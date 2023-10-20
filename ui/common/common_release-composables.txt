@@ -204,7 +204,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 )
 restartable scheme("[androidx.compose.ui.UiComposable]") fun CoordinateListItem(
   unstable context: Context
-  coordinates: CoordinatesUiModel
+  unstable coordinates: CoordinatesUiModel
   stable modifier: Modifier? = @static Companion
   stable label: String? = @static null
 )

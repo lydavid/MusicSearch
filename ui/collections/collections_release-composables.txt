@@ -121,7 +121,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreasByCo
 
 }
 
-  unstable viewModel: AreasByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  stable viewModel: AreasByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistsByCollectionScreen(
   stable collectionId: String
@@ -137,7 +137,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistsBy
 
 }
 
-  unstable viewModel: ArtistsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  stable viewModel: ArtistsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventsByCollectionScreen(
   stable collectionId: String
@@ -153,7 +153,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventsByC
 
 }
 
-  unstable viewModel: EventsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  stable viewModel: EventsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentsByCollectionScreen(
   stable collectionId: String
@@ -169,7 +169,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Instrumen
 
 }
 
-  unstable viewModel: InstrumentsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  stable viewModel: InstrumentsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelsByCollectionScreen(
   stable collectionId: String
@@ -185,7 +185,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelsByC
 
 }
 
-  unstable viewModel: LabelsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  stable viewModel: LabelsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlacesByCollectionScreen(
   stable collectionId: String
@@ -201,7 +201,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlacesByC
 
 }
 
-  unstable viewModel: PlacesByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  stable viewModel: PlacesByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingsByCollectionScreen(
   stable collectionId: String
@@ -217,7 +217,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Recording
 
 }
 
-  unstable viewModel: RecordingsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  stable viewModel: RecordingsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupsByCollectionScreen(
   stable collectionId: String
@@ -234,7 +234,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGr
 
 }
 
-  unstable viewModel: ReleaseGroupsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  stable viewModel: ReleaseGroupsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesByCollectionScreen(
   stable collectionId: String
@@ -251,7 +251,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesB
 
 }
 
-  unstable viewModel: ReleasesByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  stable viewModel: ReleasesByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesByCollectionScreen(
   stable collectionId: String
@@ -267,7 +267,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesByC
 
 }
 
-  unstable viewModel: SeriesByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  stable viewModel: SeriesByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorksByCollectionScreen(
   stable collectionId: String
@@ -283,5 +283,5 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorksByCo
 
 }
 
-  unstable viewModel: WorksByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  stable viewModel: WorksByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )

@@ -164,11 +164,11 @@ footer {
           </tr>
           <tr>
             <th>Known Unstable Arguments</th>
-            <td>43</td>
+            <td>44</td>
           </tr>
           <tr>
             <th>Unknown Stable Arguments</th>
-            <td>13</td>
+            <td>12</td>
           </tr>
           <tr>
             <th>Total Arguments</th>
@@ -180,11 +180,11 @@ footer {
           </tr>
           <tr>
             <th>Inferred Stable Classes</th>
-            <td>14</td>
+            <td>3</td>
           </tr>
           <tr>
             <th>Inferred Unstable Classes</th>
-            <td>8</td>
+            <td>4</td>
           </tr>
           <tr>
             <th>Inferred Uncertain Classes</th>
@@ -192,11 +192,11 @@ footer {
           </tr>
           <tr>
             <th>Effectively Stable Classes</th>
-            <td>14</td>
+            <td>3</td>
           </tr>
           <tr>
             <th>Total Classes</th>
-            <td>22</td>
+            <td>7</td>
           </tr>
           <tr>
             <th>Memoized Lambdas</th>
@@ -2075,9 +2075,9 @@ footer {
                     <td class="code">context</td>
                     <td class="code">Context</td>
                   </tr>
-                  <tr class="background-status-missing">
+                  <tr class="background-status-failure">
                     <td>2</td>
-                    <td>MISSING</td>
+                    <td>UNSTABLE</td>
                     <td class="code">coordinates</td>
                     <td class="code">CoordinatesUiModel</td>
                   </tr>
@@ -4318,7 +4318,7 @@ footer {
               <tr>
                 <td>1.</td>
                 <td>
-                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class BrowseEntitiesByEntityViewModel</span></h3>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class EntitiesByEntityViewModel</span></h3>
                   <table>
                     <tr>
                       <th>No.</th>
@@ -4329,73 +4329,47 @@ footer {
                     <tr style="color:#000000;background-color:#B2DFDB;">
                       <td>1</td>
                       <td>STABLE</td>
-                      <td class="code">val byEntity</td>
+                      <td class="code">val entity</td>
                       <td class="code">MusicBrainzEntity</td>
                     </tr>
                     <tr style="color:#FFFFFF;background-color:#D32F2F;">
                       <td>2</td>
                       <td>UNSTABLE</td>
-                      <td class="code">val browseEntityCountDao</td>
-                      <td class="code">BrowseEntityCountDao</td>
+                      <td class="code">val getEntitiesByEntity</td>
+                      <td class="code">GetEntitiesByEntity&lt;LI&gt;</td>
                     </tr>
                     <tr style="color:#FFFFFF;background-color:#D32F2F;">
                       <td>3</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val pagedList</td>
-                      <td class="code">PagedList&lt;DM, LI&gt;</td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td>2.</td>
-                <td>
-                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class PagedList</span></h3>
-                  <table>
-                    <tr>
-                      <th>No.</th>
-                      <th>Status</th>
-                      <th>Field</th>
-                      <th>Type</th>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>1</td>
                       <td>UNSTABLE</td>
                       <td class="code">val entityId</td>
                       <td class="code">MutableStateFlow&lt;String&gt;</td>
                     </tr>
                     <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>2</td>
+                      <td>4</td>
                       <td>UNSTABLE</td>
                       <td class="code">val query</td>
                       <td class="code">MutableStateFlow&lt;String&gt;</td>
                     </tr>
                     <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>3</td>
+                      <td>5</td>
                       <td>UNSTABLE</td>
                       <td class="code">val isRemote</td>
                       <td class="code">MutableStateFlow&lt;Boolean&gt;</td>
                     </tr>
                     <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>4</td>
+                      <td>6</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val sorted</td>
+                      <td class="code">MutableStateFlow&lt;Boolean&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>7</td>
                       <td>UNSTABLE</td>
                       <td class="code">val paramState</td>
                       <td class="code">Flow&lt;ViewModelState&gt;</td>
                     </tr>
                     <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>5</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">var scope</td>
-                      <td class="code">CoroutineScope</td>
-                    </tr>
-                    <tr style="color:#000000;background-color:#FFF9C4;">
-                      <td>6</td>
-                      <td>RUNTIME</td>
-                      <td class="code">var useCase</td>
-                      <td class="code">BrowseEntityUseCase&lt;DM, LI&gt;</td>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>7</td>
+                      <td>8</td>
                       <td>UNSTABLE</td>
                       <td class="code">val pagedEntities$delegate</td>
                       <td class="code">Lazy&lt;Flow&lt;PagingData&lt;LI&gt;&gt;&gt;</td>
@@ -4404,7 +4378,7 @@ footer {
                 </td>
               </tr>
               <tr>
-                <td>3.</td>
+                <td>2.</td>
                 <td>
                   <h3><span class="status-failure">❌ Unstable</span><span class="code"> class RelationsList</span></h3>
                   <table>
@@ -4417,8 +4391,8 @@ footer {
                     <tr style="color:#000000;background-color:#FFF9C4;">
                       <td>1</td>
                       <td>RUNTIME</td>
-                      <td class="code">val relationRepository</td>
-                      <td class="code">RelationRepository</td>
+                      <td class="code">val getEntityRelationships</td>
+                      <td class="code">GetEntityRelationships</td>
                     </tr>
                     <tr style="color:#FFFFFF;background-color:#D32F2F;">
                       <td>2</td>
@@ -4444,11 +4418,11 @@ footer {
                       <td class="code">var scope</td>
                       <td class="code">CoroutineScope</td>
                     </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                    <tr style="color:#000000;background-color:#B2DFDB;">
                       <td>6</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">var relationsListRepository</td>
-                      <td class="code">RelationsListRepository</td>
+                      <td>STABLE</td>
+                      <td class="code">var entity</td>
+                      <td class="code">MusicBrainzEntity</td>
                     </tr>
                     <tr style="color:#FFFFFF;background-color:#D32F2F;">
                       <td>7</td>
@@ -4460,39 +4434,7 @@ footer {
                 </td>
               </tr>
               <tr>
-                <td>4.</td>
-                <td>
-                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class ReleasesByEntityViewModel</span></h3>
-                  <table>
-                    <tr>
-                      <th>No.</th>
-                      <th>Status</th>
-                      <th>Field</th>
-                      <th>Type</th>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>1</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val browseEntityCountDao</td>
-                      <td class="code">BrowseEntityCountDao</td>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>2</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val releaseDao</td>
-                      <td class="code">ReleaseDao</td>
-                    </tr>
-                    <tr style="color:#000000;background-color:#B2DFDB;">
-                      <td>3</td>
-                      <td>STABLE</td>
-                      <td class="code">val pagedList</td>
-                      <td class="code">ReleasesPagedList</td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td>5.</td>
+                <td>3.</td>
                 <td>
                   <h3><span class="status-failure">❌ Unstable</span><span class="code"> class ReleasesListViewModel</span></h3>
                   <table>
@@ -4512,39 +4454,7 @@ footer {
                 </td>
               </tr>
               <tr>
-                <td>6.</td>
-                <td>
-                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class ReleaseGroupsByEntityViewModel</span></h3>
-                  <table>
-                    <tr>
-                      <th>No.</th>
-                      <th>Status</th>
-                      <th>Field</th>
-                      <th>Type</th>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>1</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val browseEntityCountDao</td>
-                      <td class="code">BrowseEntityCountDao</td>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>2</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val releaseGroupDao</td>
-                      <td class="code">ReleaseGroupDao</td>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>3</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val releaseGroupsPagedList</td>
-                      <td class="code">ReleaseGroupsPagedList</td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td>7.</td>
+                <td>4.</td>
                 <td>
                   <h3><span class="status-failure">❌ Unstable</span><span class="code"> class ReleaseGroupsListViewModel</span></h3>
                   <table>
@@ -4559,68 +4469,6 @@ footer {
                       <td>UNSTABLE</td>
                       <td class="code">val releaseGroupImageRepository</td>
                       <td class="code">ReleaseGroupImageRepository</td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td>8.</td>
-                <td>
-                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class ReleaseGroupsPagedList</span></h3>
-                  <table>
-                    <tr>
-                      <th>No.</th>
-                      <th>Status</th>
-                      <th>Field</th>
-                      <th>Type</th>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>1</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val entityId</td>
-                      <td class="code">MutableStateFlow&lt;String&gt;</td>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>2</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val query</td>
-                      <td class="code">MutableStateFlow&lt;String&gt;</td>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>3</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val isRemote</td>
-                      <td class="code">MutableStateFlow&lt;Boolean&gt;</td>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>4</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val sorted</td>
-                      <td class="code">MutableStateFlow&lt;Boolean&gt;</td>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>5</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val paramState</td>
-                      <td class="code">Flow&lt;ViewModelState&gt;</td>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>6</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">var scope</td>
-                      <td class="code">CoroutineScope</td>
-                    </tr>
-                    <tr style="color:#000000;background-color:#FFF9C4;">
-                      <td>7</td>
-                      <td>RUNTIME</td>
-                      <td class="code">var useCase</td>
-                      <td class="code">BrowseSortableEntityUseCase&lt;ReleaseGroupListItemModel&gt;</td>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>8</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val pagedEntities$delegate</td>
-                      <td class="code">Lazy&lt;Flow&lt;PagingData&lt;ListItemModel&gt;&gt;&gt;</td>
                     </tr>
                   </table>
                 </td>

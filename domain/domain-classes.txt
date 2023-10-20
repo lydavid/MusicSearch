@@ -1,0 +1,115 @@
+stable class DomainModule {
+  <runtime stability> = Stable
+}
+runtime class GetAreasByEntity {
+  runtime val areasByEntityRepository: AreasByEntityRepository
+  <runtime stability> = Uncertain(AreasByEntityRepository)
+}
+runtime class GetArtistsByEntity {
+  runtime val artistsByEntityRepository: ArtistsByEntityRepository
+  <runtime stability> = Uncertain(ArtistsByEntityRepository)
+}
+runtime class ObserveBrowseEntityCount {
+  runtime val browseEntityCountRepository: BrowseEntityCountRepository
+  <runtime stability> = Uncertain(BrowseEntityCountRepository)
+}
+runtime class GetAllCollections {
+  runtime val collectionRepository: CollectionRepository
+  <runtime stability> = Uncertain(CollectionRepository)
+}
+runtime class GetCollection {
+  runtime val collectionRepository: CollectionRepository
+  <runtime stability> = Uncertain(CollectionRepository)
+}
+runtime class GetEventsByEntity {
+  runtime val eventsByEntityRepository: EventsByEntityRepository
+  <runtime stability> = Uncertain(EventsByEntityRepository)
+}
+runtime class DeleteLookupHistory {
+  runtime val lookupHistoryRepository: LookupHistoryRepository
+  <runtime stability> = Uncertain(LookupHistoryRepository)
+}
+runtime class GetPagedHistory {
+  runtime val lookupHistoryRepository: LookupHistoryRepository
+  <runtime stability> = Uncertain(LookupHistoryRepository)
+}
+runtime class IncrementLookupHistory {
+  runtime val lookupHistoryRepository: LookupHistoryRepository
+  <runtime stability> = Uncertain(LookupHistoryRepository)
+}
+runtime class MarkLookupHistoryForDeletion {
+  runtime val lookupHistoryRepository: LookupHistoryRepository
+  <runtime stability> = Uncertain(LookupHistoryRepository)
+}
+runtime class UnMarkLookupHistoryForDeletion {
+  runtime val lookupHistoryRepository: LookupHistoryRepository
+  <runtime stability> = Uncertain(LookupHistoryRepository)
+}
+runtime class GetInstrumentsByEntity {
+  runtime val instrumentsByEntityRepository: InstrumentsByEntityRepository
+  <runtime stability> = Uncertain(InstrumentsByEntityRepository)
+}
+runtime class GetLabelsByEntity {
+  runtime val labelsByEntityRepository: LabelsByEntityRepository
+  <runtime stability> = Uncertain(LabelsByEntityRepository)
+}
+runtime class DeleteNowPlayingHistory {
+  runtime val nowPlayingHistoryRepository: NowPlayingHistoryRepository
+  <runtime stability> = Uncertain(NowPlayingHistoryRepository)
+}
+runtime class GetNowPlayingHistory {
+  runtime val nowPlayingHistoryRepository: NowPlayingHistoryRepository
+  <runtime stability> = Uncertain(NowPlayingHistoryRepository)
+}
+runtime class GetPlacesByEntity {
+  runtime val placesByEntityRepository: PlacesByEntityRepository
+  <runtime stability> = Uncertain(PlacesByEntityRepository)
+}
+runtime class GetRecordingsByEntity {
+  runtime val recordingsByEntityRepository: RecordingsByEntityRepository
+  <runtime stability> = Uncertain(RecordingsByEntityRepository)
+}
+runtime class GetCountOfEachRelationshipTypeUseCase {
+  runtime val relationRepository: RelationRepository
+  <runtime stability> = Uncertain(RelationRepository)
+}
+runtime class GetEntityRelationships {
+  runtime val relationRepository: RelationRepository
+  <runtime stability> = Uncertain(RelationRepository)
+}
+runtime class GetReleasesByEntity {
+  runtime val releasesByEntityRepository: ReleasesByEntityRepository
+  <runtime stability> = Uncertain(ReleasesByEntityRepository)
+}
+runtime class GetTracksByRelease {
+  runtime val releaseRepository: ReleaseRepository
+  <runtime stability> = Uncertain(ReleaseRepository)
+}
+runtime class GetReleaseGroupsByEntity {
+  runtime val releaseGroupsByEntityRepository: ReleaseGroupsByEntityRepository
+  <runtime stability> = Uncertain(ReleaseGroupsByEntityRepository)
+}
+runtime class DeleteSearchHistory {
+  runtime val searchHistoryRepository: SearchHistoryRepository
+  <runtime stability> = Uncertain(SearchHistoryRepository)
+}
+runtime class GetSearchHistory {
+  runtime val searchHistoryRepository: SearchHistoryRepository
+  <runtime stability> = Uncertain(SearchHistoryRepository)
+}
+runtime class RecordSearchHistory {
+  runtime val searchHistoryRepository: SearchHistoryRepository
+  <runtime stability> = Uncertain(SearchHistoryRepository)
+}
+runtime class GetSearchResults {
+  runtime val searchResultsRepository: SearchResultsRepository
+  <runtime stability> = Uncertain(SearchResultsRepository)
+}
+runtime class GetSeriesByEntity {
+  runtime val seriesByEntityRepository: SeriesByEntityRepository
+  <runtime stability> = Uncertain(SeriesByEntityRepository)
+}
+runtime class GetWorksByEntity {
+  runtime val worksByEntityRepository: WorksByEntityRepository
+  <runtime stability> = Uncertain(WorksByEntityRepository)
+}

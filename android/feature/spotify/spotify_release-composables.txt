@@ -1,0 +1,45 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyScaffold(
+  stable modifier: Modifier? = @static Companion
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyScaffold(
+  stable metadata: SpotifyMetadata
+  stable modifier: Modifier? = @static Companion
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSpotifyScaffold()
+restartable skippable fun SpotifyBroadcastReceiver(
+  stable onMetadataChange: Function1<SpotifyMetadata, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyScreen(
+  stable metadata: SpotifyMetadata
+  stable modifier: Modifier? = @static Companion
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TutorialBanner()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifySearchLinks(
+  stable metadata: SpotifyMetadata
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSpotifyScreenEmpty()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSpotifyScreenWithData()

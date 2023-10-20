@@ -1,40 +1,21 @@
 stable class CommonUiModule {
   <runtime stability> = Stable
 }
-stable class AreasPagedList {
-  <runtime stability> = Stable
-}
-stable class ArtistsPagedList {
-  <runtime stability> = Stable
-}
-stable class EventsPagedList {
-  <runtime stability> = Stable
-}
-stable class InstrumentsPagedList {
-  <runtime stability> = Stable
-}
-stable class LabelsPagedList {
-  <runtime stability> = Stable
-}
-unstable class BrowseEntitiesByEntityViewModel {
-  stable val byEntity: MusicBrainzEntity
-  unstable val browseEntityCountDao: BrowseEntityCountDao
-  unstable val pagedList: PagedList<DM, LI>
-  <runtime stability> = Unstable
-}
 stable class ViewModelState {
   stable val entityId: String
   stable val query: String
   stable val isRemote: Boolean
+  stable val sorted: Boolean
   <runtime stability> = Stable
 }
-unstable class PagedList {
+unstable class EntitiesByEntityViewModel {
+  stable val entity: MusicBrainzEntity
+  unstable val getEntitiesByEntity: GetEntitiesByEntity<LI>
   unstable val entityId: MutableStateFlow<String>
   unstable val query: MutableStateFlow<String>
   unstable val isRemote: MutableStateFlow<Boolean>
+  unstable val sorted: MutableStateFlow<Boolean>
   unstable val paramState: Flow<ViewModelState>
-  unstable var scope: CoroutineScope
-  runtime var useCase: BrowseEntityUseCase<DM, LI>
   unstable val pagedEntities$delegate: Lazy<Flow<PagingData<LI>>>
   <runtime stability> = Unstable
 }
@@ -44,65 +25,20 @@ stable class State {
   <runtime stability> = Stable
 }
 unstable class RelationsList {
-  runtime val relationRepository: RelationRepository
+  runtime val getEntityRelationships: GetEntityRelationships
   unstable val entityId: MutableStateFlow<String>
   unstable val query: MutableStateFlow<String>
   unstable val paramState: Flow<State>
   unstable var scope: CoroutineScope
-  unstable var relationsListRepository: RelationsListRepository
+  stable var entity: MusicBrainzEntity
   unstable val pagedRelations$delegate: Lazy<Flow<PagingData<RelationListItemModel>>>
-  <runtime stability> = Unstable
-}
-stable class ViewModelState {
-  stable val entityId: String
-  stable val query: String
-  stable val isRemote: Boolean
-  stable val sorted: Boolean
-  <runtime stability> = Stable
-}
-stable class PlacesPagedList {
-  <runtime stability> = Stable
-}
-stable class RecordingsPagedList {
-  <runtime stability> = Stable
-}
-unstable class ReleasesByEntityViewModel {
-  unstable val browseEntityCountDao: BrowseEntityCountDao
-  unstable val releaseDao: ReleaseDao
-  stable val pagedList: ReleasesPagedList
   <runtime stability> = Unstable
 }
 unstable class ReleasesListViewModel {
   unstable val releaseImageRepository: ReleaseImageRepository
   <runtime stability> = Unstable
 }
-stable class ReleasesPagedList {
-  <runtime stability> = Stable
-}
-unstable class ReleaseGroupsByEntityViewModel {
-  unstable val browseEntityCountDao: BrowseEntityCountDao
-  unstable val releaseGroupDao: ReleaseGroupDao
-  unstable val releaseGroupsPagedList: ReleaseGroupsPagedList
-  <runtime stability> = Unstable
-}
 unstable class ReleaseGroupsListViewModel {
   unstable val releaseGroupImageRepository: ReleaseGroupImageRepository
   <runtime stability> = Unstable
-}
-unstable class ReleaseGroupsPagedList {
-  unstable val entityId: MutableStateFlow<String>
-  unstable val query: MutableStateFlow<String>
-  unstable val isRemote: MutableStateFlow<Boolean>
-  unstable val sorted: MutableStateFlow<Boolean>
-  unstable val paramState: Flow<ViewModelState>
-  unstable var scope: CoroutineScope
-  runtime var useCase: BrowseSortableEntityUseCase<ReleaseGroupListItemModel>
-  unstable val pagedEntities$delegate: Lazy<Flow<PagingData<ListItemModel>>>
-  <runtime stability> = Unstable
-}
-stable class SeriesPagedList {
-  <runtime stability> = Stable
-}
-stable class WorksPagedList {
-  <runtime stability> = Stable
 }

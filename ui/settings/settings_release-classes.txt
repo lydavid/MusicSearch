@@ -1,14 +1,8 @@
-unstable class AppPreferencesImpl {
-  unstable val preferencesDataStore: DataStore<Preferences>
-  unstable val coroutineScope: CoroutineScope
-  unstable val historySortOptionPreference: Key<String>
-  <runtime stability> = Unstable
-}
 stable class SettingsUiModule {
   <runtime stability> = Stable
 }
 unstable class SettingsViewModel {
-  runtime val appPreferences: AppPreferences
+  unstable val appPreferences: AppPreferences
   unstable val musicBrainzAuthStore: MusicBrainzAuthStore
   <runtime stability> = Unstable
 }

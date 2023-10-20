@@ -1,0 +1,50 @@
+stable class ViewModelsModule {
+  <runtime stability> = Stable
+}
+unstable class NowPlayingNotificationListener {
+  unstable val coroutineScope$delegate: Lazy<CoroutineScope>
+  unstable val nowPlayingHistoryRepository$delegate: Lazy<NowPlayingHistoryRepositoryImpl>
+  <runtime stability> = Unstable
+}
+unstable class Result {
+  unstable val response: AuthorizationResponse?
+  unstable val exception: AuthorizationException?
+  <runtime stability> = Unstable
+}
+unstable class MusicBrainzLoginContract {
+  unstable val authService: AuthorizationService
+  unstable val authRequest: AuthorizationRequest
+  <runtime stability> = Unstable
+}
+stable class RemoteResult {
+  stable val message: String
+  stable val actionLabel: String?
+  <runtime stability> = Stable
+}
+unstable class AreaStatsViewModel {
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
+  unstable val releaseCountryDao: ReleaseCountryDao
+  unstable val areaPlaceDao: AreaPlaceDao
+  <runtime stability> = Unstable
+}
+runtime class EventStatsViewModel {
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  <runtime stability> = Runtime(GetCountOfEachRelationshipTypeUseCase)
+}
+runtime class InstrumentStatsViewModel {
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  <runtime stability> = Runtime(GetCountOfEachRelationshipTypeUseCase)
+}
+unstable class LabelStatsViewModel {
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
+  unstable val releaseLabelDao: ReleaseLabelDao
+  <runtime stability> = Unstable
+}
+unstable class PlaceStatsViewModel {
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
+  unstable val eventPlaceDao: EventPlaceDao
+  <runtime stability> = Unstable
+}

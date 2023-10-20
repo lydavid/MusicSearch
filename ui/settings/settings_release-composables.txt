@@ -71,12 +71,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingsS
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingsScreen()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingsScreenNotificationListenerEnable()
-fun useDarkTheme(
-  <this>: AppPreferences
-): Boolean
-fun useMaterialYou(
-  <this>: AppPreferences
-): Boolean
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ProfileCard(
   stable username: String
   stable showLogin: Boolean
