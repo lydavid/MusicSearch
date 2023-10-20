@@ -40,3 +40,8 @@ kotlin {
         }
     }
 }
+
+dependencies {
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.noop)
+}

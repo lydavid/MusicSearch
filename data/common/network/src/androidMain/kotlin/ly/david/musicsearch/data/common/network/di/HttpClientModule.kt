@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.common.network.di
 
 import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.engine.okhttp.OkHttpConfig
 import io.ktor.client.engine.okhttp.OkHttpEngine
@@ -54,6 +55,7 @@ actual val HttpClientModule: Module = module {
                     maxSize = 50 * 1024 * 1024,
                 ),
             )
+            addInterceptor(ChuckerInterceptor(context = get()))
         }
         ApiHttpClient.configAndCreate(
             engine = OkHttpEngine(config = okHttpConfig),
