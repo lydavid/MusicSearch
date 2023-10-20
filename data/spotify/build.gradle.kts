@@ -1,6 +1,39 @@
+import java.util.Properties
+
 plugins {
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.build.config)
+}
+
+buildConfig {
+    // These will only be set through GHA environment
+    var spotifyClientId = project.properties["SPOTIFY_CLIENT_ID"] as String?
+    var spotifyClientSecret = project.properties["SPOTIFY_CLIENT_SECRET"] as String?
+
+    if (spotifyClientId.isNullOrEmpty() || spotifyClientSecret.isNullOrEmpty()) {
+        val secretsPropertiesFile = rootProject.file("secrets.properties")
+        val secretsProperties = if (secretsPropertiesFile.exists()) {
+            Properties().apply {
+                load(secretsPropertiesFile.inputStream())
+            }
+        } else {
+            Properties()
+        }
+        spotifyClientId = secretsProperties["SPOTIFY_CLIENT_ID"] as String? ?: ""
+        spotifyClientSecret = secretsProperties["SPOTIFY_CLIENT_SECRET"] as String? ?: ""
+    }
+
+    buildConfigField(
+        type = "String",
+        name = "SPOTIFY_CLIENT_ID",
+        value = "\"$spotifyClientId\"",
+    )
+    buildConfigField(
+        type = "String",
+        name = "SPOTIFY_CLIENT_SECRET",
+        value = "\"$spotifyClientSecret\"",
+    )
 }
 
 kotlin {

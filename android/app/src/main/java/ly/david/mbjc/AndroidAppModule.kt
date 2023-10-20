@@ -2,7 +2,6 @@ package ly.david.mbjc
 
 import ly.david.data.di.auth.AuthStoreModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
-import ly.david.data.di.network.networkModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.musicsearch.android.feature.nowplaying.NowPlayingUiModule
 import ly.david.musicsearch.core.coroutines.di.coroutineDispatchersModule
@@ -39,7 +38,6 @@ val androidAppModule = module {
         coroutinesScopesModule,
         loggingModule,
         musicBrainzAuthModule,
-        networkModule,
         HttpClientModule,
         spotifyDataModule,
         spotifyApiModule,
