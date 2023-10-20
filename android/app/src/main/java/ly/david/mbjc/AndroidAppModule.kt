@@ -1,6 +1,5 @@
 package ly.david.mbjc
 
-import ly.david.data.di.auth.AuthStoreModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.musicsearch.android.feature.nowplaying.NowPlayingUiModule
@@ -51,7 +50,6 @@ val androidAppModule = module {
         coverArtApiModule,
         musicBrainzDataModule,
         musicBrainzApiModule,
-        AuthStoreModule().module,
         CollectionUiModule().module,
         CommonUiModule().module,
         historyUiModule,

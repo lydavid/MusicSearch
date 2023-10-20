@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.musicbrainz.auth
+package ly.david.musicsearch.data.musicbrainz.auth.store
 
 import kotlinx.coroutines.flow.Flow
 
@@ -7,11 +7,11 @@ interface MusicBrainzAuthStore {
     val accessToken: Flow<String?>
     suspend fun getRefreshToken(): String?
     suspend fun getExpiryTimeInEpochSeconds(): Long?
-    fun saveTokens(
+    suspend fun saveTokens(
         accessToken: String,
         refreshToken: String,
     )
 
     val username: Flow<String>
-    fun setUsername(username: String)
+    suspend fun setUsername(username: String)
 }

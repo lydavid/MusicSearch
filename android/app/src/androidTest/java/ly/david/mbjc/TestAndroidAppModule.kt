@@ -1,6 +1,5 @@
 package ly.david.mbjc
 
-import ly.david.data.di.auth.AuthStoreModule
 import ly.david.musicsearch.core.coroutines.di.coroutinesScopesModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
 import ly.david.data.test.di.testNetworkModule
@@ -52,7 +51,6 @@ val testAndroidAppModule = module {
         repositoryDataModule,
         coverArtDataModule,
         musicBrainzDataModule,
-        AuthStoreModule().module,
         CollectionUiModule().module,
         CommonUiModule().module,
         DomainModule().module,

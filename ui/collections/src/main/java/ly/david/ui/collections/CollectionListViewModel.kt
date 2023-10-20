@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthStore
+import ly.david.musicsearch.data.musicbrainz.auth.store.MusicBrainzAuthStore
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.domain.collection.usecase.GetAllCollections
