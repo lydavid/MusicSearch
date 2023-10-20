@@ -8,11 +8,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import ly.david.musicsearch.core.preferences.di.preferencesDataStoreModule
 import ly.david.ui.core.theme.BaseTheme
 import ly.david.ui.core.theme.TextStyles
+import org.koin.core.context.startKoin
 
 fun main() = application {
     val windowState = rememberWindowState()
+
+    startKoin {
+        modules(preferencesDataStoreModule)
+    }
 
     Window(
         onCloseRequest = ::exitApplication,

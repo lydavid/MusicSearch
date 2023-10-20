@@ -1,15 +1,27 @@
 plugins {
     id("ly.david.android.library")
-    kotlin("android")
+    id("ly.david.musicsearch.kotlin.multiplatform")
 }
 
 android {
     namespace = "ly.david.musicsearch.core.preferences"
 }
 
-dependencies {
-    implementation(projects.core.coroutines)
-    implementation(projects.core.models)
-    implementation(libs.androidx.datastore.preferences.android)
-    implementation(libs.koin.core)
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.core.coroutines)
+                implementation(projects.core.models)
+                implementation(libs.koin.core)
+                implementation(libs.androidx.datastore.preferences.core)
+            }
+        }
+        val jvmMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.androidx.datastore.preferences.android)
+            }
+        }
+    }
 }
