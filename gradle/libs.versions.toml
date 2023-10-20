@@ -110,7 +110,7 @@ ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devto
 
 [bundles]
 kotlinx-coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-test"]
-ktor-android = [
+ktor-jvm = [
     "ktor-client-auth",
     "ktor-client-content-negotiation",
     "ktor-client-core",

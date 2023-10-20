@@ -23,13 +23,13 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(libs.bundles.ktor.android) // TODO: jvm
+                implementation(libs.bundles.ktor.jvm)
             }
         }
         val androidMain by getting {
             dependencies {
                 implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(libs.bundles.ktor.android)
+                implementation(libs.bundles.ktor.jvm)
             }
         }
         val commonTest by getting {

@@ -97,7 +97,7 @@ dependencies {
     implementation(libs.koin.annotations)
     implementation(libs.koin.core)
     implementation(platform(libs.ktor.bom))
-    implementation(libs.bundles.ktor.android)
+    implementation(libs.bundles.ktor.jvm)
 
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.timber)
