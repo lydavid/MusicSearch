@@ -7,6 +7,7 @@ import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.request.get
 import io.ktor.http.appendPathSegments
+import ly.david.musicsearch.data.spotify.auth.SpotifyOAuthInfo
 import ly.david.musicsearch.data.spotify.auth.api.SpotifyOAuthApi
 import ly.david.musicsearch.data.spotify.auth.store.SpotifyAuthStore
 
@@ -18,8 +19,7 @@ interface SpotifyApi {
     companion object {
         fun create(
             httpClient: HttpClient,
-            clientId: String,
-            clientSecret: String,
+            spotifyOAuthInfo: SpotifyOAuthInfo,
             spotifyOAuthApi: SpotifyOAuthApi,
             spotifyAuthStore: SpotifyAuthStore,
         ): SpotifyApi {
@@ -34,8 +34,8 @@ interface SpotifyApi {
                         }
                         refreshTokens {
                             val response = spotifyOAuthApi.getAccessToken(
-                                clientId = clientId,
-                                clientSecret = clientSecret,
+                                clientId = spotifyOAuthInfo.clientId,
+                                clientSecret = spotifyOAuthInfo.clientSecret,
                             )
 
                             val accessToken = response.accessToken

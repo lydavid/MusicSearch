@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.spotify.di
 
-import MusicSearch.data.spotify.BuildConfig
 import ly.david.musicsearch.data.spotify.api.SpotifyApi
 import ly.david.musicsearch.data.spotify.auth.api.SpotifyOAuthApi
 import ly.david.musicsearch.data.spotify.auth.api.SpotifyOAuthApiImpl
@@ -13,8 +12,7 @@ val spotifyApiModule = module {
     single {
         SpotifyApi.create(
             httpClient = get(),
-            clientId = BuildConfig.SPOTIFY_CLIENT_ID,
-            clientSecret = BuildConfig.SPOTIFY_CLIENT_SECRET,
+            spotifyOAuthInfo = get(),
             spotifyOAuthApi = get(),
             spotifyAuthStore = get(),
         )
