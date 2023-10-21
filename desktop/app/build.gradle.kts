@@ -12,6 +12,7 @@ dependencies {
     implementation(projects.core.preferences)
     implementation(compose.desktop.currentOs)
     implementation(libs.koin.core)
+    implementation("com.github.scribejava:scribejava-apis:6.4.1")
 }
 
 application {

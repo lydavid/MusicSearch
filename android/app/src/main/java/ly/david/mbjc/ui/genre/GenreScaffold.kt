@@ -79,8 +79,14 @@ internal fun GenreScaffold(
                     text = "Genre lookup is currently not supported in this app.",
                     style = TextStyles.getCardBodyTextStyle(),
                 )
+
+                // TODO: viewmodel or the presenter-equivalent would need to be injected with context-agnostic
+                //  url opening class, and this would call it on click
                 Button(onClick = {
-                    context.lookupInBrowser(resource, genreId)
+                    context.lookupInBrowser(
+                        resource,
+                        genreId,
+                    )
                 }) {
                     Text(strings.openInBrowser)
                 }

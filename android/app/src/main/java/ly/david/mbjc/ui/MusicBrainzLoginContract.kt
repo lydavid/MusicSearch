@@ -8,6 +8,7 @@ import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
 import net.openid.appauth.AuthorizationService
 
+// TODO: can extract out to :data:musicbrainz or :data:musicbrainz:auth
 class MusicBrainzLoginContract(
     private val authService: AuthorizationService,
     private val authRequest: AuthorizationRequest,

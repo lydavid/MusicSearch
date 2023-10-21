@@ -80,6 +80,7 @@ dependencies {
     implementation(projects.core.preferences)
     implementation(projects.dataAndroid)
     implementation(projects.data.database)
+    implementation(projects.data.musicbrainz)
     implementation(projects.data.repository)
     implementation(projects.domain)
     implementation(projects.feature.search)

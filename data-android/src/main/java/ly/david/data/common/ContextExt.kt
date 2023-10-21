@@ -3,22 +3,21 @@ package ly.david.data.common
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import ly.david.musicsearch.core.models.place.Coordinates
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
 import ly.david.musicsearch.core.models.network.resourceUri
+import ly.david.musicsearch.core.models.place.Coordinates
+import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
 
+// TODO: wrap url lookup with a context-agnostic class
+//  then only android implementation uses context
 /**
  * Launches web browser for MusicBrainz's page for [entity] with [musicBrainzId].
  */
 fun Context.lookupInBrowser(entity: MusicBrainzEntity, musicBrainzId: String) {
-    startActivity(
-        Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("$MUSIC_BRAINZ_BASE_URL/${entity.resourceUri}/$musicBrainzId")
-        },
-    )
+    openUrl("$MUSIC_BRAINZ_BASE_URL/${entity.resourceUri}/$musicBrainzId")
 }
 
+// TODO: we could open map in google maps or open street maps for jvm
 private const val ZOOM_LEVEL = 16
 
 /**
