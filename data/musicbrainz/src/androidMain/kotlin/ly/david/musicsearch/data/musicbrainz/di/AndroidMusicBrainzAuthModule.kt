@@ -2,7 +2,6 @@ package ly.david.musicsearch.data.musicbrainz.di
 
 import android.net.Uri
 import ly.david.musicsearch.core.models.AppInfo
-import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
@@ -15,26 +14,25 @@ import org.koin.dsl.module
 
 actual val musicBrainzAuthModule: Module = module {
     factory<AuthorizationService> {
-        AuthorizationService(/* context = */ get())
+        AuthorizationService(get())
     }
 
     factory<AuthorizationRequest> {
+        val musicBrainzOAuthInfo = get<MusicBrainzOAuthInfo>()
         AuthorizationRequest.Builder(
             /* configuration = */
             AuthorizationServiceConfiguration(
                 /* authorizationEndpoint = */
-                // TODO: these endpoints should be supplied by a singleton in commonMain
-                //  so that android and jvm can use for their own implementations
-                Uri.parse("$MUSIC_BRAINZ_BASE_URL/oauth2/authorize"),
+                Uri.parse(musicBrainzOAuthInfo.authorizationEndpoint),
                 /* tokenEndpoint = */
-                Uri.parse("$MUSIC_BRAINZ_BASE_URL/oauth2/token"),
+                Uri.parse(musicBrainzOAuthInfo.tokenEndpoint),
                 /* registrationEndpoint = */
                 null,
                 /* endSessionEndpoint = */
-                Uri.parse("$MUSIC_BRAINZ_BASE_URL/oauth2/revoke"), // Doesn't work cause GET revoke not implemented
+                Uri.parse(musicBrainzOAuthInfo.endSessionEndpoint), // Doesn't work cause GET revoke not implemented
             ),
             /* clientId = */
-            get<MusicBrainzOAuthInfo>().clientId,
+            musicBrainzOAuthInfo.clientId,
             /* responseType = */
             ResponseTypeValues.CODE,
             /* redirectUri = */

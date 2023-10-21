@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.musicbrainz.di
 
 import MusicSearch.data.musicbrainz.BuildConfig
+import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthRepository
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
 import ly.david.musicsearch.data.musicbrainz.auth.store.MusicBrainzAuthStore
@@ -14,6 +15,9 @@ val musicBrainzDataModule = module {
         MusicBrainzOAuthInfo(
             clientId = BuildConfig.MUSICBRAINZ_CLIENT_ID,
             clientSecret = BuildConfig.MUSICBRAINZ_CLIENT_SECRET,
+            authorizationEndpoint = "$MUSIC_BRAINZ_BASE_URL/oauth2/authorize",
+            tokenEndpoint = "$MUSIC_BRAINZ_BASE_URL/oauth2/token",
+            endSessionEndpoint = "$MUSIC_BRAINZ_BASE_URL/oauth2/revoke",
         )
     }
     singleOf(::MusicBrainzAuthStoreImpl) bind MusicBrainzAuthStore::class
