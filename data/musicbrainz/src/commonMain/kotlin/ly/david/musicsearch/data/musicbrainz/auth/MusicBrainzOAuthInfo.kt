@@ -6,4 +6,5 @@ data class MusicBrainzOAuthInfo(
     val authorizationEndpoint: String,
     val tokenEndpoint: String,
     val endSessionEndpoint: String,
+    val scope: String,
 )

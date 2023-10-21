@@ -9,24 +9,17 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual val musicBrainzAuthModule: Module = module {
-    single {
+    single<OAuth20Service> {
         val musicBrainzOAuthInfo = get<MusicBrainzOAuthInfo>()
         val musicBrainzApi20 = object : DefaultApi20() {
-            override fun getAccessTokenEndpoint(): String {
-                return musicBrainzOAuthInfo.tokenEndpoint
-            }
-            override fun getAuthorizationBaseUrl(): String {
-                return musicBrainzOAuthInfo.authorizationEndpoint
-            }
+            override fun getAccessTokenEndpoint(): String = musicBrainzOAuthInfo.tokenEndpoint
+            override fun getAuthorizationBaseUrl(): String = musicBrainzOAuthInfo.authorizationEndpoint
         }
-
-        val service: OAuth20Service = ServiceBuilder(musicBrainzOAuthInfo.clientId)
+        ServiceBuilder(musicBrainzOAuthInfo.clientId)
             .callback("urn:ietf:wg:oauth:2.0:oob")
-            .scope("collection profile")
+            .scope(musicBrainzOAuthInfo.scope)
             .responseType(OAuthConstants.CODE)
             .apiSecret(musicBrainzOAuthInfo.clientSecret)
             .build(musicBrainzApi20)
-
-        service
     }
 }

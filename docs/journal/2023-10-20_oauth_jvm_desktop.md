@@ -29,3 +29,7 @@ Or to just keep auth under `:data:musicbrainz`.
 In the end, it seems easier to just keep them together.
 Various apis are restricted behind authentication, so we need to access auth from `:data:musicbrainz` anyways.
 
+The next issue we encountered was with redirecting the user after launching the authorization request
+in their browser.
+The simplest solution was to just provide an input field for the user to input the authorization code
+from their browser.

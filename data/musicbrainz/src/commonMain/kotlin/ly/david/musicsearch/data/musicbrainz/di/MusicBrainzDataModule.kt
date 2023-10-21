@@ -18,6 +18,7 @@ val musicBrainzDataModule = module {
             authorizationEndpoint = "$MUSIC_BRAINZ_BASE_URL/oauth2/authorize",
             tokenEndpoint = "$MUSIC_BRAINZ_BASE_URL/oauth2/token",
             endSessionEndpoint = "$MUSIC_BRAINZ_BASE_URL/oauth2/revoke",
+            scope = "collection profile",
         )
     }
     singleOf(::MusicBrainzAuthStoreImpl) bind MusicBrainzAuthStore::class

@@ -38,7 +38,7 @@ actual val musicBrainzAuthModule: Module = module {
             /* redirectUri = */
             Uri.parse("${get<AppInfo>().applicationId}://oauth2/redirect"),
         )
-            .setScope("collection profile")
+            .setScope(musicBrainzOAuthInfo.scope)
             .build()
     }
 
