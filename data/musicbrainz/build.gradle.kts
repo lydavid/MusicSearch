@@ -46,6 +46,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(projects.core.logging.api)
                 implementation(projects.core.models)
                 implementation(libs.koin.core)
                 implementation(libs.androidx.datastore.preferences.core)
@@ -64,6 +65,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                implementation(libs.androidx.activity.compose)
                 implementation(libs.appauth)
             }
         }

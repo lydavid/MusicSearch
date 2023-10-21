@@ -2,6 +2,9 @@ package ly.david.musicsearch.data.musicbrainz.di
 
 import android.net.Uri
 import ly.david.musicsearch.core.models.AppInfo
+import ly.david.musicsearch.data.musicbrainz.Login
+import ly.david.musicsearch.data.musicbrainz.Logout
+import ly.david.musicsearch.data.musicbrainz.MusicBrainzLoginActivityResultContract
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
@@ -10,14 +13,13 @@ import net.openid.appauth.ClientAuthentication
 import net.openid.appauth.ClientSecretBasic
 import net.openid.appauth.ResponseTypeValues
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 actual val musicBrainzAuthModule: Module = module {
-    factory<AuthorizationService> {
-        AuthorizationService(get())
-    }
+    single { AuthorizationService(get()) }
 
-    factory<AuthorizationRequest> {
+    single<AuthorizationRequest> {
         val musicBrainzOAuthInfo = get<MusicBrainzOAuthInfo>()
         AuthorizationRequest.Builder(
             /* configuration = */
@@ -42,7 +44,8 @@ actual val musicBrainzAuthModule: Module = module {
             .build()
     }
 
-    factory<ClientAuthentication> {
-        ClientSecretBasic(get<MusicBrainzOAuthInfo>().clientSecret)
-    }
+    singleOf(::MusicBrainzLoginActivityResultContract)
+    single<ClientAuthentication> { ClientSecretBasic(get<MusicBrainzOAuthInfo>().clientSecret) }
+    singleOf(::Login)
+    singleOf(::Logout)
 }

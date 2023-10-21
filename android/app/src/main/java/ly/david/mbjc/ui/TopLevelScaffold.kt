@@ -29,11 +29,11 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.mbjc.ui.navigation.BottomNavigationBar
 import ly.david.mbjc.ui.navigation.NavigationGraph
+import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
+import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.core.models.navigation.getTopLevelDestination
 import ly.david.musicsearch.core.models.navigation.getTopLevelRoute
-import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
-import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.ui.collections.CollectionBottomSheet
 import ly.david.ui.collections.CreateCollectionDialog
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -80,6 +80,7 @@ internal fun TopLevelScaffold(
         }
     }
 
+    // TODO: extract so that we can login without ref to AppAuth's AuthorizationResponse
     val loginLauncher = rememberLauncherForActivityResult(contract = viewModel.getLoginContract()) { result ->
         when {
             result.exception != null -> {
@@ -87,7 +88,9 @@ internal fun TopLevelScaffold(
             }
 
             result.response != null -> {
-                viewModel.performTokenRequest(result.response)
+                result.response?.let {
+                    viewModel.login(it)
+                }
             }
 
             else -> {
