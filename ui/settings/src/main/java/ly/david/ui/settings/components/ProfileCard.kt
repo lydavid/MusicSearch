@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
@@ -30,6 +31,8 @@ internal fun ProfileCard(
     onLoginClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
 ) {
+    val strings = LocalStrings.current
+
     Card(
         onClick = {
             if (showLogin) {
@@ -54,7 +57,7 @@ internal fun ProfileCard(
             Column {
                 if (showLogin) {
                     Text(
-                        text = "Login to MusicBrainz",
+                        text = strings.loginToMusicBrainz,
                         style = TextStyles.getCardBodyTextStyle(),
                     )
                     Text(
