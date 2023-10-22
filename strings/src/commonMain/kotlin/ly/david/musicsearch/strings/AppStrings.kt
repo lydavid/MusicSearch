@@ -136,6 +136,7 @@ data class AppStrings(
     val leastRecentlyVisited: String,
     val mostVisited: String,
     val leastVisited: String,
+    val loginToMusicBrainz: String,
 )
 
 object Locales {

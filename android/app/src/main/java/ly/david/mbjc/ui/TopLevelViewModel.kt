@@ -18,18 +18,15 @@ import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
+import ly.david.musicsearch.data.musicbrainz.Login
+import ly.david.musicsearch.data.musicbrainz.Logout
+import ly.david.musicsearch.data.musicbrainz.MusicBrainzLoginActivityResultContract
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
-import ly.david.musicsearch.data.musicbrainz.auth.store.MusicBrainzAuthStore
 import ly.david.musicsearch.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.domain.history.usecase.DeleteLookupHistory
 import ly.david.musicsearch.domain.history.usecase.MarkLookupHistoryForDeletion
 import ly.david.musicsearch.domain.history.usecase.UnMarkLookupHistoryForDeletion
-import net.openid.appauth.AuthState
-import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
-import net.openid.appauth.AuthorizationService
-import net.openid.appauth.ClientAuthentication
 import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
 import java.util.UUID
@@ -37,17 +34,15 @@ import java.util.UUID
 @KoinViewModel
 internal class TopLevelViewModel(
     val appPreferences: AppPreferences,
-    private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
 
     private val collectionDao: CollectionDao,
     private val getAllCollections: GetAllCollections,
     private val collectionEntityDao: CollectionEntityDao,
     private val musicBrainzApi: MusicBrainzApi,
 
-    private val musicBrainzAuthStore: MusicBrainzAuthStore,
-    private val authRequest: AuthorizationRequest,
-    private val authService: AuthorizationService,
-    private val clientAuth: ClientAuthentication,
+    private val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract,
+    private val loginUseCase: Login,
+    private val logoutUseCase: Logout,
 
     private val markLookupHistoryForDeletion: MarkLookupHistoryForDeletion,
     private val unMarkLookupHistoryForDeletion: UnMarkLookupHistoryForDeletion,
@@ -168,58 +163,17 @@ internal class TopLevelViewModel(
         return RemoteResult("Deleted $entityName from ${collection.name}.")
     }
 
-    fun getLoginContract() = MusicBrainzLoginContract(
-        authService,
-        authRequest,
-    )
+    fun getLoginContract() = musicBrainzLoginActivityResultContract
 
-    fun performTokenRequest(authorizationResponse: AuthorizationResponse) {
-        authService.performTokenRequest(
-            authorizationResponse.createTokenExchangeRequest(),
-            clientAuth,
-        ) { response, exception ->
-            viewModelScope.launch {
-                val authState = AuthState()
-                authState.update(
-                    response,
-                    exception,
-                )
-                musicBrainzAuthStore.saveTokens(
-                    accessToken = authState.accessToken.orEmpty(),
-                    refreshToken = authState.refreshToken.orEmpty(),
-                )
-
-                try {
-                    val username = musicBrainzApi.getUserInfo().username ?: return@launch
-                    musicBrainzAuthStore.setUsername(username)
-                } catch (ex: Exception) {
-                    // TODO: snackbar
-                    Timber.e("$ex")
-                }
-            }
+    fun login(authorizationResponse: AuthorizationResponse) {
+        viewModelScope.launch {
+            loginUseCase(authorizationResponse)
         }
     }
 
     fun logout() {
         viewModelScope.launch {
-            val refreshToken = musicBrainzAuthStore.getRefreshToken()
-            if (refreshToken.isNullOrEmpty()) return@launch
-            try {
-                musicBrainzApi.logout(
-                    token = refreshToken,
-                    clientId = musicBrainzOAuthInfo.clientId,
-                    clientSecret = musicBrainzOAuthInfo.clientSecret,
-                )
-            } catch (ex: Exception) {
-                // TODO: snackbar
-                Timber.e("$ex")
-            } finally {
-                musicBrainzAuthStore.saveTokens(
-                    "",
-                    "",
-                )
-                musicBrainzAuthStore.setUsername("")
-            }
+            logoutUseCase()
         }
     }
 

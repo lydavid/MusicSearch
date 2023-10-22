@@ -1,6 +1,5 @@
 package ly.david.mbjc
 
-import ly.david.data.di.musicbrainz.musicBrainzAuthModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.musicsearch.android.feature.nowplaying.NowPlayingUiModule
 import ly.david.musicsearch.core.coroutines.di.coroutineDispatchersModule
@@ -15,6 +14,7 @@ import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseDriverModule
 import ly.david.musicsearch.data.database.databaseModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzApiModule
+import ly.david.musicsearch.data.musicbrainz.di.musicBrainzAuthModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzDataModule
 import ly.david.musicsearch.data.repository.di.repositoryDataModule
 import ly.david.musicsearch.data.spotify.di.spotifyApiModule

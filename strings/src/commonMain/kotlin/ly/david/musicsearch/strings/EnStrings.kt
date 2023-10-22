@@ -286,4 +286,5 @@ val EnStrings = AppStrings(
     mostVisited = "Most visited",
 
     leastVisited = "Least visited",
+    loginToMusicBrainz = "Login to MusicBrainz",
 )

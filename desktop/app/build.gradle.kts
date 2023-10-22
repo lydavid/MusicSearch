@@ -9,9 +9,12 @@ version = "1.0-SNAPSHOT"
 
 dependencies {
     implementation(projects.ui.core)
+    implementation(projects.strings)
     implementation(projects.core.preferences)
+    implementation(projects.data.musicbrainz)
     implementation(compose.desktop.currentOs)
     implementation(libs.koin.core)
+    implementation("com.github.scribejava:scribejava-apis:6.4.1")
 }
 
 application {

@@ -56,3 +56,9 @@ We currently support two ways to re-authenticate:
 a button to login again
 
 Both of these will just bring the user to MusicBrainz's OAuth page in a browser.
+
+### Edit (2023-10-20)
+
+Refresh has been working flawlessly in the beta app for a while now.
+We just needed to send credentials without waiting for 401, which with ktor is as simple as
+using the `sendWithoutRequest` block.

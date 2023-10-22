@@ -1,9 +1,14 @@
 import java.util.Properties
 
 plugins {
+    id("ly.david.android.library")
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.build.config)
+}
+
+android {
+    namespace = "ly.david.musicsearch.data.musicbrainz"
 }
 
 buildConfig {
@@ -41,6 +46,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(projects.core.logging.api)
                 implementation(projects.core.models)
                 implementation(libs.koin.core)
                 implementation(libs.androidx.datastore.preferences.core)
@@ -55,6 +61,17 @@ kotlin {
                 implementation(libs.junit)
                 implementation(libs.koin.test)
                 implementation(libs.mockk)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.appauth)
+            }
+        }
+        val jvmMain by getting {
+            dependencies {
+                implementation("com.github.scribejava:scribejava-apis:6.4.1")
             }
         }
     }
