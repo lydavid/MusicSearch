@@ -30,7 +30,7 @@ import ly.david.mbjc.ui.series.details.SeriesDetailsScreen
 import ly.david.mbjc.ui.series.stats.SeriesStatsScreen
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.ui.common.relation.RelationsScreen
+import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
@@ -153,7 +153,7 @@ internal fun SeriesScaffold(
 
                 SeriesTab.RELATIONSHIPS -> {
                     viewModel.updateQuery(filterText)
-                    RelationsScreen(
+                    RelationsListScreen(
                         lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)

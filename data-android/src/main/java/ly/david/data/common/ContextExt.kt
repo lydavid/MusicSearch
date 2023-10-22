@@ -38,14 +38,7 @@ fun Context.showMap(coordinates: Coordinates, label: String?) {
     )
 }
 
-/**
- * Opens a [url] in browser.
- *
- * Note that if a user has certain apps that can handle this intent, it will deeplink into it instead.
- * Eg. if the user has Spotify, and clicks on [https://open.spotify.com/artist/38WbKH6oKAZskBhqDFA8Uj],
- * it will open this artist in Spotify.
- */
-fun Context.openUrl(url: String) {
+private fun Context.openUrl(url: String) {
     startActivity(
         Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse(url)

@@ -1,3 +1,4 @@
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -29,12 +30,12 @@ import ly.david.musicsearch.core.preferences.di.preferencesDataStoreModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzApiModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzAuthModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzDataModule
+import ly.david.musicsearch.domain.url.usecase.OpenInBrowser
+import ly.david.musicsearch.shared.di.sharedCommonModule
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.BaseTheme
 import ly.david.ui.core.theme.TextStyles
 import org.koin.core.context.startKoin
-import java.awt.Desktop
-import java.net.URI
 
 fun main() = application {
     val windowState = rememberWindowState()
@@ -45,10 +46,12 @@ fun main() = application {
             musicBrainzAuthModule,
             musicBrainzApiModule,
             musicBrainzDataModule,
+            sharedCommonModule,
         )
     }.koin
 
     val service = koin.get<OAuth20Service>()
+    val openInBrowser = koin.get<OpenInBrowser>()
 
     Window(
         onCloseRequest = ::exitApplication,
@@ -59,6 +62,9 @@ fun main() = application {
             content = {
                 MusicSearchApp(
                     service,
+                    openInBrowser = {
+                        openInBrowser(it)
+                    },
                 )
             },
         )
@@ -68,13 +74,16 @@ fun main() = application {
 @Composable
 private fun MusicSearchApp(
     service: OAuth20Service,
+    openInBrowser: (String) -> Unit,
 ) {
     val strings = LocalStrings.current
     var showDialog by rememberSaveable { mutableStateOf(false) }
 
     if (showDialog) {
         MyDialog(
-            onDismiss = { showDialog = false },
+            onDismiss = {
+                showDialog = false
+            },
             onSubmit = { code ->
                 service.getAccessToken(
                     code,
@@ -98,7 +107,7 @@ private fun MusicSearchApp(
             .padding(16.dp)
             .clickable {
                 val url = service.authorizationUrl
-                Desktop.getDesktop().browse(URI.create(url))
+                openInBrowser(url)
                 showDialog = true
             },
         backgroundColor = MaterialTheme.colors.onBackground,

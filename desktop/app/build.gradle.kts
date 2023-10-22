@@ -9,6 +9,8 @@ version = "1.0-SNAPSHOT"
 
 dependencies {
     implementation(projects.ui.core)
+    implementation(projects.domain)
+    implementation(projects.shared)
     implementation(projects.strings)
     implementation(projects.core.preferences)
     implementation(projects.data.musicbrainz)

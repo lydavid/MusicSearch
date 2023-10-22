@@ -59,6 +59,7 @@ include(
     ":data:spotify",
     ":domain",
     ":feature:search",
+    ":shared",
     ":strings",
     ":test-data",
     ":ui:collections",

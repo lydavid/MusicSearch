@@ -81,16 +81,17 @@ internal fun TopLevelScaffold(
     }
 
     // TODO: extract so that we can login without ref to AppAuth's AuthorizationResponse
-    val loginLauncher = rememberLauncherForActivityResult(contract = viewModel.getLoginContract()) { result ->
+    val loginLauncher = rememberLauncherForActivityResult(contract = viewModel.getLoginContract()) {
+        val result = it
+        val exception = result.exception
+        val response = result.response
         when {
-            result.exception != null -> {
-                Timber.e(result.exception)
+            exception != null -> {
+                Timber.e(exception)
             }
 
-            result.response != null -> {
-                result.response?.let {
-                    viewModel.login(it)
-                }
+            response != null -> {
+                viewModel.login(response)
             }
 
             else -> {

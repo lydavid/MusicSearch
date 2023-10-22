@@ -30,7 +30,7 @@ import ly.david.mbjc.ui.event.details.EventDetailsScreen
 import ly.david.mbjc.ui.event.stats.EventStatsScreen
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.ui.common.relation.RelationsScreen
+import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
@@ -151,7 +151,7 @@ internal fun EventScaffold(
 
                 EventTab.RELATIONSHIPS -> {
                     viewModel.updateQuery(filterText)
-                    RelationsScreen(
+                    RelationsListScreen(
                         lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)

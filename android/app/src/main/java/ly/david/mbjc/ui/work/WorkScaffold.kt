@@ -36,7 +36,7 @@ import ly.david.mbjc.ui.work.stats.WorkGroupStatsScreen
 import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.ui.common.relation.RelationsScreen
+import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
@@ -160,7 +160,7 @@ internal fun WorkScaffold(
 
                 WorkTab.RELATIONSHIPS -> {
                     viewModel.updateQuery(filterText)
-                    RelationsScreen(
+                    RelationsListScreen(
                         lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)

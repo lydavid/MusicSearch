@@ -13,14 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
-import ly.david.data.common.openUrl
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -34,7 +32,6 @@ fun RelationListItem(
     modifier: Modifier = Modifier,
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
-    val context = LocalContext.current
     val haptics = LocalHapticFeedback.current
     val clipboardManager = LocalClipboardManager.current
 
@@ -94,11 +91,7 @@ fun RelationListItem(
             .combinedClickable(
                 onClick = {
                     val entity = relation.linkedEntity
-                    if (entity == MusicBrainzEntity.URL) {
-                        context.openUrl(relation.name)
-                    } else {
-                        onItemClick(entity, relation.linkedEntityId, relation.getNameWithDisambiguation())
-                    }
+                    onItemClick(entity, relation.linkedEntityId, relation.getNameWithDisambiguation())
                 },
                 onLongClick = {
                     haptics.performHapticFeedback(HapticFeedbackType.LongPress)

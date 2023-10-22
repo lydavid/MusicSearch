@@ -21,6 +21,7 @@ import ly.david.musicsearch.data.spotify.di.spotifyApiModule
 import ly.david.musicsearch.data.spotify.di.spotifyDataModule
 import ly.david.musicsearch.domain.DomainModule
 import ly.david.musicsearch.feature.search.di.searchFeatureModule
+import ly.david.musicsearch.shared.di.sharedCommonModule
 import ly.david.musicsearch.ui.image.di.imageModule
 import ly.david.ui.collections.CollectionUiModule
 import ly.david.ui.common.CommonUiModule
@@ -55,6 +56,7 @@ val androidAppModule = module {
         historyUiModule,
         NowPlayingUiModule().module,
         SettingsUiModule().module,
+        sharedCommonModule,
 
         databaseDriverModule,
         databaseModule,

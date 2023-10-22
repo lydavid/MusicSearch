@@ -6,13 +6,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 
 @Composable
-fun RelationsScreen(
+fun RelationsListScreen(
     lazyPagingItems: LazyPagingItems<RelationListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
@@ -30,7 +30,10 @@ fun RelationsScreen(
             is RelationListItemModel -> {
                 RelationListItem(
                     relation = listItemModel,
-                    onItemClick = onItemClick,
+                    onItemClick = { entity, id, title ->
+                        if (entity == MusicBrainzEntity.URL) error("URLs should not be handled in this screen.")
+                        onItemClick(entity, id, title)
+                    },
                 )
             }
             else -> {
