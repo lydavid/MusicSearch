@@ -1,5 +1,61 @@
 package ly.david.musicsearch.shared.di
 
+import ly.david.musicsearch.core.coroutines.di.coroutineDispatchersModule
+import ly.david.musicsearch.core.coroutines.di.coroutinesScopesModule
+import ly.david.musicsearch.core.logging.loggingModule
+import ly.david.musicsearch.core.preferences.di.appPreferencesModule
+import ly.david.musicsearch.core.preferences.di.preferencesDataStoreModule
+import ly.david.musicsearch.data.common.network.di.HttpClientModule
+import ly.david.musicsearch.data.coverart.di.coverArtApiModule
+import ly.david.musicsearch.data.coverart.di.coverArtDataModule
+import ly.david.musicsearch.data.database.databaseDaoModule
+import ly.david.musicsearch.data.database.databaseDriverModule
+import ly.david.musicsearch.data.database.databaseModule
+import ly.david.musicsearch.data.musicbrainz.di.musicBrainzApiModule
+import ly.david.musicsearch.data.musicbrainz.di.musicBrainzAuthModule
+import ly.david.musicsearch.data.musicbrainz.di.musicBrainzDataModule
+import ly.david.musicsearch.data.repository.di.repositoryDataModule
+import ly.david.musicsearch.data.spotify.di.spotifyApiModule
+import ly.david.musicsearch.data.spotify.di.spotifyDataModule
+import ly.david.musicsearch.strings.di.stringsModule
 import org.koin.core.module.Module
+import org.koin.dsl.module
 
-expect val sharedCommonModule: Module
+val sharedModule: Module = module {
+    includes(
+        coreModule,
+        swappableModule,
+    )
+}
+
+val coreModule = module {
+    includes(
+        platformModule,
+        coroutinesScopesModule,
+        loggingModule,
+        musicBrainzAuthModule,
+        HttpClientModule,
+        spotifyDataModule,
+        appPreferencesModule,
+        repositoryDataModule,
+        coverArtDataModule,
+        musicBrainzDataModule,
+        databaseModule,
+        databaseDaoModule,
+        stringsModule,
+    )
+}
+
+/**
+ * Includes things that we should swap out for testing.
+ */
+val swappableModule = module {
+    includes(
+        coroutineDispatchersModule,
+        coverArtApiModule,
+        spotifyApiModule,
+        databaseDriverModule,
+        musicBrainzApiModule,
+        preferencesDataStoreModule,
+    )
+}

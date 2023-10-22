@@ -20,6 +20,25 @@ fun UrlsSection(
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     urlsSectionViewModel: UrlsSectionViewModel = koinViewModel(),
 ) {
+    UrlsSectionInternal(
+        urls = urls,
+        modifier = modifier,
+        filterText = filterText,
+        onItemClick = onItemClick,
+        openInBrowser = {
+            urlsSectionViewModel.openInBrowser(it)
+        },
+    )
+}
+
+@Composable
+private fun UrlsSectionInternal(
+    urls: List<RelationListItemModel>,
+    modifier: Modifier = Modifier,
+    filterText: String = "",
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    openInBrowser: (String) -> Unit = {},
+) {
     Column(modifier = modifier) {
         ListSeparatorHeader("Links")
         urls
@@ -29,7 +48,7 @@ fun UrlsSection(
                     relation = it,
                     onItemClick = { entity, id, title ->
                         if (entity == MusicBrainzEntity.URL) {
-                            urlsSectionViewModel.openInBrowser(title.orEmpty())
+                            openInBrowser(title.orEmpty())
                         } else {
                             onItemClick(
                                 entity,
@@ -48,7 +67,7 @@ fun UrlsSection(
 internal fun PreviewUrlsSection() {
     PreviewTheme {
         Surface {
-            UrlsSection(
+            UrlsSectionInternal(
                 urls = listOf(
                     RelationListItemModel(
                         id = "1",

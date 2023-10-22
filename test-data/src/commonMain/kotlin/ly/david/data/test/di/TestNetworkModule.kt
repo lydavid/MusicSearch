@@ -1,16 +1,16 @@
 package ly.david.data.test.di
 
+import ly.david.data.test.api.FakeCoverArtArchiveApi
+import ly.david.data.test.api.FakeMusicBrainzApi
+import ly.david.data.test.api.FakeSpotifyApi
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.spotify.api.SpotifyApi
 import ly.david.musicsearch.data.spotify.auth.api.SpotifyOAuthApi
 import ly.david.musicsearch.data.spotify.auth.api.SpotifyOAuthClientCredentialsResponse
-import ly.david.data.test.api.FakeCoverArtArchiveApi
-import ly.david.data.test.api.FakeMusicBrainzApi
-import ly.david.data.test.api.FakeSpotifyApi
 import org.koin.dsl.module
 
-val testNetworkModule = module {
+val testApiModule = module {
     single<CoverArtArchiveApi> {
         FakeCoverArtArchiveApi()
     }

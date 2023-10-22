@@ -26,12 +26,9 @@ import androidx.compose.ui.window.rememberWindowState
 import com.github.scribejava.core.model.OAuth2AccessToken
 import com.github.scribejava.core.model.OAuthAsyncRequestCallback
 import com.github.scribejava.core.oauth.OAuth20Service
-import ly.david.musicsearch.core.preferences.di.preferencesDataStoreModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzApiModule
-import ly.david.musicsearch.data.musicbrainz.di.musicBrainzAuthModule
-import ly.david.musicsearch.data.musicbrainz.di.musicBrainzDataModule
 import ly.david.musicsearch.domain.url.usecase.OpenInBrowser
-import ly.david.musicsearch.shared.di.sharedCommonModule
+import ly.david.musicsearch.shared.di.coreModule
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.BaseTheme
 import ly.david.ui.core.theme.TextStyles
@@ -42,11 +39,8 @@ fun main() = application {
 
     val koin = startKoin {
         modules(
-            preferencesDataStoreModule,
-            musicBrainzAuthModule,
+            coreModule,
             musicBrainzApiModule,
-            musicBrainzDataModule,
-            sharedCommonModule,
         )
     }.koin
 

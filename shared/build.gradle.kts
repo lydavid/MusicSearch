@@ -11,11 +11,35 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(projects.core.coroutines)
+                implementation(projects.core.logging.implementation)
+                implementation(projects.core.models)
+                implementation(projects.core.preferences)
+                implementation(projects.data.common.network)
+                implementation(projects.data.coverart)
+                implementation(projects.data.database)
+                implementation(projects.data.musicbrainz)
+                implementation(projects.data.repository)
+                implementation(projects.data.spotify)
                 implementation(projects.domain)
+                implementation(projects.strings)
                 implementation(libs.koin.core)
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(projects.android.feature.nowplaying)
+                implementation(projects.android.feature.spotify)
+                implementation(projects.feature.search)
+                implementation(projects.ui.common)
+                implementation(projects.ui.core)
+                implementation(projects.ui.collections)
+                implementation(projects.ui.history)
+                implementation(projects.ui.image)
+                implementation(projects.ui.settings)
+                implementation(projects.ui.stats)
+            }
+        }
         val jvmMain by getting
     }
 }
