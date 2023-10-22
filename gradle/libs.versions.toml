@@ -19,7 +19,6 @@ koinCompose = "3.5.0"
 kotlin = "1.9.10"
 kotlinx-coroutines = "1.7.1"
 ksp = "1.9.10-1.0.13"
-ktor = "2.3.5"
 leakcanaryAndroid = "2.12"
 lyricist = "1.5.0"
 mockk = "1.13.8"
@@ -86,7 +85,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.1"
 ksp-gradlePlugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
-ktor-bom = { module = "io.ktor:ktor-bom", version.ref = "ktor" }
+ktor-bom = "io.ktor:ktor-bom:2.3.5"
 ktor-client-auth = { module = "io.ktor:ktor-client-auth" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation" }
 ktor-client-core = { module = "io.ktor:ktor-client-core" }
