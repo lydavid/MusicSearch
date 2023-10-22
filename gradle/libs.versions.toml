@@ -2,6 +2,7 @@
 aboutlibraries = "10.9.1"
 accompanist = "0.32.0"
 androidGradlePlugin = "8.1.2"
+chucker = "4.0.0"
 coil = "2.4.0"
 compose-compiler = "1.5.3"
 compose-foundation = "1.5.4"
@@ -9,19 +10,16 @@ compose-material = "1.5.4"
 compose-material3 = "1.1.2"
 compose-multiplatform = "1.5.3"
 compose-ui = "1.5.4"
-chucker = "4.0.0"
-datastore = "1.0.0" # TODO: 1.1.0-alpha05 available but repository has jar rather than aar
+datastore = "1.0.0"
 detekt = "1.23.1"
-hilt = "2.48"
-hilt-navigation = "1.0.0"
 junit = "4.13.2"
 koin = "3.5.0"
 koinAnnotations = "1.3.0"
 koinCompose = "3.5.0"
 kotlin = "1.9.10"
 kotlinx-coroutines = "1.7.1"
-ktor = "2.3.5"
 ksp = "1.9.10-1.0.13"
+ktor = "2.3.5"
 leakcanaryAndroid = "2.12"
 lyricist = "1.5.0"
 mockk = "1.13.8"
@@ -32,56 +30,62 @@ paparazzi = "1.3.1"
 sqldelight = "2.0.0"
 
 [libraries]
-aboutlibraries-compose = { group = "com.mikepenz", name = "aboutlibraries-compose", version.ref = "aboutlibraries" }
-aboutlibraries-core = { group = "com.mikepenz", name = "aboutlibraries-core", version.ref = "aboutlibraries" }
-accompanist-swiperefresh = { group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref = "accompanist" }
-accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist" }
-androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version = "1.8.0" }
-androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version = "2.2.0" }
-androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version = "1.0.1" }
-androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.12.0" }
-androidx-datastore-preferences-android = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
-androidx-datastore-preferences-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
+aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "aboutlibraries" }
+aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutlibraries" }
+accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
+accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
+# build-logic libraries
+android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
+androidx-activity-compose = "androidx.activity:activity-compose:1.8.0"
+androidx-arch-core-testing = "androidx.arch.core:core-testing:2.2.0"
+androidx-constraintlayout-compose = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+androidx-core = "androidx.core:core-ktx:1.12.0"
+androidx-datastore-preferences-android = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 #androidx-datastore-preferences-jvm = { group = "androidx.datastore", name = "datastore-preferences-jvm", version.ref = "datastore" }
-androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version = "2.6.2" }
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.4" }
-androidx-paging-common = { group = "androidx.paging", name = "paging-common-ktx", version.ref = "paging" }
-androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
-androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "paging" }
-androidx-test-junit = { group = "androidx.test.ext", name = "junit", version = "1.1.5" }
-androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.5.1" }
-appauth = { group = "net.openid", name = "appauth", version = "0.11.1" }
-coil-base = { group = "io.coil-kt", name = "coil-base", version.ref = "coil" }
-coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
-coil-test = { group = "io.coil-kt", name = "coil-test", version.ref = "coil" }
-compose-compiler = { group = "androidx.compose.compiler", name = "compiler", version.ref = "compose-compiler" }
-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose-foundation" }
-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-material" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose-ui" }
-compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose-ui" }
-compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose-ui" }
-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose-ui" }
+androidx-lifecycle-viewmodel-compose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2"
+androidx-navigation-compose = "androidx.navigation:navigation-compose:2.7.4"
+androidx-paging-common = { module = "androidx.paging:paging-common-ktx", version.ref = "paging" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
+androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.5.1"
+androidx-test-junit = "androidx.test.ext:junit:1.1.5"
+appauth = "net.openid:appauth:0.11.1"
 chucker = { module = "com.github.chuckerteam.chucker:library", version.ref = "chucker" }
 chucker-noop = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "chucker" }
-desugarjdklibs = { module = "com.android.tools:desugar_jdk_libs", version = "2.0.3" }
-detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version = "0.3.0" }
-detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "32.4.0" }
-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
+coil-base = { module = "io.coil-kt:coil-base", version.ref = "coil" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+coil-test = { module = "io.coil-kt:coil-test", version.ref = "coil" }
+compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compose-compiler" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose-foundation" }
+compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
+compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose-material" }
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-ui" }
+compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-ui" }
+compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-ui" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui" }
+desugarjdklibs = "com.android.tools:desugar_jdk_libs:2.0.3"
+detekt-compose = "io.nlopez.compose.rules:detekt:0.3.0"
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+detekt-gradlePlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-bom = "com.google.firebase:firebase-bom:32.4.0"
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+junit = { module = "junit:junit", version.ref = "junit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinCompose" }
 koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koinAnnotations" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinAnnotations" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
-kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version = "0.3.6" }
-kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
-kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.4.1" }
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6"
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.1"
+ksp-gradlePlugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 ktor-bom = { module = "io.ktor:ktor-bom", version.ref = "ktor" }
 ktor-client-auth = { module = "io.ktor:ktor-client-auth" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation" }
@@ -91,30 +95,25 @@ ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
 lyricist-library = { module = "cafe.adriel.lyricist:lyricist", version.ref = "lyricist" }
-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
-okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
-paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "pagingMultiplatform" }
-paparazzi = { group = "app.cash.paparazzi", name = "paparazzi", version.ref = "paparazzi" }
-robolectric = { group = "org.robolectric", name = "robolectric", version = "4.10.3" }
-sqldelight-android-driver = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
-sqldelight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqldelight" }
-sqldelight-paging = { group = "app.cash.sqldelight", name = "androidx-paging3-extensions", version.ref = "sqldelight" }
-sqldelight-primitive = { group = "app.cash.sqldelight", name = "primitive-adapters", version.ref = "sqldelight" }
-sqldelight-sqlite-driver = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
-test-parameter-injector = { group = "com.google.testparameterinjector", name = "test-parameter-injector", version = "1.13" }
-timber = { group = "com.jakewharton.timber", name = "timber", version = "5.0.1" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+paging-common = { module = "app.cash.paging:paging-common", version.ref = "pagingMultiplatform" }
+paparazzi = { module = "app.cash.paparazzi:paparazzi", version.ref = "paparazzi" }
+robolectric = "org.robolectric:robolectric:4.10.3"
 scribejava = "com.github.scribejava:scribejava-apis:8.3.3"
-
-# build-logic libraries
-android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
-compose-gradlePlugin = { group = "org.jetbrains.compose", name = "compose-gradle-plugin", version.ref = "compose-multiplatform" }
-detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
-kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
-ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
-
+sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-paging = { module = "app.cash.sqldelight:androidx-paging3-extensions", version.ref = "sqldelight" }
+sqldelight-primitive = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
+sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+test-parameter-injector = "com.google.testparameterinjector:test-parameter-injector:1.13"
+timber = "com.jakewharton.timber:timber:5.0.1"
 
 [bundles]
-kotlinx-coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-test"]
+kotlinx-coroutines = [
+    "kotlinx-coroutines-android",
+    "kotlinx-coroutines-test",
+]
 ktor-jvm = [
     "ktor-client-auth",
     "ktor-client-content-negotiation",
@@ -124,17 +123,17 @@ ktor-jvm = [
     "ktor-serialization-kotlinx-json",
 ]
 
-
 [plugins]
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 build-config = "com.github.gmazzo.buildconfig:4.1.2"
-dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version = "1.25.0" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.9" }
-google-services = { id = "com.google.gms.google-services", version = "4.4.0" }
+dependency-analysis = "com.autonomousapps.dependency-analysis:1.25.0"
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+firebase-crashlytics = "com.google.firebase.crashlytics:2.9.9"
+google-services = "com.google.gms.google-services:4.4.0"
+gradle-versions = "com.github.ben-manes.versions:0.49.0"
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
@@ -142,3 +141,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.1"

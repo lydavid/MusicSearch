@@ -18,6 +18,8 @@ plugins {
 
     alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.dependency.analysis)
+    alias(libs.plugins.gradle.versions)
+    alias(libs.plugins.version.catalog.update)
 }
 
 subprojects {
@@ -29,12 +31,12 @@ subprojects {
                 freeCompilerArgs.addAll(
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
-                        project.layout.buildDirectory.asFile.get().absolutePath + "/compose_metrics"
+                        project.layout.buildDirectory.asFile.get().absolutePath + "/compose_metrics",
                 )
                 freeCompilerArgs.addAll(
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
-                        project.layout.buildDirectory.asFile.get().absolutePath + "/compose_metrics"
+                        project.layout.buildDirectory.asFile.get().absolutePath + "/compose_metrics",
                 )
             }
         }
@@ -54,7 +56,7 @@ tasks.register("testKotlinModules") {
     dependsOn(
         subprojects
             .filter { it.plugins.hasPlugin("ly.david.kotlin") }
-            .map { "${it.path}:test" }
+            .map { "${it.path}:test" },
     )
 }
 
@@ -64,7 +66,7 @@ tasks.register("testKotlinMultiplatformModules") {
     dependsOn(
         subprojects
             .filter { it.plugins.hasPlugin("ly.david.musicsearch.kotlin.multiplatform") }
-            .map { "${it.path}:jvmTest" }
+            .map { "${it.path}:jvmTest" },
     )
 }
 
@@ -82,9 +84,11 @@ tasks.register("listKMPModules") {
 tasks.register("projectDependencyGraph") {
     group = projectGroup
 
-    inputs.files(fileTree(rootDir) {
-        include("**/build.gradle.kts")
-    })
+    inputs.files(
+        fileTree(rootDir) {
+            include("**/build.gradle.kts")
+        },
+    )
 
     val outputFile = "$rootDir/assets/module_dependency_graph.svg"
     outputs.file(outputFile)
@@ -220,7 +224,7 @@ tasks.register("projectDependencyGraph") {
         val p = Runtime.getRuntime().exec(
             arrayOf("dot", "-Tsvg", "project.dot", "-o", outputFile),
             emptyArray(),
-            dot.parentFile
+            dot.parentFile,
         )
         p.waitFor()
         require(p.exitValue() == 0) { p.errorStream.bufferedReader().use(BufferedReader::readText) }
