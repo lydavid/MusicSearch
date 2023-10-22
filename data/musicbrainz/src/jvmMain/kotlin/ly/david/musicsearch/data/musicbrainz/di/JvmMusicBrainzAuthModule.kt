@@ -17,7 +17,7 @@ actual val musicBrainzAuthModule: Module = module {
         }
         ServiceBuilder(musicBrainzOAuthInfo.clientId)
             .callback("urn:ietf:wg:oauth:2.0:oob")
-            .scope(musicBrainzOAuthInfo.scope)
+            .defaultScope(musicBrainzOAuthInfo.scope)
             .responseType(OAuthConstants.CODE)
             .apiSecret(musicBrainzOAuthInfo.clientSecret)
             .build(musicBrainzApi20)

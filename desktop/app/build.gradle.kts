@@ -14,7 +14,7 @@ dependencies {
     implementation(projects.data.musicbrainz)
     implementation(compose.desktop.currentOs)
     implementation(libs.koin.core)
-    implementation("com.github.scribejava:scribejava-apis:6.4.1")
+    implementation(libs.scribejava)
 }
 
 application {
