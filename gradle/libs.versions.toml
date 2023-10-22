@@ -103,6 +103,7 @@ sqldelight-primitive = { group = "app.cash.sqldelight", name = "primitive-adapte
 sqldelight-sqlite-driver = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
 test-parameter-injector = { group = "com.google.testparameterinjector", name = "test-parameter-injector", version = "1.13" }
 timber = { group = "com.jakewharton.timber", name = "timber", version = "5.0.1" }
+scribejava = "com.github.scribejava:scribejava-apis:8.3.3"
 
 # build-logic libraries
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }

@@ -71,7 +71,7 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation("com.github.scribejava:scribejava-apis:8.3.3")
+                implementation(libs.scribejava)
             }
         }
     }
