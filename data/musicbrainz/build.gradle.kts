@@ -71,7 +71,7 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation("com.github.scribejava:scribejava-apis:6.4.1")
+                implementation("com.github.scribejava:scribejava-apis:6.9.0")
             }
         }
     }
