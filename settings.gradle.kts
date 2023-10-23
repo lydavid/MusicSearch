@@ -49,7 +49,6 @@ include(
     ":core:logging:implementation",
     ":core:models",
     ":core:preferences",
-    ":data",
     ":data:common:network",
     ":data:coverart",
     ":data:database",
