@@ -4,9 +4,10 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import ly.david.data.common.lookupInBrowser
+import androidx.compose.ui.platform.LocalUriHandler
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.resourceUri
+import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
 import ly.david.musicsearch.strings.LocalStrings
 
 @Composable
@@ -16,12 +17,12 @@ fun OverflowMenuScope.OpenInBrowserMenuItem(
     modifier: Modifier = Modifier,
 ) {
     val strings = LocalStrings.current
-    val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
 
     DropdownMenuItem(
         text = { Text(strings.openInBrowser) },
         onClick = {
-            context.lookupInBrowser(entity, entityId)
+            uriHandler.openUri("$MUSIC_BRAINZ_BASE_URL/${entity.resourceUri}/$entityId")
             closeMenu()
         },
         modifier = modifier,

@@ -1,6 +1,5 @@
 package ly.david.ui.common.place
 
-import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -13,9 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
-import ly.david.data.common.showMap
 import ly.david.musicsearch.core.models.place.CoordinatesUiModel
 import ly.david.musicsearch.core.models.place.formatForDisplay
 import ly.david.musicsearch.strings.LocalStrings
@@ -23,14 +21,16 @@ import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
+private const val ZOOM_LEVEL = 16
+
 @Composable
 fun CoordinateListItem(
-    context: Context,
     coordinates: CoordinatesUiModel,
     modifier: Modifier = Modifier,
     label: String? = null,
 ) {
     val strings = LocalStrings.current
+    val uriHandler = LocalUriHandler.current
     val text = coordinates.formatForDisplay() ?: return
 
     ListItem(
@@ -50,7 +50,16 @@ fun CoordinateListItem(
             }
         },
         modifier = modifier.clickable {
-            context.showMap(coordinates, label)
+            // TODO: need different implementation for desktop
+            //  come back once we've decided on a view modeler
+            val latitude = coordinates.latitude ?: return@clickable
+            val longitude = coordinates.longitude ?: return@clickable
+            val uri = if (label.isNullOrEmpty()) {
+                "geo:$latitude,$longitude?z=$ZOOM_LEVEL"
+            } else {
+                "geo:0,0?q=$latitude,$longitude($label)&z=$ZOOM_LEVEL"
+            }
+            uriHandler.openUri(uri)
         },
     )
 }
@@ -61,7 +70,6 @@ private fun CoordinateCardPreview() {
     PreviewTheme {
         Surface {
             CoordinateListItem(
-                context = LocalContext.current,
                 coordinates = CoordinatesUiModel(
                     longitude = -73.98905,
                     latitude = 40.76688,

@@ -11,7 +11,9 @@ android {
 }
 
 dependencies {
-    implementation(projects.dataAndroid)
+    implementation(projects.core.models)
+    implementation(projects.data.coverart)
+    implementation(projects.data.musicbrainz)
     implementation(projects.domain)
     implementation(projects.strings)
     implementation(projects.ui.core)

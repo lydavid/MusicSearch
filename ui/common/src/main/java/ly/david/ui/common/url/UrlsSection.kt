@@ -4,13 +4,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.relation.RelationListItem
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun UrlsSection(
@@ -18,27 +18,9 @@ fun UrlsSection(
     modifier: Modifier = Modifier,
     filterText: String = "",
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
-    urlsSectionViewModel: UrlsSectionViewModel = koinViewModel(),
 ) {
-    UrlsSectionInternal(
-        urls = urls,
-        modifier = modifier,
-        filterText = filterText,
-        onItemClick = onItemClick,
-        openInBrowser = {
-            urlsSectionViewModel.openInBrowser(it)
-        },
-    )
-}
+    val uriHandler = LocalUriHandler.current
 
-@Composable
-private fun UrlsSectionInternal(
-    urls: List<RelationListItemModel>,
-    modifier: Modifier = Modifier,
-    filterText: String = "",
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
-    openInBrowser: (String) -> Unit = {},
-) {
     Column(modifier = modifier) {
         ListSeparatorHeader("Links")
         urls
@@ -48,7 +30,7 @@ private fun UrlsSectionInternal(
                     relation = it,
                     onItemClick = { entity, id, title ->
                         if (entity == MusicBrainzEntity.URL) {
-                            openInBrowser(title.orEmpty())
+                            uriHandler.openUri(title.orEmpty())
                         } else {
                             onItemClick(
                                 entity,
@@ -67,7 +49,7 @@ private fun UrlsSectionInternal(
 internal fun PreviewUrlsSection() {
     PreviewTheme {
         Surface {
-            UrlsSectionInternal(
+            UrlsSection(
                 urls = listOf(
                     RelationListItemModel(
                         id = "1",

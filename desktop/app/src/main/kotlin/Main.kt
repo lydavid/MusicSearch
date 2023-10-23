@@ -17,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -26,7 +27,6 @@ import androidx.compose.ui.window.rememberWindowState
 import com.github.scribejava.core.model.OAuth2AccessToken
 import com.github.scribejava.core.model.OAuthAsyncRequestCallback
 import com.github.scribejava.core.oauth.OAuth20Service
-import ly.david.musicsearch.domain.url.usecase.OpenInBrowser
 import ly.david.musicsearch.shared.di.sharedModule
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.BaseTheme
@@ -43,7 +43,6 @@ fun main() = application {
     }.koin
 
     val service = koin.get<OAuth20Service>()
-    val openInBrowser = koin.get<OpenInBrowser>()
 
     Window(
         onCloseRequest = ::exitApplication,
@@ -54,9 +53,6 @@ fun main() = application {
             content = {
                 MusicSearchApp(
                     service,
-                    openInBrowser = {
-                        openInBrowser(it)
-                    },
                 )
             },
         )
@@ -66,9 +62,9 @@ fun main() = application {
 @Composable
 private fun MusicSearchApp(
     service: OAuth20Service,
-    openInBrowser: (String) -> Unit,
 ) {
     val strings = LocalStrings.current
+    val uriHandler = LocalUriHandler.current
     var showDialog by rememberSaveable { mutableStateOf(false) }
 
     if (showDialog) {
@@ -99,7 +95,7 @@ private fun MusicSearchApp(
             .padding(16.dp)
             .clickable {
                 val url = service.authorizationUrl
-                openInBrowser(url)
+                uriHandler.openUri(url)
                 showDialog = true
             },
         backgroundColor = MaterialTheme.colors.onBackground,

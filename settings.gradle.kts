@@ -49,7 +49,6 @@ include(
     ":core:logging:implementation",
     ":core:models",
     ":core:preferences",
-    ":data-android",
     ":data",
     ":data:common:network",
     ":data:coverart",

@@ -13,11 +13,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import ly.david.data.common.lookupInBrowser
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.resourceUri
+import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.fullscreen.FullScreenContent
@@ -40,7 +41,7 @@ internal fun GenreScaffold(
 ) {
     val resource = MusicBrainzEntity.GENRE
     val strings = LocalStrings.current
-    val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
     val title by viewModel.title.collectAsState()
@@ -80,14 +81,11 @@ internal fun GenreScaffold(
                     style = TextStyles.getCardBodyTextStyle(),
                 )
 
-                // TODO: viewmodel or the presenter-equivalent would need to be injected with context-agnostic
-                //  url opening class, and this would call it on click
-                Button(onClick = {
-                    context.lookupInBrowser(
-                        resource,
-                        genreId,
-                    )
-                }) {
+                Button(
+                    onClick = {
+                        uriHandler.openUri("$MUSIC_BRAINZ_BASE_URL/${resource.resourceUri}/$genreId")
+                    },
+                ) {
                     Text(strings.openInBrowser)
                 }
             }

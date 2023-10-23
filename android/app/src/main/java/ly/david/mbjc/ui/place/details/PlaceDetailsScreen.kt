@@ -97,7 +97,6 @@ internal fun PlaceDetailsScreen(
                     val label = place.name +
                         if (place.lifeSpan?.ended == true) " (${strings.closed})" else ""
                     CoordinateListItem(
-                        context = context,
                         coordinates = it,
                         label = label,
                     )
