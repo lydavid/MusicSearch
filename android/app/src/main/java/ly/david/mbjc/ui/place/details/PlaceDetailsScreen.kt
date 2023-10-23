@@ -1,13 +1,11 @@
 package ly.david.mbjc.ui.place.details
 
-import android.content.Context
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.core.models.common.ifNotNull
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
@@ -29,7 +27,6 @@ import ly.david.ui.core.theme.PreviewTheme
 internal fun PlaceDetailsScreen(
     place: PlaceScaffoldModel,
     modifier: Modifier = Modifier,
-    context: Context = LocalContext.current,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
