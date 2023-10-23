@@ -26,9 +26,8 @@ import androidx.compose.ui.window.rememberWindowState
 import com.github.scribejava.core.model.OAuth2AccessToken
 import com.github.scribejava.core.model.OAuthAsyncRequestCallback
 import com.github.scribejava.core.oauth.OAuth20Service
-import ly.david.musicsearch.data.musicbrainz.di.musicBrainzApiModule
 import ly.david.musicsearch.domain.url.usecase.OpenInBrowser
-import ly.david.musicsearch.shared.di.coreModule
+import ly.david.musicsearch.shared.di.sharedModule
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.BaseTheme
 import ly.david.ui.core.theme.TextStyles
@@ -39,8 +38,7 @@ fun main() = application {
 
     val koin = startKoin {
         modules(
-            coreModule,
-            musicBrainzApiModule,
+            sharedModule,
         )
     }.koin
 

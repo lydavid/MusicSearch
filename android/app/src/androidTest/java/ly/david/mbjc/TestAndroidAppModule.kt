@@ -6,13 +6,13 @@ import ly.david.mbjc.di.testCoroutineDispatchersModule
 import ly.david.mbjc.di.testDatabaseDriverModule
 import ly.david.mbjc.di.testImageModule
 import ly.david.mbjc.di.testPreferencesDataStoreModule
-import ly.david.musicsearch.shared.di.coreModule
+import ly.david.musicsearch.shared.di.sharedModule
 import org.koin.dsl.module
 import org.koin.ksp.generated.module
 
 val testAndroidAppModule = module {
     includes(
-        coreModule,
+        sharedModule,
         appDataModule,
         ViewModelsModule().module,
         testCoroutineDispatchersModule,

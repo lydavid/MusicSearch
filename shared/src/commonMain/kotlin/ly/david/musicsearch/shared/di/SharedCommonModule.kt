@@ -21,14 +21,10 @@ import ly.david.musicsearch.strings.di.stringsModule
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
+// By putting some of these into nested includes, we will crash
+// Is it due to some of the modules depending on others
+// and when they are not at the same nested level, we cannot fulfill them?
 val sharedModule: Module = module {
-    includes(
-        coreModule,
-        swappableModule,
-    )
-}
-
-val coreModule = module {
     includes(
         platformModule,
         coroutinesScopesModule,
@@ -43,14 +39,6 @@ val coreModule = module {
         databaseModule,
         databaseDaoModule,
         stringsModule,
-    )
-}
-
-/**
- * Includes things that we should swap out for testing.
- */
-val swappableModule = module {
-    includes(
         coroutineDispatchersModule,
         coverArtApiModule,
         spotifyApiModule,
