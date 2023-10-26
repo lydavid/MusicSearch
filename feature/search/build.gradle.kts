@@ -1,35 +1,55 @@
 plugins {
     id("ly.david.android.library")
-    kotlin("android")
-    id("ly.david.android.compose")
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.paparazzi)
+    id("ly.david.musicsearch.compose.multiplatform")
+    id("ly.david.musicsearch.kotlin.multiplatform")
+    id("kotlin-parcelize")
+//    alias(libs.plugins.ksp)
+//    alias(libs.plugins.paparazzi)
 }
 
 android {
     namespace = "ly.david.musicsearch.feature.search"
 }
 
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.core.models)
+                implementation(projects.domain)
+                implementation(projects.strings)
+
+                implementation(projects.ui.core)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.preview)
+                implementation(compose.ui)
+                implementation(libs.koin.core)
+                implementation(libs.circuit.foundation)
+                implementation(libs.paging.common)
+                implementation(libs.paging.compose)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(projects.ui.common)
+                implementation(libs.koin.androidx.compose)
+                implementation(libs.androidx.paging.compose)
+                implementation(libs.androidx.paging.runtime)
+            }
+        }
+        val jvmMain by getting
+    }
+}
+
 dependencies {
-    implementation(projects.core.models)
-    implementation(projects.domain)
-    implementation(projects.strings)
-    implementation(projects.ui.common)
-    implementation(projects.ui.core)
-    implementation(libs.androidx.paging.compose)
-    implementation(libs.androidx.paging.runtime)
-    implementation(libs.compose.foundation)
-    implementation(libs.compose.material3)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.preview)
-    implementation(libs.koin.androidx.compose)
-    implementation(libs.koin.core)
-    implementation(libs.koin.annotations)
+
+//    implementation(libs.koin.annotations)
 
     debugImplementation(libs.compose.ui.tooling)
+//
+//    ksp(libs.koin.ksp.compiler)
 
-    ksp(libs.koin.ksp.compiler)
-
-    testImplementation(projects.ui.test.screenshot)
-    testImplementation(libs.test.parameter.injector)
+//    testImplementation(projects.ui.test.screenshot)
+//    testImplementation(libs.test.parameter.injector)
 }

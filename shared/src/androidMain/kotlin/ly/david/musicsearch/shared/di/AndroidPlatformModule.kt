@@ -2,7 +2,6 @@ package ly.david.musicsearch.shared.di
 
 import ly.david.musicsearch.android.feature.nowplaying.NowPlayingUiModule
 import ly.david.musicsearch.domain.DomainModule
-import ly.david.musicsearch.feature.search.di.searchFeatureModule
 import ly.david.musicsearch.ui.image.di.imageModule
 import ly.david.ui.collections.CollectionUiModule
 import ly.david.ui.common.CommonUiModule
@@ -20,7 +19,6 @@ actual val platformModule: Module = module {
         NowPlayingUiModule().module,
         SettingsUiModule().module,
         imageModule,
-        searchFeatureModule,
 
         DomainModule().module,
     )

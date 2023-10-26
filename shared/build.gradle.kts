@@ -22,15 +22,16 @@ kotlin {
                 implementation(projects.data.repository)
                 implementation(projects.data.spotify)
                 implementation(projects.domain)
+                implementation(projects.feature.search)
                 implementation(projects.strings)
                 implementation(libs.koin.core)
+                implementation(libs.circuit.foundation)
             }
         }
         val androidMain by getting {
             dependencies {
                 implementation(projects.android.feature.nowplaying)
                 implementation(projects.android.feature.spotify)
-                implementation(projects.feature.search)
                 implementation(projects.ui.common)
                 implementation(projects.ui.core)
                 implementation(projects.ui.collections)
