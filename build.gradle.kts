@@ -15,7 +15,6 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.paparazzi) apply false
     alias(libs.plugins.sqldelight) apply false
-    alias(libs.plugins.kotlin.parcelize) apply false
 
     alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.dependency.analysis)
