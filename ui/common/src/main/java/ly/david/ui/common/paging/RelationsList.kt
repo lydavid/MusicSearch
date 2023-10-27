@@ -1,8 +1,8 @@
 package ly.david.ui.common.paging
 
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
+import app.cash.paging.PagingData
+import app.cash.paging.cachedIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

@@ -15,11 +15,11 @@ import ly.david.ui.common.topappbar.ScrollableTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScaffold(
-    modifier: Modifier = Modifier,
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
-    initialQuery: String? = null,
-    initialEntity: MusicBrainzEntity? = null,
+actual fun SearchScaffold(
+    modifier: Modifier,
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit,
+    initialQuery: String?,
+    initialEntity: MusicBrainzEntity?,
 ) {
     val strings = LocalStrings.current
     val snackbarHostState = remember { SnackbarHostState() }
