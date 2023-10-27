@@ -17,9 +17,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.itemKey
+import app.cash.paging.LoadStateError
+import app.cash.paging.LoadStateLoading
+import app.cash.paging.compose.LazyPagingItems
+import app.cash.paging.compose.itemKey
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
@@ -90,14 +91,14 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
     ) {
         // This doesn't affect "loads" from db/source.
         when {
-            lazyPagingItems.loadState.refresh is LoadState.Loading -> {
+            lazyPagingItems.loadState.refresh is LoadStateLoading -> {
                 FullScreenLoadingIndicator()
             }
 
-            lazyPagingItems.loadState.refresh is LoadState.Error -> {
+            lazyPagingItems.loadState.refresh is LoadStateError -> {
                 // TODO: going to another tab, and coming back will show same error message (doesn't make another call)
                 LaunchedEffect(Unit) {
-                    val errorMessage = (lazyPagingItems.loadState.refresh as LoadState.Error).error.message
+                    val errorMessage = (lazyPagingItems.loadState.refresh as LoadStateError).error.message
                     val displayMessage = "Failed to fetch data: ${errorMessage ?: "unknown"}"
                     snackbarHostState?.showSnackbar(displayMessage)
                 }
@@ -130,11 +131,11 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
                         // Is this inefficient? At least it preserves list state on configuration change.
                         if (index == lazyPagingItems.itemCount - 1) {
                             when (lazyPagingItems.loadState.append) {
-                                is LoadState.Loading -> {
+                                is LoadStateLoading -> {
                                     FooterLoadingIndicator()
                                 }
 
-                                is LoadState.Error -> {
+                                is LoadStateError -> {
                                     Row(
                                         modifier = Modifier
                                             .fillMaxWidth()

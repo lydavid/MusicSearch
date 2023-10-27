@@ -23,9 +23,8 @@ dependencies {
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.constraintlayout.compose)
-    implementation(libs.androidx.paging.compose)
-    implementation(libs.androidx.paging.runtime)
     implementation(libs.paging.common)
+    implementation(libs.paging.compose)
 
     implementation(libs.compose.foundation)
     implementation(libs.compose.material.icons.extended)

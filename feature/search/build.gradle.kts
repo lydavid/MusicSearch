@@ -3,8 +3,6 @@ plugins {
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
     id("kotlin-parcelize")
-//    alias(libs.plugins.ksp)
-//    alias(libs.plugins.paparazzi)
 }
 
 android {
@@ -40,16 +38,4 @@ kotlin {
         }
         val jvmMain by getting
     }
-}
-
-dependencies {
-
-//    implementation(libs.koin.annotations)
-
-    debugImplementation(libs.compose.ui.tooling)
-//
-//    ksp(libs.koin.ksp.compiler)
-
-//    testImplementation(projects.ui.test.screenshot)
-//    testImplementation(libs.test.parameter.injector)
 }
