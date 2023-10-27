@@ -126,6 +126,7 @@ stable class AppStrings {
   stable val leastRecentlyVisited: String
   stable val mostVisited: String
   stable val leastVisited: String
+  stable val loginToMusicBrainz: String
   <runtime stability> = Stable
 }
 stable class Locales {

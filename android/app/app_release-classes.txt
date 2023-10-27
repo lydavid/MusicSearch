@@ -6,16 +6,6 @@ unstable class NowPlayingNotificationListener {
   unstable val nowPlayingHistoryRepository$delegate: Lazy<NowPlayingHistoryRepositoryImpl>
   <runtime stability> = Unstable
 }
-unstable class Result {
-  unstable val response: AuthorizationResponse?
-  unstable val exception: AuthorizationException?
-  <runtime stability> = Unstable
-}
-unstable class MusicBrainzLoginContract {
-  unstable val authService: AuthorizationService
-  unstable val authRequest: AuthorizationRequest
-  <runtime stability> = Unstable
-}
 stable class RemoteResult {
   stable val message: String
   stable val actionLabel: String?

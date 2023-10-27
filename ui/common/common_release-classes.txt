@@ -16,7 +16,7 @@ unstable class EntitiesByEntityViewModel {
   unstable val isRemote: MutableStateFlow<Boolean>
   unstable val sorted: MutableStateFlow<Boolean>
   unstable val paramState: Flow<ViewModelState>
-  unstable val pagedEntities$delegate: Lazy<Flow<PagingData<LI>>>
+  unstable val pagedEntities$delegate: Lazy<Flow<PagingData<LI>{ app.cash.paging.PagingDataKt.PagingData<LI> }>>
   <runtime stability> = Unstable
 }
 stable class State {
@@ -31,7 +31,7 @@ unstable class RelationsList {
   unstable val paramState: Flow<State>
   unstable var scope: CoroutineScope
   stable var entity: MusicBrainzEntity
-  unstable val pagedRelations$delegate: Lazy<Flow<PagingData<RelationListItemModel>>>
+  unstable val pagedRelations$delegate: Lazy<Flow<PagingData<RelationListItemModel>{ app.cash.paging.PagingDataKt.PagingData<RelationListItemModel> }>>
   <runtime stability> = Unstable
 }
 unstable class ReleasesListViewModel {

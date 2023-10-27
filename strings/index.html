@@ -128,7 +128,7 @@ footer {
         <table class="center" style="text-align:left;">
           <tr>
             <th>Skippable Composables</th>
-            <td>1</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Restartable Composables</th>
@@ -160,19 +160,19 @@ footer {
           </tr>
           <tr>
             <th>Known Stable Arguments</th>
-            <td>3</td>
+            <td>4</td>
           </tr>
           <tr>
             <th>Known Unstable Arguments</th>
-            <td>1</td>
+            <td>2</td>
           </tr>
           <tr>
             <th>Unknown Stable Arguments</th>
-            <td>1</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Total Arguments</th>
-            <td>5</td>
+            <td>6</td>
           </tr>
           <tr>
             <th>Marked Stable Classes</th>
@@ -257,7 +257,7 @@ footer {
             <td>ly.david.musicsearch.strings.ProvideStrings</td>
             <td>ProvideStrings</td>
             <td>1</td>
-            <td>1</td>
+            <td>0</td>
             <td>1</td>
             <td>0</td>
             <td>0</td>
@@ -272,8 +272,38 @@ footer {
     </section>
     <hr>
     <section><button class="collapsible">Composables Report</button>
-      <div class="content">
-        <div class="empty-content">No composable found with issues 😁</div>
+      <div class="content"><button class="collapsible" style="background-color:#D32F2F;font-size:18px;">Composables with issues (Restartable but Not Skippable)</button>
+        <div class="content" style="background-color:#FFEBEE;">
+          <table>
+            <tr>
+              <td>1.</td>
+              <td>
+                <h3 class="code"><span> fun ProvideStrings</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">lyricist</td>
+                    <td class="code">Lyricist&lt;AppStrings&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">content</td>
+                    <td class="code">Function2&lt;Composer, Int, Unit&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
 <button class="collapsible" style="background-color:#004D40;font-size:18px;">Composibles without issues</button>
         <div class="content" style="background-color:#F1F8E9;">
           <table>
@@ -294,33 +324,6 @@ footer {
                     <td>STABLE</td>
                     <td class="code">languageTag</td>
                     <td class="code">String? = @static Locales.EN</td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td>2.</td>
-              <td>
-                <h3 class="code"><span> fun ProvideStrings</span></h3>
-                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
-                <table>
-                  <tr>
-                    <th>No.</th>
-                    <th>Stability</th>
-                    <th>Parameter</th>
-                    <th>Type</th>
-                  </tr>
-                  <tr class="background-status-missing">
-                    <td>1</td>
-                    <td>MISSING</td>
-                    <td class="code">lyricist</td>
-                    <td class="code">Lyricist&lt;AppStrings&gt;</td>
-                  </tr>
-                  <tr class="background-status-success">
-                    <td>2</td>
-                    <td>STABLE</td>
-                    <td class="code">content</td>
-                    <td class="code">Function2&lt;Composer, Int, Unit&gt;</td>
                   </tr>
                 </table>
               </td>

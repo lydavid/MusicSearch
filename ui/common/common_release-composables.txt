@@ -203,7 +203,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable itemContent: @[ExtensionFunctionType] Function4<LazyItemScope, @[ParameterName(name = 'value')] T?, Composer, Int, Unit>
 )
 restartable scheme("[androidx.compose.ui.UiComposable]") fun CoordinateListItem(
-  unstable context: Context
   unstable coordinates: CoordinatesUiModel
   stable modifier: Modifier? = @static Companion
   stable label: String? = @static null
@@ -259,7 +258,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun RelationListItem(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistRelationListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecordingRelationListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewUrlRelationListItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RelationsScreen(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RelationsListScreen(
   lazyPagingItems: LazyPagingItems<RelationListItemModel>
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
