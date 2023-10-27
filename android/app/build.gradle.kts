@@ -119,7 +119,6 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.kotlinx.collections.immutable)
     implementation(libs.timber)
-    implementation(libs.circuit.foundation)
 
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.leakcanary.android)

@@ -23,7 +23,6 @@ kotlin {
                 implementation(compose.preview)
                 implementation(compose.ui)
                 implementation(libs.koin.core)
-                implementation(libs.circuit.foundation)
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
             }

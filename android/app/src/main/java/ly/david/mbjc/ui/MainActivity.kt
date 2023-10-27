@@ -14,7 +14,6 @@ import org.koin.android.ext.android.inject
 internal class MainActivity : ComponentActivity() {
 
     private val appPreferences: AppPreferences by inject()
-//    private val circuit: Circuit by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +21,6 @@ internal class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-//            CircuitCompositionLocals(circuit) {
-//                CircuitContent(AddFavoritesScreen())
             BaseTheme(
                 darkTheme = appPreferences.useDarkTheme(),
                 materialYou = appPreferences.useMaterialYou(),
@@ -31,7 +28,6 @@ internal class MainActivity : ComponentActivity() {
                     TopLevelScaffold(navController)
                 },
             )
-//            }
         }
     }
 }

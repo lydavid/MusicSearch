@@ -45,7 +45,7 @@ internal fun RecentSearchesHeader(
     }
 }
 
-//@Preview
+// @Preview
 @Composable
 internal fun PreviewRecentSearchesHeader() {
     PreviewTheme {

@@ -25,7 +25,6 @@ kotlin {
                 implementation(projects.feature.search)
                 implementation(projects.strings)
                 implementation(libs.koin.core)
-                implementation(libs.circuit.foundation)
             }
         }
         val androidMain by getting {
