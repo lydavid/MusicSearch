@@ -1,6 +1,5 @@
 package ly.david.musicsearch.feature.search.internal
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -46,7 +45,7 @@ internal fun RecentSearchesHeader(
     }
 }
 
-@Preview
+//@Preview
 @Composable
 internal fun PreviewRecentSearchesHeader() {
     PreviewTheme {
