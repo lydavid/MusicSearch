@@ -1,4 +1,4 @@
-name: Update module graph
+name: Nightly chores
 
 on:
   schedule:
@@ -29,6 +29,7 @@ jobs:
         with:
           commit_message: 'chore: update module dependency graph [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+
   format-version-catalog:
     name: Format version catalog
     needs: regenerate-graph
