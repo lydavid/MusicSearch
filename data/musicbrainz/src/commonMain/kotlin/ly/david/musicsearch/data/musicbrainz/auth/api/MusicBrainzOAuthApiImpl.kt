@@ -5,6 +5,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.forms.submitForm
 import io.ktor.http.parameters
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
+import ly.david.musicsearch.data.musicbrainz.auth.AccessToken
 
 class MusicBrainzOAuthApiImpl(
     val httpClient: HttpClient,
@@ -14,7 +15,7 @@ class MusicBrainzOAuthApiImpl(
         clientSecret: String,
         grantType: String,
         refreshToken: String,
-    ): MusicBrainzOAuthResponse {
+    ): AccessToken {
         return httpClient.submitForm(
             url = "$MUSIC_BRAINZ_BASE_URL/oauth2/token",
             formParameters = parameters {

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
+import ly.david.musicsearch.data.musicbrainz.auth.AccessToken
 import kotlin.time.Duration.Companion.hours
 
 private val accessTokenPreference = stringPreferencesKey("MUSICBRAINZ_ACCESS_TOKEN")
@@ -43,13 +44,10 @@ class MusicBrainzAuthStoreImpl(
         return preferences[expiryTimePreference]
     }
 
-    override suspend fun saveTokens(
-        accessToken: String,
-        refreshToken: String,
-    ) {
+    override suspend fun saveTokens(accessToken: AccessToken) {
         preferencesDataStore.edit {
-            it[accessTokenPreference] = accessToken
-            it[refreshTokenPreference] = refreshToken
+            it[accessTokenPreference] = accessToken.accessToken
+            it[refreshTokenPreference] = accessToken.refreshToken
             it[expiryTimePreference] = Clock.System.now().plus(1.hours).epochSeconds
         }
     }

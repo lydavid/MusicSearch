@@ -29,8 +29,10 @@ class MusicBrainzAuthRepository(
             val newAccessToken = musicBrainzOAuthResponse.accessToken
             val newRefreshToken = musicBrainzOAuthResponse.refreshToken
             musicBrainzAuthStore.saveTokens(
-                accessToken = newAccessToken,
-                refreshToken = newRefreshToken,
+                AccessToken(
+                    accessToken = newAccessToken,
+                    refreshToken = newRefreshToken,
+                ),
             )
             newAccessToken
         } else {

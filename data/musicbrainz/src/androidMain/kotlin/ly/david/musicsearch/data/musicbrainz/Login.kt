@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.musicbrainz
 
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.auth.AccessToken
 import ly.david.musicsearch.data.musicbrainz.auth.store.MusicBrainzAuthStore
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationResponse
@@ -20,8 +21,10 @@ class Login(
     suspend operator fun invoke(authorizationResponse: AuthorizationResponse) {
         val authState = exchangeToken(authorizationResponse)
         musicBrainzAuthStore.saveTokens(
-            accessToken = authState?.accessToken.orEmpty(),
-            refreshToken = authState?.refreshToken.orEmpty(),
+            AccessToken(
+                accessToken = authState?.accessToken.orEmpty(),
+                refreshToken = authState?.refreshToken.orEmpty(),
+            ),
         )
 
         try {
