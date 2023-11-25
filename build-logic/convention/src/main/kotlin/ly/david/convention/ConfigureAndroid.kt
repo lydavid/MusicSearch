@@ -19,8 +19,6 @@ fun Project.configureAndroid() {
 
             minSdk = MIN_SDK_VERSION
             targetSdk = TARGET_SDK_VERSION
-
-            manifestPlaceholders += mapOf("appAuthRedirectScheme" to "")
         }
 
         compileOptions {
