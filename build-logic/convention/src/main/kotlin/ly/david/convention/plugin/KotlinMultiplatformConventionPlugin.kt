@@ -17,7 +17,7 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
                 apply("org.jetbrains.kotlin.multiplatform")
             }
             kotlin {
-                targetHierarchy.default()
+                applyDefaultHierarchyTemplate()
 
                 jvm()
                 if (pluginManager.hasPlugin("ly.david.android.library")) {
