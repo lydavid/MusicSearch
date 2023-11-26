@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.musicbrainz.auth
+package ly.david.musicsearch.core.models.auth
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

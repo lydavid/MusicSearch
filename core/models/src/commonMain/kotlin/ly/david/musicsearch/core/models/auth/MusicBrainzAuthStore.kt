@@ -1,7 +1,6 @@
-package ly.david.musicsearch.data.musicbrainz.auth.store
+package ly.david.musicsearch.core.models.auth
 
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.musicbrainz.auth.AccessToken
 
 interface MusicBrainzAuthStore {
     suspend fun getAccessToken(): String?

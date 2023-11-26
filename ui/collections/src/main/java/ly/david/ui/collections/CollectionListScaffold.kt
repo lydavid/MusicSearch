@@ -58,7 +58,6 @@ fun CollectionListScaffold(
     LaunchedEffect(Unit) {
         viewModel.setShowLocal(showLocal)
         viewModel.setShowRemote(showRemote)
-        viewModel.getUsernameThenLoadCollections()
     }
 
     Scaffold(

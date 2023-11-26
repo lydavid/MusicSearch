@@ -13,7 +13,6 @@ android {
 dependencies {
     implementation(projects.core.models)
     implementation(projects.core.preferences)
-    implementation(projects.data.musicbrainz) // TODO: remove after extracting MusicBrainzAuthStore
     implementation(projects.domain)
     implementation(projects.strings)
     implementation(projects.ui.common)
