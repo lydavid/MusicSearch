@@ -25,9 +25,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.searchableEntities
-import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.feature.search.SearchScreenTestTag
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.ExposedDropdownMenuBox
@@ -60,16 +60,27 @@ internal fun SearchScreen(
     val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
 
-    fun search(query: String? = null, entity: MusicBrainzEntity? = null) {
+    fun search(
+        query: String? = null,
+        entity: MusicBrainzEntity? = null,
+    ) {
         coroutineScope.launch {
-            viewModel.search(query = query, entity = entity)
-            searchResultsListState.scrollToItem(0)
+            viewModel.search(
+                query = query,
+                entity = entity,
+            )
         }
     }
 
-    LaunchedEffect(key1 = initialQuery, key2 = initialEntity) {
+    LaunchedEffect(
+        key1 = initialQuery,
+        key2 = initialEntity,
+    ) {
         if (initialQuery == null || initialEntity == null) return@LaunchedEffect
-        viewModel.search(initialQuery, initialEntity)
+        viewModel.search(
+            initialQuery,
+            initialEntity,
+        )
     }
 
     Column(modifier = modifier) {
@@ -91,7 +102,10 @@ internal fun SearchScreen(
                         viewModel.clearQuery()
                         focusRequester.requestFocus()
                     }) {
-                        Icon(Icons.Default.Clear, contentDescription = strings.clearSearch)
+                        Icon(
+                            Icons.Default.Clear,
+                            contentDescription = strings.clearSearch,
+                        )
                     }
                 },
                 onValueChange = { newText ->
@@ -116,7 +130,10 @@ internal fun SearchScreen(
                 lazyPagingItems = searchHistory,
                 lazyListState = searchHistoryListState,
                 onItemClick = { entity, query ->
-                    search(query = query, entity = entity)
+                    search(
+                        query = query,
+                        entity = entity,
+                    )
                 },
                 onDeleteItem = viewModel::deleteSearchHistoryItem,
                 onDeleteAllHistory = viewModel::deleteAllSearchHistoryForEntity,
@@ -128,7 +145,11 @@ internal fun SearchScreen(
                 snackbarHostState = snackbarHostState,
                 onItemClick = { entity, id, title ->
                     viewModel.recordSearchHistory()
-                    onItemClick(entity, id, title)
+                    onItemClick(
+                        entity,
+                        id,
+                        title,
+                    )
                 },
             )
         }

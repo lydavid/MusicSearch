@@ -38,11 +38,20 @@ internal class SearchViewModel(
 
     val searchQuery = MutableStateFlow("")
     val searchEntity = MutableStateFlow(MusicBrainzEntity.ARTIST)
-    private val viewModelState = combine(searchQuery, searchEntity) { query, entity ->
-        ViewModelState(query, entity)
+    private val viewModelState = combine(
+        searchQuery,
+        searchEntity,
+    ) { query, entity ->
+        ViewModelState(
+            query,
+            entity,
+        )
     }
 
-    fun search(query: String? = null, entity: MusicBrainzEntity? = null) {
+    fun search(
+        query: String? = null,
+        entity: MusicBrainzEntity? = null,
+    ) {
         if (query != null) {
             searchQuery.value = query
         }
@@ -59,7 +68,10 @@ internal class SearchViewModel(
         val query = searchQuery.value
         if (query.isBlank()) return
         val entity = searchEntity.value
-        recordSearchHistory(entity, query)
+        recordSearchHistory(
+            entity,
+            query,
+        )
     }
 
     fun deleteSearchHistoryItem(item: SearchHistoryListItemModel) {
@@ -73,8 +85,10 @@ internal class SearchViewModel(
         deleteSearchHistory(entity = searchEntity.value)
     }
 
-    // TODO: because of debounce, scrollToItem(0) does not work properly
-    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
+    @OptIn(
+        ExperimentalCoroutinesApi::class,
+        FlowPreview::class,
+    )
     val searchResults: Flow<PagingData<ListItemModel>> =
         viewModelState.filterNot { it.query.isBlank() }
             .debounce(SEARCH_DELAY_MS)

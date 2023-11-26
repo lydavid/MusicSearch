@@ -59,7 +59,11 @@ internal fun SearchResultsScreen(
         when (listItemModel) {
             is ArtistListItemModel -> {
                 ArtistListItem(artist = listItemModel) {
-                    onItemClick(MusicBrainzEntity.ARTIST, id, null)
+                    onItemClick(
+                        MusicBrainzEntity.ARTIST,
+                        id,
+                        null,
+                    )
                 }
             }
 
@@ -116,7 +120,11 @@ internal fun SearchResultsScreen(
 
             is PlaceListItemModel -> {
                 PlaceListItem(place = listItemModel) {
-                    onItemClick(MusicBrainzEntity.PLACE, id, getNameWithDisambiguation())
+                    onItemClick(
+                        MusicBrainzEntity.PLACE,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
                 }
             }
 
