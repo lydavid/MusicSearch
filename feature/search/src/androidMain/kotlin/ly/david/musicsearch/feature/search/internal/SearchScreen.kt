@@ -86,7 +86,7 @@ internal fun SearchScreen(
                 maxLines = 1,
                 singleLine = true,
                 trailingIcon = {
-                    if (queryText.isEmpty()) return@TextField
+                    if (queryText.isBlank()) return@TextField
                     IconButton(onClick = {
                         viewModel.clearQuery()
                         focusRequester.requestFocus()
@@ -111,7 +111,7 @@ internal fun SearchScreen(
             )
         }
 
-        if (queryText.isEmpty()) {
+        if (queryText.isBlank()) {
             SearchHistoryScreen(
                 lazyPagingItems = searchHistory,
                 lazyListState = searchHistoryListState,

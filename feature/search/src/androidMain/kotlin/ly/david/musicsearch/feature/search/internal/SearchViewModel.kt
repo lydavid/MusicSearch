@@ -57,7 +57,7 @@ internal class SearchViewModel(
 
     fun recordSearchHistory() {
         val query = searchQuery.value
-        if (query.isEmpty()) return
+        if (query.isBlank()) return
         val entity = searchEntity.value
         recordSearchHistory(entity, query)
     }
@@ -76,7 +76,7 @@ internal class SearchViewModel(
     // TODO: because of debounce, scrollToItem(0) does not work properly
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     val searchResults: Flow<PagingData<ListItemModel>> =
-        viewModelState.filterNot { it.query.isEmpty() }
+        viewModelState.filterNot { it.query.isBlank() }
             .debounce(SEARCH_DELAY_MS)
             .flatMapLatest { viewModelState ->
                 getSearchResults(
@@ -89,7 +89,7 @@ internal class SearchViewModel(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val searchHistory: Flow<PagingData<ListItemModel>> =
-        viewModelState.filter { it.query.isEmpty() }
+        viewModelState.filter { it.query.isBlank() }
             .flatMapLatest { viewModelState ->
                 getSearchHistory(viewModelState.entity)
             }
