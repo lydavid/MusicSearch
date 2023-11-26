@@ -55,6 +55,7 @@ internal fun SearchResultsScreen(
         lazyListState = lazyListState,
         snackbarHostState = snackbarHostState,
         customNoResultsText = strings.noResultsFoundSearch,
+        keyed = false,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is ArtistListItemModel -> {

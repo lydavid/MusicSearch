@@ -16,7 +16,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -24,7 +23,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.searchableEntities
@@ -58,18 +56,15 @@ internal fun SearchScreen(
     val queryText by viewModel.searchQuery.collectAsState()
     val selectedEntity by viewModel.searchEntity.collectAsState()
     val focusRequester = remember { FocusRequester() }
-    val coroutineScope = rememberCoroutineScope()
 
     fun search(
         query: String? = null,
         entity: MusicBrainzEntity? = null,
     ) {
-        coroutineScope.launch {
-            viewModel.search(
-                query = query,
-                entity = entity,
-            )
-        }
+        viewModel.search(
+            query = query,
+            entity = entity,
+        )
     }
 
     LaunchedEffect(
@@ -78,8 +73,8 @@ internal fun SearchScreen(
     ) {
         if (initialQuery == null || initialEntity == null) return@LaunchedEffect
         viewModel.search(
-            initialQuery,
-            initialEntity,
+            query = initialQuery,
+            entity = initialEntity,
         )
     }
 

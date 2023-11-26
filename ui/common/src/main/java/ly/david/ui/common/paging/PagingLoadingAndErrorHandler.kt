@@ -52,6 +52,7 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState? = null,
     customNoResultsText: String = "",
+    keyed: Boolean = true,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit,
 ) {
 //    val refreshScope = rememberCoroutineScope()
@@ -123,7 +124,7 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
                 ) {
                     items(
                         count = lazyPagingItems.itemCount,
-                        key = lazyPagingItems.itemKey { it.id },
+                        key = lazyPagingItems.itemKey { it.id }.takeIf { keyed },
                         contentType = { lazyPagingItems[it] },
                     ) { index ->
                         itemContent(lazyPagingItems[index])
