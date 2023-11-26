@@ -9,10 +9,6 @@ plugins {
 
 android {
     namespace = "ly.david.musicsearch.data.musicbrainz"
-
-    defaultConfig {
-        manifestPlaceholders += mapOf("appAuthRedirectScheme" to "")
-    }
 }
 
 buildConfig {
