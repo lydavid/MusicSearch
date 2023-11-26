@@ -20,7 +20,6 @@ dependencies {
     testImplementation(projects.ui.test.screenshot)
 
     implementation(libs.androidx.paging.compose)
-    implementation(libs.androidx.paging.runtime)
 
     implementation(libs.compose.foundation)
     implementation(libs.compose.material.icons.extended)
