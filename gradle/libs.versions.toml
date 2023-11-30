@@ -1,7 +1,7 @@
 [versions]
 aboutlibraries = "10.9.2"
 accompanist = "0.32.0"
-androidGradlePlugin = "8.1.4"
+androidGradlePlugin = "8.2.0"
 chucker = "4.0.0"
 coil = "2.5.0"
 compose-compiler = "1.5.5"
