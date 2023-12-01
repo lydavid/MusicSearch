@@ -13,9 +13,10 @@ runtime class ObserveBrowseEntityCount {
   runtime val browseEntityCountRepository: BrowseEntityCountRepository
   <runtime stability> = Uncertain(BrowseEntityCountRepository)
 }
-runtime class GetAllCollections {
+unstable class GetAllCollections {
   runtime val collectionRepository: CollectionRepository
-  <runtime stability> = Uncertain(CollectionRepository)
+  unstable val musicBrainzAuthStore: MusicBrainzAuthStore
+  <runtime stability> = Unstable
 }
 runtime class GetCollection {
   runtime val collectionRepository: CollectionRepository

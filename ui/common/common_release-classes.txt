@@ -19,6 +19,30 @@ unstable class EntitiesByEntityViewModel {
   unstable val pagedEntities$delegate: Lazy<Flow<PagingData<LI>{ app.cash.paging.PagingDataKt.PagingData<LI> }>>
   <runtime stability> = Unstable
 }
+unstable class AreaListItemPreviewParameterProvider {
+  unstable val values: Sequence<AreaListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class ArtistPreviewParameterProvider {
+  unstable val values: Sequence<ArtistListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class EventPreviewParameterProvider {
+  unstable val values: Sequence<EventListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class InstrumentCardPreviewParameterProvider {
+  unstable val values: Sequence<InstrumentListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class LabelCardPreviewParameterProvider {
+  unstable val values: Sequence<LabelListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class LifeSpanPreviewParameterProvider {
+  unstable val values: Sequence<LifeSpanUiModel>
+  <runtime stability> = Unstable
+}
 stable class State {
   stable val entityId: String
   stable val query: String
@@ -34,11 +58,31 @@ unstable class RelationsList {
   unstable val pagedRelations$delegate: Lazy<Flow<PagingData<RelationListItemModel>{ app.cash.paging.PagingDataKt.PagingData<RelationListItemModel> }>>
   <runtime stability> = Unstable
 }
+unstable class PlacePreviewParameterProvider {
+  unstable val values: Sequence<PlaceListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class RecordingPreviewParameterProvider {
+  unstable val values: Sequence<RecordingListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class ReleasePreviewParameterProvider {
+  unstable val values: Sequence<ReleaseListItemModel>
+  <runtime stability> = Unstable
+}
 unstable class ReleasesListViewModel {
   unstable val releaseImageRepository: ReleaseImageRepository
   <runtime stability> = Unstable
 }
+unstable class TrackCardPreviewParameterProvider {
+  unstable val values: Sequence<TrackListItemModel>
+  <runtime stability> = Unstable
+}
 unstable class ReleaseGroupsListViewModel {
   unstable val releaseGroupImageRepository: ReleaseGroupImageRepository
+  <runtime stability> = Unstable
+}
+unstable class SeriesPreviewParameterProvider {
+  unstable val values: Sequence<SeriesListItemModel>
   <runtime stability> = Unstable
 }

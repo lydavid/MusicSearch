@@ -156,11 +156,11 @@ footer {
           </tr>
           <tr>
             <th>Certain Arguments</th>
-            <td>16</td>
+            <td>9</td>
           </tr>
           <tr>
             <th>Known Stable Arguments</th>
-            <td>163</td>
+            <td>162</td>
           </tr>
           <tr>
             <th>Known Unstable Arguments</th>
@@ -172,7 +172,7 @@ footer {
           </tr>
           <tr>
             <th>Total Arguments</th>
-            <td>172</td>
+            <td>171</td>
           </tr>
           <tr>
             <th>Marked Stable Classes</th>
@@ -184,7 +184,7 @@ footer {
           </tr>
           <tr>
             <th>Inferred Unstable Classes</th>
-            <td>0</td>
+            <td>1</td>
           </tr>
           <tr>
             <th>Inferred Uncertain Classes</th>
@@ -196,7 +196,7 @@ footer {
           </tr>
           <tr>
             <th>Total Classes</th>
-            <td>1</td>
+            <td>2</td>
           </tr>
           <tr>
             <th>Memoized Lambdas</th>
@@ -596,8 +596,49 @@ footer {
     <hr>
     <section>
       <div><button class="collapsible">Classes Report</button>
-        <div class="content">
-          <div class="empty-content">No Unstable classes found 😁</div>
+        <div class="content"><button class="collapsible" style="background-color:#D32F2F;font-size:18px;">Unstable Classes</button>
+          <div class="content" style="background-color:#FFEBEE;">
+            <table>
+              <tr>
+                <td>1.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class NowPlayingViewModel</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#000000;background-color:#FFF9C4;">
+                      <td>1</td>
+                      <td>RUNTIME</td>
+                      <td class="code">val getNowPlayingHistory</td>
+                      <td class="code">GetNowPlayingHistory</td>
+                    </tr>
+                    <tr style="color:#000000;background-color:#FFF9C4;">
+                      <td>2</td>
+                      <td>RUNTIME</td>
+                      <td class="code">val deleteNowPlayingHistory</td>
+                      <td class="code">DeleteNowPlayingHistory</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>3</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val query</td>
+                      <td class="code">MutableStateFlow&lt;String&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>4</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val nowPlayingHistory</td>
+                      <td class="code">Flow&lt;PagingData&lt;ListItemModel&gt;&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
 <br>
           <div class="empty-content">No Stable classes found</div>
         </div>

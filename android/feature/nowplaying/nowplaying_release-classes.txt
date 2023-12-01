@@ -1,3 +1,10 @@
 stable class NowPlayingUiModule {
   <runtime stability> = Stable
 }
+unstable class NowPlayingViewModel {
+  runtime val getNowPlayingHistory: GetNowPlayingHistory
+  runtime val deleteNowPlayingHistory: DeleteNowPlayingHistory
+  unstable val query: MutableStateFlow<String>
+  unstable val nowPlayingHistory: Flow<PagingData<ListItemModel>>
+  <runtime stability> = Unstable
+}

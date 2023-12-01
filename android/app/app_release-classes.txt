@@ -1,3 +1,7 @@
+unstable class MusicSearchApplication {
+  unstable val imageLoaderFactory$delegate: Lazy<ImageLoaderFactory>
+  <runtime stability> = Unstable
+}
 stable class ViewModelsModule {
   <runtime stability> = Stable
 }
@@ -6,9 +10,48 @@ unstable class NowPlayingNotificationListener {
   unstable val nowPlayingHistoryRepository$delegate: Lazy<NowPlayingHistoryRepositoryImpl>
   <runtime stability> = Unstable
 }
+unstable class MainActivity {
+  unstable val appPreferences$delegate: Lazy<AppPreferences>
+  <runtime stability> = Unstable
+}
 stable class RemoteResult {
   stable val message: String
   stable val actionLabel: String?
+  <runtime stability> = Stable
+}
+unstable class TopLevelViewModel {
+  unstable val appPreferences: AppPreferences
+  unstable val collectionDao: CollectionDao
+  runtime val getAllCollections: GetAllCollections
+  unstable val collectionEntityDao: CollectionEntityDao
+  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract
+  unstable val loginUseCase: Login
+  unstable val logoutUseCase: Logout
+  runtime val markLookupHistoryForDeletion: MarkLookupHistoryForDeletion
+  runtime val unMarkLookupHistoryForDeletion: UnMarkLookupHistoryForDeletion
+  runtime val deleteLookupHistory: DeleteLookupHistory
+  unstable val entity: MutableStateFlow<MusicBrainzEntity>
+  unstable val entityId: MutableStateFlow<String>
+  unstable val collections: Flow<PagingData<CollectionListItemModel>>
+  <runtime stability> = Unstable
+}
+unstable class AreaScaffoldViewModel {
+  unstable val repository: AreaRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  runtime val relationsList: RelationsList
+  stable var recordedLookup: Boolean
+  stable val entity: MusicBrainzEntity
+  unstable val title: MutableStateFlow<String>
+  unstable val isError: MutableStateFlow<Boolean>
+  unstable var areaTabs: MutableStateFlow<List<AreaTab>>
+  unstable val area: MutableStateFlow<AreaScaffoldModel?>
+  <runtime stability> = Unstable
+}
+stable class PlacesByAreaViewModel {
+  <runtime stability> = Stable
+}
+stable class ReleasesByAreaViewModel {
   <runtime stability> = Stable
 }
 unstable class AreaStatsViewModel {
@@ -18,13 +61,85 @@ unstable class AreaStatsViewModel {
   unstable val areaPlaceDao: AreaPlaceDao
   <runtime stability> = Unstable
 }
+unstable class ArtistScaffoldViewModel {
+  unstable val repository: ArtistRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  runtime val relationsList: RelationsList
+  unstable val artistImageRepository: ArtistImageRepository
+  stable var recordedLookup: Boolean
+  stable val entity: MusicBrainzEntity
+  unstable val title: MutableStateFlow<String>
+  unstable val isError: MutableStateFlow<Boolean>
+  unstable val artist: MutableStateFlow<ArtistScaffoldModel?>
+  unstable val url: MutableStateFlow<String>
+  <runtime stability> = Unstable
+}
+stable class ReleaseGroupsByArtistViewModel {
+  <runtime stability> = Stable
+}
+stable class ReleasesByArtistViewModel {
+  <runtime stability> = Stable
+}
+unstable class ArtistStatsViewModel {
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
+  unstable val artistReleaseGroupDao: ArtistReleaseGroupDao
+  unstable val artistReleaseDao: ArtistReleaseDao
+  <runtime stability> = Unstable
+}
+unstable class EventScaffoldViewModel {
+  unstable val repository: EventRepository
+  runtime val relationsList: RelationsList
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable var recordedLookup: Boolean
+  stable val entity: MusicBrainzEntity
+  unstable val title: MutableStateFlow<String>
+  unstable val isError: MutableStateFlow<Boolean>
+  unstable val event: MutableStateFlow<EventScaffoldModel?>
+  <runtime stability> = Unstable
+}
 runtime class EventStatsViewModel {
   runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
   <runtime stability> = Runtime(GetCountOfEachRelationshipTypeUseCase)
 }
+unstable class GenreScaffoldViewModel {
+  unstable val musicBrainzApi: MusicBrainzApi
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable var recordedLookup: Boolean
+  stable val entity: MusicBrainzEntity
+  unstable val title: MutableStateFlow<String>
+  unstable val isError: MutableStateFlow<Boolean>
+  unstable val genre: MutableStateFlow<GenreMusicBrainzModel?>
+  <runtime stability> = Unstable
+}
+unstable class InstrumentScaffoldViewModel {
+  unstable val repository: InstrumentRepository
+  runtime val relationsList: RelationsList
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable var recordedLookup: Boolean
+  stable val entity: MusicBrainzEntity
+  unstable val title: MutableStateFlow<String>
+  unstable val isError: MutableStateFlow<Boolean>
+  unstable val instrument: MutableStateFlow<InstrumentScaffoldModel?>
+  <runtime stability> = Unstable
+}
 runtime class InstrumentStatsViewModel {
   runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
   <runtime stability> = Runtime(GetCountOfEachRelationshipTypeUseCase)
+}
+unstable class LabelScaffoldViewModel {
+  unstable val repository: LabelRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  runtime val relationsList: RelationsList
+  stable var recordedLookup: Boolean
+  stable val entity: MusicBrainzEntity
+  unstable val title: MutableStateFlow<String>
+  unstable val isError: MutableStateFlow<Boolean>
+  unstable val label: MutableStateFlow<LabelScaffoldModel?>
+  <runtime stability> = Unstable
+}
+stable class ReleasesByLabelViewModel {
+  <runtime stability> = Stable
 }
 unstable class LabelStatsViewModel {
   runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
@@ -32,9 +147,128 @@ unstable class LabelStatsViewModel {
   unstable val releaseLabelDao: ReleaseLabelDao
   <runtime stability> = Unstable
 }
+unstable class PlaceScaffoldViewModel {
+  unstable val repository: PlaceRepository
+  runtime val relationsList: RelationsList
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable var recordedLookup: Boolean
+  stable val entity: MusicBrainzEntity
+  unstable val title: MutableStateFlow<String>
+  unstable val isError: MutableStateFlow<Boolean>
+  unstable val place: MutableStateFlow<PlaceScaffoldModel?>
+  <runtime stability> = Unstable
+}
+stable class EventsByPlaceViewModel {
+  <runtime stability> = Stable
+}
 unstable class PlaceStatsViewModel {
   runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
   runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
   unstable val eventPlaceDao: EventPlaceDao
+  <runtime stability> = Unstable
+}
+unstable class RecordingScaffoldViewModel {
+  unstable val repository: RecordingRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  runtime val relationsList: RelationsList
+  stable var recordedLookup: Boolean
+  stable val entity: MusicBrainzEntity
+  unstable val title: MutableStateFlow<String>
+  unstable val isError: MutableStateFlow<Boolean>
+  unstable val subtitle: MutableStateFlow<String>
+  unstable val recording: MutableStateFlow<RecordingScaffoldModel?>
+  <runtime stability> = Unstable
+}
+stable class ReleasesByRecordingViewModel {
+  <runtime stability> = Stable
+}
+unstable class RecordingStatsViewModel {
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
+  unstable val recordingReleaseDao: RecordingReleaseDao
+  <runtime stability> = Unstable
+}
+unstable class ReleaseScaffoldViewModel {
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  unstable val releaseImageRepository: ReleaseImageRepository
+  unstable val repository: ReleaseRepository
+  runtime val relationsList: RelationsList
+  stable var recordedLookup: Boolean
+  stable val entity: MusicBrainzEntity
+  unstable val title: MutableStateFlow<String>
+  unstable val isError: MutableStateFlow<Boolean>
+  unstable val release: MutableStateFlow<ReleaseScaffoldModel?>
+  unstable val subtitle: MutableStateFlow<String>
+  unstable val url: MutableStateFlow<String>
+  <runtime stability> = Unstable
+}
+runtime class ReleaseStatsViewModel {
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  <runtime stability> = Runtime(GetCountOfEachRelationshipTypeUseCase)
+}
+unstable class TracksByReleaseViewModel {
+  runtime val getTracksByRelease: GetTracksByRelease
+  unstable val releaseId: MutableStateFlow<String>
+  unstable val query: MutableStateFlow<String>
+  unstable val tracksParamState: Flow<ViewModelState>
+  unstable val pagedTracks: Flow<PagingData<ListItemModel>>
+  <runtime stability> = Unstable
+}
+unstable class ReleaseGroupScaffoldViewModel {
+  unstable val repository: ReleaseGroupRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  runtime val relationsList: RelationsList
+  unstable val releaseGroupImageRepository: ReleaseGroupImageRepository
+  stable var recordedLookup: Boolean
+  stable val entity: MusicBrainzEntity
+  unstable val title: MutableStateFlow<String>
+  unstable val isError: MutableStateFlow<Boolean>
+  unstable val subtitle: MutableStateFlow<String>
+  unstable val releaseGroup: MutableStateFlow<ReleaseGroupScaffoldModel?>
+  unstable val url: MutableStateFlow<String>
+  <runtime stability> = Unstable
+}
+stable class ReleasesByReleaseGroupViewModel {
+  <runtime stability> = Stable
+}
+unstable class ReleaseGroupStatsViewModel {
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
+  unstable val releaseReleaseGroupDao: ReleaseReleaseGroupDao
+  <runtime stability> = Unstable
+}
+unstable class SeriesScaffoldViewModel {
+  unstable val repository: SeriesRepository
+  runtime val relationsList: RelationsList
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable var recordedLookup: Boolean
+  stable val entity: MusicBrainzEntity
+  unstable val title: MutableStateFlow<String>
+  unstable val isError: MutableStateFlow<Boolean>
+  unstable val series: MutableStateFlow<SeriesScaffoldModel?>
+  <runtime stability> = Unstable
+}
+runtime class SeriesStatsViewModel {
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  <runtime stability> = Runtime(GetCountOfEachRelationshipTypeUseCase)
+}
+unstable class WorkScaffoldViewModel {
+  unstable val repository: WorkRepository
+  runtime val relationsList: RelationsList
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable var recordedLookup: Boolean
+  stable val entity: MusicBrainzEntity
+  unstable val title: MutableStateFlow<String>
+  unstable val isError: MutableStateFlow<Boolean>
+  unstable val work: MutableStateFlow<WorkScaffoldModel?>
+  <runtime stability> = Unstable
+}
+stable class RecordingsByWorkViewModel {
+  <runtime stability> = Stable
+}
+unstable class WorkStatsViewModel {
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
+  unstable val recordingWorkDao: RecordingWorkDao
   <runtime stability> = Unstable
 }
