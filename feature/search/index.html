@@ -184,7 +184,7 @@ footer {
           </tr>
           <tr>
             <th>Inferred Unstable Classes</th>
-            <td>0</td>
+            <td>1</td>
           </tr>
           <tr>
             <th>Inferred Uncertain Classes</th>
@@ -196,7 +196,7 @@ footer {
           </tr>
           <tr>
             <th>Total Classes</th>
-            <td>0</td>
+            <td>1</td>
           </tr>
           <tr>
             <th>Memoized Lambdas</th>
@@ -641,7 +641,86 @@ footer {
       </div>
     </section>
     <hr>
-    <div class="empty-content">No Class Report</div>
+    <section>
+      <div><button class="collapsible">Classes Report</button>
+        <div class="content"><button class="collapsible" style="background-color:#D32F2F;font-size:18px;">Unstable Classes</button>
+          <div class="content" style="background-color:#FFEBEE;">
+            <table>
+              <tr>
+                <td>1.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class SearchViewModel</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#000000;background-color:#FFF9C4;">
+                      <td>1</td>
+                      <td>RUNTIME</td>
+                      <td class="code">val getSearchResults</td>
+                      <td class="code">GetSearchResults</td>
+                    </tr>
+                    <tr style="color:#000000;background-color:#FFF9C4;">
+                      <td>2</td>
+                      <td>RUNTIME</td>
+                      <td class="code">val getSearchHistory</td>
+                      <td class="code">GetSearchHistory</td>
+                    </tr>
+                    <tr style="color:#000000;background-color:#FFF9C4;">
+                      <td>3</td>
+                      <td>RUNTIME</td>
+                      <td class="code">val recordSearchHistory</td>
+                      <td class="code">RecordSearchHistory</td>
+                    </tr>
+                    <tr style="color:#000000;background-color:#FFF9C4;">
+                      <td>4</td>
+                      <td>RUNTIME</td>
+                      <td class="code">val deleteSearchHistory</td>
+                      <td class="code">DeleteSearchHistory</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>5</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val searchQuery</td>
+                      <td class="code">MutableStateFlow&lt;String&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>6</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val searchEntity</td>
+                      <td class="code">MutableStateFlow&lt;MusicBrainzEntity&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>7</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val viewModelState</td>
+                      <td class="code">Flow&lt;ViewModelState&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>8</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val searchResults</td>
+                      <td class="code">Flow&lt;PagingData&lt;ListItemModel&gt;&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>9</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val searchHistory</td>
+                      <td class="code">Flow&lt;PagingData&lt;ListItemModel&gt;&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
+<br>
+          <div class="empty-content">No Stable classes found</div>
+        </div>
+      </div>
+    </section>
     <hr>
     <footer><i>This report is beautified with <a href="https://github.com/PatilShreyas/compose-report-to-html" target="_blank">Compose Report to HTML</a></i></footer>
     <script>var coll = document.getElementsByClassName("collapsible");
