@@ -9,9 +9,6 @@ build/
 .cxx
 local.properties
 
-# Example screenshots, example json responses
-/ignore_folder
-
 # App release keystore
 keystore.properties
 release-keystore.jks
