@@ -35,7 +35,7 @@ accompanist-pager = { module = "com.google.accompanist:accompanist-pager", versi
 accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 # build-logic libraries
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.8.1"
+androidx-activity-compose = "androidx.activity:activity-compose:1.8.2"
 androidx-arch-core-testing = "androidx.arch.core:core-testing:2.2.0"
 androidx-constraintlayout-compose = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 androidx-core = "androidx.core:core-ktx:1.12.0"
