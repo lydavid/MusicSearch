@@ -79,7 +79,7 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinAnnotations" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6"
+kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7"
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
