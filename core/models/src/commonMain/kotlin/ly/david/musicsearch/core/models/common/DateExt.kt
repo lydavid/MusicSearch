@@ -21,11 +21,11 @@ fun Date.getTimeFormatted(): String {
 
 // https://github.com/Kotlin/kotlinx-datetime/issues/211
 fun Instant.getDateFormatted(): String {
-    val javaLocalDataTime = this.toLocalDateTime(TimeZone.UTC).toJavaLocalDateTime()
+    val javaLocalDataTime = this.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime()
     return DateTimeFormatter.ofPattern("EEEE, MMMM d").format(javaLocalDataTime)
 }
 
 fun Instant.getTimeFormatted(): String {
-    val javaLocalDataTime = this.toLocalDateTime(TimeZone.UTC).toJavaLocalDateTime()
+    val javaLocalDataTime = this.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime()
     return DateTimeFormatter.ofPattern("hh:mm a").format(javaLocalDataTime)
 }
