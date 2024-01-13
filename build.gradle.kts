@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
+  node-version = "20.8.1"
 import java.io.BufferedReader
 
 plugins {
@@ -12,7 +12,9 @@ plugins {
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.kotlin.serialization) apply false
-    alias(libs.plugins.ksp) apply false
+      node-version = "20.8.1"
+
+  alias(libs.plugins.ksp) apply false
     alias(libs.plugins.paparazzi) apply false
     alias(libs.plugins.sqldelight) apply false
 
