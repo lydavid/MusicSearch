@@ -106,7 +106,7 @@ sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", 
 sqldelight-paging = { module = "app.cash.sqldelight:androidx-paging3-extensions", version.ref = "sqldelight" }
 sqldelight-primitive = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
-test-parameter-injector = "com.google.testparameterinjector:test-parameter-injector:1.14"
+test-parameter-injector = "com.google.testparameterinjector:test-parameter-injector:1.15"
 timber = "com.jakewharton.timber:timber:5.0.1"
 
 [bundles]
