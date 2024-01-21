@@ -13,7 +13,7 @@ using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 - Search MusicBrainz's massive database for any information related to your favorite artist or song
 - All data is cached on device after loading each page/tab
 - See every page you've visited in the history screen, and quickly get back to them
-- Almost every tab allows you to search its content instantaneously
+- Almost every tab allows you to filter its content instantaneously
 - Save anything to a collection
 - Login using your MusicBrainz account to add to your existing collections
 - Listening on Spotify? Enable Device Broadcast Status to search the artist or song from the app
@@ -40,6 +40,8 @@ using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 See [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
 
 ## Module Dependency Graph
+
+Work in progress. Red arrows represents dependencies I wish to remove.
 
 ![](assets/module_dependency_graph.svg)
 
