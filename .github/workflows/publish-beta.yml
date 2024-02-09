@@ -107,7 +107,7 @@ jobs:
 
       - name: Publish build to Google Play's beta track
         id: publish_play_store
-        uses: r0adkll/upload-google-play@v1.1.2
+        uses: r0adkll/upload-google-play@v1.1.3
         with:
           serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
           packageName: io.github.lydavid.musicsearch
