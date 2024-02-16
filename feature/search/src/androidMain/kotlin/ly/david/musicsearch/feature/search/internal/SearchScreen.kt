@@ -16,11 +16,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.core.models.listitem.ListItemModel
@@ -32,6 +35,7 @@ import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun SearchScreen(
     modifier: Modifier = Modifier,
@@ -82,6 +86,9 @@ internal fun SearchScreen(
         Row(modifier = Modifier.fillMaxWidth()) {
             TextField(
                 modifier = Modifier
+                    .semantics {
+                        testTagsAsResourceId = true
+                    }
                     .testTag(SearchScreenTestTag.TEXT_FIELD.name)
                     .weight(1f)
                     .focusRequester(focusRequester),
@@ -111,7 +118,12 @@ internal fun SearchScreen(
             )
 
             ExposedDropdownMenuBox(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .semantics {
+                        testTagsAsResourceId = true
+                    }
+                    .testTag(SearchScreenTestTag.DROPDOWN.name)
+                    .weight(1f),
                 options = searchableEntities,
                 selectedOption = selectedEntity,
                 onSelectOption = { entity ->
