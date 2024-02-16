@@ -9,9 +9,9 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.SwipeToDismiss
-import androidx.compose.material3.rememberDismissState
+import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -157,10 +157,10 @@ internal fun TopLevelScaffold(
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState) { snackbarData ->
-                SwipeToDismiss(
-                    state = rememberDismissState(),
-                    background = {},
-                    dismissContent = { Snackbar(snackbarData) },
+                SwipeToDismissBox(
+                    state = rememberSwipeToDismissBoxState(),
+                    backgroundContent = {},
+                    content = { Snackbar(snackbarData) },
                 )
             }
         },
