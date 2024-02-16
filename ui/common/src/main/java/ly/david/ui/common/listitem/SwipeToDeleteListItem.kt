@@ -9,10 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.DismissDirection
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SwipeToDismiss
-import androidx.compose.material3.rememberDismissState
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,33 +49,31 @@ private fun SwipeToDeleteListItem(
     modifier: Modifier = Modifier,
     onDelete: () -> Unit,
 ) {
-    val dismissState = rememberDismissState()
+    val dismissState = rememberSwipeToDismissBoxState()
 
-    SwipeToDismiss(
+    if (dismissState.currentValue == SwipeToDismissBoxValue.StartToEnd ||
+        dismissState.currentValue == SwipeToDismissBoxValue.EndToStart
+    ) {
+        onDelete()
+    }
+
+    SwipeToDismissBox(
         state = dismissState,
-        background = {
+        backgroundContent = {
             when (dismissState.dismissDirection) {
-                DismissDirection.StartToEnd -> {
+                SwipeToDismissBoxValue.StartToEnd -> {
                     SwipeToDeleteBackground(alignment = Alignment.CenterStart)
                 }
 
-                DismissDirection.EndToStart -> {
+                SwipeToDismissBoxValue.EndToStart -> {
                     SwipeToDeleteBackground(alignment = Alignment.CenterEnd)
                 }
-
-                null -> Unit
+                else -> {}
             }
         },
-        dismissContent = dismissContent,
+        content = dismissContent,
         modifier = modifier,
     )
-
-    when {
-        dismissState.isDismissed(DismissDirection.StartToEnd) ||
-            dismissState.isDismissed(DismissDirection.EndToStart) -> {
-            onDelete()
-        }
-    }
 }
 
 @Composable

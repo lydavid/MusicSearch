@@ -7,11 +7,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SwipeToDismiss
+import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberDismissState
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,9 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import org.koin.androidx.compose.koinViewModel
 
@@ -100,10 +100,10 @@ fun HistoryScaffold(
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState) { snackbarData ->
-                SwipeToDismiss(
-                    state = rememberDismissState(),
-                    background = {},
-                    dismissContent = { Snackbar(snackbarData) },
+                SwipeToDismissBox(
+                    state = rememberSwipeToDismissBoxState(),
+                    backgroundContent = {},
+                    content = { Snackbar(snackbarData) },
                 )
             }
         },
