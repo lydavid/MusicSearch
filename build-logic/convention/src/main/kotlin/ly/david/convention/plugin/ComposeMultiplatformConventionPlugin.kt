@@ -2,8 +2,6 @@ package ly.david.convention.plugin
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
-import org.jetbrains.compose.ComposeExtension
 
 @Suppress("unused")
 class ComposeMultiplatformConventionPlugin : Plugin<Project> {
@@ -15,5 +13,3 @@ class ComposeMultiplatformConventionPlugin : Plugin<Project> {
         }
     }
 }
-
-private fun Project.compose(configure: ComposeExtension.() -> Unit) = extensions.configure(configure)
