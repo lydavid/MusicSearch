@@ -62,6 +62,7 @@ include(
     ":test-data",
     ":ui:collections",
     ":ui:common",
+    ":ui:common-legacy",
     ":ui:core",
     ":ui:history",
     ":ui:image",

@@ -12,7 +12,7 @@ class ReleaseGroupListItemTest : ScreenshotTest() {
     @Test
     fun default() {
         snapshot {
-            ReleaseGroupListItem(
+            ly.david.ui.common.releasegroup.ReleaseGroupListItem(
                 releaseGroup = ReleaseGroupListItemModel(
                     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
                     name = "欠けた心象、世のよすが",

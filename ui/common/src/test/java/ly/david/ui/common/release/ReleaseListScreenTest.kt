@@ -11,7 +11,7 @@ class ReleaseListScreenTest : ScreenshotTest(isFullScreen = true) {
     @Test
     fun default() {
         snapshot {
-            PreviewReleasesListScreen()
+            ly.david.ui.common.release.PreviewReleasesListScreen()
         }
     }
 }

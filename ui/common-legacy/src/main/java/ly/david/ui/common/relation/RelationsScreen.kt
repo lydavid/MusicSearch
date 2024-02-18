@@ -9,7 +9,6 @@ import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 
 @Composable
 fun RelationsListScreen(
@@ -19,7 +18,7 @@ fun RelationsListScreen(
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
-    PagingLoadingAndErrorHandler(
+    ly.david.ui.common.paging.ScreenWithPagingLoadingAndError(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
         lazyListState = lazyListState,
@@ -32,10 +31,15 @@ fun RelationsListScreen(
                     relation = listItemModel,
                     onItemClick = { entity, id, title ->
                         if (entity == MusicBrainzEntity.URL) error("URLs should not be handled in this screen.")
-                        onItemClick(entity, id, title)
+                        onItemClick(
+                            entity,
+                            id,
+                            title
+                        )
                     },
                 )
             }
+
             else -> {
                 // Do nothing.
             }

@@ -16,7 +16,7 @@ import ly.david.musicsearch.core.models.listitem.SearchHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.dialog.SimpleAlertDialog
-import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -40,7 +40,7 @@ internal fun SearchHistoryScreen(
         )
     }
 
-    PagingLoadingAndErrorHandler(
+    ScreenWithPagingLoadingAndError(
         lazyPagingItems = lazyPagingItems,
         lazyListState = lazyListState,
         customNoResultsText = "Enter a query to start searching MusicBrainz's database",

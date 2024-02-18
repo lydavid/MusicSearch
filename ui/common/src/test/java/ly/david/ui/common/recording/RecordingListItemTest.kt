@@ -12,7 +12,7 @@ class RecordingListItemTest : ScreenshotTest() {
     @Test
     fun simple() {
         snapshot {
-            RecordingListItem(
+            ly.david.ui.common.recording.RecordingListItem(
                 recording = RecordingListItemModel(
                     id = "1",
                     name = "Recording name",
@@ -24,7 +24,7 @@ class RecordingListItemTest : ScreenshotTest() {
     @Test
     fun allInfo() {
         snapshot {
-            RecordingListItem(
+            ly.david.ui.common.recording.RecordingListItem(
                 recording = RecordingListItemModel(
                     id = "2",
                     name = "Recording name",

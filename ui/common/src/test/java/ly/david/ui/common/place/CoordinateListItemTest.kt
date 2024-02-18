@@ -12,7 +12,7 @@ class CoordinateListItemTest : ScreenshotTest() {
     @Test
     fun default() {
         snapshot {
-            CoordinateListItem(
+            ly.david.ui.common.place.CoordinateListItem(
                 coordinates = CoordinatesUiModel(
                     longitude = -73.98905,
                     latitude = 40.76688,

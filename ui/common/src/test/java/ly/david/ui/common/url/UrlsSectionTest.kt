@@ -11,7 +11,7 @@ class UrlsSectionTest : ScreenshotTest() {
     @Test
     fun default() {
         snapshot {
-            PreviewUrlsSection()
+            ly.david.ui.common.url.PreviewUrlsSection()
         }
     }
 }

@@ -16,7 +16,6 @@ import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import org.koin.androidx.compose.koinViewModel
@@ -66,7 +65,7 @@ internal fun ReleasesListScreenInternal(
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = {},
 ) {
-    PagingLoadingAndErrorHandler(
+    ly.david.ui.common.paging.ScreenWithPagingLoadingAndError(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
@@ -93,7 +92,10 @@ internal fun ReleasesListScreenInternal(
                     },
                     disable = onDeleteFromCollection == null,
                     onDelete = {
-                        onDeleteFromCollection?.invoke(releaseListItemModel.id, releaseListItemModel.name)
+                        onDeleteFromCollection?.invoke(
+                            releaseListItemModel.id,
+                            releaseListItemModel.name
+                        )
                     },
                 )
             }

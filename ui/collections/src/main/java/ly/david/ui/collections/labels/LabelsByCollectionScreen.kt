@@ -13,7 +13,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.LabelListItemModel
 import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
 
@@ -44,7 +44,7 @@ internal fun LabelsByCollectionScreen(
         viewModel.updateQuery(filterText)
     }
 
-    PagingLoadingAndErrorHandler(
+    ScreenWithPagingLoadingAndError(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,

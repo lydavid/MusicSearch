@@ -7,36 +7,51 @@ plugins {
 }
 
 android {
-    namespace = "ly.david.ui.history"
+    namespace = "ly.david.ui.common.legacy"
 }
 
 dependencies {
     implementation(projects.core.models)
-    implementation(projects.core.preferences)
+    implementation(projects.data.coverart)
+    implementation(projects.data.musicbrainz)
     implementation(projects.domain)
     implementation(projects.strings)
-    implementation(projects.ui.common)
-    implementation(projects.ui.commonLegacy)
     implementation(projects.ui.core)
     implementation(projects.ui.image)
-    testImplementation(projects.ui.test.image)
-    testImplementation(projects.ui.test.screenshot)
+    implementation(projects.ui.common)
 
-    implementation(libs.androidx.paging.compose)
-    implementation(libs.androidx.paging.runtime)
+    implementation(libs.accompanist.swiperefresh)
+
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.paging.common)
+    implementation(libs.paging.compose)
 
     implementation(libs.compose.foundation)
+    implementation(libs.compose.material.icons.extended)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.preview)
+    androidTestImplementation(libs.compose.ui.test)
     debugImplementation(libs.compose.ui.tooling)
+
+    implementation(libs.coil.base)
+    implementation(libs.coil.compose)
 
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.core)
     implementation(libs.koin.annotations)
     ksp(libs.koin.ksp.compiler)
 
+    implementation(libs.lyricist.library)
+
+    implementation(libs.timber)
+
+    testImplementation(projects.ui.test.image)
+    testImplementation(projects.ui.test.screenshot)
     testImplementation(libs.bundles.kotlinx.coroutines)
     testImplementation(libs.coil.compose)
+    testImplementation(libs.coil.test)
     testImplementation(libs.test.parameter.injector)
+    testImplementation(libs.koin.test)
 }

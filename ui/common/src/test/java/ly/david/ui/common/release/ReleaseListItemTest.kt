@@ -34,7 +34,7 @@ class ReleaseListItemTest : ScreenshotTest() {
     @Test
     fun titleOnly() {
         snapshot {
-            ReleaseListItem(
+            ly.david.ui.common.release.ReleaseListItem(
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",
@@ -47,7 +47,7 @@ class ReleaseListItemTest : ScreenshotTest() {
     @Test
     fun withDisambiguation() {
         snapshot {
-            ReleaseListItem(
+            ly.david.ui.common.release.ReleaseListItem(
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",
@@ -61,7 +61,7 @@ class ReleaseListItemTest : ScreenshotTest() {
     @Test
     fun allInfo() {
         snapshot {
-            ReleaseListItem(
+            ly.david.ui.common.release.ReleaseListItem(
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",
@@ -79,7 +79,7 @@ class ReleaseListItemTest : ScreenshotTest() {
     @Test
     fun allInfoButShowLessInfo() {
         snapshot {
-            ReleaseListItem(
+            ly.david.ui.common.release.ReleaseListItem(
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",
@@ -97,7 +97,7 @@ class ReleaseListItemTest : ScreenshotTest() {
     @Test
     fun multipleReleaseEvents() {
         snapshot {
-            ReleaseListItem(
+            ly.david.ui.common.release.ReleaseListItem(
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",
@@ -112,7 +112,7 @@ class ReleaseListItemTest : ScreenshotTest() {
     @Test
     fun withCoverArt() {
         snapshot {
-            ReleaseListItem(
+            ly.david.ui.common.release.ReleaseListItem(
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",

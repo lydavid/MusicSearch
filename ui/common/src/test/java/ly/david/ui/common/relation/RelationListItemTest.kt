@@ -11,21 +11,21 @@ class RelationListItemTest : ScreenshotTest() {
     @Test
     fun artist() {
         snapshot {
-            PreviewArtistRelationListItem()
+            ly.david.ui.common.relation.PreviewArtistRelationListItem()
         }
     }
 
     @Test
     fun recording() {
         snapshot {
-            PreviewRecordingRelationListItem()
+            ly.david.ui.common.relation.PreviewRecordingRelationListItem()
         }
     }
 
     @Test
     fun relation() {
         snapshot {
-            PreviewUrlRelationListItem()
+            ly.david.ui.common.relation.PreviewUrlRelationListItem()
         }
     }
 }

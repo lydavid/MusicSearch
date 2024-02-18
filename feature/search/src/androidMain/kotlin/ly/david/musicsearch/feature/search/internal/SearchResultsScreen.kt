@@ -33,7 +33,7 @@ import ly.david.ui.common.artist.ArtistListItem
 import ly.david.ui.common.event.EventListItem
 import ly.david.ui.common.instrument.InstrumentListItem
 import ly.david.ui.common.label.LabelListItem
-import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.place.PlaceListItem
 import ly.david.ui.common.recording.RecordingListItem
 import ly.david.ui.common.release.ReleaseListItem
@@ -50,7 +50,7 @@ internal fun SearchResultsScreen(
 ) {
     val strings = LocalStrings.current
 
-    PagingLoadingAndErrorHandler(
+    ScreenWithPagingLoadingAndError(
         lazyPagingItems = lazyPagingItems,
         lazyListState = lazyListState,
         snackbarHostState = snackbarHostState,

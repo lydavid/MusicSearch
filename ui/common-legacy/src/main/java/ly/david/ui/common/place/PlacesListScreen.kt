@@ -9,7 +9,6 @@ import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
-import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -20,7 +19,7 @@ fun PlacesListScreen(
     modifier: Modifier = Modifier,
     onPlaceClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
 ) {
-    PagingLoadingAndErrorHandler(
+    ly.david.ui.common.paging.ScreenWithPagingLoadingAndError(
         lazyPagingItems = lazyPagingItems,
         modifier = modifier,
         lazyListState = lazyListState,
@@ -32,9 +31,14 @@ fun PlacesListScreen(
                     place = placeListItemModel,
                     modifier = Modifier.animateItemPlacement(),
                 ) {
-                    onPlaceClick(MusicBrainzEntity.PLACE, id, getNameWithDisambiguation())
+                    onPlaceClick(
+                        MusicBrainzEntity.PLACE,
+                        id,
+                        getNameWithDisambiguation()
+                    )
                 }
             }
+
             else -> {
                 // Do nothing.
             }

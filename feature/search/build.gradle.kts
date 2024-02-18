@@ -29,6 +29,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(projects.ui.common)
+                implementation(projects.ui.commonLegacy)
                 implementation(libs.koin.androidx.compose)
                 implementation(libs.androidx.paging.compose)
                 implementation(libs.androidx.paging.runtime)

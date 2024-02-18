@@ -14,7 +14,6 @@ import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import org.koin.androidx.compose.koinViewModel
 import timber.log.Timber
 
@@ -29,7 +28,7 @@ fun ReleaseGroupsListScreen(
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
     viewModel: ReleaseGroupsListViewModel = koinViewModel(),
 ) {
-    PagingLoadingAndErrorHandler(
+    ly.david.ui.common.paging.ScreenWithPagingLoadingAndError(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
@@ -61,7 +60,10 @@ fun ReleaseGroupsListScreen(
                     },
                     disable = onDeleteFromCollection == null,
                     onDelete = {
-                        onDeleteFromCollection?.invoke(listItemModel.id, listItemModel.name)
+                        onDeleteFromCollection?.invoke(
+                            listItemModel.id,
+                            listItemModel.name
+                        )
                     },
                 )
             }

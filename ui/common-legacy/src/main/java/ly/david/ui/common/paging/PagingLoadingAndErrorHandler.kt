@@ -46,7 +46,7 @@ import ly.david.ui.common.fullscreen.FullScreenText
  *  @param itemContent Composable UI for each [lazyPagingItems].
  */
 @Composable
-fun <T : Identifiable> PagingLoadingAndErrorHandler(
+fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     lazyPagingItems: LazyPagingItems<T>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
