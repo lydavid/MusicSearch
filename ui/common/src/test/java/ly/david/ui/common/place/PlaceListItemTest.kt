@@ -36,7 +36,7 @@ class PlaceListItemTest : ScreenshotTest() {
                     lifeSpan = LifeSpanUiModel(
                         begin = "1993",
                         end = "2007-08",
-                        ended = true
+                        ended = true,
                     ),
                 ),
             )

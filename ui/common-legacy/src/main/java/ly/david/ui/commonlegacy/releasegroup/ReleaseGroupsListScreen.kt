@@ -63,7 +63,7 @@ fun ReleaseGroupsListScreen(
                     onDelete = {
                         onDeleteFromCollection?.invoke(
                             listItemModel.id,
-                            listItemModel.name
+                            listItemModel.name,
                         )
                     },
                 )

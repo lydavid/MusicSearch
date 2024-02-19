@@ -95,7 +95,7 @@ internal fun ReleasesListScreenInternal(
                     onDelete = {
                         onDeleteFromCollection?.invoke(
                             releaseListItemModel.id,
-                            releaseListItemModel.name
+                            releaseListItemModel.name,
                         )
                     },
                 )

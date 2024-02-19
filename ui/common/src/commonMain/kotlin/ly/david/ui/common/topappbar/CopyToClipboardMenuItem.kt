@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
-import ly.david.ui.common.BuildConfig
 
 @Composable
 fun OverflowMenuScope.CopyToClipboardMenuItem(

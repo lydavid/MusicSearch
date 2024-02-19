@@ -19,8 +19,6 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import ly.david.musicsearch.strings.LocalStrings
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
 @Composable

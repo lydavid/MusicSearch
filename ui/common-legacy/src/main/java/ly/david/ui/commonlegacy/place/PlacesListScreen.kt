@@ -35,7 +35,7 @@ fun PlacesListScreen(
                     onPlaceClick(
                         MusicBrainzEntity.PLACE,
                         id,
-                        getNameWithDisambiguation()
+                        getNameWithDisambiguation(),
                     )
                 }
             }

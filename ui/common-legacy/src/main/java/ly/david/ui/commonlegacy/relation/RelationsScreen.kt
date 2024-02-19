@@ -35,7 +35,7 @@ fun RelationsListScreen(
                         onItemClick(
                             entity,
                             id,
-                            title
+                            title,
                         )
                     },
                 )
