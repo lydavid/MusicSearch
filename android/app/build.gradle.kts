@@ -97,7 +97,6 @@ dependencies {
     implementation(projects.ui.history)
     implementation(projects.ui.image)
     implementation(projects.ui.settings)
-    implementation(projects.ui.stats)
     implementation(libs.accompanist.pager)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
