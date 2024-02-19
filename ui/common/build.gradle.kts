@@ -28,16 +28,6 @@ kotlin {
                 implementation(compose.preview)
 
                 implementation(libs.lyricist.library)
-
-//                androidTestImplementation(libs.compose.ui.test)
-
-//                testImplementation(projects.ui.test.image)
-//                testImplementation(projects.ui.test.screenshot)
-//                testImplementation(libs.bundles.kotlinx.coroutines)
-//                testImplementation(libs.coil.compose)
-//                testImplementation(libs.coil.test)
-//                testImplementation(libs.test.parameter.injector)
-//                testImplementation(libs.koin.test)
             }
         }
         val androidMain by getting {
@@ -47,6 +37,17 @@ kotlin {
             }
         }
         val jvmMain by getting
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(projects.ui.test.image)
+                implementation(projects.ui.test.screenshot)
+                implementation(libs.bundles.kotlinx.coroutines)
+                implementation(libs.coil.compose)
+                implementation(libs.coil.test)
+                implementation(libs.test.parameter.injector)
+                implementation(libs.koin.test)
+            }
+        }
     }
 }
 

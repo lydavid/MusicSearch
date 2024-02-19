@@ -14,7 +14,6 @@ import org.koin.ksp.generated.module
 actual val platformModule: Module = module {
     includes(
         CollectionUiModule().module,
-//        CommonUiModule().module,
         CommonLegacyUiModule().module,
         historyUiModule,
         NowPlayingUiModule().module,
