@@ -6,8 +6,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import ly.david.ui.common.topappbar.Tab
-import ly.david.ui.stats.Stats
-import ly.david.ui.stats.StatsScreen
+import ly.david.musicsearch.feature.stats.Stats
+import ly.david.musicsearch.feature.stats.StatsScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -17,7 +17,7 @@ internal fun ReleaseStatsScreen(
     tabs: ImmutableList<Tab>,
     viewModel: ReleaseStatsViewModel = koinViewModel(),
 ) {
-    val stats by viewModel.getStats(entityId = releaseId).collectAsState(Stats())
+    val stats by viewModel.getStats(entityId = releaseId).collectAsState(ly.david.musicsearch.feature.stats.Stats())
 
     StatsScreen(
         modifier = modifier,

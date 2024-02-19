@@ -57,6 +57,7 @@ include(
     ":data:spotify",
     ":domain",
     ":feature:search",
+    ":feature:stats",
     ":shared",
     ":strings",
     ":test-data",
@@ -69,5 +70,4 @@ include(
     ":ui:test:image",
     ":ui:test:screenshot",
     ":ui:settings",
-    ":ui:stats",
 )

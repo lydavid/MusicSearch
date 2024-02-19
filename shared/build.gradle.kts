@@ -38,7 +38,6 @@ kotlin {
                 implementation(projects.ui.history)
                 implementation(projects.ui.image)
                 implementation(projects.ui.settings)
-                implementation(projects.ui.stats)
             }
         }
         val jvmMain by getting

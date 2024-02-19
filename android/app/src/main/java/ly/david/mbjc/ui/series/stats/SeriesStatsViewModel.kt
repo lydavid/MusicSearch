@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.mapLatest
 import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
-import ly.david.ui.stats.Stats
+import ly.david.musicsearch.feature.stats.Stats
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -16,9 +16,9 @@ internal class SeriesStatsViewModel(
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getStats(entityId: String): Flow<Stats> =
+    fun getStats(entityId: String): Flow<ly.david.musicsearch.feature.stats.Stats> =
         getCountOfEachRelationshipTypeUseCase(entityId).mapLatest { relationTypeCounts ->
-            Stats(
+            ly.david.musicsearch.feature.stats.Stats(
                 totalRelations = relationTypeCounts.sumOf { it.count },
                 relationTypeCounts = relationTypeCounts.toImmutableList(),
             )
