@@ -17,7 +17,7 @@ import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.TrackListItemModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.ui.commonlegacy.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.release.TrackListItem
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -65,7 +65,7 @@ private fun TracksByReleaseScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onRecordingClick: (String, String) -> Unit = { _, _ -> },
 ) {
-    PagingLoadingAndErrorHandler(
+    ScreenWithPagingLoadingAndError(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,

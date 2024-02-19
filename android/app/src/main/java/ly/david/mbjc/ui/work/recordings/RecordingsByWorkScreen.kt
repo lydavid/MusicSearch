@@ -11,7 +11,7 @@ import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
-import ly.david.ui.common.recording.RecordingsListScreen
+import ly.david.ui.commonlegacy.recording.RecordingsListScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

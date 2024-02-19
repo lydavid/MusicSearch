@@ -16,6 +16,7 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.strings)
     implementation(projects.ui.common)
+    implementation(projects.ui.commonLegacy)
     implementation(projects.ui.core)
     implementation(projects.ui.image)
     testImplementation(projects.ui.test.image)

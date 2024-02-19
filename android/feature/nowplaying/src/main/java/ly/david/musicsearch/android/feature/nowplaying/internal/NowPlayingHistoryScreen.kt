@@ -15,7 +15,7 @@ import ly.david.musicsearch.core.models.listitem.NowPlayingHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.ui.commonlegacy.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
@@ -27,7 +27,7 @@ internal fun NowPlayingHistoryScreen(
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
     onDelete: (String) -> Unit = {},
 ) {
-    PagingLoadingAndErrorHandler(
+    ScreenWithPagingLoadingAndError(
         lazyPagingItems = lazyPagingItems,
         modifier = modifier,
     ) { listItemModel: ListItemModel? ->
