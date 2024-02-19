@@ -13,8 +13,8 @@ import ly.david.musicsearch.data.spotify.ArtistImageRepository
 import ly.david.musicsearch.domain.artist.ArtistRepository
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
-import ly.david.ui.common.paging.IRelationsList
-import ly.david.ui.common.paging.RelationsList
+import ly.david.ui.commonlegacy.paging.IRelationsList
+import ly.david.ui.commonlegacy.paging.RelationsList
 import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
 

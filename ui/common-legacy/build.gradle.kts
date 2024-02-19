@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "ly.david.ui.common.legacy"
+    namespace = "ly.david.ui.commonlegacy"
 }
 
 dependencies {

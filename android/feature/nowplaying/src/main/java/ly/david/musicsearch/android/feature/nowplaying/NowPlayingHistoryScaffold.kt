@@ -26,7 +26,7 @@ import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.NowPlayingHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme

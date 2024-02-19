@@ -9,8 +9,8 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
-import ly.david.ui.common.release.ReleasesListScreen
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.commonlegacy.release.ReleasesListScreen
+import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

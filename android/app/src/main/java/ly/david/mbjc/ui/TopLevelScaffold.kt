@@ -36,7 +36,7 @@ import ly.david.musicsearch.core.models.navigation.getTopLevelDestination
 import ly.david.musicsearch.core.models.navigation.getTopLevelRoute
 import ly.david.ui.collections.CollectionBottomSheet
 import ly.david.ui.collections.CreateCollectionDialog
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import ly.david.ui.history.DeleteHistoryDelegate
 import org.koin.androidx.compose.koinViewModel
 import timber.log.Timber

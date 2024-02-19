@@ -32,6 +32,7 @@ kotlin {
                 implementation(projects.android.feature.nowplaying)
                 implementation(projects.android.feature.spotify)
                 implementation(projects.ui.common)
+                implementation(projects.ui.commonLegacy)
                 implementation(projects.ui.core)
                 implementation(projects.ui.collections)
                 implementation(projects.ui.history)

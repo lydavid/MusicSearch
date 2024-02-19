@@ -30,8 +30,8 @@ import ly.david.mbjc.ui.instrument.details.InstrumentDetailsScreen
 import ly.david.mbjc.ui.instrument.stats.InstrumentStatsScreen
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.ui.common.relation.RelationsListScreen
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.commonlegacy.relation.RelationsListScreen
+import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem

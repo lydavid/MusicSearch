@@ -3,7 +3,7 @@ package ly.david.ui.collections.works
 import ly.david.musicsearch.core.models.listitem.WorkListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.work.usecase.GetWorksByEntity
-import ly.david.ui.common.EntitiesByEntityViewModel
+import ly.david.ui.commonlegacy.EntitiesByEntityViewModel
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel

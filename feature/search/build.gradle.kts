@@ -15,12 +15,14 @@ kotlin {
                 implementation(projects.core.models)
                 implementation(projects.domain)
                 implementation(projects.strings)
-
+                implementation(projects.ui.common)
                 implementation(projects.ui.core)
+
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.preview)
                 implementation(compose.ui)
+
                 implementation(libs.koin.core)
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
@@ -28,7 +30,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(projects.ui.common)
+//                implementation(projects.ui.common)
                 implementation(projects.ui.commonLegacy)
                 implementation(libs.koin.androidx.compose)
                 implementation(libs.androidx.paging.compose)

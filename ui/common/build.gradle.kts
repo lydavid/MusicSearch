@@ -1,56 +1,55 @@
 plugins {
     id("ly.david.android.library")
-    kotlin("android")
     id("ly.david.android.compose")
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.paparazzi)
+    id("ly.david.musicsearch.compose.multiplatform")
+    id("ly.david.musicsearch.kotlin.multiplatform")
 }
 
 android {
     namespace = "ly.david.ui.common"
 }
 
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.core.models)
+                implementation(projects.data.coverart)
+                implementation(projects.data.musicbrainz)
+                implementation(projects.domain)
+                implementation(projects.strings)
+                implementation(projects.ui.core)
+                implementation(projects.ui.image)
+
+                implementation(compose.foundation)
+                implementation(compose.materialIconsExtended)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.preview)
+
+                implementation(libs.lyricist.library)
+
+//                androidTestImplementation(libs.compose.ui.test)
+
+//                testImplementation(projects.ui.test.image)
+//                testImplementation(projects.ui.test.screenshot)
+//                testImplementation(libs.bundles.kotlinx.coroutines)
+//                testImplementation(libs.coil.compose)
+//                testImplementation(libs.coil.test)
+//                testImplementation(libs.test.parameter.injector)
+//                testImplementation(libs.koin.test)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.androidx.constraintlayout.compose)
+            }
+        }
+        val jvmMain by getting
+    }
+}
+
 dependencies {
-    implementation(projects.core.models)
-    implementation(projects.data.coverart)
-    implementation(projects.data.musicbrainz)
-    implementation(projects.domain)
-    implementation(projects.strings)
-    implementation(projects.ui.core)
-    implementation(projects.ui.image)
-
-    implementation(libs.accompanist.swiperefresh)
-
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.constraintlayout.compose)
-    implementation(libs.paging.common)
-    implementation(libs.paging.compose)
-
-    implementation(libs.compose.foundation)
-    implementation(libs.compose.material.icons.extended)
-    implementation(libs.compose.material3)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.preview)
-    androidTestImplementation(libs.compose.ui.test)
-    debugImplementation(libs.compose.ui.tooling)
-
-    implementation(libs.coil.base)
-    implementation(libs.coil.compose)
-
-    implementation(libs.koin.androidx.compose)
-    implementation(libs.koin.core)
-    implementation(libs.koin.annotations)
-    ksp(libs.koin.ksp.compiler)
-
-    implementation(libs.lyricist.library)
-
-    implementation(libs.timber)
-
-    testImplementation(projects.ui.test.image)
-    testImplementation(projects.ui.test.screenshot)
-    testImplementation(libs.bundles.kotlinx.coroutines)
-    testImplementation(libs.coil.compose)
-    testImplementation(libs.coil.test)
-    testImplementation(libs.test.parameter.injector)
-    testImplementation(libs.koin.test)
+    debugImplementation(compose.uiTooling)
 }

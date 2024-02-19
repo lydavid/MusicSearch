@@ -12,8 +12,8 @@ import ly.david.musicsearch.core.models.place.PlaceScaffoldModel
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.place.PlaceRepository
 import ly.david.ui.common.MusicBrainzEntityViewModel
-import ly.david.ui.common.paging.IRelationsList
-import ly.david.ui.common.paging.RelationsList
+import ly.david.ui.commonlegacy.paging.IRelationsList
+import ly.david.ui.commonlegacy.paging.RelationsList
 import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
 

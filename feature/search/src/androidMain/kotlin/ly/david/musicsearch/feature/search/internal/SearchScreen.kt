@@ -32,7 +32,7 @@ import ly.david.musicsearch.core.models.network.searchableEntities
 import ly.david.musicsearch.feature.search.SearchScreenTestTag
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.ExposedDropdownMenuBox
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
