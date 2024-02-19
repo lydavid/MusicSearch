@@ -2,13 +2,9 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>DestructuringDeclarationWithTooManyEntries:EntitiesByEntityViewModel.kt$EntitiesByEntityViewModel$(entityId, query, isRemote, sorted)</ID>
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
-    <ID>TooGenericExceptionCaught:ReleaseGroupsListScreen.kt$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:ReleasesListScreen.kt$ex: Exception</ID>
     <ID>UnstableCollections:ExposedDropdownMenuBox.kt$List&lt;MusicBrainzEntity&gt;</ID>
     <ID>UnstableCollections:MultipleChoiceDialog.kt$List&lt;String&gt;</ID>
     <ID>UnstableCollections:TabsBar.kt$List&lt;String&gt;</ID>
-    <ID>UnstableCollections:UrlsSection.kt$List&lt;RelationListItemModel&gt;</ID>
   </CurrentIssues>
 </SmellBaseline>
