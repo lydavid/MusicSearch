@@ -12,8 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
@@ -38,7 +36,10 @@ internal fun LocalRemoteProgressBar(
             //  since the moment they click a release, it will require downloading details
             Text(
                 style = TextStyles.getCardBodyTextStyle(),
-                text = cachedLocalOfRemote(totalLocal, totalRemote),
+                text = cachedLocalOfRemote(
+                    totalLocal,
+                    totalRemote,
+                ),
             )
 
             if (totalRemote != 0) {
@@ -58,69 +59,3 @@ internal fun LocalRemoteProgressBar(
         }
     }
 }
-
-// region Previews
-@DefaultPreviews
-@Composable
-private fun Empty() {
-    PreviewTheme {
-        Surface {
-            LocalRemoteProgressBar(
-                totalRemote = 1,
-                totalLocal = 0,
-                cachedLocalOfRemote = { local, remote ->
-                    "Cached $local of $remote releases"
-                },
-            )
-        }
-    }
-}
-
-@DefaultPreviews
-@Composable
-private fun Half() {
-    PreviewTheme {
-        Surface {
-            LocalRemoteProgressBar(
-                totalRemote = 2,
-                totalLocal = 1,
-                cachedLocalOfRemote = { local, remote ->
-                    "Cached $local of $remote releases"
-                },
-            )
-        }
-    }
-}
-
-@DefaultPreviews
-@Composable
-private fun Full() {
-    PreviewTheme {
-        Surface {
-            LocalRemoteProgressBar(
-                totalRemote = 1,
-                totalLocal = 1,
-                cachedLocalOfRemote = { local, remote ->
-                    "Cached $local of $remote releases"
-                },
-            )
-        }
-    }
-}
-
-@DefaultPreviews
-@Composable
-private fun Overflow() {
-    PreviewTheme {
-        Surface {
-            LocalRemoteProgressBar(
-                totalRemote = 1,
-                totalLocal = 2,
-                cachedLocalOfRemote = { local, remote ->
-                    "Cached $local of $remote releases"
-                },
-            )
-        }
-    }
-}
-// endregion

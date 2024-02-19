@@ -1,7 +1,8 @@
 plugins {
     id("ly.david.android.library")
-    kotlin("android")
     id("ly.david.android.compose")
+    id("ly.david.musicsearch.compose.multiplatform")
+    id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.paparazzi)
 }
 
@@ -9,19 +10,30 @@ android {
     namespace = "ly.david.ui.stats"
 }
 
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.core.models)
+                implementation(projects.ui.common)
+                implementation(projects.ui.core)
+                implementation(projects.strings)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.preview)
+                implementation(libs.kotlinx.collections.immutable)
+            }
+        }
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(projects.ui.test.screenshot)
+                implementation(libs.test.parameter.injector)
+            }
+        }
+    }
+}
+
 dependencies {
-    implementation(projects.core.models)
-    implementation(projects.ui.common)
-    implementation(projects.ui.core)
-    implementation(projects.strings)
-    implementation(libs.compose.foundation)
-    implementation(libs.compose.material3)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.preview)
-    implementation(libs.kotlinx.collections.immutable)
-
-    debugImplementation(libs.compose.ui.tooling)
-
-    testImplementation(projects.ui.test.screenshot)
-    testImplementation(libs.test.parameter.injector)
+    debugImplementation(compose.uiTooling)
 }

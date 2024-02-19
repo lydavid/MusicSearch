@@ -23,6 +23,7 @@ kotlin {
                 implementation(projects.data.spotify)
                 implementation(projects.domain)
                 implementation(projects.feature.search)
+                implementation(projects.ui.stats)
                 implementation(projects.strings)
                 implementation(libs.koin.core)
             }
@@ -38,7 +39,6 @@ kotlin {
                 implementation(projects.ui.history)
                 implementation(projects.ui.image)
                 implementation(projects.ui.settings)
-                implementation(projects.ui.stats)
             }
         }
         val jvmMain by getting
