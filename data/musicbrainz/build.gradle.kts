@@ -31,14 +31,12 @@ buildConfig {
     }
 
     buildConfigField(
-        type = "String",
         name = "MUSICBRAINZ_CLIENT_ID",
-        value = "\"$musicBrainzClientId\"",
+        value = musicBrainzClientId,
     )
     buildConfigField(
-        type = "String",
         name = "MUSICBRAINZ_CLIENT_SECRET",
-        value = "\"$musicBrainzClientSecret\"",
+        value = musicBrainzClientSecret,
     )
 }
 
