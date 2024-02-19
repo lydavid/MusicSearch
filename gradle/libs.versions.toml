@@ -127,7 +127,7 @@ ktor-jvm = [
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
-build-config = "com.github.gmazzo.buildconfig:4.2.0"
+build-config = "com.github.gmazzo.buildconfig:5.3.5"
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 dependency-analysis = "com.autonomousapps.dependency-analysis:1.30.0"
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
