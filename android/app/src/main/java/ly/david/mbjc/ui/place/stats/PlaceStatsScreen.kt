@@ -6,8 +6,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import ly.david.ui.common.topappbar.Tab
-import ly.david.ui.stats.Stats
-import ly.david.ui.stats.StatsScreen
+import ly.david.musicsearch.feature.stats.Stats
+import ly.david.musicsearch.feature.stats.StatsScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

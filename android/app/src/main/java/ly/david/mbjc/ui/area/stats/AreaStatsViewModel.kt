@@ -10,9 +10,9 @@ import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
-import ly.david.ui.stats.PlaceStats
-import ly.david.ui.stats.ReleaseStats
-import ly.david.ui.stats.Stats
+import ly.david.musicsearch.feature.stats.PlaceStats
+import ly.david.musicsearch.feature.stats.ReleaseStats
+import ly.david.musicsearch.feature.stats.Stats
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel

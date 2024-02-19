@@ -87,6 +87,7 @@ dependencies {
     implementation(projects.data.repository)
     implementation(projects.domain)
     implementation(projects.feature.search)
+    implementation(projects.feature.stats)
     implementation(projects.shared)
     implementation(projects.strings)
     implementation(projects.ui.common)

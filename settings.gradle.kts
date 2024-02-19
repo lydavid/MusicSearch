@@ -57,6 +57,7 @@ include(
     ":data:spotify",
     ":domain",
     ":feature:search",
+    ":feature:stats",
     ":shared",
     ":strings",
     ":test-data",

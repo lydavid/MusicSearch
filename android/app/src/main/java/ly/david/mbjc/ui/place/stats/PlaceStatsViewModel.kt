@@ -9,8 +9,8 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.EventPlaceDao
 import ly.david.musicsearch.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
-import ly.david.ui.stats.EventStats
-import ly.david.ui.stats.Stats
+import ly.david.musicsearch.feature.stats.EventStats
+import ly.david.musicsearch.feature.stats.Stats
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -20,16 +20,16 @@ class PlaceStatsViewModel(
     private val eventPlaceDao: EventPlaceDao,
 ) : ViewModel() {
 
-    fun getStats(entityId: String): Flow<Stats> =
+    fun getStats(entityId: String): Flow<ly.david.musicsearch.feature.stats.Stats> =
         combine(
             getCountOfEachRelationshipTypeUseCase(entityId),
             observeBrowseEntityCount(entityId, MusicBrainzEntity.EVENT),
             eventPlaceDao.getNumberOfEventsByPlace(entityId),
         ) { relationTypeCounts, browseEventCount, localEvents ->
-            Stats(
+            ly.david.musicsearch.feature.stats.Stats(
                 totalRelations = relationTypeCounts.sumOf { it.count },
                 relationTypeCounts = relationTypeCounts.toImmutableList(),
-                eventStats = EventStats(
+                eventStats = ly.david.musicsearch.feature.stats.EventStats(
                     totalRemote = browseEventCount?.remoteCount,
                     totalLocal = localEvents,
                 ),

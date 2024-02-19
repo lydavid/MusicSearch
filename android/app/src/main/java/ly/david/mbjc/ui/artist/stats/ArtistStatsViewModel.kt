@@ -11,9 +11,9 @@ import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
 import ly.david.musicsearch.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
-import ly.david.ui.stats.ReleaseGroupStats
-import ly.david.ui.stats.ReleaseStats
-import ly.david.ui.stats.Stats
+import ly.david.musicsearch.feature.stats.ReleaseGroupStats
+import ly.david.musicsearch.feature.stats.ReleaseStats
+import ly.david.musicsearch.feature.stats.Stats
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
