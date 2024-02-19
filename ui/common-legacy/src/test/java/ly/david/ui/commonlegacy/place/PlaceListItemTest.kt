@@ -1,4 +1,4 @@
-package ly.david.ui.common.place
+package ly.david.ui.commonlegacy.place
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.musicsearch.core.models.LifeSpanUiModel
@@ -13,7 +13,7 @@ class PlaceListItemTest : ScreenshotTest() {
     @Test
     fun simple() {
         snapshot {
-            ly.david.ui.common.place.PlaceListItem(
+            PlaceListItem(
                 place = PlaceListItemModel(
                     id = "2",
                     name = "Place Name",
@@ -26,7 +26,7 @@ class PlaceListItemTest : ScreenshotTest() {
     @Test
     fun allInfo() {
         snapshot {
-            ly.david.ui.common.place.PlaceListItem(
+            PlaceListItem(
                 place = PlaceListItemModel(
                     id = "ed121457-87f6-4df9-a24b-d3f1bab1fdad",
                     name = "Sony Music Studios",

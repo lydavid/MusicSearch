@@ -1,4 +1,4 @@
-package ly.david.ui.common.place
+package ly.david.ui.commonlegacy.place
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.musicsearch.core.models.place.CoordinatesUiModel
@@ -12,7 +12,7 @@ class CoordinateListItemTest : ScreenshotTest() {
     @Test
     fun default() {
         snapshot {
-            ly.david.ui.common.place.CoordinateListItem(
+            CoordinateListItem(
                 coordinates = CoordinatesUiModel(
                     longitude = -73.98905,
                     latitude = 40.76688,

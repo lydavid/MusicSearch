@@ -1,4 +1,4 @@
-package ly.david.ui.common.event
+package ly.david.ui.commonlegacy.event
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.musicsearch.core.models.LifeSpanUiModel
@@ -13,7 +13,7 @@ class EventListItemTest : ScreenshotTest() {
     @Test
     fun simple() {
         snapshot {
-            ly.david.ui.common.event.EventListItem(
+            EventListItem(
                 event = EventListItemModel(
                     id = "e1",
                     name = "event name",
@@ -27,7 +27,7 @@ class EventListItemTest : ScreenshotTest() {
     @Test
     fun allInfo() {
         snapshot {
-            ly.david.ui.common.event.EventListItem(
+            EventListItem(
                 event = EventListItemModel(
                     id = "05174e82-7716-444e-86a0-d0d1e1474662",
                     name = "1998-01-22: Sony Music Studios, New York City, NY, USA",

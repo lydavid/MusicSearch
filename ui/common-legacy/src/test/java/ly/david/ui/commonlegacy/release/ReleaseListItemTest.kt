@@ -1,4 +1,4 @@
-package ly.david.ui.common.release
+package ly.david.ui.commonlegacy.release
 
 import coil.Coil
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
@@ -34,7 +34,7 @@ class ReleaseListItemTest : ScreenshotTest() {
     @Test
     fun titleOnly() {
         snapshot {
-            ly.david.ui.common.release.ReleaseListItem(
+            ReleaseListItem(
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",
@@ -47,7 +47,7 @@ class ReleaseListItemTest : ScreenshotTest() {
     @Test
     fun withDisambiguation() {
         snapshot {
-            ly.david.ui.common.release.ReleaseListItem(
+            ReleaseListItem(
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",
@@ -61,7 +61,7 @@ class ReleaseListItemTest : ScreenshotTest() {
     @Test
     fun allInfo() {
         snapshot {
-            ly.david.ui.common.release.ReleaseListItem(
+            ReleaseListItem(
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",
@@ -79,7 +79,7 @@ class ReleaseListItemTest : ScreenshotTest() {
     @Test
     fun allInfoButShowLessInfo() {
         snapshot {
-            ly.david.ui.common.release.ReleaseListItem(
+            ReleaseListItem(
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",
@@ -97,7 +97,7 @@ class ReleaseListItemTest : ScreenshotTest() {
     @Test
     fun multipleReleaseEvents() {
         snapshot {
-            ly.david.ui.common.release.ReleaseListItem(
+            ReleaseListItem(
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",
@@ -112,7 +112,7 @@ class ReleaseListItemTest : ScreenshotTest() {
     @Test
     fun withCoverArt() {
         snapshot {
-            ly.david.ui.common.release.ReleaseListItem(
+            ReleaseListItem(
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",

@@ -1,4 +1,4 @@
-package ly.david.ui.common.releasegroup
+package ly.david.ui.commonlegacy.releasegroup
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
@@ -12,7 +12,7 @@ class ReleaseGroupListItemTest : ScreenshotTest() {
     @Test
     fun default() {
         snapshot {
-            ly.david.ui.common.releasegroup.ReleaseGroupListItem(
+            ReleaseGroupListItem(
                 releaseGroup = ReleaseGroupListItemModel(
                     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
                     name = "欠けた心象、世のよすが",

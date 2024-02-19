@@ -1,4 +1,4 @@
-package ly.david.ui.common.relation
+package ly.david.ui.commonlegacy.relation
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.ui.test.screenshot.ScreenshotTest
@@ -11,21 +11,21 @@ class RelationListItemTest : ScreenshotTest() {
     @Test
     fun artist() {
         snapshot {
-            ly.david.ui.common.relation.PreviewArtistRelationListItem()
+            PreviewArtistRelationListItem()
         }
     }
 
     @Test
     fun recording() {
         snapshot {
-            ly.david.ui.common.relation.PreviewRecordingRelationListItem()
+            PreviewRecordingRelationListItem()
         }
     }
 
     @Test
     fun relation() {
         snapshot {
-            ly.david.ui.common.relation.PreviewUrlRelationListItem()
+            PreviewUrlRelationListItem()
         }
     }
 }

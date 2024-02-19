@@ -1,4 +1,4 @@
-package ly.david.ui.common.recording
+package ly.david.ui.commonlegacy.recording
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
@@ -12,7 +12,7 @@ class RecordingListItemTest : ScreenshotTest() {
     @Test
     fun simple() {
         snapshot {
-            ly.david.ui.common.recording.RecordingListItem(
+            RecordingListItem(
                 recording = RecordingListItemModel(
                     id = "1",
                     name = "Recording name",
@@ -24,7 +24,7 @@ class RecordingListItemTest : ScreenshotTest() {
     @Test
     fun allInfo() {
         snapshot {
-            ly.david.ui.common.recording.RecordingListItem(
+            RecordingListItem(
                 recording = RecordingListItemModel(
                     id = "2",
                     name = "Recording name",
