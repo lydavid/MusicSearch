@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.relation.usecase.GetEntityRelationships
-import org.koin.core.annotation.Factory
 
 /**
  * A [ViewModel] implements this for [pagedRelations].
@@ -44,7 +43,6 @@ interface IRelationsList {
  *
  * The ViewModel should should assign [scope] and [relationsListRepository] in its init block.
  */
-//@Factory
 class RelationsList(
     private val getEntityRelationships: GetEntityRelationships,
 ) : IRelationsList {
