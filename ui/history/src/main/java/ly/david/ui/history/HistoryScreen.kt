@@ -9,7 +9,7 @@ import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.commonlegacy.paging.ScreenWithPagingLoadingAndError
+import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

@@ -30,7 +30,7 @@ import ly.david.mbjc.ui.event.details.EventDetailsScreen
 import ly.david.mbjc.ui.event.stats.EventStatsScreen
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.ui.commonlegacy.relation.RelationsListScreen
+import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem

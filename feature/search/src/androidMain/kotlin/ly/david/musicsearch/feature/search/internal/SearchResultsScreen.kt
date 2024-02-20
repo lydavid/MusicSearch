@@ -30,12 +30,12 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.artist.ArtistListItem
-import ly.david.ui.commonlegacy.event.EventListItem
+import ly.david.ui.common.event.EventListItem
 import ly.david.ui.common.instrument.InstrumentListItem
 import ly.david.ui.common.label.LabelListItem
-import ly.david.ui.commonlegacy.paging.ScreenWithPagingLoadingAndError
-import ly.david.ui.commonlegacy.place.PlaceListItem
-import ly.david.ui.commonlegacy.recording.RecordingListItem
+import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.ui.common.place.PlaceListItem
+import ly.david.ui.common.recording.RecordingListItem
 import ly.david.ui.commonlegacy.release.ReleaseListItem
 import ly.david.ui.commonlegacy.releasegroup.ReleaseGroupListItem
 import ly.david.ui.common.series.SeriesListItem

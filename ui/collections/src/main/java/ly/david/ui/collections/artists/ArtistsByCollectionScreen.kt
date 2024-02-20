@@ -13,7 +13,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
 import ly.david.ui.common.artist.ArtistListItem
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.ui.commonlegacy.paging.ScreenWithPagingLoadingAndError
+import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
 

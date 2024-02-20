@@ -25,6 +25,7 @@ kotlin {
                 implementation(projects.feature.search)
                 implementation(projects.feature.stats)
                 implementation(projects.strings)
+                implementation(projects.ui.common)
                 implementation(libs.koin.core)
             }
         }
@@ -32,7 +33,6 @@ kotlin {
             dependencies {
                 implementation(projects.android.feature.nowplaying)
                 implementation(projects.android.feature.spotify)
-                implementation(projects.ui.common)
                 implementation(projects.ui.commonLegacy)
                 implementation(projects.ui.core)
                 implementation(projects.ui.collections)
