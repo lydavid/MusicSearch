@@ -14,8 +14,8 @@ import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.releasegroup.ReleaseGroupRepository
 import ly.david.ui.common.MusicBrainzEntityViewModel
-import ly.david.ui.commonlegacy.paging.IRelationsList
-import ly.david.ui.commonlegacy.paging.RelationsList
+import ly.david.ui.common.paging.IRelationsList
+import ly.david.ui.common.paging.RelationsList
 import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
 

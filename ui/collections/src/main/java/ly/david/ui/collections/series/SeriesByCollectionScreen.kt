@@ -12,7 +12,7 @@ import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.SeriesListItemModel
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.ui.commonlegacy.paging.ScreenWithPagingLoadingAndError
+import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.series.SeriesListItem
 import org.koin.androidx.compose.koinViewModel

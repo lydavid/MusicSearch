@@ -12,8 +12,8 @@ import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.ui.commonlegacy.paging.ScreenWithPagingLoadingAndError
-import ly.david.ui.commonlegacy.recording.RecordingListItem
+import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.ui.common.recording.RecordingListItem
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
 

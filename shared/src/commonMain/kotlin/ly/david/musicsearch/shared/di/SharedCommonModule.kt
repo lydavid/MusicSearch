@@ -19,6 +19,7 @@ import ly.david.musicsearch.data.spotify.di.spotifyApiModule
 import ly.david.musicsearch.data.spotify.di.spotifyDataModule
 import ly.david.musicsearch.feature.search.di.searchFeatureModule
 import ly.david.musicsearch.strings.di.stringsModule
+import ly.david.ui.common.commonUiModule
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -47,5 +48,6 @@ val sharedModule: Module = module {
         musicBrainzApiModule,
         preferencesDataStoreModule,
         searchFeatureModule,
+        commonUiModule,
     )
 }
