@@ -86,6 +86,7 @@ dependencies {
     implementation(projects.data.common.network)
     implementation(projects.data.repository)
     implementation(projects.domain)
+    implementation(projects.feature.details)
     implementation(projects.feature.search)
     implementation(projects.feature.stats)
     implementation(projects.shared)

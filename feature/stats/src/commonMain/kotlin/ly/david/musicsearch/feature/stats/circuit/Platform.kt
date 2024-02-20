@@ -1,5 +1,6 @@
 package ly.david.musicsearch.feature.stats.circuit
 
+// TODO: extract to core:parcelize
 /**
  * Copied from https://github.com/realityexpander/NoteAppKMM
  */

@@ -11,7 +11,7 @@ import ly.david.musicsearch.feature.stats.circuit.ReleaseStatsScreen
 import org.koin.dsl.module
 
 val statsFeatureModule = module {
-    factory { //args ->
+    single {
         Presenter.Factory { screen, navigator, context ->
             when (screen) {
                 is ReleaseStatsScreen -> ReleaseStatsPresenter(screen, navigator, get())
@@ -19,10 +19,12 @@ val statsFeatureModule = module {
             }
         }
     }
-    factory {
+    single {
         Ui.Factory { screen, context ->
             when (screen) {
                 is ReleaseStatsScreen -> {
+                    // TODO: Cannot inline bytecode built with JVM target 11 into bytecode that is being built
+                    //  with JVM target 1.8. Please specify proper '-jvm-target' option
                     ui<ReleaseStatsScreen.State> { state, modifier ->
                         StatsScreen(
                             modifier = modifier,
@@ -37,14 +39,8 @@ val statsFeatureModule = module {
     }
     single {
         Circuit.Builder()
-//            .addUiFactory(AddFavoritesUiFactory())
-//            .addPresenterFactory(AddFavoritesPresenterFactory())
-//            .addPresenter<ReleaseStatsScreen, ReleaseStatsScreen.State>(ReleaseStatsPresenter(getCountOfEachRelationshipTypeUseCase))
-//            .addUi<ReleaseStatsScreen, ReleaseStatsScreen.State> { state, modifier ->
-//                ReleaseStatsUi(state, modifier)
-//            }
-            .addPresenterFactory(get())
-            .addUiFactory(get())
+            .addPresenterFactories(getAll())
+            .addUiFactories(getAll())
             .build()
     }
 }
