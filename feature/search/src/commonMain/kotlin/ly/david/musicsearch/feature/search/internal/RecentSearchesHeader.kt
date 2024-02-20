@@ -7,7 +7,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.strings.LocalStrings
-import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
@@ -41,16 +39,6 @@ internal fun RecentSearchesHeader(
                 imageVector = Icons.Default.Delete,
                 contentDescription = strings.clearSearchHistory,
             )
-        }
-    }
-}
-
-// @Preview
-@Composable
-internal fun PreviewRecentSearchesHeader() {
-    PreviewTheme {
-        Surface {
-            RecentSearchesHeader()
         }
     }
 }
