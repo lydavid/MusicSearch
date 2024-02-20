@@ -25,14 +25,12 @@ buildConfig {
     }
 
     buildConfigField(
-        type = "String",
         name = "SPOTIFY_CLIENT_ID",
-        value = "\"$spotifyClientId\"",
+        value = spotifyClientId,
     )
     buildConfigField(
-        type = "String",
         name = "SPOTIFY_CLIENT_SECRET",
-        value = "\"$spotifyClientSecret\"",
+        value = spotifyClientSecret,
     )
 }
 
