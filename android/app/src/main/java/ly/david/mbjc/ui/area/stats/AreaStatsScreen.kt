@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
+import ly.david.musicsearch.feature.stats.Stats
 import ly.david.ui.common.topappbar.Tab
 import ly.david.musicsearch.feature.stats.StatsScreen
 import org.koin.androidx.compose.koinViewModel
@@ -16,7 +17,7 @@ internal fun AreaStatsScreen(
     modifier: Modifier = Modifier,
     viewModel: AreaStatsViewModel = koinViewModel(),
 ) {
-    val stats by viewModel.getStats(entityId = areaId).collectAsState(ly.david.musicsearch.feature.stats.Stats())
+    val stats by viewModel.getStats(entityId = areaId).collectAsState(Stats())
 
     StatsScreen(
         modifier = modifier,

@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
-import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
+import ly.david.mbjc.ui.release.stats.ReleaseStatsUi
 import ly.david.mbjc.ui.release.tracks.TracksByReleaseScreen
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.strings.LocalStrings
@@ -227,14 +227,14 @@ internal fun ReleaseScaffold(
                 }
 
                 ReleaseTab.STATS -> {
-                    ReleaseStatsScreen(
-                        releaseId = releaseId,
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        tabs = ReleaseTab.values().map { it.tab }.toImmutableList(),
-                    )
+//                    ReleaseStatsUi(
+////                        releaseId = releaseId,
+//                        modifier = Modifier
+//                            .padding(innerPadding)
+//                            .fillMaxSize()
+//                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+////                        tabs = ReleaseTab.values().map { it.tab }.toImmutableList(),
+//                    )
                 }
             }
         }

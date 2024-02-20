@@ -4,6 +4,7 @@ plugins {
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.paparazzi)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -15,13 +16,22 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
+                implementation(projects.domain)
                 implementation(projects.ui.common)
                 implementation(projects.ui.core)
                 implementation(projects.strings)
+
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.ui)
                 implementation(compose.preview)
+
+                implementation(libs.arkivanov.mvikotlin)
+                implementation(libs.arkivanov.mvikotlin.main)
+                implementation(libs.arkivanov.mvikotlin.logging)
+                implementation(libs.arkivanov.mvikotlin.extensions.coroutines)
+                implementation("com.slack.circuit:circuit-foundation:0.19.1")
+                implementation(libs.koin.core)
                 implementation(libs.kotlinx.collections.immutable)
             }
         }
