@@ -11,9 +11,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.EventListItemModel
-import ly.david.ui.commonlegacy.event.EventListItem
+import ly.david.ui.common.event.EventListItem
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.ui.commonlegacy.paging.ScreenWithPagingLoadingAndError
+import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
 

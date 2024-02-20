@@ -27,7 +27,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
-import ly.david.ui.commonlegacy.paging.ScreenWithPagingLoadingAndError
+import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
