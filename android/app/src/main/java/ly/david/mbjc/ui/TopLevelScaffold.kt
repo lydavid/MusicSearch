@@ -30,14 +30,12 @@ import kotlinx.coroutines.launch
 import ly.david.mbjc.ui.navigation.BottomNavigationBar
 import ly.david.mbjc.ui.navigation.NavigationGraph
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
-import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.core.models.navigation.getTopLevelDestination
 import ly.david.musicsearch.core.models.navigation.getTopLevelRoute
 import ly.david.ui.collections.CollectionBottomSheet
 import ly.david.ui.collections.CreateCollectionDialog
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
-import ly.david.ui.history.DeleteHistoryDelegate
 import org.koin.androidx.compose.koinViewModel
 import timber.log.Timber
 
@@ -104,7 +102,10 @@ internal fun TopLevelScaffold(
         CreateCollectionDialog(
             onDismiss = { showCreateCollectionDialog = false },
             onSubmit = { name, entity ->
-                viewModel.createNewCollection(name, entity)
+                viewModel.createNewCollection(
+                    name,
+                    entity,
+                )
             },
         )
     }
@@ -168,51 +169,6 @@ internal fun TopLevelScaffold(
 
         NavigationGraph(
             navController = navController,
-            deleteHistoryDelegate = object : DeleteHistoryDelegate {
-                override fun delete(history: LookupHistoryListItemModel) {
-                    scope.launch {
-                        viewModel.markHistoryAsDeleted(mbid = history.id)
-
-                        val snackbarResult = snackbarHostState.showSnackbar(
-                            message = "Removed ${history.title}",
-                            actionLabel = "Undo",
-                            duration = SnackbarDuration.Short,
-                        )
-
-                        when (snackbarResult) {
-                            SnackbarResult.ActionPerformed -> {
-                                viewModel.undoDeleteHistory(history.id)
-                            }
-
-                            SnackbarResult.Dismissed -> {
-                                viewModel.deleteHistory(history.id)
-                            }
-                        }
-                    }
-                }
-
-                override fun deleteAll() {
-                    scope.launch {
-                        viewModel.markAllHistoryAsDeleted()
-
-                        val snackbarResult = snackbarHostState.showSnackbar(
-                            message = "Cleared history",
-                            actionLabel = "Undo",
-                            duration = SnackbarDuration.Short,
-                        )
-
-                        when (snackbarResult) {
-                            SnackbarResult.ActionPerformed -> {
-                                viewModel.undoDeleteAllHistory()
-                            }
-
-                            SnackbarResult.Dismissed -> {
-                                viewModel.deleteAllHistory()
-                            }
-                        }
-                    }
-                }
-            },
             modifier = Modifier.padding(innerPadding),
             onLoginClick = {
                 loginLauncher.launch(Unit)
@@ -231,7 +187,11 @@ internal fun TopLevelScaffold(
             onDeleteFromCollection = { collectionId, entityId, name ->
                 scope.launch {
                     val deleteFromCollectionResult =
-                        viewModel.deleteFromCollectionAndGetResult(collectionId, entityId, name)
+                        viewModel.deleteFromCollectionAndGetResult(
+                            collectionId,
+                            entityId,
+                            name,
+                        )
 
                     if (deleteFromCollectionResult.message.isEmpty()) return@launch
 

@@ -73,7 +73,6 @@ internal fun NavHostController.goTo(destination: Destination) {
 @Composable
 internal fun NavigationGraph(
     navController: NavHostController,
-    deleteHistoryDelegate: DeleteHistoryDelegate,
     onLoginClick: () -> Unit,
     onLogoutClick: () -> Unit,
     onCreateCollectionClick: () -> Unit,
@@ -327,11 +326,8 @@ internal fun NavigationGraph(
         ) {
             // TODO:
 //            History(
-//                deleteHistoryDelegate = deleteHistoryDelegate,
-//                modifier = modifier,
 //                onItemClick = onLookupEntityClick,
 //            )
-            // TODO: how to pass modifier to UI? Need to convert everything to use circuit?
             CircuitContent(
                 screen = HistoryScreen,
                 modifier = modifier

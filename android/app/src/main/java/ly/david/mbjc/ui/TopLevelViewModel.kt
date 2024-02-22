@@ -23,9 +23,6 @@ import ly.david.musicsearch.data.musicbrainz.Logout
 import ly.david.musicsearch.data.musicbrainz.MusicBrainzLoginActivityResultContract
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.domain.collection.usecase.GetAllCollections
-import ly.david.musicsearch.domain.history.usecase.DeleteLookupHistory
-import ly.david.musicsearch.domain.history.usecase.MarkLookupHistoryForDeletion
-import ly.david.musicsearch.domain.history.usecase.UnMarkLookupHistoryForDeletion
 import net.openid.appauth.AuthorizationResponse
 import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
@@ -43,10 +40,6 @@ internal class TopLevelViewModel(
     private val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract,
     private val loginUseCase: Login,
     private val logoutUseCase: Logout,
-
-    private val markLookupHistoryForDeletion: MarkLookupHistoryForDeletion,
-    private val unMarkLookupHistoryForDeletion: UnMarkLookupHistoryForDeletion,
-    private val deleteLookupHistory: DeleteLookupHistory,
 ) : ViewModel() {
 
     data class RemoteResult(
@@ -175,29 +168,5 @@ internal class TopLevelViewModel(
         viewModelScope.launch {
             logoutUseCase()
         }
-    }
-
-    fun markHistoryAsDeleted(mbid: String) {
-        markLookupHistoryForDeletion(mbid)
-    }
-
-    fun markAllHistoryAsDeleted() {
-        markLookupHistoryForDeletion()
-    }
-
-    fun undoDeleteHistory(mbid: String) {
-        unMarkLookupHistoryForDeletion(mbid)
-    }
-
-    fun undoDeleteAllHistory() {
-        unMarkLookupHistoryForDeletion()
-    }
-
-    fun deleteHistory(mbid: String) {
-        deleteLookupHistory(mbid)
-    }
-
-    fun deleteAllHistory() {
-        deleteLookupHistory()
     }
 }

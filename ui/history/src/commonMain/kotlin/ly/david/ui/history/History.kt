@@ -74,9 +74,10 @@ fun History(
                             eventSink(HistoryScreen.UiEvent.UnMarkAllHistoryForDeletion)
                         }
 
-                        // TODO: leaving the screen before this is executed gives the user a strange experience
-                        //  the item will be marked as deleted, but not deleted, so when they next undo a delete all,
-                        //  they will recover items they thought they deleted
+                        // TODO: leaving the screen before this is executed marks all item as deleted,
+                        //  so they won't show in the UI, but when the user next undo a delete all,
+                        //  they will recover all of those marked as deleted, including some possibly old entries
+                        //  Wikipedia doesn't offer an undo for delete all, so maybe consider this a hidden feature?
                         SnackbarResult.Dismissed -> {
                             eventSink(HistoryScreen.UiEvent.DeleteAllHistory)
                         }
