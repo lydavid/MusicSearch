@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.di
 
+import com.slack.circuit.foundation.Circuit
 import ly.david.musicsearch.core.coroutines.di.coroutineDispatchersModule
 import ly.david.musicsearch.core.coroutines.di.coroutinesScopesModule
 import ly.david.musicsearch.core.logging.loggingModule
@@ -24,6 +25,19 @@ import ly.david.ui.common.commonUiModule
 import ly.david.ui.history.di.historyUiModule
 import org.koin.core.module.Module
 import org.koin.dsl.module
+
+val circuitModule = module {
+    includes(
+        historyUiModule,
+        statsFeatureModule,
+    )
+    single {
+        Circuit.Builder()
+            .addPresenterFactories(getAll())
+            .addUiFactories(getAll())
+            .build()
+    }
+}
 
 // By putting some of these into nested includes, we will crash
 // Is it due to some of the modules depending on others
@@ -50,8 +64,7 @@ val sharedModule: Module = module {
         musicBrainzApiModule,
         preferencesDataStoreModule,
         searchFeatureModule,
-        historyUiModule,
-        statsFeatureModule,
         commonUiModule,
+        circuitModule
     )
 }

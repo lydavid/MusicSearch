@@ -28,6 +28,7 @@ kotlin {
                 implementation(projects.ui.common)
                 implementation(projects.ui.history)
                 implementation(libs.koin.core)
+                implementation("com.slack.circuit:circuit-foundation:0.19.1")
             }
         }
         val androidMain by getting {

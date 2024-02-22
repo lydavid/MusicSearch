@@ -325,12 +325,17 @@ internal fun NavigationGraph(
                 },
             ),
         ) {
+            // TODO:
 //            History(
 //                deleteHistoryDelegate = deleteHistoryDelegate,
 //                modifier = modifier,
 //                onItemClick = onLookupEntityClick,
 //            )
-            CircuitContent(HistoryScreen)
+            // TODO: how to pass modifier to UI? Need to convert everything to use circuit?
+            CircuitContent(
+                screen = HistoryScreen,
+                modifier = modifier
+            )
         }
 
         composable(

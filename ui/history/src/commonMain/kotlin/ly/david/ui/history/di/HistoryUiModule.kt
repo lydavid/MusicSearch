@@ -1,16 +1,16 @@
 package ly.david.ui.history.di
 
-import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
 import ly.david.ui.history.History
 import ly.david.ui.history.HistoryPresenter
 import ly.david.ui.history.HistoryScreen
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val historyUiModule = module {
-    single {
+    single(named(HistoryPresenter::class.java.name)) {
         Presenter.Factory { screen, navigator, context ->
             when (screen) {
                 is HistoryScreen -> HistoryPresenter(
@@ -24,7 +24,7 @@ val historyUiModule = module {
             }
         }
     }
-    single {
+    single(named(HistoryScreen::class.java.name)) {
         Ui.Factory { screen, context ->
             when (screen) {
                 is HistoryScreen -> {
@@ -39,11 +39,5 @@ val historyUiModule = module {
                 else -> null
             }
         }
-    }
-    single {
-        Circuit.Builder()
-            .addPresenterFactories(getAll())
-            .addUiFactories(getAll())
-            .build()
     }
 }
