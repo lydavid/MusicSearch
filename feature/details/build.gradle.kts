@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "ly.david.musicsearch.feature.stats"
+    namespace = "ly.david.musicsearch.feature.details"
 }
 
 kotlin {
@@ -16,7 +16,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
-                implementation(projects.core.parcelize)
                 implementation(projects.domain)
                 implementation(projects.ui.common)
                 implementation(projects.ui.core)

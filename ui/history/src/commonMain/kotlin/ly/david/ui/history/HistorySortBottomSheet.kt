@@ -6,15 +6,12 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import ly.david.musicsearch.core.models.history.HistorySortOption
-import ly.david.ui.common.component.ClickableItem
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.musicsearch.strings.LocalStrings
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.ui.common.component.ClickableItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +33,7 @@ internal fun HistorySortBottomSheet(
 }
 
 @Composable
-private fun HistorySortBottomSheetContent(
+internal fun HistorySortBottomSheetContent(
     sortOption: HistorySortOption = HistorySortOption.RECENTLY_VISITED,
     onSortOptionClick: (HistorySortOption) -> Unit = {},
 ) {
@@ -63,15 +60,5 @@ private fun HistorySortOption.getLabel(strings: AppStrings): String {
         HistorySortOption.RECENTLY_VISITED -> strings.recentlyVisited
         HistorySortOption.MOST_VISITED -> strings.mostVisited
         HistorySortOption.LEAST_VISITED -> strings.leastVisited
-    }
-}
-
-@DefaultPreviews
-@Composable
-internal fun PreviewHistorySortBottomSheetContent() {
-    PreviewTheme {
-        Surface {
-            HistorySortBottomSheetContent()
-        }
     }
 }
