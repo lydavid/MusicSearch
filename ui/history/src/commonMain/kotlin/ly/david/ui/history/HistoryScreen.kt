@@ -6,6 +6,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.screen.Screen
 import ly.david.musicsearch.core.models.history.HistorySortOption
 import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.core.parcelize.CommonParcelize
 
 @CommonParcelize
@@ -20,5 +21,12 @@ data object HistoryScreen : Screen {
     sealed interface UiEvent : CircuitUiEvent {
         data class UpdateQuery(val query: String) : UiEvent
         data class UpdateSortOption(val sortOption: HistorySortOption) : UiEvent
+        data class MarkHistoryForDeletion(val history: LookupHistoryListItemModel) : UiEvent
+        data class UnMarkHistoryForDeletion(val history: LookupHistoryListItemModel) : UiEvent
+        data class DeleteHistory(val history: LookupHistoryListItemModel) : UiEvent
+        data object MarkAllHistoryForDeletion : UiEvent
+        data object UnMarkAllHistoryForDeletion : UiEvent
+        data object DeleteAllHistory : UiEvent
+        data class OpenItem(val id: String) : UiEvent
     }
 }

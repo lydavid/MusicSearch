@@ -6,8 +6,10 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -17,11 +19,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import app.cash.paging.compose.LazyPagingItems
+import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
@@ -35,21 +39,17 @@ import ly.david.ui.common.topappbar.TopAppBarWithFilter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun History(
-//    deleteHistoryDelegate: DeleteHistoryDelegate,
     uiState: HistoryScreen.UiState,
     modifier: Modifier = Modifier,
 //    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
-//    viewModel: HistoryViewModel = koinViewModel(),
 ) {
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     val eventSink = uiState.eventSink
 
-//    var filterText by rememberSaveable { mutableStateOf("") }
-
-//    val sortOption by viewModel.sortOption.collectAsState()
     var showDeleteConfirmationDialog by rememberSaveable { mutableStateOf(false) }
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState()
@@ -60,7 +60,29 @@ fun History(
             confirmText = strings.yes,
             dismissText = strings.no,
             onDismiss = { showDeleteConfirmationDialog = false },
-//            onConfirmClick = { deleteHistoryDelegate.deleteAll() },
+            onConfirmClick = {
+                scope.launch {
+                    eventSink(HistoryScreen.UiEvent.MarkAllHistoryForDeletion)
+                    val snackbarResult = snackbarHostState.showSnackbar(
+                        message = "Cleared history",
+                        actionLabel = "Undo",
+                        duration = SnackbarDuration.Short,
+                    )
+
+                    when (snackbarResult) {
+                        SnackbarResult.ActionPerformed -> {
+                            eventSink(HistoryScreen.UiEvent.UnMarkAllHistoryForDeletion)
+                        }
+
+                        // TODO: leaving the screen before this is executed gives the user a strange experience
+                        //  the item will be marked as deleted, but not deleted, so when they next undo a delete all,
+                        //  they will recover items they thought they deleted
+                        SnackbarResult.Dismissed -> {
+                            eventSink(HistoryScreen.UiEvent.DeleteAllHistory)
+                        }
+                    }
+                }
+            },
         )
     }
 
@@ -120,7 +142,27 @@ fun History(
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
 //            onItemClick = onItemClick,
-//            onDeleteItem = deleteHistoryDelegate::delete,
+            onDeleteItem = { history ->
+                scope.launch {
+                    eventSink(HistoryScreen.UiEvent.MarkHistoryForDeletion(history))
+
+                    val snackbarResult = snackbarHostState.showSnackbar(
+                        message = "Removed ${history.title}",
+                        actionLabel = "Undo",
+                        duration = SnackbarDuration.Short,
+                    )
+
+                    when (snackbarResult) {
+                        SnackbarResult.ActionPerformed -> {
+                            eventSink(HistoryScreen.UiEvent.UnMarkHistoryForDeletion(history))
+                        }
+
+                        SnackbarResult.Dismissed -> {
+                            eventSink(HistoryScreen.UiEvent.DeleteHistory(history))
+                        }
+                    }
+                }
+            },
         )
     }
 }

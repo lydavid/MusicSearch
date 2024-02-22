@@ -18,6 +18,9 @@ val historyUiModule = module {
                     navigator = navigator,
                     appPreferences = get(),
                     getPagedHistory = get(),
+                    markLookupHistoryForDeletion = get(),
+                    unMarkLookupHistoryForDeletion = get(),
+                    deleteLookupHistory = get(),
                 )
 
                 else -> null

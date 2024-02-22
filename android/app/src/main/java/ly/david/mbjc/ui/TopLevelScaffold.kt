@@ -26,7 +26,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.slack.circuit.foundation.Circuit
 import kotlinx.coroutines.launch
 import ly.david.mbjc.ui.navigation.BottomNavigationBar
 import ly.david.mbjc.ui.navigation.NavigationGraph
