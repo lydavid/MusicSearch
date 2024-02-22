@@ -2,6 +2,8 @@
 aboutlibraries = "10.10.0"
 accompanist = "0.34.0"
 androidGradlePlugin = "8.2.2"
+arkivanov-mvikotlin = "3.3.0"
+arkivanov-decompose = "2.2.2"
 chucker = "4.0.0"
 coil = "2.5.0"
 compose-compiler = "1.5.9"
@@ -49,6 +51,13 @@ androidx-paging-runtime = { module = "androidx.paging:paging-runtime-ktx", versi
 androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.5.1"
 androidx-test-junit = "androidx.test.ext:junit:1.1.5"
 appauth = "net.openid:appauth:0.11.1"
+arkivanov-mvikotlin = { module = "com.arkivanov.mvikotlin:mvikotlin", version.ref = "arkivanov-mvikotlin" }
+arkivanov-mvikotlin-main = { module = "com.arkivanov.mvikotlin:mvikotlin-main", version.ref = "arkivanov-mvikotlin" }
+arkivanov-mvikotlin-logging = { module = "com.arkivanov.mvikotlin:mvikotlin-logging", version.ref = "arkivanov-mvikotlin" }
+arkivanov-mvikotlin-timetravel = { module = "com.arkivanov.mvikotlin:mvikotlin-timetravel", version.ref = "arkivanov-mvikotlin" }
+arkivanov-mvikotlin-extensions-coroutines = { module = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines", version.ref = "arkivanov-mvikotlin" }
+arkivanov-decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "arkivanov-decompose" }
+arkivanov-decompose-extensions-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "arkivanov-decompose" }
 chucker = { module = "com.github.chuckerteam.chucker:library", version.ref = "chucker" }
 chucker-noop = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "chucker" }
 coil-base = { module = "io.coil-kt:coil-base", version.ref = "coil" }

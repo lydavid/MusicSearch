@@ -64,6 +64,7 @@ val sharedModule: Module = module {
         musicBrainzApiModule,
         preferencesDataStoreModule,
         searchFeatureModule,
+        statsFeatureModule,
         commonUiModule,
         circuitModule
     )
