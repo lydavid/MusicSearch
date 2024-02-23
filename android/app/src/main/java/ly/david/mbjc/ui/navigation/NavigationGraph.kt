@@ -10,8 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import com.slack.circuit.foundation.Circuit
-import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.CircuitContent
 import ly.david.mbjc.DEEP_LINK_SCHEMA
 import ly.david.mbjc.ui.area.AreaScaffold
@@ -32,16 +30,13 @@ import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.musicsearch.core.models.network.toMusicBrainzEntity
 import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.core.models.navigation.toLookupDestination
-import ly.david.musicsearch.feature.search.SearchScaffold
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
-import ly.david.ui.history.DeleteHistoryDelegate
-import ly.david.ui.history.History
 import ly.david.musicsearch.android.feature.nowplaying.NowPlayingHistoryScaffold
 import ly.david.ui.settings.SettingsScaffold
 import ly.david.ui.settings.licenses.LicensesScaffold
 import ly.david.musicsearch.android.feature.spotify.SpotifyScaffold
-import ly.david.musicsearch.feature.search.internal.SearchScreen
+import ly.david.musicsearch.feature.search.SearchScreen
 import ly.david.ui.history.HistoryScreen
 import java.net.URLDecoder
 import java.net.URLEncoder

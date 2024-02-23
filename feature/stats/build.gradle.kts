@@ -27,7 +27,7 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.preview)
 
-                implementation("com.slack.circuit:circuit-foundation:0.19.1")
+                implementation(libs.circuit.foundation)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.collections.immutable)
             }

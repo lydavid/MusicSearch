@@ -1,11 +1,10 @@
-package ly.david.musicsearch.feature.search.di
+package ly.david.musicsearch.feature.search
 
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
-import ly.david.musicsearch.feature.search.SearchScaffold
 import ly.david.musicsearch.feature.search.internal.SearchPresenter
-import ly.david.musicsearch.feature.search.internal.SearchScreen
+import ly.david.musicsearch.feature.search.internal.Search
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -32,7 +31,7 @@ val searchFeatureModule: Module = module {
             when (screen) {
                 is SearchScreen -> {
                     ui<SearchScreen.UiState> { state, modifier ->
-                        SearchScaffold(
+                        Search(
                             uiState = state,
                             modifier = modifier,
                         )
