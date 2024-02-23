@@ -1,16 +1,11 @@
 package ly.david.mbjc.ui.release.stats
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import ly.david.ui.common.topappbar.Tab
-import ly.david.musicsearch.feature.stats.Stats
 import ly.david.musicsearch.feature.stats.StatsScreen
 import ly.david.musicsearch.feature.stats.circuit.ReleaseStatsScreen
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun ReleaseStatsUi(

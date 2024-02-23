@@ -1,4 +1,4 @@
-package ly.david.ui.commonlegacy.releasegroup
+package ly.david.ui.common.releasegroup
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel

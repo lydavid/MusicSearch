@@ -1,5 +1,6 @@
-package ly.david.ui.commonlegacy.release
+package ly.david.ui.common.release
 
+import ReleaseListItem
 import coil.Coil
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import kotlinx.coroutines.Dispatchers

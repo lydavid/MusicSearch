@@ -9,12 +9,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.navigation.compose.rememberNavController
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
-import com.slack.circuit.foundation.CircuitContent
-import ly.david.mbjc.ui.release.ReleaseTab
 import ly.david.musicsearch.core.preferences.AppPreferences
-import ly.david.musicsearch.feature.stats.circuit.ReleaseStatsScreen
 import ly.david.ui.core.theme.BaseTheme
-import ly.david.ui.history.HistoryScreen
 import org.koin.android.ext.android.inject
 
 internal class MainActivity : ComponentActivity() {

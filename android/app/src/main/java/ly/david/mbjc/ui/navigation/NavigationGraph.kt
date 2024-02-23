@@ -112,7 +112,7 @@ internal fun NavigationGraph(
                 screen = SearchScreen(),
                 modifier = modifier,
                 onNavEvent = { event ->
-                    when(event) {
+                    when (event) {
                         is NavEvent.GoTo -> {
                             val screen = event.screen
                             if (screen is DetailsScreen) {
@@ -122,7 +122,7 @@ internal fun NavigationGraph(
                         is NavEvent.Pop -> TODO()
                         is NavEvent.ResetRoot -> TODO()
                     }
-                }
+                },
             )
         }
 
@@ -156,7 +156,7 @@ internal fun NavigationGraph(
                     query = query,
                     entity = type,
                 ),
-                modifier = modifier
+                modifier = modifier,
             )
         }
 
@@ -349,7 +349,7 @@ internal fun NavigationGraph(
                 screen = HistoryScreen,
                 modifier = modifier,
                 onNavEvent = { event ->
-                    when(event) {
+                    when (event) {
                         is NavEvent.GoTo -> {
                             val screen = event.screen
                             if (screen is DetailsScreen) {
@@ -359,7 +359,7 @@ internal fun NavigationGraph(
                         is NavEvent.Pop -> TODO()
                         is NavEvent.ResetRoot -> TODO()
                     }
-                }
+                },
             )
         }
 

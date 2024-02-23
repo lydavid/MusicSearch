@@ -1,10 +1,9 @@
-package ly.david.ui.commonlegacy.releasegroup
+package ly.david.ui.common.releasegroup
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,14 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.common.ifNotNull
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.image.ThumbnailImage
 import ly.david.ui.common.getIcon
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 import ly.david.ui.core.theme.getSubTextColor
-import ly.david.musicsearch.ui.image.ThumbnailImage
 
 // TODO: have 2 modes: query and browse where some data is displayed differently
 /**
@@ -84,23 +81,3 @@ fun ReleaseGroupListItem(
         },
     )
 }
-
-// region Previews
-private val testReleaseGroup = ReleaseGroupListItemModel(
-    id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
-    name = "欠けた心象、世のよすが",
-    primaryType = "EP",
-    firstReleaseDate = "2021-09-08",
-    formattedArtistCredits = "Some artist feat. some other artist",
-)
-
-@DefaultPreviews
-@Composable
-private fun Preview() {
-    PreviewTheme {
-        Surface {
-            ReleaseGroupListItem(testReleaseGroup)
-        }
-    }
-}
-// endregion
