@@ -1,4 +1,4 @@
-package ly.david.ui.history
+package ly.david.ui.history.internal
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
@@ -35,10 +35,11 @@ import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.ui.history.HistoryScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun History(
+internal fun History(
     uiState: HistoryScreen.UiState,
     modifier: Modifier = Modifier,
 //    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -143,7 +144,15 @@ fun History(
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-//            onItemClick = onItemClick,
+            onItemClick = { entity, id, title ->
+                eventSink(
+                    HistoryScreen.UiEvent.ClickItem(
+                        entity = entity,
+                        id = id,
+                        title = title,
+                    ),
+                )
+            },
             onDeleteItem = { history ->
                 scope.launch {
                     eventSink(HistoryScreen.UiEvent.MarkHistoryForDeletion(history))

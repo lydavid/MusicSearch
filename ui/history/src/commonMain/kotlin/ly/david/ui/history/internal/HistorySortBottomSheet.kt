@@ -1,4 +1,4 @@
-package ly.david.ui.history
+package ly.david.ui.history.internal
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons

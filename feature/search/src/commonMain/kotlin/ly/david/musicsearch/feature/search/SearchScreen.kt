@@ -28,5 +28,6 @@ data class SearchScreen(
         data object RecordSearch : UiEvent
         data class DeleteSearchHistory(val item: SearchHistoryListItemModel) : UiEvent
         data object DeleteAllEntitySearchHistory : UiEvent
+        data class ClickItem(val entity: MusicBrainzEntity, val id: String, val title: String?) : UiEvent
     }
 }

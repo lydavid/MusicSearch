@@ -7,6 +7,7 @@ import com.slack.circuit.runtime.screen.Screen
 import ly.david.musicsearch.core.models.history.HistorySortOption
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.parcelize.CommonParcelize
 
 @CommonParcelize
@@ -27,6 +28,6 @@ data object HistoryScreen : Screen {
         data object MarkAllHistoryForDeletion : UiEvent
         data object UnMarkAllHistoryForDeletion : UiEvent
         data object DeleteAllHistory : UiEvent
-        data class OpenItem(val id: String) : UiEvent
+        data class ClickItem(val entity: MusicBrainzEntity, val id: String, val title: String?) : UiEvent
     }
 }

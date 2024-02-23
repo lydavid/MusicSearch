@@ -68,6 +68,7 @@ internal fun SearchResultsScreen(
             }
 
             is ReleaseGroupListItemModel -> {
+
                 // TODO: should see album type rather than year
 //                ReleaseGroupListItem(releaseGroup = listItemModel) {
 //                    onItemClick(

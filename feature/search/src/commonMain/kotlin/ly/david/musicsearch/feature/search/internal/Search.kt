@@ -32,7 +32,6 @@ import ly.david.ui.common.topappbar.ScrollableTopAppBar
 internal fun Search(
     uiState: SearchScreen.UiState,
     modifier: Modifier,
-//    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit,
 ) {
     val strings = LocalStrings.current
     val snackbarHostState = remember { SnackbarHostState() }
@@ -51,7 +50,6 @@ internal fun Search(
             uiState = uiState,
             modifier = Modifier.padding(innerPadding),
             snackbarHostState = snackbarHostState,
-            //            onItemClick = onItemClick,
         )
     }
 }
@@ -61,7 +59,6 @@ private fun Search(
     uiState: SearchScreen.UiState,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
-//    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     val strings = LocalStrings.current
     val eventSink = uiState.eventSink
@@ -141,12 +138,13 @@ private fun Search(
                 snackbarHostState = snackbarHostState,
                 onItemClick = { entity, id, title ->
                     eventSink(SearchScreen.UiEvent.RecordSearch)
-
-//                    onItemClick(
-//                        entity,
-//                        id,
-//                        title,
-//                    )
+                    eventSink(
+                        SearchScreen.UiEvent.ClickItem(
+                            entity = entity,
+                            id = id,
+                            title = title,
+                        ),
+                    )
                 },
             )
         }

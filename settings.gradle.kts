@@ -61,6 +61,7 @@ include(
     ":feature:search",
     ":feature:stats",
     ":shared",
+    ":shared:screens",
     ":strings",
     ":test-data",
     ":ui:collections",

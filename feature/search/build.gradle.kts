@@ -16,6 +16,7 @@ kotlin {
             dependencies {
                 implementation(projects.core.models)
                 implementation(projects.core.parcelize)
+                implementation(projects.shared.screens)
                 implementation(projects.domain)
                 implementation(projects.strings)
                 implementation(projects.ui.common)

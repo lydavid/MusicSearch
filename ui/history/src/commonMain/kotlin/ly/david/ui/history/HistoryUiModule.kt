@@ -1,11 +1,10 @@
-package ly.david.ui.history.di
+package ly.david.ui.history
 
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
-import ly.david.ui.history.History
-import ly.david.ui.history.HistoryPresenter
-import ly.david.ui.history.HistoryScreen
+import ly.david.ui.history.internal.History
+import ly.david.ui.history.internal.HistoryPresenter
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.slack.circuit.foundation.CircuitContent
+import com.slack.circuit.foundation.NavEvent
 import ly.david.mbjc.DEEP_LINK_SCHEMA
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
@@ -37,6 +38,7 @@ import ly.david.ui.settings.SettingsScaffold
 import ly.david.ui.settings.licenses.LicensesScaffold
 import ly.david.musicsearch.android.feature.spotify.SpotifyScaffold
 import ly.david.musicsearch.feature.search.SearchScreen
+import ly.david.musicsearch.shared.screens.DetailsScreen
 import ly.david.ui.history.HistoryScreen
 import java.net.URLDecoder
 import java.net.URLEncoder
@@ -108,7 +110,19 @@ internal fun NavigationGraph(
 //            )
             CircuitContent(
                 screen = SearchScreen(),
-                modifier = modifier
+                modifier = modifier,
+                onNavEvent = { event ->
+                    when(event) {
+                        is NavEvent.GoTo -> {
+                            val screen = event.screen
+                            if (screen is DetailsScreen) {
+                                onLookupEntityClick(screen.entity, screen.id, screen.title)
+                            }
+                        }
+                        is NavEvent.Pop -> TODO()
+                        is NavEvent.ResetRoot -> TODO()
+                    }
+                }
             )
         }
 
@@ -331,13 +345,21 @@ internal fun NavigationGraph(
                 },
             ),
         ) {
-            // TODO:
-//            History(
-//                onItemClick = onLookupEntityClick,
-//            )
             CircuitContent(
                 screen = HistoryScreen,
-                modifier = modifier
+                modifier = modifier,
+                onNavEvent = { event ->
+                    when(event) {
+                        is NavEvent.GoTo -> {
+                            val screen = event.screen
+                            if (screen is DetailsScreen) {
+                                onLookupEntityClick(screen.entity, screen.id, screen.title)
+                            }
+                        }
+                        is NavEvent.Pop -> TODO()
+                        is NavEvent.ResetRoot -> TODO()
+                    }
+                }
             )
         }
 

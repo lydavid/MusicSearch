@@ -1,4 +1,4 @@
-package ly.david.ui.history
+package ly.david.ui.history.internal
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -8,6 +8,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.slack.circuit.foundation.NavEvent
+import com.slack.circuit.foundation.onNavEvent
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.models.history.HistorySortOption
@@ -17,8 +19,10 @@ import ly.david.musicsearch.domain.history.usecase.DeleteLookupHistory
 import ly.david.musicsearch.domain.history.usecase.GetPagedHistory
 import ly.david.musicsearch.domain.history.usecase.MarkLookupHistoryForDeletion
 import ly.david.musicsearch.domain.history.usecase.UnMarkLookupHistoryForDeletion
+import ly.david.musicsearch.shared.screens.DetailsScreen
+import ly.david.ui.history.HistoryScreen
 
-class HistoryPresenter(
+internal class HistoryPresenter(
     private val navigator: Navigator,
     private val appPreferences: AppPreferences,
     private val getPagedHistory: GetPagedHistory,
@@ -69,10 +73,16 @@ class HistoryPresenter(
                     deleteLookupHistory()
                 }
 
-                is HistoryScreen.UiEvent.OpenItem -> {
-                    // TODO: can we go to DetailsScreen, instead of having to specify screen based on entity type?
-                    //  that would mean a nested screen (ui/presenter)?
-//                    navigator.goTo()
+                is HistoryScreen.UiEvent.ClickItem -> {
+                    navigator.onNavEvent(
+                        NavEvent.GoTo(
+                            DetailsScreen(
+                                event.entity,
+                                event.id,
+                                event.title,
+                            ),
+                        ),
+                    )
                 }
             }
         }

@@ -22,7 +22,7 @@ import ly.david.musicsearch.feature.search.searchFeatureModule
 import ly.david.musicsearch.feature.stats.di.statsFeatureModule
 import ly.david.musicsearch.strings.di.stringsModule
 import ly.david.ui.common.commonUiModule
-import ly.david.ui.history.di.historyUiModule
+import ly.david.ui.history.historyUiModule
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
