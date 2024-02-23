@@ -13,6 +13,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.Coil
 import coil.ImageLoaderFactory
+import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
 import kotlinx.coroutines.test.runTest
 import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzModel
 import ly.david.data.test.toFakeMusicBrainzModel
@@ -55,6 +57,7 @@ internal class CollectionParameterizedTest(
 
     private val collectionDao: CollectionDao by inject()
     private val imageLoaderFactory: ImageLoaderFactory by inject()
+    private val circuit: Circuit by inject()
     private lateinit var navController: NavHostController
 
     @Before
@@ -63,7 +66,9 @@ internal class CollectionParameterizedTest(
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {
-                TopLevelScaffold(navController)
+                CircuitCompositionLocals(circuit) {
+                    TopLevelScaffold(navController)
+                }
             }
         }
     }

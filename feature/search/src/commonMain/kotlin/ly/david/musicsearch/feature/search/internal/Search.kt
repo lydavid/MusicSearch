@@ -21,8 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.testTag
 import ly.david.musicsearch.core.models.network.searchableEntities
 import ly.david.musicsearch.feature.search.SearchScreen
+import ly.david.musicsearch.feature.search.SearchScreenTestTag
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
@@ -70,10 +72,7 @@ private fun Search(
         Row(modifier = Modifier.fillMaxWidth()) {
             TextField(
                 modifier = Modifier
-//                    .semantics {
-//                        testTagsAsResourceId = true
-//                    }
-//                    .testTag(SearchScreenTestTag.TEXT_FIELD.name)
+                    .testTag(SearchScreenTestTag.TEXT_FIELD.name)
                     .weight(1f)
                     .focusRequester(focusRequester),
                 shape = RectangleShape,
@@ -103,10 +102,6 @@ private fun Search(
 
             ExposedDropdownMenuBox(
                 modifier = Modifier
-//                    .semantics {
-//                        testTagsAsResourceId = true
-//                    }
-//                    .testTag(SearchScreenTestTag.DROPDOWN.name)
                     .weight(1f),
                 options = searchableEntities,
                 selectedOption = uiState.entity,

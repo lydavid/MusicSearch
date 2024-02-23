@@ -7,6 +7,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.Coil
 import coil.ImageLoaderFactory
+import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
 import kotlinx.coroutines.test.runTest
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUri
@@ -36,6 +38,7 @@ internal class NavigateToEachEntityWithTitleTest(
     }
 
     private val imageLoaderFactory: ImageLoaderFactory by inject()
+    private val circuit: Circuit by inject()
     private lateinit var navController: NavHostController
 
     @Before
@@ -44,7 +47,9 @@ internal class NavigateToEachEntityWithTitleTest(
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {
-                TopLevelScaffold(navController)
+                CircuitCompositionLocals(circuit) {
+                    TopLevelScaffold(navController)
+                }
             }
         }
     }

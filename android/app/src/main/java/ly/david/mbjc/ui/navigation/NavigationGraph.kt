@@ -104,10 +104,6 @@ internal fun NavigationGraph(
         }
 
         composable(Destination.LOOKUP.route) {
-//            SearchScaffold(
-//                modifier = modifier,
-//                onItemClick = onLookupEntityClick,
-//            )
             CircuitContent(
                 screen = SearchScreen(),
                 modifier = modifier,

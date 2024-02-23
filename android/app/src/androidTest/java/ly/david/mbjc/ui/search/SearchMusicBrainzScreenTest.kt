@@ -15,6 +15,8 @@ import androidx.compose.ui.test.swipeRight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
 import kotlinx.coroutines.test.runTest
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.data.test.toFakeMusicBrainzModel
@@ -36,6 +38,7 @@ import kotlin.time.Duration.Companion.seconds
 internal class SearchMusicBrainzScreenTest : MainActivityTest() {
 
     private val strings: AppStrings by inject()
+    private val circuit: Circuit by inject()
     private lateinit var navController: NavHostController
 
     @Before
@@ -43,7 +46,9 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest() {
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {
-                TopLevelScaffold(navController)
+                CircuitCompositionLocals(circuit) {
+                    TopLevelScaffold(navController)
+                }
             }
         }
     }

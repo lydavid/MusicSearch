@@ -5,6 +5,8 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.lookupHistory
 import ly.david.mbjc.MainActivityTest
@@ -20,6 +22,7 @@ import org.koin.test.inject
 internal class HistoryScreenTest : MainActivityTest() {
 
     private val strings: AppStrings by inject()
+    private val circuit: Circuit by inject()
     private lateinit var navController: NavHostController
 
     private val lookupHistoryRepository: LookupHistoryRepository by inject()
@@ -29,7 +32,9 @@ internal class HistoryScreenTest : MainActivityTest() {
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {
-                TopLevelScaffold(navController)
+                CircuitCompositionLocals(circuit) {
+                    TopLevelScaffold(navController)
+                }
             }
         }
     }
