@@ -67,6 +67,7 @@ fun History(
                         message = "Cleared history",
                         actionLabel = "Undo",
                         duration = SnackbarDuration.Short,
+                        withDismissAction = true,
                     )
 
                     when (snackbarResult) {
@@ -151,6 +152,7 @@ fun History(
                         message = "Removed ${history.title}",
                         actionLabel = "Undo",
                         duration = SnackbarDuration.Short,
+                        withDismissAction = true,
                     )
 
                     when (snackbarResult) {

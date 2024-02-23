@@ -41,6 +41,7 @@ import ly.david.musicsearch.android.feature.nowplaying.NowPlayingHistoryScaffold
 import ly.david.ui.settings.SettingsScaffold
 import ly.david.ui.settings.licenses.LicensesScaffold
 import ly.david.musicsearch.android.feature.spotify.SpotifyScaffold
+import ly.david.musicsearch.feature.search.internal.SearchScreen
 import ly.david.ui.history.HistoryScreen
 import java.net.URLDecoder
 import java.net.URLEncoder
@@ -106,9 +107,13 @@ internal fun NavigationGraph(
         }
 
         composable(Destination.LOOKUP.route) {
-            SearchScaffold(
-                modifier = modifier,
-                onItemClick = onLookupEntityClick,
+//            SearchScaffold(
+//                modifier = modifier,
+//                onItemClick = onLookupEntityClick,
+//            )
+            CircuitContent(
+                screen = SearchScreen(),
+                modifier = modifier
             )
         }
 
@@ -131,11 +136,18 @@ internal fun NavigationGraph(
             val query = entry.arguments?.getString(QUERY)?.decodeUtf8()
             val type = entry.arguments?.getString(TYPE)?.toMusicBrainzEntity()
 
-            SearchScaffold(
-                modifier = modifier,
-                onItemClick = onLookupEntityClick,
-                initialQuery = query,
-                initialEntity = type,
+//            SearchScaffold(
+//                modifier = modifier,
+//                onItemClick = onLookupEntityClick,
+//                initialQuery = query,
+//                initialEntity = type,
+//            )
+            CircuitContent(
+                screen = SearchScreen(
+                    query = query,
+                    entity = type,
+                ),
+                modifier = modifier
             )
         }
 

@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,8 +13,6 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.core.TINY_ICON_SIZE
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
@@ -36,7 +33,10 @@ internal fun SearchHistoryListItem(
                     )
                 },
                 modifier = modifier.clickable {
-                    onItemClick(searchHistory.entity, searchHistory.query)
+                    onItemClick(
+                        searchHistory.entity,
+                        searchHistory.query,
+                    )
                 },
                 leadingContent = {
                     EntityIcon(
@@ -50,20 +50,4 @@ internal fun SearchHistoryListItem(
             onDeleteItem(searchHistory)
         },
     )
-}
-
-@DefaultPreviews
-@Composable
-internal fun PreviewSearchHistoryListItem() {
-    PreviewTheme {
-        Surface {
-            SearchHistoryListItem(
-                searchHistory = SearchHistoryListItemModel(
-                    id = "ARTIST_aha",
-                    query = "aha",
-                    entity = MusicBrainzEntity.ARTIST,
-                ),
-            )
-        }
-    }
 }

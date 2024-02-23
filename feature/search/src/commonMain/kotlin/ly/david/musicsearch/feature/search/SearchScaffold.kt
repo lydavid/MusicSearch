@@ -1,13 +1,47 @@
 package ly.david.musicsearch.feature.search
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.feature.search.internal.SearchScreen
+import ly.david.musicsearch.feature.search.internal.Search
+import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.common.topappbar.ScrollableTopAppBar
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-expect fun SearchScaffold(
-    modifier: Modifier = Modifier,
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
-    initialQuery: String? = null,
-    initialEntity: MusicBrainzEntity? = null,
-)
+fun SearchScaffold(
+    uiState: SearchScreen.UiState,
+    modifier: Modifier,
+//    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit,
+//    initialQuery: String?,
+//    initialEntity: MusicBrainzEntity?,
+) {
+    val strings = LocalStrings.current
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    Scaffold(
+        modifier = modifier,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        topBar = {
+            ScrollableTopAppBar(
+                showBackButton = false,
+                title = strings.searchMusicbrainz,
+            )
+        },
+    ) { innerPadding ->
+        Search(
+            uiState = uiState,
+            modifier = Modifier.padding(innerPadding),
+            snackbarHostState = snackbarHostState,
+//            onItemClick = onItemClick,
+//            initialQuery = initialQuery,
+//            initialEntity = initialEntity,
+        )
+    }
+}

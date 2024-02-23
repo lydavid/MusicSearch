@@ -19,7 +19,6 @@ import ly.david.musicsearch.domain.history.usecase.MarkLookupHistoryForDeletion
 import ly.david.musicsearch.domain.history.usecase.UnMarkLookupHistoryForDeletion
 
 class HistoryPresenter(
-    private val screen: HistoryScreen,
     private val navigator: Navigator,
     private val appPreferences: AppPreferences,
     private val getPagedHistory: GetPagedHistory,
@@ -70,7 +69,11 @@ class HistoryPresenter(
                     deleteLookupHistory()
                 }
 
-                is HistoryScreen.UiEvent.OpenItem -> TODO()
+                is HistoryScreen.UiEvent.OpenItem -> {
+                    // TODO: can we go to DetailsScreen, instead of having to specify screen based on entity type?
+                    //  that would mean a nested screen (ui/presenter)?
+//                    navigator.goTo()
+                }
             }
         }
 

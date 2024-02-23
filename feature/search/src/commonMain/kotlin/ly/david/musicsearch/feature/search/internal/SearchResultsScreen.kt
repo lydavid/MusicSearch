@@ -16,6 +16,7 @@ import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
 import ly.david.musicsearch.core.models.listitem.EndOfList
+import ly.david.musicsearch.core.models.listitem.EndOfList.id
 import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.core.models.listitem.InstrumentListItemModel
 import ly.david.musicsearch.core.models.listitem.LabelListItemModel
@@ -36,8 +37,6 @@ import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.place.PlaceListItem
 import ly.david.ui.common.recording.RecordingListItem
-import ly.david.ui.commonlegacy.release.ReleaseListItem
-import ly.david.ui.commonlegacy.releasegroup.ReleaseGroupListItem
 import ly.david.ui.common.series.SeriesListItem
 import ly.david.ui.common.work.WorkListItem
 
@@ -70,23 +69,24 @@ internal fun SearchResultsScreen(
 
             is ReleaseGroupListItemModel -> {
                 // TODO: should see album type rather than year
-                ReleaseGroupListItem(releaseGroup = listItemModel) {
-                    onItemClick(
-                        MusicBrainzEntity.RELEASE_GROUP,
-                        id,
-                        getNameWithDisambiguation(),
-                    )
-                }
+//                ReleaseGroupListItem(releaseGroup = listItemModel) {
+//                    onItemClick(
+//                        MusicBrainzEntity.RELEASE_GROUP,
+//                        id,
+//                        getNameWithDisambiguation(),
+//                    )
+//                }
             }
 
             is ReleaseListItemModel -> {
-                ReleaseListItem(release = listItemModel) {
-                    onItemClick(
-                        MusicBrainzEntity.RELEASE,
-                        id,
-                        getNameWithDisambiguation(),
-                    )
-                }
+                // TODO: handle release and rg list items in commonMain
+//                ReleaseListItem(release = listItemModel) {
+//                    onItemClick(
+//                        MusicBrainzEntity.RELEASE,
+//                        id,
+//                        getNameWithDisambiguation(),
+//                    )
+//                }
             }
 
             is RecordingListItemModel -> {

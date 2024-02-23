@@ -27,11 +27,16 @@ import androidx.compose.ui.window.rememberWindowState
 import com.github.scribejava.core.model.OAuth2AccessToken
 import com.github.scribejava.core.model.OAuthAsyncRequestCallback
 import com.github.scribejava.core.oauth.OAuth20Service
+import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
+import com.slack.circuit.foundation.CircuitContent
+import ly.david.musicsearch.feature.search.internal.SearchScreen
 import ly.david.musicsearch.shared.di.sharedModule
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.BaseTheme
 import ly.david.ui.core.theme.TextStyles
 import org.koin.core.context.startKoin
+import org.koin.java.KoinJavaComponent.inject
 
 fun main() = application {
     val windowState = rememberWindowState()
@@ -43,6 +48,7 @@ fun main() = application {
     }.koin
 
     val service = koin.get<OAuth20Service>()
+    val circuit = koin.get<Circuit>()
 
     Window(
         onCloseRequest = ::exitApplication,
@@ -51,9 +57,12 @@ fun main() = application {
     ) {
         BaseTheme(
             content = {
-                MusicSearchApp(
-                    service,
-                )
+                CircuitCompositionLocals(circuit) {
+                    CircuitContent(SearchScreen())
+                }
+//                MusicSearchApp(
+//                    service,
+//                )
             },
         )
     }

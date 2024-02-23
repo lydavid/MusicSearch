@@ -3,7 +3,6 @@ plugins {
     id("ly.david.android.compose")
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
-//    alias(libs.plugins.ksp)
     alias(libs.plugins.paparazzi)
     alias(libs.plugins.kotlin.parcelize)
 }
@@ -30,10 +29,10 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.preview)
 
-                implementation("com.slack.circuit:circuit-foundation:0.19.1")
+                implementation(libs.circuit.foundation)
+                implementation(libs.koin.core)
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
-                implementation(libs.koin.core)
             }
         }
         val androidUnitTest by getting {
@@ -49,18 +48,4 @@ kotlin {
 }
 dependencies {
     debugImplementation(compose.uiTooling)
-
-//    implementation(projects.ui.commonLegacy)
-
-
-
-
-
-
-//    implementation(libs.koin.androidx.compose)
-
-//    implementation(libs.koin.annotations)
-//    ksp(libs.koin.ksp.compiler)
-
-
 }

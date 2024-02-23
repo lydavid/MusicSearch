@@ -28,6 +28,7 @@ import org.koin.dsl.module
 
 val circuitModule = module {
     includes(
+        searchFeatureModule,
         historyUiModule,
         statsFeatureModule,
     )
@@ -63,9 +64,8 @@ val sharedModule: Module = module {
         databaseDriverModule,
         musicBrainzApiModule,
         preferencesDataStoreModule,
-        searchFeatureModule,
         statsFeatureModule,
         commonUiModule,
-        circuitModule
+        circuitModule,
     )
 }

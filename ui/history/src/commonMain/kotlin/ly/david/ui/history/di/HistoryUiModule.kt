@@ -14,7 +14,6 @@ val historyUiModule = module {
         Presenter.Factory { screen, navigator, context ->
             when (screen) {
                 is HistoryScreen -> HistoryPresenter(
-                    screen = screen,
                     navigator = navigator,
                     appPreferences = get(),
                     getPagedHistory = get(),
