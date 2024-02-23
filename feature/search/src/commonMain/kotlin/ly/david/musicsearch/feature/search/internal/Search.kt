@@ -31,7 +31,7 @@ import ly.david.ui.common.topappbar.ScrollableTopAppBar
 @Composable
 internal fun Search(
     uiState: SearchScreen.UiState,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
     val strings = LocalStrings.current
     val snackbarHostState = remember { SnackbarHostState() }

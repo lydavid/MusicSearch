@@ -10,7 +10,6 @@ import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTy
 import ly.david.musicsearch.feature.stats.Stats
 import org.koin.android.annotation.KoinViewModel
 
-// TODO: simpler to do these first than common-legacy
 @KoinViewModel
 internal class ReleaseStatsViewModel(
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,

@@ -42,7 +42,6 @@ import ly.david.ui.history.HistoryScreen
 internal fun History(
     uiState: HistoryScreen.UiState,
     modifier: Modifier = Modifier,
-//    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
