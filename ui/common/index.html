@@ -1,0 +1,4075 @@
+<html>
+  <head>
+    <title>MusicSearch - Compose Compiler Report</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" type="crossorigin">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap" rel="stylesheet">
+    <style>body {
+    font-family: 'Roboto', sans-serif;
+    text-align:center
+}
+
+hr {
+    margin: 8px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin: 8px;
+    padding: 4px
+}
+
+.code {
+    font-family: 'Roboto Mono', monospace;
+}
+
+.collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.active, .collapsible:hover {
+    background-color: #555;
+}
+
+.collapsible:after {
+    content: '\002B';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+}
+
+ .content-header {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.content-body {
+    padding: 0 18px;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+footer {
+    padding: 16px;
+    background-color: #E0E0E0 
+}
+
+.status-success {
+    color: #004D40;
+}
+
+.status-failure {
+    color: #D32F2F;
+}
+
+.background-status-success {
+    background-color: #B2DFDB;
+    color: #000000;
+}
+
+.background-status-failure {
+    background-color: #D32F2F;
+    color: #FFFFFF
+}
+
+.background-status-missing {
+    background-color: #FFAC1C;
+    color: #000000
+}
+
+.empty-content {
+    margin: 4px;
+    padding: 18px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}</style>
+  </head>
+  <body>
+    <h1>Compose Compiler Report - MusicSearch</h1>
+    <section><button class="collapsible">Brief Statistics</button>
+      <div class="content">
+        <table class="center" style="text-align:left;">
+          <tr>
+            <th>Skippable Composables</th>
+            <td>202</td>
+          </tr>
+          <tr>
+            <th>Restartable Composables</th>
+            <td>268</td>
+          </tr>
+          <tr>
+            <th>Readonly Composables</th>
+            <td>0</td>
+          </tr>
+          <tr>
+            <th>Total Composables</th>
+            <td>270</td>
+          </tr>
+          <tr>
+            <th>Restart Groups</th>
+            <td>268</td>
+          </tr>
+          <tr>
+            <th>Total Groups</th>
+            <td>304</td>
+          </tr>
+          <tr>
+            <th>Static Arguments</th>
+            <td>264</td>
+          </tr>
+          <tr>
+            <th>Certain Arguments</th>
+            <td>90</td>
+          </tr>
+          <tr>
+            <th>Known Stable Arguments</th>
+            <td>2465</td>
+          </tr>
+          <tr>
+            <th>Known Unstable Arguments</th>
+            <td>31</td>
+          </tr>
+          <tr>
+            <th>Unknown Stable Arguments</th>
+            <td>9</td>
+          </tr>
+          <tr>
+            <th>Total Arguments</th>
+            <td>2505</td>
+          </tr>
+          <tr>
+            <th>Marked Stable Classes</th>
+            <td>0</td>
+          </tr>
+          <tr>
+            <th>Inferred Stable Classes</th>
+            <td>1</td>
+          </tr>
+          <tr>
+            <th>Inferred Unstable Classes</th>
+            <td>11</td>
+          </tr>
+          <tr>
+            <th>Inferred Uncertain Classes</th>
+            <td>0</td>
+          </tr>
+          <tr>
+            <th>Effectively Stable Classes</th>
+            <td>1</td>
+          </tr>
+          <tr>
+            <th>Total Classes</th>
+            <td>12</td>
+          </tr>
+          <tr>
+            <th>Memoized Lambdas</th>
+            <td>221</td>
+          </tr>
+          <tr>
+            <th>Singleton Lambdas</th>
+            <td>42</td>
+          </tr>
+          <tr>
+            <th>Singleton Composable Lambdas</th>
+            <td>55</td>
+          </tr>
+          <tr>
+            <th>Composable Lambdas</th>
+            <td>147</td>
+          </tr>
+          <tr>
+            <th>Total Lambdas</th>
+            <td>243</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    <hr>
+    <section><button class="collapsible">Detailed Statistics</button>
+      <div class="content">
+        <table style="width:100%;">
+          <tr>
+            <th>package</th>
+            <th>name</th>
+            <th>composable</th>
+            <th>skippable</th>
+            <th>restartable</th>
+            <th>readonly</th>
+            <th>inline</th>
+            <th>isLambda</th>
+            <th>hasDefaults</th>
+            <th>defaultsGroup</th>
+            <th>groups</th>
+            <th>calls</th>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.area.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.area.PreviewReleaseEvent</td>
+            <td>PreviewReleaseEvent</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.artist.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.button.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.component.ClickableItem</td>
+            <td>ClickableItem</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.component.PreviewClickableItem</td>
+            <td>PreviewClickableItem</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.component.PreviewClickableItemWithSubtitle</td>
+            <td>PreviewClickableItemWithSubtitle</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.component.PreviewClickableItemWithIcon</td>
+            <td>PreviewClickableItemWithIcon</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.dialog.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.dialog.PreviewSimpleAlertDialog</td>
+            <td>PreviewSimpleAlertDialog</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.event.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.fullscreen.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.fullscreen.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.fullscreen.PreviewFullScreenText</td>
+            <td>PreviewFullScreenText</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.instrument.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.label.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.listitem.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.listitem.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.listitem.ListSeparatorHeaderPreview</td>
+            <td>ListSeparatorHeaderPreview</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.paging.FooterLoadingIndicatorPreview</td>
+            <td>FooterLoadingIndicatorPreview</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.place.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.recording.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.relation.PreviewArtistRelationListItem</td>
+            <td>PreviewArtistRelationListItem</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.relation.PreviewRecordingRelationListItem</td>
+            <td>PreviewRecordingRelationListItem</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.relation.PreviewUrlRelationListItem</td>
+            <td>PreviewUrlRelationListItem</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.release.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.series.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.text.PreviewTextWithHeading</td>
+            <td>PreviewTextWithHeading</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.Default</td>
+            <td>Default</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.WithIcon</td>
+            <td>WithIcon</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.WithTabs</td>
+            <td>WithTabs</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.TopAppBarWithFilter</td>
+            <td>TopAppBarWithFilter</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>2</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.Default</td>
+            <td>Default</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.FilterMode</td>
+            <td>FilterMode</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.NoFilter</td>
+            <td>NoFilter</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.WithTabs</td>
+            <td>WithTabs</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.url.PreviewUrlsSection</td>
+            <td>PreviewUrlsSection</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.work.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.EntityIcon</td>
+            <td>EntityIcon</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.ExposedDropdownMenuBox</td>
+            <td>ExposedDropdownMenuBox</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.area.AreaListItem</td>
+            <td>AreaListItem</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.artist.ArtistListItem</td>
+            <td>ArtistListItem</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.button.RetryButton</td>
+            <td>RetryButton</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.dialog.MultipleChoiceDialog</td>
+            <td>MultipleChoiceDialog</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.dialog.SimpleAlertDialog</td>
+            <td>SimpleAlertDialog</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.event.EventListItem</td>
+            <td>EventListItem</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.event.EventsListScreen</td>
+            <td>EventsListScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.fullscreen.DetailsWithErrorHandling</td>
+            <td>DetailsWithErrorHandling</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>4</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.fullscreen.FullScreenContent</td>
+            <td>FullScreenContent</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.fullscreen.FullScreenErrorWithRetry</td>
+            <td>FullScreenErrorWithRetry</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.fullscreen.FullScreenLoadingIndicator</td>
+            <td>FullScreenLoadingIndicator</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.fullscreen.FullScreenText</td>
+            <td>FullScreenText</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.instrument.InstrumentListItem</td>
+            <td>InstrumentListItem</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.label.LabelListItem</td>
+            <td>LabelListItem</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.listitem.DisambiguationText</td>
+            <td>DisambiguationText</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.listitem.LifeSpanText</td>
+            <td>LifeSpanText</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.listitem.ListSeparatorHeader</td>
+            <td>ListSeparatorHeader</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.listitem.SwipeToDeleteListItem</td>
+            <td>SwipeToDeleteListItem</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>3</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.listitem.SwipeToDeleteListItem</td>
+            <td>SwipeToDeleteListItem</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.listitem.SwipeToDeleteBackground</td>
+            <td>SwipeToDeleteBackground</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.paging.FooterLoadingIndicator</td>
+            <td>FooterLoadingIndicator</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.paging.ScreenWithPagingLoadingAndError</td>
+            <td>ScreenWithPagingLoadingAndError</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.place.PlaceListItem</td>
+            <td>PlaceListItem</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.place.PlacesListScreen</td>
+            <td>PlacesListScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.recording.RecordingListItem</td>
+            <td>RecordingListItem</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.recording.RecordingsListScreen</td>
+            <td>RecordingsListScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.relation.RelationListItem</td>
+            <td>RelationListItem</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.relation.RelationsListScreen</td>
+            <td>RelationsListScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.release.TrackListItem</td>
+            <td>TrackListItem</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.series.SeriesListItem</td>
+            <td>SeriesListItem</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.text.TextWithHeading</td>
+            <td>TextWithHeading</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.AddToCollectionMenuItem</td>
+            <td>AddToCollectionMenuItem</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.CopyToClipboardMenuItem</td>
+            <td>CopyToClipboardMenuItem</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.DotsFlashing.Dot</td>
+            <td>Dot</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.DotsFlashing.animateAlphaWithDelay</td>
+            <td>animateAlphaWithDelay</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.DotsFlashing</td>
+            <td>DotsFlashing</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.OpenInBrowserMenuItem</td>
+            <td>OpenInBrowserMenuItem</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.ScrollableTopAppBar</td>
+            <td>ScrollableTopAppBar</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.TitleAndSubtitle</td>
+            <td>TitleAndSubtitle</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>3</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.SubtitleWithOverflow</td>
+            <td>SubtitleWithOverflow</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>2</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.OverflowMenu</td>
+            <td>OverflowMenu</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.TabsBar</td>
+            <td>TabsBar</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.ToggleMenuItem</td>
+            <td>ToggleMenuItem</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.topappbar.TopAppBarWithFilterInternal</td>
+            <td>TopAppBarWithFilterInternal</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.url.UrlsSection</td>
+            <td>UrlsSection</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.common.work.WorkListItem</td>
+            <td>WorkListItem</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    <hr>
+    <section><button class="collapsible">Composables Report</button>
+      <div class="content"><button class="collapsible" style="background-color:#D32F2F;font-size:18px;">Composables with issues (Restartable but Not Skippable)</button>
+        <div class="content" style="background-color:#FFEBEE;">
+          <table>
+            <tr>
+              <td>1.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">area</td>
+                    <td class="code">AreaListItemModel</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>2.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">artist</td>
+                    <td class="code">ArtistListItemModel</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>3.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">event</td>
+                    <td class="code">EventListItemModel</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>4.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">instrument</td>
+                    <td class="code">InstrumentListItemModel</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>5.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">label</td>
+                    <td class="code">LabelListItemModel</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>6.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">lifeSpan</td>
+                    <td class="code">LifeSpanUiModel</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>7.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">place</td>
+                    <td class="code">PlaceListItemModel</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>8.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">recording</td>
+                    <td class="code">RecordingListItemModel</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>9.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">track</td>
+                    <td class="code">TrackListItemModel</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>10.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">series</td>
+                    <td class="code">SeriesListItemModel</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>11.</td>
+              <td>
+                <h3 class="code"><span> fun ExposedDropdownMenuBox</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">options</td>
+                    <td class="code">List&lt;MusicBrainzEntity&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">selectedOption</td>
+                    <td class="code">MusicBrainzEntity</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">onSelectOption</td>
+                    <td class="code">Function1&lt;MusicBrainzEntity, Unit&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>12.</td>
+              <td>
+                <h3 class="code"><span> fun AreaListItem</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">area</td>
+                    <td class="code">AreaListItemModel</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">showType</td>
+                    <td class="code">Boolean = @static true</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">onAreaClick</td>
+                    <td class="code">@[ExtensionFunctionType] Function1&lt;AreaListItemModel, Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>13.</td>
+              <td>
+                <h3 class="code"><span> fun ArtistListItem</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">artist</td>
+                    <td class="code">ArtistListItemModel</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onArtistClick</td>
+                    <td class="code">@[ExtensionFunctionType] Function1&lt;ArtistListItemModel, Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>14.</td>
+              <td>
+                <h3 class="code"><span> fun MultipleChoiceDialog</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">title</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>2</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">choices</td>
+                    <td class="code">List&lt;String&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">selectedChoiceIndex</td>
+                    <td class="code">Int</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">onSelectChoiceIndex</td>
+                    <td class="code">Function1&lt;Int, Unit&gt;? = @static { it</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">onDismiss</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>15.</td>
+              <td>
+                <h3 class="code"><span> fun EventListItem</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">event</td>
+                    <td class="code">EventListItemModel</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onEventClick</td>
+                    <td class="code">@[ExtensionFunctionType] Function1&lt;EventListItemModel, Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>16.</td>
+              <td>
+                <h3 class="code"><span> fun InstrumentListItem</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">instrument</td>
+                    <td class="code">InstrumentListItemModel</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onInstrumentClick</td>
+                    <td class="code">@[ExtensionFunctionType] Function1&lt;InstrumentListItemModel, Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>17.</td>
+              <td>
+                <h3 class="code"><span> fun LabelListItem</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">label</td>
+                    <td class="code">LabelListItemModel</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onLabelClick</td>
+                    <td class="code">@[ExtensionFunctionType] Function1&lt;LabelListItemModel, Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>18.</td>
+              <td>
+                <h3 class="code"><span> fun LifeSpanText</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">lifeSpan</td>
+                    <td class="code">LifeSpanUiModel?</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">heading</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">beginHeading</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">endHeading</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>19.</td>
+              <td>
+                <h3 class="code"><span> fun PlaceListItem</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">place</td>
+                    <td class="code">PlaceListItemModel</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onPlaceClick</td>
+                    <td class="code">@[ExtensionFunctionType] Function1&lt;PlaceListItemModel, Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>20.</td>
+              <td>
+                <h3 class="code"><span> fun RecordingListItem</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">recording</td>
+                    <td class="code">RecordingListItemModel</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onRecordingClick</td>
+                    <td class="code">@[ExtensionFunctionType] Function1&lt;RecordingListItemModel, Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>21.</td>
+              <td>
+                <h3 class="code"><span> fun RelationListItem</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">relation</td>
+                    <td class="code">RelationListItemModel</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onItemClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>22.</td>
+              <td>
+                <h3 class="code"><span> fun TrackListItem</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">track</td>
+                    <td class="code">TrackListItemModel</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onRecordingClick</td>
+                    <td class="code">Function2&lt;String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>23.</td>
+              <td>
+                <h3 class="code"><span> fun SeriesListItem</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">series</td>
+                    <td class="code">SeriesListItemModel</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onSeriesClick</td>
+                    <td class="code">@[ExtensionFunctionType] Function1&lt;SeriesListItemModel, Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>24.</td>
+              <td>
+                <h3 class="code"><span> fun UrlsSection</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">urls</td>
+                    <td class="code">List&lt;RelationListItemModel&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">onItemClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>25.</td>
+              <td>
+                <h3 class="code"><span> fun WorkListItem</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">work</td>
+                    <td class="code">WorkListItemModel</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onWorkClick</td>
+                    <td class="code">@[ExtensionFunctionType] Function1&lt;WorkListItemModel, Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+<button class="collapsible" style="background-color:#004D40;font-size:18px;">Composibles without issues</button>
+        <div class="content" style="background-color:#F1F8E9;">
+          <table>
+            <tr>
+              <td>1.</td>
+              <td>
+                <h3 class="code"><span> fun PreviewReleaseEvent</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>2.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>3.</td>
+              <td>
+                <h3 class="code"><span> fun ClickableItem</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">title</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">subtitle</td>
+                    <td class="code">String? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">endIcon</td>
+                    <td class="code">ImageVector? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">onClick</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>4.</td>
+              <td>
+                <h3 class="code"><span> fun PreviewClickableItem</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>5.</td>
+              <td>
+                <h3 class="code"><span> fun PreviewClickableItemWithSubtitle</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>6.</td>
+              <td>
+                <h3 class="code"><span> fun PreviewClickableItemWithIcon</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>7.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>8.</td>
+              <td>
+                <h3 class="code"><span> fun PreviewSimpleAlertDialog</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>9.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>10.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>11.</td>
+              <td>
+                <h3 class="code"><span> fun PreviewFullScreenText</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>12.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>13.</td>
+              <td>
+                <h3 class="code"><span> fun ListSeparatorHeaderPreview</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>14.</td>
+              <td>
+                <h3 class="code"><span> fun FooterLoadingIndicatorPreview</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>15.</td>
+              <td>
+                <h3 class="code"><span> fun PreviewArtistRelationListItem</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>16.</td>
+              <td>
+                <h3 class="code"><span> fun PreviewRecordingRelationListItem</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>17.</td>
+              <td>
+                <h3 class="code"><span> fun PreviewUrlRelationListItem</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>18.</td>
+              <td>
+                <h3 class="code"><span> fun PreviewTextWithHeading</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>19.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>20.</td>
+              <td>
+                <h3 class="code"><span> fun Default</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>21.</td>
+              <td>
+                <h3 class="code"><span> fun WithIcon</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>22.</td>
+              <td>
+                <h3 class="code"><span> fun WithTabs</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>23.</td>
+              <td>
+                <h3 class="code"><span> fun TopAppBarWithFilter</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">onBack</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">showBackButton</td>
+                    <td class="code">Boolean = @static true</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">entity</td>
+                    <td class="code">MusicBrainzEntity? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">title</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">subtitle</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">scrollBehavior</td>
+                    <td class="code">TopAppBarScrollBehavior? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>8</td>
+                    <td>STABLE</td>
+                    <td class="code">overflowDropdownMenuItems</td>
+                    <td class="code">@[ExtensionFunctionType] Function3&lt;OverflowMenuScope, Composer, Int, Unit&gt;? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>9</td>
+                    <td>STABLE</td>
+                    <td class="code">subtitleDropdownMenuItems</td>
+                    <td class="code">@[ExtensionFunctionType] Function3&lt;OverflowMenuScope, Composer, Int, Unit&gt;? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>10</td>
+                    <td>STABLE</td>
+                    <td class="code">showFilterIcon</td>
+                    <td class="code">Boolean = @static true</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>11</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>12</td>
+                    <td>STABLE</td>
+                    <td class="code">onFilterTextChange</td>
+                    <td class="code">Function1&lt;String, Unit&gt;? = @static { it</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>13</td>
+                    <td>STABLE</td>
+                    <td class="code">additionalActions</td>
+                    <td class="code">Function2&lt;Composer, Int, Unit&gt;? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda-1</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>14</td>
+                    <td>STABLE</td>
+                    <td class="code">additionalBar</td>
+                    <td class="code">Function2&lt;Composer, Int, Unit&gt;? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda-2</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>24.</td>
+              <td>
+                <h3 class="code"><span> fun Default</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>25.</td>
+              <td>
+                <h3 class="code"><span> fun FilterMode</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>26.</td>
+              <td>
+                <h3 class="code"><span> fun NoFilter</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>27.</td>
+              <td>
+                <h3 class="code"><span> fun WithTabs</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>28.</td>
+              <td>
+                <h3 class="code"><span> fun PreviewUrlsSection</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>29.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>30.</td>
+              <td>
+                <h3 class="code"><span> fun EntityIcon</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">entity</td>
+                    <td class="code">MusicBrainzEntity</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>31.</td>
+              <td>
+                <h3 class="code"><span> fun RetryButton</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">onClick</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>32.</td>
+              <td>
+                <h3 class="code"><span> fun SimpleAlertDialog</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">title</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">confirmText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">dismissText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">onDismiss</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">onConfirmClick</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>33.</td>
+              <td>
+                <h3 class="code"><span> fun EventsListScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">lazyListState</td>
+                    <td class="code">LazyListState</td>
+                  </tr>
+                  <tr class="background-status-missing">
+                    <td>3</td>
+                    <td>MISSING</td>
+                    <td class="code">lazyPagingItems</td>
+                    <td class="code">LazyPagingItems&lt;EventListItemModel&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">onEventClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>34.</td>
+              <td>
+                <h3 class="code"><span> fun DetailsWithErrorHandling</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">showError</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">onRetryClick</td>
+                    <td class="code">Function0&lt;Unit&gt;</td>
+                  </tr>
+                  <tr class="background-status-missing">
+                    <td>3</td>
+                    <td>MISSING</td>
+                    <td class="code">scaffoldModel</td>
+                    <td class="code">T?</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">detailsScreen</td>
+                    <td class="code">Function3&lt;T, Composer, Int, Unit&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>35.</td>
+              <td>
+                <h3 class="code"><span> fun FullScreenContent</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">content</td>
+                    <td class="code">@[ExtensionFunctionType] Function3&lt;ColumnScope, Composer, Int, Unit&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>36.</td>
+              <td>
+                <h3 class="code"><span> fun FullScreenErrorWithRetry</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">onClick</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>37.</td>
+              <td>
+                <h3 class="code"><span> fun FullScreenLoadingIndicator</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>38.</td>
+              <td>
+                <h3 class="code"><span> fun FullScreenText</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">text</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>39.</td>
+              <td>
+                <h3 class="code"><span> fun DisambiguationText</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">disambiguation</td>
+                    <td class="code">String?</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>40.</td>
+              <td>
+                <h3 class="code"><span> fun ListSeparatorHeader</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">text</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>41.</td>
+              <td>
+                <h3 class="code"><span> fun SwipeToDeleteListItem</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">content</td>
+                    <td class="code">@[ExtensionFunctionType] Function3&lt;RowScope, Composer, Int, Unit&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">disable</td>
+                    <td class="code">Boolean = @static false</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">onDelete</td>
+                    <td class="code">Function0&lt;Unit&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>42.</td>
+              <td>
+                <h3 class="code"><span> fun SwipeToDeleteListItem</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">dismissContent</td>
+                    <td class="code">@[ExtensionFunctionType] Function3&lt;RowScope, Composer, Int, Unit&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onDelete</td>
+                    <td class="code">Function0&lt;Unit&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>43.</td>
+              <td>
+                <h3 class="code"><span> fun SwipeToDeleteBackground</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">alignment</td>
+                    <td class="code">Alignment</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>44.</td>
+              <td>
+                <h3 class="code"><span> fun FooterLoadingIndicator</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>45.</td>
+              <td>
+                <h3 class="code"><span> fun ScreenWithPagingLoadingAndError</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-missing">
+                    <td>1</td>
+                    <td>MISSING</td>
+                    <td class="code">lazyPagingItems</td>
+                    <td class="code">LazyPagingItems&lt;T&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">lazyListState</td>
+                    <td class="code">LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">customNoResultsText</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">keyed</td>
+                    <td class="code">Boolean = @static true</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">itemContent</td>
+                    <td class="code">@[ExtensionFunctionType] Function4&lt;LazyItemScope, @[ParameterName(name = 'value')] T?, Composer, Int, Unit&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>46.</td>
+              <td>
+                <h3 class="code"><span> fun PlacesListScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">lazyListState</td>
+                    <td class="code">LazyListState</td>
+                  </tr>
+                  <tr class="background-status-missing">
+                    <td>3</td>
+                    <td>MISSING</td>
+                    <td class="code">lazyPagingItems</td>
+                    <td class="code">LazyPagingItems&lt;PlaceListItemModel&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">onPlaceClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>47.</td>
+              <td>
+                <h3 class="code"><span> fun RecordingsListScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-missing">
+                    <td>1</td>
+                    <td>MISSING</td>
+                    <td class="code">lazyPagingItems</td>
+                    <td class="code">LazyPagingItems&lt;RecordingListItemModel&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState? = @dynamic SnackbarHostState()</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">lazyListState</td>
+                    <td class="code">LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">onRecordingClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>48.</td>
+              <td>
+                <h3 class="code"><span> fun RelationsListScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-missing">
+                    <td>1</td>
+                    <td>MISSING</td>
+                    <td class="code">lazyPagingItems</td>
+                    <td class="code">LazyPagingItems&lt;RelationListItemModel&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">lazyListState</td>
+                    <td class="code">LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState? = @dynamic SnackbarHostState()</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">onItemClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>49.</td>
+              <td>
+                <h3 class="code"><span> fun TextWithHeading</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">heading</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">text</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>50.</td>
+              <td>
+                <h3 class="code"><span> fun AddToCollectionMenuItem</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">onClick</td>
+                    <td class="code">Function0&lt;Unit&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>51.</td>
+              <td>
+                <h3 class="code"><span> fun CopyToClipboardMenuItem</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">entityId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>52.</td>
+              <td>
+                <h3 class="code"><span> fun Dot</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-failure"> ❌ Non Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">alpha</td>
+                    <td class="code">Float</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>53.</td>
+              <td>
+                <h3 class="code"><span> fun animateAlphaWithDelay</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-failure"> ❌ Non Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">delay</td>
+                    <td class="code">Int</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>54.</td>
+              <td>
+                <h3 class="code"><span> fun DotsFlashing</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>55.</td>
+              <td>
+                <h3 class="code"><span> fun OpenInBrowserMenuItem</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">entity</td>
+                    <td class="code">MusicBrainzEntity</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">entityId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>56.</td>
+              <td>
+                <h3 class="code"><span> fun ScrollableTopAppBar</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">onBack</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">showBackButton</td>
+                    <td class="code">Boolean = @static true</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">entity</td>
+                    <td class="code">MusicBrainzEntity? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">title</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">subtitle</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">scrollBehavior</td>
+                    <td class="code">TopAppBarScrollBehavior? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>8</td>
+                    <td>STABLE</td>
+                    <td class="code">actions</td>
+                    <td class="code">Function2&lt;Composer, Int, Unit&gt;? = @static ComposableSingletons$ScrollableTopAppBarKt.lambda-1</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>9</td>
+                    <td>STABLE</td>
+                    <td class="code">overflowDropdownMenuItems</td>
+                    <td class="code">@[ExtensionFunctionType] Function3&lt;OverflowMenuScope, Composer, Int, Unit&gt;? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>10</td>
+                    <td>STABLE</td>
+                    <td class="code">subtitleDropdownMenuItems</td>
+                    <td class="code">@[ExtensionFunctionType] Function3&lt;OverflowMenuScope, Composer, Int, Unit&gt;? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>11</td>
+                    <td>STABLE</td>
+                    <td class="code">additionalBar</td>
+                    <td class="code">Function2&lt;Composer, Int, Unit&gt;? = @static ComposableSingletons$ScrollableTopAppBarKt.lambda-2</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>57.</td>
+              <td>
+                <h3 class="code"><span> fun TitleAndSubtitle</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">title</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">entity</td>
+                    <td class="code">MusicBrainzEntity? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">subtitle</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">subtitleDropdownMenuItems</td>
+                    <td class="code">@[ExtensionFunctionType] Function3&lt;OverflowMenuScope, Composer, Int, Unit&gt;? = @static null</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>58.</td>
+              <td>
+                <h3 class="code"><span> fun SubtitleWithOverflow</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">subtitle</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">subtitleDropdownMenuItems</td>
+                    <td class="code">@[ExtensionFunctionType] Function3&lt;OverflowMenuScope, Composer, Int, Unit&gt;? = @static null</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>59.</td>
+              <td>
+                <h3 class="code"><span> fun OverflowMenu</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">overflowDropdownMenuItems</td>
+                    <td class="code">@[ExtensionFunctionType] Function3&lt;OverflowMenuScope, Composer, Int, Unit&gt;? = @static null</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>60.</td>
+              <td>
+                <h3 class="code"><span> fun TabsBar</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>2</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">tabsTitle</td>
+                    <td class="code">List&lt;String&gt;? = @static listOf()</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">selectedTabIndex</td>
+                    <td class="code">Int = @static 0</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">onSelectTabIndex</td>
+                    <td class="code">Function1&lt;Int, Unit&gt;? = @static { it</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>61.</td>
+              <td>
+                <h3 class="code"><span> fun ToggleMenuItem</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">toggleOnText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">toggleOffText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">toggled</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">onToggle</td>
+                    <td class="code">Function1&lt;Boolean, Unit&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>62.</td>
+              <td>
+                <h3 class="code"><span> fun TopAppBarWithFilterInternal</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">onBack</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">showBackButton</td>
+                    <td class="code">Boolean = @static true</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">entity</td>
+                    <td class="code">MusicBrainzEntity? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">title</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">subtitle</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">scrollBehavior</td>
+                    <td class="code">TopAppBarScrollBehavior? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>8</td>
+                    <td>STABLE</td>
+                    <td class="code">overflowDropdownMenuItems</td>
+                    <td class="code">@[ExtensionFunctionType] Function3&lt;OverflowMenuScope, Composer, Int, Unit&gt;? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>9</td>
+                    <td>STABLE</td>
+                    <td class="code">subtitleDropdownMenuItems</td>
+                    <td class="code">@[ExtensionFunctionType] Function3&lt;OverflowMenuScope, Composer, Int, Unit&gt;? = @static null</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>10</td>
+                    <td>STABLE</td>
+                    <td class="code">showFilterIcon</td>
+                    <td class="code">Boolean = @static true</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>11</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String? = @static &quot;&quot;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>12</td>
+                    <td>STABLE</td>
+                    <td class="code">onFilterTextChange</td>
+                    <td class="code">Function1&lt;String, Unit&gt;? = @static { it</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>13</td>
+                    <td>STABLE</td>
+                    <td class="code">isFilterMode</td>
+                    <td class="code">Boolean = @static false</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>14</td>
+                    <td>STABLE</td>
+                    <td class="code">onFilterModeChange</td>
+                    <td class="code">Function1&lt;Boolean, Unit&gt;? = @static { it</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>15</td>
+                    <td>STABLE</td>
+                    <td class="code">additionalActions</td>
+                    <td class="code">Function2&lt;Composer, Int, Unit&gt;? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda-3</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>16</td>
+                    <td>STABLE</td>
+                    <td class="code">additionalBar</td>
+                    <td class="code">Function2&lt;Composer, Int, Unit&gt;? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda-4</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
+    <hr>
+    <section>
+      <div><button class="collapsible">Classes Report</button>
+        <div class="content"><button class="collapsible" style="background-color:#D32F2F;font-size:18px;">Unstable Classes</button>
+          <div class="content" style="background-color:#FFEBEE;">
+            <table>
+              <tr>
+                <td>1.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class AreaListItemPreviewParameterProvider</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>1</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val values</td>
+                      <td class="code">Sequence&lt;AreaListItemModel&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>2.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class ArtistPreviewParameterProvider</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>1</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val values</td>
+                      <td class="code">Sequence&lt;ArtistListItemModel&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>3.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class EventPreviewParameterProvider</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>1</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val values</td>
+                      <td class="code">Sequence&lt;EventListItemModel&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>4.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class InstrumentCardPreviewParameterProvider</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>1</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val values</td>
+                      <td class="code">Sequence&lt;InstrumentListItemModel&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>5.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class LabelCardPreviewParameterProvider</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>1</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val values</td>
+                      <td class="code">Sequence&lt;LabelListItemModel&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>6.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class LifeSpanPreviewParameterProvider</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>1</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val values</td>
+                      <td class="code">Sequence&lt;LifeSpanUiModel&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>7.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class PlacePreviewParameterProvider</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>1</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val values</td>
+                      <td class="code">Sequence&lt;PlaceListItemModel&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>8.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class RecordingPreviewParameterProvider</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>1</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val values</td>
+                      <td class="code">Sequence&lt;RecordingListItemModel&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>9.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class TrackCardPreviewParameterProvider</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>1</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val values</td>
+                      <td class="code">Sequence&lt;TrackListItemModel&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>10.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class SeriesPreviewParameterProvider</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>1</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val values</td>
+                      <td class="code">Sequence&lt;SeriesListItemModel&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>11.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class RelationsList</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#000000;background-color:#FFF9C4;">
+                      <td>1</td>
+                      <td>RUNTIME</td>
+                      <td class="code">val getEntityRelationships</td>
+                      <td class="code">GetEntityRelationships</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>2</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val entityId</td>
+                      <td class="code">MutableStateFlow&lt;String&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>3</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val query</td>
+                      <td class="code">MutableStateFlow&lt;String&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>4</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val paramState</td>
+                      <td class="code">Flow&lt;State&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>5</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">var scope</td>
+                      <td class="code">CoroutineScope</td>
+                    </tr>
+                    <tr style="color:#000000;background-color:#B2DFDB;">
+                      <td>6</td>
+                      <td>STABLE</td>
+                      <td class="code">var entity</td>
+                      <td class="code">MusicBrainzEntity</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>7</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val pagedRelations$delegate</td>
+                      <td class="code">Lazy&lt;Flow&lt;PagingData&lt;RelationListItemModel&gt;{ app.cash.paging.PagingDataKt.PagingData&lt;RelationListItemModel&gt; }&gt;&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
+<br>
+          <div class="empty-content">No Stable classes found</div>
+        </div>
+      </div>
+    </section>
+    <hr>
+    <footer><i>This report is beautified with <a href="https://github.com/PatilShreyas/compose-report-to-html" target="_blank">Compose Report to HTML</a></i></footer>
+    <script>var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+      content.style.overflow = "hidden"
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+      content.style.overflow = "auto";
+      content.style.maxHeight = "none";
+    } 
+  });
+}</script>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+fun rememberFlowWithLifecycleStarted(
+  unstable flow: Flow<T>
+  unstable lifecycleOwner: Lifecycle? = @dynamic LocalLifecycleOwner.<get-current>($composer, 0).lifecycle
+): Flow<T>
+restartable scheme("[androidx.compose.ui.UiComposable]") fun CoordinateListItem(
+  unstable coordinates: CoordinatesUiModel
+  stable modifier: Modifier? = @static Companion
+  stable label: String? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoordinateCardPreview()
+restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseListItem(
+  unstable release: ReleaseListItemModel
+  stable modifier: Modifier? = @static Companion
+  stable showMoreInfo: Boolean = @static true
+  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @static {
+
+}
+
+  stable onClick: @[ExtensionFunctionType] Function1<ReleaseListItemModel, Unit>? = @static {
+
+}
+
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  unstable release: ReleaseListItemModel
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesListScreen(
+  lazyPagingItems: LazyPagingItems<ReleaseListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable showMoreInfo: Boolean = @static true
+  stable onReleaseClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
+  unstable viewModel: ReleasesListViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesListScreenInternal(
+  lazyPagingItems: LazyPagingItems<ReleaseListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable showMoreInfo: Boolean = @static true
+  stable onReleaseClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
+  unstable requestForMissingCoverArtUrl: SuspendFunction1<@[ParameterName(name = 'id')] String, Unit>? = @static { it: String ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleasesListScreen()
+restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupListItem(
+  unstable releaseGroup: ReleaseGroupListItemModel
+  stable modifier: Modifier? = @static Companion
+  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @static {
+
+}
+
+  stable onClick: @[ExtensionFunctionType] Function1<ReleaseGroupListItemModel, Unit>? = @static {
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupsListScreen(
+  lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onReleaseGroupClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
+  unstable viewModel: ReleaseGroupsListViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)

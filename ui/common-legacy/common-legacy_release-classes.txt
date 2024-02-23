@@ -1,0 +1,33 @@
+stable class CommonLegacyUiModule {
+  <runtime stability> = Stable
+}
+stable class ViewModelState {
+  stable val entityId: String
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val sorted: Boolean
+  <runtime stability> = Stable
+}
+unstable class EntitiesByEntityViewModel {
+  stable val entity: MusicBrainzEntity
+  unstable val getEntitiesByEntity: GetEntitiesByEntity<LI>
+  unstable val entityId: MutableStateFlow<String>
+  unstable val query: MutableStateFlow<String>
+  unstable val isRemote: MutableStateFlow<Boolean>
+  unstable val sorted: MutableStateFlow<Boolean>
+  unstable val paramState: Flow<ViewModelState>
+  unstable val pagedEntities$delegate: Lazy<Flow<PagingData<LI>{ app.cash.paging.PagingDataKt.PagingData<LI> }>>
+  <runtime stability> = Unstable
+}
+unstable class ReleasePreviewParameterProvider {
+  unstable val values: Sequence<ReleaseListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class ReleasesListViewModel {
+  unstable val releaseImageRepository: ReleaseImageRepository
+  <runtime stability> = Unstable
+}
+unstable class ReleaseGroupsListViewModel {
+  unstable val releaseGroupImageRepository: ReleaseGroupImageRepository
+  <runtime stability> = Unstable
+}

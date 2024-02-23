@@ -7,6 +7,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchSca
   stable initialQuery: String? = @static null
   stable initialEntity: MusicBrainzEntity? = @static null
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecentSearchesHeader()
 restartable scheme("[androidx.compose.ui.UiComposable]") fun SearchHistoryListItem(
   unstable searchHistory: SearchHistoryListItemModel
   stable modifier: Modifier? = @static Companion
@@ -56,11 +57,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchScr
   stable initialEntity: MusicBrainzEntity? = @static null
   unstable viewModel: SearchViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecentSearchesHeader()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecentSearchesHeader(
   stable onDeleteAllHistory: Function0<Unit>? = @static {
 
 }
 
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecentSearchesHeader()
