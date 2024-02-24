@@ -15,6 +15,8 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.printToLog
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.musicsearch.core.models.network.searchableEntities
@@ -48,6 +50,7 @@ internal class SearchEachEntityTest(
     }
 
     private val strings: AppStrings by inject()
+    private val circuit: Circuit by inject()
     private lateinit var navController: NavHostController
 
     @Before
@@ -55,7 +58,9 @@ internal class SearchEachEntityTest(
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {
-                TopLevelScaffold(navController)
+                CircuitCompositionLocals(circuit) {
+                    TopLevelScaffold(navController)
+                }
             }
         }
     }

@@ -13,6 +13,8 @@ import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
 import kotlinx.coroutines.test.runTest
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
@@ -36,6 +38,7 @@ internal class CollectionListScaffoldTest : MainActivityTest() {
 
     private val strings: AppStrings by inject()
     private val collectionDao: CollectionDao by inject()
+    private val circuit: Circuit by inject()
     private lateinit var navController: NavHostController
 
     @Before
@@ -43,7 +46,9 @@ internal class CollectionListScaffoldTest : MainActivityTest() {
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {
-                TopLevelScaffold(navController)
+                CircuitCompositionLocals(circuit) {
+                    TopLevelScaffold(navController)
+                }
             }
         }
     }

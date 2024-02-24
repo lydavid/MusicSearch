@@ -10,6 +10,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
 import kotlinx.coroutines.test.runTest
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.mbjc.MainActivityTest
@@ -23,6 +25,7 @@ import org.koin.test.inject
 internal class NavigationTest : MainActivityTest() {
 
     private val strings: AppStrings by inject()
+    private val circuit: Circuit by inject()
     private lateinit var navController: NavHostController
 
     @Before
@@ -30,7 +33,9 @@ internal class NavigationTest : MainActivityTest() {
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {
-                TopLevelScaffold(navController)
+                CircuitCompositionLocals(circuit) {
+                    TopLevelScaffold(navController)
+                }
             }
         }
     }

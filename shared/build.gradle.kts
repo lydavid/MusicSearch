@@ -23,9 +23,12 @@ kotlin {
                 implementation(projects.data.spotify)
                 implementation(projects.domain)
                 implementation(projects.feature.search)
+                implementation(projects.feature.stats)
                 implementation(projects.strings)
                 implementation(projects.ui.common)
+                implementation(projects.ui.history)
                 implementation(libs.koin.core)
+                implementation(libs.circuit.foundation)
             }
         }
         val androidMain by getting {
@@ -35,7 +38,6 @@ kotlin {
                 implementation(projects.ui.commonLegacy)
                 implementation(projects.ui.core)
                 implementation(projects.ui.collections)
-                implementation(projects.ui.history)
                 implementation(projects.ui.image)
                 implementation(projects.ui.settings)
             }
