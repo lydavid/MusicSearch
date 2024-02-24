@@ -1,4 +1,4 @@
-package ly.david.ui.settings.components
+package ly.david.musicsearch.shared.feature.settings.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

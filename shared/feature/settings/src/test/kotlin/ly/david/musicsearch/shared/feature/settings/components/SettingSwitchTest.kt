@@ -1,4 +1,4 @@
-package ly.david.ui.settings
+package ly.david.musicsearch.shared.feature.settings.components
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.ui.test.screenshot.ScreenshotTest
@@ -6,19 +6,19 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
-class SettingsScreenTest : ScreenshotTest(isFullScreen = true) {
+class SettingSwitchTest : ScreenshotTest() {
 
     @Test
-    fun default() {
+    fun checked() {
         snapshot {
-            PreviewSettingsScreen()
+            PreviewSettingSwitchChecked()
         }
     }
 
     @Test
-    fun notificationListenerEnable() {
+    fun unchecked() {
         snapshot {
-            PreviewSettingsScreenNotificationListenerEnable()
+            PreviewSettingSwitchUnchecked()
         }
     }
 }

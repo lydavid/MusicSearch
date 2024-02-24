@@ -40,6 +40,7 @@ kotlin {
                 implementation(projects.ui.collections)
                 implementation(projects.ui.image)
                 implementation(projects.ui.settings)
+                implementation(projects.shared.feature.settings)
             }
         }
         val jvmMain by getting

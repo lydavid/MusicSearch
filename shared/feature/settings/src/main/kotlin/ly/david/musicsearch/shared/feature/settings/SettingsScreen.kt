@@ -1,4 +1,4 @@
-package ly.david.ui.settings
+package ly.david.musicsearch.shared.feature.settings
 
 import android.os.Build
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,9 +16,9 @@ import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
-import ly.david.ui.settings.components.ProfileCard
-import ly.david.ui.settings.components.SettingSwitch
-import ly.david.ui.settings.components.SettingWithDialogChoices
+import ly.david.musicsearch.shared.feature.settings.components.ProfileCard
+import ly.david.musicsearch.shared.feature.settings.components.SettingSwitch
+import ly.david.musicsearch.shared.feature.settings.components.SettingWithDialogChoices
 
 private fun AppPreferences.Theme.getText(strings: AppStrings): String =
     when (this) {

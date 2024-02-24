@@ -98,6 +98,7 @@ dependencies {
     implementation(projects.ui.collections)
     implementation(projects.ui.image)
     implementation(projects.ui.settings)
+    implementation(projects.shared.feature.settings)
     implementation(projects.shared.screens)
     implementation(libs.accompanist.pager)
     implementation(libs.androidx.activity.compose)

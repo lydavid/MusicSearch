@@ -1,4 +1,4 @@
-package ly.david.ui.settings.components
+package ly.david.musicsearch.shared.feature.settings.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,7 +10,6 @@ import androidx.compose.material.icons.filled.Login
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -23,7 +22,6 @@ import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ProfileCard(
     username: String,

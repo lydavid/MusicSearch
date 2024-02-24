@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.navigation
 
+import ly.david.musicsearch.shared.feature.settings.SettingsScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavBackStackEntry
@@ -12,6 +13,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.foundation.NavEvent
+import ly.david.musicsearch.shared.feature.settings.licenses.LicensesScaffold
 import ly.david.mbjc.DEEP_LINK_SCHEMA
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
@@ -34,8 +36,6 @@ import ly.david.musicsearch.core.models.navigation.toLookupDestination
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
 import ly.david.musicsearch.android.feature.nowplaying.NowPlayingHistoryScaffold
-import ly.david.ui.settings.SettingsScaffold
-import ly.david.ui.settings.licenses.LicensesScaffold
 import ly.david.musicsearch.android.feature.spotify.SpotifyScaffold
 import ly.david.musicsearch.shared.screens.DetailsScreen
 import ly.david.musicsearch.shared.screens.HistoryScreen
@@ -405,6 +405,7 @@ internal fun NavigationGraph(
                 },
             ),
         ) {
+            // TODO:
             SettingsScaffold(
                 modifier = modifier,
                 onDestinationClick = { destination ->

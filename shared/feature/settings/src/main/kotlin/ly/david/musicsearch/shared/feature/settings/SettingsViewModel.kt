@@ -1,4 +1,4 @@
-package ly.david.ui.settings
+package ly.david.musicsearch.shared.feature.settings
 
 import androidx.lifecycle.ViewModel
 import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore

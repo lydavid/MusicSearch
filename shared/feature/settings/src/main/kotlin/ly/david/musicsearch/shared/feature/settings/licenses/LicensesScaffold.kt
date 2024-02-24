@@ -1,4 +1,4 @@
-package ly.david.ui.settings.licenses
+package ly.david.musicsearch.shared.feature.settings.licenses
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding

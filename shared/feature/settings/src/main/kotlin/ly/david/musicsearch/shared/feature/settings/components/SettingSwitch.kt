@@ -1,4 +1,4 @@
-package ly.david.ui.settings.components
+package ly.david.musicsearch.shared.feature.settings.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,7 +33,10 @@ internal fun SettingSwitch(
                 role = Role.Switch,
                 onValueChange = onCheckedChange,
             )
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(
+                horizontal = 16.dp,
+                vertical = 8.dp,
+            ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -57,7 +60,10 @@ internal fun SettingSwitch(
 internal fun PreviewSettingSwitchChecked() {
     PreviewTheme {
         Surface {
-            SettingSwitch(header = "A setting", checked = true)
+            SettingSwitch(
+                header = "A setting",
+                checked = true,
+            )
         }
     }
 }
@@ -67,7 +73,10 @@ internal fun PreviewSettingSwitchChecked() {
 internal fun PreviewSettingSwitchUnchecked() {
     PreviewTheme {
         Surface {
-            SettingSwitch(header = "A setting", checked = false)
+            SettingSwitch(
+                header = "A setting",
+                checked = false,
+            )
         }
     }
 }

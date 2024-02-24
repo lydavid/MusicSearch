@@ -61,6 +61,7 @@ include(
     ":shared",
     ":shared:feature:history",
     ":shared:feature:search",
+    ":shared:feature:settings",
     ":shared:screens",
     ":strings",
     ":test-data",

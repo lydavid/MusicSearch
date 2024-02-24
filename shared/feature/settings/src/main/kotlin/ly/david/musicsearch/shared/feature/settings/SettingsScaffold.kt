@@ -1,4 +1,4 @@
-package ly.david.ui.settings
+package ly.david.musicsearch.shared.feature.settings
 
 import android.content.Context
 import android.content.Intent
@@ -12,8 +12,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.NotificationManagerCompat
-import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.core.models.navigation.Destination
+import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
 import org.koin.androidx.compose.koinViewModel
