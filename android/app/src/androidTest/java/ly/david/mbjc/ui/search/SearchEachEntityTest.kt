@@ -23,7 +23,7 @@ import ly.david.musicsearch.core.models.network.searchableEntities
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
-import ly.david.musicsearch.feature.search.SearchScreenTestTag
+import ly.david.musicsearch.shared.feature.search.SearchScreenTestTag
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.common.getDisplayText
 import ly.david.ui.core.theme.PreviewTheme
