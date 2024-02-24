@@ -27,3 +27,4 @@ gha-creds-*.json
 # SPOTIFY_CLIENT_SECRET
 secrets.properties
 .aider*
+!.aiderignore
