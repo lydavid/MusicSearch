@@ -48,7 +48,6 @@ include(
     ":core:logging:api",
     ":core:logging:implementation",
     ":core:models",
-    ":core:parcelize",
     ":core:preferences",
     ":data:common:network",
     ":data:coverart",

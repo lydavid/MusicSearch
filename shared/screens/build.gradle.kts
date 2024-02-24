@@ -13,7 +13,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
-                implementation(projects.core.parcelize)
                 implementation(libs.circuit.foundation)
             }
         }

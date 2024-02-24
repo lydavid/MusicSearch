@@ -4,7 +4,6 @@ plugins {
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.paparazzi)
-    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {

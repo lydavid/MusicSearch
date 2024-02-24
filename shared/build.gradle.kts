@@ -1,7 +1,6 @@
 plugins {
     id("ly.david.android.library")
     id("ly.david.musicsearch.kotlin.multiplatform")
-    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -15,7 +14,6 @@ kotlin {
                 implementation(projects.core.coroutines)
                 implementation(projects.core.logging.implementation)
                 implementation(projects.core.models)
-                implementation(projects.core.parcelize)
                 implementation(projects.core.preferences)
                 implementation(projects.data.common.network)
                 implementation(projects.data.coverart)
