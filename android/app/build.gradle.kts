@@ -97,7 +97,6 @@ dependencies {
     implementation(projects.ui.core)
     implementation(projects.ui.collections)
     implementation(projects.ui.image)
-    implementation(projects.ui.settings)
     implementation(projects.shared.feature.settings)
     implementation(projects.shared.screens)
     implementation(libs.accompanist.pager)

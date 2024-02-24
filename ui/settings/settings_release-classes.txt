@@ -1,8 +1,0 @@
-stable class SettingsUiModule {
-  <runtime stability> = Stable
-}
-unstable class SettingsViewModel {
-  unstable val appPreferences: AppPreferences
-  unstable val musicBrainzAuthStore: MusicBrainzAuthStore
-  <runtime stability> = Unstable
-}
