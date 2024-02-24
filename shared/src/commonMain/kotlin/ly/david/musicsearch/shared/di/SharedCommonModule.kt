@@ -19,9 +19,9 @@ import ly.david.musicsearch.data.repository.di.repositoryDataModule
 import ly.david.musicsearch.data.spotify.di.spotifyApiModule
 import ly.david.musicsearch.data.spotify.di.spotifyDataModule
 import ly.david.musicsearch.feature.search.searchFeatureModule
+import ly.david.musicsearch.shared.feature.history.historyUiModule
 import ly.david.musicsearch.strings.di.stringsModule
 import ly.david.ui.common.commonUiModule
-import ly.david.ui.history.historyUiModule
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
