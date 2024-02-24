@@ -39,7 +39,7 @@ import ly.david.ui.settings.licenses.LicensesScaffold
 import ly.david.musicsearch.android.feature.spotify.SpotifyScaffold
 import ly.david.musicsearch.feature.search.SearchScreen
 import ly.david.musicsearch.shared.screens.DetailsScreen
-import ly.david.ui.history.HistoryScreen
+import ly.david.musicsearch.shared.feature.history.HistoryScreen
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -141,12 +141,6 @@ internal fun NavigationGraph(
             val query = entry.arguments?.getString(QUERY)?.decodeUtf8()
             val type = entry.arguments?.getString(TYPE)?.toMusicBrainzEntity()
 
-//            SearchScaffold(
-//                modifier = modifier,
-//                onItemClick = onLookupEntityClick,
-//                initialQuery = query,
-//                initialEntity = type,
-//            )
             CircuitContent(
                 screen = SearchScreen(
                     query = query,

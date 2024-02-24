@@ -24,9 +24,9 @@ kotlin {
                 implementation(projects.domain)
                 implementation(projects.feature.search)
                 implementation(projects.feature.stats)
+                implementation(projects.shared.feature.history)
                 implementation(projects.strings)
                 implementation(projects.ui.common)
-                implementation(projects.ui.history)
                 implementation(libs.koin.core)
                 implementation(libs.circuit.foundation)
             }
