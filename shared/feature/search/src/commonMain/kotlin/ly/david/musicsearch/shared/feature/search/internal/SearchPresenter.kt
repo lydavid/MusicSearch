@@ -21,8 +21,8 @@ import ly.david.musicsearch.domain.search.history.usecase.DeleteSearchHistory
 import ly.david.musicsearch.domain.search.history.usecase.GetSearchHistory
 import ly.david.musicsearch.domain.search.history.usecase.RecordSearchHistory
 import ly.david.musicsearch.domain.search.results.usecase.GetSearchResults
-import ly.david.musicsearch.shared.feature.search.SearchScreen
 import ly.david.musicsearch.shared.screens.DetailsScreen
+import ly.david.musicsearch.shared.screens.SearchScreen
 
 private const val SEARCH_DELAY_MS = 500L
 
@@ -33,10 +33,10 @@ internal class SearchPresenter(
     private val getSearchHistory: GetSearchHistory,
     private val recordSearchHistory: RecordSearchHistory,
     private val deleteSearchHistory: DeleteSearchHistory,
-) : Presenter<SearchScreen.UiState> {
+) : Presenter<SearchUiState> {
 
     @Composable
-    override fun present(): SearchScreen.UiState {
+    override fun present(): SearchUiState {
         var query by rememberSaveable { mutableStateOf(screen.query.orEmpty()) }
         var entity by rememberSaveable { mutableStateOf(screen.entity ?: MusicBrainzEntity.ARTIST) }
         var searchResults by remember { mutableStateOf(emptyFlow<PagingData<ListItemModel>>()) }
@@ -59,37 +59,37 @@ internal class SearchPresenter(
             }
         }
 
-        fun eventSink(event: SearchScreen.UiEvent) {
+        fun eventSink(event: SearchUiEvent) {
             when (event) {
-                is SearchScreen.UiEvent.UpdateEntity -> {
+                is SearchUiEvent.UpdateEntity -> {
                     entity = event.entity
                 }
 
-                is SearchScreen.UiEvent.UpdateQuery -> {
+                is SearchUiEvent.UpdateQuery -> {
                     query = event.query
                 }
 
-                is SearchScreen.UiEvent.RecordSearch -> {
+                is SearchUiEvent.RecordSearch -> {
                     recordSearchHistory(
                         entity,
                         query,
                     )
                 }
 
-                SearchScreen.UiEvent.DeleteAllEntitySearchHistory -> {
+                SearchUiEvent.DeleteAllEntitySearchHistory -> {
                     deleteSearchHistory(
                         entity = entity,
                     )
                 }
 
-                is SearchScreen.UiEvent.DeleteSearchHistory -> {
+                is SearchUiEvent.DeleteSearchHistory -> {
                     deleteSearchHistory(
                         entity = event.item.entity,
                         query = event.item.query,
                     )
                 }
 
-                is SearchScreen.UiEvent.ClickItem -> {
+                is SearchUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             DetailsScreen(
@@ -103,7 +103,7 @@ internal class SearchPresenter(
             }
         }
 
-        return SearchScreen.UiState(
+        return SearchUiState(
             query = query,
             entity = entity,
             searchResults = searchResults.collectAsLazyPagingItems(),

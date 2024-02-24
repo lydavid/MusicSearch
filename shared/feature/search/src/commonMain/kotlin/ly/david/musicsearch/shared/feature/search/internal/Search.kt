@@ -23,7 +23,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
 import ly.david.musicsearch.core.models.network.searchableEntities
-import ly.david.musicsearch.shared.feature.search.SearchScreen
 import ly.david.musicsearch.shared.feature.search.SearchScreenTestTag
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.ExposedDropdownMenuBox
@@ -32,7 +31,7 @@ import ly.david.ui.common.topappbar.ScrollableTopAppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun Search(
-    uiState: SearchScreen.UiState,
+    state: SearchUiState,
     modifier: Modifier = Modifier,
 ) {
     val strings = LocalStrings.current
@@ -49,7 +48,7 @@ internal fun Search(
         },
     ) { innerPadding ->
         Search(
-            uiState = uiState,
+            state = state,
             modifier = Modifier.padding(innerPadding),
             snackbarHostState = snackbarHostState,
         )
@@ -58,12 +57,12 @@ internal fun Search(
 
 @Composable
 private fun Search(
-    uiState: SearchScreen.UiState,
+    state: SearchUiState,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
 ) {
     val strings = LocalStrings.current
-    val eventSink = uiState.eventSink
+    val eventSink = state.eventSink
     val searchResultsListState = rememberLazyListState()
     val searchHistoryListState = rememberLazyListState()
     val focusRequester = remember { FocusRequester() }
@@ -76,15 +75,15 @@ private fun Search(
                     .weight(1f)
                     .focusRequester(focusRequester),
                 shape = RectangleShape,
-                value = uiState.query,
+                value = state.query,
                 label = { Text(strings.search) },
                 placeholder = { Text(strings.search) },
                 maxLines = 1,
                 singleLine = true,
                 trailingIcon = {
-                    if (uiState.query.isBlank()) return@TextField
+                    if (state.query.isBlank()) return@TextField
                     IconButton(onClick = {
-                        eventSink(SearchScreen.UiEvent.UpdateQuery(""))
+                        eventSink(SearchUiEvent.UpdateQuery(""))
                         focusRequester.requestFocus()
                     }) {
                         Icon(
@@ -95,7 +94,7 @@ private fun Search(
                 },
                 onValueChange = { newText ->
                     if (!newText.contains("\n")) {
-                        eventSink(SearchScreen.UiEvent.UpdateQuery(newText))
+                        eventSink(SearchUiEvent.UpdateQuery(newText))
                     }
                 },
             )
@@ -104,37 +103,37 @@ private fun Search(
                 modifier = Modifier
                     .weight(1f),
                 options = searchableEntities,
-                selectedOption = uiState.entity,
+                selectedOption = state.entity,
                 onSelectOption = { entity ->
-                    eventSink(SearchScreen.UiEvent.UpdateEntity(entity))
+                    eventSink(SearchUiEvent.UpdateEntity(entity))
                 },
             )
         }
 
-        if (uiState.query.isBlank()) {
+        if (state.query.isBlank()) {
             SearchHistoryScreen(
-                lazyPagingItems = uiState.searchHistory,
+                lazyPagingItems = state.searchHistory,
                 lazyListState = searchHistoryListState,
                 onItemClick = { entity, query ->
-                    eventSink(SearchScreen.UiEvent.UpdateEntity(entity))
-                    eventSink(SearchScreen.UiEvent.UpdateQuery(query))
+                    eventSink(SearchUiEvent.UpdateEntity(entity))
+                    eventSink(SearchUiEvent.UpdateQuery(query))
                 },
                 onDeleteItem = {
-                    eventSink(SearchScreen.UiEvent.DeleteSearchHistory(it))
+                    eventSink(SearchUiEvent.DeleteSearchHistory(it))
                 },
                 onDeleteAllHistory = {
-                    eventSink(SearchScreen.UiEvent.DeleteAllEntitySearchHistory)
+                    eventSink(SearchUiEvent.DeleteAllEntitySearchHistory)
                 },
             )
         } else {
             SearchResultsScreen(
-                lazyPagingItems = uiState.searchResults,
+                lazyPagingItems = state.searchResults,
                 lazyListState = searchResultsListState,
                 snackbarHostState = snackbarHostState,
                 onItemClick = { entity, id, title ->
-                    eventSink(SearchScreen.UiEvent.RecordSearch)
+                    eventSink(SearchUiEvent.RecordSearch)
                     eventSink(
-                        SearchScreen.UiEvent.ClickItem(
+                        SearchUiEvent.ClickItem(
                             entity = entity,
                             id = id,
                             title = title,

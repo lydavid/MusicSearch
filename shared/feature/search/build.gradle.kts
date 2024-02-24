@@ -3,7 +3,6 @@ plugins {
     id("ly.david.android.compose")
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
-    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -15,7 +14,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
-                implementation(projects.core.parcelize)
                 implementation(projects.shared.screens)
                 implementation(projects.domain)
                 implementation(projects.strings)
