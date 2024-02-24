@@ -20,7 +20,6 @@ import ly.david.musicsearch.domain.history.usecase.GetPagedHistory
 import ly.david.musicsearch.domain.history.usecase.MarkLookupHistoryForDeletion
 import ly.david.musicsearch.domain.history.usecase.UnMarkLookupHistoryForDeletion
 import ly.david.musicsearch.shared.screens.DetailsScreen
-import ly.david.musicsearch.shared.feature.history.HistoryScreen
 
 internal class HistoryPresenter(
     private val navigator: Navigator,
@@ -29,9 +28,9 @@ internal class HistoryPresenter(
     private val markLookupHistoryForDeletion: MarkLookupHistoryForDeletion,
     private val unMarkLookupHistoryForDeletion: UnMarkLookupHistoryForDeletion,
     private val deleteLookupHistory: DeleteLookupHistory,
-) : Presenter<HistoryScreen.UiState> {
+) : Presenter<HistoryUiState> {
     @Composable
-    override fun present(): HistoryScreen.UiState {
+    override fun present(): HistoryUiState {
         var query by rememberSaveable { mutableStateOf("") }
         val sortOption by appPreferences.historySortOption.collectAsState(HistorySortOption.RECENTLY_VISITED)
         val lazyPagingItems: LazyPagingItems<ListItemModel> = getPagedHistory(
@@ -39,41 +38,41 @@ internal class HistoryPresenter(
             sortOption = sortOption,
         ).collectAsLazyPagingItems()
 
-        fun eventSink(event: HistoryScreen.UiEvent) {
+        fun eventSink(event: HistoryUiEvent) {
             when (event) {
-                is HistoryScreen.UiEvent.UpdateQuery -> {
+                is HistoryUiEvent.UpdateQuery -> {
                     query = event.query
                 }
 
-                is HistoryScreen.UiEvent.UpdateSortOption -> {
+                is HistoryUiEvent.UpdateSortOption -> {
                     appPreferences.setHistorySortOption(event.sortOption)
                 }
 
-                is HistoryScreen.UiEvent.MarkHistoryForDeletion -> {
+                is HistoryUiEvent.MarkHistoryForDeletion -> {
                     markLookupHistoryForDeletion(event.history.id)
                 }
 
-                is HistoryScreen.UiEvent.UnMarkHistoryForDeletion -> {
+                is HistoryUiEvent.UnMarkHistoryForDeletion -> {
                     unMarkLookupHistoryForDeletion(event.history.id)
                 }
 
-                is HistoryScreen.UiEvent.DeleteHistory -> {
+                is HistoryUiEvent.DeleteHistory -> {
                     deleteLookupHistory(event.history.id)
                 }
 
-                HistoryScreen.UiEvent.MarkAllHistoryForDeletion -> {
+                HistoryUiEvent.MarkAllHistoryForDeletion -> {
                     markLookupHistoryForDeletion()
                 }
 
-                HistoryScreen.UiEvent.UnMarkAllHistoryForDeletion -> {
+                HistoryUiEvent.UnMarkAllHistoryForDeletion -> {
                     unMarkLookupHistoryForDeletion()
                 }
 
-                HistoryScreen.UiEvent.DeleteAllHistory -> {
+                HistoryUiEvent.DeleteAllHistory -> {
                     deleteLookupHistory()
                 }
 
-                is HistoryScreen.UiEvent.ClickItem -> {
+                is HistoryUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             DetailsScreen(
@@ -87,7 +86,7 @@ internal class HistoryPresenter(
             }
         }
 
-        return HistoryScreen.UiState(
+        return HistoryUiState(
             query = query,
             sortOption = sortOption,
             lazyPagingItems = lazyPagingItems,

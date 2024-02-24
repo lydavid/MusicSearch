@@ -35,20 +35,18 @@ import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.musicsearch.shared.feature.history.HistoryScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun History(
-    uiState: HistoryScreen.UiState,
+    state: HistoryUiState,
     modifier: Modifier = Modifier,
 ) {
+    val eventSink = state.eventSink
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-
-    val eventSink = uiState.eventSink
 
     var showDeleteConfirmationDialog by rememberSaveable { mutableStateOf(false) }
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -62,7 +60,7 @@ internal fun History(
             onDismiss = { showDeleteConfirmationDialog = false },
             onConfirmClick = {
                 scope.launch {
-                    eventSink(HistoryScreen.UiEvent.MarkAllHistoryForDeletion)
+                    eventSink(HistoryUiEvent.MarkAllHistoryForDeletion)
                     val snackbarResult = snackbarHostState.showSnackbar(
                         message = "Cleared history",
                         actionLabel = "Undo",
@@ -72,7 +70,7 @@ internal fun History(
 
                     when (snackbarResult) {
                         SnackbarResult.ActionPerformed -> {
-                            eventSink(HistoryScreen.UiEvent.UnMarkAllHistoryForDeletion)
+                            eventSink(HistoryUiEvent.UnMarkAllHistoryForDeletion)
                         }
 
                         // TODO: leaving the screen before this is executed marks all item as deleted,
@@ -80,7 +78,7 @@ internal fun History(
                         //  they will recover all of those marked as deleted, including some possibly old entries
                         //  Wikipedia doesn't offer an undo for delete all, so maybe consider this a hidden feature?
                         SnackbarResult.Dismissed -> {
-                            eventSink(HistoryScreen.UiEvent.DeleteAllHistory)
+                            eventSink(HistoryUiEvent.DeleteAllHistory)
                         }
                     }
                 }
@@ -90,9 +88,9 @@ internal fun History(
 
     if (showBottomSheet) {
         HistorySortBottomSheet(
-            sortOption = uiState.sortOption,
+            sortOption = state.sortOption,
             onSortOptionClick = {
-                eventSink(HistoryScreen.UiEvent.UpdateSortOption(it))
+                eventSink(HistoryUiEvent.UpdateSortOption(it))
             },
             bottomSheetState = bottomSheetState,
             onDismiss = { showBottomSheet = false },
@@ -106,9 +104,9 @@ internal fun History(
                 showBackButton = false,
                 title = strings.recentHistory,
                 scrollBehavior = scrollBehavior,
-                filterText = uiState.query,
+                filterText = state.query,
                 onFilterTextChange = {
-                    eventSink(HistoryScreen.UiEvent.UpdateQuery(it))
+                    eventSink(HistoryUiEvent.UpdateQuery(it))
                 },
                 overflowDropdownMenuItems = {
                     DropdownMenuItem(
@@ -139,13 +137,13 @@ internal fun History(
         },
     ) { innerPadding ->
         History(
-            lazyPagingItems = uiState.lazyPagingItems,
+            lazyPagingItems = state.lazyPagingItems,
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             onItemClick = { entity, id, title ->
                 eventSink(
-                    HistoryScreen.UiEvent.ClickItem(
+                    HistoryUiEvent.ClickItem(
                         entity = entity,
                         id = id,
                         title = title,
@@ -154,7 +152,7 @@ internal fun History(
             },
             onDeleteItem = { history ->
                 scope.launch {
-                    eventSink(HistoryScreen.UiEvent.MarkHistoryForDeletion(history))
+                    eventSink(HistoryUiEvent.MarkHistoryForDeletion(history))
 
                     val snackbarResult = snackbarHostState.showSnackbar(
                         message = "Removed ${history.title}",
@@ -165,11 +163,11 @@ internal fun History(
 
                     when (snackbarResult) {
                         SnackbarResult.ActionPerformed -> {
-                            eventSink(HistoryScreen.UiEvent.UnMarkHistoryForDeletion(history))
+                            eventSink(HistoryUiEvent.UnMarkHistoryForDeletion(history))
                         }
 
                         SnackbarResult.Dismissed -> {
-                            eventSink(HistoryScreen.UiEvent.DeleteHistory(history))
+                            eventSink(HistoryUiEvent.DeleteHistory(history))
                         }
                     }
                 }

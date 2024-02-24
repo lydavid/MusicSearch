@@ -5,6 +5,8 @@ import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.shared.feature.history.internal.History
 import ly.david.musicsearch.shared.feature.history.internal.HistoryPresenter
+import ly.david.musicsearch.shared.feature.history.internal.HistoryUiState
+import ly.david.musicsearch.shared.screens.HistoryScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -29,9 +31,9 @@ val historyFeatureModule = module {
         Ui.Factory { screen, context ->
             when (screen) {
                 is HistoryScreen -> {
-                    ui<HistoryScreen.UiState> { state, modifier ->
+                    ui<HistoryUiState> { state, modifier ->
                         History(
-                            uiState = state,
+                            state = state,
                             modifier = modifier,
                         )
                     }

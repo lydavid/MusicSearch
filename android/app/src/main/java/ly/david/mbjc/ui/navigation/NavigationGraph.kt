@@ -38,7 +38,7 @@ import ly.david.ui.settings.SettingsScaffold
 import ly.david.ui.settings.licenses.LicensesScaffold
 import ly.david.musicsearch.android.feature.spotify.SpotifyScaffold
 import ly.david.musicsearch.shared.screens.DetailsScreen
-import ly.david.musicsearch.shared.feature.history.HistoryScreen
+import ly.david.musicsearch.shared.screens.HistoryScreen
 import ly.david.musicsearch.shared.screens.SearchScreen
 import java.net.URLDecoder
 import java.net.URLEncoder

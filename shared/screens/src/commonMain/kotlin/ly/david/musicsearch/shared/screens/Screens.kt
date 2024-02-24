@@ -11,6 +11,9 @@ data class SearchScreen(
 ) : Screen
 
 @CommonParcelize
+data object HistoryScreen : Screen
+
+@CommonParcelize
 data class DetailsScreen(
     val entity: MusicBrainzEntity,
     val id: String,
