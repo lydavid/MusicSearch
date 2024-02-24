@@ -40,7 +40,6 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(libs.androidx.activity.compose)
-                implementation(libs.androidx.constraintlayout.compose)
             }
         }
         val jvmMain by getting

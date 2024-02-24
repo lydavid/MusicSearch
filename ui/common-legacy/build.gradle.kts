@@ -23,7 +23,6 @@ dependencies {
     implementation(libs.accompanist.swiperefresh)
 
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.paging.common)
     implementation(libs.paging.compose)
 

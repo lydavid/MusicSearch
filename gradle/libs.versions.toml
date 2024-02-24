@@ -39,7 +39,6 @@ accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiper
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
 androidx-activity-compose = "androidx.activity:activity-compose:1.8.2"
 androidx-arch-core-testing = "androidx.arch.core:core-testing:2.2.0"
-androidx-constraintlayout-compose = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 androidx-core = "androidx.core:core-ktx:1.12.0"
 androidx-datastore-preferences-android = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }

@@ -6,22 +6,20 @@ import androidx.navigation.compose.rememberNavController
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.navigation.goToEntityScreen
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.koin.android.ext.android.inject
 import org.koin.test.inject
 
-// TODO: either comment out these tests, or add circuit
 @RunWith(Parameterized::class)
 internal class LookupEachEntityErrorTest(
-    private val entity: MusicBrainzEntity
+    private val entity: MusicBrainzEntity,
 ) : MainActivityTest() {
 
     companion object {
@@ -29,7 +27,10 @@ internal class LookupEachEntityErrorTest(
         @Parameterized.Parameters(name = "{0}")
         fun data(): Collection<MusicBrainzEntity> {
             return MusicBrainzEntity.values().filterNot {
-                it in listOf(MusicBrainzEntity.URL, MusicBrainzEntity.COLLECTION)
+                it in listOf(
+                    MusicBrainzEntity.URL,
+                    MusicBrainzEntity.COLLECTION,
+                )
             }
         }
     }
@@ -55,7 +56,10 @@ internal class LookupEachEntityErrorTest(
         composeTestRule.awaitIdle()
 
         val entityId = "error"
-        navController.goToEntityScreen(entity = entity, id = entityId)
+        navController.goToEntityScreen(
+            entity = entity,
+            id = entityId,
+        )
 
         waitForThenAssertAtLeastOneIsDisplayed(strings.retry)
 
