@@ -37,7 +37,7 @@ import ly.david.musicsearch.android.feature.nowplaying.NowPlayingHistoryScaffold
 import ly.david.ui.settings.SettingsScaffold
 import ly.david.ui.settings.licenses.LicensesScaffold
 import ly.david.musicsearch.android.feature.spotify.SpotifyScaffold
-import ly.david.musicsearch.feature.search.SearchScreen
+import ly.david.musicsearch.shared.feature.search.SearchScreen
 import ly.david.musicsearch.shared.screens.DetailsScreen
 import ly.david.musicsearch.shared.feature.history.HistoryScreen
 import java.net.URLDecoder

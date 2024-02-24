@@ -30,7 +30,7 @@ import com.github.scribejava.core.oauth.OAuth20Service
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.CircuitContent
-import ly.david.musicsearch.feature.search.SearchScreen
+import ly.david.musicsearch.shared.feature.search.SearchScreen
 import ly.david.musicsearch.shared.di.sharedModule
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.BaseTheme

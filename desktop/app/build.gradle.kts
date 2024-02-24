@@ -15,7 +15,7 @@ dependencies {
     implementation(projects.ui.core)
     implementation(projects.domain)
     implementation(projects.strings)
-    implementation(projects.feature.search)
+    implementation(projects.shared.feature.search)
     implementation(projects.core.models)
     implementation(projects.core.preferences)
     implementation(projects.data.musicbrainz)
