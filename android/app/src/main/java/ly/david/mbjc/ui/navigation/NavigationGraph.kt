@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.navigation
 
-import ly.david.musicsearch.shared.feature.settings.SettingsScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavBackStackEntry
@@ -11,9 +10,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.foundation.NavEvent
-import ly.david.musicsearch.shared.feature.settings.licenses.LicensesScaffold
+import com.slack.circuit.foundation.NavigableCircuitContent
+import com.slack.circuit.foundation.rememberCircuitNavigator
 import ly.david.mbjc.DEEP_LINK_SCHEMA
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
@@ -39,7 +40,9 @@ import ly.david.musicsearch.android.feature.nowplaying.NowPlayingHistoryScaffold
 import ly.david.musicsearch.android.feature.spotify.SpotifyScaffold
 import ly.david.musicsearch.shared.screens.DetailsScreen
 import ly.david.musicsearch.shared.screens.HistoryScreen
+import ly.david.musicsearch.shared.screens.LicensesScreen
 import ly.david.musicsearch.shared.screens.SearchScreen
+import ly.david.musicsearch.shared.screens.SettingsScreen
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -406,18 +409,21 @@ internal fun NavigationGraph(
             ),
         ) {
             // TODO:
-            SettingsScaffold(
-                modifier = modifier,
-                onDestinationClick = { destination ->
-                    onSettingsClick(destination)
-                },
-                onLoginClick = onLoginClick,
-                onLogoutClick = onLogoutClick,
-                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
-                sortReleaseGroupListItems = sortReleaseGroupListItems,
-                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
-            )
+//            Settings(
+//                modifier = modifier,
+//                onDestinationClick = { destination ->
+//                    onSettingsClick(destination)
+//                },
+//                onLoginClick = onLoginClick,
+//                onLogoutClick = onLogoutClick,
+//            )
+            val backStack = rememberSaveableBackStack(root = SettingsScreen)
+            val navigator = rememberCircuitNavigator(backStack)
+            NavigableCircuitContent(navigator, backStack, modifier)
+//            CircuitContent(
+//                screen = SettingsScreen,
+//                modifier = modifier,
+//            )
         }
 
         composable(
@@ -427,15 +433,6 @@ internal fun NavigationGraph(
                 modifier = modifier,
                 onBack = navController::navigateUp,
                 searchMusicBrainz = searchMusicBrainz,
-            )
-        }
-
-        composable(
-            Destination.SETTINGS_LICENSES.route,
-        ) {
-            LicensesScaffold(
-                modifier = modifier,
-                onBack = navController::navigateUp,
             )
         }
 

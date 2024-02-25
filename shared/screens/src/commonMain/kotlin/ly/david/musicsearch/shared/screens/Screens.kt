@@ -18,3 +18,9 @@ data class DetailsScreen(
     val id: String,
     val title: String?,
 ) : Screen
+
+@CommonParcelize
+data object SettingsScreen : Screen
+
+@CommonParcelize
+data object LicensesScreen : Screen

@@ -23,6 +23,7 @@ kotlin {
                 implementation(projects.data.spotify)
                 implementation(projects.domain)
                 implementation(projects.shared.feature.search)
+                implementation(projects.shared.feature.settings)
                 implementation(projects.feature.stats)
                 implementation(projects.shared.feature.history)
                 implementation(projects.strings)

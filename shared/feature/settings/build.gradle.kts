@@ -1,57 +1,73 @@
 plugins {
     id("ly.david.android.library")
-    kotlin("android")
     id("ly.david.android.compose")
+    id("ly.david.musicsearch.compose.multiplatform")
+    id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.aboutlibraries)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.build.config)
+//    alias(libs.plugins.ksp)
     alias(libs.plugins.paparazzi)
 }
 
 android {
     namespace = "ly.david.musicsearch.shared.feature.settings"
+}
 
-    buildTypes {
-        all {
-            buildConfigField(
-                type = "int",
-                name = "VERSION_CODE",
-                value = project.properties["VERSION_CODE"] as String? ?: "",
-            )
-            buildConfigField(
-                type = "String",
-                name = "VERSION_NAME",
-                value = "\"${project.properties["VERSION_NAME"] as String? ?: ""}\"",
-            )
+buildConfig {
+    buildConfigField(
+        name = "VERSION_CODE",
+        value = project.properties["VERSION_CODE"] as String? ?: "",
+    )
+    buildConfigField(
+        name = "VERSION_NAME",
+        value = project.properties["VERSION_NAME"] as String? ?: "",
+    )
+}
+
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.core.models)
+                implementation(projects.core.preferences)
+                implementation(projects.data.musicbrainz) // TODO: remove after extracting MusicBrainzAuthStore
+                implementation(projects.domain)
+                implementation(projects.shared.screens)
+                implementation(projects.strings)
+                implementation(projects.ui.common)
+                implementation(projects.ui.core)
+
+                implementation(compose.foundation)
+                implementation(compose.materialIconsExtended)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.preview)
+
+                implementation(libs.aboutlibraries.compose)
+                implementation(libs.aboutlibraries.core)
+                implementation(libs.circuit.foundation)
+                implementation(libs.koin.core)
+                implementation(libs.koin.annotations)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.appauth)
+
+                implementation(libs.koin.androidx.compose)
+            }
+        }
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(projects.ui.test.screenshot)
+                implementation(libs.test.parameter.injector)
+                implementation(libs.bundles.kotlinx.coroutines)
+            }
         }
     }
 }
-
 dependencies {
-    implementation(projects.core.models)
-    implementation(projects.core.preferences)
-    implementation(projects.data.musicbrainz) // TODO: remove after extracting MusicBrainzAuthStore
-    implementation(projects.domain)
-    implementation(projects.strings)
-    implementation(projects.ui.common)
-    implementation(projects.ui.core)
-    implementation(libs.aboutlibraries.compose)
-    implementation(libs.aboutlibraries.core)
-    implementation(libs.appauth)
-    implementation(libs.compose.foundation)
-    implementation(libs.compose.material.icons.extended)
-    implementation(libs.compose.material3)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.preview)
-    implementation(libs.koin.androidx.compose)
-    implementation(libs.koin.core)
-    implementation(libs.koin.annotations)
+    debugImplementation(compose.uiTooling)
 
-    debugImplementation(libs.compose.ui.tooling)
-
-    ksp(libs.koin.ksp.compiler)
-
-    testRuntimeOnly(libs.bundles.kotlinx.coroutines)
-
-    testImplementation(projects.ui.test.screenshot)
-    testImplementation(libs.test.parameter.injector)
+//    ksp(libs.koin.ksp.compiler)
 }

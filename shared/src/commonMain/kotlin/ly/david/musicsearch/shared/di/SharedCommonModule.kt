@@ -20,6 +20,7 @@ import ly.david.musicsearch.data.spotify.di.spotifyApiModule
 import ly.david.musicsearch.data.spotify.di.spotifyDataModule
 import ly.david.musicsearch.shared.feature.search.searchFeatureModule
 import ly.david.musicsearch.shared.feature.history.historyFeatureModule
+import ly.david.musicsearch.shared.feature.settings.settingsFeatureModule
 import ly.david.musicsearch.strings.di.stringsModule
 import ly.david.ui.common.commonUiModule
 import org.koin.core.module.Module
@@ -29,6 +30,7 @@ val circuitModule = module {
     includes(
         searchFeatureModule,
         historyFeatureModule,
+        settingsFeatureModule,
     )
     single {
         Circuit.Builder()
