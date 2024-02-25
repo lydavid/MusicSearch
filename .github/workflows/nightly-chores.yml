@@ -43,6 +43,8 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
+      - run: git pull
+
       - id: setup
         uses: ./.github/actions/setup
 
