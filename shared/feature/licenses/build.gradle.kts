@@ -17,9 +17,9 @@ kotlin {
                 implementation(projects.strings)
                 implementation(projects.shared.screens)
 
-//                implementation(compose.foundation)
+                implementation(compose.foundation)
                 implementation(compose.material3)
-//                implementation(compose.ui)
+                implementation(compose.ui)
 
                 implementation(libs.aboutlibraries.compose)
                 implementation(libs.aboutlibraries.core)

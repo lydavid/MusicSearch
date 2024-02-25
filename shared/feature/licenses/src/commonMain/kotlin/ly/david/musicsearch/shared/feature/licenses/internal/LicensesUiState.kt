@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.licenses
+package ly.david.musicsearch.shared.feature.licenses.internal
 
 import com.slack.circuit.runtime.CircuitUiState
 
