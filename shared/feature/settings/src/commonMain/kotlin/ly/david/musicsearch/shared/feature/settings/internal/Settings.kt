@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.toImmutableList
 import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
@@ -78,7 +79,7 @@ internal fun Settings(
             versionCode = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
             onLicenseClick = {
                 eventSink(SettingsUiEvent.GoToLicensesScreen)
-            }
+            },
         )
     }
 }
@@ -86,8 +87,6 @@ internal fun Settings(
 // private fun Context.isNotificationListenerEnabled(): Boolean {
 //    return NotificationManagerCompat.getEnabledListenerPackages(this).any { it == this.packageName }
 // }
-
-
 
 @Composable
 internal fun Settings(
@@ -124,9 +123,9 @@ internal fun Settings(
 
             SettingWithDialogChoices(
                 title = strings.theme,
-                choices = AppPreferences.Theme.values().map { it.getText(strings) },
+                choices = AppPreferences.Theme.entries.map { it.getText(strings) }.toImmutableList(),
                 selectedChoiceIndex = theme.ordinal,
-                onSelectChoiceIndex = { onThemeChange(AppPreferences.Theme.values()[it]) },
+                onSelectChoiceIndex = { onThemeChange(AppPreferences.Theme.entries[it]) },
             )
 
             // TODO: how should I split Android-only settings?

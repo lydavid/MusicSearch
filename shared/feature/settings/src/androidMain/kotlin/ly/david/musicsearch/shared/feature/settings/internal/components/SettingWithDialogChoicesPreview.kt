@@ -2,7 +2,7 @@ package ly.david.musicsearch.shared.feature.settings.internal.components
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
+import kotlinx.collections.immutable.toImmutableList
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
@@ -13,7 +13,7 @@ internal fun PreviewSettingWithDialogChoices() {
         Surface {
             SettingWithDialogChoices(
                 title = "Theme",
-                choices = listOf("Light"),
+                choices = listOf("Light").toImmutableList(),
                 selectedChoiceIndex = 0,
             )
         }

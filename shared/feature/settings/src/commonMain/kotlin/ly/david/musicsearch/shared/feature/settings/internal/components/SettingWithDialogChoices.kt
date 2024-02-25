@@ -12,13 +12,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
 import ly.david.ui.common.dialog.MultipleChoiceDialog
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
 internal fun SettingWithDialogChoices(
     title: String,
-    choices: List<String>,
+    choices: ImmutableList<String>,
     selectedChoiceIndex: Int,
     onSelectChoiceIndex: (Int) -> Unit = {},
 ) {

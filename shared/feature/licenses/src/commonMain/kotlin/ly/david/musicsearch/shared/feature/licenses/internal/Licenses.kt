@@ -26,11 +26,11 @@ internal fun Licenses(
             )
         },
     ) { innerPadding ->
-        Licenses(modifier = modifier.padding(innerPadding))
+        Licenses(modifier = Modifier.padding(innerPadding))
     }
 }
 
 @Composable
 internal expect fun Licenses(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 )
