@@ -6,16 +6,12 @@ import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.shared.feature.settings.internal.Settings
 import ly.david.musicsearch.shared.feature.settings.internal.SettingsPresenter
 import ly.david.musicsearch.shared.feature.settings.internal.SettingsUiState
-import ly.david.musicsearch.shared.feature.settings.internal.licenses.LicensesPresenter
-import ly.david.musicsearch.shared.feature.settings.internal.licenses.LicensesScaffold
-import ly.david.musicsearch.shared.feature.settings.internal.licenses.LicensesUiState
-import ly.david.musicsearch.shared.screens.LicensesScreen
 import ly.david.musicsearch.shared.screens.SettingsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val settingsFeatureModule = module {
-    single(named("SettingsFeaturePresenterFactories")) {
+    single(named(SettingsScreen::class.java.name)) {
         Presenter.Factory { screen, navigator, context ->
             when (screen) {
                 is SettingsScreen -> SettingsPresenter(
@@ -24,29 +20,16 @@ val settingsFeatureModule = module {
                     get(),
                 )
 
-                is LicensesScreen -> LicensesPresenter(
-                    navigator = navigator,
-                )
-
                 else -> null
             }
         }
     }
-    single(named("SettingsFeatureUiFactories")) {
+    single(named(SettingsScreen::class.java.name)) {
         Ui.Factory { screen, context ->
             when (screen) {
                 is SettingsScreen -> {
                     ui<SettingsUiState> { state, modifier ->
                         Settings(
-                            state = state,
-                            modifier = modifier,
-                        )
-                    }
-                }
-
-                is LicensesScreen -> {
-                    ui<LicensesUiState> { state, modifier ->
-                        LicensesScaffold(
                             state = state,
                             modifier = modifier,
                         )

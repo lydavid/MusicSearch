@@ -15,7 +15,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.core.models)
+                api(projects.core.models)
                 implementation(projects.data.coverart)
                 implementation(projects.data.musicbrainz)
                 implementation(projects.domain)

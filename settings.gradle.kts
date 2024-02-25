@@ -60,6 +60,7 @@ include(
     ":feature:stats",
     ":shared",
     ":shared:feature:history",
+    ":shared:feature:licenses",
     ":shared:feature:search",
     ":shared:feature:settings",
     ":shared:screens",

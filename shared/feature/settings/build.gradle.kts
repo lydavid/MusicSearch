@@ -5,7 +5,6 @@ plugins {
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.build.config)
-//    alias(libs.plugins.ksp)
     alias(libs.plugins.paparazzi)
 }
 
@@ -68,6 +67,4 @@ kotlin {
 }
 dependencies {
     debugImplementation(compose.uiTooling)
-
-//    ksp(libs.koin.ksp.compiler)
 }

@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.settings.internal.licenses
+package ly.david.musicsearch.shared.feature.licenses
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme

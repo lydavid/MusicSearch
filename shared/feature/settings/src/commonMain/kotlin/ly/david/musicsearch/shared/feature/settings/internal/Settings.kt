@@ -45,6 +45,8 @@ internal fun Settings(
 
 //        val context = LocalContext.current
 
+        // TODO: no-op for jvm for now, and do not show
+
         Settings(
             modifier = Modifier.padding(innerPadding),
             username = state.username,
@@ -168,6 +170,7 @@ internal fun Settings(
                 )
             }
 
+            // TODO:
             ClickableItem(
                 title = strings.spotify,
                 subtitle = strings.spotifySubtitle,
