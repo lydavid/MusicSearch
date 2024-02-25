@@ -3,7 +3,6 @@ plugins {
     id("ly.david.android.compose")
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
-    alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.build.config)
     alias(libs.plugins.paparazzi)
 }
@@ -42,8 +41,6 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.preview)
 
-                implementation(libs.aboutlibraries.compose)
-                implementation(libs.aboutlibraries.core)
                 implementation(libs.circuit.foundation)
                 implementation(libs.koin.core)
                 implementation(libs.koin.annotations)

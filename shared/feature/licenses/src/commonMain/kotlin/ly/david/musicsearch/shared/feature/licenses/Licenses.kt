@@ -1,7 +1,34 @@
 package ly.david.musicsearch.shared.feature.licenses
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.common.topappbar.ScrollableTopAppBar
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun Licenses(
+    state: LicensesUiState,
+    modifier: Modifier = Modifier,
+) {
+    val strings = LocalStrings.current
+    val eventSink = state.eventSink
+
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            ScrollableTopAppBar(
+                onBack = { eventSink(LicensesUiEvent.NavigateUp) },
+                title = strings.openSourceLicenses,
+            )
+        },
+    ) { innerPadding ->
+        Licenses(modifier = modifier.padding(innerPadding))
+    }
+}
 
 @Composable
 internal expect fun Licenses(

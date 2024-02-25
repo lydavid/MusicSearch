@@ -24,7 +24,7 @@ val licensesFeatureModule = module {
             when (screen) {
                 is LicensesScreen -> {
                     ui<LicensesUiState> { state, modifier ->
-                        LicensesScaffold(
+                        Licenses(
                             state = state,
                             modifier = modifier,
                         )
