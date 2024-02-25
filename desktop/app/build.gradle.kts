@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm")
     id("ly.david.musicsearch.compose.multiplatform")
     application
+    alias(libs.plugins.aboutlibraries)
 }
 
 group = "ly.david.musicsearch"

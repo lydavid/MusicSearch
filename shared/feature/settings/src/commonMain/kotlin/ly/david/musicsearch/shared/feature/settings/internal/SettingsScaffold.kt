@@ -85,12 +85,7 @@ internal fun Settings(
 //    return NotificationManagerCompat.getEnabledListenerPackages(this).any { it == this.packageName }
 // }
 
-private fun AppPreferences.Theme.getText(strings: AppStrings): String =
-    when (this) {
-        AppPreferences.Theme.LIGHT -> strings.light
-        AppPreferences.Theme.DARK -> strings.dark
-        AppPreferences.Theme.SYSTEM -> strings.system
-    }
+
 
 @Composable
 internal fun Settings(
@@ -132,6 +127,7 @@ internal fun Settings(
                 onSelectChoiceIndex = { onThemeChange(AppPreferences.Theme.values()[it]) },
             )
 
+            // TODO: how should I split Android-only settings?
             val isAndroid12 = true // TODO: handle Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
             if (isAndroid12) {
                 SettingSwitch(
@@ -195,9 +191,16 @@ internal fun Settings(
                 text = "$versionName ($versionCode)",
             )
 
-            if (true) { // TODO: handle BuildConfig.DEBUG
+            if (false) { // TODO: handle BuildConfig.DEBUG
                 DevSettingsSection()
             }
         }
     }
 }
+
+private fun AppPreferences.Theme.getText(strings: AppStrings): String =
+    when (this) {
+        AppPreferences.Theme.LIGHT -> strings.light
+        AppPreferences.Theme.DARK -> strings.dark
+        AppPreferences.Theme.SYSTEM -> strings.system
+    }
