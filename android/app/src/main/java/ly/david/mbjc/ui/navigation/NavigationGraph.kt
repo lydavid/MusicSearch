@@ -420,10 +420,6 @@ internal fun NavigationGraph(
             val backStack = rememberSaveableBackStack(root = SettingsScreen)
             val navigator = rememberCircuitNavigator(backStack)
             NavigableCircuitContent(navigator, backStack, modifier)
-//            CircuitContent(
-//                screen = SettingsScreen,
-//                modifier = modifier,
-//            )
         }
 
         composable(

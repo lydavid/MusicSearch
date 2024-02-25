@@ -1,4 +1,3 @@
-
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -27,11 +26,14 @@ import androidx.compose.ui.window.rememberWindowState
 import com.github.scribejava.core.model.OAuth2AccessToken
 import com.github.scribejava.core.model.OAuthAsyncRequestCallback
 import com.github.scribejava.core.oauth.OAuth20Service
+import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
-import com.slack.circuit.foundation.CircuitContent
+import com.slack.circuit.foundation.NavigableCircuitContent
+import com.slack.circuit.foundation.rememberCircuitNavigator
 import ly.david.musicsearch.shared.di.sharedModule
 import ly.david.musicsearch.shared.screens.SearchScreen
+import ly.david.musicsearch.shared.screens.SettingsScreen
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.BaseTheme
 import ly.david.ui.core.theme.TextStyles
@@ -57,7 +59,15 @@ fun main() = application {
         BaseTheme(
             content = {
                 CircuitCompositionLocals(circuit) {
-                    CircuitContent(SearchScreen())
+                    val backStack = rememberSaveableBackStack(root = SearchScreen())
+                    val navigator = rememberCircuitNavigator(
+                        backStack,
+                        onRootPop = {},
+                    )
+                    NavigableCircuitContent(
+                        navigator,
+                        backStack,
+                    )
                 }
 //                MusicSearchApp(
 //                    service,

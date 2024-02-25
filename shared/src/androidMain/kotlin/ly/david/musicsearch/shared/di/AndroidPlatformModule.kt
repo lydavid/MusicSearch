@@ -14,7 +14,6 @@ actual val platformModule: Module = module {
         CollectionUiModule().module,
         CommonLegacyUiModule().module,
         NowPlayingUiModule().module,
-//        SettingsUiModule().module,
         imageModule,
 
         DomainModule().module,
