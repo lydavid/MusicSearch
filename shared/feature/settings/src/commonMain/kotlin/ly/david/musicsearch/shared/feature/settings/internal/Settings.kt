@@ -9,12 +9,15 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.toImmutableList
-import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
+import ly.david.musicsearch.shared.screens.LicensesScreen
+import ly.david.musicsearch.shared.screens.NowPlayingHistoryScreen
+import ly.david.musicsearch.shared.screens.SpotifyPlayingScreen
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.component.ClickableItem
@@ -22,12 +25,21 @@ import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
 
+@Composable
+internal expect fun Settings(
+    state: SettingsUiState,
+    modifier: Modifier = Modifier,
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun Settings(
     state: SettingsUiState,
+    showAndroidSettings: Boolean,
     modifier: Modifier = Modifier,
-    onDestinationClick: (Destination) -> Unit = {},
+    isAndroid12: Boolean = false,
+    isNotificationListenerEnabled: Boolean = false,
+    onGoToNotificationListenerSettings: () -> Unit = {},
     onLoginClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
 ) {
@@ -43,18 +55,17 @@ internal fun Settings(
             )
         },
     ) { innerPadding ->
-
-//        val context = LocalContext.current
-
-        // TODO: no-op for jvm for now, and do not show
-
         Settings(
             modifier = Modifier.padding(innerPadding),
             username = state.username,
             showLogin = state.accessToken.isNullOrEmpty(),
             onLoginClick = onLoginClick,
             onLogoutClick = onLogoutClick,
-            onDestinationClick = onDestinationClick,
+            onDestinationClick = {
+                eventSink(SettingsUiEvent.GoToScreen(it))
+            },
+            showAndroidSettings = showAndroidSettings,
+            isAndroid12 = isAndroid12,
             theme = state.theme,
             onThemeChange = {
                 eventSink(SettingsUiEvent.UpdateTheme(it))
@@ -71,22 +82,13 @@ internal fun Settings(
             onSortReleaseGroupListItemsChange = {
                 eventSink(SettingsUiEvent.UpdateSortReleaseGroupListItems(it))
             },
-            //            isNotificationListenerEnabled = context.isNotificationListenerEnabled(),
-            onGoToNotificationListenerSettings = {
-                //                context.startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
-            },
+            isNotificationListenerEnabled = isNotificationListenerEnabled,
+            onGoToNotificationListenerSettings = onGoToNotificationListenerSettings,
             versionName = BuildConfig.VERSION_NAME,
             versionCode = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
-            onLicenseClick = {
-                eventSink(SettingsUiEvent.GoToLicensesScreen)
-            },
         )
     }
 }
-
-// private fun Context.isNotificationListenerEnabled(): Boolean {
-//    return NotificationManagerCompat.getEnabledListenerPackages(this).any { it == this.packageName }
-// }
 
 @Composable
 internal fun Settings(
@@ -95,7 +97,9 @@ internal fun Settings(
     showLogin: Boolean = true,
     onLoginClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
-    onDestinationClick: (Destination) -> Unit = {},
+    onDestinationClick: (Screen) -> Unit = {},
+    showAndroidSettings: Boolean = true,
+    isAndroid12: Boolean = false,
     theme: AppPreferences.Theme = AppPreferences.Theme.SYSTEM,
     onThemeChange: (AppPreferences.Theme) -> Unit = {},
     useMaterialYou: Boolean = true,
@@ -108,7 +112,6 @@ internal fun Settings(
     onGoToNotificationListenerSettings: () -> Unit = {},
     versionName: String = "",
     versionCode: Int = 0,
-    onLicenseClick: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -128,9 +131,7 @@ internal fun Settings(
                 onSelectChoiceIndex = { onThemeChange(AppPreferences.Theme.entries[it]) },
             )
 
-            // TODO: how should I split Android-only settings?
-            val isAndroid12 = true // TODO: handle Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-            if (isAndroid12) {
+            if (showAndroidSettings && isAndroid12) {
                 SettingSwitch(
                     header = "Use Material You",
                     checked = useMaterialYou,
@@ -150,41 +151,44 @@ internal fun Settings(
                 onCheckedChange = onSortReleaseGroupListItemsChange,
             )
 
-            ListSeparatorHeader(text = strings.experimentalSearch)
+            if (showAndroidSettings) {
+                ListSeparatorHeader(text = strings.experimentalSearch)
 
-            if (isNotificationListenerEnabled) {
+                if (isNotificationListenerEnabled) {
+                    ClickableItem(
+                        title = strings.nowPlayingHistory,
+                        subtitle = strings.nowPlayingHistorySubtitle,
+                        endIcon = Icons.Default.ChevronRight,
+                        onClick = {
+                            onDestinationClick(NowPlayingHistoryScreen)
+                        },
+                    )
+                } else {
+                    ClickableItem(
+                        title = strings.enableNotificationListener,
+                        subtitle = strings.enableNotificationListenerSubtitle,
+                        onClick = onGoToNotificationListenerSettings,
+                    )
+                }
+
                 ClickableItem(
-                    title = strings.nowPlayingHistory,
-                    subtitle = strings.nowPlayingHistorySubtitle,
+                    title = strings.spotify,
+                    subtitle = strings.spotifySubtitle,
                     endIcon = Icons.Default.ChevronRight,
                     onClick = {
-                        onDestinationClick(Destination.SETTINGS_NOWPLAYING)
+                        onDestinationClick(SpotifyPlayingScreen)
                     },
                 )
-            } else {
-                ClickableItem(
-                    title = strings.enableNotificationListener,
-                    subtitle = strings.enableNotificationListenerSubtitle,
-                    onClick = onGoToNotificationListenerSettings,
-                )
             }
-
-            // TODO:
-            ClickableItem(
-                title = strings.spotify,
-                subtitle = strings.spotifySubtitle,
-                endIcon = Icons.Default.ChevronRight,
-                onClick = {
-                    onDestinationClick(Destination.EXPERIMENTAL_SPOTIFY)
-                },
-            )
 
             ListSeparatorHeader(text = strings.about)
 
             ClickableItem(
                 title = strings.openSourceLicenses,
                 endIcon = Icons.Default.ChevronRight,
-                onClick = onLicenseClick,
+                onClick = {
+                    onDestinationClick(LicensesScreen)
+                },
             )
 
             val versionKey = strings.appVersion

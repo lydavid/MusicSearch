@@ -24,3 +24,9 @@ data object SettingsScreen : Screen
 
 @CommonParcelize
 data object LicensesScreen : Screen
+
+@CommonParcelize
+data object NowPlayingHistoryScreen : Screen
+
+@CommonParcelize
+data object SpotifyPlayingScreen : Screen

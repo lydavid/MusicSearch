@@ -7,7 +7,6 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.core.preferences.AppPreferences
-import ly.david.musicsearch.shared.screens.LicensesScreen
 
 internal class SettingsPresenter(
     private val navigator: Navigator,
@@ -20,7 +19,7 @@ internal class SettingsPresenter(
         val accessToken by musicBrainzAuthStore.accessToken.collectAsState(initial = null)
         val theme by appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
         val useMaterialYou by appPreferences.useMaterialYou.collectAsState(initial = true)
-        val sortReleaseGroupListItems by appPreferences.sortReleaseGroupListItems.collectAsState(initial = false)
+        val sortReleaseGroupListItems by appPreferences.sortReleaseGroupListItems.collectAsState(initial = true)
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
 
         fun eventSink(event: SettingsUiEvent) {
@@ -40,8 +39,8 @@ internal class SettingsPresenter(
                 is SettingsUiEvent.UpdateSortReleaseGroupListItems -> {
                     appPreferences.setSortReleaseGroupListItems(event.sort)
                 }
-                is SettingsUiEvent.GoToLicensesScreen -> {
-                    navigator.goTo(LicensesScreen)
+                is SettingsUiEvent.GoToScreen -> {
+                    navigator.goTo(event.screen)
                 }
             }
         }
