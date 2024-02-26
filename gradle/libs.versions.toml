@@ -2,8 +2,8 @@
 aboutlibraries = "10.10.0"
 accompanist = "0.34.0"
 androidGradlePlugin = "8.2.2"
-arkivanov-mvikotlin = "3.3.0"
 arkivanov-decompose = "2.2.2"
+arkivanov-mvikotlin = "3.3.0"
 chucker = "4.0.0"
 circuit = "0.19.1"
 coil = "2.6.0"
@@ -51,13 +51,13 @@ androidx-paging-runtime = { module = "androidx.paging:paging-runtime-ktx", versi
 androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.5.1"
 androidx-test-junit = "androidx.test.ext:junit:1.1.5"
 appauth = "net.openid:appauth:0.11.1"
-arkivanov-mvikotlin = { module = "com.arkivanov.mvikotlin:mvikotlin", version.ref = "arkivanov-mvikotlin" }
-arkivanov-mvikotlin-main = { module = "com.arkivanov.mvikotlin:mvikotlin-main", version.ref = "arkivanov-mvikotlin" }
-arkivanov-mvikotlin-logging = { module = "com.arkivanov.mvikotlin:mvikotlin-logging", version.ref = "arkivanov-mvikotlin" }
-arkivanov-mvikotlin-timetravel = { module = "com.arkivanov.mvikotlin:mvikotlin-timetravel", version.ref = "arkivanov-mvikotlin" }
-arkivanov-mvikotlin-extensions-coroutines = { module = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines", version.ref = "arkivanov-mvikotlin" }
 arkivanov-decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "arkivanov-decompose" }
 arkivanov-decompose-extensions-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "arkivanov-decompose" }
+arkivanov-mvikotlin = { module = "com.arkivanov.mvikotlin:mvikotlin", version.ref = "arkivanov-mvikotlin" }
+arkivanov-mvikotlin-extensions-coroutines = { module = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines", version.ref = "arkivanov-mvikotlin" }
+arkivanov-mvikotlin-logging = { module = "com.arkivanov.mvikotlin:mvikotlin-logging", version.ref = "arkivanov-mvikotlin" }
+arkivanov-mvikotlin-main = { module = "com.arkivanov.mvikotlin:mvikotlin-main", version.ref = "arkivanov-mvikotlin" }
+arkivanov-mvikotlin-timetravel = { module = "com.arkivanov.mvikotlin:mvikotlin-timetravel", version.ref = "arkivanov-mvikotlin" }
 chucker = { module = "com.github.chuckerteam.chucker:library", version.ref = "chucker" }
 chucker-noop = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "chucker" }
 circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "circuit" }
@@ -144,9 +144,9 @@ firebase-crashlytics = "com.google.firebase.crashlytics:2.9.9"
 google-services = "com.google.gms.google-services:4.4.1"
 gradle-versions = "com.github.ben-manes.versions:0.51.0"
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
