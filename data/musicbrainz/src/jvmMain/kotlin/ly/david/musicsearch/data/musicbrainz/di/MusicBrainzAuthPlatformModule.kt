@@ -5,10 +5,9 @@ import com.github.scribejava.core.builder.api.DefaultApi20
 import com.github.scribejava.core.model.OAuthConstants
 import com.github.scribejava.core.oauth.OAuth20Service
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
-import org.koin.core.module.Module
 import org.koin.dsl.module
 
-actual val musicBrainzAuthModule: Module = module {
+actual val musicBrainzAuthPlatformModule = module {
     single<OAuth20Service> {
         val musicBrainzOAuthInfo = get<MusicBrainzOAuthInfo>()
         val musicBrainzApi20 = object : DefaultApi20() {
