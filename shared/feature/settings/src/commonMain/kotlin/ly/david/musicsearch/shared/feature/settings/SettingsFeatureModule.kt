@@ -11,13 +11,17 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val settingsFeatureModule = module {
+    includes(platformModule)
+
     single(named(SettingsScreen::class.java.name)) {
-        Presenter.Factory { screen, navigator, context ->
+        Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is SettingsScreen -> SettingsPresenter(
                     navigator = navigator,
                     appPreferences = get(),
-                    get(),
+                    musicBrainzAuthStore = get(),
+                    loginPresenter = get(),
+                    logout = get()
                 )
 
                 else -> null
@@ -25,7 +29,7 @@ val settingsFeatureModule = module {
         }
     }
     single(named(SettingsScreen::class.java.name)) {
-        Ui.Factory { screen, context ->
+        Ui.Factory { screen, _ ->
             when (screen) {
                 is SettingsScreen -> {
                     ui<SettingsUiState> { state, modifier ->

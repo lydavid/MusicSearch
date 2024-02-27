@@ -85,8 +85,6 @@ internal fun NavHostController.goTo(destination: Destination) {
 @Composable
 internal fun NavigationGraph(
     navController: NavHostController,
-    onLoginClick: () -> Unit,
-    onLogoutClick: () -> Unit,
     onCreateCollectionClick: () -> Unit,
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit,
     onDeleteFromCollection: (collectionId: String, entityId: String, name: String) -> Unit,
@@ -425,10 +423,6 @@ internal fun NavigationGraph(
             )
         }
 
-        val onSettingsClick: (Destination) -> Unit = { destination ->
-            navController.goTo(destination)
-        }
-
         composable(
             Destination.SETTINGS.route,
             deepLinks = listOf(
@@ -437,22 +431,17 @@ internal fun NavigationGraph(
                 },
             ),
         ) {
-            // TODO:
-//            Settings(
-//                onLoginClick = onLoginClick,
-//                onLogoutClick = onLogoutClick,
-//            )
             val backStack = rememberSaveableBackStack(root = SettingsScreen)
             val navigator = rememberCircuitNavigator(backStack)
             NavigableCircuitContent(
                 navigator = navigator,
                 backStack = backStack,
                 modifier = modifier,
-                unavailableRoute = { screen, modifier ->
+                unavailableRoute = { screen, nestedModifier ->
                     when (screen) {
                         is NowPlayingHistoryScreen -> {
                             NowPlayingHistoryScaffold(
-                                modifier = modifier,
+                                modifier = nestedModifier,
                                 onBack = navigator::pop,
                                 searchMusicBrainz = searchMusicBrainz,
                             )
@@ -460,7 +449,7 @@ internal fun NavigationGraph(
 
                         is SpotifyPlayingScreen -> {
                             SpotifyScaffold(
-                                modifier = modifier,
+                                modifier = nestedModifier,
                                 onBack = navigator::pop,
                                 searchMusicBrainz = searchMusicBrainz,
                             )

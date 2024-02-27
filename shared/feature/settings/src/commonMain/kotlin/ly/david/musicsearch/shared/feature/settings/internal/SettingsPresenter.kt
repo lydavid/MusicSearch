@@ -3,15 +3,20 @@ package ly.david.musicsearch.shared.feature.settings.internal
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.core.preferences.AppPreferences
+import ly.david.musicsearch.data.musicbrainz.auth.Logout
 
 internal class SettingsPresenter(
     private val navigator: Navigator,
     private val appPreferences: AppPreferences,
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
+    private val loginPresenter: LoginPresenter,
+    private val logout: Logout,
 ) : Presenter<SettingsUiState> {
     @Composable
     override fun present(): SettingsUiState {
@@ -21,6 +26,10 @@ internal class SettingsPresenter(
         val useMaterialYou by appPreferences.useMaterialYou.collectAsState(initial = true)
         val sortReleaseGroupListItems by appPreferences.sortReleaseGroupListItems.collectAsState(initial = true)
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
+
+        val scope = rememberCoroutineScope()
+        val nestedPresenter = loginPresenter.present()
+        val nestedPresenterEventSink = nestedPresenter.eventSink
 
         fun eventSink(event: SettingsUiEvent) {
             when (event) {
@@ -39,8 +48,19 @@ internal class SettingsPresenter(
                 is SettingsUiEvent.UpdateSortReleaseGroupListItems -> {
                     appPreferences.setSortReleaseGroupListItems(event.sort)
                 }
+
                 is SettingsUiEvent.GoToScreen -> {
                     navigator.goTo(event.screen)
+                }
+
+                is SettingsUiEvent.Login -> {
+                    nestedPresenterEventSink(LoginUiEvent.Login)
+                }
+
+                is SettingsUiEvent.Logout -> {
+                    scope.launch {
+                        logout()
+                    }
                 }
             }
         }

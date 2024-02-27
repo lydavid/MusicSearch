@@ -1,19 +1,19 @@
-package ly.david.musicsearch.data.musicbrainz
+package ly.david.musicsearch.data.musicbrainz.auth
 
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.auth.AccessToken
 import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationResponse
 import net.openid.appauth.AuthorizationService
-import net.openid.appauth.ClientAuthentication
+import net.openid.appauth.ClientSecretBasic
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class Login(
+class LoginAndroid(
     private val authService: AuthorizationService,
-    private val clientAuth: ClientAuthentication,
+    private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val musicBrainzApi: MusicBrainzApi,
     private val logger: Logger,
@@ -39,7 +39,7 @@ class Login(
         return suspendCoroutine { cont ->
             authService.performTokenRequest(
                 authorizationResponse.createTokenExchangeRequest(),
-                clientAuth,
+                ClientSecretBasic(musicBrainzOAuthInfo.clientSecret),
             ) { response, exception ->
                 val authState = AuthState()
                 authState.update(

@@ -38,6 +38,8 @@ import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.BaseTheme
 import ly.david.ui.core.theme.TextStyles
 import org.koin.core.context.startKoin
+import java.awt.Desktop
+import java.net.URI
 
 fun main() = application {
     val windowState = rememberWindowState()
@@ -58,20 +60,20 @@ fun main() = application {
     ) {
         BaseTheme(
             content = {
-                CircuitCompositionLocals(circuit) {
-                    val backStack = rememberSaveableBackStack(root = SettingsScreen)
-                    val navigator = rememberCircuitNavigator(
-                        backStack,
-                        onRootPop = {},
-                    )
-                    NavigableCircuitContent(
-                        navigator,
-                        backStack,
-                    )
-                }
-//                MusicSearchApp(
-//                    service,
-//                )
+//                CircuitCompositionLocals(circuit) {
+//                    val backStack = rememberSaveableBackStack(root = SettingsScreen)
+//                    val navigator = rememberCircuitNavigator(
+//                        backStack,
+//                        onRootPop = {},
+//                    )
+//                    NavigableCircuitContent(
+//                        navigator,
+//                        backStack,
+//                    )
+//                }
+                MusicSearchApp(
+                    service,
+                )
             },
         )
     }

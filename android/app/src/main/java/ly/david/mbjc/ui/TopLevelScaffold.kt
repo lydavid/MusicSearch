@@ -170,12 +170,12 @@ internal fun TopLevelScaffold(
         NavigationGraph(
             navController = navController,
             modifier = Modifier.padding(innerPadding),
-            onLoginClick = {
-                loginLauncher.launch(Unit)
-            },
-            onLogoutClick = {
-                viewModel.logout()
-            },
+//            onLoginClick = {
+//                loginLauncher.launch(Unit)
+//            },
+//            onLogoutClick = {
+//                viewModel.logout()
+//            },
             onCreateCollectionClick = {
                 showCreateCollectionDialog = true
             },

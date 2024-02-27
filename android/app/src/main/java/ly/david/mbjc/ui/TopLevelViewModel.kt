@@ -18,9 +18,9 @@ import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.musicbrainz.Login
-import ly.david.musicsearch.data.musicbrainz.Logout
-import ly.david.musicsearch.data.musicbrainz.MusicBrainzLoginActivityResultContract
+import ly.david.musicsearch.data.musicbrainz.auth.LoginAndroid
+import ly.david.musicsearch.data.musicbrainz.auth.Logout
+import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzLoginActivityResultContract
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.domain.collection.usecase.GetAllCollections
 import net.openid.appauth.AuthorizationResponse
@@ -38,7 +38,7 @@ internal class TopLevelViewModel(
     private val musicBrainzApi: MusicBrainzApi,
 
     private val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract,
-    private val loginUseCase: Login,
+    private val loginUseCase: LoginAndroid,
     private val logoutUseCase: Logout,
 ) : ViewModel() {
 

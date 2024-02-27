@@ -50,6 +50,7 @@ kotlin {
             dependencies {
                 implementation(libs.appauth)
 
+                implementation(libs.androidx.activity.compose)
                 implementation(libs.koin.androidx.compose)
             }
         }

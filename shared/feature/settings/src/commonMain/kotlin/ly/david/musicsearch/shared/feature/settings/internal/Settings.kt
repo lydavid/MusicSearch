@@ -40,8 +40,6 @@ internal fun Settings(
     isAndroid12: Boolean = false,
     isNotificationListenerEnabled: Boolean = false,
     onGoToNotificationListenerSettings: () -> Unit = {},
-    onLoginClick: () -> Unit = {},
-    onLogoutClick: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
     val eventSink = state.eventSink
@@ -59,8 +57,12 @@ internal fun Settings(
             modifier = Modifier.padding(innerPadding),
             username = state.username,
             showLogin = state.accessToken.isNullOrEmpty(),
-            onLoginClick = onLoginClick,
-            onLogoutClick = onLogoutClick,
+            onLoginClick = {
+                eventSink(SettingsUiEvent.Login)
+            },
+            onLogoutClick = {
+                eventSink(SettingsUiEvent.Logout)
+            },
             onDestinationClick = {
                 eventSink(SettingsUiEvent.GoToScreen(it))
             },
