@@ -158,15 +158,9 @@ internal class TopLevelViewModel(
 
     fun getLoginContract() = musicBrainzLoginActivityResultContract
 
-    fun login(authorizationResponse: AuthorizationResponse) {
+    fun login(result: MusicBrainzLoginActivityResultContract.Result) {
         viewModelScope.launch {
-            loginUseCase(authorizationResponse)
-        }
-    }
-
-    fun logout() {
-        viewModelScope.launch {
-            logoutUseCase()
+            loginUseCase(result)
         }
     }
 }

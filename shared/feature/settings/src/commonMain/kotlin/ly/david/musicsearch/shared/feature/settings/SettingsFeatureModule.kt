@@ -21,7 +21,7 @@ val settingsFeatureModule = module {
                     appPreferences = get(),
                     musicBrainzAuthStore = get(),
                     loginPresenter = get(),
-                    logout = get()
+                    logout = get(),
                 )
 
                 else -> null

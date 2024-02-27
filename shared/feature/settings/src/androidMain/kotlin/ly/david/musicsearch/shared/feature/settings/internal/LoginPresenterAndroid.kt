@@ -9,7 +9,6 @@ import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzLoginActivityResult
 
 internal class LoginPresenterAndroid(
     private val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract,
-//    private val logger: Logger,
     private val login: LoginAndroid,
 ) : LoginPresenter {
     @Composable
@@ -17,22 +16,8 @@ internal class LoginPresenterAndroid(
         val scope = rememberCoroutineScope()
         val loginLauncher = rememberLauncherForActivityResult(contract = musicBrainzLoginActivityResultContract) {
             val result = it
-            val exception = result.exception
-            val response = result.response
-            when {
-                exception != null -> {
-//                    Timber.e(exception)
-                }
-
-                response != null -> {
-                    scope.launch {
-                        login(response)
-                    }
-                }
-
-                else -> {
-//                    Timber.e("login's result intent is null")
-                }
+            scope.launch {
+                login(result)
             }
         }
 

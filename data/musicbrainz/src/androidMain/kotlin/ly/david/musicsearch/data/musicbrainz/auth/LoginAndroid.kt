@@ -18,20 +18,34 @@ class LoginAndroid(
     private val musicBrainzApi: MusicBrainzApi,
     private val logger: Logger,
 ) {
-    suspend operator fun invoke(authorizationResponse: AuthorizationResponse) {
-        val authState = exchangeToken(authorizationResponse)
-        musicBrainzAuthStore.saveTokens(
-            AccessToken(
-                accessToken = authState?.accessToken.orEmpty(),
-                refreshToken = authState?.refreshToken.orEmpty(),
-            ),
-        )
+    suspend operator fun invoke(result: MusicBrainzLoginActivityResultContract.Result) {
+        val exception = result.exception
+        val response = result.response
+        when {
+            exception != null -> {
+                logger.e(exception)
+            }
 
-        try {
-            val username = musicBrainzApi.getUserInfo().username ?: return
-            musicBrainzAuthStore.setUsername(username)
-        } catch (ex: Exception) {
-            logger.e(ex)
+            response != null -> {
+                val authState = exchangeToken(response)
+                musicBrainzAuthStore.saveTokens(
+                    AccessToken(
+                        accessToken = authState?.accessToken.orEmpty(),
+                        refreshToken = authState?.refreshToken.orEmpty(),
+                    ),
+                )
+
+                try {
+                    val username = musicBrainzApi.getUserInfo().username ?: return
+                    musicBrainzAuthStore.setUsername(username)
+                } catch (ex: Exception) {
+                    logger.e(ex)
+                }
+            }
+
+            else -> {
+                logger.e(IllegalStateException("login's result intent is null"))
+            }
         }
     }
 
