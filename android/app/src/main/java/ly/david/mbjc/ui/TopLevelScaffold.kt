@@ -37,7 +37,6 @@ import ly.david.ui.collections.CollectionBottomSheet
 import ly.david.ui.collections.CreateCollectionDialog
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
-import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -81,21 +80,7 @@ internal fun TopLevelScaffold(
     // TODO: extract so that we can login without ref to AppAuth's AuthorizationResponse
     val loginLauncher = rememberLauncherForActivityResult(contract = viewModel.getLoginContract()) {
         val result = it
-        val exception = result.exception
-        val response = result.response
-        when {
-            exception != null -> {
-                Timber.e(exception)
-            }
-
-            response != null -> {
-                viewModel.login(response)
-            }
-
-            else -> {
-                Timber.e("login's result intent is null")
-            }
-        }
+        viewModel.login(result)
     }
 
     if (showCreateCollectionDialog) {
@@ -170,12 +155,6 @@ internal fun TopLevelScaffold(
         NavigationGraph(
             navController = navController,
             modifier = Modifier.padding(innerPadding),
-            onLoginClick = {
-                loginLauncher.launch(Unit)
-            },
-            onLogoutClick = {
-                viewModel.logout()
-            },
             onCreateCollectionClick = {
                 showCreateCollectionDialog = true
             },

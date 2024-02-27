@@ -10,8 +10,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.foundation.NavEvent
+import com.slack.circuit.foundation.NavigableCircuitContent
+import com.slack.circuit.foundation.rememberCircuitNavigator
 import ly.david.mbjc.DEEP_LINK_SCHEMA
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
@@ -25,21 +28,22 @@ import ly.david.mbjc.ui.release.ReleaseScaffold
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupScaffold
 import ly.david.mbjc.ui.series.SeriesScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
+import ly.david.musicsearch.android.feature.nowplaying.NowPlayingHistoryScaffold
+import ly.david.musicsearch.android.feature.spotify.SpotifyScaffold
 import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.core.models.navigation.Destination
+import ly.david.musicsearch.core.models.navigation.toLookupDestination
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.musicsearch.core.models.network.toMusicBrainzEntity
-import ly.david.musicsearch.core.models.navigation.Destination
-import ly.david.musicsearch.core.models.navigation.toLookupDestination
-import ly.david.ui.collections.CollectionListScaffold
-import ly.david.ui.collections.CollectionScaffold
-import ly.david.musicsearch.android.feature.nowplaying.NowPlayingHistoryScaffold
-import ly.david.ui.settings.SettingsScaffold
-import ly.david.ui.settings.licenses.LicensesScaffold
-import ly.david.musicsearch.android.feature.spotify.SpotifyScaffold
 import ly.david.musicsearch.shared.screens.DetailsScreen
 import ly.david.musicsearch.shared.screens.HistoryScreen
+import ly.david.musicsearch.shared.screens.NowPlayingHistoryScreen
 import ly.david.musicsearch.shared.screens.SearchScreen
+import ly.david.musicsearch.shared.screens.SettingsScreen
+import ly.david.musicsearch.shared.screens.SpotifyPlayingScreen
+import ly.david.ui.collections.CollectionListScaffold
+import ly.david.ui.collections.CollectionScaffold
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -50,14 +54,24 @@ private const val QUERY = "query"
 private const val TYPE = "type"
 
 private fun String.encodeUtf8(): String {
-    return URLEncoder.encode(this, StandardCharsets.UTF_8.toString())
+    return URLEncoder.encode(
+        this,
+        StandardCharsets.UTF_8.toString(),
+    )
 }
 
 private fun String.decodeUtf8(): String {
-    return URLDecoder.decode(this, StandardCharsets.UTF_8.toString())
+    return URLDecoder.decode(
+        this,
+        StandardCharsets.UTF_8.toString(),
+    )
 }
 
-internal fun NavHostController.goToEntityScreen(entity: MusicBrainzEntity, id: String, title: String? = null) {
+internal fun NavHostController.goToEntityScreen(
+    entity: MusicBrainzEntity,
+    id: String,
+    title: String? = null,
+) {
     val route = "${entity.toLookupDestination().route}/$id" +
         title?.encodeUtf8().transformThisIfNotNullOrEmpty { "?$TITLE=$it" }
     this.navigate(route)
@@ -71,8 +85,6 @@ internal fun NavHostController.goTo(destination: Destination) {
 @Composable
 internal fun NavigationGraph(
     navController: NavHostController,
-    onLoginClick: () -> Unit,
-    onLogoutClick: () -> Unit,
     onCreateCollectionClick: () -> Unit,
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit,
     onDeleteFromCollection: (collectionId: String, entityId: String, name: String) -> Unit,
@@ -89,7 +101,11 @@ internal fun NavigationGraph(
         startDestination = Destination.LOOKUP.route,
     ) {
         val onLookupEntityClick: (MusicBrainzEntity, String, String?) -> Unit = { entity, id, title ->
-            navController.goToEntityScreen(entity, id, title)
+            navController.goToEntityScreen(
+                entity,
+                id,
+                title,
+            )
         }
 
         val onCollectionClick: (String, Boolean) -> Unit = { collectionId, _ ->
@@ -112,9 +128,14 @@ internal fun NavigationGraph(
                         is NavEvent.GoTo -> {
                             val screen = event.screen
                             if (screen is DetailsScreen) {
-                                onLookupEntityClick(screen.entity, screen.id, screen.title)
+                                onLookupEntityClick(
+                                    screen.entity,
+                                    screen.id,
+                                    screen.title,
+                                )
                             }
                         }
+
                         is NavEvent.Pop -> TODO()
                         is NavEvent.ResetRoot -> TODO()
                     }
@@ -343,9 +364,14 @@ internal fun NavigationGraph(
                         is NavEvent.GoTo -> {
                             val screen = event.screen
                             if (screen is DetailsScreen) {
-                                onLookupEntityClick(screen.entity, screen.id, screen.title)
+                                onLookupEntityClick(
+                                    screen.entity,
+                                    screen.id,
+                                    screen.title,
+                                )
                             }
                         }
+
                         is NavEvent.Pop -> TODO()
                         is NavEvent.ResetRoot -> TODO()
                     }
@@ -388,13 +414,13 @@ internal fun NavigationGraph(
                 sortReleaseGroupListItems = sortReleaseGroupListItems,
                 onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
                 onDeleteFromCollection = { collectableId, name ->
-                    onDeleteFromCollection(collectionId, collectableId, name)
+                    onDeleteFromCollection(
+                        collectionId,
+                        collectableId,
+                        name,
+                    )
                 },
             )
-        }
-
-        val onSettingsClick: (Destination) -> Unit = { destination ->
-            navController.goTo(destination)
         }
 
         composable(
@@ -405,17 +431,33 @@ internal fun NavigationGraph(
                 },
             ),
         ) {
-            SettingsScaffold(
+            val backStack = rememberSaveableBackStack(root = SettingsScreen)
+            val navigator = rememberCircuitNavigator(backStack)
+            NavigableCircuitContent(
+                navigator = navigator,
+                backStack = backStack,
                 modifier = modifier,
-                onDestinationClick = { destination ->
-                    onSettingsClick(destination)
+                unavailableRoute = { screen, nestedModifier ->
+                    when (screen) {
+                        is NowPlayingHistoryScreen -> {
+                            NowPlayingHistoryScaffold(
+                                modifier = nestedModifier,
+                                onBack = navigator::pop,
+                                searchMusicBrainz = searchMusicBrainz,
+                            )
+                        }
+
+                        is SpotifyPlayingScreen -> {
+                            SpotifyScaffold(
+                                modifier = nestedModifier,
+                                onBack = navigator::pop,
+                                searchMusicBrainz = searchMusicBrainz,
+                            )
+                        }
+
+                        else -> {}
+                    }
                 },
-                onLoginClick = onLoginClick,
-                onLogoutClick = onLogoutClick,
-                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
-                sortReleaseGroupListItems = sortReleaseGroupListItems,
-                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
             )
         }
 
@@ -426,15 +468,6 @@ internal fun NavigationGraph(
                 modifier = modifier,
                 onBack = navController::navigateUp,
                 searchMusicBrainz = searchMusicBrainz,
-            )
-        }
-
-        composable(
-            Destination.SETTINGS_LICENSES.route,
-        ) {
-            LicensesScaffold(
-                modifier = modifier,
-                onBack = navController::navigateUp,
             )
         }
 
@@ -475,6 +508,9 @@ private fun NavGraphBuilder.addLookupEntityScreen(
     ) { entry: NavBackStackEntry ->
         val entityId = entry.arguments?.getString(ID) ?: return@composable
         val title = entry.arguments?.getString(TITLE)?.decodeUtf8()
-        scaffold(entityId, title)
+        scaffold(
+            entityId,
+            title,
+        )
     }
 }

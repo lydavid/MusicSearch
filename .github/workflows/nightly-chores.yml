@@ -43,6 +43,8 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
+      - run: git pull
+
       - id: setup
         uses: ./.github/actions/setup
 
@@ -52,4 +54,30 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5.0.0
         with:
           commit_message: 'chore: format version catalog [skip ci]'
+          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+
+  regenerate-licenses:
+    name: Regenerate licenses
+    needs: format-version-catalog
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@v1
+        with:
+          token: ${{ secrets.PAT }}
+
+      - run: git pull
+
+      - id: setup
+        uses: ./.github/actions/setup
+
+      - run: ./gradlew desktop:app:exportLibraryDefinitions -PaboutLibraries.exportPath=src/main/resources/
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v5.0.0
+        with:
+          commit_message: 'chore: update licenses [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>

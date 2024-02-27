@@ -106,5 +106,6 @@
     <ID>MaxLineLength:RelationshipHeaders.kt$// "f30c29d3-a3f1-420d-9b6c-a750fd6bc2aa" to ("{additional:additionally} {assistant} {associate} {co:co-}edited" to "{additional} {assistant} {associate} {co:co-}editor"),</ID>
     <ID>MaxLineLength:RelationshipHeaders.kt$// "f845a95e-b2b5-4a94-9645-fc8b031ab0bd" to ("{additional} engineering location for" to "{additional:additionally} engineered at"),</ID>
     <ID>MaxLineLength:RelationshipHeaders.kt$// "fc206200-021c-4b28-97ea-36e4c1391068" to ("{additional} arranging location for" to "{additional:additionally} arranged at"),</ID>
+    <ID>TooGenericExceptionCaught:Logout.kt$Logout$ex: Exception</ID>
   </CurrentIssues>
 </SmellBaseline>

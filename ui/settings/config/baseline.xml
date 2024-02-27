@@ -1,7 +1,0 @@
-<?xml version="1.0" ?>
-<SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>UnstableCollections:SettingWithDialogChoices.kt$List&lt;String&gt;</ID>
-  </CurrentIssues>
-</SmellBaseline>
