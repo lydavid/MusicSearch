@@ -61,6 +61,11 @@ kotlin {
                 implementation(libs.bundles.kotlinx.coroutines)
             }
         }
+        val jvmMain by getting {
+            dependencies {
+                implementation(libs.scribejava)
+            }
+        }
     }
 }
 dependencies {

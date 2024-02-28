@@ -28,3 +28,6 @@ gha-creds-*.json
 secrets.properties
 .aider*
 !.aiderignore
+
+# DataStore preferences
+*.preferences_pb

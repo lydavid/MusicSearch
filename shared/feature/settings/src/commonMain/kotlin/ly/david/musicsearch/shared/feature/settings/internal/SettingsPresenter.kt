@@ -28,8 +28,8 @@ internal class SettingsPresenter(
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
 
         val scope = rememberCoroutineScope()
-        val nestedPresenter = loginPresenter.present()
-        val nestedPresenterEventSink = nestedPresenter.eventSink
+        val loginUiState = loginPresenter.present()
+        val loginEventSink = loginUiState.eventSink
 
         fun eventSink(event: SettingsUiEvent) {
             when (event) {
@@ -54,13 +54,21 @@ internal class SettingsPresenter(
                 }
 
                 is SettingsUiEvent.Login -> {
-                    nestedPresenterEventSink(LoginUiEvent.Login)
+                    loginEventSink(LoginUiEvent.Login)
                 }
 
                 is SettingsUiEvent.Logout -> {
                     scope.launch {
                         logout()
                     }
+                }
+
+                is SettingsUiEvent.DismissDialog -> {
+                    loginEventSink(LoginUiEvent.DismissDialog)
+                }
+
+                is SettingsUiEvent.SubmitAuthCode -> {
+                    loginEventSink(LoginUiEvent.SubmitAuthCode(event.authCode))
                 }
             }
         }
@@ -72,6 +80,7 @@ internal class SettingsPresenter(
             useMaterialYou = useMaterialYou,
             sortReleaseGroupListItems = sortReleaseGroupListItems,
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+            showDialog = loginUiState.showDialog,
             eventSink = ::eventSink,
         )
     }

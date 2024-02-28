@@ -60,20 +60,20 @@ fun main() = application {
     ) {
         BaseTheme(
             content = {
-//                CircuitCompositionLocals(circuit) {
-//                    val backStack = rememberSaveableBackStack(root = SettingsScreen)
-//                    val navigator = rememberCircuitNavigator(
-//                        backStack,
-//                        onRootPop = {},
-//                    )
-//                    NavigableCircuitContent(
-//                        navigator,
-//                        backStack,
-//                    )
-//                }
-                MusicSearchApp(
-                    service,
-                )
+                CircuitCompositionLocals(circuit) {
+                    val backStack = rememberSaveableBackStack(root = SettingsScreen)
+                    val navigator = rememberCircuitNavigator(
+                        backStack,
+                        onRootPop = {},
+                    )
+                    NavigableCircuitContent(
+                        navigator,
+                        backStack,
+                    )
+                }
+//                MusicSearchApp(
+//                    service,
+//                )
             },
         )
     }

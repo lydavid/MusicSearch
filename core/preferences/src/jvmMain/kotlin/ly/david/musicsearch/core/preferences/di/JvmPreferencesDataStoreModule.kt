@@ -9,7 +9,7 @@ actual val preferencesDataStoreModule: Module = module {
     single {
         createDataStore(
             dispatchers = get(),
-            path = "datastore/$SETTINGS_KEY.preferences_pb",
+            path = "$SETTINGS_KEY.preferences_pb",
         )
     }
 }

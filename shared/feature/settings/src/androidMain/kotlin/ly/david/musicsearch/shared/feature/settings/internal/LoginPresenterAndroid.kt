@@ -26,6 +26,14 @@ internal class LoginPresenterAndroid(
                 LoginUiEvent.Login -> {
                     loginLauncher.launch(Unit)
                 }
+
+                LoginUiEvent.DismissDialog -> {
+                    // no-op
+                }
+
+                is LoginUiEvent.SubmitAuthCode -> {
+                    // no-op
+                }
             }
         }
 

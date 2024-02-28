@@ -12,4 +12,6 @@ internal sealed interface SettingsUiEvent : CircuitUiEvent {
     data class GoToScreen(val screen: Screen) : SettingsUiEvent
     data object Login : SettingsUiEvent
     data object Logout : SettingsUiEvent
+    data object DismissDialog : SettingsUiEvent
+    data class SubmitAuthCode(val authCode: String) : SettingsUiEvent
 }
