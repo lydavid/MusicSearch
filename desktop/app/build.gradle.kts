@@ -25,7 +25,6 @@ dependencies {
 
     implementation(libs.circuit.foundation)
     implementation(libs.koin.core)
-    implementation(libs.scribejava)
 }
 
 application {

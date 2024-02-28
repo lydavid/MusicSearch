@@ -4,6 +4,7 @@ import com.github.scribejava.core.builder.ServiceBuilder
 import com.github.scribejava.core.builder.api.DefaultApi20
 import com.github.scribejava.core.model.OAuthConstants
 import com.github.scribejava.core.oauth.OAuth20Service
+import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthorizationUrl
 import ly.david.musicsearch.data.musicbrainz.auth.LoginJvm
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
 import org.koin.core.module.dsl.singleOf
@@ -22,6 +23,9 @@ actual val musicBrainzAuthPlatformModule = module {
             .responseType(OAuthConstants.CODE)
             .apiSecret(musicBrainzOAuthInfo.clientSecret)
             .build(musicBrainzApi20)
+    }
+    single<MusicBrainzAuthorizationUrl> {
+        MusicBrainzAuthorizationUrl(get<OAuth20Service>().authorizationUrl)
     }
     singleOf(::LoginJvm)
 }
