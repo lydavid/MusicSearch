@@ -23,8 +23,16 @@ internal class LoginPresenterAndroid(
 
         fun eventSink(event: LoginUiEvent) {
             when (event) {
-                LoginUiEvent.Login -> {
+                LoginUiEvent.StartLogin -> {
                     loginLauncher.launch(Unit)
+                }
+
+                LoginUiEvent.DismissDialog -> {
+                    // no-op
+                }
+
+                is LoginUiEvent.SubmitAuthCode -> {
+                    // no-op
                 }
             }
         }
