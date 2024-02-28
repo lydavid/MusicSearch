@@ -21,7 +21,7 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.ui)
 
-                implementation(libs.aboutlibraries.compose)
+                implementation(libs.aboutlibraries.compose.m3)
                 implementation(libs.aboutlibraries.core)
                 implementation(libs.circuit.foundation)
                 implementation(libs.koin.core)

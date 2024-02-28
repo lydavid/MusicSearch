@@ -4,15 +4,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
-import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
+import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
+import com.mikepenz.aboutlibraries.ui.compose.m3.LibraryDefaults
 
 @Composable
 internal actual fun Licenses(
     modifier: Modifier,
 ) {
     LibrariesContainer(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         colors = LibraryDefaults.libraryColors(
             backgroundColor = MaterialTheme.colorScheme.background,
