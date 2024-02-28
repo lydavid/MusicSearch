@@ -54,7 +54,7 @@ internal class SettingsPresenter(
                 }
 
                 is SettingsUiEvent.Login -> {
-                    loginEventSink(LoginUiEvent.Login)
+                    loginEventSink(LoginUiEvent.StartLogin)
                 }
 
                 is SettingsUiEvent.Logout -> {

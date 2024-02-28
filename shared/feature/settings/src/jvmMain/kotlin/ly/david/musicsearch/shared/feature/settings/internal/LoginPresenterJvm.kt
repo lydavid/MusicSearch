@@ -20,7 +20,7 @@ internal class LoginPresenterJvm(
 
         fun eventSink(event: LoginUiEvent) {
             when (event) {
-                LoginUiEvent.Login -> {
+                LoginUiEvent.StartLogin -> {
                     uriHandler.openUri(musicBrainzAuthorizationUrl.url)
                     showDialog = true
                 }
