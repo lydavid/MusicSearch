@@ -33,10 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.collectableEntities
-import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.musicsearch.strings.LocalStrings
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
@@ -97,7 +95,10 @@ fun CreateCollectionDialog(
                             name = ""
                             focusRequester.requestFocus()
                         }) {
-                            Icon(Icons.Default.Clear, contentDescription = strings.clearSearch)
+                            Icon(
+                                Icons.Default.Clear,
+                                contentDescription = strings.clearSearch,
+                            )
                         }
                     },
                     onValueChange = { newText ->
@@ -130,7 +131,10 @@ fun CreateCollectionDialog(
                     }
                     TextButton(
                         onClick = {
-                            onSubmit(name, selectedEntity)
+                            onSubmit(
+                                name,
+                                selectedEntity,
+                            )
                             onDismiss()
                         },
                         enabled = name.isNotEmpty(),
@@ -141,16 +145,6 @@ fun CreateCollectionDialog(
                     }
                 }
             }
-        }
-    }
-}
-
-@DefaultPreviews
-@Composable
-private fun Preview() {
-    PreviewTheme {
-        Surface {
-            CreateCollectionDialog()
         }
     }
 }

@@ -42,8 +42,8 @@ import ly.david.musicsearch.shared.screens.NowPlayingHistoryScreen
 import ly.david.musicsearch.shared.screens.SearchScreen
 import ly.david.musicsearch.shared.screens.SettingsScreen
 import ly.david.musicsearch.shared.screens.SpotifyPlayingScreen
-import ly.david.musicsearch.shared.feature.collections.CollectionListScaffold
 import ly.david.musicsearch.shared.feature.collections.CollectionScaffold
+import ly.david.musicsearch.shared.screens.CollectionListScreen
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -387,10 +387,31 @@ internal fun NavigationGraph(
                 },
             ),
         ) {
-            CollectionListScaffold(
+//            CollectionList(
+//                modifier = modifier,
+//                onCollectionClick = onCollectionClick,
+//                onCreateCollectionClick = onCreateCollectionClick,
+//            )
+            CircuitContent(
+                screen = CollectionListScreen,
                 modifier = modifier,
-                onCollectionClick = onCollectionClick,
-                onCreateCollectionClick = onCreateCollectionClick,
+//                onNavEvent = { event ->
+//                    when (event) {
+//                        is NavEvent.GoTo -> {
+//                            val screen = event.screen
+//                            if (screen is DetailsScreen) {
+//                                onLookupEntityClick(
+//                                    screen.entity,
+//                                    screen.id,
+//                                    screen.title,
+//                                )
+//                            }
+//                        }
+//
+//                        is NavEvent.Pop -> TODO()
+//                        is NavEvent.ResetRoot -> TODO()
+//                    }
+//                },
             )
         }
 

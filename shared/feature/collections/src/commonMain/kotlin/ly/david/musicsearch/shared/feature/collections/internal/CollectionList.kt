@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.collections
+package ly.david.musicsearch.shared.feature.collections.internal
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Row
@@ -12,53 +12,35 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
-import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
-import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
+import ly.david.musicsearch.shared.feature.collections.CollectionListItem
 import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
-import org.koin.androidx.compose.koinViewModel
+
+// TODO: hoist and preview
 
 /**
  * Displays a list of all of your collections.
  */
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalFoundationApi::class,
+)
 @Composable
-fun CollectionListScaffold(
+internal fun CollectionList(
+    state: CollectionListUiState,
     modifier: Modifier = Modifier,
-    onCollectionClick: (id: String, isRemote: Boolean) -> Unit = { _, _ -> },
-    onCreateCollectionClick: () -> Unit = {},
-    viewModel: CollectionListViewModel = koinViewModel(),
 ) {
+    val eventSink = state.eventSink
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
-    var filterText by rememberSaveable { mutableStateOf("") }
-    val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.pagedEntities)
-        .collectAsLazyPagingItems()
-    val showLocal by viewModel.appPreferences.showLocalCollections.collectAsState(initial = true)
-    val showRemote by viewModel.appPreferences.showRemoteCollections.collectAsState(initial = true)
-
-    LaunchedEffect(Unit) {
-        viewModel.setShowLocal(showLocal)
-        viewModel.setShowRemote(showRemote)
-    }
 
     Scaffold(
         modifier = modifier,
@@ -67,13 +49,14 @@ fun CollectionListScaffold(
                 showBackButton = false,
                 title = strings.collections,
                 scrollBehavior = scrollBehavior,
-                filterText = filterText,
+                filterText = state.query,
                 onFilterTextChange = {
-                    filterText = it
-                    viewModel.updateQuery(query = filterText)
+                    eventSink(CollectionListUiEvent.UpdateQuery(it))
                 },
                 additionalActions = {
-                    IconButton(onClick = onCreateCollectionClick) {
+                    IconButton(onClick = {
+                        eventSink(CollectionListUiEvent.ClickCreateCollection)
+                    }) {
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = strings.createCollection,
@@ -82,10 +65,14 @@ fun CollectionListScaffold(
                 },
                 additionalBar = {
                     CollectionsFilterChipsBar(
-                        showLocal = showLocal,
-                        onShowLocalToggle = viewModel::setShowLocal,
-                        showRemote = showRemote,
-                        onShowRemoteToggle = viewModel::setShowRemote,
+                        showLocal = state.showLocal,
+                        onShowLocalToggle = {
+                            eventSink(CollectionListUiEvent.UpdateShowLocal(it))
+                        },
+                        showRemote = state.showRemote,
+                        onShowRemoteToggle = {
+                            eventSink(CollectionListUiEvent.UpdateShowRemote(it))
+                        },
                     )
                 },
             )
@@ -96,14 +83,21 @@ fun CollectionListScaffold(
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-            lazyPagingItems = lazyPagingItems,
+            lazyPagingItems = state.lazyPagingItems,
         ) { collectionListItemModel: CollectionListItemModel? ->
             when (collectionListItemModel) {
                 is CollectionListItemModel -> {
                     CollectionListItem(
                         collection = collectionListItemModel,
                         modifier = Modifier.animateItemPlacement(),
-                        onClick = { onCollectionClick(id, isRemote) },
+                        onClick = {
+                            eventSink(
+                                CollectionListUiEvent.ClickCollection(
+                                    id = id,
+                                    isRemote = isRemote,
+                                ),
+                            )
+                        },
                     )
                 }
 
@@ -115,7 +109,6 @@ fun CollectionListScaffold(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CollectionsFilterChipsBar(
     modifier: Modifier = Modifier,
@@ -131,7 +124,10 @@ private fun CollectionsFilterChipsBar(
             label = { Text(text = "Local") },
             leadingIcon = {
                 if (showLocal) {
-                    Icon(imageVector = Icons.Default.Done, contentDescription = null)
+                    Icon(
+                        imageVector = Icons.Default.Done,
+                        contentDescription = null,
+                    )
                 }
             },
         )
@@ -142,27 +138,12 @@ private fun CollectionsFilterChipsBar(
             label = { Text(text = "Remote") },
             leadingIcon = {
                 if (showRemote) {
-                    Icon(imageVector = Icons.Default.Done, contentDescription = null)
+                    Icon(
+                        imageVector = Icons.Default.Done,
+                        contentDescription = null,
+                    )
                 }
             },
         )
-    }
-}
-
-@DefaultPreviews
-@Composable
-private fun Preview() {
-    PreviewTheme {
-        var showLocal by rememberSaveable { mutableStateOf(true) }
-        var showRemote by rememberSaveable { mutableStateOf(true) }
-
-        Surface {
-            CollectionsFilterChipsBar(
-                showLocal = showLocal,
-                onShowLocalToggle = { showLocal = it },
-                showRemote = showRemote,
-                onShowRemoteToggle = { showRemote = it },
-            )
-        }
     }
 }
