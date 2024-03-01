@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.artist
 
-import androidx.paging.PagingData
-import androidx.paging.PagingSource
+import app.cash.paging.PagingData
+import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse

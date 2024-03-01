@@ -2,6 +2,7 @@ package ly.david.musicsearch.domain.collection
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.core.models.ActionableResult
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 
@@ -15,4 +16,14 @@ interface CollectionRepository {
     ): Flow<PagingData<CollectionListItemModel>>
 
     fun getCollection(entityId: String): CollectionListItemModel
+
+    fun insertLocal(
+        collection: CollectionListItemModel,
+    )
+
+    suspend fun deleteFromCollection(
+        collectionId: String,
+        entityId: String,
+        entityName: String,
+    ): ActionableResult
 }

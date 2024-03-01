@@ -1,5 +1,7 @@
 package ly.david.musicsearch.domain.area.usecase
 
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -15,7 +17,7 @@ class GetAreasByEntity(
         entityId: String,
         entity: MusicBrainzEntity,
         listFilters: ListFilters,
-    ) = areasByEntityRepository.observeAreasByEntity(
+    ): Flow<PagingData<AreaListItemModel>> = areasByEntityRepository.observeAreasByEntity(
         entityId = entityId,
         entity = entity,
         listFilters = listFilters,
