@@ -1,7 +1,7 @@
 package ly.david.ui.commonlegacy.releasegroup
 
 import androidx.lifecycle.ViewModel
-import ly.david.musicsearch.data.coverart.ReleaseGroupImageRepository
+import ly.david.musicsearch.domain.releasegroup.ReleaseGroupImageRepository
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel

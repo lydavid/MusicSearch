@@ -1,41 +1,64 @@
 plugins {
     id("ly.david.android.library")
-    kotlin("android")
     id("ly.david.android.compose")
-    alias(libs.plugins.ksp)
+    id("ly.david.musicsearch.compose.multiplatform")
+    id("ly.david.musicsearch.kotlin.multiplatform")
+    alias(libs.plugins.build.config)
     alias(libs.plugins.paparazzi)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "ly.david.ui.collection"
+    namespace = "ly.david.musicsearch.shared.feature.collection"
+}
+
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.core.models)
+                implementation(projects.core.preferences)
+                implementation(projects.domain)
+                implementation(projects.strings)
+                implementation(projects.ui.common)
+                implementation(projects.ui.core)
+                implementation(projects.shared.screens)
+
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.materialIconsExtended)
+                implementation(compose.ui)
+                implementation(compose.preview)
+
+                implementation(libs.circuit.foundation)
+                implementation(libs.circuit.overlay)
+                implementation(libs.circuitx.overlays)
+                implementation(libs.koin.core)
+                implementation(libs.paging.common)
+                implementation(libs.paging.compose)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(projects.ui.commonLegacy)
+
+                implementation(libs.koin.androidx.compose)
+                implementation(libs.koin.annotations)
+            }
+        }
+
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(projects.ui.test.screenshot)
+                implementation(libs.test.parameter.injector)
+                implementation(libs.bundles.kotlinx.coroutines)
+            }
+        }
+    }
 }
 
 dependencies {
-    implementation(projects.core.models)
-    implementation(projects.core.preferences)
-    implementation(projects.domain)
-    implementation(projects.strings)
-    implementation(projects.ui.common)
-    implementation(projects.ui.commonLegacy)
-    implementation(projects.ui.core)
-    testImplementation(projects.ui.test.screenshot)
-
-    implementation(libs.androidx.paging.compose)
-
-    implementation(libs.compose.foundation)
-    implementation(libs.compose.material.icons.extended)
-    implementation(libs.compose.material3)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.preview)
-    androidTestImplementation(libs.compose.ui.test)
     debugImplementation(libs.compose.ui.tooling)
-
-    implementation(libs.koin.androidx.compose)
-    implementation(libs.koin.core)
-    implementation(libs.koin.annotations)
-    ksp(libs.koin.ksp.compiler)
-
-    testImplementation(libs.bundles.kotlinx.coroutines)
-
-    testImplementation(libs.test.parameter.injector)
+//    ksp(libs.koin.ksp.compiler)
+    add("kspAndroid", libs.koin.ksp.compiler)
 }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.navigation.compose.rememberNavController
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
+import com.slack.circuit.overlay.ContentWithOverlays
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.ui.core.theme.BaseTheme
 import org.koin.android.ext.android.inject
@@ -29,7 +30,9 @@ internal class MainActivity : ComponentActivity() {
                 materialYou = appPreferences.useMaterialYou(),
                 content = {
                     CircuitCompositionLocals(circuit) {
-                        TopLevelScaffold(navController)
+                        ContentWithOverlays {
+                            TopLevelScaffold(navController)
+                        }
                     }
                 },
             )

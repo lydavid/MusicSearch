@@ -7,6 +7,7 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.getFrontLargeCoverArtUrl
 import ly.david.musicsearch.data.coverart.api.getFrontThumbnailCoverArtUrl
+import ly.david.musicsearch.domain.releasegroup.ReleaseGroupImageRepository
 
 internal class ReleaseGroupImageRepositoryImpl(
     private val coverArtArchiveApi: CoverArtArchiveApi,

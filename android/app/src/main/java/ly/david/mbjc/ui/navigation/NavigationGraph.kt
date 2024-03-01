@@ -36,14 +36,14 @@ import ly.david.musicsearch.core.models.navigation.toLookupDestination
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.musicsearch.core.models.network.toMusicBrainzEntity
+import ly.david.musicsearch.shared.screens.CollectionListScreen
+import ly.david.musicsearch.shared.screens.CollectionScreen
 import ly.david.musicsearch.shared.screens.DetailsScreen
 import ly.david.musicsearch.shared.screens.HistoryScreen
 import ly.david.musicsearch.shared.screens.NowPlayingHistoryScreen
 import ly.david.musicsearch.shared.screens.SearchScreen
 import ly.david.musicsearch.shared.screens.SettingsScreen
 import ly.david.musicsearch.shared.screens.SpotifyPlayingScreen
-import ly.david.musicsearch.shared.feature.collections.CollectionListScaffold
-import ly.david.musicsearch.shared.feature.collections.CollectionScaffold
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -77,17 +77,10 @@ internal fun NavHostController.goToEntityScreen(
     this.navigate(route)
 }
 
-internal fun NavHostController.goTo(destination: Destination) {
-    val route = destination.route
-    this.navigate(route)
-}
-
 @Composable
 internal fun NavigationGraph(
     navController: NavHostController,
-    onCreateCollectionClick: () -> Unit,
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit,
-    onDeleteFromCollection: (collectionId: String, entityId: String, name: String) -> Unit,
     showMoreInfoInReleaseListItem: Boolean,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit,
     sortReleaseGroupListItems: Boolean,
@@ -106,10 +99,6 @@ internal fun NavigationGraph(
                 id,
                 title,
             )
-        }
-
-        val onCollectionClick: (String, Boolean) -> Unit = { collectionId, _ ->
-            navController.navigate("${Destination.COLLECTIONS.route}/$collectionId")
         }
 
         val searchMusicBrainz: (String, MusicBrainzEntity) -> Unit = { query, type ->
@@ -404,10 +393,13 @@ internal fun NavigationGraph(
                 },
             ),
         ) {
-            CollectionListScaffold(
+            val backStack = rememberSaveableBackStack(root = CollectionListScreen)
+            val navigator = rememberCircuitNavigator(backStack)
+
+            NavigableCircuitContent(
+                navigator = navigator,
+                backStack = backStack,
                 modifier = modifier,
-                onCollectionClick = onCollectionClick,
-                onCreateCollectionClick = onCreateCollectionClick,
             )
         }
 
@@ -421,21 +413,32 @@ internal fun NavigationGraph(
         ) { entry ->
             val collectionId = entry.arguments?.getString(ID) ?: return@composable
 
-            CollectionScaffold(
-                collectionId = collectionId,
+            val backStack = rememberSaveableBackStack(
+                initialScreens = listOf(
+                    CollectionListScreen,
+                    CollectionScreen(collectionId),
+                ),
+            )
+            val navigator = rememberCircuitNavigator(backStack)
+            NavigableCircuitContent(
+                navigator = navigator,
+                backStack = backStack,
                 modifier = modifier,
-                onItemClick = onLookupEntityClick,
-                onBack = navController::navigateUp,
-                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
-                sortReleaseGroupListItems = sortReleaseGroupListItems,
-                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
-                onDeleteFromCollection = { collectableId, name ->
-                    onDeleteFromCollection(
-                        collectionId,
-                        collectableId,
-                        name,
-                    )
+
+                // TODO: these do not work, because we're not actually going through this CircuitContent
+                //  unless we deeplinked into here
+                unavailableRoute = { screen, _ ->
+                    when (screen) {
+                        is DetailsScreen -> {
+                            onLookupEntityClick(
+                                screen.entity,
+                                screen.id,
+                                screen.title,
+                            )
+                        }
+
+                        else -> {}
+                    }
                 },
             )
         }

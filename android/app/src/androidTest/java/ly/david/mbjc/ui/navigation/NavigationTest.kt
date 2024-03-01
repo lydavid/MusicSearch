@@ -12,10 +12,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
+import com.slack.circuit.overlay.ContentWithOverlays
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
@@ -34,7 +35,9 @@ internal class NavigationTest : MainActivityTest() {
             navController = rememberNavController()
             PreviewTheme {
                 CircuitCompositionLocals(circuit) {
-                    TopLevelScaffold(navController)
+                    ContentWithOverlays {
+                        TopLevelScaffold(navController)
+                    }
                 }
             }
         }
@@ -42,7 +45,6 @@ internal class NavigationTest : MainActivityTest() {
 
     @Test
     fun clickHistory_thenClickSearch() {
-
         // Main title
         composeTestRule
             .onNodeWithText(strings.searchMusicbrainz)
@@ -79,7 +81,7 @@ internal class NavigationTest : MainActivityTest() {
         navController.goToEntityScreen(
             entity = MusicBrainzEntity.ARTIST,
             id = entityId,
-            title = title
+            title = title,
         )
 
         composeTestRule

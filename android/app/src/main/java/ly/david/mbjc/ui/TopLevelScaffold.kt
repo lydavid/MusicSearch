@@ -29,12 +29,12 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.mbjc.ui.navigation.BottomNavigationBar
 import ly.david.mbjc.ui.navigation.NavigationGraph
+import ly.david.musicsearch.core.models.ActionableResult
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.core.models.navigation.getTopLevelDestination
 import ly.david.musicsearch.core.models.navigation.getTopLevelRoute
-import ly.david.musicsearch.shared.feature.collections.CollectionBottomSheet
-import ly.david.musicsearch.shared.feature.collections.CreateCollectionDialog
+import ly.david.musicsearch.shared.feature.collections.components.CollectionBottomSheet
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
 
@@ -54,7 +54,6 @@ internal fun TopLevelScaffold(
     val scope = rememberCoroutineScope()
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState()
-    var showCreateCollectionDialog by rememberSaveable { mutableStateOf(false) }
     val collections: LazyPagingItems<CollectionListItemModel> =
         rememberFlowWithLifecycleStarted(viewModel.collections)
             .collectAsLazyPagingItems()
@@ -83,22 +82,10 @@ internal fun TopLevelScaffold(
         viewModel.login(result)
     }
 
-    if (showCreateCollectionDialog) {
-        CreateCollectionDialog(
-            onDismiss = { showCreateCollectionDialog = false },
-            onSubmit = { name, entity ->
-                viewModel.createNewCollection(
-                    name,
-                    entity,
-                )
-            },
-        )
-    }
-
-    suspend fun showSnackbarAndHandleResult(remoteResult: TopLevelViewModel.RemoteResult) {
+    suspend fun showSnackbarAndHandleResult(actionableResult: ActionableResult) {
         val snackbarResult = snackbarHostState.showSnackbar(
-            message = remoteResult.message,
-            actionLabel = remoteResult.actionLabel,
+            message = actionableResult.message,
+            actionLabel = actionableResult.actionLabel,
             duration = SnackbarDuration.Short,
         )
 
@@ -119,7 +106,9 @@ internal fun TopLevelScaffold(
             scope = scope,
             collections = collections,
             onDismiss = { showBottomSheet = false },
-            onCreateCollectionClick = { showCreateCollectionDialog = true },
+            onCreateCollectionClick = {
+                // TODO: support creating collection from bottom sheet once we work on details screen mvi
+            },
             onAddToCollection = { collectionId ->
                 scope.launch {
                     val addToCollectionResult = viewModel.addToCollectionAndGetResult(
@@ -155,27 +144,10 @@ internal fun TopLevelScaffold(
         NavigationGraph(
             navController = navController,
             modifier = Modifier.padding(innerPadding),
-            onCreateCollectionClick = {
-                showCreateCollectionDialog = true
-            },
             onAddToCollectionMenuClick = { entity, id ->
                 viewModel.setEntity(entity)
                 viewModel.setEntityId(id)
                 showBottomSheet = true
-            },
-            onDeleteFromCollection = { collectionId, entityId, name ->
-                scope.launch {
-                    val deleteFromCollectionResult =
-                        viewModel.deleteFromCollectionAndGetResult(
-                            collectionId,
-                            entityId,
-                            name,
-                        )
-
-                    if (deleteFromCollectionResult.message.isEmpty()) return@launch
-
-                    showSnackbarAndHandleResult(deleteFromCollectionResult)
-                }
             },
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
             onShowMoreInfoInReleaseListItemChange = viewModel.appPreferences::setShowMoreInfoInReleaseListItem,

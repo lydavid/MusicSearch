@@ -24,6 +24,7 @@ dependencies {
     implementation(compose.desktop.currentOs)
 
     implementation(libs.circuit.foundation)
+    implementation(libs.circuit.overlay)
     implementation(libs.koin.core)
 }
 
