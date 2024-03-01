@@ -41,6 +41,7 @@ import ly.david.ui.core.theme.TextStyles
 
 @Composable
 fun CreateCollectionDialog(
+    modifier: Modifier = Modifier,
     onDismiss: () -> Unit = {},
     onSubmit: (name: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
 ) {
@@ -62,6 +63,7 @@ fun CreateCollectionDialog(
     ) {
         Surface(
             shape = RoundedCornerShape(28.dp),
+            modifier = modifier,
         ) {
             Column(
                 modifier = Modifier.padding(24.dp),

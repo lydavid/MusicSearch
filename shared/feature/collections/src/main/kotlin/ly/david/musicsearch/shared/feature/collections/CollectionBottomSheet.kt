@@ -32,6 +32,7 @@ fun CollectionBottomSheet(
     bottomSheetState: SheetState,
     scope: CoroutineScope,
     collections: LazyPagingItems<CollectionListItemModel>,
+    modifier: Modifier = Modifier,
     onDismiss: () -> Unit = {},
     onCreateCollectionClick: () -> Unit = {},
     onAddToCollection: suspend (collectionId: String) -> Unit = {},
@@ -41,6 +42,7 @@ fun CollectionBottomSheet(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = bottomSheetState,
+        modifier = modifier,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
