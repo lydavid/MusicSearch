@@ -42,8 +42,8 @@ import ly.david.musicsearch.shared.screens.NowPlayingHistoryScreen
 import ly.david.musicsearch.shared.screens.SearchScreen
 import ly.david.musicsearch.shared.screens.SettingsScreen
 import ly.david.musicsearch.shared.screens.SpotifyPlayingScreen
-import ly.david.ui.collections.CollectionListScaffold
-import ly.david.ui.collections.CollectionScaffold
+import ly.david.musicsearch.shared.feature.collections.CollectionListScaffold
+import ly.david.musicsearch.shared.feature.collections.CollectionScaffold
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
