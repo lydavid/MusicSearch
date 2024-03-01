@@ -26,8 +26,8 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.collectableEntities
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.strings.AppStrings
-import ly.david.ui.collections.CollectionListScaffold
-import ly.david.ui.collections.CollectionScaffold
+import ly.david.musicsearch.shared.feature.collections.CollectionListScaffold
+import ly.david.musicsearch.shared.feature.collections.CollectionScaffold
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before

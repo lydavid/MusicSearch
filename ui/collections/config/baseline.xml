@@ -1,8 +1,0 @@
-<?xml version="1.0" ?>
-<SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>ModifierMissing:CollectionBottomSheet.kt$CollectionBottomSheet</ID>
-    <ID>ModifierMissing:CreateCollectionDialog.kt$CreateCollectionDialog</ID>
-  </CurrentIssues>
-</SmellBaseline>

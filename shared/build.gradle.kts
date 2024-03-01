@@ -37,9 +37,9 @@ kotlin {
             dependencies {
                 implementation(projects.android.feature.nowplaying)
                 implementation(projects.android.feature.spotify)
+                implementation(projects.shared.feature.collections)
                 implementation(projects.ui.commonLegacy)
                 implementation(projects.ui.core)
-                implementation(projects.ui.collections)
                 implementation(projects.ui.image)
             }
         }

@@ -33,8 +33,8 @@ import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.core.models.navigation.getTopLevelDestination
 import ly.david.musicsearch.core.models.navigation.getTopLevelRoute
-import ly.david.ui.collections.CollectionBottomSheet
-import ly.david.ui.collections.CreateCollectionDialog
+import ly.david.musicsearch.shared.feature.collections.CollectionBottomSheet
+import ly.david.musicsearch.shared.feature.collections.CreateCollectionDialog
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
 
