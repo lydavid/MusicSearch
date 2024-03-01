@@ -1,0 +1,62 @@
+stable class ViewModelState {
+  stable val username: String
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val showLocal: Boolean
+  stable val showRemote: Boolean
+  <runtime stability> = Stable
+}
+unstable class CollectionListViewModel {
+  unstable val appPreferences: AppPreferences
+  runtime val getAllCollections: GetAllCollections
+  unstable val username: MutableStateFlow<String>
+  unstable val query: MutableStateFlow<String>
+  unstable val isRemote: MutableStateFlow<Boolean>
+  unstable val showLocal: MutableStateFlow<Boolean>
+  unstable val showRemote: MutableStateFlow<Boolean>
+  unstable val paramState: Flow<ViewModelState>
+  unstable val pagedEntities$delegate: Lazy<Flow<PagingData<CollectionListItemModel>>>
+  <runtime stability> = Unstable
+}
+stable class CollectionUiModule {
+  <runtime stability> = Stable
+}
+unstable class CollectionViewModel {
+  runtime val getCollectionUseCase: GetCollection
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable var recordedLookup: Boolean
+  <runtime stability> = Unstable
+}
+stable class AreasByCollectionViewModel {
+  <runtime stability> = Stable
+}
+stable class ArtistsByCollectionViewModel {
+  <runtime stability> = Stable
+}
+stable class EventsByCollectionViewModel {
+  <runtime stability> = Stable
+}
+stable class InstrumentsByCollectionViewModel {
+  <runtime stability> = Stable
+}
+stable class LabelsByCollectionViewModel {
+  <runtime stability> = Stable
+}
+stable class PlacesByCollectionViewModel {
+  <runtime stability> = Stable
+}
+stable class RecordingsByCollectionViewModel {
+  <runtime stability> = Stable
+}
+stable class ReleaseGroupsByCollectionViewModel {
+  <runtime stability> = Stable
+}
+stable class ReleasesByCollectionViewModel {
+  <runtime stability> = Stable
+}
+stable class SeriesByCollectionViewModel {
+  <runtime stability> = Stable
+}
+stable class WorksByCollectionViewModel {
+  <runtime stability> = Stable
+}

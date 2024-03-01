@@ -19,10 +19,6 @@ unstable class EntitiesByEntityViewModel {
   unstable val pagedEntities$delegate: Lazy<Flow<PagingData<LI>{ app.cash.paging.PagingDataKt.PagingData<LI> }>>
   <runtime stability> = Unstable
 }
-unstable class ReleasePreviewParameterProvider {
-  unstable val values: Sequence<ReleaseListItemModel>
-  <runtime stability> = Unstable
-}
 unstable class ReleasesListViewModel {
   unstable val releaseImageRepository: ReleaseImageRepository
   <runtime stability> = Unstable

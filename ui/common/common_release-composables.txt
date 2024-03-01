@@ -6,16 +6,6 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
   unstable artist: ArtistListItemModel
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ClickableItem(
-  stable title: String
-  stable modifier: Modifier? = @static Companion
-  stable subtitle: String? = @static null
-  stable endIcon: ImageVector? = @static null
-  stable onClick: Function0<Unit>? = @static {
-
-}
-
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithSubtitle()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithIcon()
@@ -49,8 +39,12 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAr
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecordingRelationListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewUrlRelationListItem()
 restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  unstable release: ReleaseListItemModel
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
   unstable track: TrackListItemModel
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
 restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
   unstable series: SeriesListItemModel
 )
@@ -116,6 +110,16 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun ArtistListItem(
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RetryButton(
   stable modifier: Modifier? = @static Companion
+  stable onClick: Function0<Unit>? = @static {
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ClickableItem(
+  stable title: String
+  stable modifier: Modifier? = @static Companion
+  stable subtitle: String? = @static null
+  stable endIcon: ImageVector? = @static null
   stable onClick: Function0<Unit>? = @static {
 
 }
@@ -298,10 +302,35 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Relations
 }
 
 )
+restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseListItem(
+  unstable release: ReleaseListItemModel
+  stable modifier: Modifier? = @static Companion
+  stable showMoreInfo: Boolean = @static true
+  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @static {
+
+}
+
+  stable onClick: @[ExtensionFunctionType] Function1<ReleaseListItemModel, Unit>? = @static {
+
+}
+
+)
 restartable scheme("[androidx.compose.ui.UiComposable]") fun TrackListItem(
   unstable track: TrackListItemModel
   stable modifier: Modifier? = @static Companion
   stable onRecordingClick: Function2<String, String, Unit>? = @static { <unused var>: String, <unused var>: String ->
+
+}
+
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupListItem(
+  unstable releaseGroup: ReleaseGroupListItemModel
+  stable modifier: Modifier? = @static Companion
+  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @static {
+
+}
+
+  stable onClick: @[ExtensionFunctionType] Function1<ReleaseGroupListItemModel, Unit>? = @static {
 
 }
 

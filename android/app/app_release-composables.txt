@@ -313,9 +313,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun BottomNav
 )
 restartable scheme("[androidx.compose.ui.UiComposable]") fun NavigationGraph(
   unstable navController: NavHostController
-  unstable deleteHistoryDelegate: DeleteHistoryDelegate
-  stable onLoginClick: Function0<Unit>
-  stable onLogoutClick: Function0<Unit>
   stable onCreateCollectionClick: Function0<Unit>
   stable onAddToCollectionMenuClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>
   stable onDeleteFromCollection: Function3<@[ParameterName(name = 'collectionId')] String, @[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>

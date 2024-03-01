@@ -8,22 +8,6 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun CoordinateListItem(
   stable label: String? = @static null
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoordinateCardPreview()
-restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseListItem(
-  unstable release: ReleaseListItemModel
-  stable modifier: Modifier? = @static Companion
-  stable showMoreInfo: Boolean = @static true
-  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @static {
-
-}
-
-  stable onClick: @[ExtensionFunctionType] Function1<ReleaseListItemModel, Unit>? = @static {
-
-}
-
-)
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable release: ReleaseListItemModel
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesListScreen(
   lazyPagingItems: LazyPagingItems<ReleaseListItemModel>
   stable modifier: Modifier? = @static Companion
@@ -53,20 +37,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesL
 }
 
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleasesListScreen()
-restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupListItem(
-  unstable releaseGroup: ReleaseGroupListItemModel
-  stable modifier: Modifier? = @static Companion
-  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @static {
-
-}
-
-  stable onClick: @[ExtensionFunctionType] Function1<ReleaseGroupListItemModel, Unit>? = @static {
-
-}
-
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupsListScreen(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion

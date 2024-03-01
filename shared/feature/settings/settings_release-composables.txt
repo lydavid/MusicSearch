@@ -1,0 +1,106 @@
+fun present(
+  stable <this>: LoginPresenterAndroid
+): LoginUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
+  stable state: SettingsUiState
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingsScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingsScreenNotificationListenerEnable()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewProfileCardLoggedOut()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewProfileCardLoggedIn()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewProfileCardLoggedInWaitingForUsername()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingSwitchChecked()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingSwitchUnchecked()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingWithDialogChoices()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DevSettingsSection()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
+  stable state: SettingsUiState
+  stable showAndroidSettings: Boolean
+  stable modifier: Modifier? = @static Companion
+  stable isAndroid12: Boolean = @static false
+  stable isNotificationListenerEnabled: Boolean = @static false
+  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static {
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
+  stable modifier: Modifier? = @static Companion
+  stable username: String? = @static ""
+  stable showLogin: Boolean = @static true
+  stable onLoginClick: Function0<Unit>? = @static {
+
+}
+
+  stable onLogoutClick: Function0<Unit>? = @static {
+
+}
+
+  stable onDestinationClick: Function1<Screen, Unit>? = @static { it: Screen ->
+
+}
+
+  stable showAndroidSettings: Boolean = @static true
+  stable isAndroid12: Boolean = @static false
+  stable theme: Theme? = @static Theme.SYSTEM
+  stable onThemeChange: Function1<Theme, Unit>? = @static { it: Theme ->
+
+}
+
+  stable useMaterialYou: Boolean = @static true
+  stable onUseMaterialYouChange: Function1<Boolean, Unit>? = @static { it: Boolean ->
+
+}
+
+  stable showMoreInfoInReleaseListItem: Boolean = @static true
+  stable onShowMoreInfoInReleaseListItemChange: Function1<Boolean, Unit>? = @static { it: Boolean ->
+
+}
+
+  stable sortReleaseGroupListItems: Boolean = @static false
+  stable onSortReleaseGroupListItemsChange: Function1<Boolean, Unit>? = @static { it: Boolean ->
+
+}
+
+  stable isNotificationListenerEnabled: Boolean = @static false
+  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static {
+
+}
+
+  stable versionName: String? = @static ""
+  stable versionCode: Int = @static 0
+)
+fun present(
+  stable <this>: SettingsPresenter
+): SettingsUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ProfileCard(
+  stable username: String
+  stable showLogin: Boolean
+  stable onLoginClick: Function0<Unit>? = @static {
+
+}
+
+  stable onLogoutClick: Function0<Unit>? = @static {
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingSwitch(
+  stable header: String
+  stable checked: Boolean
+  stable modifier: Modifier? = @static Companion
+  stable onCheckedChange: Function1<Boolean, Unit>? = @static { it: Boolean ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingWithDialogChoices(
+  stable title: String
+  stable choices: ImmutableList<String>
+  stable selectedChoiceIndex: Int
+  stable onSelectChoiceIndex: Function1<Int, Unit>? = @static { it: Int ->
+
+}
+
+)
