@@ -9,6 +9,5 @@ internal sealed interface CollectionListUiEvent : CircuitUiEvent {
     data class CreateCollection(val newCollection: NewCollection) : CollectionListUiEvent
     data class ClickCollection(
         val id: String,
-        val isRemote: Boolean,
     ) : CollectionListUiEvent
 }

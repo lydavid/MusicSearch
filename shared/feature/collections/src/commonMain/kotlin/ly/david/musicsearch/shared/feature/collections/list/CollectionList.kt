@@ -124,7 +124,6 @@ internal fun CollectionList(
                             eventSink(
                                 CollectionListUiEvent.ClickCollection(
                                     id = id,
-                                    isRemote = isRemote,
                                 ),
                             )
                         },

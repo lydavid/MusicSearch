@@ -1,7 +1,5 @@
 package ly.david.mbjc.ui.collection
 
-import ly.david.musicsearch.shared.feature.collections.CollectionScaffold
-
 // TODO: maestro test instead
 /**
  * Tests interacting with [CollectionList] and [CollectionScaffold].

@@ -37,14 +37,14 @@ import ly.david.musicsearch.core.models.navigation.toLookupDestination
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.musicsearch.core.models.network.toMusicBrainzEntity
+import ly.david.musicsearch.shared.screens.CollectionListScreen
+import ly.david.musicsearch.shared.screens.CollectionScreen
 import ly.david.musicsearch.shared.screens.DetailsScreen
 import ly.david.musicsearch.shared.screens.HistoryScreen
 import ly.david.musicsearch.shared.screens.NowPlayingHistoryScreen
 import ly.david.musicsearch.shared.screens.SearchScreen
 import ly.david.musicsearch.shared.screens.SettingsScreen
 import ly.david.musicsearch.shared.screens.SpotifyPlayingScreen
-import ly.david.musicsearch.shared.feature.collections.CollectionScaffold
-import ly.david.musicsearch.shared.screens.CollectionListScreen
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -88,7 +88,7 @@ internal fun NavigationGraph(
     navController: NavHostController,
     onCreateCollectionClick: () -> Unit,
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit,
-    onDeleteFromCollection: (collectionId: String, entityId: String, name: String) -> Unit,
+    onDeleteFromCollection: (collectionId: String, collectableId: String, name: String) -> Unit,
     showMoreInfoInReleaseListItem: Boolean,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit,
     sortReleaseGroupListItems: Boolean,
@@ -420,7 +420,6 @@ internal fun NavigationGraph(
 //                },
                 )
             }
-
         }
 
         composable(
@@ -433,21 +432,45 @@ internal fun NavigationGraph(
         ) { entry ->
             val collectionId = entry.arguments?.getString(ID) ?: return@composable
 
-            CollectionScaffold(
-                collectionId = collectionId,
+//            CollectionScaffold(
+//                collectionId = collectionId,
+//                modifier = modifier,
+//                onItemClick = onLookupEntityClick,
+//                onBack = navController::navigateUp,
+//                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+//                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
+//                sortReleaseGroupListItems = sortReleaseGroupListItems,
+//                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
+//                onDeleteFromCollection = { collectableId, name ->
+//                    onDeleteFromCollection(
+//                        collectionId,
+//                        collectableId,
+//                        name,
+//                    )
+//                },
+//            )
+            CircuitContent(
+                screen = CollectionScreen(collectionId),
                 modifier = modifier,
-                onItemClick = onLookupEntityClick,
-                onBack = navController::navigateUp,
-                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
-                sortReleaseGroupListItems = sortReleaseGroupListItems,
-                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
-                onDeleteFromCollection = { collectableId, name ->
-                    onDeleteFromCollection(
-                        collectionId,
-                        collectableId,
-                        name,
-                    )
+
+                // TODO: these do not work, because we're not actually going through this CircuitContent
+                //  unless we deeplinked into here
+                onNavEvent = { event ->
+                    when (event) {
+                        is NavEvent.GoTo -> {
+                            val screen = event.screen
+                            if (screen is DetailsScreen) {
+                                onLookupEntityClick(
+                                    screen.entity,
+                                    screen.id,
+                                    screen.title,
+                                )
+                            }
+                        }
+
+                        is NavEvent.Pop -> TODO()
+                        is NavEvent.ResetRoot -> TODO()
+                    }
                 },
             )
         }

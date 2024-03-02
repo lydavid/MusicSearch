@@ -14,6 +14,7 @@ import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.domain.collection.usecase.GetAllCollections
+import ly.david.musicsearch.shared.screens.CollectionScreen
 
 internal class CollectionListPresenter(
     private val navigator: Navigator,
@@ -56,7 +57,7 @@ internal class CollectionListPresenter(
                 }
 
                 is CollectionListUiEvent.ClickCollection -> {
-                    // TODO: nav to collection
+                    navigator.goTo(CollectionScreen(event.id))
                 }
             }
         }
