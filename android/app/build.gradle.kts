@@ -123,6 +123,7 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.kotlinx.collections.immutable)
     implementation(libs.timber)
+    implementation(libs.circuit.overlay)
 
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.leakcanary.android)

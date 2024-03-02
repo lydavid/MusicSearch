@@ -111,4 +111,8 @@ class CollectionRepositoryImpl(
     }
 
     override fun getCollection(entityId: String): CollectionListItemModel = collectionDao.getCollection(entityId)
+
+    override fun insertLocal(collection: CollectionListItemModel) {
+        collectionDao.insertLocal(collection)
+    }
 }

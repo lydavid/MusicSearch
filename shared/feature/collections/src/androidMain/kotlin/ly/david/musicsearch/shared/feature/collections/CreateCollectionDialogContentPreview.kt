@@ -10,7 +10,7 @@ import ly.david.ui.core.theme.PreviewTheme
 internal fun PreviewCreateCollectionDialog() {
     PreviewTheme {
         Surface {
-            CreateCollectionDialog()
+            CreateCollectionDialogContent()
         }
     }
 }

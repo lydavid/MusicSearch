@@ -12,12 +12,13 @@ import org.koin.dsl.module
 
 val collectionsFeatureModule = module {
     single(named(CollectionListScreen::class.java.name)) {
-        Presenter.Factory { screen, navigator, context ->
+        Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is CollectionListScreen -> CollectionListPresenter(
                     navigator = navigator,
                     appPreferences = get(),
                     getAllCollections = get(),
+                    createCollection = get()
                 )
 
                 else -> null
@@ -25,7 +26,7 @@ val collectionsFeatureModule = module {
         }
     }
     single(named(CollectionListScreen::class.java.name)) {
-        Ui.Factory { screen, context ->
+        Ui.Factory { screen, _ ->
             when (screen) {
                 is CollectionListScreen -> {
                     ui<CollectionListUiState> { state, modifier ->

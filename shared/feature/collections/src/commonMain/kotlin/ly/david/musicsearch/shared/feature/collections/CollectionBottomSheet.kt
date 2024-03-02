@@ -26,7 +26,10 @@ import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.TextStyles
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalFoundationApi::class,
+)
 @Composable
 fun CollectionBottomSheet(
     bottomSheetState: SheetState,
@@ -87,6 +90,7 @@ fun CollectionBottomSheet(
                             },
                         )
                     }
+
                     else -> {
                         // Do nothing.
                     }

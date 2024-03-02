@@ -15,6 +15,7 @@ import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
+import com.slack.circuit.overlay.ContentWithOverlays
 import ly.david.mbjc.DEEP_LINK_SCHEMA
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
@@ -392,9 +393,14 @@ internal fun NavigationGraph(
 //                onCollectionClick = onCollectionClick,
 //                onCreateCollectionClick = onCreateCollectionClick,
 //            )
-            CircuitContent(
-                screen = CollectionListScreen,
-                modifier = modifier,
+            val backStack = rememberSaveableBackStack(root = CollectionListScreen)
+            val navigator = rememberCircuitNavigator(backStack)
+
+            ContentWithOverlays {
+                NavigableCircuitContent(
+                    navigator = navigator,
+                    backStack = backStack,
+                    modifier = modifier,
 //                onNavEvent = { event ->
 //                    when (event) {
 //                        is NavEvent.GoTo -> {
@@ -412,7 +418,9 @@ internal fun NavigationGraph(
 //                        is NavEvent.ResetRoot -> TODO()
 //                    }
 //                },
-            )
+                )
+            }
+
         }
 
         composable(

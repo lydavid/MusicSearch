@@ -31,6 +31,8 @@ kotlin {
                 implementation(compose.preview)
 
                 implementation(libs.circuit.foundation)
+                implementation(libs.circuit.overlay)
+                implementation(libs.circuitx.overlays)
                 implementation(libs.koin.core)
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)

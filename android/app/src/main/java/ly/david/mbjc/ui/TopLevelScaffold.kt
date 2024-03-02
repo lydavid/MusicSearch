@@ -34,7 +34,7 @@ import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.core.models.navigation.getTopLevelDestination
 import ly.david.musicsearch.core.models.navigation.getTopLevelRoute
 import ly.david.musicsearch.shared.feature.collections.CollectionBottomSheet
-import ly.david.musicsearch.shared.feature.collections.CreateCollectionDialog
+import ly.david.musicsearch.shared.feature.collections.CreateCollectionDialogContent
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
 
@@ -84,7 +84,7 @@ internal fun TopLevelScaffold(
     }
 
     if (showCreateCollectionDialog) {
-        CreateCollectionDialog(
+        CreateCollectionDialogContent(
             onDismiss = { showCreateCollectionDialog = false },
             onSubmit = { name, entity ->
                 viewModel.createNewCollection(

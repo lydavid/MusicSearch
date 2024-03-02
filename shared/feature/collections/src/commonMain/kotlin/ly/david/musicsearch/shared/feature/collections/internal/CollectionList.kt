@@ -15,16 +15,27 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
+import com.slack.circuit.overlay.LocalOverlayHost
+import com.slack.circuitx.overlays.BasicDialogOverlay
+import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.collections.CollectionListItem
+import ly.david.musicsearch.shared.feature.collections.CreateCollectionDialogContent
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
 // TODO: hoist and preview
+
+data class NewCollection(
+    val name: String? = null,
+    val entity: MusicBrainzEntity? = null,
+)
 
 /**
  * Displays a list of all of your collections.
@@ -41,6 +52,8 @@ internal fun CollectionList(
     val eventSink = state.eventSink
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scope = rememberCoroutineScope()
+    val overlayHost = LocalOverlayHost.current
 
     Scaffold(
         modifier = modifier,
@@ -55,7 +68,31 @@ internal fun CollectionList(
                 },
                 additionalActions = {
                     IconButton(onClick = {
-                        eventSink(CollectionListUiEvent.ClickCreateCollection)
+                        scope.launch {
+                            val result = overlayHost.show(
+                                BasicDialogOverlay(
+                                    model = Unit,
+                                    onDismissRequest = {
+                                        // This is expecting a non-null Result,
+                                        // so a dismissal emits this with all null arguments
+                                        NewCollection()
+                                    },
+                                ) { _, overlayNavigator ->
+                                    CreateCollectionDialogContent(
+                                        onDismiss = { overlayNavigator.finish(NewCollection()) },
+                                        onSubmit = { name, entity ->
+                                            overlayNavigator.finish(
+                                                NewCollection(
+                                                    name,
+                                                    entity,
+                                                ),
+                                            )
+                                        },
+                                    )
+                                },
+                            )
+                            eventSink(CollectionListUiEvent.CreateCollection(result))
+                        }
                     }) {
                         Icon(
                             imageVector = Icons.Default.Add,

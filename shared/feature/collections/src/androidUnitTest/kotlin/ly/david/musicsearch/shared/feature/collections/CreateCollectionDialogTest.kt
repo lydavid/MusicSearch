@@ -11,7 +11,7 @@ class CreateCollectionDialogTest : ScreenshotTest(isFullScreen = true) {
     @Test
     fun default() {
         snapshot {
-            CreateCollectionDialog()
+            CreateCollectionDialogContent()
         }
     }
 }
