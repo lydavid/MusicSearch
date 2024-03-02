@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.collections
+package ly.david.musicsearch.shared.feature.collections.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Row
@@ -23,6 +23,7 @@ import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.feature.collections.list.CollectionListItem
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.TextStyles
 

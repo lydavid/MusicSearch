@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.collections.internal
+package ly.david.musicsearch.shared.feature.collections.list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Row
@@ -23,19 +23,12 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import com.slack.circuitx.overlays.BasicDialogOverlay
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.feature.collections.CollectionListItem
-import ly.david.musicsearch.shared.feature.collections.CreateCollectionDialogContent
+import ly.david.musicsearch.shared.feature.collections.components.CreateCollectionDialogContent
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
 // TODO: hoist and preview
-
-data class NewCollection(
-    val name: String? = null,
-    val entity: MusicBrainzEntity? = null,
-)
 
 /**
  * Displays a list of all of your collections.

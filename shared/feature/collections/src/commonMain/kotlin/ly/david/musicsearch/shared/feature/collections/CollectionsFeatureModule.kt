@@ -3,9 +3,9 @@ package ly.david.musicsearch.shared.feature.collections
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
-import ly.david.musicsearch.shared.feature.collections.internal.CollectionList
-import ly.david.musicsearch.shared.feature.collections.internal.CollectionListPresenter
-import ly.david.musicsearch.shared.feature.collections.internal.CollectionListUiState
+import ly.david.musicsearch.shared.feature.collections.list.CollectionList
+import ly.david.musicsearch.shared.feature.collections.list.CollectionListPresenter
+import ly.david.musicsearch.shared.feature.collections.list.CollectionListUiState
 import ly.david.musicsearch.shared.screens.CollectionListScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

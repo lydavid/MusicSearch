@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.collections
+package ly.david.musicsearch.shared.feature.collections.list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -18,7 +18,7 @@ import ly.david.ui.core.SMALL_IMAGE_SIZE
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
-fun CollectionListItem(
+internal fun CollectionListItem(
     collection: CollectionListItemModel,
     modifier: Modifier = Modifier,
     onClick: CollectionListItemModel.() -> Unit = {},

@@ -33,8 +33,7 @@ import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.core.models.navigation.getTopLevelDestination
 import ly.david.musicsearch.core.models.navigation.getTopLevelRoute
-import ly.david.musicsearch.shared.feature.collections.CollectionBottomSheet
-import ly.david.musicsearch.shared.feature.collections.CreateCollectionDialogContent
+import ly.david.musicsearch.shared.feature.collections.components.CollectionBottomSheet
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
 
@@ -83,17 +82,18 @@ internal fun TopLevelScaffold(
         viewModel.login(result)
     }
 
-    if (showCreateCollectionDialog) {
-        CreateCollectionDialogContent(
-            onDismiss = { showCreateCollectionDialog = false },
-            onSubmit = { name, entity ->
-                viewModel.createNewCollection(
-                    name,
-                    entity,
-                )
-            },
-        )
-    }
+    // TODO: add back ability to create collection from any details screen
+//    if (showCreateCollectionDialog) {
+//        CreateCollectionDialogContent(
+//            onDismiss = { showCreateCollectionDialog = false },
+//            onSubmit = { name, entity ->
+//                viewModel.createNewCollection(
+//                    name,
+//                    entity,
+//                )
+//            },
+//        )
+//    }
 
     suspend fun showSnackbarAndHandleResult(remoteResult: TopLevelViewModel.RemoteResult) {
         val snackbarResult = snackbarHostState.showSnackbar(

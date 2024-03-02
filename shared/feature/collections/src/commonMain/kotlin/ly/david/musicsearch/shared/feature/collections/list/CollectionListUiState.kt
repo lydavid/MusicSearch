@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.collections.internal
+package ly.david.musicsearch.shared.feature.collections.list
 
 import androidx.paging.compose.LazyPagingItems
 import com.slack.circuit.runtime.CircuitUiState
