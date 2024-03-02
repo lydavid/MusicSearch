@@ -47,20 +47,10 @@ fun CreateCollectionDialogContent(
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
 
-    // TODO: crashes on recomposition
     LaunchedEffect(key1 = Unit) {
         focusRequester.requestFocus()
     }
 
-// //    Dialog(
-// //        onDismissRequest = {
-// //            onDismiss()
-// //        },
-// //    ) {
-//        Surface(
-//            shape = RoundedCornerShape(28.dp),
-//            modifier = modifier,
-//        ) {
     Column(
         modifier = modifier.padding(24.dp),
     ) {

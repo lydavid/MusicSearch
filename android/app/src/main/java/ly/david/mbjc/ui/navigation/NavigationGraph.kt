@@ -422,6 +422,9 @@ internal fun NavigationGraph(
             }
         }
 
+        // TODO: for a screen like this, where it has a back button,
+        //  when we deeplink, we should add its previous screen to backstack, so that navigate up does not crash
+        //  similar thing would apply for details screen
         composable(
             route = "${Destination.COLLECTIONS.route}/{$ID}",
             deepLinks = listOf(

@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.collections.list
+package ly.david.musicsearch.shared.feature.collections.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row

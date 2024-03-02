@@ -29,8 +29,6 @@ internal class CollectionPresenter(
     override fun present(): CollectionUiState {
         val collectionId = screen.id
 
-        // TODO: does it keep executing this on config change?
-//        val collection = getCollectionUseCase(collectionId)
         var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
