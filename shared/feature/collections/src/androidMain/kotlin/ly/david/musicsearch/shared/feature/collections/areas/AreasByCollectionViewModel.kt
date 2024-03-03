@@ -17,3 +17,5 @@ internal class AreasByCollectionViewModel(
     entity = MusicBrainzEntity.COLLECTION,
     getEntitiesByEntity = getAreasByEntity,
 )
+
+// TODO: multiple nested presenters or just pass all of these to one presenter?

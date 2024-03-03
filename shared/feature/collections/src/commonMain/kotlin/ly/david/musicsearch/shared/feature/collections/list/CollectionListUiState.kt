@@ -1,9 +1,11 @@
 package ly.david.musicsearch.shared.feature.collections.list
 
+import androidx.compose.runtime.Stable
 import androidx.paging.compose.LazyPagingItems
 import com.slack.circuit.runtime.CircuitUiState
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 
+@Stable
 internal data class CollectionListUiState(
     val query: String,
     val showLocal: Boolean,

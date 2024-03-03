@@ -30,6 +30,17 @@ val collectionsFeatureModule = module {
                     navigator = navigator,
                     getCollectionUseCase = get(),
                     incrementLookupHistory = get(),
+                    getAreasByEntity = get(),
+                    getArtistsByEntity = get(),
+                    getEventsByEntity = get(),
+                    getInstrumentsByEntity = get(),
+                    getLabelsByEntity = get(),
+                    getPlacesByEntity = get(),
+                    getRecordingsByEntity = get(),
+                    getReleasesByEntity = get(),
+                    getReleaseGroupsByEntity = get(),
+                    getSeriesByEntity = get(),
+                    getWorksByEntity = get(),
                 )
 
                 else -> null

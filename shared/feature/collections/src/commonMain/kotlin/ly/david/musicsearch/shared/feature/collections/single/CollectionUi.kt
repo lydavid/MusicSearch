@@ -105,6 +105,7 @@ internal fun CollectionUi(
         } else {
             CollectionPlatformContent(
                 collectionId = collection.id,
+                lazyPagingItems = state.lazyPagingItems,
                 isRemote = collection.isRemote,
                 filterText = state.query,
                 entity = collection.entity,
