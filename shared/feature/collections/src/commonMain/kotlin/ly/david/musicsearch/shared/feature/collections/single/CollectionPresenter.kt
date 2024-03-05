@@ -30,7 +30,7 @@ import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.domain.area.usecase.GetAreasByEntity
 import ly.david.musicsearch.domain.artist.usecase.GetArtistsByEntity
 import ly.david.musicsearch.domain.collection.usecase.GetCollection
-import ly.david.musicsearch.domain.collection.usecase.MarkItemForDeletionFromCollection
+import ly.david.musicsearch.domain.collection.usecase.DeleteFromCollection
 import ly.david.musicsearch.domain.event.usecase.GetEventsByEntity
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.instrument.usecase.GetInstrumentsByEntity
@@ -61,7 +61,7 @@ internal class CollectionPresenter(
     private val getReleaseGroupsByEntity: GetReleaseGroupsByEntity,
     private val getSeriesByEntity: GetSeriesByEntity,
     private val getWorksByEntity: GetWorksByEntity,
-    private val markItemForDeletionFromCollection: MarkItemForDeletionFromCollection,
+    private val deleteFromCollection: DeleteFromCollection,
 ) : Presenter<CollectionUiState> {
     @Composable
     override fun present(): CollectionUiState {
@@ -294,7 +294,7 @@ internal class CollectionPresenter(
 
                 is CollectionUiEvent.MarkItemForDeletion -> {
                     scope.launch {
-                        actionableResult = markItemForDeletionFromCollection(
+                        actionableResult = deleteFromCollection(
                             collectionId = collection?.id ?: return@launch,
                             entityId = event.collectableId,
                             entityName = event.name,

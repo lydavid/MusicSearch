@@ -81,9 +81,7 @@ internal fun NavHostController.goToEntityScreen(
 @Composable
 internal fun NavigationGraph(
     navController: NavHostController,
-    onCreateCollectionClick: () -> Unit,
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit,
-    onDeleteFromCollection: (collectionId: String, collectableId: String, name: String) -> Unit,
     showMoreInfoInReleaseListItem: Boolean,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit,
     sortReleaseGroupListItems: Boolean,

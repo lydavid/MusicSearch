@@ -121,8 +121,7 @@ class CollectionRepositoryImpl(
         collectionDao.insertLocal(collection)
     }
 
-    // TODO: this is currently just deleting outright
-    override suspend fun markForDeletion(
+    override suspend fun deleteFromCollection(
         collectionId: String,
         entityId: String,
         entityName: String,

@@ -21,7 +21,7 @@ interface CollectionRepository {
         collection: CollectionListItemModel,
     )
 
-    suspend fun markForDeletion(
+    suspend fun deleteFromCollection(
         collectionId: String,
         entityId: String,
         entityName: String,

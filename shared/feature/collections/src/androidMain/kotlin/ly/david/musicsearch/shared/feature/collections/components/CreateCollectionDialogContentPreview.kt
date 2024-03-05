@@ -2,10 +2,10 @@ package ly.david.musicsearch.shared.feature.collections.components
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import ly.david.ui.core.preview.DefaultPreviews
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.ui.core.theme.PreviewTheme
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewCreateCollectionDialog() {
     PreviewTheme {

@@ -4,14 +4,14 @@ import ly.david.musicsearch.domain.collection.CollectionRepository
 import org.koin.core.annotation.Single
 
 @Single
-class MarkItemForDeletionFromCollection(
+class DeleteFromCollection(
     private val collectionRepository: CollectionRepository,
 ) {
     suspend operator fun invoke(
         collectionId: String,
         entityId: String,
         entityName: String,
-    ) = collectionRepository.markForDeletion(
+    ) = collectionRepository.deleteFromCollection(
         collectionId = collectionId,
         entityId = entityId,
         entityName = entityName,

@@ -54,7 +54,6 @@ internal fun TopLevelScaffold(
     val scope = rememberCoroutineScope()
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState()
-    var showCreateCollectionDialog by rememberSaveable { mutableStateOf(false) }
     val collections: LazyPagingItems<CollectionListItemModel> =
         rememberFlowWithLifecycleStarted(viewModel.collections)
             .collectAsLazyPagingItems()
@@ -83,19 +82,6 @@ internal fun TopLevelScaffold(
         viewModel.login(result)
     }
 
-    // TODO: add back ability to create collection from any details screen
-//    if (showCreateCollectionDialog) {
-//        CreateCollectionDialogContent(
-//            onDismiss = { showCreateCollectionDialog = false },
-//            onSubmit = { name, entity ->
-//                viewModel.createNewCollection(
-//                    name,
-//                    entity,
-//                )
-//            },
-//        )
-//    }
-
     suspend fun showSnackbarAndHandleResult(actionableResult: ActionableResult) {
         val snackbarResult = snackbarHostState.showSnackbar(
             message = actionableResult.message,
@@ -120,7 +106,9 @@ internal fun TopLevelScaffold(
             scope = scope,
             collections = collections,
             onDismiss = { showBottomSheet = false },
-            onCreateCollectionClick = { showCreateCollectionDialog = true },
+            onCreateCollectionClick = {
+                // TODO: support creating collection from bottom sheet once we work on details screen mvi
+            },
             onAddToCollection = { collectionId ->
                 scope.launch {
                     val addToCollectionResult = viewModel.addToCollectionAndGetResult(
@@ -156,27 +144,10 @@ internal fun TopLevelScaffold(
         NavigationGraph(
             navController = navController,
             modifier = Modifier.padding(innerPadding),
-            onCreateCollectionClick = {
-                showCreateCollectionDialog = true
-            },
             onAddToCollectionMenuClick = { entity, id ->
                 viewModel.setEntity(entity)
                 viewModel.setEntityId(id)
                 showBottomSheet = true
-            },
-            onDeleteFromCollection = { collectionId, entityId, name ->
-                scope.launch {
-                    val deleteFromCollectionResult =
-                        viewModel.deleteFromCollectionAndGetResult(
-                            collectionId,
-                            entityId,
-                            name,
-                        )
-
-                    if (deleteFromCollectionResult.message.isEmpty()) return@launch
-
-                    showSnackbarAndHandleResult(deleteFromCollectionResult)
-                }
             },
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
             onShowMoreInfoInReleaseListItemChange = viewModel.appPreferences::setShowMoreInfoInReleaseListItem,

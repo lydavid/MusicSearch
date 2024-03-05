@@ -97,38 +97,6 @@ internal class TopLevelViewModel(
         return result
     }
 
-    suspend fun deleteFromCollectionAndGetResult(
-        collectionId: String,
-        entityId: String,
-        entityName: String,
-    ): ActionableResult {
-        val collection = collectionDao.getCollection(collectionId)
-        if (collection.isRemote) {
-            try {
-                musicBrainzApi.deleteFromCollection(
-                    collectionId = collectionId,
-                    resourceUriPlural = collection.entity.resourceUriPlural,
-                    mbids = entityId,
-                )
-            } catch (ex: RecoverableNetworkException) {
-                val userFacingError = "Failed to delete from remote collection ${collection.name}. Login has expired."
-                Timber.e("$userFacingError $ex")
-                return ActionableResult(
-                    message = userFacingError,
-                    actionLabel = "Login",
-                )
-            }
-        }
-
-        collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteFromCollection(
-                collectionId,
-                entityId,
-            )
-        }
-        return ActionableResult("Deleted $entityName from ${collection.name}.")
-    }
-
     fun getLoginContract() = musicBrainzLoginActivityResultContract
 
     fun login(result: MusicBrainzLoginActivityResultContract.Result) {
