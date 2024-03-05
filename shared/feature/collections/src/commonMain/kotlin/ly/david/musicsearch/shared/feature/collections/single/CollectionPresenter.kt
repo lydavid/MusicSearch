@@ -61,7 +61,6 @@ internal class CollectionPresenter(
 
         var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
-//        var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
 
