@@ -169,6 +169,23 @@ internal fun NavigationGraph(
                     entity = type,
                 ),
                 modifier = modifier,
+                onNavEvent = { event ->
+                    when (event) {
+                        is NavEvent.GoTo -> {
+                            val screen = event.screen
+                            if (screen is DetailsScreen) {
+                                onLookupEntityClick(
+                                    screen.entity,
+                                    screen.id,
+                                    screen.title,
+                                )
+                            }
+                        }
+
+                        is NavEvent.Pop -> TODO()
+                        is NavEvent.ResetRoot -> TODO()
+                    }
+                },
             )
         }
 
