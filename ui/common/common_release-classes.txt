@@ -30,6 +30,10 @@ unstable class RecordingPreviewParameterProvider {
   unstable val values: Sequence<RecordingListItemModel>
   <runtime stability> = Unstable
 }
+unstable class ReleasePreviewParameterProvider {
+  unstable val values: Sequence<ReleaseListItemModel>
+  <runtime stability> = Unstable
+}
 unstable class TrackCardPreviewParameterProvider {
   unstable val values: Sequence<TrackListItemModel>
   <runtime stability> = Unstable

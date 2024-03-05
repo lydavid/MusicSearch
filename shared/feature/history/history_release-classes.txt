@@ -1,0 +1,51 @@
+stable class HistoryPresenter {
+  stable val navigator: Navigator
+  unstable val appPreferences: AppPreferences
+  runtime val getPagedHistory: GetPagedHistory
+  runtime val markLookupHistoryForDeletion: MarkLookupHistoryForDeletion
+  runtime val unMarkLookupHistoryForDeletion: UnMarkLookupHistoryForDeletion
+  runtime val deleteLookupHistory: DeleteLookupHistory
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class UpdateSortOption {
+  stable val sortOption: HistorySortOption
+  <runtime stability> = Stable
+}
+stable class MarkHistoryForDeletion {
+  unstable val history: LookupHistoryListItemModel
+  <runtime stability> = Stable
+}
+stable class UnMarkHistoryForDeletion {
+  unstable val history: LookupHistoryListItemModel
+  <runtime stability> = Stable
+}
+stable class DeleteHistory {
+  unstable val history: LookupHistoryListItemModel
+  <runtime stability> = Stable
+}
+stable class MarkAllHistoryForDeletion {
+  <runtime stability> = Stable
+}
+stable class UnMarkAllHistoryForDeletion {
+  <runtime stability> = Stable
+}
+stable class DeleteAllHistory {
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class HistoryUiState {
+  stable val query: String
+  stable val sortOption: HistorySortOption
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable val eventSink: Function1<HistoryUiEvent, Unit>
+  <runtime stability> = Stable
+}
