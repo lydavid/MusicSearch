@@ -42,6 +42,7 @@ val collectionsFeatureModule = module {
                     getReleaseGroupsByEntity = get(),
                     getSeriesByEntity = get(),
                     getWorksByEntity = get(),
+                    markItemForDeletionFromCollection = get(),
                 )
 
                 else -> null

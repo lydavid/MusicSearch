@@ -6,6 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.paging.insertSeparators
@@ -18,6 +19,8 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import ly.david.musicsearch.core.models.ActionableResult
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
@@ -27,6 +30,7 @@ import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.domain.area.usecase.GetAreasByEntity
 import ly.david.musicsearch.domain.artist.usecase.GetArtistsByEntity
 import ly.david.musicsearch.domain.collection.usecase.GetCollection
+import ly.david.musicsearch.domain.collection.usecase.MarkItemForDeletionFromCollection
 import ly.david.musicsearch.domain.event.usecase.GetEventsByEntity
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.instrument.usecase.GetInstrumentsByEntity
@@ -57,12 +61,15 @@ internal class CollectionPresenter(
     private val getReleaseGroupsByEntity: GetReleaseGroupsByEntity,
     private val getSeriesByEntity: GetSeriesByEntity,
     private val getWorksByEntity: GetWorksByEntity,
+    private val markItemForDeletionFromCollection: MarkItemForDeletionFromCollection,
 ) : Presenter<CollectionUiState> {
     @Composable
     override fun present(): CollectionUiState {
         val collectionId = screen.id
 
+        val scope = rememberCoroutineScope()
         var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
+        var actionableResult: ActionableResult? by rememberSaveable { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
@@ -87,7 +94,10 @@ internal class CollectionPresenter(
             }
         }
 
-        LaunchedEffect(key1 = query, key2 = sortReleaseGroupListItems) {
+        LaunchedEffect(
+            key1 = query,
+            key2 = sortReleaseGroupListItems,
+        ) {
             collectableItems = when (collection?.entity) {
                 MusicBrainzEntity.AREA -> {
                     getAreasByEntity(
@@ -282,9 +292,22 @@ internal class CollectionPresenter(
                     )
                 }
 
-                is CollectionUiEvent.DeleteItem -> TODO()
-                is CollectionUiEvent.MarkItemForDeletion -> TODO()
-                is CollectionUiEvent.UnMarkItemForDeletion -> TODO()
+                is CollectionUiEvent.MarkItemForDeletion -> {
+                    scope.launch {
+                        actionableResult = markItemForDeletionFromCollection(
+                            collectionId = collection?.id ?: return@launch,
+                            entityId = event.collectableId,
+                            entityName = event.name,
+                        )
+                    }
+                }
+
+                is CollectionUiEvent.UnMarkItemForDeletion -> {
+                }
+
+                is CollectionUiEvent.DeleteItem -> {
+                }
+
                 is CollectionUiEvent.UpdateQuery -> {
                     query = event.query
                 }
@@ -301,6 +324,7 @@ internal class CollectionPresenter(
 
         return CollectionUiState(
             collection = collection,
+            actionableResult = actionableResult,
             query = query,
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
             sortReleaseGroupListItems = sortReleaseGroupListItems,
@@ -308,23 +332,4 @@ internal class CollectionPresenter(
             eventSink = ::eventSink,
         )
     }
-
-//    private var recordedLookup = false
-//
-//    fun getCollection(collectionId: String): CollectionListItemModel {
-//
-//
-//        if (!recordedLookup) {
-//            incrementLookupHistory(
-//                LookupHistory(
-//                    mbid = collectionId,
-//                    title = collection.name,
-//                    entity = MusicBrainzEntity.COLLECTION,
-//                ),
-//            )
-//            recordedLookup = true
-//        }
-//
-//        return collection
-//    }
 }

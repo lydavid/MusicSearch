@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -63,13 +66,38 @@ import ly.david.ui.common.work.WorkListItem
 internal fun CollectionUi(
     state: CollectionUiState,
     modifier: Modifier = Modifier,
-//    onDeleteFromCollection: (collectableId: String, name: String) -> Unit = { _, _ -> },
 ) {
     val collection = state.collection
     val eventSink = state.eventSink
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
+
+    state.actionableResult?.let { result ->
+        LaunchedEffect(result) {
+            val snackbarResult = snackbarHostState.showSnackbar(
+                message = result.message,
+                actionLabel = result.actionLabel,
+                duration = SnackbarDuration.Short,
+                withDismissAction = true,
+            )
+
+            // TODO: support undoing deletion from collection
+            when (snackbarResult) {
+                SnackbarResult.ActionPerformed -> {
+                    // TODO: support login if not logged in
+//                    eventSink(CollectionUiEvent.UnMarkItemForDeletion(collectableId))
+                }
+
+                SnackbarResult.Dismissed -> {
+//                    eventSink(CollectionUiEvent.DeleteItem(
+//                        collectableId = collectableId,
+//                        name = name
+//                    ))
+                }
+            }
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -141,7 +169,14 @@ internal fun CollectionUi(
                         ),
                     )
                 },
-//                onDeleteFromCollection = onDeleteFromCollection,
+                onDeleteFromCollection = { collectableId, name ->
+                    eventSink(
+                        CollectionUiEvent.MarkItemForDeletion(
+                            collectableId = collectableId,
+                            name = name,
+                        ),
+                    )
+                },
             )
         }
     }

@@ -4,12 +4,16 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.core.models.ActionableResult
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.resourceUriPlural
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
+import ly.david.musicsearch.data.database.dao.CollectionEntityDao
+import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.domain.browse.BrowseEntityCountRepository
@@ -19,6 +23,7 @@ import lydavidmusicsearchdatadatabase.Browse_entity_count
 class CollectionRepositoryImpl(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionDao: CollectionDao,
+    private val collectionEntityDao: CollectionEntityDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val browseEntityCountRepository: BrowseEntityCountRepository,
 ) : CollectionRepository {
@@ -114,5 +119,37 @@ class CollectionRepositoryImpl(
 
     override fun insertLocal(collection: CollectionListItemModel) {
         collectionDao.insertLocal(collection)
+    }
+
+    // TODO: this is currently just deleting outright
+    override suspend fun markForDeletion(
+        collectionId: String,
+        entityId: String,
+        entityName: String,
+    ): ActionableResult {
+        val collection = collectionDao.getCollection(collectionId)
+        if (collection.isRemote) {
+            try {
+                musicBrainzApi.deleteFromCollection(
+                    collectionId = collectionId,
+                    resourceUriPlural = collection.entity.resourceUriPlural,
+                    mbids = entityId,
+                )
+            } catch (ex: RecoverableNetworkException) {
+                val userFacingError = "Failed to delete from remote collection ${collection.name}. Not logged in."
+                return ActionableResult(
+                    message = userFacingError,
+                    actionLabel = "Login",
+                )
+            }
+        }
+
+        collectionEntityDao.withTransaction {
+            collectionEntityDao.deleteFromCollection(
+                collectionId,
+                entityId,
+            )
+        }
+        return ActionableResult("Deleted $entityName from ${collection.name}.")
     }
 }

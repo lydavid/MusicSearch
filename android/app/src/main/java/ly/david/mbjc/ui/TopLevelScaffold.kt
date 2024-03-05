@@ -29,6 +29,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.mbjc.ui.navigation.BottomNavigationBar
 import ly.david.mbjc.ui.navigation.NavigationGraph
+import ly.david.musicsearch.core.models.ActionableResult
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.core.models.navigation.getTopLevelDestination
@@ -95,10 +96,10 @@ internal fun TopLevelScaffold(
 //        )
 //    }
 
-    suspend fun showSnackbarAndHandleResult(remoteResult: TopLevelViewModel.RemoteResult) {
+    suspend fun showSnackbarAndHandleResult(actionableResult: ActionableResult) {
         val snackbarResult = snackbarHostState.showSnackbar(
-            message = remoteResult.message,
-            actionLabel = remoteResult.actionLabel,
+            message = actionableResult.message,
+            actionLabel = actionableResult.actionLabel,
             duration = SnackbarDuration.Short,
         )
 
