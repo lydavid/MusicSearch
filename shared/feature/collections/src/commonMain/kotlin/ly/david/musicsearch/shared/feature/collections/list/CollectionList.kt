@@ -43,6 +43,7 @@ internal fun CollectionList(
     val overlayHost = LocalOverlayHost.current
 
     CollectionList(
+        lazyPagingItems = state.lazyPagingItems,
         modifier = modifier,
         filterText = state.query,
         onFilterTextChange = { eventSink(CollectionListUiEvent.UpdateQuery(it)) },
@@ -81,7 +82,6 @@ internal fun CollectionList(
         onShowRemoteToggle = {
             eventSink(CollectionListUiEvent.UpdateShowRemote(it))
         },
-        lazyPagingItems = state.lazyPagingItems,
         onCollectionClick = {
             eventSink(CollectionListUiEvent.ClickCollection(it))
         },
@@ -94,6 +94,7 @@ internal fun CollectionList(
 )
 @Composable
 internal fun CollectionList(
+    lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
     modifier: Modifier = Modifier,
     filterText: String = "",
     onFilterTextChange: (String) -> Unit = {},
@@ -102,7 +103,6 @@ internal fun CollectionList(
     onShowLocalToggle: (Boolean) -> Unit = {},
     showRemote: Boolean = true,
     onShowRemoteToggle: (Boolean) -> Unit = {},
-    lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
     onCollectionClick: (String) -> Unit = {},
 ) {
     val strings = LocalStrings.current

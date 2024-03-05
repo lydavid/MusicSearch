@@ -162,9 +162,9 @@ internal fun CollectionUi(
                 onItemClick = { entity, id, title ->
                     eventSink(
                         CollectionUiEvent.ClickItem(
-                            entity,
-                            id,
-                            title,
+                            entity = entity,
+                            id = id,
+                            title = title,
                         ),
                     )
                 },

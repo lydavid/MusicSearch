@@ -82,15 +82,15 @@ internal class CollectionPresenter(
         var collectableItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
 
         LaunchedEffect(Unit) {
-            val _collection = getCollectionUseCase(collectionId)
-            collection = _collection
-            isRemote = _collection.isRemote
+            val nonNullCollection = getCollectionUseCase(collectionId)
+            collection = nonNullCollection
+            isRemote = nonNullCollection.isRemote
 
             if (!recordedHistory) {
                 incrementLookupHistory(
                     LookupHistory(
                         mbid = collectionId,
-                        title = _collection.name,
+                        title = nonNullCollection.name,
                         entity = MusicBrainzEntity.COLLECTION,
                     ),
                 )
