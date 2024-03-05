@@ -20,11 +20,11 @@ import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
-import ly.david.musicsearch.core.models.listitem.EndOfList.id
 import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.core.models.listitem.InstrumentListItemModel
 import ly.david.musicsearch.core.models.listitem.LabelListItemModel
 import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
 import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
 import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
@@ -39,6 +39,7 @@ import ly.david.ui.common.event.EventListItem
 import ly.david.ui.common.fullscreen.FullScreenText
 import ly.david.ui.common.instrument.InstrumentListItem
 import ly.david.ui.common.label.LabelListItem
+import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.place.PlaceListItem
@@ -47,6 +48,7 @@ import ly.david.ui.common.releasegroup.ReleaseGroupListItem
 import ly.david.ui.common.series.SeriesListItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.work.WorkListItem
 
@@ -61,31 +63,13 @@ import ly.david.ui.common.work.WorkListItem
 internal fun CollectionUi(
     state: CollectionUiState,
     modifier: Modifier = Modifier,
-//    onBack: () -> Unit = {},
-//    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
-//    showMoreInfoInReleaseListItem: Boolean = true,
-//    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
-//    sortReleaseGroupListItems: Boolean = false,
-//    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
 //    onDeleteFromCollection: (collectableId: String, name: String) -> Unit = { _, _ -> },
-//    viewModel: CollectionPresenter = koinViewModel(),
 ) {
+    val collection = state.collection
     val eventSink = state.eventSink
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-
-//    var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
-//    var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
-//    var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-//    var filterText by rememberSaveable { mutableStateOf("") }
-
-//    LaunchedEffect(key1 = collectionId) {
-//        collection = viewModel.getCollection(collectionId)
-//        entity = collection?.entity
-//        isRemote = collection?.isRemote ?: false
-//    }
-    val collection = state.collection
 
     Scaffold(
         modifier = modifier,
@@ -106,20 +90,24 @@ internal fun CollectionUi(
                     }
                     CopyToClipboardMenuItem(collection?.id.orEmpty())
                     if (collection?.entity == MusicBrainzEntity.RELEASE_GROUP) {
-//                        ToggleMenuItem(
-//                            toggleOnText = strings.sort,
-//                            toggleOffText = strings.unsort,
-//                            toggled = sortReleaseGroupListItems,
-//                            onToggle = onSortReleaseGroupListItemsChange,
-//                        )
+                        ToggleMenuItem(
+                            toggleOnText = strings.sort,
+                            toggleOffText = strings.unsort,
+                            toggled = state.sortReleaseGroupListItems,
+                            onToggle = {
+                                eventSink(CollectionUiEvent.UpdateSortReleaseGroupListItems(it))
+                            },
+                        )
                     }
                     if (collection?.entity == MusicBrainzEntity.RELEASE) {
-//                        ToggleMenuItem(
-//                            toggleOnText = strings.showMoreInfo,
-//                            toggleOffText = strings.showLessInfo,
-//                            toggled = showMoreInfoInReleaseListItem,
-//                            onToggle = onShowMoreInfoInReleaseListItemChange,
-//                        )
+                        ToggleMenuItem(
+                            toggleOnText = strings.showMoreInfo,
+                            toggleOffText = strings.showLessInfo,
+                            toggled = state.showMoreInfoInReleaseListItem,
+                            onToggle = {
+                                eventSink(CollectionUiEvent.UpdateShowMoreInfoInReleaseListItem(it))
+                            },
+                        )
                     }
                 },
                 filterText = state.query,
@@ -138,16 +126,12 @@ internal fun CollectionUi(
             )
         } else {
             CollectionPlatformContent(
-                collectionId = collection.id,
                 lazyPagingItems = state.lazyPagingItems,
-                isRemote = collection.isRemote,
-                filterText = state.query,
                 entity = collection.entity,
                 snackbarHostState = snackbarHostState,
                 innerPadding = innerPadding,
                 scrollBehavior = scrollBehavior,
-//                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-//                sortReleaseGroupListItems = sortReleaseGroupListItems,
+                showMoreInfoInReleaseListItem = state.showMoreInfoInReleaseListItem,
                 onItemClick = { entity, id, title ->
                     eventSink(
                         CollectionUiEvent.ClickItem(
@@ -166,21 +150,16 @@ internal fun CollectionUi(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CollectionPlatformContent(
-    collectionId: String,
     lazyPagingItems: LazyPagingItems<ListItemModel>,
-    isRemote: Boolean,
-    filterText: String,
     entity: MusicBrainzEntity,
     snackbarHostState: SnackbarHostState,
     innerPadding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
     showMoreInfoInReleaseListItem: Boolean = true,
-    sortReleaseGroupListItems: Boolean = false,
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: (collectableId: String, name: String) -> Unit = { _, _ -> },
 ) {
     EntitiesByCollection(
-        collectionId = collectionId,
         lazyPagingItems = lazyPagingItems,
         entity = entity,
         snackbarHostState = snackbarHostState,
@@ -188,6 +167,7 @@ internal fun CollectionPlatformContent(
             .padding(innerPadding)
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
+        showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
         onDeleteFromCollection = onDeleteFromCollection,
         onItemClick = onItemClick,
     )
@@ -196,27 +176,15 @@ internal fun CollectionPlatformContent(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun EntitiesByCollection(
-    collectionId: String,
     lazyPagingItems: androidx.paging.compose.LazyPagingItems<ListItemModel>,
     entity: MusicBrainzEntity,
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
+    showMoreInfoInReleaseListItem: Boolean = true,
     onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
 ) {
     val lazyListState = rememberLazyListState()
-//    val lazyPagingItems: LazyPagingItems<AreaListItemModel> =
-//        rememberFlowWithLifecycleStarted(viewModel.pagedEntities)
-//            .collectAsLazyPagingItems()
-
-//    LaunchedEffect(key1 = collectionId) {
-//        viewModel.setRemote(isRemote)
-//        viewModel.loadPagedEntities(collectionId)
-//    }
-//
-//    LaunchedEffect(key1 = filterText) {
-//        viewModel.updateQuery(filterText)
-//    }
 
     ScreenWithPagingLoadingAndError(
         modifier = modifier,
@@ -225,6 +193,10 @@ internal fun EntitiesByCollection(
         snackbarHostState = snackbarHostState,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
+            is ListSeparator -> {
+                ListSeparatorHeader(text = listItemModel.text)
+            }
+
             is AreaListItemModel -> {
                 SwipeToDeleteListItem(
                     content = {
@@ -392,7 +364,7 @@ internal fun EntitiesByCollection(
                         ReleaseListItem(
                             release = listItemModel,
                             modifier = Modifier.animateItemPlacement(),
-//                            showMoreInfo = showMoreInfo,
+                            showMoreInfo = showMoreInfoInReleaseListItem,
 //                            requestForMissingCoverArtUrl = {
 //                                requestForMissingCoverArtUrl(releaseListItemModel.id)
 //                            },
@@ -497,4 +469,3 @@ internal fun EntitiesByCollection(
         }
     }
 }
-

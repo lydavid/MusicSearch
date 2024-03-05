@@ -30,6 +30,7 @@ val collectionsFeatureModule = module {
                     navigator = navigator,
                     getCollectionUseCase = get(),
                     incrementLookupHistory = get(),
+                    appPreferences = get(),
                     getAreasByEntity = get(),
                     getArtistsByEntity = get(),
                     getEventsByEntity = get(),

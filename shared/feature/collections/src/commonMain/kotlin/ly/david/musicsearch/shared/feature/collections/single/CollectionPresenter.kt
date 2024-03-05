@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.collections.single
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +23,7 @@ import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.domain.area.usecase.GetAreasByEntity
 import ly.david.musicsearch.domain.artist.usecase.GetArtistsByEntity
 import ly.david.musicsearch.domain.collection.usecase.GetCollection
@@ -43,6 +45,7 @@ internal class CollectionPresenter(
     private val navigator: Navigator,
     private val getCollectionUseCase: GetCollection,
     private val incrementLookupHistory: IncrementLookupHistory,
+    private val appPreferences: AppPreferences,
     private val getAreasByEntity: GetAreasByEntity,
     private val getArtistsByEntity: GetArtistsByEntity,
     private val getEventsByEntity: GetEventsByEntity,
@@ -63,7 +66,8 @@ internal class CollectionPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-
+        val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsState(true)
+        val sortReleaseGroupListItems by appPreferences.sortReleaseGroupListItems.collectAsState(true)
         var collectableItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
 
         LaunchedEffect(Unit) {
@@ -83,7 +87,7 @@ internal class CollectionPresenter(
             }
         }
 
-        LaunchedEffect(key1 = query) {
+        LaunchedEffect(key1 = query, key2 = sortReleaseGroupListItems) {
             collectableItems = when (collection?.entity) {
                 MusicBrainzEntity.AREA -> {
                     getAreasByEntity(
@@ -212,6 +216,7 @@ internal class CollectionPresenter(
                         listFilters = ListFilters(
                             query = query,
                             isRemote = isRemote,
+                            sorted = sortReleaseGroupListItems,
                         ),
                     ).map { pagingData ->
                         pagingData.insertSeparators { _, _ ->
@@ -283,12 +288,22 @@ internal class CollectionPresenter(
                 is CollectionUiEvent.UpdateQuery -> {
                     query = event.query
                 }
+
+                is CollectionUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
+                    appPreferences.setShowMoreInfoInReleaseListItem(event.showMore)
+                }
+
+                is CollectionUiEvent.UpdateSortReleaseGroupListItems -> {
+                    appPreferences.setSortReleaseGroupListItems(event.sort)
+                }
             }
         }
 
         return CollectionUiState(
             collection = collection,
             query = query,
+            showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+            sortReleaseGroupListItems = sortReleaseGroupListItems,
             lazyPagingItems = collectableItems.collectAsLazyPagingItems(),
             eventSink = ::eventSink,
         )

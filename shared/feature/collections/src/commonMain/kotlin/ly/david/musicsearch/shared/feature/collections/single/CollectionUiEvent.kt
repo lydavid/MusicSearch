@@ -8,6 +8,10 @@ internal sealed interface CollectionUiEvent : CircuitUiEvent {
 
     data class UpdateQuery(val query: String) : CollectionUiEvent
 
+    data class UpdateShowMoreInfoInReleaseListItem(val showMore: Boolean) : CollectionUiEvent
+
+    data class UpdateSortReleaseGroupListItems(val sort: Boolean) : CollectionUiEvent
+
     data class MarkItemForDeletion(
         val collectableId: String,
         val name: String,

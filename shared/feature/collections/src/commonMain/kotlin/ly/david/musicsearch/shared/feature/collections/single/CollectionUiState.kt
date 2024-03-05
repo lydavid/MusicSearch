@@ -10,6 +10,8 @@ import ly.david.musicsearch.core.models.listitem.ListItemModel
 internal data class CollectionUiState(
     val collection: CollectionListItemModel?,
     val query: String,
+    val showMoreInfoInReleaseListItem: Boolean,
+    val sortReleaseGroupListItems: Boolean,
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val eventSink: (CollectionUiEvent) -> Unit,
 ) : CircuitUiState

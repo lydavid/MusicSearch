@@ -78,11 +78,6 @@ internal fun NavHostController.goToEntityScreen(
     this.navigate(route)
 }
 
-internal fun NavHostController.goTo(destination: Destination) {
-    val route = destination.route
-    this.navigate(route)
-}
-
 @Composable
 internal fun NavigationGraph(
     navController: NavHostController,
@@ -107,10 +102,6 @@ internal fun NavigationGraph(
                 id,
                 title,
             )
-        }
-
-        val onCollectionClick: (String, Boolean) -> Unit = { collectionId, _ ->
-            navController.navigate("${Destination.COLLECTIONS.route}/$collectionId")
         }
 
         val searchMusicBrainz: (String, MusicBrainzEntity) -> Unit = { query, type ->
@@ -405,11 +396,6 @@ internal fun NavigationGraph(
                 },
             ),
         ) {
-//            CollectionList(
-//                modifier = modifier,
-//                onCollectionClick = onCollectionClick,
-//                onCreateCollectionClick = onCreateCollectionClick,
-//            )
             val backStack = rememberSaveableBackStack(root = CollectionListScreen)
             val navigator = rememberCircuitNavigator(backStack)
 
@@ -418,23 +404,6 @@ internal fun NavigationGraph(
                     navigator = navigator,
                     backStack = backStack,
                     modifier = modifier,
-//                onNavEvent = { event ->
-//                    when (event) {
-//                        is NavEvent.GoTo -> {
-//                            val screen = event.screen
-//                            if (screen is DetailsScreen) {
-//                                onLookupEntityClick(
-//                                    screen.entity,
-//                                    screen.id,
-//                                    screen.title,
-//                                )
-//                            }
-//                        }
-//
-//                        is NavEvent.Pop -> TODO()
-//                        is NavEvent.ResetRoot -> TODO()
-//                    }
-//                },
                 )
             }
         }
