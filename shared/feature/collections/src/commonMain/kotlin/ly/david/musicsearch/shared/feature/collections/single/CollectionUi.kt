@@ -19,7 +19,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
@@ -177,52 +176,42 @@ internal fun CollectionUi(
                         ),
                     )
                 },
+                requestForMissingCoverArtUrl = { entityId ->
+                    eventSink(
+                        CollectionUiEvent.RequestForMissingCoverArtUrl(
+                            entityId = entityId,
+                            entity = collection.entity,
+                        ),
+                    )
+                },
             )
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalFoundationApi::class,
+    ExperimentalMaterial3Api::class,
+)
 @Composable
 internal fun CollectionPlatformContent(
-    lazyPagingItems: LazyPagingItems<ListItemModel>,
+    lazyPagingItems: androidx.paging.compose.LazyPagingItems<ListItemModel>,
     entity: MusicBrainzEntity,
     snackbarHostState: SnackbarHostState,
     innerPadding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
-    showMoreInfoInReleaseListItem: Boolean = true,
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onDeleteFromCollection: (collectableId: String, name: String) -> Unit = { _, _ -> },
-) {
-    EntitiesByCollection(
-        lazyPagingItems = lazyPagingItems,
-        entity = entity,
-        snackbarHostState = snackbarHostState,
-        modifier = Modifier
-            .padding(innerPadding)
-            .fillMaxSize()
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
-        showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-        onDeleteFromCollection = onDeleteFromCollection,
-        onItemClick = onItemClick,
-    )
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-internal fun EntitiesByCollection(
-    lazyPagingItems: androidx.paging.compose.LazyPagingItems<ListItemModel>,
-    entity: MusicBrainzEntity,
-    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
     showMoreInfoInReleaseListItem: Boolean = true,
     onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
+    requestForMissingCoverArtUrl: (entityId: String) -> Unit = {},
 ) {
     val lazyListState = rememberLazyListState()
 
     ScreenWithPagingLoadingAndError(
-        modifier = modifier,
+        modifier = modifier.padding(innerPadding)
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState,
@@ -400,9 +389,9 @@ internal fun EntitiesByCollection(
                             release = listItemModel,
                             modifier = Modifier.animateItemPlacement(),
                             showMoreInfo = showMoreInfoInReleaseListItem,
-//                            requestForMissingCoverArtUrl = {
-//                                requestForMissingCoverArtUrl(releaseListItemModel.id)
-//                            },
+                            requestForMissingCoverArtUrl = {
+                                requestForMissingCoverArtUrl(listItemModel.id)
+                            },
                         ) {
                             onItemClick(
                                 entity,
@@ -427,13 +416,7 @@ internal fun EntitiesByCollection(
                             releaseGroup = listItemModel,
                             modifier = Modifier.animateItemPlacement(),
                             requestForMissingCoverArtUrl = {
-//                                try {
-//                                    viewModel.getReleaseGroupCoverArtUrlFromNetwork(
-//                                        releaseGroupId = listItemModel.id,
-//                                    )
-//                                } catch (ex: Exception) {
-//                                    Timber.e(ex)
-//                                }
+                                requestForMissingCoverArtUrl(listItemModel.id)
                             },
                         ) {
                             onItemClick(

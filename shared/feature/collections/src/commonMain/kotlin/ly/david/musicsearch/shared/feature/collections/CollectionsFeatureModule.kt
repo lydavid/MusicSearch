@@ -43,6 +43,8 @@ val collectionsFeatureModule = module {
                     getSeriesByEntity = get(),
                     getWorksByEntity = get(),
                     deleteFromCollection = get(),
+                    releaseGroupImageRepository = get(),
+                    releaseImageRepository = get(),
                 )
 
                 else -> null

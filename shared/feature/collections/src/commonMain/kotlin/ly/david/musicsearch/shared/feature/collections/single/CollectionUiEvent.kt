@@ -19,6 +19,11 @@ internal sealed interface CollectionUiEvent : CircuitUiEvent {
 
     data class UnMarkItemForDeletion(val collectableId: String) : CollectionUiEvent
 
+    data class RequestForMissingCoverArtUrl(
+        val entityId: String,
+        val entity: MusicBrainzEntity,
+    ) : CollectionUiEvent
+
     data class DeleteItem(
         val collectableId: String,
         val name: String,

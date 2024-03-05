@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.coverart
+package ly.david.musicsearch.domain.release
 
 /**
  * Logic to retrieve release cover art path.

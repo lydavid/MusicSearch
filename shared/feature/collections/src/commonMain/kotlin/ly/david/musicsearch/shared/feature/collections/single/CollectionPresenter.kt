@@ -29,15 +29,17 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.domain.area.usecase.GetAreasByEntity
 import ly.david.musicsearch.domain.artist.usecase.GetArtistsByEntity
-import ly.david.musicsearch.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.domain.collection.usecase.DeleteFromCollection
+import ly.david.musicsearch.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.domain.event.usecase.GetEventsByEntity
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.instrument.usecase.GetInstrumentsByEntity
 import ly.david.musicsearch.domain.label.usecase.GetLabelsByEntity
 import ly.david.musicsearch.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.domain.recording.usecase.GetRecordingsByEntity
+import ly.david.musicsearch.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.domain.release.usecase.GetReleasesByEntity
+import ly.david.musicsearch.domain.releasegroup.ReleaseGroupImageRepository
 import ly.david.musicsearch.domain.releasegroup.usecase.GetReleaseGroupsByEntity
 import ly.david.musicsearch.domain.series.usecase.GetSeriesByEntity
 import ly.david.musicsearch.domain.work.usecase.GetWorksByEntity
@@ -62,6 +64,8 @@ internal class CollectionPresenter(
     private val getSeriesByEntity: GetSeriesByEntity,
     private val getWorksByEntity: GetWorksByEntity,
     private val deleteFromCollection: DeleteFromCollection,
+    private val releaseGroupImageRepository: ReleaseGroupImageRepository,
+    private val releaseImageRepository: ReleaseImageRepository,
 ) : Presenter<CollectionUiState> {
     @Composable
     override fun present(): CollectionUiState {
@@ -318,6 +322,30 @@ internal class CollectionPresenter(
 
                 is CollectionUiEvent.UpdateSortReleaseGroupListItems -> {
                     appPreferences.setSortReleaseGroupListItems(event.sort)
+                }
+
+                is CollectionUiEvent.RequestForMissingCoverArtUrl -> {
+                    scope.launch {
+                        when (event.entity) {
+                            MusicBrainzEntity.RELEASE -> {
+                                releaseImageRepository.getReleaseCoverArtUrlFromNetwork(
+                                    releaseId = event.entityId,
+                                    thumbnail = true,
+                                )
+                            }
+
+                            MusicBrainzEntity.RELEASE_GROUP -> {
+                                releaseGroupImageRepository.getReleaseGroupCoverArtUrlFromNetwork(
+                                    releaseGroupId = event.entityId,
+                                    thumbnail = true,
+                                )
+                            }
+
+                            else -> {
+                                // no-op
+                            }
+                        }
+                    }
                 }
             }
         }
