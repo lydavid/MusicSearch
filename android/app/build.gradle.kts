@@ -99,7 +99,6 @@ dependencies {
     implementation(projects.ui.commonLegacy)
     implementation(projects.ui.core)
     implementation(projects.ui.image)
-    implementation(libs.accompanist.pager)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
