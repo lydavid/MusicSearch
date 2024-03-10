@@ -39,6 +39,7 @@ kotlin {
 
                 implementation(libs.circuit.foundation)
                 implementation(libs.circuit.overlay)
+                implementation(libs.circuit.retained)
                 implementation(libs.circuitx.overlays)
                 implementation(libs.koin.core)
                 implementation(libs.paging.common)

@@ -26,6 +26,8 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.ui.common.place.PlacesListScreen
+import ly.david.ui.common.release.ReleasesListScreen
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
@@ -53,7 +55,6 @@ internal fun AreaUi(
     val resource = MusicBrainzEntity.AREA
     val strings = LocalStrings.current
     val snackbarHostState = remember { SnackbarHostState() }
-    var selectedTab by rememberSaveable { mutableStateOf(AreaTab.DETAILS) }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val scope = rememberCoroutineScope()
@@ -61,7 +62,7 @@ internal fun AreaUi(
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
     LaunchedEffect(key1 = pagerState.currentPage) {
-        selectedTab = state.tabs[pagerState.currentPage]
+        eventSink(AreaUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
     }
 
 //    LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
@@ -88,7 +89,7 @@ internal fun AreaUi(
                         entityId = entityId,
                     )
                     CopyToClipboardMenuItem(entityId)
-                    if (selectedTab == AreaTab.RELEASES) {
+                    if (state.selectedTab == AreaTab.RELEASES) {
                         ToggleMenuItem(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
@@ -102,7 +103,7 @@ internal fun AreaUi(
 //                        onAddToCollectionMenuClick(resource, areaId)
                     }
                 },
-                showFilterIcon = selectedTab !in listOf(
+                showFilterIcon = state.selectedTab !in listOf(
                     AreaTab.STATS,
                 ),
                 filterText = state.query,
@@ -112,7 +113,7 @@ internal fun AreaUi(
                 additionalBar = {
                     TabsBar(
                         tabsTitle = state.tabs.map { it.tab.getTitle(strings) },
-                        selectedTabIndex = state.tabs.indexOf(selectedTab),
+                        selectedTabIndex = state.tabs.indexOf(state.selectedTab),
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
                 },
@@ -122,18 +123,18 @@ internal fun AreaUi(
 
         val detailsLazyListState = rememberLazyListState()
 
-//        val relationsLazyListState = rememberLazyListState()
+        val relationsLazyListState = rememberLazyListState()
 //        val relationsLazyPagingItems =
 //            rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
 //                .collectAsLazyPagingItems()
 
-//        val releasesLazyListState = rememberLazyListState()
+        val releasesLazyListState = rememberLazyListState()
 //        var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
 //        val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
 //            rememberFlowWithLifecycleStarted(pagedReleasesFlow)
 //                .collectAsLazyPagingItems()
 //
-//        val placesLazyListState = rememberLazyListState()
+        val placesLazyListState = rememberLazyListState()
 //        var pagedPlacesFlow: Flow<PagingData<PlaceListItemModel>> by remember { mutableStateOf(emptyFlow()) }
 //        val placesLazyPagingItems: LazyPagingItems<PlaceListItemModel> =
 //            rememberFlowWithLifecycleStarted(pagedPlacesFlow)
@@ -178,7 +179,25 @@ internal fun AreaUi(
                 }
 
                 AreaTab.RELEASES -> {
-                    Text("Releases")
+                    ReleasesListScreen(
+                        lazyListState = state.releasesLazyListState,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.releasesLazyPagingItems,
+                        showMoreInfo = state.showMoreInfoInReleaseListItem,
+//                        onReleaseClick = onReleaseClick,
+                        requestForMissingCoverArtUrl = { id ->
+                            eventSink(
+                                AreaUiEvent.RequestForMissingCoverArtUrl(
+                                    entityId = id,
+                                    entity = MusicBrainzEntity.RELEASE,
+                                ),
+                            )
+                        },
+                    )
 //                    ReleasesByAreaScreen(
 //                        areaId = areaId,
 //                        filterText = filterText,
@@ -196,7 +215,16 @@ internal fun AreaUi(
                 }
 
                 AreaTab.PLACES -> {
-                    Text("places")
+                    PlacesListScreen(
+                        snackbarHostState = snackbarHostState,
+                        lazyListState = placesLazyListState,
+                        lazyPagingItems = state.placesLazyPagingItems,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+//                        onPlaceClick = onPlaceClick,
+                    )
 //                    PlacesByAreaScreen(
 //                        areaId = areaId,
 //                        filterText = filterText,

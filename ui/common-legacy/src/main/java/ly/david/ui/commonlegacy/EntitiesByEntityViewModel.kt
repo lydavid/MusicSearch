@@ -16,7 +16,7 @@ import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.base.usecase.GetEntitiesByEntity
 
-// TODO: it's the worst thing to not have this abstraction
+// TODO: it's not the worst thing to not have this abstraction
 //  we have to overfill it with properties such as isRemote (only used by *ByCollectionViewModel)
 //  because we need to account for all usecases
 abstract class EntitiesByEntityViewModel<LI : ListItemModel>(

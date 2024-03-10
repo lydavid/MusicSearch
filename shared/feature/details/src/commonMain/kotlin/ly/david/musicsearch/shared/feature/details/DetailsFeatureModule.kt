@@ -24,7 +24,11 @@ val detailsFeatureModule = module {
                                 repository = get(),
                                 incrementLookupHistory = get(),
                                 appPreferences = get(),
+                                getPlacesByEntity = get(),
+                                getReleasesByEntity = get(),
                                 relationsList = get(),
+                                releaseGroupImageRepository = get(),
+                                releaseImageRepository = get(),
                                 logger = get(),
                             )
                         }
