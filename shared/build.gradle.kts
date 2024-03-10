@@ -27,6 +27,7 @@ kotlin {
                 implementation(projects.shared.feature.search)
                 implementation(projects.shared.feature.settings)
                 implementation(projects.shared.feature.licenses)
+                implementation(projects.shared.feature.details)
                 implementation(projects.feature.stats)
                 implementation(projects.strings)
                 implementation(projects.ui.common)

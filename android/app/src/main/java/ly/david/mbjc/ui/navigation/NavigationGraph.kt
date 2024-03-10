@@ -24,7 +24,6 @@ import ly.david.musicsearch.core.models.navigation.toLookupDestination
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.musicsearch.core.models.network.toMusicBrainzEntity
-import ly.david.musicsearch.shared.feature.details.area.AreaScaffold
 import ly.david.musicsearch.shared.feature.details.artist.ArtistScaffold
 import ly.david.musicsearch.shared.feature.details.event.EventScaffold
 import ly.david.musicsearch.shared.feature.details.genre.GenreScaffold
@@ -181,15 +180,28 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.AREA,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-            AreaScaffold(
-                areaId = entityId,
+//            AreaUi(
+//                areaId = entityId,
+//                modifier = modifier,
+//                titleWithDisambiguation = title,
+//                onBack = navController::navigateUp,
+//                onItemClick = onLookupEntityClick,
+//                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
+//                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+//                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
+//            )
+            val backStack = rememberSaveableBackStack(
+                root = DetailsScreen(
+                    entity = MusicBrainzEntity.AREA,
+                    id = entityId,
+                    title = title,
+                ),
+            )
+            val navigator = rememberCircuitNavigator(backStack)
+            NavigableCircuitContent(
+                navigator = navigator,
+                backStack = backStack,
                 modifier = modifier,
-                titleWithDisambiguation = title,
-                onBack = navController::navigateUp,
-                onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
-                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
             )
         }
 

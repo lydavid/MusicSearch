@@ -1,22 +1,18 @@
-package ly.david.musicsearch.shared.feature.details.area.details
+package ly.david.musicsearch.shared.feature.details.area
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import ly.david.musicsearch.core.models.area.AreaScaffoldModel
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.area.AreaScaffoldModel
-import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.listitem.LifeSpanText
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
 internal fun AreaDetailsScreen(
@@ -70,27 +66,3 @@ internal fun AreaDetailsScreen(
         }
     }
 }
-
-// region Previews
-@DefaultPreviews
-@Composable
-internal fun PreviewAreaDetailsScreen() {
-    PreviewTheme {
-        Surface {
-            AreaDetailsScreen(
-                area = AreaScaffoldModel(
-                    id = "88f49821-05a3-3bbc-a24b-bbd6b918c07b",
-                    name = "Czechoslovakia",
-                    type = "Country",
-                    lifeSpan = LifeSpanUiModel(
-                        begin = "1918-10-28",
-                        end = "1992-12-31",
-                        ended = true,
-                    ),
-                    countryCodes = listOf("XC"),
-                ),
-            )
-        }
-    }
-}
-// endregion
