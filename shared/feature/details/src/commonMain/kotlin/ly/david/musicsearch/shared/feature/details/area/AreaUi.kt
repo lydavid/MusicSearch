@@ -52,6 +52,7 @@ internal fun AreaUi(
 //    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
 ) {
     val eventSink = state.eventSink
+    val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
     val resource = MusicBrainzEntity.AREA
     val strings = LocalStrings.current
     val snackbarHostState = remember { SnackbarHostState() }
@@ -93,9 +94,9 @@ internal fun AreaUi(
                         ToggleMenuItem(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
-                            toggled = state.showMoreInfoInReleaseListItem,
+                            toggled = state.releasesByEntityUiState.showMoreInfo,
                             onToggle = {
-                                eventSink(AreaUiEvent.UpdateShowMoreInfoInReleaseListItem(it))
+                                releasesByEntityEventSink(ReleasesByEntityUiEvent.UpdateShowMoreInfoInReleaseListItem(it))
                             },
                         )
                     }
@@ -180,18 +181,18 @@ internal fun AreaUi(
 
                 AreaTab.RELEASES -> {
                     ReleasesListScreen(
-                        lazyListState = state.releasesLazyListState,
+                        lazyListState = releasesLazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.releasesLazyPagingItems,
-                        showMoreInfo = state.showMoreInfoInReleaseListItem,
+                        lazyPagingItems = state.releasesByEntityUiState.releasesLazyPagingItems,
+                        showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
 //                        onReleaseClick = onReleaseClick,
                         requestForMissingCoverArtUrl = { id ->
-                            eventSink(
-                                AreaUiEvent.RequestForMissingCoverArtUrl(
+                            releasesByEntityEventSink(
+                                ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl(
                                     entityId = id,
                                     entity = MusicBrainzEntity.RELEASE,
                                 ),
