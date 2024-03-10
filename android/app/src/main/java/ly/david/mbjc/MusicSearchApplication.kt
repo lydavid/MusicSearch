@@ -4,8 +4,9 @@ import android.app.Application
 import coil.Coil
 import coil.ImageLoaderFactory
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import ly.david.mbjc.di.appDataModule
+import ly.david.mbjc.di.androidAppModule
 import ly.david.musicsearch.shared.di.sharedModule
+import ly.david.musicsearch.shared.feature.details.ViewModelsModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -32,7 +33,7 @@ internal class MusicSearchApplication : Application() {
             modules(
                 sharedModule,
                 // TODO: extract out of :app
-                appDataModule,
+                androidAppModule,
                 ViewModelsModule().module,
             )
         }

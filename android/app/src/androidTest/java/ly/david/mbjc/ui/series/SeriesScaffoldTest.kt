@@ -10,6 +10,7 @@ import ly.david.data.test.fakeInstrument
 import ly.david.data.test.fakeSeries
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.series.SeriesRepository
+import ly.david.musicsearch.shared.feature.details.series.SeriesScaffold
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test

@@ -11,6 +11,7 @@ import ly.david.data.test.elektraMusicGroup
 import ly.david.data.test.underPressure
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.label.LabelRepository
+import ly.david.musicsearch.shared.feature.details.label.LabelScaffold
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test

@@ -9,6 +9,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
 import ly.david.data.test.fakeEvent
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.event.EventRepository
+import ly.david.musicsearch.shared.feature.details.event.EventScaffold
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test

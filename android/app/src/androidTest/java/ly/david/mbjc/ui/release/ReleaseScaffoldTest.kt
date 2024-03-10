@@ -32,6 +32,7 @@ import ly.david.data.test.underPressureRemasterOf
 import ly.david.data.test.underPressureTrack
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.release.ReleaseRepository
+import ly.david.musicsearch.shared.feature.details.release.ReleaseScaffold
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.musicsearch.ui.image.LargeImageTestTag
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag

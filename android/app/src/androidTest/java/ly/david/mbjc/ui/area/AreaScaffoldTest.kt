@@ -21,6 +21,7 @@ import ly.david.data.test.underPressure
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.domain.area.AreaRepository
+import ly.david.musicsearch.shared.feature.details.area.AreaScaffold
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme

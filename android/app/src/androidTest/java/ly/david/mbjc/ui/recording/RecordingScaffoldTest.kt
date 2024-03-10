@@ -17,6 +17,7 @@ import ly.david.data.test.underPressure
 import ly.david.data.test.underPressureRecording
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.recording.RecordingRepository
+import ly.david.musicsearch.shared.feature.details.recording.RecordingScaffold
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
