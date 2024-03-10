@@ -5,6 +5,7 @@ import app.cash.paging.compose.LazyPagingItems
 import com.slack.circuit.runtime.CircuitUiState
 import ly.david.musicsearch.core.models.area.AreaScaffoldModel
 import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
+import ly.david.ui.common.release.ReleasesByEntityUiState
 
 @Stable
 internal data class AreaUiState(

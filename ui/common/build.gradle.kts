@@ -18,6 +18,7 @@ kotlin {
                 api(projects.core.models)
                 implementation(projects.data.coverart)
                 implementation(projects.data.musicbrainz)
+                implementation(projects.core.preferences)
                 implementation(projects.domain)
                 implementation(projects.strings)
                 implementation(projects.ui.core)
@@ -30,6 +31,7 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.preview)
 
+                implementation(libs.circuit.foundation)
                 implementation(libs.koin.annotations)
                 implementation(libs.koin.core)
                 implementation(libs.lyricist.library)

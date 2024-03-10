@@ -1,13 +1,13 @@
 package ly.david.ui.common
 
 import ly.david.ui.common.paging.RelationsList
+import ly.david.ui.common.release.ReleasesByEntityPresenter
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-// @Module
-// @ComponentScan
-// class CommonUiModule
-
 val commonUiModule = module {
+    singleOf(::ReleasesByEntityPresenter)
+
     factory {
         RelationsList(get())
     }

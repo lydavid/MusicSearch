@@ -27,6 +27,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.place.PlacesListScreen
+import ly.david.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.ui.common.release.ReleasesListScreen
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
@@ -130,16 +131,7 @@ internal fun AreaUi(
 //                .collectAsLazyPagingItems()
 
         val releasesLazyListState = rememberLazyListState()
-//        var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
-//        val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
-//            rememberFlowWithLifecycleStarted(pagedReleasesFlow)
-//                .collectAsLazyPagingItems()
-//
         val placesLazyListState = rememberLazyListState()
-//        var pagedPlacesFlow: Flow<PagingData<PlaceListItemModel>> by remember { mutableStateOf(emptyFlow()) }
-//        val placesLazyPagingItems: LazyPagingItems<PlaceListItemModel> =
-//            rememberFlowWithLifecycleStarted(pagedPlacesFlow)
-//                .collectAsLazyPagingItems()
 
         HorizontalPager(
             state = pagerState,
@@ -187,14 +179,13 @@ internal fun AreaUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.releasesByEntityUiState.releasesLazyPagingItems,
+                        lazyPagingItems = state.releasesByEntityUiState.lazyPagingItems,
                         showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
 //                        onReleaseClick = onReleaseClick,
                         requestForMissingCoverArtUrl = { id ->
                             releasesByEntityEventSink(
                                 ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl(
                                     entityId = id,
-                                    entity = MusicBrainzEntity.RELEASE,
                                 ),
                             )
                         },
