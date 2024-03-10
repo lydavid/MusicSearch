@@ -54,7 +54,7 @@ internal class AreaPresenter(
         var selectedTab by rememberSaveable { mutableStateOf(AreaTab.DETAILS) }
         var placeListItems: Flow<PagingData<PlaceListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val releasesByEntityUiState = releasesByEntityPresenter.present()
-        val releasesByEntityEventSink = releasesByEntityUiState.eventSink
+        val releasesEventSink = releasesByEntityUiState.eventSink
 
         LaunchedEffect(Unit) {
             try {
@@ -95,13 +95,13 @@ internal class AreaPresenter(
 
                 AreaTab.RELATIONSHIPS -> {}
                 AreaTab.RELEASES -> {
-                    releasesByEntityEventSink(
+                    releasesEventSink(
                         ReleasesByEntityUiEvent.GetReleases(
-                            screen.id,
-                            screen.entity,
+                            byEntityId = screen.id,
+                            byEntity = screen.entity,
                         ),
                     )
-                    releasesByEntityEventSink(ReleasesByEntityUiEvent.UpdateQuery(query))
+                    releasesEventSink(ReleasesByEntityUiEvent.UpdateQuery(query))
                 }
 
                 AreaTab.PLACES -> {

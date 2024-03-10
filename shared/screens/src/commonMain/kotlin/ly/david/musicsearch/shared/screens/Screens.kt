@@ -28,12 +28,6 @@ data class DetailsScreen(
 ) : Screen
 
 @CommonParcelize
-data class ReleasesByEntityScreen(
-    val entity: MusicBrainzEntity,
-    val id: String,
-) : Screen
-
-@CommonParcelize
 data object SettingsScreen : Screen
 
 @CommonParcelize

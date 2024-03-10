@@ -45,6 +45,8 @@ import ly.david.musicsearch.domain.series.usecase.GetSeriesByEntity
 import ly.david.musicsearch.domain.work.usecase.GetWorksByEntity
 import ly.david.musicsearch.shared.screens.CollectionScreen
 import ly.david.musicsearch.shared.screens.DetailsScreen
+import ly.david.ui.common.release.ReleasesByEntityPresenter
+import ly.david.ui.common.release.ReleasesByEntityUiEvent
 
 internal class CollectionPresenter(
     private val screen: CollectionScreen,
@@ -59,7 +61,7 @@ internal class CollectionPresenter(
     private val getLabelsByEntity: GetLabelsByEntity,
     private val getPlacesByEntity: GetPlacesByEntity,
     private val getRecordingsByEntity: GetRecordingsByEntity,
-    private val getReleasesByEntity: GetReleasesByEntity,
+    private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val getReleaseGroupsByEntity: GetReleaseGroupsByEntity,
     private val getSeriesByEntity: GetSeriesByEntity,
     private val getWorksByEntity: GetWorksByEntity,
@@ -77,9 +79,10 @@ internal class CollectionPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsState(true)
         val sortReleaseGroupListItems by appPreferences.sortReleaseGroupListItems.collectAsState(true)
         var collectableItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val releasesByEntityUiState = releasesByEntityPresenter.present()
+        val releasesByEntityEventSink = releasesByEntityUiState.eventSink
 
         LaunchedEffect(Unit) {
             val nonNullCollection = getCollectionUseCase(collectionId)
@@ -100,11 +103,10 @@ internal class CollectionPresenter(
 
         LaunchedEffect(
             key1 = query,
-            key2 = sortReleaseGroupListItems,
         ) {
-            collectableItems = when (collection?.entity) {
+            when (collection?.entity) {
                 MusicBrainzEntity.AREA -> {
-                    getAreasByEntity(
+                    collectableItems = getAreasByEntity(
                         entityId = collectionId,
                         entity = MusicBrainzEntity.COLLECTION,
                         listFilters = ListFilters(
@@ -119,7 +121,7 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.ARTIST -> {
-                    getArtistsByEntity(
+                    collectableItems = getArtistsByEntity(
                         entityId = collectionId,
                         entity = MusicBrainzEntity.COLLECTION,
                         listFilters = ListFilters(
@@ -134,7 +136,7 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.EVENT -> {
-                    getEventsByEntity(
+                    collectableItems = getEventsByEntity(
                         entityId = collectionId,
                         entity = MusicBrainzEntity.COLLECTION,
                         listFilters = ListFilters(
@@ -149,7 +151,7 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.INSTRUMENT -> {
-                    getInstrumentsByEntity(
+                    collectableItems = getInstrumentsByEntity(
                         entityId = collectionId,
                         entity = MusicBrainzEntity.COLLECTION,
                         listFilters = ListFilters(
@@ -164,7 +166,7 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.LABEL -> {
-                    getLabelsByEntity(
+                    collectableItems = getLabelsByEntity(
                         entityId = collectionId,
                         entity = MusicBrainzEntity.COLLECTION,
                         listFilters = ListFilters(
@@ -179,7 +181,7 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.PLACE -> {
-                    getPlacesByEntity(
+                    collectableItems = getPlacesByEntity(
                         entityId = collectionId,
                         entity = MusicBrainzEntity.COLLECTION,
                         listFilters = ListFilters(
@@ -194,7 +196,7 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.RECORDING -> {
-                    getRecordingsByEntity(
+                    collectableItems = getRecordingsByEntity(
                         entityId = collectionId,
                         entity = MusicBrainzEntity.COLLECTION,
                         listFilters = ListFilters(
@@ -209,22 +211,17 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.RELEASE -> {
-                    getReleasesByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
-                            isRemote = isRemote,
+                    releasesByEntityEventSink(
+                        ReleasesByEntityUiEvent.GetReleases(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    releasesByEntityEventSink(ReleasesByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.RELEASE_GROUP -> {
-                    getReleaseGroupsByEntity(
+                    collectableItems = getReleaseGroupsByEntity(
                         entityId = collectionId,
                         entity = MusicBrainzEntity.COLLECTION,
                         listFilters = ListFilters(
@@ -240,7 +237,7 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.SERIES -> {
-                    getSeriesByEntity(
+                    collectableItems = getSeriesByEntity(
                         entityId = collectionId,
                         entity = MusicBrainzEntity.COLLECTION,
                         listFilters = ListFilters(
@@ -255,7 +252,7 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.WORK -> {
-                    getWorksByEntity(
+                    collectableItems = getWorksByEntity(
                         entityId = collectionId,
                         entity = MusicBrainzEntity.COLLECTION,
                         listFilters = ListFilters(
@@ -274,7 +271,9 @@ internal class CollectionPresenter(
                 MusicBrainzEntity.URL,
                 -> error("${collection?.entity} by collection not supported")
 
-                null -> emptyFlow()
+                null -> {
+                    // no-op
+                }
             }
         }
 
@@ -316,14 +315,11 @@ internal class CollectionPresenter(
                     query = event.query
                 }
 
-                is CollectionUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
-                    appPreferences.setShowMoreInfoInReleaseListItem(event.showMore)
-                }
-
                 is CollectionUiEvent.UpdateSortReleaseGroupListItems -> {
                     appPreferences.setSortReleaseGroupListItems(event.sort)
                 }
 
+                // TODO: remove once we have ReleaseGroupsByEntityPresenter
                 is CollectionUiEvent.RequestForMissingCoverArtUrl -> {
                     scope.launch {
                         when (event.entity) {
@@ -354,9 +350,9 @@ internal class CollectionPresenter(
             collection = collection,
             actionableResult = actionableResult,
             query = query,
-            showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
             sortReleaseGroupListItems = sortReleaseGroupListItems,
             lazyPagingItems = collectableItems.collectAsLazyPagingItems(),
+            releasesByEntityUiState = releasesByEntityUiState,
             eventSink = ::eventSink,
         )
     }
