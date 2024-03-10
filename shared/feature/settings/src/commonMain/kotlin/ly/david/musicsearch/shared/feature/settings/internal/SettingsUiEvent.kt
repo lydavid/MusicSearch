@@ -10,8 +10,5 @@ internal sealed interface SettingsUiEvent : CircuitUiEvent {
     data class UpdateShowMoreInfoInReleaseListItem(val show: Boolean) : SettingsUiEvent
     data class UpdateSortReleaseGroupListItems(val sort: Boolean) : SettingsUiEvent
     data class GoToScreen(val screen: Screen) : SettingsUiEvent
-    data object Login : SettingsUiEvent
     data object Logout : SettingsUiEvent
-    data object DismissDialog : SettingsUiEvent
-    data class SubmitAuthCode(val authCode: String) : SettingsUiEvent
 }

@@ -43,6 +43,7 @@ internal fun Settings(
 ) {
     val strings = LocalStrings.current
     val eventSink = state.eventSink
+    val loginEventSink = state.loginState.eventSink
 
     Scaffold(
         modifier = modifier,
@@ -58,7 +59,7 @@ internal fun Settings(
             username = state.username,
             showLogin = state.accessToken.isNullOrEmpty(),
             onLoginClick = {
-                eventSink(SettingsUiEvent.Login)
+                loginEventSink(LoginUiEvent.StartLogin)
             },
             onLogoutClick = {
                 eventSink(SettingsUiEvent.Logout)

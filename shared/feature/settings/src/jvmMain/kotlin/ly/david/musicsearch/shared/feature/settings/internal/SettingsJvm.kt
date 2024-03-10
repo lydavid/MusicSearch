@@ -33,15 +33,15 @@ internal actual fun Settings(
     state: SettingsUiState,
     modifier: Modifier,
 ) {
-    val eventSink = state.eventSink
+    val loginEventSink = state.loginState.eventSink
 
-    if (state.showDialog) {
+    if (state.loginState.showDialog) {
         AuthorizationDialog(
             onDismiss = {
-                eventSink(SettingsUiEvent.DismissDialog)
+                loginEventSink(LoginUiEvent.DismissDialog)
             },
             onSubmit = { code ->
-                eventSink(SettingsUiEvent.SubmitAuthCode(code))
+                loginEventSink(LoginUiEvent.SubmitAuthCode(code))
             },
         )
     }

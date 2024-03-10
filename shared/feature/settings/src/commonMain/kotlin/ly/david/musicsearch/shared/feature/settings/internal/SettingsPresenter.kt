@@ -29,7 +29,6 @@ internal class SettingsPresenter(
 
         val scope = rememberCoroutineScope()
         val loginUiState = loginPresenter.present()
-        val loginEventSink = loginUiState.eventSink
 
         fun eventSink(event: SettingsUiEvent) {
             when (event) {
@@ -53,22 +52,10 @@ internal class SettingsPresenter(
                     navigator.goTo(event.screen)
                 }
 
-                is SettingsUiEvent.Login -> {
-                    loginEventSink(LoginUiEvent.StartLogin)
-                }
-
                 is SettingsUiEvent.Logout -> {
                     scope.launch {
                         logout()
                     }
-                }
-
-                is SettingsUiEvent.DismissDialog -> {
-                    loginEventSink(LoginUiEvent.DismissDialog)
-                }
-
-                is SettingsUiEvent.SubmitAuthCode -> {
-                    loginEventSink(LoginUiEvent.SubmitAuthCode(event.authCode))
                 }
             }
         }
@@ -80,7 +67,7 @@ internal class SettingsPresenter(
             useMaterialYou = useMaterialYou,
             sortReleaseGroupListItems = sortReleaseGroupListItems,
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-            showDialog = loginUiState.showDialog,
+            loginState = loginUiState,
             eventSink = ::eventSink,
         )
     }

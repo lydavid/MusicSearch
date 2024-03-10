@@ -10,6 +10,6 @@ internal data class SettingsUiState(
     val useMaterialYou: Boolean,
     val showMoreInfoInReleaseListItem: Boolean = true,
     val sortReleaseGroupListItems: Boolean = false,
-    val showDialog: Boolean = false,
+    val loginState: LoginUiState,
     val eventSink: (SettingsUiEvent) -> Unit,
 ) : CircuitUiState
