@@ -94,8 +94,6 @@ internal class ReleasesByEntityPresenter(
                     query = query,
                 ),
             )
-                .distinctUntilChanged()
-                .cachedIn(scope)
         }
 
         fun eventSink(event: ReleasesByEntityUiEvent) {
