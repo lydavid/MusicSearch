@@ -26,6 +26,8 @@ import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.shared.screens.DetailsScreen
 import ly.david.ui.common.paging.RelationsList
+import ly.david.ui.common.place.PlacesByEntityPresenter
+import ly.david.ui.common.place.PlacesByEntityUiEvent
 import ly.david.ui.common.release.ReleasesByEntityPresenter
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
 
@@ -35,7 +37,7 @@ internal class AreaPresenter(
     private val repository: AreaRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
-    private val getPlacesByEntity: GetPlacesByEntity,
+    private val placesByEntityPresenter: PlacesByEntityPresenter,
     private val relationsList: RelationsList,
     private val logger: Logger,
 ) : Presenter<AreaUiState> {
@@ -52,9 +54,10 @@ internal class AreaPresenter(
             mutableStateOf(AreaTab.entries.filter { it != AreaTab.RELEASES })
         }
         var selectedTab by rememberSaveable { mutableStateOf(AreaTab.DETAILS) }
-        var placeListItems: Flow<PagingData<PlaceListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
+        val placesByEntityUiState = placesByEntityPresenter.present()
+        val placesEventSink = placesByEntityUiState.eventSink
 
         LaunchedEffect(Unit) {
             try {
@@ -105,13 +108,13 @@ internal class AreaPresenter(
                 }
 
                 AreaTab.PLACES -> {
-                    placeListItems = getPlacesByEntity(
-                        entityId = screen.id,
-                        entity = screen.entity,
-                        listFilters = ListFilters(
-                            query = query,
+                    placesEventSink(
+                        PlacesByEntityUiEvent.GetPlaces(
+                            byEntityId = screen.id,
+                            byEntity = screen.entity,
                         ),
                     )
+                    placesEventSink(PlacesByEntityUiEvent.UpdateQuery(query))
                 }
 
                 AreaTab.STATS -> {}
@@ -141,7 +144,7 @@ internal class AreaPresenter(
             tabs = tabs,
             selectedTab = selectedTab,
             query = query,
-            placesLazyPagingItems = placeListItems.collectAsLazyPagingItems(),
+            placesByEntityUiState = placesByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             eventSink = ::eventSink,
         )

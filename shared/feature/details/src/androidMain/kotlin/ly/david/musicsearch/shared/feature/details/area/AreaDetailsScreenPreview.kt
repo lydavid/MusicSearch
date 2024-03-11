@@ -1,15 +1,14 @@
-package ly.david.musicsearch.shared.feature.details.area.details
+package ly.david.musicsearch.shared.feature.details.area
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.core.models.area.AreaScaffoldModel
-import ly.david.musicsearch.shared.feature.details.area.AreaDetailsScreen
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
 // region Previews
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewAreaDetailsScreen() {
     PreviewTheme {

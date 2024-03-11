@@ -1,4 +1,4 @@
-package ly.david.ui.common.release
+package ly.david.ui.common.track
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth

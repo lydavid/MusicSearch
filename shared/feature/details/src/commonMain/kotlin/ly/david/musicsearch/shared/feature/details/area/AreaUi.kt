@@ -97,7 +97,9 @@ internal fun AreaUi(
                             toggleOffText = strings.showLessInfo,
                             toggled = state.releasesByEntityUiState.showMoreInfo,
                             onToggle = {
-                                releasesByEntityEventSink(ReleasesByEntityUiEvent.UpdateShowMoreInfoInReleaseListItem(it))
+                                releasesByEntityEventSink(
+                                    ReleasesByEntityUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
+                                )
                             },
                         )
                     }
@@ -190,46 +192,19 @@ internal fun AreaUi(
                             )
                         },
                     )
-//                    ReleasesByAreaScreen(
-//                        areaId = areaId,
-//                        filterText = filterText,
-//                        showMoreInfo = showMoreInfoInReleaseListItem,
-//                        snackbarHostState = snackbarHostState,
-//                        releasesLazyListState = releasesLazyListState,
-//                        releasesLazyPagingItems = releasesLazyPagingItems,
-//                        modifier = Modifier
-//                            .padding(innerPadding)
-//                            .fillMaxSize()
-//                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-//                        onReleaseClick = onItemClick,
-//                        onPagedReleasesFlowChange = { pagedReleasesFlow = it },
-//                    )
                 }
 
                 AreaTab.PLACES -> {
                     PlacesListScreen(
                         snackbarHostState = snackbarHostState,
                         lazyListState = placesLazyListState,
-                        lazyPagingItems = state.placesLazyPagingItems,
+                        lazyPagingItems = state.placesByEntityUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
 //                        onPlaceClick = onPlaceClick,
                     )
-//                    PlacesByAreaScreen(
-//                        areaId = areaId,
-//                        filterText = filterText,
-//                        placesLazyListState = placesLazyListState,
-//                        modifier = Modifier
-//                            .padding(innerPadding)
-//                            .fillMaxSize()
-//                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-//                        snackbarHostState = snackbarHostState,
-//                        placesLazyPagingItems = placesLazyPagingItems,
-//                        onPagedPlacesFlowChange = { pagedPlacesFlow = it },
-//                        onPlaceClick = onItemClick,
-//                    )
                 }
 
                 AreaTab.STATS -> {
