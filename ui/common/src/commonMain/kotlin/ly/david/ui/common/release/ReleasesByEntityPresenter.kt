@@ -15,6 +15,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -26,6 +27,7 @@ class ReleasesByEntityPresenter(
     private val getReleasesByEntity: GetReleasesByEntity,
     private val appPreferences: AppPreferences,
     private val releaseImageRepository: ReleaseImageRepository,
+    private val logger: Logger,
 ) : Presenter<ReleasesByEntityUiState> {
     @Composable
     override fun present(): ReleasesByEntityUiState {
@@ -57,10 +59,14 @@ class ReleasesByEntityPresenter(
             when (event) {
                 is ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl -> {
                     scope.launch {
-                        releaseImageRepository.getReleaseCoverArtUrlFromNetwork(
-                            releaseId = event.entityId,
-                            thumbnail = true,
-                        )
+                        try {
+                            releaseImageRepository.getReleaseCoverArtUrlFromNetwork(
+                                releaseId = event.entityId,
+                                thumbnail = true,
+                            )
+                        } catch (ex: Exception) {
+                            logger.e(ex)
+                        }
                     }
                 }
 
