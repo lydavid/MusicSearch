@@ -25,7 +25,7 @@ val detailsFeatureModule = module {
                                 incrementLookupHistory = get(),
                                 placesByEntityPresenter = get(),
                                 releasesByEntityPresenter = get(),
-                                relationsList = get(),
+                                relationsPresenter = get(),
                                 logger = get(),
                             )
                         }

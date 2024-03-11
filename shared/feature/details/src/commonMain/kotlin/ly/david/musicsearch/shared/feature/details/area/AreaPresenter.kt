@@ -7,27 +7,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import app.cash.paging.PagingData
-import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.area.AreaScaffoldModel
 import ly.david.musicsearch.core.models.area.showReleases
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
-import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
-import ly.david.musicsearch.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.shared.screens.DetailsScreen
-import ly.david.ui.common.paging.RelationsList
 import ly.david.ui.common.place.PlacesByEntityPresenter
 import ly.david.ui.common.place.PlacesByEntityUiEvent
+import ly.david.ui.common.relation.RelationsPresenter
+import ly.david.ui.common.relation.RelationsUiEvent
 import ly.david.ui.common.release.ReleasesByEntityPresenter
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
 
@@ -38,7 +32,7 @@ internal class AreaPresenter(
     private val incrementLookupHistory: IncrementLookupHistory,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val placesByEntityPresenter: PlacesByEntityPresenter,
-    private val relationsList: RelationsList,
+    private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
 ) : Presenter<AreaUiState> {
 //    IRelationsList by relationsList {
@@ -58,6 +52,8 @@ internal class AreaPresenter(
         val releasesEventSink = releasesByEntityUiState.eventSink
         val placesByEntityUiState = placesByEntityPresenter.present()
         val placesEventSink = placesByEntityUiState.eventSink
+        val relationsUiState = relationsPresenter.present()
+        val relationsEventSink = relationsUiState.eventSink
 
         LaunchedEffect(Unit) {
             try {
@@ -87,6 +83,7 @@ internal class AreaPresenter(
             }
         }
 
+        // TODO: good candidate for extraction
         LaunchedEffect(
             key1 = query,
             key2 = selectedTab,
@@ -96,7 +93,15 @@ internal class AreaPresenter(
                     // Loaded above
                 }
 
-                AreaTab.RELATIONSHIPS -> {}
+                AreaTab.RELATIONSHIPS -> {
+                    relationsEventSink(
+                        RelationsUiEvent.GetRelations(
+                            byEntityId = screen.id,
+                            byEntity = screen.entity,
+                        ),
+                    )
+                    relationsEventSink(RelationsUiEvent.UpdateQuery(query))
+                }
                 AreaTab.RELEASES -> {
                     releasesEventSink(
                         ReleasesByEntityUiEvent.GetReleases(
@@ -146,6 +151,7 @@ internal class AreaPresenter(
             query = query,
             placesByEntityUiState = placesByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
+            relationsUiState = relationsUiState,
             eventSink = ::eventSink,
         )
     }

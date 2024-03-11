@@ -27,6 +27,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.place.PlacesListScreen
+import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.ui.common.release.ReleasesListScreen
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
@@ -159,18 +160,16 @@ internal fun AreaUi(
                 }
 
                 AreaTab.RELATIONSHIPS -> {
-                    Text("Rel")
-//                    viewModel.updateQuery(filterText)
-//                    RelationsListScreen(
-//                        lazyPagingItems = relationsLazyPagingItems,
-//                        modifier = Modifier
-//                            .padding(innerPadding)
-//                            .fillMaxSize()
-//                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-//                        lazyListState = relationsLazyListState,
-//                        snackbarHostState = snackbarHostState,
+                    RelationsListScreen(
+                        lazyPagingItems = state.relationsUiState.lazyPagingItems,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        lazyListState = relationsLazyListState,
+                        snackbarHostState = snackbarHostState,
 //                        onItemClick = onItemClick,
-//                    )
+                    )
                 }
 
                 AreaTab.RELEASES -> {
