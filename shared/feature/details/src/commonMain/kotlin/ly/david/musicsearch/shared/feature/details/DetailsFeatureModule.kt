@@ -26,7 +26,6 @@ val detailsFeatureModule = module {
                                 placesByEntityPresenter = get(),
                                 releasesByEntityPresenter = get(),
                                 relationsPresenter = get(),
-//                                areaStatsPresenter = get(),
                                 logger = get(),
                             )
                         }

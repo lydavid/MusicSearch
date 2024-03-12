@@ -3,9 +3,7 @@ package ly.david.musicsearch.feature.stats.area
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
@@ -15,15 +13,10 @@ import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTy
 import ly.david.musicsearch.feature.stats.PlaceStats
 import ly.david.musicsearch.feature.stats.ReleaseStats
 import ly.david.musicsearch.feature.stats.Stats
+import ly.david.musicsearch.feature.stats.internal.StatsUiState
 import ly.david.ui.common.screen.AreaStatsScreen
-import ly.david.ui.common.topappbar.Tab
 
-data class StatsUiState(
-    val stats: Stats,
-    val tabs: ImmutableList<Tab>,
-) : CircuitUiState
-
-class AreaStatsPresenter(
+internal class AreaStatsPresenter(
     private val screen: AreaStatsScreen,
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,

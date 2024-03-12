@@ -33,7 +33,6 @@ internal class AreaPresenter(
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val placesByEntityPresenter: PlacesByEntityPresenter,
     private val relationsPresenter: RelationsPresenter,
-//    private val areaStatsPresenter: AreaStatsPresenter,
     private val logger: Logger,
 ) : Presenter<AreaUiState> {
 
@@ -55,8 +54,6 @@ internal class AreaPresenter(
         val placesEventSink = placesByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
-//        val statsUiState = areaStatsPresenter.present()
-//        val statsEventSink = statsUiState.eventSink
 
         LaunchedEffect(Unit) {
             try {
@@ -98,6 +95,7 @@ internal class AreaPresenter(
                 }
 
                 AreaTab.RELATIONSHIPS -> {
+                    // TODO: consider handling these like StatsScreen = more separation of concerns
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
@@ -128,8 +126,7 @@ internal class AreaPresenter(
                 }
 
                 AreaTab.STATS -> {
-//                    statsEventSink(StatsUiEvent.GetStats(screen.id))
-//                    navigator.goTo(AreaStatsScreen(screen.id))
+                    // Handled in UI
                 }
             }
         }
@@ -160,7 +157,6 @@ internal class AreaPresenter(
             placesByEntityUiState = placesByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
-//            statsUiState = statsUiState,
             eventSink = ::eventSink,
         )
     }

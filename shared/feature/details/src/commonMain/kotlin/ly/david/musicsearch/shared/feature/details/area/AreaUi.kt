@@ -22,7 +22,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.slack.circuit.foundation.CircuitContent
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
@@ -204,14 +203,6 @@ internal fun AreaUi(
                 }
 
                 AreaTab.STATS -> {
-//                    StatsScreen(
-//                        tabs = state.tabs.map { it.tab }.toImmutableList(),
-//                        stats = state.statsUiState.stats,
-//                        modifier = Modifier
-//                            .padding(innerPadding)
-//                            .fillMaxSize()
-//                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-//                    )
                     CircuitContent(
                         AreaStatsScreen(
                             id = state.area?.id.orEmpty(),

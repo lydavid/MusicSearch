@@ -4,14 +4,14 @@ import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.feature.stats.area.AreaStatsPresenter
-import ly.david.musicsearch.feature.stats.area.StatsUiState
+import ly.david.musicsearch.feature.stats.internal.StatsUiState
 import ly.david.ui.common.screen.AreaStatsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val statsFeatureModule = module {
     single(named(AreaStatsScreen::class.java.name)) {
-        Presenter.Factory { screen, navigator, _ ->
+        Presenter.Factory { screen, _, _ ->
             when (screen) {
                 is AreaStatsScreen -> {
                     AreaStatsPresenter(
@@ -32,7 +32,7 @@ val statsFeatureModule = module {
             when (screen) {
                 is AreaStatsScreen -> {
                     ui<StatsUiState> { state, modifier ->
-                        StatsScreen(
+                        StatsUi(
                             state = state,
                             modifier = modifier,
                         )

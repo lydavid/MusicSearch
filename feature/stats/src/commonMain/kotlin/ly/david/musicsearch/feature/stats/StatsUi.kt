@@ -4,7 +4,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
-import ly.david.musicsearch.feature.stats.area.StatsUiState
+import ly.david.musicsearch.feature.stats.internal.StatsUiState
 import ly.david.musicsearch.feature.stats.internal.addEntitiesStatsSection
 import ly.david.musicsearch.feature.stats.internal.addRelationshipsSection
 import ly.david.musicsearch.feature.stats.internal.addReleaseGroupsSection
@@ -12,11 +12,11 @@ import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.Tab
 
 @Composable
-fun StatsScreen(
+internal fun StatsUi(
     state: StatsUiState,
     modifier: Modifier = Modifier,
 ) {
-    StatsScreen(
+    StatsUi(
         tabs = state.tabs,
         stats = state.stats,
         modifier = modifier,
@@ -27,7 +27,7 @@ fun StatsScreen(
  * Display all [stats] ordered/shown based on [tabs].
  */
 @Composable
-fun StatsScreen(
+fun StatsUi(
     tabs: ImmutableList<Tab>,
     stats: Stats,
     modifier: Modifier = Modifier,
