@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   android: circleci/android@2.5.0
-  codecov: codecov/codecov@3.2.4
+  codecov: codecov/codecov@3.3.0
 
 # TODO: Running into https://issuetracker.google.com/issues/235259765 sometimes
 
