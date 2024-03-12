@@ -1,7 +1,9 @@
-package ly.david.musicsearch.shared.screens
+package ly.david.ui.common.screen
 
 import com.slack.circuit.runtime.screen.Screen
+import kotlinx.collections.immutable.ImmutableList
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.ui.common.topappbar.Tab
 
 @CommonParcelize
 data class SearchScreen(
@@ -25,6 +27,12 @@ data class DetailsScreen(
     val entity: MusicBrainzEntity,
     val id: String,
     val title: String?,
+) : Screen
+
+@CommonParcelize
+data class AreaStatsScreen(
+    val id: String,
+    val tabs: List<Tab>,
 ) : Screen
 
 @CommonParcelize

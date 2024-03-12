@@ -8,7 +8,7 @@ import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.overlay.ContentWithOverlays
 import ly.david.musicsearch.shared.di.sharedModule
-import ly.david.musicsearch.shared.screens.CollectionListScreen
+import ly.david.ui.common.screen.SearchScreen
 import ly.david.ui.core.theme.BaseTheme
 import org.koin.core.context.startKoin
 
@@ -32,7 +32,7 @@ fun main() = application {
             content = {
                 ContentWithOverlays {
                     CircuitCompositionLocals(circuit) {
-                        val backStack = rememberSaveableBackStack(root = CollectionListScreen)
+                        val backStack = rememberSaveableBackStack(root = SearchScreen())
                         val navigator = rememberCircuitNavigator(
                             backStack,
                             onRootPop = {},

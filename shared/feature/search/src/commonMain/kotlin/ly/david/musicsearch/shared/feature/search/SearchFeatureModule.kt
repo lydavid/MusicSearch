@@ -6,7 +6,7 @@ import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.shared.feature.search.internal.SearchPresenter
 import ly.david.musicsearch.shared.feature.search.internal.Search
 import ly.david.musicsearch.shared.feature.search.internal.SearchUiState
-import ly.david.musicsearch.shared.screens.SearchScreen
+import ly.david.ui.common.screen.SearchScreen
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

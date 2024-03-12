@@ -16,6 +16,8 @@ kotlin {
             dependencies {
                 implementation(projects.core.models)
                 implementation(projects.ui.common)
+                implementation(projects.domain)
+                implementation(projects.data.database)
                 implementation(projects.ui.core)
                 implementation(projects.strings)
                 implementation(compose.foundation)
@@ -23,6 +25,8 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.preview)
                 implementation(libs.kotlinx.collections.immutable)
+                implementation(libs.circuit.foundation)
+                implementation(libs.koin.core)
             }
         }
         val androidUnitTest by getting {

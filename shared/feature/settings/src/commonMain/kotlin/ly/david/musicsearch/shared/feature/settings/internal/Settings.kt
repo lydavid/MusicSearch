@@ -15,9 +15,9 @@ import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
-import ly.david.musicsearch.shared.screens.LicensesScreen
-import ly.david.musicsearch.shared.screens.NowPlayingHistoryScreen
-import ly.david.musicsearch.shared.screens.SpotifyPlayingScreen
+import ly.david.ui.common.screen.LicensesScreen
+import ly.david.ui.common.screen.NowPlayingHistoryScreen
+import ly.david.ui.common.screen.SpotifyPlayingScreen
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.component.ClickableItem

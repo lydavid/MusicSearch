@@ -17,7 +17,7 @@ import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
-import ly.david.musicsearch.shared.screens.DetailsScreen
+import ly.david.ui.common.screen.DetailsScreen
 import ly.david.ui.common.place.PlacesByEntityPresenter
 import ly.david.ui.common.place.PlacesByEntityUiEvent
 import ly.david.ui.common.relation.RelationsPresenter
@@ -33,9 +33,9 @@ internal class AreaPresenter(
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val placesByEntityPresenter: PlacesByEntityPresenter,
     private val relationsPresenter: RelationsPresenter,
+//    private val areaStatsPresenter: AreaStatsPresenter,
     private val logger: Logger,
 ) : Presenter<AreaUiState> {
-//    IRelationsList by relationsList {
 
     @Composable
     override fun present(): AreaUiState {
@@ -48,12 +48,15 @@ internal class AreaPresenter(
             mutableStateOf(AreaTab.entries.filter { it != AreaTab.RELEASES })
         }
         var selectedTab by rememberSaveable { mutableStateOf(AreaTab.DETAILS) }
+
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
         val placesByEntityUiState = placesByEntityPresenter.present()
         val placesEventSink = placesByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
+//        val statsUiState = areaStatsPresenter.present()
+//        val statsEventSink = statsUiState.eventSink
 
         LaunchedEffect(Unit) {
             try {
@@ -84,6 +87,7 @@ internal class AreaPresenter(
         }
 
         // TODO: good candidate for extraction
+        // TODO: handle force refresh
         LaunchedEffect(
             key1 = query,
             key2 = selectedTab,
@@ -102,6 +106,7 @@ internal class AreaPresenter(
                     )
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
                 }
+
                 AreaTab.RELEASES -> {
                     releasesEventSink(
                         ReleasesByEntityUiEvent.GetReleases(
@@ -122,7 +127,10 @@ internal class AreaPresenter(
                     placesEventSink(PlacesByEntityUiEvent.UpdateQuery(query))
                 }
 
-                AreaTab.STATS -> {}
+                AreaTab.STATS -> {
+//                    statsEventSink(StatsUiEvent.GetStats(screen.id))
+//                    navigator.goTo(AreaStatsScreen(screen.id))
+                }
             }
         }
 
@@ -152,23 +160,8 @@ internal class AreaPresenter(
             placesByEntityUiState = placesByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
+//            statsUiState = statsUiState,
             eventSink = ::eventSink,
         )
     }
-
-//    fun loadDataForTab(
-//        areaId: String,
-//        selectedTab: AreaTab,
-//    ) {
-//        when (selectedTab) {
-//            AreaTab.DETAILS -> {
-
-//            }
-//
-//            AreaTab.RELATIONSHIPS -> loadRelations(areaId)
-//            else -> {
-//                // Not handled here.
-//            }
-//        }
-//    }
 }

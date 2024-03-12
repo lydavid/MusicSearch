@@ -93,7 +93,6 @@ dependencies {
     implementation(projects.shared.feature.history)
     implementation(projects.shared.feature.search)
     implementation(projects.shared.feature.settings)
-    implementation(projects.shared.screens)
     implementation(projects.strings)
     implementation(projects.ui.common)
     implementation(projects.ui.commonLegacy)

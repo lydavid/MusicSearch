@@ -10,7 +10,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,6 +21,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import com.slack.circuit.foundation.CircuitContent
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
@@ -30,6 +31,7 @@ import ly.david.ui.common.place.PlacesListScreen
 import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.ui.common.release.ReleasesListScreen
+import ly.david.ui.common.screen.AreaStatsScreen
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
@@ -127,12 +129,7 @@ internal fun AreaUi(
     ) { innerPadding ->
 
         val detailsLazyListState = rememberLazyListState()
-
         val relationsLazyListState = rememberLazyListState()
-//        val relationsLazyPagingItems =
-//            rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
-//                .collectAsLazyPagingItems()
-
         val releasesLazyListState = rememberLazyListState()
         val placesLazyListState = rememberLazyListState()
 
@@ -207,15 +204,24 @@ internal fun AreaUi(
                 }
 
                 AreaTab.STATS -> {
-                    Text("stats")
-//                    AreaStatsScreen(
-//                        areaId = areaId,
-//                        tabs = areaTabs.map { it.tab }.toImmutableList(),
+//                    StatsScreen(
+//                        tabs = state.tabs.map { it.tab }.toImmutableList(),
+//                        stats = state.statsUiState.stats,
 //                        modifier = Modifier
 //                            .padding(innerPadding)
 //                            .fillMaxSize()
 //                            .nestedScroll(scrollBehavior.nestedScrollConnection),
 //                    )
+                    CircuitContent(
+                        AreaStatsScreen(
+                            id = state.area?.id.orEmpty(),
+                            tabs = state.tabs.map { it.tab },
+                        ),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    )
                 }
             }
         }

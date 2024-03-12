@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.screens
+package ly.david.ui.common.screen
 
 /**
  * Copied from https://github.com/realityexpander/NoteAppKMM

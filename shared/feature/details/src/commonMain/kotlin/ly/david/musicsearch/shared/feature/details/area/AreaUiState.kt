@@ -18,5 +18,6 @@ internal data class AreaUiState(
     val placesByEntityUiState: PlacesByEntityUiState,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val relationsUiState: RelationsUiState,
+//    val statsUiState: StatsUiState,
     val eventSink: (AreaUiEvent) -> Unit,
 ) : CircuitUiState

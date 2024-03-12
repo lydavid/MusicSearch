@@ -7,7 +7,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.details.area.AreaPresenter
 import ly.david.musicsearch.shared.feature.details.area.AreaUi
 import ly.david.musicsearch.shared.feature.details.area.AreaUiState
-import ly.david.musicsearch.shared.screens.DetailsScreen
+import ly.david.ui.common.screen.DetailsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -26,6 +26,7 @@ val detailsFeatureModule = module {
                                 placesByEntityPresenter = get(),
                                 releasesByEntityPresenter = get(),
                                 relationsPresenter = get(),
+//                                areaStatsPresenter = get(),
                                 logger = get(),
                             )
                         }

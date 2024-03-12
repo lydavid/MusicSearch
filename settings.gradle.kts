@@ -64,7 +64,6 @@ include(
     ":shared:feature:licenses",
     ":shared:feature:search",
     ":shared:feature:settings",
-    ":shared:screens",
     ":strings",
     ":test-data",
     ":ui:common",

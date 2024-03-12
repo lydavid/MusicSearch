@@ -13,7 +13,7 @@ dependencies {
 
     // TODO: eventually, the only dependent project should be shared
     //  where shared exposes the root entry point
-    implementation(projects.shared.screens)
+    implementation(projects.ui.common)
     implementation(projects.ui.core)
     implementation(projects.domain)
     implementation(projects.strings)

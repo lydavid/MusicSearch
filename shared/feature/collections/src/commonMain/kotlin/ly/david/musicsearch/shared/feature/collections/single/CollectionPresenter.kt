@@ -38,13 +38,12 @@ import ly.david.musicsearch.domain.label.usecase.GetLabelsByEntity
 import ly.david.musicsearch.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.domain.recording.usecase.GetRecordingsByEntity
 import ly.david.musicsearch.domain.release.ReleaseImageRepository
-import ly.david.musicsearch.domain.release.usecase.GetReleasesByEntity
 import ly.david.musicsearch.domain.releasegroup.ReleaseGroupImageRepository
 import ly.david.musicsearch.domain.releasegroup.usecase.GetReleaseGroupsByEntity
 import ly.david.musicsearch.domain.series.usecase.GetSeriesByEntity
 import ly.david.musicsearch.domain.work.usecase.GetWorksByEntity
-import ly.david.musicsearch.shared.screens.CollectionScreen
-import ly.david.musicsearch.shared.screens.DetailsScreen
+import ly.david.ui.common.screen.CollectionScreen
+import ly.david.ui.common.screen.DetailsScreen
 import ly.david.ui.common.release.ReleasesByEntityPresenter
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
 

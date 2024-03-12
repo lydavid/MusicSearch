@@ -29,7 +29,6 @@ kotlin {
                 implementation(projects.strings)
                 implementation(projects.ui.common)
                 implementation(projects.ui.core)
-                implementation(projects.shared.screens)
 
                 implementation(compose.foundation)
                 implementation(compose.material3)

@@ -6,7 +6,7 @@ import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.shared.feature.history.internal.History
 import ly.david.musicsearch.shared.feature.history.internal.HistoryPresenter
 import ly.david.musicsearch.shared.feature.history.internal.HistoryUiState
-import ly.david.musicsearch.shared.screens.HistoryScreen
+import ly.david.ui.common.screen.HistoryScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
