@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.feature.collections.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,7 +29,6 @@ import ly.david.ui.core.theme.TextStyles
 
 @OptIn(
     ExperimentalMaterial3Api::class,
-    ExperimentalFoundationApi::class,
 )
 @Composable
 fun CollectionBottomSheet(
@@ -40,65 +40,85 @@ fun CollectionBottomSheet(
     onCreateCollectionClick: () -> Unit = {},
     onAddToCollection: suspend (collectionId: String) -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = bottomSheetState,
         modifier = modifier,
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = strings.addToCollection,
-                modifier = Modifier
-                    .padding(horizontal = 16.dp),
-                style = TextStyles.getCardBodyTextStyle(),
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            IconButton(onClick = onCreateCollectionClick) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = strings.createCollection,
-                )
-            }
-        }
-
-        Divider(modifier = Modifier.padding(top = 16.dp))
-
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            items(
-                count = collections.itemCount,
-            ) { index ->
-                when (val collection = collections[index]) {
-                    is CollectionListItemModel -> {
-                        CollectionListItem(
-                            collection = collection,
-                            modifier = Modifier.animateItemPlacement(),
-                            onClick = {
-                                scope.launch {
-                                    onAddToCollection(collection.id)
-                                    bottomSheetState.hide()
-                                }.invokeOnCompletion {
-                                    if (!bottomSheetState.isVisible) {
-                                        onDismiss()
-                                    }
-                                }
-                            },
-                        )
-                    }
-
-                    else -> {
-                        // Do nothing.
-                    }
+        CollectionBottomSheetContent(
+            collections = collections,
+            modifier = modifier,
+            onCreateCollectionClick = onCreateCollectionClick,
+        ) { collectionId ->
+            scope.launch {
+                onAddToCollection(collectionId)
+                bottomSheetState.hide()
+            }.invokeOnCompletion {
+                if (!bottomSheetState.isVisible) {
+                    onDismiss()
                 }
             }
-            item {
-                Spacer(modifier = Modifier.padding(bottom = 16.dp))
+        }
+    }
+}
+
+@Suppress("UnusedReceiverParameter")
+@OptIn(
+    ExperimentalFoundationApi::class,
+)
+@Composable
+internal fun ColumnScope.CollectionBottomSheetContent(
+    collections: LazyPagingItems<CollectionListItemModel>,
+    modifier: Modifier = Modifier,
+    onCreateCollectionClick: () -> Unit = {},
+    onAddToCollection: (collectionId: String) -> Unit = {},
+) {
+    val strings = LocalStrings.current
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(
+            text = strings.addToCollection,
+            modifier = Modifier
+                .padding(horizontal = 16.dp),
+            style = TextStyles.getCardBodyTextStyle(),
+        )
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        IconButton(onClick = onCreateCollectionClick) {
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = strings.createCollection,
+            )
+        }
+    }
+
+    Divider(modifier = Modifier.padding(top = 16.dp))
+
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        items(
+            count = collections.itemCount,
+        ) { index ->
+            when (val collection = collections[index]) {
+                is CollectionListItemModel -> {
+                    CollectionListItem(
+                        collection = collection,
+                        modifier = Modifier.animateItemPlacement(),
+                        onClick = {
+                            onAddToCollection(collection.id)
+                        },
+                    )
+                }
+
+                else -> {
+                    // Do nothing.
+                }
             }
+        }
+        item {
+            Spacer(modifier = Modifier.padding(bottom = 16.dp))
         }
     }
 }

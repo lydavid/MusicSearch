@@ -181,14 +181,7 @@ internal fun NavigationGraph(
             uriPrefix = uriPrefix,
         ) { entityId, title ->
 //            AreaUi(
-//                areaId = entityId,
-//                modifier = modifier,
-//                titleWithDisambiguation = title,
-//                onBack = navController::navigateUp,
-//                onItemClick = onLookupEntityClick,
 //                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
-//                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-//                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
 //            )
             val backStack = rememberSaveableBackStack(
                 root = DetailsScreen(
@@ -202,6 +195,21 @@ internal fun NavigationGraph(
                 navigator = navigator,
                 backStack = backStack,
                 modifier = modifier,
+
+                // TODO: temp
+                unavailableRoute = { screen, _ ->
+                    when (screen) {
+                        is DetailsScreen -> {
+                            onLookupEntityClick(
+                                screen.entity,
+                                screen.id,
+                                screen.title,
+                            )
+                        }
+
+                        else -> {}
+                    }
+                },
             )
         }
 

@@ -10,10 +10,10 @@ import ly.david.ui.core.theme.PreviewTheme
 // region Previews
 @PreviewLightDark
 @Composable
-internal fun PreviewAreaDetailsScreen() {
+internal fun PreviewAreaDetailsUi() {
     PreviewTheme {
         Surface {
-            AreaDetailsScreen(
+            AreaDetailsUi(
                 area = AreaScaffoldModel(
                     id = "88f49821-05a3-3bbc-a24b-bbd6b918c07b",
                     name = "Czechoslovakia",

@@ -7,6 +7,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import com.slack.circuit.foundation.NavEvent
+import com.slack.circuit.foundation.onNavEvent
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
@@ -14,7 +16,6 @@ import ly.david.musicsearch.core.models.area.AreaScaffoldModel
 import ly.david.musicsearch.core.models.area.showReleases
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
-import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.ui.common.screen.DetailsScreen
@@ -47,6 +48,7 @@ internal class AreaPresenter(
             mutableStateOf(AreaTab.entries.filter { it != AreaTab.RELEASES })
         }
         var selectedTab by rememberSaveable { mutableStateOf(AreaTab.DETAILS) }
+        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
 
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
@@ -55,7 +57,7 @@ internal class AreaPresenter(
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
 
-        LaunchedEffect(Unit) {
+        LaunchedEffect(forceRefreshDetails) {
             try {
                 val areaScaffoldModel = repository.lookupArea(screen.id)
                 if (title.isEmpty()) {
@@ -66,7 +68,7 @@ internal class AreaPresenter(
                 }
                 area = areaScaffoldModel
                 isError = false
-            } catch (ex: RecoverableNetworkException) {
+            } catch (ex: Exception) {
                 logger.e(ex)
                 isError = true
             }
@@ -84,7 +86,6 @@ internal class AreaPresenter(
         }
 
         // TODO: good candidate for extraction
-        // TODO: handle force refresh
         LaunchedEffect(
             key1 = query,
             key2 = selectedTab,
@@ -96,6 +97,8 @@ internal class AreaPresenter(
 
                 AreaTab.RELATIONSHIPS -> {
                     // TODO: consider handling these like StatsScreen = more separation of concerns
+                    //  possible problems:
+                    //  - how to pass query?
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
@@ -143,6 +146,22 @@ internal class AreaPresenter(
 
                 is AreaUiEvent.UpdateTab -> {
                     selectedTab = event.tab
+                }
+
+                is AreaUiEvent.ClickItem -> {
+                    navigator.onNavEvent(
+                        NavEvent.GoTo(
+                            DetailsScreen(
+                                event.entity,
+                                event.id,
+                                event.title,
+                            ),
+                        ),
+                    )
+                }
+
+                AreaUiEvent.ForceRefresh -> {
+                    forceRefreshDetails = true
                 }
             }
         }

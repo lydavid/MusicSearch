@@ -15,7 +15,7 @@ import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 
 @Composable
-internal fun AreaDetailsScreen(
+internal fun AreaDetailsUi(
     area: AreaScaffoldModel,
     modifier: Modifier = Modifier,
     filterText: String = "",

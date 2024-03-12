@@ -9,7 +9,7 @@ import ly.david.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
 @Composable
-private fun Preview() {
+internal fun PreviewCollectionListItem() {
     PreviewTheme {
         Surface {
             CollectionListItem(

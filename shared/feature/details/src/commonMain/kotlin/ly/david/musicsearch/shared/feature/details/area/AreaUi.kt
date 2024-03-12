@@ -13,12 +13,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.slack.circuit.foundation.CircuitContent
@@ -51,7 +47,6 @@ internal fun AreaUi(
     state: AreaUiState,
     entityId: String,
     modifier: Modifier = Modifier,
-//    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 //    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
 ) {
     val eventSink = state.eventSink
@@ -59,10 +54,8 @@ internal fun AreaUi(
     val resource = MusicBrainzEntity.AREA
     val strings = LocalStrings.current
     val snackbarHostState = remember { SnackbarHostState() }
-    var forceRefresh by rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val scope = rememberCoroutineScope()
-
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
     LaunchedEffect(key1 = pagerState.currentPage) {
@@ -139,10 +132,12 @@ internal fun AreaUi(
                 AreaTab.DETAILS -> {
                     DetailsWithErrorHandling(
                         showError = state.isError,
-                        onRetryClick = { forceRefresh = true },
+                        onRetryClick = {
+                            eventSink(AreaUiEvent.ForceRefresh)
+                        },
                         scaffoldModel = state.area,
                     ) {
-                        AreaDetailsScreen(
+                        AreaDetailsUi(
                             area = it,
                             modifier = Modifier
                                 .padding(innerPadding)
@@ -150,7 +145,15 @@ internal fun AreaUi(
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = state.query,
                             lazyListState = detailsLazyListState,
-//                            onItemClick = onItemClick,
+                            onItemClick = { entity, id, title ->
+                                eventSink(
+                                    AreaUiEvent.ClickItem(
+                                        entity = entity,
+                                        id = id,
+                                        title = title,
+                                    ),
+                                )
+                            },
                         )
                     }
                 }
@@ -164,7 +167,15 @@ internal fun AreaUi(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = relationsLazyListState,
                         snackbarHostState = snackbarHostState,
-//                        onItemClick = onItemClick,
+                        onItemClick = { entity, id, title ->
+                            eventSink(
+                                AreaUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
+                                ),
+                            )
+                        },
                     )
                 }
 
@@ -178,7 +189,15 @@ internal fun AreaUi(
                         snackbarHostState = snackbarHostState,
                         lazyPagingItems = state.releasesByEntityUiState.lazyPagingItems,
                         showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
-//                        onReleaseClick = onReleaseClick,
+                        onReleaseClick = { entity, id, title ->
+                            eventSink(
+                                AreaUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
+                                ),
+                            )
+                        },
                         requestForMissingCoverArtUrl = { id ->
                             releasesByEntityEventSink(
                                 ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl(
@@ -198,7 +217,15 @@ internal fun AreaUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-//                        onPlaceClick = onPlaceClick,
+                        onPlaceClick = { entity, id, title ->
+                            eventSink(
+                                AreaUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
+                                ),
+                            )
+                        },
                     )
                 }
 
