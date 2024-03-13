@@ -32,7 +32,7 @@ import org.koin.androidx.compose.koinViewModel
 //  lookup only returns its name so there's not much for us to display ATM
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GenreScaffold(
+fun GenreUi(
     genreId: String,
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
@@ -97,7 +97,7 @@ fun GenreScaffold(
 @Composable
 private fun Preview() {
     PreviewTheme {
-        GenreScaffold(
+        GenreUi(
             genreId = "911c7bbb-172d-4df8-9478-dbff4296e791",
             titleWithDisambiguation = "pop",
         )

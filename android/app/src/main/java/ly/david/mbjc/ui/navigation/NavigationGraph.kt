@@ -24,17 +24,17 @@ import ly.david.musicsearch.core.models.navigation.toLookupDestination
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.musicsearch.core.models.network.toMusicBrainzEntity
-import ly.david.musicsearch.shared.feature.details.artist.ArtistScaffold
-import ly.david.musicsearch.shared.feature.details.event.EventScaffold
-import ly.david.musicsearch.shared.feature.details.genre.GenreScaffold
-import ly.david.musicsearch.shared.feature.details.instrument.InstrumentScaffold
-import ly.david.musicsearch.shared.feature.details.label.LabelScaffold
-import ly.david.musicsearch.shared.feature.details.place.PlaceScaffold
-import ly.david.musicsearch.shared.feature.details.recording.RecordingScaffold
-import ly.david.musicsearch.shared.feature.details.release.ReleaseScaffold
-import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupScaffold
-import ly.david.musicsearch.shared.feature.details.series.SeriesScaffold
-import ly.david.musicsearch.shared.feature.details.work.WorkScaffold
+import ly.david.musicsearch.shared.feature.details.artist.ArtistUi
+import ly.david.musicsearch.shared.feature.details.event.EventUi
+import ly.david.musicsearch.shared.feature.details.genre.GenreUi
+import ly.david.musicsearch.shared.feature.details.instrument.InstrumentUi
+import ly.david.musicsearch.shared.feature.details.label.LabelUi
+import ly.david.musicsearch.shared.feature.details.place.PlaceUi
+import ly.david.musicsearch.shared.feature.details.recording.RecordingUi
+import ly.david.musicsearch.shared.feature.details.release.ReleaseUi
+import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUi
+import ly.david.musicsearch.shared.feature.details.series.SeriesUi
+import ly.david.musicsearch.shared.feature.details.work.WorkUi
 import ly.david.ui.common.screen.CollectionListScreen
 import ly.david.ui.common.screen.CollectionScreen
 import ly.david.ui.common.screen.DetailsScreen
@@ -217,7 +217,7 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.ARTIST,
             uriPrefix = uriPrefix,
         ) { entity, title ->
-            ArtistScaffold(
+            ArtistUi(
                 artistId = entity,
                 modifier = modifier,
                 titleWithDisambiguation = title,
@@ -235,7 +235,7 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.EVENT,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-            EventScaffold(
+            EventUi(
                 eventId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
@@ -249,7 +249,7 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.GENRE,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-            GenreScaffold(
+            GenreUi(
                 genreId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
@@ -261,7 +261,7 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.INSTRUMENT,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-            InstrumentScaffold(
+            InstrumentUi(
                 instrumentId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
@@ -275,7 +275,7 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.LABEL,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-            LabelScaffold(
+            LabelUi(
                 labelId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
@@ -291,7 +291,7 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.PLACE,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-            PlaceScaffold(
+            PlaceUi(
                 placeId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
@@ -305,7 +305,7 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.RECORDING,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-            RecordingScaffold(
+            RecordingUi(
                 recordingId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
@@ -321,7 +321,7 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.RELEASE,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-            ReleaseScaffold(
+            ReleaseUi(
                 releaseId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
@@ -334,7 +334,7 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.RELEASE_GROUP,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-            ReleaseGroupScaffold(
+            ReleaseGroupUi(
                 releaseGroupId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
@@ -350,7 +350,7 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.SERIES,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-            SeriesScaffold(
+            SeriesUi(
                 seriesId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
@@ -364,7 +364,7 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.WORK,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-            WorkScaffold(
+            WorkUi(
                 workId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,

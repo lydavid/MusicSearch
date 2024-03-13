@@ -32,7 +32,7 @@ import ly.david.ui.core.theme.PreviewTheme
 import ly.david.musicsearch.ui.image.LargeImage
 
 @Composable
-internal fun ReleaseDetailsScreen(
+internal fun ReleaseDetailsUi(
     release: ReleaseScaffoldModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
@@ -202,7 +202,7 @@ internal fun ReleaseDetailsScreen(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            ReleaseDetailsScreen(
+            ReleaseDetailsUi(
                 release = ReleaseScaffoldModel(
                     id = "r1",
                     name = "Release",

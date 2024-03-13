@@ -15,7 +15,7 @@ import ly.david.ui.common.url.UrlsSection
 import ly.david.musicsearch.ui.image.LargeImage
 
 @Composable
-internal fun ReleaseGroupDetailsScreen(
+internal fun ReleaseGroupDetailsUi(
     releaseGroup: ReleaseGroupScaffoldModel,
     modifier: Modifier = Modifier,
     filterText: String = "",

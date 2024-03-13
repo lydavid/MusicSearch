@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.details.releasegroup
+package ly.david.musicsearch.shared.feature.details.label
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
@@ -6,12 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,11 +31,10 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
-import ly.david.musicsearch.shared.feature.details.releasegroup.details.ReleaseGroupDetailsScreen
-import ly.david.musicsearch.shared.feature.details.releasegroup.releases.ReleasesByReleaseGroupScreen
-import ly.david.musicsearch.shared.feature.details.releasegroup.stats.ReleaseGroupStatsScreen
+import ly.david.musicsearch.shared.feature.details.label.details.LabelDetailsUi
+import ly.david.musicsearch.shared.feature.details.label.releases.ReleasesByLabelScreen
+import ly.david.musicsearch.shared.feature.details.label.stats.LabelStatsScreen
 import ly.david.musicsearch.strings.LocalStrings
-import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
@@ -50,15 +47,10 @@ import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.topappbar.getTitle
 import org.koin.androidx.compose.koinViewModel
 
-/**
- * Equivalent to a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756
- *
- * Starts on a screen that displays all of its releases.
- */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun ReleaseGroupScaffold(
-    releaseGroupId: String,
+fun LabelUi(
+    labelId: String,
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
@@ -66,36 +58,34 @@ fun ReleaseGroupScaffold(
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
-    viewModel: ReleaseGroupScaffoldViewModel = koinViewModel(),
+    viewModel: LabelScaffoldViewModel = koinViewModel(),
 ) {
-    val resource = MusicBrainzEntity.RELEASE_GROUP
+    val resource = MusicBrainzEntity.LABEL
     val strings = LocalStrings.current
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pagerState = rememberPagerState(pageCount = ReleaseGroupTab.values()::size)
+    val pagerState = rememberPagerState(pageCount = LabelTab.values()::size)
 
-    var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.DETAILS) }
+    var selectedTab by rememberSaveable { mutableStateOf(LabelTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
     val title by viewModel.title.collectAsState()
-    val subtitle by viewModel.subtitle.collectAsState()
-    val releaseGroup by viewModel.releaseGroup.collectAsState()
+    val label by viewModel.label.collectAsState()
     val showError by viewModel.isError.collectAsState()
-    val url by viewModel.url.collectAsState()
 
-    LaunchedEffect(key1 = releaseGroupId) {
+    LaunchedEffect(key1 = labelId) {
         viewModel.setTitle(titleWithDisambiguation)
     }
 
     LaunchedEffect(key1 = pagerState.currentPage) {
-        selectedTab = ReleaseGroupTab.values()[pagerState.currentPage]
+        selectedTab = LabelTab.values()[pagerState.currentPage]
     }
 
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
-            releaseGroupId = releaseGroupId,
+            labelId = labelId,
             selectedTab = selectedTab,
         )
     }
@@ -106,13 +96,12 @@ fun ReleaseGroupScaffold(
             TopAppBarWithFilter(
                 entity = resource,
                 title = title,
-                subtitle = subtitle,
                 scrollBehavior = scrollBehavior,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(entity = MusicBrainzEntity.RELEASE_GROUP, entityId = releaseGroupId)
-                    CopyToClipboardMenuItem(releaseGroupId)
-                    if (selectedTab == ReleaseGroupTab.RELEASES) {
+                    OpenInBrowserMenuItem(entity = MusicBrainzEntity.LABEL, entityId = labelId)
+                    CopyToClipboardMenuItem(labelId)
+                    if (selectedTab == LabelTab.RELEASES) {
                         ToggleMenuItem(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
@@ -121,25 +110,11 @@ fun ReleaseGroupScaffold(
                         )
                     }
                     AddToCollectionMenuItem {
-                        onAddToCollectionMenuClick(resource, releaseGroupId)
-                    }
-                },
-                subtitleDropdownMenuItems = {
-                    releaseGroup?.artistCredits?.forEach { artistCredit ->
-                        DropdownMenuItem(
-                            text = { Text(artistCredit.name) },
-                            leadingIcon = { EntityIcon(entity = MusicBrainzEntity.ARTIST) },
-                            onClick = {
-                                closeMenu()
-                                // Don't pass a title, because the name used here may not be the name used for the
-                                // the artist's page.
-                                onItemClick(MusicBrainzEntity.ARTIST, artistCredit.artistId, null)
-                            },
-                        )
+                        onAddToCollectionMenuClick(resource, labelId)
                     }
                 },
                 showFilterIcon = selectedTab !in listOf(
-                    ReleaseGroupTab.STATS,
+                    LabelTab.STATS,
                 ),
                 filterText = filterText,
                 onFilterTextChange = {
@@ -147,7 +122,7 @@ fun ReleaseGroupScaffold(
                 },
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = ReleaseGroupTab.values().map { it.tab.getTitle(strings) },
+                        tabsTitle = LabelTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
@@ -173,31 +148,30 @@ fun ReleaseGroupScaffold(
         HorizontalPager(
             state = pagerState,
         ) { page ->
-            when (ReleaseGroupTab.values()[page]) {
-                ReleaseGroupTab.DETAILS -> {
+            when (LabelTab.values()[page]) {
+                LabelTab.DETAILS -> {
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = releaseGroup,
+                        scaffoldModel = label,
                     ) {
-                        ReleaseGroupDetailsScreen(
-                            releaseGroup = it,
+                        LabelDetailsUi(
+                            label = it,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = filterText,
-                            coverArtUrl = url,
                             lazyListState = detailsLazyListState,
                             onItemClick = onItemClick,
                         )
                     }
                 }
 
-                ReleaseGroupTab.RELEASES -> {
-                    ReleasesByReleaseGroupScreen(
-                        releaseGroupId = releaseGroupId,
+                LabelTab.RELEASES -> {
+                    ReleasesByLabelScreen(
+                        labelId = labelId,
                         filterText = filterText,
                         showMoreInfo = showMoreInfoInReleaseListItem,
                         snackbarHostState = snackbarHostState,
@@ -212,7 +186,7 @@ fun ReleaseGroupScaffold(
                     )
                 }
 
-                ReleaseGroupTab.RELATIONSHIPS -> {
+                LabelTab.RELATIONSHIPS -> {
                     viewModel.updateQuery(filterText)
                     RelationsListScreen(
                         lazyPagingItems = relationsLazyPagingItems,
@@ -226,14 +200,14 @@ fun ReleaseGroupScaffold(
                     )
                 }
 
-                ReleaseGroupTab.STATS -> {
-                    ReleaseGroupStatsScreen(
-                        releaseGroupId = releaseGroupId,
+                LabelTab.STATS -> {
+                    LabelStatsScreen(
+                        labelId = labelId,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        tabs = ReleaseGroupTab.values().map { it.tab }.toImmutableList(),
+                        tabs = LabelTab.values().map { it.tab }.toImmutableList(),
                     )
                 }
             }

@@ -24,7 +24,7 @@ import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
-internal fun PlaceDetailsScreen(
+internal fun PlaceDetailsUi(
     place: PlaceScaffoldModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
@@ -115,7 +115,7 @@ internal fun PlaceDetailsScreen(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            PlaceDetailsScreen(
+            PlaceDetailsUi(
                 place = PlaceScaffoldModel(
                     id = "p1",
                     name = "Some Place",

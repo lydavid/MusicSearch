@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.details.artist
+package ly.david.musicsearch.shared.feature.details.recording
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
@@ -6,10 +6,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,13 +31,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
-import ly.david.musicsearch.shared.feature.details.artist.details.ArtistDetailsScreen
-import ly.david.musicsearch.shared.feature.details.artist.releasegroups.ReleaseGroupsByArtistScreen
-import ly.david.musicsearch.shared.feature.details.artist.releases.ReleasesByArtistScreen
-import ly.david.musicsearch.shared.feature.details.artist.stats.ArtistStatsScreen
+import ly.david.musicsearch.shared.feature.details.recording.details.RecordingDetailsUi
+import ly.david.musicsearch.shared.feature.details.recording.releases.ReleasesByRecordingScreen
+import ly.david.musicsearch.shared.feature.details.recording.stats.RecordingStatsScreen
 import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
@@ -51,46 +51,44 @@ import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun ArtistScaffold(
-    artistId: String,
+fun RecordingUi(
+    recordingId: String,
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onBack: () -> Unit = {},
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
-    sortReleaseGroupListItems: Boolean = false,
-    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
-    viewModel: ArtistScaffoldViewModel = koinViewModel(),
+    viewModel: RecordingScaffoldViewModel = koinViewModel(),
 ) {
-    val resource = MusicBrainzEntity.ARTIST
+    val resource = MusicBrainzEntity.RECORDING
     val strings = LocalStrings.current
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pagerState = rememberPagerState(pageCount = ArtistTab.values()::size)
+    val pagerState = rememberPagerState(pageCount = RecordingTab.values()::size)
 
+    var selectedTab by rememberSaveable { mutableStateOf(RecordingTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
-    var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
 
     val title by viewModel.title.collectAsState()
-    val artist by viewModel.artist.collectAsState()
-    val url by viewModel.url.collectAsState()
+    val subtitle by viewModel.subtitle.collectAsState()
+    val recording by viewModel.recording.collectAsState()
     val showError by viewModel.isError.collectAsState()
 
-    LaunchedEffect(key1 = artistId) {
+    LaunchedEffect(key1 = recordingId) {
         viewModel.setTitle(titleWithDisambiguation)
     }
 
     LaunchedEffect(key1 = pagerState.currentPage) {
-        selectedTab = ArtistTab.values()[pagerState.currentPage]
+        selectedTab = RecordingTab.values()[pagerState.currentPage]
     }
 
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
-            artistId = artistId,
+            recordingId = recordingId,
             selectedTab = selectedTab,
         )
     }
@@ -99,25 +97,15 @@ fun ArtistScaffold(
         modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
-                onBack = onBack,
                 entity = resource,
                 title = title,
+                subtitle = subtitle,
                 scrollBehavior = scrollBehavior,
-                showFilterIcon = selectedTab !in listOf(
-                    ArtistTab.STATS,
-                ),
+                onBack = onBack,
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(entity = MusicBrainzEntity.ARTIST, entityId = artistId)
-                    CopyToClipboardMenuItem(artistId)
-                    if (selectedTab == ArtistTab.RELEASE_GROUPS) {
-                        ToggleMenuItem(
-                            toggleOnText = strings.sort,
-                            toggleOffText = strings.unsort,
-                            toggled = sortReleaseGroupListItems,
-                            onToggle = onSortReleaseGroupListItemsChange,
-                        )
-                    }
-                    if (selectedTab == ArtistTab.RELEASES) {
+                    OpenInBrowserMenuItem(entity = resource, entityId = recordingId)
+                    CopyToClipboardMenuItem(recordingId)
+                    if (selectedTab == RecordingTab.RELEASES) {
                         ToggleMenuItem(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
@@ -126,32 +114,40 @@ fun ArtistScaffold(
                         )
                     }
                     AddToCollectionMenuItem {
-                        onAddToCollectionMenuClick(resource, artistId)
+                        onAddToCollectionMenuClick(resource, recordingId)
                     }
                 },
+                subtitleDropdownMenuItems = {
+                    recording?.artistCredits?.forEach { artistCredit ->
+                        DropdownMenuItem(
+                            text = { Text(artistCredit.name) },
+                            leadingIcon = { EntityIcon(entity = MusicBrainzEntity.ARTIST) },
+                            onClick = {
+                                closeMenu()
+                                onItemClick(MusicBrainzEntity.ARTIST, artistCredit.artistId, null)
+                            },
+                        )
+                    }
+                },
+                showFilterIcon = selectedTab !in listOf(
+                    RecordingTab.STATS,
+                ),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
                 },
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = ArtistTab.values().map { it.tab.getTitle(strings) },
+                        tabsTitle = RecordingTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
                 },
             )
         },
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
 
         val detailsLazyListState = rememberLazyListState()
-
-        // This is sufficient to preserve scroll position when switching tabs
-        val releaseGroupsLazyListState = rememberLazyListState()
-        var pagedReleaseGroups: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
-        val releaseGroupsLazyPagingItems = rememberFlowWithLifecycleStarted(pagedReleaseGroups)
-            .collectAsLazyPagingItems()
 
         val releasesLazyListState = rememberLazyListState()
         var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
@@ -167,50 +163,30 @@ fun ArtistScaffold(
         HorizontalPager(
             state = pagerState,
         ) { page ->
-            when (ArtistTab.values()[page]) {
-                ArtistTab.DETAILS -> {
+            when (RecordingTab.values()[page]) {
+                RecordingTab.DETAILS -> {
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = artist,
-                    ) { artist ->
-                        ArtistDetailsScreen(
-                            artist = artist,
+                        scaffoldModel = recording,
+                    ) {
+                        RecordingDetailsUi(
+                            recording = it,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = filterText,
-                            artistImageUrl = url,
                             lazyListState = detailsLazyListState,
                             onItemClick = onItemClick,
                         )
                     }
                 }
 
-                ArtistTab.RELEASE_GROUPS -> {
-                    ReleaseGroupsByArtistScreen(
-                        artistId = artistId,
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        filterText = filterText,
-                        isSorted = sortReleaseGroupListItems,
-                        snackbarHostState = snackbarHostState,
-                        onReleaseGroupClick = onItemClick,
-                        lazyListState = releaseGroupsLazyListState,
-                        lazyPagingItems = releaseGroupsLazyPagingItems,
-                        onPagedReleaseGroupsChange = {
-                            pagedReleaseGroups = it
-                        },
-                    )
-                }
-
-                ArtistTab.RELEASES -> {
-                    ReleasesByArtistScreen(
-                        artistId = artistId,
+                RecordingTab.RELEASES -> {
+                    ReleasesByRecordingScreen(
+                        recordingId = recordingId,
                         filterText = filterText,
                         showMoreInfo = showMoreInfoInReleaseListItem,
                         snackbarHostState = snackbarHostState,
@@ -225,7 +201,7 @@ fun ArtistScaffold(
                     )
                 }
 
-                ArtistTab.RELATIONSHIPS -> {
+                RecordingTab.RELATIONSHIPS -> {
                     viewModel.updateQuery(filterText)
                     RelationsListScreen(
                         lazyPagingItems = relationsLazyPagingItems,
@@ -239,14 +215,14 @@ fun ArtistScaffold(
                     )
                 }
 
-                ArtistTab.STATS -> {
-                    ArtistStatsScreen(
-                        artistId = artistId,
-                        tabs = ArtistTab.values().map { it.tab }.toImmutableList(),
+                RecordingTab.STATS -> {
+                    RecordingStatsScreen(
+                        recordingId = recordingId,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        tabs = RecordingTab.values().map { it.tab }.toImmutableList(),
                     )
                 }
             }

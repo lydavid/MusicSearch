@@ -23,7 +23,7 @@ import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
-internal fun ArtistDetailsScreen(
+internal fun ArtistDetailsUi(
     artist: ArtistScaffoldModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
@@ -109,7 +109,7 @@ internal fun ArtistDetailsScreen(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            ArtistDetailsScreen(
+            ArtistDetailsUi(
                 artist = ArtistScaffoldModel(
                     id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                     name = "The Beatles",

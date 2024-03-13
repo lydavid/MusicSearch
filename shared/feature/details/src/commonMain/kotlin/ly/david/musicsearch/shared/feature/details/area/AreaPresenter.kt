@@ -26,6 +26,8 @@ import ly.david.ui.common.relation.RelationsUiEvent
 import ly.david.ui.common.release.ReleasesByEntityPresenter
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
 
+// TODO: not only do we need every XByEntityPresenter, we also need every XRepository...
+//  all XByEntityPresenter could be moved to another nested Presenter, which will half our injections
 internal class AreaPresenter(
     private val screen: DetailsScreen,
     private val navigator: Navigator,

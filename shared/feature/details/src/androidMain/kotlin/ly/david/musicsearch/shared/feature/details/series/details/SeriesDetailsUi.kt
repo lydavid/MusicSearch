@@ -14,7 +14,7 @@ import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 
 @Composable
-internal fun SeriesDetailsScreen(
+internal fun SeriesDetailsUi(
     series: SeriesScaffoldModel,
     modifier: Modifier = Modifier,
     filterText: String = "",

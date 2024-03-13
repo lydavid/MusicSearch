@@ -27,7 +27,7 @@ import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
-internal fun EventDetailsScreen(
+internal fun EventDetailsUi(
     event: EventScaffoldModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
@@ -97,7 +97,7 @@ internal fun EventDetailsScreen(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            EventDetailsScreen(
+            EventDetailsUi(
                 event = EventScaffoldModel(
                     id = "e1",
                     name = "Some Place",

@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.details.place
+package ly.david.musicsearch.shared.feature.details.artist
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,11 +29,13 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.feature.details.place.details.PlaceDetailsScreen
-import ly.david.musicsearch.shared.feature.details.place.events.EventsByPlaceScreen
-import ly.david.musicsearch.shared.feature.details.place.stats.PlaceStatsScreen
+import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.feature.details.artist.details.ArtistDetailsUi
+import ly.david.musicsearch.shared.feature.details.artist.releasegroups.ReleaseGroupsByArtistScreen
+import ly.david.musicsearch.shared.feature.details.artist.releases.ReleasesByArtistScreen
+import ly.david.musicsearch.shared.feature.details.artist.stats.ArtistStatsScreen
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsListScreen
@@ -42,47 +44,53 @@ import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TabsBar
+import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.topappbar.getTitle
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun PlaceScaffold(
-    placeId: String,
+fun ArtistUi(
+    artistId: String,
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
-    onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onBack: () -> Unit = {},
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
-    viewModel: PlaceScaffoldViewModel = koinViewModel(),
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
+    sortReleaseGroupListItems: Boolean = false,
+    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
+    viewModel: ArtistScaffoldViewModel = koinViewModel(),
 ) {
-    val resource = MusicBrainzEntity.PLACE
+    val resource = MusicBrainzEntity.ARTIST
     val strings = LocalStrings.current
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pagerState = rememberPagerState(pageCount = PlaceTab.values()::size)
+    val pagerState = rememberPagerState(pageCount = ArtistTab.values()::size)
 
-    var selectedTab by rememberSaveable { mutableStateOf(PlaceTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
+    var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
 
     val title by viewModel.title.collectAsState()
-    val place by viewModel.place.collectAsState()
+    val artist by viewModel.artist.collectAsState()
+    val url by viewModel.url.collectAsState()
     val showError by viewModel.isError.collectAsState()
 
-    LaunchedEffect(key1 = placeId) {
+    LaunchedEffect(key1 = artistId) {
         viewModel.setTitle(titleWithDisambiguation)
     }
 
     LaunchedEffect(key1 = pagerState.currentPage) {
-        selectedTab = PlaceTab.values()[pagerState.currentPage]
+        selectedTab = ArtistTab.values()[pagerState.currentPage]
     }
 
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
-            placeId = placeId,
+            artistId = artistId,
             selectedTab = selectedTab,
         )
     }
@@ -91,27 +99,43 @@ fun PlaceScaffold(
         modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
+                onBack = onBack,
                 entity = resource,
                 title = title,
                 scrollBehavior = scrollBehavior,
-                onBack = onBack,
+                showFilterIcon = selectedTab !in listOf(
+                    ArtistTab.STATS,
+                ),
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(entity = resource, entityId = placeId)
-                    CopyToClipboardMenuItem(placeId)
+                    OpenInBrowserMenuItem(entity = MusicBrainzEntity.ARTIST, entityId = artistId)
+                    CopyToClipboardMenuItem(artistId)
+                    if (selectedTab == ArtistTab.RELEASE_GROUPS) {
+                        ToggleMenuItem(
+                            toggleOnText = strings.sort,
+                            toggleOffText = strings.unsort,
+                            toggled = sortReleaseGroupListItems,
+                            onToggle = onSortReleaseGroupListItemsChange,
+                        )
+                    }
+                    if (selectedTab == ArtistTab.RELEASES) {
+                        ToggleMenuItem(
+                            toggleOnText = strings.showMoreInfo,
+                            toggleOffText = strings.showLessInfo,
+                            toggled = showMoreInfoInReleaseListItem,
+                            onToggle = onShowMoreInfoInReleaseListItemChange,
+                        )
+                    }
                     AddToCollectionMenuItem {
-                        onAddToCollectionMenuClick(resource, placeId)
+                        onAddToCollectionMenuClick(resource, artistId)
                     }
                 },
-                showFilterIcon = selectedTab !in listOf(
-                    PlaceTab.STATS,
-                ),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
                 },
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = PlaceTab.values().map { it.tab.getTitle(strings) },
+                        tabsTitle = ArtistTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
@@ -123,42 +147,85 @@ fun PlaceScaffold(
 
         val detailsLazyListState = rememberLazyListState()
 
+        // This is sufficient to preserve scroll position when switching tabs
+        val releaseGroupsLazyListState = rememberLazyListState()
+        var pagedReleaseGroups: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val releaseGroupsLazyPagingItems = rememberFlowWithLifecycleStarted(pagedReleaseGroups)
+            .collectAsLazyPagingItems()
+
+        val releasesLazyListState = rememberLazyListState()
+        var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
+            rememberFlowWithLifecycleStarted(pagedReleasesFlow)
+                .collectAsLazyPagingItems()
+
         val relationsLazyListState = rememberLazyListState()
         val relationsLazyPagingItems =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 
-        val eventsLazyListState = rememberLazyListState()
-        var pagedEventsFlow: Flow<PagingData<EventListItemModel>> by remember { mutableStateOf(emptyFlow()) }
-        val eventsLazyPagingItems: LazyPagingItems<EventListItemModel> =
-            rememberFlowWithLifecycleStarted(pagedEventsFlow)
-                .collectAsLazyPagingItems()
-
         HorizontalPager(
             state = pagerState,
         ) { page ->
-            when (PlaceTab.values()[page]) {
-                PlaceTab.DETAILS -> {
+            when (ArtistTab.values()[page]) {
+                ArtistTab.DETAILS -> {
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = place,
-                    ) {
-                        PlaceDetailsScreen(
-                            place = it,
+                        scaffoldModel = artist,
+                    ) { artist ->
+                        ArtistDetailsUi(
+                            artist = artist,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = filterText,
+                            artistImageUrl = url,
                             lazyListState = detailsLazyListState,
                             onItemClick = onItemClick,
                         )
                     }
                 }
 
-                PlaceTab.RELATIONSHIPS -> {
+                ArtistTab.RELEASE_GROUPS -> {
+                    ReleaseGroupsByArtistScreen(
+                        artistId = artistId,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        filterText = filterText,
+                        isSorted = sortReleaseGroupListItems,
+                        snackbarHostState = snackbarHostState,
+                        onReleaseGroupClick = onItemClick,
+                        lazyListState = releaseGroupsLazyListState,
+                        lazyPagingItems = releaseGroupsLazyPagingItems,
+                        onPagedReleaseGroupsChange = {
+                            pagedReleaseGroups = it
+                        },
+                    )
+                }
+
+                ArtistTab.RELEASES -> {
+                    ReleasesByArtistScreen(
+                        artistId = artistId,
+                        filterText = filterText,
+                        showMoreInfo = showMoreInfoInReleaseListItem,
+                        snackbarHostState = snackbarHostState,
+                        releasesLazyListState = releasesLazyListState,
+                        releasesLazyPagingItems = releasesLazyPagingItems,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        onReleaseClick = onItemClick,
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it },
+                    )
+                }
+
+                ArtistTab.RELATIONSHIPS -> {
                     viewModel.updateQuery(filterText)
                     RelationsListScreen(
                         lazyPagingItems = relationsLazyPagingItems,
@@ -172,30 +239,14 @@ fun PlaceScaffold(
                     )
                 }
 
-                PlaceTab.EVENTS -> {
-                    EventsByPlaceScreen(
-                        placeId = placeId,
+                ArtistTab.STATS -> {
+                    ArtistStatsScreen(
+                        artistId = artistId,
+                        tabs = ArtistTab.values().map { it.tab }.toImmutableList(),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        lazyListState = eventsLazyListState,
-                        lazyPagingItems = eventsLazyPagingItems,
-                        onPagedEventsFlowChange = { pagedEventsFlow = it },
-                        onEventClick = onItemClick,
-                        filterText = filterText,
-                    )
-                }
-
-                PlaceTab.STATS -> {
-                    PlaceStatsScreen(
-                        placeId = placeId,
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        tabs = PlaceTab.values().map { it.tab }.toImmutableList(),
                     )
                 }
             }

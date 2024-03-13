@@ -21,7 +21,7 @@ import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
-internal fun WorkDetailsScreen(
+internal fun WorkDetailsUi(
     modifier: Modifier = Modifier,
     work: WorkScaffoldModel,
     filterText: String = "",
@@ -89,7 +89,7 @@ internal fun WorkDetailsScreen(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            WorkDetailsScreen(
+            WorkDetailsUi(
                 work = WorkScaffoldModel(
                     id = "w1",
                     name = "Work",

@@ -28,7 +28,7 @@ import ly.david.data.test.underPressure
 import ly.david.data.test.underPressureReleaseGroup
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.artist.ArtistRepository
-import ly.david.musicsearch.shared.feature.details.artist.ArtistScaffold
+import ly.david.musicsearch.shared.feature.details.artist.ArtistUi
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
@@ -51,7 +51,7 @@ internal class ArtistScaffoldTest : MainActivityTest() {
     private fun setArtist(artistMusicBrainzModel: ArtistMusicBrainzModel) {
         composeTestRule.activity.setContent {
             PreviewTheme {
-                ArtistScaffold(artistId = artistMusicBrainzModel.id)
+                ArtistUi(artistId = artistMusicBrainzModel.id)
             }
         }
     }
@@ -173,7 +173,7 @@ internal class ArtistScaffoldTest : MainActivityTest() {
     fun releaseGroupsSortedAndGrouped() = runTest {
         composeTestRule.activity.setContent {
             PreviewTheme {
-                ArtistScaffold(
+                ArtistUi(
                     artistId = davidBowie.id,
                     sortReleaseGroupListItems = true
                 )
@@ -202,7 +202,7 @@ internal class ArtistScaffoldTest : MainActivityTest() {
     fun showLessInfoInReleaseListItem() = runTest {
         composeTestRule.activity.setContent {
             PreviewTheme {
-                ArtistScaffold(
+                ArtistUi(
                     artistId = davidBowie.id,
                     showMoreInfoInReleaseListItem = false
                 )

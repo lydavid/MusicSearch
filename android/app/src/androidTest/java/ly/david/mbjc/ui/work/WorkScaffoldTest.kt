@@ -12,7 +12,7 @@ import ly.david.data.test.fakeWorkWithAllData
 import ly.david.data.test.underPressureRecording
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.work.WorkRepository
-import ly.david.musicsearch.shared.feature.details.work.WorkScaffold
+import ly.david.musicsearch.shared.feature.details.work.WorkUi
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
@@ -26,7 +26,7 @@ internal class WorkScaffoldTest : MainActivityTest() {
     private fun setWork(workMusicBrainzModel: WorkMusicBrainzModel) {
         composeTestRule.activity.setContent {
             PreviewTheme {
-                WorkScaffold(workId = workMusicBrainzModel.id)
+                WorkUi(workId = workMusicBrainzModel.id)
             }
         }
     }

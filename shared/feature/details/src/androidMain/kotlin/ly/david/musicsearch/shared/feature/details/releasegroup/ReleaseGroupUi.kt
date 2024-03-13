@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.details.instrument
+package ly.david.musicsearch.shared.feature.details.releasegroup
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,13 +24,20 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.feature.details.instrument.details.InstrumentDetailsScreen
-import ly.david.musicsearch.shared.feature.details.instrument.stats.InstrumentStatsScreen
+import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.feature.details.releasegroup.details.ReleaseGroupDetailsUi
+import ly.david.musicsearch.shared.feature.details.releasegroup.releases.ReleasesByReleaseGroupScreen
+import ly.david.musicsearch.shared.feature.details.releasegroup.stats.ReleaseGroupStatsScreen
 import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
@@ -36,52 +45,57 @@ import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TabsBar
+import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.topappbar.getTitle
 import org.koin.androidx.compose.koinViewModel
 
 /**
- * The top-level screen for an instrument.
+ * Equivalent to a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756
  *
- * All of its content are relationships, there's no browsing supported in the API.
+ * Starts on a screen that displays all of its releases.
  */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun InstrumentScaffold(
-    instrumentId: String,
+fun ReleaseGroupUi(
+    releaseGroupId: String,
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
-    viewModel: InstrumentScaffoldViewModel = koinViewModel(),
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
+    viewModel: ReleaseGroupScaffoldViewModel = koinViewModel(),
 ) {
-    val resource = MusicBrainzEntity.INSTRUMENT
+    val resource = MusicBrainzEntity.RELEASE_GROUP
     val strings = LocalStrings.current
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pagerState = rememberPagerState(pageCount = InstrumentTab.values()::size)
+    val pagerState = rememberPagerState(pageCount = ReleaseGroupTab.values()::size)
 
-    var selectedTab by rememberSaveable { mutableStateOf(InstrumentTab.DETAILS) }
+    var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
     val title by viewModel.title.collectAsState()
-    val instrument by viewModel.instrument.collectAsState()
+    val subtitle by viewModel.subtitle.collectAsState()
+    val releaseGroup by viewModel.releaseGroup.collectAsState()
     val showError by viewModel.isError.collectAsState()
+    val url by viewModel.url.collectAsState()
 
-    LaunchedEffect(key1 = instrumentId) {
+    LaunchedEffect(key1 = releaseGroupId) {
         viewModel.setTitle(titleWithDisambiguation)
     }
 
     LaunchedEffect(key1 = pagerState.currentPage) {
-        selectedTab = InstrumentTab.values()[pagerState.currentPage]
+        selectedTab = ReleaseGroupTab.values()[pagerState.currentPage]
     }
 
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
-            instrumentId = instrumentId,
+            releaseGroupId = releaseGroupId,
             selectedTab = selectedTab,
         )
     }
@@ -92,23 +106,48 @@ fun InstrumentScaffold(
             TopAppBarWithFilter(
                 entity = resource,
                 title = title,
+                subtitle = subtitle,
                 scrollBehavior = scrollBehavior,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(entity = resource, entityId = instrumentId)
-                    CopyToClipboardMenuItem(instrumentId)
+                    OpenInBrowserMenuItem(entity = MusicBrainzEntity.RELEASE_GROUP, entityId = releaseGroupId)
+                    CopyToClipboardMenuItem(releaseGroupId)
+                    if (selectedTab == ReleaseGroupTab.RELEASES) {
+                        ToggleMenuItem(
+                            toggleOnText = strings.showMoreInfo,
+                            toggleOffText = strings.showLessInfo,
+                            toggled = showMoreInfoInReleaseListItem,
+                            onToggle = onShowMoreInfoInReleaseListItemChange,
+                        )
+                    }
                     AddToCollectionMenuItem {
-                        onAddToCollectionMenuClick(resource, instrumentId)
+                        onAddToCollectionMenuClick(resource, releaseGroupId)
                     }
                 },
-                showFilterIcon = selectedTab !in listOf(InstrumentTab.STATS),
+                subtitleDropdownMenuItems = {
+                    releaseGroup?.artistCredits?.forEach { artistCredit ->
+                        DropdownMenuItem(
+                            text = { Text(artistCredit.name) },
+                            leadingIcon = { EntityIcon(entity = MusicBrainzEntity.ARTIST) },
+                            onClick = {
+                                closeMenu()
+                                // Don't pass a title, because the name used here may not be the name used for the
+                                // the artist's page.
+                                onItemClick(MusicBrainzEntity.ARTIST, artistCredit.artistId, null)
+                            },
+                        )
+                    }
+                },
+                showFilterIcon = selectedTab !in listOf(
+                    ReleaseGroupTab.STATS,
+                ),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
                 },
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = InstrumentTab.values().map { it.tab.getTitle(strings) },
+                        tabsTitle = ReleaseGroupTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
@@ -120,6 +159,12 @@ fun InstrumentScaffold(
 
         val detailsLazyListState = rememberLazyListState()
 
+        val releasesLazyListState = rememberLazyListState()
+        var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
+            rememberFlowWithLifecycleStarted(pagedReleasesFlow)
+                .collectAsLazyPagingItems()
+
         val relationsLazyListState = rememberLazyListState()
         val relationsLazyPagingItems =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
@@ -128,28 +173,46 @@ fun InstrumentScaffold(
         HorizontalPager(
             state = pagerState,
         ) { page ->
-            when (InstrumentTab.values()[page]) {
-                InstrumentTab.DETAILS -> {
+            when (ReleaseGroupTab.values()[page]) {
+                ReleaseGroupTab.DETAILS -> {
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = instrument,
+                        scaffoldModel = releaseGroup,
                     ) {
-                        InstrumentDetailsScreen(
-                            instrument = it,
+                        ReleaseGroupDetailsUi(
+                            releaseGroup = it,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = filterText,
+                            coverArtUrl = url,
                             lazyListState = detailsLazyListState,
                             onItemClick = onItemClick,
                         )
                     }
                 }
 
-                InstrumentTab.RELATIONSHIPS -> {
+                ReleaseGroupTab.RELEASES -> {
+                    ReleasesByReleaseGroupScreen(
+                        releaseGroupId = releaseGroupId,
+                        filterText = filterText,
+                        showMoreInfo = showMoreInfoInReleaseListItem,
+                        snackbarHostState = snackbarHostState,
+                        releasesLazyListState = releasesLazyListState,
+                        releasesLazyPagingItems = releasesLazyPagingItems,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        onReleaseClick = onItemClick,
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it },
+                    )
+                }
+
+                ReleaseGroupTab.RELATIONSHIPS -> {
                     viewModel.updateQuery(filterText)
                     RelationsListScreen(
                         lazyPagingItems = relationsLazyPagingItems,
@@ -163,14 +226,14 @@ fun InstrumentScaffold(
                     )
                 }
 
-                InstrumentTab.STATS -> {
-                    InstrumentStatsScreen(
-                        instrumentId = instrumentId,
+                ReleaseGroupTab.STATS -> {
+                    ReleaseGroupStatsScreen(
+                        releaseGroupId = releaseGroupId,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        tabs = InstrumentTab.values().map { it.tab }.toImmutableList(),
+                        tabs = ReleaseGroupTab.values().map { it.tab }.toImmutableList(),
                     )
                 }
             }

@@ -19,7 +19,7 @@ import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
-internal fun RecordingDetailsScreen(
+internal fun RecordingDetailsUi(
     recording: RecordingScaffoldModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
@@ -73,7 +73,7 @@ internal fun RecordingDetailsScreen(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            RecordingDetailsScreen(
+            RecordingDetailsUi(
                 recording = RecordingScaffoldModel(
                     id = "132a508b-624a-4f1d-b61f-f6616121bab5",
                     name = "プライド革命",

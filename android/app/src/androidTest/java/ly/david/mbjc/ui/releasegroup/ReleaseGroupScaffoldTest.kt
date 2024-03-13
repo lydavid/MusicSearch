@@ -19,7 +19,7 @@ import ly.david.data.test.underPressure
 import ly.david.data.test.underPressureReleaseGroup
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.releasegroup.ReleaseGroupRepository
-import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupScaffold
+import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUi
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
@@ -40,7 +40,7 @@ internal class ReleaseGroupScaffoldTest : MainActivityTest() {
     private fun setReleaseGroup(releaseGroupMusicBrainzModel: ReleaseGroupMusicBrainzModel) {
         composeTestRule.activity.setContent {
             PreviewTheme {
-                ReleaseGroupScaffold(releaseGroupId = releaseGroupMusicBrainzModel.id)
+                ReleaseGroupUi(releaseGroupId = releaseGroupMusicBrainzModel.id)
             }
         }
     }

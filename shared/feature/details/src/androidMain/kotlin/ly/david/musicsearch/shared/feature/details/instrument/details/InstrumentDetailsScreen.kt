@@ -23,7 +23,7 @@ import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
-internal fun InstrumentDetailsScreen(
+internal fun InstrumentDetailsUi(
     instrument: InstrumentScaffoldModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
@@ -76,7 +76,7 @@ internal fun InstrumentDetailsScreen(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            InstrumentDetailsScreen(
+            InstrumentDetailsUi(
                 instrument = InstrumentScaffoldModel(
                     id = "i1",
                     name = "baroque guitar",

@@ -18,7 +18,7 @@ import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
-internal fun LabelDetailsScreen(
+internal fun LabelDetailsUi(
     label: LabelScaffoldModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
@@ -69,7 +69,7 @@ internal fun LabelDetailsScreen(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            LabelDetailsScreen(
+            LabelDetailsUi(
                 label = LabelScaffoldModel(
                     id = "f9ada3ae-3081-44df-8581-ca27a3462b68",
                     name = "Sony BMG Music Entertainment",

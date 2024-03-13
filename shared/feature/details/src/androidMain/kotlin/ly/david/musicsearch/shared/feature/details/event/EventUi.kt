@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.details.series
+package ly.david.musicsearch.shared.feature.details.event
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,8 +26,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.feature.details.series.details.SeriesDetailsScreen
-import ly.david.musicsearch.shared.feature.details.series.stats.SeriesStatsScreen
+import ly.david.musicsearch.shared.feature.details.event.details.EventDetailsUi
+import ly.david.musicsearch.shared.feature.details.event.stats.EventStatsScreen
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsListScreen
@@ -41,47 +41,47 @@ import ly.david.ui.common.topappbar.getTitle
 import org.koin.androidx.compose.koinViewModel
 
 /**
- * The top-level screen for an series.
+ * The top-level screen for an event.
  *
  * All of its content are relationships, there's no browsing supported in the API.
  */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun SeriesScaffold(
-    seriesId: String,
+fun EventUi(
+    eventId: String,
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
-    viewModel: SeriesScaffoldViewModel = koinViewModel(),
+    viewModel: EventScaffoldViewModel = koinViewModel(),
 ) {
-    val resource = MusicBrainzEntity.SERIES
+    val resource = MusicBrainzEntity.EVENT
     val strings = LocalStrings.current
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pagerState = rememberPagerState(pageCount = SeriesTab.values()::size)
+    val pagerState = rememberPagerState(pageCount = EventTab.values()::size)
 
-    var selectedTab by rememberSaveable { mutableStateOf(SeriesTab.DETAILS) }
+    var selectedTab by rememberSaveable { mutableStateOf(EventTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
     val title by viewModel.title.collectAsState()
-    val series by viewModel.series.collectAsState()
+    val event by viewModel.event.collectAsState()
     val showError by viewModel.isError.collectAsState()
 
-    LaunchedEffect(key1 = seriesId) {
+    LaunchedEffect(key1 = eventId) {
         viewModel.setTitle(titleWithDisambiguation)
     }
 
     LaunchedEffect(key1 = pagerState.currentPage) {
-        selectedTab = SeriesTab.values()[pagerState.currentPage]
+        selectedTab = EventTab.values()[pagerState.currentPage]
     }
 
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
-            seriesId = seriesId,
+            eventId = eventId,
             selectedTab = selectedTab,
         )
     }
@@ -91,26 +91,24 @@ fun SeriesScaffold(
         topBar = {
             TopAppBarWithFilter(
                 entity = resource,
+                onBack = onBack,
                 title = title,
                 scrollBehavior = scrollBehavior,
-                onBack = onBack,
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(resource, seriesId)
-                    CopyToClipboardMenuItem(seriesId)
+                    OpenInBrowserMenuItem(resource, eventId)
+                    CopyToClipboardMenuItem(eventId)
                     AddToCollectionMenuItem {
-                        onAddToCollectionMenuClick(resource, seriesId)
+                        onAddToCollectionMenuClick(resource, eventId)
                     }
                 },
-                showFilterIcon = selectedTab !in listOf(
-                    SeriesTab.STATS,
-                ),
+                showFilterIcon = selectedTab !in listOf(EventTab.STATS),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
                 },
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = SeriesTab.values().map { it.tab.getTitle(strings) },
+                        tabsTitle = EventTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
@@ -130,16 +128,16 @@ fun SeriesScaffold(
         HorizontalPager(
             state = pagerState,
         ) { page ->
-            when (SeriesTab.values()[page]) {
-                SeriesTab.DETAILS -> {
+            when (EventTab.values()[page]) {
+                EventTab.DETAILS -> {
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = series,
+                        scaffoldModel = event,
                     ) {
-                        SeriesDetailsScreen(
-                            series = it,
+                        EventDetailsUi(
+                            event = it,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
@@ -151,7 +149,7 @@ fun SeriesScaffold(
                     }
                 }
 
-                SeriesTab.RELATIONSHIPS -> {
+                EventTab.RELATIONSHIPS -> {
                     viewModel.updateQuery(filterText)
                     RelationsListScreen(
                         lazyPagingItems = relationsLazyPagingItems,
@@ -165,14 +163,14 @@ fun SeriesScaffold(
                     )
                 }
 
-                SeriesTab.STATS -> {
-                    SeriesStatsScreen(
-                        seriesId = seriesId,
+                EventTab.STATS -> {
+                    EventStatsScreen(
+                        eventId = eventId,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        tabs = SeriesTab.values().map { it.tab }.toImmutableList(),
+                        tabs = EventTab.values().map { it.tab }.toImmutableList(),
                     )
                 }
             }

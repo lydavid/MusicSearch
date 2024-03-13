@@ -17,7 +17,7 @@ import ly.david.data.test.underPressure
 import ly.david.data.test.underPressureRecording
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.recording.RecordingRepository
-import ly.david.musicsearch.shared.feature.details.recording.RecordingScaffold
+import ly.david.musicsearch.shared.feature.details.recording.RecordingUi
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
@@ -31,7 +31,7 @@ internal class RecordingScaffoldTest : MainActivityTest() {
     private fun setRecording(recordingMusicBrainzModel: RecordingMusicBrainzModel) {
         composeTestRule.activity.setContent {
             PreviewTheme {
-                RecordingScaffold(recordingId = recordingMusicBrainzModel.id)
+                RecordingUi(recordingId = recordingMusicBrainzModel.id)
             }
         }
     }

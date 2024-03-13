@@ -9,7 +9,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzMo
 import ly.david.data.test.fakeInstrument
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.instrument.InstrumentRepository
-import ly.david.musicsearch.shared.feature.details.instrument.InstrumentScaffold
+import ly.david.musicsearch.shared.feature.details.instrument.InstrumentUi
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
@@ -23,7 +23,7 @@ internal class InstrumentScaffoldTest : MainActivityTest() {
     private fun setInstrument(instrumentMusicBrainzModel: InstrumentMusicBrainzModel) {
         composeTestRule.activity.setContent {
             PreviewTheme {
-                InstrumentScaffold(instrumentId = instrumentMusicBrainzModel.id)
+                InstrumentUi(instrumentId = instrumentMusicBrainzModel.id)
             }
         }
     }
