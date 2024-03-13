@@ -6,12 +6,10 @@ import coil.ImageLoaderFactory
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import ly.david.mbjc.di.androidAppModule
 import ly.david.musicsearch.shared.di.sharedModule
-import ly.david.musicsearch.shared.feature.details.ViewModelsModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import org.koin.ksp.generated.module
 import timber.log.Timber
 
 internal class MusicSearchApplication : Application() {
@@ -34,7 +32,6 @@ internal class MusicSearchApplication : Application() {
                 sharedModule,
                 // TODO: extract out of :app
                 androidAppModule,
-                ViewModelsModule().module,
             )
         }
 

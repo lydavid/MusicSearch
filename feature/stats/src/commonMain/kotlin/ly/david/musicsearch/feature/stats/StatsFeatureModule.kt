@@ -99,6 +99,15 @@ val statsFeatureModule = module {
                             )
                         }
 
+                        MusicBrainzEntity.WORK -> {
+                            WorkStatsPresenter(
+                                screen = screen,
+                                getCountOfEachRelationshipTypeUseCase = get(),
+                                observeBrowseEntityCount = get(),
+                                recordingWorkDao = get(),
+                            )
+                        }
+
                         else -> null
                     }
                 }

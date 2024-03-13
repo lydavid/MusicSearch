@@ -28,7 +28,7 @@ internal class SeriesStatsPresenter(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getStats(entityId: String): Flow<Stats> =
+    private fun getStats(entityId: String): Flow<Stats> =
         getCountOfEachRelationshipTypeUseCase(entityId).mapLatest { relationTypeCounts ->
             Stats(
                 totalRelations = relationTypeCounts.sumOf { it.count },

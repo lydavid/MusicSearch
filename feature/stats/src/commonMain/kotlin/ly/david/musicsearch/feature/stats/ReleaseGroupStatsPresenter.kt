@@ -31,7 +31,7 @@ internal class ReleaseGroupStatsPresenter(
         )
     }
 
-    fun getStats(entityId: String): Flow<Stats> =
+    private fun getStats(entityId: String): Flow<Stats> =
         combine(
             getCountOfEachRelationshipTypeUseCase(entityId),
             observeBrowseEntityCount(
