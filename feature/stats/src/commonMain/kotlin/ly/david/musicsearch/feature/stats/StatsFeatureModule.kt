@@ -92,6 +92,13 @@ val statsFeatureModule = module {
                             )
                         }
 
+                        MusicBrainzEntity.SERIES -> {
+                            SeriesStatsPresenter(
+                                screen = screen,
+                                getCountOfEachRelationshipTypeUseCase = get(),
+                            )
+                        }
+
                         else -> null
                     }
                 }

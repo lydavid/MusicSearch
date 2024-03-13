@@ -14,21 +14,18 @@ import ly.david.musicsearch.core.models.ActionableResult
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUriPlural
-import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzLoginActivityResultContract
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzLoginActivityResultContract
 import ly.david.musicsearch.domain.collection.usecase.GetAllCollections
 import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
 
 @KoinViewModel
 internal class TopLevelViewModel(
-    val appPreferences: AppPreferences,
-
     private val collectionDao: CollectionDao,
     private val getAllCollections: GetAllCollections,
     private val collectionEntityDao: CollectionEntityDao,

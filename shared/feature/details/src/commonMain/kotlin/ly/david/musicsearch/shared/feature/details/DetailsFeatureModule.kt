@@ -34,6 +34,9 @@ import ly.david.musicsearch.shared.feature.details.release.ReleaseUiState
 import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupPresenter
 import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUi
 import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUiState
+import ly.david.musicsearch.shared.feature.details.series.SeriesPresenter
+import ly.david.musicsearch.shared.feature.details.series.SeriesUi
+import ly.david.musicsearch.shared.feature.details.series.SeriesUiState
 import ly.david.ui.common.screen.DetailsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -165,6 +168,17 @@ val detailsFeatureModule = module {
                             )
                         }
 
+                        MusicBrainzEntity.SERIES -> {
+                            SeriesPresenter(
+                                screen = screen,
+                                navigator = navigator,
+                                repository = get(),
+                                incrementLookupHistory = get(),
+                                relationsPresenter = get(),
+                                logger = get(),
+                            )
+                        }
+
                         else -> null
                     }
                 }
@@ -271,6 +285,16 @@ val detailsFeatureModule = module {
                         MusicBrainzEntity.RELEASE_GROUP -> {
                             ui<ReleaseGroupUiState> { state, modifier ->
                                 ReleaseGroupUi(
+                                    state = state,
+                                    entityId = screen.id,
+                                    modifier = modifier,
+                                )
+                            }
+                        }
+
+                        MusicBrainzEntity.SERIES -> {
+                            ui<SeriesUiState> { state, modifier ->
+                                SeriesUi(
                                     state = state,
                                     entityId = screen.id,
                                     modifier = modifier,

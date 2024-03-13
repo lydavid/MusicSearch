@@ -13,7 +13,6 @@ import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,11 +44,6 @@ internal fun TopLevelScaffold(
     viewModel: TopLevelViewModel = koinViewModel(),
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-
-    val sortReleaseGroupListItems
-        by viewModel.appPreferences.sortReleaseGroupListItems.collectAsState(initial = false)
-    val showMoreInfoInReleaseListItem
-        by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
 
     val scope = rememberCoroutineScope()
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -149,10 +143,6 @@ internal fun TopLevelScaffold(
                 viewModel.setEntityId(id)
                 showBottomSheet = true
             },
-            showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-            onShowMoreInfoInReleaseListItemChange = viewModel.appPreferences::setShowMoreInfoInReleaseListItem,
-            sortReleaseGroupListItems = sortReleaseGroupListItems,
-            onSortReleaseGroupListItemsChange = viewModel.appPreferences::setSortReleaseGroupListItems,
         )
     }
 }

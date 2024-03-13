@@ -13,166 +13,171 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.paging.compose.collectAsLazyPagingItems
-import kotlinx.collections.immutable.toImmutableList
+import com.slack.circuit.foundation.CircuitContent
+import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.feature.details.series.details.SeriesDetailsUi
-import ly.david.musicsearch.shared.feature.details.series.stats.SeriesStatsScreen
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsListScreen
-import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
+import ly.david.ui.common.screen.AddToCollectionScreen
+import ly.david.ui.common.screen.StatsScreen
+import ly.david.ui.common.screen.showInBottomSheet
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.topappbar.getTitle
-import org.koin.androidx.compose.koinViewModel
 
 /**
  * The top-level screen for an series.
  *
  * All of its content are relationships, there's no browsing supported in the API.
  */
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalFoundationApi::class,
+)
 @Composable
-fun SeriesUi(
-    seriesId: String,
+internal fun SeriesUi(
+    state: SeriesUiState,
+    entityId: String,
     modifier: Modifier = Modifier,
-    titleWithDisambiguation: String? = null,
-    onBack: () -> Unit = {},
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
-    viewModel: SeriesScaffoldViewModel = koinViewModel(),
 ) {
-    val resource = MusicBrainzEntity.SERIES
+    val overlayHost = LocalOverlayHost.current
     val strings = LocalStrings.current
-    val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pagerState = rememberPagerState(pageCount = SeriesTab.values()::size)
+    val scope = rememberCoroutineScope()
 
-    var selectedTab by rememberSaveable { mutableStateOf(SeriesTab.DETAILS) }
-    var filterText by rememberSaveable { mutableStateOf("") }
-    var forceRefresh by rememberSaveable { mutableStateOf(false) }
-
-    val title by viewModel.title.collectAsState()
-    val series by viewModel.series.collectAsState()
-    val showError by viewModel.isError.collectAsState()
-
-    LaunchedEffect(key1 = seriesId) {
-        viewModel.setTitle(titleWithDisambiguation)
-    }
+    val entity = MusicBrainzEntity.SERIES
+    val eventSink = state.eventSink
+    val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
     LaunchedEffect(key1 = pagerState.currentPage) {
-        selectedTab = SeriesTab.values()[pagerState.currentPage]
-    }
-
-    LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
-        viewModel.loadDataForTab(
-            seriesId = seriesId,
-            selectedTab = selectedTab,
-        )
+        eventSink(SeriesUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
     }
 
     Scaffold(
         modifier = modifier,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithFilter(
-                entity = resource,
-                title = title,
-                scrollBehavior = scrollBehavior,
-                onBack = onBack,
-                overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(resource, seriesId)
-                    CopyToClipboardMenuItem(seriesId)
-                    AddToCollectionMenuItem {
-                        onAddToCollectionMenuClick(resource, seriesId)
-                    }
+                onBack = {
+                    eventSink(SeriesUiEvent.NavigateUp)
                 },
-                showFilterIcon = selectedTab !in listOf(
+                entity = entity,
+                title = state.title,
+                scrollBehavior = scrollBehavior,
+                showFilterIcon = state.selectedTab !in listOf(
                     SeriesTab.STATS,
                 ),
-                filterText = filterText,
+                overflowDropdownMenuItems = {
+                    OpenInBrowserMenuItem(
+                        entity = entity,
+                        entityId = entityId,
+                    )
+                    CopyToClipboardMenuItem(entityId)
+                    AddToCollectionMenuItem {
+                        scope.launch {
+                            overlayHost.showInBottomSheet(
+                                AddToCollectionScreen(
+                                    entity = entity,
+                                    id = entityId,
+                                ),
+                            )
+                        }
+                    }
+                },
+                filterText = state.query,
                 onFilterTextChange = {
-                    filterText = it
+                    eventSink(SeriesUiEvent.UpdateQuery(it))
                 },
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = SeriesTab.values().map { it.tab.getTitle(strings) },
-                        selectedTabIndex = selectedTab.ordinal,
+                        tabsTitle = state.tabs.map { it.tab.getTitle(strings) },
+                        selectedTabIndex = state.tabs.indexOf(state.selectedTab),
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
                 },
             )
         },
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
 
         val detailsLazyListState = rememberLazyListState()
-
         val relationsLazyListState = rememberLazyListState()
-        val relationsLazyPagingItems =
-            rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
-                .collectAsLazyPagingItems()
 
         HorizontalPager(
             state = pagerState,
         ) { page ->
-            when (SeriesTab.values()[page]) {
+            when (state.tabs[page]) {
                 SeriesTab.DETAILS -> {
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
-                        showError = showError,
-                        onRetryClick = { forceRefresh = true },
-                        scaffoldModel = series,
-                    ) {
+                        showError = state.isError,
+                        onRetryClick = {
+                            eventSink(SeriesUiEvent.ForceRefresh)
+                        },
+                        scaffoldModel = state.series,
+                    ) { series ->
                         SeriesDetailsUi(
-                            series = it,
+                            series = series,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-                            filterText = filterText,
+                            filterText = state.query,
                             lazyListState = detailsLazyListState,
-                            onItemClick = onItemClick,
+                            onItemClick = { entity, id, title ->
+                                eventSink(
+                                    SeriesUiEvent.ClickItem(
+                                        entity = entity,
+                                        id = id,
+                                        title = title,
+                                    ),
+                                )
+                            },
                         )
                     }
                 }
 
                 SeriesTab.RELATIONSHIPS -> {
-                    viewModel.updateQuery(filterText)
                     RelationsListScreen(
-                        lazyPagingItems = relationsLazyPagingItems,
+                        lazyPagingItems = state.relationsUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = relationsLazyListState,
                         snackbarHostState = snackbarHostState,
-                        onItemClick = onItemClick,
+                        onItemClick = { entity, id, title ->
+                            eventSink(
+                                SeriesUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
+                                ),
+                            )
+                        },
                     )
                 }
 
                 SeriesTab.STATS -> {
-                    SeriesStatsScreen(
-                        seriesId = seriesId,
+                    CircuitContent(
+                        StatsScreen(
+                            entity = entity,
+                            id = entityId,
+                            tabs = state.tabs.map { it.tab },
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        tabs = SeriesTab.values().map { it.tab }.toImmutableList(),
                     )
                 }
             }
