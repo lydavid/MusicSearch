@@ -35,6 +35,7 @@ class ReleasesByEntityPresenter(
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsState(true)
         var query by rememberSaveable { mutableStateOf("") }
         var id: String by rememberSaveable { mutableStateOf("") }
+        var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var releaseListItems: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
 
@@ -51,6 +52,7 @@ class ReleasesByEntityPresenter(
                 entity = capturedEntity,
                 listFilters = ListFilters(
                     query = query,
+                    isRemote = isRemote,
                 ),
             )
         }
@@ -74,9 +76,10 @@ class ReleasesByEntityPresenter(
                     appPreferences.setShowMoreInfoInReleaseListItem(event.showMore)
                 }
 
-                is ReleasesByEntityUiEvent.GetReleases -> {
+                is ReleasesByEntityUiEvent.Get -> {
                     id = event.byEntityId
                     entity = event.byEntity
+                    isRemote = event.isRemote
                 }
 
                 is ReleasesByEntityUiEvent.UpdateQuery -> {

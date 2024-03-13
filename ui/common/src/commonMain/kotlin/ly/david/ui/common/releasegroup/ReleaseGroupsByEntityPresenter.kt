@@ -35,6 +35,7 @@ class ReleaseGroupsByEntityPresenter(
         val sorted by appPreferences.sortReleaseGroupListItems.collectAsState(true)
         var query by rememberSaveable { mutableStateOf("") }
         var id: String by rememberSaveable { mutableStateOf("") }
+        var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var releaseGroupListItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
 
@@ -53,6 +54,7 @@ class ReleaseGroupsByEntityPresenter(
                 listFilters = ListFilters(
                     query = query,
                     sorted = sorted,
+                    isRemote = isRemote,
                 ),
             )
         }
@@ -79,6 +81,7 @@ class ReleaseGroupsByEntityPresenter(
                 is ReleaseGroupsByEntityUiEvent.Get -> {
                     id = event.byEntityId
                     entity = event.byEntity
+                    isRemote = event.isRemote
                 }
 
                 is ReleaseGroupsByEntityUiEvent.UpdateQuery -> {

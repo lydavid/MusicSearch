@@ -34,7 +34,6 @@ val collectionsFeatureModule = module {
                     navigator = navigator,
                     getCollectionUseCase = get(),
                     incrementLookupHistory = get(),
-                    appPreferences = get(),
                     getAreasByEntity = get(),
                     getArtistsByEntity = get(),
                     getEventsByEntity = get(),
@@ -43,12 +42,10 @@ val collectionsFeatureModule = module {
                     getPlacesByEntity = get(),
                     getRecordingsByEntity = get(),
                     releasesByEntityPresenter = get(),
-                    getReleaseGroupsByEntity = get(),
+                    releaseGroupsByEntityPresenter = get(),
                     getSeriesByEntity = get(),
                     getWorksByEntity = get(),
                     deleteFromCollection = get(),
-                    releaseGroupImageRepository = get(),
-                    releaseImageRepository = get(),
                 )
 
                 is AddToCollectionScreen -> AddToCollectionPresenter(

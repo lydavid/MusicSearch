@@ -122,7 +122,7 @@ internal class ArtistPresenter(
 
                 ArtistTab.RELEASES -> {
                     releasesEventSink(
-                        ReleasesByEntityUiEvent.GetReleases(
+                        ReleasesByEntityUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
@@ -135,6 +135,7 @@ internal class ArtistPresenter(
                         ReleaseGroupsByEntityUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
+                            isRemote = true,
                         ),
                     )
                     releaseGroupsEventSink(ReleaseGroupsByEntityUiEvent.UpdateQuery(query))

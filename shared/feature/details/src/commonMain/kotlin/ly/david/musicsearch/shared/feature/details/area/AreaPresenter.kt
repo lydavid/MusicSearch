@@ -109,7 +109,7 @@ internal class AreaPresenter(
 
                 AreaTab.RELEASES -> {
                     releasesEventSink(
-                        ReleasesByEntityUiEvent.GetReleases(
+                        ReleasesByEntityUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),

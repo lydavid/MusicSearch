@@ -7,6 +7,7 @@ sealed interface ReleaseGroupsByEntityUiEvent : CircuitUiEvent {
     data class Get(
         val byEntityId: String,
         val byEntity: MusicBrainzEntity,
+        val isRemote: Boolean,
     ) : ReleaseGroupsByEntityUiEvent
 
     data class UpdateQuery(

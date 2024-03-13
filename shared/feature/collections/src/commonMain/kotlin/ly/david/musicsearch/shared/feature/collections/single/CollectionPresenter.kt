@@ -2,7 +2,6 @@ package ly.david.musicsearch.shared.feature.collections.single
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,7 +25,6 @@ import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.domain.area.usecase.GetAreasByEntity
 import ly.david.musicsearch.domain.artist.usecase.GetArtistsByEntity
 import ly.david.musicsearch.domain.collection.usecase.DeleteFromCollection
@@ -37,22 +35,20 @@ import ly.david.musicsearch.domain.instrument.usecase.GetInstrumentsByEntity
 import ly.david.musicsearch.domain.label.usecase.GetLabelsByEntity
 import ly.david.musicsearch.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.domain.recording.usecase.GetRecordingsByEntity
-import ly.david.musicsearch.domain.release.ReleaseImageRepository
-import ly.david.musicsearch.domain.releasegroup.ReleaseGroupImageRepository
-import ly.david.musicsearch.domain.releasegroup.usecase.GetReleaseGroupsByEntity
 import ly.david.musicsearch.domain.series.usecase.GetSeriesByEntity
 import ly.david.musicsearch.domain.work.usecase.GetWorksByEntity
-import ly.david.ui.common.screen.CollectionScreen
-import ly.david.ui.common.screen.DetailsScreen
 import ly.david.ui.common.release.ReleasesByEntityPresenter
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
+import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
+import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
+import ly.david.ui.common.screen.CollectionScreen
+import ly.david.ui.common.screen.DetailsScreen
 
 internal class CollectionPresenter(
     private val screen: CollectionScreen,
     private val navigator: Navigator,
     private val getCollectionUseCase: GetCollection,
     private val incrementLookupHistory: IncrementLookupHistory,
-    private val appPreferences: AppPreferences,
     private val getAreasByEntity: GetAreasByEntity,
     private val getArtistsByEntity: GetArtistsByEntity,
     private val getEventsByEntity: GetEventsByEntity,
@@ -61,12 +57,10 @@ internal class CollectionPresenter(
     private val getPlacesByEntity: GetPlacesByEntity,
     private val getRecordingsByEntity: GetRecordingsByEntity,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
-    private val getReleaseGroupsByEntity: GetReleaseGroupsByEntity,
+    private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
     private val getSeriesByEntity: GetSeriesByEntity,
     private val getWorksByEntity: GetWorksByEntity,
     private val deleteFromCollection: DeleteFromCollection,
-    private val releaseGroupImageRepository: ReleaseGroupImageRepository,
-    private val releaseImageRepository: ReleaseImageRepository,
 ) : Presenter<CollectionUiState> {
     @Composable
     override fun present(): CollectionUiState {
@@ -78,10 +72,11 @@ internal class CollectionPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val sortReleaseGroupListItems by appPreferences.sortReleaseGroupListItems.collectAsState(true)
         var collectableItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesByEntityEventSink = releasesByEntityUiState.eventSink
+        val releaseGroupsByEntityUiState = releaseGroupsByEntityPresenter.present()
+        val releaseGroupsByEntityEventSink = releaseGroupsByEntityUiState.eventSink
 
         LaunchedEffect(Unit) {
             val nonNullCollection = getCollectionUseCase(collectionId)
@@ -211,28 +206,24 @@ internal class CollectionPresenter(
 
                 MusicBrainzEntity.RELEASE -> {
                     releasesByEntityEventSink(
-                        ReleasesByEntityUiEvent.GetReleases(
+                        ReleasesByEntityUiEvent.Get(
                             byEntityId = collectionId,
                             byEntity = MusicBrainzEntity.COLLECTION,
+                            isRemote = isRemote
                         ),
                     )
                     releasesByEntityEventSink(ReleasesByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.RELEASE_GROUP -> {
-                    collectableItems = getReleaseGroupsByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    releaseGroupsByEntityEventSink(
+                        ReleaseGroupsByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
-                            sorted = sortReleaseGroupListItems,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    releaseGroupsByEntityEventSink(ReleaseGroupsByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.SERIES -> {
@@ -268,7 +259,9 @@ internal class CollectionPresenter(
                 MusicBrainzEntity.COLLECTION,
                 MusicBrainzEntity.GENRE,
                 MusicBrainzEntity.URL,
-                -> error("${collection?.entity} by collection not supported")
+                -> {
+                    error("${collection?.entity} by collection not supported")
+                }
 
                 null -> {
                     // no-op
@@ -313,35 +306,6 @@ internal class CollectionPresenter(
                 is CollectionUiEvent.UpdateQuery -> {
                     query = event.query
                 }
-
-                is CollectionUiEvent.UpdateSortReleaseGroupListItems -> {
-                    appPreferences.setSortReleaseGroupListItems(event.sort)
-                }
-
-                // TODO: remove once we have ReleaseGroupsByEntityPresenter
-                is CollectionUiEvent.RequestForMissingCoverArtUrl -> {
-                    scope.launch {
-                        when (event.entity) {
-                            MusicBrainzEntity.RELEASE -> {
-                                releaseImageRepository.getReleaseCoverArtUrlFromNetwork(
-                                    releaseId = event.entityId,
-                                    thumbnail = true,
-                                )
-                            }
-
-                            MusicBrainzEntity.RELEASE_GROUP -> {
-                                releaseGroupImageRepository.getReleaseGroupCoverArtUrlFromNetwork(
-                                    releaseGroupId = event.entityId,
-                                    thumbnail = true,
-                                )
-                            }
-
-                            else -> {
-                                // no-op
-                            }
-                        }
-                    }
-                }
             }
         }
 
@@ -349,9 +313,9 @@ internal class CollectionPresenter(
             collection = collection,
             actionableResult = actionableResult,
             query = query,
-            sortReleaseGroupListItems = sortReleaseGroupListItems,
             lazyPagingItems = collectableItems.collectAsLazyPagingItems(),
             releasesByEntityUiState = releasesByEntityUiState,
+            releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
             eventSink = ::eventSink,
         )
     }

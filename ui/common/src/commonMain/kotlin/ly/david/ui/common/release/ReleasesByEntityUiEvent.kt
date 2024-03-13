@@ -4,9 +4,10 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 
 sealed interface ReleasesByEntityUiEvent : CircuitUiEvent {
-    data class GetReleases(
+    data class Get(
         val byEntityId: String,
         val byEntity: MusicBrainzEntity,
+        val isRemote: Boolean = true,
     ) : ReleasesByEntityUiEvent
 
     data class UpdateQuery(
