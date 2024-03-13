@@ -57,9 +57,10 @@ internal fun ArtistUi(
 
     val entity = MusicBrainzEntity.ARTIST
     val eventSink = state.eventSink
+    val pagerState = rememberPagerState(pageCount = state.tabs::size)
+
     val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
     val releaseGroupsByEntityEventSink = state.releaseGroupsByEntityUiState.eventSink
-    val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(ArtistUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
@@ -81,7 +82,7 @@ internal fun ArtistUi(
                 ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
-                        entity = MusicBrainzEntity.ARTIST,
+                        entity = entity,
                         entityId = entityId,
                     )
                     CopyToClipboardMenuItem(entityId)
@@ -113,7 +114,7 @@ internal fun ArtistUi(
                         scope.launch {
                             overlayHost.showInBottomSheet(
                                 AddToCollectionScreen(
-                                    entity = MusicBrainzEntity.ARTIST,
+                                    entity = entity,
                                     id = entityId,
                                 ),
                             )
@@ -160,7 +161,7 @@ internal fun ArtistUi(
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = state.query,
-                            artistImageUrl = state.imageUrl,
+                            imageUrl = state.imageUrl,
                             lazyListState = detailsLazyListState,
                             onItemClick = { entity, id, title ->
                                 eventSink(

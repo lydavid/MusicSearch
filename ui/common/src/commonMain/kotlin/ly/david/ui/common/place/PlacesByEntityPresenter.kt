@@ -46,7 +46,7 @@ class PlacesByEntityPresenter(
 
         fun eventSink(event: PlacesByEntityUiEvent) {
             when (event) {
-                is PlacesByEntityUiEvent.GetPlaces -> {
+                is PlacesByEntityUiEvent.Get -> {
                     id = event.byEntityId
                     entity = event.byEntity
                 }

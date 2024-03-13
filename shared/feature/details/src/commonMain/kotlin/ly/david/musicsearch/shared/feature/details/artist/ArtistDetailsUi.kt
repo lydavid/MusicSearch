@@ -23,7 +23,7 @@ internal fun ArtistDetailsUi(
     artist: ArtistScaffoldModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
-    artistImageUrl: String = "",
+    imageUrl: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
@@ -35,7 +35,7 @@ internal fun ArtistDetailsUi(
     ) {
         item {
             LargeImage(
-                url = artistImageUrl,
+                url = imageUrl,
                 mbid = artist.id,
             )
 

@@ -15,6 +15,7 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.artist.ArtistScaffoldModel
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.data.spotify.ArtistImageRepository
 import ly.david.musicsearch.domain.artist.ArtistRepository
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
@@ -38,22 +39,6 @@ internal class ArtistPresenter(
     private val logger: Logger,
 ) : Presenter<ArtistUiState> {
 
-    private suspend fun fetchArtistImage(
-        artist: ArtistScaffoldModel,
-    ): String {
-        val imageUrl = artist.imageUrl
-        return if (imageUrl == null) {
-            val spotifyUrl =
-                artist.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name ?: return ""
-            artistImageRepository.getArtistImageFromNetwork(
-                artistMbid = artist.id,
-                spotifyUrl = spotifyUrl,
-            )
-        } else {
-            imageUrl
-        }
-    }
-
     @Composable
     override fun present(): ArtistUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
@@ -62,7 +47,7 @@ internal class ArtistPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var artist: ArtistScaffoldModel? by remember { mutableStateOf(null) }
         var imageUrl by rememberSaveable { mutableStateOf("") }
-        var tabs: List<ArtistTab> by rememberSaveable {
+        val tabs: List<ArtistTab> by rememberSaveable {
             mutableStateOf(ArtistTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
@@ -84,7 +69,7 @@ internal class ArtistPresenter(
                 artist = artistScaffoldModel
                 imageUrl = fetchArtistImage(artistScaffoldModel)
                 isError = false
-            } catch (ex: Exception) {
+            } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
                 isError = true
             }
@@ -165,9 +150,9 @@ internal class ArtistPresenter(
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             DetailsScreen(
-                                event.entity,
-                                event.id,
-                                event.title,
+                                entity = event.entity,
+                                id = event.id,
+                                title = event.title,
                             ),
                         ),
                     )
@@ -192,5 +177,21 @@ internal class ArtistPresenter(
             relationsUiState = relationsUiState,
             eventSink = ::eventSink,
         )
+    }
+
+    private suspend fun fetchArtistImage(
+        artist: ArtistScaffoldModel,
+    ): String {
+        val imageUrl = artist.imageUrl
+        return if (imageUrl == null) {
+            val spotifyUrl =
+                artist.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name ?: return ""
+            artistImageRepository.getArtistImageFromNetwork(
+                artistMbid = artist.id,
+                spotifyUrl = spotifyUrl,
+            )
+        } else {
+            imageUrl
+        }
     }
 }

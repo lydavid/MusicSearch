@@ -16,6 +16,7 @@ import ly.david.musicsearch.core.models.area.AreaScaffoldModel
 import ly.david.musicsearch.core.models.area.showReleases
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.ui.common.screen.DetailsScreen
@@ -70,7 +71,7 @@ internal class AreaPresenter(
                 }
                 area = areaScaffoldModel
                 isError = false
-            } catch (ex: Exception) {
+            } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
                 isError = true
             }
@@ -119,7 +120,7 @@ internal class AreaPresenter(
 
                 AreaTab.PLACES -> {
                     placesEventSink(
-                        PlacesByEntityUiEvent.GetPlaces(
+                        PlacesByEntityUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),

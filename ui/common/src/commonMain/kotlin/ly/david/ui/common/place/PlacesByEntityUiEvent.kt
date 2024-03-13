@@ -4,7 +4,7 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 
 sealed interface PlacesByEntityUiEvent : CircuitUiEvent {
-    data class GetPlaces(
+    data class Get(
         val byEntityId: String,
         val byEntity: MusicBrainzEntity,
     ) : PlacesByEntityUiEvent
