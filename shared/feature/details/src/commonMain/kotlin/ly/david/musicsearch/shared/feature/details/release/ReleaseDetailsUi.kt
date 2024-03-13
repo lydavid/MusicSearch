@@ -1,42 +1,33 @@
-package ly.david.musicsearch.shared.feature.details.release.details
+package ly.david.musicsearch.shared.feature.details.release
 
-import android.icu.lang.UScript
-import android.os.Build
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import java.util.Locale
-import ly.david.musicsearch.core.models.area.AreaType.COUNTRY
-import ly.david.musicsearch.core.models.area.AreaType.WORLDWIDE
 import ly.david.musicsearch.core.models.common.UNKNOWN_TIME
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.common.toDisplayTime
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
-import ly.david.musicsearch.core.models.listitem.LabelListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
-import ly.david.musicsearch.core.models.release.TextRepresentationUiModel
+import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
+import ly.david.musicsearch.strings.LocalStrings
+import ly.david.musicsearch.ui.image.LargeImage
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
-import ly.david.musicsearch.ui.image.LargeImage
+import java.util.Locale
 
 @Composable
 internal fun ReleaseDetailsUi(
     release: ReleaseScaffoldModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
-    coverArtUrl: String = "",
+    imageUrl: String = "",
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     lazyListState: LazyListState = rememberLazyListState(),
 ) {
@@ -48,7 +39,7 @@ internal fun ReleaseDetailsUi(
     ) {
         item {
             LargeImage(
-                url = coverArtUrl,
+                url = imageUrl,
                 mbid = release.id,
             )
 
@@ -125,23 +116,24 @@ internal fun ReleaseDetailsUi(
                         filterText = filterText,
                     )
                 }
-                textRepresentation?.script?.ifNotNullOrEmpty { script ->
-                    val scriptOrCode = if (script == "Qaaa") {
-                        strings.multipleScripts
-                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        // TODO: Works for Latn but not Jpan or Kore
-                        //  let's just map the most common codes to their name stored in strings.xml
-                        //  then fallback to this for everything else
-                        UScript.getName(UScript.getCodeFromName(script))
-                    } else {
-                        script
-                    }
-                    TextWithHeading(
-                        heading = strings.script,
-                        text = scriptOrCode,
-                        filterText = filterText,
-                    )
-                }
+                // TODO: handle script
+//                textRepresentation?.script?.ifNotNullOrEmpty { script ->
+//                    val scriptOrCode = if (script == "Qaaa") {
+//                        strings.multipleScripts
+//                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                        // TODO: Works for Latn but not Jpan or Kore
+//                        //  let's just map the most common codes to their name stored in strings.xml
+//                        //  then fallback to this for everything else
+//                        UScript.getName(UScript.getCodeFromName(script))
+//                    } else {
+//                        script
+//                    }
+//                    TextWithHeading(
+//                        heading = strings.script,
+//                        text = scriptOrCode,
+//                        filterText = filterText,
+//                    )
+//                }
                 quality?.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.dataQuality,
@@ -166,7 +158,11 @@ internal fun ReleaseDetailsUi(
                         LabelListItem(
                             label = label,
                             onLabelClick = {
-                                onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.LABEL, id, name)
+                                onItemClick(
+                                    MusicBrainzEntity.LABEL,
+                                    id,
+                                    name,
+                                )
                             },
                         )
                     }
@@ -181,7 +177,11 @@ internal fun ReleaseDetailsUi(
                             area = area,
                             showType = false,
                             onAreaClick = {
-                                onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.AREA, id, name)
+                                onItemClick(
+                                    MusicBrainzEntity.AREA,
+                                    id,
+                                    name,
+                                )
                             },
                         )
                     }
@@ -195,64 +195,3 @@ internal fun ReleaseDetailsUi(
         }
     }
 }
-
-// region Previews
-@DefaultPreviews
-@Composable
-private fun Preview() {
-    PreviewTheme {
-        Surface {
-            ReleaseDetailsUi(
-                release = ReleaseScaffoldModel(
-                    id = "r1",
-                    name = "Release",
-                    date = "1000-10-10",
-                    barcode = "123456789",
-                    status = "Official",
-                    countryCode = "CA",
-                    packaging = "Box",
-                    asin = "B12341234",
-                    quality = "normal",
-                    textRepresentation = TextRepresentationUiModel(
-                        script = "Latn",
-                        language = "eng",
-                    ),
-                    formattedFormats = "2xCD + Blu-ray",
-                    formattedTracks = "15 + 8 + 24",
-                    areas = listOf(
-                        AreaListItemModel(
-                            id = "a1",
-                            name = "Canada",
-                            type = COUNTRY,
-                            countryCodes = listOf("CA"),
-                            date = "2022-11-29",
-                        ),
-                        AreaListItemModel(
-                            id = "a2",
-                            name = WORLDWIDE,
-                            countryCodes = listOf("XW"),
-                            date = "2022-11-30",
-                        ),
-                    ),
-                    labels = listOf(
-                        LabelListItemModel(
-                            id = "l1",
-                            name = "Label 1",
-                            type = "Imprint",
-                            catalogNumber = "ASDF-1010",
-                        ),
-                        LabelListItemModel(
-                            id = "l1",
-                            name = "Label 1",
-                            catalogNumber = "ASDF-1011",
-                        ),
-                    ),
-                    releaseLength = 8000,
-                    hasNullLength = true,
-                ),
-                coverArtUrl = "https://i.scdn.co/image/ab6761610000f1786761852cd2852fceb64e8cd9",
-            )
-        }
-    }
-}
-// endregion

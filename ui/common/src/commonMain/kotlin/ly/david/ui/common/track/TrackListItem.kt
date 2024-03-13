@@ -20,7 +20,7 @@ import ly.david.ui.core.theme.TextStyles
 fun TrackListItem(
     track: TrackListItemModel,
     modifier: Modifier = Modifier,
-    onRecordingClick: (String, String) -> Unit = { _, _ -> },
+    onRecordingClick: (id: String, title: String) -> Unit = { _, _ -> },
 ) {
     ListItem(
         headlineContent = {

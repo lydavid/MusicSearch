@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.details.releasegroup
+package ly.david.musicsearch.shared.feature.details.release
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,8 +27,6 @@ import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsListScreen
-import ly.david.ui.common.release.ReleasesByEntityUiEvent
-import ly.david.ui.common.release.ReleasesListScreen
 import ly.david.ui.common.screen.AddToCollectionScreen
 import ly.david.ui.common.screen.StatsScreen
 import ly.david.ui.common.screen.showInBottomSheet
@@ -36,22 +34,16 @@ import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TabsBar
-import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.topappbar.getTitle
 
-/**
- * Equivalent to a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756
- *
- * Starts on a screen that displays all of its releases.
- */
 @OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalFoundationApi::class,
 )
 @Composable
-internal fun ReleaseGroupUi(
-    state: ReleaseGroupUiState,
+internal fun ReleaseUi(
+    state: ReleaseUiState,
     entityId: String,
     modifier: Modifier = Modifier,
 ) {
@@ -61,14 +53,12 @@ internal fun ReleaseGroupUi(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
-    val entity = MusicBrainzEntity.RELEASE_GROUP
+    val entity = MusicBrainzEntity.RELEASE
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
-    val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
-
     LaunchedEffect(key1 = pagerState.currentPage) {
-        eventSink(ReleaseGroupUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
+        eventSink(ReleaseUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
     }
 
     Scaffold(
@@ -77,33 +67,25 @@ internal fun ReleaseGroupUi(
         topBar = {
             TopAppBarWithFilter(
                 onBack = {
-                    eventSink(ReleaseGroupUiEvent.NavigateUp)
+                    eventSink(ReleaseUiEvent.NavigateUp)
                 },
                 entity = entity,
                 title = state.title,
                 subtitle = state.subtitle,
                 scrollBehavior = scrollBehavior,
                 showFilterIcon = state.selectedTab !in listOf(
-                    ReleaseGroupTab.STATS,
+                    ReleaseTab.STATS,
                 ),
+                filterText = state.query,
+                onFilterTextChange = {
+                    eventSink(ReleaseUiEvent.UpdateQuery(it))
+                },
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
                         entity = entity,
                         entityId = entityId,
                     )
                     CopyToClipboardMenuItem(entityId)
-                    if (state.selectedTab == ReleaseGroupTab.RELEASES) {
-                        ToggleMenuItem(
-                            toggleOnText = strings.showMoreInfo,
-                            toggleOffText = strings.showLessInfo,
-                            toggled = state.releasesByEntityUiState.showMoreInfo,
-                            onToggle = {
-                                releasesByEntityEventSink(
-                                    ReleasesByEntityUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
-                                )
-                            },
-                        )
-                    }
                     AddToCollectionMenuItem {
                         scope.launch {
                             overlayHost.showInBottomSheet(
@@ -116,16 +98,14 @@ internal fun ReleaseGroupUi(
                     }
                 },
                 subtitleDropdownMenuItems = {
-                    state.releaseGroup?.artistCredits?.forEach { artistCredit ->
+                    state.release?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(
                             text = { Text(artistCredit.name) },
                             leadingIcon = { EntityIcon(entity = MusicBrainzEntity.ARTIST) },
                             onClick = {
                                 closeMenu()
-                                // Don't pass a title, because the name used here may not be the name used for the
-                                // the artist's page.
                                 eventSink(
-                                    ReleaseGroupUiEvent.ClickItem(
+                                    ReleaseUiEvent.ClickItem(
                                         entity = MusicBrainzEntity.ARTIST,
                                         id = artistCredit.artistId,
                                         title = null,
@@ -134,10 +114,22 @@ internal fun ReleaseGroupUi(
                             },
                         )
                     }
-                },
-                filterText = state.query,
-                onFilterTextChange = {
-                    eventSink(ReleaseGroupUiEvent.UpdateQuery(it))
+                    state.release?.releaseGroup?.let { releaseGroup ->
+                        DropdownMenuItem(
+                            text = { Text(text = releaseGroup.name) },
+                            leadingIcon = { EntityIcon(entity = MusicBrainzEntity.RELEASE_GROUP) },
+                            onClick = {
+                                closeMenu()
+                                eventSink(
+                                    ReleaseUiEvent.ClickItem(
+                                        entity = MusicBrainzEntity.RELEASE_GROUP,
+                                        id = releaseGroup.id,
+                                        title = null,
+                                    ),
+                                )
+                            },
+                        )
+                    }
                 },
                 additionalBar = {
                     TabsBar(
@@ -151,24 +143,24 @@ internal fun ReleaseGroupUi(
     ) { innerPadding ->
 
         val detailsLazyListState = rememberLazyListState()
-        val releasesLazyListState = rememberLazyListState()
+        val tracksLazyListState = rememberLazyListState()
         val relationsLazyListState = rememberLazyListState()
 
         HorizontalPager(
             state = pagerState,
         ) { page ->
             when (state.tabs[page]) {
-                ReleaseGroupTab.DETAILS -> {
+                ReleaseTab.DETAILS -> {
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = state.isError,
                         onRetryClick = {
-                            eventSink(ReleaseGroupUiEvent.ForceRefresh)
+                            eventSink(ReleaseUiEvent.ForceRefresh)
                         },
-                        scaffoldModel = state.releaseGroup,
-                    ) { releaseGroup ->
-                        ReleaseGroupDetailsUi(
-                            releaseGroup = releaseGroup,
+                        scaffoldModel = state.release,
+                    ) { release ->
+                        ReleaseDetailsUi(
+                            release = release,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
@@ -178,7 +170,7 @@ internal fun ReleaseGroupUi(
                             lazyListState = detailsLazyListState,
                             onItemClick = { entity, id, title ->
                                 eventSink(
-                                    ReleaseGroupUiEvent.ClickItem(
+                                    ReleaseUiEvent.ClickItem(
                                         entity = entity,
                                         id = id,
                                         title = title,
@@ -189,36 +181,28 @@ internal fun ReleaseGroupUi(
                     }
                 }
 
-                ReleaseGroupTab.RELEASES -> {
-                    ReleasesListScreen(
-                        lazyListState = releasesLazyListState,
+                ReleaseTab.TRACKS -> {
+                    TracksByReleaseScreen(
+                        lazyListState = tracksLazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.releasesByEntityUiState.lazyPagingItems,
-                        showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
-                        onReleaseClick = { entity, id, title ->
+                        lazyPagingItems = state.tracksLazyPagingItems,
+                        onRecordingClick = { id, title ->
                             eventSink(
-                                ReleaseGroupUiEvent.ClickItem(
-                                    entity = entity,
+                                ReleaseUiEvent.ClickItem(
+                                    entity = MusicBrainzEntity.RECORDING,
                                     id = id,
                                     title = title,
-                                ),
-                            )
-                        },
-                        requestForMissingCoverArtUrl = { id ->
-                            releasesByEntityEventSink(
-                                ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl(
-                                    entityId = id,
                                 ),
                             )
                         },
                     )
                 }
 
-                ReleaseGroupTab.RELATIONSHIPS -> {
+                ReleaseTab.RELATIONSHIPS -> {
                     RelationsListScreen(
                         lazyPagingItems = state.relationsUiState.lazyPagingItems,
                         modifier = Modifier
@@ -229,7 +213,7 @@ internal fun ReleaseGroupUi(
                         snackbarHostState = snackbarHostState,
                         onItemClick = { entity, id, title ->
                             eventSink(
-                                ReleaseGroupUiEvent.ClickItem(
+                                ReleaseUiEvent.ClickItem(
                                     entity = entity,
                                     id = id,
                                     title = title,
@@ -239,7 +223,7 @@ internal fun ReleaseGroupUi(
                     )
                 }
 
-                ReleaseGroupTab.STATS -> {
+                ReleaseTab.STATS -> {
                     CircuitContent(
                         StatsScreen(
                             entity = entity,

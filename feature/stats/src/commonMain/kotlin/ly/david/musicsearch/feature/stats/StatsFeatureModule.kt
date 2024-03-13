@@ -76,6 +76,13 @@ val statsFeatureModule = module {
                             )
                         }
 
+                        MusicBrainzEntity.RELEASE -> {
+                            ReleaseStatsPresenter(
+                                screen = screen,
+                                getCountOfEachRelationshipTypeUseCase = get(),
+                            )
+                        }
+
                         MusicBrainzEntity.RELEASE_GROUP -> {
                             ReleaseGroupStatsPresenter(
                                 screen = screen,

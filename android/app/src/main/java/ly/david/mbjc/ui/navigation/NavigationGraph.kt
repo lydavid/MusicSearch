@@ -24,7 +24,6 @@ import ly.david.musicsearch.core.models.navigation.toLookupDestination
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.musicsearch.core.models.network.toMusicBrainzEntity
-import ly.david.musicsearch.shared.feature.details.release.ReleaseUi
 import ly.david.musicsearch.shared.feature.details.series.SeriesUi
 import ly.david.musicsearch.shared.feature.details.work.WorkUi
 import ly.david.ui.common.screen.CollectionListScreen
@@ -456,13 +455,33 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.RELEASE,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-            ReleaseUi(
-                releaseId = entityId,
+            val backStack = rememberSaveableBackStack(
+                root = DetailsScreen(
+                    entity = MusicBrainzEntity.RELEASE,
+                    id = entityId,
+                    title = title,
+                ),
+            )
+            val navigator = rememberCircuitNavigator(backStack)
+            NavigableCircuitContent(
+                navigator = navigator,
+                backStack = backStack,
                 modifier = modifier,
-                titleWithDisambiguation = title,
-                onBack = navController::navigateUp,
-                onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
+
+                // TODO: temp
+                unavailableRoute = { screen, _ ->
+                    when (screen) {
+                        is DetailsScreen -> {
+                            onLookupEntityClick(
+                                screen.entity,
+                                screen.id,
+                                screen.title,
+                            )
+                        }
+
+                        else -> {}
+                    }
+                },
             )
         }
 

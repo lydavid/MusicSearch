@@ -28,6 +28,9 @@ import ly.david.musicsearch.shared.feature.details.place.PlaceUiState
 import ly.david.musicsearch.shared.feature.details.recording.RecordingPresenter
 import ly.david.musicsearch.shared.feature.details.recording.RecordingUi
 import ly.david.musicsearch.shared.feature.details.recording.RecordingUiState
+import ly.david.musicsearch.shared.feature.details.release.ReleasePresenter
+import ly.david.musicsearch.shared.feature.details.release.ReleaseUi
+import ly.david.musicsearch.shared.feature.details.release.ReleaseUiState
 import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupPresenter
 import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUi
 import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUiState
@@ -136,6 +139,19 @@ val detailsFeatureModule = module {
                             )
                         }
 
+                        MusicBrainzEntity.RELEASE -> {
+                            ReleasePresenter(
+                                screen = screen,
+                                navigator = navigator,
+                                repository = get(),
+                                incrementLookupHistory = get(),
+                                relationsPresenter = get(),
+                                releaseImageRepository = get(),
+                                getTracksByRelease = get(),
+                                logger = get(),
+                            )
+                        }
+
                         MusicBrainzEntity.RELEASE_GROUP -> {
                             ReleaseGroupPresenter(
                                 screen = screen,
@@ -235,6 +251,16 @@ val detailsFeatureModule = module {
                         MusicBrainzEntity.RECORDING -> {
                             ui<RecordingUiState> { state, modifier ->
                                 RecordingUi(
+                                    state = state,
+                                    entityId = screen.id,
+                                    modifier = modifier,
+                                )
+                            }
+                        }
+
+                        MusicBrainzEntity.RELEASE -> {
+                            ui<ReleaseUiState> { state, modifier ->
+                                ReleaseUi(
                                     state = state,
                                     entityId = screen.id,
                                     modifier = modifier,
