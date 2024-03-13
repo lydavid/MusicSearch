@@ -14,10 +14,10 @@ import ly.david.musicsearch.feature.stats.PlaceStats
 import ly.david.musicsearch.feature.stats.ReleaseStats
 import ly.david.musicsearch.feature.stats.Stats
 import ly.david.musicsearch.feature.stats.internal.StatsUiState
-import ly.david.ui.common.screen.AreaStatsScreen
+import ly.david.ui.common.screen.StatsScreen
 
 internal class AreaStatsPresenter(
-    private val screen: AreaStatsScreen,
+    private val screen: StatsScreen,
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
     private val releaseCountryDao: ReleaseCountryDao,

@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -28,6 +29,7 @@ import ly.david.ui.common.release.ReleasesListScreen
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
 import ly.david.ui.common.releasegroup.ReleaseGroupsListScreen
 import ly.david.ui.common.screen.AddToCollectionScreen
+import ly.david.ui.common.screen.StatsScreen
 import ly.david.ui.common.screen.showInBottomSheet
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
@@ -46,10 +48,6 @@ internal fun ArtistUi(
     state: ArtistUiState,
     entityId: String,
     modifier: Modifier = Modifier,
-//    showMoreInfoInReleaseListItem: Boolean = true,
-//    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
-//    sortReleaseGroupListItems: Boolean = false,
-//    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
 ) {
     val overlayHost = LocalOverlayHost.current
     val strings = LocalStrings.current
@@ -57,7 +55,7 @@ internal fun ArtistUi(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
-    val resource = MusicBrainzEntity.ARTIST
+    val entity = MusicBrainzEntity.ARTIST
     val eventSink = state.eventSink
     val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
     val releaseGroupsByEntityEventSink = state.releaseGroupsByEntityUiState.eventSink
@@ -75,7 +73,7 @@ internal fun ArtistUi(
                 onBack = {
                     eventSink(ArtistUiEvent.NavigateUp)
                 },
-                entity = resource,
+                entity = entity,
                 title = state.title,
                 scrollBehavior = scrollBehavior,
                 showFilterIcon = state.selectedTab !in listOf(
@@ -256,16 +254,17 @@ internal fun ArtistUi(
                 }
 
                 ArtistTab.STATS -> {
-//                    CircuitContent(
-//                        ArtistStatsScreen(
-//                            id = entityId,
-//                            tabs = state.tabs.map { it.tab },
-//                        ),
-//                        modifier = Modifier
-//                            .padding(innerPadding)
-//                            .fillMaxSize()
-//                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-//                    )
+                    CircuitContent(
+                        StatsScreen(
+                            entity = entity,
+                            id = entityId,
+                            tabs = state.tabs.map { it.tab },
+                        ),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    )
                 }
             }
         }

@@ -28,7 +28,7 @@ import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.ui.common.release.ReleasesListScreen
 import ly.david.ui.common.screen.AddToCollectionScreen
-import ly.david.ui.common.screen.AreaStatsScreen
+import ly.david.ui.common.screen.StatsScreen
 import ly.david.ui.common.screen.showInBottomSheet
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
@@ -57,7 +57,7 @@ internal fun AreaUi(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
-    val resource = MusicBrainzEntity.AREA
+    val entity = MusicBrainzEntity.AREA
     val eventSink = state.eventSink
     val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
@@ -74,7 +74,7 @@ internal fun AreaUi(
                 onBack = {
                     eventSink(AreaUiEvent.NavigateUp)
                 },
-                entity = resource,
+                entity = entity,
                 title = state.title,
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = {
@@ -237,7 +237,8 @@ internal fun AreaUi(
 
                 AreaTab.STATS -> {
                     CircuitContent(
-                        AreaStatsScreen(
+                        StatsScreen(
+                            entity = entity,
                             id = entityId,
                             tabs = state.tabs.map { it.tab },
                         ),
