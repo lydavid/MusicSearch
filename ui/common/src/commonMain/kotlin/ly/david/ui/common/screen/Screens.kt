@@ -23,6 +23,12 @@ data class CollectionScreen(
 ) : Screen
 
 @CommonParcelize
+data class AddToCollectionScreen(
+    val entity: MusicBrainzEntity,
+    val id: String,
+) : Screen
+
+@CommonParcelize
 data class DetailsScreen(
     val entity: MusicBrainzEntity,
     val id: String,

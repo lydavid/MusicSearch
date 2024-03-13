@@ -7,7 +7,7 @@ internal sealed interface CollectionListUiEvent : CircuitUiEvent {
     data class UpdateShowLocal(val show: Boolean) : CollectionListUiEvent
     data class UpdateShowRemote(val show: Boolean) : CollectionListUiEvent
     data class CreateCollection(val newCollection: NewCollection) : CollectionListUiEvent
-    data class ClickCollection(
+    data class GoToCollection(
         val id: String,
     ) : CollectionListUiEvent
 }

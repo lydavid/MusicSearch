@@ -99,6 +99,8 @@ internal class AreaPresenter(
                     // TODO: consider handling these like StatsScreen = more separation of concerns
                     //  possible problems:
                     //  - how to pass query?
+                    //  - Will each of them be NavigableCircuitContent? Ui can't receive navigator,
+                    //  so we have to eventSink its navigation?
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,

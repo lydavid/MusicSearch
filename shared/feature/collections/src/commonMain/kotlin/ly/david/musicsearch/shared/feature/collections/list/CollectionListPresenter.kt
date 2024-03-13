@@ -56,7 +56,7 @@ internal class CollectionListPresenter(
                     )
                 }
 
-                is CollectionListUiEvent.ClickCollection -> {
+                is CollectionListUiEvent.GoToCollection -> {
                     navigator.goTo(CollectionScreen(event.id))
                 }
             }

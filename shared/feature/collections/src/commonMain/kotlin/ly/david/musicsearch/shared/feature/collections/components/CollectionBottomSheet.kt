@@ -62,12 +62,14 @@ fun CollectionBottomSheet(
     }
 }
 
+// TODO: by using screen, we can decouple details from depending on collections, as it just needs to call
+//  AddToCollectionsScreen
 @Suppress("UnusedReceiverParameter")
 @OptIn(
     ExperimentalFoundationApi::class,
 )
 @Composable
-internal fun ColumnScope.CollectionBottomSheetContent(
+fun ColumnScope.CollectionBottomSheetContent(
     collections: LazyPagingItems<CollectionListItemModel>,
     modifier: Modifier = Modifier,
     onCreateCollectionClick: () -> Unit = {},

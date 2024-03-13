@@ -4,11 +4,13 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.ActionableResult
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUriPlural
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
+import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -26,6 +28,7 @@ class CollectionRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val browseEntityCountRepository: BrowseEntityCountRepository,
+    private val logger: Logger,
 ) : CollectionRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -150,5 +153,46 @@ class CollectionRepositoryImpl(
             )
         }
         return ActionableResult("Deleted $entityName from ${collection.name}.")
+    }
+
+    override suspend fun addToCollection(
+        collectionId: String,
+        entity: MusicBrainzEntity,
+        entityId: String,
+    ): ActionableResult {
+        var result = ActionableResult()
+
+        val collection = collectionDao.getCollection(collectionId)
+        if (collection.isRemote) {
+            try {
+                musicBrainzApi.uploadToCollection(
+                    collectionId = collectionId,
+                    resourceUriPlural = entity.resourceUriPlural,
+                    mbids = entityId,
+                )
+            } catch (ex: RecoverableNetworkException) {
+                val userFacingError = "Failed to add to ${collection.name}. Login has expired."
+                logger.e(ex)
+                return ActionableResult(
+                    message = userFacingError,
+                    actionLabel = "Login",
+                )
+            }
+        }
+
+        collectionEntityDao.withTransaction {
+            val insertedOneEntry = collectionEntityDao.insert(
+                collectionId = collectionId,
+                entityId = entityId,
+            )
+
+            result = if (insertedOneEntry == INSERTION_FAILED_DUE_TO_CONFLICT) {
+                ActionableResult("Already in ${collection.name}.")
+            } else {
+                ActionableResult("Added to ${collection.name}.")
+            }
+        }
+
+        return result
     }
 }

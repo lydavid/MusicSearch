@@ -18,6 +18,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.slack.circuit.foundation.CircuitContent
+import com.slack.circuit.foundation.NavEvent
+import com.slack.circuit.overlay.LocalOverlayHost
+import com.slack.circuitx.overlays.BottomSheetOverlay
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
@@ -26,6 +29,7 @@ import ly.david.ui.common.place.PlacesListScreen
 import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.ui.common.release.ReleasesListScreen
+import ly.david.ui.common.screen.AddToCollectionScreen
 import ly.david.ui.common.screen.AreaStatsScreen
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
@@ -47,10 +51,10 @@ internal fun AreaUi(
     state: AreaUiState,
     entityId: String,
     modifier: Modifier = Modifier,
-//    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
 ) {
     val eventSink = state.eventSink
     val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
+    val overlayHost = LocalOverlayHost.current
     val resource = MusicBrainzEntity.AREA
     val strings = LocalStrings.current
     val snackbarHostState = remember { SnackbarHostState() }
@@ -61,13 +65,6 @@ internal fun AreaUi(
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(AreaUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
     }
-
-//    LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
-//        viewModel.loadDataForTab(
-//            areaId = areaId,
-//            selectedTab = selectedTab,
-//        )
-//    }
 
     Scaffold(
         modifier = modifier,
@@ -99,7 +96,27 @@ internal fun AreaUi(
                         )
                     }
                     AddToCollectionMenuItem {
-//                        onAddToCollectionMenuClick(resource, areaId)
+                        scope.launch {
+                            overlayHost.show(
+                                BottomSheetOverlay(
+                                    model = Unit,
+                                    onDismiss = {}, // Crashes if we don't include this
+                                ) { _, overlayNavigator ->
+                                    CircuitContent(
+                                        AddToCollectionScreen(
+                                            entity = MusicBrainzEntity.AREA,
+                                            id = entityId,
+                                        ),
+                                        onNavEvent = { event ->
+                                            when (event) {
+                                                is NavEvent.Pop -> overlayNavigator.finish(Unit)
+                                                else -> {}
+                                            }
+                                        },
+                                    )
+                                },
+                            )
+                        }
                     }
                 },
                 showFilterIcon = state.selectedTab !in listOf(
@@ -125,6 +142,8 @@ internal fun AreaUi(
         val releasesLazyListState = rememberLazyListState()
         val placesLazyListState = rememberLazyListState()
 
+        // TODO: consider generalizing this entire details ui, we can have all types of tabs here
+        //  each details screen will provide its own list of tabs (which may be in different order)
         HorizontalPager(
             state = pagerState,
         ) { page ->

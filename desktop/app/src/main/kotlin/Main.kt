@@ -8,6 +8,7 @@ import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.overlay.ContentWithOverlays
 import ly.david.musicsearch.shared.di.sharedModule
+import ly.david.ui.common.screen.CollectionListScreen
 import ly.david.ui.common.screen.SearchScreen
 import ly.david.ui.core.theme.BaseTheme
 import org.koin.core.context.startKoin

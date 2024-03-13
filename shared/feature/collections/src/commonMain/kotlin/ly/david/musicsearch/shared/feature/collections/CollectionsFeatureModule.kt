@@ -3,12 +3,16 @@ package ly.david.musicsearch.shared.feature.collections
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
+import ly.david.musicsearch.shared.feature.collections.add.AddToCollectionPresenter
+import ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUi
+import ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUiState
 import ly.david.musicsearch.shared.feature.collections.list.CollectionList
 import ly.david.musicsearch.shared.feature.collections.list.CollectionListPresenter
 import ly.david.musicsearch.shared.feature.collections.list.CollectionListUiState
 import ly.david.musicsearch.shared.feature.collections.single.CollectionPresenter
 import ly.david.musicsearch.shared.feature.collections.single.CollectionUi
 import ly.david.musicsearch.shared.feature.collections.single.CollectionUiState
+import ly.david.ui.common.screen.AddToCollectionScreen
 import ly.david.ui.common.screen.CollectionListScreen
 import ly.david.ui.common.screen.CollectionScreen
 import org.koin.core.qualifier.named
@@ -47,6 +51,14 @@ val collectionsFeatureModule = module {
                     releaseImageRepository = get(),
                 )
 
+                is AddToCollectionScreen -> AddToCollectionPresenter(
+                    screen = screen,
+                    navigator = navigator,
+                    getAllCollections = get(),
+                    createCollection = get(),
+                    collectionRepository = get(),
+                )
+
                 else -> null
             }
         }
@@ -66,6 +78,15 @@ val collectionsFeatureModule = module {
                 is CollectionScreen -> {
                     ui<CollectionUiState> { state, modifier ->
                         CollectionUi(
+                            state = state,
+                            modifier = modifier,
+                        )
+                    }
+                }
+
+                is AddToCollectionScreen -> {
+                    ui<AddToCollectionUiState> { state, modifier ->
+                        AddToCollectionUi(
                             state = state,
                             modifier = modifier,
                         )
