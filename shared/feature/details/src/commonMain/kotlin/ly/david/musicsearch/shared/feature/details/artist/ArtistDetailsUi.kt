@@ -1,15 +1,13 @@
-package ly.david.musicsearch.shared.feature.details.artist.details
+package ly.david.musicsearch.shared.feature.details.artist
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.core.models.artist.ArtistScaffoldModel
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -19,8 +17,6 @@ import ly.david.ui.common.listitem.LifeSpanText
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
 internal fun ArtistDetailsUi(
@@ -102,28 +98,3 @@ internal fun ArtistDetailsUi(
         }
     }
 }
-
-// region Previews
-@DefaultPreviews
-@Composable
-private fun Preview() {
-    PreviewTheme {
-        Surface {
-            ArtistDetailsUi(
-                artist = ArtistScaffoldModel(
-                    id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
-                    name = "The Beatles",
-                    type = "Group",
-                    lifeSpan = LifeSpanUiModel(
-                        begin = "1960",
-                        end = "1970-04-10",
-                        ended = true,
-                    ),
-                    sortName = "Beatles, The",
-                ),
-                artistImageUrl = "https://i.scdn.co/image/ab6761610000e5ebe9348cc01ff5d55971b22433",
-            )
-        }
-    }
-}
-// endregion

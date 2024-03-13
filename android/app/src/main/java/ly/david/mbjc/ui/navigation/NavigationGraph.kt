@@ -24,7 +24,6 @@ import ly.david.musicsearch.core.models.navigation.toLookupDestination
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.musicsearch.core.models.network.toMusicBrainzEntity
-import ly.david.musicsearch.shared.feature.details.artist.ArtistUi
 import ly.david.musicsearch.shared.feature.details.event.EventUi
 import ly.david.musicsearch.shared.feature.details.genre.GenreUi
 import ly.david.musicsearch.shared.feature.details.instrument.InstrumentUi
@@ -180,9 +179,6 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.AREA,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-//            AreaUi(
-//                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
-//            )
             val backStack = rememberSaveableBackStack(
                 root = DetailsScreen(
                     entity = MusicBrainzEntity.AREA,
@@ -216,18 +212,46 @@ internal fun NavigationGraph(
         addLookupEntityScreen(
             entity = MusicBrainzEntity.ARTIST,
             uriPrefix = uriPrefix,
-        ) { entity, title ->
-            ArtistUi(
-                artistId = entity,
+        ) { entityId, title ->
+//            ArtistUi(
+//                artistId = entity,
+//                modifier = modifier,
+//                titleWithDisambiguation = title,
+//                onItemClick = onLookupEntityClick,
+//                onBack = navController::navigateUp,
+//                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
+//                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+//                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
+//                sortReleaseGroupListItems = sortReleaseGroupListItems,
+//                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
+//            )
+            val backStack = rememberSaveableBackStack(
+                root = DetailsScreen(
+                    entity = MusicBrainzEntity.ARTIST,
+                    id = entityId,
+                    title = title,
+                ),
+            )
+            val navigator = rememberCircuitNavigator(backStack)
+            NavigableCircuitContent(
+                navigator = navigator,
+                backStack = backStack,
                 modifier = modifier,
-                titleWithDisambiguation = title,
-                onItemClick = onLookupEntityClick,
-                onBack = navController::navigateUp,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
-                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
-                sortReleaseGroupListItems = sortReleaseGroupListItems,
-                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
+
+                // TODO: temp
+                unavailableRoute = { screen, _ ->
+                    when (screen) {
+                        is DetailsScreen -> {
+                            onLookupEntityClick(
+                                screen.entity,
+                                screen.id,
+                                screen.title,
+                            )
+                        }
+
+                        else -> {}
+                    }
+                },
             )
         }
 

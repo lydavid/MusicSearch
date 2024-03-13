@@ -1,4 +1,4 @@
-package ly.david.ui.commonlegacy.releasegroup
+package ly.david.ui.common.releasegroup
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
@@ -15,9 +15,6 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.ui.common.releasegroup.ReleaseGroupListItem
-import org.koin.androidx.compose.koinViewModel
-import timber.log.Timber
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -28,7 +25,7 @@ fun ReleaseGroupsListScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onReleaseGroupClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
-    viewModel: ReleaseGroupsListViewModel = koinViewModel(),
+    requestForMissingCoverArtUrl: suspend (id: String) -> Unit = {},
 ) {
     ScreenWithPagingLoadingAndError(
         modifier = modifier,
@@ -44,13 +41,7 @@ fun ReleaseGroupsListScreen(
                             releaseGroup = listItemModel,
                             modifier = Modifier.animateItemPlacement(),
                             requestForMissingCoverArtUrl = {
-                                try {
-                                    viewModel.getReleaseGroupCoverArtUrlFromNetwork(
-                                        releaseGroupId = listItemModel.id,
-                                    )
-                                } catch (ex: Exception) {
-                                    Timber.e(ex)
-                                }
+                                requestForMissingCoverArtUrl(listItemModel.id)
                             },
                         ) {
                             onReleaseGroupClick(

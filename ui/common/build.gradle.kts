@@ -34,6 +34,8 @@ kotlin {
                 implementation(compose.preview)
 
                 implementation(libs.circuit.foundation)
+                implementation(libs.circuit.overlay)
+                implementation(libs.circuitx.overlays)
                 implementation(libs.koin.annotations)
                 implementation(libs.koin.core)
                 implementation(libs.lyricist.library)

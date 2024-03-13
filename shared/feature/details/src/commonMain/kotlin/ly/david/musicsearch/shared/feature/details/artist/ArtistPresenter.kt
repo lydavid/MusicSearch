@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.details.area
+package ly.david.musicsearch.shared.feature.details.artist
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,63 +12,77 @@ import com.slack.circuit.foundation.onNavEvent
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.core.models.area.AreaScaffoldModel
-import ly.david.musicsearch.core.models.area.showReleases
+import ly.david.musicsearch.core.models.artist.ArtistScaffoldModel
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
-import ly.david.musicsearch.domain.area.AreaRepository
+import ly.david.musicsearch.data.spotify.ArtistImageRepository
+import ly.david.musicsearch.domain.artist.ArtistRepository
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
-import ly.david.ui.common.screen.DetailsScreen
-import ly.david.ui.common.place.PlacesByEntityPresenter
-import ly.david.ui.common.place.PlacesByEntityUiEvent
 import ly.david.ui.common.relation.RelationsPresenter
 import ly.david.ui.common.relation.RelationsUiEvent
 import ly.david.ui.common.release.ReleasesByEntityPresenter
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
+import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
+import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
+import ly.david.ui.common.screen.DetailsScreen
 
-// TODO: not only do we need every XByEntityPresenter, we also need every XRepository...
-//  all XByEntityPresenter could be moved to another nested Presenter, which will half our injections
-internal class AreaPresenter(
+internal class ArtistPresenter(
     private val screen: DetailsScreen,
     private val navigator: Navigator,
-    private val repository: AreaRepository,
+    private val repository: ArtistRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
-    private val placesByEntityPresenter: PlacesByEntityPresenter,
+    private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
     private val relationsPresenter: RelationsPresenter,
+    private val artistImageRepository: ArtistImageRepository,
     private val logger: Logger,
-) : Presenter<AreaUiState> {
+) : Presenter<ArtistUiState> {
+
+    private suspend fun fetchArtistImage(
+        artist: ArtistScaffoldModel,
+    ): String {
+        val imageUrl = artist.imageUrl
+        return if (imageUrl == null) {
+            val spotifyUrl =
+                artist.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name ?: return ""
+            artistImageRepository.getArtistImageFromNetwork(
+                artistMbid = artist.id,
+                spotifyUrl = spotifyUrl,
+            )
+        } else {
+            imageUrl
+        }
+    }
 
     @Composable
-    override fun present(): AreaUiState {
+    override fun present(): ArtistUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
-        var area: AreaScaffoldModel? by remember { mutableStateOf(null) }
-        var tabs: List<AreaTab> by rememberSaveable {
-            mutableStateOf(AreaTab.entries.filter { it != AreaTab.RELEASES })
+        var artist: ArtistScaffoldModel? by remember { mutableStateOf(null) }
+        var imageUrl by rememberSaveable { mutableStateOf("") }
+        var tabs: List<ArtistTab> by rememberSaveable {
+            mutableStateOf(ArtistTab.entries)
         }
-        var selectedTab by rememberSaveable { mutableStateOf(AreaTab.DETAILS) }
+        var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
         var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
 
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
-        val placesByEntityUiState = placesByEntityPresenter.present()
-        val placesEventSink = placesByEntityUiState.eventSink
+        val releaseGroupsByEntityUiState = releaseGroupsByEntityPresenter.present()
+        val releaseGroupsEventSink = releaseGroupsByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val areaScaffoldModel = repository.lookupArea(screen.id)
+                val artistScaffoldModel = repository.lookupArtist(screen.id)
                 if (title.isEmpty()) {
-                    title = areaScaffoldModel.getNameWithDisambiguation()
+                    title = artistScaffoldModel.getNameWithDisambiguation()
                 }
-                if (areaScaffoldModel.showReleases()) {
-                    tabs = AreaTab.entries
-                }
-                area = areaScaffoldModel
+                artist = artistScaffoldModel
+                imageUrl = fetchArtistImage(artistScaffoldModel)
                 isError = false
             } catch (ex: Exception) {
                 logger.e(ex)
@@ -80,24 +94,23 @@ internal class AreaPresenter(
                         mbid = screen.id,
                         title = title,
                         entity = screen.entity,
-                        searchHint = area?.sortName.orEmpty(),
+                        searchHint = artist?.sortName.orEmpty(),
                     ),
                 )
                 recordedHistory = true
             }
         }
 
-        // TODO: good candidate for extraction
         LaunchedEffect(
             key1 = query,
             key2 = selectedTab,
         ) {
             when (selectedTab) {
-                AreaTab.DETAILS -> {
+                ArtistTab.DETAILS -> {
                     // Loaded above
                 }
 
-                AreaTab.RELATIONSHIPS -> {
+                ArtistTab.RELATIONSHIPS -> {
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
@@ -107,7 +120,7 @@ internal class AreaPresenter(
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
                 }
 
-                AreaTab.RELEASES -> {
+                ArtistTab.RELEASES -> {
                     releasesEventSink(
                         ReleasesByEntityUiEvent.GetReleases(
                             byEntityId = screen.id,
@@ -117,37 +130,37 @@ internal class AreaPresenter(
                     releasesEventSink(ReleasesByEntityUiEvent.UpdateQuery(query))
                 }
 
-                AreaTab.PLACES -> {
-                    placesEventSink(
-                        PlacesByEntityUiEvent.GetPlaces(
+                ArtistTab.RELEASE_GROUPS -> {
+                    releaseGroupsEventSink(
+                        ReleaseGroupsByEntityUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    placesEventSink(PlacesByEntityUiEvent.UpdateQuery(query))
+                    releaseGroupsEventSink(ReleaseGroupsByEntityUiEvent.UpdateQuery(query))
                 }
 
-                AreaTab.STATS -> {
+                ArtistTab.STATS -> {
                     // Handled in UI
                 }
             }
         }
 
-        fun eventSink(event: AreaUiEvent) {
+        fun eventSink(event: ArtistUiEvent) {
             when (event) {
-                AreaUiEvent.NavigateUp -> {
+                ArtistUiEvent.NavigateUp -> {
                     navigator.pop()
                 }
 
-                is AreaUiEvent.UpdateQuery -> {
+                is ArtistUiEvent.UpdateQuery -> {
                     query = event.query
                 }
 
-                is AreaUiEvent.UpdateTab -> {
+                is ArtistUiEvent.UpdateTab -> {
                     selectedTab = event.tab
                 }
 
-                is AreaUiEvent.ClickItem -> {
+                is ArtistUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             DetailsScreen(
@@ -159,20 +172,21 @@ internal class AreaPresenter(
                     )
                 }
 
-                AreaUiEvent.ForceRefresh -> {
+                ArtistUiEvent.ForceRefresh -> {
                     forceRefreshDetails = true
                 }
             }
         }
 
-        return AreaUiState(
+        return ArtistUiState(
             title = title,
             isError = isError,
-            area = area,
+            artist = artist,
+            imageUrl = imageUrl,
             tabs = tabs,
             selectedTab = selectedTab,
             query = query,
-            placesByEntityUiState = placesByEntityUiState,
+            releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
             eventSink = ::eventSink,

@@ -10,18 +10,18 @@ import ly.david.musicsearch.feature.stats.Stats
 import ly.david.musicsearch.feature.stats.StatsUi
 import org.koin.androidx.compose.koinViewModel
 
-@Composable
-internal fun ArtistStatsScreen(
-    artistId: String,
-    tabs: ImmutableList<Tab>,
-    modifier: Modifier = Modifier,
-    viewModel: ArtistStatsViewModel = koinViewModel(),
-) {
-    val stats by viewModel.getStats(entityId = artistId).collectAsState(Stats())
-
-    StatsUi(
-        modifier = modifier,
-        tabs = tabs,
-        stats = stats,
-    )
-}
+//@Composable
+//internal fun ArtistStatsScreen(
+//    artistId: String,
+//    tabs: ImmutableList<Tab>,
+//    modifier: Modifier = Modifier,
+//    viewModel: ArtistStatsViewModel = koinViewModel(),
+//) {
+//    val stats by viewModel.getStats(entityId = artistId).collectAsState(Stats())
+//
+//    StatsUi(
+//        modifier = modifier,
+//        tabs = tabs,
+//        stats = stats,
+//    )
+//}

@@ -10,7 +10,7 @@ import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.ListItemModel
-import ly.david.ui.commonlegacy.releasegroup.ReleaseGroupsListScreen
+import ly.david.ui.commonlegacy.releasegroup.ReleaseGroupsListScreenLegacy
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -34,7 +34,7 @@ internal fun ReleaseGroupsByArtistScreen(
     viewModel.updateQuery(query = filterText)
     viewModel.updateSorted(sorted = isSorted)
 
-    ReleaseGroupsListScreen(
+    ReleaseGroupsListScreenLegacy(
         lazyListState = lazyListState,
         modifier = modifier,
         snackbarHostState = snackbarHostState,

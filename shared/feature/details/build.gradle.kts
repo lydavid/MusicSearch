@@ -26,7 +26,6 @@ kotlin {
                 implementation(projects.ui.image)
                 implementation(projects.domain)
                 implementation(projects.feature.stats)
-                implementation(projects.shared.feature.collections)
                 implementation(projects.strings)
                 implementation(projects.ui.common)
                 implementation(projects.ui.core)
