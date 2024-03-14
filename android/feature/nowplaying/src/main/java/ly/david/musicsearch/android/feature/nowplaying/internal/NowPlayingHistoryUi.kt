@@ -34,7 +34,7 @@ internal fun NowPlayingHistoryUi(
 ) {
     val eventSink = state.eventSink
 
-    NowPlayingHistoryScaffold(
+    NowPlayingHistoryUi(
         lazyPagingItems = state.lazyPagingItems,
         modifier = modifier,
         onBack = {
@@ -60,7 +60,7 @@ internal fun NowPlayingHistoryUi(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun NowPlayingHistoryScaffold(
+private fun NowPlayingHistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
@@ -143,7 +143,7 @@ private fun NowPlayingHistoryContent(
 // region Previews
 @DefaultPreviews
 @Composable
-internal fun PreviewNowPlayingHistoryScaffold() {
+internal fun PreviewNowPlayingHistoryUi() {
     PreviewTheme {
         Surface {
             val items = MutableStateFlow(
@@ -178,7 +178,7 @@ internal fun PreviewNowPlayingHistoryScaffold() {
                     ),
                 ),
             )
-            NowPlayingHistoryScaffold(
+            NowPlayingHistoryUi(
                 lazyPagingItems = items.collectAsLazyPagingItems(),
             )
         }

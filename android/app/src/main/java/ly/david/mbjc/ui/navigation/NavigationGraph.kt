@@ -5,7 +5,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ly.david.musicsearch.android.feature.spotify.SpotifyScaffold
 import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUri
@@ -49,14 +48,14 @@ internal fun NavigationGraph(
 //            )
 //        }
 
-        composable(
-            Destination.EXPERIMENTAL_SPOTIFY.route,
-        ) {
-            SpotifyScaffold(
-                modifier = modifier,
-                onBack = navController::navigateUp,
-                searchMusicBrainz = searchMusicBrainz,
-            )
-        }
+//        composable(
+//            Destination.EXPERIMENTAL_SPOTIFY.route,
+//        ) {
+//            SpotifyUi(
+//                modifier = modifier,
+//                onBack = navController::navigateUp,
+//                searchMusicBrainz = searchMusicBrainz,
+//            )
+//        }
     }
 }

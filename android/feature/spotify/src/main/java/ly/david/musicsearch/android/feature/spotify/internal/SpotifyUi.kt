@@ -7,21 +7,83 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.component.ClickableItem
+import ly.david.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
-internal fun SpotifyScreen(
+internal fun SpotifyUi(
+    state: SpotifyUiState,
+    modifier: Modifier = Modifier,
+) {
+    val eventSink = state.eventSink
+
+    SpotifyUi(
+        metadata = state.metadata,
+        modifier = modifier,
+        onBack = {
+            eventSink(SpotifyUiEvent.NavigateUp)
+        },
+        searchMusicBrainz = { query, entity ->
+            eventSink(
+                SpotifyUiEvent.GoToSearch(
+                    query = query,
+                    entity = entity,
+                ),
+            )
+        },
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SpotifyUi(
+    metadata: SpotifyMetadata,
+    modifier: Modifier = Modifier,
+    onBack: () -> Unit = {},
+    searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
+) {
+    val strings = LocalStrings.current
+    val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            ScrollableTopAppBar(
+                showBackButton = true,
+                onBack = onBack,
+                title = strings.spotify,
+                scrollBehavior = scrollBehavior,
+            )
+        },
+    ) { innerPadding ->
+        SpotifyContent(
+            metadata = metadata,
+            modifier = Modifier
+                .padding(innerPadding)
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
+            searchMusicBrainz = searchMusicBrainz,
+        )
+    }
+}
+
+@Composable
+internal fun SpotifyContent(
     metadata: SpotifyMetadata,
     modifier: Modifier = Modifier,
     searchMusicBrainz: (query: String, id: MusicBrainzEntity) -> Unit = { _, _ -> },
@@ -85,7 +147,10 @@ private fun SpotifySearchLinks(
         metadata.albumName.ifNotNullOrEmpty { albumName ->
             ClickableItem(
                 title = albumName,
-                subtitle = strings.searchXByX(albumName, artistName),
+                subtitle = strings.searchXByX(
+                    albumName,
+                    artistName,
+                ),
                 endIcon = Icons.Default.Search,
                 onClick = {
                     searchMusicBrainz(
@@ -99,7 +164,10 @@ private fun SpotifySearchLinks(
         metadata.trackName.ifNotNullOrEmpty { trackName ->
             ClickableItem(
                 title = trackName,
-                subtitle = strings.searchXByX(trackName, artistName),
+                subtitle = strings.searchXByX(
+                    trackName,
+                    artistName,
+                ),
                 endIcon = Icons.Default.Search,
                 onClick = {
                     searchMusicBrainz(
@@ -115,26 +183,24 @@ private fun SpotifySearchLinks(
 // region Previews
 @DefaultPreviews
 @Composable
-internal fun PreviewSpotifyScreenEmpty() {
+internal fun PreviewSpotifyUi() {
     PreviewTheme {
-        Surface {
-            SpotifyScreen(metadata = SpotifyMetadata())
-        }
+        SpotifyUi(
+            metadata = SpotifyMetadata(
+                artistName = "Artist",
+                albumName = "Album",
+                trackName = "Track",
+            ),
+        )
     }
 }
 
 @DefaultPreviews
 @Composable
-internal fun PreviewSpotifyScreenWithData() {
+internal fun PreviewSpotifyUiEmpty() {
     PreviewTheme {
         Surface {
-            SpotifyScreen(
-                metadata = SpotifyMetadata(
-                    artistName = "Artist",
-                    albumName = "Album",
-                    trackName = "Track",
-                ),
-            )
+            SpotifyUi(metadata = SpotifyMetadata())
         }
     }
 }
