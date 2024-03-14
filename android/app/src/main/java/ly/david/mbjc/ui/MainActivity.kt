@@ -18,7 +18,6 @@ import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.overlay.ContentWithOverlays
 import com.slack.circuit.runtime.screen.Screen
 import ly.david.mbjc.ui.navigation.BottomNavigationBar
-import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.core.models.network.toMusicBrainzEntity
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.ui.common.screen.CollectionListScreen
@@ -63,8 +62,9 @@ private fun getInitialScreens(
 
     val initialScreens: MutableList<Screen> = mutableListOf()
     val pathSegments = uri.pathSegments
+
     when (pathSegments.first()) {
-        Destination.LOOKUP.route -> {
+        "search" -> {
             initialScreens.add(
                 SearchScreen(
                     query = uri.getQueryParameter(QUERY),
@@ -73,11 +73,11 @@ private fun getInitialScreens(
             )
         }
 
-        Destination.HISTORY.route -> {
+        "history" -> {
             initialScreens.add(HistoryScreen)
         }
 
-        Destination.COLLECTIONS.route -> {
+        "collection" -> {
             initialScreens.add(CollectionListScreen)
             if (pathSegments.size > 1) {
                 val collectionId = pathSegments.last()
@@ -89,7 +89,7 @@ private fun getInitialScreens(
             }
         }
 
-        Destination.SETTINGS.route -> {
+        "settings" -> {
             initialScreens.add(SettingsScreen)
         }
 

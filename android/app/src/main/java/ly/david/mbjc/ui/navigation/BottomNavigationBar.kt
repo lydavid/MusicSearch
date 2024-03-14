@@ -66,7 +66,7 @@ internal fun BottomNavigationBar(
                     )
                 },
                 label = { Text(item.getText(strings)) },
-                selected = currentTopLevelScreen == item.screen,
+                selected = currentTopLevelScreen::class == item.screen::class,
                 onClick = {
                     navigateToTopLevelScreen(item.screen)
                 },
