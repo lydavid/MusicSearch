@@ -34,7 +34,7 @@ internal fun NowPlayingHistoryUi(
 ) {
     val eventSink = state.eventSink
 
-    NowPlayingHistoryUi(
+    NowPlayingHistoryScaffold(
         lazyPagingItems = state.lazyPagingItems,
         modifier = modifier,
         onBack = {
@@ -60,7 +60,7 @@ internal fun NowPlayingHistoryUi(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun NowPlayingHistoryUi(
+private fun NowPlayingHistoryScaffold(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
@@ -85,7 +85,7 @@ internal fun NowPlayingHistoryUi(
             )
         },
     ) { innerPadding ->
-        NowPlayingHistoryUi(
+        NowPlayingHistoryContent(
             lazyPagingItems = lazyPagingItems,
             modifier = Modifier
                 .padding(innerPadding)
@@ -98,7 +98,7 @@ internal fun NowPlayingHistoryUi(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun NowPlayingHistoryUi(
+private fun NowPlayingHistoryContent(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
@@ -143,7 +143,7 @@ internal fun NowPlayingHistoryUi(
 // region Previews
 @DefaultPreviews
 @Composable
-internal fun PreviewNowPlayingHistoryScreen() {
+internal fun PreviewNowPlayingHistoryScaffold() {
     PreviewTheme {
         Surface {
             val items = MutableStateFlow(
@@ -178,50 +178,10 @@ internal fun PreviewNowPlayingHistoryScreen() {
                     ),
                 ),
             )
-            NowPlayingHistoryUi(lazyPagingItems = items.collectAsLazyPagingItems())
+            NowPlayingHistoryScaffold(
+                lazyPagingItems = items.collectAsLazyPagingItems(),
+            )
         }
     }
 }
-// endregion
-
-// region Previews
-// @DefaultPreviews
-// @Composable
-// internal fun PreviewNowPlayingHistoryScaffold() {
-//    PreviewTheme {
-//        val items = MutableStateFlow(
-//            PagingData.from(
-//                listOf(
-//                    ListSeparator(
-//                        id = "separator1",
-//                        text = "Saturday, July 7, 2023",
-//                    ),
-//                    NowPlayingHistoryListItemModel(
-//                        id = "1",
-//                        title = "Title",
-//                        artist = "Artist",
-//                        lastPlayed = Instant.parse("2023-07-15T11:42:20Z"),
-//                    ),
-//                    NowPlayingHistoryListItemModel(
-//                        id = "2",
-//                        title = "Another Title",
-//                        artist = "A different artist",
-//                        lastPlayed = Instant.parse("2023-07-15T11:42:19Z"),
-//                    ),
-//                    ListSeparator(
-//                        id = "separator2",
-//                        text = "Friday, July 6, 2023",
-//                    ),
-//                    NowPlayingHistoryListItemModel(
-//                        id = "3",
-//                        title = "Yet Another Title",
-//                        artist = "A different artist",
-//                        lastPlayed = Instant.parse("2023-07-15T11:42:19Z"),
-//                    ),
-//                ),
-//            ),
-//        )
-//        NowPlayingHistoryUi(lazyPagingItems = items.collectAsLazyPagingItems())
-//    }
-// }
 // endregion

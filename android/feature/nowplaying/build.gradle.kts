@@ -2,7 +2,6 @@ plugins {
     id("ly.david.android.library")
     kotlin("android")
     id("ly.david.android.compose")
-    alias(libs.plugins.ksp)
     alias(libs.plugins.paparazzi)
 }
 
@@ -15,10 +14,7 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.strings)
     implementation(projects.ui.common)
-    implementation(projects.ui.commonLegacy)
     implementation(projects.ui.core)
-    implementation(projects.ui.image)
-    testImplementation(projects.ui.test.image)
     testImplementation(projects.ui.test.screenshot)
 
     implementation(libs.paging.compose)
@@ -31,12 +27,8 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
 
     implementation(libs.circuit.foundation)
-    implementation(libs.koin.androidx.compose)
     implementation(libs.koin.core)
-    implementation(libs.koin.annotations)
-    ksp(libs.koin.ksp.compiler)
 
     testImplementation(libs.bundles.kotlinx.coroutines)
-    testImplementation(libs.coil.compose)
     testImplementation(libs.test.parameter.injector)
 }
