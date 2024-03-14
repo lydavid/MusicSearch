@@ -117,32 +117,27 @@ internal fun TopLevelScaffold(
         )
     }
 
-    Scaffold(
-        bottomBar = {
-            BottomNavigationBar(
-                currentTopLevelDestination = currentTopLevelDestination,
-                navigateToTopLevelDestination = { it.onTopLevelDestinationClick() },
-            )
-        },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
-                SwipeToDismissBox(
-                    state = rememberSwipeToDismissBoxState(),
-                    backgroundContent = {},
-                    content = { Snackbar(snackbarData) },
-                )
-            }
-        },
-    ) { innerPadding ->
-
-        NavigationGraph(
-            navController = navController,
-            modifier = Modifier.padding(innerPadding),
-            onAddToCollectionMenuClick = { entity, id ->
-                viewModel.setEntity(entity)
-                viewModel.setEntityId(id)
-                showBottomSheet = true
-            },
-        )
-    }
+//    Scaffold(
+//        bottomBar = {
+//            BottomNavigationBar(
+//                currentTopLevelScreen = currentTopLevelDestination,
+//                navigateToTopLevelScreen = { it.onTopLevelDestinationClick() },
+//            )
+//        },
+//        snackbarHost = {
+//            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
+//                SwipeToDismissBox(
+//                    state = rememberSwipeToDismissBoxState(),
+//                    backgroundContent = {},
+//                    content = { Snackbar(snackbarData) },
+//                )
+//            }
+//        },
+//    ) { innerPadding ->
+//
+//        NavigationGraph(
+//            navController = navController,
+//            modifier = Modifier.padding(innerPadding),
+//        )
+//    }
 }

@@ -2,11 +2,11 @@ package ly.david.musicsearch.shared.feature.details.series
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.core.models.series.SeriesScaffoldModel
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewSeriesDetailsUi() {
     PreviewTheme {

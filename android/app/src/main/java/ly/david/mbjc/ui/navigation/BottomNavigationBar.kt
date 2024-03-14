@@ -11,15 +11,34 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-import ly.david.musicsearch.core.models.navigation.Destination
+import com.slack.circuit.runtime.screen.Screen
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.common.screen.CollectionListScreen
+import ly.david.ui.common.screen.HistoryScreen
+import ly.david.ui.common.screen.SearchScreen
+import ly.david.ui.common.screen.SettingsScreen
 
-private enum class BottomNavigationItem(val icon: ImageVector, val destination: Destination) {
-    Search(Icons.Default.Search, Destination.LOOKUP),
-    History(Icons.Default.History, Destination.HISTORY),
-    Collection(Icons.Default.CollectionsBookmark, Destination.COLLECTIONS),
-    Settings(Icons.Default.Settings, Destination.SETTINGS),
+private enum class BottomNavigationItem(
+    val icon: ImageVector,
+    val screen: Screen,
+) {
+    Search(
+        Icons.Default.Search,
+        SearchScreen(),
+    ),
+    History(
+        Icons.Default.History,
+        HistoryScreen,
+    ),
+    Collection(
+        Icons.Default.CollectionsBookmark,
+        CollectionListScreen,
+    ),
+    Settings(
+        Icons.Default.Settings,
+        SettingsScreen,
+    ),
 }
 
 private fun BottomNavigationItem.getText(strings: AppStrings): String =
@@ -32,13 +51,13 @@ private fun BottomNavigationItem.getText(strings: AppStrings): String =
 
 @Composable
 internal fun BottomNavigationBar(
-    currentTopLevelDestination: Destination,
-    navigateToTopLevelDestination: (Destination) -> Unit = {},
+    currentTopLevelScreen: Screen,
+    navigateToTopLevelScreen: (Screen) -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
     NavigationBar {
-        BottomNavigationItem.values().forEach { item ->
+        BottomNavigationItem.entries.forEach { item ->
             NavigationBarItem(
                 icon = {
                     Icon(
@@ -47,9 +66,9 @@ internal fun BottomNavigationBar(
                     )
                 },
                 label = { Text(item.getText(strings)) },
-                selected = currentTopLevelDestination == item.destination,
+                selected = currentTopLevelScreen == item.screen,
                 onClick = {
-                    navigateToTopLevelDestination(item.destination)
+                    navigateToTopLevelScreen(item.screen)
                 },
             )
         }

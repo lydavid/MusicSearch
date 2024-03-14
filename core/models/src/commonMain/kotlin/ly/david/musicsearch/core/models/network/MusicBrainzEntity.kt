@@ -123,7 +123,7 @@ val collectableEntities: List<MusicBrainzEntity>
     )
 
 fun String.toMusicBrainzEntity(): MusicBrainzEntity? =
-    MusicBrainzEntity.values().firstOrNull { this == it.resourceUri }
+    MusicBrainzEntity.entries.firstOrNull { this == it.resourceUri }
 
 /**
  * The uri resource to use for query/lookup request to MusicBrainz.

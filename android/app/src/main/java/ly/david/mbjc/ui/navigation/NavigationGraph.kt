@@ -68,7 +68,6 @@ internal fun NavHostController.goToEntityScreen(
 @Composable
 internal fun NavigationGraph(
     navController: NavHostController,
-    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val uriPrefix = "$DEEP_LINK_SCHEMA://app/"
@@ -199,18 +198,6 @@ internal fun NavigationGraph(
             entity = MusicBrainzEntity.ARTIST,
             uriPrefix = uriPrefix,
         ) { entityId, title ->
-//            ArtistUi(
-//                artistId = entity,
-//                modifier = modifier,
-//                titleWithDisambiguation = title,
-//                onItemClick = onLookupEntityClick,
-//                onBack = navController::navigateUp,
-//                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
-//                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-//                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
-//                sortReleaseGroupListItems = sortReleaseGroupListItems,
-//                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
-//            )
             val backStack = rememberSaveableBackStack(
                 root = DetailsScreen(
                     entity = MusicBrainzEntity.ARTIST,

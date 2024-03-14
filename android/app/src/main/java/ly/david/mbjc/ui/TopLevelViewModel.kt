@@ -45,14 +45,6 @@ internal class TopLevelViewModel(
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
 
-    fun setEntity(entity: MusicBrainzEntity) {
-        this.entity.value = entity
-    }
-
-    fun setEntityId(entityId: String) {
-        this.entityId.value = entityId
-    }
-
     suspend fun addToCollectionAndGetResult(collectionId: String): ActionableResult {
         var result = ActionableResult()
 
