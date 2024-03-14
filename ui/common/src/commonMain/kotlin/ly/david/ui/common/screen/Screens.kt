@@ -2,58 +2,53 @@ package ly.david.ui.common.screen
 
 import com.slack.circuit.runtime.screen.Screen
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.ui.common.topappbar.Tab
-
-sealed class AppScreen(
-    val path: String,
-) : Screen
 
 @CommonParcelize
 data class SearchScreen(
     val query: String? = null,
     val entity: MusicBrainzEntity? = null,
-) : AppScreen("search")
+) : Screen
 
 @CommonParcelize
-data object HistoryScreen : AppScreen("history")
+data object HistoryScreen : Screen
 
 @CommonParcelize
-data object CollectionListScreen : AppScreen("collections")
+data object CollectionListScreen : Screen
 
 @CommonParcelize
 data class CollectionScreen(
     val id: String,
-) : AppScreen("collection")
+) : Screen
 
 @CommonParcelize
 data class AddToCollectionScreen(
     val entity: MusicBrainzEntity,
     val id: String,
-) : AppScreen("addtocollection")
+) : Screen
 
 @CommonParcelize
 data class DetailsScreen(
     val entity: MusicBrainzEntity,
     val id: String,
     val title: String?,
-) : AppScreen(entity.resourceUri)
+) : Screen
 
 @CommonParcelize
 data class StatsScreen(
     val entity: MusicBrainzEntity,
     val id: String,
     val tabs: List<Tab>,
-) : AppScreen("${entity.resourceUri}/stats")
+) : Screen
 
 @CommonParcelize
-data object SettingsScreen : AppScreen("settings")
+data object SettingsScreen : Screen
 
 @CommonParcelize
-data object LicensesScreen : AppScreen("settings/licenses")
+data object LicensesScreen : Screen
 
 @CommonParcelize
-data object NowPlayingHistoryScreen : AppScreen("nowplayinghistory")
+data object NowPlayingHistoryScreen : Screen
 
 @CommonParcelize
-data object SpotifyPlayingScreen : AppScreen("spotifyplaying")
+data object SpotifyPlayingScreen : Screen
