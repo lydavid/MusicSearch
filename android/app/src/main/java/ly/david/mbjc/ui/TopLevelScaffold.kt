@@ -16,10 +16,8 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.ActionableResult
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.feature.collections.components.CollectionBottomSheet
 import ly.david.ui.commonlegacy.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
 
@@ -78,29 +76,6 @@ internal fun TopLevelScaffold(
                 // Do nothing.
             }
         }
-    }
-
-    if (showBottomSheet) {
-        CollectionBottomSheet(
-            bottomSheetState = bottomSheetState,
-            scope = scope,
-            collections = collections,
-            onDismiss = { showBottomSheet = false },
-            onCreateCollectionClick = {
-                // TODO: support creating collection from bottom sheet once we work on details screen mvi
-            },
-            onAddToCollection = { collectionId ->
-                scope.launch {
-                    val addToCollectionResult = viewModel.addToCollectionAndGetResult(
-                        collectionId = collectionId,
-                    )
-
-                    if (addToCollectionResult.message.isEmpty()) return@launch
-
-                    showSnackbarAndHandleResult(addToCollectionResult)
-                }
-            },
-        )
     }
 
 //    Scaffold(
