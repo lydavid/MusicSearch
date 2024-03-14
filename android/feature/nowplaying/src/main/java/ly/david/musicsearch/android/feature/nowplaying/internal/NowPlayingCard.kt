@@ -6,15 +6,15 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.models.common.getTimeFormatted
 import ly.david.musicsearch.core.models.listitem.NowPlayingHistoryListItemModel
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
-internal fun NowPlayingCard(
+internal fun NowPlayingHistoryCard(
     nowPlayingHistory: NowPlayingHistoryListItemModel,
     modifier: Modifier = Modifier,
     onClick: NowPlayingHistoryListItemModel.() -> Unit = {},
@@ -42,12 +42,12 @@ internal fun NowPlayingCard(
     )
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-internal fun PreviewNowPlayingCard() {
+internal fun PreviewNowPlayingHistoryCard() {
     PreviewTheme {
         Surface {
-            NowPlayingCard(
+            NowPlayingHistoryCard(
                 nowPlayingHistory = NowPlayingHistoryListItemModel(
                     id = "Immigrant Song by Led Zeppelin",
                     title = "Immigrant Song",

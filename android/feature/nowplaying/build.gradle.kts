@@ -21,8 +21,8 @@ dependencies {
     testImplementation(projects.ui.test.image)
     testImplementation(projects.ui.test.screenshot)
 
-    implementation(libs.androidx.paging.compose)
-    implementation(libs.androidx.paging.runtime)
+    implementation(libs.paging.compose)
+    implementation(libs.paging.common)
 
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
@@ -30,6 +30,7 @@ dependencies {
     implementation(libs.compose.ui.preview)
     debugImplementation(libs.compose.ui.tooling)
 
+    implementation(libs.circuit.foundation)
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.core)
     implementation(libs.koin.annotations)

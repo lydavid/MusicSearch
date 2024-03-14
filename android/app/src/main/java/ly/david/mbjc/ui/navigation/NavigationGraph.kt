@@ -5,7 +5,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ly.david.musicsearch.android.feature.nowplaying.NowPlayingHistoryScaffold
 import ly.david.musicsearch.android.feature.spotify.SpotifyScaffold
 import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -40,15 +39,15 @@ internal fun NavigationGraph(
             navController.navigate(route)
         }
 
-        composable(
-            Destination.SETTINGS_NOWPLAYING.route,
-        ) {
-            NowPlayingHistoryScaffold(
-                modifier = modifier,
-                onBack = navController::navigateUp,
-                searchMusicBrainz = searchMusicBrainz,
-            )
-        }
+//        composable(
+//            Destination.SETTINGS_NOWPLAYING.route,
+//        ) {
+//            NowPlayingHistoryScaffold(
+//                modifier = modifier,
+//                onBack = navController::navigateUp,
+//                searchMusicBrainz = searchMusicBrainz,
+//            )
+//        }
 
         composable(
             Destination.EXPERIMENTAL_SPOTIFY.route,
