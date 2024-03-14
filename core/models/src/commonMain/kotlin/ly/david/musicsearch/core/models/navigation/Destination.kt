@@ -17,7 +17,7 @@ import ly.david.musicsearch.core.models.network.RESOURCE_WORK
 
 private const val TOP_LEVEL_LOOKUP = "lookup"
 private const val TOP_LEVEL_HISTORY = "history"
-private const val TOP_LEVEL_COLLECTIONS = "collections"
+private const val TOP_LEVEL_COLLECTIONS = "collection"
 private const val TOP_LEVEL_SETTINGS = "settings"
 
 private const val EXPERIMENTAL = "experimental"

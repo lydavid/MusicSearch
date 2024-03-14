@@ -14,11 +14,13 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.models.history.HistorySortOption
 import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.domain.history.usecase.DeleteLookupHistory
 import ly.david.musicsearch.domain.history.usecase.GetPagedHistory
 import ly.david.musicsearch.domain.history.usecase.MarkLookupHistoryForDeletion
 import ly.david.musicsearch.domain.history.usecase.UnMarkLookupHistoryForDeletion
+import ly.david.ui.common.screen.CollectionScreen
 import ly.david.ui.common.screen.DetailsScreen
 
 internal class HistoryPresenter(
@@ -75,11 +77,17 @@ internal class HistoryPresenter(
                 is HistoryUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
-                            DetailsScreen(
-                                event.entity,
-                                event.id,
-                                event.title,
-                            ),
+                            if (event.entity == MusicBrainzEntity.COLLECTION) {
+                                CollectionScreen(
+                                    id = event.id,
+                                )
+                            } else {
+                                DetailsScreen(
+                                    entity = event.entity,
+                                    id = event.id,
+                                    title = event.title,
+                                )
+                            }
                         ),
                     )
                 }

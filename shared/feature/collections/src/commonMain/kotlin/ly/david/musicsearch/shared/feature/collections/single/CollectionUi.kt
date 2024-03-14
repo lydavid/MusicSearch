@@ -234,6 +234,12 @@ private fun CollectionUi(
                 lazyPagingItems = releasesByEntityUiState.lazyPagingItems,
                 showMoreInfo = releasesByEntityUiState.showMoreInfo,
                 onReleaseClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
                 requestForMissingCoverArtUrl = { id ->
                     requestForMissingCoverArtUrl(
                         id,
@@ -252,6 +258,12 @@ private fun CollectionUi(
                 snackbarHostState = snackbarHostState,
                 lazyPagingItems = releaseGroupsByEntityUiState.lazyPagingItems,
                 onReleaseGroupClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
                 requestForMissingCoverArtUrl = { id ->
                     requestForMissingCoverArtUrl(
                         id,

@@ -152,9 +152,9 @@ internal class AreaPresenter(
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             DetailsScreen(
-                                event.entity,
-                                event.id,
-                                event.title,
+                                entity = event.entity,
+                                id = event.id,
+                                title = event.title,
                             ),
                         ),
                     )
