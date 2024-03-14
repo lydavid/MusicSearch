@@ -87,7 +87,7 @@ internal class HistoryPresenter(
                                     id = event.id,
                                     title = event.title,
                                 )
-                            }
+                            },
                         ),
                     )
                 }

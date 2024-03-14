@@ -16,7 +16,7 @@ import ly.david.musicsearch.shared.feature.collections.list.NewCollection
 @Composable
 internal fun AddToCollectionUi(
     state: AddToCollectionUiState,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
     var showDialog by rememberSaveable { mutableStateOf(false) }

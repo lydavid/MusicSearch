@@ -17,8 +17,8 @@ import ly.david.ui.common.url.UrlsSection
 
 @Composable
 internal fun WorkDetailsUi(
-    modifier: Modifier = Modifier,
     work: WorkScaffoldModel,
+    modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },

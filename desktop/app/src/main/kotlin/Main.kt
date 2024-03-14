@@ -2,6 +2,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.slack.circuit.foundation.Circuit
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.AppRoot
 import ly.david.musicsearch.shared.di.sharedModule
@@ -34,7 +35,7 @@ fun main() = application {
             content = {
                 AppRoot(
                     circuit = circuit,
-                    initialScreens = listOf(SearchScreen()),
+                    initialScreens = persistentListOf(SearchScreen()),
                 )
             },
         )

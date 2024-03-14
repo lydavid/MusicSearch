@@ -209,7 +209,7 @@ internal class CollectionPresenter(
                         ReleasesByEntityUiEvent.Get(
                             byEntityId = collectionId,
                             byEntity = MusicBrainzEntity.COLLECTION,
-                            isRemote = isRemote
+                            isRemote = isRemote,
                         ),
                     )
                     releasesByEntityEventSink(ReleasesByEntityUiEvent.UpdateQuery(query))

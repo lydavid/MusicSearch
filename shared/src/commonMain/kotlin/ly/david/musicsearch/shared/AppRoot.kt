@@ -11,11 +11,13 @@ import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.overlay.ContentWithOverlays
 import com.slack.circuit.runtime.screen.Screen
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun AppRoot(
     circuit: Circuit,
-    initialScreens: List<Screen>,
+    initialScreens: ImmutableList<Screen>,
+    modifier: Modifier = Modifier,
 ) {
     CircuitCompositionLocals(circuit) {
         ContentWithOverlays {
@@ -28,6 +30,7 @@ fun AppRoot(
             )
 
             Scaffold(
+                modifier = modifier,
                 bottomBar = {
                     BottomNavigationBar(
                         currentTopLevelScreen = backStack.last().screen,

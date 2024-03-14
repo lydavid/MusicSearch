@@ -1,10 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>DestructuringDeclarationWithTooManyEntries:EntitiesByEntityViewModel.kt$EntitiesByEntityViewModel$(entityId, query, isRemote, sorted)</ID>
-    <ID>TooGenericExceptionCaught:ReleaseGroupsListScreen.kt$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:ReleasesListScreen.kt$ex: Exception</ID>
-    <ID>UnstableCollections:UrlsSection.kt$List&lt;RelationListItemModel&gt;</ID>
-  </CurrentIssues>
+  <CurrentIssues></CurrentIssues>
 </SmellBaseline>

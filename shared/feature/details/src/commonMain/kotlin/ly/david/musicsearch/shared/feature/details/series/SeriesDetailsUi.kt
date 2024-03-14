@@ -50,4 +50,3 @@ internal fun SeriesDetailsUi(
         }
     }
 }
-

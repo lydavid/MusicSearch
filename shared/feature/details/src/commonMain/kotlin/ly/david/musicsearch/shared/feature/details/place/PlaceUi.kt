@@ -107,7 +107,6 @@ internal fun PlaceUi(
 
         val detailsLazyListState = rememberLazyListState()
         val eventsLazyListState = rememberLazyListState()
-        val releasesLazyListState = rememberLazyListState()
         val relationsLazyListState = rememberLazyListState()
 
         HorizontalPager(
@@ -146,7 +145,7 @@ internal fun PlaceUi(
 
                 PlaceTab.EVENTS -> {
                     EventsListScreen(
-                        lazyListState = releasesLazyListState,
+                        lazyListState = eventsLazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

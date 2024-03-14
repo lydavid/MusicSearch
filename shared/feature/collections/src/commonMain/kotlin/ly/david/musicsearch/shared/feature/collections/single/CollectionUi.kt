@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -273,230 +274,259 @@ private fun CollectionUi(
         }
 
         else -> {
-            ScreenWithPagingLoadingAndError(
-                modifier = modifier.padding(innerPadding)
-                    .fillMaxSize()
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
-                lazyListState = lazyListState,
+            CollectionUi(
                 lazyPagingItems = lazyPagingItems,
+                lazyListState = lazyListState,
+                entity = entity,
                 snackbarHostState = snackbarHostState,
-            ) { listItemModel: ListItemModel? ->
-                when (listItemModel) {
-                    is ListSeparator -> {
-                        ListSeparatorHeader(text = listItemModel.text)
-                    }
+                innerPadding = innerPadding,
+                scrollBehavior = scrollBehavior,
+                modifier = modifier,
+                onItemClick = onItemClick,
+                onDeleteFromCollection = onDeleteFromCollection,
+            )
+        }
+    }
+}
 
-                    is AreaListItemModel -> {
-                        SwipeToDeleteListItem(
-                            content = {
-                                AreaListItem(
-                                    area = listItemModel,
-                                    modifier = Modifier.animateItemPlacement(),
-                                ) {
-                                    onItemClick(
-                                        entity,
-                                        id,
-                                        getNameWithDisambiguation(),
-                                    )
-                                }
-                            },
-                            onDelete = {
-                                onDeleteFromCollection(
-                                    listItemModel.id,
-                                    listItemModel.name,
-                                )
-                            },
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalFoundationApi::class,
+)
+@Composable
+internal fun CollectionUi(
+    lazyPagingItems: LazyPagingItems<ListItemModel>,
+    lazyListState: LazyListState,
+    entity: MusicBrainzEntity,
+    snackbarHostState: SnackbarHostState,
+    innerPadding: PaddingValues,
+    scrollBehavior: TopAppBarScrollBehavior,
+    modifier: Modifier = Modifier,
+    onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
+    onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
+) {
+    ScreenWithPagingLoadingAndError(
+        modifier = modifier.padding(innerPadding)
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        lazyListState = lazyListState,
+        lazyPagingItems = lazyPagingItems,
+        snackbarHostState = snackbarHostState,
+    ) { listItemModel: ListItemModel? ->
+        when (listItemModel) {
+            is ListSeparator -> {
+                ListSeparatorHeader(text = listItemModel.text)
+            }
+
+            is AreaListItemModel -> {
+                SwipeToDeleteListItem(
+                    content = {
+                        AreaListItem(
+                            area = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onItemClick(
+                                entity,
+                                id,
+                                getNameWithDisambiguation(),
+                            )
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(
+                            listItemModel.id,
+                            listItemModel.name,
                         )
-                    }
+                    },
+                )
+            }
 
-                    is ArtistListItemModel -> {
-                        SwipeToDeleteListItem(
-                            content = {
-                                ArtistListItem(
-                                    artist = listItemModel,
-                                    modifier = Modifier.animateItemPlacement(),
-                                ) {
-                                    onItemClick(
-                                        entity,
-                                        id,
-                                        getNameWithDisambiguation(),
-                                    )
-                                }
-                            },
-                            onDelete = {
-                                onDeleteFromCollection(
-                                    listItemModel.id,
-                                    listItemModel.name,
-                                )
-                            },
+            is ArtistListItemModel -> {
+                SwipeToDeleteListItem(
+                    content = {
+                        ArtistListItem(
+                            artist = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onItemClick(
+                                entity,
+                                id,
+                                getNameWithDisambiguation(),
+                            )
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(
+                            listItemModel.id,
+                            listItemModel.name,
                         )
-                    }
+                    },
+                )
+            }
 
-                    is EventListItemModel -> {
-                        SwipeToDeleteListItem(
-                            content = {
-                                EventListItem(
-                                    event = listItemModel,
-                                    modifier = Modifier.animateItemPlacement(),
-                                ) {
-                                    onItemClick(
-                                        entity,
-                                        id,
-                                        getNameWithDisambiguation(),
-                                    )
-                                }
-                            },
-                            onDelete = {
-                                onDeleteFromCollection(
-                                    listItemModel.id,
-                                    listItemModel.name,
-                                )
-                            },
+            is EventListItemModel -> {
+                SwipeToDeleteListItem(
+                    content = {
+                        EventListItem(
+                            event = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onItemClick(
+                                entity,
+                                id,
+                                getNameWithDisambiguation(),
+                            )
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(
+                            listItemModel.id,
+                            listItemModel.name,
                         )
-                    }
+                    },
+                )
+            }
 
-                    is InstrumentListItemModel -> {
-                        SwipeToDeleteListItem(
-                            content = {
-                                InstrumentListItem(
-                                    instrument = listItemModel,
-                                    modifier = Modifier.animateItemPlacement(),
-                                ) {
-                                    onItemClick(
-                                        entity,
-                                        id,
-                                        getNameWithDisambiguation(),
-                                    )
-                                }
-                            },
-                            onDelete = {
-                                onDeleteFromCollection(
-                                    listItemModel.id,
-                                    listItemModel.name,
-                                )
-                            },
+            is InstrumentListItemModel -> {
+                SwipeToDeleteListItem(
+                    content = {
+                        InstrumentListItem(
+                            instrument = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onItemClick(
+                                entity,
+                                id,
+                                getNameWithDisambiguation(),
+                            )
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(
+                            listItemModel.id,
+                            listItemModel.name,
                         )
-                    }
+                    },
+                )
+            }
 
-                    is LabelListItemModel -> {
-                        SwipeToDeleteListItem(
-                            content = {
-                                LabelListItem(
-                                    label = listItemModel,
-                                    modifier = Modifier.animateItemPlacement(),
-                                ) {
-                                    onItemClick(
-                                        entity,
-                                        id,
-                                        getNameWithDisambiguation(),
-                                    )
-                                }
-                            },
-                            onDelete = {
-                                onDeleteFromCollection(
-                                    listItemModel.id,
-                                    listItemModel.name,
-                                )
-                            },
+            is LabelListItemModel -> {
+                SwipeToDeleteListItem(
+                    content = {
+                        LabelListItem(
+                            label = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onItemClick(
+                                entity,
+                                id,
+                                getNameWithDisambiguation(),
+                            )
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(
+                            listItemModel.id,
+                            listItemModel.name,
                         )
-                    }
+                    },
+                )
+            }
 
-                    is PlaceListItemModel -> {
-                        SwipeToDeleteListItem(
-                            content = {
-                                PlaceListItem(
-                                    place = listItemModel,
-                                    modifier = Modifier.animateItemPlacement(),
-                                ) {
-                                    onItemClick(
-                                        entity,
-                                        id,
-                                        getNameWithDisambiguation(),
-                                    )
-                                }
-                            },
-                            onDelete = {
-                                onDeleteFromCollection(
-                                    listItemModel.id,
-                                    listItemModel.name,
-                                )
-                            },
+            is PlaceListItemModel -> {
+                SwipeToDeleteListItem(
+                    content = {
+                        PlaceListItem(
+                            place = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onItemClick(
+                                entity,
+                                id,
+                                getNameWithDisambiguation(),
+                            )
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(
+                            listItemModel.id,
+                            listItemModel.name,
                         )
-                    }
+                    },
+                )
+            }
 
-                    is RecordingListItemModel -> {
-                        SwipeToDeleteListItem(
-                            content = {
-                                RecordingListItem(
-                                    recording = listItemModel,
-                                    modifier = Modifier.animateItemPlacement(),
-                                ) {
-                                    onItemClick(
-                                        entity,
-                                        id,
-                                        getNameWithDisambiguation(),
-                                    )
-                                }
-                            },
-                            onDelete = {
-                                onDeleteFromCollection(
-                                    listItemModel.id,
-                                    listItemModel.name,
-                                )
-                            },
+            is RecordingListItemModel -> {
+                SwipeToDeleteListItem(
+                    content = {
+                        RecordingListItem(
+                            recording = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onItemClick(
+                                entity,
+                                id,
+                                getNameWithDisambiguation(),
+                            )
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(
+                            listItemModel.id,
+                            listItemModel.name,
                         )
-                    }
+                    },
+                )
+            }
 
-                    is SeriesListItemModel -> {
-                        SwipeToDeleteListItem(
-                            content = {
-                                SeriesListItem(
-                                    series = listItemModel,
-                                    modifier = Modifier.animateItemPlacement(),
-                                ) {
-                                    onItemClick(
-                                        entity,
-                                        id,
-                                        getNameWithDisambiguation(),
-                                    )
-                                }
-                            },
-                            onDelete = {
-                                onDeleteFromCollection(
-                                    listItemModel.id,
-                                    listItemModel.name,
-                                )
-                            },
+            is SeriesListItemModel -> {
+                SwipeToDeleteListItem(
+                    content = {
+                        SeriesListItem(
+                            series = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onItemClick(
+                                entity,
+                                id,
+                                getNameWithDisambiguation(),
+                            )
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(
+                            listItemModel.id,
+                            listItemModel.name,
                         )
-                    }
+                    },
+                )
+            }
 
-                    is WorkListItemModel -> {
-                        SwipeToDeleteListItem(
-                            content = {
-                                WorkListItem(
-                                    work = listItemModel,
-                                    modifier = Modifier.animateItemPlacement(),
-                                ) {
-                                    onItemClick(
-                                        entity,
-                                        id,
-                                        getNameWithDisambiguation(),
-                                    )
-                                }
-                            },
-                            onDelete = {
-                                onDeleteFromCollection(
-                                    listItemModel.id,
-                                    listItemModel.name,
-                                )
-                            },
+            is WorkListItemModel -> {
+                SwipeToDeleteListItem(
+                    content = {
+                        WorkListItem(
+                            work = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onItemClick(
+                                entity,
+                                id,
+                                getNameWithDisambiguation(),
+                            )
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(
+                            listItemModel.id,
+                            listItemModel.name,
                         )
-                    }
+                    },
+                )
+            }
 
-                    else -> {
-                        // Do nothing.
-                    }
-                }
+            else -> {
+                // Do nothing.
             }
         }
     }

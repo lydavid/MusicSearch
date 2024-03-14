@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.runtime.screen.Screen
+import kotlinx.collections.immutable.toImmutableList
 import ly.david.musicsearch.core.models.network.toMusicBrainzEntity
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.AppRoot
@@ -35,7 +36,7 @@ internal class MainActivity : ComponentActivity() {
                 content = {
                     AppRoot(
                         circuit = circuit,
-                        initialScreens = getInitialScreens(intent.data),
+                        initialScreens = getInitialScreens(intent.data).toImmutableList(),
                     )
                 },
             )
