@@ -15,11 +15,8 @@ dependencies {
     //  where shared exposes the root entry point
     implementation(projects.ui.common)
     implementation(projects.ui.core)
-    implementation(projects.domain)
     implementation(projects.strings)
-    implementation(projects.core.models)
     implementation(projects.core.preferences)
-    implementation(projects.data.musicbrainz)
 
     implementation(compose.desktop.currentOs)
 

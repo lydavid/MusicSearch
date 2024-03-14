@@ -1,6 +1,5 @@
-package ly.david.mbjc.di
+package ly.david.mbjc
 
-import ly.david.mbjc.BuildConfig
 import ly.david.musicsearch.core.models.AppInfo
 import org.koin.dsl.module
 

@@ -1,5 +1,6 @@
 plugins {
     id("ly.david.android.library")
+    id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
 }
 
@@ -31,8 +32,16 @@ kotlin {
                 implementation(projects.feature.stats)
                 implementation(projects.strings)
                 implementation(projects.ui.common)
+
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.materialIconsExtended)
+                implementation(compose.ui)
+                implementation(compose.preview)
+
                 implementation(libs.koin.core)
                 implementation(libs.circuit.foundation)
+                implementation(libs.circuit.overlay)
             }
         }
         val androidMain by getting {

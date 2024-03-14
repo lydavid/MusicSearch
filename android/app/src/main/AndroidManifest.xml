@@ -15,7 +15,7 @@
         tools:targetApi="tiramisu">
 
         <activity
-            android:name="ly.david.mbjc.ui.MainActivity"
+            android:name="ly.david.mbjc.MainActivity"
             android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
             android:exported="true"
             android:theme="@style/Theme.MusicSearch">

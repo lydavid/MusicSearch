@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.navigation
+package ly.david.musicsearch.shared
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CollectionsBookmark

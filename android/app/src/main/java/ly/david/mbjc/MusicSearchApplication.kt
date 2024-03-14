@@ -4,7 +4,6 @@ import android.app.Application
 import coil.Coil
 import coil.ImageLoaderFactory
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import ly.david.mbjc.di.androidAppModule
 import ly.david.musicsearch.shared.di.sharedModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -42,7 +41,12 @@ internal class MusicSearchApplication : Application() {
 private class CrashlyticsTree(
     private val firebaseCrashlytics: FirebaseCrashlytics,
 ) : Timber.Tree() {
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+    override fun log(
+        priority: Int,
+        tag: String?,
+        message: String,
+        t: Throwable?,
+    ) {
         firebaseCrashlytics.log(message)
     }
 }
