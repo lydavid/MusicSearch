@@ -11,6 +11,7 @@ import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.overlay.ContentWithOverlays
 import com.slack.circuit.runtime.screen.Screen
+import com.slack.circuitx.gesturenavigation.GestureNavigationDecoration
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
@@ -45,6 +46,9 @@ fun AppRoot(
                     navigator = navigator,
                     backStack = backStack,
                     modifier = Modifier.padding(innerPadding),
+                    decoration = GestureNavigationDecoration(
+                        onBackInvoked = navigator::pop,
+                    )
                 )
             }
         }

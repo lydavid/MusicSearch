@@ -42,6 +42,7 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.circuit.foundation)
                 implementation(libs.circuit.overlay)
+                implementation(libs.circuitx.gesture.navigation)
             }
         }
         val androidMain by getting {
