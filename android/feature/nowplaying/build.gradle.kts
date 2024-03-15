@@ -17,17 +17,18 @@ dependencies {
     implementation(projects.ui.core)
     testImplementation(projects.ui.test.screenshot)
 
-    implementation(libs.paging.compose)
-    implementation(libs.paging.common)
-
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.preview)
-    debugImplementation(libs.compose.ui.tooling)
 
     implementation(libs.circuit.foundation)
     implementation(libs.koin.core)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.paging.compose)
+    implementation(libs.paging.common)
+
+    debugImplementation(libs.compose.ui.tooling)
 
     testImplementation(libs.bundles.kotlinx.coroutines)
     testImplementation(libs.test.parameter.injector)

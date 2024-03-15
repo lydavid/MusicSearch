@@ -1,7 +1,6 @@
 package ly.david.mbjc
 
 import ly.david.data.test.di.testApiModule
-import ly.david.mbjc.di.androidAppModule
 import ly.david.mbjc.di.testCoroutineDispatchersModule
 import ly.david.mbjc.di.testDatabaseDriverModule
 import ly.david.mbjc.di.testImageModule

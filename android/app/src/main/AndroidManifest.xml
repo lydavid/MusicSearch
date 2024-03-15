@@ -58,7 +58,7 @@
         </activity>
 
         <service
-            android:name=".services.NowPlayingNotificationListener"
+            android:name="ly.david.musicsearch.android.feature.nowplaying.NowPlayingNotificationListener"
             android:exported="false"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
