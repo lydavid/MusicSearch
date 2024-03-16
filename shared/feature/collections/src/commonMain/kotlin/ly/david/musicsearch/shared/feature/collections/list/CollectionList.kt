@@ -83,7 +83,7 @@ internal fun CollectionList(
             eventSink(CollectionListUiEvent.UpdateShowRemote(it))
         },
         onCollectionClick = {
-            eventSink(CollectionListUiEvent.ClickCollection(it))
+            eventSink(CollectionListUiEvent.GoToCollection(it))
         },
     )
 }

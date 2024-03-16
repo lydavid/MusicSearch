@@ -18,7 +18,9 @@ import ly.david.musicsearch.data.musicbrainz.di.musicBrainzDataModule
 import ly.david.musicsearch.data.repository.di.repositoryDataModule
 import ly.david.musicsearch.data.spotify.di.spotifyApiModule
 import ly.david.musicsearch.data.spotify.di.spotifyDataModule
+import ly.david.musicsearch.feature.stats.statsFeatureModule
 import ly.david.musicsearch.shared.feature.collections.collectionsFeatureModule
+import ly.david.musicsearch.shared.feature.details.detailsFeatureModule
 import ly.david.musicsearch.shared.feature.search.searchFeatureModule
 import ly.david.musicsearch.shared.feature.history.historyFeatureModule
 import ly.david.musicsearch.shared.feature.licenses.licensesFeatureModule
@@ -35,6 +37,8 @@ val circuitModule = module {
         collectionsFeatureModule,
         settingsFeatureModule,
         licensesFeatureModule,
+        detailsFeatureModule,
+        statsFeatureModule,
     )
     single {
         Circuit.Builder()

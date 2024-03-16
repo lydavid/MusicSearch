@@ -1,10 +1,10 @@
 package ly.david.musicsearch.shared.feature.collections.single
 
-import ReleaseListItem
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
@@ -29,8 +30,6 @@ import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
 import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
-import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
-import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.core.models.listitem.SeriesListItemModel
 import ly.david.musicsearch.core.models.listitem.WorkListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -46,7 +45,12 @@ import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.place.PlaceListItem
 import ly.david.ui.common.recording.RecordingListItem
-import ly.david.ui.common.releasegroup.ReleaseGroupListItem
+import ly.david.ui.common.release.ReleasesByEntityUiEvent
+import ly.david.ui.common.release.ReleasesByEntityUiState
+import ly.david.ui.common.release.ReleasesListScreen
+import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
+import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiState
+import ly.david.ui.common.releasegroup.ReleaseGroupsListScreen
 import ly.david.ui.common.series.SeriesListItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
@@ -68,6 +72,8 @@ internal fun CollectionUi(
 ) {
     val collection = state.collection
     val eventSink = state.eventSink
+    val releasesEventSink = state.releasesByEntityUiState.eventSink
+    val releaseGroupsEventSink = state.releaseGroupsByEntityUiState.eventSink
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -120,9 +126,9 @@ internal fun CollectionUi(
                         ToggleMenuItem(
                             toggleOnText = strings.sort,
                             toggleOffText = strings.unsort,
-                            toggled = state.sortReleaseGroupListItems,
+                            toggled = state.releaseGroupsByEntityUiState.sort,
                             onToggle = {
-                                eventSink(CollectionUiEvent.UpdateSortReleaseGroupListItems(it))
+                                releaseGroupsEventSink(ReleaseGroupsByEntityUiEvent.UpdateSortReleaseGroupListItem(it))
                             },
                         )
                     }
@@ -130,9 +136,9 @@ internal fun CollectionUi(
                         ToggleMenuItem(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
-                            toggled = state.showMoreInfoInReleaseListItem,
+                            toggled = state.releasesByEntityUiState.showMoreInfo,
                             onToggle = {
-                                eventSink(CollectionUiEvent.UpdateShowMoreInfoInReleaseListItem(it))
+                                releasesEventSink(ReleasesByEntityUiEvent.UpdateShowMoreInfoInReleaseListItem(it))
                             },
                         )
                     }
@@ -152,13 +158,14 @@ internal fun CollectionUi(
                     .padding(innerPadding),
             )
         } else {
-            CollectionPlatformContent(
+            CollectionUi(
                 lazyPagingItems = state.lazyPagingItems,
+                releasesByEntityUiState = state.releasesByEntityUiState,
+                releaseGroupsByEntityUiState = state.releaseGroupsByEntityUiState,
                 entity = collection.entity,
                 snackbarHostState = snackbarHostState,
                 innerPadding = innerPadding,
                 scrollBehavior = scrollBehavior,
-                showMoreInfoInReleaseListItem = state.showMoreInfoInReleaseListItem,
                 onItemClick = { entity, id, title ->
                     eventSink(
                         CollectionUiEvent.ClickItem(
@@ -177,12 +184,19 @@ internal fun CollectionUi(
                     )
                 },
                 requestForMissingCoverArtUrl = { entityId ->
-                    eventSink(
-                        CollectionUiEvent.RequestForMissingCoverArtUrl(
-                            entityId = entityId,
-                            entity = collection.entity,
-                        ),
-                    )
+                    when (collection.entity) {
+                        MusicBrainzEntity.RELEASE -> {
+                            releasesEventSink(ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl(entityId))
+                        }
+
+                        MusicBrainzEntity.RELEASE_GROUP -> {
+                            releaseGroupsEventSink(ReleaseGroupsByEntityUiEvent.RequestForMissingCoverArtUrl(entityId))
+                        }
+
+                        else -> {
+                            // no-op
+                        }
+                    }
                 },
             )
         }
@@ -194,20 +208,103 @@ internal fun CollectionUi(
     ExperimentalMaterial3Api::class,
 )
 @Composable
-internal fun CollectionPlatformContent(
-    lazyPagingItems: androidx.paging.compose.LazyPagingItems<ListItemModel>,
+private fun CollectionUi(
+    lazyPagingItems: LazyPagingItems<ListItemModel>,
+    releasesByEntityUiState: ReleasesByEntityUiState,
+    releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
     entity: MusicBrainzEntity,
     snackbarHostState: SnackbarHostState,
     innerPadding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
     modifier: Modifier = Modifier,
-    showMoreInfoInReleaseListItem: Boolean = true,
     onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     requestForMissingCoverArtUrl: (entityId: String) -> Unit = {},
 ) {
     val lazyListState = rememberLazyListState()
 
+    when (entity) {
+        MusicBrainzEntity.RELEASE -> {
+            ReleasesListScreen(
+                lazyListState = lazyListState,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                snackbarHostState = snackbarHostState,
+                lazyPagingItems = releasesByEntityUiState.lazyPagingItems,
+                showMoreInfo = releasesByEntityUiState.showMoreInfo,
+                onReleaseClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
+                requestForMissingCoverArtUrl = { id ->
+                    requestForMissingCoverArtUrl(
+                        id,
+                    )
+                },
+            )
+        }
+
+        MusicBrainzEntity.RELEASE_GROUP -> {
+            ReleaseGroupsListScreen(
+                lazyListState = lazyListState,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                snackbarHostState = snackbarHostState,
+                lazyPagingItems = releaseGroupsByEntityUiState.lazyPagingItems,
+                onReleaseGroupClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
+                requestForMissingCoverArtUrl = { id ->
+                    requestForMissingCoverArtUrl(
+                        id,
+                    )
+                },
+            )
+        }
+
+        else -> {
+            CollectionUi(
+                lazyPagingItems = lazyPagingItems,
+                lazyListState = lazyListState,
+                entity = entity,
+                snackbarHostState = snackbarHostState,
+                innerPadding = innerPadding,
+                scrollBehavior = scrollBehavior,
+                modifier = modifier,
+                onItemClick = onItemClick,
+                onDeleteFromCollection = onDeleteFromCollection,
+            )
+        }
+    }
+}
+
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalFoundationApi::class,
+)
+@Composable
+internal fun CollectionUi(
+    lazyPagingItems: LazyPagingItems<ListItemModel>,
+    lazyListState: LazyListState,
+    entity: MusicBrainzEntity,
+    snackbarHostState: SnackbarHostState,
+    innerPadding: PaddingValues,
+    scrollBehavior: TopAppBarScrollBehavior,
+    modifier: Modifier = Modifier,
+    onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
+    onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
+) {
     ScreenWithPagingLoadingAndError(
         modifier = modifier.padding(innerPadding)
             .fillMaxSize()
@@ -365,59 +462,6 @@ internal fun CollectionPlatformContent(
                         RecordingListItem(
                             recording = listItemModel,
                             modifier = Modifier.animateItemPlacement(),
-                        ) {
-                            onItemClick(
-                                entity,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    onDelete = {
-                        onDeleteFromCollection(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
-                )
-            }
-
-            is ReleaseListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        ReleaseListItem(
-                            release = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
-                            showMoreInfo = showMoreInfoInReleaseListItem,
-                            requestForMissingCoverArtUrl = {
-                                requestForMissingCoverArtUrl(listItemModel.id)
-                            },
-                        ) {
-                            onItemClick(
-                                entity,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    onDelete = {
-                        onDeleteFromCollection(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
-                )
-            }
-
-            is ReleaseGroupListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        ReleaseGroupListItem(
-                            releaseGroup = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
-                            requestForMissingCoverArtUrl = {
-                                requestForMissingCoverArtUrl(listItemModel.id)
-                            },
                         ) {
                             onItemClick(
                                 entity,

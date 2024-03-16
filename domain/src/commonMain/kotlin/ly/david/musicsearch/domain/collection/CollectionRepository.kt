@@ -26,4 +26,10 @@ interface CollectionRepository {
         entityId: String,
         entityName: String,
     ): ActionableResult
+
+    suspend fun addToCollection(
+        collectionId: String,
+        entity: MusicBrainzEntity,
+        entityId: String,
+    ): ActionableResult
 }

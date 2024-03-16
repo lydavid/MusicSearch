@@ -1,6 +1,5 @@
 [versions]
 aboutlibraries = "11.1.0"
-accompanist = "0.34.0"
 androidGradlePlugin = "8.2.2"
 chucker = "4.0.0"
 circuit = "0.19.1"
@@ -32,8 +31,6 @@ sqldelight = "2.0.0"
 [libraries]
 aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutlibraries" }
 aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutlibraries" }
-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
-accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
 androidx-activity-compose = "androidx.activity:activity-compose:1.8.2"
 androidx-arch-core-testing = "androidx.arch.core:core-testing:2.2.0"
@@ -53,7 +50,10 @@ chucker = { module = "com.github.chuckerteam.chucker:library", version.ref = "ch
 chucker-noop = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "chucker" }
 circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "circuit" }
 circuit-overlay = { module = "com.slack.circuit:circuit-overlay", version.ref = "circuit" }
+circuit-retained = { module = "com.slack.circuit:circuit-retained", version.ref = "circuit" }
+circuit-test = { module = "com.slack.circuit:circuit-test", version.ref = "circuit" }
 circuitx-overlays = { module = "com.slack.circuit:circuitx-overlays", version.ref = "circuit" }
+circuitx-gesture-navigation = { module = "com.slack.circuit:circuitx-gesture-navigation", version.ref = "circuit" }
 coil-base = { module = "io.coil-kt:coil-base", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-test = { module = "io.coil-kt:coil-test", version.ref = "coil" }

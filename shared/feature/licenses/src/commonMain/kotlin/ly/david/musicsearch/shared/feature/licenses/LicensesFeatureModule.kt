@@ -6,7 +6,7 @@ import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.shared.feature.licenses.internal.Licenses
 import ly.david.musicsearch.shared.feature.licenses.internal.LicensesPresenter
 import ly.david.musicsearch.shared.feature.licenses.internal.LicensesUiState
-import ly.david.musicsearch.shared.screens.LicensesScreen
+import ly.david.ui.common.screen.LicensesScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

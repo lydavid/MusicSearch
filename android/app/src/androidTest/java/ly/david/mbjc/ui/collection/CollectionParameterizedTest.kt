@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.collection
 
-// TODO: maestro test instead
 /**
  * Tests interacting with [CollectionList] and [CollectionScaffold].
  */

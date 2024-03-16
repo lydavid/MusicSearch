@@ -4,6 +4,7 @@ plugins {
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.paparazzi)
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
 }
 
@@ -18,6 +19,8 @@ kotlin {
                 api(projects.core.models)
                 implementation(projects.data.coverart)
                 implementation(projects.data.musicbrainz)
+                implementation(projects.core.preferences)
+                implementation(projects.core.logging.api)
                 implementation(projects.domain)
                 implementation(projects.strings)
                 implementation(projects.ui.core)
@@ -30,6 +33,9 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.preview)
 
+                implementation(libs.circuit.foundation)
+                implementation(libs.circuit.overlay)
+                implementation(libs.circuitx.overlays)
                 implementation(libs.koin.annotations)
                 implementation(libs.koin.core)
                 implementation(libs.lyricist.library)

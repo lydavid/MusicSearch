@@ -15,7 +15,6 @@ kotlin {
             dependencies {
                 implementation(projects.ui.common)
                 implementation(projects.strings)
-                implementation(projects.shared.screens)
 
                 implementation(compose.foundation)
                 implementation(compose.material3)

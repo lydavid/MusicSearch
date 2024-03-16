@@ -1,0 +1,28 @@
+package ly.david.musicsearch.shared.feature.details.instrument
+
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import ly.david.musicsearch.core.models.instrument.InstrumentScaffoldModel
+import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.theme.PreviewTheme
+
+@PreviewLightDark
+@Composable
+internal fun PreviewInstrumentDetailsUi() {
+    PreviewTheme {
+        Surface {
+            InstrumentDetailsUi(
+                instrument = InstrumentScaffoldModel(
+                    id = "i1",
+                    name = "baroque guitar",
+                    disambiguation = "Baroque gut string guitar",
+                    type = "String instrument",
+                    description = "Predecessor of the modern classical guitar, " +
+                        "it had gut strings and even gut frets. " +
+                        "First described in 1555, it surpassed the Renaissance lute's popularity.",
+                ),
+            )
+        }
+    }
+}

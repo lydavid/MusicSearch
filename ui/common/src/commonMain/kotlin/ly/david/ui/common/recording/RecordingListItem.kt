@@ -14,7 +14,7 @@ import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.common.toDisplayTime
 import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
-import ly.david.ui.common.release.TrackListItem
+import ly.david.ui.common.track.TrackListItem
 import ly.david.ui.core.theme.TextStyles
 
 /**

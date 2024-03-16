@@ -15,6 +15,8 @@ dependencies {
     implementation(projects.ui.common)
     implementation(projects.strings)
     implementation(libs.androidx.core)
+    implementation(libs.circuit.foundation)
+    implementation(libs.koin.core)
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui)

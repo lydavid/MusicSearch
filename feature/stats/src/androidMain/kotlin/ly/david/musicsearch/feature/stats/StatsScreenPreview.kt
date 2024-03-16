@@ -15,7 +15,7 @@ import ly.david.ui.core.theme.PreviewTheme
 internal fun PreviewStatsScreen() {
     PreviewTheme {
         Surface {
-            StatsScreen(
+            StatsUi(
                 tabs = persistentListOf(
                     Tab.RELATIONSHIPS,
                     Tab.RELEASE_GROUPS,

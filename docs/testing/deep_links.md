@@ -26,11 +26,11 @@ adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsear
 ## Collection
 
 ```shell
-adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/collections"
+adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/collection"
 ```
 
 ```shell
-adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/collections/debe8581-e0c8-45ee-8fda-3ddcb5233f91"
+adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/collection/debe8581-e0c8-45ee-8fda-3ddcb5233f91"
 ```
 
 

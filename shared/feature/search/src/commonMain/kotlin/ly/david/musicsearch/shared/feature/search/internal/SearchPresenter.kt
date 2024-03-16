@@ -21,8 +21,8 @@ import ly.david.musicsearch.domain.search.history.usecase.DeleteSearchHistory
 import ly.david.musicsearch.domain.search.history.usecase.GetSearchHistory
 import ly.david.musicsearch.domain.search.history.usecase.RecordSearchHistory
 import ly.david.musicsearch.domain.search.results.usecase.GetSearchResults
-import ly.david.musicsearch.shared.screens.DetailsScreen
-import ly.david.musicsearch.shared.screens.SearchScreen
+import ly.david.ui.common.screen.DetailsScreen
+import ly.david.ui.common.screen.SearchScreen
 
 private const val SEARCH_DELAY_MS = 500L
 
@@ -93,9 +93,9 @@ internal class SearchPresenter(
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             DetailsScreen(
-                                event.entity,
-                                event.id,
-                                event.title,
+                                entity = event.entity,
+                                id = event.id,
+                                title = event.title,
                             ),
                         ),
                     )
