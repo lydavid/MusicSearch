@@ -8,6 +8,10 @@ plugins {
 group = "ly.david.musicsearch"
 version = "1.0-SNAPSHOT"
 
+aboutLibraries {
+    excludeFields = arrayOf("generated")
+}
+
 dependencies {
     implementation(projects.shared)
 
