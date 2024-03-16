@@ -78,6 +78,7 @@ kotlin {
                 implementation(libs.koin.test)
                 implementation(libs.sqldelight.android.driver)
                 implementation(libs.test.parameter.injector)
+                implementation(libs.circuit.test)
             }
         }
     }

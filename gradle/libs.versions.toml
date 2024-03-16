@@ -51,6 +51,7 @@ chucker-noop = { module = "com.github.chuckerteam.chucker:library-no-op", versio
 circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "circuit" }
 circuit-overlay = { module = "com.slack.circuit:circuit-overlay", version.ref = "circuit" }
 circuit-retained = { module = "com.slack.circuit:circuit-retained", version.ref = "circuit" }
+circuit-test = { module = "com.slack.circuit:circuit-test", version.ref = "circuit" }
 circuitx-overlays = { module = "com.slack.circuit:circuitx-overlays", version.ref = "circuit" }
 circuitx-gesture-navigation = { module = "com.slack.circuit:circuitx-gesture-navigation", version.ref = "circuit" }
 coil-base = { module = "io.coil-kt:coil-base", version.ref = "coil" }

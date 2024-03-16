@@ -8,5 +8,5 @@ import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
 @Stable
 data class PlacesByEntityUiState(
     val lazyPagingItems: LazyPagingItems<PlaceListItemModel>,
-    val eventSink: (PlacesByEntityUiEvent) -> Unit,
+    val eventSink: (PlacesByEntityUiEvent) -> Unit = {},
 ) : CircuitUiState

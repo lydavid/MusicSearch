@@ -8,6 +8,6 @@ import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 @Stable
 data class ReleasesByEntityUiState(
     val lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
-    val showMoreInfo: Boolean,
-    val eventSink: (ReleasesByEntityUiEvent) -> Unit,
+    val showMoreInfo: Boolean = true,
+    val eventSink: (ReleasesByEntityUiEvent) -> Unit = {},
 ) : CircuitUiState

@@ -8,5 +8,5 @@ import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 @Stable
 data class RelationsUiState(
     val lazyPagingItems: LazyPagingItems<RelationListItemModel>,
-    val eventSink: (RelationsUiEvent) -> Unit,
+    val eventSink: (RelationsUiEvent) -> Unit = {},
 ) : CircuitUiState

@@ -48,7 +48,7 @@ fun AppRoot(
                     modifier = Modifier.padding(innerPadding),
                     decoration = GestureNavigationDecoration(
                         onBackInvoked = navigator::pop,
-                    )
+                    ),
                 )
             }
         }
