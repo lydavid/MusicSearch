@@ -67,7 +67,6 @@ include(
     ":strings",
     ":test-data",
     ":ui:common",
-    ":ui:common-legacy",
     ":ui:core",
     ":ui:image",
     ":ui:test:image",

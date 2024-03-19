@@ -39,8 +39,6 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(projects.ui.commonLegacy)
-
                 implementation(libs.koin.androidx.compose)
                 implementation(libs.koin.annotations)
             }

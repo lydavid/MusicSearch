@@ -95,7 +95,6 @@ dependencies {
     implementation(projects.shared.feature.settings)
     implementation(projects.strings)
     implementation(projects.ui.common)
-    implementation(projects.ui.commonLegacy)
     implementation(projects.ui.core)
     implementation(projects.ui.image)
     implementation(libs.androidx.activity.compose)
