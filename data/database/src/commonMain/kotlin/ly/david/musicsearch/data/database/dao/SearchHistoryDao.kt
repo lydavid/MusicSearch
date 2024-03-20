@@ -32,20 +32,21 @@ class SearchHistoryDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getAllSearchHistory(
-            entity = entity,
-            limit = limit,
-            offset = offset,
-            mapper = { entity, query ->
-                SearchHistoryListItemModel(
-                    id = "${query}_$entity",
-                    query = query,
-                    entity = entity,
-                )
-            },
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getAllSearchHistory(
+                entity = entity,
+                limit = limit,
+                offset = offset,
+                mapper = { entity, query ->
+                    SearchHistoryListItemModel(
+                        id = "${query}_$entity",
+                        query = query,
+                        entity = entity,
+                    )
+                },
+            )
+        },
+    )
 
     fun delete(
         entity: MusicBrainzEntity,

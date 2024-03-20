@@ -2,11 +2,11 @@ package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
-import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.core.models.listitem.TrackListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToTrackListItemModel
+import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
 import lydavidmusicsearchdatadatabase.Track
 
 class TrackDao(
@@ -69,13 +69,14 @@ class TrackDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getTracksByRelease(
-            releaseId = releaseId,
-            query = query,
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToTrackListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getTracksByRelease(
+                releaseId = releaseId,
+                query = query,
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToTrackListItemModel,
+            )
+        },
+    )
 }

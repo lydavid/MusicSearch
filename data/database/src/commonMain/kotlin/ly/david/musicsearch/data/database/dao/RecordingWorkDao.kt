@@ -68,13 +68,14 @@ class RecordingWorkDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getRecordingsByWork(
-            workId = workId,
-            query = query,
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToRecordingListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getRecordingsByWork(
+                workId = workId,
+                query = query,
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToRecordingListItemModel,
+            )
+        },
+    )
 }

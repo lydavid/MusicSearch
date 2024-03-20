@@ -70,13 +70,14 @@ class ReleaseReleaseGroupDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getReleasesByReleaseGroup(
-            releaseGroupId = releaseGroupId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToReleaseListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getReleasesByReleaseGroup(
+                releaseGroupId = releaseGroupId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToReleaseListItemModel,
+            )
+        }
+    )
 }

@@ -76,14 +76,15 @@ class AreaPlaceDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getPlacesByArea(
-            areaId = areaId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToPlaceListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getPlacesByArea(
+                areaId = areaId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToPlaceListItemModel,
+            )
+        },
+    )
     // endregion
 }

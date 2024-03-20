@@ -6,13 +6,13 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.core.models.area.ReleaseEvent
 import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import lydavidmusicsearchdatadatabase.Release_country
 
 /**
@@ -107,15 +107,16 @@ class ReleaseCountryDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getReleasesByCountry(
-            areaId = areaId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToReleaseListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getReleasesByCountry(
+                areaId = areaId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToReleaseListItemModel,
+            )
+        },
+    )
 
     fun deleteReleasesByCountry(areaId: String) {
         withTransaction {

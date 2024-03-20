@@ -70,13 +70,14 @@ class ArtistReleaseDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getReleasesByArtist(
-            artistId = artistId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToReleaseListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getReleasesByArtist(
+                artistId = artistId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToReleaseListItemModel,
+            )
+        },
+    )
 }
