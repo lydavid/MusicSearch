@@ -70,7 +70,10 @@ class CollectionEntityDao(
         transacter.deleteAllFromCollection(collectionId)
     }
 
-    fun deleteFromCollection(collectionId: String, collectableId: String) {
+    fun deleteFromCollection(
+        collectionId: String,
+        collectableId: String,
+    ) {
         transacter.deleteFromCollection(
             collectionId = collectionId,
             collectableId = collectableId,
@@ -87,15 +90,16 @@ class CollectionEntityDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getAreasByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToAreaListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getAreasByCollection(
+                collectionId = collectionId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToAreaListItemModel,
+            )
+        },
+    )
 
     fun getArtistsByCollection(
         collectionId: String,
@@ -107,15 +111,16 @@ class CollectionEntityDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getArtistsByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToArtistListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getArtistsByCollection(
+                collectionId = collectionId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToArtistListItemModel,
+            )
+        },
+    )
 
     fun getEventsByCollection(
         collectionId: String,
@@ -127,15 +132,16 @@ class CollectionEntityDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getEventsByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToEventListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getEventsByCollection(
+                collectionId = collectionId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToEventListItemModel,
+            )
+        },
+    )
 
     fun getInstrumentsByCollection(
         collectionId: String,
@@ -147,15 +153,16 @@ class CollectionEntityDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getInstrumentsByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToInstrumentListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getInstrumentsByCollection(
+                collectionId = collectionId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToInstrumentListItemModel,
+            )
+        },
+    )
 
     fun getLabelsByCollection(
         collectionId: String,
@@ -167,15 +174,16 @@ class CollectionEntityDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getLabelsByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToLabelListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getLabelsByCollection(
+                collectionId = collectionId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToLabelListItemModel,
+            )
+        },
+    )
 
     fun getPlacesByCollection(
         collectionId: String,
@@ -187,15 +195,16 @@ class CollectionEntityDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getPlacesByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToPlaceListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getPlacesByCollection(
+                collectionId = collectionId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToPlaceListItemModel,
+            )
+        },
+    )
 
     fun getRecordingsByCollection(
         collectionId: String,
@@ -207,15 +216,16 @@ class CollectionEntityDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getRecordingsByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToRecordingListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getRecordingsByCollection(
+                collectionId = collectionId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToRecordingListItemModel,
+            )
+        },
+    )
 
     fun getReleasesByCollection(
         collectionId: String,
@@ -227,15 +237,16 @@ class CollectionEntityDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getReleasesByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToReleaseListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getReleasesByCollection(
+                collectionId = collectionId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToReleaseListItemModel,
+            )
+        },
+    )
 
     fun getReleaseGroupsByCollection(
         collectionId: String,
@@ -248,16 +259,17 @@ class CollectionEntityDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getReleaseGroupsByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-            sorted = sorted,
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToReleaseGroupListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getReleaseGroupsByCollection(
+                collectionId = collectionId,
+                query = "%$query%",
+                sorted = sorted,
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToReleaseGroupListItemModel,
+            )
+        },
+    )
 
     fun getSeriesByCollection(
         collectionId: String,
@@ -269,15 +281,16 @@ class CollectionEntityDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getSeriesByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToSeriesListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getSeriesByCollection(
+                collectionId = collectionId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToSeriesListItemModel,
+            )
+        },
+    )
 
     fun getWorksByCollection(
         collectionId: String,
@@ -289,13 +302,14 @@ class CollectionEntityDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getWorksByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToWorkListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getWorksByCollection(
+                collectionId = collectionId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToWorkListItemModel,
+            )
+        },
+    )
 }

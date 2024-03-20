@@ -66,13 +66,14 @@ class EventPlaceDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getEventsByPlace(
-            placeId = placeId,
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToEventListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getEventsByPlace(
+                placeId = placeId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToEventListItemModel,
+            )
+        },
+    )
 }

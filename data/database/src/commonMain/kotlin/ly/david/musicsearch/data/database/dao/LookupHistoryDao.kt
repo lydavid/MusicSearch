@@ -43,22 +43,26 @@ class LookupHistoryDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getAllLookupHistory(
-            query = query,
-            alphabetically = alphabetically,
-            alphabeticallyReverse = alphabeticallyReverse,
-            recentlyVisited = recentlyVisited,
-            leastRecentlyVisited = leastRecentlyVisited,
-            mostVisited = mostVisited,
-            leastVisited = leastVisited,
-            limit = limit,
-            offset = offset,
-            mapper = ::mapToLookupHistoryListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getAllLookupHistory(
+                query = query,
+                alphabetically = alphabetically,
+                alphabeticallyReverse = alphabeticallyReverse,
+                recentlyVisited = recentlyVisited,
+                leastRecentlyVisited = leastRecentlyVisited,
+                mostVisited = mostVisited,
+                leastVisited = leastVisited,
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToLookupHistoryListItemModel,
+            )
+        },
+    )
 
-    fun markAsDeleted(mbid: String, deleted: Boolean) {
+    fun markAsDeleted(
+        mbid: String,
+        deleted: Boolean,
+    ) {
         transacter.markAsDeleted(
             mbid = mbid,
             deleted = deleted,

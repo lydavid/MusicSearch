@@ -2,12 +2,12 @@ package ly.david.musicsearch.data.database.dao
 
 import androidx.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
-import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.getCount
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.getCount
 import lydavidmusicsearchdatadatabase.Collection
 
 class CollectionDao(
@@ -76,17 +76,18 @@ class CollectionDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getAllCollections(
-            showLocal = showLocal,
-            showRemote = showRemote,
-            query = query,
-            limit = limit,
-            offset = offset,
-            entity = entity,
-            mapper = ::mapToCollectionListItem,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getAllCollections(
+                showLocal = showLocal,
+                showRemote = showRemote,
+                query = query,
+                limit = limit,
+                offset = offset,
+                entity = entity,
+                mapper = ::mapToCollectionListItem,
+            )
+        },
+    )
 
     private fun mapToCollectionListItem(
         id: String,

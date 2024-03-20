@@ -7,8 +7,8 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
-import ly.david.musicsearch.core.models.relation.RelationWithOrder
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.relation.RelationWithOrder
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 
@@ -52,15 +52,16 @@ class RelationDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getEntityRelationshipsExcludingUrls(
-            entityId = entityId,
-            query = query,
-            limit = limit,
-            offset = offset,
-            mapper = ::toRelationListItemModel,
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getEntityRelationshipsExcludingUrls(
+                entityId = entityId,
+                query = query,
+                limit = limit,
+                offset = offset,
+                mapper = ::toRelationListItemModel,
+            )
+        },
+    )
 
     fun getEntityUrlRelationships(
         entityId: String,

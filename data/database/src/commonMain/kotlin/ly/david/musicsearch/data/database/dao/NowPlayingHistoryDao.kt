@@ -29,19 +29,20 @@ class NowPlayingHistoryDao(
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
-    ) { limit, offset ->
-        transacter.getAllNowPlayingHistory(
-            query = "%$query%",
-            limit = limit,
-            offset = offset,
-            mapper = { raw, lastPlayed ->
-                NowPlayingHistory(
-                    raw = raw,
-                    lastPlayed = lastPlayed,
-                )
-            },
-        )
-    }
+        queryProvider = { limit, offset ->
+            transacter.getAllNowPlayingHistory(
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = { raw, lastPlayed ->
+                    NowPlayingHistory(
+                        raw = raw,
+                        lastPlayed = lastPlayed,
+                    )
+                },
+            )
+        },
+    )
 
 //    fun markAsDeleted(mbid: String, deleted: Boolean) {
 //        transacter.markAsDeleted(
