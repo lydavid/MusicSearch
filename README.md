@@ -21,6 +21,8 @@ using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 - Dark theme
 - Material You theme
 
+See [all features here](./docs/all_features.md).
+
 ## Screenshots
 
 | Search artist                             | Artist details                             | Release groups by artist                          | Release details                             |
