@@ -93,23 +93,11 @@ class EventsByEntityRepositoryImpl(
         entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseEventsResponse {
-        return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
-                musicBrainzApi.browseEventsByCollection(
-                    collectionId = entityId,
-                    offset = offset,
-                )
-            }
-
-            MusicBrainzEntity.PLACE -> {
-                musicBrainzApi.browseEventsByPlace(
-                    placeId = entityId,
-                    offset = offset,
-                )
-            }
-
-            else -> error(browseEntitiesNotSupported(entity))
-        }
+        return musicBrainzApi.browseEventsByEntity(
+            entityId = entityId,
+            entity = entity,
+            offset = offset,
+        )
     }
 
     override fun insertAllLinkingModels(

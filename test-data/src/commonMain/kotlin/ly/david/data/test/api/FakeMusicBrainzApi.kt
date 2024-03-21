@@ -73,6 +73,7 @@ import ly.david.data.test.searchReleaseGroupsResponse
 import ly.david.data.test.searchReleasesResponse
 import ly.david.data.test.searchSeriesResponse
 import ly.david.data.test.searchWorksResponse
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 
 class FakeMusicBrainzApi : MusicBrainzApi {
     // region Search
@@ -147,15 +148,12 @@ class FakeMusicBrainzApi : MusicBrainzApi {
         return browseCollectionsResponse
     }
 
-    override suspend fun browseEventsByCollection(
-        collectionId: String,
+    override suspend fun browseEventsByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
     ): BrowseEventsResponse {
-        return browseEventsResponse
-    }
-
-    override suspend fun browseEventsByPlace(placeId: String, limit: Int, offset: Int): BrowseEventsResponse {
         return browseEventsResponse
     }
 

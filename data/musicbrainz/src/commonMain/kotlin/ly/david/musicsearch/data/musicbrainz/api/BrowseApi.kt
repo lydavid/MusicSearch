@@ -7,6 +7,8 @@ import io.ktor.client.request.parameter
 import io.ktor.http.appendPathSegments
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.musicsearch.data.musicbrainz.SEARCH_BROWSE_LIMIT
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
@@ -52,14 +54,9 @@ interface BrowseApi {
         include: String? = null,
     ): BrowseCollectionsResponse
 
-    suspend fun browseEventsByCollection(
-        collectionId: String,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-    ): BrowseEventsResponse
-
-    suspend fun browseEventsByPlace(
-        placeId: String,
+    suspend fun browseEventsByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
     ): BrowseEventsResponse
@@ -251,8 +248,9 @@ interface BrowseApiImpl : BrowseApi {
         }.body()
     }
 
-    override suspend fun browseEventsByCollection(
-        collectionId: String,
+    override suspend fun browseEventsByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
     ): BrowseEventsResponse {
@@ -260,32 +258,8 @@ interface BrowseApiImpl : BrowseApi {
             url {
                 appendPathSegments("event")
                 parameter(
-                    "collection",
-                    collectionId,
-                )
-                parameter(
-                    "limit",
-                    limit,
-                )
-                parameter(
-                    "offset",
-                    offset,
-                )
-            }
-        }.body()
-    }
-
-    override suspend fun browseEventsByPlace(
-        placeId: String,
-        limit: Int,
-        offset: Int,
-    ): BrowseEventsResponse {
-        return httpClient.get {
-            url {
-                appendPathSegments("event")
-                parameter(
-                    "place",
-                    placeId,
+                    entity.resourceUri,
+                    entityId,
                 )
                 parameter(
                     "limit",
