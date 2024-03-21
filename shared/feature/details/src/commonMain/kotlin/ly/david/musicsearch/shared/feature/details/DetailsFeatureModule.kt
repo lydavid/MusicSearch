@@ -56,6 +56,7 @@ val detailsFeatureModule = module {
                                 navigator = navigator,
                                 repository = get(),
                                 incrementLookupHistory = get(),
+                                eventsByEntityPresenter = get(),
                                 placesByEntityPresenter = get(),
                                 releasesByEntityPresenter = get(),
                                 relationsPresenter = get(),

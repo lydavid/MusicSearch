@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS area_event (
+  area_id TEXT NOT NULL,
+  event_id TEXT NOT NULL,
+
+  PRIMARY KEY (area_id, event_id)
+);

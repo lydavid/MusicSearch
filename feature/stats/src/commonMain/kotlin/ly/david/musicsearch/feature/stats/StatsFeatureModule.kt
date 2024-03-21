@@ -21,6 +21,7 @@ val statsFeatureModule = module {
                                 getCountOfEachRelationshipTypeUseCase = get(),
                                 observeBrowseEntityCount = get(),
                                 releaseCountryDao = get(),
+                                areaEventDao = get(),
                                 areaPlaceDao = get(),
                             )
                         }

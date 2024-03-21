@@ -22,6 +22,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.common.event.EventsListScreen
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.place.PlacesListScreen
 import ly.david.ui.common.relation.RelationsListScreen
@@ -126,6 +127,7 @@ internal fun AreaUi(
 
         val detailsLazyListState = rememberLazyListState()
         val relationsLazyListState = rememberLazyListState()
+        val eventsLazyListState = rememberLazyListState()
         val releasesLazyListState = rememberLazyListState()
         val placesLazyListState = rememberLazyListState()
 
@@ -174,6 +176,27 @@ internal fun AreaUi(
                         lazyListState = relationsLazyListState,
                         snackbarHostState = snackbarHostState,
                         onItemClick = { entity, id, title ->
+                            eventSink(
+                                AreaUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
+                                ),
+                            )
+                        },
+                    )
+                }
+
+                AreaTab.EVENTS -> {
+                    EventsListScreen(
+                        lazyListState = eventsLazyListState,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.eventsByEntityUiState.lazyPagingItems,
+                        onEventClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
                                     entity = entity,

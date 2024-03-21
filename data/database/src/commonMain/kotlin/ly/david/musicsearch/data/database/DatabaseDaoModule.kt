@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.database
 
 import ly.david.musicsearch.core.models.image.ImageUrlDao
 import ly.david.musicsearch.data.database.dao.AreaDao
+import ly.david.musicsearch.data.database.dao.AreaEventDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
@@ -40,6 +41,7 @@ import org.koin.dsl.module
 
 val databaseDaoModule = module {
     single { AreaDao(get()) }
+    single { AreaEventDao(get(), get()) }
     single { AreaPlaceDao(get(), get()) }
     single { ArtistCreditDao(get()) }
     single { ArtistDao(get()) }
