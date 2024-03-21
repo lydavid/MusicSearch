@@ -7,6 +7,7 @@ sealed interface EventsByEntityUiEvent : CircuitUiEvent {
     data class Get(
         val byEntityId: String,
         val byEntity: MusicBrainzEntity,
+        val isRemote: Boolean = true,
     ) : EventsByEntityUiEvent
 
     data class UpdateQuery(

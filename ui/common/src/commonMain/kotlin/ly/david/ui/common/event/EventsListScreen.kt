@@ -9,6 +9,7 @@ import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -19,6 +20,7 @@ fun EventsListScreen(
     lazyPagingItems: LazyPagingItems<EventListItemModel>,
     modifier: Modifier = Modifier,
     onEventClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
+    onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
 ) {
     ScreenWithPagingLoadingAndError(
         modifier = modifier,
@@ -28,16 +30,27 @@ fun EventsListScreen(
     ) { eventListItemModel: EventListItemModel? ->
         when (eventListItemModel) {
             is EventListItemModel -> {
-                EventListItem(
-                    event = eventListItemModel,
-                    modifier = Modifier.animateItemPlacement(),
-                ) {
-                    onEventClick(
-                        MusicBrainzEntity.EVENT,
-                        id,
-                        getNameWithDisambiguation(),
-                    )
-                }
+                SwipeToDeleteListItem(
+                    content = {
+                        EventListItem(
+                            event = eventListItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onEventClick(
+                                MusicBrainzEntity.EVENT,
+                                id,
+                                getNameWithDisambiguation(),
+                            )
+                        }
+                    },
+                    disable = onDeleteFromCollection == null,
+                    onDelete = {
+                        onDeleteFromCollection?.invoke(
+                            eventListItemModel.id,
+                            eventListItemModel.name,
+                        )
+                    },
+                )
             }
 
             else -> {

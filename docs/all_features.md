@@ -28,7 +28,7 @@ Soon, there will be a tab to browse all of their events, recordings, and works.
 
 - Note that MusicBrainz supports browsing some entities not supported by the API, such as works by area. See below for those supported by MusicBrainz's API
 - There are no url details screen, clicking a url will just go to that url, either opening it in the browser, or deep linking to an app that supports it
-- labels by release have been excluded, as we fetch all labels with `inc-labels`, displaying it in the Details tab
+- labels by release have been excluded, as we fetch all labels in the initial lookup with `inc=labels`, displaying it in the Details tab
 - releases by track (which releases a given track is found in) is not supported as we don't have a track details screen. Clicking a track goes to its associated recording
 - releases by track_artist may eventually be supported, but is not planned. This would be found in an artist's details screen
 

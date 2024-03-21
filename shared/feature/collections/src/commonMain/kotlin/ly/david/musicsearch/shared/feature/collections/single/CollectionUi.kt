@@ -23,7 +23,6 @@ import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
-import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.core.models.listitem.InstrumentListItemModel
 import ly.david.musicsearch.core.models.listitem.LabelListItemModel
 import ly.david.musicsearch.core.models.listitem.ListItemModel
@@ -36,7 +35,8 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.artist.ArtistListItem
-import ly.david.ui.common.event.EventListItem
+import ly.david.ui.common.event.EventsByEntityUiState
+import ly.david.ui.common.event.EventsListScreen
 import ly.david.ui.common.fullscreen.FullScreenText
 import ly.david.ui.common.instrument.InstrumentListItem
 import ly.david.ui.common.label.LabelListItem
@@ -160,6 +160,7 @@ internal fun CollectionUi(
         } else {
             CollectionUi(
                 lazyPagingItems = state.lazyPagingItems,
+                eventsByEntityUiState = state.eventsByEntityUiState,
                 releasesByEntityUiState = state.releasesByEntityUiState,
                 releaseGroupsByEntityUiState = state.releaseGroupsByEntityUiState,
                 entity = collection.entity,
@@ -204,12 +205,12 @@ internal fun CollectionUi(
 }
 
 @OptIn(
-    ExperimentalFoundationApi::class,
     ExperimentalMaterial3Api::class,
 )
 @Composable
 private fun CollectionUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
+    eventsByEntityUiState: EventsByEntityUiState,
     releasesByEntityUiState: ReleasesByEntityUiState,
     releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
     entity: MusicBrainzEntity,
@@ -224,6 +225,25 @@ private fun CollectionUi(
     val lazyListState = rememberLazyListState()
 
     when (entity) {
+        MusicBrainzEntity.EVENT -> {
+            EventsListScreen(
+                lazyListState = lazyListState,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                snackbarHostState = snackbarHostState,
+                lazyPagingItems = eventsByEntityUiState.lazyPagingItems,
+                onEventClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
+            )
+        }
+
         MusicBrainzEntity.RELEASE -> {
             ReleasesListScreen(
                 lazyListState = lazyListState,
@@ -346,29 +366,6 @@ internal fun CollectionUi(
                     content = {
                         ArtistListItem(
                             artist = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
-                        ) {
-                            onItemClick(
-                                entity,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    onDelete = {
-                        onDeleteFromCollection(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
-                )
-            }
-
-            is EventListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        EventListItem(
-                            event = listItemModel,
                             modifier = Modifier.animateItemPlacement(),
                         ) {
                             onItemClick(

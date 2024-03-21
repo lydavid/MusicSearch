@@ -25,6 +25,7 @@ class EventsByEntityPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
+        var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         var eventListItems: Flow<PagingData<EventListItemModel>> by remember { mutableStateOf(emptyFlow()) }
 
         LaunchedEffect(
@@ -40,6 +41,7 @@ class EventsByEntityPresenter(
                 entity = capturedEntity,
                 listFilters = ListFilters(
                     query = query,
+                    isRemote = isRemote,
                 ),
             )
         }
@@ -49,6 +51,7 @@ class EventsByEntityPresenter(
                 is EventsByEntityUiEvent.Get -> {
                     id = event.byEntityId
                     entity = event.byEntity
+                    isRemote = event.isRemote
                 }
 
                 is EventsByEntityUiEvent.UpdateQuery -> {

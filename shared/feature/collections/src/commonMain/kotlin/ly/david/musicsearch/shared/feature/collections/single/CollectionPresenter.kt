@@ -29,7 +29,6 @@ import ly.david.musicsearch.domain.area.usecase.GetAreasByEntity
 import ly.david.musicsearch.domain.artist.usecase.GetArtistsByEntity
 import ly.david.musicsearch.domain.collection.usecase.DeleteFromCollection
 import ly.david.musicsearch.domain.collection.usecase.GetCollection
-import ly.david.musicsearch.domain.event.usecase.GetEventsByEntity
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.instrument.usecase.GetInstrumentsByEntity
 import ly.david.musicsearch.domain.label.usecase.GetLabelsByEntity
@@ -37,6 +36,8 @@ import ly.david.musicsearch.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.domain.recording.usecase.GetRecordingsByEntity
 import ly.david.musicsearch.domain.series.usecase.GetSeriesByEntity
 import ly.david.musicsearch.domain.work.usecase.GetWorksByEntity
+import ly.david.ui.common.event.EventsByEntityPresenter
+import ly.david.ui.common.event.EventsByEntityUiEvent
 import ly.david.ui.common.release.ReleasesByEntityPresenter
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
@@ -51,11 +52,11 @@ internal class CollectionPresenter(
     private val incrementLookupHistory: IncrementLookupHistory,
     private val getAreasByEntity: GetAreasByEntity,
     private val getArtistsByEntity: GetArtistsByEntity,
-    private val getEventsByEntity: GetEventsByEntity,
     private val getInstrumentsByEntity: GetInstrumentsByEntity,
     private val getLabelsByEntity: GetLabelsByEntity,
     private val getPlacesByEntity: GetPlacesByEntity,
     private val getRecordingsByEntity: GetRecordingsByEntity,
+    private val eventsByEntityPresenter: EventsByEntityPresenter,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
     private val getSeriesByEntity: GetSeriesByEntity,
@@ -73,10 +74,12 @@ internal class CollectionPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         var collectableItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val eventsByEntityUiState = eventsByEntityPresenter.present()
+        val eventsEventSink = eventsByEntityUiState.eventSink
         val releasesByEntityUiState = releasesByEntityPresenter.present()
-        val releasesByEntityEventSink = releasesByEntityUiState.eventSink
+        val releasesEventSink = releasesByEntityUiState.eventSink
         val releaseGroupsByEntityUiState = releaseGroupsByEntityPresenter.present()
-        val releaseGroupsByEntityEventSink = releaseGroupsByEntityUiState.eventSink
+        val releaseGroupsEventSink = releaseGroupsByEntityUiState.eventSink
 
         LaunchedEffect(Unit) {
             val nonNullCollection = getCollectionUseCase(collectionId)
@@ -130,18 +133,14 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.EVENT -> {
-                    collectableItems = getEventsByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    eventsEventSink(
+                        EventsByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    eventsEventSink(EventsByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.INSTRUMENT -> {
@@ -205,25 +204,25 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.RELEASE -> {
-                    releasesByEntityEventSink(
+                    releasesEventSink(
                         ReleasesByEntityUiEvent.Get(
                             byEntityId = collectionId,
                             byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
                     )
-                    releasesByEntityEventSink(ReleasesByEntityUiEvent.UpdateQuery(query))
+                    releasesEventSink(ReleasesByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.RELEASE_GROUP -> {
-                    releaseGroupsByEntityEventSink(
+                    releaseGroupsEventSink(
                         ReleaseGroupsByEntityUiEvent.Get(
                             byEntityId = collectionId,
                             byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
                     )
-                    releaseGroupsByEntityEventSink(ReleaseGroupsByEntityUiEvent.UpdateQuery(query))
+                    releaseGroupsEventSink(ReleaseGroupsByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.SERIES -> {
@@ -314,6 +313,7 @@ internal class CollectionPresenter(
             actionableResult = actionableResult,
             query = query,
             lazyPagingItems = collectableItems.collectAsLazyPagingItems(),
+            eventsByEntityUiState = eventsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
             eventSink = ::eventSink,
