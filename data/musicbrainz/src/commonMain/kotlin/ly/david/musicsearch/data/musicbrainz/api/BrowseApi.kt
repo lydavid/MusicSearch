@@ -182,9 +182,18 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("area")
-                parameter("collection", collectionId)
-                parameter("limit", limit)
-                parameter("offset", offset)
+                parameter(
+                    "collection",
+                    collectionId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
             }
         }.body()
     }
@@ -197,9 +206,18 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("artist")
-                parameter("collection", collectionId)
-                parameter("limit", limit)
-                parameter("offset", offset)
+                parameter(
+                    "collection",
+                    collectionId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
             }
         }.body()
     }
@@ -213,10 +231,22 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("collection")
-                parameter("editor", username)
-                parameter("limit", limit)
-                parameter("offset", offset)
-                parameter("inc", include)
+                parameter(
+                    "editor",
+                    username,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -229,9 +259,18 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("event")
-                parameter("collection", collectionId)
-                parameter("limit", limit)
-                parameter("offset", offset)
+                parameter(
+                    "collection",
+                    collectionId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
             }
         }.body()
     }
@@ -244,9 +283,18 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("event")
-                parameter("place", placeId)
-                parameter("limit", limit)
-                parameter("offset", offset)
+                parameter(
+                    "place",
+                    placeId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
             }
         }.body()
     }
@@ -259,9 +307,18 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("instrument")
-                parameter("collection", collectionId)
-                parameter("limit", limit)
-                parameter("offset", offset)
+                parameter(
+                    "collection",
+                    collectionId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
             }
         }.body()
     }
@@ -274,9 +331,18 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("label")
-                parameter("collection", collectionId)
-                parameter("limit", limit)
-                parameter("offset", offset)
+                parameter(
+                    "collection",
+                    collectionId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
             }
         }.body()
     }
@@ -289,9 +355,18 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("place")
-                parameter("area", areaId)
-                parameter("limit", limit)
-                parameter("offset", offset)
+                parameter(
+                    "area",
+                    areaId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
             }
         }.body()
     }
@@ -304,9 +379,18 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("place")
-                parameter("collection", collectionId)
-                parameter("limit", limit)
-                parameter("offset", offset)
+                parameter(
+                    "collection",
+                    collectionId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
             }
         }.body()
     }
@@ -320,10 +404,22 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("recording")
-                parameter("collection", collectionId)
-                parameter("limit", limit)
-                parameter("offset", offset)
-                parameter("inc", include)
+                parameter(
+                    "collection",
+                    collectionId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -337,10 +433,22 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("recording")
-                parameter("work", workId)
-                parameter("limit", limit)
-                parameter("offset", offset)
-                parameter("inc", include)
+                parameter(
+                    "work",
+                    workId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -354,10 +462,22 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("release")
-                parameter("area", areaId)
-                parameter("limit", limit)
-                parameter("offset", offset)
-                parameter("inc", include)
+                parameter(
+                    "area",
+                    areaId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -371,10 +491,22 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("release")
-                parameter("artist", artistId)
-                parameter("limit", limit)
-                parameter("offset", offset)
-                parameter("inc", include)
+                parameter(
+                    "artist",
+                    artistId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -388,10 +520,22 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("release")
-                parameter("collection", collectionId)
-                parameter("limit", limit)
-                parameter("offset", offset)
-                parameter("inc", include)
+                parameter(
+                    "collection",
+                    collectionId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -405,10 +549,22 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("release")
-                parameter("label", labelId)
-                parameter("limit", limit)
-                parameter("offset", offset)
-                parameter("inc", include)
+                parameter(
+                    "label",
+                    labelId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -422,10 +578,22 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("release")
-                parameter("recording", recordingId)
-                parameter("limit", limit)
-                parameter("offset", offset)
-                parameter("inc", include)
+                parameter(
+                    "recording",
+                    recordingId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -439,10 +607,22 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("release")
-                parameter("release-group", releaseGroupId)
-                parameter("limit", limit)
-                parameter("offset", offset)
-                parameter("inc", include)
+                parameter(
+                    "release-group",
+                    releaseGroupId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -456,10 +636,22 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("release-group")
-                parameter("artist", artistId)
-                parameter("limit", limit)
-                parameter("offset", offset)
-                parameter("inc", include)
+                parameter(
+                    "artist",
+                    artistId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -473,10 +665,22 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("release-group")
-                parameter("collection", collectionId)
-                parameter("limit", limit)
-                parameter("offset", offset)
-                parameter("inc", include)
+                parameter(
+                    "collection",
+                    collectionId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -489,9 +693,18 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("series")
-                parameter("collection", collectionId)
-                parameter("limit", limit)
-                parameter("offset", offset)
+                parameter(
+                    "collection",
+                    collectionId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
             }
         }.body()
     }
@@ -504,9 +717,18 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("work")
-                parameter("collection", collectionId)
-                parameter("limit", limit)
-                parameter("offset", offset)
+                parameter(
+                    "collection",
+                    collectionId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
             }
         }.body()
     }
