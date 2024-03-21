@@ -78,6 +78,6 @@ class ReleaseReleaseGroupDao(
                 offset = offset,
                 mapper = ::mapToReleaseListItemModel,
             )
-        }
+        },
     )
 }
