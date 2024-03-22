@@ -1,15 +1,14 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyScaffold(
-  stable modifier: Modifier? = @static Companion
-  stable onBack: Function0<Unit>? = @static {
-
-}
-
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
-
-}
-
+restartable skippable fun SpotifyBroadcastReceiver(
+  stable onMetadataChange: Function1<SpotifyMetadata, Unit>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyScaffold(
+fun present(
+  stable <this>: SpotifyPresenter
+): SpotifyUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyUi(
+  stable state: SpotifyUiState
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyUi(
   stable metadata: SpotifyMetadata
   stable modifier: Modifier? = @static Companion
   stable onBack: Function0<Unit>? = @static {
@@ -21,11 +20,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifySc
 }
 
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSpotifyScaffold()
-restartable skippable fun SpotifyBroadcastReceiver(
-  stable onMetadataChange: Function1<SpotifyMetadata, Unit>
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyScreen(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyContent(
   stable metadata: SpotifyMetadata
   stable modifier: Modifier? = @static Companion
   stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
@@ -41,5 +36,5 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifySe
 }
 
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSpotifyScreenEmpty()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSpotifyScreenWithData()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSpotifyUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSpotifyUiEmpty()

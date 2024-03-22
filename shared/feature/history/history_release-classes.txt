@@ -47,5 +47,4 @@ stable class HistoryUiState {
   stable val sortOption: HistorySortOption
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val eventSink: Function1<HistoryUiEvent, Unit>
-  <runtime stability> = Stable
 }

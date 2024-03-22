@@ -1,0 +1,480 @@
+stable class AreaPresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val repository: AreaRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val eventsByEntityPresenter: EventsByEntityPresenter
+  stable val releasesByEntityPresenter: ReleasesByEntityPresenter
+  stable val placesByEntityPresenter: PlacesByEntityPresenter
+  stable val relationsPresenter: RelationsPresenter
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class UpdateTab {
+  stable val tab: AreaTab
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class AreaUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val area: AreaScaffoldModel?
+  unstable val tabs: List<AreaTab>
+  stable val selectedTab: AreaTab
+  stable val query: String
+  stable val eventsByEntityUiState: EventsByEntityUiState
+  stable val placesByEntityUiState: PlacesByEntityUiState
+  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<AreaUiEvent, Unit>
+}
+stable class ArtistPresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val repository: ArtistRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val releasesByEntityPresenter: ReleasesByEntityPresenter
+  stable val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter
+  stable val relationsPresenter: RelationsPresenter
+  unstable val artistImageRepository: ArtistImageRepository
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class UpdateTab {
+  stable val tab: ArtistTab
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class ArtistUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val artist: ArtistScaffoldModel?
+  stable val imageUrl: String
+  unstable val tabs: List<ArtistTab>
+  stable val selectedTab: ArtistTab
+  stable val query: String
+  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<ArtistUiEvent, Unit>
+}
+stable class EventPresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val repository: EventRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val relationsPresenter: RelationsPresenter
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class UpdateTab {
+  stable val tab: EventTab
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class EventUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val event: EventScaffoldModel?
+  unstable val tabs: List<EventTab>
+  stable val selectedTab: EventTab
+  stable val query: String
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<EventUiEvent, Unit>
+}
+stable class GenrePresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val musicBrainzApi: MusicBrainzApi
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class GenreUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val genre: GenreMusicBrainzModel?
+  stable val eventSink: Function1<GenreUiGenre, Unit>
+}
+stable class InstrumentPresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val repository: InstrumentRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val relationsPresenter: RelationsPresenter
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class UpdateTab {
+  stable val tab: InstrumentTab
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class InstrumentUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val instrument: InstrumentScaffoldModel?
+  unstable val tabs: List<InstrumentTab>
+  stable val selectedTab: InstrumentTab
+  stable val query: String
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<InstrumentUiEvent, Unit>
+}
+stable class LabelPresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val repository: LabelRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val releasesByEntityPresenter: ReleasesByEntityPresenter
+  stable val relationsPresenter: RelationsPresenter
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class UpdateTab {
+  stable val tab: LabelTab
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class LabelUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val label: LabelScaffoldModel?
+  unstable val tabs: List<LabelTab>
+  stable val selectedTab: LabelTab
+  stable val query: String
+  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<LabelUiEvent, Unit>
+}
+stable class PlacePresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val repository: PlaceRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val eventsByEntityPresenter: EventsByEntityPresenter
+  stable val relationsPresenter: RelationsPresenter
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class UpdateTab {
+  stable val tab: PlaceTab
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class PlaceUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val place: PlaceScaffoldModel?
+  unstable val tabs: List<PlaceTab>
+  stable val selectedTab: PlaceTab
+  stable val query: String
+  stable val eventsByEntityUiState: EventsByEntityUiState
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<PlaceUiEvent, Unit>
+}
+stable class RecordingPresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val repository: RecordingRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val releasesByEntityPresenter: ReleasesByEntityPresenter
+  stable val relationsPresenter: RelationsPresenter
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class UpdateTab {
+  stable val tab: RecordingTab
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class RecordingUiState {
+  stable val title: String
+  stable val subtitle: String
+  stable val isError: Boolean
+  unstable val recording: RecordingScaffoldModel?
+  unstable val tabs: List<RecordingTab>
+  stable val selectedTab: RecordingTab
+  stable val query: String
+  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<RecordingUiEvent, Unit>
+}
+stable class ReleasePresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val repository: ReleaseRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val relationsPresenter: RelationsPresenter
+  unstable val releaseImageRepository: ReleaseImageRepository
+  runtime val getTracksByRelease: GetTracksByRelease
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class UpdateTab {
+  stable val tab: ReleaseTab
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class ReleaseUiState {
+  stable val title: String
+  stable val subtitle: String
+  stable val isError: Boolean
+  unstable val release: ReleaseScaffoldModel?
+  stable val imageUrl: String
+  unstable val tabs: List<ReleaseTab>
+  stable val selectedTab: ReleaseTab
+  stable val query: String
+  stable val relationsUiState: RelationsUiState
+  runtime val tracksLazyPagingItems: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
+  stable val eventSink: Function1<ReleaseUiEvent, Unit>
+}
+stable class ReleaseGroupPresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val repository: ReleaseGroupRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val releasesByEntityPresenter: ReleasesByEntityPresenter
+  stable val relationsPresenter: RelationsPresenter
+  unstable val releaseGroupImageRepository: ReleaseGroupImageRepository
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class UpdateTab {
+  stable val tab: ReleaseGroupTab
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class ReleaseGroupUiState {
+  stable val title: String
+  stable val subtitle: String
+  stable val isError: Boolean
+  unstable val releaseGroup: ReleaseGroupScaffoldModel?
+  stable val imageUrl: String
+  unstable val tabs: List<ReleaseGroupTab>
+  stable val selectedTab: ReleaseGroupTab
+  stable val query: String
+  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<ReleaseGroupUiEvent, Unit>
+}
+stable class SeriesPresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val repository: SeriesRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val relationsPresenter: RelationsPresenter
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class UpdateTab {
+  stable val tab: SeriesTab
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class SeriesUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val series: SeriesScaffoldModel?
+  unstable val tabs: List<SeriesTab>
+  stable val selectedTab: SeriesTab
+  stable val query: String
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<SeriesUiEvent, Unit>
+}
+stable class WorkPresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val repository: WorkRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val recordingsByEntityPresenter: RecordingsByEntityPresenter
+  stable val relationsPresenter: RelationsPresenter
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class UpdateTab {
+  stable val tab: WorkTab
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class WorkUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val work: WorkScaffoldModel?
+  unstable val tabs: List<WorkTab>
+  stable val selectedTab: WorkTab
+  stable val query: String
+  stable val recordingsByEntityUiState: RecordingsByEntityUiState
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<WorkUiEvent, Unit>
+}

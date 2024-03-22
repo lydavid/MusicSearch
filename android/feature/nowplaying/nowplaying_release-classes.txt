@@ -1,10 +1,32 @@
-stable class NowPlayingUiModule {
-  <runtime stability> = Stable
+unstable class NowPlayingNotificationListener {
+  unstable val coroutineScope$delegate: Lazy<CoroutineScope>
+  unstable val nowPlayingHistoryRepository$delegate: Lazy<NowPlayingHistoryRepository>
+  <runtime stability> = Unstable
 }
-unstable class NowPlayingViewModel {
+stable class NowPlayingHistoryPresenter {
+  stable val navigator: Navigator
   runtime val getNowPlayingHistory: GetNowPlayingHistory
   runtime val deleteNowPlayingHistory: DeleteNowPlayingHistory
-  unstable val query: MutableStateFlow<String>
-  unstable val nowPlayingHistory: Flow<PagingData<ListItemModel>>
-  <runtime stability> = Unstable
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class DeleteHistory {
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class GoToSearch {
+  stable val query: String
+  stable val entity: MusicBrainzEntity
+  <runtime stability> = Stable
+}
+stable class NowPlayingHistoryUiState {
+  stable val query: String
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable val eventSink: Function1<NowPlayingHistoryUiEvent, Unit>
 }

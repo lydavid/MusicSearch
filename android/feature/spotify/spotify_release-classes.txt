@@ -7,3 +7,19 @@ stable class SpotifyMetadata {
   stable val timeSentInMs: Long?
   <runtime stability> = Stable
 }
+stable class SpotifyPresenter {
+  stable val navigator: Navigator
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class GoToSearch {
+  stable val query: String
+  stable val entity: MusicBrainzEntity
+  <runtime stability> = Stable
+}
+stable class SpotifyUiState {
+  stable val metadata: SpotifyMetadata
+  stable val eventSink: Function1<SpotifyUiEvent, Unit>
+}

@@ -1,27 +1,20 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryScaffold(
+restartable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryCard(
+  unstable nowPlayingHistory: NowPlayingHistoryListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onBack: Function0<Unit>? = @static {
-
-}
-
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+  stable onClick: @[ExtensionFunctionType] Function1<NowPlayingHistoryListItemModel, Unit>? = @static {
 
 }
 
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryScaffoldInternal(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewNowPlayingHistoryCard()
+fun present(
+  stable <this>: NowPlayingHistoryPresenter
+): NowPlayingHistoryUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryUi(
+  stable state: NowPlayingHistoryUiState
   stable modifier: Modifier? = @static Companion
-  stable onBack: Function0<Unit>? = @static {
-
-}
-
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
-
-}
-
-  unstable viewModel: NowPlayingViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryScaffoldInternal(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
   stable onBack: Function0<Unit>? = @static {
@@ -42,17 +35,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayin
 }
 
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewNowPlayingHistoryScaffold()
-restartable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingCard(
-  unstable nowPlayingHistory: NowPlayingHistoryListItemModel
-  stable modifier: Modifier? = @static Companion
-  stable onClick: @[ExtensionFunctionType] Function1<NowPlayingHistoryListItemModel, Unit>? = @static {
-
-}
-
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewNowPlayingCard()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryScreen(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryContent(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
   stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
@@ -64,4 +47,4 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayin
 }
 
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewNowPlayingHistoryScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewNowPlayingHistoryUi()

@@ -1,62 +1,115 @@
-stable class ViewModelState {
-  stable val username: String
-  stable val query: String
-  stable val isRemote: Boolean
-  stable val showLocal: Boolean
-  stable val showRemote: Boolean
+stable class AddToCollectionPresenter {
+  stable val screen: AddToCollectionScreen
+  stable val navigator: Navigator
+  runtime val getAllCollections: GetAllCollections
+  runtime val createCollection: CreateCollection
+  unstable val collectionRepository: CollectionRepository
   <runtime stability> = Stable
 }
-unstable class CollectionListViewModel {
+stable class CreateCollection {
+  stable val newCollection: NewCollection
+  <runtime stability> = Stable
+}
+stable class AddToCollection {
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class AddToCollectionUiState {
+  runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<CollectionListItemModel> }
+  stable val eventSink: Function1<AddToCollectionUiEvent, Unit>
+}
+stable class CollectionListPresenter {
+  stable val navigator: Navigator
   unstable val appPreferences: AppPreferences
   runtime val getAllCollections: GetAllCollections
-  unstable val username: MutableStateFlow<String>
-  unstable val query: MutableStateFlow<String>
-  unstable val isRemote: MutableStateFlow<Boolean>
-  unstable val showLocal: MutableStateFlow<Boolean>
-  unstable val showRemote: MutableStateFlow<Boolean>
-  unstable val paramState: Flow<ViewModelState>
-  unstable val pagedEntities$delegate: Lazy<Flow<PagingData<CollectionListItemModel>>>
-  <runtime stability> = Unstable
-}
-stable class CollectionUiModule {
+  runtime val createCollection: CreateCollection
   <runtime stability> = Stable
 }
-unstable class CollectionViewModel {
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class UpdateShowLocal {
+  stable val show: Boolean
+  <runtime stability> = Stable
+}
+stable class UpdateShowRemote {
+  stable val show: Boolean
+  <runtime stability> = Stable
+}
+stable class CreateCollection {
+  stable val newCollection: NewCollection
+  <runtime stability> = Stable
+}
+stable class GoToCollection {
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class CollectionListUiState {
+  stable val query: String
+  stable val showLocal: Boolean
+  stable val showRemote: Boolean
+  runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
+  stable val eventSink: Function1<CollectionListUiEvent, Unit>
+}
+stable class NewCollection {
+  stable val name: String?
+  stable val entity: MusicBrainzEntity?
+  <runtime stability> = Stable
+}
+stable class CollectionPresenter {
+  stable val screen: CollectionScreen
+  stable val navigator: Navigator
   runtime val getCollectionUseCase: GetCollection
   runtime val incrementLookupHistory: IncrementLookupHistory
-  stable var recordedLookup: Boolean
-  <runtime stability> = Unstable
-}
-stable class AreasByCollectionViewModel {
+  runtime val getAreasByEntity: GetAreasByEntity
+  runtime val getArtistsByEntity: GetArtistsByEntity
+  runtime val getInstrumentsByEntity: GetInstrumentsByEntity
+  runtime val getLabelsByEntity: GetLabelsByEntity
+  runtime val getPlacesByEntity: GetPlacesByEntity
+  runtime val getRecordingsByEntity: GetRecordingsByEntity
+  stable val eventsByEntityPresenter: EventsByEntityPresenter
+  stable val releasesByEntityPresenter: ReleasesByEntityPresenter
+  stable val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter
+  runtime val getSeriesByEntity: GetSeriesByEntity
+  runtime val getWorksByEntity: GetWorksByEntity
+  runtime val deleteFromCollection: DeleteFromCollection
   <runtime stability> = Stable
 }
-stable class ArtistsByCollectionViewModel {
+stable class NavigateUp {
   <runtime stability> = Stable
 }
-stable class EventsByCollectionViewModel {
+stable class UpdateQuery {
+  stable val query: String
   <runtime stability> = Stable
 }
-stable class InstrumentsByCollectionViewModel {
+stable class MarkItemForDeletion {
+  stable val collectableId: String
+  stable val name: String
   <runtime stability> = Stable
 }
-stable class LabelsByCollectionViewModel {
+stable class UnMarkItemForDeletion {
+  stable val collectableId: String
   <runtime stability> = Stable
 }
-stable class PlacesByCollectionViewModel {
+stable class DeleteItem {
+  stable val collectableId: String
+  stable val name: String
   <runtime stability> = Stable
 }
-stable class RecordingsByCollectionViewModel {
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
   <runtime stability> = Stable
 }
-stable class ReleaseGroupsByCollectionViewModel {
-  <runtime stability> = Stable
-}
-stable class ReleasesByCollectionViewModel {
-  <runtime stability> = Stable
-}
-stable class SeriesByCollectionViewModel {
-  <runtime stability> = Stable
-}
-stable class WorksByCollectionViewModel {
-  <runtime stability> = Stable
+stable class CollectionUiState {
+  unstable val collection: CollectionListItemModel?
+  unstable val actionableResult: ActionableResult?
+  stable val query: String
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
+  stable val eventsByEntityUiState: EventsByEntityUiState
+  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState
+  stable val eventSink: Function1<CollectionUiEvent, Unit>
 }

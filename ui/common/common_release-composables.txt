@@ -32,6 +32,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun FooterLoa
 restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
   unstable place: PlaceListItemModel
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoordinateListItem()
 restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
   unstable recording: RecordingListItemModel
 )
@@ -160,6 +161,9 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun EventListItem(
 }
 
 )
+fun present(
+  stable <this>: EventsByEntityPresenter
+): EventsByEntityUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventsListScreen(
   stable snackbarHostState: SnackbarHostState
   stable lazyListState: LazyListState
@@ -169,6 +173,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventsLis
 
 }
 
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
 )
 restartable skippable fun DetailsWithErrorHandling(
   stable showError: Boolean
@@ -251,6 +256,11 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable keyed: Boolean = @static true
   stable itemContent: @[ExtensionFunctionType] Function4<LazyItemScope, @[ParameterName(name = 'value')] T?, Composer, Int, Unit>
 )
+restartable scheme("[androidx.compose.ui.UiComposable]") fun CoordinateListItem(
+  unstable coordinates: CoordinatesUiModel
+  stable modifier: Modifier? = @static Companion
+  stable label: String? = @static null
+)
 restartable scheme("[androidx.compose.ui.UiComposable]") fun PlaceListItem(
   unstable place: PlaceListItemModel
   stable modifier: Modifier? = @static Companion
@@ -259,6 +269,9 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun PlaceListItem(
 }
 
 )
+fun present(
+  stable <this>: PlacesByEntityPresenter
+): PlacesByEntityUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlacesListScreen(
   stable snackbarHostState: SnackbarHostState
   stable lazyListState: LazyListState
@@ -277,6 +290,9 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun RecordingListItem(
 }
 
 )
+fun present(
+  stable <this>: RecordingsByEntityPresenter
+): RecordingsByEntityUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingsListScreen(
   lazyPagingItems: LazyPagingItems<RecordingListItemModel>
   stable modifier: Modifier? = @static Companion
@@ -292,6 +308,9 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun RelationListItem(
 }
 
 )
+fun present(
+  stable <this>: RelationsPresenter
+): RelationsUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RelationsListScreen(
   lazyPagingItems: LazyPagingItems<RelationListItemModel>
   stable modifier: Modifier? = @static Companion
@@ -315,10 +334,21 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseListItem(
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun TrackListItem(
-  unstable track: TrackListItemModel
+fun present(
+  stable <this>: ReleasesByEntityPresenter
+): ReleasesByEntityUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesListScreen(
+  lazyPagingItems: LazyPagingItems<ReleaseListItemModel>
   stable modifier: Modifier? = @static Companion
-  stable onRecordingClick: Function2<String, String, Unit>? = @static { <unused var>: String, <unused var>: String ->
+  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable showMoreInfo: Boolean = @static true
+  stable onReleaseClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
+  unstable requestForMissingCoverArtUrl: SuspendFunction1<@[ParameterName(name = 'id')] String, Unit>? = @static { it: String ->
 
 }
 
@@ -331,6 +361,24 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupListIte
 }
 
   stable onClick: @[ExtensionFunctionType] Function1<ReleaseGroupListItemModel, Unit>? = @static {
+
+}
+
+)
+fun present(
+  stable <this>: ReleaseGroupsByEntityPresenter
+): ReleaseGroupsByEntityUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupsListScreen(
+  lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onReleaseGroupClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
+  unstable requestForMissingCoverArtUrl: SuspendFunction1<@[ParameterName(name = 'id')] String, Unit>? = @static { it: String ->
 
 }
 
@@ -446,6 +494,14 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 
   stable additionalActions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda-3
   stable additionalBar: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda-4
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun TrackListItem(
+  unstable track: TrackListItemModel
+  stable modifier: Modifier? = @static Companion
+  stable onRecordingClick: Function2<@[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String, Unit>? = @static { <unused var>: String, <unused var>: String ->
+
+}
+
 )
 restartable scheme("[androidx.compose.ui.UiComposable]") fun UrlsSection(
   unstable urls: List<RelationListItemModel>

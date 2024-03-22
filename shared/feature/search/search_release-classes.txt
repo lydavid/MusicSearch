@@ -37,5 +37,4 @@ stable class SearchUiState {
   runtime val searchResults: LazyPagingItems<ListItemModel>
   runtime val searchHistory: LazyPagingItems<ListItemModel>
   stable val eventSink: Function1<SearchUiEvent, Unit>
-  <runtime stability> = Stable
 }

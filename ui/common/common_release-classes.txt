@@ -42,6 +42,24 @@ unstable class SeriesPreviewParameterProvider {
   unstable val values: Sequence<SeriesListItemModel>
   <runtime stability> = Unstable
 }
+stable class EventsByEntityPresenter {
+  runtime val getEventsByEntity: GetEventsByEntity
+  <runtime stability> = Stable
+}
+stable class Get {
+  stable val byEntityId: String
+  stable val byEntity: MusicBrainzEntity
+  stable val isRemote: Boolean
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class EventsByEntityUiState {
+  runtime val lazyPagingItems: LazyPagingItems<EventListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<EventListItemModel> }
+  stable val eventSink: Function1<EventsByEntityUiEvent, Unit>
+}
 stable class State {
   stable val entityId: String
   stable val query: String
@@ -56,4 +74,160 @@ unstable class RelationsList {
   stable var entity: MusicBrainzEntity
   unstable val pagedRelations$delegate: Lazy<Flow<PagingData<RelationListItemModel>{ app.cash.paging.PagingDataKt.PagingData<RelationListItemModel> }>>
   <runtime stability> = Unstable
+}
+stable class PlacesByEntityPresenter {
+  runtime val getPlacesByEntity: GetPlacesByEntity
+  <runtime stability> = Stable
+}
+stable class Get {
+  stable val byEntityId: String
+  stable val byEntity: MusicBrainzEntity
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class PlacesByEntityUiState {
+  runtime val lazyPagingItems: LazyPagingItems<PlaceListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<PlaceListItemModel> }
+  stable val eventSink: Function1<PlacesByEntityUiEvent, Unit>
+}
+stable class RecordingsByEntityPresenter {
+  runtime val getRecordingsByEntity: GetRecordingsByEntity
+  <runtime stability> = Stable
+}
+stable class Get {
+  stable val byEntityId: String
+  stable val byEntity: MusicBrainzEntity
+  stable val isRemote: Boolean
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class RecordingsByEntityUiState {
+  runtime val lazyPagingItems: LazyPagingItems<RecordingListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<RecordingListItemModel> }
+  stable val eventSink: Function1<RecordingsByEntityUiEvent, Unit>
+}
+stable class RelationsPresenter {
+  runtime val getEntityRelationships: GetEntityRelationships
+  <runtime stability> = Stable
+}
+stable class GetRelations {
+  stable val byEntityId: String
+  stable val byEntity: MusicBrainzEntity
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class RelationsUiState {
+  runtime val lazyPagingItems: LazyPagingItems<RelationListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<RelationListItemModel> }
+  stable val eventSink: Function1<RelationsUiEvent, Unit>
+}
+stable class ReleasesByEntityPresenter {
+  runtime val getReleasesByEntity: GetReleasesByEntity
+  unstable val appPreferences: AppPreferences
+  unstable val releaseImageRepository: ReleaseImageRepository
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class Get {
+  stable val byEntityId: String
+  stable val byEntity: MusicBrainzEntity
+  stable val isRemote: Boolean
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class UpdateShowMoreInfoInReleaseListItem {
+  stable val showMore: Boolean
+  <runtime stability> = Stable
+}
+stable class RequestForMissingCoverArtUrl {
+  stable val entityId: String
+  <runtime stability> = Stable
+}
+stable class ReleasesByEntityUiState {
+  runtime val lazyPagingItems: LazyPagingItems<ReleaseListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ReleaseListItemModel> }
+  stable val showMoreInfo: Boolean
+  stable val eventSink: Function1<ReleasesByEntityUiEvent, Unit>
+}
+stable class ReleaseGroupsByEntityPresenter {
+  runtime val getReleaseGroupsByEntity: GetReleaseGroupsByEntity
+  unstable val appPreferences: AppPreferences
+  unstable val releaseGroupImageRepository: ReleaseGroupImageRepository
+  unstable val logger: Logger
+  <runtime stability> = Stable
+}
+stable class Get {
+  stable val byEntityId: String
+  stable val byEntity: MusicBrainzEntity
+  stable val isRemote: Boolean
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class UpdateSortReleaseGroupListItem {
+  stable val sort: Boolean
+  <runtime stability> = Stable
+}
+stable class RequestForMissingCoverArtUrl {
+  stable val entityId: String
+  <runtime stability> = Stable
+}
+stable class ReleaseGroupsByEntityUiState {
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
+  stable val sort: Boolean
+  stable val eventSink: Function1<ReleaseGroupsByEntityUiEvent, Unit>
+}
+stable class SearchScreen {
+  stable val query: String?
+  stable val entity: MusicBrainzEntity?
+  <runtime stability> = Stable
+}
+stable class HistoryScreen {
+  <runtime stability> = Stable
+}
+stable class CollectionListScreen {
+  <runtime stability> = Stable
+}
+stable class CollectionScreen {
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class AddToCollectionScreen {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class DetailsScreen {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class StatsScreen {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  unstable val tabs: List<Tab>
+  <runtime stability> = Stable
+}
+stable class SettingsScreen {
+  <runtime stability> = Stable
+}
+stable class LicensesScreen {
+  <runtime stability> = Stable
+}
+stable class NowPlayingHistoryScreen {
+  <runtime stability> = Stable
+}
+stable class SpotifyPlayingScreen {
+  <runtime stability> = Stable
 }

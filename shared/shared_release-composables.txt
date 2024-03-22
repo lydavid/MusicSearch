@@ -1,0 +1,18 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AppRoot(
+  stable circuit: Circuit
+  stable initialScreens: ImmutableList<Screen>
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun BottomNavigationBar(
+  stable currentTopLevelScreen: Screen
+  stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static { it: Screen ->
+
+}
+
+)
+fun useDarkTheme(
+  unstable <this>: AppPreferences
+): Boolean
+fun useMaterialYou(
+  unstable <this>: AppPreferences
+): Boolean
