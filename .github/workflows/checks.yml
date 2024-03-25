@@ -11,6 +11,8 @@ jobs:
   checks:
     timeout-minutes: 20
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: nschloe/action-cached-lfs-checkout@v1
