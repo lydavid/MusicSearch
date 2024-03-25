@@ -18,6 +18,9 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
+      - name: Set timezone because some tests depend on it
+        run: timedatectl set-timezone "America/Toronto"
+
       - name: Detekt non-KMP code smells
         continue-on-error: true
         run: ./gradlew detekt
