@@ -47,7 +47,7 @@ jobs:
       # Runs if previous job failed
       - name: Generate new screenshots if verification failed and it's a PR
         id: screenshotsrecord
-        if: steps.screenshotsverify.outcome == 'failure' && github.event_name == 'pull_request'
+        if: steps.screenshotsverify.outcome == 'failure'
         run: |
           ./gradlew recordPaparazziDebug
 
@@ -57,5 +57,5 @@ jobs:
         with:
           file_pattern: '*/*.png'
           disable_globbing: true
-          commit_message: "chore: updates screenshots"
+          commit_message: "chore: rerecord snapshot tests"
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
