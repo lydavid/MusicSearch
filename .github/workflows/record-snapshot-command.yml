@@ -15,12 +15,16 @@ jobs:
           repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
           ref: ${{ github.event.client_payload.pull_request.head.ref }}
 
-      - id: setup
-        uses: ./.github/actions/setup
+      - uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: "America/Toronto"
 
       # Renamed and deleted test functions are not automatically removed by Paparazzi
       - name: Delete all snapshot golden
         run: find . -type f ! -path '*/build/*' -a -path '*/snapshots/images/*' | xargs rm
+
+      - name: Set timezone because some tests depend on it
+        run: timedatectl set-timezone "America/Toronto"
 
       - name: Record snapshots
         run: ./gradlew recordPaparazziDebug

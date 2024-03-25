@@ -13,7 +13,7 @@ Soon, there will be a tab to browse all of their events, recordings, and works.
 
 | Entity        | Browsing supported                                                                                       | Browsing not yet supported                       |
 |---------------|----------------------------------------------------------------------------------------------------------|--------------------------------------------------|
-| area          | places, releases                                                                                         | artists, collections, events, labels             |
+| area          | events, places, releases                                                                                 | artists, collections, labels                     |
 | artist        | release, release groups                                                                                  | collections, events, recordings, works           |
 | collection    | areas, artists, events, instruments, labels, places, recordings, releases, release groups, series, works |                                                  |
 | event         |                                                                                                          | collections                                      |
@@ -58,6 +58,7 @@ eg. The first row means we can browse areas from a collection's screen.
 TODO: Insert an image/gif of a release with multiple artist credits
 
 From the subtitle of the following screens, you can navigate "up" without having visited them first.
+
 - Recording -> Artist
 - Release -> Artist, Release Group
 - Release Group -> Artist
