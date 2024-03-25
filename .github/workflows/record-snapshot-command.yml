@@ -15,8 +15,9 @@ jobs:
           repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
           ref: ${{ github.event.client_payload.pull_request.head.ref }}
 
-      - id: setup
-        uses: ./.github/actions/setup
+      - uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: "America/Toronto"
 
       # Renamed and deleted test functions are not automatically removed by Paparazzi
       - name: Delete all snapshot golden
