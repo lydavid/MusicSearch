@@ -2,10 +2,10 @@ name: Update Schema Diagram
 
 on:
   push:
-    paths:
-      - "*.sqm"
+#    paths:
+#      - "*.sqm"
   workflow_dispatch:
-
+g
 jobs:
   checks:
     timeout-minutes: 20
