@@ -47,14 +47,15 @@ jobs:
             sleep 10
             adb shell "run-as io.github.lydavid.musicsearch.debug cat /data/data/io.github.lydavid.musicsearch.debug/databases/musicsearch.db" > musicsearch.db
 
-      - name: Run SchemaCrawler Action with specified command-line
+      - name: Generate schema SVG from sqlite file
         uses: schemacrawler/SchemaCrawler-Action@v16.21.2
         with:
           entrypoint: /schemacrawler.sh
-          args: --server=sqlite --database=musicsearch.db --info-level=standard --command=brief --output-file schema.svg --log-level=CONFIG
+          args: --server=sqlite --database=musicsearch.db --info-level=standard --command=brief --output-file assets/musicsearch_db_schema.svg --log-level=CONFIG
 
-      - name: Upload SchemaCrawler database diagram
-        uses: actions/upload-artifact@v2
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v5.0.0
         with:
-          name: schema
-          path: schema.svg
+          commit_message: 'chore: update schema diagram [skip ci]'
+          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          file_pattern: 'assets/musicsearch_db_schema.svg'
