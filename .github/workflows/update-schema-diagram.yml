@@ -51,13 +51,7 @@ jobs:
         uses: schemacrawler/SchemaCrawler-Action@v16.21.2
         with:
           entrypoint: /schemacrawler.sh
-          args: |
-            --server=sqlite \
-            --database=musicsearch.db \
-            --info-level=maximum \
-            --command=brief \
-            --output-file assets/musicsearch_db_schema.svg \
-            --log-level=CONFIG
+          args: --server=sqlite --database=musicsearch.db --info-level=maximum --command=brief --output-file assets/musicsearch_db_schema.svg --log-level=CONFIG
 
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5.0.0
