@@ -52,11 +52,11 @@ jobs:
         with:
           entrypoint: /schemacrawler.sh
           args: |
-            --server=sqlite
-            --database=musicsearch.db
-            --info-level=maximum
-            --command=brief
-            --output-file assets/musicsearch_db_schema.svg
+            --server=sqlite \
+            --database=musicsearch.db \
+            --info-level=maximum \
+            --command=brief \
+            --output-file assets/musicsearch_db_schema.svg \
             --log-level=CONFIG
 
       - name: Commit
