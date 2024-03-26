@@ -44,6 +44,7 @@ jobs:
             ./gradlew installDebug
             # Installing is not enough to initialize the SQLDelight database, need to launch the app
             adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/history"
+            sleep 10
             adb shell "run-as io.github.lydavid.musicsearch.debug cat /data/data/io.github.lydavid.musicsearch.debug/databases/musicsearch.db" > musicsearch.db
 
       - name: Run SchemaCrawler Action with specified command-line
