@@ -42,9 +42,7 @@ jobs:
           disk-size: 4G
           script: |
             ./gradlew installDebug
-
-      - name: Extract database from emulator
-        run: adb shell "run-as io.github.lydavid.musicsearch.debug cat /data/data/io.github.lydavid.musicsearch.debug/databases/musicsearch.db" > musicsearch.db
+            adb shell "run-as io.github.lydavid.musicsearch.debug cat /data/data/io.github.lydavid.musicsearch.debug/databases/musicsearch.db" > musicsearch.db
 
       - name: Run SchemaCrawler Action with specified command-line
         uses: schemacrawler/SchemaCrawler-Action@v16.21.2
