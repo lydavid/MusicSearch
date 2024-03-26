@@ -5,9 +5,9 @@ on:
 #    paths:
 #      - "*.sqm"
   workflow_dispatch:
-g
+
 jobs:
-  checks:
+  update-schema-diagram:
     timeout-minutes: 20
     runs-on: ubuntu-latest
     permissions:
@@ -18,13 +18,19 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
       - id: setup
         uses: ./.github/actions/setup
 
       - run: sudo apt install graphviz
 
-      - name: Install app
-        uses: reactivecircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2
+      - name: Install app on emulator
+        uses: reactivecircus/android-emulator-runner@2.30.1
         with:
           api-level: 31
           arch: x86_64
@@ -33,10 +39,12 @@ jobs:
           ram-size: 4096M
           emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          disk-size: 8G
+          disk-size: 4G
           script: |
             ./gradlew installDebug
-            adb shell "run-as io.github.lydavid.musicsearch.debug cat /data/data/io.github.lydavid.musicsearch.debug/databases/musicsearch.db" > musicsearch.db
+
+      - name: Extract database from emulator
+        run: adb shell "run-as io.github.lydavid.musicsearch.debug cat /data/data/io.github.lydavid.musicsearch.debug/databases/musicsearch.db" > musicsearch.db
 
       - name: Run SchemaCrawler Action with specified command-line
         uses: schemacrawler/SchemaCrawler-Action@v16.21.2
