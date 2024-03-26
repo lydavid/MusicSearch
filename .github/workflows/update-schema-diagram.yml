@@ -1,0 +1,26 @@
+name: Update Schema Diagram
+
+on:
+  push:
+    paths:
+      - "*.sqm"
+  workflow_dispatch:
+
+jobs:
+  checks:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@v1
+        with:
+          token: ${{ secrets.PAT }}
+
+      - id: setup
+        uses: ./.github/actions/setup
+
+      - run: sudo apt install graphviz
+
+      - run: echo "TODO"
