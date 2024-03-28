@@ -3,7 +3,7 @@ name: Update Schema Diagram
 on:
   push:
     paths:
-      - "*.sqm"
+      - "**.sqm"
   workflow_dispatch:
 
 jobs:
