@@ -21,7 +21,7 @@ val statsFeatureModule = module {
                                 getCountOfEachRelationshipTypeUseCase = get(),
                                 observeBrowseEntityCount = get(),
                                 releaseCountryDao = get(),
-                                areaEventDao = get(),
+                                eventsByEntityDao = get(),
                                 areaPlaceDao = get(),
                             )
                         }
@@ -64,7 +64,7 @@ val statsFeatureModule = module {
                                 screen = screen,
                                 getCountOfEachRelationshipTypeUseCase = get(),
                                 observeBrowseEntityCount = get(),
-                                eventPlaceDao = get(),
+                                eventsByEntityDao = get(),
                             )
                         }
 

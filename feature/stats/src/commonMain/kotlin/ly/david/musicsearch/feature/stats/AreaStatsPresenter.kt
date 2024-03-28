@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.toImmutableList
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.database.dao.AreaEventDao
+import ly.david.musicsearch.data.database.dao.EventsByEntityDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.domain.browse.usecase.ObserveBrowseEntityCount
@@ -19,7 +19,7 @@ internal class AreaStatsPresenter(
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
     private val releaseCountryDao: ReleaseCountryDao,
-    private val areaEventDao: AreaEventDao,
+    private val eventsByEntityDao: EventsByEntityDao,
     private val areaPlaceDao: AreaPlaceDao,
 ) : Presenter<StatsUiState> {
 
@@ -34,7 +34,7 @@ internal class AreaStatsPresenter(
                 entity = MusicBrainzEntity.EVENT,
             ).collectAsState(null)
         val localEvents
-            by areaEventDao.getNumberOfEventsByArea(screen.id).collectAsState(0)
+            by eventsByEntityDao.getNumberOfEventsByEntity(screen.id).collectAsState(0)
 
         val browseReleaseCount
             by observeBrowseEntityCount(
