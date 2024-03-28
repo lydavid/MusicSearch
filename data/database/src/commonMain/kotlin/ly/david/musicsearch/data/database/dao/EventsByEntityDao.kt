@@ -10,65 +10,65 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToEventListItemModel
-import lydavidmusicsearchdatadatabase.Area_event
+import lydavidmusicsearchdatadatabase.Events_by_entity
 
-class AreaEventDao(
+class EventsByEntityDao(
     database: Database,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
-    override val transacter = database.area_eventQueries
+    override val transacter = database.events_by_entityQueries
 
     fun insert(
-        areaId: String,
+        entityId: String,
         eventId: String,
     ) {
         transacter.insert(
-            Area_event(
-                area_id = areaId,
+            Events_by_entity(
+                entity_id = entityId,
                 event_id = eventId,
             ),
         )
     }
 
     fun insertAll(
-        areaAndEventIds: List<Pair<String, String>>,
+        entityAndEventIds: List<Pair<String, String>>,
     ) {
         transacter.transaction {
-            areaAndEventIds.forEach { (areaId, eventId) ->
+            entityAndEventIds.forEach { (entityId, eventId) ->
                 insert(
-                    areaId = areaId,
+                    entityId = entityId,
                     eventId = eventId,
                 )
             }
         }
     }
 
-    fun deleteEventsByArea(areaId: String) {
-        transacter.deleteEventsByArea(areaId)
+    fun deleteEventsByEntity(entityId: String) {
+        transacter.deleteEventsByEntity(entityId)
     }
 
-    fun getNumberOfEventsByArea(areaId: String): Flow<Int> =
-        transacter.getNumberOfEventsByArea(
-            areaId = areaId,
+    fun getNumberOfEventsByEntity(entityId: String): Flow<Int> =
+        transacter.getNumberOfEventsByEntity(
+            entityId = entityId,
             query = "%%",
         )
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
 
-    fun getEventsByArea(
-        areaId: String,
+    fun getEventsByEntity(
+        entityId: String,
         query: String,
     ): PagingSource<Int, EventListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfEventsByArea(
-            areaId = areaId,
+        countQuery = transacter.getNumberOfEventsByEntity(
+            entityId = entityId,
             query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
-            transacter.getEventsByArea(
-                areaId = areaId,
+            transacter.getEventsByEntity(
+                entityId = entityId,
                 query = "%$query%",
                 limit = limit,
                 offset = offset,

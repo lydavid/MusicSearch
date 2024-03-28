@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS events_by_entity (
+  entity_id TEXT NOT NULL,
+  event_id TEXT NOT NULL,
+
+  PRIMARY KEY (entity_id, event_id)
+);
+
+INSERT INTO events_by_entity (entity_id, event_id)
+SELECT area_id AS entity_id, event_id
+FROM area_event;
+
+INSERT INTO events_by_entity (entity_id, event_id)
+SELECT place_id AS entity_id, event_id
+FROM event_place;

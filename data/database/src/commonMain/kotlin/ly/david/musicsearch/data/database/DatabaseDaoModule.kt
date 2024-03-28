@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.database
 
 import ly.david.musicsearch.core.models.image.ImageUrlDao
 import ly.david.musicsearch.data.database.dao.AreaDao
-import ly.david.musicsearch.data.database.dao.AreaEventDao
+import ly.david.musicsearch.data.database.dao.EventsByEntityDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
@@ -15,7 +15,6 @@ import ly.david.musicsearch.data.database.dao.CountryCodeDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.EventDao
-import ly.david.musicsearch.data.database.dao.EventPlaceDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao
@@ -41,7 +40,7 @@ import org.koin.dsl.module
 
 val databaseDaoModule = module {
     single { AreaDao(get()) }
-    single { AreaEventDao(get(), get()) }
+    single { EventsByEntityDao(get(), get()) }
     single { AreaPlaceDao(get(), get()) }
     single { ArtistCreditDao(get()) }
     single { ArtistDao(get()) }
@@ -54,7 +53,6 @@ val databaseDaoModule = module {
     single { EntityHasRelationsDao(get()) }
     single { EntityHasUrlsDao(get()) }
     single { EventDao(get()) }
-    single { EventPlaceDao(get(), get()) }
     single { InstrumentDao(get()) }
     single { LabelDao(get()) }
     single { LookupHistoryDao(get(), get()) }

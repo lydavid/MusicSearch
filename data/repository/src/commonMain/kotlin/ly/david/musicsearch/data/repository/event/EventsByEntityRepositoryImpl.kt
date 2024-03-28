@@ -6,11 +6,10 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.database.dao.AreaEventDao
+import ly.david.musicsearch.data.database.dao.EventsByEntityDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EventDao
-import ly.david.musicsearch.data.database.dao.EventPlaceDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
@@ -18,11 +17,10 @@ import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.domain.event.EventsByEntityRepository
 
 class EventsByEntityRepositoryImpl(
-    private val areaEventDao: AreaEventDao,
+    private val eventsByEntityDao: EventsByEntityDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val eventDao: EventDao,
-    private val eventPlaceDao: EventPlaceDao,
     private val musicBrainzApi: MusicBrainzApi,
 ) : EventsByEntityRepository,
     BrowseEntitiesByEntity<EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
@@ -53,16 +51,14 @@ class EventsByEntityRepositoryImpl(
             )
 
             when (entity) {
-                MusicBrainzEntity.AREA -> {
-                    areaEventDao.deleteEventsByArea(entityId)
+                MusicBrainzEntity.AREA,
+                MusicBrainzEntity.PLACE,
+                -> {
+                    eventsByEntityDao.deleteEventsByEntity(entityId)
                 }
 
                 MusicBrainzEntity.COLLECTION -> {
                     collectionEntityDao.deleteAllFromCollection(entityId)
-                }
-
-                MusicBrainzEntity.PLACE -> {
-                    eventPlaceDao.deleteEventsByPlace(entityId)
                 }
 
                 else -> error(browseEntitiesNotSupported(entity))
@@ -76,9 +72,11 @@ class EventsByEntityRepositoryImpl(
         listFilters: ListFilters,
     ): PagingSource<Int, EventListItemModel> {
         return when (entity) {
-            MusicBrainzEntity.AREA -> {
-                areaEventDao.getEventsByArea(
-                    areaId = entityId,
+            MusicBrainzEntity.AREA,
+            MusicBrainzEntity.PLACE,
+            -> {
+                eventsByEntityDao.getEventsByEntity(
+                    entityId = entityId,
                     query = listFilters.query,
                 )
             }
@@ -86,13 +84,6 @@ class EventsByEntityRepositoryImpl(
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.getEventsByCollection(
                     collectionId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            MusicBrainzEntity.PLACE -> {
-                eventPlaceDao.getEventsByPlace(
-                    placeId = entityId,
                     query = listFilters.query,
                 )
             }
@@ -120,9 +111,11 @@ class EventsByEntityRepositoryImpl(
     ) {
         eventDao.insertAll(musicBrainzModels)
         when (entity) {
-            MusicBrainzEntity.AREA -> {
-                areaEventDao.insertAll(
-                    areaAndEventIds = musicBrainzModels.map { event ->
+            MusicBrainzEntity.AREA,
+            MusicBrainzEntity.PLACE,
+            -> {
+                eventsByEntityDao.insertAll(
+                    entityAndEventIds = musicBrainzModels.map { event ->
                         entityId to event.id
                     },
                 )
@@ -132,14 +125,6 @@ class EventsByEntityRepositoryImpl(
                 collectionEntityDao.insertAll(
                     collectionId = entityId,
                     entityIds = musicBrainzModels.map { event -> event.id },
-                )
-            }
-
-            MusicBrainzEntity.PLACE -> {
-                eventPlaceDao.insertAll(
-                    eventAndPlaceIds = musicBrainzModels.map { event ->
-                        event.id to entityId
-                    },
                 )
             }
 
