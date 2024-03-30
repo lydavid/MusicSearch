@@ -26,9 +26,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Install Maestro
-        run: |
-          curl -Ls "https://get.maestro.mobile.dev" | bash
-          export PATH="$PATH":"$HOME/.maestro/bin"
+        run: curl -Ls "https://get.maestro.mobile.dev" | bash
 
       - name: Install app on emulator, run Maestro tests
         uses: reactivecircus/android-emulator-runner@v2.30.1
@@ -43,4 +41,4 @@ jobs:
           disk-size: 4G
           script: |
             ./gradlew installDebug
-            maestro test .maestro
+            $HOME/.maestro/bin/maestro test .maestro
