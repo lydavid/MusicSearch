@@ -26,7 +26,9 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Install Maestro
-        run: curl -Ls "https://get.maestro.mobile.dev" | bash
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          export PATH="$PATH":"$HOME/.maestro/bin"
 
       - name: Install app on emulator, run Maestro tests
         uses: reactivecircus/android-emulator-runner@v2.30.1
