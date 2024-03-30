@@ -11,5 +11,7 @@ appId: io.github.lydavid.musicsearch.debug
 - assertVisible: "Sort name: Tsukuyomi"
 - assertVisible: "Type: Group"
 - assertVisible: "Founded: 2020-10-10"
+# By testing this, we confirm that the keyboard is not open, otherwise this will close the keyboard
+# and fail to actually go back
 - tapOn: "Back"
 - assertVisible: "Search MusicBrainz"

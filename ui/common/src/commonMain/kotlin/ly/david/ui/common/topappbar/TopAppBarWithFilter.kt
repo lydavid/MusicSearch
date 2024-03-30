@@ -136,9 +136,8 @@ internal fun TopAppBarWithFilterInternal(
                                 )
                             }
                         },
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                         keyboardActions = KeyboardActions(
-                            onSearch = {
+                            onDone = {
                                 focusManager.clearFocus()
                             },
                         ),
