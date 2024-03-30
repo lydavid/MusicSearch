@@ -1,8 +1,0 @@
-appId: io.github.lydavid.musicsearch.debug
----
-- launchApp
-- repeat:
-    times: 3
-    commands:
-        - runFlow: artist/search-random-artist.yml
-        - tapOn: "Clear search field"

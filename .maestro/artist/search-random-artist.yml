@@ -1,8 +1,0 @@
-appId: io.github.lydavid.musicsearch.debug
----
-- tapOn:
-    id: TEXT_FIELD
-- inputRandomPersonName
-- tapOn:
-    point: 50%,26%
-- tapOn: Back

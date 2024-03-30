@@ -1,0 +1,15 @@
+appId: io.github.lydavid.musicsearch.debug
+---
+- launchApp
+- tapOn:
+    text: "Search"
+    index: 0
+- inputText: "tsukuyomi"
+- tapOn:
+    point: "50%,52%"
+- assertVisible: "月詠み"
+- assertVisible: "Sort name: Tsukuyomi"
+- assertVisible: "Type: Group"
+- assertVisible: "Founded: 2020-10-10"
+- tapOn: "Back"
+- assertVisible: "Search MusicBrainz"
