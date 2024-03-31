@@ -1,6 +1,7 @@
 appId: io.github.lydavid.musicsearch.debug
 ---
 - launchApp
+- startRecording: search-artist-then-back
 - tapOn:
     text: "Search"
     index: 0

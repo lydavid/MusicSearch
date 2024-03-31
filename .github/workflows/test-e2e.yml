@@ -40,6 +40,7 @@ jobs:
           emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           disk-size: 4G
+          sdcard-path-or-size: 100M
           script: |
             ./gradlew installDebug
             $HOME/.maestro/bin/maestro test .maestro
@@ -48,5 +49,7 @@ jobs:
         if: always() && steps.test.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
-          name: maestro_outputs
-          path: /home/runner/.maestro/tests/
+          name: musicsearch_test_e2e_outputs
+          path: |
+            /home/runner/.maestro/tests/
+            *.mp4
