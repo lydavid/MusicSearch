@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "ly.david.musicsearch"
-version = "1.0-SNAPSHOT"
+version = project.properties["VERSION_NAME"] as String
 
 aboutLibraries {
     excludeFields = arrayOf("generated")

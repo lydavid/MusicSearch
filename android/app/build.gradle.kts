@@ -41,8 +41,8 @@ android {
 
     defaultConfig {
         applicationId = "io.github.lydavid.musicsearch"
-        versionCode = (project.properties["VERSION_CODE"] as String?)?.toInt()
-        versionName = project.properties["VERSION_NAME"] as String?
+        versionCode = (project.properties["VERSION_CODE"] as String).toInt()
+        versionName = project.properties["VERSION_NAME"] as String
 
         testInstrumentationRunner = "ly.david.mbjc.CustomTestRunner"
         vectorDrawables {
