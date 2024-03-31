@@ -6,8 +6,7 @@ appId: io.github.lydavid.musicsearch.debug
     text: "Search"
     index: 0
 - inputText: "tsukuyomi"
-- tapOn:
-    point: "50%,52%"
+- tapOn: "月詠み"
 
 - assertVisible: "月詠み"
 - assertVisible: "Sort name: Tsukuyomi"
