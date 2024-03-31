@@ -1,13 +1,16 @@
 *.iml
-.gradle
-/local.properties
-/.idea/*
-
-.DS_Store
-build/
-.externalNativeBuild
 .cxx
+.DS_Store
+.externalNativeBuild
+.gradle
+
+build/
 local.properties
+
+.idea/*
+!.idea/codeStyles/
+!.idea/detekt.xml
+!.idea/icon.svg
 
 # App release keystore
 keystore.properties
