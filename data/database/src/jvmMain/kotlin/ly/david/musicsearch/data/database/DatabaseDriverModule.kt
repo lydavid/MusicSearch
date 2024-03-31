@@ -14,7 +14,7 @@ actual val databaseDriverModule = module {
 private class DriverFactory {
     fun createDriver(): SqlDriver {
         val driver = JdbcSqliteDriver(
-            url = JdbcSqliteDriver.IN_MEMORY,
+            url = "jdbc:sqlite:music_search.db",
             properties = Properties().apply { put("foreign_keys", "true") }
         )
         Database.Schema.create(driver)
