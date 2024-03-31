@@ -38,3 +38,4 @@ appId: io.github.lydavid.musicsearch.debug
     text: "Back"
     index: 0
 - assertVisible: "Search MusicBrainz"
+- stopRecording

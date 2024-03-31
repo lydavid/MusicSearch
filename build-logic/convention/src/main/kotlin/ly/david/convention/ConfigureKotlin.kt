@@ -5,7 +5,7 @@ import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
 
-private const val JAVA_VERSION = 19
+private const val JAVA_VERSION = 21
 
 fun Project.configureKotlin() {
     extensions.configure<JavaPluginExtension> {
