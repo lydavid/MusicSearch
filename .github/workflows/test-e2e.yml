@@ -46,7 +46,7 @@ jobs:
             $HOME/.maestro/bin/maestro test .maestro
 
       - name: Store outputs on failure
-        if: always() && steps.test.outcome == 'failure'
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: musicsearch_test_e2e_outputs
