@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import ly.david.musicsearch.core.models.network.searchableEntities
 import ly.david.musicsearch.shared.feature.search.SearchScreenTestTag
@@ -66,6 +67,7 @@ private fun Search(
     val searchResultsListState = rememberLazyListState()
     val searchHistoryListState = rememberLazyListState()
     val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
 
     Column(modifier = modifier) {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -131,6 +133,7 @@ private fun Search(
                 lazyListState = searchResultsListState,
                 snackbarHostState = snackbarHostState,
                 onItemClick = { entity, id, title ->
+                    focusManager.clearFocus()
                     eventSink(SearchUiEvent.RecordSearch)
                     eventSink(
                         SearchUiEvent.ClickItem(
