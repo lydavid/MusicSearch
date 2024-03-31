@@ -1,6 +1,7 @@
 appId: io.github.lydavid.musicsearch.debug
 ---
 - launchApp
+- startRecording: search-artist-then-back
 - tapOn:
     text: "Search"
     index: 0
@@ -16,4 +17,4 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn:
     text: "Back"
     index: 0
-- assertVisible: "Search MusicBrainz"
+- assertVisible: "Search MusicBrains"

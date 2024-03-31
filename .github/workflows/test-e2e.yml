@@ -43,11 +43,7 @@ jobs:
           sdcard-path-or-size: 100M
           script: |
             ./gradlew installDebug
-            adb shell screenrecord /sdcard/video.mp4
-            pid=$!
             $HOME/.maestro/bin/maestro test .maestro
-            kill $pid
-            adb pull /sdcard/video.mp4 .
 
       - name: Store outputs on failure
         if: always() && steps.test.outcome == 'failure'
@@ -56,4 +52,4 @@ jobs:
           name: musicsearch_test_e2e_outputs
           path: |
             /home/runner/.maestro/tests/
-            video.mp4
+            *.mp4
