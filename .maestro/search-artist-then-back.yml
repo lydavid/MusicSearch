@@ -16,4 +16,4 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn:
     text: "Back"
     index: 0
-- assertVisible: "Search MusicBrains"
+- assertVisible: "Search MusicBrainz"
