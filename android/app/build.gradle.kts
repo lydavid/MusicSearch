@@ -53,7 +53,6 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
-            isTestCoverageEnabled = true
         }
         release {
             isMinifyEnabled = true
