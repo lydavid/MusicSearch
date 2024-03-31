@@ -49,4 +49,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: maestro_outputs
-          path: $HOME/.maestro/tests/
+          path: ${{ github.workspace }}/.maestro/tests/
