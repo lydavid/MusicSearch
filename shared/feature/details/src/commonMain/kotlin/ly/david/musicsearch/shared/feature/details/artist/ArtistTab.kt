@@ -6,6 +6,7 @@ enum class ArtistTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),
     RELEASE_GROUPS(Tab.RELEASE_GROUPS),
     RELEASES(Tab.RELEASES),
+    EVENTS(Tab.EVENTS),
     RELATIONSHIPS(Tab.RELATIONSHIPS),
     STATS(Tab.STATS),
 }

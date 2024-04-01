@@ -19,6 +19,8 @@ import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.data.spotify.ArtistImageRepository
 import ly.david.musicsearch.domain.artist.ArtistRepository
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
+import ly.david.ui.common.event.EventsByEntityPresenter
+import ly.david.ui.common.event.EventsByEntityUiEvent
 import ly.david.ui.common.relation.RelationsPresenter
 import ly.david.ui.common.relation.RelationsUiEvent
 import ly.david.ui.common.release.ReleasesByEntityPresenter
@@ -32,6 +34,7 @@ internal class ArtistPresenter(
     private val navigator: Navigator,
     private val repository: ArtistRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
+    private val eventsByEntityPresenter: EventsByEntityPresenter,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
     private val relationsPresenter: RelationsPresenter,
@@ -53,6 +56,8 @@ internal class ArtistPresenter(
         var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
         var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
 
+        val eventsByEntityUiState = eventsByEntityPresenter.present()
+        val eventsEventSink = eventsByEntityUiState.eventSink
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
         val releaseGroupsByEntityUiState = releaseGroupsByEntityPresenter.present()
@@ -126,6 +131,16 @@ internal class ArtistPresenter(
                     releaseGroupsEventSink(ReleaseGroupsByEntityUiEvent.UpdateQuery(query))
                 }
 
+                ArtistTab.EVENTS -> {
+                    eventsEventSink(
+                        EventsByEntityUiEvent.Get(
+                            byEntityId = screen.id,
+                            byEntity = screen.entity,
+                        ),
+                    )
+                    eventsEventSink(EventsByEntityUiEvent.UpdateQuery(query))
+                }
+
                 ArtistTab.STATS -> {
                     // Handled in UI
                 }
@@ -172,6 +187,7 @@ internal class ArtistPresenter(
             tabs = tabs,
             selectedTab = selectedTab,
             query = query,
+            eventsByEntityUiState = eventsByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,

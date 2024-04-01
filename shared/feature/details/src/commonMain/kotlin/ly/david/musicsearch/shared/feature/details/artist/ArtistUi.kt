@@ -21,7 +21,9 @@ import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.feature.details.area.AreaUiEvent
 import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.common.event.EventsListScreen
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
@@ -139,6 +141,7 @@ internal fun ArtistUi(
         val detailsLazyListState = rememberLazyListState()
         val releaseGroupsLazyListState = rememberLazyListState()
         val releasesLazyListState = rememberLazyListState()
+        val eventsLazyListState = rememberLazyListState()
         val relationsLazyListState = rememberLazyListState()
 
         HorizontalPager(
@@ -174,6 +177,27 @@ internal fun ArtistUi(
                             },
                         )
                     }
+                }
+
+                ArtistTab.EVENTS -> {
+                    EventsListScreen(
+                        lazyListState = eventsLazyListState,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.eventsByEntityUiState.lazyPagingItems,
+                        onEventClick = { entity, id, title ->
+                            eventSink(
+                                ArtistUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
+                                ),
+                            )
+                        },
+                    )
                 }
 
                 ArtistTab.RELEASE_GROUPS -> {
