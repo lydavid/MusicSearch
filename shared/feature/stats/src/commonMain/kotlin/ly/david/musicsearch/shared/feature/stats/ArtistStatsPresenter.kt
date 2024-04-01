@@ -11,6 +11,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.EventsByEntityDao
 import ly.david.musicsearch.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
 import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
@@ -20,6 +21,7 @@ internal class ArtistStatsPresenter(
     private val screen: StatsScreen,
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
+    private val eventsByEntityDao: EventsByEntityDao,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val artistReleaseDao: ArtistReleaseDao,
 ) : Presenter<StatsUiState> {
@@ -33,6 +35,23 @@ internal class ArtistStatsPresenter(
             tabs = screen.tabs.toImmutableList(),
         )
     }
+
+    private fun getStats(entityId: String): Flow<Stats> =
+        combine(
+            getCountOfEachRelationshipTypeUseCase(entityId),
+            releaseStats(entityId),
+            releaseGroupStats(entityId),
+            eventsStats(entityId),
+        ) { relationTypeCounts, releaseStats, releaseGroupStats, eventStats ->
+            Stats(
+                totalRelations = relationTypeCounts.sumOf { it.count },
+                relationTypeCounts = relationTypeCounts.toImmutableList(),
+                releaseStats = releaseStats,
+                releaseGroupStats = releaseGroupStats,
+                eventStats = eventStats,
+            )
+        }
+            .distinctUntilChanged()
 
     private fun releaseStats(entityId: String): Flow<ReleaseStats> =
         combine(
@@ -70,18 +89,17 @@ internal class ArtistStatsPresenter(
             )
         }
 
-    private fun getStats(entityId: String): Flow<Stats> =
+    private fun eventsStats(entityId: String): Flow<EventStats> =
         combine(
-            getCountOfEachRelationshipTypeUseCase(entityId),
-            releaseStats(entityId),
-            releaseGroupStats(entityId),
-        ) { relationTypeCounts, releaseStats, releaseGroupStats ->
-            Stats(
-                totalRelations = relationTypeCounts.sumOf { it.count },
-                relationTypeCounts = relationTypeCounts.toImmutableList(),
-                releaseStats = releaseStats,
-                releaseGroupStats = releaseGroupStats,
+            observeBrowseEntityCount(
+                entityId,
+                MusicBrainzEntity.EVENT,
+            ),
+            eventsByEntityDao.getNumberOfEventsByEntity(entityId),
+        ) { browseReleaseCount, localReleases ->
+            EventStats(
+                totalRemote = browseReleaseCount?.remoteCount,
+                totalLocal = localReleases,
             )
         }
-            .distinctUntilChanged()
 }

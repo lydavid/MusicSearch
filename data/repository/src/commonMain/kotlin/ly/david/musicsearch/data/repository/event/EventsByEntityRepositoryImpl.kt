@@ -51,17 +51,13 @@ class EventsByEntityRepositoryImpl(
             )
 
             when (entity) {
-                MusicBrainzEntity.AREA,
-                MusicBrainzEntity.PLACE,
-                -> {
-                    eventsByEntityDao.deleteEventsByEntity(entityId)
-                }
-
                 MusicBrainzEntity.COLLECTION -> {
                     collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
-                else -> error(browseEntitiesNotSupported(entity))
+                else -> {
+                    eventsByEntityDao.deleteEventsByEntity(entityId)
+                }
             }
         }
     }
@@ -72,15 +68,6 @@ class EventsByEntityRepositoryImpl(
         listFilters: ListFilters,
     ): PagingSource<Int, EventListItemModel> {
         return when (entity) {
-            MusicBrainzEntity.AREA,
-            MusicBrainzEntity.PLACE,
-            -> {
-                eventsByEntityDao.getEventsByEntity(
-                    entityId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.getEventsByCollection(
                     collectionId = entityId,
@@ -88,7 +75,12 @@ class EventsByEntityRepositoryImpl(
                 )
             }
 
-            else -> error(browseEntitiesNotSupported(entity))
+            else -> {
+                eventsByEntityDao.getEventsByEntity(
+                    entityId = entityId,
+                    query = listFilters.query,
+                )
+            }
         }
     }
 
@@ -111,16 +103,6 @@ class EventsByEntityRepositoryImpl(
     ) {
         eventDao.insertAll(musicBrainzModels)
         when (entity) {
-            MusicBrainzEntity.AREA,
-            MusicBrainzEntity.PLACE,
-            -> {
-                eventsByEntityDao.insertAll(
-                    entityAndEventIds = musicBrainzModels.map { event ->
-                        entityId to event.id
-                    },
-                )
-            }
-
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.insertAll(
                     collectionId = entityId,
@@ -129,7 +111,11 @@ class EventsByEntityRepositoryImpl(
             }
 
             else -> {
-                error(browseEntitiesNotSupported(entity))
+                eventsByEntityDao.insertAll(
+                    entityAndEventIds = musicBrainzModels.map { event ->
+                        entityId to event.id
+                    },
+                )
             }
         }
     }

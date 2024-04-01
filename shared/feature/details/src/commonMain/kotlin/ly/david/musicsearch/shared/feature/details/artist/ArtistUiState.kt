@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.details.artist
 import androidx.compose.runtime.Stable
 import com.slack.circuit.runtime.CircuitUiState
 import ly.david.musicsearch.core.models.artist.ArtistScaffoldModel
+import ly.david.ui.common.event.EventsByEntityUiState
 import ly.david.ui.common.relation.RelationsUiState
 import ly.david.ui.common.release.ReleasesByEntityUiState
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiState
@@ -16,6 +17,7 @@ internal data class ArtistUiState(
     val tabs: List<ArtistTab>,
     val selectedTab: ArtistTab,
     val query: String,
+    val eventsByEntityUiState: EventsByEntityUiState,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
     val relationsUiState: RelationsUiState,
