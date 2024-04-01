@@ -17,7 +17,6 @@ import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
 import ly.david.musicsearch.core.models.listitem.EndOfList
-import ly.david.musicsearch.core.models.listitem.EndOfList.id
 import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.core.models.listitem.InstrumentListItemModel
 import ly.david.musicsearch.core.models.listitem.LabelListItemModel

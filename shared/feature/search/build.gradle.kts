@@ -30,13 +30,7 @@ kotlin {
                 implementation(libs.paging.compose)
             }
         }
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.koin.androidx.compose)
-                implementation(libs.androidx.paging.compose)
-                implementation(libs.androidx.paging.runtime)
-            }
-        }
+        val androidMain by getting
         val jvmMain by getting
     }
 }

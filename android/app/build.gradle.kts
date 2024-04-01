@@ -98,8 +98,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.paging.compose)
-    implementation(libs.androidx.paging.runtime)
     implementation(libs.appauth)
     implementation(libs.coil.base)
     implementation(libs.coil.compose)

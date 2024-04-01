@@ -13,7 +13,7 @@ import org.koin.dsl.module
 
 val searchFeatureModule: Module = module {
     single(named(SearchPresenter::class.java.name)) {
-        Presenter.Factory { screen, navigator, context ->
+        Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is SearchScreen -> SearchPresenter(
                     screen = screen,
