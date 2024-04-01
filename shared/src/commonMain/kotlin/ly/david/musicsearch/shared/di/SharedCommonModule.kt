@@ -18,7 +18,7 @@ import ly.david.musicsearch.data.musicbrainz.di.musicBrainzDataModule
 import ly.david.musicsearch.data.repository.di.repositoryDataModule
 import ly.david.musicsearch.data.spotify.di.spotifyApiModule
 import ly.david.musicsearch.data.spotify.di.spotifyDataModule
-import ly.david.musicsearch.feature.stats.statsFeatureModule
+import ly.david.musicsearch.shared.feature.stats.statsFeatureModule
 import ly.david.musicsearch.shared.feature.collections.collectionsFeatureModule
 import ly.david.musicsearch.shared.feature.details.detailsFeatureModule
 import ly.david.musicsearch.shared.feature.search.searchFeatureModule
