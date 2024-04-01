@@ -8,6 +8,10 @@ plugins {
 group = "ly.david.musicsearch"
 version = project.properties["VERSION_NAME"] as String
 
+application {
+    mainClass.set("MainKt")
+}
+
 aboutLibraries {
     excludeFields = arrayOf("generated")
 }
@@ -29,6 +33,8 @@ dependencies {
     implementation(libs.koin.core)
 }
 
-application {
-    mainClass.set("MainKt")
+distributions {
+    main {
+        distributionBaseName = "MusicSearch"
+    }
 }
