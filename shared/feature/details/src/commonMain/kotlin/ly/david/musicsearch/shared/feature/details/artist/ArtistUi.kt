@@ -21,7 +21,6 @@ import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.feature.details.area.AreaUiEvent
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.event.EventsListScreen
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
