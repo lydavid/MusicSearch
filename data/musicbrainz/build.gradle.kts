@@ -72,5 +72,10 @@ kotlin {
                 implementation(libs.scribejava)
             }
         }
+        val iosMain by getting {
+            dependencies {
+                // TODO: OAuth
+            }
+        }
     }
 }
