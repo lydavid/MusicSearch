@@ -48,6 +48,7 @@ stable class ArtistPresenter {
   stable val navigator: Navigator
   unstable val repository: ArtistRepository
   runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val eventsByEntityPresenter: EventsByEntityPresenter
   stable val releasesByEntityPresenter: ReleasesByEntityPresenter
   stable val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter
   stable val relationsPresenter: RelationsPresenter
@@ -83,6 +84,7 @@ stable class ArtistUiState {
   unstable val tabs: List<ArtistTab>
   stable val selectedTab: ArtistTab
   stable val query: String
+  stable val eventsByEntityUiState: EventsByEntityUiState
   stable val releasesByEntityUiState: ReleasesByEntityUiState
   stable val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState
   stable val relationsUiState: RelationsUiState

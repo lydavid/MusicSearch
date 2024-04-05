@@ -17,7 +17,7 @@
  "inferredUncertainClasses": 0,
  "effectivelyStableClasses": 8,
  "totalClasses": 8,
- "memoizedLambdas": 50,
+ "memoizedLambdas": 49,
  "singletonLambdas": 8,
  "singletonComposableLambdas": 4,
  "composableLambdas": 17,
