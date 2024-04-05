@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.collection
 
-import androidx.paging.PagingData
+import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.models.ActionableResult
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel

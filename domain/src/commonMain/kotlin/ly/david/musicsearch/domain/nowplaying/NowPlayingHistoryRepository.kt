@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.nowplaying
 
-import androidx.paging.PagingData
+import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.models.history.NowPlayingHistory
 import ly.david.musicsearch.core.models.listitem.ListItemModel

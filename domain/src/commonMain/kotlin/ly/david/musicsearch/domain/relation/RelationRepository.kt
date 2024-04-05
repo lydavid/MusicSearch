@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.relation
 
-import androidx.paging.PagingData
+import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 import ly.david.musicsearch.core.models.relation.RelationWithOrder

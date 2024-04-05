@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository
 
-import androidx.paging.Pager
+import app.cash.paging.Pager
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.listitem.EndOfList
