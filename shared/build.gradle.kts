@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
     id("ly.david.android.library")
     id("ly.david.musicsearch.compose.multiplatform")
@@ -54,5 +56,11 @@ kotlin {
             }
         }
         val jvmMain by getting
+
+        targets.withType<KotlinNativeTarget>().configureEach {
+            binaries.framework {
+                baseName = "common"
+            }
+        }
     }
 }
