@@ -29,7 +29,6 @@ internal class MusicSearchApplication : Application() {
             androidContext(this@MusicSearchApplication)
             modules(
                 sharedModule,
-                // TODO: extract out of :app
                 androidAppModule,
             )
         }

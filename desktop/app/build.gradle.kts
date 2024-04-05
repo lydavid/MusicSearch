@@ -23,13 +23,12 @@ dependencies {
     //  where shared exposes the root entry point
     implementation(projects.ui.common)
     implementation(projects.ui.core)
-    implementation(projects.strings)
     implementation(projects.core.preferences)
 
+    // gradle desktop:app:projectHealth falsely reports this as unused
     implementation(compose.desktop.currentOs)
 
     implementation(libs.circuit.foundation)
-    implementation(libs.circuit.overlay)
     implementation(libs.koin.core)
 }
 
