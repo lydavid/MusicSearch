@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.collection.usecase
 
-import androidx.paging.PagingData
+import app.cash.paging.PagingData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest

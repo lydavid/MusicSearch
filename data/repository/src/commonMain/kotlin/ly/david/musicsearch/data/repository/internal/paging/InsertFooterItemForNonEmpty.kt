@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.repository.internal.paging
 
-import androidx.paging.PagingData
-import androidx.paging.TerminalSeparatorType
-import androidx.paging.insertSeparators
+import app.cash.paging.PagingData
+import app.cash.paging.TerminalSeparatorType
+import app.cash.paging.insertSeparators
 
 /**
  * Inserts a footer, only if there was data before it.

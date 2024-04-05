@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.history.usecase
 
-import androidx.paging.PagingData
+import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.history.HistorySortOption

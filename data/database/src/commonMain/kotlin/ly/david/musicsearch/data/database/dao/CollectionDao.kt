@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
-import androidx.paging.PagingSource
+import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel

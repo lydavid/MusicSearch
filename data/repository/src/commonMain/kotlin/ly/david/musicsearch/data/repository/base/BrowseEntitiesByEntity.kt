@@ -1,9 +1,9 @@
 package ly.david.musicsearch.data.repository.base
 
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingData
-import androidx.paging.PagingSource
+import app.cash.paging.ExperimentalPagingApi
+import app.cash.paging.Pager
+import app.cash.paging.PagingData
+import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.Browsable
