@@ -18,7 +18,6 @@ import ly.david.musicsearch.data.musicbrainz.di.musicBrainzDataModule
 import ly.david.musicsearch.data.repository.di.repositoryDataModule
 import ly.david.musicsearch.data.spotify.di.spotifyApiModule
 import ly.david.musicsearch.data.spotify.di.spotifyDataModule
-import ly.david.musicsearch.domain.DomainModule
 import ly.david.musicsearch.shared.feature.stats.statsFeatureModule
 import ly.david.musicsearch.shared.feature.collections.collectionsFeatureModule
 import ly.david.musicsearch.shared.feature.details.detailsFeatureModule
@@ -30,7 +29,6 @@ import ly.david.musicsearch.strings.di.stringsModule
 import ly.david.ui.common.commonUiModule
 import org.koin.core.module.Module
 import org.koin.dsl.module
-import org.koin.ksp.generated.module
 
 val circuitModule = module {
     includes(
@@ -76,6 +74,5 @@ val sharedModule: Module = module {
         preferencesDataStoreModule,
         commonUiModule,
         circuitModule,
-        DomainModule().module,
     )
 }

@@ -21,17 +21,6 @@ kotlin {
     }
 }
 
-// See: https://github.com/google/ksp/issues/567
 dependencies {
-    add("kspCommonMainMetadata", libs.koin.ksp.compiler)
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().all {
-    if (name != "kspCommonMainKotlinMetadata") {
-        dependsOn("kspCommonMainKotlinMetadata")
-    }
-}
-
-kotlin.sourceSets.commonMain {
-    kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+    add("kspJvm", libs.koin.ksp.compiler)
 }
