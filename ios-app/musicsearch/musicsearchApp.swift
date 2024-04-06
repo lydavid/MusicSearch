@@ -6,9 +6,15 @@
 //
 
 import SwiftUI
+import shared
 
 @main
 struct musicsearchApp: App {
+    
+    init() {
+        Main_iosKt.doInitKoin()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

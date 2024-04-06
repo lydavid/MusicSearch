@@ -9,5 +9,6 @@ package ly.david.musicsearch.core.models.common
  * @return Flag emoji of country code, or globe emoji for global.
  */
 actual fun String.toFlagEmoji(): String {
-    TODO("Not yet implemented")
+    // TODO: iOS flag emoji
+    return "TODO"
 }

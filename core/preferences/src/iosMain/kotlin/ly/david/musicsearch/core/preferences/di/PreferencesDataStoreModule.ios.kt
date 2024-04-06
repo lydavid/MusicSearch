@@ -1,6 +1,8 @@
 package ly.david.musicsearch.core.preferences.di
 
 import org.koin.core.module.Module
+import org.koin.dsl.module
 
-actual val preferencesDataStoreModule: Module
-    get() = TODO("Not yet implemented")
+actual val preferencesDataStoreModule: Module = module {
+    // TODO: iOS preferences
+}
