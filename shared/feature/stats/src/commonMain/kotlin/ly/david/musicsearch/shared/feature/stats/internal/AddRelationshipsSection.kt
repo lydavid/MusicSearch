@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.relation.RelationTypeCount
-import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.getDisplayText
 import ly.david.ui.common.listitem.ListSeparatorHeader

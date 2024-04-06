@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.feature.collections.components.CollectionListItem
 import ly.david.musicsearch.shared.feature.collections.components.CreateCollectionDialogContent
-import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 

@@ -13,7 +13,7 @@ import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
 import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
-import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.LargeImage
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.label.LabelListItem

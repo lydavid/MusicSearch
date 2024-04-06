@@ -27,7 +27,7 @@ import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.itemKey
 import ly.david.musicsearch.core.models.Identifiable
 import ly.david.musicsearch.core.models.listitem.Header
-import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.button.RetryButton
 import ly.david.ui.common.fullscreen.FullScreenErrorWithRetry
 import ly.david.ui.common.fullscreen.FullScreenLoadingIndicator

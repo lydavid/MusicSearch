@@ -25,7 +25,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import ly.david.musicsearch.core.models.network.searchableEntities
 import ly.david.musicsearch.shared.feature.search.SearchScreenTestTag
-import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
 

@@ -12,7 +12,7 @@ import ly.david.musicsearch.core.models.common.ifNotNull
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.listitem.LabelListItemModel
-import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.core.LocalStrings
 import ly.david.ui.core.theme.TextStyles
 import ly.david.ui.core.theme.getSubTextColor
 
