@@ -60,6 +60,7 @@ kotlin {
         targets.withType<KotlinNativeTarget>().configureEach {
             binaries.framework {
                 baseName = "common"
+                isStatic = true
             }
         }
     }

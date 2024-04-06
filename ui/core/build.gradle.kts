@@ -15,6 +15,10 @@ kotlin {
             dependencies {
                 implementation(compose.foundation)
                 implementation(compose.material3)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
                 implementation(compose.preview)
             }
         }

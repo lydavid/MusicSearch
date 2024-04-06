@@ -124,7 +124,7 @@ val EnStrings = AppStrings(
 
     lc = { p0 ->
         "LC %d"
-            .format(p0)
+            .fmt(p0)
     },
 
     length = "Length",
@@ -183,12 +183,12 @@ val EnStrings = AppStrings(
 
     informationHeader = { p0 ->
         "%s information"
-            .format(p0)
+            .fmt(p0)
     },
 
     attributesHeader = { p0 ->
         "%s attributes"
-            .format(p0)
+            .fmt(p0)
     },
 
     additionalDetails = "Additional details",
@@ -209,27 +209,27 @@ val EnStrings = AppStrings(
 
     cachedEvents = { p0, p1 ->
         "Cached %d of %d events"
-            .format(p0, p1)
+            .fmt(p0, p1)
     },
 
     cachedPlaces = { p0, p1 ->
         "Cached %d of %d places"
-            .format(p0, p1)
+            .fmt(p0, p1)
     },
 
     cachedRecordings = { p0, p1 ->
         "Cached %d of %d recordings"
-            .format(p0, p1)
+            .fmt(p0, p1)
     },
 
     cachedReleases = { p0, p1 ->
         "Cached %d of %d releases"
-            .format(p0, p1)
+            .fmt(p0, p1)
     },
 
     cachedReleaseGroups = { p0, p1 ->
         "Cached %d of %d release groups"
-            .format(p0, p1)
+            .fmt(p0, p1)
     },
 
     moreActions = "More actions",
@@ -267,12 +267,12 @@ val EnStrings = AppStrings(
 
     searchX = { p0 ->
         "Search %s"
-            .format(p0)
+            .fmt(p0)
     },
 
     searchXByX = { p0, p1 ->
         "Search %s by %s"
-            .format(p0, p1)
+            .fmt(p0, p1)
     },
 
     alphabetically = "Alphabetically",

@@ -1,12 +1,6 @@
 package ly.david.musicsearch.strings
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ProvidableCompositionLocal
-import androidx.compose.runtime.staticCompositionLocalOf
 import cafe.adriel.lyricist.LanguageTag
-import cafe.adriel.lyricist.Lyricist
-import cafe.adriel.lyricist.ProvideStrings
-import cafe.adriel.lyricist.rememberStrings
 
 data class AppStrings(
     val theme: String,
@@ -147,18 +141,4 @@ val Strings: Map<LanguageTag, AppStrings> = mapOf(
     Locales.EN to EnStrings,
 )
 
-val LocalStrings: ProvidableCompositionLocal<AppStrings> = staticCompositionLocalOf { EnStrings }
-
-@Composable
-fun rememberStrings(
-    languageTag: LanguageTag = Locales.EN,
-): Lyricist<AppStrings> =
-    rememberStrings(Strings, languageTag)
-
-@Composable
-fun ProvideStrings(
-    lyricist: Lyricist<AppStrings>,
-    content: @Composable () -> Unit,
-) {
-    ProvideStrings(lyricist, LocalStrings, content)
-}
+expect fun String.fmt(vararg args: Any?): String

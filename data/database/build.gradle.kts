@@ -28,12 +28,17 @@ kotlin {
                 implementation(libs.mockk)
             }
         }
+        val jvmCommon by creating {
+            dependsOn(commonMain)
+        }
         val androidMain by getting {
+            dependsOn(jvmCommon)
             dependencies {
                 implementation(libs.sqldelight.android.driver)
             }
         }
         val jvmMain by getting {
+            dependsOn(jvmCommon)
             dependencies {
                 implementation(libs.sqldelight.sqlite.driver)
             }
