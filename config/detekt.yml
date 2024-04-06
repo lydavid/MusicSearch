@@ -30,6 +30,7 @@ style:
       - "DefaultPreviews"
       - "Test"
   MaxLineLength:
+    excludeCommentStatements: true
     ignoreAnnotated:
       - "Test"
   ReturnCount:
