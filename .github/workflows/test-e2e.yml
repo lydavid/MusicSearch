@@ -43,6 +43,7 @@ jobs:
           sdcard-path-or-size: 100M
           script: |
             ./gradlew installDebug
+            adb shell settings put system show_touches 1
             $HOME/.maestro/bin/maestro test .maestro
 
       - name: Store outputs on failure
