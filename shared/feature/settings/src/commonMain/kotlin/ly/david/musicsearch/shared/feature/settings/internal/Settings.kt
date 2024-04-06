@@ -19,7 +19,7 @@ import ly.david.ui.common.screen.LicensesScreen
 import ly.david.ui.common.screen.NowPlayingHistoryScreen
 import ly.david.ui.common.screen.SpotifyPlayingScreen
 import ly.david.musicsearch.strings.AppStrings
-import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.component.ClickableItem
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading

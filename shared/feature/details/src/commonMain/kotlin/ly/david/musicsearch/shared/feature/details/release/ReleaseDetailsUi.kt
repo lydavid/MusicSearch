@@ -13,14 +13,14 @@ import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
 import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
-import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.LargeImage
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
-import java.util.Locale
+import ly.david.ui.common.work.getDisplayLanguage
 
 @Composable
 internal fun ReleaseDetailsUi(
@@ -109,10 +109,10 @@ internal fun ReleaseDetailsUi(
                         filterText = filterText,
                     )
                 }
-                textRepresentation?.language?.ifNotNullOrEmpty {
+                textRepresentation?.language?.getDisplayLanguage().ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.language,
-                        text = Locale(it).displayLanguage,
+                        text = it,
                         filterText = filterText,
                     )
                 }

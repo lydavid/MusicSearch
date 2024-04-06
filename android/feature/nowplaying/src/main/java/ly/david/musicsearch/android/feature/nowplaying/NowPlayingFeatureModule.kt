@@ -11,7 +11,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val nowPlayingFeatureModule = module {
-    single(named(NowPlayingHistoryScreen::class.java.name)) {
+    single(named("NowPlayingHistoryScreen")) {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is NowPlayingHistoryScreen -> NowPlayingHistoryPresenter(
@@ -24,7 +24,7 @@ val nowPlayingFeatureModule = module {
             }
         }
     }
-    single(named(NowPlayingHistoryScreen::class.java.name)) {
+    single(named("NowPlayingHistoryScreen")) {
         Ui.Factory { screen, _ ->
             when (screen) {
                 is NowPlayingHistoryScreen -> {

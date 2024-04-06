@@ -37,3 +37,6 @@ secrets.properties
 
 # Desktop app database
 music_search.db
+
+# Xcode
+xcuserdata/

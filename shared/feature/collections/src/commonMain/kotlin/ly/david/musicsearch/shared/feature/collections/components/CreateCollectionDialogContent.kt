@@ -31,7 +31,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.collectableEntities
-import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.core.theme.TextStyles
 

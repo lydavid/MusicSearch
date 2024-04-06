@@ -92,6 +92,7 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
+lyricist-core = { module = "cafe.adriel.lyricist:lyricist-core", version.ref = "lyricist" }
 lyricist-library = { module = "cafe.adriel.lyricist:lyricist", version.ref = "lyricist" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }

@@ -13,6 +13,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(projects.strings)
+                implementation(libs.lyricist.library)
+
                 implementation(compose.foundation)
                 implementation(compose.material3)
             }

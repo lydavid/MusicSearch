@@ -12,7 +12,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val searchFeatureModule: Module = module {
-    single(named(SearchPresenter::class.java.name)) {
+    single(named("SearchPresenter")) {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is SearchScreen -> SearchPresenter(
@@ -28,7 +28,7 @@ val searchFeatureModule: Module = module {
             }
         }
     }
-    single(named(SearchScreen::class.java.name)) {
+    single(named("SearchScreen")) {
         Ui.Factory { screen, context ->
             when (screen) {
                 is SearchScreen -> {

@@ -11,7 +11,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val spotifyFeatureModule = module {
-    single(named(SpotifyPlayingScreen::class.java.name)) {
+    single(named("SpotifyPlayingScreen")) {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is SpotifyPlayingScreen -> SpotifyPresenter(
@@ -22,7 +22,7 @@ val spotifyFeatureModule = module {
             }
         }
     }
-    single(named(SpotifyPlayingScreen::class.java.name)) {
+    single(named("SpotifyPlayingScreen")) {
         Ui.Factory { screen, _ ->
             when (screen) {
                 is SpotifyPlayingScreen -> {

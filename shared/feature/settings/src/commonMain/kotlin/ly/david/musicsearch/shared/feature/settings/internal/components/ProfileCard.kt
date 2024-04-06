@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.core.LocalStrings
 import ly.david.ui.core.theme.TextStyles
 
 @Composable

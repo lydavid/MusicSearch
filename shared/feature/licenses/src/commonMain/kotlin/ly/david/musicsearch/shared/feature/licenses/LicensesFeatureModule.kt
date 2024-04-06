@@ -11,7 +11,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val licensesFeatureModule = module {
-    single(named(LicensesScreen::class.java.name)) {
+    single(named("LicensesScreen")) {
         Presenter.Factory { screen, navigator, context ->
             when (screen) {
                 is LicensesScreen -> LicensesPresenter(
@@ -22,7 +22,7 @@ val licensesFeatureModule = module {
             }
         }
     }
-    single(named(LicensesScreen::class.java.name)) {
+    single(named("LicensesScreen")) {
         Ui.Factory { screen, context ->
             when (screen) {
                 is LicensesScreen -> {

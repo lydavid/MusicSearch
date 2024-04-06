@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.core.LocalStrings
 
 @Composable
 fun RetryButton(

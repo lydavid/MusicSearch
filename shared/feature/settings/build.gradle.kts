@@ -38,7 +38,6 @@ kotlin {
                 implementation(compose.materialIconsExtended)
                 implementation(compose.material3)
                 implementation(compose.ui)
-                implementation(compose.preview)
 
                 implementation(libs.circuit.foundation)
                 implementation(libs.koin.core)
@@ -64,5 +63,6 @@ kotlin {
 }
 
 dependencies {
+    implementation(compose.preview)
     debugImplementation(compose.uiTooling)
 }

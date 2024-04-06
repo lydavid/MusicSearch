@@ -34,12 +34,12 @@ kotlin {
                 implementation(projects.shared.feature.stats)
                 implementation(projects.strings)
                 implementation(projects.ui.common)
+                implementation(projects.ui.core)
 
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
                 implementation(compose.ui)
-                implementation(compose.preview)
 
                 implementation(libs.koin.core)
                 implementation(libs.circuit.foundation)
@@ -53,13 +53,14 @@ kotlin {
                 implementation(projects.android.feature.spotify)
                 implementation(projects.ui.core)
                 implementation(projects.ui.image)
+                implementation(compose.preview)
             }
         }
         val jvmMain by getting
 
         targets.withType<KotlinNativeTarget>().configureEach {
             binaries.framework {
-                baseName = "common"
+                baseName = "shared"
                 isStatic = true
             }
         }

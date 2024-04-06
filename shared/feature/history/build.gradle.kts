@@ -25,12 +25,16 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.ui)
-                implementation(compose.preview)
 
                 implementation(libs.circuit.foundation)
                 implementation(libs.koin.core)
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(compose.preview)
             }
         }
         val androidUnitTest by getting {
