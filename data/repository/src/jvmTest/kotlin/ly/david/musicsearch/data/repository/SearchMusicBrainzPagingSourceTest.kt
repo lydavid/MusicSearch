@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository
 
-import app.cash.paging.PagingSource
+import androidx.paging.PagingSource
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.api.FakeMusicBrainzApi
 import ly.david.data.test.toFakeMusicBrainzModel
