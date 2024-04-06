@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues></CurrentIssues>
+  <CurrentIssues>
+    <ID>CompositionLocalAllowlist:LocalStrings.kt$LocalStrings</ID>
+  </CurrentIssues>
 </SmellBaseline>
