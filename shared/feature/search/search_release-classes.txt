@@ -34,7 +34,7 @@ stable class ClickItem {
 stable class SearchUiState {
   stable val query: String
   stable val entity: MusicBrainzEntity
-  runtime val searchResults: LazyPagingItems<ListItemModel>
-  runtime val searchHistory: LazyPagingItems<ListItemModel>
+  runtime val searchResults: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
+  runtime val searchHistory: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
   stable val eventSink: Function1<SearchUiEvent, Unit>
 }

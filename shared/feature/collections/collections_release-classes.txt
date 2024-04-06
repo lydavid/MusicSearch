@@ -49,7 +49,7 @@ stable class CollectionListUiState {
   stable val query: String
   stable val showLocal: Boolean
   stable val showRemote: Boolean
-  runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
+  runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<CollectionListItemModel> }
   stable val eventSink: Function1<CollectionListUiEvent, Unit>
 }
 stable class NewCollection {
