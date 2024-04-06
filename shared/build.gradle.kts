@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
     id("ly.david.android.library")
     id("ly.david.musicsearch.compose.multiplatform")
@@ -38,7 +40,6 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
                 implementation(compose.ui)
-                implementation(compose.preview)
 
                 implementation(libs.koin.core)
                 implementation(libs.circuit.foundation)
@@ -52,8 +53,20 @@ kotlin {
                 implementation(projects.android.feature.spotify)
                 implementation(projects.ui.core)
                 implementation(projects.ui.image)
+                implementation(compose.preview)
             }
         }
         val jvmMain by getting
+
+        targets.withType<KotlinNativeTarget>().configureEach {
+            binaries.framework {
+                baseName = "shared"
+                isStatic = true
+            }
+            binaries.configureEach {
+                // https://github.com/touchlab/SQLiter/issues/77
+                linkerOpts("-lsqlite3")
+            }
+        }
     }
 }

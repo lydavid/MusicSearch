@@ -11,7 +11,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val historyFeatureModule = module {
-    single(named(HistoryPresenter::class.java.name)) {
+    single(named("HistoryPresenter")) {
         Presenter.Factory { screen, navigator, context ->
             when (screen) {
                 is HistoryScreen -> HistoryPresenter(
@@ -27,7 +27,7 @@ val historyFeatureModule = module {
             }
         }
     }
-    single(named(HistoryScreen::class.java.name)) {
+    single(named("HistoryScreen")) {
         Ui.Factory { screen, context ->
             when (screen) {
                 is HistoryScreen -> {

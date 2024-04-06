@@ -19,6 +19,7 @@ kotlin {
                 implementation(projects.domain)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.collections.immutable)
+                implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.paging.common)
             }
         }

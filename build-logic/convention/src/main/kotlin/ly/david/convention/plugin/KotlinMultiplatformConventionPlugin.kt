@@ -21,6 +21,8 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
                 if (pluginManager.hasPlugin("ly.david.android.library")) {
                     androidTarget()
                 }
+                iosArm64()
+                iosSimulatorArm64()
             }
             configureKotlin()
             configureDetekt()

@@ -140,3 +140,5 @@ object Locales {
 val Strings: Map<LanguageTag, AppStrings> = mapOf(
     Locales.EN to EnStrings,
 )
+
+expect fun String.fmt(vararg args: Any?): String

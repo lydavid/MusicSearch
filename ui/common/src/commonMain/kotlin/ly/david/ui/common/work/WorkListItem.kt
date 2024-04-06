@@ -10,7 +10,6 @@ import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.listitem.WorkListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.core.theme.TextStyles
-import java.util.Locale
 
 @Composable
 fun WorkListItem(
@@ -41,9 +40,9 @@ fun WorkListItem(
                             style = TextStyles.getCardBodySubTextStyle(),
                         )
                     }
-                    language?.ifNotNullOrEmpty {
+                    language?.getDisplayLanguage().ifNotNullOrEmpty {
                         Text(
-                            text = Locale(it).displayLanguage,
+                            text = it,
                             style = TextStyles.getCardBodySubTextStyle(),
                         )
                     }

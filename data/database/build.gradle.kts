@@ -1,3 +1,5 @@
+import okhttp3.internal.notifyAll
+
 plugins {
     id("ly.david.android.library")
     id("ly.david.musicsearch.kotlin.multiplatform")
@@ -26,14 +28,24 @@ kotlin {
                 implementation(libs.mockk)
             }
         }
+        val jvmCommon by creating {
+            dependsOn(commonMain)
+        }
         val androidMain by getting {
+            dependsOn(jvmCommon)
             dependencies {
                 implementation(libs.sqldelight.android.driver)
             }
         }
         val jvmMain by getting {
+            dependsOn(jvmCommon)
             dependencies {
                 implementation(libs.sqldelight.sqlite.driver)
+            }
+        }
+        val iosMain by getting {
+            dependencies {
+                implementation(libs.sqldelight.native.driver)
             }
         }
     }

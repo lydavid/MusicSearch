@@ -1,9 +1,5 @@
 package ly.david.musicsearch.core.models.common
 
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-
 private const val YEAR_FIRST_INDEX = 0
 private const val YEAR_LAST_INDEX = 4
 
@@ -54,31 +50,4 @@ fun String?.emptyToNull(): String? {
  * or "XW" for global, or "XE" for EU.
  * @return Flag emoji of country code, or globe emoji for global.
  */
-fun String.toFlagEmoji(): String {
-    if (this.length != 2) {
-        return this
-    }
-
-    if (!this[0].isLetter() || !this[1].isLetter()) {
-        return this
-    }
-    val countryCodeCaps = this.uppercase() // upper case is important because we are calculating offset
-
-    if (this == "XW") {
-        return "\uD83C\uDF10"
-    } else if (this == "XE") {
-        return "\uD83C\uDDEA\uD83C\uDDFA"
-    }
-
-    // TODO: Support these flags
-    //  https://github.com/metabrainz/musicbrainz-server/blob/f7d1d109e51b9c0313de3bdd64c1ce0f543e73f1/root/static/styles/flags.less
-
-    val firstLetter = Character.codePointAt(countryCodeCaps, 0) - 0x41 + 0x1F1E6
-    val secondLetter = Character.codePointAt(countryCodeCaps, 1) - 0x41 + 0x1F1E6
-
-    return String(Character.toChars(firstLetter)) + String(Character.toChars(secondLetter))
-}
-
-fun String.toDate(): Date {
-    return SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(this)
-}
+expect fun String.toFlagEmoji(): String

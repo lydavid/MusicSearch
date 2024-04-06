@@ -45,7 +45,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val detailsFeatureModule = module {
-    single(named(DetailsScreen::class.java.name)) {
+    single(named("DetailsScreen")) {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is DetailsScreen -> {
@@ -204,7 +204,7 @@ val detailsFeatureModule = module {
             }
         }
     }
-    single(named(DetailsScreen::class.java.name)) {
+    single(named("DetailsScreen")) {
         Ui.Factory { screen, _ ->
             when (screen) {
                 is DetailsScreen -> {

@@ -13,7 +13,7 @@ import org.koin.dsl.module
 val settingsFeatureModule = module {
     includes(platformModule)
 
-    single(named(SettingsScreen::class.java.name)) {
+    single(named("SettingsScreen")) {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is SettingsScreen -> SettingsPresenter(
@@ -28,7 +28,7 @@ val settingsFeatureModule = module {
             }
         }
     }
-    single(named(SettingsScreen::class.java.name)) {
+    single(named("SettingsScreen")) {
         Ui.Factory { screen, _ ->
             when (screen) {
                 is SettingsScreen -> {

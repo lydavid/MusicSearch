@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import java.util.Locale
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.work.WorkScaffoldModel
@@ -14,6 +13,7 @@ import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
+import ly.david.ui.common.work.getDisplayLanguage
 
 @Composable
 internal fun WorkDetailsUi(
@@ -39,10 +39,10 @@ internal fun WorkDetailsUi(
                         filterText = filterText,
                     )
                 }
-                language?.ifNotNullOrEmpty {
+                language?.getDisplayLanguage().ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.language,
-                        text = Locale(it).displayLanguage,
+                        text = it,
                         filterText = filterText,
                     )
                 }

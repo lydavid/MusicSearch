@@ -31,7 +31,6 @@ kotlin {
                 implementation(compose.material)
                 implementation(compose.material3)
                 implementation(compose.ui)
-                implementation(compose.preview)
 
                 implementation(libs.circuit.foundation)
                 implementation(libs.circuit.overlay)
@@ -43,12 +42,18 @@ kotlin {
                 implementation(libs.paging.compose)
             }
         }
+        val jvmCommon by creating {
+            dependsOn(commonMain)
+        }
         val androidMain by getting {
+            dependsOn(jvmCommon)
             dependencies {
                 implementation(libs.androidx.activity.compose)
             }
         }
-        val jvmMain by getting
+        val jvmMain by getting {
+            dependsOn(jvmCommon)
+        }
         val androidUnitTest by getting {
             dependencies {
                 implementation(projects.ui.test.image)
@@ -64,6 +69,7 @@ kotlin {
 }
 
 dependencies {
+    implementation(compose.preview)
     debugImplementation(compose.uiTooling)
     add("kspJvm", libs.koin.ksp.compiler)
 }

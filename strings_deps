@@ -1,0 +1,2798 @@
+Type-safe project accessors is an incubating feature.
+
+> Configure project :
+Java 17.0.10 Oracle Corporation
+Gradle 8.6 at /Users/david/.gradle/wrapper/dists/gradle-8.6-bin/afr5mpiioh2wthjmwnkmdsd5w/gradle-8.6
+
+> Task :build-logic:convention:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:convention:compileKotlin UP-TO-DATE
+> Task :build-logic:convention:compileJava NO-SOURCE
+> Task :build-logic:convention:pluginDescriptors UP-TO-DATE
+> Task :build-logic:convention:processResources UP-TO-DATE
+> Task :build-logic:convention:classes UP-TO-DATE
+> Task :build-logic:convention:jar UP-TO-DATE
+
+> Configure project :shared
+WARNING: The option setting 'android.defaults.buildfeatures.buildconfig=true' is deprecated.
+The current default is 'false'.
+It will be removed in version 9.0 of the Android Gradle plugin.
+You can resolve this warning in Android Studio via `Refactor` > `Migrate BuildConfig to Gradle Build Files`
+w: Kotlin Multiplatform <-> Android Gradle Plugin compatibility issue:
+The applied Android Gradle Plugin version (8.3.1) is higher 
+than the maximum known to the Kotlin Gradle Plugin.
+Tooling stability in such configuration isn't tested, please report encountered issues to https://kotl.in/issue"
+
+Minimum supported Android Gradle Plugin version: 7.0
+Maximum tested Android Gradle Plugin version: 8.2
+
+To suppress this message add 'kotlin.mpp.androidGradlePluginCompatibility.nowarn=true' to your gradle.properties
+
+
+> Task :strings:dependencies
+
+------------------------------------------------------------
+Project ':strings'
+------------------------------------------------------------
+
+allSourceSetsCompileDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+     |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+     |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+     |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+     |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+     |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+     +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+     \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+appleMainApi (n)
+No dependencies
+
+appleMainApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+appleMainCompileOnly (n)
+No dependencies
+
+appleMainCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+appleMainImplementation (n)
+No dependencies
+
+appleMainImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+appleMainIntransitiveDependenciesMetadata
+No dependencies
+
+appleMainResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+appleMainRuntimeOnly (n)
+No dependencies
+
+appleTestApi (n)
+No dependencies
+
+appleTestApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+appleTestCompileOnly (n)
+No dependencies
+
+appleTestCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+appleTestImplementation (n)
+No dependencies
+
+appleTestImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+appleTestIntransitiveDependenciesMetadata
+No dependencies
+
+appleTestResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+appleTestRuntimeOnly (n)
+No dependencies
+
+commonMainApi (n)
+No dependencies
+
+commonMainApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+commonMainCompileOnly (n)
+No dependencies
+
+commonMainCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+commonMainImplementation (n)
++--- io.insert-koin:koin-core:3.5.3 (n)
+\--- cafe.adriel.lyricist:lyricist:1.7.0 (n)
+
+commonMainImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+commonMainIntransitiveDependenciesMetadata
+No dependencies
+
+commonMainResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+commonMainRuntimeOnly (n)
+No dependencies
+
+commonTestApi (n)
+No dependencies
+
+commonTestApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+commonTestCompileOnly (n)
+No dependencies
+
+commonTestCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+commonTestImplementation (n)
+No dependencies
+
+commonTestImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+commonTestIntransitiveDependenciesMetadata
+No dependencies
+
+commonTestResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+commonTestRuntimeOnly (n)
+No dependencies
+
+debugFrameworkIosArm64 (n)
+No dependencies
+
+debugFrameworkIosSimulatorArm64 (n)
+No dependencies
+
+detekt - The detekt dependencies to be used for this project.
+\--- io.gitlab.arturbosch.detekt:detekt-cli:1.23.6
+     +--- com.beust:jcommander:1.82
+     +--- io.gitlab.arturbosch.detekt:detekt-tooling:1.23.6
+     |    +--- io.gitlab.arturbosch.detekt:detekt-api:1.23.6
+     |    |    +--- io.gitlab.arturbosch.detekt:detekt-utils:1.23.6
+     |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+     |    |    |         +--- org.jetbrains:annotations:13.0
+     |    |    |         +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0 -> 1.8.21 (c)
+     |    |    |         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
+     |    |    |         \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0 -> 1.8.21 (c)
+     |    |    +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23
+     |    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    |    |    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.23
+     |    |    |    +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10 -> 1.9.23
+     |    |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    |    |    +--- org.jetbrains.kotlin:kotlin-daemon-embeddable:1.9.23
+     |    |    |    \--- org.jetbrains.intellij.deps:trove4j:1.0.20200330
+     |    |    +--- io.gitlab.arturbosch.detekt:detekt-psi-utils:1.23.6
+     |    |    |    +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23 (*)
+     |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     +--- io.gitlab.arturbosch.detekt:detekt-parser:1.23.6
+     |    +--- io.gitlab.arturbosch.detekt:detekt-psi-utils:1.23.6 (*)
+     |    +--- io.github.davidburstrom.contester:contester-breakpoint:0.2.0
+     |    +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23 (*)
+     |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:{strictly 1.9.23} -> 1.9.23 (*)
+     +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     +--- io.gitlab.arturbosch.detekt:detekt-core:1.23.6
+     |    +--- org.snakeyaml:snakeyaml-engine:2.6
+     |    +--- org.jetbrains.kotlin:kotlin-reflect:1.9.23 (*)
+     |    +--- io.gitlab.arturbosch.detekt:detekt-metrics:1.23.6
+     |    |    +--- io.gitlab.arturbosch.detekt:detekt-api:1.23.6 (*)
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    +--- io.gitlab.arturbosch.detekt:detekt-psi-utils:1.23.6 (*)
+     |    +--- io.gitlab.arturbosch.detekt:detekt-report-html:1.23.6
+     |    |    +--- io.gitlab.arturbosch.detekt:detekt-utils:1.23.6 (*)
+     |    |    +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.1
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    +--- io.gitlab.arturbosch.detekt:detekt-report-md:1.23.6
+     |    |    +--- io.gitlab.arturbosch.detekt:detekt-metrics:1.23.6 (*)
+     |    |    +--- io.gitlab.arturbosch.detekt:detekt-api:1.23.6 (*)
+     |    |    +--- io.gitlab.arturbosch.detekt:detekt-utils:1.23.6 (*)
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    +--- io.gitlab.arturbosch.detekt:detekt-report-txt:1.23.6
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    +--- io.gitlab.arturbosch.detekt:detekt-report-xml:1.23.6
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    +--- io.gitlab.arturbosch.detekt:detekt-report-sarif:1.23.6
+     |    |    +--- io.github.detekt.sarif4k:sarif4k:0.4.0
+     |    |    |    \--- io.github.detekt.sarif4k:sarif4k-jvm:0.4.0
+     |    |    |         +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.21
+     |    |    |         |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.21 -> 1.9.23 (*)
+     |    |    |         |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.21
+     |    |    |         |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.21 -> 1.9.23 (*)
+     |    |    |         +--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1
+     |    |    |         |    \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.4.1
+     |    |    |         |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.7.20 -> 1.9.23 (*)
+     |    |    |         |         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.7.20 -> 1.9.23
+     |    |    |         |         |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    |    |         |         +--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.4.1
+     |    |    |         |         |    \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.4.1
+     |    |    |         |         |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.7.20 -> 1.9.23 (*)
+     |    |    |         |         |         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.7.20 -> 1.9.23 (*)
+     |    |    |         |         |         \--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20 -> 1.8.21 (*)
+     |    |    |         |         \--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20 -> 1.8.21 (*)
+     |    |    |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.21 -> 1.9.23 (*)
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    +--- io.gitlab.arturbosch.detekt:detekt-utils:1.23.6 (*)
+     |    +--- io.gitlab.arturbosch.detekt:detekt-api:1.23.6 (*)
+     |    +--- io.gitlab.arturbosch.detekt:detekt-parser:1.23.6 (*)
+     |    +--- io.gitlab.arturbosch.detekt:detekt-tooling:1.23.6 (*)
+     |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     \--- io.gitlab.arturbosch.detekt:detekt-rules:1.23.6
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+          +--- io.gitlab.arturbosch.detekt:detekt-rules-complexity:1.23.6
+          |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+          +--- io.gitlab.arturbosch.detekt:detekt-rules-coroutines:1.23.6
+          |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+          +--- io.gitlab.arturbosch.detekt:detekt-rules-documentation:1.23.6
+          |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+          +--- io.gitlab.arturbosch.detekt:detekt-rules-empty:1.23.6
+          |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+          +--- io.gitlab.arturbosch.detekt:detekt-rules-errorprone:1.23.6
+          |    +--- io.gitlab.arturbosch.detekt:detekt-tooling:1.23.6 (*)
+          |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+          +--- io.gitlab.arturbosch.detekt:detekt-rules-exceptions:1.23.6
+          |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+          +--- io.gitlab.arturbosch.detekt:detekt-rules-naming:1.23.6
+          |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+          +--- io.gitlab.arturbosch.detekt:detekt-rules-performance:1.23.6
+          |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+          \--- io.gitlab.arturbosch.detekt:detekt-rules-style:1.23.6
+               \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+
+detektPlugins - The detektPlugins libraries to be used for this project.
++--- io.nlopez.compose.rules:detekt:0.3.13
+|    +--- io.nlopez.compose.rules:core-common:0.3.13
+|    |    +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23
+|    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    |    |    |    +--- org.jetbrains:annotations:13.0
+|    |    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0 -> 1.8.21 (c)
+|    |    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
+|    |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0 -> 1.8.21 (c)
+|    |    |    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.23
+|    |    |    +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10 -> 1.9.23
+|    |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    |    |    +--- org.jetbrains.kotlin:kotlin-daemon-embeddable:1.9.23
+|    |    |    \--- org.jetbrains.intellij.deps:trove4j:1.0.20200330
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- io.gitlab.arturbosch.detekt:detekt-core:1.23.6
+|    |    +--- org.snakeyaml:snakeyaml-engine:2.6
+|    |    +--- org.jetbrains.kotlin:kotlin-reflect:1.9.23 (*)
+|    |    +--- io.gitlab.arturbosch.detekt:detekt-metrics:1.23.6
+|    |    |    +--- io.gitlab.arturbosch.detekt:detekt-api:1.23.6
+|    |    |    |    +--- io.gitlab.arturbosch.detekt:detekt-utils:1.23.6
+|    |    |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    |    |    |    +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23 (*)
+|    |    |    |    +--- io.gitlab.arturbosch.detekt:detekt-psi-utils:1.23.6
+|    |    |    |    |    +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23 (*)
+|    |    |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    |    +--- io.gitlab.arturbosch.detekt:detekt-psi-utils:1.23.6 (*)
+|    |    +--- io.gitlab.arturbosch.detekt:detekt-report-html:1.23.6
+|    |    |    +--- io.gitlab.arturbosch.detekt:detekt-utils:1.23.6 (*)
+|    |    |    +--- org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.1
+|    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    |    +--- io.gitlab.arturbosch.detekt:detekt-report-md:1.23.6
+|    |    |    +--- io.gitlab.arturbosch.detekt:detekt-metrics:1.23.6 (*)
+|    |    |    +--- io.gitlab.arturbosch.detekt:detekt-api:1.23.6 (*)
+|    |    |    +--- io.gitlab.arturbosch.detekt:detekt-utils:1.23.6 (*)
+|    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    |    +--- io.gitlab.arturbosch.detekt:detekt-report-txt:1.23.6
+|    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    |    +--- io.gitlab.arturbosch.detekt:detekt-report-xml:1.23.6
+|    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    |    +--- io.gitlab.arturbosch.detekt:detekt-report-sarif:1.23.6
+|    |    |    +--- io.github.detekt.sarif4k:sarif4k:0.4.0
+|    |    |    |    \--- io.github.detekt.sarif4k:sarif4k-jvm:0.4.0
+|    |    |    |         +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.21
+|    |    |    |         |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.21 -> 1.9.23 (*)
+|    |    |    |         |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.21
+|    |    |    |         |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.21 -> 1.9.23 (*)
+|    |    |    |         +--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1
+|    |    |    |         |    \--- org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.4.1
+|    |    |    |         |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.7.20 -> 1.9.23 (*)
+|    |    |    |         |         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.7.20 -> 1.9.23
+|    |    |    |         |         |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    |    |    |         |         +--- org.jetbrains.kotlinx:kotlinx-serialization-core:1.4.1
+|    |    |    |         |         |    \--- org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.4.1
+|    |    |    |         |         |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.7.20 -> 1.9.23 (*)
+|    |    |    |         |         |         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.7.20 -> 1.9.23 (*)
+|    |    |    |         |         |         \--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20 -> 1.8.21 (*)
+|    |    |    |         |         \--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20 -> 1.8.21 (*)
+|    |    |    |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.21 -> 1.9.23 (*)
+|    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    |    +--- io.gitlab.arturbosch.detekt:detekt-utils:1.23.6 (*)
+|    |    +--- io.gitlab.arturbosch.detekt:detekt-api:1.23.6 (*)
+|    |    +--- io.gitlab.arturbosch.detekt:detekt-parser:1.23.6
+|    |    |    +--- io.gitlab.arturbosch.detekt:detekt-psi-utils:1.23.6 (*)
+|    |    |    +--- io.github.davidburstrom.contester:contester-breakpoint:0.2.0
+|    |    |    +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23 (*)
+|    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    |    +--- io.gitlab.arturbosch.detekt:detekt-tooling:1.23.6
+|    |    |    +--- io.gitlab.arturbosch.detekt:detekt-api:1.23.6 (*)
+|    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- io.nlopez.compose.rules:common:0.3.13
+|    |    +--- io.nlopez.compose.rules:core-common:0.3.13 (*)
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- io.nlopez.compose.rules:core-detekt:0.3.13
+|    |    +--- io.nlopez.compose.rules:core-common:0.3.13 (*)
+|    |    +--- io.gitlab.arturbosch.detekt:detekt-core:1.23.6 (*)
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+\--- io.gitlab.arturbosch.detekt:detekt-formatting:1.23.6
+     +--- com.pinterest.ktlint:ktlint-ruleset-standard:0.50.0
+     |    +--- com.pinterest.ktlint:ktlint-logger:0.50.0
+     |    |    \--- io.github.microutils:kotlin-logging-jvm:3.0.5
+     |    |         \--- org.slf4j:slf4j-api:2.0.3
+     |    +--- com.pinterest.ktlint:ktlint-cli-ruleset-core:0.50.0
+     |    |    \--- com.pinterest.ktlint:ktlint-rule-engine-core:0.50.0
+     |    |         +--- com.pinterest.ktlint:ktlint-logger:0.50.0 (*)
+     |    |         \--- org.ec4j.core:ec4j-core:0.3.0
+     |    \--- com.pinterest.ktlint:ktlint-rule-engine-core:0.50.0 (*)
+     \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+
+iosArm64ApiElements - API elements for main. (n)
+No dependencies
+
+iosArm64CInteropApiElements (n)
+No dependencies
+
+iosArm64CompilationApi - API dependencies for iosArm64/main
+\--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+
+iosArm64CompilationCompileOnly - Compile only dependencies for iosArm64/main. (n)
+No dependencies
+
+iosArm64CompilationDependenciesMetadata - Host-specific Metadata dependencies for iosArm64/main
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    \--- io.insert-koin:koin-core-iosarm64:3.5.3
+|         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|         \--- co.touchlab:stately-concurrency:2.0.5
+|              \--- co.touchlab:stately-concurrency-iosarm64:2.0.5
+|                   \--- co.touchlab:stately-strict:2.0.5
+|                        \--- co.touchlab:stately-strict-iosarm64:2.0.5
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     \--- cafe.adriel.lyricist:lyricist-iosarm64:1.7.0
+          +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+          |    \--- cafe.adriel.lyricist:lyricist-core-iosarm64:1.7.0
+          |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          |         \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+          |              \--- org.jetbrains.kotlinx:kotlinx-coroutines-core-iosarm64:1.8.0
+          |                   +--- org.jetbrains.kotlinx:atomicfu:0.23.1
+          |                   |    \--- org.jetbrains.kotlinx:atomicfu-iosarm64:0.23.1
+          |                   |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          |                   \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+iosArm64CompilationImplementation - Implementation only dependencies for iosArm64/main. (n)
+No dependencies
+
+iosArm64CompilationRuntimeOnly - Runtime only dependencies for iosArm64/main. (n)
+No dependencies
+
+iosArm64CompileKlibraries - Compile classpath for iosArm64/main.
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    \--- io.insert-koin:koin-core-iosarm64:3.5.3
+|         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|         \--- co.touchlab:stately-concurrency:2.0.5
+|              \--- co.touchlab:stately-concurrency-iosarm64:2.0.5
+|                   \--- co.touchlab:stately-strict:2.0.5
+|                        \--- co.touchlab:stately-strict-iosarm64:2.0.5
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     \--- cafe.adriel.lyricist:lyricist-iosarm64:1.7.0
+          +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+          |    \--- cafe.adriel.lyricist:lyricist-core-iosarm64:1.7.0
+          |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          |         \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+          |              \--- org.jetbrains.kotlinx:kotlinx-coroutines-core-iosarm64:1.8.0
+          |                   +--- org.jetbrains.kotlinx:atomicfu:0.23.1
+          |                   |    \--- org.jetbrains.kotlinx:atomicfu-iosarm64:0.23.1
+          |                   |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          |                   \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+iosArm64DebugFrameworkExport - Dependenceis to be exported in framework debugFramework for target iosArm64
+No dependencies
+
+iosArm64MainApi (n)
+No dependencies
+
+iosArm64MainApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosArm64MainCompileOnly (n)
+No dependencies
+
+iosArm64MainCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosArm64MainImplementation (n)
+No dependencies
+
+iosArm64MainImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosArm64MainIntransitiveDependenciesMetadata
+No dependencies
+
+iosArm64MainResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosArm64MainRuntimeOnly (n)
+No dependencies
+
+iosArm64MetadataElements (n)
+No dependencies
+
+iosArm64ReleaseFrameworkExport - Dependenceis to be exported in framework releaseFramework for target iosArm64
+No dependencies
+
+iosArm64SourcesElements - Source files of main compilation of iosArm64. (n)
+No dependencies
+
+iosArm64TestApi (n)
+No dependencies
+
+iosArm64TestApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosArm64TestCompilationApi - API dependencies for iosArm64/test
+No dependencies
+
+iosArm64TestCompilationCompileOnly - Compile only dependencies for iosArm64/test. (n)
+No dependencies
+
+iosArm64TestCompilationDependenciesMetadata - Host-specific Metadata dependencies for iosArm64/test
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    \--- io.insert-koin:koin-core-iosarm64:3.5.3
+|         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|         \--- co.touchlab:stately-concurrency:2.0.5
+|              \--- co.touchlab:stately-concurrency-iosarm64:2.0.5
+|                   \--- co.touchlab:stately-strict:2.0.5
+|                        \--- co.touchlab:stately-strict-iosarm64:2.0.5
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     \--- cafe.adriel.lyricist:lyricist-iosarm64:1.7.0
+          +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+          |    \--- cafe.adriel.lyricist:lyricist-core-iosarm64:1.7.0
+          |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          |         \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+          |              \--- org.jetbrains.kotlinx:kotlinx-coroutines-core-iosarm64:1.8.0
+          |                   +--- org.jetbrains.kotlinx:atomicfu:0.23.1
+          |                   |    \--- org.jetbrains.kotlinx:atomicfu-iosarm64:0.23.1
+          |                   |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          |                   \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+iosArm64TestCompilationImplementation - Implementation only dependencies for iosArm64/test. (n)
+No dependencies
+
+iosArm64TestCompilationRuntimeOnly - Runtime only dependencies for iosArm64/test. (n)
+No dependencies
+
+iosArm64TestCompileKlibraries - Compile classpath for iosArm64/test.
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    \--- io.insert-koin:koin-core-iosarm64:3.5.3
+|         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|         \--- co.touchlab:stately-concurrency:2.0.5
+|              \--- co.touchlab:stately-concurrency-iosarm64:2.0.5
+|                   \--- co.touchlab:stately-strict:2.0.5
+|                        \--- co.touchlab:stately-strict-iosarm64:2.0.5
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     \--- cafe.adriel.lyricist:lyricist-iosarm64:1.7.0
+          +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+          |    \--- cafe.adriel.lyricist:lyricist-core-iosarm64:1.7.0
+          |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          |         \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+          |              \--- org.jetbrains.kotlinx:kotlinx-coroutines-core-iosarm64:1.8.0
+          |                   +--- org.jetbrains.kotlinx:atomicfu:0.23.1
+          |                   |    \--- org.jetbrains.kotlinx:atomicfu-iosarm64:0.23.1
+          |                   |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          |                   \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+iosArm64TestCompileOnly (n)
+No dependencies
+
+iosArm64TestCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosArm64TestImplementation (n)
+No dependencies
+
+iosArm64TestImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosArm64TestIntransitiveDependenciesMetadata
+No dependencies
+
+iosArm64TestResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosArm64TestRuntimeOnly (n)
+No dependencies
+
+iosMainApi (n)
+No dependencies
+
+iosMainApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosMainCompileOnly (n)
+No dependencies
+
+iosMainCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosMainImplementation (n)
+No dependencies
+
+iosMainImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosMainIntransitiveDependenciesMetadata
+No dependencies
+
+iosMainResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosMainRuntimeOnly (n)
+No dependencies
+
+iosSimulatorArm64ApiElements - API elements for main. (n)
+No dependencies
+
+iosSimulatorArm64CInteropApiElements (n)
+No dependencies
+
+iosSimulatorArm64CompilationApi - API dependencies for iosSimulatorArm64/main
+\--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+
+iosSimulatorArm64CompilationCompileOnly - Compile only dependencies for iosSimulatorArm64/main. (n)
+No dependencies
+
+iosSimulatorArm64CompilationDependenciesMetadata - Host-specific Metadata dependencies for iosSimulatorArm64/main
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    \--- io.insert-koin:koin-core-iossimulatorarm64:3.5.3
+|         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|         \--- co.touchlab:stately-concurrency:2.0.5
+|              \--- co.touchlab:stately-concurrency-iossimulatorarm64:2.0.5
+|                   \--- co.touchlab:stately-strict:2.0.5
+|                        \--- co.touchlab:stately-strict-iossimulatorarm64:2.0.5
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     \--- cafe.adriel.lyricist:lyricist-iossimulatorarm64:1.7.0
+          +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+          |    \--- cafe.adriel.lyricist:lyricist-core-iossimulatorarm64:1.7.0
+          |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          |         \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+          |              \--- org.jetbrains.kotlinx:kotlinx-coroutines-core-iossimulatorarm64:1.8.0
+          |                   +--- org.jetbrains.kotlinx:atomicfu:0.23.1
+          |                   |    \--- org.jetbrains.kotlinx:atomicfu-iossimulatorarm64:0.23.1
+          |                   |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          |                   \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+iosSimulatorArm64CompilationImplementation - Implementation only dependencies for iosSimulatorArm64/main. (n)
+No dependencies
+
+iosSimulatorArm64CompilationRuntimeOnly - Runtime only dependencies for iosSimulatorArm64/main. (n)
+No dependencies
+
+iosSimulatorArm64CompileKlibraries - Compile classpath for iosSimulatorArm64/main.
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    \--- io.insert-koin:koin-core-iossimulatorarm64:3.5.3
+|         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|         \--- co.touchlab:stately-concurrency:2.0.5
+|              \--- co.touchlab:stately-concurrency-iossimulatorarm64:2.0.5
+|                   \--- co.touchlab:stately-strict:2.0.5
+|                        \--- co.touchlab:stately-strict-iossimulatorarm64:2.0.5
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     \--- cafe.adriel.lyricist:lyricist-iossimulatorarm64:1.7.0
+          +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+          |    \--- cafe.adriel.lyricist:lyricist-core-iossimulatorarm64:1.7.0
+          |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          |         \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+          |              \--- org.jetbrains.kotlinx:kotlinx-coroutines-core-iossimulatorarm64:1.8.0
+          |                   +--- org.jetbrains.kotlinx:atomicfu:0.23.1
+          |                   |    \--- org.jetbrains.kotlinx:atomicfu-iossimulatorarm64:0.23.1
+          |                   |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          |                   \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+iosSimulatorArm64DebugFrameworkExport - Dependenceis to be exported in framework debugFramework for target iosSimulatorArm64
+No dependencies
+
+iosSimulatorArm64MainApi (n)
+No dependencies
+
+iosSimulatorArm64MainApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosSimulatorArm64MainCompileOnly (n)
+No dependencies
+
+iosSimulatorArm64MainCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosSimulatorArm64MainImplementation (n)
+No dependencies
+
+iosSimulatorArm64MainImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosSimulatorArm64MainIntransitiveDependenciesMetadata
+No dependencies
+
+iosSimulatorArm64MainResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosSimulatorArm64MainRuntimeOnly (n)
+No dependencies
+
+iosSimulatorArm64MetadataElements (n)
+No dependencies
+
+iosSimulatorArm64ReleaseFrameworkExport - Dependenceis to be exported in framework releaseFramework for target iosSimulatorArm64
+No dependencies
+
+iosSimulatorArm64SourcesElements - Source files of main compilation of iosSimulatorArm64. (n)
+No dependencies
+
+iosSimulatorArm64TestApi (n)
+No dependencies
+
+iosSimulatorArm64TestApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosSimulatorArm64TestCompilationApi - API dependencies for iosSimulatorArm64/test
+No dependencies
+
+iosSimulatorArm64TestCompilationCompileOnly - Compile only dependencies for iosSimulatorArm64/test. (n)
+No dependencies
+
+iosSimulatorArm64TestCompilationDependenciesMetadata - Host-specific Metadata dependencies for iosSimulatorArm64/test
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    \--- io.insert-koin:koin-core-iossimulatorarm64:3.5.3
+|         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|         \--- co.touchlab:stately-concurrency:2.0.5
+|              \--- co.touchlab:stately-concurrency-iossimulatorarm64:2.0.5
+|                   \--- co.touchlab:stately-strict:2.0.5
+|                        \--- co.touchlab:stately-strict-iossimulatorarm64:2.0.5
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     \--- cafe.adriel.lyricist:lyricist-iossimulatorarm64:1.7.0
+          +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+          |    \--- cafe.adriel.lyricist:lyricist-core-iossimulatorarm64:1.7.0
+          |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          |         \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+          |              \--- org.jetbrains.kotlinx:kotlinx-coroutines-core-iossimulatorarm64:1.8.0
+          |                   +--- org.jetbrains.kotlinx:atomicfu:0.23.1
+          |                   |    \--- org.jetbrains.kotlinx:atomicfu-iossimulatorarm64:0.23.1
+          |                   |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          |                   \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+iosSimulatorArm64TestCompilationImplementation - Implementation only dependencies for iosSimulatorArm64/test. (n)
+No dependencies
+
+iosSimulatorArm64TestCompilationRuntimeOnly - Runtime only dependencies for iosSimulatorArm64/test. (n)
+No dependencies
+
+iosSimulatorArm64TestCompileKlibraries - Compile classpath for iosSimulatorArm64/test.
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    \--- io.insert-koin:koin-core-iossimulatorarm64:3.5.3
+|         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|         \--- co.touchlab:stately-concurrency:2.0.5
+|              \--- co.touchlab:stately-concurrency-iossimulatorarm64:2.0.5
+|                   \--- co.touchlab:stately-strict:2.0.5
+|                        \--- co.touchlab:stately-strict-iossimulatorarm64:2.0.5
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     \--- cafe.adriel.lyricist:lyricist-iossimulatorarm64:1.7.0
+          +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+          |    \--- cafe.adriel.lyricist:lyricist-core-iossimulatorarm64:1.7.0
+          |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          |         \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+          |              \--- org.jetbrains.kotlinx:kotlinx-coroutines-core-iossimulatorarm64:1.8.0
+          |                   +--- org.jetbrains.kotlinx:atomicfu:0.23.1
+          |                   |    \--- org.jetbrains.kotlinx:atomicfu-iossimulatorarm64:0.23.1
+          |                   |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          |                   \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+          \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+iosSimulatorArm64TestCompileOnly (n)
+No dependencies
+
+iosSimulatorArm64TestCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosSimulatorArm64TestImplementation (n)
+No dependencies
+
+iosSimulatorArm64TestImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosSimulatorArm64TestIntransitiveDependenciesMetadata
+No dependencies
+
+iosSimulatorArm64TestResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosSimulatorArm64TestRuntimeOnly (n)
+No dependencies
+
+iosTestApi (n)
+No dependencies
+
+iosTestApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosTestCompileOnly (n)
+No dependencies
+
+iosTestCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosTestImplementation (n)
+No dependencies
+
+iosTestImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosTestIntransitiveDependenciesMetadata
+No dependencies
+
+iosTestResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+iosTestRuntimeOnly (n)
+No dependencies
+
+jvmApiElements - API elements for main. (n)
+No dependencies
+
+jvmCompilationApi - API dependencies for jvm/main (n)
+No dependencies
+
+jvmCompilationCompileOnly - Compile only dependencies for jvm/main. (n)
+No dependencies
+
+jvmCompilationImplementation - Implementation only dependencies for jvm/main. (n)
+No dependencies
+
+jvmCompilationRuntimeOnly - Runtime only dependencies for jvm/main. (n)
+No dependencies
+
+jvmCompileClasspath - Compile classpath for jvm/main.
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    +--- org.jetbrains:annotations:13.0
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0 -> 1.9.21 (c)
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0 -> 1.9.21 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    \--- io.insert-koin:koin-core-jvm:3.5.3
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.21
+|         |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|         |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.21
+|         |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     \--- cafe.adriel.lyricist:lyricist-desktop:1.7.0
+          +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+          |    \--- cafe.adriel.lyricist:lyricist-core-desktop:1.7.0
+          |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+          \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+
+jvmMainApi (n)
+No dependencies
+
+jvmMainApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+jvmMainCompileOnly (n)
+No dependencies
+
+jvmMainCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+jvmMainImplementation (n)
+No dependencies
+
+jvmMainImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+jvmMainIntransitiveDependenciesMetadata
+No dependencies
+
+jvmMainResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+jvmMainRuntimeOnly (n)
+No dependencies
+
+jvmRuntimeClasspath - Runtime classpath of jvm/main.
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    +--- org.jetbrains:annotations:13.0 -> 23.0.0
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0 -> 1.9.21 (c)
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0 -> 1.9.21 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    \--- io.insert-koin:koin-core-jvm:3.5.3
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.21
+|         |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|         |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.21
+|         |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     \--- cafe.adriel.lyricist:lyricist-desktop:1.7.0
+          +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+          |    \--- cafe.adriel.lyricist:lyricist-core-desktop:1.7.0
+          |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+          |         \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+          |              \--- org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.0
+          |                   +--- org.jetbrains:annotations:23.0.0
+          |                   +--- org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0
+          |                   |    +--- org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.0 (c)
+          |                   |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (c)
+          |                   \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+          \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+jvmRuntimeElements - Elements of runtime for main. (n)
+No dependencies
+
+jvmSourcesElements - Source files of main compilation of jvm. (n)
+No dependencies
+
+jvmTestApi (n)
+No dependencies
+
+jvmTestApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+jvmTestCompilationApi - API dependencies for jvm/test (n)
+No dependencies
+
+jvmTestCompilationCompileOnly - Compile only dependencies for jvm/test. (n)
+\--- unspecified (n)
+
+jvmTestCompilationImplementation - Implementation only dependencies for jvm/test. (n)
+\--- unspecified (n)
+
+jvmTestCompilationRuntimeOnly - Runtime only dependencies for jvm/test. (n)
+\--- unspecified (n)
+
+jvmTestCompileClasspath - Compile classpath for jvm/test.
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    +--- org.jetbrains:annotations:13.0
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0 -> 1.9.21 (c)
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0 -> 1.9.21 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    \--- io.insert-koin:koin-core-jvm:3.5.3
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.21
+|         |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|         |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.21
+|         |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     \--- cafe.adriel.lyricist:lyricist-desktop:1.7.0
+          +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+          |    \--- cafe.adriel.lyricist:lyricist-core-desktop:1.7.0
+          |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+          \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+
+jvmTestCompileOnly (n)
+No dependencies
+
+jvmTestCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+jvmTestImplementation (n)
+No dependencies
+
+jvmTestImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         \--- co.touchlab:stately-strict:2.0.5
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+jvmTestIntransitiveDependenciesMetadata
+No dependencies
+
+jvmTestResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+jvmTestRuntimeClasspath - Runtime classpath of jvm/test.
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    +--- org.jetbrains:annotations:13.0 -> 23.0.0
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0 -> 1.9.21 (c)
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0 -> 1.9.21 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    \--- io.insert-koin:koin-core-jvm:3.5.3
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.21
+|         |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|         |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.21
+|         |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     \--- cafe.adriel.lyricist:lyricist-desktop:1.7.0
+          +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+          |    \--- cafe.adriel.lyricist:lyricist-core-desktop:1.7.0
+          |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+          |         \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+          |              \--- org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.0
+          |                   +--- org.jetbrains:annotations:23.0.0
+          |                   +--- org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0
+          |                   |    +--- org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.0 (c)
+          |                   |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (c)
+          |                   \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+          \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+jvmTestRuntimeOnly (n)
+No dependencies
+
+kotlinBuildToolsApiClasspath
+\--- org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.23
+     +--- org.jetbrains.kotlin:kotlin-build-tools-api:1.9.23
+     +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+     |    \--- org.jetbrains:annotations:13.0
+     +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23
+     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.23
+     |    +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10
+     |    +--- org.jetbrains.kotlin:kotlin-daemon-embeddable:1.9.23
+     |    \--- org.jetbrains.intellij.deps:trove4j:1.0.20200330
+     \--- org.jetbrains.kotlin:kotlin-compiler-runner:1.9.23
+          +--- org.jetbrains.kotlin:kotlin-build-common:1.9.23
+          +--- org.jetbrains.kotlin:kotlin-daemon-client:1.9.23
+          +--- org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.5.0
+          \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23 (*)
+
+kotlinCompilerClasspath
+\--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23
+     +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+     |    \--- org.jetbrains:annotations:13.0
+     +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.23
+     +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10
+     +--- org.jetbrains.kotlin:kotlin-daemon-embeddable:1.9.23
+     \--- org.jetbrains.intellij.deps:trove4j:1.0.20200330
+
+kotlinCompilerPluginClasspath
+No dependencies
+
+kotlinCompilerPluginClasspathIosArm64Main - Kotlin compiler plugins for compilation
+No dependencies
+
+kotlinCompilerPluginClasspathIosArm64Test - Kotlin compiler plugins for compilation
+No dependencies
+
+kotlinCompilerPluginClasspathIosSimulatorArm64Main - Kotlin compiler plugins for compilation
+No dependencies
+
+kotlinCompilerPluginClasspathIosSimulatorArm64Test - Kotlin compiler plugins for compilation
+No dependencies
+
+kotlinCompilerPluginClasspathJvmMain - Kotlin compiler plugins for compilation
+\--- org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.9.23
+     +--- org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:1.9.23
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.23
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+     |    |         \--- org.jetbrains:annotations:13.0
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.23
+     |    |    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.23
+     |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    |    \--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.23 (*)
+     |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+
+kotlinCompilerPluginClasspathJvmTest - Kotlin compiler plugins for compilation
+\--- org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.9.23
+     +--- org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:1.9.23
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.23
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+     |    |         \--- org.jetbrains:annotations:13.0
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.23
+     |    |    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.23
+     |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    |    \--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.23 (*)
+     |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+
+kotlinCompilerPluginClasspathMetadataAppleMain - Kotlin compiler plugins for compilation
+No dependencies
+
+kotlinCompilerPluginClasspathMetadataCommonMain - Kotlin compiler plugins for compilation
+\--- org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.9.23
+     +--- org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:1.9.23
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.23
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+     |    |         \--- org.jetbrains:annotations:13.0
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.23
+     |    |    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.23
+     |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    |    \--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.23 (*)
+     |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+
+kotlinCompilerPluginClasspathMetadataIosMain - Kotlin compiler plugins for compilation
+No dependencies
+
+kotlinCompilerPluginClasspathMetadataMain - Kotlin compiler plugins for compilation
+\--- org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.9.23
+     +--- org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:1.9.23
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.23
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+     |    |         \--- org.jetbrains:annotations:13.0
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.23
+     |    |    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.23
+     |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     |    |    \--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.23 (*)
+     |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+     \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+
+kotlinCompilerPluginClasspathMetadataNativeMain - Kotlin compiler plugins for compilation
+No dependencies
+
+kotlinKlibCommonizerClasspath
+\--- org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.23
+     +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+     |    \--- org.jetbrains:annotations:13.0
+     \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+          +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.23
+          +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10
+          +--- org.jetbrains.kotlin:kotlin-daemon-embeddable:1.9.23
+          \--- org.jetbrains.intellij.deps:trove4j:1.0.20200330
+
+kotlinNativeCompilerPluginClasspath
+No dependencies
+
+kotlinScriptDef - Script filename extensions discovery classpath configuration
+No dependencies
+
+kotlinScriptDefExtensions
+No dependencies
+
+metadataApiElements - API elements for main. (n)
+No dependencies
+
+metadataAppleMainCompilationApi - API dependencies for metadata/appleMain (n)
+No dependencies
+
+metadataAppleMainCompilationCompileOnly - Compile only dependencies for metadata/appleMain. (n)
+No dependencies
+
+metadataAppleMainCompilationImplementation - Implementation only dependencies for metadata/appleMain. (n)
+No dependencies
+
+metadataAppleMainCompilationRuntimeOnly - Runtime only dependencies for metadata/appleMain. (n)
+No dependencies
+
+metadataAppleMainCompileClasspath - Compile classpath for metadata/appleMain.
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+     |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+     |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+     |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+     |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+     |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+     +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+     \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+metadataCommonMainCompilationApi - API dependencies for metadata/commonMain (n)
+No dependencies
+
+metadataCommonMainCompilationCompileOnly - Compile only dependencies for metadata/commonMain. (n)
+No dependencies
+
+metadataCommonMainCompilationImplementation - Implementation only dependencies for metadata/commonMain. (n)
+No dependencies
+
+metadataCommonMainCompilationRuntimeOnly - Runtime only dependencies for metadata/commonMain. (n)
+No dependencies
+
+metadataCommonMainCompileClasspath - Compile classpath for metadata/commonMain.
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+     |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+     |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+     |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+     |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+     |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+     +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+     \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+metadataCompilationApi - API dependencies for metadata/main (n)
+No dependencies
+
+metadataCompilationCompileOnly - Compile only dependencies for metadata/main. (n)
+No dependencies
+
+metadataCompilationImplementation - Implementation only dependencies for metadata/main. (n)
+No dependencies
+
+metadataCompilationRuntimeOnly - Runtime only dependencies for metadata/main. (n)
+No dependencies
+
+metadataCompileClasspath - Compile classpath for metadata/main.
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+     |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+     |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+     |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+     |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+     |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+     +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+     \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+metadataIosMainCompilationApi - API dependencies for metadata/iosMain (n)
+No dependencies
+
+metadataIosMainCompilationCompileOnly - Compile only dependencies for metadata/iosMain. (n)
+No dependencies
+
+metadataIosMainCompilationImplementation - Implementation only dependencies for metadata/iosMain. (n)
+No dependencies
+
+metadataIosMainCompilationRuntimeOnly - Runtime only dependencies for metadata/iosMain. (n)
+No dependencies
+
+metadataIosMainCompileClasspath - Compile classpath for metadata/iosMain.
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+     |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+     |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+     |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+     |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+     |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+     +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+     \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+metadataNativeMainCompilationApi - API dependencies for metadata/nativeMain (n)
+No dependencies
+
+metadataNativeMainCompilationCompileOnly - Compile only dependencies for metadata/nativeMain. (n)
+No dependencies
+
+metadataNativeMainCompilationImplementation - Implementation only dependencies for metadata/nativeMain. (n)
+No dependencies
+
+metadataNativeMainCompilationRuntimeOnly - Runtime only dependencies for metadata/nativeMain. (n)
+No dependencies
+
+metadataNativeMainCompileClasspath - Compile classpath for metadata/nativeMain.
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+\--- cafe.adriel.lyricist:lyricist:1.7.0
+     +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+     |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+     |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+     |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+     |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+     |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+     +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+     \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
+
+metadataSourcesElements - Source files of main compilation of metadata. (n)
+No dependencies
+
+nativeMainApi (n)
+No dependencies
+
+nativeMainApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+nativeMainCompileOnly (n)
+No dependencies
+
+nativeMainCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+nativeMainImplementation (n)
+No dependencies
+
+nativeMainImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+nativeMainIntransitiveDependenciesMetadata
+No dependencies
+
+nativeMainResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+nativeMainRuntimeOnly (n)
+No dependencies
+
+nativeTestApi (n)
+No dependencies
+
+nativeTestApiDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+nativeTestCompileOnly (n)
+No dependencies
+
+nativeTestCompileOnlyDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+nativeTestImplementation (n)
+No dependencies
+
+nativeTestImplementationDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+nativeTestIntransitiveDependenciesMetadata
+No dependencies
+
+nativeTestResolvableDependenciesMetadata
++--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+|    \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.23 (c)
++--- io.insert-koin:koin-core:3.5.3
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23
+|    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    \--- co.touchlab:stately-concurrency:2.0.5
+|         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
+|         \--- co.touchlab:stately-strict:2.0.5
+|              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10 -> 1.9.23 (*)
++--- cafe.adriel.lyricist:lyricist:1.7.0
+|    +--- cafe.adriel.lyricist:lyricist-core:1.7.0
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+|    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |         \--- org.jetbrains.kotlinx:atomicfu:0.23.1
+|    |              +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 1.9.23 (*)
+|    |              \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.9.21 -> 1.9.23 (*)
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 1.9.23 (*)
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0 (*)
++--- org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.23} -> 1.9.23 (c)
++--- io.insert-koin:koin-core:{strictly 3.5.3} -> 3.5.3 (c)
++--- cafe.adriel.lyricist:lyricist:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlin:kotlin-stdlib-common:{strictly 1.9.23} -> 1.9.23 (c)
++--- co.touchlab:stately-concurrency:{strictly 2.0.5} -> 2.0.5 (c)
++--- cafe.adriel.lyricist:lyricist-core:{strictly 1.7.0} -> 1.7.0 (c)
++--- org.jetbrains.kotlinx:kotlinx-coroutines-core:{strictly 1.8.0} -> 1.8.0 (c)
++--- co.touchlab:stately-strict:{strictly 2.0.5} -> 2.0.5 (c)
+\--- org.jetbrains.kotlinx:atomicfu:{strictly 0.23.1} -> 0.23.1 (c)
+
+nativeTestRuntimeOnly (n)
+No dependencies
+
+releaseFrameworkIosArm64 (n)
+No dependencies
+
+releaseFrameworkIosSimulatorArm64 (n)
+No dependencies
+
+testKotlinScriptDef - Script filename extensions discovery classpath configuration
+No dependencies
+
+testKotlinScriptDefExtensions
+No dependencies
+
+(c) - A dependency constraint, not a dependency. The dependency affected by the constraint occurs elsewhere in the tree.
+(*) - Indicates repeated occurrences of a transitive dependency subtree. Gradle expands transitive dependency subtrees only once per project; repeat occurrences only display the root of the subtree, followed by this annotation.
+
+(n) - A dependency or dependency configuration that cannot be resolved.
+
+A web-based, searchable dependency report is available by adding the --scan option.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.6/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3s
+6 actionable tasks: 2 executed, 4 up-to-date
+WARNING: The following functionality has been deprecated and will be removed in the next major release of the Develocity Gradle plugin:
+- The deprecated "gradleEnterprise.buildScan.termsOfServiceUrl" API has been replaced by "develocity.buildScan.termsOfUseUrl"
+- The deprecated "gradleEnterprise.buildScan.termsOfServiceAgree" API has been replaced by "develocity.buildScan.termsOfUseAgree"
+- The deprecated "gradleEnterprise.buildScan.publishAlwaysIf(condition)" API has been replaced by "develocity.buildScan.publishing.onlyIf { condition }"
+- The "com.gradle.enterprise" plugin has been replaced by "com.gradle.develocity"

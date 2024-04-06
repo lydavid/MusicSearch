@@ -20,7 +20,7 @@ import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
-import java.util.Locale
+import ly.david.ui.common.work.getDisplayLanguage
 
 @Composable
 internal fun ReleaseDetailsUi(
@@ -109,10 +109,10 @@ internal fun ReleaseDetailsUi(
                         filterText = filterText,
                     )
                 }
-                textRepresentation?.language?.ifNotNullOrEmpty {
+                textRepresentation?.language?.getDisplayLanguage().ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.language,
-                        text = Locale(it).displayLanguage,
+                        text = it,
                         filterText = filterText,
                     )
                 }

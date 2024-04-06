@@ -4,7 +4,6 @@ import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.collection.CollectionRepository
 import org.koin.core.annotation.Single
-import java.util.UUID
 
 @Single
 class CreateCollection(
@@ -15,7 +14,7 @@ class CreateCollection(
         entity: MusicBrainzEntity,
     ) = collectionRepository.insertLocal(
         CollectionListItemModel(
-            id = UUID.randomUUID().toString(),
+            id = getUUID(),
             name = name,
             entity = entity,
             entityCount = 1,
@@ -23,3 +22,5 @@ class CreateCollection(
         ),
     )
 }
+
+expect fun getUUID(): String

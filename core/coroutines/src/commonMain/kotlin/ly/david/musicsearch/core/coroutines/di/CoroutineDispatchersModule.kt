@@ -1,6 +1,7 @@
 package ly.david.musicsearch.core.coroutines.di
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import org.koin.dsl.module
 

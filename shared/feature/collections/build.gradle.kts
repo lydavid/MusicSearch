@@ -27,7 +27,6 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
                 implementation(compose.ui)
-                implementation(compose.preview)
 
                 implementation(libs.circuit.foundation)
                 implementation(libs.circuit.overlay)
@@ -41,6 +40,7 @@ kotlin {
             dependencies {
                 implementation(libs.koin.androidx.compose)
                 implementation(libs.koin.annotations)
+                implementation(compose.preview)
             }
         }
 

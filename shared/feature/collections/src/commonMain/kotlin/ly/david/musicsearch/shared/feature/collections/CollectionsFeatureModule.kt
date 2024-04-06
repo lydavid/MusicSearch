@@ -19,7 +19,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val collectionsFeatureModule = module {
-    single(named(CollectionListScreen::class.java.name)) {
+    single(named("CollectionListScreen")) {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is CollectionListScreen -> CollectionListPresenter(
@@ -60,7 +60,7 @@ val collectionsFeatureModule = module {
             }
         }
     }
-    single(named(CollectionListScreen::class.java.name)) {
+    single(named("CollectionListScreen")) {
         Ui.Factory { screen, _ ->
             when (screen) {
                 is CollectionListScreen -> {

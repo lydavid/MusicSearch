@@ -10,7 +10,6 @@ import ly.david.musicsearch.core.models.getLifeSpanForDisplay
 import ly.david.musicsearch.core.models.relation.RelationWithOrder
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.Relation
-import java.net.URLDecoder
 
 /**
  * We cannot guarantee that a [Relation] will be created in the scenario that target-type points to a resource
@@ -144,7 +143,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             if (url == null) return null
             url?.apply {
                 linkedEntityId = id
-                linkedEntityName = URLDecoder.decode(resource, "utf-8")
+                linkedEntityName = resource.decodeUrl()
                 linkedEntityDisambiguation = null
             } ?: return null
         }
@@ -164,3 +163,5 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         additionalInfo = additionalInfo,
     )
 }
+
+internal expect fun String.decodeUrl(): String

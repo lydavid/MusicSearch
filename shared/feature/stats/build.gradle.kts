@@ -24,7 +24,6 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.ui)
-                implementation(compose.preview)
 
                 implementation(libs.kotlinx.collections.immutable)
                 implementation(libs.circuit.foundation)
@@ -41,5 +40,6 @@ kotlin {
 }
 
 dependencies {
+    implementation(compose.preview)
     debugImplementation(compose.uiTooling)
 }
