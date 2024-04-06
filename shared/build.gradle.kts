@@ -63,6 +63,10 @@ kotlin {
                 baseName = "shared"
                 isStatic = true
             }
+            binaries.configureEach {
+                // https://github.com/touchlab/SQLiter/issues/77
+                linkerOpts("-lsqlite3")
+            }
         }
     }
 }
