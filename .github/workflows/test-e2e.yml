@@ -35,11 +35,8 @@ jobs:
           api-level: 29
           arch: x86_64
           profile: pixel_3a
-          heap-size: 512M
-          ram-size: 4096M
           emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          disk-size: 4G
           sdcard-path-or-size: 100M
           script: |
             ./gradlew installDebug
