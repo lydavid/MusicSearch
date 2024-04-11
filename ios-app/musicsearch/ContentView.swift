@@ -13,18 +13,16 @@ struct ContentView: View {
     
     var body: some View {
         ComposeView()
-            .ignoresSafeArea(.all)
+            .ignoresSafeArea(.all, edges: .all)
     }
 }
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        let controller = Main_iosKt.MainViewController()
-        return controller
+        Main_iosKt.MainViewController()
     }
 
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-    }
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 
 #Preview {
