@@ -9,16 +9,17 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
+    let appComponent = AppComponent()
+    
     var body: some View {
         ComposeView()
-                .ignoresSafeArea(.all)
+            .ignoresSafeArea(.all)
     }
 }
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
         let controller = Main_iosKt.MainViewController()
-        controller.overrideUserInterfaceStyle = .light
         return controller
     }
 

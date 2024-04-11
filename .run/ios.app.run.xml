@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ios.app" type="KmmRunConfiguration" factoryName="iOS Application" CONFIG_VERSION="1" EXEC_TARGET_ID="983E6914-B411-4CC4-8DAE-2A76F57535A2" XCODE_PROJECT="$PROJECT_DIR$/ios-app/musicsearch.xcodeproj" XCODE_CONFIGURATION="Debug" XCODE_SCHEME="musicsearch">
+    <method v="2">
+      <option name="com.jetbrains.kmm.ios.BuildIOSAppTask" enabled="true" />
+    </method>
+  </configuration>
+</component>
