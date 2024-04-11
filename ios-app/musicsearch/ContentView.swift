@@ -9,11 +9,8 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
-    let appComponent = AppComponent()
-    
     var body: some View {
         ComposeView()
-            .ignoresSafeArea(.all, edges: .all)
     }
 }
 
@@ -23,8 +20,4 @@ struct ComposeView: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-}
-
-#Preview {
-    ContentView()
 }

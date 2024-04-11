@@ -33,6 +33,7 @@ fun AppRoot(
             Scaffold(
                 modifier = modifier,
                 bottomBar = {
+                    // TODO: This seems to add a blank space of equal height to iOS's screen
                     BottomNavigationBar(
                         currentTopLevelScreen = backStack.last().screen,
                         navigateToTopLevelScreen = { screen ->
