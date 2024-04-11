@@ -4,5 +4,15 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual val loggingModule: Module = module {
-    // TODO: iOS logging
+    single<Logger> {
+        object : Logger {
+            override fun d(text: String) {
+                println(text)
+            }
+
+            override fun e(exception: Exception) {
+                println(exception)
+            }
+        }
+    }
 }
