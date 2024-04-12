@@ -25,7 +25,7 @@ jobs:
       - run: ./gradlew projectDependencyGraph
 
       - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@v5.0.0
+        uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
           commit_message: 'chore: update module dependency graph [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
@@ -51,7 +51,7 @@ jobs:
       - run: ./gradlew versionCatalogFormat
 
       - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@v5.0.0
+        uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
           commit_message: 'chore: format version catalog [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
@@ -77,7 +77,7 @@ jobs:
       - run: ./gradlew desktop:app:exportLibraryDefinitions -PaboutLibraries.exportPath=src/main/resources/
 
       - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@v5.0.0
+        uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
           commit_message: 'chore: update licenses [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
