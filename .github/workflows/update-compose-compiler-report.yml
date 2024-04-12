@@ -54,7 +54,7 @@ jobs:
         run: find . -type d -path '*/build/compose_metrics' -exec bash -c 'mv {}/* "$(dirname "$(dirname {})")"' \;
 
       - name: Commit version code bump
-        uses: stefanzweifel/git-auto-commit-action@v5.0.0
+        uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
           commit_message: 'chore: update compose compiler report [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
