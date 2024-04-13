@@ -10,6 +10,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import app.cash.paging.PagingData
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
@@ -141,7 +142,7 @@ private fun NowPlayingHistoryContent(
 }
 
 // region Previews
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewNowPlayingHistoryUi() {
     PreviewTheme {

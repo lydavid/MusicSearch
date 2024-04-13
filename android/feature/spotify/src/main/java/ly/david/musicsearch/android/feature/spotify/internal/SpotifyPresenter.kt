@@ -1,14 +1,19 @@
 package ly.david.musicsearch.android.feature.spotify.internal
 
+import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.screen.SearchScreen
 
 internal class SpotifyPresenter(
@@ -47,4 +52,18 @@ internal class SpotifyPresenter(
             eventSink = ::eventSink,
         )
     }
+}
+
+@Stable
+internal data class SpotifyUiState(
+    val metadata: SpotifyMetadata,
+    val eventSink: (SpotifyUiEvent) -> Unit,
+) : CircuitUiState
+
+internal sealed interface SpotifyUiEvent : CircuitUiEvent {
+    data object NavigateUp : SpotifyUiEvent
+    data class GoToSearch(
+        val query: String,
+        val entity: MusicBrainzEntity,
+    ) : SpotifyUiEvent
 }

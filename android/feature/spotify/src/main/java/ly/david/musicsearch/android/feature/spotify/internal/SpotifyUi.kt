@@ -16,6 +16,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -181,7 +182,7 @@ private fun SpotifySearchLinks(
 }
 
 // region Previews
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewSpotifyUi() {
     PreviewTheme {
@@ -195,7 +196,7 @@ internal fun PreviewSpotifyUi() {
     }
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewSpotifyUiEmpty() {
     PreviewTheme {

@@ -1,6 +1,7 @@
 package ly.david.musicsearch.android.feature.nowplaying.internal
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -9,9 +10,12 @@ import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.nowplaying.usecase.DeleteNowPlayingHistory
 import ly.david.musicsearch.domain.nowplaying.usecase.GetNowPlayingHistory
 import ly.david.ui.common.screen.SearchScreen
@@ -62,4 +66,21 @@ internal class NowPlayingHistoryPresenter(
             eventSink = ::eventSink,
         )
     }
+}
+
+@Stable
+internal data class NowPlayingHistoryUiState(
+    val query: String,
+    val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val eventSink: (NowPlayingHistoryUiEvent) -> Unit,
+) : CircuitUiState
+
+internal sealed interface NowPlayingHistoryUiEvent : CircuitUiEvent {
+    data object NavigateUp : NowPlayingHistoryUiEvent
+    data class UpdateQuery(val query: String) : NowPlayingHistoryUiEvent
+    data class DeleteHistory(val id: String) : NowPlayingHistoryUiEvent
+    data class GoToSearch(
+        val query: String,
+        val entity: MusicBrainzEntity,
+    ) : NowPlayingHistoryUiEvent
 }
