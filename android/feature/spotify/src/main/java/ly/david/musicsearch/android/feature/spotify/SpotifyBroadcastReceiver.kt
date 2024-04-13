@@ -1,4 +1,4 @@
-package ly.david.musicsearch.android.feature.spotify.internal
+package ly.david.musicsearch.android.feature.spotify
 
 import android.content.BroadcastReceiver
 import android.content.Context

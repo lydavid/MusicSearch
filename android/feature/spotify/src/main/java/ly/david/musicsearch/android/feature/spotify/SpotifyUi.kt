@@ -1,4 +1,4 @@
-package ly.david.musicsearch.android.feature.spotify.internal
+package ly.david.musicsearch.android.feature.spotify
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,10 +20,9 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.component.ClickableItem
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.LocalStrings
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 

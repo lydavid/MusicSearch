@@ -1,6 +1,5 @@
-package ly.david.musicsearch.android.feature.spotify.internal
+package ly.david.musicsearch.android.feature.spotify
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue

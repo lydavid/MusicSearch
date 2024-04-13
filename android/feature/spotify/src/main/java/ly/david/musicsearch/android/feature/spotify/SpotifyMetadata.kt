@@ -1,4 +1,4 @@
-package ly.david.musicsearch.android.feature.spotify.internal
+package ly.david.musicsearch.android.feature.spotify
 
 /**
  * Example format
