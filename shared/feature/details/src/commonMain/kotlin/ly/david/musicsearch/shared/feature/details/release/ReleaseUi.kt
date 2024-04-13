@@ -189,7 +189,7 @@ internal fun ReleaseUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.tracksLazyPagingItems,
+                        lazyPagingItems = state.tracksByReleaseUiState.lazyPagingItems,
                         onRecordingClick = { id, title ->
                             eventSink(
                                 ReleaseUiEvent.ClickItem(

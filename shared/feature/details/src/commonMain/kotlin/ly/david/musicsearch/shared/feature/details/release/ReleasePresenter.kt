@@ -7,28 +7,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import app.cash.paging.PagingData
-import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
-import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.domain.release.ReleaseRepository
-import ly.david.musicsearch.domain.release.usecase.GetTracksByRelease
 import ly.david.ui.common.relation.RelationsPresenter
 import ly.david.ui.common.relation.RelationsUiEvent
 import ly.david.ui.common.screen.DetailsScreen
+import ly.david.ui.common.track.TracksByEntityUiEvent
+import ly.david.ui.common.track.TracksByReleasePresenter
 
 internal class ReleasePresenter(
     private val screen: DetailsScreen,
@@ -37,7 +33,7 @@ internal class ReleasePresenter(
     private val incrementLookupHistory: IncrementLookupHistory,
     private val relationsPresenter: RelationsPresenter,
     private val releaseImageRepository: ReleaseImageRepository,
-    private val getTracksByRelease: GetTracksByRelease,
+    private val tracksByReleasePresenter: TracksByReleasePresenter,
     private val logger: Logger,
 ) : Presenter<ReleaseUiState> {
 
@@ -56,8 +52,8 @@ internal class ReleasePresenter(
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
         var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
 
-        // TODO: if we want these to maintain their scroll position, need to move to TracksByReleasePresenter
-        var tracksListItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val tracksByReleaseUiState = tracksByReleasePresenter.present()
+        val tracksEventSink = tracksByReleaseUiState.eventSink
 
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
@@ -109,10 +105,12 @@ internal class ReleasePresenter(
                 }
 
                 ReleaseTab.TRACKS -> {
-                    tracksListItems = getTracksByRelease(
-                        releaseId = screen.id,
-                        query = query,
+                    tracksEventSink(
+                        TracksByEntityUiEvent.Get(
+                            byEntityId = screen.id,
+                        ),
                     )
+                    tracksEventSink(TracksByEntityUiEvent.UpdateQuery(query))
                 }
 
                 ReleaseTab.STATS -> {
@@ -163,7 +161,7 @@ internal class ReleasePresenter(
             selectedTab = selectedTab,
             query = query,
             relationsUiState = relationsUiState,
-            tracksLazyPagingItems = tracksListItems.collectAsLazyPagingItems(),
+            tracksByReleaseUiState = tracksByReleaseUiState,
             eventSink = ::eventSink,
         )
     }

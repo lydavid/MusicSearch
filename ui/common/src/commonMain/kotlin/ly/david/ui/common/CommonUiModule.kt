@@ -4,6 +4,7 @@ import ly.david.ui.common.event.EventsByEntityPresenter
 import ly.david.ui.common.paging.RelationsList
 import ly.david.ui.common.place.PlacesByEntityPresenter
 import ly.david.ui.common.recording.RecordingsByEntityPresenter
+import ly.david.ui.common.track.TracksByReleasePresenter
 import ly.david.ui.common.relation.RelationsPresenter
 import ly.david.ui.common.release.ReleasesByEntityPresenter
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
@@ -14,6 +15,7 @@ val commonUiModule = module {
     singleOf(::EventsByEntityPresenter)
     singleOf(::PlacesByEntityPresenter)
     singleOf(::RecordingsByEntityPresenter)
+    singleOf(::TracksByReleasePresenter)
     singleOf(::RelationsPresenter)
     singleOf(::ReleasesByEntityPresenter)
     singleOf(::ReleaseGroupsByEntityPresenter)

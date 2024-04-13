@@ -155,7 +155,7 @@ val detailsFeatureModule = module {
                                 incrementLookupHistory = get(),
                                 relationsPresenter = get(),
                                 releaseImageRepository = get(),
-                                getTracksByRelease = get(),
+                                tracksByReleasePresenter = get(),
                                 logger = get(),
                             )
                         }

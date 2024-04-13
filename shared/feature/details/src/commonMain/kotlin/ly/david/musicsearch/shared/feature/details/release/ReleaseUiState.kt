@@ -1,11 +1,10 @@
 package ly.david.musicsearch.shared.feature.details.release
 
 import androidx.compose.runtime.Stable
-import app.cash.paging.compose.LazyPagingItems
 import com.slack.circuit.runtime.CircuitUiState
-import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
 import ly.david.ui.common.relation.RelationsUiState
+import ly.david.ui.common.track.TracksByReleaseUiState
 
 @Stable
 internal data class ReleaseUiState(
@@ -18,6 +17,6 @@ internal data class ReleaseUiState(
     val selectedTab: ReleaseTab,
     val query: String,
     val relationsUiState: RelationsUiState,
-    val tracksLazyPagingItems: LazyPagingItems<ListItemModel>,
+    val tracksByReleaseUiState: TracksByReleaseUiState,
     val eventSink: (ReleaseUiEvent) -> Unit,
 ) : CircuitUiState
