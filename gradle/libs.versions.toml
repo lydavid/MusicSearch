@@ -31,7 +31,7 @@ sqldelight = "2.0.2"
 aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutlibraries" }
 aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutlibraries" }
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.8.2"
+androidx-activity-compose = "androidx.activity:activity-compose:1.9.0"
 androidx-arch-core-testing = "androidx.arch.core:core-testing:2.2.0"
 androidx-core = "androidx.core:core-ktx:1.12.0"
 androidx-datastore-preferences-android = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
