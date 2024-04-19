@@ -503,6 +503,9 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun TrackListItem(
 }
 
 )
+fun present(
+  stable <this>: TracksByReleasePresenter
+): TracksByReleaseUiState
 restartable scheme("[androidx.compose.ui.UiComposable]") fun UrlsSection(
   unstable urls: List<RelationListItemModel>
   stable modifier: Modifier? = @static Companion

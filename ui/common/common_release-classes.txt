@@ -231,3 +231,19 @@ stable class NowPlayingHistoryScreen {
 stable class SpotifyPlayingScreen {
   <runtime stability> = Stable
 }
+stable class TracksByReleasePresenter {
+  runtime val getTracksByRelease: GetTracksByRelease
+  <runtime stability> = Stable
+}
+stable class TracksByReleaseUiState {
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
+  stable val eventSink: Function1<TracksByEntityUiEvent, Unit>
+}
+stable class Get {
+  stable val byEntityId: String
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}

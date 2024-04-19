@@ -319,7 +319,7 @@ stable class ReleasePresenter {
   runtime val incrementLookupHistory: IncrementLookupHistory
   stable val relationsPresenter: RelationsPresenter
   unstable val releaseImageRepository: ReleaseImageRepository
-  runtime val getTracksByRelease: GetTracksByRelease
+  stable val tracksByReleasePresenter: TracksByReleasePresenter
   unstable val logger: Logger
   <runtime stability> = Stable
 }
@@ -353,7 +353,7 @@ stable class ReleaseUiState {
   stable val selectedTab: ReleaseTab
   stable val query: String
   stable val relationsUiState: RelationsUiState
-  runtime val tracksLazyPagingItems: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
+  stable val tracksByReleaseUiState: TracksByReleaseUiState
   stable val eventSink: Function1<ReleaseUiEvent, Unit>
 }
 stable class ReleaseGroupPresenter {
