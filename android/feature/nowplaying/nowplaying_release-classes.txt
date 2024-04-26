@@ -9,6 +9,11 @@ stable class NowPlayingHistoryPresenter {
   runtime val deleteNowPlayingHistory: DeleteNowPlayingHistory
   <runtime stability> = Stable
 }
+stable class NowPlayingHistoryUiState {
+  stable val query: String
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
+  stable val eventSink: Function1<NowPlayingHistoryUiEvent, Unit>
+}
 stable class NavigateUp {
   <runtime stability> = Stable
 }
@@ -24,9 +29,4 @@ stable class GoToSearch {
   stable val query: String
   stable val entity: MusicBrainzEntity
   <runtime stability> = Stable
-}
-stable class NowPlayingHistoryUiState {
-  stable val query: String
-  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
-  stable val eventSink: Function1<NowPlayingHistoryUiEvent, Unit>
 }
