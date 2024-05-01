@@ -19,12 +19,8 @@ import ly.david.musicsearch.domain.spotify.SpotifyHistoryRepository
 class SpotifyHistoryRepositoryImpl(
     private val spotifyHistoryDao: SpotifyHistoryDao,
 ) : SpotifyHistoryRepository {
-    override fun upsert(spotifyHistory: SpotifyHistory) {
-        // Debounce if the track is the same, and the time last listened is within its length.
-        // We need this because exiting and returning to this screen will continuously upsert the current playing song.
-        // Also, need to not upsert when the user is not playing anything, because the last played song will be kept.
-
-        spotifyHistoryDao.upsert(spotifyHistory)
+    override fun insert(spotifyHistory: SpotifyHistory) {
+        spotifyHistoryDao.insert(spotifyHistory)
     }
 
     override fun observeSpotifyHistory(query: String): Flow<PagingData<ListItemModel>> =

@@ -41,7 +41,7 @@ internal class SpotifyHistoryPresenter(
                 "findme",
                 "$it",
             )
-            spotifyHistoryRepository.upsert(it)
+            spotifyHistoryRepository.insert(it)
         }
 
         fun eventSink(event: SpotifyUiEvent) {

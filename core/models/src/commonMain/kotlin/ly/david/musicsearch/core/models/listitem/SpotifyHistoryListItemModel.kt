@@ -10,18 +10,16 @@ data class SpotifyHistoryListItemModel(
     val albumName: String? = null,
     val trackName: String? = null,
     val trackLengthMilliseconds: Int? = null,
-    val numberOfListens: Int = 1,
     val lastListened: Instant = Clock.System.now(),
 ) : ListItemModel()
 
 fun SpotifyHistory.toSpotifyHistoryListItemModel(): SpotifyHistoryListItemModel {
     return SpotifyHistoryListItemModel(
-        id = trackId,
+        id = "$trackId$lastListened",
         artistName = artistName,
         albumName = albumName,
         trackName = trackName,
         trackLengthMilliseconds = trackLengthMilliseconds,
-        numberOfListens = numberOfListens,
         lastListened = lastListened,
     )
 }

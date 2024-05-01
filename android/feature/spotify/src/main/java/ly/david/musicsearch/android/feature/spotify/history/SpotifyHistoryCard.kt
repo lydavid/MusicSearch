@@ -48,10 +48,6 @@ internal fun SpotifyHistoryCard(
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
                 Text(
-                    text = spotifyHistory.numberOfListens.toString(),
-                    style = TextStyles.getCardBodySubTextStyle(),
-                )
-                Text(
                     text = spotifyHistory.trackLengthMilliseconds.toDisplayTime(),
                     style = TextStyles.getCardBodySubTextStyle(),
                 )

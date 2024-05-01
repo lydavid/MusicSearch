@@ -20,14 +20,13 @@ import ly.david.musicsearch.android.feature.spotify.SpotifyUiEvent
 import ly.david.musicsearch.android.feature.spotify.SpotifyUiState
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.ListSeparator
-import ly.david.musicsearch.core.models.listitem.NowPlayingHistoryListItemModel
 import ly.david.musicsearch.core.models.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.ui.core.LocalStrings
 import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
@@ -44,12 +43,12 @@ internal fun SpotifyHistoryUi(
             eventSink(SpotifyUiEvent.NavigateUp)
         },
         searchMusicBrainz = { query, entity ->
-//            eventSink(
-//                NowPlayingHistoryUiEvent.GoToSearch(
-//                    query = query,
-//                    entity = entity,
-//                ),
-//            )
+            eventSink(
+                SpotifyUiEvent.GoToSearch(
+                    query = query,
+                    entity = entity,
+                ),
+            )
         },
         filterText = state.query,
         onFilterTextChange = {
@@ -123,10 +122,11 @@ private fun SpotifyHistoryContent(
                             spotifyHistory = listItemModel,
                             modifier = Modifier.animateItemPlacement(),
                             onClick = {
-//                                searchMusicBrainz(
-//                                    "\"$title\" artist:\"$artist\"",
-//                                    MusicBrainzEntity.RECORDING,
-//                                )
+                                // TODO: overlay to allow search artist/rg/recording?
+                                searchMusicBrainz(
+                                    "\"$trackName\" artist:\"$artistName\"",
+                                    MusicBrainzEntity.RECORDING,
+                                )
                             },
                         )
                     },

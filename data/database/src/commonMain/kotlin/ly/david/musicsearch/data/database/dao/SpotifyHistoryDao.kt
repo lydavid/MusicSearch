@@ -2,28 +2,40 @@ package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.core.models.history.SpotifyHistory
 import ly.david.musicsearch.data.database.Database
+import lydavidmusicsearchdatadatabase.Spotify_track
+import lydavidmusicsearchdatadatabase.Spotify_track_listen
 
 class SpotifyHistoryDao(
     database: Database,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
-    override val transacter = database.spotify_historyQueries
+    override val transacter = database.spotify_track_listenQueries
+    private val spotifyTrackTransacter = database.spotify_trackQueries
 
-    fun upsert(spotifyHistory: SpotifyHistory) {
+    fun insert(spotifyHistory: SpotifyHistory) {
         spotifyHistory.run {
-            transacter.upsert(
-                trackId = trackId,
-                artistName = artistName,
-                albumName = albumName,
-                trackName = trackName,
-                trackLength = trackLengthMilliseconds,
-                numberOfListens = numberOfListens,
-                lastListened = lastListened,
-            )
+            transacter.transaction {
+                spotifyTrackTransacter.insert(
+                    Spotify_track(
+                        track_id = trackId,
+                        artist_name = artistName,
+                        album_name = albumName,
+                        track_name = trackName,
+                        track_length = trackLengthMilliseconds,
+                    ),
+                )
+                transacter.insert(
+                    Spotify_track_listen(
+                        track_id = trackId,
+                        listened = lastListened,
+                    ),
+                )
+            }
         }
     }
 
@@ -52,14 +64,12 @@ private fun mapToSpotifyHistory(
     albumName: String?,
     trackName: String?,
     trackLength: Int?,
-    numberOfListens: Int,
-    lastListened: Instant,
+    lastListened: Instant?,
 ) = SpotifyHistory(
     trackId = trackId,
     artistName = artistName,
     albumName = albumName,
     trackName = trackName,
     trackLengthMilliseconds = trackLength,
-    numberOfListens = numberOfListens,
-    lastListened = lastListened,
+    lastListened = lastListened ?: Clock.System.now(),
 )

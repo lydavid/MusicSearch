@@ -6,7 +6,7 @@ import ly.david.musicsearch.core.models.history.SpotifyHistory
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 
 interface SpotifyHistoryRepository {
-    fun upsert(spotifyHistory: SpotifyHistory)
+    fun insert(spotifyHistory: SpotifyHistory)
     fun observeSpotifyHistory(query: String): Flow<PagingData<ListItemModel>>
     fun delete(raw: String)
 }

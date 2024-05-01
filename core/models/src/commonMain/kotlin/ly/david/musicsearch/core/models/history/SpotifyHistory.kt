@@ -13,7 +13,7 @@ import kotlinx.datetime.Instant
  *     albumName="Where's My History?",
  *     trackName="ワタリドリ",
  *     trackLengthMilliseconds=253600,
- *     timeSentInMs=1712974970504
+ *     lastListened=1712974970504
  * )
  * ```
  */
@@ -23,8 +23,5 @@ data class SpotifyHistory(
     val albumName: String? = null,
     val trackName: String? = null,
     val trackLengthMilliseconds: Int? = null,
-//    val timeSentInMs: Long? = null,
-
-    val numberOfListens: Int = 1,
     val lastListened: Instant = Clock.System.now(),
 )
