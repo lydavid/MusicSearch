@@ -48,7 +48,7 @@ internal fun SpotifyBroadcastReceiver(
                 )
                 Log.d(
                     "findme",
-                    "timeSentInMs=$timeSentInMs"
+                    "timeSentInMs=$timeSentInMs",
                 )
                 when (intent.action) {
                     BroadcastTypes.METADATA_CHANGED -> {
@@ -67,7 +67,7 @@ internal fun SpotifyBroadcastReceiver(
                                 albumName = albumName,
                                 trackName = trackName,
                                 trackLengthMilliseconds = trackLengthMilliseconds,
-                                lastListened = Instant.fromEpochMilliseconds(timeSentInMs)
+                                lastListened = Instant.fromEpochMilliseconds(timeSentInMs),
                             ),
                         )
                     }
@@ -77,7 +77,7 @@ internal fun SpotifyBroadcastReceiver(
                         val playbackPosition = intent.getIntExtra("playbackPosition", 0)
                         Log.d(
                             "findme",
-                            "playing=$playing, playbackPosition$playbackPosition"
+                            "playing=$playing, playbackPosition$playbackPosition",
                         )
                     }
 

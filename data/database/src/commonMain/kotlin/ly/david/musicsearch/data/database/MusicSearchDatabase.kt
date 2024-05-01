@@ -83,6 +83,6 @@ fun createDatabase(driver: SqlDriver): Database {
         ),
         spotify_track_listenAdapter = Spotify_track_listen.Adapter(
             listenedAdapter = InstantLongColumnAdapter,
-        )
+        ),
     )
 }
