@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.android.feature.spotify.history.SpotifyUiEvent
+import ly.david.musicsearch.android.feature.spotify.history.SpotifyUiState
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.history.SpotifyHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity

@@ -16,8 +16,7 @@ import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.Instant
-import ly.david.musicsearch.android.feature.spotify.SpotifyUiEvent
-import ly.david.musicsearch.android.feature.spotify.SpotifyUiState
+import ly.david.musicsearch.core.models.common.getDateFormatted
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.SpotifyHistoryListItemModel
@@ -154,32 +153,34 @@ internal fun PreviewNowPlayingHistoryUi() {
                     listOf(
                         ListSeparator(
                             id = "separator1",
-                            text = "Saturday, July 7, 2023",
+                            text = Instant.parse("2024-05-01T02:29:38.973Z").getDateFormatted(),
                         ),
                         SpotifyHistoryListItemModel(
-                            id = "1di1C0QI6Y92yZPYn6XYAZ",
-                            trackName = "シルエット",
-                            artistName = "KANA-BOON",
-                            albumName = "TIME",
-                            lastListened = Instant.parse("2024-05-01T00:16:57.029Z"),
+                            id = "spotify:track:2ritsV4U3jq2LduJpovZ1A${Instant.parse("2024-05-01T02:29:38.973Z")}",
+                            trackName = "だれかの心臓になれたなら",
+                            artistName = "Yurry Canon",
+                            albumName = "Kardia",
+                            trackLengthMilliseconds = 231724,
+                            lastListened = Instant.parse("2024-05-01T02:29:38.973Z"),
                         ),
                         SpotifyHistoryListItemModel(
-                            id = "3hRRYgBeunE3PTmnzATTS0",
+                            id = "3hRRYgBeunE3PTmnzATTS0${Instant.parse("2024-05-01T02:29:38.973Z")}",
                             trackName = "天体観測",
                             artistName = "BUMP OF CHICKEN",
                             albumName = "jupiter",
-                            lastListened = Instant.parse("2024-05-01T00:28:14.862Z"),
+                            lastListened = Instant.parse("2024-05-01T02:29:38.973Z"),
                         ),
                         ListSeparator(
                             id = "separator2",
-                            text = "Friday, July 6, 2023",
+                            text = Instant.parse("2024-04-30T02:29:38.973Z").getDateFormatted(),
                         ),
                         SpotifyHistoryListItemModel(
-                            id = "0bA3KbwKjGktPb6wiglJ7Q",
-                            trackName = "Hoshi Ni Naru",
-                            artistName = "Islet",
-                            albumName = "Hoshi Ni Naru",
-                            lastListened = Instant.parse("2024-05-01T00:28:50.246Z"),
+                            id = "spotify:track:2ritsV4U3jq2LduJpovZ1A${Instant.parse("2024-04-30T02:29:38.973Z")}",
+                            trackName = "だれかの心臓になれたなら",
+                            artistName = "Yurry Canon",
+                            albumName = "Kardia",
+                            trackLengthMilliseconds = 231724,
+                            lastListened = Instant.parse("2024-04-30T02:29:38.973Z"),
                         ),
                     ),
                 ),

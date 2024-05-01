@@ -17,7 +17,7 @@ import ly.david.musicsearch.shared.feature.settings.internal.components.SettingS
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
 import ly.david.ui.common.screen.LicensesScreen
 import ly.david.ui.common.screen.NowPlayingHistoryScreen
-import ly.david.ui.common.screen.SpotifyPlayingScreen
+import ly.david.ui.common.screen.SpotifyHistoryScreen
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.component.ClickableItem
@@ -179,7 +179,7 @@ internal fun Settings(
                     subtitle = strings.spotifySubtitle,
                     endIcon = Icons.Default.ChevronRight,
                     onClick = {
-                        onDestinationClick(SpotifyPlayingScreen)
+                        onDestinationClick(SpotifyHistoryScreen)
                     },
                 )
             }

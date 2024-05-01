@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
@@ -46,10 +45,6 @@ internal fun SpotifyBroadcastReceiver(
                     "timeSent",
                     0L,
                 )
-                Log.d(
-                    "findme",
-                    "timeSentInMs=$timeSentInMs",
-                )
                 when (intent.action) {
                     BroadcastTypes.METADATA_CHANGED -> {
                         val trackId = intent.getStringExtra("id") ?: return
@@ -73,12 +68,8 @@ internal fun SpotifyBroadcastReceiver(
                     }
 
                     BroadcastTypes.PLAYBACK_STATE_CHANGED -> {
-                        val playing = intent.getBooleanExtra("playing", false)
-                        val playbackPosition = intent.getIntExtra("playbackPosition", 0)
-                        Log.d(
-                            "findme",
-                            "playing=$playing, playbackPosition$playbackPosition",
-                        )
+//                        val playing = intent.getBooleanExtra("playing", false)
+//                        val playbackPosition = intent.getIntExtra("playbackPosition", 0)
                     }
 
                     BroadcastTypes.QUEUE_CHANGED -> {

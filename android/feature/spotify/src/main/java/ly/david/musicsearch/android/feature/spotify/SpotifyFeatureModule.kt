@@ -3,16 +3,18 @@ package ly.david.musicsearch.android.feature.spotify
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
+import ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryPresenter
 import ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryUi
-import ly.david.ui.common.screen.SpotifyPlayingScreen
+import ly.david.musicsearch.android.feature.spotify.history.SpotifyUiState
+import ly.david.ui.common.screen.SpotifyHistoryScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val spotifyFeatureModule = module {
-    single(named("SpotifyPlayingScreen")) {
+    single(named("SpotifyHistoryScreen")) {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
-                is SpotifyPlayingScreen -> SpotifyHistoryPresenter(
+                is SpotifyHistoryScreen -> SpotifyHistoryPresenter(
                     navigator = navigator,
                     spotifyHistoryRepository = get(),
                 )
@@ -21,10 +23,10 @@ val spotifyFeatureModule = module {
             }
         }
     }
-    single(named("SpotifyPlayingScreen")) {
+    single(named("SpotifyHistoryScreen")) {
         Ui.Factory { screen, _ ->
             when (screen) {
-                is SpotifyPlayingScreen -> {
+                is SpotifyHistoryScreen -> {
                     ui<SpotifyUiState> { state, modifier ->
                         SpotifyHistoryUi(
                             state = state,

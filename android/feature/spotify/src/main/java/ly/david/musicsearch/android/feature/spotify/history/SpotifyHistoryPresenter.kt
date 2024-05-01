@@ -1,6 +1,5 @@
-package ly.david.musicsearch.android.feature.spotify
+package ly.david.musicsearch.android.feature.spotify.history
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -16,6 +15,7 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import ly.david.musicsearch.android.feature.spotify.SpotifyBroadcastReceiver
 import ly.david.musicsearch.core.models.history.SpotifyHistory
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -37,10 +37,6 @@ internal class SpotifyHistoryPresenter(
 
         SpotifyBroadcastReceiver {
             spotifyPlaying = it
-            Log.d(
-                "findme",
-                "$it",
-            )
             spotifyHistoryRepository.insert(it)
         }
 
