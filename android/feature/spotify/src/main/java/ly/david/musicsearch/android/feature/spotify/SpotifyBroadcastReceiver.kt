@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
+import ly.david.musicsearch.core.models.history.SpotifyHistory
 
 private object BroadcastTypes {
     private const val SPOTIFY_PACKAGE = "com.spotify.music"
@@ -18,7 +19,7 @@ private object BroadcastTypes {
 
 @Composable
 internal fun SpotifyBroadcastReceiver(
-    onMetadataChange: (SpotifyMetadata) -> Unit,
+    onMetadataChange: (SpotifyHistory) -> Unit,
 ) {
     // Grab the current context in this part of the UI tree
     val context = LocalContext.current
@@ -45,22 +46,21 @@ internal fun SpotifyBroadcastReceiver(
                 )
                 when (intent.action) {
                     BroadcastTypes.METADATA_CHANGED -> {
-                        val trackId = intent.getStringExtra("id")
+                        val trackId = intent.getStringExtra("id") ?: return
                         val artistName = intent.getStringExtra("artist")
                         val albumName = intent.getStringExtra("album")
                         val trackName = intent.getStringExtra("track")
-                        val trackLengthInSec = intent.getIntExtra(
+                        val trackLengthMilliseconds = intent.getIntExtra(
                             "length",
                             0,
                         )
                         onMetadataChange(
-                            SpotifyMetadata(
+                            SpotifyHistory(
                                 trackId = trackId,
                                 artistName = artistName,
                                 albumName = albumName,
                                 trackName = trackName,
-                                trackLengthInSec = trackLengthInSec,
-                                timeSentInMs = timeSentInMs,
+                                trackLengthMilliseconds = trackLengthMilliseconds,
                             ),
                         )
                     }

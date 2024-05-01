@@ -19,6 +19,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
+import ly.david.musicsearch.core.models.history.SpotifyHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.component.ClickableItem
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
@@ -27,14 +28,14 @@ import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
-internal fun SpotifyUi(
+internal fun LegacySpotifyUi(
     state: SpotifyUiState,
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
 
-    SpotifyUi(
-        metadata = state.metadata,
+    LegacySpotifyUi(
+        spotifyHistory = state.spotifyHistory,
         modifier = modifier,
         onBack = {
             eventSink(SpotifyUiEvent.NavigateUp)
@@ -52,8 +53,8 @@ internal fun SpotifyUi(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SpotifyUi(
-    metadata: SpotifyMetadata,
+private fun LegacySpotifyUi(
+    spotifyHistory: SpotifyHistory?,
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
@@ -73,7 +74,7 @@ private fun SpotifyUi(
         },
     ) { innerPadding ->
         SpotifyContent(
-            metadata = metadata,
+            spotifyHistory = spotifyHistory,
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -84,7 +85,7 @@ private fun SpotifyUi(
 
 @Composable
 internal fun SpotifyContent(
-    metadata: SpotifyMetadata,
+    spotifyHistory: SpotifyHistory?,
     modifier: Modifier = Modifier,
     searchMusicBrainz: (query: String, id: MusicBrainzEntity) -> Unit = { _, _ -> },
 ) {
@@ -94,12 +95,11 @@ internal fun SpotifyContent(
             .padding(horizontal = 16.dp),
     ) {
         item {
-            val artistName = metadata.artistName
-            if (artistName.isNullOrEmpty()) {
+            if (spotifyHistory == null) {
                 TutorialBanner()
             } else {
                 SpotifySearchLinks(
-                    metadata = metadata,
+                    spotifyHistory = spotifyHistory,
                     searchMusicBrainz = searchMusicBrainz,
                 )
             }
@@ -126,12 +126,12 @@ private fun TutorialBanner() {
 
 @Composable
 private fun SpotifySearchLinks(
-    metadata: SpotifyMetadata,
+    spotifyHistory: SpotifyHistory?,
     searchMusicBrainz: (query: String, id: MusicBrainzEntity) -> Unit = { _, _ -> },
 ) {
     val strings = LocalStrings.current
 
-    metadata.artistName.ifNotNullOrEmpty { artistName ->
+    spotifyHistory?.artistName.ifNotNullOrEmpty { artistName ->
         ClickableItem(
             title = artistName,
             subtitle = strings.searchX(artistName),
@@ -144,7 +144,7 @@ private fun SpotifySearchLinks(
             },
         )
 
-        metadata.albumName.ifNotNullOrEmpty { albumName ->
+        spotifyHistory?.albumName.ifNotNullOrEmpty { albumName ->
             ClickableItem(
                 title = albumName,
                 subtitle = strings.searchXByX(
@@ -161,7 +161,7 @@ private fun SpotifySearchLinks(
             )
         }
 
-        metadata.trackName.ifNotNullOrEmpty { trackName ->
+        spotifyHistory?.trackName.ifNotNullOrEmpty { trackName ->
             ClickableItem(
                 title = trackName,
                 subtitle = strings.searchXByX(
@@ -185,8 +185,9 @@ private fun SpotifySearchLinks(
 @Composable
 internal fun PreviewSpotifyUi() {
     PreviewTheme {
-        SpotifyUi(
-            metadata = SpotifyMetadata(
+        LegacySpotifyUi(
+            spotifyHistory = SpotifyHistory(
+                trackId = "1",
                 artistName = "Artist",
                 albumName = "Album",
                 trackName = "Track",
@@ -200,7 +201,7 @@ internal fun PreviewSpotifyUi() {
 internal fun PreviewSpotifyUiEmpty() {
     PreviewTheme {
         Surface {
-            SpotifyUi(metadata = SpotifyMetadata())
+            LegacySpotifyUi(spotifyHistory = null)
         }
     }
 }

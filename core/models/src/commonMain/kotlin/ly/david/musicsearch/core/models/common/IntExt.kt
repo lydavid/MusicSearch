@@ -6,6 +6,9 @@ private const val MINUTES_IN_HOUR = 60
 
 const val UNKNOWN_TIME = "?:??"
 
+/**
+ * Given time in milliseconds, returns a human-readable time string.
+ */
 fun Int?.toDisplayTime(): String {
     if (this == null || this < 0) return UNKNOWN_TIME
 

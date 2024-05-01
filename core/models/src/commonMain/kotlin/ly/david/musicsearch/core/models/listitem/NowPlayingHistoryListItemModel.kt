@@ -15,7 +15,7 @@ private const val TITLE_ARTIST_DELIMITER = "by"
 
 fun NowPlayingHistory.toNowPlayingHistoryListItemModel(): NowPlayingHistoryListItemModel {
     // This does not account for any "by" in the artist or track title
-    val substrings = raw.split(ly.david.musicsearch.core.models.listitem.TITLE_ARTIST_DELIMITER)
+    val substrings = raw.split(TITLE_ARTIST_DELIMITER)
     val title = substrings.firstOrNull().orEmpty().trim()
     val artist = substrings.lastOrNull().orEmpty().trim()
 
