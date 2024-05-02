@@ -54,4 +54,9 @@ internal class IntExtTest {
     fun `3 digit hours`() {
         assertEquals("100:00:00", (10 * 10 * 60 * 60 * 1000).toDisplayTime())
     }
+
+    @Test
+    fun `spotify track length example`() {
+        assertEquals("3:54", 234283.toDisplayTime())
+    }
 }

@@ -1,7 +1,9 @@
 package ly.david.ui.common.dialog
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
@@ -9,7 +11,7 @@ import ly.david.ui.core.theme.PreviewTheme
 @Composable
 internal fun PreviewSimpleAlertDialog() {
     PreviewTheme {
-        Surface {
+        Surface(modifier = Modifier.fillMaxSize()) {
             SimpleAlertDialog(
                 title = "Clear your search history?",
                 confirmText = "Yes",

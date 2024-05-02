@@ -13,6 +13,7 @@ dependencies {
     implementation(projects.core.models)
     implementation(projects.ui.core)
     implementation(projects.ui.common)
+    implementation(projects.domain)
     implementation(projects.strings)
     implementation(libs.androidx.core)
     implementation(libs.circuit.foundation)
@@ -21,6 +22,8 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.preview)
+    implementation(libs.paging.compose)
+    implementation(libs.paging.common)
 
     debugImplementation(libs.compose.ui.tooling)
 

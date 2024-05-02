@@ -51,4 +51,4 @@ data object LicensesScreen : Screen
 data object NowPlayingHistoryScreen : Screen
 
 @CommonParcelize
-data object SpotifyPlayingScreen : Screen
+data object SpotifyHistoryScreen : Screen

@@ -265,13 +265,15 @@ val EnStrings = AppStrings(
     spotifyTutorial = "Enable Device Broadcast Status in the Spotify app\'s settings " +
         "in order for MusicSearch to detect the playing song",
 
+    spotifyHistory = "Spotify History",
+
     searchX = { p0 ->
-        "Search %s"
+        "Search: %s"
             .fmt(p0)
     },
 
     searchXByX = { p0, p1 ->
-        "Search %s by %s"
+        "Search: %s by %s"
             .fmt(p0, p1)
     },
 

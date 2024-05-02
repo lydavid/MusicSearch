@@ -23,9 +23,23 @@ class ClickableItemTest : ScreenshotTest() {
     }
 
     @Test
-    fun withIcon() {
+    fun withStartIcon() {
         snapshot {
-            PreviewClickableItemWithIcon()
+            PreviewClickableItemWithStartIcon()
+        }
+    }
+
+    @Test
+    fun withEndIcon() {
+        snapshot {
+            PreviewClickableItemWithEndIcon()
+        }
+    }
+
+    @Test
+    fun withStartEndIcon() {
+        snapshot {
+            PreviewClickableItemWithStartEndIcon()
         }
     }
 }

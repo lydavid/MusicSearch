@@ -2,14 +2,14 @@ package ly.david.musicsearch.shared.feature.history
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.history.internal.HistoryListItem
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewLookupHistoryReleaseGroup(
     imageUrl: String = "https://www.example.com/image.jpg",
@@ -30,7 +30,7 @@ internal fun PreviewLookupHistoryReleaseGroup(
     }
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewLookupHistoryRelease(
     imageUrl: String = "https://www.example.com/image.jpg",
@@ -50,7 +50,7 @@ internal fun PreviewLookupHistoryRelease(
     }
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewLookupHistoryArtist(
     imageUrl: String = "https://www.example.com/image.jpg",

@@ -7,6 +7,7 @@ import ly.david.musicsearch.data.repository.NowPlayingHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.SearchHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.SearchResultsRepositoryImpl
+import ly.david.musicsearch.data.repository.SpotifyHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreasByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.artist.ArtistRepositoryImpl
@@ -56,6 +57,7 @@ import ly.david.musicsearch.domain.search.history.SearchHistoryRepository
 import ly.david.musicsearch.domain.search.results.SearchResultsRepository
 import ly.david.musicsearch.domain.series.SeriesByEntityRepository
 import ly.david.musicsearch.domain.series.SeriesRepository
+import ly.david.musicsearch.domain.spotify.SpotifyHistoryRepository
 import ly.david.musicsearch.domain.work.WorkRepository
 import ly.david.musicsearch.domain.work.WorksByEntityRepository
 import org.koin.core.module.dsl.singleOf
@@ -88,6 +90,7 @@ val repositoryDataModule = module {
     singleOf(::ReleaseGroupsByEntityRepositoryImpl) bind ReleaseGroupsByEntityRepository::class
     singleOf(::SearchResultsRepositoryImpl) bind SearchResultsRepository::class
     singleOf(::SearchHistoryRepositoryImpl) bind SearchHistoryRepository::class
+    singleOf(::SpotifyHistoryRepositoryImpl) bind SpotifyHistoryRepository::class
     singleOf(::SeriesRepositoryImpl) bind SeriesRepository::class
     singleOf(::SeriesByEntityRepositoryImpl) bind SeriesByEntityRepository::class
     singleOf(::WorkRepositoryImpl) bind WorkRepository::class
