@@ -19,6 +19,7 @@ fun ClickableItem(
     title: String,
     modifier: Modifier = Modifier,
     subtitle: String? = null,
+    startIcon: ImageVector? = null,
     endIcon: ImageVector? = null,
     onClick: () -> Unit = {},
 ) {
@@ -28,10 +29,21 @@ fun ClickableItem(
             .clickable { onClick() }
             .padding(16.dp),
     ) {
+        startIcon?.let {
+            Icon(
+                imageVector = startIcon,
+                contentDescription = null,
+                modifier = Modifier.align(Alignment.CenterStart),
+            )
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = if (endIcon == null) 0.dp else 24.dp),
+                .padding(
+                    start = if (startIcon == null) 0.dp else 32.dp,
+                    end = if (endIcon == null) 0.dp else 32.dp,
+                ),
         ) {
             Text(
                 text = title,

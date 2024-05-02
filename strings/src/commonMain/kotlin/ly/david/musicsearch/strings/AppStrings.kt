@@ -122,6 +122,7 @@ data class AppStrings(
     val spotify: String,
     val spotifySubtitle: String,
     val spotifyTutorial: String,
+    val spotifyHistory: String,
     val searchX: (String) -> String,
     val searchXByX: (String, String) -> String,
     val alphabetically: String,

@@ -3,11 +3,16 @@ package ly.david.musicsearch.android.feature.spotify.history
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -53,7 +58,8 @@ internal fun SpotifyHistoryUi(
         onFilterTextChange = {
             eventSink(SpotifyUiEvent.UpdateQuery(it))
         },
-        onDelete = { id ->
+        onDelete = {
+            // TODO: support deleting spotify history
 //            eventSink(NowPlayingHistoryUiEvent.DeleteHistory(id))
         },
     )
@@ -79,7 +85,7 @@ private fun SpotifyHistoryUi(
             TopAppBarWithFilter(
                 showBackButton = true,
                 onBack = onBack,
-                title = strings.spotify,
+                title = strings.spotifyHistory,
                 scrollBehavior = scrollBehavior,
                 filterText = filterText,
                 onFilterTextChange = onFilterTextChange,
@@ -97,7 +103,10 @@ private fun SpotifyHistoryUi(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalFoundationApi::class,
+    ExperimentalMaterial3Api::class,
+)
 @Composable
 private fun SpotifyHistoryContent(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
@@ -105,6 +114,25 @@ private fun SpotifyHistoryContent(
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
     onDelete: (String) -> Unit = {},
 ) {
+    var clickListItem: SpotifyHistoryListItemModel? by rememberSaveable { mutableStateOf(null) }
+
+    if (clickListItem != null) {
+        ModalBottomSheet(
+            onDismissRequest = { clickListItem = null },
+        ) {
+            SearchSpotifyBottomSheetContent(
+                spotifyHistory = clickListItem,
+                searchMusicBrainz = { query, entity ->
+                    searchMusicBrainz(
+                        query,
+                        entity,
+                    )
+                    clickListItem = null
+                },
+            )
+        }
+    }
+
     ScreenWithPagingLoadingAndError(
         lazyPagingItems = lazyPagingItems,
         modifier = modifier,
@@ -121,11 +149,7 @@ private fun SpotifyHistoryContent(
                             spotifyHistory = listItemModel,
                             modifier = Modifier.animateItemPlacement(),
                             onClick = {
-                                // TODO: overlay to allow search artist/rg/recording?
-                                searchMusicBrainz(
-                                    "\"$trackName\" artist:\"$artistName\"",
-                                    MusicBrainzEntity.RECORDING,
-                                )
+                                clickListItem = this
                             },
                         )
                     },
