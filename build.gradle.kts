@@ -151,7 +151,6 @@ allprojects {
             val androidProjects = mutableListOf<Project>()
             val javaProjects = mutableListOf<Project>()
 
-            val rootProjects = mutableListOf<Project>()
             val queue = mutableListOf(rootProject)
             while (queue.isNotEmpty()) {
                 println("queue=$queue\n")
@@ -197,10 +196,6 @@ allprojects {
                             projects.add(dependency)
                             newQueue.add(dependency)
 
-                            if (currentProject == project) {
-                                rootProjects.add(currentProject)
-                            }
-
                             val traits = mutableListOf<String>()
                             if (currentProject.path.split(":").getOrNull(1)?.equals("ui") == true &&
                                 dependency.path.contains("data")
@@ -233,36 +228,28 @@ allprojects {
             }
 
             dot.appendText("\n  # Projects\n\n")
-            for (project in projects) {
+            for (currentProject in projects) {
                 val traits = mutableListOf<String>()
 
-                if (rootProjects.contains(project)) {
+                if (currentProject == project) {
                     traits.add("shape=box")
                     traits.add("width=5")
                 }
 
-                if (multiplatformProjects.contains(project)) {
+                if (multiplatformProjects.contains(currentProject)) {
                     traits.add("fillcolor=\"#b59aff\"")
-                } else if (jsProjects.contains(project)) {
+                } else if (jsProjects.contains(currentProject)) {
                     traits.add("fillcolor=\"#ffe89a\"")
-                } else if (androidProjects.contains(project)) {
+                } else if (androidProjects.contains(currentProject)) {
                     traits.add("fillcolor=\"#9affb5\"")
-                } else if (javaProjects.contains(project)) {
+                } else if (javaProjects.contains(currentProject)) {
                     traits.add("fillcolor=\"#ffb59a\"")
                 } else {
                     traits.add("fillcolor=\"#eeeeee\"")
                 }
 
-                dot.appendText("  \"${project.path}\" [${traits.joinToString(", ")}];\n")
+                dot.appendText("  \"${currentProject.path}\" [${traits.joinToString(", ")}];\n")
             }
-
-            dot.appendText("\n  {rank = same;")
-            for (project in projects) {
-                if (rootProjects.contains(project)) {
-                    dot.appendText(" \"${project.path}\";")
-                }
-            }
-            dot.appendText("}\n")
 
             dot.appendText("\n  # Dependencies\n\n")
             dependencies.forEach { (key, traits) ->
