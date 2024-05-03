@@ -1,21 +1,19 @@
-stable class SpotifyMetadata {
-  stable val trackId: String?
-  stable val artistName: String?
-  stable val albumName: String?
-  stable val trackName: String?
-  stable val trackLengthInSec: Int?
-  stable val timeSentInMs: Long?
-  <runtime stability> = Stable
-}
-stable class SpotifyPresenter {
+stable class SpotifyHistoryPresenter {
   stable val navigator: Navigator
+  unstable val spotifyHistoryRepository: SpotifyHistoryRepository
   <runtime stability> = Stable
 }
 stable class SpotifyUiState {
-  stable val metadata: SpotifyMetadata
+  unstable val spotifyHistory: SpotifyHistory?
+  stable val query: String
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
   stable val eventSink: Function1<SpotifyUiEvent, Unit>
 }
 stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
   <runtime stability> = Stable
 }
 stable class GoToSearch {

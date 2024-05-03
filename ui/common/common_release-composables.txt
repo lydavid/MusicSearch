@@ -8,7 +8,9 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithSubtitle()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithIcon()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithEndIcon()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithStartIcon()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithStartEndIcon()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSimpleAlertDialog()
 restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
@@ -120,6 +122,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Clickable
   stable title: String
   stable modifier: Modifier? = @static Companion
   stable subtitle: String? = @static null
+  stable startIcon: ImageVector? = @static null
   stable endIcon: ImageVector? = @static null
   stable onClick: Function0<Unit>? = @static {
 

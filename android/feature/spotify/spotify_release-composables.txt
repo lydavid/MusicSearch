@@ -1,15 +1,32 @@
 restartable skippable fun SpotifyBroadcastReceiver(
-  stable onMetadataChange: Function1<SpotifyMetadata, Unit>
+  stable onMetadataChange: Function1<SpotifyHistory, Unit>
 )
+restartable scheme("[androidx.compose.ui.UiComposable]") fun SearchSpotifyBottomSheetContent(
+  unstable spotifyHistory: SpotifyHistoryListItemModel?
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSearchSpotifyBottomSheetContent()
+restartable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHistoryCard(
+  unstable spotifyHistory: SpotifyHistoryListItemModel
+  stable modifier: Modifier? = @static Companion
+  stable onClick: @[ExtensionFunctionType] Function1<SpotifyHistoryListItemModel, Unit>? = @static {
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSpotifyHistoryCard()
 fun present(
-  stable <this>: SpotifyPresenter
+  stable <this>: SpotifyHistoryPresenter
 ): SpotifyUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHistoryUi(
   stable state: SpotifyUiState
   stable modifier: Modifier? = @static Companion
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyUi(
-  stable metadata: SpotifyMetadata
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHistoryUi(
+  lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
   stable onBack: Function0<Unit>? = @static {
 
@@ -19,22 +36,26 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyUi
 
 }
 
+  stable filterText: String? = @static ""
+  stable onFilterTextChange: Function1<String, Unit>? = @static { it: String ->
+
+}
+
+  stable onDelete: Function1<String, Unit>? = @static { it: String ->
+
+}
+
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyContent(
-  stable metadata: SpotifyMetadata
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHistoryContent(
+  lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+
+}
+
+  stable onDelete: Function1<String, Unit>? = @static { it: String ->
 
 }
 
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TutorialBanner()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifySearchLinks(
-  stable metadata: SpotifyMetadata
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
-
-}
-
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSpotifyUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSpotifyUiEmpty()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewNowPlayingHistoryUi()

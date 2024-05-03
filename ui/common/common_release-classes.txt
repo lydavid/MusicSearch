@@ -228,7 +228,7 @@ stable class LicensesScreen {
 stable class NowPlayingHistoryScreen {
   <runtime stability> = Stable
 }
-stable class SpotifyPlayingScreen {
+stable class SpotifyHistoryScreen {
   <runtime stability> = Stable
 }
 stable class TracksByReleasePresenter {
