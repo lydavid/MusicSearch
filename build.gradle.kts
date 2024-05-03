@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
+import org.jetbrains.kotlin.gradle.utils.`is`
 import java.io.BufferedReader
 
 plugins {
@@ -145,19 +146,17 @@ allprojects {
             dot.appendText("  splines=ortho;\n")
 
             val projects = LinkedHashSet<Project>()
-            val dependencies = LinkedHashMap<Pair<Project, Project>, List<String>>()
             val multiplatformProjects = mutableListOf<Project>()
             val jsProjects = mutableListOf<Project>()
             val androidProjects = mutableListOf<Project>()
             val javaProjects = mutableListOf<Project>()
 
+            // Find all projects in this repository and group them accordingly
             val queue = mutableListOf(rootProject)
             while (queue.isNotEmpty()) {
-                println("queue=$queue\n")
                 val currentProject = queue.removeFirst()
-                println("currentProject=${currentProject.path}")
-                println("childProjects=${currentProject.childProjects.values}\n")
 
+                // A child project is not necessarily a dependency
                 // eg. :feature:collections is child project of :shared
                 queue.addAll(currentProject.childProjects.values)
 
@@ -177,12 +176,12 @@ allprojects {
                 }
             }
 
+            val dependencies = LinkedHashMap<Pair<Project, Project>, List<String>>()
+
+            // Find all dependencies of this project and their dependencies
             val newQueue = mutableListOf(project)
             while (newQueue.isNotEmpty()) {
-                println("newQueue=$newQueue\n")
                 val currentProject = newQueue.removeFirst()
-                println("currentProject=${currentProject.path}")
-                println("childProjects=${currentProject.childProjects.values}\n")
 
                 currentProject.configurations.forEach outer@{ config ->
                     config.dependencies
@@ -261,6 +260,11 @@ allprojects {
             }
 
             dot.appendText("}\n")
+
+            // Don't create an svg for projects with no dependencies
+            if (dependencies.isEmpty()) {
+                return@doLast
+            }
 
             val p = Runtime.getRuntime().exec(
                 arrayOf(
