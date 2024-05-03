@@ -269,7 +269,7 @@ allprojects {
 
             val p = Runtime.getRuntime().exec(
                 arrayOf(
-                    "/opt/homebrew/bin/dot", // TODO: for testing, change back
+                    "dot",
                     "-Tsvg",
                     "project.dot",
                     "-o",
