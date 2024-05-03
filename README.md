@@ -41,12 +41,6 @@ See [all features here](./docs/all_features.md).
 
 See [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
 
-## Module Dependency Graph
-
-Work in progress. Red arrows represents dependencies I wish to remove.
-
-![](assets/module_dependency_graph.svg)
-
 ## Database schema
 
 ![](assets/musicsearch_db_schema.svg)
