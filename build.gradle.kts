@@ -197,15 +197,7 @@ allprojects {
                             newQueue.add(dependency)
 
                             val traits = mutableListOf<String>()
-                            if (currentProject.path.split(":").getOrNull(1)?.equals("ui") == true &&
-                                dependency.path.contains("data")
-                            ) {
-                                traits.add("color=orange")
-                            } else if (currentProject.path.split(":").getOrNull(1)?.equals("ui") == true &&
-                                dependency.path.split(":").getOrNull(1)?.equals("ui") == true
-                            ) {
-                                traits.add("color=red")
-                            } else if (config.name.lowercase().endsWith("implementation")) {
+                            if (config.name.lowercase().endsWith("implementation")) {
                                 traits.add("style=dotted")
                             }
                             if (config.name.lowercase().contains("test")) {
