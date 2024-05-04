@@ -1,6 +1,10 @@
 name: Update dependency graph
 
 on:
+  push:
+    branches: [ "beta" ]
+    paths:
+      - "*.kts"
   workflow_call:
   workflow_dispatch:
 
@@ -21,7 +25,7 @@ jobs:
 
       - run: sudo apt install graphviz
 
-      - run: ./gradlew projectDependencyGraph
+      - run: ./gradlew generateProjectReadme
 
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5.0.1

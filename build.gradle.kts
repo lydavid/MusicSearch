@@ -121,7 +121,40 @@ tasks.register("listKMPModules") {
 // Original from https://github.com/JakeWharton/SdkSearch/blob/master/gradle/projectDependencyGraph.gradle
 // kts version from https://github.com/leinardi/Forlago/blob/e47f2d8781b8a05e074bf2b761e1693b14b7a06c/build-conventions/src/main/kotlin/forlago.dependency-graph-conventions.gradle.kts
 allprojects {
-    tasks.register("projectDependencyGraph") {
+
+    val dependenciesGraphRelativePath = "assets/module_dependency_graph.svg"
+    val dependenciesGraphAbsolutePath = "$projectDir/$dependenciesGraphRelativePath"
+
+    val dependentsGraphRelativePath = "assets/module_dependent_graph.svg"
+    val dependentsGraphAbsolutePath = "$projectDir/$dependentsGraphRelativePath"
+
+    fun getGraphvizTraits(currentProject: Project): String {
+        val traits = mutableListOf<String>()
+
+        if (currentProject == project) {
+            traits.add("shape=box")
+        }
+
+        if (currentProject.plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
+            traits.add("fillcolor=\"#b59aff\"")
+        } else if (currentProject.plugins.hasPlugin("org.jetbrains.kotlin.js")) {
+            traits.add("fillcolor=\"#ffe89a\"")
+        } else if (currentProject.plugins.hasPlugin("com.android.library") ||
+            currentProject.plugins.hasPlugin("com.android.application")
+        ) {
+            traits.add("fillcolor=\"#9affb5\"")
+        } else if (currentProject.plugins.hasPlugin("java-library") ||
+            currentProject.plugins.hasPlugin("java")
+        ) {
+            traits.add("fillcolor=\"#9affb5\"")
+        } else {
+            traits.add("fillcolor=\"#eeeeee\"")
+        }
+
+        return "[${traits.joinToString(", ")}]"
+    }
+
+    tasks.register("projectDependenciesGraph") {
         group = projectGroup
 
         inputs.files(
@@ -130,10 +163,7 @@ allprojects {
             },
         )
 
-        val graphSvgFile = "$projectDir/assets/module_dependency_graph.svg"
-        outputs.file(graphSvgFile)
-        val readmeFile = file("$projectDir/README.md")
-        outputs.file(readmeFile)
+        outputs.file(dependenciesGraphAbsolutePath)
 
         doLast {
             val dot = project.layout.buildDirectory.file("reports/dependency-graph/project.dot").get().asFile
@@ -147,42 +177,21 @@ allprojects {
             dot.appendText("  splines=ortho;\n")
 
             val projects = LinkedHashSet<Project>()
-            val multiplatformProjects = mutableListOf<Project>()
-            val jsProjects = mutableListOf<Project>()
-            val androidProjects = mutableListOf<Project>()
-            val javaProjects = mutableListOf<Project>()
 
             // Find all projects in this repository and group them accordingly
-            val queue = mutableListOf(rootProject)
+            var queue = mutableListOf(rootProject)
             while (queue.isNotEmpty()) {
                 val currentProject = queue.removeFirst()
 
                 // A child project is not necessarily a dependency
                 // eg. :feature:collections is child project of :shared
                 queue.addAll(currentProject.childProjects.values)
-
-                if (currentProject.plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
-                    multiplatformProjects.add(currentProject)
-                }
-                if (currentProject.plugins.hasPlugin("org.jetbrains.kotlin.js")) {
-                    jsProjects.add(currentProject)
-                }
-                if (currentProject.plugins.hasPlugin("com.android.library") ||
-                    currentProject.plugins.hasPlugin("com.android.application")
-                ) {
-                    androidProjects.add(currentProject)
-                }
-                if (currentProject.plugins.hasPlugin("java-library") || currentProject.plugins.hasPlugin("java")) {
-                    javaProjects.add(currentProject)
-                }
             }
 
             val dependencies = LinkedHashMap<Pair<Project, Project>, List<String>>()
-
-            // Find all dependencies of this project and their dependencies
-            val newQueue = mutableListOf(project)
-            while (newQueue.isNotEmpty()) {
-                val currentProject = newQueue.removeFirst()
+            queue = mutableListOf(project)
+            while (queue.isNotEmpty()) {
+                val currentProject = queue.removeFirst()
 
                 currentProject.configurations.forEach outer@{ config ->
                     config.dependencies
@@ -194,7 +203,7 @@ allprojects {
 
                             projects.add(currentProject)
                             projects.add(dependency)
-                            newQueue.add(dependency)
+                            queue.add(dependency)
 
                             val traits = mutableListOf<String>()
                             if (config.name.lowercase().endsWith("implementation")) {
@@ -215,37 +224,9 @@ allprojects {
 
             projects.sortedBy { it.path }
 
-//            println("\nAll projects")
-//            projects.forEach { project ->
-//                println(project)
-//            }
-//            println("\nDependencies")
-//            for ((key, value) in dependencies) {
-//                println("$key $value")
-//            }
-
             dot.appendText("\n  # Projects\n\n")
             for (currentProject in projects) {
-                val traits = mutableListOf<String>()
-
-                if (currentProject == project) {
-                    traits.add("shape=box")
-                    traits.add("width=5")
-                }
-
-                if (multiplatformProjects.contains(currentProject)) {
-                    traits.add("fillcolor=\"#b59aff\"")
-                } else if (jsProjects.contains(currentProject)) {
-                    traits.add("fillcolor=\"#ffe89a\"")
-                } else if (androidProjects.contains(currentProject)) {
-                    traits.add("fillcolor=\"#9affb5\"")
-                } else if (javaProjects.contains(currentProject)) {
-                    traits.add("fillcolor=\"#ffb59a\"")
-                } else {
-                    traits.add("fillcolor=\"#eeeeee\"")
-                }
-
-                dot.appendText("  \"${currentProject.path}\" [${traits.joinToString(", ")}];\n")
+                dot.appendText("  \"${currentProject.path}\" ${getGraphvizTraits(currentProject)};\n")
             }
 
             dot.appendText("\n  # Dependencies\n\n")
@@ -265,7 +246,7 @@ allprojects {
                     "-Tsvg",
                     "project.dot",
                     "-o",
-                    graphSvgFile,
+                    dependenciesGraphAbsolutePath,
                 ),
                 emptyArray(),
                 dot.parentFile,
@@ -273,22 +254,160 @@ allprojects {
             p.waitFor()
             require(p.exitValue() == 0) { p.errorStream.bufferedReader().use(BufferedReader::readText) }
 
-            println("Project module dependency graph created at ${dot.absolutePath}.svg")
+            println("Generated $dependenciesGraphAbsolutePath")
+        }
+    }
 
-            if (!readmeFile.exists()) {
-                readmeFile.writeText(
+    tasks.register("projectDependentsGraph") {
+        group = projectGroup
+
+        inputs.files(
+            fileTree(rootDir) {
+                include("**/build.gradle.kts")
+            },
+        )
+
+        outputs.file(dependentsGraphAbsolutePath)
+
+        doLast {
+            val dot = project.layout.buildDirectory.file("reports/dependent-graph/project.dot").get().asFile
+            dot.parentFile.mkdirs()
+            dot.delete()
+
+            dot.writeText("digraph {\n")
+            dot.appendText("  graph [label=\"Dependents\\n \",labelloc=t,fontsize=30,ranksep=1.4];\n")
+            dot.appendText("  node [style=filled, fillcolor=\"#bbbbbb\"];\n")
+            dot.appendText("  rankdir=RL;\n")
+            dot.appendText("  splines=ortho;\n")
+
+            val projects = LinkedHashSet<Project>()
+            val queue = mutableListOf(rootProject)
+            while (queue.isNotEmpty()) {
+                val currentProject = queue.removeFirst()
+
+                // A child project is not necessarily a dependency
+                // eg. :feature:collections is child project of :shared
+                queue.addAll(currentProject.childProjects.values)
+                projects.addAll(currentProject.childProjects.values)
+            }
+
+            val dependents = LinkedHashMap<Pair<Project, Project>, List<String>>()
+            projects.forEach { currentProject ->
+                currentProject.configurations.forEach outer@{ config ->
+                    config.dependencies
+                        .withType(ProjectDependency::class.java)
+                        .map { it.dependencyProject }
+                        .filter { currentProject != rootProject }
+                        .filter { currentProject != it }
+                        .forEach inner@{ dependency ->
+                            if (dependency == project) {
+                                val traits = mutableListOf<String>()
+                                if (config.name.lowercase().endsWith("implementation")) {
+                                    traits.add("style=dotted")
+                                }
+                                if (config.name.lowercase().contains("test")) {
+                                    traits.add("color=\"#ff9ab1\"")
+                                }
+                                dependents[currentProject to project] = traits
+                            }
+                        }
+                }
+            }
+
+            if (dependents.isEmpty()) {
+                return@doLast
+            }
+
+            dot.appendText("\n  # Projects\n\n")
+            dot.appendText("  \"${project.path}\" ${getGraphvizTraits(project)};\n")
+            dependents.forEach { (key, _) ->
+                val currentProject = key.first
+                dot.appendText("  \"${key.first.path}\" ${getGraphvizTraits(currentProject)};\n")
+            }
+
+            dot.appendText("\n  # Dependents\n\n")
+            dependents.forEach { (key, traits) ->
+                dot.appendText("  \"${key.first.path}\" -> \"${key.second.path}\"")
+                if (traits.isNotEmpty()) {
+                    dot.appendText(" [${traits.joinToString(", ")}]")
+                }
+                dot.appendText("\n")
+            }
+
+            dot.appendText("}\n")
+
+            val p = Runtime.getRuntime().exec(
+                arrayOf(
+                    "dot",
+                    "-Tsvg",
+                    "project.dot",
+                    "-o",
+                    dependentsGraphAbsolutePath,
+                ),
+                emptyArray(),
+                dot.parentFile,
+            )
+            p.waitFor()
+            require(p.exitValue() == 0) { p.errorStream.bufferedReader().use(BufferedReader::readText) }
+
+            println("Generated $dependentsGraphAbsolutePath")
+        }
+    }
+
+    val generateProjectReadme = "generateProjectReadme"
+    tasks.register(generateProjectReadme) {
+        group = projectGroup
+        description = "Creates the README.md for individual modules, not the root README.md."
+
+        dependsOn(
+            "projectDependenciesGraph",
+            "projectDependentsGraph",
+        )
+
+        inputs.files(
+            dependenciesGraphAbsolutePath,
+            dependentsGraphAbsolutePath,
+        )
+
+        val readmeFile = file("$projectDir/README.md")
+        outputs.file(readmeFile)
+
+        doLast {
+            val dependenciesGraphSvgFile = file(dependenciesGraphAbsolutePath)
+            val dependentsGraphSvgFile = file(dependentsGraphAbsolutePath)
+            if (!dependenciesGraphSvgFile.exists() && !dependentsGraphSvgFile.exists()) return@doLast
+            readmeFile.writeText(
+                """
+                # ${project.path}
+
+                Do not edit this file.
+                It was automatically generated by the `$generateProjectReadme` task.
+                """.trimIndent(),
+            )
+
+            if (dependenciesGraphSvgFile.exists()) {
+                readmeFile.appendText(
                     """
-                    # ${project.path}
-                    
-                    Do not edit this file.
-                    It was automatically generated by the `projectDependencyGraph` task.
-                    
-                    ## Dependencies
-                    ![](assets/module_dependency_graph.svg)
-                    
+                
+                
+                ## Dependencies
+                ![]($dependenciesGraphRelativePath)
                     """.trimIndent(),
                 )
             }
+
+            if (dependentsGraphSvgFile.exists()) {
+                readmeFile.appendText(
+                    """
+                
+                
+                ## Dependents
+                ![]($dependentsGraphRelativePath)
+                    """.trimIndent(),
+                )
+            }
+
+            println("Generated ${readmeFile.path}")
         }
     }
 }
