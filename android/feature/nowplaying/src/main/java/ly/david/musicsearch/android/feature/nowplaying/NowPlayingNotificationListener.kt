@@ -7,11 +7,12 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.history.NowPlayingHistory
 import ly.david.musicsearch.domain.nowplaying.NowPlayingHistoryRepository
 import org.koin.android.ext.android.inject
+import org.koin.core.component.KoinComponent
 
 private const val ANDROID_SYSTEM_INTELLIGENCE_PACKAGE_NAME = "com.google.android.as"
 private const val ANDROID_TITLE_KEY = "android.title"
 
-class NowPlayingNotificationListener : NotificationListenerService() {
+class NowPlayingNotificationListener : NotificationListenerService(), KoinComponent {
 
     private val coroutineScope: CoroutineScope by inject()
     private val nowPlayingHistoryRepository: NowPlayingHistoryRepository by inject()
