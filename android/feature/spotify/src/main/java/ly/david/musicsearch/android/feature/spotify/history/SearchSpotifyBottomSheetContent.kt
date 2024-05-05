@@ -1,11 +1,15 @@
 package ly.david.musicsearch.android.feature.spotify.history
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -68,6 +72,7 @@ internal fun SearchSpotifyBottomSheetContent(
             )
         }
     }
+    Spacer(modifier = Modifier.padding(top = 64.dp))
 }
 
 @PreviewLightDark

@@ -1,12 +1,16 @@
 package ly.david.mbjc
 
+import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.core.content.ContextCompat
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.toImmutableList
+import ly.david.musicsearch.android.feature.spotify.BroadcastTypes
+import ly.david.musicsearch.android.feature.spotify.SpotifyBroadcastReceiver
 import ly.david.musicsearch.core.models.network.toMusicBrainzEntity
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.AppRoot
@@ -25,9 +29,22 @@ internal class MainActivity : ComponentActivity() {
 
     private val appPreferences: AppPreferences by inject()
     private val circuit: Circuit by inject()
+    private val broadcastReceiver by lazy { SpotifyBroadcastReceiver() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val intentFilter = IntentFilter().apply {
+            addAction(BroadcastTypes.METADATA_CHANGED)
+            addAction(BroadcastTypes.QUEUE_CHANGED)
+            addAction(BroadcastTypes.PLAYBACK_STATE_CHANGED)
+        }
+        ContextCompat.registerReceiver(
+            this,
+            broadcastReceiver,
+            intentFilter,
+            ContextCompat.RECEIVER_EXPORTED,
+        )
 
         setContent {
             BaseTheme(
@@ -41,6 +58,11 @@ internal class MainActivity : ComponentActivity() {
                 },
             )
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(broadcastReceiver)
     }
 }
 
