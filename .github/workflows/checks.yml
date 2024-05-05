@@ -54,6 +54,9 @@ jobs:
         run: |
           ./gradlew recordPaparazziDebug
 
+      - run: git pull --rebase --autostash
+        if: always() && steps.screenshotsrecord.outcome == 'success'
+
       - name: Push new screenshots if available
         uses: stefanzweifel/git-auto-commit-action@v5.0.1
         if: always() && steps.screenshotsrecord.outcome == 'success'

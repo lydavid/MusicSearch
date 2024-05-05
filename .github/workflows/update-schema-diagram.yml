@@ -53,6 +53,8 @@ jobs:
           entrypoint: /schemacrawler.sh
           args: --server=sqlite --database=musicsearch.db --info-level=maximum --command=schema --output-file assets/musicsearch_db_schema.svg --log-level=CONFIG
 
+      - run: git pull --rebase --autostash
+
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:

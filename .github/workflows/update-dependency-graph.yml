@@ -30,6 +30,8 @@ jobs:
 
       - run: ./gradlew generateProjectReadme
 
+      - run: git pull --rebase --autostash
+
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
