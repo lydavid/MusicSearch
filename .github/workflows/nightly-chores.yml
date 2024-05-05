@@ -10,6 +10,8 @@ jobs:
     permissions:
       contents: write
     uses: ./.github/workflows/update-dependency-graph.yml
+    secrets:
+      token: ${{ secrets.PAT }}
 
   format-version-catalog:
     name: Format version catalog
