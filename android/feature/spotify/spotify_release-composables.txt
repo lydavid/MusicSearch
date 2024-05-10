@@ -1,6 +1,3 @@
-restartable skippable fun SpotifyBroadcastReceiver(
-  stable onMetadataChange: Function1<SpotifyHistory, Unit>
-)
 restartable scheme("[androidx.compose.ui.UiComposable]") fun SearchSpotifyBottomSheetContent(
   unstable spotifyHistory: SpotifyHistoryListItemModel?
   stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->

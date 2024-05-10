@@ -1,10 +1,20 @@
+stable class BroadcastTypes {
+  stable val SPOTIFY_PACKAGE: String
+  stable val PLAYBACK_STATE_CHANGED: String
+  stable val QUEUE_CHANGED: String
+  stable val METADATA_CHANGED: String
+  <runtime stability> = Stable
+}
+unstable class SpotifyBroadcastReceiver {
+  unstable val spotifyHistoryRepository$delegate: Lazy<SpotifyHistoryRepository>
+  <runtime stability> = Unstable
+}
 stable class SpotifyHistoryPresenter {
   stable val navigator: Navigator
   unstable val spotifyHistoryRepository: SpotifyHistoryRepository
   <runtime stability> = Stable
 }
 stable class SpotifyUiState {
-  unstable val spotifyHistory: SpotifyHistory?
   stable val query: String
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
   stable val eventSink: Function1<SpotifyUiEvent, Unit>
