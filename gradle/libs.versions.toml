@@ -132,7 +132,7 @@ build-config = "com.github.gmazzo.buildconfig:5.3.5"
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 dependency-analysis = "com.autonomousapps.dependency-analysis:1.31.0"
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-firebase-crashlytics = "com.google.firebase.crashlytics:3.0.0"
+firebase-crashlytics = "com.google.firebase.crashlytics:3.0.1"
 google-services = "com.google.gms.google-services:4.4.1"
 gradle-versions = "com.github.ben-manes.versions:0.51.0"
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
