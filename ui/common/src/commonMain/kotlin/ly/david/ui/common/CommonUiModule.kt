@@ -1,5 +1,6 @@
 package ly.david.ui.common
 
+import ly.david.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.ui.common.event.EventsByEntityPresenter
 import ly.david.ui.common.paging.RelationsList
 import ly.david.ui.common.place.PlacesByEntityPresenter
@@ -12,6 +13,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val commonUiModule = module {
+    singleOf(::ArtistsByEntityPresenter)
     singleOf(::EventsByEntityPresenter)
     singleOf(::PlacesByEntityPresenter)
     singleOf(::RecordingsByEntityPresenter)

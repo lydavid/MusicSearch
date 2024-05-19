@@ -2,6 +2,7 @@ package ly.david.ui.common.release
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,7 +11,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
+import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -95,3 +99,30 @@ class ReleasesByEntityPresenter(
         )
     }
 }
+
+sealed interface ReleasesByEntityUiEvent : CircuitUiEvent {
+    data class Get(
+        val byEntityId: String,
+        val byEntity: MusicBrainzEntity,
+        val isRemote: Boolean = true,
+    ) : ReleasesByEntityUiEvent
+
+    data class UpdateQuery(
+        val query: String,
+    ) : ReleasesByEntityUiEvent
+
+    data class UpdateShowMoreInfoInReleaseListItem(
+        val showMore: Boolean,
+    ) : ReleasesByEntityUiEvent
+
+    data class RequestForMissingCoverArtUrl(
+        val entityId: String,
+    ) : ReleasesByEntityUiEvent
+}
+
+@Stable
+data class ReleasesByEntityUiState(
+    val lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
+    val showMoreInfo: Boolean = true,
+    val eventSink: (ReleasesByEntityUiEvent) -> Unit = {},
+) : CircuitUiState

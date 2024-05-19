@@ -8,9 +8,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import app.cash.paging.insertSeparators
 import app.cash.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
+import app.cash.paging.insertSeparators
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
 import com.slack.circuit.runtime.Navigator
@@ -26,7 +26,6 @@ import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.area.usecase.GetAreasByEntity
-import ly.david.musicsearch.domain.artist.usecase.GetArtistsByEntity
 import ly.david.musicsearch.domain.collection.usecase.DeleteFromCollection
 import ly.david.musicsearch.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
@@ -36,6 +35,8 @@ import ly.david.musicsearch.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.domain.recording.usecase.GetRecordingsByEntity
 import ly.david.musicsearch.domain.series.usecase.GetSeriesByEntity
 import ly.david.musicsearch.domain.work.usecase.GetWorksByEntity
+import ly.david.ui.common.artist.ArtistsByEntityPresenter
+import ly.david.ui.common.artist.ArtistsByEntityUiEvent
 import ly.david.ui.common.event.EventsByEntityPresenter
 import ly.david.ui.common.event.EventsByEntityUiEvent
 import ly.david.ui.common.release.ReleasesByEntityPresenter
@@ -51,7 +52,7 @@ internal class CollectionPresenter(
     private val getCollectionUseCase: GetCollection,
     private val incrementLookupHistory: IncrementLookupHistory,
     private val getAreasByEntity: GetAreasByEntity,
-    private val getArtistsByEntity: GetArtistsByEntity,
+    private val artistsByEntityPresenter: ArtistsByEntityPresenter,
     private val getInstrumentsByEntity: GetInstrumentsByEntity,
     private val getLabelsByEntity: GetLabelsByEntity,
     private val getPlacesByEntity: GetPlacesByEntity,
@@ -74,6 +75,8 @@ internal class CollectionPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         var collectableItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val artistsByEntityUiState = artistsByEntityPresenter.present()
+        val artistsEventSink = artistsByEntityUiState.eventSink
         val eventsByEntityUiState = eventsByEntityPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
         val releasesByEntityUiState = releasesByEntityPresenter.present()
@@ -118,18 +121,14 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.ARTIST -> {
-                    collectableItems = getArtistsByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    artistsEventSink(
+                        ArtistsByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    artistsEventSink(ArtistsByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.EVENT -> {
@@ -313,6 +312,7 @@ internal class CollectionPresenter(
             actionableResult = actionableResult,
             query = query,
             lazyPagingItems = collectableItems.collectAsLazyPagingItems(),
+            artistsByEntityUiState = artistsByEntityUiState,
             eventsByEntityUiState = eventsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,

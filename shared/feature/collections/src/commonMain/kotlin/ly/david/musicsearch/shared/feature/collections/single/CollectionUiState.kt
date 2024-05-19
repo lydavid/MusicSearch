@@ -6,6 +6,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import ly.david.musicsearch.core.models.ActionableResult
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.ui.common.artist.ArtistsByEntityUiState
 import ly.david.ui.common.event.EventsByEntityUiState
 import ly.david.ui.common.release.ReleasesByEntityUiState
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiState
@@ -16,6 +17,7 @@ internal data class CollectionUiState(
     val actionableResult: ActionableResult?,
     val query: String,
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val artistsByEntityUiState: ArtistsByEntityUiState,
     val eventsByEntityUiState: EventsByEntityUiState,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
