@@ -6,8 +6,9 @@ import androidx.compose.runtime.getValue
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.toImmutableList
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.database.dao.EventsByEntityDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
+import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
+import ly.david.musicsearch.data.database.dao.EventsByEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
@@ -19,6 +20,7 @@ internal class AreaStatsPresenter(
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
     private val releaseCountryDao: ReleaseCountryDao,
+    private val artistsByEntityDao: ArtistsByEntityDao,
     private val eventsByEntityDao: EventsByEntityDao,
     private val areaPlaceDao: AreaPlaceDao,
 ) : Presenter<StatsUiState> {
@@ -27,6 +29,14 @@ internal class AreaStatsPresenter(
     override fun present(): StatsUiState {
         val relationTypeCounts
             by getCountOfEachRelationshipTypeUseCase(screen.id).collectAsState(listOf())
+
+        val browseArtistCount
+            by observeBrowseEntityCount(
+                entityId = screen.id,
+                entity = MusicBrainzEntity.ARTIST,
+            ).collectAsState(null)
+        val localArtists
+            by artistsByEntityDao.getNumberOfArtistsByEntity(screen.id).collectAsState(0)
 
         val browseEventCount
             by observeBrowseEntityCount(
@@ -55,6 +65,10 @@ internal class AreaStatsPresenter(
         val stats = Stats(
             totalRelations = relationTypeCounts.sumOf { it.count },
             relationTypeCounts = relationTypeCounts.toImmutableList(),
+            artistStats = ArtistStats(
+                totalRemote = browseArtistCount?.remoteCount,
+                totalLocal = localArtists,
+            ),
             eventStats = EventStats(
                 totalRemote = browseEventCount?.remoteCount,
                 totalLocal = localEvents,

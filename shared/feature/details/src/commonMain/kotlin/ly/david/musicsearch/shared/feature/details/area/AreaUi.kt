@@ -21,6 +21,7 @@ import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.ui.common.artist.ArtistsListScreen
 import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.event.EventsListScreen
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
@@ -175,6 +176,27 @@ internal fun AreaUi(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = relationsLazyListState,
                         snackbarHostState = snackbarHostState,
+                        onItemClick = { entity, id, title ->
+                            eventSink(
+                                AreaUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
+                                ),
+                            )
+                        },
+                    )
+                }
+
+                AreaTab.ARTISTS -> {
+                    ArtistsListScreen(
+                        lazyListState = eventsLazyListState,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.artistsByEntityUiState.lazyPagingItems,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(

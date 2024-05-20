@@ -19,6 +19,8 @@ import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
+import ly.david.ui.common.artist.ArtistsByEntityPresenter
+import ly.david.ui.common.artist.ArtistsByEntityUiEvent
 import ly.david.ui.common.event.EventsByEntityPresenter
 import ly.david.ui.common.event.EventsByEntityUiEvent
 import ly.david.ui.common.place.PlacesByEntityPresenter
@@ -34,6 +36,7 @@ internal class AreaPresenter(
     private val navigator: Navigator,
     private val repository: AreaRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
+    private val artistsByEntityPresenter: ArtistsByEntityPresenter,
     private val eventsByEntityPresenter: EventsByEntityPresenter,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val placesByEntityPresenter: PlacesByEntityPresenter,
@@ -54,6 +57,8 @@ internal class AreaPresenter(
         var selectedTab by rememberSaveable { mutableStateOf(AreaTab.DETAILS) }
         var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
 
+        val artistsByEntityUiState = artistsByEntityPresenter.present()
+        val artistsEventSink = artistsByEntityUiState.eventSink
         val eventsByEntityUiState = eventsByEntityPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
         val releasesByEntityUiState = releasesByEntityPresenter.present()
@@ -109,6 +114,16 @@ internal class AreaPresenter(
                         ),
                     )
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
+                }
+
+                AreaTab.ARTISTS -> {
+                    artistsEventSink(
+                        ArtistsByEntityUiEvent.Get(
+                            byEntityId = screen.id,
+                            byEntity = screen.entity,
+                        ),
+                    )
+                    artistsEventSink(ArtistsByEntityUiEvent.UpdateQuery(query))
                 }
 
                 AreaTab.EVENTS -> {
@@ -186,6 +201,7 @@ internal class AreaPresenter(
             tabs = tabs,
             selectedTab = selectedTab,
             query = query,
+            artistsByEntityUiState = artistsByEntityUiState,
             eventsByEntityUiState = eventsByEntityUiState,
             placesByEntityUiState = placesByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,

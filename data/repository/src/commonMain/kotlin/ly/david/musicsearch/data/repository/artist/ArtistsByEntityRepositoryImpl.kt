@@ -10,12 +10,14 @@ import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.ArtistDao
+import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.domain.artist.ArtistsByEntityRepository
 
 class ArtistsByEntityRepositoryImpl(
+    private val artistsByEntityDao: ArtistsByEntityDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val artistDao: ArtistDao,
@@ -53,7 +55,9 @@ class ArtistsByEntityRepositoryImpl(
                     collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
-                else -> error(browseEntitiesNotSupported(entity))
+                else -> {
+                    artistsByEntityDao.deleteArtistsByEntity(entityId)
+                }
             }
         }
     }
@@ -71,7 +75,12 @@ class ArtistsByEntityRepositoryImpl(
                 )
             }
 
-            else -> error(browseEntitiesNotSupported(entity))
+            else -> {
+                artistsByEntityDao.getArtistsByEntity(
+                    entityId = entityId,
+                    query = listFilters.query,
+                )
+            }
         }
     }
 
@@ -80,16 +89,11 @@ class ArtistsByEntityRepositoryImpl(
         entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseArtistsResponse {
-        return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
-                musicBrainzApi.browseArtistsByCollection(
-                    collectionId = entityId,
-                    offset = offset,
-                )
-            }
-
-            else -> error(browseEntitiesNotSupported(entity))
-        }
+        return musicBrainzApi.browseArtistsByEntity(
+            entityId = entityId,
+            entity = entity,
+            offset = offset,
+        )
     }
 
     override fun insertAllLinkingModels(
@@ -107,7 +111,11 @@ class ArtistsByEntityRepositoryImpl(
             }
 
             else -> {
-                error(browseEntitiesNotSupported(entity))
+                artistsByEntityDao.insertAll(
+                    entityAndArtistIds = musicBrainzModels.map { event ->
+                        entityId to event.id
+                    },
+                )
             }
         }
     }

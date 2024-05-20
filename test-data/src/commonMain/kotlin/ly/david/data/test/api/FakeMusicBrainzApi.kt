@@ -131,8 +131,9 @@ class FakeMusicBrainzApi : MusicBrainzApi {
         return browseAreasResponse
     }
 
-    override suspend fun browseArtistsByCollection(
-        collectionId: String,
+    override suspend fun browseArtistsByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
     ): BrowseArtistsResponse {

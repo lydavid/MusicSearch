@@ -96,6 +96,8 @@ val EnStrings = AppStrings(
 
     details = "Details",
 
+    artists = "Artists",
+
     events = "Events",
 
     places = "Places",
@@ -206,6 +208,11 @@ val EnStrings = AppStrings(
     ok = "OK",
 
     retry = "Retry",
+
+    cachedArtists = { p0, p1 ->
+        "Cached %d of %d artists"
+            .fmt(p0, p1)
+    },
 
     cachedEvents = { p0, p1 ->
         "Cached %d of %d events"

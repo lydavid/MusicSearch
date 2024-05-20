@@ -37,6 +37,15 @@ internal fun StatsUi(
     LazyColumn(modifier = modifier) {
         tabs.forEach { tab ->
             when (tab) {
+                Tab.ARTISTS -> {
+                    addEntitiesStatsSection(
+                        totalRemote = stats.artistStats.totalRemote,
+                        totalLocal = stats.artistStats.totalLocal,
+                        header = strings.artists,
+                        cachedLocalOfRemote = strings.cachedArtists,
+                    )
+                }
+
                 Tab.EVENTS -> {
                     addEntitiesStatsSection(
                         totalRemote = stats.eventStats.totalRemote,

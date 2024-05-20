@@ -1,0 +1,63 @@
+CREATE TABLE IF NOT EXISTS artists_by_entity (
+  entity_id TEXT NOT NULL,
+  artist_id TEXT NOT NULL,
+
+  PRIMARY KEY (entity_id, artist_id)
+);
+
+insert:
+INSERT OR IGNORE INTO artists_by_entity
+VALUES ?;
+
+deleteArtistsByEntity:
+DELETE FROM artist WHERE id IN (
+  SELECT a.id
+  FROM artists_by_entity ae
+  INNER JOIN artist a ON a.id = ae.artist_id
+  WHERE ae.entity_id = :entityId
+);
+
+getNumberOfArtistsByEntity:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM artists_by_entity ae
+    INNER JOIN artist a ON a.id = ae.artist_id
+    WHERE ae.entity_id = :entityId
+    AND (
+      a.name LIKE :query OR
+      a.disambiguation LIKE :query OR
+      a.sort_name LIKE :query OR
+      a.type LIKE :query OR
+      a.gender LIKE :query OR
+      a.country_code LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getArtistsByEntity:
+SELECT
+  a.id,
+  a.name,
+  a.sort_name,
+  a.disambiguation,
+  a.type,
+  a.gender,
+  a.country_code,
+  a.begin,
+  a.end,
+  a.ended
+FROM artists_by_entity ae
+INNER JOIN artist a ON a.id = ae.artist_id
+WHERE ae.entity_id = :entityId
+AND (
+  a.name LIKE :query OR
+  a.disambiguation LIKE :query OR
+  a.sort_name LIKE :query OR
+  a.type LIKE :query OR
+  a.gender LIKE :query OR
+  a.country_code LIKE :query
+)
+ORDER BY a.begin, a.end, a.name
+LIMIT :limit OFFSET :offset;
