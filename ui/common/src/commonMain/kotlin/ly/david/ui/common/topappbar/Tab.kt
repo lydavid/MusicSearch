@@ -7,6 +7,7 @@ import ly.david.musicsearch.strings.AppStrings
  */
 enum class Tab {
     DETAILS,
+    ARTISTS,
     EVENTS,
     PLACES,
     RECORDINGS,
@@ -20,6 +21,7 @@ enum class Tab {
 fun Tab.getTitle(strings: AppStrings): String {
     return when (this) {
         Tab.DETAILS -> strings.details
+        Tab.ARTISTS -> strings.artists
         Tab.EVENTS -> strings.events
         Tab.PLACES -> strings.places
         Tab.RECORDINGS -> strings.recordings

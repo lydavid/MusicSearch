@@ -10,11 +10,17 @@ import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupTypeCount
 internal data class Stats(
     val totalRelations: Int? = null,
     val relationTypeCounts: ImmutableList<RelationTypeCount> = persistentListOf(),
+    val artistStats: ArtistStats = ArtistStats(),
     val eventStats: EventStats = EventStats(),
     val placeStats: PlaceStats = PlaceStats(),
     val recordingStats: RecordingStats = RecordingStats(),
     val releaseStats: ReleaseStats = ReleaseStats(),
     val releaseGroupStats: ReleaseGroupStats = ReleaseGroupStats(),
+)
+
+internal data class ArtistStats(
+    val totalRemote: Int? = null,
+    val totalLocal: Int = 0,
 )
 
 internal data class EventStats(
