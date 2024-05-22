@@ -1,6 +1,7 @@
+import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
+
 plugins {
     id("ly.david.android.library")
-    id("ly.david.android.compose")
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.paparazzi)
@@ -63,6 +64,24 @@ kotlin {
                 implementation(libs.coil.test)
                 implementation(libs.test.parameter.injector)
                 implementation(libs.koin.test)
+            }
+        }
+    }
+
+    // Copied from https://github.com/chrisbanes/tivi/pull/1827/commits/0840a6c769c8b91f520e03c5a2fa6292431a99ea
+    targets.configureEach {
+        val isAndroidTarget = platformType == KotlinPlatformType.androidJvm
+        compilations.configureEach {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    if (isAndroidTarget) {
+                        freeCompilerArgs.addAll(
+                            "-P",
+                            "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=" +
+                                "ly.david.ui.common.screen.Parcelize",
+                        )
+                    }
+                }
             }
         }
     }

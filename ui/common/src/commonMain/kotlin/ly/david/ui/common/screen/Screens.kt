@@ -4,51 +4,51 @@ import com.slack.circuit.runtime.screen.Screen
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.topappbar.Tab
 
-@CommonParcelize
+@Parcelize
 data class SearchScreen(
     val query: String? = null,
     val entity: MusicBrainzEntity? = null,
 ) : Screen
 
-@CommonParcelize
+@Parcelize
 data object HistoryScreen : Screen
 
-@CommonParcelize
+@Parcelize
 data object CollectionListScreen : Screen
 
-@CommonParcelize
+@Parcelize
 data class CollectionScreen(
     val id: String,
 ) : Screen
 
-@CommonParcelize
+@Parcelize
 data class AddToCollectionScreen(
     val entity: MusicBrainzEntity,
     val id: String,
 ) : Screen
 
-@CommonParcelize
+@Parcelize
 data class DetailsScreen(
     val entity: MusicBrainzEntity,
     val id: String,
     val title: String?,
 ) : Screen
 
-@CommonParcelize
+@Parcelize
 data class StatsScreen(
     val entity: MusicBrainzEntity,
     val id: String,
     val tabs: List<Tab>,
 ) : Screen
 
-@CommonParcelize
+@Parcelize
 data object SettingsScreen : Screen
 
-@CommonParcelize
+@Parcelize
 data object LicensesScreen : Screen
 
-@CommonParcelize
+@Parcelize
 data object NowPlayingHistoryScreen : Screen
 
-@CommonParcelize
+@Parcelize
 data object SpotifyHistoryScreen : Screen

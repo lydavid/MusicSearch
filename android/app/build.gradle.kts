@@ -3,7 +3,7 @@ import java.util.Properties
 
 plugins {
     id("ly.david.android.application")
-    id("ly.david.android.compose")
+    id("ly.david.musicsearch.compose.multiplatform")
 }
 
 if (file("google-services.json").exists() ||
