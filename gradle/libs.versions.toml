@@ -60,6 +60,7 @@ compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-ui" }
 compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-ui" }
 compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-ui" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui" }
+composeCompiler-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 desugarjdklibs = "com.android.tools:desugar_jdk_libs:2.0.4"
 detekt-compose = "io.nlopez.compose.rules:detekt:0.3.13"
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
@@ -107,7 +108,6 @@ sqldelight-primitive = { module = "app.cash.sqldelight:primitive-adapters", vers
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 test-parameter-injector = "com.google.testparameterinjector:test-parameter-injector:1.16"
 timber = "com.jakewharton.timber:timber:5.0.1"
-composeCompiler-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 
 [bundles]
 kotlinx-coroutines = [
