@@ -130,7 +130,7 @@ android-library = { id = "com.android.library", version.ref = "androidGradlePlug
 build-config = "com.github.gmazzo.buildconfig:5.3.5"
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
-dependency-analysis = "com.autonomousapps.dependency-analysis:1.31.0"
+dependency-analysis = "com.autonomousapps.dependency-analysis:1.32.0"
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 firebase-crashlytics = "com.google.firebase.crashlytics:3.0.1"
 google-services = "com.google.gms.google-services:4.4.1"
