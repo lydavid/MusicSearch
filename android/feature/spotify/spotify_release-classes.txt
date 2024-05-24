@@ -16,7 +16,7 @@ stable class SpotifyHistoryPresenter {
 }
 stable class SpotifyUiState {
   stable val query: String
-  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val eventSink: Function1<SpotifyUiEvent, Unit>
 }
 stable class NavigateUp {

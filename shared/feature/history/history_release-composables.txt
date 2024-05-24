@@ -1,13 +1,3 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLookupHistoryReleaseGroup(
-  stable imageUrl: String? = @static "https://www.example.com/image.jpg"
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLookupHistoryRelease(
-  stable imageUrl: String? = @static "https://www.example.com/image.jpg"
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLookupHistoryArtist(
-  stable imageUrl: String? = @static "https://www.example.com/image.jpg"
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewHistorySortBottomSheetContent()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun History(
   stable state: HistoryUiState
   stable modifier: Modifier? = @static Companion
@@ -15,7 +5,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun History(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun History(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
 
@@ -27,7 +17,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun History(
 restartable scheme("[androidx.compose.ui.UiComposable]") fun HistoryListItem(
   unstable lookupHistory: LookupHistoryListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
 
@@ -58,3 +48,13 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistorySo
 }
 
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLookupHistoryReleaseGroup(
+  stable imageUrl: String? = @static "https://www.example.com/image.jpg"
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLookupHistoryRelease(
+  stable imageUrl: String? = @static "https://www.example.com/image.jpg"
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLookupHistoryArtist(
+  stable imageUrl: String? = @static "https://www.example.com/image.jpg"
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewHistorySortBottomSheetContent()

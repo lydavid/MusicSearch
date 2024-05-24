@@ -11,7 +11,7 @@ stable class NowPlayingHistoryPresenter {
 }
 stable class NowPlayingHistoryUiState {
   stable val query: String
-  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val eventSink: Function1<NowPlayingHistoryUiEvent, Unit>
 }
 stable class NavigateUp {

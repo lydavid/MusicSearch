@@ -3,6 +3,7 @@ stable class AreaPresenter {
   stable val navigator: Navigator
   unstable val repository: AreaRepository
   runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val artistsByEntityPresenter: ArtistsByEntityPresenter
   stable val eventsByEntityPresenter: EventsByEntityPresenter
   stable val releasesByEntityPresenter: ReleasesByEntityPresenter
   stable val placesByEntityPresenter: PlacesByEntityPresenter
@@ -37,6 +38,7 @@ stable class AreaUiState {
   unstable val tabs: List<AreaTab>
   stable val selectedTab: AreaTab
   stable val query: String
+  stable val artistsByEntityUiState: ArtistsByEntityUiState
   stable val eventsByEntityUiState: EventsByEntityUiState
   stable val placesByEntityUiState: PlacesByEntityUiState
   stable val releasesByEntityUiState: ReleasesByEntityUiState

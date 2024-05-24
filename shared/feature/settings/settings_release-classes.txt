@@ -3,11 +3,6 @@ stable class BuildConfig {
   stable val VERSION_NAME: String
   <runtime stability> = Stable
 }
-stable class LoginPresenterAndroid {
-  unstable val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract
-  unstable val login: LoginAndroid
-  <runtime stability> = Stable
-}
 stable class StartLogin {
   <runtime stability> = Stable
 }
@@ -63,5 +58,10 @@ stable class SettingsUiState {
   stable val sortReleaseGroupListItems: Boolean
   stable val loginState: LoginUiState
   stable val eventSink: Function1<SettingsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+stable class LoginPresenterAndroid {
+  unstable val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract
+  unstable val login: LoginAndroid
   <runtime stability> = Stable
 }

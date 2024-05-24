@@ -3,6 +3,7 @@ stable class AreaStatsPresenter {
   runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
   runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
   unstable val releaseCountryDao: ReleaseCountryDao
+  unstable val artistsByEntityDao: ArtistsByEntityDao
   unstable val eventsByEntityDao: EventsByEntityDao
   unstable val areaPlaceDao: AreaPlaceDao
   <runtime stability> = Stable
@@ -67,11 +68,17 @@ stable class SeriesStatsPresenter {
 stable class Stats {
   stable val totalRelations: Int?
   unstable val relationTypeCounts: ImmutableList<RelationTypeCount>
+  stable val artistStats: ArtistStats
   stable val eventStats: EventStats
   stable val placeStats: PlaceStats
   stable val recordingStats: RecordingStats
   stable val releaseStats: ReleaseStats
   unstable val releaseGroupStats: ReleaseGroupStats
+}
+stable class ArtistStats {
+  stable val totalRemote: Int?
+  stable val totalLocal: Int
+  <runtime stability> = Stable
 }
 stable class EventStats {
   stable val totalRemote: Int?

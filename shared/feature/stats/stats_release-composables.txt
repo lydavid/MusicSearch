@@ -1,13 +1,3 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Default()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NoRelationships()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NullRelationships()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Empty()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Half()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Full()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Overflow()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewStatsScreen()
 fun present(
   stable <this>: AreaStatsPresenter
 ): StatsUiState
@@ -55,3 +45,13 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LocalRemo
   stable totalLocal: Int
   stable cachedLocalOfRemote: Function2<Int, Int, String>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Default()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NoRelationships()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NullRelationships()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Empty()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Half()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Full()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Overflow()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewStatsScreen()

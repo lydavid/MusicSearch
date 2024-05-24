@@ -21,7 +21,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayin
 
 }
 
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: @[ParameterName(name = 'query')] String, <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity ->
 
 }
 
@@ -38,7 +38,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayin
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryContent(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: @[ParameterName(name = 'query')] String, <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity ->
 
 }
 

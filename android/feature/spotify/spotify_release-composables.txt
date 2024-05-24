@@ -1,6 +1,6 @@
 restartable scheme("[androidx.compose.ui.UiComposable]") fun SearchSpotifyBottomSheetContent(
   unstable spotifyHistory: SpotifyHistoryListItemModel?
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntity, Unit>? = @static { <unused var>: @[ParameterName(name = 'query')] String, <unused var>: @[ParameterName(name = 'id')] MusicBrainzEntity ->
 
 }
 
@@ -29,7 +29,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHi
 
 }
 
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: @[ParameterName(name = 'query')] String, <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity ->
 
 }
 
@@ -46,7 +46,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHi
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHistoryContent(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: @[ParameterName(name = 'query')] String, <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity ->
 
 }
 

@@ -1,7 +1,3 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionBottomSheet()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCreateCollectionDialog()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionList()
 fun present(
   stable <this>: AddToCollectionPresenter
 ): AddToCollectionUiState
@@ -16,7 +12,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
 
 }
 
-  stable onAddToCollection: Function1<@[ParameterName(name = 'collectionId')] String, Unit>? = @static { it: String ->
+  stable onAddToCollection: Function1<@[ParameterName(name = 'collectionId')] String, Unit>? = @static { it: @[ParameterName(name = 'collectionId')] String ->
 
 }
 
@@ -35,7 +31,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CreateCol
 
 }
 
-  stable onSubmit: Function2<@[ParameterName(name = 'name')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: String, <unused var>: MusicBrainzEntity ->
+  stable onSubmit: Function2<@[ParameterName(name = 'name')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: @[ParameterName(name = 'name')] String, <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity ->
 
 }
 
@@ -96,6 +92,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable artistsByEntityUiState: ArtistsByEntityUiState
   stable eventsByEntityUiState: EventsByEntityUiState
   stable releasesByEntityUiState: ReleasesByEntityUiState
   stable releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState
@@ -104,15 +101,15 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
   stable innerPadding: PaddingValues
   stable scrollBehavior: TopAppBarScrollBehavior
   stable modifier: Modifier? = @static Companion
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: String, <unused var>: String ->
 
 }
 
-  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static { <unused var>: String, <unused var>: String ->
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static { <unused var>: @[ParameterName(name = 'entityId')] String, <unused var>: @[ParameterName(name = 'name')] String ->
 
 }
 
-  stable requestForMissingCoverArtUrl: Function1<@[ParameterName(name = 'entityId')] String, Unit>? = @static { it: String ->
+  stable requestForMissingCoverArtUrl: Function1<@[ParameterName(name = 'entityId')] String, Unit>? = @static { it: @[ParameterName(name = 'entityId')] String ->
 
 }
 
@@ -125,12 +122,16 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
   stable innerPadding: PaddingValues
   stable scrollBehavior: TopAppBarScrollBehavior
   stable modifier: Modifier? = @static Companion
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: String, <unused var>: String ->
 
 }
 
-  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static { <unused var>: String, <unused var>: String ->
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static { <unused var>: @[ParameterName(name = 'entityId')] String, <unused var>: @[ParameterName(name = 'name')] String ->
 
 }
 
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionBottomSheet()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCreateCollectionDialog()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionList()

@@ -45,6 +45,6 @@ stable class ClickItem {
 stable class HistoryUiState {
   stable val query: String
   stable val sortOption: HistorySortOption
-  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>{ app.cash.paging.compose.LazyPagingItems_androidKt.LazyPagingItems<ListItemModel> }
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val eventSink: Function1<HistoryUiEvent, Unit>
 }

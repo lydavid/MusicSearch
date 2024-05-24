@@ -1,22 +1,9 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewEventDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewGenreUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewInstrumentDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLabelDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewPlaceDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecordingDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTracksInReleaseScreen()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseGroupDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSeriesDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWorkDetailsUi()
 restartable scheme("[androidx.compose.ui.UiComposable]") fun AreaDetailsUi(
   unstable area: AreaScaffoldModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
 
@@ -35,7 +22,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun ArtistDetailsUi(
   stable filterText: String? = @static ""
   stable imageUrl: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
 
@@ -53,7 +40,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun EventDetailsUi(
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
 
@@ -94,7 +81,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentDetailsUi
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
 
@@ -112,7 +99,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun LabelDetailsUi(
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
 
@@ -130,7 +117,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun PlaceDetailsUi(
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
 
@@ -148,7 +135,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun RecordingDetailsUi(
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
 
@@ -166,7 +153,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseDetailsUi(
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable imageUrl: String? = @static ""
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
 
@@ -185,7 +172,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TracksByR
   stable modifier: Modifier? = @static Companion
   stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onRecordingClick: Function2<@[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String, Unit>? = @static { <unused var>: String, <unused var>: String ->
+  stable onRecordingClick: Function2<@[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String, Unit>? = @static { <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String ->
 
 }
 
@@ -196,7 +183,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupDetails
   stable filterText: String? = @static ""
   stable imageUrl: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
 
@@ -214,7 +201,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun SeriesDetailsUi(
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
 
@@ -232,7 +219,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun WorkDetailsUi(
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
 
@@ -245,3 +232,16 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorkUi(
   stable entityId: String
   stable modifier: Modifier? = @static Companion
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewEventDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewGenreUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewInstrumentDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLabelDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewPlaceDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecordingDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTracksInReleaseScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseGroupDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSeriesDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWorkDetailsUi()
