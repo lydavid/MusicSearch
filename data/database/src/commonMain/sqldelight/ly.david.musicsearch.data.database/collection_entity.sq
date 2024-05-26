@@ -299,7 +299,7 @@ LIMIT :limit OFFSET :offset;
 getNumberOfRecordingsByCollection:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(DISTINCT r.id)
     FROM recording r
     INNER JOIN collection_entity ce ON r.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
@@ -337,6 +337,7 @@ AND (
   OR r.first_release_date LIKE :query
   OR ac.name LIKE :query
 )
+GROUP BY r.id
 ORDER BY r.first_release_date, r.name
 LIMIT :limit OFFSET :offset;
 
@@ -346,7 +347,7 @@ LIMIT :limit OFFSET :offset;
 getNumberOfReleasesByCollection:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(DISTINCT r.id)
     FROM release r
     INNER JOIN collection_entity ce ON r.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
@@ -390,6 +391,7 @@ AND (
   OR r.country_code LIKE :query
   OR ac.name LIKE :query
 )
+GROUP BY r.id
 ORDER BY r.date, r.name
 LIMIT :limit OFFSET :offset;
 
@@ -399,7 +401,7 @@ LIMIT :limit OFFSET :offset;
 getNumberOfReleaseGroupsByCollection:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(DISTINCT rg.id)
     FROM release_group rg
     INNER JOIN collection_entity ce ON rg.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
@@ -443,6 +445,7 @@ AND (
   OR rg.secondary_types LIKE :query
   OR ac.name LIKE :query
 )
+GROUP BY rg.id
 ORDER BY
   CASE WHEN :sorted THEN rg.primary_type ELSE ce.rowid END,
   CASE WHEN :sorted THEN rg.secondary_types END,

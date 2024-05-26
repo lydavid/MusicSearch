@@ -32,7 +32,7 @@ DELETE FROM recording_release WHERE recording_id = :recordingId;
 getNumberOfReleasesByRecording:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(DISTINCT r.id)
     FROM release r
     INNER JOIN recording_release rr ON r.id = rr.release_id
     INNER JOIN recording rec ON rec.id = rr.recording_id
@@ -76,5 +76,6 @@ AND (
   OR r.country_code LIKE :query
   OR ac.name LIKE :query
 )
+GROUP BY r.id
 ORDER BY r.date, r.name
 LIMIT :limit OFFSET :offset;

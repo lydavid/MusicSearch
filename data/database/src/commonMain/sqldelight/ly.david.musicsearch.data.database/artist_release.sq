@@ -33,7 +33,7 @@ DELETE FROM artist_release WHERE artist_id = :artistId;
 getNumberOfReleasesByArtist:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(DISTINCT r.id)
     FROM release r
     INNER JOIN artist_release ar ON r.id = ar.release_id
     INNER JOIN artist a ON a.id = ar.artist_id
@@ -77,5 +77,6 @@ AND (
   OR r.country_code LIKE :query
   OR ac.name LIKE :query
 )
+GROUP BY r.id
 ORDER BY r.date, r.name
 LIMIT :limit OFFSET :offset;
