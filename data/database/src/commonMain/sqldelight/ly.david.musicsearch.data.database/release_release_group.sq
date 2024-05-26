@@ -32,7 +32,7 @@ DELETE FROM release_release_group WHERE release_group_id = :releaseGroupId;
 getNumberOfReleasesByReleaseGroup:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(DISTINCT r.id)
     FROM release r
     INNER JOIN release_release_group rrg ON r.id = rrg.release_id
     INNER JOIN release_group rg ON rg.id = rrg.release_group_id
@@ -76,5 +76,6 @@ AND (
   OR r.country_code LIKE :query
   OR ac.name LIKE :query
 )
+GROUP BY r.id
 ORDER BY r.date, r.name
 LIMIT :limit OFFSET :offset;

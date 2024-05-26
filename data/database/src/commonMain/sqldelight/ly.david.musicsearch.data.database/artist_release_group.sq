@@ -22,7 +22,7 @@ DELETE FROM release_group WHERE id IN (
 getNumberOfReleaseGroupsByArtist:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(DISTINCT rg.id)
     FROM release_group rg
     INNER JOIN artist_release_group arg ON rg.id = arg.release_group_id
     INNER JOIN artist a ON a.id = arg.artist_id
@@ -72,6 +72,7 @@ AND (
   OR rg.primary_type LIKE :query OR rg.secondary_types LIKE :query
   OR ac.name LIKE :query
 )
+GROUP BY rg.id
 ORDER BY
   CASE WHEN :sorted THEN rg.primary_type ELSE arg.rowid END,
   CASE WHEN :sorted THEN rg.secondary_types END,

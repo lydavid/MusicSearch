@@ -35,7 +35,7 @@ DELETE FROM release_country WHERE country_id = :areaId;
 getNumberOfReleasesByCountry:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(DISTINCT r.id)
     FROM release r
     INNER JOIN release_country rc ON r.id = rc.release_id
     INNER JOIN area a ON a.id = rc.country_id
@@ -79,6 +79,7 @@ AND (
   OR r.country_code LIKE :query
   OR ac.name LIKE :query
 )
+GROUP BY r.id
 ORDER BY r.date, r.name
 LIMIT :limit OFFSET :offset;
 
