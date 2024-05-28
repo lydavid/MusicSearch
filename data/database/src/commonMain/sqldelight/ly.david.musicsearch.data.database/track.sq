@@ -21,10 +21,10 @@ VALUES ?;
 getNumberOfTracksByRelease:
 SELECT IFNULL(
   (
-    SELECT COUNT(DISTINCT t.id)
+    SELECT COUNT(*)
     FROM track t
     INNER JOIN medium m ON t.medium_id = m.id
-    INNER JOIN release r ON m.release_id = r.id
+    INNER JOIN `release` r ON m.release_id = r.id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = t.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
     WHERE r.id = :releaseId
@@ -41,7 +41,7 @@ getTracksByRelease:
 SELECT t.*, ac.name AS artist_credits
 FROM track t
 INNER JOIN medium m ON t.medium_id = m.id
-INNER JOIN release r ON m.release_id = r.id
+INNER JOIN `release` r ON m.release_id = r.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = t.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 WHERE r.id = :releaseId
@@ -50,5 +50,4 @@ AND (
   OR t.number LIKE :query
   OR ac.name LIKE :query
 )
-GROUP BY t.id
 LIMIT :limit OFFSET :offset;
