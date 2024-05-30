@@ -14,7 +14,7 @@ Soon, there will be a tab to browse all of their events, recordings, and works.
 | Entity        | Browsing supported                                                                                       | Browsing not yet supported                       |
 |---------------|----------------------------------------------------------------------------------------------------------|--------------------------------------------------|
 | area          | artists, events, places, releases                                                                        | collections, labels                              |
-| artist        | release, release groups, events                                                                          | collections, recordings, works                   |
+| artist        | events, recordings, release, release groups                                                              | collections, works                               |
 | collection    | areas, artists, events, instruments, labels, places, recordings, releases, release groups, series, works |                                                  |
 | event         |                                                                                                          | collections                                      |
 | instrument    |                                                                                                          | collections                                      |

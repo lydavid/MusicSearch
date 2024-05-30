@@ -21,9 +21,9 @@ import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.event.EventsListScreen
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.ui.common.recording.RecordingsListScreen
 import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.ui.common.release.ReleasesListScreen
@@ -39,6 +39,7 @@ import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.topappbar.getTitle
+import ly.david.ui.core.LocalStrings
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -178,27 +179,6 @@ internal fun ArtistUi(
                     }
                 }
 
-                ArtistTab.EVENTS -> {
-                    EventsListScreen(
-                        lazyListState = eventsLazyListState,
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.eventsByEntityUiState.lazyPagingItems,
-                        onEventClick = { entity, id, title ->
-                            eventSink(
-                                ArtistUiEvent.ClickItem(
-                                    entity = entity,
-                                    id = id,
-                                    title = title,
-                                ),
-                            )
-                        },
-                    )
-                }
-
                 ArtistTab.RELEASE_GROUPS -> {
                     ReleaseGroupsListScreen(
                         lazyListState = releaseGroupsLazyListState,
@@ -221,6 +201,27 @@ internal fun ArtistUi(
                             releaseGroupsByEntityEventSink(
                                 ReleaseGroupsByEntityUiEvent.RequestForMissingCoverArtUrl(
                                     entityId = id,
+                                ),
+                            )
+                        },
+                    )
+                }
+
+                ArtistTab.RECORDINGS -> {
+                    RecordingsListScreen(
+                        lazyListState = eventsLazyListState,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.recordingsByEntityUiState.lazyPagingItems,
+                        onRecordingClick = { entity, id, title ->
+                            eventSink(
+                                ArtistUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
                                 ),
                             )
                         },
@@ -250,6 +251,27 @@ internal fun ArtistUi(
                             releasesByEntityEventSink(
                                 ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl(
                                     entityId = id,
+                                ),
+                            )
+                        },
+                    )
+                }
+
+                ArtistTab.EVENTS -> {
+                    EventsListScreen(
+                        lazyListState = eventsLazyListState,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.eventsByEntityUiState.lazyPagingItems,
+                        onEventClick = { entity, id, title ->
+                            eventSink(
+                                ArtistUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
                                 ),
                             )
                         },

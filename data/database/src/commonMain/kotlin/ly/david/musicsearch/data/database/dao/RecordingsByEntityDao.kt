@@ -10,68 +10,67 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToRecordingListItemModel
-import lydavidmusicsearchdatadatabase.Recording_work
-import lydavidmusicsearchdatadatabase.Recording_workQueries
+import lydavidmusicsearchdatadatabase.Recordings_by_entity
 
-class RecordingWorkDao(
+class RecordingsByEntityDao(
     database: Database,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
-    override val transacter: Recording_workQueries = database.recording_workQueries
+    override val transacter = database.recordings_by_entityQueries
 
     fun insert(
+        entityId: String,
         recordingId: String,
-        workId: String,
     ) {
         transacter.insert(
-            Recording_work(
+            Recordings_by_entity(
+                entity_id = entityId,
                 recording_id = recordingId,
-                work_id = workId,
             ),
         )
     }
 
     fun insertAll(
-        workId: String,
+        entityId: String,
         recordingIds: List<String>,
     ) {
         transacter.transaction {
             recordingIds.forEach { recordingId ->
                 insert(
                     recordingId = recordingId,
-                    workId = workId,
+                    entityId = entityId,
                 )
             }
         }
     }
 
-    fun deleteRecordingsByWork(workId: String) {
-        transacter.deleteRecordingsByWork(workId)
+    fun deleteRecordingsByEntity(entityId: String) {
+        transacter.deleteRecordingsByEntity(entityId)
     }
 
-    fun getNumberOfRecordingsByWork(workId: String): Flow<Int> =
-        transacter.getNumberOfRecordingsByWork(
-            workId = workId,
+    fun getNumberOfRecordingsByEntity(entityId: String): Flow<Int> =
+        transacter.getNumberOfRecordingsByEntity(
+            entityId = entityId,
             query = "%%",
         )
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
 
-    fun getRecordingsByWork(
-        workId: String,
+    fun getRecordingsByEntity(
+        entityId: String,
         query: String,
     ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfRecordingsByWork(
-            workId = workId,
-            query = query,
+        countQuery = transacter.getNumberOfRecordingsByEntity(
+            entityId = entityId,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
-            transacter.getRecordingsByWork(
-                workId = workId,
-                query = query,
+            transacter.getRecordingsByEntity(
+                entityId = entityId,
+                query = "%$query%",
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToRecordingListItemModel,

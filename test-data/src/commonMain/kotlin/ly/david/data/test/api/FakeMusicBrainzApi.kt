@@ -186,17 +186,9 @@ class FakeMusicBrainzApi : MusicBrainzApi {
         return browsePlacesResponse
     }
 
-    override suspend fun browseRecordingsByCollection(
-        collectionId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseRecordingsResponse {
-        return browseRecordingsResponse
-    }
-
-    override suspend fun browseRecordingsByWork(
-        workId: String,
+    override suspend fun browseRecordingsByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
         include: String,

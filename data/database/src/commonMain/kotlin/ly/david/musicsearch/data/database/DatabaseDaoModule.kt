@@ -25,7 +25,7 @@ import ly.david.musicsearch.data.database.dao.NowPlayingHistoryDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RecordingReleaseDao
-import ly.david.musicsearch.data.database.dao.RecordingWorkDao
+import ly.david.musicsearch.data.database.dao.RecordingsByEntityDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
@@ -65,7 +65,7 @@ val databaseDaoModule = module {
     single { PlaceDao(get()) }
     single { RecordingDao(get(), get()) }
     single { RecordingReleaseDao(get(), get()) }
-    single { RecordingWorkDao(get(), get()) }
+    single { RecordingsByEntityDao(get(), get()) }
     single { RelationDao(get(), get()) }
     single { ReleaseCountryDao(get(), get()) }
     single { ReleaseDao(get(), get(), get()) }

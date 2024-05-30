@@ -86,15 +86,9 @@ interface BrowseApi {
         offset: Int = 0,
     ): BrowsePlacesResponse
 
-    suspend fun browseRecordingsByCollection(
-        collectionId: String,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-        include: String = ARTIST_CREDITS,
-    ): BrowseRecordingsResponse
-
-    suspend fun browseRecordingsByWork(
-        workId: String,
+    suspend fun browseRecordingsByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
         include: String = ARTIST_CREDITS,
@@ -371,8 +365,9 @@ interface BrowseApiImpl : BrowseApi {
         }.body()
     }
 
-    override suspend fun browseRecordingsByCollection(
-        collectionId: String,
+    override suspend fun browseRecordingsByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
         include: String,
@@ -381,37 +376,8 @@ interface BrowseApiImpl : BrowseApi {
             url {
                 appendPathSegments("recording")
                 parameter(
-                    "collection",
-                    collectionId,
-                )
-                parameter(
-                    "limit",
-                    limit,
-                )
-                parameter(
-                    "offset",
-                    offset,
-                )
-                parameter(
-                    "inc",
-                    include,
-                )
-            }
-        }.body()
-    }
-
-    override suspend fun browseRecordingsByWork(
-        workId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseRecordingsResponse {
-        return httpClient.get {
-            url {
-                appendPathSegments("recording")
-                parameter(
-                    "work",
-                    workId,
+                    entity.resourceUri,
+                    entityId,
                 )
                 parameter(
                     "limit",
