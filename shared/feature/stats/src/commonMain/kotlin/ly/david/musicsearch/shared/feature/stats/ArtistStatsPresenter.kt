@@ -12,6 +12,7 @@ import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.EventsByEntityDao
+import ly.david.musicsearch.data.database.dao.RecordingsByEntityDao
 import ly.david.musicsearch.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
 import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
@@ -22,6 +23,7 @@ internal class ArtistStatsPresenter(
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
     private val eventsByEntityDao: EventsByEntityDao,
+    private val recordingsByEntityDao: RecordingsByEntityDao,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val artistReleaseDao: ArtistReleaseDao,
 ) : Presenter<StatsUiState> {
@@ -39,15 +41,24 @@ internal class ArtistStatsPresenter(
     private fun getStats(entityId: String): Flow<Stats> =
         combine(
             getCountOfEachRelationshipTypeUseCase(entityId),
-            releaseStats(entityId),
             releaseGroupStats(entityId),
+            releaseStats(entityId),
+            recordingsStats(entityId),
             eventsStats(entityId),
-        ) { relationTypeCounts, releaseStats, releaseGroupStats, eventStats ->
+        ) {
+                relationTypeCounts,
+                releaseGroupStats,
+                releaseStats,
+                recordingStats,
+                eventStats,
+            ->
+
             Stats(
                 totalRelations = relationTypeCounts.sumOf { it.count },
                 relationTypeCounts = relationTypeCounts.toImmutableList(),
-                releaseStats = releaseStats,
                 releaseGroupStats = releaseGroupStats,
+                releaseStats = releaseStats,
+                recordingStats = recordingStats,
                 eventStats = eventStats,
             )
         }
@@ -86,6 +97,20 @@ internal class ArtistStatsPresenter(
                         count = it.count,
                     )
                 }.toImmutableList(),
+            )
+        }
+
+    private fun recordingsStats(entityId: String): Flow<RecordingStats> =
+        combine(
+            observeBrowseEntityCount(
+                entityId,
+                MusicBrainzEntity.RECORDING,
+            ),
+            recordingsByEntityDao.getNumberOfRecordingsByEntity(entityId),
+        ) { browseRecordingCount, localRecordings ->
+            RecordingStats(
+                totalRemote = browseRecordingCount?.remoteCount,
+                totalLocal = localRecordings,
             )
         }
 

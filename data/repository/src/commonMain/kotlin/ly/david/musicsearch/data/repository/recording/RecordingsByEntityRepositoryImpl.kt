@@ -12,7 +12,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
-import ly.david.musicsearch.data.database.dao.RecordingWorkDao
+import ly.david.musicsearch.data.database.dao.RecordingsByEntityDao
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.domain.recording.RecordingsByEntityRepository
 
@@ -20,7 +20,7 @@ class RecordingsByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val recordingDao: RecordingDao,
-    private val recordingWorkDao: RecordingWorkDao,
+    private val recordingsByEntityDao: RecordingsByEntityDao,
     private val musicBrainzApi: MusicBrainzApi,
 ) : RecordingsByEntityRepository,
     BrowseEntitiesByEntity<RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
@@ -55,11 +55,9 @@ class RecordingsByEntityRepositoryImpl(
                     collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
-                MusicBrainzEntity.WORK -> {
-                    recordingWorkDao.deleteRecordingsByWork(entityId)
+                else -> {
+                    recordingsByEntityDao.deleteRecordingsByEntity(entityId)
                 }
-
-                else -> error(browseEntitiesNotSupported(entity))
             }
         }
     }
@@ -77,14 +75,12 @@ class RecordingsByEntityRepositoryImpl(
                 )
             }
 
-            MusicBrainzEntity.WORK -> {
-                recordingWorkDao.getRecordingsByWork(
-                    workId = entityId,
+            else -> {
+                recordingsByEntityDao.getRecordingsByEntity(
+                    entityId = entityId,
                     query = listFilters.query,
                 )
             }
-
-            else -> error(browseEntitiesNotSupported(entity))
         }
     }
 
@@ -93,23 +89,11 @@ class RecordingsByEntityRepositoryImpl(
         entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseRecordingsResponse {
-        return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
-                musicBrainzApi.browseRecordingsByCollection(
-                    collectionId = entityId,
-                    offset = offset,
-                )
-            }
-
-            MusicBrainzEntity.WORK -> {
-                musicBrainzApi.browseRecordingsByWork(
-                    workId = entityId,
-                    offset = offset,
-                )
-            }
-
-            else -> error(browseEntitiesNotSupported(entity))
-        }
+        return musicBrainzApi.browseRecordingsByEntity(
+            entityId = entityId,
+            entity = entity,
+            offset = offset,
+        )
     }
 
     override fun insertAllLinkingModels(
@@ -126,15 +110,11 @@ class RecordingsByEntityRepositoryImpl(
                 )
             }
 
-            MusicBrainzEntity.WORK -> {
-                recordingWorkDao.insertAll(
-                    workId = entityId,
+            else -> {
+                recordingsByEntityDao.insertAll(
+                    entityId = entityId,
                     recordingIds = musicBrainzModels.map { recording -> recording.id },
                 )
-            }
-
-            else -> {
-                error(browseEntitiesNotSupported(entity))
             }
         }
     }

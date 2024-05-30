@@ -112,9 +112,8 @@ class EventsByEntityRepositoryImpl(
 
             else -> {
                 eventsByEntityDao.insertAll(
-                    entityAndEventIds = musicBrainzModels.map { event ->
-                        entityId to event.id
-                    },
+                    entityId = entityId,
+                    eventIds = musicBrainzModels.map { event -> event.id },
                 )
             }
         }

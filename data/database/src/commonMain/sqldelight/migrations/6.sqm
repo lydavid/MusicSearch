@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS recordings_by_entity (
+  entity_id TEXT NOT NULL,
+  recording_id TEXT NOT NULL,
+
+  PRIMARY KEY (entity_id, recording_id)
+);

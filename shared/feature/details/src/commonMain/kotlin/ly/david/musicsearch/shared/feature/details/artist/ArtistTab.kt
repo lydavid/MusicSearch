@@ -4,6 +4,7 @@ import ly.david.ui.common.topappbar.Tab
 
 enum class ArtistTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),
+    RECORDINGS(Tab.RECORDINGS),
     RELEASE_GROUPS(Tab.RELEASE_GROUPS),
     RELEASES(Tab.RELEASES),
     EVENTS(Tab.EVENTS),

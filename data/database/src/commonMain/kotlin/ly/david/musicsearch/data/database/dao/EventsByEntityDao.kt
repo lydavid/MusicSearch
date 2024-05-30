@@ -31,10 +31,11 @@ class EventsByEntityDao(
     }
 
     fun insertAll(
-        entityAndEventIds: List<Pair<String, String>>,
+        entityId: String,
+        eventIds: List<String>,
     ) {
         transacter.transaction {
-            entityAndEventIds.forEach { (entityId, eventId) ->
+            eventIds.forEach { eventId ->
                 insert(
                     entityId = entityId,
                     eventId = eventId,

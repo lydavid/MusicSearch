@@ -1,33 +1,31 @@
-CREATE TABLE IF NOT EXISTS recording_work (
+CREATE TABLE IF NOT EXISTS recordings_by_entity (
+  entity_id TEXT NOT NULL,
   recording_id TEXT NOT NULL,
-  work_id TEXT NOT NULL,
 
-  PRIMARY KEY (recording_id, work_id)
+  PRIMARY KEY (entity_id, recording_id)
 );
 
 insert:
-INSERT OR IGNORE INTO recording_work
+INSERT OR IGNORE INTO recordings_by_entity
 VALUES ?;
 
-deleteRecordingsByWork:
+deleteRecordingsByEntity:
 DELETE FROM recording WHERE id IN (
   SELECT r.id
-  FROM recording r
-  INNER JOIN recording_work rw ON r.id = rw.recording_id
-  INNER JOIN work w ON w.id = rw.work_id
-  WHERE w.id = :workId
+  FROM recordings_by_entity re
+  INNER JOIN recording r ON r.id = re.recording_id
+  WHERE re.entity_id = :entityId
 );
 
-getNumberOfRecordingsByWork:
+getNumberOfRecordingsByEntity:
 SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT r.id)
-    FROM recording r
-    INNER JOIN recording_work rw ON r.id = rw.recording_id
-    INNER JOIN work w ON w.id = rw.work_id
+    FROM recordings_by_entity re
+    INNER JOIN recording r ON r.id = re.recording_id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-    WHERE w.id = :workId
+    WHERE re.entity_id = :entityId
     AND (
       r.name LIKE :query
       OR r.disambiguation LIKE :query
@@ -38,7 +36,7 @@ SELECT IFNULL(
   0
 ) AS count;
 
-getRecordingsByWork:
+getRecordingsByEntity:
 SELECT
   r.id,
   r.name,
@@ -47,12 +45,11 @@ SELECT
   r.length,
   r.video,
   ac.name AS artist_credits
-FROM recording r
-INNER JOIN recording_work rw ON r.id = rw.recording_id
-INNER JOIN work w ON w.id = rw.work_id
+FROM recordings_by_entity re
+INNER JOIN recording r ON r.id = re.recording_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-WHERE w.id = :workId
+WHERE re.entity_id = :entityId
 AND (
   r.name LIKE :query
   OR r.disambiguation LIKE :query

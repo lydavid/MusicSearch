@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.details.artist
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -9,24 +10,34 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.artist.ArtistScaffoldModel
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.data.spotify.ArtistImageRepository
 import ly.david.musicsearch.domain.artist.ArtistRepository
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.ui.common.event.EventsByEntityPresenter
 import ly.david.ui.common.event.EventsByEntityUiEvent
+import ly.david.ui.common.event.EventsByEntityUiState
+import ly.david.ui.common.recording.RecordingsByEntityPresenter
+import ly.david.ui.common.recording.RecordingsByEntityUiEvent
+import ly.david.ui.common.recording.RecordingsByEntityUiState
 import ly.david.ui.common.relation.RelationsPresenter
 import ly.david.ui.common.relation.RelationsUiEvent
+import ly.david.ui.common.relation.RelationsUiState
 import ly.david.ui.common.release.ReleasesByEntityPresenter
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
+import ly.david.ui.common.release.ReleasesByEntityUiState
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
+import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiState
 import ly.david.ui.common.screen.DetailsScreen
 
 internal class ArtistPresenter(
@@ -35,6 +46,7 @@ internal class ArtistPresenter(
     private val repository: ArtistRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
     private val eventsByEntityPresenter: EventsByEntityPresenter,
+    private val recordingsByEntityPresenter: RecordingsByEntityPresenter,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
     private val relationsPresenter: RelationsPresenter,
@@ -58,6 +70,8 @@ internal class ArtistPresenter(
 
         val eventsByEntityUiState = eventsByEntityPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
+        val recordingsByEntityUiState = recordingsByEntityPresenter.present()
+        val recordingsEventSink = recordingsByEntityUiState.eventSink
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
         val releaseGroupsByEntityUiState = releaseGroupsByEntityPresenter.present()
@@ -108,6 +122,16 @@ internal class ArtistPresenter(
                         ),
                     )
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
+                }
+
+                ArtistTab.RECORDINGS -> {
+                    recordingsEventSink(
+                        RecordingsByEntityUiEvent.Get(
+                            byEntityId = screen.id,
+                            byEntity = screen.entity,
+                        ),
+                    )
+                    recordingsEventSink(RecordingsByEntityUiEvent.UpdateQuery(query))
                 }
 
                 ArtistTab.RELEASES -> {
@@ -188,6 +212,7 @@ internal class ArtistPresenter(
             selectedTab = selectedTab,
             query = query,
             eventsByEntityUiState = eventsByEntityUiState,
+            recordingsByEntityUiState = recordingsByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
@@ -210,4 +235,33 @@ internal class ArtistPresenter(
             imageUrl
         }
     }
+}
+
+@Stable
+internal data class ArtistUiState(
+    val title: String,
+    val isError: Boolean,
+    val artist: ArtistScaffoldModel?,
+    val imageUrl: String,
+    val tabs: List<ArtistTab>,
+    val selectedTab: ArtistTab,
+    val query: String,
+    val eventsByEntityUiState: EventsByEntityUiState,
+    val recordingsByEntityUiState: RecordingsByEntityUiState,
+    val releasesByEntityUiState: ReleasesByEntityUiState,
+    val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
+    val relationsUiState: RelationsUiState,
+    val eventSink: (ArtistUiEvent) -> Unit,
+) : CircuitUiState
+
+internal sealed interface ArtistUiEvent : CircuitUiEvent {
+    data object NavigateUp : ArtistUiEvent
+    data object ForceRefresh : ArtistUiEvent
+    data class UpdateTab(val tab: ArtistTab) : ArtistUiEvent
+    data class UpdateQuery(val query: String) : ArtistUiEvent
+    data class ClickItem(
+        val entity: MusicBrainzEntity,
+        val id: String,
+        val title: String?,
+    ) : ArtistUiEvent
 }
