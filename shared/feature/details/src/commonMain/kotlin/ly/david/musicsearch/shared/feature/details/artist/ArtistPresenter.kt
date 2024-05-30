@@ -129,7 +129,7 @@ internal class ArtistPresenter(
                         RecordingsByEntityUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
-                        )
+                        ),
                     )
                     recordingsEventSink(RecordingsByEntityUiEvent.UpdateQuery(query))
                 }
