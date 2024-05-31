@@ -51,12 +51,28 @@ stable class ArtistPresenter {
   unstable val repository: ArtistRepository
   runtime val incrementLookupHistory: IncrementLookupHistory
   stable val eventsByEntityPresenter: EventsByEntityPresenter
+  stable val recordingsByEntityPresenter: RecordingsByEntityPresenter
   stable val releasesByEntityPresenter: ReleasesByEntityPresenter
   stable val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter
   stable val relationsPresenter: RelationsPresenter
   unstable val artistImageRepository: ArtistImageRepository
   unstable val logger: Logger
   <runtime stability> = Stable
+}
+stable class ArtistUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val artist: ArtistScaffoldModel?
+  stable val imageUrl: String
+  unstable val tabs: List<ArtistTab>
+  stable val selectedTab: ArtistTab
+  stable val query: String
+  stable val eventsByEntityUiState: EventsByEntityUiState
+  stable val recordingsByEntityUiState: RecordingsByEntityUiState
+  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<ArtistUiEvent, Unit>
 }
 stable class NavigateUp {
   <runtime stability> = Stable
@@ -77,20 +93,6 @@ stable class ClickItem {
   stable val id: String
   stable val title: String?
   <runtime stability> = Stable
-}
-stable class ArtistUiState {
-  stable val title: String
-  stable val isError: Boolean
-  unstable val artist: ArtistScaffoldModel?
-  stable val imageUrl: String
-  unstable val tabs: List<ArtistTab>
-  stable val selectedTab: ArtistTab
-  stable val query: String
-  stable val eventsByEntityUiState: EventsByEntityUiState
-  stable val releasesByEntityUiState: ReleasesByEntityUiState
-  stable val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState
-  stable val relationsUiState: RelationsUiState
-  stable val eventSink: Function1<ArtistUiEvent, Unit>
 }
 stable class EventPresenter {
   stable val screen: DetailsScreen
