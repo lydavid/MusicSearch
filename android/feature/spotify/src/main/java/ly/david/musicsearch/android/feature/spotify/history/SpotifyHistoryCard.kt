@@ -64,7 +64,8 @@ internal fun PreviewSpotifyHistoryCard() {
         Surface {
             SpotifyHistoryCard(
                 spotifyHistory = SpotifyHistoryListItemModel(
-                    id = "1di1C0QI6Y92yZPYn6XYAZ",
+                    id = "spotify:track:7ALurdGTM0BZMHhUcrM2AW${Instant.parse("2024-05-01T00:16:57.029Z")}",
+                    trackId = "spotify:track:7ALurdGTM0BZMHhUcrM2AW",
                     trackName = "シルエット",
                     artistName = "KANA-BOON",
                     albumName = "TIME",

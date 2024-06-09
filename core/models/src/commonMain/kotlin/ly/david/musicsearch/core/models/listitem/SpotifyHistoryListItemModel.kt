@@ -6,6 +6,7 @@ import ly.david.musicsearch.core.models.history.SpotifyHistory
 
 data class SpotifyHistoryListItemModel(
     override val id: String,
+    val trackId: String,
     val artistName: String? = null,
     val albumName: String? = null,
     val trackName: String? = null,
@@ -16,6 +17,7 @@ data class SpotifyHistoryListItemModel(
 fun SpotifyHistory.toSpotifyHistoryListItemModel(): SpotifyHistoryListItemModel {
     return SpotifyHistoryListItemModel(
         id = "$trackId$lastListened",
+        trackId = trackId,
         artistName = artistName,
         albumName = albumName,
         trackName = trackName,
