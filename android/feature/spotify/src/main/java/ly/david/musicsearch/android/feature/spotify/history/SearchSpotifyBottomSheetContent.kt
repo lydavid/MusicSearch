@@ -89,7 +89,7 @@ internal fun PreviewSearchSpotifyBottomSheetContent() {
                         trackName = "Take on Me",
                         artistName = "a-ha",
                         albumName = "Hunting High and Low",
-                        lastListened = Instant.parse("2024-05-01T00:16:57.029Z")
+                        lastListened = Instant.parse("2024-05-01T00:16:57.029Z"),
                     ),
                 )
             }
