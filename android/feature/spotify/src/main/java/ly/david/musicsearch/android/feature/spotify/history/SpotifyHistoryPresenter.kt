@@ -15,6 +15,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.spotify.SpotifyHistoryRepository
 import ly.david.ui.common.screen.SearchScreen
@@ -51,6 +52,27 @@ internal class SpotifyHistoryPresenter(
                         ),
                     )
                 }
+
+                is SpotifyUiEvent.MarkAsDeleted -> {
+                    spotifyHistoryRepository.markAsDeleted(
+                        trackId = event.history.trackId,
+                        listened = event.history.lastListened,
+                    )
+                }
+
+                is SpotifyUiEvent.UndoMarkAsDeleted -> {
+                    spotifyHistoryRepository.undoMarkAsDeleted(
+                        trackId = event.history.trackId,
+                        listened = event.history.lastListened,
+                    )
+                }
+
+                is SpotifyUiEvent.Delete -> {
+                    spotifyHistoryRepository.delete(
+                        trackId = event.history.trackId,
+                        listened = event.history.lastListened,
+                    )
+                }
             }
         }
 
@@ -76,4 +98,8 @@ internal sealed interface SpotifyUiEvent : CircuitUiEvent {
         val query: String,
         val entity: MusicBrainzEntity,
     ) : SpotifyUiEvent
+
+    data class MarkAsDeleted(val history: SpotifyHistoryListItemModel) : SpotifyUiEvent
+    data class UndoMarkAsDeleted(val history: SpotifyHistoryListItemModel) : SpotifyUiEvent
+    data class Delete(val history: SpotifyHistoryListItemModel) : SpotifyUiEvent
 }

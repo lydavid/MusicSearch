@@ -5,12 +5,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
+import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -20,6 +29,7 @@ import app.cash.paging.PagingData
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.models.common.getDateFormatted
 import ly.david.musicsearch.core.models.listitem.ListItemModel
@@ -58,9 +68,14 @@ internal fun SpotifyHistoryUi(
         onFilterTextChange = {
             eventSink(SpotifyUiEvent.UpdateQuery(it))
         },
+        onMarkAsDeleted = {
+            eventSink(SpotifyUiEvent.MarkAsDeleted(it))
+        },
+        onUndoMarkAsDeleted = {
+            eventSink(SpotifyUiEvent.UndoMarkAsDeleted(it))
+        },
         onDelete = {
-            // TODO: support deleting spotify history
-//            eventSink(NowPlayingHistoryUiEvent.DeleteHistory(id))
+            eventSink(SpotifyUiEvent.Delete(it))
         },
     )
 }
@@ -74,10 +89,14 @@ private fun SpotifyHistoryUi(
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
     filterText: String = "",
     onFilterTextChange: (String) -> Unit = {},
-    onDelete: (String) -> Unit = {},
+    onMarkAsDeleted: (SpotifyHistoryListItemModel) -> Unit = {},
+    onUndoMarkAsDeleted: (SpotifyHistoryListItemModel) -> Unit = {},
+    onDelete: (SpotifyHistoryListItemModel) -> Unit = {},
 ) {
     val strings = LocalStrings.current
     val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
         modifier = modifier,
@@ -91,6 +110,15 @@ private fun SpotifyHistoryUi(
                 onFilterTextChange = onFilterTextChange,
             )
         },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
+                SwipeToDismissBox(
+                    state = rememberSwipeToDismissBoxState(),
+                    backgroundContent = {},
+                    content = { Snackbar(snackbarData) },
+                )
+            }
+        },
     ) { innerPadding ->
         SpotifyHistoryContent(
             lazyPagingItems = lazyPagingItems,
@@ -98,7 +126,27 @@ private fun SpotifyHistoryUi(
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             searchMusicBrainz = searchMusicBrainz,
-            onDelete = onDelete,
+            onDelete = { history ->
+                scope.launch {
+                    onMarkAsDeleted(history)
+
+                    val snackbarResult = snackbarHostState.showSnackbar(
+                        message = "Removed ${history.trackName}",
+                        actionLabel = "Undo",
+                        duration = SnackbarDuration.Short,
+                    )
+
+                    when (snackbarResult) {
+                        SnackbarResult.ActionPerformed -> {
+                            onUndoMarkAsDeleted(history)
+                        }
+
+                        SnackbarResult.Dismissed -> {
+                            onDelete(history)
+                        }
+                    }
+                }
+            },
         )
     }
 }
@@ -112,7 +160,7 @@ private fun SpotifyHistoryContent(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
-    onDelete: (String) -> Unit = {},
+    onDelete: (SpotifyHistoryListItemModel) -> Unit = {},
 ) {
     var clickListItem: SpotifyHistoryListItemModel? by rememberSaveable { mutableStateOf(null) }
 
@@ -154,7 +202,7 @@ private fun SpotifyHistoryContent(
                         )
                     },
                     onDelete = {
-                        onDelete(listItemModel.id)
+                        onDelete(listItemModel)
                     },
                 )
             }
@@ -181,6 +229,7 @@ internal fun PreviewNowPlayingHistoryUi() {
                         ),
                         SpotifyHistoryListItemModel(
                             id = "spotify:track:2ritsV4U3jq2LduJpovZ1A${Instant.parse("2024-05-01T02:29:38.973Z")}",
+                            trackId = "spotify:track:2ritsV4U3jq2LduJpovZ1A",
                             trackName = "だれかの心臓になれたなら",
                             artistName = "Yurry Canon",
                             albumName = "Kardia",
@@ -188,7 +237,8 @@ internal fun PreviewNowPlayingHistoryUi() {
                             lastListened = Instant.parse("2024-05-01T02:29:38.973Z"),
                         ),
                         SpotifyHistoryListItemModel(
-                            id = "3hRRYgBeunE3PTmnzATTS0${Instant.parse("2024-05-01T02:29:38.973Z")}",
+                            id = "spotify:track:3hRRYgBeunE3PTmnzATTS0${Instant.parse("2024-05-01T02:29:38.973Z")}",
+                            trackId = "spotify:track:3hRRYgBeunE3PTmnzATTS0",
                             trackName = "天体観測",
                             artistName = "BUMP OF CHICKEN",
                             albumName = "jupiter",
@@ -200,6 +250,7 @@ internal fun PreviewNowPlayingHistoryUi() {
                         ),
                         SpotifyHistoryListItemModel(
                             id = "spotify:track:2ritsV4U3jq2LduJpovZ1A${Instant.parse("2024-04-30T02:29:38.973Z")}",
+                            trackId = "spotify:track:2ritsV4U3jq2LduJpovZ1A",
                             trackName = "だれかの心臓になれたなら",
                             artistName = "Yurry Canon",
                             albumName = "Kardia",

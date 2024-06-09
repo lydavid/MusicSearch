@@ -33,6 +33,7 @@ class SpotifyHistoryDao(
                     Spotify_track_listen(
                         track_id = trackId,
                         listened = lastListened,
+                        deleted = false,
                     ),
                 )
             }
@@ -56,6 +57,28 @@ class SpotifyHistoryDao(
             )
         },
     )
+
+    fun markAsDeleted(
+        trackId: String,
+        listened: Instant,
+        deleted: Boolean,
+    ) {
+        transacter.markAsDeleted(
+            deleted = deleted,
+            trackId = trackId,
+            listened = listened,
+        )
+    }
+
+    fun delete(
+        trackId: String,
+        listened: Instant,
+    ) {
+        transacter.delete(
+            trackId = trackId,
+            listened = listened,
+        )
+    }
 }
 
 private fun mapToSpotifyHistory(

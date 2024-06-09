@@ -6,6 +6,7 @@ import app.cash.paging.insertSeparators
 import app.cash.paging.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.models.common.getDateFormatted
 import ly.david.musicsearch.core.models.history.SpotifyHistory
 import ly.david.musicsearch.core.models.listitem.ListItemModel
@@ -53,7 +54,35 @@ class SpotifyHistoryRepositoryImpl(
         }
     }
 
-    override fun delete(raw: String) {
-        TODO("Not yet implemented")
+    override fun markAsDeleted(
+        trackId: String,
+        listened: Instant,
+    ) {
+        spotifyHistoryDao.markAsDeleted(
+            trackId = trackId,
+            listened = listened,
+            deleted = true,
+        )
+    }
+
+    override fun undoMarkAsDeleted(
+        trackId: String,
+        listened: Instant,
+    ) {
+        spotifyHistoryDao.markAsDeleted(
+            trackId = trackId,
+            listened = listened,
+            deleted = false,
+        )
+    }
+
+    override fun delete(
+        trackId: String,
+        listened: Instant,
+    ) {
+        spotifyHistoryDao.delete(
+            trackId = trackId,
+            listened = listened,
+        )
     }
 }

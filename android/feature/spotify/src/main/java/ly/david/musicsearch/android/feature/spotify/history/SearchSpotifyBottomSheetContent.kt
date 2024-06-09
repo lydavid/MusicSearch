@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -83,10 +84,12 @@ internal fun PreviewSearchSpotifyBottomSheetContent() {
             Column {
                 SearchSpotifyBottomSheetContent(
                     spotifyHistory = SpotifyHistoryListItemModel(
-                        id = "1",
+                        id = "spotify:track:2WfaOiMkCvy7F5fcp2zZ8L${Instant.parse("2024-05-01T00:16:57.029Z")}",
+                        trackId = "spotify:track:2WfaOiMkCvy7F5fcp2zZ8L",
                         trackName = "Take on Me",
                         artistName = "a-ha",
                         albumName = "Hunting High and Low",
+                        lastListened = Instant.parse("2024-05-01T00:16:57.029Z"),
                     ),
                 )
             }
