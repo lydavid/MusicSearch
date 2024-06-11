@@ -116,11 +116,13 @@ jobs:
           releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
           mappingFile: android/app/build/outputs/mapping/release/mapping.txt
 
-      - name: Assemble desktop tar and zip
+      - name: Create jars
         if: always()
-        run: ./gradlew desktop:app:assembleDist
+        run: ./gradlew jar
 
-      - uses: hydraulic-software/conveyor/actions/build@v14.2
+      - name: Create desktop distributions
+        uses: hydraulic-software/conveyor/actions/build@v14.2
+        if: always()
         with:
           signing_key: ${{ secrets.SIGNING_KEY }}
           agree_to_license: 1
