@@ -1,3 +1,0 @@
-import kotlin.Boolean;
-
-ALTER TABLE spotify_track_listen ADD COLUMN `deleted` INTEGER AS Boolean NOT NULL;
