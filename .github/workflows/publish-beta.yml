@@ -6,6 +6,7 @@ name: Publish beta build
 # eg. If only chores were committed, then there would be no new GitHub release.
 # Google Play allows us to reuse versionName, so it isn't a problem for our releases to be out of sync.
 on:
+  push: # TODO: remove
   schedule:
     - cron: '42 7 * * *'
   workflow_dispatch:
@@ -118,6 +119,12 @@ jobs:
       - name: Assemble desktop tar and zip
         if: always()
         run: ./gradlew desktop:app:assembleDist
+
+      - uses: hydraulic-software/conveyor/actions/build@v14.2
+        with:
+          signing_key: ${{ secrets.SIGNING_KEY }}
+          agree_to_license: 1
+          command: make copied-site
 
       - name: Merge with origin in case changes have been pushed since job start
         if: always()

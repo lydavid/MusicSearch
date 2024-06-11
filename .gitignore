@@ -41,3 +41,6 @@ music_search.db
 
 # Xcode
 xcuserdata/
+
+# Conveyor desktop distribution
+output/
