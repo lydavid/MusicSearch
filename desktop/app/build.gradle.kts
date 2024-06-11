@@ -11,9 +11,7 @@ application {
 }
 
 group = "io.github.lydavid.musicsearch"
-version = "1.2.0" // project.properties["VERSION_NAME"] as String
-// TODO: transform VERSION_NAME to an appropriate version for other platforms
-//  need to merge -beta.13 into the patch version
+version = getDesktopVersion()
 
 aboutLibraries {
     excludeFields = arrayOf("generated")
@@ -41,7 +39,13 @@ dependencies {
 configurations.all {
     attributes {
         // https://github.com/JetBrains/compose-jb/issues/1404#issuecomment-1146894731
-        attribute(Attribute.of("ui", String::class.java), "awt")
+        attribute(
+            Attribute.of(
+                "ui",
+                String::class.java,
+            ),
+            "awt",
+        )
     }
 }
 
@@ -49,4 +53,23 @@ java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(19))
     }
+}
+
+/**
+ * Transform a version name to the format MAJOR.MINOR.PATCH, where each part is a number.
+ *
+ * e.g. 1.2.1-beta.14 to 1.2.114
+ */
+fun getDesktopVersion(): String {
+    var versionName = project.properties["VERSION_NAME"] as String
+    val parts = versionName.split("-")
+    val versionPart = parts.first()
+    val betaPart = parts.last()
+    if (versionPart != betaPart) {
+        val splitVersion = versionPart.split(".")
+        val betaNum = betaPart.split(".").last().toInt()
+        val modifiedPatch = splitVersion.last().toInt() * 100 + betaNum
+        versionName = "${splitVersion[0]}.${splitVersion[1]}.$modifiedPatch"
+    }
+    return versionName
 }
