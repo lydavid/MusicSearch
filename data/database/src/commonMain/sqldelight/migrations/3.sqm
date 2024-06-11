@@ -1,2 +1,0 @@
-DROP TABLE IF EXISTS area_event;
-DROP TABLE IF EXISTS event_place;

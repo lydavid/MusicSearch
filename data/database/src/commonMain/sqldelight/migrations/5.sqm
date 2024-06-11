@@ -1,6 +1,0 @@
-CREATE TABLE IF NOT EXISTS artists_by_entity (
-  entity_id TEXT NOT NULL,
-  artist_id TEXT NOT NULL,
-
-  PRIMARY KEY (entity_id, artist_id)
-);

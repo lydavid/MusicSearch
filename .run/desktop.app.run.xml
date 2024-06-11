@@ -1,9 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="desktop.app" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="MainKt" />
-    <module name="MusicSearch.desktop.app.main" />
-    <method v="2">
-      <option name="Make" enabled="true" />
-    </method>
-  </configuration>
-</component>

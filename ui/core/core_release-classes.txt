@@ -1,3 +1,0 @@
-stable class TextStyles {
-  <runtime stability> = Stable
-}

@@ -1,3 +1,0 @@
-INSERT INTO recordings_by_entity (entity_id, recording_id)
-SELECT work_id AS entity_id, recording_id
-FROM recording_work;
