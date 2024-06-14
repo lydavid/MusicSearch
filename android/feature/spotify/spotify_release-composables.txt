@@ -38,7 +38,15 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHi
 
 }
 
-  stable onDelete: Function1<String, Unit>? = @static { it: String ->
+  stable onMarkAsDeleted: Function1<SpotifyHistoryListItemModel, Unit>? = @static { it: SpotifyHistoryListItemModel ->
+
+}
+
+  stable onUndoMarkAsDeleted: Function1<SpotifyHistoryListItemModel, Unit>? = @static { it: SpotifyHistoryListItemModel ->
+
+}
+
+  stable onDelete: Function1<SpotifyHistoryListItemModel, Unit>? = @static { it: SpotifyHistoryListItemModel ->
 
 }
 
@@ -50,7 +58,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHi
 
 }
 
-  stable onDelete: Function1<String, Unit>? = @static { it: String ->
+  stable onDelete: Function1<SpotifyHistoryListItemModel, Unit>? = @static { it: SpotifyHistoryListItemModel ->
 
 }
 

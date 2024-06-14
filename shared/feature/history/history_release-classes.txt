@@ -7,6 +7,12 @@ stable class HistoryPresenter {
   runtime val deleteLookupHistory: DeleteLookupHistory
   <runtime stability> = Stable
 }
+stable class HistoryUiState {
+  stable val query: String
+  stable val sortOption: HistorySortOption
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable val eventSink: Function1<HistoryUiEvent, Unit>
+}
 stable class UpdateQuery {
   stable val query: String
   <runtime stability> = Stable
@@ -41,10 +47,4 @@ stable class ClickItem {
   stable val id: String
   stable val title: String?
   <runtime stability> = Stable
-}
-stable class HistoryUiState {
-  stable val query: String
-  stable val sortOption: HistorySortOption
-  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
-  stable val eventSink: Function1<HistoryUiEvent, Unit>
 }

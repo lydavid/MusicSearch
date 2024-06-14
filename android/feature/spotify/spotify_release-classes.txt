@@ -31,3 +31,15 @@ stable class GoToSearch {
   stable val entity: MusicBrainzEntity
   <runtime stability> = Stable
 }
+stable class MarkAsDeleted {
+  unstable val history: SpotifyHistoryListItemModel
+  <runtime stability> = Stable
+}
+stable class UndoMarkAsDeleted {
+  unstable val history: SpotifyHistoryListItemModel
+  <runtime stability> = Stable
+}
+stable class Delete {
+  unstable val history: SpotifyHistoryListItemModel
+  <runtime stability> = Stable
+}
