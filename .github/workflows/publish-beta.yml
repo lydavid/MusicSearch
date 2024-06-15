@@ -99,36 +99,37 @@ jobs:
       - name: Assemble apk, bundle aab
         run: ./gradlew assembleRelease bundleRelease
 
-      - name: Authenticate to Google Cloud
-        id: auth
-        uses: google-github-actions/auth@v2.1.3
-        with:
-          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-          service_account: ${{ secrets.SERVICE_ACCOUNT }}
-
-      - name: Publish build to Google Play's beta track
-        id: publish_play_store
-        uses: r0adkll/upload-google-play@v1.1.3
-        with:
-          serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
-          packageName: io.github.lydavid.musicsearch
-          track: beta
-          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
-          mappingFile: android/app/build/outputs/mapping/release/mapping.txt
+# TODO: uncomment
+#      - name: Authenticate to Google Cloud
+#        id: auth
+#        uses: google-github-actions/auth@v2.1.3
+#        with:
+#          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+#          service_account: ${{ secrets.SERVICE_ACCOUNT }}
+#
+#      - name: Publish build to Google Play's beta track
+#        id: publish_play_store
+#        uses: r0adkll/upload-google-play@v1.1.3
+#        with:
+#          serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
+#          packageName: io.github.lydavid.musicsearch
+#          track: beta
+#          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
+#          mappingFile: android/app/build/outputs/mapping/release/mapping.txt
 
       - name: Create jars
         if: always()
         run: ./gradlew jar
 
       - name: Create desktop distributions
-        uses: hydraulic-software/conveyor/actions/build@v14.2
+        uses: hydraulic-software/conveyor/actions/build@v14.3
         if: always()
         with:
           signing_key: ${{ secrets.SIGNING_KEY }}
           agree_to_license: 1
-          command: make copied-site
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          command: make site
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - name: Commit version code bump
         uses: stefanzweifel/git-auto-commit-action@v5.0.1
@@ -140,6 +141,6 @@ jobs:
 
       - name: Publish to GitHub
         if: always()
-        run: npx semantic-release
+        run: npx semantic-release --dry-run # TODO: remove --dry-run
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
