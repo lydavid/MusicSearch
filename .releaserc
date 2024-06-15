@@ -2,7 +2,7 @@
   "branches": [
     "master",
     {"name": "beta", "prerelease": true},
-    {"name": "dl/conveyor-distribute-desktop", "prerelease": true},
+    {"name": "alpha", "prerelease": true},
   ],
   "repositoryUrl": "https://github.com/lydavid/MusicSearch",
   "debug": "false",
@@ -14,7 +14,7 @@
       "@semantic-release/github",
       {
         "assets": [
-            "android/app/build/outputs/apk/release/*.apk",
+            { path: "android/app/build/outputs/apk/release/*.apk", "label": "Android distribution" },
             "output/*"
         ],
         "successComment": false,
