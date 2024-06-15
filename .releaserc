@@ -13,9 +13,8 @@
       "@semantic-release/github",
       {
         "assets": [
-            "android/app/build/outputs/apk/release/*.apk",
-            "desktop/app/build/distributions/*.tar",
-            "desktop/app/build/distributions/*.zip"
+            { path: "android/app/build/outputs/apk/release/*.apk", "label": "Android distribution" },
+            "output/*"
         ],
         "successComment": false,
         "failTitle": false

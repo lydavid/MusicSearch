@@ -80,8 +80,14 @@ subprojects {
 }
 
 // Debugging info copied from https://github.com/JFormDesigner/markdown-writer-fx/blob/62bab275f8b32ced1aae80b64ff3389c7c4f5e8c/build.gradle.kts#L30
-println("Java ${System.getProperty("java.version")} ${System.getProperty("java.vendor")}")
-println("Gradle ${gradle.gradleVersion} at ${gradle.gradleHomeDir}")
+project.logger.log(
+    LogLevel.DEBUG,
+    "Java ${System.getProperty("java.version")} ${System.getProperty("java.vendor")}",
+)
+project.logger.log(
+    LogLevel.DEBUG,
+    "Gradle ${gradle.gradleVersion} at ${gradle.gradleHomeDir}",
+)
 
 // Android Studio highlighting in standalone gradle.kts scripts seems to be broken:
 // https://issuetracker.google.com/issues/293048764

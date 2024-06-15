@@ -115,15 +115,17 @@ jobs:
           releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
           mappingFile: android/app/build/outputs/mapping/release/mapping.txt
 
-      - name: Assemble desktop tar and zip
+      - name: Create jars
         if: always()
-        run: ./gradlew desktop:app:assembleDist
+        run: ./gradlew jar
 
-      - name: Merge with origin in case changes have been pushed since job start
+      - name: Create desktop distributions
+        uses: hydraulic-software/conveyor/actions/build@v14.3
         if: always()
-        run: |
-          git fetch
-          git merge -X ours origin/beta
+        with:
+          signing_key: ${{ secrets.SIGNING_KEY }}
+          agree_to_license: 1
+          command: make site
 
       - name: Commit version code bump
         uses: stefanzweifel/git-auto-commit-action@v5.0.1

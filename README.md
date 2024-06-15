@@ -3,10 +3,20 @@
 An Android app for browsing songs, artists, and anything related to them
 using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 
+## Releases
+
+The [master branch](https://github.com/lydavid/MusicSearch/tree/master) Android app is available on Google Play.
+Or you can you can download its APK from the [latest GitHub Release](https://github.com/lydavid/MusicSearch/releases/latest/).
+
+The [beta branch](https://github.com/lydavid/MusicSearch) Android app is available on Google Play as a beta tester.
+Or you can you can download its APK from the top of [all GitHub Releases](https://github.com/lydavid/MusicSearch/releases/).
+
 <a href="https://play.google.com/store/apps/details?id=io.github.lydavid.musicsearch">
     <img alt="Get it on Google Play" height="80"
         src="https://play.google.com/intl/en_ca/badges/static/images/badges/en_badge_web_generic.png" />
 </a>
+
+Desktop releases are packaged by [Conveyor](https://www.hydraulic.dev/) and available from [GitHub Releases](https://github.com/lydavid/MusicSearch/releases/).
 
 ## Features
 
