@@ -128,6 +128,7 @@ internal fun AreaUi(
 
         val detailsLazyListState = rememberLazyListState()
         val relationsLazyListState = rememberLazyListState()
+        val artistsLazyListState = rememberLazyListState()
         val eventsLazyListState = rememberLazyListState()
         val releasesLazyListState = rememberLazyListState()
         val placesLazyListState = rememberLazyListState()
@@ -190,7 +191,7 @@ internal fun AreaUi(
 
                 AreaTab.ARTISTS -> {
                     ArtistsListScreen(
-                        lazyListState = eventsLazyListState,
+                        lazyListState = artistsLazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
