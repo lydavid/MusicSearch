@@ -193,6 +193,11 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/series/44d6cf07
 
 ## Work
 
+Work with many artists
+```shell
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/work/82cbbd32-3b19-3fd7-b409-49d1dbededd5" -a android.intent.action.VIEW
+```
+
 Work with work attributes, url-rels
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/work/412c8cf4-6905-3b4b-a59a-1a71f98e2677" -a android.intent.action.VIEW

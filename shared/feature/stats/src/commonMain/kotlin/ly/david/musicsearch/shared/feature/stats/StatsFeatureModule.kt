@@ -108,6 +108,7 @@ val statsFeatureModule = module {
                                 screen = screen,
                                 getCountOfEachRelationshipTypeUseCase = get(),
                                 observeBrowseEntityCount = get(),
+                                artistsByEntityDao = get(),
                                 recordingsByEntityDao = get(),
                             )
                         }

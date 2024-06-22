@@ -193,6 +193,7 @@ val detailsFeatureModule = module {
                                 repository = get(),
                                 incrementLookupHistory = get(),
                                 relationsPresenter = get(),
+                                artistsByEntityPresenter = get(),
                                 recordingsByEntityPresenter = get(),
                                 logger = get(),
                             )

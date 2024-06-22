@@ -21,6 +21,7 @@ import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.ui.common.artist.ArtistsListScreen
 import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.recording.RecordingsListScreen
@@ -106,6 +107,7 @@ internal fun WorkUi(
     ) { innerPadding ->
 
         val detailsLazyListState = rememberLazyListState()
+        val artistsLazyListState = rememberLazyListState()
         val recordingsLazyListState = rememberLazyListState()
         val relationsLazyListState = rememberLazyListState()
 
@@ -141,6 +143,27 @@ internal fun WorkUi(
                             },
                         )
                     }
+                }
+
+                WorkTab.ARTISTS -> {
+                    ArtistsListScreen(
+                        lazyListState = artistsLazyListState,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.artistsByEntityUiState.lazyPagingItems,
+                        onItemClick = { entity, id, title ->
+                            eventSink(
+                                WorkUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
+                                ),
+                            )
+                        },
+                    )
                 }
 
                 WorkTab.RECORDINGS -> {

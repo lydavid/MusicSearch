@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingsByEntityDao
 import ly.david.musicsearch.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
@@ -18,6 +19,7 @@ internal class WorkStatsPresenter(
     private val screen: StatsScreen,
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
+    private val artistsByEntityDao: ArtistsByEntityDao,
     private val recordingsByEntityDao: RecordingsByEntityDao,
 ) : Presenter<StatsUiState> {
 
@@ -34,20 +36,43 @@ internal class WorkStatsPresenter(
     private fun getStats(entityId: String): Flow<Stats> =
         combine(
             getCountOfEachRelationshipTypeUseCase(entityId),
+            artistStats(entityId),
+            recordingStats(entityId),
+        ) { relationTypeCounts, artistStats, recordingStats ->
+            Stats(
+                totalRelations = relationTypeCounts.sumOf { it.count },
+                relationTypeCounts = relationTypeCounts.toImmutableList(),
+                artistStats = artistStats,
+                recordingStats = recordingStats,
+            )
+        }
+            .distinctUntilChanged()
+
+    private fun artistStats(entityId: String): Flow<ArtistStats> =
+        combine(
+            observeBrowseEntityCount(
+                entityId,
+                MusicBrainzEntity.ARTIST,
+            ),
+            artistsByEntityDao.getNumberOfArtistsByEntity(entityId),
+        ) { browseRecordingCount, localRecordings ->
+            ArtistStats(
+                totalRemote = browseRecordingCount?.remoteCount,
+                totalLocal = localRecordings,
+            )
+        }
+
+    private fun recordingStats(entityId: String): Flow<RecordingStats> =
+        combine(
             observeBrowseEntityCount(
                 entityId,
                 MusicBrainzEntity.RECORDING,
             ),
             recordingsByEntityDao.getNumberOfRecordingsByEntity(entityId),
-        ) { relationTypeCounts, browseRecordingCount, localRecordings ->
-            Stats(
-                totalRelations = relationTypeCounts.sumOf { it.count },
-                relationTypeCounts = relationTypeCounts.toImmutableList(),
-                recordingStats = RecordingStats(
-                    totalRemote = browseRecordingCount?.remoteCount,
-                    totalLocal = localRecordings,
-                ),
+        ) { browseRecordingCount, localRecordings ->
+            RecordingStats(
+                totalRemote = browseRecordingCount?.remoteCount,
+                totalLocal = localRecordings,
             )
         }
-            .distinctUntilChanged()
 }
