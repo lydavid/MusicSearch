@@ -17,7 +17,7 @@ jobs:
           token: ${{ secrets.PAT }}
 
       - run: |
-          echo "hello" > world3.txt
+          echo "hello" > world4.txt
 
       - uses: tibdex/github-app-token@v1
         id: generate-token
@@ -30,4 +30,6 @@ jobs:
         with:
           commit_message: 'by musicsearch-gha-helper'
           token: ${{ steps.generate-token.outputs.token }}
+          commit_user_name: musicsearch-gha-helper[bot]
+          commit_user_email: 173635759+musicsearch-gha-helper[bot]@users.noreply.github.com
           commit_author: musicsearch-gha-helper[bot] <173635759+musicsearch-gha-helper[bot]@users.noreply.github.com>
