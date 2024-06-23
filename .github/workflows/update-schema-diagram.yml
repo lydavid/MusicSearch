@@ -55,7 +55,7 @@ jobs:
 
       - run: git pull --rebase --autostash
 
-      - uses: tibdex/github-app-token@v1
+      - uses: tibdex/github-app-token@v2
         id: generate-token
         with:
           app_id: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_ID }}
