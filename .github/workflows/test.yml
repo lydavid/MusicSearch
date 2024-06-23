@@ -17,7 +17,7 @@ jobs:
           token: ${{ secrets.PAT }}
 
       - run: |
-          echo "hello" > world2.txt
+          echo "hello" > world3.txt
 
       - uses: tibdex/github-app-token@v1
         id: generate-token
@@ -28,6 +28,6 @@ jobs:
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
-          commit_message: 'chore: test if robot commit can trigger workflow with commit_author'
+          commit_message: 'by musicsearch-gha-helper'
           token: ${{ steps.generate-token.outputs.token }}
-          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          commit_author: musicsearch-gha-helper[bot] <173635759+musicsearch-gha-helper[bot]@users.noreply.github.com>
