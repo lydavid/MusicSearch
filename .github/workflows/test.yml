@@ -17,7 +17,7 @@ jobs:
           token: ${{ secrets.PAT }}
 
       - run: |
-          echo "hello" > world.txt
+          echo "hello" > world2.txt
 
       - uses: tibdex/github-app-token@v1
         id: generate-token
