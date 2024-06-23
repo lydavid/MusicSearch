@@ -156,8 +156,9 @@ interface BrowseApi {
         offset: Int = 0,
     ): BrowseSeriesResponse
 
-    suspend fun browseWorksByCollection(
-        collectionId: String,
+    suspend fun browseWorksByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
     ): BrowseWorksResponse
@@ -651,8 +652,9 @@ interface BrowseApiImpl : BrowseApi {
         }.body()
     }
 
-    override suspend fun browseWorksByCollection(
-        collectionId: String,
+    override suspend fun browseWorksByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
     ): BrowseWorksResponse {
@@ -660,8 +662,8 @@ interface BrowseApiImpl : BrowseApi {
             url {
                 appendPathSegments("work")
                 parameter(
-                    "collection",
-                    collectionId,
+                    entity.resourceUri,
+                    entityId,
                 )
                 parameter(
                     "limit",

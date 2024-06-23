@@ -38,6 +38,7 @@ import ly.david.musicsearch.data.database.dao.SpotifyHistoryDao
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
+import ly.david.musicsearch.data.database.dao.WorksByEntityDao
 import org.koin.dsl.module
 
 val databaseDaoModule = module {
@@ -77,5 +78,6 @@ val databaseDaoModule = module {
     single { TrackDao(get(), get(), get()) }
     single { WorkAttributeDao(get()) }
     single { WorkDao(get()) }
+    single { WorksByEntityDao(get(), get()) }
     single { SpotifyHistoryDao(get(), get()) }
 }

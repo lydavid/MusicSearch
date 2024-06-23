@@ -3,19 +3,21 @@ package ly.david.musicsearch.data.repository.work
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.BrowseWorksResponse
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.WorkListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.WorkDao
+import ly.david.musicsearch.data.database.dao.WorksByEntityDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowseWorksResponse
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.domain.work.WorksByEntityRepository
 
 class WorksByEntityRepositoryImpl(
+    private val worksByEntityDao: WorksByEntityDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val workDao: WorkDao,
@@ -53,7 +55,9 @@ class WorksByEntityRepositoryImpl(
                     collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
-                else -> error(browseEntitiesNotSupported(entity))
+                else -> {
+                    worksByEntityDao.deleteWorksByEntity(entityId)
+                }
             }
         }
     }
@@ -71,7 +75,12 @@ class WorksByEntityRepositoryImpl(
                 )
             }
 
-            else -> error(browseEntitiesNotSupported(entity))
+            else -> {
+                worksByEntityDao.getWorksByEntity(
+                    entityId = entityId,
+                    query = listFilters.query,
+                )
+            }
         }
     }
 
@@ -80,16 +89,11 @@ class WorksByEntityRepositoryImpl(
         entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseWorksResponse {
-        return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
-                musicBrainzApi.browseWorksByCollection(
-                    collectionId = entityId,
-                    offset = offset,
-                )
-            }
-
-            else -> error(browseEntitiesNotSupported(entity))
-        }
+        return musicBrainzApi.browseWorksByEntity(
+            entityId = entityId,
+            entity = entity,
+            offset = offset,
+        )
     }
 
     override fun insertAllLinkingModels(
@@ -107,7 +111,10 @@ class WorksByEntityRepositoryImpl(
             }
 
             else -> {
-                error(browseEntitiesNotSupported(entity))
+                worksByEntityDao.insertAll(
+                    entityId,
+                    workIds = musicBrainzModels.map { work -> work.id },
+                )
             }
         }
     }

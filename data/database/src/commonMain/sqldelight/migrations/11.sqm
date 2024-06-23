@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS works_by_entity (
+  entity_id TEXT NOT NULL,
+  work_id TEXT NOT NULL,
+
+  PRIMARY KEY (entity_id, work_id)
+);

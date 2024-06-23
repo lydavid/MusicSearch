@@ -16,6 +16,7 @@ internal data class Stats(
     val recordingStats: RecordingStats = RecordingStats(),
     val releaseStats: ReleaseStats = ReleaseStats(),
     val releaseGroupStats: ReleaseGroupStats = ReleaseGroupStats(),
+    val workStats: WorkStats = WorkStats(),
 )
 
 internal data class ArtistStats(
@@ -47,4 +48,9 @@ internal data class ReleaseGroupStats(
     val totalRemote: Int? = null,
     val totalLocal: Int = 0,
     val releaseGroupTypeCounts: ImmutableList<ReleaseGroupTypeCount> = persistentListOf(),
+)
+
+internal data class WorkStats(
+    val totalRemote: Int? = null,
+    val totalLocal: Int = 0,
 )

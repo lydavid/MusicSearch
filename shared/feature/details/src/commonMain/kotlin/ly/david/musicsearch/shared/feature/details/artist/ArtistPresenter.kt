@@ -39,6 +39,9 @@ import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiState
 import ly.david.ui.common.screen.DetailsScreen
+import ly.david.ui.common.work.WorksByEntityPresenter
+import ly.david.ui.common.work.WorksByEntityUiEvent
+import ly.david.ui.common.work.WorksByEntityUiState
 
 internal class ArtistPresenter(
     private val screen: DetailsScreen,
@@ -49,6 +52,7 @@ internal class ArtistPresenter(
     private val recordingsByEntityPresenter: RecordingsByEntityPresenter,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
+    private val worksByEntityPresenter: WorksByEntityPresenter,
     private val relationsPresenter: RelationsPresenter,
     private val artistImageRepository: ArtistImageRepository,
     private val logger: Logger,
@@ -78,6 +82,8 @@ internal class ArtistPresenter(
         val releaseGroupsEventSink = releaseGroupsByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
+        val worksByEntityUiState = worksByEntityPresenter.present()
+        val worksEventSink = worksByEntityUiState.eventSink
 
         LaunchedEffect(forceRefreshDetails) {
             try {
@@ -165,6 +171,16 @@ internal class ArtistPresenter(
                     eventsEventSink(EventsByEntityUiEvent.UpdateQuery(query))
                 }
 
+                ArtistTab.WORKS -> {
+                    worksEventSink(
+                        WorksByEntityUiEvent.Get(
+                            byEntityId = screen.id,
+                            byEntity = screen.entity,
+                        ),
+                    )
+                    worksEventSink(WorksByEntityUiEvent.UpdateQuery(query))
+                }
+
                 ArtistTab.STATS -> {
                     // Handled in UI
                 }
@@ -215,6 +231,7 @@ internal class ArtistPresenter(
             recordingsByEntityUiState = recordingsByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
+            worksByEntityUiState = worksByEntityUiState,
             relationsUiState = relationsUiState,
             eventSink = ::eventSink,
         )
@@ -250,6 +267,7 @@ internal data class ArtistUiState(
     val recordingsByEntityUiState: RecordingsByEntityUiState,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
+    val worksByEntityUiState: WorksByEntityUiState,
     val relationsUiState: RelationsUiState,
     val eventSink: (ArtistUiEvent) -> Unit,
 ) : CircuitUiState

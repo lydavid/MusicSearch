@@ -16,6 +16,7 @@ enum class Tab {
     RELEASE_GROUPS,
     STATS,
     TRACKS,
+    WORKS,
 }
 
 fun Tab.getTitle(strings: AppStrings): String {
@@ -30,5 +31,6 @@ fun Tab.getTitle(strings: AppStrings): String {
         Tab.RELEASE_GROUPS -> strings.releaseGroups
         Tab.STATS -> strings.stats
         Tab.TRACKS -> strings.tracks
+        Tab.WORKS -> strings.works
     }
 }

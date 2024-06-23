@@ -97,6 +97,15 @@ internal fun StatsUi(
                     )
                 }
 
+                Tab.WORKS -> {
+                    addEntitiesStatsSection(
+                        totalRemote = stats.workStats.totalRemote,
+                        totalLocal = stats.workStats.totalLocal,
+                        header = strings.works,
+                        cachedLocalOfRemote = strings.cachedReleases,
+                    )
+                }
+
                 else -> {
                     // No stats for these tabs yet.
                 }

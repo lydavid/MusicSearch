@@ -9,6 +9,7 @@ import ly.david.ui.common.track.TracksByReleasePresenter
 import ly.david.ui.common.relation.RelationsPresenter
 import ly.david.ui.common.release.ReleasesByEntityPresenter
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
+import ly.david.ui.common.work.WorksByEntityPresenter
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
@@ -21,6 +22,7 @@ val commonUiModule = module {
     singleOf(::RelationsPresenter)
     singleOf(::ReleasesByEntityPresenter)
     singleOf(::ReleaseGroupsByEntityPresenter)
+    singleOf(::WorksByEntityPresenter)
 
     factory {
         RelationsList(get())

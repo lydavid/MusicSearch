@@ -2,17 +2,18 @@ package ly.david.musicsearch.shared.feature.stats
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.EventsByEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingsByEntityDao
+import ly.david.musicsearch.data.database.dao.WorksByEntityDao
 import ly.david.musicsearch.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
 import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
@@ -24,45 +25,35 @@ internal class ArtistStatsPresenter(
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
     private val eventsByEntityDao: EventsByEntityDao,
     private val recordingsByEntityDao: RecordingsByEntityDao,
+    private val worksByEntityDao: WorksByEntityDao,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val artistReleaseDao: ArtistReleaseDao,
 ) : Presenter<StatsUiState> {
 
     @Composable
     override fun present(): StatsUiState {
-        val stats = getStats(screen.id).collectAsState(Stats())
+        val relationTypeCounts
+            by getCountOfEachRelationshipTypeUseCase(screen.id).collectAsState(listOf())
+        val releaseStats by releaseStats(screen.id).collectAsState(ReleaseStats())
+        val releaseGroupStats by releaseGroupStats(screen.id).collectAsState(ReleaseGroupStats())
+        val recordingStats by recordingsStats(screen.id).collectAsState(RecordingStats())
+        val eventStats by eventsStats(screen.id).collectAsState(EventStats())
+        val workStats by worksStats(screen.id).collectAsState(WorkStats())
+        val stats = Stats(
+            totalRelations = relationTypeCounts.sumOf { it.count },
+            relationTypeCounts = relationTypeCounts.toImmutableList(),
+            releaseGroupStats = releaseGroupStats,
+            releaseStats = releaseStats,
+            recordingStats = recordingStats,
+            eventStats = eventStats,
+            workStats = workStats,
+        )
 
         return StatsUiState(
-            stats = stats.value,
+            stats = stats,
             tabs = screen.tabs.toImmutableList(),
         )
     }
-
-    private fun getStats(entityId: String): Flow<Stats> =
-        combine(
-            getCountOfEachRelationshipTypeUseCase(entityId),
-            releaseGroupStats(entityId),
-            releaseStats(entityId),
-            recordingsStats(entityId),
-            eventsStats(entityId),
-        ) {
-                relationTypeCounts,
-                releaseGroupStats,
-                releaseStats,
-                recordingStats,
-                eventStats,
-            ->
-
-            Stats(
-                totalRelations = relationTypeCounts.sumOf { it.count },
-                relationTypeCounts = relationTypeCounts.toImmutableList(),
-                releaseGroupStats = releaseGroupStats,
-                releaseStats = releaseStats,
-                recordingStats = recordingStats,
-                eventStats = eventStats,
-            )
-        }
-            .distinctUntilChanged()
 
     private fun releaseStats(entityId: String): Flow<ReleaseStats> =
         combine(
@@ -123,6 +114,20 @@ internal class ArtistStatsPresenter(
             eventsByEntityDao.getNumberOfEventsByEntity(entityId),
         ) { browseReleaseCount, localReleases ->
             EventStats(
+                totalRemote = browseReleaseCount?.remoteCount,
+                totalLocal = localReleases,
+            )
+        }
+
+    private fun worksStats(entityId: String): Flow<WorkStats> =
+        combine(
+            observeBrowseEntityCount(
+                entityId,
+                MusicBrainzEntity.WORK,
+            ),
+            worksByEntityDao.getNumberOfWorksByEntity(entityId),
+        ) { browseReleaseCount, localReleases ->
+            WorkStats(
                 totalRemote = browseReleaseCount?.remoteCount,
                 totalLocal = localReleases,
             )

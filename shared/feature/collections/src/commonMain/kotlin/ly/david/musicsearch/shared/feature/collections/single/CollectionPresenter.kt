@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.collections.single
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -9,10 +10,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
+import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import app.cash.paging.insertSeparators
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
@@ -34,17 +38,23 @@ import ly.david.musicsearch.domain.label.usecase.GetLabelsByEntity
 import ly.david.musicsearch.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.domain.recording.usecase.GetRecordingsByEntity
 import ly.david.musicsearch.domain.series.usecase.GetSeriesByEntity
-import ly.david.musicsearch.domain.work.usecase.GetWorksByEntity
 import ly.david.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.ui.common.artist.ArtistsByEntityUiEvent
+import ly.david.ui.common.artist.ArtistsByEntityUiState
 import ly.david.ui.common.event.EventsByEntityPresenter
 import ly.david.ui.common.event.EventsByEntityUiEvent
+import ly.david.ui.common.event.EventsByEntityUiState
 import ly.david.ui.common.release.ReleasesByEntityPresenter
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
+import ly.david.ui.common.release.ReleasesByEntityUiState
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
+import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiState
 import ly.david.ui.common.screen.CollectionScreen
 import ly.david.ui.common.screen.DetailsScreen
+import ly.david.ui.common.work.WorksByEntityPresenter
+import ly.david.ui.common.work.WorksByEntityUiEvent
+import ly.david.ui.common.work.WorksByEntityUiState
 
 internal class CollectionPresenter(
     private val screen: CollectionScreen,
@@ -60,8 +70,8 @@ internal class CollectionPresenter(
     private val eventsByEntityPresenter: EventsByEntityPresenter,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
+    private val worksByEntityPresenter: WorksByEntityPresenter,
     private val getSeriesByEntity: GetSeriesByEntity,
-    private val getWorksByEntity: GetWorksByEntity,
     private val deleteFromCollection: DeleteFromCollection,
 ) : Presenter<CollectionUiState> {
     @Composable
@@ -83,6 +93,8 @@ internal class CollectionPresenter(
         val releasesEventSink = releasesByEntityUiState.eventSink
         val releaseGroupsByEntityUiState = releaseGroupsByEntityPresenter.present()
         val releaseGroupsEventSink = releaseGroupsByEntityUiState.eventSink
+        val worksByEntityUiState = worksByEntityPresenter.present()
+        val worksEventSink = worksByEntityUiState.eventSink
 
         LaunchedEffect(Unit) {
             val nonNullCollection = getCollectionUseCase(collectionId)
@@ -240,18 +252,14 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.WORK -> {
-                    collectableItems = getWorksByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    worksEventSink(
+                        WorksByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    worksEventSink(WorksByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.COLLECTION,
@@ -316,7 +324,46 @@ internal class CollectionPresenter(
             eventsByEntityUiState = eventsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
+            worksByEntityUiState = worksByEntityUiState,
             eventSink = ::eventSink,
         )
     }
+}
+
+@Stable
+internal data class CollectionUiState(
+    val collection: CollectionListItemModel?,
+    val actionableResult: ActionableResult?,
+    val query: String,
+    val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val artistsByEntityUiState: ArtistsByEntityUiState,
+    val eventsByEntityUiState: EventsByEntityUiState,
+    val releasesByEntityUiState: ReleasesByEntityUiState,
+    val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
+    val worksByEntityUiState: WorksByEntityUiState,
+    val eventSink: (CollectionUiEvent) -> Unit,
+) : CircuitUiState
+
+internal sealed interface CollectionUiEvent : CircuitUiEvent {
+    data object NavigateUp : CollectionUiEvent
+
+    data class UpdateQuery(val query: String) : CollectionUiEvent
+
+    data class MarkItemForDeletion(
+        val collectableId: String,
+        val name: String,
+    ) : CollectionUiEvent
+
+    data class UnMarkItemForDeletion(val collectableId: String) : CollectionUiEvent
+
+    data class DeleteItem(
+        val collectableId: String,
+        val name: String,
+    ) : CollectionUiEvent
+
+    data class ClickItem(
+        val entity: MusicBrainzEntity,
+        val id: String,
+        val title: String?,
+    ) : CollectionUiEvent
 }
