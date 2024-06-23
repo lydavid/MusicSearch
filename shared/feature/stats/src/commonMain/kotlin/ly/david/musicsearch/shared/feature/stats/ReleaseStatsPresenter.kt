@@ -4,10 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.mapLatest
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
+import ly.david.musicsearch.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
 import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
 import ly.david.ui.common.screen.StatsScreen
@@ -15,6 +17,8 @@ import ly.david.ui.common.screen.StatsScreen
 internal class ReleaseStatsPresenter(
     private val screen: StatsScreen,
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
+    private val observeBrowseEntityCount: ObserveBrowseEntityCount,
+    private val artistsByEntityDao: ArtistsByEntityDao,
 ) : Presenter<StatsUiState> {
 
     @Composable
@@ -27,13 +31,30 @@ internal class ReleaseStatsPresenter(
         )
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private fun getStats(entityId: String): Flow<Stats> =
-        getCountOfEachRelationshipTypeUseCase(entityId).mapLatest { relationTypeCounts ->
+        combine(
+            getCountOfEachRelationshipTypeUseCase(entityId),
+            artistStats(entityId),
+        ) { relationTypeCounts, artistStats ->
             Stats(
                 totalRelations = relationTypeCounts.sumOf { it.count },
                 relationTypeCounts = relationTypeCounts.toImmutableList(),
+                artistStats = artistStats,
             )
         }
             .distinctUntilChanged()
+
+    private fun artistStats(entityId: String): Flow<ArtistStats> =
+        combine(
+            observeBrowseEntityCount(
+                entityId,
+                MusicBrainzEntity.ARTIST,
+            ),
+            artistsByEntityDao.getNumberOfArtistsByEntity(entityId),
+        ) { browseRecordingCount, localRecordings ->
+            ArtistStats(
+                totalRemote = browseRecordingCount?.remoteCount,
+                totalLocal = localRecordings,
+            )
+        }
 }

@@ -12,27 +12,27 @@ When you click on an artist, you will see the artist's details screen, in it, th
 browse all of their events, recordings, releases, and release groups.
 Soon, there will be a tab to browse all of their works.
 
-| Entity        | Browsing supported                                                                                       | Browsing not yet supported                       |
-|---------------|----------------------------------------------------------------------------------------------------------|--------------------------------------------------|
-| area          | artists, events, places, releases                                                                        | collections, labels                              |
-| artist        | events, recordings, release, release groups                                                              | collections, works                               |
-| collection    | areas, artists, events, instruments, labels, places, recordings, releases, release groups, series, works |                                                  |
-| event         |                                                                                                          | collections                                      |
-| instrument    |                                                                                                          | collections                                      |
-| label         | releases                                                                                                 | collections                                      |
-| place         | events                                                                                                   | collections                                      |
-| recording     | releases                                                                                                 | artists, collections                             |
-| release       |                                                                                                          | artists, collections, recordings, release groups |
-| release group | releases                                                                                                 | artists, collections                             |
-| series        |                                                                                                          | collections                                      |
-| work          | artists, recordings                                                                                      | collections                                      |
+| Entity        | Browsing supported                                                                                       | Browsing not yet supported              |
+|---------------|----------------------------------------------------------------------------------------------------------|-----------------------------------------|
+| area          | artists, events, places, releases                                                                        | collections, labels                     |
+| artist        | events, recordings, release, release groups                                                              | collections, works                      |
+| collection    | areas, artists, events, instruments, labels, places, recordings, releases, release groups, series, works |                                         |
+| event         |                                                                                                          | collections                             |
+| instrument    |                                                                                                          | collections                             |
+| label         | releases                                                                                                 | collections                             |
+| place         | events                                                                                                   | collections                             |
+| recording     | releases                                                                                                 | collections                             |
+| release       | artists                                                                                                  | collections, recordings, release groups |
+| release group | releases                                                                                                 | artists, collections                    |
+| series        |                                                                                                          | collections                             |
+| work          | artists, recordings                                                                                      | collections                             |
 
 - Note that MusicBrainz supports browsing some entities not supported by the API, such as works by area. See below for those supported by MusicBrainz's API
 - There are no url details screen, clicking a url will just go to that url, either opening it in the browser, or deep linking to an app that supports it
 - labels by release have been excluded, as we fetch all labels in the initial lookup with `inc=labels`, displaying it in the Details tab
 - releases by track (which releases a given track is found in) is not supported as we don't have a track details screen. Clicking a track goes to its associated recording
 - releases by track_artist may eventually be supported, but is not planned. This would be found in an artist's details screen
-
+- artists by recording have been excluded as it is already fetched with initial recording lookup and is displayed as artist credits in the top bar
 
 ## Up navigation from subtitle
 

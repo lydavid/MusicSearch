@@ -78,6 +78,10 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/dd216
 
 ## Release
 
+Artist credit as "Various Artists", browse artists reveals 104 artists
+```shell
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/1f22306b-bb99-42b3-b42d-1fa22ff79d17" -a android.intent.action.VIEW
+```
 
 Has label multiple labels, and has multiple catalog numbers from the same label
 ```sh

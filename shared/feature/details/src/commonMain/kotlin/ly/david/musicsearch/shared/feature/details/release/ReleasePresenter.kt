@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.details.release
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -9,22 +10,30 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.domain.release.ReleaseRepository
+import ly.david.ui.common.artist.ArtistsByEntityPresenter
+import ly.david.ui.common.artist.ArtistsByEntityUiEvent
+import ly.david.ui.common.artist.ArtistsByEntityUiState
 import ly.david.ui.common.relation.RelationsPresenter
 import ly.david.ui.common.relation.RelationsUiEvent
+import ly.david.ui.common.relation.RelationsUiState
 import ly.david.ui.common.screen.DetailsScreen
 import ly.david.ui.common.track.TracksByEntityUiEvent
 import ly.david.ui.common.track.TracksByReleasePresenter
+import ly.david.ui.common.track.TracksByReleaseUiState
 
 internal class ReleasePresenter(
     private val screen: DetailsScreen,
@@ -34,6 +43,7 @@ internal class ReleasePresenter(
     private val relationsPresenter: RelationsPresenter,
     private val releaseImageRepository: ReleaseImageRepository,
     private val tracksByReleasePresenter: TracksByReleasePresenter,
+    private val artistsByEntityPresenter: ArtistsByEntityPresenter,
     private val logger: Logger,
 ) : Presenter<ReleaseUiState> {
 
@@ -54,6 +64,9 @@ internal class ReleasePresenter(
 
         val tracksByReleaseUiState = tracksByReleasePresenter.present()
         val tracksEventSink = tracksByReleaseUiState.eventSink
+
+        val artistsByEntityUiState = artistsByEntityPresenter.present()
+        val artistsEventSink = artistsByEntityUiState.eventSink
 
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
@@ -94,6 +107,25 @@ internal class ReleasePresenter(
                     // Loaded above
                 }
 
+                ReleaseTab.TRACKS -> {
+                    tracksEventSink(
+                        TracksByEntityUiEvent.Get(
+                            byEntityId = screen.id,
+                        ),
+                    )
+                    tracksEventSink(TracksByEntityUiEvent.UpdateQuery(query))
+                }
+
+                ReleaseTab.ARTISTS -> {
+                    artistsEventSink(
+                        ArtistsByEntityUiEvent.Get(
+                            byEntityId = screen.id,
+                            byEntity = screen.entity,
+                        ),
+                    )
+                    artistsEventSink(ArtistsByEntityUiEvent.UpdateQuery(query))
+                }
+
                 ReleaseTab.RELATIONSHIPS -> {
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
@@ -102,15 +134,6 @@ internal class ReleasePresenter(
                         ),
                     )
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
-                }
-
-                ReleaseTab.TRACKS -> {
-                    tracksEventSink(
-                        TracksByEntityUiEvent.Get(
-                            byEntityId = screen.id,
-                        ),
-                    )
-                    tracksEventSink(TracksByEntityUiEvent.UpdateQuery(query))
                 }
 
                 ReleaseTab.STATS -> {
@@ -162,6 +185,7 @@ internal class ReleasePresenter(
             query = query,
             relationsUiState = relationsUiState,
             tracksByReleaseUiState = tracksByReleaseUiState,
+            artistsByEntityUiState = artistsByEntityUiState,
             eventSink = ::eventSink,
         )
     }
@@ -175,4 +199,32 @@ internal class ReleasePresenter(
             thumbnail = false,
         )
     }
+}
+
+@Stable
+internal data class ReleaseUiState(
+    val title: String,
+    val subtitle: String,
+    val isError: Boolean,
+    val release: ReleaseScaffoldModel?,
+    val imageUrl: String,
+    val tabs: List<ReleaseTab>,
+    val selectedTab: ReleaseTab,
+    val query: String,
+    val relationsUiState: RelationsUiState,
+    val tracksByReleaseUiState: TracksByReleaseUiState,
+    val artistsByEntityUiState: ArtistsByEntityUiState,
+    val eventSink: (ReleaseUiEvent) -> Unit,
+) : CircuitUiState
+
+internal sealed interface ReleaseUiEvent : CircuitUiEvent {
+    data object NavigateUp : ReleaseUiEvent
+    data object ForceRefresh : ReleaseUiEvent
+    data class UpdateTab(val tab: ReleaseTab) : ReleaseUiEvent
+    data class UpdateQuery(val query: String) : ReleaseUiEvent
+    data class ClickItem(
+        val entity: MusicBrainzEntity,
+        val id: String,
+        val title: String?,
+    ) : ReleaseUiEvent
 }

@@ -23,8 +23,8 @@ import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.EntityIcon
+import ly.david.ui.common.artist.ArtistsListScreen
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.common.screen.AddToCollectionScreen
@@ -36,6 +36,7 @@ import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.topappbar.getTitle
+import ly.david.ui.core.LocalStrings
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -144,6 +145,7 @@ internal fun ReleaseUi(
 
         val detailsLazyListState = rememberLazyListState()
         val tracksLazyListState = rememberLazyListState()
+        val artistsLazyListState = rememberLazyListState()
         val relationsLazyListState = rememberLazyListState()
 
         HorizontalPager(
@@ -194,6 +196,27 @@ internal fun ReleaseUi(
                             eventSink(
                                 ReleaseUiEvent.ClickItem(
                                     entity = MusicBrainzEntity.RECORDING,
+                                    id = id,
+                                    title = title,
+                                ),
+                            )
+                        },
+                    )
+                }
+
+                ReleaseTab.ARTISTS -> {
+                    ArtistsListScreen(
+                        lazyListState = artistsLazyListState,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.artistsByEntityUiState.lazyPagingItems,
+                        onItemClick = { entity, id, title ->
+                            eventSink(
+                                ReleaseUiEvent.ClickItem(
+                                    entity = entity,
                                     id = id,
                                     title = title,
                                 ),
