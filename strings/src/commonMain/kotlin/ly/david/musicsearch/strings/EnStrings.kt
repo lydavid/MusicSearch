@@ -33,6 +33,8 @@ val EnStrings = AppStrings(
 
     work = "Work",
 
+    works = "Works",
+
     url = "URL",
 
     collection = "Collection",
@@ -236,6 +238,11 @@ val EnStrings = AppStrings(
 
     cachedReleaseGroups = { p0, p1 ->
         "Cached %d of %d release groups"
+            .fmt(p0, p1)
+    },
+
+    cachedWorks = { p0, p1 ->
+        "Cached %d of %d works"
             .fmt(p0, p1)
     },
 

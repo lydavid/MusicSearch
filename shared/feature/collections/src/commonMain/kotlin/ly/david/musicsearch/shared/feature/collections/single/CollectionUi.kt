@@ -29,7 +29,6 @@ import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
 import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
 import ly.david.musicsearch.core.models.listitem.SeriesListItemModel
-import ly.david.musicsearch.core.models.listitem.WorkListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.area.AreaListItem
@@ -56,7 +55,8 @@ import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.ui.common.work.WorkListItem
+import ly.david.ui.common.work.WorksByEntityUiState
+import ly.david.ui.common.work.WorksListScreen
 
 /**
  * A single MusicBrainz collection.
@@ -164,6 +164,7 @@ internal fun CollectionUi(
                 eventsByEntityUiState = state.eventsByEntityUiState,
                 releasesByEntityUiState = state.releasesByEntityUiState,
                 releaseGroupsByEntityUiState = state.releaseGroupsByEntityUiState,
+                worksByEntityUiState = state.worksByEntityUiState,
                 entity = collection.entity,
                 snackbarHostState = snackbarHostState,
                 innerPadding = innerPadding,
@@ -215,6 +216,7 @@ private fun CollectionUi(
     eventsByEntityUiState: EventsByEntityUiState,
     releasesByEntityUiState: ReleasesByEntityUiState,
     releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
+    worksByEntityUiState: WorksByEntityUiState,
     entity: MusicBrainzEntity,
     snackbarHostState: SnackbarHostState,
     innerPadding: PaddingValues,
@@ -309,6 +311,25 @@ private fun CollectionUi(
                 requestForMissingCoverArtUrl = { id ->
                     requestForMissingCoverArtUrl(
                         id,
+                    )
+                },
+            )
+        }
+
+        MusicBrainzEntity.WORK -> {
+            WorksListScreen(
+                lazyListState = lazyListState,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                snackbarHostState = snackbarHostState,
+                lazyPagingItems = worksByEntityUiState.lazyPagingItems,
+                onWorkClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
                     )
                 },
             )
@@ -479,29 +500,6 @@ internal fun CollectionUi(
                     content = {
                         SeriesListItem(
                             series = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
-                        ) {
-                            onItemClick(
-                                entity,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    onDelete = {
-                        onDeleteFromCollection(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
-                )
-            }
-
-            is WorkListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        WorkListItem(
-                            work = listItemModel,
                             modifier = Modifier.animateItemPlacement(),
                         ) {
                             onItemClick(

@@ -276,8 +276,9 @@ class FakeMusicBrainzApi : MusicBrainzApi {
         return browseSeriesResponse
     }
 
-    override suspend fun browseWorksByCollection(
-        collectionId: String,
+    override suspend fun browseWorksByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
     ): BrowseWorksResponse {

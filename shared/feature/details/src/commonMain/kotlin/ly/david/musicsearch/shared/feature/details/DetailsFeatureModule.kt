@@ -75,6 +75,7 @@ val detailsFeatureModule = module {
                                 recordingsByEntityPresenter = get(),
                                 releaseGroupsByEntityPresenter = get(),
                                 releasesByEntityPresenter = get(),
+                                worksByEntityPresenter = get(),
                                 relationsPresenter = get(),
                                 artistImageRepository = get(),
                                 logger = get(),

@@ -39,6 +39,7 @@ import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.topappbar.getTitle
+import ly.david.ui.common.work.WorksListScreen
 import ly.david.ui.core.LocalStrings
 
 @OptIn(
@@ -142,6 +143,7 @@ internal fun ArtistUi(
         val releaseGroupsLazyListState = rememberLazyListState()
         val releasesLazyListState = rememberLazyListState()
         val eventsLazyListState = rememberLazyListState()
+        val worksLazyListState = rememberLazyListState()
         val relationsLazyListState = rememberLazyListState()
 
         HorizontalPager(
@@ -207,27 +209,6 @@ internal fun ArtistUi(
                     )
                 }
 
-                ArtistTab.RECORDINGS -> {
-                    RecordingsListScreen(
-                        lazyListState = eventsLazyListState,
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.recordingsByEntityUiState.lazyPagingItems,
-                        onRecordingClick = { entity, id, title ->
-                            eventSink(
-                                ArtistUiEvent.ClickItem(
-                                    entity = entity,
-                                    id = id,
-                                    title = title,
-                                ),
-                            )
-                        },
-                    )
-                }
-
                 ArtistTab.RELEASES -> {
                     ReleasesListScreen(
                         lazyListState = releasesLazyListState,
@@ -251,6 +232,48 @@ internal fun ArtistUi(
                             releasesByEntityEventSink(
                                 ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl(
                                     entityId = id,
+                                ),
+                            )
+                        },
+                    )
+                }
+
+                ArtistTab.RECORDINGS -> {
+                    RecordingsListScreen(
+                        lazyListState = eventsLazyListState,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.recordingsByEntityUiState.lazyPagingItems,
+                        onRecordingClick = { entity, id, title ->
+                            eventSink(
+                                ArtistUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
+                                ),
+                            )
+                        },
+                    )
+                }
+
+                ArtistTab.WORKS -> {
+                    WorksListScreen(
+                        lazyListState = worksLazyListState,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.worksByEntityUiState.lazyPagingItems,
+                        onWorkClick = { entity, id, title ->
+                            eventSink(
+                                ArtistUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
                                 ),
                             )
                         },

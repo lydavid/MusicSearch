@@ -43,8 +43,8 @@ val collectionsFeatureModule = module {
                     eventsByEntityPresenter = get(),
                     releasesByEntityPresenter = get(),
                     releaseGroupsByEntityPresenter = get(),
+                    worksByEntityPresenter = get(),
                     getSeriesByEntity = get(),
-                    getWorksByEntity = get(),
                     deleteFromCollection = get(),
                 )
 
