@@ -55,9 +55,18 @@ jobs:
 
       - run: git pull --rebase --autostash
 
+      - uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_ID }}
+          private_key: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_PRIVATE_KEY }}
+
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
-          commit_message: 'chore: update schema diagram [skip ci]'
-          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          commit_message: 'chore: update schema diagram'
           file_pattern: 'assets/musicsearch_db_schema.svg'
+          token: ${{ steps.generate-token.outputs.token }}
+          commit_user_name: musicsearch-gha-helper[bot]
+          commit_user_email: 173635759+musicsearch-gha-helper[bot]@users.noreply.github.com
+          commit_author: musicsearch-gha-helper[bot] <173635759+musicsearch-gha-helper[bot]@users.noreply.github.com>
