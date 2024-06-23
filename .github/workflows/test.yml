@@ -28,5 +28,6 @@ jobs:
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
-          commit_message: 'chore: test if robot commit can trigger workflow'
+          commit_message: 'chore: test if robot commit can trigger workflow with commit_author'
           token: ${{ steps.generate-token.outputs.token }}
+          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
