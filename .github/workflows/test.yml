@@ -1,0 +1,32 @@
+name: Test robot commit
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@v1
+        with:
+          token: ${{ secrets.PAT }}
+
+      - run: |
+          echo "hello" > world.txt
+
+      - uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_ID }}
+          private_key: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_PRIVATE_KEY }}
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v5.0.1
+        with:
+          commit_message: 'chore: test if robot commit can trigger workflow'
+          token: ${{ steps.generate-token.outputs.token }}
