@@ -68,8 +68,9 @@ interface BrowseApi {
         offset: Int = 0,
     ): BrowseInstrumentsResponse
 
-    suspend fun browseLabelsByCollection(
-        collectionId: String,
+    suspend fun browseLabelsByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
     ): BrowseLabelsResponse
@@ -294,8 +295,9 @@ interface BrowseApiImpl : BrowseApi {
         }.body()
     }
 
-    override suspend fun browseLabelsByCollection(
-        collectionId: String,
+    override suspend fun browseLabelsByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
     ): BrowseLabelsResponse {
@@ -303,8 +305,8 @@ interface BrowseApiImpl : BrowseApi {
             url {
                 appendPathSegments("label")
                 parameter(
-                    "collection",
-                    collectionId,
+                    entity.resourceUri,
+                    entityId,
                 )
                 parameter(
                     "limit",

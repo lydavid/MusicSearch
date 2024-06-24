@@ -34,7 +34,6 @@ import ly.david.musicsearch.domain.collection.usecase.DeleteFromCollection
 import ly.david.musicsearch.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.instrument.usecase.GetInstrumentsByEntity
-import ly.david.musicsearch.domain.label.usecase.GetLabelsByEntity
 import ly.david.musicsearch.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.domain.recording.usecase.GetRecordingsByEntity
 import ly.david.musicsearch.domain.series.usecase.GetSeriesByEntity
@@ -44,6 +43,9 @@ import ly.david.ui.common.artist.ArtistsByEntityUiState
 import ly.david.ui.common.event.EventsByEntityPresenter
 import ly.david.ui.common.event.EventsByEntityUiEvent
 import ly.david.ui.common.event.EventsByEntityUiState
+import ly.david.ui.common.label.LabelsByEntityPresenter
+import ly.david.ui.common.label.LabelsByEntityUiEvent
+import ly.david.ui.common.label.LabelsByEntityUiState
 import ly.david.ui.common.release.ReleasesByEntityPresenter
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.ui.common.release.ReleasesByEntityUiState
@@ -64,7 +66,7 @@ internal class CollectionPresenter(
     private val getAreasByEntity: GetAreasByEntity,
     private val artistsByEntityPresenter: ArtistsByEntityPresenter,
     private val getInstrumentsByEntity: GetInstrumentsByEntity,
-    private val getLabelsByEntity: GetLabelsByEntity,
+    private val labelsByEntityPresenter: LabelsByEntityPresenter,
     private val getPlacesByEntity: GetPlacesByEntity,
     private val getRecordingsByEntity: GetRecordingsByEntity,
     private val eventsByEntityPresenter: EventsByEntityPresenter,
@@ -89,6 +91,8 @@ internal class CollectionPresenter(
         val artistsEventSink = artistsByEntityUiState.eventSink
         val eventsByEntityUiState = eventsByEntityPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
+        val labelsByEntityUiState = labelsByEntityPresenter.present()
+        val labelsEventSink = labelsByEntityUiState.eventSink
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
         val releaseGroupsByEntityUiState = releaseGroupsByEntityPresenter.present()
@@ -170,18 +174,14 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.LABEL -> {
-                    collectableItems = getLabelsByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    labelsEventSink(
+                        LabelsByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    labelsEventSink(LabelsByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.PLACE -> {
@@ -322,6 +322,7 @@ internal class CollectionPresenter(
             lazyPagingItems = collectableItems.collectAsLazyPagingItems(),
             artistsByEntityUiState = artistsByEntityUiState,
             eventsByEntityUiState = eventsByEntityUiState,
+            labelsByEntityUiState = labelsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
             worksByEntityUiState = worksByEntityUiState,
@@ -338,6 +339,7 @@ internal data class CollectionUiState(
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val eventsByEntityUiState: EventsByEntityUiState,
+    val labelsByEntityUiState: LabelsByEntityUiState,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
     val worksByEntityUiState: WorksByEntityUiState,

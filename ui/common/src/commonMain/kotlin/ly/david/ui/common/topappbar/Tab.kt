@@ -9,6 +9,7 @@ enum class Tab {
     DETAILS,
     ARTISTS,
     EVENTS,
+    LABELS,
     PLACES,
     RECORDINGS,
     RELATIONSHIPS,
@@ -24,6 +25,7 @@ fun Tab.getTitle(strings: AppStrings): String {
         Tab.DETAILS -> strings.details
         Tab.ARTISTS -> strings.artists
         Tab.EVENTS -> strings.events
+        Tab.LABELS -> strings.labels
         Tab.PLACES -> strings.places
         Tab.RECORDINGS -> strings.recordings
         Tab.RELATIONSHIPS -> strings.relationships

@@ -22,9 +22,9 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.artist.ArtistsListScreen
-import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.event.EventsListScreen
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.ui.common.label.LabelsListScreen
 import ly.david.ui.common.place.PlacesListScreen
 import ly.david.ui.common.relation.RelationsListScreen
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
@@ -39,6 +39,7 @@ import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.topappbar.getTitle
+import ly.david.ui.core.LocalStrings
 
 /**
  * The top-level screen for an area.
@@ -130,6 +131,7 @@ internal fun AreaUi(
         val relationsLazyListState = rememberLazyListState()
         val artistsLazyListState = rememberLazyListState()
         val eventsLazyListState = rememberLazyListState()
+        val labelsLazyListState = rememberLazyListState()
         val releasesLazyListState = rememberLazyListState()
         val placesLazyListState = rememberLazyListState()
 
@@ -168,27 +170,6 @@ internal fun AreaUi(
                     }
                 }
 
-                AreaTab.RELATIONSHIPS -> {
-                    RelationsListScreen(
-                        lazyPagingItems = state.relationsUiState.lazyPagingItems,
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = relationsLazyListState,
-                        snackbarHostState = snackbarHostState,
-                        onItemClick = { entity, id, title ->
-                            eventSink(
-                                AreaUiEvent.ClickItem(
-                                    entity = entity,
-                                    id = id,
-                                    title = title,
-                                ),
-                            )
-                        },
-                    )
-                }
-
                 AreaTab.ARTISTS -> {
                     ArtistsListScreen(
                         lazyListState = artistsLazyListState,
@@ -212,7 +193,7 @@ internal fun AreaUi(
 
                 AreaTab.EVENTS -> {
                     EventsListScreen(
-                        lazyListState = eventsLazyListState,
+                        lazyListState = labelsLazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -220,6 +201,27 @@ internal fun AreaUi(
                         snackbarHostState = snackbarHostState,
                         lazyPagingItems = state.eventsByEntityUiState.lazyPagingItems,
                         onEventClick = { entity, id, title ->
+                            eventSink(
+                                AreaUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
+                                ),
+                            )
+                        },
+                    )
+                }
+
+                AreaTab.LABELS -> {
+                    LabelsListScreen(
+                        lazyListState = eventsLazyListState,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.labelsByEntityUiState.lazyPagingItems,
+                        onLabelClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
                                     entity = entity,
@@ -254,6 +256,27 @@ internal fun AreaUi(
                             releasesByEntityEventSink(
                                 ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl(
                                     entityId = id,
+                                ),
+                            )
+                        },
+                    )
+                }
+
+                AreaTab.RELATIONSHIPS -> {
+                    RelationsListScreen(
+                        lazyPagingItems = state.relationsUiState.lazyPagingItems,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        lazyListState = relationsLazyListState,
+                        snackbarHostState = snackbarHostState,
+                        onItemClick = { entity, id, title ->
+                            eventSink(
+                                AreaUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
                                 ),
                             )
                         },
