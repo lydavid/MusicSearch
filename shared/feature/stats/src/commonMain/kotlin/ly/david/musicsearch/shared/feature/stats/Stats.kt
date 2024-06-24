@@ -12,6 +12,7 @@ internal data class Stats(
     val relationTypeCounts: ImmutableList<RelationTypeCount> = persistentListOf(),
     val artistStats: ArtistStats = ArtistStats(),
     val eventStats: EventStats = EventStats(),
+    val labelStats: LabelStats = LabelStats(),
     val placeStats: PlaceStats = PlaceStats(),
     val recordingStats: RecordingStats = RecordingStats(),
     val releaseStats: ReleaseStats = ReleaseStats(),
@@ -25,6 +26,11 @@ internal data class ArtistStats(
 )
 
 internal data class EventStats(
+    val totalRemote: Int? = null,
+    val totalLocal: Int = 0,
+)
+
+internal data class LabelStats(
     val totalRemote: Int? = null,
     val totalLocal: Int = 0,
 )

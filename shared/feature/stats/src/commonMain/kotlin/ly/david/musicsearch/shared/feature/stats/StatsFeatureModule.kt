@@ -23,6 +23,7 @@ val statsFeatureModule = module {
                                 releaseCountryDao = get(),
                                 artistsByEntityDao = get(),
                                 eventsByEntityDao = get(),
+                                labelsByEntityDao = get(),
                                 areaPlaceDao = get(),
                             )
                         }

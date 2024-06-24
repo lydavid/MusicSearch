@@ -5,10 +5,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
 import ly.david.musicsearch.data.database.dao.EventsByEntityDao
+import ly.david.musicsearch.data.database.dao.LabelsByEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
@@ -22,6 +25,7 @@ internal class AreaStatsPresenter(
     private val releaseCountryDao: ReleaseCountryDao,
     private val artistsByEntityDao: ArtistsByEntityDao,
     private val eventsByEntityDao: EventsByEntityDao,
+    private val labelsByEntityDao: LabelsByEntityDao,
     private val areaPlaceDao: AreaPlaceDao,
 ) : Presenter<StatsUiState> {
 
@@ -30,57 +34,20 @@ internal class AreaStatsPresenter(
         val relationTypeCounts
             by getCountOfEachRelationshipTypeUseCase(screen.id).collectAsState(listOf())
 
-        val browseArtistCount
-            by observeBrowseEntityCount(
-                entityId = screen.id,
-                entity = MusicBrainzEntity.ARTIST,
-            ).collectAsState(null)
-        val localArtists
-            by artistsByEntityDao.getNumberOfArtistsByEntity(screen.id).collectAsState(0)
-
-        val browseEventCount
-            by observeBrowseEntityCount(
-                entityId = screen.id,
-                entity = MusicBrainzEntity.EVENT,
-            ).collectAsState(null)
-        val localEvents
-            by eventsByEntityDao.getNumberOfEventsByEntity(screen.id).collectAsState(0)
-
-        val browseReleaseCount
-            by observeBrowseEntityCount(
-                entityId = screen.id,
-                entity = MusicBrainzEntity.RELEASE,
-            ).collectAsState(null)
-        val localReleases
-            by releaseCountryDao.getNumberOfReleasesByCountry(screen.id).collectAsState(0)
-
-        val browsePlaceCount
-            by observeBrowseEntityCount(
-                entityId = screen.id,
-                entity = MusicBrainzEntity.PLACE,
-            ).collectAsState(null)
-        val localPlaces
-            by areaPlaceDao.getNumberOfPlacesByArea(screen.id).collectAsState(0)
+        val artistStats by artistStats(screen.id).collectAsState(ArtistStats())
+        val eventStats by eventStats(screen.id).collectAsState(EventStats())
+        val labelStats by labelStats(screen.id).collectAsState(LabelStats())
+        val releaseStats by releaseStats(screen.id).collectAsState(ReleaseStats())
+        val placeStats by placeStats(screen.id).collectAsState(PlaceStats())
 
         val stats = Stats(
             totalRelations = relationTypeCounts.sumOf { it.count },
             relationTypeCounts = relationTypeCounts.toImmutableList(),
-            artistStats = ArtistStats(
-                totalRemote = browseArtistCount?.remoteCount,
-                totalLocal = localArtists,
-            ),
-            eventStats = EventStats(
-                totalRemote = browseEventCount?.remoteCount,
-                totalLocal = localEvents,
-            ),
-            releaseStats = ReleaseStats(
-                totalRemote = browseReleaseCount?.remoteCount,
-                totalLocal = localReleases,
-            ),
-            placeStats = PlaceStats(
-                totalRemote = browsePlaceCount?.remoteCount,
-                totalLocal = localPlaces,
-            ),
+            artistStats = artistStats,
+            eventStats = eventStats,
+            labelStats = labelStats,
+            placeStats = placeStats,
+            releaseStats = releaseStats,
         )
 
         return StatsUiState(
@@ -88,4 +55,74 @@ internal class AreaStatsPresenter(
             tabs = screen.tabs.toImmutableList(),
         )
     }
+
+    private fun artistStats(entityId: String): Flow<ArtistStats> =
+        combine(
+            observeBrowseEntityCount(
+                entityId = entityId,
+                entity = MusicBrainzEntity.ARTIST,
+            ),
+            artistsByEntityDao.getNumberOfArtistsByEntity(entityId),
+        ) { browseEntityCount, localCount ->
+            ArtistStats(
+                totalRemote = browseEntityCount?.remoteCount,
+                totalLocal = localCount,
+            )
+        }
+
+    private fun eventStats(entityId: String): Flow<EventStats> =
+        combine(
+            observeBrowseEntityCount(
+                entityId = entityId,
+                entity = MusicBrainzEntity.EVENT,
+            ),
+            eventsByEntityDao.getNumberOfEventsByEntity(entityId),
+        ) { browseEntityCount, localCount ->
+            EventStats(
+                totalRemote = browseEntityCount?.remoteCount,
+                totalLocal = localCount,
+            )
+        }
+
+    private fun labelStats(entityId: String): Flow<LabelStats> =
+        combine(
+            observeBrowseEntityCount(
+                entityId = entityId,
+                entity = MusicBrainzEntity.LABEL,
+            ),
+            labelsByEntityDao.getNumberOfLabelsByEntity(entityId),
+        ) { browseEntityCount, localCount ->
+            LabelStats(
+                totalRemote = browseEntityCount?.remoteCount,
+                totalLocal = localCount,
+            )
+        }
+
+    private fun placeStats(entityId: String): Flow<PlaceStats> =
+        combine(
+            observeBrowseEntityCount(
+                entityId = entityId,
+                entity = MusicBrainzEntity.PLACE,
+            ),
+            areaPlaceDao.getNumberOfPlacesByArea(entityId),
+        ) { browseEntityCount, localCount ->
+            PlaceStats(
+                totalRemote = browseEntityCount?.remoteCount,
+                totalLocal = localCount,
+            )
+        }
+
+    private fun releaseStats(entityId: String): Flow<ReleaseStats> =
+        combine(
+            observeBrowseEntityCount(
+                entityId,
+                MusicBrainzEntity.RELEASE,
+            ),
+            releaseCountryDao.getNumberOfReleasesByCountry(entityId),
+        ) { browseEntityCount, localCount ->
+            ReleaseStats(
+                totalRemote = browseEntityCount?.remoteCount,
+                totalLocal = localCount,
+            )
+        }
 }

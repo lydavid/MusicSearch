@@ -221,6 +221,11 @@ val EnStrings = AppStrings(
             .fmt(p0, p1)
     },
 
+    cachedLabels = { p0, p1 ->
+        "Cached %d of %d labels"
+            .fmt(p0, p1)
+    },
+
     cachedPlaces = { p0, p1 ->
         "Cached %d of %d places"
             .fmt(p0, p1)

@@ -105,6 +105,7 @@ data class AppStrings(
     val retry: String,
     val cachedArtists: (Int, Int) -> String,
     val cachedEvents: (Int, Int) -> String,
+    val cachedLabels: (Int, Int) -> String,
     val cachedPlaces: (Int, Int) -> String,
     val cachedRecordings: (Int, Int) -> String,
     val cachedReleases: (Int, Int) -> String,
