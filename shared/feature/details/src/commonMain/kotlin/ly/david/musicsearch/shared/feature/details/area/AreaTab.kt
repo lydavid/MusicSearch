@@ -7,6 +7,7 @@ internal enum class AreaTab(val tab: Tab) {
     RELATIONSHIPS(Tab.RELATIONSHIPS),
     ARTISTS(Tab.ARTISTS),
     EVENTS(Tab.EVENTS),
+    LABELS(Tab.LABELS),
     RELEASES(Tab.RELEASES),
     PLACES(Tab.PLACES),
     STATS(Tab.STATS),

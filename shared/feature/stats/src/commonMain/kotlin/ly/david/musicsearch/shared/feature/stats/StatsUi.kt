@@ -55,6 +55,15 @@ internal fun StatsUi(
                     )
                 }
 
+                Tab.LABELS -> {
+                    addEntitiesStatsSection(
+                        totalRemote = stats.labelStats.totalRemote,
+                        totalLocal = stats.labelStats.totalLocal,
+                        header = strings.labels,
+                        cachedLocalOfRemote = strings.cachedLabels,
+                    )
+                }
+
                 Tab.PLACES -> {
                     addEntitiesStatsSection(
                         totalRemote = stats.placeStats.totalRemote,

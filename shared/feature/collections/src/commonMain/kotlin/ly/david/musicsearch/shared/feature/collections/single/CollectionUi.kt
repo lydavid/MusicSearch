@@ -23,14 +23,12 @@ import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.listitem.InstrumentListItemModel
-import ly.david.musicsearch.core.models.listitem.LabelListItemModel
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
 import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
 import ly.david.musicsearch.core.models.listitem.SeriesListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.artist.ArtistsByEntityUiState
 import ly.david.ui.common.artist.ArtistsListScreen
@@ -38,7 +36,8 @@ import ly.david.ui.common.event.EventsByEntityUiState
 import ly.david.ui.common.event.EventsListScreen
 import ly.david.ui.common.fullscreen.FullScreenText
 import ly.david.ui.common.instrument.InstrumentListItem
-import ly.david.ui.common.label.LabelListItem
+import ly.david.ui.common.label.LabelsByEntityUiState
+import ly.david.ui.common.label.LabelsListScreen
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
@@ -57,6 +56,7 @@ import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.work.WorksByEntityUiState
 import ly.david.ui.common.work.WorksListScreen
+import ly.david.ui.core.LocalStrings
 
 /**
  * A single MusicBrainz collection.
@@ -162,6 +162,7 @@ internal fun CollectionUi(
                 lazyPagingItems = state.lazyPagingItems,
                 artistsByEntityUiState = state.artistsByEntityUiState,
                 eventsByEntityUiState = state.eventsByEntityUiState,
+                labelsByEntityUiState = state.labelsByEntityUiState,
                 releasesByEntityUiState = state.releasesByEntityUiState,
                 releaseGroupsByEntityUiState = state.releaseGroupsByEntityUiState,
                 worksByEntityUiState = state.worksByEntityUiState,
@@ -214,6 +215,7 @@ private fun CollectionUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     artistsByEntityUiState: ArtistsByEntityUiState,
     eventsByEntityUiState: EventsByEntityUiState,
+    labelsByEntityUiState: LabelsByEntityUiState,
     releasesByEntityUiState: ReleasesByEntityUiState,
     releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
     worksByEntityUiState: WorksByEntityUiState,
@@ -258,6 +260,25 @@ private fun CollectionUi(
                 snackbarHostState = snackbarHostState,
                 lazyPagingItems = eventsByEntityUiState.lazyPagingItems,
                 onEventClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
+            )
+        }
+
+        MusicBrainzEntity.LABEL -> {
+            LabelsListScreen(
+                lazyListState = lazyListState,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                snackbarHostState = snackbarHostState,
+                lazyPagingItems = labelsByEntityUiState.lazyPagingItems,
+                onLabelClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,
@@ -408,29 +429,6 @@ internal fun CollectionUi(
                     content = {
                         InstrumentListItem(
                             instrument = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
-                        ) {
-                            onItemClick(
-                                entity,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    onDelete = {
-                        onDeleteFromCollection(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
-                )
-            }
-
-            is LabelListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        LabelListItem(
-                            label = listItemModel,
                             modifier = Modifier.animateItemPlacement(),
                         ) {
                             onItemClick(

@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS labels_by_entity (
+  entity_id TEXT NOT NULL,
+  label_id TEXT NOT NULL,
+
+  PRIMARY KEY (entity_id, label_id)
+);
