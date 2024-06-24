@@ -108,6 +108,7 @@ sqldelight-primitive = { module = "app.cash.sqldelight:primitive-adapters", vers
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 test-parameter-injector = "com.google.testparameterinjector:test-parameter-injector:1.16"
 timber = "com.jakewharton.timber:timber:5.0.1"
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
 [bundles]
 kotlinx-coroutines = [
@@ -144,3 +145,4 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.4"
+kotlin-powerAssert = { id = "org.jetbrains.kotlin.plugin.power-assert", version.ref = "kotlin" }

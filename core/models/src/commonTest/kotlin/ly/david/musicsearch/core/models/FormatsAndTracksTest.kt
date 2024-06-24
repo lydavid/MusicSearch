@@ -1,7 +1,8 @@
 package ly.david.musicsearch.core.models
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
 
 class FormatsAndTracksTest {
 
@@ -42,7 +43,7 @@ class FormatsAndTracksTest {
     }
 
     @Test
-    fun `2 CDs, 1 Blu ray`() {
+    fun `2 CDs and 1 Blu ray`() {
         assertEquals("2×CD + Blu-ray", listOf("CD", "Blu-ray", "CD").getFormatsForDisplay())
         assertEquals("15 + 8 + 24", listOf(15, 8, 24).getTracksForDisplay())
     }

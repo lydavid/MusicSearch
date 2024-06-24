@@ -34,10 +34,6 @@ jobs:
         if: always()
         run: ./gradlew detektMetadataMain
 
-      - name: Unit test all kotlin modules
-        if: always()
-        run: ./gradlew testKotlinModules
-
       - name: Unit test all KMP modules
         if: always()
         run: ./gradlew testKotlinMultiplatformModules

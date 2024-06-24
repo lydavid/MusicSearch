@@ -1,68 +1,129 @@
 package ly.david.musicsearch.core.models.releasegroup
 
-import io.mockk.every
-import io.mockk.mockk
+import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.core.models.network.NO_TYPE
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class ReleaseGroupTest {
 
-    private val releaseGroupTypes: ReleaseGroupTypes = mockk()
-
     @Test
-    fun `null primary type, null secondary types`() {
-        every { releaseGroupTypes.primaryType } returns null
-        every { releaseGroupTypes.secondaryTypes } returns null
-        assertEquals(NO_TYPE, releaseGroupTypes.getDisplayTypes())
+    fun `null primary type and null secondary types`() {
+        val releaseGroupTypes = ReleaseGroupListItemModel(
+            id = "",
+            name = "",
+            primaryType = null,
+            secondaryTypes = null,
+        )
+        assertEquals(
+            NO_TYPE,
+            releaseGroupTypes.getDisplayTypes(),
+        )
     }
 
     @Test
-    fun `null primary type, empty secondary types`() {
-        every { releaseGroupTypes.primaryType } returns null
-        every { releaseGroupTypes.secondaryTypes } returns listOf()
-        assertEquals(NO_TYPE, releaseGroupTypes.getDisplayTypes())
+    fun `null primary type and empty secondary types`() {
+        val releaseGroupTypes = ReleaseGroupListItemModel(
+            id = "",
+            name = "",
+            primaryType = null,
+            secondaryTypes = listOf(),
+        )
+        assertEquals(
+            NO_TYPE,
+            releaseGroupTypes.getDisplayTypes(),
+        )
     }
 
     @Test
-    fun `empty primary type, empty secondary types`() {
-        every { releaseGroupTypes.primaryType } returns ""
-        every { releaseGroupTypes.secondaryTypes } returns listOf()
-        assertEquals(NO_TYPE, releaseGroupTypes.getDisplayTypes())
+    fun `empty primary type and empty secondary types`() {
+        val releaseGroupTypes = ReleaseGroupListItemModel(
+            id = "",
+            name = "",
+            primaryType = "",
+            secondaryTypes = listOf(),
+        )
+        assertEquals(
+            NO_TYPE,
+            releaseGroupTypes.getDisplayTypes(),
+        )
     }
 
     @Test
-    fun `primary type, empty secondary types`() {
-        every { releaseGroupTypes.primaryType } returns "Album"
-        every { releaseGroupTypes.secondaryTypes } returns listOf()
-        assertEquals("Album", releaseGroupTypes.getDisplayTypes())
+    fun `primary type and empty secondary types`() {
+        val releaseGroupTypes = ReleaseGroupListItemModel(
+            id = "",
+            name = "",
+            primaryType = "Album",
+            secondaryTypes = listOf(),
+        )
+        assertEquals(
+            "Album",
+            releaseGroupTypes.getDisplayTypes(),
+        )
     }
 
     @Test
-    fun `only has primary type`() {
-        every { releaseGroupTypes.primaryType } returns "Album"
-        every { releaseGroupTypes.secondaryTypes } returns null
-        assertEquals("Album", releaseGroupTypes.getDisplayTypes())
+    fun `primary type and null secondary types`() {
+        val releaseGroupTypes = ReleaseGroupListItemModel(
+            id = "",
+            name = "",
+            primaryType = "Album",
+            secondaryTypes = null,
+        )
+        assertEquals(
+            "Album",
+            releaseGroupTypes.getDisplayTypes(),
+        )
     }
 
     @Test
-    fun `only has a secondary type`() {
-        every { releaseGroupTypes.primaryType } returns null
-        every { releaseGroupTypes.secondaryTypes } returns listOf("Compilation")
-        assertEquals("Compilation", releaseGroupTypes.getDisplayTypes())
+    fun `null primary type and has a secondary type`() {
+        val releaseGroupTypes = ReleaseGroupListItemModel(
+            id = "",
+            name = "",
+            primaryType = null,
+            secondaryTypes = listOf(
+                "Compilation",
+            ),
+        )
+        assertEquals(
+            "Compilation",
+            releaseGroupTypes.getDisplayTypes(),
+        )
     }
 
     @Test
     fun `primary type and a secondary type`() {
-        every { releaseGroupTypes.primaryType } returns "Album"
-        every { releaseGroupTypes.secondaryTypes } returns listOf("Compilation")
-        assertEquals("Album + Compilation", releaseGroupTypes.getDisplayTypes())
+        val releaseGroupTypes = ReleaseGroupListItemModel(
+            id = "",
+            name = "",
+            primaryType = "Album",
+            secondaryTypes = listOf(
+                "Compilation",
+            ),
+        )
+        assertEquals(
+            "Album + Compilation",
+            releaseGroupTypes.getDisplayTypes(),
+        )
     }
 
     @Test
     fun `primary type and multiple secondary types`() {
-        every { releaseGroupTypes.primaryType } returns "Album"
-        every { releaseGroupTypes.secondaryTypes } returns listOf("Compilation", "Live", "Remix")
-        assertEquals("Album + Compilation + Live + Remix", releaseGroupTypes.getDisplayTypes())
+        val releaseGroupTypes = ReleaseGroupListItemModel(
+            id = "",
+            name = "",
+            primaryType = "Album",
+            secondaryTypes = listOf(
+                "Compilation",
+                "Live",
+                "Remix",
+            ),
+        )
+        assertEquals(
+            "Album + Compilation + Live + Remix",
+            releaseGroupTypes.getDisplayTypes(),
+        )
     }
 }

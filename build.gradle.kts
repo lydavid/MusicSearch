@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import java.io.BufferedReader
 
@@ -17,6 +18,7 @@ plugins {
     alias(libs.plugins.paparazzi) apply false
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.sqldelight) apply false
+    alias(libs.plugins.kotlin.powerAssert) apply false
 
     alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.dependency.analysis)
@@ -96,16 +98,7 @@ project.logger.log(
 // region Project tasks
 private val projectGroup = "MusicSearch"
 
-tasks.register("testKotlinModules") {
-    description = "Run unit tests on Kotlin (non-Android) modules"
-    group = projectGroup
-    dependsOn(
-        subprojects
-            .filter { it.plugins.hasPlugin("ly.david.kotlin") }
-            .map { "${it.path}:test" },
-    )
-}
-
+// this obscures the nice formatting from powerAssert
 tasks.register("testKotlinMultiplatformModules") {
     description = "Run JVM tests on Kotlin Multiplatform modules"
     group = projectGroup

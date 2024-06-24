@@ -1,73 +1,75 @@
 package ly.david.musicsearch.core.models.place
 
-import org.junit.Assert
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNull
+
 
 internal class CoordinatesTest {
 
     private lateinit var coordinates: CoordinatesUiModel
 
     @Test
-    fun `null lat, null long`() {
+    fun `null lat null long`() {
         coordinates = CoordinatesUiModel(
             latitude = null,
             longitude = null
         )
-        Assert.assertNull(coordinates.formatForDisplay())
+        assertNull(coordinates.formatForDisplay())
     }
 
     @Test
-    fun `null lat, has long`() {
+    fun `null lat has long`() {
         coordinates = CoordinatesUiModel(
             latitude = null,
             longitude = 0.0
         )
-        Assert.assertNull("", coordinates.formatForDisplay())
+        assertNull(coordinates.formatForDisplay())
     }
 
     @Test
-    fun `has lat, null long`() {
+    fun `has lat null long`() {
         coordinates = CoordinatesUiModel(
             latitude = 0.0,
             longitude = null
         )
-        Assert.assertNull("", coordinates.formatForDisplay())
+        assertNull(coordinates.formatForDisplay())
     }
 
     @Test
-    fun `N lat, E long`() {
+    fun `N lat E long`() {
         coordinates = CoordinatesUiModel(
             latitude = 0.0,
             longitude = 0.0
         )
-        Assert.assertEquals("0.0°N, 0.0°E", coordinates.formatForDisplay())
+        assertEquals("0.0°N, 0.0°E", coordinates.formatForDisplay())
     }
 
     @Test
-    fun `N lat, W long`() {
+    fun `N lat W long`() {
         coordinates = CoordinatesUiModel(
             latitude = 0.0,
             longitude = -1.0
         )
-        Assert.assertEquals("0.0°N, 1.0°W", coordinates.formatForDisplay())
+        assertEquals("0.0°N, 1.0°W", coordinates.formatForDisplay())
     }
 
     @Test
-    fun `S lat, E long`() {
+    fun `S lat E long`() {
         coordinates = CoordinatesUiModel(
             latitude = -1.0,
             longitude = 0.0
         )
-        Assert.assertEquals("1.0°S, 0.0°E", coordinates.formatForDisplay())
+        assertEquals("1.0°S, 0.0°E", coordinates.formatForDisplay())
     }
 
     @Test
-    fun `S lat, W long`() {
+    fun `S lat W long`() {
         coordinates = CoordinatesUiModel(
             latitude = -1.0,
             longitude = -1.0
         )
-        Assert.assertEquals("1.0°S, 1.0°W", coordinates.formatForDisplay())
+        assertEquals("1.0°S, 1.0°W", coordinates.formatForDisplay())
     }
 
     @Test
@@ -76,6 +78,6 @@ internal class CoordinatesTest {
             latitude = 1.23456789,
             longitude = 73.98905
         )
-        Assert.assertEquals("1.23456789°N, 73.98905°E", coordinates.formatForDisplay())
+        assertEquals("1.23456789°N, 73.98905°E", coordinates.formatForDisplay())
     }
 }
