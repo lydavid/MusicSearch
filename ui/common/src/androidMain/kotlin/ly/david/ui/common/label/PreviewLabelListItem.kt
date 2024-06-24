@@ -5,13 +5,26 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import ly.david.musicsearch.core.models.listitem.LabelListItemModel
 import ly.david.ui.core.theme.PreviewTheme
 
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun LabelListItemPreview(
+    @PreviewParameter(LabelCardPreviewParameterProvider::class) label: LabelListItemModel,
+) {
+    PreviewTheme {
+        Surface {
+            LabelListItem(label)
+        }
+    }
+}
+
 // Cannot be private.
-internal class LabelCardPreviewParameterProvider : PreviewParameterProvider<LabelListItemModel> {
-    override val values = sequenceOf(
+internal class LabelCardPreviewParameterProvider : CollectionPreviewParameterProvider<LabelListItemModel>(
+    listOf(
         LabelListItemModel(
             id = "1",
             name = "Music Label",
@@ -42,18 +55,5 @@ internal class LabelCardPreviewParameterProvider : PreviewParameterProvider<Labe
             labelCode = 10746,
             catalogNumber = "CAT-123",
         ),
-    )
-}
-
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun Preview(
-    @PreviewParameter(LabelCardPreviewParameterProvider::class) label: LabelListItemModel,
-) {
-    PreviewTheme {
-        Surface {
-            LabelListItem(label)
-        }
-    }
-}
+    ),
+)
