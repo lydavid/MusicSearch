@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.details.place
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -9,19 +10,24 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.place.PlaceScaffoldModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.place.PlaceRepository
 import ly.david.ui.common.event.EventsByEntityPresenter
 import ly.david.ui.common.event.EventsByEntityUiEvent
+import ly.david.ui.common.event.EventsByEntityUiState
 import ly.david.ui.common.relation.RelationsPresenter
 import ly.david.ui.common.relation.RelationsUiEvent
+import ly.david.ui.common.relation.RelationsUiState
 import ly.david.ui.common.screen.DetailsScreen
 
 internal class PlacePresenter(
@@ -155,4 +161,29 @@ internal class PlacePresenter(
             eventSink = ::eventSink,
         )
     }
+}
+
+@Stable
+internal data class PlaceUiState(
+    val title: String,
+    val isError: Boolean,
+    val place: PlaceScaffoldModel?,
+    val tabs: List<PlaceTab>,
+    val selectedTab: PlaceTab,
+    val query: String,
+    val eventsByEntityUiState: EventsByEntityUiState,
+    val relationsUiState: RelationsUiState,
+    val eventSink: (PlaceUiEvent) -> Unit,
+) : CircuitUiState
+
+internal sealed interface PlaceUiEvent : CircuitUiEvent {
+    data object NavigateUp : PlaceUiEvent
+    data object ForceRefresh : PlaceUiEvent
+    data class UpdateTab(val tab: PlaceTab) : PlaceUiEvent
+    data class UpdateQuery(val query: String) : PlaceUiEvent
+    data class ClickItem(
+        val entity: MusicBrainzEntity,
+        val id: String,
+        val title: String?,
+    ) : PlaceUiEvent
 }

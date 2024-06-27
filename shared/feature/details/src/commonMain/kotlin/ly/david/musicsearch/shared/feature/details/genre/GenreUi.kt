@@ -35,9 +35,9 @@ internal fun GenreUi(
         genre = state.genre,
         modifier = modifier,
         onBack = {
-            eventSink(GenreUiGenre.NavigateUp)
+            eventSink(GenreUiEvent.NavigateUp)
         },
-        onRetryClick = { eventSink(GenreUiGenre.ForceRefresh) },
+        onRetryClick = { eventSink(GenreUiEvent.ForceRefresh) },
     )
 }
 

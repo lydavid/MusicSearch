@@ -9,7 +9,7 @@ import org.junit.runner.RunWith
 class AreaDetailsUiTest : ScreenshotTest() {
 
     @Test
-    fun isRemote() {
+    fun default() {
         snapshot {
             PreviewAreaDetailsUi()
         }
