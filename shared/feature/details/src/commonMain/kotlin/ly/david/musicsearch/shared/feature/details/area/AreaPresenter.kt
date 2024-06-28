@@ -89,6 +89,7 @@ internal class AreaPresenter(
                 if (title.isEmpty()) {
                     title = areaScaffoldModel.getNameWithDisambiguation()
                 }
+
                 if (areaScaffoldModel.showReleases()) {
                     tabs = AreaTab.entries
                 }

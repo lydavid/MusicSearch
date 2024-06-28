@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.details.releasegroup
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -9,12 +10,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
@@ -22,8 +26,10 @@ import ly.david.musicsearch.domain.releasegroup.ReleaseGroupImageRepository
 import ly.david.musicsearch.domain.releasegroup.ReleaseGroupRepository
 import ly.david.ui.common.relation.RelationsPresenter
 import ly.david.ui.common.relation.RelationsUiEvent
+import ly.david.ui.common.relation.RelationsUiState
 import ly.david.ui.common.release.ReleasesByEntityPresenter
 import ly.david.ui.common.release.ReleasesByEntityUiEvent
+import ly.david.ui.common.release.ReleasesByEntityUiState
 import ly.david.ui.common.screen.DetailsScreen
 
 internal class ReleaseGroupPresenter(
@@ -175,4 +181,31 @@ internal class ReleaseGroupPresenter(
             thumbnail = false,
         )
     }
+}
+
+@Stable
+internal data class ReleaseGroupUiState(
+    val title: String,
+    val subtitle: String,
+    val isError: Boolean,
+    val releaseGroup: ReleaseGroupScaffoldModel?,
+    val imageUrl: String,
+    val tabs: List<ReleaseGroupTab>,
+    val selectedTab: ReleaseGroupTab,
+    val query: String,
+    val releasesByEntityUiState: ReleasesByEntityUiState,
+    val relationsUiState: RelationsUiState,
+    val eventSink: (ReleaseGroupUiEvent) -> Unit,
+) : CircuitUiState
+
+internal sealed interface ReleaseGroupUiEvent : CircuitUiEvent {
+    data object NavigateUp : ReleaseGroupUiEvent
+    data object ForceRefresh : ReleaseGroupUiEvent
+    data class UpdateTab(val tab: ReleaseGroupTab) : ReleaseGroupUiEvent
+    data class UpdateQuery(val query: String) : ReleaseGroupUiEvent
+    data class ClickItem(
+        val entity: MusicBrainzEntity,
+        val id: String,
+        val title: String?,
+    ) : ReleaseGroupUiEvent
 }

@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.details.instrument
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -9,17 +10,21 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.instrument.InstrumentScaffoldModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.instrument.InstrumentRepository
 import ly.david.ui.common.relation.RelationsPresenter
 import ly.david.ui.common.relation.RelationsUiEvent
+import ly.david.ui.common.relation.RelationsUiState
 import ly.david.ui.common.screen.DetailsScreen
 
 internal class InstrumentPresenter(
@@ -139,4 +144,28 @@ internal class InstrumentPresenter(
             eventSink = ::eventSink,
         )
     }
+}
+
+@Stable
+internal data class InstrumentUiState(
+    val title: String,
+    val isError: Boolean,
+    val instrument: InstrumentScaffoldModel?,
+    val tabs: List<InstrumentTab>,
+    val selectedTab: InstrumentTab,
+    val query: String,
+    val relationsUiState: RelationsUiState,
+    val eventSink: (InstrumentUiEvent) -> Unit,
+) : CircuitUiState
+
+internal sealed interface InstrumentUiEvent : CircuitUiEvent {
+    data object NavigateUp : InstrumentUiEvent
+    data object ForceRefresh : InstrumentUiEvent
+    data class UpdateTab(val tab: InstrumentTab) : InstrumentUiEvent
+    data class UpdateQuery(val query: String) : InstrumentUiEvent
+    data class ClickItem(
+        val entity: MusicBrainzEntity,
+        val id: String,
+        val title: String?,
+    ) : InstrumentUiEvent
 }

@@ -2,11 +2,14 @@ package ly.david.musicsearch.shared.feature.details.genre
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
@@ -60,13 +63,13 @@ internal class GenrePresenter(
             }
         }
 
-        fun genreSink(genre: GenreUiGenre) {
+        fun genreSink(genre: GenreUiEvent) {
             when (genre) {
-                GenreUiGenre.NavigateUp -> {
+                GenreUiEvent.NavigateUp -> {
                     navigator.pop()
                 }
 
-                GenreUiGenre.ForceRefresh -> {
+                GenreUiEvent.ForceRefresh -> {
                     forceRefreshDetails = true
                 }
             }
@@ -79,4 +82,17 @@ internal class GenrePresenter(
             eventSink = ::genreSink,
         )
     }
+}
+
+@Stable
+internal data class GenreUiState(
+    val title: String,
+    val isError: Boolean,
+    val genre: GenreMusicBrainzModel?,
+    val eventSink: (GenreUiEvent) -> Unit,
+) : CircuitUiState
+
+internal sealed interface GenreUiEvent : CircuitUiEvent {
+    data object NavigateUp : GenreUiEvent
+    data object ForceRefresh : GenreUiEvent
 }
