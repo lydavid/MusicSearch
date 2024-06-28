@@ -90,10 +90,6 @@ internal class AreaPresenter(
                     title = areaScaffoldModel.getNameWithDisambiguation()
                 }
 
-                // TODO: rather than hiding releases tab, which is bad ux,
-                //  tell user why it's empty for non-countries
-                //  but this reveals unnecessary implementation details
-                //  and EU/XW are not countries but still has releases
                 if (areaScaffoldModel.showReleases()) {
                     tabs = AreaTab.entries
                 }
