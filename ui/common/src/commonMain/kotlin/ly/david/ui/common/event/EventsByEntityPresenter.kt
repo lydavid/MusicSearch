@@ -86,5 +86,5 @@ sealed interface EventsByEntityUiEvent : CircuitUiEvent {
 @Stable
 data class EventsByEntityUiState(
     val lazyPagingItems: LazyPagingItems<EventListItemModel>,
-    val eventSink: (EventsByEntityUiEvent) -> Unit,
+    val eventSink: (EventsByEntityUiEvent) -> Unit = {},
 ) : CircuitUiState

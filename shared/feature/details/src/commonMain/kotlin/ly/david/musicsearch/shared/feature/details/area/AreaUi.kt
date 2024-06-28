@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.artist.ArtistsListScreen
@@ -44,6 +45,36 @@ import ly.david.ui.core.LocalStrings
 /**
  * The top-level screen for an area.
  */
+@Composable
+internal fun AreaUi(
+    state: AreaUiState,
+    entityId: String,
+    modifier: Modifier = Modifier,
+) {
+    val overlayHost = LocalOverlayHost.current
+    val scope = rememberCoroutineScope()
+
+    AreaUi(
+        state = state,
+        entityId = entityId,
+        modifier = modifier,
+        scope = scope,
+        onAddToCollectionClick = {
+            scope.launch {
+                overlayHost.showInBottomSheet(
+                    AddToCollectionScreen(
+                        entity = MusicBrainzEntity.AREA,
+                        id = entityId,
+                    ),
+                )
+            }
+        },
+    )
+}
+
+/**
+ * The top-level screen for an area.
+ */
 @OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalFoundationApi::class,
@@ -53,17 +84,20 @@ internal fun AreaUi(
     state: AreaUiState,
     entityId: String,
     modifier: Modifier = Modifier,
+    scope: CoroutineScope = rememberCoroutineScope(),
+    onAddToCollectionClick: () -> Unit = {},
 ) {
-    val overlayHost = LocalOverlayHost.current
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
 
     val entity = MusicBrainzEntity.AREA
     val eventSink = state.eventSink
     val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
-    val pagerState = rememberPagerState(pageCount = state.tabs::size)
+    val pagerState = rememberPagerState(
+        initialPage = state.tabs.indexOf(state.selectedTab),
+        pageCount = state.tabs::size
+    )
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(AreaUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
@@ -98,16 +132,9 @@ internal fun AreaUi(
                             },
                         )
                     }
-                    AddToCollectionMenuItem {
-                        scope.launch {
-                            overlayHost.showInBottomSheet(
-                                AddToCollectionScreen(
-                                    entity = MusicBrainzEntity.AREA,
-                                    id = entityId,
-                                ),
-                            )
-                        }
-                    }
+                    AddToCollectionMenuItem(
+                        onClick = onAddToCollectionClick,
+                    )
                 },
                 showFilterIcon = state.selectedTab !in listOf(
                     AreaTab.STATS,
