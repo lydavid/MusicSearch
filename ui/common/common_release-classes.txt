@@ -35,6 +35,24 @@ stable class EventsByEntityUiState {
   runtime val lazyPagingItems: LazyPagingItems<EventListItemModel>
   stable val eventSink: Function1<EventsByEntityUiEvent, Unit>
 }
+stable class LabelsByEntityPresenter {
+  runtime val getLabelsByEntity: GetLabelsByEntity
+  <runtime stability> = Stable
+}
+stable class Get {
+  stable val byEntityId: String
+  stable val byEntity: MusicBrainzEntity
+  stable val isRemote: Boolean
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class LabelsByEntityUiState {
+  runtime val lazyPagingItems: LazyPagingItems<LabelListItemModel>
+  stable val eventSink: Function1<LabelsByEntityUiEvent, Unit>
+}
 stable class State {
   stable val entityId: String
   stable val query: String
@@ -222,6 +240,24 @@ stable class UpdateQuery {
   stable val query: String
   <runtime stability> = Stable
 }
+stable class WorksByEntityPresenter {
+  runtime val getWorksByEntity: GetWorksByEntity
+  <runtime stability> = Stable
+}
+stable class Get {
+  stable val byEntityId: String
+  stable val byEntity: MusicBrainzEntity
+  stable val isRemote: Boolean
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class WorksByEntityUiState {
+  runtime val lazyPagingItems: LazyPagingItems<WorkListItemModel>
+  stable val eventSink: Function1<WorksByEntityUiEvent, Unit>
+}
 unstable class AreaListItemPreviewParameterProvider {
   unstable val values: Sequence<AreaListItemModel>
   <runtime stability> = Unstable
@@ -238,9 +274,8 @@ unstable class InstrumentCardPreviewParameterProvider {
   unstable val values: Sequence<InstrumentListItemModel>
   <runtime stability> = Unstable
 }
-unstable class LabelCardPreviewParameterProvider {
-  unstable val values: Sequence<LabelListItemModel>
-  <runtime stability> = Unstable
+stable class LabelCardPreviewParameterProvider {
+  <runtime stability> = Stable
 }
 unstable class LifeSpanPreviewParameterProvider {
   unstable val values: Sequence<LifeSpanUiModel>

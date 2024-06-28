@@ -94,8 +94,10 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable artistsByEntityUiState: ArtistsByEntityUiState
   stable eventsByEntityUiState: EventsByEntityUiState
+  stable labelsByEntityUiState: LabelsByEntityUiState
   stable releasesByEntityUiState: ReleasesByEntityUiState
   stable releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState
+  stable worksByEntityUiState: WorksByEntityUiState
   stable entity: MusicBrainzEntity
   stable snackbarHostState: SnackbarHostState
   stable innerPadding: PaddingValues

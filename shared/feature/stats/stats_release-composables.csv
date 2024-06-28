@@ -1,6 +1,6 @@
 package,name,composable,skippable,restartable,readonly,inline,isLambda,hasDefaults,defaultsGroup,groups,calls,
-ly.david.musicsearch.shared.feature.stats.AreaStatsPresenter.present,present,1,0,0,0,0,0,0,0,1,9,
-ly.david.musicsearch.shared.feature.stats.ArtistStatsPresenter.present,present,1,0,0,0,0,0,0,0,1,1,
+ly.david.musicsearch.shared.feature.stats.AreaStatsPresenter.present,present,1,0,0,0,0,0,0,0,1,6,
+ly.david.musicsearch.shared.feature.stats.ArtistStatsPresenter.present,present,1,0,0,0,0,0,0,0,1,6,
 ly.david.musicsearch.shared.feature.stats.EventStatsPresenter.present,present,1,0,0,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.stats.InstrumentStatsPresenter.present,present,1,0,0,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.stats.LabelStatsPresenter.present,present,1,0,0,0,0,0,0,0,1,1,

@@ -5,6 +5,7 @@ stable class AreaStatsPresenter {
   unstable val releaseCountryDao: ReleaseCountryDao
   unstable val artistsByEntityDao: ArtistsByEntityDao
   unstable val eventsByEntityDao: EventsByEntityDao
+  unstable val labelsByEntityDao: LabelsByEntityDao
   unstable val areaPlaceDao: AreaPlaceDao
   <runtime stability> = Stable
 }
@@ -14,6 +15,7 @@ stable class ArtistStatsPresenter {
   runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
   unstable val eventsByEntityDao: EventsByEntityDao
   unstable val recordingsByEntityDao: RecordingsByEntityDao
+  unstable val worksByEntityDao: WorksByEntityDao
   unstable val artistReleaseGroupDao: ArtistReleaseGroupDao
   unstable val artistReleaseDao: ArtistReleaseDao
   <runtime stability> = Stable
@@ -59,6 +61,8 @@ stable class ReleaseGroupStatsPresenter {
 stable class ReleaseStatsPresenter {
   stable val screen: StatsScreen
   runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
+  unstable val artistsByEntityDao: ArtistsByEntityDao
   <runtime stability> = Stable
 }
 stable class SeriesStatsPresenter {
@@ -71,10 +75,12 @@ stable class Stats {
   unstable val relationTypeCounts: ImmutableList<RelationTypeCount>
   stable val artistStats: ArtistStats
   stable val eventStats: EventStats
+  stable val labelStats: LabelStats
   stable val placeStats: PlaceStats
   stable val recordingStats: RecordingStats
   stable val releaseStats: ReleaseStats
   unstable val releaseGroupStats: ReleaseGroupStats
+  stable val workStats: WorkStats
 }
 stable class ArtistStats {
   stable val totalRemote: Int?
@@ -82,6 +88,11 @@ stable class ArtistStats {
   <runtime stability> = Stable
 }
 stable class EventStats {
+  stable val totalRemote: Int?
+  stable val totalLocal: Int
+  <runtime stability> = Stable
+}
+stable class LabelStats {
   stable val totalRemote: Int?
   stable val totalLocal: Int
   <runtime stability> = Stable
@@ -107,10 +118,16 @@ unstable class ReleaseGroupStats {
   unstable val releaseGroupTypeCounts: ImmutableList<ReleaseGroupTypeCount>
   <runtime stability> = Unstable
 }
+stable class WorkStats {
+  stable val totalRemote: Int?
+  stable val totalLocal: Int
+  <runtime stability> = Stable
+}
 stable class WorkStatsPresenter {
   stable val screen: StatsScreen
   runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
   runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
+  unstable val artistsByEntityDao: ArtistsByEntityDao
   unstable val recordingsByEntityDao: RecordingsByEntityDao
   <runtime stability> = Stable
 }

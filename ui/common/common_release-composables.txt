@@ -147,6 +147,20 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun LabelListItem(
 }
 
 )
+fun present(
+  stable <this>: LabelsByEntityPresenter
+): LabelsByEntityUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelsListScreen(
+  lazyPagingItems: LazyPagingItems<LabelListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onLabelClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DisambiguationText(
   stable disambiguation: String?
   stable modifier: Modifier? = @static Companion
@@ -454,6 +468,20 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun WorkListItem(
 }
 
 )
+fun present(
+  stable <this>: WorksByEntityPresenter
+): WorksByEntityUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorksListScreen(
+  lazyPagingItems: LazyPagingItems<WorkListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onWorkClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
+)
 restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
   unstable area: AreaListItemModel
 )
@@ -478,7 +506,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewFu
 restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
   unstable instrument: InstrumentListItemModel
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+restartable scheme("[androidx.compose.ui.UiComposable]") fun LabelListItemPreview(
   unstable label: LabelListItemModel
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
