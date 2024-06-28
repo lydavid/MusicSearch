@@ -96,7 +96,7 @@ internal fun AreaUi(
     val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
-        pageCount = state.tabs::size
+        pageCount = state.tabs::size,
     )
 
     LaunchedEffect(key1 = pagerState.currentPage) {

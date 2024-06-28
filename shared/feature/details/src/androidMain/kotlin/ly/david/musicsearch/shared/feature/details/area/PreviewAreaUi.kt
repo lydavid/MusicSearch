@@ -23,19 +23,105 @@ import ly.david.ui.common.relation.RelationsUiState
 import ly.david.ui.common.release.ReleasesByEntityUiState
 import ly.david.ui.core.theme.PreviewTheme
 
-internal val artists = MutableStateFlow(
+private val canadianArtists = MutableStateFlow(
     PagingData.from(
         data = listOf(
             ArtistListItemModel(
+                id = "celine_dion",
+                name = "Céline Dion",
+                sortName = "Dion, Céline",
+                type = "Person",
+                gender = "Female",
+                countryCode = "CA",
+                lifeSpan = LifeSpanUiModel(begin = "1968-03-30"),
+            ),
+            ArtistListItemModel(
+                id = "rush",
+                name = "Rush",
+                sortName = "Rush",
+                type = "Group",
+                countryCode = "CA",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1968-08",
+                    end = "2018-01-19",
+                ),
+            ),
+            ArtistListItemModel(
+                id = "neil_young",
+                name = "Neil Young",
+                sortName = "Young, Neil",
+                type = "Person",
+                gender = "Male",
+                countryCode = "CA",
+                lifeSpan = LifeSpanUiModel(begin = "1945-11-12"),
+            ),
+            ArtistListItemModel(
+                id = "joni_mitchell",
+                name = "Joni Mitchell",
+                sortName = "Mitchell, Joni",
+                type = "Person",
+                gender = "Female",
+                countryCode = "CA",
+                lifeSpan = LifeSpanUiModel(begin = "1943-11-07"),
+            ),
+            ArtistListItemModel(
                 id = "c8b03190-306c-4120-bb0b-6f2ebfc06ea9",
                 name = "The Weeknd",
-                sortName = "",
+                sortName = "Weeknd, The",
                 disambiguation = "Canadian R&B singer",
                 type = "Person",
                 gender = "Male",
                 countryCode = "CA",
+                lifeSpan = LifeSpanUiModel(begin = "1990-02-16"),
+            ),
+            ArtistListItemModel(
+                id = "shania_twain",
+                name = "Shania Twain",
+                sortName = "Twain, Shania",
+                type = "Person",
+                gender = "Female",
+                countryCode = "CA",
+                lifeSpan = LifeSpanUiModel(begin = "1965-08-28"),
+            ),
+            ArtistListItemModel(
+                id = "arcade_fire",
+                name = "Arcade Fire",
+                sortName = "Arcade Fire",
+                type = "Group",
+                countryCode = "CA",
+                lifeSpan = LifeSpanUiModel(begin = "2001"),
+            ),
+            ArtistListItemModel(
+                id = "leonard_cohen",
+                name = "Leonard Cohen",
+                sortName = "Cohen, Leonard",
+                disambiguation = "Canadian singer‐songwriter and poet",
+                type = "Person",
+                gender = "Male",
+                countryCode = "CA",
                 lifeSpan = LifeSpanUiModel(
-                    begin = "1990-02-16",
+                    begin = "1934-09-21",
+                    end = "2016-11-07",
+                ),
+            ),
+            ArtistListItemModel(
+                id = "avril_lavigne",
+                name = "Avril Lavigne",
+                sortName = "Lavigne, Avril",
+                type = "Person",
+                gender = "Female",
+                countryCode = "CA",
+                lifeSpan = LifeSpanUiModel(begin = "1984-09-27"),
+            ),
+            ArtistListItemModel(
+                id = "the_tragically_hip",
+                name = "The Tragically Hip",
+                sortName = "Tragically Hip, The",
+                type = "Group",
+                countryCode = "CA",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1983",
+                    end = "2016-08-20",
                 ),
             ),
         ),
@@ -234,18 +320,78 @@ internal val places = MutableStateFlow(
     ),
 )
 
-internal val releases = MutableStateFlow(
+private val canadianReleases = MutableStateFlow(
     PagingData.from(
         data = listOf(
             ReleaseListItemModel(
-                id = "5",
-                name = "",
+                id = "rush_moving_pictures",
+                name = "Moving Pictures",
+                date = "1981-02-12",
+                countryCode = "CA",
+                formattedArtistCredits = "Rush",
+            ),
+            ReleaseListItemModel(
+                id = "celine_dion_falling_into_you",
+                name = "Falling into You",
+                date = "1996",
+                countryCode = "CA",
+                formattedArtistCredits = "Céline Dion",
+            ),
+            ReleaseListItemModel(
+                id = "alanis_morissette_jagged_little_pill",
+                name = "Jagged Little Pill",
+                date = "1995-06-13",
+                countryCode = "CA",
+                formattedArtistCredits = "Alanis Morissette",
+            ),
+            ReleaseListItemModel(
+                id = "the_tragically_hip_fully_completely",
+                name = "Fully Completely",
+                date = "1992",
+                countryCode = "CA",
+                formattedArtistCredits = "The Tragically Hip",
+            ),
+            ReleaseListItemModel(
+                id = "shania_twain_come_on_over",
+                name = "Come On Over",
+                disambiguation = "original version, club edition",
+                date = "1997",
+                countryCode = "CA",
+                formattedArtistCredits = "Shania Twain",
+            ),
+            ReleaseListItemModel(
+                id = "arcade_fire_funeral",
+                name = "Funeral",
+                date = "2004-09-14",
+                countryCode = "CA",
+                formattedArtistCredits = "Arcade Fire",
+            ),
+            ReleaseListItemModel(
+                id = "neil_young_harvest",
+                name = "Harvest",
+                date = "1984",
+                countryCode = "CA",
+                formattedArtistCredits = "Neil Young",
+            ),
+            ReleaseListItemModel(
+                id = "sarah_mclachlan_surfacing",
+                name = "Surfacing",
+                date = "1997",
+                countryCode = "CA",
+                formattedArtistCredits = "Sarah McLachlan",
+            ),
+            ReleaseListItemModel(
+                id = "leonard_cohen_songs_of_leonard_cohen",
+                name = "Songs of Leonard Cohen",
+                date = "1967-12-27",
+                countryCode = "CA",
+                formattedArtistCredits = "Leonard Cohen",
             ),
         ),
     ),
 )
 
-internal val relations = MutableStateFlow(
+private val canadianRelations = MutableStateFlow(
     PagingData.from(
         data = listOf(
             RelationListItemModel(
@@ -349,7 +495,7 @@ internal fun PreviewAreaDetails() {
                     selectedTab = AreaTab.DETAILS,
                     query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
-                        lazyPagingItems = artists.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -361,10 +507,10 @@ internal fun PreviewAreaDetails() {
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
                     releasesByEntityUiState = ReleasesByEntityUiState(
-                        lazyPagingItems = releases.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = relations.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -388,7 +534,7 @@ internal fun PreviewAreaDetailsError() {
                     selectedTab = AreaTab.DETAILS,
                     query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
-                        lazyPagingItems = artists.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -400,10 +546,10 @@ internal fun PreviewAreaDetailsError() {
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
                     releasesByEntityUiState = ReleasesByEntityUiState(
-                        lazyPagingItems = releases.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = relations.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -427,7 +573,7 @@ internal fun PreviewAreaRelationships() {
                     selectedTab = AreaTab.RELATIONSHIPS,
                     query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
-                        lazyPagingItems = artists.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -439,10 +585,10 @@ internal fun PreviewAreaRelationships() {
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
                     releasesByEntityUiState = ReleasesByEntityUiState(
-                        lazyPagingItems = releases.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = relations.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -466,7 +612,7 @@ internal fun PreviewAreaArtists() {
                     selectedTab = AreaTab.ARTISTS,
                     query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
-                        lazyPagingItems = artists.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -478,10 +624,10 @@ internal fun PreviewAreaArtists() {
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
                     releasesByEntityUiState = ReleasesByEntityUiState(
-                        lazyPagingItems = releases.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = relations.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -505,7 +651,7 @@ internal fun PreviewAreaEvents() {
                     selectedTab = AreaTab.EVENTS,
                     query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
-                        lazyPagingItems = artists.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -517,10 +663,10 @@ internal fun PreviewAreaEvents() {
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
                     releasesByEntityUiState = ReleasesByEntityUiState(
-                        lazyPagingItems = releases.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = relations.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -544,7 +690,7 @@ internal fun PreviewAreaLabels() {
                     selectedTab = AreaTab.LABELS,
                     query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
-                        lazyPagingItems = artists.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -556,10 +702,10 @@ internal fun PreviewAreaLabels() {
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
                     releasesByEntityUiState = ReleasesByEntityUiState(
-                        lazyPagingItems = releases.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = relations.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -583,7 +729,7 @@ internal fun PreviewAreaReleases() {
                     selectedTab = AreaTab.RELEASES,
                     query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
-                        lazyPagingItems = artists.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -595,10 +741,10 @@ internal fun PreviewAreaReleases() {
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
                     releasesByEntityUiState = ReleasesByEntityUiState(
-                        lazyPagingItems = releases.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = relations.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -622,7 +768,7 @@ internal fun PreviewAreaPlaces() {
                     selectedTab = AreaTab.PLACES,
                     query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
-                        lazyPagingItems = artists.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -634,10 +780,10 @@ internal fun PreviewAreaPlaces() {
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
                     releasesByEntityUiState = ReleasesByEntityUiState(
-                        lazyPagingItems = releases.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = relations.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -661,7 +807,7 @@ internal fun PreviewAreaStats() {
                     selectedTab = AreaTab.STATS,
                     query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
-                        lazyPagingItems = artists.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -673,10 +819,10 @@ internal fun PreviewAreaStats() {
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
                     releasesByEntityUiState = ReleasesByEntityUiState(
-                        lazyPagingItems = releases.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = relations.collectAsLazyPagingItems(),
+                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
