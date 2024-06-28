@@ -21,9 +21,6 @@ object AreaType {
     const val WORLDWIDE = "[Worldwide]"
 }
 
-fun Area.showReleases(): Boolean =
-    type == AreaType.COUNTRY || name == AreaType.WORLDWIDE
-
 data class ReleaseEvent(
     val id: String,
     val name: String,

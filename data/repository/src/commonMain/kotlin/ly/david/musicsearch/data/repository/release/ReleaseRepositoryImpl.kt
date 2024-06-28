@@ -107,9 +107,7 @@ class ReleaseRepositoryImpl(
 
             areaDao.insertAll(
                 release.releaseEvents?.mapNotNull {
-                    // release events returns null type, but we know they are countries
-                    // Except in the case of [Worldwide], but it will replace itself when we first visit it.
-                    it.area?.copy(type = AreaType.COUNTRY)
+                    it.area
                 }.orEmpty(),
             )
             release.releaseEvents?.forEach {

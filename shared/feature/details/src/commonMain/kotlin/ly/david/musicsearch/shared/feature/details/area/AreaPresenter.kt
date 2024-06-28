@@ -16,7 +16,6 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.area.AreaScaffoldModel
-import ly.david.musicsearch.core.models.area.showReleases
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -64,8 +63,8 @@ internal class AreaPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
         var area: AreaScaffoldModel? by remember { mutableStateOf(null) }
-        var tabs: List<AreaTab> by rememberSaveable {
-            mutableStateOf(AreaTab.entries.filter { it != AreaTab.RELEASES })
+        val tabs: List<AreaTab> by rememberSaveable {
+            mutableStateOf(AreaTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(AreaTab.DETAILS) }
         var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
@@ -90,9 +89,6 @@ internal class AreaPresenter(
                     title = areaScaffoldModel.getNameWithDisambiguation()
                 }
 
-                if (areaScaffoldModel.showReleases()) {
-                    tabs = AreaTab.entries
-                }
                 area = areaScaffoldModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {

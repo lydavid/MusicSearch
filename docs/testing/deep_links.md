@@ -78,6 +78,11 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/dd216
 
 ## Release
 
+Released in Europe
+```shell
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/9427ac9c-f05a-4a45-8c30-da5ac1ae29a0" -a android.intent.action.VIEW
+```
+
 Artist credit as "Various Artists", browse artists reveals 104 artists
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/1f22306b-bb99-42b3-b42d-1fa22ff79d17" -a android.intent.action.VIEW
