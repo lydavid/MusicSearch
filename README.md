@@ -3,6 +3,8 @@
 An Android app for browsing songs, artists, and anything related to them
 using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 
+Multiplatform distributions are heavily WIP. Only the Android app is considered stable.
+
 ## Releases
 
 The [master branch](https://github.com/lydavid/MusicSearch/tree/master) Android app is available on Google Play.
@@ -21,7 +23,7 @@ Desktop releases are packaged by [Conveyor](https://www.hydraulic.dev/) and avai
 ## Features
 
 - Search MusicBrainz's massive database for any information related to your favorite artist or song
-- All data is cached on device after loading each page/tab
+- Offline-first; all data is cached on device after loading each page/tab
 - See every page you've visited in the history screen, and quickly get back to them
 - Almost every tab allows you to filter its content instantaneously
 - Save anything to a collection
