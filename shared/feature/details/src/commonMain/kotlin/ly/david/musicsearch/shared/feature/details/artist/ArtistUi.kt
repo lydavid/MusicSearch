@@ -165,9 +165,6 @@ internal fun ArtistUi(
                     ) { artist ->
                         ArtistDetailsUi(
                             artist = artist,
-//                            modifier = Modifier
-//                                .padding(innerPadding)
-//                                ,
                             filterText = state.query,
                             imageUrl = state.imageUrl,
                             lazyListState = detailsLazyListState,

@@ -79,10 +79,10 @@ actual val HttpClientModule: Module = module {
                 sanitizeHeader { header -> header == HttpHeaders.Authorization }
             }
 
-//            install(HttpRequestRetry) {
-//                retryOnExceptionOrServerErrors(maxRetries = 3)
-//                exponentialDelay()
-//            }
+            install(HttpRequestRetry) {
+                retryOnExceptionOrServerErrors(maxRetries = 3)
+                exponentialDelay()
+            }
         }
     }
 }
