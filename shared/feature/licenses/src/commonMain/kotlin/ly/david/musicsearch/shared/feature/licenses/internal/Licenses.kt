@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.feature.licenses.internal
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -19,6 +20,7 @@ internal fun Licenses(
 
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             ScrollableTopAppBar(
                 onBack = { eventSink(LicensesUiEvent.NavigateUp) },
