@@ -40,8 +40,7 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - id: setup
-        uses: ./.github/actions/setup
+      - uses: ./.github/actions/setup
 
       - name: Install Maestro
         run: curl -Ls "https://get.maestro.mobile.dev" | bash
@@ -69,7 +68,6 @@ jobs:
           script: echo "Generated AVD snapshot for caching."
 
       - name: Install app on emulator, run Maestro tests on master
-        id: test
         uses: reactivecircus/android-emulator-runner@v2.31.0
         with:
           api-level: ${{ matrix.api-level }}
@@ -89,11 +87,9 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
-      - id: setup2
-        uses: ./.github/actions/setup
+      - uses: ./.github/actions/setup
 
       - name: Install app on emulator, run Maestro tests on branch
-        id: test
         uses: reactivecircus/android-emulator-runner@v2.31.0
         with:
           api-level: ${{ matrix.api-level }}
