@@ -80,21 +80,7 @@ jobs:
           script: |
             ./gradlew installDebug
             adb shell settings put system show_touches 1
-            sleep 5
-            adb shell input keyevent 61
-            sleep 2
-            adb shell input text "Tsukuyomi"
-            sleep 2
-            adb shell input keyevent 61
-            sleep 2
-            adb shell input keyevent 61
-            sleep 2
-            adb shell input keyevent 61
-            sleep 2
-            adb shell input keyevent 61
-            sleep 2
-            adb shell input keyevent 66
-#            $HOME/.maestro/bin/maestro test .maestro
+            $HOME/.maestro/bin/maestro test .maestro/artist
 
       - name: Checkout
         uses: nschloe/action-cached-lfs-checkout@v1
