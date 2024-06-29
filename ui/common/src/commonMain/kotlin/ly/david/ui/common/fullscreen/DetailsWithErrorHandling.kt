@@ -17,33 +17,32 @@ import androidx.compose.ui.Modifier
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun <T> DetailsWithErrorHandling(
+    scaffoldModel: T?,
+    onRefresh: () -> Unit,
+    modifier: Modifier = Modifier,
     showLoading: Boolean = false,
     showError: Boolean = false,
-    onRefresh: () -> Unit,
-    scaffoldModel: T?,
-    modifier: Modifier = Modifier,
     detailsScreen: @Composable ((T) -> Unit),
 ) {
-    when {
-        showError -> {
-            FullScreenErrorWithRetry(
-                modifier = modifier,
-                onClick = onRefresh,
-            )
-        }
+    val refreshState = rememberPullRefreshState(
+        refreshing = showLoading,
+        onRefresh = { onRefresh() },
+    )
+    Box(
+        modifier = modifier.pullRefresh(refreshState),
+    ) {
+        when {
+            showError -> {
+                FullScreenErrorWithRetry(
+                    onClick = onRefresh,
+                )
+            }
 
-        scaffoldModel == null -> {
-            FullScreenLoadingIndicator(modifier = modifier)
-        }
+            scaffoldModel == null -> {
+                FullScreenLoadingIndicator()
+            }
 
-        else -> {
-            val refreshState = rememberPullRefreshState(
-                refreshing = showLoading,
-                onRefresh = { onRefresh() },
-            )
-            Box(
-                modifier = modifier.pullRefresh(refreshState),
-            ) {
+            else -> {
                 detailsScreen(scaffoldModel)
 
                 PullRefreshIndicator(
