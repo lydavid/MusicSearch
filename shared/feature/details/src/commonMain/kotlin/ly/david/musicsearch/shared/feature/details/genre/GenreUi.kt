@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.feature.details.genre
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -59,6 +60,7 @@ internal fun GenreUi(
 
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             ScrollableTopAppBar(
                 entity = entity,

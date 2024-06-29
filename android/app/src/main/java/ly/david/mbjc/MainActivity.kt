@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.runtime.screen.Screen
@@ -33,6 +34,8 @@ internal class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        enableEdgeToEdge()
 
         val intentFilter = IntentFilter().apply {
             addAction(BroadcastTypes.METADATA_CHANGED)

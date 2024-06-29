@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.search.internal
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -40,6 +41,7 @@ internal fun Search(
 
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             ScrollableTopAppBar(

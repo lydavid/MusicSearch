@@ -5,7 +5,11 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -93,7 +97,11 @@ internal fun TopAppBarWithFilterInternal(
                 focusRequester.requestFocus()
             }
 
-            Surface {
+            Surface(
+                modifier = Modifier.padding(
+                    top = WindowInsets.safeDrawing.asPaddingValues().calculateTopPadding(),
+                ),
+            ) {
                 Column {
                     TextField(
                         modifier = Modifier

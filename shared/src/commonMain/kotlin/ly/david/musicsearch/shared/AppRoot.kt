@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -32,6 +33,7 @@ fun AppRoot(
 
             Scaffold(
                 modifier = modifier,
+                contentWindowInsets = WindowInsets(0, 0, 0, 0),
                 bottomBar = {
                     // TODO: This seems to add a blank space of equal height to iOS's screen
                     BottomNavigationBar(

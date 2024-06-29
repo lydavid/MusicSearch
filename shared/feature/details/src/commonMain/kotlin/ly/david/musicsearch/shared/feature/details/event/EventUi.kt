@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.feature.details.event
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -65,6 +66,7 @@ internal fun EventUi(
 
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             TopAppBarWithFilter(
                 onBack = {

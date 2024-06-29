@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.collections.single
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
@@ -106,6 +107,7 @@ internal fun CollectionUi(
 
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             TopAppBarWithFilter(
                 onBack = {

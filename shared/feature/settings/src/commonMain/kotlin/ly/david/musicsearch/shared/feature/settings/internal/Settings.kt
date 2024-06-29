@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.feature.settings.internal
 
 import MusicSearch.shared.feature.settings.BuildConfig
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -47,6 +48,7 @@ internal fun Settings(
 
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             ScrollableTopAppBar(
                 showBackButton = false,
