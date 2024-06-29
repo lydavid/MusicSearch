@@ -80,6 +80,14 @@ jobs:
           script: |
             ./gradlew installDebug
             adb shell settings put system show_touches 1
+            adb shell input keyevent 61
+            adb shell input text "Tsukuyomi"
+            adb shell input keyevent 61
+            adb shell input keyevent 61
+            adb shell input keyevent 61
+            adb shell input keyevent 61
+            adb shell input keyevent 61
+            adb shell input keyevent 66
 #            $HOME/.maestro/bin/maestro test .maestro
 
       - name: Checkout
@@ -104,11 +112,11 @@ jobs:
             adb shell settings put system show_touches 1
             $HOME/.maestro/bin/maestro test .maestro
 
-      - name: Store outputs on failure
+      - name: Store outputs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: musicsearch_test_e2e_outputs
+          name: musicsearch_test_e2e_outputs-${{ matrix.api-level }}
           path: |
             /home/runner/.maestro/tests/
             *.mp4
