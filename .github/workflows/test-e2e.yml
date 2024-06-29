@@ -45,11 +45,7 @@ jobs:
       - name: Install Maestro
         run: curl -Ls "https://get.maestro.mobile.dev" | bash
 
-      - uses: actions/checkout@v3
-        with:
-          sparse-checkout: |
-            .maestro/search-artist-then-back.yml
-          sparse-checkout-cone-mode: false
+      - run: git checkout beta -- .maestro/search-artist-then-back.yml
 
       - name: AVD cache
         uses: actions/cache@v4
