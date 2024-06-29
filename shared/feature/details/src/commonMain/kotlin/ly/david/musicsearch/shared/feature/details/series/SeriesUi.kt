@@ -118,19 +118,18 @@ internal fun SeriesUi(
             when (state.tabs[page]) {
                 SeriesTab.DETAILS -> {
                     DetailsWithErrorHandling(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(SeriesUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.series,
                     ) { series ->
                         SeriesDetailsUi(
                             series = series,
-                            modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize()
-                                .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = state.query,
                             lazyListState = detailsLazyListState,
                             onItemClick = { entity, id, title ->

@@ -3,8 +3,6 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
-    <ID>TooGenericExceptionCaught:ReleaseGroupsByEntityPresenter.kt$ReleaseGroupsByEntityPresenter$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:ReleasesByEntityPresenter.kt$ReleasesByEntityPresenter$ex: Exception</ID>
     <ID>UnstableCollections:ExposedDropdownMenuBox.kt$List&lt;MusicBrainzEntity&gt;</ID>
     <ID>UnstableCollections:MultipleChoiceDialog.kt$List&lt;String&gt;</ID>
     <ID>UnstableCollections:TabsBar.kt$List&lt;String&gt;</ID>

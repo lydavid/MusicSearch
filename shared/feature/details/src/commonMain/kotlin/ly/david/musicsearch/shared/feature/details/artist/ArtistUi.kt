@@ -152,19 +152,19 @@ internal fun ArtistUi(
             when (state.tabs[page]) {
                 ArtistTab.DETAILS -> {
                     DetailsWithErrorHandling(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        showLoading = state.isLoading,
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(ArtistUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.artist,
                     ) { artist ->
                         ArtistDetailsUi(
                             artist = artist,
-                            modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize()
-                                .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = state.query,
                             imageUrl = state.imageUrl,
                             lazyListState = detailsLazyListState,

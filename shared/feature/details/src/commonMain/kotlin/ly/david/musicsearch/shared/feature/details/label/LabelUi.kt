@@ -131,19 +131,18 @@ internal fun LabelUi(
             when (state.tabs[page]) {
                 LabelTab.DETAILS -> {
                     DetailsWithErrorHandling(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(LabelUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.label,
                     ) { label ->
                         LabelDetailsUi(
                             label = label,
-                            modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize()
-                                .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = state.query,
                             lazyListState = detailsLazyListState,
                             onItemClick = { entity, id, title ->

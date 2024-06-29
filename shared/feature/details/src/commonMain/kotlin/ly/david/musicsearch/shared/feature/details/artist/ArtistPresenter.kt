@@ -19,7 +19,6 @@ import ly.david.musicsearch.core.models.artist.ArtistScaffoldModel
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.data.spotify.ArtistImageRepository
 import ly.david.musicsearch.domain.artist.ArtistRepository
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
@@ -61,6 +60,7 @@ internal class ArtistPresenter(
     @Composable
     override fun present(): ArtistUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
+        var isLoading by rememberSaveable { mutableStateOf(true) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
@@ -87,14 +87,18 @@ internal class ArtistPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val artistScaffoldModel = repository.lookupArtist(screen.id)
+                isLoading = true
+                val artistScaffoldModel = repository.lookupArtist(
+                    artistId = screen.id,
+                    forceRefresh = forceRefreshDetails,
+                )
                 if (title.isEmpty()) {
                     title = artistScaffoldModel.getNameWithDisambiguation()
                 }
                 artist = artistScaffoldModel
                 imageUrl = fetchArtistImage(artistScaffoldModel)
                 isError = false
-            } catch (ex: RecoverableNetworkException) {
+            } catch (ex: Exception) {
                 logger.e(ex)
                 isError = true
             }
@@ -109,6 +113,8 @@ internal class ArtistPresenter(
                 )
                 recordedHistory = true
             }
+            isLoading = false
+            forceRefreshDetails = false
         }
 
         LaunchedEffect(
@@ -221,6 +227,7 @@ internal class ArtistPresenter(
 
         return ArtistUiState(
             title = title,
+            isLoading = isLoading,
             isError = isError,
             artist = artist,
             imageUrl = imageUrl,
@@ -257,6 +264,7 @@ internal class ArtistPresenter(
 @Stable
 internal data class ArtistUiState(
     val title: String,
+    val isLoading: Boolean,
     val isError: Boolean,
     val artist: ArtistScaffoldModel?,
     val imageUrl: String,

@@ -46,6 +46,10 @@ class ArtistDao(
         ).executeAsOneOrNull()
     }
 
+    fun delete(artistId: String) {
+        transacter.delete(artistId)
+    }
+
     private fun toArtistScaffoldModel(
         id: String,
         name: String,

@@ -66,6 +66,10 @@ attributes LIKE :query OR additional_info LIKE :query)
 ORDER BY linked_entity, label, `order`
 LIMIT :limit OFFSET :offset;
 
+deleteRelationshipsExcludingUrlsByEntity:
+DELETE FROM relation
+WHERE entity_id = :entityId AND linked_entity != "url";
+
 getEntityUrlRelationships:
 SELECT
   `linked_entity_id`,
@@ -82,9 +86,9 @@ WHERE entity_id = :entityId AND linked_entity = "url" AND
 attributes LIKE :query OR additional_info LIKE :query)
 ORDER BY linked_entity, label, `order`;
 
-deleteRelationshipsExcludingUrlsByEntity:
+deleteUrlRelationshipssByEntity:
 DELETE FROM relation
-WHERE entity_id = :entityId AND linked_entity != "url";
+WHERE entity_id = :entityId AND linked_entity = "url";
 
 countOfEachRelationshipType:
 SELECT linked_entity, count(entity_id) AS entity_count

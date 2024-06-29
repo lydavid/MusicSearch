@@ -118,19 +118,18 @@ internal fun EventUi(
             when (state.tabs[page]) {
                 EventTab.DETAILS -> {
                     DetailsWithErrorHandling(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(EventUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.event,
                     ) { event ->
                         EventDetailsUi(
                             event = event,
-                            modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize()
-                                .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = state.query,
                             lazyListState = detailsLazyListState,
                             onItemClick = { entity, id, title ->

@@ -115,19 +115,18 @@ internal fun PlaceUi(
             when (state.tabs[page]) {
                 PlaceTab.DETAILS -> {
                     DetailsWithErrorHandling(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(PlaceUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.place,
                     ) { place ->
                         PlaceDetailsUi(
                             place = place,
-                            modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize()
-                                .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = state.query,
                             lazyListState = detailsLazyListState,
                             onItemClick = { entity, id, title ->

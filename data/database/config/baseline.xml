@@ -8,7 +8,5 @@
     <ID>ReturnCount:ToRelationDatabaseModel.kt$fun RelationMusicBrainzModel.toRelationDatabaseModel( entityId: String, order: Int, ): RelationWithOrder?</ID>
     <ID>SwallowedException:ArtistCreditDao.kt$ArtistCreditDao$ex: Exception</ID>
     <ID>SwallowedException:CollectionEntityDao.kt$CollectionEntityDao$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:ArtistCreditDao.kt$ArtistCreditDao$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:CollectionEntityDao.kt$CollectionEntityDao$ex: Exception</ID>
   </CurrentIssues>
 </SmellBaseline>

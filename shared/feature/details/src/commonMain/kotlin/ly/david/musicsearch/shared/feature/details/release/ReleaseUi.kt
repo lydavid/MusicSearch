@@ -154,19 +154,18 @@ internal fun ReleaseUi(
             when (state.tabs[page]) {
                 ReleaseTab.DETAILS -> {
                     DetailsWithErrorHandling(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(ReleaseUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.release,
                     ) { release ->
                         ReleaseDetailsUi(
                             release = release,
-                            modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize()
-                                .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = state.query,
                             imageUrl = state.imageUrl,
                             lazyListState = detailsLazyListState,

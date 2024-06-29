@@ -201,6 +201,10 @@ class RelationRepositoryImpl(
         entityId = entityId,
     )
 
+    override fun deleteUrlRelationshipsByEntity(entityId: String) {
+        relationDao.deleteUrlRelationshipsByEntity(entityId)
+    }
+
     override fun getCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>> =
         relationDao.getCountOfEachRelationshipType(entityId).map {
             it.map { countOfEachRelationshipType: CountOfEachRelationshipType ->
