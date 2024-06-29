@@ -21,13 +21,13 @@ file_names=(
 )
 
 commands=(
-  "adb shell am start -a android.intent.action.VIEW -d '\"io.github.lydavid.musicsearch.debug://app/lookup?query=aimer&type=artist\"'"
+  "adb shell am start -a android.intent.action.VIEW -d '\"io.github.lydavid.musicsearch.debug://app/search?query=aimer&type=artist\"'"
   "adb shell am start -a android.intent.action.VIEW -d 'io.github.lydavid.musicsearch.debug://app/artist/dfc6a151-3792-4695-8fda-f64723eaa788'"
   "adb shell input swipe 900 500 100 500"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/release/3cd31605-0f7e-45ee-aacb-637a53e4c367' -a android.intent.action.VIEW"
   "adb shell input swipe 900 500 100 500"
-  "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/collections'"
-  "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/collections/debe8581-e0c8-45ee-8fda-3ddcb5233f91'"
+  "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/collection'"
+  "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/collection/debe8581-e0c8-45ee-8fda-3ddcb5233f91'"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/history'"
 )
 

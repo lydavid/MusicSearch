@@ -8,11 +8,11 @@ The release version also supports deep links, but you will have to remove the `.
 Note the `'`. Need to include this when building uri with `&`.
 
 ```shell
-adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/lookup?query=tsukuyomi&type=artist"'
+adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/search?query=tsukuyomi&type=artist"'
 ```
 
 ```shell
-adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/lookup?query=沈香学&type=release-group"'
+adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/search?query=沈香学&type=release-group"'
 ```
 
 
