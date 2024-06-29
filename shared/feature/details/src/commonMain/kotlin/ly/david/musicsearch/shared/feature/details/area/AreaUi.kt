@@ -170,6 +170,10 @@ internal fun AreaUi(
             when (state.tabs[page]) {
                 AreaTab.DETAILS -> {
                     DetailsWithErrorHandling(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
                         showError = state.isError,
                         onRefresh = {
                             eventSink(AreaUiEvent.ForceRefresh)
@@ -178,10 +182,6 @@ internal fun AreaUi(
                     ) {
                         AreaDetailsUi(
                             area = it,
-                            modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize()
-                                .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = state.query,
                             lazyListState = detailsLazyListState,
                             onItemClick = { entity, id, title ->

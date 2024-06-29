@@ -153,7 +153,10 @@ internal fun RecordingUi(
             when (state.tabs[page]) {
                 RecordingTab.DETAILS -> {
                     DetailsWithErrorHandling(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
                         showError = state.isError,
                         onRefresh = {
                             eventSink(RecordingUiEvent.ForceRefresh)
@@ -162,10 +165,6 @@ internal fun RecordingUi(
                     ) { recording ->
                         RecordingDetailsUi(
                             recording = recording,
-                            modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize()
-                                .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = state.query,
                             lazyListState = detailsLazyListState,
                             onItemClick = { entity, id, title ->

@@ -117,7 +117,10 @@ internal fun WorkUi(
             when (state.tabs[page]) {
                 WorkTab.DETAILS -> {
                     DetailsWithErrorHandling(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
                         showError = state.isError,
                         onRefresh = {
                             eventSink(WorkUiEvent.ForceRefresh)
@@ -126,10 +129,6 @@ internal fun WorkUi(
                     ) { work ->
                         WorkDetailsUi(
                             work = work,
-                            modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize()
-                                .nestedScroll(scrollBehavior.nestedScrollConnection),
                             filterText = state.query,
                             lazyListState = detailsLazyListState,
                             onItemClick = { entity, id, title ->
