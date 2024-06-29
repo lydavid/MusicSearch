@@ -63,6 +63,12 @@ class RelationDao(
         },
     )
 
+    fun deleteRelationshipsExcludingUrlsByEntity(
+        entityId: String,
+    ) {
+        transacter.deleteRelationshipsExcludingUrlsByEntity(entityId)
+    }
+
     fun getEntityUrlRelationships(
         entityId: String,
     ): List<RelationListItemModel> {
@@ -71,6 +77,12 @@ class RelationDao(
             query = "%%", // TODO: either filter here or with Kotlin like before
             mapper = ::toRelationListItemModel,
         ).executeAsList()
+    }
+
+    fun deleteUrlRelationshipsByEntity(
+        entityId: String,
+    ) {
+        transacter.deleteUrlRelationshipssByEntity(entityId)
     }
 
     private fun toRelationListItemModel(
@@ -92,12 +104,6 @@ class RelationDao(
         attributes = attributes,
         additionalInfo = additionalInfo,
     )
-
-    fun deleteRelationshipsExcludingUrlsByEntity(
-        entityId: String,
-    ) {
-        transacter.deleteRelationshipsExcludingUrlsByEntity(entityId)
-    }
 
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<CountOfEachRelationshipType>> =
         transacter.countOfEachRelationshipType(entityId)

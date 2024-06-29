@@ -30,5 +30,9 @@ interface RelationRepository {
         entityId: String,
     ): List<RelationListItemModel>
 
+    fun deleteUrlRelationshipsByEntity(
+        entityId: String,
+    )
+
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>>
 }

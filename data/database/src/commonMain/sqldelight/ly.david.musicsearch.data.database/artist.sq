@@ -34,3 +34,7 @@ SELECT
 FROM artist a
 LEFT JOIN mbid_image mi ON mi.mbid = a.id
 WHERE id = :artistId;
+
+delete:
+DELETE FROM artist
+WHERE id = :artistId;

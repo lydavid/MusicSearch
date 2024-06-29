@@ -120,7 +120,7 @@ internal fun EventUi(
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(EventUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.event,

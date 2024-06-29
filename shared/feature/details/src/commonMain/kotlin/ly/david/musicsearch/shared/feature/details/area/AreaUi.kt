@@ -171,7 +171,7 @@ internal fun AreaUi(
                 AreaTab.DETAILS -> {
                     DetailsWithErrorHandling(
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(AreaUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.area,

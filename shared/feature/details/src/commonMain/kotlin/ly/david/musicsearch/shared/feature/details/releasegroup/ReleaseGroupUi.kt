@@ -162,7 +162,7 @@ internal fun ReleaseGroupUi(
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(ReleaseGroupUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.releaseGroup,

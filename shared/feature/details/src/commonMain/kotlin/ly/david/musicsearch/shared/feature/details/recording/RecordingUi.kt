@@ -155,7 +155,7 @@ internal fun RecordingUi(
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(RecordingUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.recording,

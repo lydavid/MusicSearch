@@ -156,7 +156,7 @@ internal fun ReleaseUi(
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(ReleaseUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.release,

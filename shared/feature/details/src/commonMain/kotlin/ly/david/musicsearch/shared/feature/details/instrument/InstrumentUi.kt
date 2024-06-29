@@ -120,7 +120,7 @@ internal fun InstrumentUi(
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(InstrumentUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.instrument,

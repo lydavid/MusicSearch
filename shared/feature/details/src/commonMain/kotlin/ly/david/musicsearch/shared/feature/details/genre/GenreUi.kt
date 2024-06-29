@@ -69,7 +69,7 @@ internal fun GenreUi(
     ) { innerPadding ->
         DetailsWithErrorHandling(
             showError = isError,
-            onRetryClick = onRetryClick,
+            onRefresh = onRetryClick,
             scaffoldModel = genre,
         ) {
             FullScreenContent(modifier = Modifier.padding(innerPadding)) {

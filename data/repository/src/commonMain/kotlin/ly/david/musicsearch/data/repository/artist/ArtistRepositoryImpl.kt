@@ -1,9 +1,9 @@
 package ly.david.musicsearch.data.repository.artist
 
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.artist.ArtistScaffoldModel
 import ly.david.musicsearch.data.database.dao.ArtistDao
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.domain.artist.ArtistRepository
 import ly.david.musicsearch.domain.relation.RelationRepository
@@ -14,11 +14,23 @@ class ArtistRepositoryImpl(
     private val relationRepository: RelationRepository,
 ) : ArtistRepository {
 
-    override suspend fun lookupArtist(artistId: String): ArtistScaffoldModel {
+    override suspend fun lookupArtist(
+        artistId: String,
+        forceRefresh: Boolean,
+    ): ArtistScaffoldModel {
+        if (forceRefresh) {
+            relationRepository.deleteUrlRelationshipsByEntity(artistId)
+            artistDao.delete(artistId)
+        }
+
         val artistScaffoldModel = artistDao.getArtistForDetails(artistId)
         val urlRelations = relationRepository.getEntityUrlRelationships(artistId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(artistId)
-        if (artistScaffoldModel != null && hasUrlsBeenSavedForEntity) {
+        if (
+            artistScaffoldModel != null &&
+            hasUrlsBeenSavedForEntity &&
+            !forceRefresh
+        ) {
             return artistScaffoldModel.copy(
                 urls = urlRelations,
             )
@@ -26,7 +38,10 @@ class ArtistRepositoryImpl(
 
         val artistMusicBrainzModel = musicBrainzApi.lookupArtist(artistId)
         cache(artistMusicBrainzModel)
-        return lookupArtist(artistId)
+        return lookupArtist(
+            artistId = artistId,
+            forceRefresh = false,
+        )
     }
 
     private fun cache(artist: ArtistMusicBrainzModel) {

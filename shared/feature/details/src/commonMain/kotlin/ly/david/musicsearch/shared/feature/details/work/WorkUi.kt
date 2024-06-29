@@ -119,7 +119,7 @@ internal fun WorkUi(
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(WorkUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.work,

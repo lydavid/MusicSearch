@@ -117,7 +117,7 @@ internal fun PlaceUi(
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(PlaceUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.place,

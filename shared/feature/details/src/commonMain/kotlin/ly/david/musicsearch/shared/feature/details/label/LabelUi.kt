@@ -133,7 +133,7 @@ internal fun LabelUi(
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(LabelUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.label,

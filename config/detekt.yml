@@ -8,6 +8,9 @@ complexity:
       - "Composable"
   TooManyFunctions:
     active: false
+exceptions:
+  TooGenericExceptionCaught:
+    active: false
 formatting:
   ImportOrdering:
     active: false

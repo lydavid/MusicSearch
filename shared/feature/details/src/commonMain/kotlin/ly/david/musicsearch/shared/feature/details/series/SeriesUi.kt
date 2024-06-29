@@ -120,7 +120,7 @@ internal fun SeriesUi(
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
                         showError = state.isError,
-                        onRetryClick = {
+                        onRefresh = {
                             eventSink(SeriesUiEvent.ForceRefresh)
                         },
                         scaffoldModel = state.series,
