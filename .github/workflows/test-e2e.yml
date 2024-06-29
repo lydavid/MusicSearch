@@ -42,6 +42,28 @@ jobs:
       - name: Install Maestro
         run: curl -Ls "https://get.maestro.mobile.dev" | bash
 
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2.31.0
+        with:
+          api-level: 30
+          arch: x86_64
+          profile: pixel_3a
+          force-avd-creation: false
+          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          sdcard-path-or-size: 100M
+          script: echo "Generated AVD snapshot for caching."
+
       - name: Install app on emulator, run Maestro tests
         id: test
         uses: reactivecircus/android-emulator-runner@v2.31.0
@@ -49,7 +71,8 @@ jobs:
           api-level: 30
           arch: x86_64
           profile: pixel_3a
-          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           sdcard-path-or-size: 100M
           script: |
