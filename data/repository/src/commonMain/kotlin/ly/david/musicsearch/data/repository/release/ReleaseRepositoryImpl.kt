@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.core.models.area.AreaType
 import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.core.models.getFormatsForDisplay
 import ly.david.musicsearch.core.models.getTracksForDisplay
