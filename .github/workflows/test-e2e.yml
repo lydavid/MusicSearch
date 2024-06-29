@@ -8,6 +8,9 @@ jobs:
   test-e2e:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        api-level: [ 30 ]
     permissions:
       contents: write
     steps:
@@ -55,7 +58,7 @@ jobs:
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2.31.0
         with:
-          api-level: 30
+          api-level: ${{ matrix.api-level }}
           arch: x86_64
           profile: pixel_3a
           force-avd-creation: false
@@ -68,7 +71,7 @@ jobs:
         id: test
         uses: reactivecircus/android-emulator-runner@v2.31.0
         with:
-          api-level: 30
+          api-level: ${{ matrix.api-level }}
           arch: x86_64
           profile: pixel_3a
           force-avd-creation: false
