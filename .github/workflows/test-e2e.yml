@@ -80,13 +80,21 @@ jobs:
           script: |
             ./gradlew installDebug
             adb shell settings put system show_touches 1
+            sleep 5
             adb shell input keyevent 61
+            sleep 5
             adb shell input text "Tsukuyomi"
+            sleep 5
             adb shell input keyevent 61
+            sleep 5
             adb shell input keyevent 61
+            sleep 5
             adb shell input keyevent 61
+            sleep 5
             adb shell input keyevent 61
+            sleep 5
             adb shell input keyevent 61
+            sleep 5
             adb shell input keyevent 66
 #            $HOME/.maestro/bin/maestro test .maestro
 
