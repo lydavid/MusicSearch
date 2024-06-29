@@ -45,6 +45,8 @@ jobs:
       - name: Install Maestro
         run: curl -Ls "https://get.maestro.mobile.dev" | bash
 
+      - run: git checkout origin/beta -- .maestro/search-artist-then-back.yml
+
       - name: AVD cache
         uses: actions/cache@v4
         id: avd-cache
@@ -80,7 +82,9 @@ jobs:
           script: |
             ./gradlew installDebug
             adb shell settings put system show_touches 1
-            $HOME/.maestro/bin/maestro test .maestro/artist
+            $HOME/.maestro/bin/maestro test .maestro
+
+      - run: git restore .maestro/search-artist-then-back.yml
 
       - name: Checkout
         uses: nschloe/action-cached-lfs-checkout@v1
