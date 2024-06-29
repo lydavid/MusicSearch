@@ -27,11 +27,11 @@ import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.itemKey
 import ly.david.musicsearch.core.models.Identifiable
 import ly.david.musicsearch.core.models.listitem.Header
-import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.button.RetryButton
 import ly.david.ui.common.fullscreen.FullScreenErrorWithRetry
 import ly.david.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.ui.common.fullscreen.FullScreenText
+import ly.david.ui.core.LocalStrings
 
 /**
  * Handles loading and errors for paging screens.
@@ -61,7 +61,10 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
         strings.noResultsFound
     }
     val refreshing = lazyPagingItems.loadState.refresh == LoadStateLoading
-    val refreshState = rememberPullRefreshState(refreshing, lazyPagingItems::refresh)
+    val refreshState = rememberPullRefreshState(
+        refreshing = refreshing,
+        onRefresh = lazyPagingItems::refresh,
+    )
 
     Box(
         modifier = modifier.pullRefresh(refreshState),
@@ -86,10 +89,6 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
             lazyPagingItems.loadState.append.endOfPaginationReached &&
                 lazyPagingItems.itemCount == 0 ||
                 lazyPagingItems.itemCount == 1 && lazyPagingItems[0] is Header -> {
-                // TODO: cannot refresh
-                //  also there should be a difference between 0 out of 0, and 0 out of 1 found
-                //  the latter should offer a retry button
-
                 FullScreenText(noResultsText)
             }
 
