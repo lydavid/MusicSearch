@@ -6,6 +6,7 @@ The release version also supports deep links, but you will have to remove the `.
 Either copy/paste the commands into a terminal, or run them using Android Studio's `Run in Terminal` gutter.
 
 ADB commands: https://gist.github.com/Pulimet/5013acf2cd5b28e55036c82c91bd56d8
+
 Intent arguments: https://developer.android.com/tools/adb#IntentSpec
 
 
