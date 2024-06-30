@@ -4,7 +4,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.core.models.area.AreaType.COUNTRY
-import ly.david.musicsearch.core.models.area.AreaType.WORLDWIDE
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.listitem.LabelListItemModel
 import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
@@ -43,7 +42,7 @@ internal fun PreviewReleaseDetailsUi() {
                         ),
                         AreaListItemModel(
                             id = "a2",
-                            name = WORLDWIDE,
+                            name = "[Worldwide]",
                             countryCodes = listOf("XW"),
                             date = "2022-11-30",
                         ),
