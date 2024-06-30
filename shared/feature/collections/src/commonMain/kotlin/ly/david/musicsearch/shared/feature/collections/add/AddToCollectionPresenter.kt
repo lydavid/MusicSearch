@@ -1,9 +1,12 @@
 package ly.david.musicsearch.shared.feature.collections.add
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.rememberCoroutineScope
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.launch
@@ -11,6 +14,7 @@ import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.domain.collection.CollectionRepository
 import ly.david.musicsearch.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.domain.collection.usecase.GetAllCollections
+import ly.david.musicsearch.shared.feature.collections.list.NewCollection
 import ly.david.ui.common.screen.AddToCollectionScreen
 
 internal class AddToCollectionPresenter(
@@ -23,7 +27,6 @@ internal class AddToCollectionPresenter(
     @Composable
     override fun present(): AddToCollectionUiState {
         val scope = rememberCoroutineScope()
-        // TODO: show remote based on whether user is logged in
         val lazyPagingItems: LazyPagingItems<CollectionListItemModel> = getAllCollections(
             showLocal = true,
             showRemote = true,
@@ -59,4 +62,17 @@ internal class AddToCollectionPresenter(
             eventSink = ::eventSink,
         )
     }
+}
+
+@Stable
+internal data class AddToCollectionUiState(
+    val lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
+    val eventSink: (AddToCollectionUiEvent) -> Unit,
+) : CircuitUiState
+
+internal sealed interface AddToCollectionUiEvent : CircuitUiEvent {
+    data class CreateCollection(val newCollection: NewCollection) : AddToCollectionUiEvent
+    data class AddToCollection(
+        val id: String,
+    ) : AddToCollectionUiEvent
 }

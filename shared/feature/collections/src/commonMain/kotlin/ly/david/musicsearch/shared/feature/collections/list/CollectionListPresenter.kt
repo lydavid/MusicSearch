@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.feature.collections.list
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,6 +9,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
@@ -70,4 +73,23 @@ internal class CollectionListPresenter(
             eventSink = ::eventSink,
         )
     }
+}
+
+@Stable
+internal data class CollectionListUiState(
+    val query: String,
+    val showLocal: Boolean,
+    val showRemote: Boolean,
+    val lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
+    val eventSink: (CollectionListUiEvent) -> Unit,
+) : CircuitUiState
+
+internal sealed interface CollectionListUiEvent : CircuitUiEvent {
+    data class UpdateQuery(val query: String) : CollectionListUiEvent
+    data class UpdateShowLocal(val show: Boolean) : CollectionListUiEvent
+    data class UpdateShowRemote(val show: Boolean) : CollectionListUiEvent
+    data class CreateCollection(val newCollection: NewCollection) : CollectionListUiEvent
+    data class GoToCollection(
+        val id: String,
+    ) : CollectionListUiEvent
 }
