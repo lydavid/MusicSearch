@@ -308,4 +308,5 @@ val EnStrings = AppStrings(
 
     leastVisited = "Least visited",
     loginToMusicBrainz = "Login to MusicBrainz",
+    artificialLanguage = "[Artificial (Other)]",
 )

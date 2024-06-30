@@ -109,7 +109,7 @@ internal fun ReleaseDetailsUi(
                         filterText = filterText,
                     )
                 }
-                textRepresentation?.language?.getDisplayLanguage().ifNotNullOrEmpty {
+                textRepresentation?.language?.getDisplayLanguage(strings).ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.language,
                         text = it,

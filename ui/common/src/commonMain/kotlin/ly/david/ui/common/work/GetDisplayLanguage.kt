@@ -1,3 +1,5 @@
 package ly.david.ui.common.work
 
-expect fun String.getDisplayLanguage(): String?
+import ly.david.musicsearch.strings.AppStrings
+
+expect fun String.getDisplayLanguage(appStrings: AppStrings): String?

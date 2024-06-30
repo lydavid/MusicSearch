@@ -269,6 +269,17 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/work/c4ebe5b5-6
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/work/7a7d89a4-ddb9-44af-a293-cf3b7ad59cf3" -a android.intent.action.VIEW # work with arrangement of
 ```
 
+```shell
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/work/90b1e26b-5101-4518-89a7-5f08090d9ec2" -a android.intent.action.VIEW # work with zxx
+```
+
+```shell
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/work/dcb8c64d-181f-45c3-85d7-cdb6af3d2599" -a android.intent.action.VIEW # work with zxx
+```
+
+
+
+
 ## Genre
 
 ```shell

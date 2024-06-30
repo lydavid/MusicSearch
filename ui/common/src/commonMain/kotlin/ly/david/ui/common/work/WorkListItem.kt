@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.listitem.WorkListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
+import ly.david.ui.core.LocalStrings
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
@@ -17,6 +18,8 @@ fun WorkListItem(
     modifier: Modifier = Modifier,
     onWorkClick: WorkListItemModel.() -> Unit = {},
 ) {
+    val strings = LocalStrings.current
+
     ListItem(
         headlineContent = {
             Text(
@@ -40,7 +43,7 @@ fun WorkListItem(
                             style = TextStyles.getCardBodySubTextStyle(),
                         )
                     }
-                    language?.getDisplayLanguage().ifNotNullOrEmpty {
+                    language?.getDisplayLanguage(strings).ifNotNullOrEmpty {
                         Text(
                             text = it,
                             style = TextStyles.getCardBodySubTextStyle(),

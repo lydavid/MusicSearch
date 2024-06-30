@@ -39,7 +39,7 @@ internal fun WorkDetailsUi(
                         filterText = filterText,
                     )
                 }
-                language?.getDisplayLanguage().ifNotNullOrEmpty {
+                language?.getDisplayLanguage(strings).ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.language,
                         text = it,
