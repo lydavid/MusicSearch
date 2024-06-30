@@ -43,8 +43,11 @@ jobs:
         if: always()
         run: ./gradlew verifyPaparazziDebug
 
-      # Runs if previous job failed
-      - name: Generate new screenshots if verification failed and it's a PR
+      - name: Delete all snapshot golden
+        if: always() && steps.screenshotsverify.outcome == 'failure'
+        run: find . -type f ! -path '*/build/*' -a -path '*/snapshots/images/*' | xargs -I {} rm {}
+
+      - name: Generate new screenshots if verification failed
         id: screenshotsrecord
         if: always() && steps.screenshotsverify.outcome == 'failure'
         run: |
