@@ -94,13 +94,13 @@ class CollectionDao(
         isRemote: Boolean,
         name: String,
         entity: MusicBrainzEntity,
-        entityCount: Int,
+        entityCount: Long,
     ) = CollectionListItemModel(
         id = id,
         isRemote = isRemote,
         name = name,
         entity = entity,
-        entityCount = entityCount,
+        entityCount = entityCount.toInt(),
     )
 
     fun deleteMusicBrainzCollections() {
