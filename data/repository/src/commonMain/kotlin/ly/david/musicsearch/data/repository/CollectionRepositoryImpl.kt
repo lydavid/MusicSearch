@@ -6,6 +6,7 @@ import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.ActionableResult
+import ly.david.musicsearch.core.models.collection.CollectionSortOption
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUriPlural
@@ -34,20 +35,22 @@ class CollectionRepositoryImpl(
     @OptIn(ExperimentalPagingApi::class)
     override fun observeAllCollections(
         username: String,
+        entity: MusicBrainzEntity?,
+        query: String,
         showLocal: Boolean,
         showRemote: Boolean,
-        query: String,
-        entity: MusicBrainzEntity?,
+        sortOption: CollectionSortOption,
     ): Flow<PagingData<CollectionListItemModel>> =
         Pager(
             config = CommonPagingConfig.pagingConfig,
             remoteMediator = getRemoteMediator(username).takeIf { username.isNotEmpty() },
             pagingSourceFactory = {
                 collectionDao.getAllCollections(
+                    entity = entity,
+                    query = "%$query%",
                     showLocal = showLocal,
                     showRemote = showRemote,
-                    query = "%$query%",
-                    entity = entity,
+                    sortOption = sortOption,
                 )
             },
         ).flow

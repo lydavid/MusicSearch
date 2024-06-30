@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
+import ly.david.musicsearch.core.models.collection.CollectionSortOption
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
@@ -63,10 +64,11 @@ class CollectionDao(
         ).executeAsOne()
 
     fun getAllCollections(
-        showLocal: Boolean = true,
-        showRemote: Boolean = true,
-        query: String = "%%",
-        entity: MusicBrainzEntity? = null,
+        entity: MusicBrainzEntity?,
+        query: String,
+        showLocal: Boolean,
+        showRemote: Boolean,
+        sortOption: CollectionSortOption,
     ): PagingSource<Int, CollectionListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfCollections(
             showLocal = showLocal,
@@ -78,12 +80,16 @@ class CollectionDao(
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
             transacter.getAllCollections(
+                entity = entity,
+                query = query,
                 showLocal = showLocal,
                 showRemote = showRemote,
-                query = query,
+                alphabetically = sortOption == CollectionSortOption.ALPHABETICALLY,
+                alphabeticallyReverse = sortOption == CollectionSortOption.ALPHABETICALLY_REVERSE,
+                mostEntities = sortOption == CollectionSortOption.MOST_ENTITY_COUNT,
+                leastEntities = sortOption == CollectionSortOption.LEAST_ENTITY_COUNT,
                 limit = limit,
                 offset = offset,
-                entity = entity,
                 mapper = ::mapToCollectionListItem,
             )
         },

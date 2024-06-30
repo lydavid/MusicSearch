@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.collections.list
+package ly.david.musicsearch.shared.feature.collections.create
 
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 

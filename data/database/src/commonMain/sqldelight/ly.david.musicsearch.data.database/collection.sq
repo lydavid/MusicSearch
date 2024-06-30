@@ -56,6 +56,11 @@ WHERE c.id IN
   WHERE is_remote AND :showRemote)
 AND name LIKE :query
 AND (:entity = NULL OR entity = :entity)
+ORDER BY
+  CASE WHEN :alphabetically THEN `name` END ASC,
+  CASE WHEN :alphabeticallyReverse THEN `name` END DESC,
+  CASE WHEN :mostEntities THEN ce.`entity_count` END DESC,
+  CASE WHEN :leastEntities THEN ce.`entity_count` END ASC
 LIMIT :limit OFFSET :offset;
 
 getAllCollectionsOfType:
@@ -82,8 +87,3 @@ LEFT JOIN (
   GROUP BY id
 ) ce ON c.id = ce.id
 WHERE c.id = :id;
-
--- getCollectionWithEntities:
--- SELECT *
--- FROM collection
--- WHERE id = :id;

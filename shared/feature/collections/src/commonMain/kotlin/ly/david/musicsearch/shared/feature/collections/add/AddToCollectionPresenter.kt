@@ -14,7 +14,7 @@ import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.domain.collection.CollectionRepository
 import ly.david.musicsearch.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.domain.collection.usecase.GetAllCollections
-import ly.david.musicsearch.shared.feature.collections.list.NewCollection
+import ly.david.musicsearch.shared.feature.collections.create.NewCollection
 import ly.david.ui.common.screen.AddToCollectionScreen
 
 internal class AddToCollectionPresenter(

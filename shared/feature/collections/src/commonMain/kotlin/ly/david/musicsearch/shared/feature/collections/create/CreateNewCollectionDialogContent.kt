@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.collections.components
+package ly.david.musicsearch.shared.feature.collections.create
 
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Column
