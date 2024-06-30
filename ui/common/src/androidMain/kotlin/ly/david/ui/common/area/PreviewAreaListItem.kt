@@ -3,49 +3,70 @@ package ly.david.ui.common.area
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import ly.david.musicsearch.core.models.area.AreaType.COUNTRY
-import ly.david.musicsearch.core.models.area.AreaType.WORLDWIDE
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.ui.core.theme.PreviewTheme
 
-internal val areas = listOf(
-    AreaListItemModel(
-        id = "1",
-        name = "Area Name",
-    ),
-    AreaListItemModel(
-        id = "2",
-        name = "Area Name",
-        disambiguation = "That one",
-    ),
-    AreaListItemModel(
-        id = "3",
-        name = "Area Name with a very long name",
-        disambiguation = "That one",
-        type = COUNTRY,
-        countryCodes = listOf("GB"),
-    ),
-    AreaListItemModel(
-        id = "4",
-        name = "Area Name with a very long name",
-        type = WORLDWIDE,
-        countryCodes = listOf("XW"),
-    ),
-)
-
-// Cannot be private.
-internal class AreaListItemPreviewParameterProvider : CollectionPreviewParameterProvider<AreaListItemModel>(areas)
+@PreviewLightDark
+@Composable
+internal fun PreviewAreaListItem() {
+    PreviewTheme {
+        Surface {
+            AreaListItem(
+                area = AreaListItemModel(
+                    id = "1",
+                    name = "Area Name",
+                ),
+            )
+        }
+    }
+}
 
 @PreviewLightDark
 @Composable
-internal fun PreviewAreaListItem(
-    @PreviewParameter(AreaListItemPreviewParameterProvider::class) area: AreaListItemModel,
-) {
+internal fun PreviewAreaListItemDisambiguation() {
     PreviewTheme {
         Surface {
-            AreaListItem(area)
+            AreaListItem(
+                area = AreaListItemModel(
+                    id = "2",
+                    name = "Area Name",
+                    disambiguation = "That one",
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewAreaListItemCountry() {
+    PreviewTheme {
+        Surface {
+            AreaListItem(
+                area = AreaListItemModel(
+                    id = "38ce2215-162b-3f3c-af41-34800017e1d8",
+                    name = "South Georgia and the South Sandwich Islands",
+                    type = COUNTRY,
+                    countryCodes = listOf("GS"),
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewAreaListItemWorldwide() {
+    PreviewTheme {
+        Surface {
+            AreaListItem(
+                area = AreaListItemModel(
+                    id = "ba484a95-2fa3-4cf6-ab25-ed6da47fe677",
+                    name = "[Worldwide]",
+                    countryCodes = listOf("XW"),
+                ),
+            )
         }
     }
 }
@@ -57,12 +78,28 @@ internal fun PreviewReleaseEvent() {
         Surface {
             AreaListItem(
                 area = AreaListItemModel(
-                    id = "4",
-                    name = "Area Name with a very long name",
-                    disambiguation = "That one",
-                    countryCodes = listOf("KR"),
-                    date = "2022-10-29",
-                    type = "Country",
+                    id = "38ce2215-162b-3f3c-af41-34800017e1d8",
+                    name = "South Georgia and the South Sandwich Islands",
+                    type = COUNTRY,
+                    countryCodes = listOf("GS"),
+                    date = "2006-03-21",
+                ),
+                showType = false,
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewReleaseEventNoDate() {
+    PreviewTheme {
+        Surface {
+            AreaListItem(
+                area = AreaListItemModel(
+                    id = "ba484a95-2fa3-4cf6-ab25-ed6da47fe677",
+                    name = "[Worldwide]",
+                    countryCodes = listOf("XW"),
                 ),
                 showType = false,
             )

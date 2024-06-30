@@ -21,7 +21,7 @@ jobs:
 
       # Renamed and deleted test functions are not automatically removed by Paparazzi
       - name: Delete all snapshot golden
-        run: find . -type f ! -path '*/build/*' -a -path '*/snapshots/images/*' | xargs rm
+        run: find . -type f ! -path '*/build/*' -a -path '*/snapshots/images/*' | xargs -I {} rm {}
 
       - name: Set timezone because some tests depend on it
         run: timedatectl set-timezone "America/Toronto"
