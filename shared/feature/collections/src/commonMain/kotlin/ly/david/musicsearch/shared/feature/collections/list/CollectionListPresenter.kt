@@ -50,7 +50,7 @@ internal class CollectionListPresenter(
                     appPreferences.setShowRemoteCollections(event.show)
                 }
 
-                is CollectionListUiEvent.CreateCollection -> {
+                is CollectionListUiEvent.CreateNewCollection -> {
                     val name = event.newCollection.name ?: return
                     val entity = event.newCollection.entity ?: return
                     createCollection(
@@ -88,7 +88,7 @@ internal sealed interface CollectionListUiEvent : CircuitUiEvent {
     data class UpdateQuery(val query: String) : CollectionListUiEvent
     data class UpdateShowLocal(val show: Boolean) : CollectionListUiEvent
     data class UpdateShowRemote(val show: Boolean) : CollectionListUiEvent
-    data class CreateCollection(val newCollection: NewCollection) : CollectionListUiEvent
+    data class CreateNewCollection(val newCollection: NewCollection) : CollectionListUiEvent
     data class GoToCollection(
         val id: String,
     ) : CollectionListUiEvent

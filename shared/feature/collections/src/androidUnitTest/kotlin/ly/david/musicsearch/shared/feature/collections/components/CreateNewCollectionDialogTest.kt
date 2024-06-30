@@ -6,12 +6,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
-class CreateCollectionDialogTest : ScreenshotTest() {
+class CreateNewCollectionDialogTest : ScreenshotTest() {
 
     @Test
     fun default() {
         snapshot {
-            PreviewCreateCollectionDialog()
+            PreviewCreateNewCollectionDialog()
         }
     }
 }

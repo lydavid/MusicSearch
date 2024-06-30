@@ -7,10 +7,10 @@ import ly.david.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
 @Composable
-internal fun PreviewCreateCollectionDialog() {
+internal fun PreviewCreateNewCollectionDialogContent() {
     PreviewTheme {
         Surface {
-            CreateCollectionDialogContent()
+            CreateNewCollectionDialogContent()
         }
     }
 }

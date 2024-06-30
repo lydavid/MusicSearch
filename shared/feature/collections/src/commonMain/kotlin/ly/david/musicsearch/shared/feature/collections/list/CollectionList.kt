@@ -26,7 +26,7 @@ import com.slack.circuitx.overlays.BasicDialogOverlay
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.feature.collections.components.CollectionListItem
-import ly.david.musicsearch.shared.feature.collections.components.CreateCollectionDialogContent
+import ly.david.musicsearch.shared.feature.collections.components.CreateNewCollectionDialogContent
 import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
@@ -59,7 +59,7 @@ internal fun CollectionList(
                             NewCollection()
                         },
                     ) { _, overlayNavigator ->
-                        CreateCollectionDialogContent(
+                        CreateNewCollectionDialogContent(
                             onDismiss = { overlayNavigator.finish(NewCollection()) },
                             onSubmit = { name, entity ->
                                 overlayNavigator.finish(
@@ -72,7 +72,7 @@ internal fun CollectionList(
                         )
                     },
                 )
-                eventSink(CollectionListUiEvent.CreateCollection(result))
+                eventSink(CollectionListUiEvent.CreateNewCollection(result))
             }
         },
         showLocal = state.showLocal,

@@ -10,7 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Dialog
 import ly.david.musicsearch.shared.feature.collections.components.CollectionBottomSheetContent
-import ly.david.musicsearch.shared.feature.collections.components.CreateCollectionDialogContent
+import ly.david.musicsearch.shared.feature.collections.components.CreateNewCollectionDialogContent
 import ly.david.musicsearch.shared.feature.collections.list.NewCollection
 
 @Composable
@@ -28,11 +28,11 @@ internal fun AddToCollectionUi(
             },
         ) {
             Surface {
-                CreateCollectionDialogContent(
+                CreateNewCollectionDialogContent(
                     onDismiss = { showDialog = false },
                     onSubmit = { name, entity ->
                         eventSink(
-                            AddToCollectionUiEvent.CreateCollection(
+                            AddToCollectionUiEvent.CreateNewCollection(
                                 NewCollection(
                                     name,
                                     entity,

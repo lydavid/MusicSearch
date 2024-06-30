@@ -36,7 +36,7 @@ import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
-fun CreateCollectionDialogContent(
+fun CreateNewCollectionDialogContent(
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit = {},
     onSubmit: (name: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },

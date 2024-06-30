@@ -35,7 +35,7 @@ internal class AddToCollectionPresenter(
 
         fun eventSink(event: AddToCollectionUiEvent) {
             when (event) {
-                is AddToCollectionUiEvent.CreateCollection -> {
+                is AddToCollectionUiEvent.CreateNewCollection -> {
                     val name = event.newCollection.name ?: return
                     val entity = event.newCollection.entity ?: return
                     createCollection(
@@ -71,7 +71,7 @@ internal data class AddToCollectionUiState(
 ) : CircuitUiState
 
 internal sealed interface AddToCollectionUiEvent : CircuitUiEvent {
-    data class CreateCollection(val newCollection: NewCollection) : AddToCollectionUiEvent
+    data class CreateNewCollection(val newCollection: NewCollection) : AddToCollectionUiEvent
     data class AddToCollection(
         val id: String,
     ) : AddToCollectionUiEvent
