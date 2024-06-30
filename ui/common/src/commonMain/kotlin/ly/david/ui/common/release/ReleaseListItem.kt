@@ -1,3 +1,5 @@
+package ly.david.ui.common.release
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -118,7 +120,15 @@ fun ReleaseListItem(
                         )
                     }
 
-                    // TODO: catalog number
+                    release.catalogNumbers.ifNotNullOrEmpty {
+                        Text(
+                            text = it,
+                            modifier = Modifier
+                                .padding(top = 4.dp)
+                                .fillMaxWidth(),
+                            style = TextStyles.getCardBodySubTextStyle(),
+                        )
+                    }
                 }
             }
         },
