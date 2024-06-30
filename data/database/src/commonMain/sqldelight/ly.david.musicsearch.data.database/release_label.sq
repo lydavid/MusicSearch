@@ -58,11 +58,10 @@ SELECT IFNULL(
   0
 ) AS count;
 
--- DISTINCT because junction table can have the same release/label with different catalog number
 getReleasesByLabel:
 SELECT
   r.*,
-  GROUP_CONCAT(rl.catalog_number, ', ') AS catalog_numbers,
+  GROUP_CONCAT(rl.catalog_number, ', ') AS catalogNumbers,
   ac.name AS artistCreditNames,
   mi.thumbnail_url,
   (
@@ -85,6 +84,9 @@ AND (
   OR r.date LIKE :query
   OR r.country_code LIKE :query
   OR ac.name LIKE :query
+  -- This will remove any catalog number not matching this query from the ReleaseListItem
+  -- because when we group by, they will be excluded
+  OR rl.catalog_number LIKE :query
 )
 GROUP BY r.id
 ORDER BY r.date, r.name
