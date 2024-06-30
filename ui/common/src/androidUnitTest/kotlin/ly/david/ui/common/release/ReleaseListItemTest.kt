@@ -1,8 +1,6 @@
 package ly.david.ui.common.release
 
-import ReleaseListItem
 import coil.Coil
-import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -14,10 +12,8 @@ import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@RunWith(TestParameterInjector::class)
 class ReleaseListItemTest : ScreenshotTest() {
 
     @Before
@@ -33,80 +29,72 @@ class ReleaseListItemTest : ScreenshotTest() {
     }
 
     @Test
-    fun titleOnly() {
+    fun releaseListItem() {
         snapshot {
-            ReleaseListItem(
-                release = ReleaseListItemModel(
-                    id = "1",
-                    name = "Release title",
-                ),
-                showMoreInfo = true,
-            )
+            PreviewReleaseListItem()
         }
     }
 
     @Test
-    fun withDisambiguation() {
+    fun releaseListItemDisambiguation() {
         snapshot {
-            ReleaseListItem(
-                release = ReleaseListItemModel(
-                    id = "1",
-                    name = "Release title",
-                    disambiguation = "Disambiguation text",
-                ),
-                showMoreInfo = true,
-            )
+            PreviewReleaseListItemDisambiguation()
         }
     }
 
     @Test
-    fun allInfo() {
+    fun releaseListItemDisambiguationCountry() {
         snapshot {
-            ReleaseListItem(
-                release = ReleaseListItemModel(
-                    id = "1",
-                    name = "Release title",
-                    disambiguation = "Disambiguation text",
-                    date = "2021-09-08",
-                    countryCode = "CA",
-                    formattedFormats = "2×CD + Blu-ray",
-                    formattedTracks = "15 + 8 + 24",
-                ),
-                showMoreInfo = true,
-            )
+            PreviewReleaseListItemDisambiguationCountry()
         }
     }
 
     @Test
-    fun allInfoButShowLessInfo() {
+    fun releaseListItemCountry() {
         snapshot {
-            ReleaseListItem(
-                release = ReleaseListItemModel(
-                    id = "1",
-                    name = "Release title",
-                    disambiguation = "Disambiguation text",
-                    date = "2021-09-08",
-                    countryCode = "CA",
-                    formattedFormats = "2×CD + Blu-ray",
-                    formattedTracks = "15 + 8 + 24",
-                ),
-                showMoreInfo = false,
-            )
+            PreviewReleaseListItemCountry()
         }
     }
 
     @Test
-    fun multipleReleaseEvents() {
+    fun releaseListItemDateCountryFormatsTracks() {
         snapshot {
-            ReleaseListItem(
-                release = ReleaseListItemModel(
-                    id = "1",
-                    name = "Release title",
-                    countryCode = "CA",
-                    releaseCountryCount = 3,
-                ),
-                showMoreInfo = true,
-            )
+            PreviewReleaseListItemDateCountryFormatsTracks()
+        }
+    }
+
+    @Test
+    fun releaseListItemCountryDate() {
+        snapshot {
+            PreviewReleaseListItemCountryDate()
+        }
+    }
+
+    @Test
+    fun releaseListItemDateArtistCredits() {
+        snapshot {
+            PreviewReleaseListItemDateArtistCredits()
+        }
+    }
+
+    @Test
+    fun releaseListItemMultipleCountries() {
+        snapshot {
+            PreviewReleaseListItemMultipleCountries()
+        }
+    }
+
+    @Test
+    fun releaseListItemShowLessInfo() {
+        snapshot {
+            PreviewReleaseListItemShowLessInfo()
+        }
+    }
+
+    @Test
+    fun releaseListItemCatalog() {
+        snapshot {
+            PreviewReleaseListItemCatalog()
         }
     }
 

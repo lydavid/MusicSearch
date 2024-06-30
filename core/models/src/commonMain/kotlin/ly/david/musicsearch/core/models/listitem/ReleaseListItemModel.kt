@@ -18,6 +18,8 @@ data class ReleaseListItemModel(
     override val asin: String? = null,
     override val quality: String? = null,
 
+    val catalogNumbers: String? = null,
+
     val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
     val textRepresentation: TextRepresentationUiModel? = null,
     val imageUrl: String? = null,

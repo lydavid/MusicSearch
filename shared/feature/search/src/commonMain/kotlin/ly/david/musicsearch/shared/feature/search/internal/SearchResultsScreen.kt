@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.search.internal
 
-import ReleaseListItem
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
@@ -37,6 +36,7 @@ import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.place.PlaceListItem
 import ly.david.ui.common.recording.RecordingListItem
+import ly.david.ui.common.release.ReleaseListItem
 import ly.david.ui.common.releasegroup.ReleaseGroupListItem
 import ly.david.ui.common.series.SeriesListItem
 import ly.david.ui.common.work.WorkListItem

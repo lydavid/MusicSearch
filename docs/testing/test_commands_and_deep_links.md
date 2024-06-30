@@ -171,6 +171,10 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/dd216
 ## Release
 
 ```sh
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5" -a android.intent.action.VIEW # release with multiple catalog number
+```
+
+```sh
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/18572d3b-b8d6-4ac1-8cda-6951a8f625d5" -a android.intent.action.VIEW # release with a massive number of media; 170×CD
 ```
 
