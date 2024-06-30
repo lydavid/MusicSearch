@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS collection (
 
   -- not used, but meant for remote collections where we may not have stored all of their entities,
   -- so a COUNT(*) would be inaccurate
-  -- Maybe consider showing 99/2500 or something for remote
   entity_count INTEGER AS Int NOT NULL
 );
 
@@ -38,13 +37,18 @@ SELECT IFNULL(
 
 getAllCollections:
 SELECT
-  id,
-  is_remote,
-  name,
-  entity,
-  entity_count
-FROM collection
-WHERE id IN
+  c.id,
+  c.is_remote,
+  c.name,
+  c.entity,
+  COALESCE(ce.entity_count, 0) AS entity_count
+FROM collection c
+LEFT JOIN (
+  SELECT id, COUNT(entity_id) AS entity_count
+  FROM collection_entity
+  GROUP BY id
+) ce ON c.id = ce.id
+WHERE c.id IN
   (SELECT id FROM collection
   WHERE is_remote = 0 AND :showLocal
   UNION
@@ -66,13 +70,18 @@ WHERE is_remote;
 
 getCollection:
 SELECT
-  id,
-  is_remote,
-  name,
-  entity,
-  entity_count
-FROM collection
-WHERE id = :id;
+  c.id,
+  c.is_remote,
+  c.name,
+  c.entity,
+  COALESCE(ce.entity_count, 0) AS entity_count
+FROM collection c
+LEFT JOIN (
+  SELECT id, COUNT(entity_id) AS entity_count
+  FROM collection_entity
+  GROUP BY id
+) ce ON c.id = ce.id
+WHERE c.id = :id;
 
 -- getCollectionWithEntities:
 -- SELECT *

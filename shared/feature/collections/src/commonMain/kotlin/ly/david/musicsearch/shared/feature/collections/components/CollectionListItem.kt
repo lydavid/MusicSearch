@@ -40,8 +40,6 @@ internal fun CollectionListItem(
             )
         },
         leadingContent = {
-            // TODO: don't need it when viewed from within an entity's page
-
             EntityIcon(
                 entity = collection.entity,
                 modifier = Modifier.size(SMALL_IMAGE_SIZE.dp),
@@ -49,6 +47,12 @@ internal fun CollectionListItem(
         },
         trailingContent = {
             Row {
+                // TODO: not accurate for remote collections we have not clicked into yet
+                Text(
+                    text = collection.entityCount.toString(),
+                    modifier = Modifier.padding(end = 8.dp),
+                    style = TextStyles.getCardBodyTextStyle(),
+                )
                 if (collection.isRemote) {
                     Icon(
                         modifier = Modifier.padding(end = 4.dp),
@@ -56,11 +60,6 @@ internal fun CollectionListItem(
                         contentDescription = null,
                     )
                 }
-                // TODO: count isn't accurate right now
-//                Text(
-//                    text = collection.entityCount.toString(),
-//                    style = TextStyles.getCardBodyTextStyle()
-//                )
             }
         },
     )

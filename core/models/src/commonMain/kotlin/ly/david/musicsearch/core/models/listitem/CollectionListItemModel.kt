@@ -9,5 +9,4 @@ data class CollectionListItemModel(
     val description: String = "",
     val entity: MusicBrainzEntity,
     val entityCount: Int = 0,
-    val entityIds: List<String> = listOf(),
 ) : ListItemModel()
