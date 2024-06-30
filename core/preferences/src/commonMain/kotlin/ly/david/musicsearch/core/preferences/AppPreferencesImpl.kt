@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.core.models.collection.CollectionSortOption
 import ly.david.musicsearch.core.models.history.HistorySortOption
 
 private const val THEME_KEY = "theme"
@@ -137,6 +138,26 @@ class AppPreferencesImpl(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[historySortOptionPreference] = sort.name
+            }
+        }
+    }
+    // endregion
+
+    // region Collection
+    private val collectionSortOptionPreference = stringPreferencesKey("collectionSortOption")
+
+    override val collectionSortOption: Flow<CollectionSortOption>
+        get() = preferencesDataStore.data
+            .map {
+                CollectionSortOption.valueOf(
+                    it[collectionSortOptionPreference] ?: CollectionSortOption.ALPHABETICALLY.name,
+                )
+            }
+
+    override fun setCollectionSortOption(sort: CollectionSortOption) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[collectionSortOptionPreference] = sort.name
             }
         }
     }

@@ -1,6 +1,7 @@
 package ly.david.musicsearch.core.preferences
 
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.core.models.collection.CollectionSortOption
 import ly.david.musicsearch.core.models.history.HistorySortOption
 
 interface AppPreferences {
@@ -31,4 +32,7 @@ interface AppPreferences {
 
     val historySortOption: Flow<HistorySortOption>
     fun setHistorySortOption(sort: HistorySortOption)
+
+    val collectionSortOption: Flow<CollectionSortOption>
+    fun setCollectionSortOption(sort: CollectionSortOption)
 }
