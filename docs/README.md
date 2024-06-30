@@ -12,7 +12,7 @@ A place to document my development, testing, and release processes.
 
 ## Testing
 
-- [Test commands and deep links](./testing/test_commands_and_deep_links)
+- [Test commands and deep links](./testing/test_commands_and_deep_links.md)
 
 ## Release
 - [Automated Nightly Release](./release/automated_beta_release.md)
