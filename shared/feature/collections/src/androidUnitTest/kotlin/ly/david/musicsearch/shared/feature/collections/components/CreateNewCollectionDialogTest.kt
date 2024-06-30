@@ -11,7 +11,7 @@ class CreateNewCollectionDialogTest : ScreenshotTest() {
     @Test
     fun default() {
         snapshot {
-            PreviewCreateNewCollectionDialog()
+            PreviewCreateNewCollectionDialogContent()
         }
     }
 }
