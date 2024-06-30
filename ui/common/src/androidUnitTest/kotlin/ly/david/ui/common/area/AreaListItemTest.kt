@@ -1,39 +1,19 @@
 package ly.david.ui.common.area
 
-import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.musicsearch.core.models.area.AreaType
+import com.google.testing.junit.testparameterinjector.TestParameter
+import com.google.testing.junit.testparameterinjector.TestParameterValuesProvider
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(TestParameterInjector::class)
 class AreaListItemTest : ScreenshotTest() {
 
     @Test
-    fun simple() {
+    fun areaListItem(
+        @TestParameter(valuesProvider = AreasProvider::class) area: AreaListItemModel,
+    ) {
         snapshot {
-            AreaListItem(
-                area = AreaListItemModel(
-                    id = "1",
-                    name = "Area Name",
-                ),
-            )
-        }
-    }
-
-    @Test
-    fun allInfo() {
-        snapshot {
-            AreaListItem(
-                area = AreaListItemModel(
-                    id = "3",
-                    name = "Area Name with a very long name",
-                    disambiguation = "That one",
-                    type = AreaType.COUNTRY,
-                    countryCodes = listOf("GB"),
-                ),
-            )
+            PreviewAreaListItem(area = area)
         }
     }
 
@@ -42,5 +22,9 @@ class AreaListItemTest : ScreenshotTest() {
         snapshot {
             PreviewReleaseEvent()
         }
+    }
+
+    class AreasProvider : TestParameterValuesProvider() {
+        override fun provideValues(context: Context?): List<AreaListItemModel> = areas
     }
 }

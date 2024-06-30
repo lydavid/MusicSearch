@@ -21,11 +21,11 @@ import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.NowPlayingHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.ui.core.LocalStrings
 import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
@@ -75,7 +75,7 @@ private fun NowPlayingHistoryUi(
 
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        contentWindowInsets = WindowInsets(0),
         topBar = {
             TopAppBarWithFilter(
                 showBackButton = true,
