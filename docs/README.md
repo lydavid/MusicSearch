@@ -12,8 +12,7 @@ A place to document my development, testing, and release processes.
 
 ## Testing
 
-- [ADB Testing](./testing/adb_testing.md)
-- [Deep links](./testing/deep_links.md)
+- [Test commands and deep links](./testing/test_commands_and_deep_links)
 
 ## Release
 - [Automated Nightly Release](./release/automated_beta_release.md)
