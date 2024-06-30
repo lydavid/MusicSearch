@@ -3,7 +3,7 @@ name: Checks
 on:
   push:
     paths-ignore:
-      - "*.md"
+      - "**.md"
 
 jobs:
   # When we change the name of this job, make sure to update GitHub's branch protection to the new name
