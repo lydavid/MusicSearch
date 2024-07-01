@@ -2,12 +2,12 @@ package ly.david.ui.common.relation
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewArtistRelationListItem() {
     PreviewTheme {
@@ -27,7 +27,7 @@ internal fun PreviewArtistRelationListItem() {
     }
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewRecordingRelationListItem() {
     PreviewTheme {
@@ -46,7 +46,7 @@ internal fun PreviewRecordingRelationListItem() {
     }
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewUrlRelationListItem() {
     PreviewTheme {

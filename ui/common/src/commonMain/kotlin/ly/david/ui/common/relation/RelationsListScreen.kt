@@ -31,7 +31,7 @@ fun RelationsListScreen(
                 RelationListItem(
                     relation = listItemModel,
                     onItemClick = { entity, id, title ->
-                        if (entity == MusicBrainzEntity.URL) error("URLs should not be handled in this screen.")
+                        require(entity != MusicBrainzEntity.URL)
                         onItemClick(
                             entity,
                             id,
