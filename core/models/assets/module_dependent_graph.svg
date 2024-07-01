@@ -41,28 +41,28 @@
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M294.41,-990C201.96,-990 26,-990 26,-990 26,-990 26,-559.28 26,-559.28"/>
 <polygon fill="black" stroke="black" points="29.5,-559.28 26,-549.28 22.5,-559.28 29.5,-559.28"/>
 </g>
-<!-- :domain -->
-<g id="node4" class="node">
-<title>:domain</title>
-<ellipse fill="#b59aff" stroke="black" cx="349.69" cy="-936" rx="48.19" ry="18"/>
-<text text-anchor="middle" x="349.69" y="-932.3" font-family="Times,serif" font-size="14.00">:domain</text>
-</g>
-<!-- :domain&#45;&gt;:core:models -->
-<g id="edge3" class="edge">
-<title>:domain&#45;&gt;:core:models</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M301.3,-936C214.2,-936 40,-936 40,-936 40,-936 40,-559.19 40,-559.19"/>
-<polygon fill="black" stroke="black" points="43.5,-559.19 40,-549.19 36.5,-559.19 43.5,-559.19"/>
-</g>
 <!-- :core:preferences -->
-<g id="node5" class="node">
+<g id="node4" class="node">
 <title>:core:preferences</title>
-<ellipse fill="#b59aff" stroke="black" cx="349.69" cy="-882" rx="91.78" ry="18"/>
-<text text-anchor="middle" x="349.69" y="-878.3" font-family="Times,serif" font-size="14.00">:core:preferences</text>
+<ellipse fill="#b59aff" stroke="black" cx="349.69" cy="-936" rx="91.78" ry="18"/>
+<text text-anchor="middle" x="349.69" y="-932.3" font-family="Times,serif" font-size="14.00">:core:preferences</text>
 </g>
 <!-- :core:preferences&#45;&gt;:core:models -->
-<g id="edge4" class="edge">
+<g id="edge3" class="edge">
 <title>:core:preferences&#45;&gt;:core:models</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M257.85,-882C170.71,-882 53,-882 53,-882 53,-882 53,-559.38 53,-559.38"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M258.03,-936C166.71,-936 40,-936 40,-936 40,-936 40,-559.19 40,-559.19"/>
+<polygon fill="black" stroke="black" points="43.5,-559.19 40,-549.19 36.5,-559.19 43.5,-559.19"/>
+</g>
+<!-- :shared:domain -->
+<g id="node5" class="node">
+<title>:shared:domain</title>
+<ellipse fill="#b59aff" stroke="black" cx="349.69" cy="-882" rx="82.59" ry="18"/>
+<text text-anchor="middle" x="349.69" y="-878.3" font-family="Times,serif" font-size="14.00">:shared:domain</text>
+</g>
+<!-- :shared:domain&#45;&gt;:core:models -->
+<g id="edge4" class="edge">
+<title>:shared:domain&#45;&gt;:core:models</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M267.04,-882C179.26,-882 53,-882 53,-882 53,-882 53,-559.38 53,-559.38"/>
 <polygon fill="black" stroke="black" points="56.5,-559.38 53,-549.38 49.5,-559.38 56.5,-559.38"/>
 </g>
 <!-- :data:database -->
