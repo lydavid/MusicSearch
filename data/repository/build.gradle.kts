@@ -16,7 +16,7 @@ kotlin {
                 implementation(projects.data.musicbrainz)
                 implementation(projects.data.common.network)
                 implementation(projects.core.logging.api)
-                implementation(projects.domain)
+                implementation(projects.shared.domain)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.collections.immutable)
                 implementation(libs.kotlinx.coroutines.core)

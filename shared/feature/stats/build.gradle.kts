@@ -15,7 +15,7 @@ kotlin {
             dependencies {
                 implementation(projects.core.models)
                 implementation(projects.ui.common)
-                implementation(projects.domain)
+                implementation(projects.shared.domain)
                 implementation(projects.data.database)
                 implementation(projects.ui.core)
                 implementation(projects.shared.strings)

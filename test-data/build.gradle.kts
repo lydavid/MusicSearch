@@ -11,7 +11,7 @@ kotlin {
                 implementation(projects.data.musicbrainz)
                 implementation(projects.data.coverart)
                 implementation(projects.data.spotify)
-                implementation(projects.domain)
+                implementation(projects.shared.domain)
                 implementation(libs.koin.core)
             }
         }

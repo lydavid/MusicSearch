@@ -17,7 +17,7 @@ kotlin {
             dependencies {
                 implementation(projects.core.models)
                 implementation(projects.core.preferences)
-                implementation(projects.domain)
+                implementation(projects.shared.domain)
                 implementation(projects.shared.strings)
                 implementation(projects.ui.common)
                 implementation(projects.ui.core)

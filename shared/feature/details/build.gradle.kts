@@ -23,7 +23,7 @@ kotlin {
                 implementation(projects.data.musicbrainz)
                 implementation(projects.data.database)
                 implementation(projects.ui.image)
-                implementation(projects.domain)
+                implementation(projects.shared.domain)
                 implementation(projects.shared.strings)
                 implementation(projects.ui.common)
                 implementation(projects.ui.core)

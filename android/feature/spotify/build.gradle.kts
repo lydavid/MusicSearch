@@ -13,7 +13,7 @@ dependencies {
     implementation(projects.core.models)
     implementation(projects.ui.core)
     implementation(projects.ui.common)
-    implementation(projects.domain)
+    implementation(projects.shared.domain)
     implementation(projects.shared.strings)
     implementation(libs.androidx.core)
     implementation(libs.circuit.foundation)
