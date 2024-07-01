@@ -9,8 +9,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
 /**
@@ -68,18 +68,18 @@ actual fun TopAppBarWithFilter(
 
 // region Previews
 @OptIn(ExperimentalMaterial3Api::class)
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-private fun Default() {
+private fun PreviewTopAppBarWithFilter() {
     PreviewTheme {
         TopAppBarWithFilterInternal(title = "Title")
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-private fun FilterMode() {
+private fun PreviewTopAppBarWithFilterFilterMode() {
     PreviewTheme {
         TopAppBarWithFilterInternal(
             title = "Title",
@@ -89,9 +89,9 @@ private fun FilterMode() {
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-private fun NoFilter() {
+private fun PreviewTopAppBarWithFilterNoFilter() {
     PreviewTheme {
         TopAppBarWithFilterInternal(
             title = "Title",
@@ -101,9 +101,9 @@ private fun NoFilter() {
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-private fun WithTabs() {
+private fun PreviewTopAppBarWithFilterWithTabs() {
     PreviewTheme {
         var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
 
