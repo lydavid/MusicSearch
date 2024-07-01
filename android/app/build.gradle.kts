@@ -78,7 +78,6 @@ dependencies {
     implementation(projects.data.database)
     implementation(projects.shared)
     implementation(projects.ui.common)
-    implementation(projects.ui.core)
     implementation(libs.androidx.activity.compose)
     implementation(libs.appauth)
     implementation(libs.coil.base)

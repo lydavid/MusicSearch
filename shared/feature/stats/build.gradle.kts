@@ -17,7 +17,6 @@ kotlin {
                 implementation(projects.ui.common)
                 implementation(projects.shared.domain)
                 implementation(projects.data.database)
-                implementation(projects.ui.core)
 
                 implementation(compose.foundation)
                 implementation(compose.material3)

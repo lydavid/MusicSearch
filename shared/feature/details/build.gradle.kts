@@ -25,7 +25,6 @@ kotlin {
                 implementation(projects.ui.image)
                 implementation(projects.shared.domain)
                 implementation(projects.ui.common)
-                implementation(projects.ui.core)
 
                 implementation(compose.foundation)
                 implementation(compose.material3)

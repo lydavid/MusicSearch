@@ -13,7 +13,6 @@ dependencies {
     implementation(projects.core.models)
     implementation(projects.shared.domain)
     implementation(projects.ui.common)
-    implementation(projects.ui.core)
     testImplementation(projects.ui.test.screenshot)
 
     implementation(libs.compose.foundation)

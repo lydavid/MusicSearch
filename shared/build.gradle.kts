@@ -33,7 +33,6 @@ kotlin {
                 implementation(projects.shared.feature.details)
                 implementation(projects.shared.feature.stats)
                 implementation(projects.ui.common)
-                implementation(projects.ui.core)
 
                 implementation(compose.foundation)
                 implementation(compose.material3)

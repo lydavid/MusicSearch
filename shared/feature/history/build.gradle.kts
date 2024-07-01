@@ -17,7 +17,6 @@ kotlin {
                 implementation(projects.core.preferences)
                 implementation(projects.shared.domain)
                 implementation(projects.ui.common)
-                implementation(projects.ui.core)
                 implementation(projects.ui.image)
 
                 implementation(compose.foundation)
