@@ -7,7 +7,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import ly.david.ui.test.image.FakeImageLoader
+import ly.david.musicsearch.ui.test.image.FakeImageLoader
 import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.After
 import org.junit.Before

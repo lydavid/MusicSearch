@@ -1,4 +1,4 @@
-package ly.david.ui.test.image
+package ly.david.musicsearch.ui.test.image
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -34,7 +34,12 @@ class FakeImageLoader : ImageLoader {
         request.target?.onSuccess(drawable)
 
         return object : Disposable {
-            override val job = CompletableDeferred(newResult(request, drawable))
+            override val job = CompletableDeferred(
+                newResult(
+                    request,
+                    drawable
+                )
+            )
             override val isDisposed
                 get() = true
 
