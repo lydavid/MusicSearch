@@ -32,7 +32,6 @@ kotlin {
                 implementation(projects.shared.feature.licenses)
                 implementation(projects.shared.feature.details)
                 implementation(projects.shared.feature.stats)
-                implementation(projects.shared.strings)
                 implementation(projects.ui.common)
                 implementation(projects.ui.core)
 

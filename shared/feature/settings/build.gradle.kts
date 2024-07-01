@@ -29,7 +29,6 @@ kotlin {
                 implementation(projects.core.preferences)
                 implementation(projects.data.musicbrainz) // TODO: remove after extracting MusicBrainzAuthStore
                 implementation(projects.shared.domain)
-                implementation(projects.shared.strings)
                 implementation(projects.ui.common)
                 implementation(projects.ui.core)
 

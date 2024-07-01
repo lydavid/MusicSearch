@@ -98,7 +98,10 @@ class KonsistTest {
     @Test
     fun `classes with 'Test' Annotation should have 'Test' suffix`() {
         Konsist
-            .scopeFromSourceSet("test", "androidUnitTest")
+            .scopeFromSourceSet(
+                "test",
+                "androidUnitTest",
+            )
             .classes()
             .filter {
                 it.functions().any { func -> func.hasAnnotationOf(Test::class) }
