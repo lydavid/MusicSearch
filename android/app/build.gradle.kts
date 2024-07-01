@@ -15,7 +15,7 @@ if (file("google-services.json").exists() ||
 }
 
 android {
-    namespace = "ly.david.mbjc"
+    namespace = "ly.david.musicsearch.android.app"
 
     signingConfigs {
         create("release") {
@@ -42,7 +42,7 @@ android {
         versionCode = (project.properties["VERSION_CODE"] as String).toInt()
         versionName = project.properties["VERSION_NAME"] as String
 
-        testInstrumentationRunner = "ly.david.mbjc.CustomTestRunner"
+        testInstrumentationRunner = "ly.david.musicsearch.android.app.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
