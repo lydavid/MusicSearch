@@ -1,7 +1,7 @@
 package ly.david.ui.common.work
 
 import ly.david.musicsearch.data.musicbrainz.models.core.ARTIFICIAL_LANGUAGE_CODE
-import ly.david.musicsearch.strings.AppStrings
+import ly.david.musicsearch.shared.strings.AppStrings
 import java.util.Locale
 
 actual fun String.getDisplayLanguage(appStrings: AppStrings): String? {

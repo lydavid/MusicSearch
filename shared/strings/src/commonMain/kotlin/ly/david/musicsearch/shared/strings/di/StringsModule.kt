@@ -1,8 +1,8 @@
-package ly.david.musicsearch.strings.di
+package ly.david.musicsearch.shared.strings.di
 
 import cafe.adriel.lyricist.Lyricist
-import ly.david.musicsearch.strings.Locales
-import ly.david.musicsearch.strings.Strings
+import ly.david.musicsearch.shared.strings.Locales
+import ly.david.musicsearch.shared.strings.Strings
 import org.koin.dsl.module
 
 val stringsModule = module {

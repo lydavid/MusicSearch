@@ -12,7 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.slack.circuit.runtime.screen.Screen
-import ly.david.musicsearch.strings.AppStrings
+import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.ui.common.screen.CollectionListScreen
 import ly.david.ui.common.screen.HistoryScreen
 import ly.david.ui.common.screen.SearchScreen

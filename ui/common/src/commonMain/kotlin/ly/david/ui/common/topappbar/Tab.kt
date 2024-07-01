@@ -1,6 +1,6 @@
 package ly.david.ui.common.topappbar
 
-import ly.david.musicsearch.strings.AppStrings
+import ly.david.musicsearch.shared.strings.AppStrings
 
 /**
  * All possible tabs in MusicBrainz resource pages.

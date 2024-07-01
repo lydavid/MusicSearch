@@ -9,7 +9,7 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import ly.david.musicsearch.core.models.history.HistorySortOption
-import ly.david.musicsearch.strings.AppStrings
+import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.component.ClickableItem
 

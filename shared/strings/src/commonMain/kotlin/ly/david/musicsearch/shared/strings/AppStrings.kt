@@ -1,4 +1,4 @@
-package ly.david.musicsearch.strings
+package ly.david.musicsearch.shared.strings
 
 import cafe.adriel.lyricist.LanguageTag
 

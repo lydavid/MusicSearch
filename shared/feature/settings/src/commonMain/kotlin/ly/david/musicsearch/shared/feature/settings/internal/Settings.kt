@@ -19,7 +19,7 @@ import ly.david.musicsearch.shared.feature.settings.internal.components.SettingW
 import ly.david.ui.common.screen.LicensesScreen
 import ly.david.ui.common.screen.NowPlayingHistoryScreen
 import ly.david.ui.common.screen.SpotifyHistoryScreen
-import ly.david.musicsearch.strings.AppStrings
+import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.ui.core.LocalStrings
 import ly.david.ui.common.component.ClickableItem
 import ly.david.ui.common.listitem.ListSeparatorHeader

@@ -118,4 +118,14 @@ class KonsistTest {
 //                }
 //            }
 //    }
+
+//    @Test
+//    fun `files reside in package that is derived from module name`() {
+//        Konsist.scopeFromProduction()
+//            .files
+//            .assertTrue {
+//                val featurePackageName = it.moduleName
+//                it.hasPackage("ly.david.musicsearch.$featurePackageName..")
+//            }
+//    }
 }

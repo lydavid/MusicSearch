@@ -1,4 +1,4 @@
-package ly.david.musicsearch.strings
+package ly.david.musicsearch.shared.strings
 
 import platform.Foundation.NSString
 import platform.Foundation.stringWithFormat
