@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.feature.details.area
 
-import ly.david.ui.test.screenshot.ScreenshotTest
+import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 
 class AreaUiTest : ScreenshotTest() {

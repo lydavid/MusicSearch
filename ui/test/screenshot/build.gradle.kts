@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "ly.david.ui.test.screenshot"
+    namespace = "ly.david.musicsearch.ui.test.screenshot"
 }
 
 dependencies {

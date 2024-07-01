@@ -3,7 +3,7 @@ package ly.david.ui.common.artist
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
-import ly.david.ui.test.screenshot.ScreenshotTest
+import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith
 

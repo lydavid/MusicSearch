@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.ui.test.screenshot.ScreenshotTest
+import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith
 

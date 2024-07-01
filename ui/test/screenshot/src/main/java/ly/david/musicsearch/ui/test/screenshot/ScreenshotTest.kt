@@ -1,4 +1,4 @@
-package ly.david.ui.test.screenshot
+package ly.david.musicsearch.ui.test.screenshot
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -31,7 +31,13 @@ abstract class ScreenshotTest(
     val paparazzi: Paparazzi by lazy {
         Paparazzi(
             environment = detectEnvironment().run {
-                copy(compileSdkVersion = 33, platformDir = platformDir.replace("34", "33"))
+                copy(
+                    compileSdkVersion = 33,
+                    platformDir = platformDir.replace(
+                        "34",
+                        "33",
+                    ),
+                )
             },
             deviceConfig = DeviceConfig.PIXEL_5.copy(nightMode = nightMode),
             theme = PAPARAZZI_THEME,

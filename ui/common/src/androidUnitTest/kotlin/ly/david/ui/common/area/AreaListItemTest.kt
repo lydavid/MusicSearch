@@ -1,6 +1,6 @@
 package ly.david.ui.common.area
 
-import ly.david.ui.test.screenshot.ScreenshotTest
+import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 
 class AreaListItemTest : ScreenshotTest() {
