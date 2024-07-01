@@ -6,15 +6,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
-// region Preview
 @OptIn(ExperimentalMaterial3Api::class)
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-private fun Default() {
+internal fun PreviewScrollableTopAppBar() {
     PreviewTheme {
         ScrollableTopAppBar(
             title = "A title that is very long so that it will go off the screen and allow us to scroll.",
@@ -24,9 +23,9 @@ private fun Default() {
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-private fun WithIcon() {
+internal fun PreviewScrollableTopAppBarWithIcon() {
     PreviewTheme {
         ScrollableTopAppBar(
             entity = MusicBrainzEntity.ARTIST,
@@ -37,9 +36,9 @@ private fun WithIcon() {
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-private fun WithTabs() {
+internal fun PreviewScrollableTopAppBarWithTabs() {
     PreviewTheme {
         var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
@@ -61,4 +60,3 @@ private fun WithTabs() {
         )
     }
 }
-// endregion

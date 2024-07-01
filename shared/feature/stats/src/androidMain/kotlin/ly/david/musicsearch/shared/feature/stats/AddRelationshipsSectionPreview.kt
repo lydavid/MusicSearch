@@ -3,15 +3,16 @@ package ly.david.musicsearch.shared.feature.stats
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.relation.RelationTypeCount
 import ly.david.musicsearch.shared.feature.stats.internal.addRelationshipsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-private fun Default() {
+internal fun PreviewAddRelationshipsSection() {
     PreviewTheme {
         Surface {
             LazyColumn {
@@ -79,7 +80,7 @@ private fun Default() {
 
 @DefaultPreviews
 @Composable
-private fun NoRelationships() {
+internal fun PreviewAddRelationshipsSectionNoRelationships() {
     PreviewTheme {
         Surface {
             LazyColumn {
@@ -94,7 +95,7 @@ private fun NoRelationships() {
 
 @DefaultPreviews
 @Composable
-private fun NullRelationships() {
+internal fun PreviewAddRelationshipsSectionNullRelationships() {
     PreviewTheme {
         Surface {
             LazyColumn {

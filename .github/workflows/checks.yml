@@ -38,6 +38,9 @@ jobs:
         if: always()
         run: ./gradlew testKotlinMultiplatformModules
 
+      - name: Konsist architecture unit tests
+        run: ./gradlew konsist-test:test --rerun-tasks
+
       - name: Verify screenshot tests
         id: screenshotsverify
         if: always()

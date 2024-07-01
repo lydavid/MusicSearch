@@ -2,13 +2,13 @@ package ly.david.musicsearch.shared.feature.stats
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.feature.stats.internal.LocalRemoteProgressBar
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-private fun Empty() {
+internal fun PreviewLocalRemoteProgressBarEmpty() {
     PreviewTheme {
         Surface {
             LocalRemoteProgressBar(
@@ -22,9 +22,9 @@ private fun Empty() {
     }
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-private fun Half() {
+internal fun PreviewLocalRemoteProgressBarHalf() {
     PreviewTheme {
         Surface {
             LocalRemoteProgressBar(
@@ -38,9 +38,9 @@ private fun Half() {
     }
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-private fun Full() {
+internal fun PreviewLocalRemoteProgressBarFull() {
     PreviewTheme {
         Surface {
             LocalRemoteProgressBar(
@@ -54,9 +54,9 @@ private fun Full() {
     }
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-private fun Overflow() {
+internal fun PreviewLocalRemoteProgressBarOverflow() {
     PreviewTheme {
         Surface {
             LocalRemoteProgressBar(

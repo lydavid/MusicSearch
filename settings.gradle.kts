@@ -71,4 +71,5 @@ include(
     ":ui:image",
     ":ui:test:image",
     ":ui:test:screenshot",
+    "konsist-test",
 )
