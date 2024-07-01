@@ -24,7 +24,7 @@ kotlin {
                 implementation(projects.data.database)
                 implementation(projects.ui.image)
                 implementation(projects.domain)
-                implementation(projects.strings)
+                implementation(projects.shared.strings)
                 implementation(projects.ui.common)
                 implementation(projects.ui.core)
 

@@ -13,7 +13,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.strings)
+                api(projects.shared.strings)
                 implementation(libs.lyricist.library)
 
                 implementation(compose.foundation)

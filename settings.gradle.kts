@@ -64,7 +64,7 @@ include(
     ":shared:feature:search",
     ":shared:feature:settings",
     ":shared:feature:stats",
-    ":strings",
+    ":shared:strings",
     ":test-data",
     ":ui:common",
     ":ui:core",

@@ -12,7 +12,7 @@ android {
 dependencies {
     implementation(projects.core.models)
     implementation(projects.domain)
-    implementation(projects.strings)
+    implementation(projects.shared.strings)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
     testImplementation(projects.ui.test.screenshot)

@@ -18,7 +18,7 @@ kotlin {
                 implementation(projects.domain)
                 implementation(projects.data.database)
                 implementation(projects.ui.core)
-                implementation(projects.strings)
+                implementation(projects.shared.strings)
 
                 implementation(compose.foundation)
                 implementation(compose.material3)
