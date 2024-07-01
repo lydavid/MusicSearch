@@ -27,7 +27,7 @@ import ly.david.musicsearch.shared.feature.history.historyFeatureModule
 import ly.david.musicsearch.shared.feature.licenses.licensesFeatureModule
 import ly.david.musicsearch.shared.feature.settings.settingsFeatureModule
 import ly.david.musicsearch.shared.strings.di.stringsModule
-import ly.david.ui.common.commonUiModule
+import ly.david.musicsearch.ui.common.commonUiModule
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.koin.ksp.generated.module

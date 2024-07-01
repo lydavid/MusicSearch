@@ -12,9 +12,9 @@ import ly.david.musicsearch.shared.feature.collections.list.CollectionListUiStat
 import ly.david.musicsearch.shared.feature.collections.single.CollectionPresenter
 import ly.david.musicsearch.shared.feature.collections.single.CollectionUi
 import ly.david.musicsearch.shared.feature.collections.single.CollectionUiState
-import ly.david.ui.common.screen.AddToCollectionScreen
-import ly.david.ui.common.screen.CollectionListScreen
-import ly.david.ui.common.screen.CollectionScreen
+import ly.david.musicsearch.ui.common.screen.AddToCollectionScreen
+import ly.david.musicsearch.ui.common.screen.CollectionListScreen
+import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

@@ -18,7 +18,7 @@ import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.DeleteNowPlayingHistory
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.GetNowPlayingHistory
-import ly.david.ui.common.screen.SearchScreen
+import ly.david.musicsearch.ui.common.screen.SearchScreen
 
 internal class NowPlayingHistoryPresenter(
     private val navigator: Navigator,

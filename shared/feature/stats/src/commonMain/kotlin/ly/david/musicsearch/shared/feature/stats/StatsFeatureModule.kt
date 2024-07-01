@@ -5,7 +5,7 @@ import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
-import ly.david.ui.common.screen.StatsScreen
+import ly.david.musicsearch.ui.common.screen.StatsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.feature.details.release
 
-import ly.david.ui.common.topappbar.Tab
+import ly.david.musicsearch.ui.common.topappbar.Tab
 
 enum class ReleaseTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),

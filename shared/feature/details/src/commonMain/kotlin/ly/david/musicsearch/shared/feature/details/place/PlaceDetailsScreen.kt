@@ -11,11 +11,11 @@ import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.place.PlaceScaffoldModel
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.area.AreaListItem
-import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.place.CoordinateListItem
-import ly.david.ui.common.text.TextWithHeading
-import ly.david.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.area.AreaListItem
+import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.place.CoordinateListItem
+import ly.david.musicsearch.ui.common.text.TextWithHeading
+import ly.david.musicsearch.ui.common.url.UrlsSection
 
 @Composable
 internal fun PlaceDetailsUi(

@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.feature.details.artist
 
-import ly.david.ui.common.topappbar.Tab
+import ly.david.musicsearch.ui.common.topappbar.Tab
 
 enum class ArtistTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),

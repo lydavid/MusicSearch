@@ -9,10 +9,10 @@ import ly.david.musicsearch.core.models.area.AreaScaffoldModel
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.listitem.LifeSpanText
-import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.text.TextWithHeading
-import ly.david.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.listitem.LifeSpanText
+import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.text.TextWithHeading
+import ly.david.musicsearch.ui.common.url.UrlsSection
 
 @Composable
 internal fun AreaDetailsUi(

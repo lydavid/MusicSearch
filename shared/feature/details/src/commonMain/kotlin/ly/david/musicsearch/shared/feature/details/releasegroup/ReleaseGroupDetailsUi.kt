@@ -8,10 +8,10 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
 import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupScaffoldModel
-import ly.david.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.text.TextWithHeading
-import ly.david.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.text.TextWithHeading
+import ly.david.musicsearch.ui.common.url.UrlsSection
 import ly.david.musicsearch.ui.image.LargeImage
 
 @Composable

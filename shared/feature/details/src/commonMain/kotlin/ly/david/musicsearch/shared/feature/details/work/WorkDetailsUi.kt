@@ -9,11 +9,11 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.work.WorkScaffoldModel
-import ly.david.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.text.TextWithHeading
-import ly.david.ui.common.url.UrlsSection
-import ly.david.ui.common.work.getDisplayLanguage
+import ly.david.musicsearch.ui.common.text.TextWithHeading
+import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 
 @Composable
 internal fun WorkDetailsUi(

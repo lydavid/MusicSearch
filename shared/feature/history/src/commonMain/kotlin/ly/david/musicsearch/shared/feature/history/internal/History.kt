@@ -32,10 +32,10 @@ import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.dialog.SimpleAlertDialog
-import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
+import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

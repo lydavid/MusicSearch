@@ -22,16 +22,16 @@ import ly.david.musicsearch.core.models.work.WorkScaffoldModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.work.WorkRepository
-import ly.david.ui.common.artist.ArtistsByEntityPresenter
-import ly.david.ui.common.artist.ArtistsByEntityUiEvent
-import ly.david.ui.common.artist.ArtistsByEntityUiState
-import ly.david.ui.common.recording.RecordingsByEntityPresenter
-import ly.david.ui.common.recording.RecordingsByEntityUiEvent
-import ly.david.ui.common.recording.RecordingsByEntityUiState
-import ly.david.ui.common.relation.RelationsPresenter
-import ly.david.ui.common.relation.RelationsUiEvent
-import ly.david.ui.common.relation.RelationsUiState
-import ly.david.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
+import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
+import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
+import ly.david.musicsearch.ui.common.recording.RecordingsByEntityPresenter
+import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiEvent
+import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiState
+import ly.david.musicsearch.ui.common.relation.RelationsPresenter
+import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
+import ly.david.musicsearch.ui.common.relation.RelationsUiState
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
 
 internal class WorkPresenter(
     private val screen: DetailsScreen,

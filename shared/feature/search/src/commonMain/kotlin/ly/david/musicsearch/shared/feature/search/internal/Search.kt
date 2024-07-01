@@ -27,8 +27,8 @@ import androidx.compose.ui.platform.testTag
 import ly.david.musicsearch.core.models.network.searchableEntities
 import ly.david.musicsearch.shared.feature.search.SearchScreenTestTag
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.ExposedDropdownMenuBox
-import ly.david.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.musicsearch.ui.common.ExposedDropdownMenuBox
+import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

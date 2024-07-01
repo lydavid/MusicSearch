@@ -6,7 +6,7 @@ import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryPresenter
 import ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryUi
 import ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryUiState
-import ly.david.ui.common.screen.NowPlayingHistoryScreen
+import ly.david.musicsearch.ui.common.screen.NowPlayingHistoryScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

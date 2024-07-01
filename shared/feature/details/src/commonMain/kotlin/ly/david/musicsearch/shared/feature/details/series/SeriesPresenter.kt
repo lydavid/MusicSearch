@@ -22,10 +22,10 @@ import ly.david.musicsearch.core.models.series.SeriesScaffoldModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.series.SeriesRepository
-import ly.david.ui.common.relation.RelationsPresenter
-import ly.david.ui.common.relation.RelationsUiEvent
-import ly.david.ui.common.relation.RelationsUiState
-import ly.david.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.relation.RelationsPresenter
+import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
+import ly.david.musicsearch.ui.common.relation.RelationsUiState
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
 
 internal class SeriesPresenter(
     private val screen: DetailsScreen,

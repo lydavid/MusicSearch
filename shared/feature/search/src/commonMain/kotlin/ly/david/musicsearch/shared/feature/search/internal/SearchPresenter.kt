@@ -21,8 +21,8 @@ import ly.david.musicsearch.shared.domain.search.history.usecase.DeleteSearchHis
 import ly.david.musicsearch.shared.domain.search.history.usecase.GetSearchHistory
 import ly.david.musicsearch.shared.domain.search.history.usecase.RecordSearchHistory
 import ly.david.musicsearch.shared.domain.search.results.usecase.GetSearchResults
-import ly.david.ui.common.screen.DetailsScreen
-import ly.david.ui.common.screen.SearchScreen
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.SearchScreen
 
 private const val SEARCH_DELAY_MS = 500L
 

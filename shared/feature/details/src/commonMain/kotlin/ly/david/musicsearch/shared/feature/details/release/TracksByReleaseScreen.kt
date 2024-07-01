@@ -10,9 +10,9 @@ import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.TrackListItemModel
-import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.ui.common.track.TrackListItem
+import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.track.TrackListItem
 
 /**
  * Main screen for Release lookup. Shows all tracks in all media in this release.

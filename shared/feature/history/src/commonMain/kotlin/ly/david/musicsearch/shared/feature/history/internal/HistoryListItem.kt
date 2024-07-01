@@ -14,9 +14,9 @@ import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.ThumbnailImage
-import ly.david.ui.common.getDisplayText
-import ly.david.ui.common.getIcon
-import ly.david.ui.common.listitem.SwipeToDeleteListItem
+import ly.david.musicsearch.ui.common.getDisplayText
+import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable

@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.feature.details.work
 
-import ly.david.ui.common.topappbar.Tab
+import ly.david.musicsearch.ui.common.topappbar.Tab
 
 enum class WorkTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),

@@ -37,26 +37,26 @@ import ly.david.musicsearch.shared.domain.instrument.usecase.GetInstrumentsByEnt
 import ly.david.musicsearch.shared.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.shared.domain.recording.usecase.GetRecordingsByEntity
 import ly.david.musicsearch.shared.domain.series.usecase.GetSeriesByEntity
-import ly.david.ui.common.artist.ArtistsByEntityPresenter
-import ly.david.ui.common.artist.ArtistsByEntityUiEvent
-import ly.david.ui.common.artist.ArtistsByEntityUiState
-import ly.david.ui.common.event.EventsByEntityPresenter
-import ly.david.ui.common.event.EventsByEntityUiEvent
-import ly.david.ui.common.event.EventsByEntityUiState
-import ly.david.ui.common.label.LabelsByEntityPresenter
-import ly.david.ui.common.label.LabelsByEntityUiEvent
-import ly.david.ui.common.label.LabelsByEntityUiState
-import ly.david.ui.common.release.ReleasesByEntityPresenter
-import ly.david.ui.common.release.ReleasesByEntityUiEvent
-import ly.david.ui.common.release.ReleasesByEntityUiState
-import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
-import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
-import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityUiState
-import ly.david.ui.common.screen.CollectionScreen
-import ly.david.ui.common.screen.DetailsScreen
-import ly.david.ui.common.work.WorksByEntityPresenter
-import ly.david.ui.common.work.WorksByEntityUiEvent
-import ly.david.ui.common.work.WorksByEntityUiState
+import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
+import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
+import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
+import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
+import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
+import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
+import ly.david.musicsearch.ui.common.label.LabelsByEntityPresenter
+import ly.david.musicsearch.ui.common.label.LabelsByEntityUiEvent
+import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
+import ly.david.musicsearch.ui.common.release.ReleasesByEntityPresenter
+import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
+import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
+import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
+import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
+import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiState
+import ly.david.musicsearch.ui.common.screen.CollectionScreen
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.work.WorksByEntityPresenter
+import ly.david.musicsearch.ui.common.work.WorksByEntityUiEvent
+import ly.david.musicsearch.ui.common.work.WorksByEntityUiState
 
 internal class CollectionPresenter(
     private val screen: CollectionScreen,

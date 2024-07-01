@@ -15,8 +15,8 @@ import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.SearchHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.dialog.SimpleAlertDialog
-import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
+import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

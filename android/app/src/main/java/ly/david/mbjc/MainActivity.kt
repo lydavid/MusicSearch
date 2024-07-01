@@ -17,12 +17,12 @@ import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.AppRoot
 import ly.david.musicsearch.shared.useDarkTheme
 import ly.david.musicsearch.shared.useMaterialYou
-import ly.david.ui.common.screen.CollectionListScreen
-import ly.david.ui.common.screen.CollectionScreen
-import ly.david.ui.common.screen.DetailsScreen
-import ly.david.ui.common.screen.HistoryScreen
-import ly.david.ui.common.screen.SearchScreen
-import ly.david.ui.common.screen.SettingsScreen
+import ly.david.musicsearch.ui.common.screen.CollectionListScreen
+import ly.david.musicsearch.ui.common.screen.CollectionScreen
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.HistoryScreen
+import ly.david.musicsearch.ui.common.screen.SearchScreen
+import ly.david.musicsearch.ui.common.screen.SettingsScreen
 import ly.david.musicsearch.ui.core.theme.BaseTheme
 import org.koin.android.ext.android.inject
 

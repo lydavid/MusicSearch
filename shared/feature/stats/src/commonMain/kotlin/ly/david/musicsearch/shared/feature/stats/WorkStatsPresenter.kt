@@ -13,7 +13,7 @@ import ly.david.musicsearch.data.database.dao.RecordingsByEntityDao
 import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
 import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
-import ly.david.ui.common.screen.StatsScreen
+import ly.david.musicsearch.ui.common.screen.StatsScreen
 
 internal class WorkStatsPresenter(
     private val screen: StatsScreen,

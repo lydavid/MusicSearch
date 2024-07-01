@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 
 internal fun LazyListScope.addEntitiesStatsSection(
     totalRemote: Int?,

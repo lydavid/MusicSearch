@@ -6,7 +6,7 @@ import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryPresenter
 import ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryUi
 import ly.david.musicsearch.android.feature.spotify.history.SpotifyUiState
-import ly.david.ui.common.screen.SpotifyHistoryScreen
+import ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

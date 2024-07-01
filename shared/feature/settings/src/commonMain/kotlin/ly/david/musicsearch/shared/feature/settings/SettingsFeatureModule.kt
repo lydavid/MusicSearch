@@ -6,7 +6,7 @@ import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.shared.feature.settings.internal.Settings
 import ly.david.musicsearch.shared.feature.settings.internal.SettingsPresenter
 import ly.david.musicsearch.shared.feature.settings.internal.SettingsUiState
-import ly.david.ui.common.screen.SettingsScreen
+import ly.david.musicsearch.ui.common.screen.SettingsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

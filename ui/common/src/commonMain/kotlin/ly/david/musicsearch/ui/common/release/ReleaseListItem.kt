@@ -1,0 +1,143 @@
+package ly.david.musicsearch.ui.common.release
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
+import ly.david.musicsearch.core.models.common.toFlagEmoji
+import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.getSubTextColor
+
+// TODO: rethink showing release country -> could be misleading, and expensive joins
+//  with cover art loaded by default, we can prob hide the other info by default
+@Composable
+fun ReleaseListItem(
+    release: ReleaseListItemModel,
+    modifier: Modifier = Modifier,
+    showMoreInfo: Boolean = true,
+    requestForMissingCoverArtUrl: suspend () -> Unit = {},
+    onClick: ReleaseListItemModel.() -> Unit = {},
+) {
+    LaunchedEffect(key1 = release.id) {
+        if (release.imageUrl == null) {
+            requestForMissingCoverArtUrl()
+        }
+    }
+
+    ListItem(
+        headlineContent = {
+            Text(
+                text = release.name,
+                style = TextStyles.getCardBodyTextStyle(),
+            )
+        },
+        modifier = modifier.clickable { onClick(release) },
+        supportingContent = {
+            Column {
+                release.disambiguation.ifNotNullOrEmpty {
+                    Text(
+                        text = "($it)",
+                        color = getSubTextColor(),
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+                }
+
+                if (showMoreInfo) {
+                    Row {
+                        release.date.ifNotNullOrEmpty {
+                            Text(
+                                text = it,
+                                modifier = Modifier
+                                    .padding(top = 4.dp)
+                                    .weight(1f),
+                                style = TextStyles.getCardBodySubTextStyle(),
+                            )
+                        }
+
+                        release.countryCode.ifNotNullOrEmpty { countryCode ->
+                            val count = release.releaseCountryCount
+                            val additionalReleaseEvents = if (count > 1) {
+                                "+ ${count - 1}"
+                            } else {
+                                ""
+                            }
+                            Text(
+                                text = "${countryCode.toFlagEmoji()} $countryCode" +
+                                    additionalReleaseEvents.transformThisIfNotNullOrEmpty { " $it" },
+                                modifier = Modifier
+                                    .padding(top = 4.dp)
+                                    .weight(1f),
+                                style = TextStyles.getCardBodySubTextStyle(),
+                                textAlign = TextAlign.End,
+                            )
+                        }
+                    }
+
+                    Row {
+                        release.formattedFormats.ifNotNullOrEmpty {
+                            Text(
+                                modifier = Modifier
+                                    .padding(top = 4.dp)
+                                    .weight(1f),
+                                text = it,
+                                style = TextStyles.getCardBodySubTextStyle(),
+                            )
+                        }
+
+                        release.formattedTracks.ifNotNullOrEmpty {
+                            Text(
+                                modifier = Modifier
+                                    .padding(top = 4.dp)
+                                    .weight(1f),
+                                text = it,
+                                style = TextStyles.getCardBodySubTextStyle(),
+                                textAlign = TextAlign.End,
+                            )
+                        }
+                    }
+
+                    release.formattedArtistCredits.ifNotNullOrEmpty {
+                        Text(
+                            text = it,
+                            modifier = Modifier
+                                .padding(top = 4.dp)
+                                .fillMaxWidth(),
+                            style = TextStyles.getCardBodySubTextStyle(),
+                        )
+                    }
+
+                    release.catalogNumbers.ifNotNullOrEmpty {
+                        Text(
+                            text = it,
+                            modifier = Modifier
+                                .padding(top = 4.dp)
+                                .fillMaxWidth(),
+                            style = TextStyles.getCardBodySubTextStyle(),
+                        )
+                    }
+                }
+            }
+        },
+        leadingContent = {
+            ThumbnailImage(
+                url = release.imageUrl.orEmpty(),
+                mbid = release.id,
+                placeholderIcon = MusicBrainzEntity.RELEASE.getIcon(),
+            )
+        },
+    )
+}

@@ -7,7 +7,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

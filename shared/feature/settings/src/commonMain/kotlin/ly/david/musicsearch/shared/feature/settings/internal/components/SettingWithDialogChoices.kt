@@ -13,7 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
-import ly.david.ui.common.dialog.MultipleChoiceDialog
+import ly.david.musicsearch.ui.common.dialog.MultipleChoiceDialog
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable

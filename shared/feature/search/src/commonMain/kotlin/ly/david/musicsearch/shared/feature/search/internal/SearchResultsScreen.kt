@@ -28,18 +28,18 @@ import ly.david.musicsearch.core.models.listitem.SeriesListItemModel
 import ly.david.musicsearch.core.models.listitem.WorkListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.area.AreaListItem
-import ly.david.ui.common.artist.ArtistListItem
-import ly.david.ui.common.event.EventListItem
-import ly.david.ui.common.instrument.InstrumentListItem
-import ly.david.ui.common.label.LabelListItem
-import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.ui.common.place.PlaceListItem
-import ly.david.ui.common.recording.RecordingListItem
-import ly.david.ui.common.release.ReleaseListItem
-import ly.david.ui.common.releasegroup.ReleaseGroupListItem
-import ly.david.ui.common.series.SeriesListItem
-import ly.david.ui.common.work.WorkListItem
+import ly.david.musicsearch.ui.common.area.AreaListItem
+import ly.david.musicsearch.ui.common.artist.ArtistListItem
+import ly.david.musicsearch.ui.common.event.EventListItem
+import ly.david.musicsearch.ui.common.instrument.InstrumentListItem
+import ly.david.musicsearch.ui.common.label.LabelListItem
+import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.place.PlaceListItem
+import ly.david.musicsearch.ui.common.recording.RecordingListItem
+import ly.david.musicsearch.ui.common.release.ReleaseListItem
+import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
+import ly.david.musicsearch.ui.common.series.SeriesListItem
+import ly.david.musicsearch.ui.common.work.WorkListItem
 
 @Composable
 internal fun SearchResultsScreen(

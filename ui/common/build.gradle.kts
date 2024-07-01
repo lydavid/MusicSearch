@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "ly.david.ui.common"
+    namespace = "ly.david.musicsearch.ui.common"
 }
 
 kotlin {
@@ -77,7 +77,7 @@ kotlin {
                         freeCompilerArgs.addAll(
                             "-P",
                             "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=" +
-                                "ly.david.ui.common.screen.Parcelize",
+                                "ly.david.musicsearch.ui.common.screen.Parcelize",
                         )
                     }
                 }

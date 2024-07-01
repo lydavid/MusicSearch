@@ -16,15 +16,15 @@ import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
-import ly.david.ui.common.screen.LicensesScreen
-import ly.david.ui.common.screen.NowPlayingHistoryScreen
-import ly.david.ui.common.screen.SpotifyHistoryScreen
+import ly.david.musicsearch.ui.common.screen.LicensesScreen
+import ly.david.musicsearch.ui.common.screen.NowPlayingHistoryScreen
+import ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.component.ClickableItem
-import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.text.TextWithHeading
-import ly.david.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.musicsearch.ui.common.component.ClickableItem
+import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.text.TextWithHeading
+import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 
 @Composable
 internal expect fun Settings(

@@ -24,13 +24,13 @@ import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
-import ly.david.ui.common.relation.RelationsPresenter
-import ly.david.ui.common.relation.RelationsUiEvent
-import ly.david.ui.common.relation.RelationsUiState
-import ly.david.ui.common.release.ReleasesByEntityPresenter
-import ly.david.ui.common.release.ReleasesByEntityUiEvent
-import ly.david.ui.common.release.ReleasesByEntityUiState
-import ly.david.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.relation.RelationsPresenter
+import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
+import ly.david.musicsearch.ui.common.relation.RelationsUiState
+import ly.david.musicsearch.ui.common.release.ReleasesByEntityPresenter
+import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
+import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
 
 internal class ReleaseGroupPresenter(
     private val screen: DetailsScreen,

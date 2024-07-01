@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
-import ly.david.ui.common.EntityIcon
+import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.core.SMALL_IMAGE_SIZE
 import ly.david.musicsearch.ui.core.theme.TextStyles
 

@@ -22,13 +22,13 @@ import ly.david.musicsearch.core.models.place.PlaceScaffoldModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
-import ly.david.ui.common.event.EventsByEntityPresenter
-import ly.david.ui.common.event.EventsByEntityUiEvent
-import ly.david.ui.common.event.EventsByEntityUiState
-import ly.david.ui.common.relation.RelationsPresenter
-import ly.david.ui.common.relation.RelationsUiEvent
-import ly.david.ui.common.relation.RelationsUiState
-import ly.david.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
+import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
+import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
+import ly.david.musicsearch.ui.common.relation.RelationsPresenter
+import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
+import ly.david.musicsearch.ui.common.relation.RelationsUiState
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
 
 internal class PlacePresenter(
     private val screen: DetailsScreen,

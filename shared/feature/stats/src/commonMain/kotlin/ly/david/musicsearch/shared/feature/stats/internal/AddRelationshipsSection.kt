@@ -17,9 +17,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.relation.RelationTypeCount
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.EntityIcon
-import ly.david.ui.common.getDisplayText
-import ly.david.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.EntityIcon
+import ly.david.musicsearch.ui.common.getDisplayText
+import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 internal fun LazyListScope.addRelationshipsSection(

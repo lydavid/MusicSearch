@@ -27,8 +27,8 @@ import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.feature.collections.components.CollectionListItem
 import ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
 import ly.david.musicsearch.shared.feature.collections.create.NewCollection
-import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.core.LocalStrings
 
 /**

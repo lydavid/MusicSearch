@@ -24,8 +24,8 @@ import ly.david.musicsearch.shared.domain.history.usecase.DeleteLookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.GetPagedHistory
 import ly.david.musicsearch.shared.domain.history.usecase.MarkLookupHistoryForDeletion
 import ly.david.musicsearch.shared.domain.history.usecase.UnMarkLookupHistoryForDeletion
-import ly.david.ui.common.screen.CollectionScreen
-import ly.david.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.CollectionScreen
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
 
 internal class HistoryPresenter(
     private val navigator: Navigator,

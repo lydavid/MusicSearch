@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.shared.feature.collections.create.NewCollection
-import ly.david.ui.common.screen.AddToCollectionScreen
+import ly.david.musicsearch.ui.common.screen.AddToCollectionScreen
 
 internal class AddToCollectionPresenter(
     private val screen: AddToCollectionScreen,

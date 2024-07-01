@@ -9,7 +9,7 @@ import ly.david.musicsearch.shared.feature.stats.internal.addEntitiesStatsSectio
 import ly.david.musicsearch.shared.feature.stats.internal.addRelationshipsSection
 import ly.david.musicsearch.shared.feature.stats.internal.addReleaseGroupsSection
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.topappbar.Tab
+import ly.david.musicsearch.ui.common.topappbar.Tab
 
 @Composable
 internal fun StatsUi(

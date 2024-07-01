@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.mapLatest
 import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
 import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
-import ly.david.ui.common.screen.StatsScreen
+import ly.david.musicsearch.ui.common.screen.StatsScreen
 
 internal class InstrumentStatsPresenter(
     private val screen: StatsScreen,

@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import ly.david.musicsearch.core.models.history.HistorySortOption
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.component.ClickableItem
+import ly.david.musicsearch.ui.common.component.ClickableItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

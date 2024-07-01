@@ -15,12 +15,12 @@ import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.common.artist.ArtistsByEntityUiState
-import ly.david.ui.common.event.EventsByEntityUiState
-import ly.david.ui.common.label.LabelsByEntityUiState
-import ly.david.ui.common.place.PlacesByEntityUiState
-import ly.david.ui.common.relation.RelationsUiState
-import ly.david.ui.common.release.ReleasesByEntityUiState
+import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
+import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
+import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
+import ly.david.musicsearch.ui.common.place.PlacesByEntityUiState
+import ly.david.musicsearch.ui.common.relation.RelationsUiState
+import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 private val canadianArtists = MutableStateFlow(

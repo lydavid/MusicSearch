@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.collectableEntities
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.ExposedDropdownMenuBox
+import ly.david.musicsearch.ui.common.ExposedDropdownMenuBox
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable

@@ -22,25 +22,25 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
-import ly.david.ui.common.artist.ArtistsByEntityPresenter
-import ly.david.ui.common.artist.ArtistsByEntityUiEvent
-import ly.david.ui.common.artist.ArtistsByEntityUiState
-import ly.david.ui.common.event.EventsByEntityPresenter
-import ly.david.ui.common.event.EventsByEntityUiEvent
-import ly.david.ui.common.event.EventsByEntityUiState
-import ly.david.ui.common.label.LabelsByEntityPresenter
-import ly.david.ui.common.label.LabelsByEntityUiEvent
-import ly.david.ui.common.label.LabelsByEntityUiState
-import ly.david.ui.common.place.PlacesByEntityPresenter
-import ly.david.ui.common.place.PlacesByEntityUiEvent
-import ly.david.ui.common.place.PlacesByEntityUiState
-import ly.david.ui.common.relation.RelationsPresenter
-import ly.david.ui.common.relation.RelationsUiEvent
-import ly.david.ui.common.relation.RelationsUiState
-import ly.david.ui.common.release.ReleasesByEntityPresenter
-import ly.david.ui.common.release.ReleasesByEntityUiEvent
-import ly.david.ui.common.release.ReleasesByEntityUiState
-import ly.david.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
+import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
+import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
+import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
+import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
+import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
+import ly.david.musicsearch.ui.common.label.LabelsByEntityPresenter
+import ly.david.musicsearch.ui.common.label.LabelsByEntityUiEvent
+import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
+import ly.david.musicsearch.ui.common.place.PlacesByEntityPresenter
+import ly.david.musicsearch.ui.common.place.PlacesByEntityUiEvent
+import ly.david.musicsearch.ui.common.place.PlacesByEntityUiState
+import ly.david.musicsearch.ui.common.relation.RelationsPresenter
+import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
+import ly.david.musicsearch.ui.common.relation.RelationsUiState
+import ly.david.musicsearch.ui.common.release.ReleasesByEntityPresenter
+import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
+import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
 
 internal class AreaPresenter(
     private val screen: DetailsScreen,

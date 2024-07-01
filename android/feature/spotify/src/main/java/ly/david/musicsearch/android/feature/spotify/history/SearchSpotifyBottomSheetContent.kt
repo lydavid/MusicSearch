@@ -14,8 +14,8 @@ import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.common.component.ClickableItem
-import ly.david.ui.common.getIcon
+import ly.david.musicsearch.ui.common.component.ClickableItem
+import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 

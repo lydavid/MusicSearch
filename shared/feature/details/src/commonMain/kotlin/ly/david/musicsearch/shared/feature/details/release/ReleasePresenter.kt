@@ -24,16 +24,16 @@ import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
-import ly.david.ui.common.artist.ArtistsByEntityPresenter
-import ly.david.ui.common.artist.ArtistsByEntityUiEvent
-import ly.david.ui.common.artist.ArtistsByEntityUiState
-import ly.david.ui.common.relation.RelationsPresenter
-import ly.david.ui.common.relation.RelationsUiEvent
-import ly.david.ui.common.relation.RelationsUiState
-import ly.david.ui.common.screen.DetailsScreen
-import ly.david.ui.common.track.TracksByEntityUiEvent
-import ly.david.ui.common.track.TracksByReleasePresenter
-import ly.david.ui.common.track.TracksByReleaseUiState
+import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
+import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
+import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
+import ly.david.musicsearch.ui.common.relation.RelationsPresenter
+import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
+import ly.david.musicsearch.ui.common.relation.RelationsUiState
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.track.TracksByEntityUiEvent
+import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
+import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
 
 internal class ReleasePresenter(
     private val screen: DetailsScreen,

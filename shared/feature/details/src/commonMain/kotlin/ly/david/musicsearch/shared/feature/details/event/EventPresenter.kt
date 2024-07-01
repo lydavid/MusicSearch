@@ -22,10 +22,10 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
-import ly.david.ui.common.relation.RelationsPresenter
-import ly.david.ui.common.relation.RelationsUiEvent
-import ly.david.ui.common.relation.RelationsUiState
-import ly.david.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.relation.RelationsPresenter
+import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
+import ly.david.musicsearch.ui.common.relation.RelationsUiState
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
 
 internal class EventPresenter(
     private val screen: DetailsScreen,

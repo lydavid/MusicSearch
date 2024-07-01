@@ -40,7 +40,7 @@ import ly.david.musicsearch.shared.feature.details.series.SeriesUiState
 import ly.david.musicsearch.shared.feature.details.work.WorkPresenter
 import ly.david.musicsearch.shared.feature.details.work.WorkUi
 import ly.david.musicsearch.shared.feature.details.work.WorkUiState
-import ly.david.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

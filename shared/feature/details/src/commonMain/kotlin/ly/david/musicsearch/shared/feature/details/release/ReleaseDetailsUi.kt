@@ -15,12 +15,12 @@ import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
 import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.LargeImage
-import ly.david.ui.common.area.AreaListItem
-import ly.david.ui.common.label.LabelListItem
-import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.text.TextWithHeading
-import ly.david.ui.common.url.UrlsSection
-import ly.david.ui.common.work.getDisplayLanguage
+import ly.david.musicsearch.ui.common.area.AreaListItem
+import ly.david.musicsearch.ui.common.label.LabelListItem
+import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.text.TextWithHeading
+import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 
 @Composable
 internal fun ReleaseDetailsUi(

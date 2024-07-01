@@ -23,17 +23,17 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.ui.common.relation.RelationsListScreen
-import ly.david.ui.common.screen.AddToCollectionScreen
-import ly.david.ui.common.screen.StatsScreen
-import ly.david.ui.common.screen.showInBottomSheet
-import ly.david.ui.common.topappbar.AddToCollectionMenuItem
-import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
-import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.ui.common.topappbar.TabsBar
-import ly.david.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.ui.common.topappbar.getTitle
+import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.musicsearch.ui.common.relation.RelationsListScreen
+import ly.david.musicsearch.ui.common.screen.AddToCollectionScreen
+import ly.david.musicsearch.ui.common.screen.StatsScreen
+import ly.david.musicsearch.ui.common.screen.showInBottomSheet
+import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
+import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
+import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.musicsearch.ui.common.topappbar.TabsBar
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.musicsearch.ui.common.topappbar.getTitle
 
 /**
  * The top-level screen for an series.
