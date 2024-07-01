@@ -23,7 +23,6 @@ kotlin {
                 implementation(projects.core.preferences)
                 implementation(projects.core.logging.api)
                 implementation(projects.shared.domain)
-                implementation(projects.shared.strings)
                 implementation(projects.ui.core)
                 implementation(projects.ui.image)
 
