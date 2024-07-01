@@ -43,6 +43,9 @@ kotlin {
                 implementation(libs.circuit.foundation)
                 implementation(libs.circuit.overlay)
                 implementation(libs.circuitx.gesture.navigation)
+
+                implementation(libs.coil.base)
+                implementation(libs.coil.compose)
             }
         }
         val androidMain by getting {
@@ -52,9 +55,15 @@ kotlin {
                 implementation(projects.ui.core)
                 implementation(projects.ui.image)
                 implementation(compose.preview)
+
+                implementation(libs.coil.network.okhttp)
             }
         }
-        val jvmMain by getting
+        val jvmMain by getting {
+            dependencies {
+                implementation(libs.coil.network.okhttp)
+            }
+        }
 
         targets.withType<KotlinNativeTarget>().configureEach {
             binaries.framework {
