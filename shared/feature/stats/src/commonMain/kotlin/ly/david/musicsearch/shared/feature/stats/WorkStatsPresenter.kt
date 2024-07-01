@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingsByEntityDao
-import ly.david.musicsearch.domain.browse.usecase.ObserveBrowseEntityCount
-import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
+import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
+import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
 import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
 import ly.david.ui.common.screen.StatsScreen
 

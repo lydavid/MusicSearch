@@ -1,0 +1,20 @@
+package ly.david.musicsearch.shared.domain.release.usecase
+
+import app.cash.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.release.ReleaseRepository
+import org.koin.core.annotation.Single
+
+@Single
+class GetTracksByRelease(
+    private val releaseRepository: ReleaseRepository,
+) {
+    operator fun invoke(
+        releaseId: String,
+        query: String,
+    ): Flow<PagingData<ListItemModel>> = releaseRepository.observeTracksByRelease(
+        releaseId = releaseId,
+        query = query,
+    )
+}

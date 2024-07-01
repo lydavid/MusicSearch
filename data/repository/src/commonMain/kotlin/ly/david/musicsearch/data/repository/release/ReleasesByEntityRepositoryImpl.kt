@@ -18,7 +18,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
-import ly.david.musicsearch.domain.release.ReleasesByEntityRepository
+import ly.david.musicsearch.shared.domain.release.ReleasesByEntityRepository
 
 class ReleasesByEntityRepositoryImpl(
     private val artistReleaseDao: ArtistReleaseDao,

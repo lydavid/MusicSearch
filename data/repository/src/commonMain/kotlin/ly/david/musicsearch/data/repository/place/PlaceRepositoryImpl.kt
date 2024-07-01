@@ -7,8 +7,8 @@ import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.domain.place.PlaceRepository
-import ly.david.musicsearch.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.place.PlaceRepository
+import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class PlaceRepositoryImpl(
     private val musicBrainzApi: MusicBrainzApi,

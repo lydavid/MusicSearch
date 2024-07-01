@@ -20,10 +20,10 @@ import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.preferences.AppPreferences
-import ly.david.musicsearch.domain.history.usecase.DeleteLookupHistory
-import ly.david.musicsearch.domain.history.usecase.GetPagedHistory
-import ly.david.musicsearch.domain.history.usecase.MarkLookupHistoryForDeletion
-import ly.david.musicsearch.domain.history.usecase.UnMarkLookupHistoryForDeletion
+import ly.david.musicsearch.shared.domain.history.usecase.DeleteLookupHistory
+import ly.david.musicsearch.shared.domain.history.usecase.GetPagedHistory
+import ly.david.musicsearch.shared.domain.history.usecase.MarkLookupHistoryForDeletion
+import ly.david.musicsearch.shared.domain.history.usecase.UnMarkLookupHistoryForDeletion
 import ly.david.ui.common.screen.CollectionScreen
 import ly.david.ui.common.screen.DetailsScreen
 

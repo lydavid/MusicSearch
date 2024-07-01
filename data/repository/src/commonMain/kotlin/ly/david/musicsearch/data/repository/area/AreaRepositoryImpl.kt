@@ -6,8 +6,8 @@ import ly.david.musicsearch.core.models.area.AreaScaffoldModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.CountryCodeDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.domain.area.AreaRepository
-import ly.david.musicsearch.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.area.AreaRepository
+import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class AreaRepositoryImpl(
     private val musicBrainzApi: MusicBrainzApi,

@@ -12,7 +12,7 @@ import ly.david.musicsearch.core.models.listitem.SearchHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.SearchHistoryDao
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
-import ly.david.musicsearch.domain.search.history.SearchHistoryRepository
+import ly.david.musicsearch.shared.domain.search.history.SearchHistoryRepository
 
 class SearchHistoryRepositoryImpl(
     private val searchHistoryDao: SearchHistoryDao,

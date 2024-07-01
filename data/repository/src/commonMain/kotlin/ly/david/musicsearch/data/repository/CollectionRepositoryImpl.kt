@@ -19,8 +19,8 @@ import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
-import ly.david.musicsearch.domain.browse.BrowseEntityCountRepository
-import ly.david.musicsearch.domain.collection.CollectionRepository
+import ly.david.musicsearch.shared.domain.browse.BrowseEntityCountRepository
+import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import lydavidmusicsearchdatadatabase.Browse_entity_count
 
 class CollectionRepositoryImpl(

@@ -14,7 +14,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
-import ly.david.musicsearch.domain.event.EventsByEntityRepository
+import ly.david.musicsearch.shared.domain.event.EventsByEntityRepository
 
 class EventsByEntityRepositoryImpl(
     private val eventsByEntityDao: EventsByEntityDao,

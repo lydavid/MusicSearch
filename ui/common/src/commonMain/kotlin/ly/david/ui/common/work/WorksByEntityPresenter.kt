@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.WorkListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.work.usecase.GetWorksByEntity
+import ly.david.musicsearch.shared.domain.work.usecase.GetWorksByEntity
 
 class WorksByEntityPresenter(
     private val getWorksByEntity: GetWorksByEntity,

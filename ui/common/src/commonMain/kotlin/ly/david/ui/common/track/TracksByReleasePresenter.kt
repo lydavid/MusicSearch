@@ -17,7 +17,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.core.models.listitem.ListItemModel
-import ly.david.musicsearch.domain.release.usecase.GetTracksByRelease
+import ly.david.musicsearch.shared.domain.release.usecase.GetTracksByRelease
 
 class TracksByReleasePresenter(
     private val getTracksByRelease: GetTracksByRelease,

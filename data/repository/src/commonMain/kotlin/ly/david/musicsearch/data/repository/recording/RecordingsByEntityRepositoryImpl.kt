@@ -14,7 +14,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RecordingsByEntityDao
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
-import ly.david.musicsearch.domain.recording.RecordingsByEntityRepository
+import ly.david.musicsearch.shared.domain.recording.RecordingsByEntityRepository
 
 class RecordingsByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,

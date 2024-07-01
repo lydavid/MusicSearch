@@ -5,8 +5,8 @@ import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.series.SeriesScaffoldModel
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.domain.relation.RelationRepository
-import ly.david.musicsearch.domain.series.SeriesRepository
+import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.series.SeriesRepository
 
 class SeriesRepositoryImpl(
     private val musicBrainzApi: MusicBrainzApi,

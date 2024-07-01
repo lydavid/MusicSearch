@@ -19,7 +19,7 @@ import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
-import ly.david.musicsearch.domain.releasegroup.ReleaseGroupsByEntityRepository
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsByEntityRepository
 
 class ReleaseGroupsByEntityRepositoryImpl(
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,

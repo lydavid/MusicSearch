@@ -5,8 +5,8 @@ import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.event.EventScaffoldModel
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.domain.event.EventRepository
-import ly.david.musicsearch.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.event.EventRepository
+import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class EventRepositoryImpl(
     private val musicBrainzApi: MusicBrainzApi,

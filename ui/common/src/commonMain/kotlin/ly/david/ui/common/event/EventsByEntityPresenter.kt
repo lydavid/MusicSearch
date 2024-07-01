@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.event.usecase.GetEventsByEntity
+import ly.david.musicsearch.shared.domain.event.usecase.GetEventsByEntity
 
 class EventsByEntityPresenter(
     private val getEventsByEntity: GetEventsByEntity,

@@ -20,8 +20,8 @@ import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.instrument.InstrumentScaffoldModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
-import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
-import ly.david.musicsearch.domain.instrument.InstrumentRepository
+import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.ui.common.relation.RelationsPresenter
 import ly.david.ui.common.relation.RelationsUiEvent
 import ly.david.ui.common.relation.RelationsUiState

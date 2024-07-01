@@ -6,8 +6,8 @@ import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.domain.relation.RelationRepository
-import ly.david.musicsearch.domain.releasegroup.ReleaseGroupRepository
+import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 
 class ReleaseGroupRepositoryImpl(
     private val musicBrainzApi: MusicBrainzApi,

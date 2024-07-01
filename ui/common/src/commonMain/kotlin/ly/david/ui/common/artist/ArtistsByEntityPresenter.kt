@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.artist.usecase.GetArtistsByEntity
+import ly.david.musicsearch.shared.domain.artist.usecase.GetArtistsByEntity
 
 class ArtistsByEntityPresenter(
     private val getArtistsByEntity: GetArtistsByEntity,

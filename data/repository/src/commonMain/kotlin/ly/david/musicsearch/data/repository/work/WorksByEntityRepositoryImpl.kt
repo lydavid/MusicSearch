@@ -14,7 +14,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseWorksResponse
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
-import ly.david.musicsearch.domain.work.WorksByEntityRepository
+import ly.david.musicsearch.shared.domain.work.WorksByEntityRepository
 
 class WorksByEntityRepositoryImpl(
     private val worksByEntityDao: WorksByEntityDao,

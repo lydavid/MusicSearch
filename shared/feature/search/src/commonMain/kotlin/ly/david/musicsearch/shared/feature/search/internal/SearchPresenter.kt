@@ -17,10 +17,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.search.history.usecase.DeleteSearchHistory
-import ly.david.musicsearch.domain.search.history.usecase.GetSearchHistory
-import ly.david.musicsearch.domain.search.history.usecase.RecordSearchHistory
-import ly.david.musicsearch.domain.search.results.usecase.GetSearchResults
+import ly.david.musicsearch.shared.domain.search.history.usecase.DeleteSearchHistory
+import ly.david.musicsearch.shared.domain.search.history.usecase.GetSearchHistory
+import ly.david.musicsearch.shared.domain.search.history.usecase.RecordSearchHistory
+import ly.david.musicsearch.shared.domain.search.results.usecase.GetSearchResults
 import ly.david.ui.common.screen.DetailsScreen
 import ly.david.ui.common.screen.SearchScreen
 

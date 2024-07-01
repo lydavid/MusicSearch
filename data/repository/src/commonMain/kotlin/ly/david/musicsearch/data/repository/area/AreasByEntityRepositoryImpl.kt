@@ -13,7 +13,7 @@ import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
-import ly.david.musicsearch.domain.area.AreasByEntityRepository
+import ly.david.musicsearch.shared.domain.area.AreasByEntityRepository
 
 class AreasByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,

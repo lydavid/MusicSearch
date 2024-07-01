@@ -14,7 +14,7 @@ import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
-import ly.david.musicsearch.domain.artist.ArtistsByEntityRepository
+import ly.david.musicsearch.shared.domain.artist.ArtistsByEntityRepository
 
 class ArtistsByEntityRepositoryImpl(
     private val artistsByEntityDao: ArtistsByEntityDao,

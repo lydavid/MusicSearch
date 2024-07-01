@@ -13,7 +13,7 @@ import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.core.models.history.HistorySortOption
-import ly.david.musicsearch.domain.history.LookupHistoryRepository
+import ly.david.musicsearch.shared.domain.history.LookupHistoryRepository
 
 class LookupHistoryRepositoryImpl(
     private val lookupHistoryDao: LookupHistoryDao,

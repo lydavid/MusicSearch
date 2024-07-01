@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.models.history.SpotifyHistory
-import ly.david.musicsearch.domain.spotify.SpotifyHistoryRepository
+import ly.david.musicsearch.shared.domain.spotify.SpotifyHistoryRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

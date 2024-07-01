@@ -15,7 +15,7 @@ import ly.david.musicsearch.core.models.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.core.models.listitem.toSpotifyHistoryListItemModel
 import ly.david.musicsearch.data.database.dao.SpotifyHistoryDao
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
-import ly.david.musicsearch.domain.spotify.SpotifyHistoryRepository
+import ly.david.musicsearch.shared.domain.spotify.SpotifyHistoryRepository
 
 class SpotifyHistoryRepositoryImpl(
     private val spotifyHistoryDao: SpotifyHistoryDao,

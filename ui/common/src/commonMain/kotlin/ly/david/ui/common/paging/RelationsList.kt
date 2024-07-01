@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.relation.usecase.GetEntityRelationships
+import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
 
 /**
  * A [ViewModel] implements this for [pagedRelations].

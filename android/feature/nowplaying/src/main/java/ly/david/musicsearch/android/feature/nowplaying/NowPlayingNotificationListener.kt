@@ -5,7 +5,7 @@ import android.service.notification.StatusBarNotification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.history.NowPlayingHistory
-import ly.david.musicsearch.domain.nowplaying.NowPlayingHistoryRepository
+import ly.david.musicsearch.shared.domain.nowplaying.NowPlayingHistoryRepository
 import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinComponent
 

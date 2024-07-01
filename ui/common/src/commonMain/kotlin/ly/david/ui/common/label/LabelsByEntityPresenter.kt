@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.LabelListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.label.usecase.GetLabelsByEntity
+import ly.david.musicsearch.shared.domain.label.usecase.GetLabelsByEntity
 
 class LabelsByEntityPresenter(
     private val getLabelsByEntity: GetLabelsByEntity,

@@ -6,8 +6,8 @@ import ly.david.musicsearch.core.models.work.WorkScaffoldModel
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.domain.relation.RelationRepository
-import ly.david.musicsearch.domain.work.WorkRepository
+import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.work.WorkRepository
 
 class WorkRepositoryImpl(
     private val musicBrainzApi: MusicBrainzApi,

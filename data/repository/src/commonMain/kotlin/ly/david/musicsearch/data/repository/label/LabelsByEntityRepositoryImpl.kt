@@ -14,7 +14,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
-import ly.david.musicsearch.domain.label.LabelsByEntityRepository
+import ly.david.musicsearch.shared.domain.label.LabelsByEntityRepository
 
 class LabelsByEntityRepositoryImpl(
     private val labelsByEntityDao: LabelsByEntityDao,

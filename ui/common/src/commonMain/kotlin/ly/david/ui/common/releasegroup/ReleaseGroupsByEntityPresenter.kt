@@ -20,8 +20,8 @@ import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.preferences.AppPreferences
-import ly.david.musicsearch.domain.releasegroup.ReleaseGroupImageRepository
-import ly.david.musicsearch.domain.releasegroup.usecase.GetReleaseGroupsByEntity
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
+import ly.david.musicsearch.shared.domain.releasegroup.usecase.GetReleaseGroupsByEntity
 
 class ReleaseGroupsByEntityPresenter(
     private val getReleaseGroupsByEntity: GetReleaseGroupsByEntity,

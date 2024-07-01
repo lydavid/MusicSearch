@@ -6,8 +6,8 @@ import ly.david.musicsearch.core.models.recording.RecordingScaffoldModel
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.domain.recording.RecordingRepository
-import ly.david.musicsearch.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.recording.RecordingRepository
+import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class RecordingRepositoryImpl(
     private val musicBrainzApi: MusicBrainzApi,

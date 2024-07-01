@@ -16,8 +16,8 @@ import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.models.collection.CollectionSortOption
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.preferences.AppPreferences
-import ly.david.musicsearch.domain.collection.usecase.CreateCollection
-import ly.david.musicsearch.domain.collection.usecase.GetAllCollections
+import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
+import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.shared.feature.collections.create.NewCollection
 import ly.david.ui.common.screen.CollectionScreen
 

@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.coverart.di
 
-import ly.david.musicsearch.domain.releasegroup.ReleaseGroupImageRepository
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
 import ly.david.musicsearch.data.coverart.ReleaseGroupImageRepositoryImpl
-import ly.david.musicsearch.domain.release.ReleaseImageRepository
+import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.data.coverart.ReleaseImageRepositoryImpl
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind

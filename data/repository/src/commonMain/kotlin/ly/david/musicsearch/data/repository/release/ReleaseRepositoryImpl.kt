@@ -31,8 +31,8 @@ import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.domain.relation.RelationRepository
-import ly.david.musicsearch.domain.release.ReleaseRepository
+import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 
 class ReleaseRepositoryImpl(
     private val musicBrainzApi: MusicBrainzApi,

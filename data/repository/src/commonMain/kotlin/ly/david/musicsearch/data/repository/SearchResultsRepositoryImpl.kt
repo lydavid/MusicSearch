@@ -8,7 +8,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.SearchMusicBrainzPagingSource
 import ly.david.musicsearch.data.repository.internal.paging.insertFooterItemForNonEmpty
-import ly.david.musicsearch.domain.search.results.SearchResultsRepository
+import ly.david.musicsearch.shared.domain.search.results.SearchResultsRepository
 
 class SearchResultsRepositoryImpl(
     private val musicBrainzApi: MusicBrainzApi,

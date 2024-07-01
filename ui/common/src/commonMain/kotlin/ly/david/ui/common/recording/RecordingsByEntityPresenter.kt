@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.recording.usecase.GetRecordingsByEntity
+import ly.david.musicsearch.shared.domain.recording.usecase.GetRecordingsByEntity
 
 class RecordingsByEntityPresenter(
     private val getRecordingsByEntity: GetRecordingsByEntity,

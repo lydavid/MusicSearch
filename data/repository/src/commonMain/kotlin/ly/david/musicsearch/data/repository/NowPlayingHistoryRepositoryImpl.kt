@@ -11,7 +11,7 @@ import ly.david.musicsearch.core.models.listitem.NowPlayingHistoryListItemModel
 import ly.david.musicsearch.core.models.listitem.toNowPlayingHistoryListItemModel
 import ly.david.musicsearch.data.database.dao.NowPlayingHistoryDao
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
-import ly.david.musicsearch.domain.nowplaying.NowPlayingHistoryRepository
+import ly.david.musicsearch.shared.domain.nowplaying.NowPlayingHistoryRepository
 
 class NowPlayingHistoryRepositoryImpl(
     private val nowPlayingHistoryDao: NowPlayingHistoryDao,
