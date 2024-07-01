@@ -14,8 +14,8 @@
 <!-- :shared:feature:stats -->
 <g id="node1" class="node">
 <title>:shared:feature:stats</title>
-<polygon fill="#b59aff" stroke="black" points="538.84,-584 372.84,-584 372.84,-548 538.84,-548 538.84,-584"/>
-<text text-anchor="middle" x="455.84" y="-562.3" font-family="Times,serif" font-size="14.00">:shared:feature:stats</text>
+<polygon fill="#b59aff" stroke="black" points="694.84,-584 528.84,-584 528.84,-548 694.84,-548 694.84,-584"/>
+<text text-anchor="middle" x="611.84" y="-562.3" font-family="Times,serif" font-size="14.00">:shared:feature:stats</text>
 </g>
 <!-- :ui:test:screenshot -->
 <g id="node2" class="node">
@@ -26,44 +26,44 @@
 <!-- :shared:feature:stats&#45;&gt;:ui:test:screenshot -->
 <g id="edge1" class="edge">
 <title>:shared:feature:stats&#45;&gt;:ui:test:screenshot</title>
-<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M372.38,-572C257.47,-572 64.56,-572 64.56,-572 64.56,-572 64.56,-319.09 64.56,-319.09"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M528.72,-572C375.62,-572 64.56,-572 64.56,-572 64.56,-572 64.56,-319.09 64.56,-319.09"/>
 <polygon fill="#ff9ab1" stroke="#ff9ab1" points="68.06,-319.09 64.56,-309.09 61.06,-319.09 68.06,-319.09"/>
 </g>
 <!-- :core:models -->
 <g id="node3" class="node">
 <title>:core:models</title>
-<ellipse fill="#b59aff" stroke="black" cx="887.84" cy="-18" rx="69.59" ry="18"/>
-<text text-anchor="middle" x="887.84" y="-14.3" font-family="Times,serif" font-size="14.00">:core:models</text>
+<ellipse fill="#b59aff" stroke="black" cx="877.84" cy="-18" rx="69.59" ry="18"/>
+<text text-anchor="middle" x="877.84" y="-14.3" font-family="Times,serif" font-size="14.00">:core:models</text>
 </g>
 <!-- :shared:feature:stats&#45;&gt;:core:models -->
 <g id="edge2" class="edge">
 <title>:shared:feature:stats&#45;&gt;:core:models</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M539.06,-560C656.71,-560 857.5,-560 857.5,-560 857.5,-560 857.5,-44.22 857.5,-44.22"/>
-<polygon fill="black" stroke="black" points="861,-44.22 857.5,-34.22 854,-44.22 861,-44.22"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M694.95,-566C762.82,-566 847.58,-566 847.58,-566 847.58,-566 847.58,-44.4 847.58,-44.4"/>
+<polygon fill="black" stroke="black" points="851.08,-44.4 847.58,-34.4 844.08,-44.4 851.08,-44.4"/>
 </g>
 <!-- :ui:common -->
 <g id="node4" class="node">
 <title>:ui:common</title>
-<ellipse fill="#b59aff" stroke="black" cx="526.84" cy="-429" rx="64.19" ry="18"/>
-<text text-anchor="middle" x="526.84" y="-425.3" font-family="Times,serif" font-size="14.00">:ui:common</text>
+<ellipse fill="#b59aff" stroke="black" cx="611.84" cy="-429" rx="64.19" ry="18"/>
+<text text-anchor="middle" x="611.84" y="-425.3" font-family="Times,serif" font-size="14.00">:ui:common</text>
 </g>
 <!-- :shared:feature:stats&#45;&gt;:ui:common -->
 <g id="edge3" class="edge">
 <title>:shared:feature:stats&#45;&gt;:ui:common</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M500.67,-547.81C500.67,-547.81 500.67,-455.55 500.67,-455.55"/>
-<polygon fill="black" stroke="black" points="504.17,-455.55 500.67,-445.55 497.17,-455.55 504.17,-455.55"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M611.84,-547.81C611.84,-547.81 611.84,-457.27 611.84,-457.27"/>
+<polygon fill="black" stroke="black" points="615.34,-457.27 611.84,-447.27 608.34,-457.27 615.34,-457.27"/>
 </g>
 <!-- :shared:domain -->
 <g id="node5" class="node">
 <title>:shared:domain</title>
-<ellipse fill="#b59aff" stroke="black" cx="495.84" cy="-155" rx="82.59" ry="18"/>
-<text text-anchor="middle" x="495.84" y="-151.3" font-family="Times,serif" font-size="14.00">:shared:domain</text>
+<ellipse fill="#b59aff" stroke="black" cx="448.84" cy="-155" rx="82.59" ry="18"/>
+<text text-anchor="middle" x="448.84" y="-151.3" font-family="Times,serif" font-size="14.00">:shared:domain</text>
 </g>
 <!-- :shared:feature:stats&#45;&gt;:shared:domain -->
 <g id="edge4" class="edge">
 <title>:shared:feature:stats&#45;&gt;:shared:domain</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M426.23,-547.81C426.23,-547.81 426.23,-174.81 426.23,-174.81"/>
-<polygon fill="black" stroke="black" points="429.73,-174.81 426.23,-164.81 422.73,-174.81 429.73,-174.81"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M528.77,-560C472.77,-560 409.05,-560 409.05,-560 409.05,-560 409.05,-180.88 409.05,-180.88"/>
+<polygon fill="black" stroke="black" points="412.55,-180.88 409.05,-170.88 405.55,-180.88 412.55,-180.88"/>
 </g>
 <!-- :data:database -->
 <g id="node6" class="node">
@@ -74,74 +74,68 @@
 <!-- :shared:feature:stats&#45;&gt;:data:database -->
 <g id="edge5" class="edge">
 <title>:shared:feature:stats&#45;&gt;:data:database</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M539.16,-572C714.55,-572 1105.84,-572 1105.84,-572 1105.84,-572 1105.84,-457.11 1105.84,-457.11"/>
-<polygon fill="black" stroke="black" points="1109.34,-457.11 1105.84,-447.11 1102.34,-457.11 1109.34,-457.11"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M685.51,-547.93C685.51,-512.65 685.51,-438 685.51,-438 685.51,-438 1026.9,-438 1026.9,-438"/>
+<polygon fill="black" stroke="black" points="1026.9,-441.5 1036.9,-438 1026.9,-434.5 1026.9,-441.5"/>
 </g>
 <!-- :ui:core -->
 <g id="node7" class="node">
 <title>:ui:core</title>
-<ellipse fill="#b59aff" stroke="black" cx="159.84" cy="-155" rx="45.49" ry="18"/>
-<text text-anchor="middle" x="159.84" y="-151.3" font-family="Times,serif" font-size="14.00">:ui:core</text>
-</g>
-<!-- :shared:feature:stats&#45;&gt;:ui:core -->
-<g id="edge6" class="edge">
-<title>:shared:feature:stats&#45;&gt;:ui:core</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M372.74,-560C296.92,-560 196.6,-560 196.6,-560 196.6,-560 196.6,-175.83 196.6,-175.83"/>
-<polygon fill="black" stroke="black" points="200.1,-175.83 196.6,-165.83 193.1,-175.83 200.1,-175.83"/>
+<ellipse fill="#b59aff" stroke="black" cx="221.84" cy="-155" rx="45.49" ry="18"/>
+<text text-anchor="middle" x="221.84" y="-151.3" font-family="Times,serif" font-size="14.00">:ui:core</text>
 </g>
 <!-- :ui:test:screenshot&#45;&gt;:ui:core -->
-<g id="edge7" class="edge">
+<g id="edge6" class="edge">
 <title>:ui:test:screenshot&#45;&gt;:ui:core</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M154.01,-277.34C154.01,-277.34 154.01,-183.01 154.01,-183.01"/>
-<polygon fill="black" stroke="black" points="157.51,-183.01 154.01,-173.01 150.51,-183.01 157.51,-183.01"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M185.01,-284.24C185.01,-284.24 185.01,-175.58 185.01,-175.58"/>
+<polygon fill="black" stroke="black" points="188.51,-175.58 185.01,-165.58 181.51,-175.58 188.51,-175.58"/>
 </g>
 <!-- :ui:common&#45;&gt;:ui:test:screenshot -->
-<g id="edge9" class="edge">
+<g id="edge8" class="edge">
 <title>:ui:common&#45;&gt;:ui:test:screenshot</title>
-<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M473.2,-439C364.64,-439 129.12,-439 129.12,-439 129.12,-439 129.12,-319.15 129.12,-319.15"/>
-<polygon fill="#ff9ab1" stroke="#ff9ab1" points="132.62,-319.15 129.12,-309.15 125.62,-319.15 132.62,-319.15"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M556,-438C428.93,-438 129.12,-438 129.12,-438 129.12,-438 129.12,-319.03 129.12,-319.03"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="132.62,-319.03 129.12,-309.03 125.62,-319.03 132.62,-319.03"/>
 </g>
 <!-- :ui:common&#45;&gt;:core:models -->
-<g id="edge10" class="edge">
+<g id="edge9" class="edge">
 <title>:ui:common&#45;&gt;:core:models</title>
-<path fill="none" stroke="black" d="M590.44,-432C684.25,-432 848.74,-432 848.74,-432 848.74,-432 848.74,-43.23 848.74,-43.23"/>
-<polygon fill="black" stroke="black" points="852.24,-43.23 848.74,-33.23 845.24,-43.23 852.24,-43.23"/>
+<path fill="none" stroke="black" d="M667.74,-420C732.06,-420 828.91,-420 828.91,-420 828.91,-420 828.91,-40.92 828.91,-40.92"/>
+<polygon fill="black" stroke="black" points="832.41,-40.92 828.91,-30.92 825.41,-40.92 832.41,-40.92"/>
 </g>
 <!-- :ui:common&#45;&gt;:shared:domain -->
 <g id="edge15" class="edge">
 <title>:ui:common&#45;&gt;:shared:domain</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M475.84,-418C456.55,-418 439.16,-418 439.16,-418 439.16,-418 439.16,-178.4 439.16,-178.4"/>
-<polygon fill="black" stroke="black" points="442.67,-178.4 439.16,-168.4 435.67,-178.4 442.67,-178.4"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M609.96,-410.79C609.96,-350.91 609.96,-164 609.96,-164 609.96,-164 530.45,-164 530.45,-164"/>
+<polygon fill="black" stroke="black" points="530.45,-160.5 520.45,-164 530.45,-167.5 530.45,-160.5"/>
 </g>
 <!-- :ui:common&#45;&gt;:ui:core -->
-<g id="edge16" class="edge">
+<g id="edge10" class="edge">
 <title>:ui:common&#45;&gt;:ui:core</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M463.34,-432C368.15,-432 199.51,-432 199.51,-432 199.51,-432 199.51,-173.9 199.51,-173.9"/>
-<polygon fill="black" stroke="black" points="203.01,-173.9 199.51,-163.9 196.01,-173.9 203.01,-173.9"/>
+<path fill="none" stroke="black" d="M547.43,-429C436.65,-429 221.79,-429 221.79,-429 221.79,-429 221.79,-183.4 221.79,-183.4"/>
+<polygon fill="black" stroke="black" points="225.29,-183.4 221.79,-173.4 218.29,-183.4 225.29,-183.4"/>
 </g>
 <!-- :ui:test:image -->
 <g id="node8" class="node">
 <title>:ui:test:image</title>
-<ellipse fill="#9affb5" stroke="black" cx="526.84" cy="-292" rx="74.99" ry="18"/>
-<text text-anchor="middle" x="526.84" y="-288.3" font-family="Times,serif" font-size="14.00">:ui:test:image</text>
+<ellipse fill="#9affb5" stroke="black" cx="696.84" cy="-292" rx="74.99" ry="18"/>
+<text text-anchor="middle" x="696.84" y="-288.3" font-family="Times,serif" font-size="14.00">:ui:test:image</text>
 </g>
 <!-- :ui:common&#45;&gt;:ui:test:image -->
-<g id="edge8" class="edge">
+<g id="edge7" class="edge">
 <title>:ui:common&#45;&gt;:ui:test:image</title>
-<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M505.39,-411.93C505.39,-411.93 505.39,-319.29 505.39,-319.29"/>
-<polygon fill="#ff9ab1" stroke="#ff9ab1" points="508.89,-319.29 505.39,-309.29 501.89,-319.29 508.89,-319.29"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M640.13,-412.75C640.13,-412.75 640.13,-313.83 640.13,-313.83"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="643.63,-313.83 640.13,-303.83 636.63,-313.83 643.63,-313.83"/>
 </g>
 <!-- :data:coverart -->
 <g id="node9" class="node">
 <title>:data:coverart</title>
-<ellipse fill="#b59aff" stroke="black" cx="695.84" cy="-292" rx="76.09" ry="18"/>
-<text text-anchor="middle" x="695.84" y="-288.3" font-family="Times,serif" font-size="14.00">:data:coverart</text>
+<ellipse fill="#b59aff" stroke="black" cx="527.84" cy="-292" rx="76.09" ry="18"/>
+<text text-anchor="middle" x="527.84" y="-288.3" font-family="Times,serif" font-size="14.00">:data:coverart</text>
 </g>
 <!-- :ui:common&#45;&gt;:data:coverart -->
 <g id="edge11" class="edge">
 <title>:ui:common&#45;&gt;:data:coverart</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M578.01,-418C627.75,-418 695.84,-418 695.84,-418 695.84,-418 695.84,-320.05 695.84,-320.05"/>
-<polygon fill="black" stroke="black" points="699.34,-320.05 695.84,-310.05 692.34,-320.05 699.34,-320.05"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M575.69,-414.08C575.69,-414.08 575.69,-316.08 575.69,-316.08"/>
+<polygon fill="black" stroke="black" points="579.19,-316.08 575.69,-306.08 572.19,-316.08 579.19,-316.08"/>
 </g>
 <!-- :data:musicbrainz -->
 <g id="node10" class="node">
@@ -152,8 +146,8 @@
 <!-- :ui:common&#45;&gt;:data:musicbrainz -->
 <g id="edge12" class="edge">
 <title>:ui:common&#45;&gt;:data:musicbrainz</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M580.4,-439C693.51,-439 946.4,-439 946.4,-439 946.4,-439 946.4,-320.03 946.4,-320.03"/>
-<polygon fill="black" stroke="black" points="949.9,-320.03 946.4,-310.03 942.9,-320.03 949.9,-320.03"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M676.35,-429C773.57,-429 946.4,-429 946.4,-429 946.4,-429 946.4,-319.91 946.4,-319.91"/>
+<polygon fill="black" stroke="black" points="949.9,-319.91 946.4,-309.91 942.9,-319.91 949.9,-319.91"/>
 </g>
 <!-- :core:preferences -->
 <g id="node11" class="node">
@@ -164,20 +158,20 @@
 <!-- :ui:common&#45;&gt;:core:preferences -->
 <g id="edge13" class="edge">
 <title>:ui:common&#45;&gt;:core:preferences</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M548.29,-411.94C548.29,-391.51 548.29,-360 548.29,-360 548.29,-360 1128.17,-360 1128.17,-360 1128.17,-360 1128.17,-318.81 1128.17,-318.81"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M658.16,-416.34C658.16,-396.42 658.16,-360 658.16,-360 658.16,-360 1128.17,-360 1128.17,-360 1128.17,-360 1128.17,-318.81 1128.17,-318.81"/>
 <polygon fill="black" stroke="black" points="1131.67,-318.81 1128.17,-308.81 1124.67,-318.81 1131.67,-318.81"/>
 </g>
 <!-- :core:logging:api -->
 <g id="node12" class="node">
 <title>:core:logging:api</title>
-<ellipse fill="#b59aff" stroke="black" cx="742.84" cy="-155" rx="88.28" ry="18"/>
-<text text-anchor="middle" x="742.84" y="-151.3" font-family="Times,serif" font-size="14.00">:core:logging:api</text>
+<ellipse fill="#b59aff" stroke="black" cx="721.84" cy="-155" rx="88.28" ry="18"/>
+<text text-anchor="middle" x="721.84" y="-151.3" font-family="Times,serif" font-size="14.00">:core:logging:api</text>
 </g>
 <!-- :ui:common&#45;&gt;:core:logging:api -->
 <g id="edge14" class="edge">
 <title>:ui:common&#45;&gt;:core:logging:api</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M589.6,-425C667.91,-425 791.67,-425 791.67,-425 791.67,-425 791.67,-180.29 791.67,-180.29"/>
-<polygon fill="black" stroke="black" points="795.17,-180.29 791.67,-170.29 788.17,-180.29 795.17,-180.29"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M616.03,-411.02C616.03,-350.06 616.03,-155 616.03,-155 616.03,-155 623.03,-155 623.03,-155"/>
+<polygon fill="black" stroke="black" points="623.03,-158.5 633.03,-155 623.03,-151.5 623.03,-158.5"/>
 </g>
 <!-- :ui:image -->
 <g id="node13" class="node">
@@ -186,25 +180,25 @@
 <text text-anchor="middle" x="303.84" y="-288.3" font-family="Times,serif" font-size="14.00">:ui:image</text>
 </g>
 <!-- :ui:common&#45;&gt;:ui:image -->
-<g id="edge17" class="edge">
+<g id="edge16" class="edge">
 <title>:ui:common&#45;&gt;:ui:image</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M463.83,-425C397.89,-425 303.84,-425 303.84,-425 303.84,-425 303.84,-320.21 303.84,-320.21"/>
-<polygon fill="black" stroke="black" points="307.34,-320.21 303.84,-310.21 300.34,-320.21 307.34,-320.21"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M556.06,-420C467.31,-420 303.84,-420 303.84,-420 303.84,-420 303.84,-320.07 303.84,-320.07"/>
+<polygon fill="black" stroke="black" points="307.34,-320.07 303.84,-310.07 300.34,-320.07 307.34,-320.07"/>
 </g>
 <!-- :shared:domain&#45;&gt;:core:models -->
-<g id="edge18" class="edge">
+<g id="edge17" class="edge">
 <title>:shared:domain&#45;&gt;:core:models</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M495.84,-136.79C495.84,-100.79 495.84,-24 495.84,-24 495.84,-24 812.23,-24 812.23,-24"/>
-<polygon fill="black" stroke="black" points="812.23,-27.5 822.23,-24 812.23,-20.5 812.23,-27.5"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M448.84,-136.81C448.84,-99.54 448.84,-18 448.84,-18 448.84,-18 797.96,-18 797.96,-18"/>
+<polygon fill="black" stroke="black" points="797.96,-21.5 807.96,-18 797.96,-14.5 797.96,-21.5"/>
 </g>
 <!-- :data:database&#45;&gt;:core:models -->
-<g id="edge20" class="edge">
+<g id="edge19" class="edge">
 <title>:data:database&#45;&gt;:core:models</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1059.36,-414.11C1059.36,-341.04 1059.36,-24 1059.36,-24 1059.36,-24 963.66,-24 963.66,-24"/>
-<polygon fill="black" stroke="black" points="963.66,-20.5 953.66,-24 963.66,-27.5 963.66,-20.5"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1059.36,-414.11C1059.36,-341.04 1059.36,-24 1059.36,-24 1059.36,-24 953.63,-24 953.63,-24"/>
+<polygon fill="black" stroke="black" points="953.63,-20.5 943.63,-24 953.63,-27.5 953.63,-20.5"/>
 </g>
 <!-- :data:database&#45;&gt;:data:musicbrainz -->
-<g id="edge21" class="edge">
+<g id="edge20" class="edge">
 <title>:data:database&#45;&gt;:data:musicbrainz</title>
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M1039.99,-418.7C1039.99,-418.7 1039.99,-311.32 1039.99,-311.32"/>
 <polygon fill="black" stroke="black" points="1043.49,-311.32 1039.99,-301.32 1036.49,-311.32 1043.49,-311.32"/>
@@ -216,7 +210,7 @@
 <text text-anchor="middle" x="1184.84" y="-151.3" font-family="Times,serif" font-size="14.00">:core:coroutines</text>
 </g>
 <!-- :data:database&#45;&gt;:core:coroutines -->
-<g id="edge19" class="edge">
+<g id="edge18" class="edge">
 <title>:data:database&#45;&gt;:core:coroutines</title>
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M1065.28,-413.48C1065.28,-355.52 1065.28,-155 1065.28,-155 1065.28,-155 1089.54,-155 1089.54,-155"/>
 <polygon fill="black" stroke="black" points="1089.54,-158.5 1099.54,-155 1089.54,-151.5 1089.54,-158.5"/>
@@ -224,68 +218,68 @@
 <!-- :shared:strings -->
 <g id="node15" class="node">
 <title>:shared:strings</title>
-<ellipse fill="#b59aff" stroke="black" cx="159.84" cy="-18" rx="81.49" ry="18"/>
-<text text-anchor="middle" x="159.84" y="-14.3" font-family="Times,serif" font-size="14.00">:shared:strings</text>
+<ellipse fill="#b59aff" stroke="black" cx="221.84" cy="-18" rx="81.49" ry="18"/>
+<text text-anchor="middle" x="221.84" y="-14.3" font-family="Times,serif" font-size="14.00">:shared:strings</text>
 </g>
 <!-- :ui:core&#45;&gt;:shared:strings -->
-<g id="edge22" class="edge">
+<g id="edge21" class="edge">
 <title>:ui:core&#45;&gt;:shared:strings</title>
-<path fill="none" stroke="black" d="M159.84,-136.81C159.84,-136.81 159.84,-46.27 159.84,-46.27"/>
-<polygon fill="black" stroke="black" points="163.34,-46.27 159.84,-36.27 156.34,-46.27 163.34,-46.27"/>
+<path fill="none" stroke="black" d="M221.84,-136.81C221.84,-136.81 221.84,-46.27 221.84,-46.27"/>
+<polygon fill="black" stroke="black" points="225.34,-46.27 221.84,-36.27 218.34,-46.27 225.34,-46.27"/>
 </g>
 <!-- :data:coverart&#45;&gt;:core:models -->
-<g id="edge24" class="edge">
+<g id="edge23" class="edge">
 <title>:data:coverart&#45;&gt;:core:models</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M767.91,-298C803.95,-298 839.99,-298 839.99,-298 839.99,-298 839.99,-41.13 839.99,-41.13"/>
-<polygon fill="black" stroke="black" points="843.49,-41.13 839.99,-31.13 836.49,-41.13 843.49,-41.13"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M555.55,-275.02C555.55,-216.53 555.55,-27 555.55,-27 555.55,-27 807.6,-27 807.6,-27"/>
+<polygon fill="black" stroke="black" points="807.6,-30.5 817.6,-27 807.6,-23.5 807.6,-30.5"/>
 </g>
 <!-- :data:coverart&#45;&gt;:shared:domain -->
-<g id="edge25" class="edge">
+<g id="edge24" class="edge">
 <title>:data:coverart&#45;&gt;:shared:domain</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M637.12,-280.32C637.12,-247.19 637.12,-155 637.12,-155 637.12,-155 588.43,-155 588.43,-155"/>
-<polygon fill="black" stroke="black" points="588.43,-151.5 578.43,-155 588.43,-158.5 588.43,-151.5"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M491.59,-276.02C491.59,-276.02 491.59,-180.46 491.59,-180.46"/>
+<polygon fill="black" stroke="black" points="495.09,-180.46 491.59,-170.46 488.09,-180.46 495.09,-180.46"/>
 </g>
 <!-- :data:coverart&#45;&gt;:core:logging:api -->
-<g id="edge23" class="edge">
+<g id="edge22" class="edge">
 <title>:data:coverart&#45;&gt;:core:logging:api</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M713.17,-274.37C713.17,-274.37 713.17,-182.13 713.17,-182.13"/>
-<polygon fill="black" stroke="black" points="716.67,-182.13 713.17,-172.13 709.67,-182.13 716.67,-182.13"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M579.72,-278.79C579.72,-242.85 579.72,-146 579.72,-146 579.72,-146 634.96,-146 634.96,-146"/>
+<polygon fill="black" stroke="black" points="634.96,-149.5 644.96,-146 634.96,-142.5 634.96,-149.5"/>
 </g>
 <!-- :data:musicbrainz&#45;&gt;:core:models -->
-<g id="edge27" class="edge">
+<g id="edge26" class="edge">
 <title>:data:musicbrainz&#45;&gt;:core:models</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M911.82,-276.48C911.82,-276.48 911.82,-45.08 911.82,-45.08"/>
-<polygon fill="black" stroke="black" points="915.32,-45.08 911.82,-35.08 908.32,-45.08 915.32,-45.08"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M906.82,-276.88C906.82,-276.88 906.82,-44.45 906.82,-44.45"/>
+<polygon fill="black" stroke="black" points="910.32,-44.45 906.82,-34.45 903.32,-44.45 910.32,-44.45"/>
 </g>
 <!-- :data:musicbrainz&#45;&gt;:core:logging:api -->
-<g id="edge26" class="edge">
+<g id="edge25" class="edge">
 <title>:data:musicbrainz&#45;&gt;:core:logging:api</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M871.38,-286C839.6,-286 811.45,-286 811.45,-286 811.45,-286 811.45,-176.63 811.45,-176.63"/>
-<polygon fill="black" stroke="black" points="814.95,-176.63 811.45,-166.63 807.95,-176.63 814.95,-176.63"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M865.99,-292C827.11,-292 790.91,-292 790.91,-292 790.91,-292 790.91,-176.68 790.91,-176.68"/>
+<polygon fill="black" stroke="black" points="794.41,-176.68 790.91,-166.68 787.41,-176.68 794.41,-176.68"/>
 </g>
 <!-- :core:preferences&#45;&gt;:core:models -->
-<g id="edge29" class="edge">
+<g id="edge28" class="edge">
 <title>:core:preferences&#45;&gt;:core:models</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1085.45,-282.03C1085.45,-232.16 1085.45,-12 1085.45,-12 1085.45,-12 963.64,-12 963.64,-12"/>
-<polygon fill="black" stroke="black" points="963.64,-8.5 953.64,-12 963.64,-15.5 963.64,-8.5"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1085.45,-282.03C1085.45,-232.16 1085.45,-12 1085.45,-12 1085.45,-12 953.53,-12 953.53,-12"/>
+<polygon fill="black" stroke="black" points="953.53,-8.5 943.53,-12 953.53,-15.5 953.53,-8.5"/>
 </g>
 <!-- :core:preferences&#45;&gt;:core:coroutines -->
-<g id="edge28" class="edge">
+<g id="edge27" class="edge">
 <title>:core:preferences&#45;&gt;:core:coroutines</title>
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M1177.09,-274.09C1177.09,-274.09 1177.09,-183.35 1177.09,-183.35"/>
 <polygon fill="black" stroke="black" points="1180.59,-183.35 1177.09,-173.35 1173.59,-183.35 1180.59,-183.35"/>
 </g>
 <!-- :ui:image&#45;&gt;:core:models -->
-<g id="edge30" class="edge">
+<g id="edge29" class="edge">
 <title>:ui:image&#45;&gt;:core:models</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M303.84,-273.63C303.84,-211.34 303.84,-12 303.84,-12 303.84,-12 812.27,-12 812.27,-12"/>
-<polygon fill="black" stroke="black" points="812.27,-15.5 822.27,-12 812.27,-8.5 812.27,-15.5"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M330.44,-275.97C330.44,-216.11 330.44,-9 330.44,-9 330.44,-9 807.43,-9 807.43,-9"/>
+<polygon fill="black" stroke="black" points="807.43,-12.5 817.43,-9 807.43,-5.5 807.43,-12.5"/>
 </g>
 <!-- :ui:image&#45;&gt;:ui:core -->
-<g id="edge31" class="edge">
+<g id="edge30" class="edge">
 <title>:ui:image&#45;&gt;:ui:core</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M249.87,-292C225.65,-292 202.42,-292 202.42,-292 202.42,-292 202.42,-171.61 202.42,-171.61"/>
-<polygon fill="black" stroke="black" points="205.92,-171.61 202.42,-161.61 198.92,-171.61 205.92,-171.61"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M258.62,-282.15C258.62,-282.15 258.62,-175.89 258.62,-175.89"/>
+<polygon fill="black" stroke="black" points="262.12,-175.89 258.62,-165.89 255.12,-175.89 262.12,-175.89"/>
 </g>
 </g>
 </svg>
