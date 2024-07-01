@@ -9,7 +9,7 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
 @Composable

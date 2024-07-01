@@ -22,8 +22,8 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
 import ly.david.musicsearch.core.models.common.useHttps
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.preview.DefaultPreviews
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @Composable
 actual fun LargeImage(

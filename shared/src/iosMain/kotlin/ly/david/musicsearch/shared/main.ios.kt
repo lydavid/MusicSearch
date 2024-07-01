@@ -6,7 +6,7 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.di.sharedModule
 import ly.david.ui.common.screen.SearchScreen
-import ly.david.ui.core.theme.BaseTheme
+import ly.david.musicsearch.ui.core.theme.BaseTheme
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.startKoin

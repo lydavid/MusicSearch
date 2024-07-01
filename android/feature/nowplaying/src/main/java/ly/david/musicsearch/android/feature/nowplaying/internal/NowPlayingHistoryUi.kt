@@ -25,8 +25,8 @@ import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.ui.core.LocalStrings
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @Composable
 internal fun NowPlayingHistoryUi(

@@ -13,11 +13,11 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.instrument.InstrumentScaffoldModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
-import ly.david.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 internal fun InstrumentDetailsUi(

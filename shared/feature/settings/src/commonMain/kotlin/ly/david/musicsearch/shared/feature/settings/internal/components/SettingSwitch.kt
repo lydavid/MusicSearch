@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
-import ly.david.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 internal fun SettingSwitch(

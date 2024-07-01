@@ -15,8 +15,8 @@ import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.image.ThumbnailImage
 import ly.david.ui.common.getIcon
-import ly.david.ui.core.theme.TextStyles
-import ly.david.ui.core.theme.getSubTextColor
+import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.getSubTextColor
 
 // TODO: have 2 modes: query and browse where some data is displayed differently
 /**

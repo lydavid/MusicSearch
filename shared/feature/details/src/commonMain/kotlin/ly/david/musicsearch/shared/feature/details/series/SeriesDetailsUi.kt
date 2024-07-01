@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.series.SeriesScaffoldModel
-import ly.david.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection

@@ -21,7 +21,7 @@ import ly.david.ui.common.label.LabelsByEntityUiState
 import ly.david.ui.common.place.PlacesByEntityUiState
 import ly.david.ui.common.relation.RelationsUiState
 import ly.david.ui.common.release.ReleasesByEntityUiState
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 private val canadianArtists = MutableStateFlow(
     PagingData.from(

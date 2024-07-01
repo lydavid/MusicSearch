@@ -16,8 +16,8 @@ import ly.david.musicsearch.core.models.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.component.ClickableItem
 import ly.david.ui.common.getIcon
-import ly.david.ui.core.LocalStrings
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @Composable
 internal fun SearchSpotifyBottomSheetContent(

@@ -7,8 +7,8 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.relation.RelationTypeCount
 import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupTypeCount
 import ly.david.ui.common.topappbar.Tab
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.preview.DefaultPreviews
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @DefaultPreviews
 @Composable

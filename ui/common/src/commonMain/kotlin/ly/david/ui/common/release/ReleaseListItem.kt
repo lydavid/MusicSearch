@@ -19,8 +19,8 @@ import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.image.ThumbnailImage
 import ly.david.ui.common.getIcon
-import ly.david.ui.core.theme.TextStyles
-import ly.david.ui.core.theme.getSubTextColor
+import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.getSubTextColor
 
 // TODO: rethink showing release country -> could be misleading, and expensive joins
 //  with cover art loaded by default, we can prob hide the other info by default

@@ -7,7 +7,7 @@ import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.place.CoordinatesUiModel
 import ly.david.musicsearch.core.models.place.PlaceScaffoldModel
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
 @Composable

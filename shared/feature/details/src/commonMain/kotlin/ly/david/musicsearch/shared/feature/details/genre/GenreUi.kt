@@ -15,11 +15,11 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
-import ly.david.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.fullscreen.FullScreenContent
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 internal fun GenreUi(

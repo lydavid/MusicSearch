@@ -11,7 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 /**
  * [ScrollableTopAppBar] with filtering.

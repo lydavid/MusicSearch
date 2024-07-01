@@ -8,7 +8,7 @@ import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.listitem.LabelListItemModel
 import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
 import ly.david.musicsearch.core.models.release.TextRepresentationUiModel
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
 @Composable

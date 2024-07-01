@@ -3,8 +3,8 @@ package ly.david.ui.common.releasegroup
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.preview.DefaultPreviews
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 private val testReleaseGroup = ReleaseGroupListItemModel(
     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",

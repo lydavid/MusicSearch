@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.common.toDisplayTime
 import ly.david.musicsearch.core.models.listitem.TrackListItemModel
-import ly.david.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 /**
  * Also see [RecordingListItem].

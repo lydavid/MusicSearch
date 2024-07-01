@@ -3,8 +3,8 @@ package ly.david.ui.common.work
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import ly.david.musicsearch.core.models.listitem.WorkListItemModel
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.preview.DefaultPreviews
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @DefaultPreviews
 @Composable

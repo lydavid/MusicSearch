@@ -17,7 +17,7 @@ import ly.david.ui.common.screen.CollectionListScreen
 import ly.david.ui.common.screen.HistoryScreen
 import ly.david.ui.common.screen.SearchScreen
 import ly.david.ui.common.screen.SettingsScreen
-import ly.david.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.LocalStrings
 
 private enum class BottomNavigationItem(
     val icon: ImageVector,

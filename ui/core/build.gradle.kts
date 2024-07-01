@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "ly.david.ui.core"
+    namespace = "ly.david.musicsearch.ui.core"
 }
 
 kotlin {

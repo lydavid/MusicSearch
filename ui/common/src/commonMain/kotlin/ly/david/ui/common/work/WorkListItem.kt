@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.listitem.WorkListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
-import ly.david.ui.core.LocalStrings
-import ly.david.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 fun WorkListItem(

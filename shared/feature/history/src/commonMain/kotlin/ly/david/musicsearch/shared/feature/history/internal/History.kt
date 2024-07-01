@@ -31,7 +31,7 @@ import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError

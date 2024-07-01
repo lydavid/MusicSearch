@@ -12,8 +12,8 @@ import ly.david.musicsearch.core.models.listitem.SearchHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.ui.core.TINY_ICON_SIZE
-import ly.david.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.TINY_ICON_SIZE
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 internal fun SearchHistoryListItem(

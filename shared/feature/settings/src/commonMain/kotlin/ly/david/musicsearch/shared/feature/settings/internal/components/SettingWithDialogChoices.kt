@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import ly.david.ui.common.dialog.MultipleChoiceDialog
-import ly.david.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 internal fun SettingWithDialogChoices(

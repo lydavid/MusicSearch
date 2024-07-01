@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
-import ly.david.ui.core.LocalStrings
-import ly.david.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Suppress("UnusedReceiverParameter")
 @OptIn(

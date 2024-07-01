@@ -16,7 +16,7 @@ import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.core.models.getLifeSpanForDisplay
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
-import ly.david.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 /**
  * Also used for release event cards since their Destination is also an Area.

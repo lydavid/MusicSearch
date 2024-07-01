@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import ly.david.ui.core.SMALL_IMAGE_SIZE
+import ly.david.musicsearch.ui.core.SMALL_IMAGE_SIZE
 
 @Composable
 internal fun PlaceholderIcon(

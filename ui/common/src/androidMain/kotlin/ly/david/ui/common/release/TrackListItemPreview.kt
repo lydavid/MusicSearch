@@ -6,8 +6,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import ly.david.musicsearch.core.models.listitem.TrackListItemModel
 import ly.david.ui.common.track.TrackListItem
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.preview.DefaultPreviews
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 internal class TrackCardPreviewParameterProvider : PreviewParameterProvider<TrackListItemModel> {
     override val values = sequenceOf(

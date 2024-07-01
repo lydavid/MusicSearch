@@ -29,7 +29,7 @@ import ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectio
 import ly.david.musicsearch.shared.feature.collections.create.NewCollection
 import ly.david.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.LocalStrings
 
 /**
  * Displays a list of all of your collections.

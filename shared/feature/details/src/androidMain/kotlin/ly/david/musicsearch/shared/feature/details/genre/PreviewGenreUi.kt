@@ -2,8 +2,8 @@ package ly.david.musicsearch.shared.feature.details.genre
 
 import androidx.compose.runtime.Composable
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
-import ly.david.ui.core.preview.DefaultPreviews
-import ly.david.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.preview.DefaultPreviews
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @DefaultPreviews
 @Composable

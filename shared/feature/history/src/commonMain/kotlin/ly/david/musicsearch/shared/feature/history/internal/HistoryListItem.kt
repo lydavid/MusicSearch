@@ -12,12 +12,12 @@ import androidx.compose.ui.draw.clip
 import ly.david.musicsearch.core.models.common.getTimeFormatted
 import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.ThumbnailImage
 import ly.david.ui.common.getDisplayText
 import ly.david.ui.common.getIcon
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 internal fun HistoryListItem(

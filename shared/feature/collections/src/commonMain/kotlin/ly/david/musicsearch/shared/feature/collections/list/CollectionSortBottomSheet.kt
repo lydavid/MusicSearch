@@ -10,7 +10,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import ly.david.musicsearch.core.models.collection.CollectionSortOption
 import ly.david.musicsearch.shared.strings.AppStrings
-import ly.david.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.ui.common.component.ClickableItem
 
 @OptIn(ExperimentalMaterial3Api::class)

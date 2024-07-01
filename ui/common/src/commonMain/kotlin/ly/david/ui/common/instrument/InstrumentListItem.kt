@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.listitem.InstrumentListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
-import ly.david.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 fun InstrumentListItem(

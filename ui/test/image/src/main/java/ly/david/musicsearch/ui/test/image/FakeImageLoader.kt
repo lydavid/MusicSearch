@@ -37,8 +37,8 @@ class FakeImageLoader : ImageLoader {
             override val job = CompletableDeferred(
                 newResult(
                     request,
-                    drawable
-                )
+                    drawable,
+                ),
             )
             override val isDisposed
                 get() = true
@@ -47,9 +47,15 @@ class FakeImageLoader : ImageLoader {
         }
     }
 
-    override suspend fun execute(request: ImageRequest): ImageResult = newResult(request, drawable)
+    override suspend fun execute(request: ImageRequest): ImageResult = newResult(
+        request,
+        drawable,
+    )
 
-    private fun newResult(request: ImageRequest, drawable: Drawable): SuccessResult {
+    private fun newResult(
+        request: ImageRequest,
+        drawable: Drawable,
+    ): SuccessResult {
         return SuccessResult(
             drawable = drawable,
             request = request,

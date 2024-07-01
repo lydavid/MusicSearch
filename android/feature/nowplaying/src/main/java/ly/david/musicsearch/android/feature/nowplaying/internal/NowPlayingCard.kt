@@ -10,8 +10,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.models.common.getTimeFormatted
 import ly.david.musicsearch.core.models.listitem.NowPlayingHistoryListItemModel
-import ly.david.ui.core.theme.PreviewTheme
-import ly.david.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 internal fun NowPlayingHistoryCard(

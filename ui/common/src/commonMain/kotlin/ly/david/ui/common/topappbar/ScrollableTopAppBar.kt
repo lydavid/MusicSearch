@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.EntityIcon
-import ly.david.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.LocalStrings
 
 /**
  * Assuming an average api call finishes under 300ms, we should delay showing the loading indicator until we

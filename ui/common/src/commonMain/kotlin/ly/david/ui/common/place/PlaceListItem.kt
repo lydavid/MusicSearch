@@ -13,7 +13,7 @@ import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.getLifeSpanForDisplay
 import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
-import ly.david.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 fun PlaceListItem(

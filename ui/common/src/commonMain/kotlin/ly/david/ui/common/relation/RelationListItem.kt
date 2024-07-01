@@ -19,8 +19,8 @@ import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.EntityIcon
-import ly.david.ui.core.theme.TextStyles
-import ly.david.ui.core.theme.getSubTextColor
+import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.core.theme.getSubTextColor
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
