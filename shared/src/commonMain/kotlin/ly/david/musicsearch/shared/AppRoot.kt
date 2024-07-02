@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import coil3.annotation.ExperimentalCoilApi
-import coil3.compose.setSingletonImageLoaderFactory
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
@@ -16,18 +14,15 @@ import com.slack.circuit.overlay.ContentWithOverlays
 import com.slack.circuit.runtime.screen.Screen
 import com.slack.circuitx.gesturenavigation.GestureNavigationDecoration
 import kotlinx.collections.immutable.ImmutableList
-import ly.david.musicsearch.shared.image.newImageLoader
+import ly.david.musicsearch.ui.image.InitializeImageLoader
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun AppRoot(
     circuit: Circuit,
     initialScreens: ImmutableList<Screen>,
     modifier: Modifier = Modifier,
 ) {
-    setSingletonImageLoaderFactory { context ->
-        newImageLoader(context, false)
-    }
+    InitializeImageLoader()
 
     CircuitCompositionLocals(circuit) {
         ContentWithOverlays {
@@ -41,7 +36,7 @@ fun AppRoot(
 
             Scaffold(
                 modifier = modifier,
-                contentWindowInsets = WindowInsets(0, 0, 0, 0),
+                contentWindowInsets = WindowInsets(0),
                 bottomBar = {
                     // TODO: This seems to add a blank space of equal height to iOS's screen
                     BottomNavigationBar(

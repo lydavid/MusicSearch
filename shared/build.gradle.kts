@@ -33,6 +33,7 @@ kotlin {
                 implementation(projects.shared.feature.details)
                 implementation(projects.shared.feature.stats)
                 implementation(projects.ui.common)
+                implementation(projects.ui.image)
 
                 implementation(compose.foundation)
                 implementation(compose.material3)
@@ -43,9 +44,6 @@ kotlin {
                 implementation(libs.circuit.foundation)
                 implementation(libs.circuit.overlay)
                 implementation(libs.circuitx.gesture.navigation)
-
-                implementation(libs.coil)
-                implementation(libs.coil.compose)
             }
         }
         val androidMain by getting {
@@ -53,22 +51,7 @@ kotlin {
                 implementation(projects.android.feature.nowplaying)
                 implementation(projects.android.feature.spotify)
                 implementation(projects.ui.core)
-                implementation(projects.ui.image)
                 implementation(compose.preview)
-
-                implementation(libs.coil.network.okhttp)
-            }
-        }
-        val jvmMain by getting {
-            dependencies {
-                implementation(libs.coil.network.okhttp)
-            }
-        }
-
-        val iosMain by getting {
-            dependencies {
-                implementation(libs.coil.network.ktor)
-                implementation(libs.ktor.client.darwin)
             }
         }
 

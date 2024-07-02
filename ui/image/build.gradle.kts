@@ -27,6 +27,18 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(compose.preview)
+                implementation(libs.coil.network.okhttp)
+            }
+        }
+        val jvmMain by getting {
+            dependencies {
+                implementation(libs.coil.network.okhttp)
+            }
+        }
+        val iosMain by getting {
+            dependencies {
+                implementation(libs.coil.network.ktor)
+                implementation(libs.ktor.client.darwin)
             }
         }
     }
