@@ -65,6 +65,13 @@ kotlin {
             }
         }
 
+        val iosMain by getting {
+            dependencies {
+                implementation(libs.coil.network.ktor)
+                implementation(libs.ktor.client.darwin)
+            }
+        }
+
         targets.withType<KotlinNativeTarget>().configureEach {
             binaries.framework {
                 baseName = "shared"

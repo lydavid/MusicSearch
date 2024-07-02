@@ -9,5 +9,6 @@ android {
 
 dependencies {
     implementation(libs.coil.base)
+    api(libs.coil.test)
     implementation(libs.bundles.kotlinx.coroutines)
 }
