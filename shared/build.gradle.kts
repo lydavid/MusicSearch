@@ -44,7 +44,7 @@ kotlin {
                 implementation(libs.circuit.overlay)
                 implementation(libs.circuitx.gesture.navigation)
 
-                implementation(libs.coil.base)
+                implementation(libs.coil)
                 implementation(libs.coil.compose)
             }
         }

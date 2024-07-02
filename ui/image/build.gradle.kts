@@ -20,7 +20,7 @@ kotlin {
                 implementation(compose.ui)
                 implementation(libs.koin.core)
 
-                implementation(libs.coil.base)
+                implementation(libs.coil)
                 implementation(libs.coil.compose)
             }
         }

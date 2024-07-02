@@ -67,7 +67,6 @@ kotlin {
                 implementation(libs.androidx.test.espresso.core)
                 implementation(libs.androidx.arch.core.testing)
                 implementation(libs.bundles.kotlinx.coroutines)
-                implementation(libs.coil.test)
                 implementation(libs.compose.ui.test)
                 implementation(libs.koin.test)
                 implementation(libs.sqldelight.android.driver)
