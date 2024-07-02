@@ -33,6 +33,7 @@ kotlin {
                 implementation(projects.shared.feature.details)
                 implementation(projects.shared.feature.stats)
                 implementation(projects.ui.common)
+                implementation(projects.ui.image)
 
                 implementation(compose.foundation)
                 implementation(compose.material3)
@@ -50,11 +51,9 @@ kotlin {
                 implementation(projects.android.feature.nowplaying)
                 implementation(projects.android.feature.spotify)
                 implementation(projects.ui.core)
-                implementation(projects.ui.image)
                 implementation(compose.preview)
             }
         }
-        val jvmMain by getting
 
         targets.withType<KotlinNativeTarget>().configureEach {
             binaries.framework {

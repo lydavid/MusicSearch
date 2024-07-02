@@ -69,7 +69,6 @@ include(
     ":ui:common",
     ":ui:core",
     ":ui:image",
-    ":ui:test:image",
     ":ui:test:screenshot",
     "konsist-test",
 )

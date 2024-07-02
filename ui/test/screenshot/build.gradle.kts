@@ -11,6 +11,9 @@ android {
 dependencies {
     implementation(projects.ui.core)
 
+    implementation(libs.coil.compose)
+    implementation(libs.coil.test)
+    implementation(libs.bundles.kotlinx.coroutines)
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
     implementation(libs.paparazzi)

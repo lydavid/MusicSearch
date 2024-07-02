@@ -19,13 +19,26 @@ kotlin {
                 implementation(compose.materialIconsExtended)
                 implementation(compose.ui)
                 implementation(libs.koin.core)
+
+                implementation(libs.coil)
+                implementation(libs.coil.compose)
             }
         }
         val androidMain by getting {
             dependencies {
                 implementation(compose.preview)
-                implementation(libs.coil.base)
-                implementation(libs.coil.compose)
+                implementation(libs.coil.network.okhttp)
+            }
+        }
+        val jvmMain by getting {
+            dependencies {
+                implementation(libs.coil.network.okhttp)
+            }
+        }
+        val iosMain by getting {
+            dependencies {
+                implementation(libs.coil.network.ktor)
+                implementation(libs.ktor.client.darwin)
             }
         }
     }

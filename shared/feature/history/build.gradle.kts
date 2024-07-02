@@ -36,11 +36,7 @@ kotlin {
         }
         val androidUnitTest by getting {
             dependencies {
-                implementation(projects.ui.test.image)
                 implementation(projects.ui.test.screenshot)
-                implementation(libs.test.parameter.injector)
-                implementation(libs.bundles.kotlinx.coroutines)
-                implementation(libs.coil.compose)
             }
         }
     }

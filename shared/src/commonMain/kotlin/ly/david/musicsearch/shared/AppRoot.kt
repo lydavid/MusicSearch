@@ -14,6 +14,7 @@ import com.slack.circuit.overlay.ContentWithOverlays
 import com.slack.circuit.runtime.screen.Screen
 import com.slack.circuitx.gesturenavigation.GestureNavigationDecoration
 import kotlinx.collections.immutable.ImmutableList
+import ly.david.musicsearch.ui.image.InitializeImageLoader
 
 @Composable
 fun AppRoot(
@@ -21,6 +22,8 @@ fun AppRoot(
     initialScreens: ImmutableList<Screen>,
     modifier: Modifier = Modifier,
 ) {
+    InitializeImageLoader()
+
     CircuitCompositionLocals(circuit) {
         ContentWithOverlays {
             val backStack = rememberSaveableBackStack(
@@ -33,7 +36,7 @@ fun AppRoot(
 
             Scaffold(
                 modifier = modifier,
-                contentWindowInsets = WindowInsets(0, 0, 0, 0),
+                contentWindowInsets = WindowInsets(0),
                 bottomBar = {
                     // TODO: This seems to add a blank space of equal height to iOS's screen
                     BottomNavigationBar(
