@@ -31,6 +31,10 @@ Intent arguments: https://developer.android.com/tools/adb#IntentSpec
 
 ## Configurations
 
+```shell
+adb shell pm clear io.github.lydavid.musicsearch.debug
+```
+
 https://stackoverflow.com/a/69411601
 
 ```shell
@@ -171,7 +175,7 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/dd216
 ## Release
 
 ```sh
-adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5" -a android.intent.action.VIEW # release with multiple catalog number
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5" -a android.intent.action.VIEW # release with multiple catalog number; release with multiple cover art
 ```
 
 ```sh

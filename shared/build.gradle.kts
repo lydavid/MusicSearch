@@ -27,6 +27,7 @@ kotlin {
                 implementation(projects.shared.domain)
                 implementation(projects.shared.feature.collections)
                 implementation(projects.shared.feature.history)
+                implementation(projects.shared.feature.images)
                 implementation(projects.shared.feature.search)
                 implementation(projects.shared.feature.settings)
                 implementation(projects.shared.feature.licenses)

@@ -66,7 +66,7 @@ class ReleasesByEntityPresenter(
                 is ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl -> {
                     scope.launch {
                         try {
-                            releaseImageRepository.getReleaseCoverArtUrlFromNetwork(
+                            releaseImageRepository.getReleaseCoverArtUrlsFromNetworkAndSave(
                                 releaseId = event.entityId,
                                 thumbnail = true,
                             )

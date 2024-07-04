@@ -11,10 +11,13 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import ly.david.musicsearch.core.models.common.useHttps
 
+/**
+ * @param id A unique ID that we use as a cache key.
+ */
 @Composable
 fun LargeImage(
     url: String,
-    mbid: String,
+    id: String,
     modifier: Modifier = Modifier,
 ) {
     if (url.isNotEmpty()) {
@@ -25,8 +28,8 @@ fun LargeImage(
             model = ImageRequest.Builder(LocalPlatformContext.current)
                 .data(url.useHttps())
                 .crossfade(true)
-                .memoryCacheKey(mbid)
-                .placeholderMemoryCacheKey(mbid)
+                .memoryCacheKey(id)
+                .placeholderMemoryCacheKey(id)
                 .build(),
             contentDescription = null,
             contentScale = ContentScale.FillWidth,

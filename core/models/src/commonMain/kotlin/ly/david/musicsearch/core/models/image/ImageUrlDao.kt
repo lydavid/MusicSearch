@@ -1,5 +1,10 @@
 package ly.david.musicsearch.core.models.image
 
 interface ImageUrlDao {
-    fun saveUrl(mbid: String, thumbnailUrl: String, largeUrl: String)
+    fun saveUrls(
+        mbid: String,
+        imageUrls: List<ImageUrls>,
+    )
+
+    fun getAllUrls(mbid: String): List<ImageUrls>
 }

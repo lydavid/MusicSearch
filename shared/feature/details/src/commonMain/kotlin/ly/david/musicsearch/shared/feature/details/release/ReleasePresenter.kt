@@ -30,6 +30,7 @@ import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
+import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.track.TracksByEntityUiEvent
 import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
@@ -171,6 +172,16 @@ internal class ReleasePresenter(
                 ReleaseUiEvent.ForceRefresh -> {
                     forceRefreshDetails = true
                 }
+
+                is ReleaseUiEvent.ClickImage -> {
+                    navigator.onNavEvent(
+                        NavEvent.GoTo(
+                            CoverArtsScreen(
+                                id = screen.id,
+                            ),
+                        ),
+                    )
+                }
             }
         }
 
@@ -194,7 +205,7 @@ internal class ReleasePresenter(
         releaseScaffoldModel: ReleaseScaffoldModel,
     ): String {
         val imageUrl = releaseScaffoldModel.imageUrl
-        return imageUrl ?: releaseImageRepository.getReleaseCoverArtUrlFromNetwork(
+        return imageUrl ?: releaseImageRepository.getReleaseCoverArtUrlsFromNetworkAndSave(
             releaseId = releaseScaffoldModel.id,
             thumbnail = false,
         )
@@ -227,4 +238,5 @@ internal sealed interface ReleaseUiEvent : CircuitUiEvent {
         val id: String,
         val title: String?,
     ) : ReleaseUiEvent
+    data object ClickImage : ReleaseUiEvent
 }

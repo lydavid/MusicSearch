@@ -1,11 +1,12 @@
 package ly.david.musicsearch.data.spotify
 
 import io.ktor.client.plugins.ClientRequestException
+import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.core.models.image.ImageUrlDao
+import ly.david.musicsearch.core.models.image.ImageUrls
 import ly.david.musicsearch.data.spotify.api.SpotifyApi
 import ly.david.musicsearch.data.spotify.api.getLargeImageUrl
 import ly.david.musicsearch.data.spotify.api.getThumbnailImageUrl
-import ly.david.musicsearch.core.models.image.ImageUrlDao
-import ly.david.musicsearch.core.logging.Logger
 
 /**
  * Logic to retrieve release cover art path.
@@ -22,17 +23,24 @@ class ArtistImageRepository(
      *
      * Also saves it to db.
      */
-    suspend fun getArtistImageFromNetwork(artistMbid: String, spotifyUrl: String): String {
+    suspend fun getArtistImageFromNetwork(
+        artistMbid: String,
+        spotifyUrl: String,
+    ): String {
         return try {
             val spotifyArtistId = spotifyUrl.split("/").last()
 
             val spotifyArtist = spotifyApi.getArtist(spotifyArtistId)
             val thumbnailUrl = spotifyArtist.getThumbnailImageUrl()
             val largeUrl = spotifyArtist.getLargeImageUrl()
-            imageUrlDao.saveUrl(
+            imageUrlDao.saveUrls(
                 mbid = artistMbid,
-                thumbnailUrl = thumbnailUrl,
-                largeUrl = largeUrl,
+                imageUrls = listOf(
+                    ImageUrls(
+                        thumbnailUrl = thumbnailUrl,
+                        largeUrl = largeUrl,
+                    ),
+                ),
             )
             largeUrl
         } catch (ex: ClientRequestException) {

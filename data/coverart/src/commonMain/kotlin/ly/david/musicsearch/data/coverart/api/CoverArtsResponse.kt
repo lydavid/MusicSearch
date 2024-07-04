@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.coverart.api
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ly.david.musicsearch.core.models.image.ImageUrls
 
 /**
  * [Cover Art Archive API documentation](https://wiki.musicbrainz.org/Cover_Art_Archive/API#Cover_Art_Archive_Metadata)
@@ -43,12 +44,25 @@ data class ThumbnailsUrls(
     @SerialName("large") val large: String? = null,
 )
 
+fun CoverArtsResponse.toImageUrlsList(): List<ImageUrls> {
+    return coverArtUrls.map { it.toImageUrls() }
+}
+
+private fun CoverArtUrls.toImageUrls(): ImageUrls {
+    return ImageUrls(
+        thumbnailUrl = getThumbnailUrl().orEmpty(),
+        largeUrl = imageUrl.orEmpty(),
+    )
+}
+
+private fun CoverArtUrls.getThumbnailUrl(): String? {
+    return thumbnailsUrls?.resolution250Url ?: thumbnailsUrls?.small ?: thumbnailsUrls?.resolution500Url
+        ?: thumbnailsUrls?.large ?: thumbnailsUrls?.resolution1200Url
+}
+
 fun CoverArtsResponse.getFrontThumbnailCoverArtUrl(): String? {
     // Note: MB doesn't fall back to any non-front covers
-    return coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.resolution250Url
-        ?: coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.small
-        ?: coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.resolution500Url
-        ?: coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.large
+    return coverArtUrls.firstOrNull { it.front }?.getThumbnailUrl()
 }
 
 fun CoverArtsResponse.getFrontLargeCoverArtUrl(): String? {

@@ -2,8 +2,9 @@ package ly.david.musicsearch.data.coverart
 
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.http.HttpStatusCode
-import ly.david.musicsearch.core.models.image.ImageUrlDao
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.core.models.image.ImageUrlDao
+import ly.david.musicsearch.core.models.image.ImageUrls
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.getFrontLargeCoverArtUrl
 import ly.david.musicsearch.data.coverart.api.getFrontThumbnailCoverArtUrl
@@ -22,18 +23,26 @@ internal class ReleaseGroupImageRepositoryImpl(
             val coverArts = coverArtArchiveApi.getReleaseGroupCoverArts(releaseGroupId)
             val thumbnailUrl = coverArts.getFrontThumbnailCoverArtUrl().orEmpty()
             val largeUrl = coverArts.getFrontLargeCoverArtUrl().orEmpty()
-            imageUrlDao.saveUrl(
+            imageUrlDao.saveUrls(
                 mbid = releaseGroupId,
-                thumbnailUrl = thumbnailUrl.removeFileExtension(),
-                largeUrl = largeUrl.removeFileExtension(),
+                imageUrls = listOf(
+                    ImageUrls(
+                        thumbnailUrl = thumbnailUrl.removeFileExtension(),
+                        largeUrl = largeUrl.removeFileExtension(),
+                    ),
+                ),
             )
             return if (thumbnail) thumbnailUrl else largeUrl
         } catch (ex: ClientRequestException) {
             if (ex.response.status == HttpStatusCode.NotFound) {
-                imageUrlDao.saveUrl(
+                imageUrlDao.saveUrls(
                     mbid = releaseGroupId,
-                    thumbnailUrl = "",
-                    largeUrl = "",
+                    imageUrls = listOf(
+                        ImageUrls(
+                            thumbnailUrl = "",
+                            largeUrl = "",
+                        ),
+                    ),
                 )
             } else {
                 logger.e(ex)

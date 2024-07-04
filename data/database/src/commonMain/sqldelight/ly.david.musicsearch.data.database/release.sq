@@ -46,7 +46,8 @@ SELECT
   ) AS hasNullLength
 FROM `release`
 LEFT JOIN mbid_image mi ON mi.mbid = `release`.id
-WHERE id = :releaseId;
+WHERE `release`.id = :releaseId
+LIMIT 1;
 
 getReleaseFormatTrackCount:
 SELECT m.format, COUNT(t.id) AS trackCount

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.feature.details.release
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -28,6 +29,7 @@ internal fun ReleaseDetailsUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     imageUrl: String = "",
+    onImageClick: () -> Unit = {},
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     lazyListState: LazyListState = rememberLazyListState(),
 ) {
@@ -40,7 +42,8 @@ internal fun ReleaseDetailsUi(
         item {
             LargeImage(
                 url = imageUrl,
-                mbid = release.id,
+                id = release.id,
+                modifier = Modifier.clickable { onImageClick() },
             )
 
             release.run {

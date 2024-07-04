@@ -1,21 +1,38 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.musicsearch.core.models.image.ImageUrlDao
+import ly.david.musicsearch.core.models.image.ImageUrls
 import ly.david.musicsearch.data.database.Database
-import lydavidmusicsearchdatadatabase.Mbid_image
 
 class MbidImageDao(
     database: Database,
 ) : EntityDao, ImageUrlDao {
     override val transacter = database.mbid_imageQueries
 
-    override fun saveUrl(mbid: String, thumbnailUrl: String, largeUrl: String) {
-        transacter.insert(
-            Mbid_image(
-                mbid = mbid,
-                thumbnail_url = thumbnailUrl,
-                large_url = largeUrl,
-            ),
-        )
+    override fun saveUrls(
+        mbid: String,
+        imageUrls: List<ImageUrls>,
+    ) {
+        transacter.transaction {
+            imageUrls.forEach { urls ->
+                transacter.insert(
+                    mbid = mbid,
+                    thumbnail_url = urls.thumbnailUrl,
+                    large_url = urls.largeUrl,
+                )
+            }
+        }
+    }
+
+    override fun getAllUrls(mbid: String): List<ImageUrls> {
+        return transacter.getAllUrls(
+            mbid = mbid,
+            mapper = { _, _, thumbnailUrl, largeUrl ->
+                ImageUrls(
+                    thumbnailUrl = thumbnailUrl,
+                    largeUrl = largeUrl,
+                )
+            },
+        ).executeAsList()
     }
 }
