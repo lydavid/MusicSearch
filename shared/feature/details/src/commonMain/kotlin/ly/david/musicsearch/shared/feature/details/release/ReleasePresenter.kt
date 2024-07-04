@@ -238,5 +238,5 @@ internal sealed interface ReleaseUiEvent : CircuitUiEvent {
         val id: String,
         val title: String?,
     ) : ReleaseUiEvent
-    data object ClickImage: ReleaseUiEvent
+    data object ClickImage : ReleaseUiEvent
 }

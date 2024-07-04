@@ -19,8 +19,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
+import ly.david.musicsearch.core.models.image.ImageUrls
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.image.LargeImage
+
+@Composable
+internal fun CoverArtsUi(
+    state: CoverArtsUiState,
+    modifier: Modifier = Modifier,
+) {
+    val eventSink = state.eventSink
+
+    CoverArtsUi(
+        imageUrlsList = state.imageUrls.toImmutableList(),
+        onBack = {
+            eventSink(CoverArtsUiEvent.NavigateUp)
+        },
+        modifier = modifier,
+    )
+}
 
 @OptIn(
     ExperimentalFoundationApi::class,
@@ -28,11 +48,11 @@ import ly.david.musicsearch.ui.image.LargeImage
 )
 @Composable
 internal fun CoverArtsUi(
-    state: CoverArtsUiState,
     modifier: Modifier = Modifier,
+    imageUrlsList: ImmutableList<ImageUrls> = persistentListOf(),
+    onBack: () -> Unit = {},
 ) {
-    val eventSink = state.eventSink
-    val pagerState = rememberPagerState(pageCount = { state.imageUrls.size })
+    val pagerState = rememberPagerState(pageCount = { imageUrlsList.size })
 //    val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -41,7 +61,7 @@ internal fun CoverArtsUi(
         topBar = {
             ScrollableTopAppBar(
                 showBackButton = true,
-                onBack = { eventSink(CoverArtsUiEvent.NavigateUp) },
+                onBack = onBack,
                 title = " ",
 //                scrollBehavior = scrollBehavior,
             )
@@ -59,7 +79,7 @@ internal fun CoverArtsUi(
 //                    .verticalScroll(rememberScrollState())
 //                    .nestedScroll(scrollBehavior.nestedScrollConnection)
             ) { page ->
-                val url = state.imageUrls[page]
+                val url = imageUrlsList[page]
                 Column(
                     modifier = Modifier
                         .fillMaxSize(),

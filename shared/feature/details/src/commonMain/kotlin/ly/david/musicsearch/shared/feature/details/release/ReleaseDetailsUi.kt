@@ -43,7 +43,7 @@ internal fun ReleaseDetailsUi(
             LargeImage(
                 url = imageUrl,
                 id = release.id,
-                modifier = Modifier.clickable { onImageClick() }
+                modifier = Modifier.clickable { onImageClick() },
             )
 
             release.run {
