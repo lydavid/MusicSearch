@@ -82,8 +82,8 @@ stable class CollectionPresenter {
   <runtime stability> = Stable
 }
 stable class CollectionUiState {
-  unstable val collection: CollectionListItemModel?
-  unstable val actionableResult: ActionableResult?
+  runtime val collection: CollectionListItemModel?
+  runtime val actionableResult: ActionableResult?
   stable val query: String
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val artistsByEntityUiState: ArtistsByEntityUiState

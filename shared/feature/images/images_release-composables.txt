@@ -7,7 +7,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArts
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsUi(
   stable modifier: Modifier? = @static Companion
-  unstable imageUrlsList: ImmutableList<ImageUrls>? = @static persistentListOf()
+  imageUrlsList: ImmutableList<ImageUrls>? = @static persistentListOf()
   stable onBack: Function0<Unit>? = @static {
 
 }

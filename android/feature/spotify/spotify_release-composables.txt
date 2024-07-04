@@ -1,13 +1,13 @@
-restartable scheme("[androidx.compose.ui.UiComposable]") fun SearchSpotifyBottomSheetContent(
-  unstable spotifyHistory: SpotifyHistoryListItemModel?
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchSpotifyBottomSheetContent(
+  spotifyHistory: SpotifyHistoryListItemModel?
   stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntity, Unit>? = @static { <unused var>: @[ParameterName(name = 'query')] String, <unused var>: @[ParameterName(name = 'id')] MusicBrainzEntity ->
 
 }
 
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSearchSpotifyBottomSheetContent()
-restartable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHistoryCard(
-  unstable spotifyHistory: SpotifyHistoryListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHistoryCard(
+  spotifyHistory: SpotifyHistoryListItemModel
   stable modifier: Modifier? = @static Companion
   stable onClick: @[ExtensionFunctionType] Function1<SpotifyHistoryListItemModel, Unit>? = @static {
 

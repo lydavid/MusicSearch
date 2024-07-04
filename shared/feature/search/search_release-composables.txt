@@ -13,8 +13,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Search(
   stable modifier: Modifier? = @static Companion
   stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun SearchHistoryListItem(
-  unstable searchHistory: SearchHistoryListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchHistoryListItem(
+  searchHistory: SearchHistoryListItemModel
   stable modifier: Modifier? = @static Companion
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'query')] String, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'query')] String ->
 

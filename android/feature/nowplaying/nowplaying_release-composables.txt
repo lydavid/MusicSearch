@@ -1,5 +1,5 @@
-restartable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryCard(
-  unstable nowPlayingHistory: NowPlayingHistoryListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryCard(
+  nowPlayingHistory: NowPlayingHistoryListItemModel
   stable modifier: Modifier? = @static Companion
   stable onClick: @[ExtensionFunctionType] Function1<NowPlayingHistoryListItemModel, Unit>? = @static {
 

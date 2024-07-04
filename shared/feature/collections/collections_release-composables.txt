@@ -17,8 +17,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun CollectionListItem(
-  unstable collection: CollectionListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionListItem(
+  collection: CollectionListItemModel
   stable modifier: Modifier? = @static Companion
   stable onClick: @[ExtensionFunctionType] Function1<CollectionListItemModel, Unit>? = @static {
 

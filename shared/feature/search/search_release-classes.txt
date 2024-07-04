@@ -19,7 +19,7 @@ stable class RecordSearch {
   <runtime stability> = Stable
 }
 stable class DeleteSearchHistory {
-  unstable val item: SearchHistoryListItemModel
+  runtime val item: SearchHistoryListItemModel
   <runtime stability> = Stable
 }
 stable class DeleteAllEntitySearchHistory {
