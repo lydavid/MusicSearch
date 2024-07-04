@@ -27,7 +27,7 @@ SELECT
   mi.large_url
 FROM release_group rg
 LEFT JOIN mbid_image mi ON mi.mbid = rg.id
-WHERE id = :releaseGroupId;
+WHERE rg.id = :releaseGroupId;
 
 getReleaseGroupForRelease:
 SELECT rg.*

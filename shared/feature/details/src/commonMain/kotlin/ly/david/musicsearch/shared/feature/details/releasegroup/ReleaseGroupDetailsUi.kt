@@ -32,7 +32,7 @@ internal fun ReleaseGroupDetailsUi(
         item {
             LargeImage(
                 url = imageUrl,
-                mbid = releaseGroup.id,
+                id = releaseGroup.id,
             )
         }
 

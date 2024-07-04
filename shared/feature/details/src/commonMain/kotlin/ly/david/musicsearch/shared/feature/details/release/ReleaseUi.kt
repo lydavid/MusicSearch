@@ -171,6 +171,9 @@ internal fun ReleaseUi(
                             filterText = state.query,
                             imageUrl = state.imageUrl,
                             lazyListState = detailsLazyListState,
+                            onImageClick = {
+                                eventSink(ReleaseUiEvent.ClickImage)
+                            },
                             onItemClick = { entity, id, title ->
                                 eventSink(
                                     ReleaseUiEvent.ClickItem(

@@ -55,6 +55,7 @@ WHERE
     OR `entity` LIKE :query
     OR `search_hint` LIKE :query
   )
+GROUP BY lh.mbid
 ORDER BY
   CASE WHEN :alphabetically THEN `title` END ASC,
   CASE WHEN :alphabeticallyReverse THEN `title` END DESC,

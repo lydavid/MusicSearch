@@ -35,6 +35,11 @@ data class DetailsScreen(
 ) : Screen
 
 @Parcelize
+data class CoverArtsScreen(
+    val id: String,
+) : Screen
+
+@Parcelize
 data class StatsScreen(
     val entity: MusicBrainzEntity,
     val id: String,

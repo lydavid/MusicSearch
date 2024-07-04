@@ -36,7 +36,7 @@ internal fun ArtistDetailsUi(
         item {
             LargeImage(
                 url = imageUrl,
-                mbid = artist.id,
+                id = artist.id,
             )
 
             artist.run {

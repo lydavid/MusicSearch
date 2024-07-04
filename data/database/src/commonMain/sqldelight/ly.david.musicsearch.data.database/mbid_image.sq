@@ -1,9 +1,19 @@
+-- If an entity with mbid has no image urls, we will add one entry
+-- with empty values, to mark that we've tried fetching its image urls.
 CREATE TABLE IF NOT EXISTS mbid_image (
-  `mbid` TEXT PRIMARY KEY NOT NULL,
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `mbid` TEXT NOT NULL,
   `thumbnail_url` TEXT NOT NULL,
   `large_url` TEXT NOT NULL
 );
 
+CREATE INDEX IF NOT EXISTS idx_mbid_image_mbid ON mbid_image(`mbid`);
+
 insert:
-INSERT OR IGNORE INTO mbid_image
-VALUES ?;
+INSERT OR IGNORE INTO mbid_image (`mbid`, `thumbnail_url`, `large_url`)
+VALUES (?, ?, ?);
+
+getAllUrls:
+SELECT *
+FROM mbid_image
+WHERE mbid = :mbid;

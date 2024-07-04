@@ -1,0 +1,18 @@
+-- Create new table
+CREATE TABLE IF NOT EXISTS new_mbid_image (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `mbid` TEXT NOT NULL,
+  `thumbnail_url` TEXT NOT NULL,
+  `large_url` TEXT NOT NULL
+);
+
+-- Copy data
+INSERT INTO new_mbid_image (`mbid`, `thumbnail_url`, `large_url`)
+SELECT `mbid`, `thumbnail_url`, `large_url`
+FROM mbid_image;
+
+-- Drop old table
+DROP TABLE IF EXISTS mbid_image;
+
+-- Rename new to old
+ALTER TABLE new_mbid_image RENAME TO mbid_image;
