@@ -24,6 +24,7 @@ import ly.david.musicsearch.shared.feature.collections.collectionsFeatureModule
 import ly.david.musicsearch.shared.feature.details.detailsFeatureModule
 import ly.david.musicsearch.shared.feature.search.searchFeatureModule
 import ly.david.musicsearch.shared.feature.history.historyFeatureModule
+import ly.david.musicsearch.shared.feature.images.imagesFeatureModule
 import ly.david.musicsearch.shared.feature.licenses.licensesFeatureModule
 import ly.david.musicsearch.shared.feature.settings.settingsFeatureModule
 import ly.david.musicsearch.shared.strings.di.stringsModule
@@ -41,6 +42,7 @@ val circuitModule = module {
         licensesFeatureModule,
         detailsFeatureModule,
         statsFeatureModule,
+        imagesFeatureModule,
     )
     single {
         Circuit.Builder()

@@ -40,7 +40,6 @@ import ly.david.musicsearch.shared.feature.details.series.SeriesUiState
 import ly.david.musicsearch.shared.feature.details.work.WorkPresenter
 import ly.david.musicsearch.shared.feature.details.work.WorkUi
 import ly.david.musicsearch.shared.feature.details.work.WorkUiState
-import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -49,13 +48,6 @@ val detailsFeatureModule = module {
     single(named("DetailsScreen")) {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
-                is CoverArtsScreen -> {
-                    CoverArtsPresenter(
-                        screen = screen,
-                        navigator = navigator,
-                        releaseImageRepository = get(),
-                    )
-                }
                 is DetailsScreen -> {
                     when (screen.entity) {
                         MusicBrainzEntity.AREA -> {
@@ -221,14 +213,6 @@ val detailsFeatureModule = module {
     single(named("DetailsScreen")) {
         Ui.Factory { screen, _ ->
             when (screen) {
-                is CoverArtsScreen -> {
-                    ui<CoverArtsUiState> { state, modifier ->
-                        CoverArtsUi(
-                            state = state,
-                            modifier = modifier
-                        )
-                    }
-                }
                 is DetailsScreen -> {
                     when (screen.entity) {
                         MusicBrainzEntity.AREA -> {
