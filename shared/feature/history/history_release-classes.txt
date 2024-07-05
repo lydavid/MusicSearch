@@ -22,15 +22,15 @@ stable class UpdateSortOption {
   <runtime stability> = Stable
 }
 stable class MarkHistoryForDeletion {
-  stable val history: LookupHistoryListItemModel
+  runtime val history: LookupHistoryListItemModel
   <runtime stability> = Stable
 }
 stable class UnMarkHistoryForDeletion {
-  stable val history: LookupHistoryListItemModel
+  runtime val history: LookupHistoryListItemModel
   <runtime stability> = Stable
 }
 stable class DeleteHistory {
-  stable val history: LookupHistoryListItemModel
+  runtime val history: LookupHistoryListItemModel
   <runtime stability> = Stable
 }
 stable class MarkAllHistoryForDeletion {

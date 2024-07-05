@@ -15,7 +15,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun History(
 
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistoryListItem(
-  stable lookupHistory: LookupHistoryListItemModel
+  lookupHistory: LookupHistoryListItemModel
   stable modifier: Modifier? = @static Companion
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 

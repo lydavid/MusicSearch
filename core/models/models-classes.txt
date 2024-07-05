@@ -229,13 +229,14 @@ stable class ListSeparator {
   stable val text: String
   <runtime stability> = Stable
 }
-stable class LookupHistoryListItemModel {
+unstable class LookupHistoryListItemModel {
   stable val id: String
   stable val title: String
   stable val entity: MusicBrainzEntity
   stable val numberOfVisits: Int
   unstable val lastAccessed: Instant
   stable val imageUrl: String?
+  <runtime stability> = Unstable
 }
 unstable class NowPlayingHistoryListItemModel {
   stable val id: String
