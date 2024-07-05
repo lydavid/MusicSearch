@@ -1,11 +1,9 @@
 package ly.david.musicsearch.core.models.listitem
 
-import androidx.compose.runtime.Immutable
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 
-@Immutable
 data class LookupHistoryListItemModel(
     override val id: String,
     val title: String = "",

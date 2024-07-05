@@ -1,17 +1,18 @@
 package ly.david.musicsearch.ui.image
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Album
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImagePainter
+import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
-import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import coil3.size.Scale
@@ -28,9 +29,16 @@ fun ThumbnailImage(
     modifier: Modifier = Modifier,
 ) {
     val sizeModifier = modifier.size(SMALL_IMAGE_SIZE.dp)
+    val placeholder = rememberVectorPainter(placeholderIcon ?: Icons.Default.Album)
 
     if (url.isNotEmpty()) {
-        val painter = rememberAsyncImagePainter(
+        AsyncImage(
+            modifier = sizeModifier
+                .fillMaxWidth(),
+            placeholder = forwardingPainter(
+                painter = placeholder,
+                colorFilter = ColorFilter.tint(LocalContentColor.current),
+            ),
             model = ImageRequest.Builder(LocalPlatformContext.current)
                 .data(url.useHttps())
                 .size(
@@ -43,41 +51,8 @@ fun ThumbnailImage(
                 .crossfade(true)
                 .memoryCacheKey(mbid)
                 .build(),
+            contentDescription = null,
         )
-        val state by painter.state.collectAsState()
-
-        when (state) {
-            is AsyncImagePainter.State.Loading, AsyncImagePainter.State.Empty -> {
-                PlaceholderIcon(
-                    sizeModifier,
-                    placeholderIcon,
-                )
-            }
-
-            is AsyncImagePainter.State.Success -> {
-                state.painter?.let {
-                    Image(
-                        modifier = sizeModifier,
-                        painter = it,
-                        contentDescription = null,
-                        contentScale = ContentScale.FillWidth,
-                    )
-                } ?: run {
-                    PlaceholderIcon(
-                        sizeModifier,
-                        placeholderIcon,
-                    )
-                }
-            }
-
-            is AsyncImagePainter.State.Error -> {
-                // No need to show error. List items will auto-retry when next recomposed.
-                PlaceholderIcon(
-                    sizeModifier,
-                    placeholderIcon,
-                )
-            }
-        }
     } else {
         PlaceholderIcon(
             sizeModifier,
