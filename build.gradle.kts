@@ -29,7 +29,7 @@ plugins {
 buildscript {
     dependencies {
         // Workaround for CMP and buildconfig mismatch: https://github.com/gmazzo/gradle-buildconfig-plugin/issues/131
-        classpath("com.squareup:kotlinpoet:1.17.0")
+        classpath("com.squareup:kotlinpoet:1.18.0")
     }
 }
 
