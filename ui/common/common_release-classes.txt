@@ -206,6 +206,10 @@ stable class DetailsScreen {
   stable val title: String?
   <runtime stability> = Stable
 }
+stable class CoverArtsScreen {
+  stable val id: String
+  <runtime stability> = Stable
+}
 stable class StatsScreen {
   stable val entity: MusicBrainzEntity
   stable val id: String
@@ -258,10 +262,6 @@ stable class WorksByEntityUiState {
   runtime val lazyPagingItems: LazyPagingItems<WorkListItemModel>
   stable val eventSink: Function1<WorksByEntityUiEvent, Unit>
 }
-unstable class AreaListItemPreviewParameterProvider {
-  unstable val values: Sequence<AreaListItemModel>
-  <runtime stability> = Unstable
-}
 unstable class ArtistPreviewParameterProvider {
   unstable val values: Sequence<ArtistListItemModel>
   <runtime stability> = Unstable
@@ -287,10 +287,6 @@ unstable class PlacePreviewParameterProvider {
 }
 unstable class RecordingPreviewParameterProvider {
   unstable val values: Sequence<RecordingListItemModel>
-  <runtime stability> = Unstable
-}
-unstable class ReleasePreviewParameterProvider {
-  unstable val values: Sequence<ReleaseListItemModel>
   <runtime stability> = Unstable
 }
 unstable class TrackCardPreviewParameterProvider {

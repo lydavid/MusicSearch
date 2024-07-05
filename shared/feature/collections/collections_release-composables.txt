@@ -25,7 +25,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun CollectionListItem(
 }
 
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CreateCollectionDialogContent(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CreateNewCollectionDialogContent(
   stable modifier: Modifier? = @static Companion
   stable onDismiss: Function0<Unit>? = @static {
 
@@ -66,8 +66,36 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
 
 }
 
+  stable sortOption: CollectionSortOption? = @static CollectionSortOption.ALPHABETICALLY
+  stable onSortClick: Function0<Unit>? = @static {
+
+}
+
+)
+fun present(
+  stable <this>: CollectionListPresenter
+): CollectionListUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionSortBottomSheet(
+  stable sortOption: CollectionSortOption
+  stable onSortOptionClick: Function1<CollectionSortOption, Unit>? = @static { it: CollectionSortOption ->
+
+}
+
+  stable bottomSheetState: SheetState? = @dynamic rememberModalBottomSheetState(false, null, $composer, 0, 0b0011)
+  stable onDismiss: Function0<Unit>? = @static {
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionSortBottomSheetContent(
+  stable sortOption: CollectionSortOption? = @static CollectionSortOption.ALPHABETICALLY
+  stable onSortOptionClick: Function1<CollectionSortOption, Unit>? = @static { it: CollectionSortOption ->
+
+}
+
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionsFilterChipsBar(
+  stable sortOption: CollectionSortOption
   stable modifier: Modifier? = @static Companion
   stable showLocal: Boolean = @static true
   stable onShowLocalToggle: Function1<Boolean, Unit>? = @static { it: Boolean ->
@@ -79,10 +107,11 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
 
 }
 
+  stable onSortClick: Function0<Unit>? = @static {
+
+}
+
 )
-fun present(
-  stable <this>: CollectionListPresenter
-): CollectionListUiState
 fun present(
   stable <this>: CollectionPresenter
 ): CollectionUiState
@@ -134,6 +163,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
 
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionBottomSheet()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCreateCollectionDialog()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListItem(
+  stable isRemote: Boolean = @static true
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCreateNewCollectionDialogContent()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionList()

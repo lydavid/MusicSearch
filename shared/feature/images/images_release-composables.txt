@@ -1,0 +1,17 @@
+fun present(
+  stable <this>: CoverArtsPresenter
+): CoverArtsUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsUi(
+  stable state: CoverArtsUiState
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsUi(
+  stable modifier: Modifier? = @static Companion
+  unstable imageUrlsList: ImmutableList<ImageUrls>? = @static persistentListOf()
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsUiOne()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsUiMultiple()

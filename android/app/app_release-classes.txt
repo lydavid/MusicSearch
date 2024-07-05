@@ -4,7 +4,6 @@ unstable class MainActivity {
   unstable val broadcastReceiver$delegate: Lazy<SpotifyBroadcastReceiver>
   <runtime stability> = Unstable
 }
-unstable class MusicSearchApplication {
-  unstable val imageLoaderFactory$delegate: Lazy<ImageLoaderFactory>
-  <runtime stability> = Unstable
+stable class MusicSearchApplication {
+  <runtime stability> = Stable
 }

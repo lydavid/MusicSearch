@@ -107,10 +107,11 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventsLis
   stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
 )
 restartable skippable fun DetailsWithErrorHandling(
-  stable showError: Boolean
-  stable onRetryClick: Function0<Unit>
   scaffoldModel: T?
+  stable onRefresh: Function0<Unit>
   stable modifier: Modifier? = @static Companion
+  stable showLoading: Boolean = @static false
+  stable showError: Boolean = @static false
   stable detailsScreen: Function3<T, Composer, Int, Unit>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun FullScreenContent(
@@ -253,9 +254,6 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun RelationListItem(
 }
 
 )
-fun present(
-  stable <this>: RelationsPresenter
-): RelationsUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RelationsListScreen(
   lazyPagingItems: LazyPagingItems<RelationListItemModel>
   stable modifier: Modifier? = @static Companion
@@ -266,6 +264,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Relations
 }
 
 )
+fun present(
+  stable <this>: RelationsPresenter
+): RelationsUiState
 restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseListItem(
   unstable release: ReleaseListItemModel
   stable modifier: Modifier? = @static Companion
@@ -482,10 +483,12 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorksList
 
   stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable area: AreaListItemModel
-)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaListItemDisambiguation()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaListItemCountry()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaListItemWorldwide()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseEvent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseEventNoDate()
 restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
   unstable artist: ArtistListItemModel
 )
@@ -525,9 +528,16 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistRelationListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecordingRelationListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewUrlRelationListItem()
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable release: ReleaseListItemModel
-)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemDisambiguation()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemDisambiguationCountry()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemCountry()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemDateCountryFormatsTracks()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemCountryDate()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemDateArtistCredits()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemMultipleCountries()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemShowLessInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemCatalog()
 restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
   unstable track: TrackListItemModel
 )
@@ -537,9 +547,9 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTextWithHeading()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Default()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WithIcon()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WithTabs()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewScrollableTopAppBar()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewScrollableTopAppBarWithIcon()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewScrollableTopAppBarWithTabs()
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun TopAppBarWithFilter(
   stable modifier: Modifier? = @static Companion
   stable onBack: Function0<Unit>? = @static {
@@ -562,9 +572,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable additionalActions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilterAndroidKt.lambda-1
   stable additionalBar: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilterAndroidKt.lambda-2
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Default()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun FilterMode()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NoFilter()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WithTabs()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilter()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterFilterMode()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterNoFilter()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterWithTabs()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewUrlsSection()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()

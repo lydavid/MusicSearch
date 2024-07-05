@@ -16,6 +16,16 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaUi(
   stable entityId: String
   stable modifier: Modifier? = @static Companion
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaUi(
+  stable state: AreaUiState
+  stable entityId: String
+  stable modifier: Modifier? = @static Companion
+  unstable scope: CoroutineScope? = @dynamic rememberCoroutineScope(null, $composer, 0, 0b0001)
+  stable onAddToCollectionClick: Function0<Unit>? = @static {
+
+}
+
+)
 restartable scheme("[androidx.compose.ui.UiComposable]") fun ArtistDetailsUi(
   unstable artist: ArtistScaffoldModel
   stable modifier: Modifier? = @static Companion
@@ -153,6 +163,10 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseDetailsUi(
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable imageUrl: String? = @static ""
+  stable onImageClick: Function0<Unit>? = @static {
+
+}
+
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity, <unused var>: @[ParameterName(name = 'id')] String, <unused var>: @[ParameterName(name = 'title')] String? ->
 
 }
@@ -232,7 +246,15 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorkUi(
   stable entityId: String
   stable modifier: Modifier? = @static Companion
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaDetails()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaDetailsError()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaRelationships()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaArtists()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaEvents()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaLabels()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaReleases()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaPlaces()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaStats()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewEventDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewGenreUi()

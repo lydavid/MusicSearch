@@ -6,7 +6,11 @@ stable class AddToCollectionPresenter {
   unstable val collectionRepository: CollectionRepository
   <runtime stability> = Stable
 }
-stable class CreateCollection {
+stable class AddToCollectionUiState {
+  runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
+  stable val eventSink: Function1<AddToCollectionUiEvent, Unit>
+}
+stable class CreateNewCollection {
   stable val newCollection: NewCollection
   <runtime stability> = Stable
 }
@@ -14,9 +18,10 @@ stable class AddToCollection {
   stable val id: String
   <runtime stability> = Stable
 }
-stable class AddToCollectionUiState {
-  runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
-  stable val eventSink: Function1<AddToCollectionUiEvent, Unit>
+stable class NewCollection {
+  stable val name: String?
+  stable val entity: MusicBrainzEntity?
+  <runtime stability> = Stable
 }
 stable class CollectionListPresenter {
   stable val navigator: Navigator
@@ -24,6 +29,14 @@ stable class CollectionListPresenter {
   runtime val getAllCollections: GetAllCollections
   runtime val createCollection: CreateCollection
   <runtime stability> = Stable
+}
+stable class CollectionListUiState {
+  stable val query: String
+  stable val showLocal: Boolean
+  stable val showRemote: Boolean
+  stable val sortOption: CollectionSortOption
+  runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
+  stable val eventSink: Function1<CollectionListUiEvent, Unit>
 }
 stable class UpdateQuery {
   stable val query: String
@@ -37,24 +50,16 @@ stable class UpdateShowRemote {
   stable val show: Boolean
   <runtime stability> = Stable
 }
-stable class CreateCollection {
+stable class UpdateSortOption {
+  stable val sortOption: CollectionSortOption
+  <runtime stability> = Stable
+}
+stable class CreateNewCollection {
   stable val newCollection: NewCollection
   <runtime stability> = Stable
 }
 stable class GoToCollection {
   stable val id: String
-  <runtime stability> = Stable
-}
-stable class CollectionListUiState {
-  stable val query: String
-  stable val showLocal: Boolean
-  stable val showRemote: Boolean
-  runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
-  stable val eventSink: Function1<CollectionListUiEvent, Unit>
-}
-stable class NewCollection {
-  stable val name: String?
-  stable val entity: MusicBrainzEntity?
   <runtime stability> = Stable
 }
 stable class CollectionPresenter {

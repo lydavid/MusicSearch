@@ -1,0 +1,14 @@
+stable class CoverArtsPresenter {
+  stable val screen: CoverArtsScreen
+  stable val navigator: Navigator
+  unstable val releaseImageRepository: ReleaseImageRepository
+  <runtime stability> = Stable
+}
+stable class CoverArtsUiState {
+  stable val id: String
+  unstable val imageUrls: List<ImageUrls>
+  stable val eventSink: Function1<CoverArtsUiEvent, Unit>
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}

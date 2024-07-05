@@ -1,21 +1,16 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceholderIcon(
-  stable modifier: Modifier? = @static Companion
-  stable placeholderIcon: ImageVector? = @static null
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LargeImage(
+restartable skippable fun InitializeImageLoader()
+restartable skippable fun LargeImage(
   stable url: String
-  stable mbid: String
+  stable id: String
   stable modifier: Modifier? = @static Companion
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun PainterImage(
-  unstable painter: Painter
-  stable modifier: Modifier? = @static Companion
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLargeImage()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ThumbnailImage(
   stable url: String
   stable mbid: String
   stable placeholderIcon: ImageVector?
   stable modifier: Modifier? = @static Companion
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewThumbnailImage()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceholderIcon(
+  stable modifier: Modifier? = @static Companion
+  stable placeholderIcon: ImageVector? = @static null
+)

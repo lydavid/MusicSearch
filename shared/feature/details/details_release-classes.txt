@@ -64,6 +64,7 @@ stable class ArtistPresenter {
 }
 stable class ArtistUiState {
   stable val title: String
+  stable val isLoading: Boolean
   stable val isError: Boolean
   unstable val artist: ArtistScaffoldModel?
   stable val imageUrl: String
@@ -107,6 +108,16 @@ stable class EventPresenter {
   unstable val logger: Logger
   <runtime stability> = Stable
 }
+stable class EventUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val event: EventScaffoldModel?
+  unstable val tabs: List<EventTab>
+  stable val selectedTab: EventTab
+  stable val query: String
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<EventUiEvent, Unit>
+}
 stable class NavigateUp {
   <runtime stability> = Stable
 }
@@ -127,16 +138,6 @@ stable class ClickItem {
   stable val title: String?
   <runtime stability> = Stable
 }
-stable class EventUiState {
-  stable val title: String
-  stable val isError: Boolean
-  unstable val event: EventScaffoldModel?
-  unstable val tabs: List<EventTab>
-  stable val selectedTab: EventTab
-  stable val query: String
-  stable val relationsUiState: RelationsUiState
-  stable val eventSink: Function1<EventUiEvent, Unit>
-}
 stable class GenrePresenter {
   stable val screen: DetailsScreen
   stable val navigator: Navigator
@@ -145,17 +146,17 @@ stable class GenrePresenter {
   unstable val logger: Logger
   <runtime stability> = Stable
 }
+stable class GenreUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val genre: GenreMusicBrainzModel?
+  stable val eventSink: Function1<GenreUiEvent, Unit>
+}
 stable class NavigateUp {
   <runtime stability> = Stable
 }
 stable class ForceRefresh {
   <runtime stability> = Stable
-}
-stable class GenreUiState {
-  stable val title: String
-  stable val isError: Boolean
-  unstable val genre: GenreMusicBrainzModel?
-  stable val eventSink: Function1<GenreUiGenre, Unit>
 }
 stable class InstrumentPresenter {
   stable val screen: DetailsScreen
@@ -165,6 +166,16 @@ stable class InstrumentPresenter {
   stable val relationsPresenter: RelationsPresenter
   unstable val logger: Logger
   <runtime stability> = Stable
+}
+stable class InstrumentUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val instrument: InstrumentScaffoldModel?
+  unstable val tabs: List<InstrumentTab>
+  stable val selectedTab: InstrumentTab
+  stable val query: String
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<InstrumentUiEvent, Unit>
 }
 stable class NavigateUp {
   <runtime stability> = Stable
@@ -186,16 +197,6 @@ stable class ClickItem {
   stable val title: String?
   <runtime stability> = Stable
 }
-stable class InstrumentUiState {
-  stable val title: String
-  stable val isError: Boolean
-  unstable val instrument: InstrumentScaffoldModel?
-  unstable val tabs: List<InstrumentTab>
-  stable val selectedTab: InstrumentTab
-  stable val query: String
-  stable val relationsUiState: RelationsUiState
-  stable val eventSink: Function1<InstrumentUiEvent, Unit>
-}
 stable class LabelPresenter {
   stable val screen: DetailsScreen
   stable val navigator: Navigator
@@ -205,6 +206,17 @@ stable class LabelPresenter {
   stable val relationsPresenter: RelationsPresenter
   unstable val logger: Logger
   <runtime stability> = Stable
+}
+stable class LabelUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val label: LabelScaffoldModel?
+  unstable val tabs: List<LabelTab>
+  stable val selectedTab: LabelTab
+  stable val query: String
+  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<LabelUiEvent, Unit>
 }
 stable class NavigateUp {
   <runtime stability> = Stable
@@ -226,17 +238,6 @@ stable class ClickItem {
   stable val title: String?
   <runtime stability> = Stable
 }
-stable class LabelUiState {
-  stable val title: String
-  stable val isError: Boolean
-  unstable val label: LabelScaffoldModel?
-  unstable val tabs: List<LabelTab>
-  stable val selectedTab: LabelTab
-  stable val query: String
-  stable val releasesByEntityUiState: ReleasesByEntityUiState
-  stable val relationsUiState: RelationsUiState
-  stable val eventSink: Function1<LabelUiEvent, Unit>
-}
 stable class PlacePresenter {
   stable val screen: DetailsScreen
   stable val navigator: Navigator
@@ -246,6 +247,17 @@ stable class PlacePresenter {
   stable val relationsPresenter: RelationsPresenter
   unstable val logger: Logger
   <runtime stability> = Stable
+}
+stable class PlaceUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val place: PlaceScaffoldModel?
+  unstable val tabs: List<PlaceTab>
+  stable val selectedTab: PlaceTab
+  stable val query: String
+  stable val eventsByEntityUiState: EventsByEntityUiState
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<PlaceUiEvent, Unit>
 }
 stable class NavigateUp {
   <runtime stability> = Stable
@@ -267,17 +279,6 @@ stable class ClickItem {
   stable val title: String?
   <runtime stability> = Stable
 }
-stable class PlaceUiState {
-  stable val title: String
-  stable val isError: Boolean
-  unstable val place: PlaceScaffoldModel?
-  unstable val tabs: List<PlaceTab>
-  stable val selectedTab: PlaceTab
-  stable val query: String
-  stable val eventsByEntityUiState: EventsByEntityUiState
-  stable val relationsUiState: RelationsUiState
-  stable val eventSink: Function1<PlaceUiEvent, Unit>
-}
 stable class RecordingPresenter {
   stable val screen: DetailsScreen
   stable val navigator: Navigator
@@ -287,6 +288,18 @@ stable class RecordingPresenter {
   stable val relationsPresenter: RelationsPresenter
   unstable val logger: Logger
   <runtime stability> = Stable
+}
+stable class RecordingUiState {
+  stable val title: String
+  stable val subtitle: String
+  stable val isError: Boolean
+  unstable val recording: RecordingScaffoldModel?
+  unstable val tabs: List<RecordingTab>
+  stable val selectedTab: RecordingTab
+  stable val query: String
+  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<RecordingUiEvent, Unit>
 }
 stable class NavigateUp {
   <runtime stability> = Stable
@@ -307,18 +320,6 @@ stable class ClickItem {
   stable val id: String
   stable val title: String?
   <runtime stability> = Stable
-}
-stable class RecordingUiState {
-  stable val title: String
-  stable val subtitle: String
-  stable val isError: Boolean
-  unstable val recording: RecordingScaffoldModel?
-  unstable val tabs: List<RecordingTab>
-  stable val selectedTab: RecordingTab
-  stable val query: String
-  stable val releasesByEntityUiState: ReleasesByEntityUiState
-  stable val relationsUiState: RelationsUiState
-  stable val eventSink: Function1<RecordingUiEvent, Unit>
 }
 stable class ReleasePresenter {
   stable val screen: DetailsScreen
@@ -366,6 +367,9 @@ stable class ClickItem {
   stable val title: String?
   <runtime stability> = Stable
 }
+stable class ClickImage {
+  <runtime stability> = Stable
+}
 stable class ReleaseGroupPresenter {
   stable val screen: DetailsScreen
   stable val navigator: Navigator
@@ -376,6 +380,19 @@ stable class ReleaseGroupPresenter {
   unstable val releaseGroupImageRepository: ReleaseGroupImageRepository
   unstable val logger: Logger
   <runtime stability> = Stable
+}
+stable class ReleaseGroupUiState {
+  stable val title: String
+  stable val subtitle: String
+  stable val isError: Boolean
+  unstable val releaseGroup: ReleaseGroupScaffoldModel?
+  stable val imageUrl: String
+  unstable val tabs: List<ReleaseGroupTab>
+  stable val selectedTab: ReleaseGroupTab
+  stable val query: String
+  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<ReleaseGroupUiEvent, Unit>
 }
 stable class NavigateUp {
   <runtime stability> = Stable
@@ -397,19 +414,6 @@ stable class ClickItem {
   stable val title: String?
   <runtime stability> = Stable
 }
-stable class ReleaseGroupUiState {
-  stable val title: String
-  stable val subtitle: String
-  stable val isError: Boolean
-  unstable val releaseGroup: ReleaseGroupScaffoldModel?
-  stable val imageUrl: String
-  unstable val tabs: List<ReleaseGroupTab>
-  stable val selectedTab: ReleaseGroupTab
-  stable val query: String
-  stable val releasesByEntityUiState: ReleasesByEntityUiState
-  stable val relationsUiState: RelationsUiState
-  stable val eventSink: Function1<ReleaseGroupUiEvent, Unit>
-}
 stable class SeriesPresenter {
   stable val screen: DetailsScreen
   stable val navigator: Navigator
@@ -418,6 +422,16 @@ stable class SeriesPresenter {
   stable val relationsPresenter: RelationsPresenter
   unstable val logger: Logger
   <runtime stability> = Stable
+}
+stable class SeriesUiState {
+  stable val title: String
+  stable val isError: Boolean
+  unstable val series: SeriesScaffoldModel?
+  unstable val tabs: List<SeriesTab>
+  stable val selectedTab: SeriesTab
+  stable val query: String
+  stable val relationsUiState: RelationsUiState
+  stable val eventSink: Function1<SeriesUiEvent, Unit>
 }
 stable class NavigateUp {
   <runtime stability> = Stable
@@ -438,16 +452,6 @@ stable class ClickItem {
   stable val id: String
   stable val title: String?
   <runtime stability> = Stable
-}
-stable class SeriesUiState {
-  stable val title: String
-  stable val isError: Boolean
-  unstable val series: SeriesScaffoldModel?
-  unstable val tabs: List<SeriesTab>
-  stable val selectedTab: SeriesTab
-  stable val query: String
-  stable val relationsUiState: RelationsUiState
-  stable val eventSink: Function1<SeriesUiEvent, Unit>
 }
 stable class WorkPresenter {
   stable val screen: DetailsScreen
