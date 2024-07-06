@@ -1,5 +1,5 @@
 {
- "skippableComposables": 15,
+ "skippableComposables": 17,
  "restartableComposables": 18,
  "readonlyComposables": 0,
  "totalComposables": 19,
@@ -8,8 +8,8 @@
  "staticArguments": 13,
  "certainArguments": 6,
  "knownStableArguments": 144,
- "knownUnstableArguments": 3,
- "unknownStableArguments": 4,
+ "knownUnstableArguments": 1,
+ "unknownStableArguments": 6,
  "totalArguments": 151,
  "markedStableClasses": 1,
  "inferredStableClasses": 5,

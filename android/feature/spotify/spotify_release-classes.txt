@@ -32,14 +32,14 @@ stable class GoToSearch {
   <runtime stability> = Stable
 }
 stable class MarkAsDeleted {
-  unstable val history: SpotifyHistoryListItemModel
+  runtime val history: SpotifyHistoryListItemModel
   <runtime stability> = Stable
 }
 stable class UndoMarkAsDeleted {
-  unstable val history: SpotifyHistoryListItemModel
+  runtime val history: SpotifyHistoryListItemModel
   <runtime stability> = Stable
 }
 stable class Delete {
-  unstable val history: SpotifyHistoryListItemModel
+  runtime val history: SpotifyHistoryListItemModel
   <runtime stability> = Stable
 }

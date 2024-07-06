@@ -14,6 +14,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
@@ -57,9 +59,7 @@ internal class ReleasePresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var release: ReleaseScaffoldModel? by remember { mutableStateOf(null) }
         var imageUrl by rememberSaveable { mutableStateOf("") }
-        val tabs: List<ReleaseTab> by rememberSaveable {
-            mutableStateOf(ReleaseTab.entries)
-        }
+        val tabs: ImmutableList<ReleaseTab> = ReleaseTab.entries.toPersistentList()
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
         var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
 
@@ -219,7 +219,7 @@ internal data class ReleaseUiState(
     val isError: Boolean,
     val release: ReleaseScaffoldModel?,
     val imageUrl: String,
-    val tabs: List<ReleaseTab>,
+    val tabs: ImmutableList<ReleaseTab>,
     val selectedTab: ReleaseTab,
     val query: String,
     val relationsUiState: RelationsUiState,

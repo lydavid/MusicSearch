@@ -2,7 +2,7 @@ package,name,composable,skippable,restartable,readonly,inline,isLambda,hasDefaul
 ly.david.musicsearch.shared.feature.collections.add.AddToCollectionPresenter.present,present,1,0,0,0,0,0,0,0,1,2,
 ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUi,AddToCollectionUi,1,1,1,0,0,0,0,0,2,3,
 ly.david.musicsearch.shared.feature.collections.components.CollectionBottomSheetContent,CollectionBottomSheetContent,1,1,1,0,0,0,0,0,1,4,
-ly.david.musicsearch.shared.feature.collections.components.CollectionListItem,CollectionListItem,1,0,1,0,0,0,0,0,1,1,
+ly.david.musicsearch.shared.feature.collections.components.CollectionListItem,CollectionListItem,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent,CreateNewCollectionDialogContent,1,1,1,0,0,0,0,0,1,6,
 ly.david.musicsearch.shared.feature.collections.list.CollectionList,CollectionList,1,1,1,0,0,0,0,0,2,6,
 ly.david.musicsearch.shared.feature.collections.list.CollectionList,CollectionList,1,1,1,0,0,0,0,0,1,3,

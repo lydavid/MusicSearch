@@ -15,7 +15,7 @@ stable class AreaPresenter {
 stable class AreaUiState {
   stable val title: String
   stable val isError: Boolean
-  unstable val area: AreaScaffoldModel?
+  runtime val area: AreaScaffoldModel?
   unstable val tabs: List<AreaTab>
   stable val selectedTab: AreaTab
   stable val query: String
@@ -66,7 +66,7 @@ stable class ArtistUiState {
   stable val title: String
   stable val isLoading: Boolean
   stable val isError: Boolean
-  unstable val artist: ArtistScaffoldModel?
+  runtime val artist: ArtistScaffoldModel?
   stable val imageUrl: String
   unstable val tabs: List<ArtistTab>
   stable val selectedTab: ArtistTab
@@ -111,7 +111,7 @@ stable class EventPresenter {
 stable class EventUiState {
   stable val title: String
   stable val isError: Boolean
-  unstable val event: EventScaffoldModel?
+  runtime val event: EventScaffoldModel?
   unstable val tabs: List<EventTab>
   stable val selectedTab: EventTab
   stable val query: String
@@ -170,7 +170,7 @@ stable class InstrumentPresenter {
 stable class InstrumentUiState {
   stable val title: String
   stable val isError: Boolean
-  unstable val instrument: InstrumentScaffoldModel?
+  runtime val instrument: InstrumentScaffoldModel?
   unstable val tabs: List<InstrumentTab>
   stable val selectedTab: InstrumentTab
   stable val query: String
@@ -210,7 +210,7 @@ stable class LabelPresenter {
 stable class LabelUiState {
   stable val title: String
   stable val isError: Boolean
-  unstable val label: LabelScaffoldModel?
+  runtime val label: LabelScaffoldModel?
   unstable val tabs: List<LabelTab>
   stable val selectedTab: LabelTab
   stable val query: String
@@ -251,7 +251,7 @@ stable class PlacePresenter {
 stable class PlaceUiState {
   stable val title: String
   stable val isError: Boolean
-  unstable val place: PlaceScaffoldModel?
+  runtime val place: PlaceScaffoldModel?
   unstable val tabs: List<PlaceTab>
   stable val selectedTab: PlaceTab
   stable val query: String
@@ -293,7 +293,7 @@ stable class RecordingUiState {
   stable val title: String
   stable val subtitle: String
   stable val isError: Boolean
-  unstable val recording: RecordingScaffoldModel?
+  runtime val recording: RecordingScaffoldModel?
   unstable val tabs: List<RecordingTab>
   stable val selectedTab: RecordingTab
   stable val query: String
@@ -337,9 +337,9 @@ stable class ReleaseUiState {
   stable val title: String
   stable val subtitle: String
   stable val isError: Boolean
-  unstable val release: ReleaseScaffoldModel?
+  runtime val release: ReleaseScaffoldModel?
   stable val imageUrl: String
-  unstable val tabs: List<ReleaseTab>
+  stable val tabs: ImmutableList<ReleaseTab>
   stable val selectedTab: ReleaseTab
   stable val query: String
   stable val relationsUiState: RelationsUiState
@@ -385,7 +385,7 @@ stable class ReleaseGroupUiState {
   stable val title: String
   stable val subtitle: String
   stable val isError: Boolean
-  unstable val releaseGroup: ReleaseGroupScaffoldModel?
+  runtime val releaseGroup: ReleaseGroupScaffoldModel?
   stable val imageUrl: String
   unstable val tabs: List<ReleaseGroupTab>
   stable val selectedTab: ReleaseGroupTab
@@ -426,7 +426,7 @@ stable class SeriesPresenter {
 stable class SeriesUiState {
   stable val title: String
   stable val isError: Boolean
-  unstable val series: SeriesScaffoldModel?
+  runtime val series: SeriesScaffoldModel?
   unstable val tabs: List<SeriesTab>
   stable val selectedTab: SeriesTab
   stable val query: String
@@ -467,7 +467,7 @@ stable class WorkPresenter {
 stable class WorkUiState {
   stable val title: String
   stable val isError: Boolean
-  unstable val work: WorkScaffoldModel?
+  runtime val work: WorkScaffoldModel?
   unstable val tabs: List<WorkTab>
   stable val selectedTab: WorkTab
   stable val query: String

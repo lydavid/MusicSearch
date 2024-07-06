@@ -72,14 +72,14 @@ stable class SeriesStatsPresenter {
 }
 stable class Stats {
   stable val totalRelations: Int?
-  unstable val relationTypeCounts: ImmutableList<RelationTypeCount>
+  runtime val relationTypeCounts: ImmutableList<RelationTypeCount>
   stable val artistStats: ArtistStats
   stable val eventStats: EventStats
   stable val labelStats: LabelStats
   stable val placeStats: PlaceStats
   stable val recordingStats: RecordingStats
   stable val releaseStats: ReleaseStats
-  unstable val releaseGroupStats: ReleaseGroupStats
+  runtime val releaseGroupStats: ReleaseGroupStats
   stable val workStats: WorkStats
 }
 stable class ArtistStats {
@@ -112,11 +112,11 @@ stable class ReleaseStats {
   stable val totalLocal: Int
   <runtime stability> = Stable
 }
-unstable class ReleaseGroupStats {
+runtime class ReleaseGroupStats {
   stable val totalRemote: Int?
   stable val totalLocal: Int
-  unstable val releaseGroupTypeCounts: ImmutableList<ReleaseGroupTypeCount>
-  <runtime stability> = Unstable
+  runtime val releaseGroupTypeCounts: ImmutableList<ReleaseGroupTypeCount>
+  <runtime stability> = Runtime(ReleaseGroupTypeCount)
 }
 stable class WorkStats {
   stable val totalRemote: Int?

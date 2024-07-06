@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
+    id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.powerAssert)
@@ -20,6 +21,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(libs.kotlinx.datetime)
+                implementation(compose.runtime)
 
                 implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.serialization.kotlinx.json)
