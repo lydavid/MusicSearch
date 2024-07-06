@@ -6,7 +6,7 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.image.ImageUrlDao
 import ly.david.musicsearch.core.models.image.ImageUrls
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
-import ly.david.musicsearch.data.coverart.api.getFrontLargeCoverArtUrl
+import ly.david.musicsearch.data.coverart.api.getFrontCoverArtUrl
 import ly.david.musicsearch.data.coverart.api.getFrontThumbnailCoverArtUrl
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
 
@@ -22,7 +22,7 @@ internal class ReleaseGroupImageRepositoryImpl(
         return try {
             val coverArts = coverArtArchiveApi.getReleaseGroupCoverArts(releaseGroupId)
             val thumbnailUrl = coverArts.getFrontThumbnailCoverArtUrl().orEmpty()
-            val largeUrl = coverArts.getFrontLargeCoverArtUrl().orEmpty()
+            val largeUrl = coverArts.getFrontCoverArtUrl().orEmpty()
             imageUrlDao.saveUrls(
                 mbid = releaseGroupId,
                 imageUrls = listOf(
