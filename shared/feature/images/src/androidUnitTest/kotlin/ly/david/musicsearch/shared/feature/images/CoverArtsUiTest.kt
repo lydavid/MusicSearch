@@ -6,16 +6,16 @@ import org.junit.Test
 class CoverArtsUiTest : ScreenshotTest() {
 
     @Test
-    fun one() {
+    fun compact() {
         snapshot {
-            PreviewCoverArtsUiOne()
+            PreviewCoverArtsUiCompact()
         }
     }
 
     @Test
-    fun multiple() {
+    fun nonCompact() {
         snapshot {
-            PreviewCoverArtsUiMultiple()
+            PreviewCoverArtsUiNonCompact()
         }
     }
 }

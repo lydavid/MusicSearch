@@ -1,5 +1,6 @@
 package ly.david.musicsearch.ui.image
 
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,12 +20,25 @@ fun LargeImage(
     url: String,
     id: String,
     modifier: Modifier = Modifier,
+    isCompact: Boolean = true,
 ) {
+    val imageModifier = modifier.testTag(LargeImageTestTag.IMAGE.name)
+        .then(
+            if (isCompact) {
+                Modifier.fillMaxWidth()
+            } else {
+                Modifier.fillMaxHeight()
+            },
+        )
+    val contentScale = if (isCompact) {
+        ContentScale.FillWidth
+    } else {
+        ContentScale.Fit
+    }
+
     if (url.isNotEmpty()) {
         AsyncImage(
-            modifier = modifier
-                .fillMaxWidth()
-                .testTag(LargeImageTestTag.IMAGE.name),
+            modifier = imageModifier,
             model = ImageRequest.Builder(LocalPlatformContext.current)
                 .data(url.useHttps())
                 .crossfade(true)
@@ -32,7 +46,7 @@ fun LargeImage(
                 .placeholderMemoryCacheKey(id)
                 .build(),
             contentDescription = null,
-            contentScale = ContentScale.FillWidth,
+            contentScale = contentScale,
         )
     }
 }

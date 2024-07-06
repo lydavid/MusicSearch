@@ -5,15 +5,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.models.image.ImageUrls
+import ly.david.musicsearch.ui.core.preview.DefaultPreviews
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.test.screenshot.InitializeFakeImageLoader
 
 @PreviewLightDark
 @Composable
-internal fun PreviewCoverArtsUiOne() {
+internal fun PreviewCoverArtsUiCompact() {
+    InitializeFakeImageLoader()
     PreviewTheme {
         Surface {
             CoverArtsUi(
+                isCompact = true,
                 imageUrlsList = persistentListOf(
+                    ImageUrls(
+                        largeUrl = "https://www.example.com/image.jpg",
+                    ),
                     ImageUrls(
                         largeUrl = "https://www.example.com/image.jpg",
                     ),
@@ -23,9 +30,10 @@ internal fun PreviewCoverArtsUiOne() {
     }
 }
 
-@PreviewLightDark
+@DefaultPreviews
 @Composable
-internal fun PreviewCoverArtsUiMultiple() {
+internal fun PreviewCoverArtsUiNonCompact() {
+    InitializeFakeImageLoader()
     PreviewTheme {
         Surface {
             CoverArtsUi(

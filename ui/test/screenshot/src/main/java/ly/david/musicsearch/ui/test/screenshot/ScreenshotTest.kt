@@ -11,12 +11,8 @@ import androidx.compose.runtime.Composable
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import app.cash.paparazzi.detectEnvironment
-import coil3.ImageLoader
 import coil3.SingletonImageLoader
 import coil3.annotation.DelicateCoilApi
-import coil3.test.FakeImageLoaderEngine
-import coil3.test.default
-import coil3.test.intercept
 import com.android.ide.common.rendering.api.SessionParams
 import com.android.resources.NightMode
 import com.google.testing.junit.testparameterinjector.TestParameter
@@ -82,20 +78,7 @@ abstract class ScreenshotTest(
     @OptIn(DelicateCoilApi::class)
     @Before
     fun before() {
-        val engine = FakeImageLoaderEngine.Builder()
-            .intercept(
-                "https://www.example.com/image.jpg",
-                createColorSquare(
-                    paparazzi.context,
-                    1,
-                ),
-            )
-            .default(ColorDrawable(Color.RED))
-            .build()
-        val imageLoader = ImageLoader.Builder(paparazzi.context)
-            .components { add(engine) }
-            .build()
-        SingletonImageLoader.setUnsafe(imageLoader)
+        SingletonImageLoader.setUnsafe(getFakeImageLoader(paparazzi.context))
         Dispatchers.setMain(UnconfinedTestDispatcher())
     }
 
@@ -103,29 +86,4 @@ abstract class ScreenshotTest(
     fun teardown() {
         Dispatchers.resetMain()
     }
-}
-
-private fun createColorSquare(
-    context: Context,
-    size: Int,
-    color: Int = Color.BLUE,
-): BitmapDrawable {
-    val colorDrawable = ColorDrawable(color)
-    val bitmap = Bitmap.createBitmap(
-        size,
-        size,
-        Bitmap.Config.ARGB_8888,
-    )
-    val canvas = Canvas(bitmap)
-    colorDrawable.setBounds(
-        0,
-        0,
-        canvas.width,
-        canvas.height,
-    )
-    colorDrawable.draw(canvas)
-    return BitmapDrawable(
-        context.resources,
-        bitmap,
-    )
 }

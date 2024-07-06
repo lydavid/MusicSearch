@@ -3,7 +3,11 @@ package ly.david.musicsearch.ui.core.preview
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 
+/**
+ * A copy of [PreviewScreenSizes] with light and dark mode.
+ */
 @Retention(AnnotationRetention.BINARY)
 @Target(
     AnnotationTarget.ANNOTATION_CLASS,
