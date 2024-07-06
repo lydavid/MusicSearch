@@ -115,6 +115,7 @@ sqldelight-primitive = { module = "app.cash.sqldelight:primitive-adapters", vers
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 test-parameter-injector = "com.google.testparameterinjector:test-parameter-injector:1.16"
 timber = "com.jakewharton.timber:timber:5.0.1"
+windowSizeClass = "dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0"
 
 [bundles]
 kotlinx-coroutines = [

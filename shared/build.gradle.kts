@@ -45,6 +45,7 @@ kotlin {
                 implementation(libs.circuit.foundation)
                 implementation(libs.circuit.overlay)
                 implementation(libs.circuitx.gesture.navigation)
+                implementation(libs.windowSizeClass)
             }
         }
         val androidMain by getting {
