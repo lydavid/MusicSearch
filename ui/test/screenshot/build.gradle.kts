@@ -10,6 +10,7 @@ android {
 
 dependencies {
     implementation(projects.ui.core)
+    implementation(projects.test.image)
 
     implementation(libs.coil.compose)
     implementation(libs.coil.test)

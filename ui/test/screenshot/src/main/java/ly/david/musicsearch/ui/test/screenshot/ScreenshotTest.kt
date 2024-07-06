@@ -16,6 +16,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import ly.david.musicsearch.test.image.getFakeImageLoader
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 import org.junit.After
 import org.junit.Before

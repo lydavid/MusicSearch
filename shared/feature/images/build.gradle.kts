@@ -29,7 +29,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(projects.ui.test.screenshot)
+                implementation(projects.test.image)
                 implementation(compose.preview)
             }
         }

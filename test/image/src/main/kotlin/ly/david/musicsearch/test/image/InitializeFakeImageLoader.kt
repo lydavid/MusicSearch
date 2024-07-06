@@ -1,4 +1,4 @@
-package ly.david.musicsearch.ui.test.screenshot
+package ly.david.musicsearch.test.image
 
 import androidx.compose.runtime.Composable
 import coil3.annotation.ExperimentalCoilApi

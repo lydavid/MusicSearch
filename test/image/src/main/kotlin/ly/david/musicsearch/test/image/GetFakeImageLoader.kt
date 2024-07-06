@@ -1,4 +1,4 @@
-package ly.david.musicsearch.ui.test.screenshot
+package ly.david.musicsearch.test.image
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -11,7 +11,7 @@ import coil3.test.FakeImageLoaderEngine
 import coil3.test.default
 import coil3.test.intercept
 
-internal fun getFakeImageLoader(context: Context): ImageLoader {
+fun getFakeImageLoader(context: Context): ImageLoader {
     val engine = FakeImageLoaderEngine.Builder()
         .intercept(
             "https://www.example.com/image.jpg",
