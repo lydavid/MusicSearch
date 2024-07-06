@@ -1,22 +1,12 @@
 package ly.david.musicsearch.ui.test.screenshot
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import app.cash.paparazzi.detectEnvironment
-import coil3.ImageLoader
 import coil3.SingletonImageLoader
 import coil3.annotation.DelicateCoilApi
-import coil3.test.FakeImageLoaderEngine
-import coil3.test.default
-import coil3.test.intercept
 import com.android.ide.common.rendering.api.SessionParams
 import com.android.resources.NightMode
 import com.google.testing.junit.testparameterinjector.TestParameter
@@ -26,6 +16,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import ly.david.musicsearch.test.image.getFakeImageLoader
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 import org.junit.After
 import org.junit.Before
@@ -82,20 +73,7 @@ abstract class ScreenshotTest(
     @OptIn(DelicateCoilApi::class)
     @Before
     fun before() {
-        val engine = FakeImageLoaderEngine.Builder()
-            .intercept(
-                "https://www.example.com/image.jpg",
-                createColorSquare(
-                    paparazzi.context,
-                    1,
-                ),
-            )
-            .default(ColorDrawable(Color.RED))
-            .build()
-        val imageLoader = ImageLoader.Builder(paparazzi.context)
-            .components { add(engine) }
-            .build()
-        SingletonImageLoader.setUnsafe(imageLoader)
+        SingletonImageLoader.setUnsafe(getFakeImageLoader(paparazzi.context))
         Dispatchers.setMain(UnconfinedTestDispatcher())
     }
 
@@ -103,29 +81,4 @@ abstract class ScreenshotTest(
     fun teardown() {
         Dispatchers.resetMain()
     }
-}
-
-private fun createColorSquare(
-    context: Context,
-    size: Int,
-    color: Int = Color.BLUE,
-): BitmapDrawable {
-    val colorDrawable = ColorDrawable(color)
-    val bitmap = Bitmap.createBitmap(
-        size,
-        size,
-        Bitmap.Config.ARGB_8888,
-    )
-    val canvas = Canvas(bitmap)
-    colorDrawable.setBounds(
-        0,
-        0,
-        canvas.width,
-        canvas.height,
-    )
-    colorDrawable.draw(canvas)
-    return BitmapDrawable(
-        context.resources,
-        bitmap,
-    )
 }

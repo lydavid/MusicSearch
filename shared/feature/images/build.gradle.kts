@@ -24,10 +24,12 @@ kotlin {
 
                 implementation(libs.circuit.foundation)
                 implementation(libs.koin.core)
+                implementation(libs.windowSizeClass)
             }
         }
         val androidMain by getting {
             dependencies {
+                implementation(projects.test.image)
                 implementation(compose.preview)
             }
         }

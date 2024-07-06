@@ -51,13 +51,18 @@ fun CoverArtsResponse.toImageUrlsList(): List<ImageUrls> {
 private fun CoverArtUrls.toImageUrls(): ImageUrls {
     return ImageUrls(
         thumbnailUrl = getThumbnailUrl().orEmpty(),
-        largeUrl = thumbnailsUrls?.resolution1200Url.orEmpty(),
+        largeUrl = getUrl().orEmpty(),
     )
 }
 
 private fun CoverArtUrls.getThumbnailUrl(): String? {
     return thumbnailsUrls?.resolution250Url ?: thumbnailsUrls?.small ?: thumbnailsUrls?.resolution500Url
         ?: thumbnailsUrls?.large ?: thumbnailsUrls?.resolution1200Url
+}
+
+private fun CoverArtUrls.getUrl(): String? {
+    return thumbnailsUrls?.resolution1200Url ?: thumbnailsUrls?.resolution500Url ?: thumbnailsUrls?.large
+        ?: thumbnailsUrls?.resolution250Url ?: thumbnailsUrls?.small
 }
 
 fun CoverArtsResponse.getFrontThumbnailCoverArtUrl(): String? {
