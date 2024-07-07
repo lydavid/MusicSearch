@@ -2,7 +2,7 @@
 aboutlibraries = "11.2.2"
 androidGradlePlugin = "8.5.0"
 chucker = "4.0.0"
-circuit = "0.22.2"
+circuit = "0.20.0"
 coil = "3.0.0-alpha07"
 compose-foundation = "1.6.8"
 compose-material = "1.6.8"
