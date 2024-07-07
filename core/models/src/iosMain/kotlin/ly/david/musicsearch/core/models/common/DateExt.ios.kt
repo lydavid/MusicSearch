@@ -8,15 +8,14 @@ actual fun Instant.getDateFormatted(): String {
     val dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = DATE_FORMAT
     return dateFormatter.stringFromDate(
-        toNSDate()
+        toNSDate(),
     )
 }
 
 actual fun Instant.getTimeFormatted(): String {
     val dateFormatter = NSDateFormatter()
-    // TODO: confirm this
     dateFormatter.dateFormat = TIME_FORMAT
     return dateFormatter.stringFromDate(
-        toNSDate()
+        toNSDate(),
     )
 }

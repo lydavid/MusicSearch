@@ -10,5 +10,5 @@ package ly.david.musicsearch.core.models.common
  */
 actual fun String.toFlagEmoji(): String {
     // TODO: iOS flag emoji
-    return "TODO"
+    return ""
 }
