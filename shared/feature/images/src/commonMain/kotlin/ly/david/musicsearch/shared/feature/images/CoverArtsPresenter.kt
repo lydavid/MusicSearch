@@ -5,7 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -23,7 +23,7 @@ internal class CoverArtsPresenter(
 
     @Composable
     override fun present(): CoverArtsUiState {
-        var imageUrls by rememberSaveable { mutableStateOf<List<ImageUrls>>(listOf()) }
+        var imageUrls by remember { mutableStateOf<List<ImageUrls>>(listOf()) }
 
         LaunchedEffect(Unit) {
             imageUrls = releaseImageRepository.getAllUrls(screen.id)
