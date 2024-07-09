@@ -31,7 +31,7 @@ jobs:
       - run: sudo apt install graphviz
 
       - name: Install app on emulator
-        uses: reactivecircus/android-emulator-runner@v2.31.0
+        uses: reactivecircus/android-emulator-runner@v2.32.0
         with:
           api-level: 31
           arch: x86_64
