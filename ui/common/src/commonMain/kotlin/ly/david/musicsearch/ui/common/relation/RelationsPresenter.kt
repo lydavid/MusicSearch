@@ -1,5 +1,6 @@
 package ly.david.musicsearch.ui.common.relation
 
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,6 +26,7 @@ class RelationsPresenter(
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var relationListItems: Flow<PagingData<RelationListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val relationsLazyListState = rememberLazyListState()
 
         LaunchedEffect(
             key1 = id,
@@ -56,6 +58,7 @@ class RelationsPresenter(
 
         return RelationsUiState(
             lazyPagingItems = relationListItems.collectAsLazyPagingItems(),
+            relationsLazyListState = relationsLazyListState,
             eventSink = ::eventSink,
         )
     }

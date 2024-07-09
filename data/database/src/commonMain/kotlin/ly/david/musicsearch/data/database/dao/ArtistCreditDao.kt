@@ -1,21 +1,32 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.core.models.artist.ArtistCreditUiModel
 import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
+import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import lydavidmusicsearchdatadatabase.Artist_credit_entity
 import lydavidmusicsearchdatadatabase.Artist_credit_name
 
-class ArtistCreditDao(
+interface ArtistCreditDao : EntityDao {
+    fun insertArtistCredits(
+        entityId: String,
+        artistCredits: List<ArtistCreditMusicBrainzModel>?,
+    )
+
+    fun getArtistCreditsForEntity(
+        entityId: String,
+    ): List<ArtistCreditUiModel>
+}
+
+class ArtistCreditDaoImpl(
     database: Database,
-) : EntityDao {
+) : ArtistCreditDao {
     override val transacter = database.artist_creditQueries
     private val artistCreditNameQueries = database.artist_credit_nameQueries
     private val artistCreditEntityQueries = database.artist_credit_entityQueries
 
-    internal fun insertArtistCredits(
+    override fun insertArtistCredits(
         entityId: String,
         artistCredits: List<ArtistCreditMusicBrainzModel>?,
     ) {
@@ -67,7 +78,7 @@ class ArtistCreditDao(
         )
     }
 
-    fun getArtistCreditsForEntity(
+    override fun getArtistCreditsForEntity(
         entityId: String,
     ): List<ArtistCreditUiModel> =
         artistCreditNameQueries.getArtistCreditNamesForEntity(

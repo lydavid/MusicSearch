@@ -1,5 +1,7 @@
 package ly.david.musicsearch.ui.common.place
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,6 +28,7 @@ class PlacesByEntityPresenter(
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var placeListItems: Flow<PagingData<PlaceListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val placesLazyListState: LazyListState = rememberLazyListState()
 
         LaunchedEffect(
             key1 = id,
@@ -59,6 +62,7 @@ class PlacesByEntityPresenter(
 
         return PlacesByEntityUiState(
             lazyPagingItems = placeListItems.collectAsLazyPagingItems(),
+            placesLazyListState = placesLazyListState,
             eventSink = ::eventSink,
         )
     }

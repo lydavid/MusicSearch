@@ -4,7 +4,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -73,9 +72,6 @@ internal fun AreaUi(
     )
 }
 
-/**
- * The top-level screen for an area.
- */
 @OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalFoundationApi::class,
@@ -106,7 +102,7 @@ internal fun AreaUi(
 
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        contentWindowInsets = WindowInsets(0),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithFilter(
@@ -156,14 +152,6 @@ internal fun AreaUi(
         },
     ) { innerPadding ->
 
-        val detailsLazyListState = rememberLazyListState()
-        val relationsLazyListState = rememberLazyListState()
-        val artistsLazyListState = rememberLazyListState()
-        val eventsLazyListState = rememberLazyListState()
-        val labelsLazyListState = rememberLazyListState()
-        val releasesLazyListState = rememberLazyListState()
-        val placesLazyListState = rememberLazyListState()
-
         // TODO: consider generalizing this entire details ui, we can have all types of tabs here
         //  each details screen will provide its own list of tabs (which may be in different order)
         HorizontalPager(
@@ -185,7 +173,7 @@ internal fun AreaUi(
                         AreaDetailsUi(
                             area = it,
                             filterText = state.query,
-                            lazyListState = detailsLazyListState,
+                            lazyListState = state.detailsLazyListState,
                             onItemClick = { entity, id, title ->
                                 eventSink(
                                     AreaUiEvent.ClickItem(
@@ -201,7 +189,7 @@ internal fun AreaUi(
 
                 AreaTab.ARTISTS -> {
                     ArtistsListScreen(
-                        lazyListState = artistsLazyListState,
+                        lazyListState = state.artistsByEntityUiState.artistsLazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -222,7 +210,7 @@ internal fun AreaUi(
 
                 AreaTab.EVENTS -> {
                     EventsListScreen(
-                        lazyListState = labelsLazyListState,
+                        lazyListState = state.eventsByEntityUiState.eventsLazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -243,7 +231,7 @@ internal fun AreaUi(
 
                 AreaTab.LABELS -> {
                     LabelsListScreen(
-                        lazyListState = eventsLazyListState,
+                        lazyListState = state.labelsByEntityUiState.labelsLazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -264,7 +252,7 @@ internal fun AreaUi(
 
                 AreaTab.RELEASES -> {
                     ReleasesListScreen(
-                        lazyListState = releasesLazyListState,
+                        lazyListState = state.releasesByEntityUiState.releasesLazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -298,7 +286,7 @@ internal fun AreaUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = relationsLazyListState,
+                        lazyListState = state.relationsUiState.relationsLazyListState,
                         snackbarHostState = snackbarHostState,
                         onItemClick = { entity, id, title ->
                             eventSink(
@@ -315,7 +303,7 @@ internal fun AreaUi(
                 AreaTab.PLACES -> {
                     PlacesListScreen(
                         snackbarHostState = snackbarHostState,
-                        lazyListState = placesLazyListState,
+                        lazyListState = state.placesByEntityUiState.placesLazyListState,
                         lazyPagingItems = state.placesByEntityUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)

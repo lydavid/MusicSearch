@@ -1,5 +1,7 @@
 package ly.david.musicsearch.ui.common.release
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -42,6 +44,7 @@ class ReleasesByEntityPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var releaseListItems: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val releasesLazyListState: LazyListState = rememberLazyListState()
 
         LaunchedEffect(
             key1 = id,
@@ -94,6 +97,7 @@ class ReleasesByEntityPresenter(
 
         return ReleasesByEntityUiState(
             lazyPagingItems = releaseListItems.collectAsLazyPagingItems(),
+            releasesLazyListState = releasesLazyListState,
             showMoreInfo = showMoreInfoInReleaseListItem,
             eventSink = ::eventSink,
         )
@@ -123,6 +127,7 @@ sealed interface ReleasesByEntityUiEvent : CircuitUiEvent {
 @Stable
 data class ReleasesByEntityUiState(
     val lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
+    val releasesLazyListState: LazyListState = LazyListState(),
     val showMoreInfo: Boolean = true,
     val eventSink: (ReleasesByEntityUiEvent) -> Unit = {},
 ) : CircuitUiState

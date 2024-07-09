@@ -1,18 +1,25 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import lydavidmusicsearchdatadatabase.Release_group
 
-class ReleaseGroupDao(
+interface ReleaseGroupDao : EntityDao {
+    fun insert(releaseGroup: ReleaseGroupMusicBrainzModel)
+    fun insertAll(releaseGroups: List<ReleaseGroupMusicBrainzModel>)
+    fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupScaffoldModel?
+    fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease?
+}
+
+class ReleaseGroupDaoImpl(
     database: Database,
     private val artistCreditDao: ArtistCreditDao,
-) : EntityDao {
+) : ReleaseGroupDao {
     override val transacter = database.release_groupQueries
 
-    fun insert(releaseGroup: ReleaseGroupMusicBrainzModel) {
+    override fun insert(releaseGroup: ReleaseGroupMusicBrainzModel) {
         releaseGroup.run {
             transacter.insert(
                 Release_group(
@@ -33,7 +40,7 @@ class ReleaseGroupDao(
         }
     }
 
-    fun insertAll(releaseGroups: List<ReleaseGroupMusicBrainzModel>) {
+    override fun insertAll(releaseGroups: List<ReleaseGroupMusicBrainzModel>) {
         transacter.transaction {
             releaseGroups.forEach { releaseGroup ->
                 insert(releaseGroup)
@@ -41,7 +48,7 @@ class ReleaseGroupDao(
         }
     }
 
-    fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupScaffoldModel? =
+    override fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupScaffoldModel? =
         transacter.getReleaseGroupForDetails(
             releaseGroupId = releaseGroupId,
             mapper = ::mapToReleaseGroupForDetails,
@@ -65,7 +72,7 @@ class ReleaseGroupDao(
         imageUrl = thumbnailUrl,
     )
 
-    fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease? =
+    override fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease? =
         transacter.getReleaseGroupForRelease(
             releaseId = releaseId,
             mapper = { id, name, firstReleaseDate, disambiguation, primaryType, _, secondaryTypes, _ ->

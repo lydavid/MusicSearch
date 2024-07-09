@@ -2,9 +2,9 @@ package ly.david.musicsearch.data.database
 
 import ly.david.musicsearch.core.models.image.ImageUrlDao
 import ly.david.musicsearch.data.database.dao.AreaDao
-import ly.david.musicsearch.data.database.dao.EventsByEntityDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
+import ly.david.musicsearch.data.database.dao.ArtistCreditDaoImpl
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
@@ -16,6 +16,7 @@ import ly.david.musicsearch.data.database.dao.CountryCodeDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.EventDao
+import ly.david.musicsearch.data.database.dao.EventsByEntityDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.LabelsByEntityDao
@@ -31,6 +32,7 @@ import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.ReleaseGroupDaoImpl
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.SearchHistoryDao
@@ -40,6 +42,8 @@ import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.database.dao.WorksByEntityDao
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val databaseDaoModule = module {
@@ -47,7 +51,7 @@ val databaseDaoModule = module {
     single { ArtistsByEntityDao(get(), get()) }
     single { EventsByEntityDao(get(), get()) }
     single { AreaPlaceDao(get(), get()) }
-    single { ArtistCreditDao(get()) }
+    singleOf(::ArtistCreditDaoImpl) bind ArtistCreditDao::class
     single { ArtistDao(get()) }
     single { ArtistReleaseDao(get(), get()) }
     single { ArtistReleaseGroupDao(get(), get()) }
@@ -72,7 +76,7 @@ val databaseDaoModule = module {
     single { RelationDao(get(), get()) }
     single { ReleaseCountryDao(get(), get()) }
     single { ReleaseDao(get(), get(), get()) }
-    single { ReleaseGroupDao(get(), get()) }
+    singleOf(::ReleaseGroupDaoImpl) bind ReleaseGroupDao::class
     single { ReleaseLabelDao(get(), get()) }
     single { ReleaseReleaseGroupDao(get(), get()) }
     single { SearchHistoryDao(get(), get()) }
