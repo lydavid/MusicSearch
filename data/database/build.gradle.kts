@@ -1,5 +1,3 @@
-import okhttp3.internal.notifyAll
-
 plugins {
     id("ly.david.android.library")
     id("ly.david.musicsearch.kotlin.multiplatform")
@@ -62,20 +60,3 @@ sqldelight {
 android {
     namespace = "ly.david.musicsearch.data.database"
 }
-
-//dependencies {
-//    add("kspCommonMainMetadata", libs.koin.ksp.compiler)
-//}
-//
-//// region Workaround
-////  from https://github.com/google/ksp/issues/567#issuecomment-1510477456
-//tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
-//    if(name != "kspCommonMainKotlinMetadata") {
-//        dependsOn("kspCommonMainKotlinMetadata")
-//    }
-//}
-//
-//kotlin.sourceSets.commonMain {
-//    kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-//}
-//// endregion
