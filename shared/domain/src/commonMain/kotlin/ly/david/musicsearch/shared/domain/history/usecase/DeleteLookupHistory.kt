@@ -1,9 +1,7 @@
 package ly.david.musicsearch.shared.domain.history.usecase
 
 import ly.david.musicsearch.shared.domain.history.LookupHistoryRepository
-import org.koin.core.annotation.Single
 
-@Single
 class DeleteLookupHistory(
     private val lookupHistoryRepository: LookupHistoryRepository,
 ) {

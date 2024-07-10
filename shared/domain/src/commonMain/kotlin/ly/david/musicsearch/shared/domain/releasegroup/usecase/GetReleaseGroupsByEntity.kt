@@ -5,9 +5,7 @@ import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsByEntityRepository
-import org.koin.core.annotation.Single
 
-@Single
 class GetReleaseGroupsByEntity(
     private val releaseGroupsByEntityRepository: ReleaseGroupsByEntityRepository,
 ) : GetEntitiesByEntity<ListItemModel> {

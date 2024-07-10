@@ -5,9 +5,7 @@ import ly.david.musicsearch.core.models.listitem.WorkListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
 import ly.david.musicsearch.shared.domain.work.WorksByEntityRepository
-import org.koin.core.annotation.Single
 
-@Single
 class GetWorksByEntity(
     private val worksByEntityRepository: WorksByEntityRepository,
 ) : GetEntitiesByEntity<WorkListItemModel> {

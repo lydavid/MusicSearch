@@ -2,9 +2,7 @@ package ly.david.musicsearch.shared.domain.relation.usecase
 
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
-import org.koin.core.annotation.Single
 
-@Single
 class GetEntityRelationships(
     private val relationRepository: RelationRepository,
 ) {

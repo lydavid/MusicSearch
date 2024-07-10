@@ -7,9 +7,7 @@ import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.area.AreasByEntityRepository
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
-import org.koin.core.annotation.Single
 
-@Single
 class GetAreasByEntity(
     private val areasByEntityRepository: AreasByEntityRepository,
 ) : GetEntitiesByEntity<AreaListItemModel> {

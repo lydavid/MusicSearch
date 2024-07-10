@@ -2,9 +2,7 @@ package ly.david.musicsearch.shared.domain.search.history.usecase
 
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.search.history.SearchHistoryRepository
-import org.koin.core.annotation.Single
 
-@Single
 class RecordSearchHistory(
     private val searchHistoryRepository: SearchHistoryRepository,
 ) {
@@ -12,6 +10,9 @@ class RecordSearchHistory(
         entity: MusicBrainzEntity,
         query: String,
     ) {
-        searchHistoryRepository.recordSearchHistory(entity, query)
+        searchHistoryRepository.recordSearchHistory(
+            entity,
+            query,
+        )
     }
 }

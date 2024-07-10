@@ -4,9 +4,7 @@ import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
-import org.koin.core.annotation.Single
 
-@Single
 class GetTracksByRelease(
     private val releaseRepository: ReleaseRepository,
 ) {

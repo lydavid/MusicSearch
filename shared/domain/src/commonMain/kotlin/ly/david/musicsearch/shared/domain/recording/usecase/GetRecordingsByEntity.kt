@@ -5,9 +5,7 @@ import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingsByEntityRepository
-import org.koin.core.annotation.Single
 
-@Single
 class GetRecordingsByEntity(
     private val recordingsByEntityRepository: RecordingsByEntityRepository,
 ) : GetEntitiesByEntity<RecordingListItemModel> {

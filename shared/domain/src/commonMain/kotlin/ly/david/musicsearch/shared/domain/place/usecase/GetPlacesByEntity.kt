@@ -5,9 +5,7 @@ import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
 import ly.david.musicsearch.shared.domain.place.PlacesByEntityRepository
-import org.koin.core.annotation.Single
 
-@Single
 class GetPlacesByEntity(
     private val placesByEntityRepository: PlacesByEntityRepository,
 ) : GetEntitiesByEntity<PlaceListItemModel> {
