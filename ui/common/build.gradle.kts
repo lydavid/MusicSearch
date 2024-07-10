@@ -6,7 +6,6 @@ plugins {
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.paparazzi)
     alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.ksp)
 }
 
 android {
@@ -35,7 +34,6 @@ kotlin {
                 implementation(libs.circuit.foundation)
                 implementation(libs.circuit.overlay)
                 implementation(libs.circuitx.overlays)
-                implementation(libs.koin.annotations)
                 implementation(libs.koin.core)
                 implementation(libs.lyricist.library)
                 implementation(libs.paging.common)
@@ -85,5 +83,4 @@ kotlin {
 dependencies {
     implementation(compose.preview)
     debugImplementation(compose.uiTooling)
-    add("kspJvm", libs.koin.ksp.compiler)
 }

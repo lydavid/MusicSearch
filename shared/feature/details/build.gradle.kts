@@ -4,7 +4,6 @@ plugins {
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.build.config)
     alias(libs.plugins.paparazzi)
-    alias(libs.plugins.ksp)
 }
 
 android {
@@ -43,9 +42,6 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.koin.android)
-                implementation(libs.koin.androidx.compose)
-                implementation(libs.koin.annotations)
                 implementation(compose.preview)
             }
         }
@@ -79,6 +75,4 @@ kotlin {
 
 dependencies {
     debugImplementation(libs.compose.ui.tooling)
-//    ksp(libs.koin.ksp.compiler)
-    add("kspAndroid", libs.koin.ksp.compiler)
 }

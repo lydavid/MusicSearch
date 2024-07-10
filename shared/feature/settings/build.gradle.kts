@@ -38,7 +38,6 @@ kotlin {
 
                 implementation(libs.circuit.foundation)
                 implementation(libs.koin.core)
-                implementation(libs.koin.annotations)
             }
         }
         val androidMain by getting {
@@ -46,7 +45,6 @@ kotlin {
                 implementation(libs.appauth)
 
                 implementation(libs.androidx.activity.compose)
-                implementation(libs.koin.androidx.compose)
             }
         }
         val androidUnitTest by getting {
