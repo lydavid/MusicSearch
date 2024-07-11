@@ -38,9 +38,21 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(projects.testData)
+                implementation(projects.core.coroutines)
                 implementation(libs.kotlin.test)
+                implementation(libs.koin.test)
                 implementation(libs.junit)
                 implementation(libs.kotlinx.coroutines.test)
+            }
+        }
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(libs.sqldelight.sqlite.driver)
+            }
+        }
+        val jvmTest by getting {
+            dependencies {
+                implementation(libs.sqldelight.sqlite.driver)
             }
         }
     }
