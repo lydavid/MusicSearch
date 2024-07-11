@@ -61,7 +61,15 @@ SELECT IFNULL(
 getReleasesByLabel:
 SELECT
   r.*,
-  GROUP_CONCAT(rl.catalog_number, ', ') AS catalogNumbers,
+  (
+    SELECT GROUP_CONCAT(catalog_number, ', ')
+    FROM (
+      SELECT DISTINCT rl2.catalog_number
+      FROM release_label rl2
+      WHERE rl2.release_id = r.id
+      ORDER BY rl2.catalog_number
+    ) AS distinct_catalogs
+  ) AS catalogNumbers,
   ac.name AS artistCreditNames,
   mi.thumbnail_url,
   (

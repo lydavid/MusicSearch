@@ -19,6 +19,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.repository.KoinTestRule
 import ly.david.musicsearch.data.repository.release.ReleasesByEntityRepositoryImpl
 import lydavidmusicsearchdatadatabase.Label
@@ -43,9 +44,10 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
     private val releaseLabelDao: ReleaseLabelDao by inject()
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
 
-    @Test
-    fun `releases by label - release with multiple catalog numbers`() = runTest {
-        val sut = ReleasesByEntityRepositoryImpl(
+    private fun createRepositoryWithFakeNetworkData(
+        releases: List<ReleaseMusicBrainzModel>,
+    ): ReleasesByEntityRepositoryImpl {
+        return ReleasesByEntityRepositoryImpl(
             artistReleaseDao = artistReleaseDao,
             browseEntityCountDao = browseEntityCountDao,
             collectionEntityDao = collectionEntityDao,
@@ -59,9 +61,7 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
                 ) = BrowseReleasesResponse(
                     count = 1,
                     offset = 0,
-                    musicBrainzModels = listOf(
-                        releaseWith3CatalogNumbersWithSameLabel,
-                    ),
+                    musicBrainzModels = releases,
                 )
             },
             recordingReleaseDao = recordingReleaseDao,
@@ -69,6 +69,15 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
             releaseCountryDao = releaseCountryDao,
             releaseLabelDao = releaseLabelDao,
             releaseReleaseGroupDao = releaseReleaseGroupDao,
+        )
+    }
+
+    @Test
+    fun `releases by label - release with multiple catalog numbers, multiple cover arts`() = runTest {
+        val sut = createRepositoryWithFakeNetworkData(
+            releases = listOf(
+                releaseWith3CatalogNumbersWithSameLabel,
+            ),
         )
 
         // Although I could use the label repository here, it will require standing up more fakes
@@ -85,6 +94,17 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
                 ended = null,
                 end = null,
             ),
+        )
+
+        database.mbid_imageQueries.insert(
+            mbid = releaseWith3CatalogNumbersWithSameLabel.id,
+            thumbnail_url = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+            large_url = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-1200.jpg",
+        )
+        database.mbid_imageQueries.insert(
+            mbid = releaseWith3CatalogNumbersWithSameLabel.id,
+            thumbnail_url = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-250.jpg",
+            large_url = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-1200.jpg",
         )
 
         val flow: Flow<PagingData<ReleaseListItemModel>> = sut.observeReleasesByEntity(
