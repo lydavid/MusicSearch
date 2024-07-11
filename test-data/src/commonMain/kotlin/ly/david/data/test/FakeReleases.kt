@@ -9,8 +9,12 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.CoverArtArchiveMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.TextRepresentationMusicBrainzModel
 
 val underPressureRemastered = ReleaseMusicBrainzModel(
     id = "eac6d0cd-1ed0-4e17-b5b0-d3cfc40547b2",
@@ -52,22 +56,57 @@ val underPressure = ReleaseMusicBrainzModel(
     relations = listOf(underPressureRemasterOf),
 )
 
+val ado = ArtistCreditMusicBrainzModel(
+    artist = ArtistMusicBrainzModel(
+        id = "e134b52f-2e9e-4734-9bc3-bea9648d1fa1",
+        type = "Person",
+        sortName = "Ado",
+        typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+        disambiguation = "Japanese vocalist",
+        name = "Ado",
+    ),
+    name = "Ado",
+    joinPhrase = "",
+)
+
 val releaseWith3CatalogNumbersWithSameLabel = ReleaseMusicBrainzModel(
     id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
     name = "ウタの歌 ONE PIECE FILM RED",
+    disambiguation = "初回限定盤",
+    quality = "normal",
+    status = "Official",
+    asin = "B0B392M9SC",
+    packaging = "Jewel Case",
+    date = "2022-08-10",
+    countryCode = "JP",
+    barcode = "4988031519660",
+    textRepresentation = TextRepresentationMusicBrainzModel(
+        script = "Jpan",
+        language = "jpn",
+    ),
     artistCredits = listOf(
-        ArtistCreditMusicBrainzModel(
-            artist = ArtistMusicBrainzModel(
-                id = "e134b52f-2e9e-4734-9bc3-bea9648d1fa1",
-                type = "Person",
-                sortName = "Ado",
-                typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
-                disambiguation = "Japanese vocalist",
-                name = "Ado",
+        ado
+    ),
+    releaseGroup = ReleaseGroupMusicBrainzModel(
+        id = "22760f81-37ce-47ce-98b6-65f8a285f083",
+        name = "ウタの歌 ONE PIECE FILM RED",
+        primaryType = "Album",
+        secondaryTypes = listOf(),
+        disambiguation = "",
+        artistCredits = listOf(ado),
+        firstReleaseDate = "2022-08-10"
+    ),
+    releaseEvents = listOf(
+        ReleaseEventMusicBrainzModel(
+            area = AreaMusicBrainzModel(
+                id = "2db42837-c832-3c27-b4a3-08198f75693c",
+                name = "Japan",
+                disambiguation = "",
+                countryCodes = listOf("JP"),
+                sortName = "Japan"
             ),
-            name = "Ado",
-            joinPhrase = "",
-        ),
+            date = "2022-08-10",
+        )
     ),
     labelInfoList = listOf(
         LabelInfo(
@@ -103,6 +142,9 @@ val releaseWith3CatalogNumbersWithSameLabel = ReleaseMusicBrainzModel(
                 typeId = "7aaa37fe-2def-3476-b359-80245850062d",
             ),
         ),
+    ),
+    coverArtArchive = CoverArtArchiveMusicBrainzModel(
+        count = 11,
     ),
 )
 

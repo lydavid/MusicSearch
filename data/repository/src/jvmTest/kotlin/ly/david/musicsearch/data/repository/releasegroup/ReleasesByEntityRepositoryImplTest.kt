@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
-import ly.david.data.test.api.FakeMusicBrainzApi
+import ly.david.data.test.releaseWith3CatalogNumbersWithSameLabel
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -17,7 +17,8 @@ import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseApi
+import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.repository.release.ReleasesByEntityRepositoryImpl
 import lydavidmusicsearchdatadatabase.Label
 import org.junit.Assert.assertEquals
@@ -31,14 +32,10 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    // Copy and paste the SUT's parameters
-    // Inject for all DAOs
-    // Swap out network APIs for fake
     private val database: Database by inject()
     private val artistReleaseDao: ArtistReleaseDao by inject()
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
-    private val musicBrainzApi: MusicBrainzApi = FakeMusicBrainzApi()
     private val recordingReleaseDao: RecordingReleaseDao by inject()
     private val releaseDao: ReleaseDao by inject()
     private val releaseCountryDao: ReleaseCountryDao by inject()
@@ -46,12 +43,26 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
 
     @Test
-    fun `release with multiple catalog numbers`() = runTest {
-        val repository = ReleasesByEntityRepositoryImpl(
+    fun `releases by label - release with multiple catalog numbers`() = runTest {
+        val sut = ReleasesByEntityRepositoryImpl(
             artistReleaseDao = artistReleaseDao,
             browseEntityCountDao = browseEntityCountDao,
             collectionEntityDao = collectionEntityDao,
-            musicBrainzApi = musicBrainzApi,
+            browseReleaseApi = object : BrowseReleaseApi {
+                override suspend fun browseReleasesByEntity(
+                    entityId: String,
+                    entity: MusicBrainzEntity,
+                    limit: Int,
+                    offset: Int,
+                    include: String,
+                ) = BrowseReleasesResponse(
+                    count = 1,
+                    offset = 0,
+                    musicBrainzModels = listOf(
+                        releaseWith3CatalogNumbersWithSameLabel,
+                    ),
+                )
+            },
             recordingReleaseDao = recordingReleaseDao,
             releaseDao = releaseDao,
             releaseCountryDao = releaseCountryDao,
@@ -59,22 +70,23 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
             releaseReleaseGroupDao = releaseReleaseGroupDao,
         )
 
-        // TODO: use repository?
+        // Although I could use the label repository here, it will require standing up more fakes
+        // I feel like it will pollute the test case more than its worth
         database.labelQueries.insert(
             Label(
                 id = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
-                name = "",
-                disambiguation = "",
-                type = null,
-                type_id = "",
-                label_code = 0,
-                begin = "",
+                name = "Virgin Music",
+                disambiguation = "a division of Universal Music Japan created in 2014 that replaces EMI R",
+                type = "Original Production",
+                type_id = "7aaa37fe-2def-3476-b359-80245850062d",
+                label_code = null,
+                begin = null,
                 ended = null,
-                end = "",
+                end = null,
             ),
         )
 
-        val flow: Flow<PagingData<ReleaseListItemModel>> = repository.observeReleasesByEntity(
+        val flow: Flow<PagingData<ReleaseListItemModel>> = sut.observeReleasesByEntity(
             entityId = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
             MusicBrainzEntity.LABEL,
             listFilters = ListFilters(

@@ -3,9 +3,6 @@ package ly.david.musicsearch.data.repository.release
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -17,6 +14,11 @@ import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
+import ly.david.musicsearch.data.musicbrainz.api.ARTIST_CREDITS
+import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseApi
+import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
+import ly.david.musicsearch.data.musicbrainz.api.LABELS
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.shared.domain.release.ReleasesByEntityRepository
 
@@ -24,7 +26,7 @@ class ReleasesByEntityRepositoryImpl(
     private val artistReleaseDao: ArtistReleaseDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val browseReleaseApi: BrowseReleaseApi,
     private val recordingReleaseDao: RecordingReleaseDao,
     private val releaseDao: ReleaseDao,
     private val releaseCountryDao: ReleaseCountryDao,
@@ -146,49 +148,22 @@ class ReleasesByEntityRepositoryImpl(
         offset: Int,
     ): BrowseReleasesResponse {
         return when (entity) {
-            MusicBrainzEntity.AREA -> {
-                musicBrainzApi.browseReleasesByArea(
-                    areaId = entityId,
-                    offset = offset,
-                )
-            }
-
-            MusicBrainzEntity.ARTIST -> {
-                musicBrainzApi.browseReleasesByArtist(
-                    artistId = entityId,
-                    offset = offset,
-                )
-            }
-
-            MusicBrainzEntity.COLLECTION -> {
-                musicBrainzApi.browseReleasesByCollection(
-                    collectionId = entityId,
-                    offset = offset,
-                )
-            }
-
             MusicBrainzEntity.LABEL -> {
-                musicBrainzApi.browseReleasesByLabel(
-                    labelId = entityId,
+                browseReleaseApi.browseReleasesByEntity(
+                    entityId = entityId,
+                    entity = entity,
                     offset = offset,
+                    include = "$ARTIST_CREDITS+$LABELS",
                 )
             }
 
-            MusicBrainzEntity.RECORDING -> {
-                musicBrainzApi.browseReleasesByRecording(
-                    recordingId = entityId,
+            else -> {
+                browseReleaseApi.browseReleasesByEntity(
+                    entityId = entityId,
+                    entity = entity,
                     offset = offset,
                 )
             }
-
-            MusicBrainzEntity.RELEASE_GROUP -> {
-                musicBrainzApi.browseReleasesByReleaseGroup(
-                    releaseGroupId = entityId,
-                    offset = offset,
-                )
-            }
-
-            else -> error(browseEntitiesNotSupported(entity))
         }
     }
 
