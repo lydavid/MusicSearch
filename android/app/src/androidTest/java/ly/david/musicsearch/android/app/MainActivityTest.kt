@@ -17,8 +17,8 @@ import org.koin.test.KoinTest
 
 internal abstract class MainActivityTest : KoinTest {
 
-    @get:Rule(order = 0)
-    val koinTestRule = KoinTestRule()
+//    @get:Rule(order = 0)
+//    val koinTestRule = KoinTestRule()
 
     @get:Rule(order = 1)
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -30,7 +30,10 @@ internal abstract class MainActivityTest : KoinTest {
 
     @OptIn(ExperimentalTestApi::class)
     fun waitForNodeToShow(matcher: SemanticsMatcher) {
-        composeTestRule.waitUntilAtLeastOneExists(matcher, 10_000L)
+        composeTestRule.waitUntilAtLeastOneExists(
+            matcher,
+            10_000L,
+        )
     }
 
     private fun waitForTextToShow(text: String) {

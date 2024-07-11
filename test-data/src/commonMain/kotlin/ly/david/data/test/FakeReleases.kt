@@ -85,7 +85,7 @@ val releaseWith3CatalogNumbersWithSameLabel = ReleaseMusicBrainzModel(
         language = "jpn",
     ),
     artistCredits = listOf(
-        ado
+        ado,
     ),
     releaseGroup = ReleaseGroupMusicBrainzModel(
         id = "22760f81-37ce-47ce-98b6-65f8a285f083",
@@ -94,7 +94,7 @@ val releaseWith3CatalogNumbersWithSameLabel = ReleaseMusicBrainzModel(
         secondaryTypes = listOf(),
         disambiguation = "",
         artistCredits = listOf(ado),
-        firstReleaseDate = "2022-08-10"
+        firstReleaseDate = "2022-08-10",
     ),
     releaseEvents = listOf(
         ReleaseEventMusicBrainzModel(
@@ -103,10 +103,10 @@ val releaseWith3CatalogNumbersWithSameLabel = ReleaseMusicBrainzModel(
                 name = "Japan",
                 disambiguation = "",
                 countryCodes = listOf("JP"),
-                sortName = "Japan"
+                sortName = "Japan",
             ),
             date = "2022-08-10",
-        )
+        ),
     ),
     labelInfoList = listOf(
         LabelInfo(

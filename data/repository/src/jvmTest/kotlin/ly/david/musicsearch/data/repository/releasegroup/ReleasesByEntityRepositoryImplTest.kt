@@ -19,6 +19,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
+import ly.david.musicsearch.data.repository.KoinTestRule
 import ly.david.musicsearch.data.repository.release.ReleasesByEntityRepositoryImpl
 import lydavidmusicsearchdatadatabase.Label
 import org.junit.Assert.assertEquals
