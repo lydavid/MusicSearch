@@ -43,6 +43,7 @@ kotlin {
                 implementation(libs.koin.test)
                 implementation(libs.junit)
                 implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.androidx.paging.testing)
             }
         }
         val androidUnitTest by getting {

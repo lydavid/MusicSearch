@@ -1,8 +1,14 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
-import kotlinx.coroutines.runBlocking
+import androidx.paging.PagingData
+import androidx.paging.testing.asSnapshot
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.test.runTest
 import ly.david.data.test.api.FakeMusicBrainzApi
+import ly.david.musicsearch.core.models.ListFilters
+import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -13,8 +19,8 @@ import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.repository.release.ReleasesByEntityRepositoryImpl
+import lydavidmusicsearchdatadatabase.Label
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
@@ -25,6 +31,10 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
+    // Copy and paste the SUT's parameters
+    // Inject for all DAOs
+    // Swap out network APIs for fake
+    private val database: Database by inject()
     private val artistReleaseDao: ArtistReleaseDao by inject()
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
@@ -35,12 +45,8 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
     private val releaseLabelDao: ReleaseLabelDao by inject()
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
 
-    @Before
-    fun setup() {
-    }
-
     @Test
-    fun e() = runBlocking {
+    fun `release with multiple catalog numbers`() = runTest {
         val repository = ReleasesByEntityRepositoryImpl(
             artistReleaseDao = artistReleaseDao,
             browseEntityCountDao = browseEntityCountDao,
@@ -52,13 +58,43 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
             releaseLabelDao = releaseLabelDao,
             releaseReleaseGroupDao = releaseReleaseGroupDao,
         )
-        assertEquals(
-            "",
-            repository.browseEntities(
-                "",
-                MusicBrainzEntity.LABEL,
-                0
+
+        // TODO: use repository?
+        database.labelQueries.insert(
+            Label(
+                id = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
+                name = "",
+                disambiguation = "",
+                type = null,
+                type_id = "",
+                label_code = 0,
+                begin = "",
+                ended = null,
+                end = "",
             ),
+        )
+
+        val flow: Flow<PagingData<ReleaseListItemModel>> = repository.observeReleasesByEntity(
+            entityId = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
+            MusicBrainzEntity.LABEL,
+            listFilters = ListFilters(
+                query = "ウタ",
+            ),
+        )
+        val releases: List<ReleaseListItemModel> = flow.asSnapshot()
+
+        assertEquals(
+            1,
+            releases.size,
+        )
+        val release: ReleaseListItemModel = releases[0]
+        assertEquals(
+            "ウタの歌 ONE PIECE FILM RED",
+            release.name,
+        )
+        assertEquals(
+            "TYBX-10260, TYCT-69245, TYCX-60187",
+            release.catalogNumbers,
         )
     }
 }
