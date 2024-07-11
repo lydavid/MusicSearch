@@ -1,6 +1,6 @@
 [versions]
 aboutlibraries = "11.2.2"
-androidGradlePlugin = "8.5.0"
+androidGradlePlugin = "8.5.1"
 chucker = "4.0.0"
 circuit = "0.22.2"
 coil = "3.0.0-alpha08"
