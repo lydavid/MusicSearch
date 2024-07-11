@@ -24,8 +24,18 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 
-internal const val ARTIST_CREDITS = "artist-credits"
-internal const val LABELS = "labels"
+const val ARTIST_CREDITS = "artist-credits"
+const val LABELS = "labels"
+
+interface BrowseReleaseApi {
+    suspend fun browseReleasesByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
+        include: String = ARTIST_CREDITS,
+    ): BrowseReleasesResponse
+}
 
 /**
  * See [browse API](https://wiki.musicbrainz.org/MusicBrainz_API#Browse).
@@ -33,7 +43,7 @@ internal const val LABELS = "labels"
  * Get entities directly linked to another entity. Such as all release groups by an artist.
  * This is the only type of request with pagination.
  */
-interface BrowseApi {
+interface BrowseApi : BrowseReleaseApi {
 
     suspend fun browseAreasByCollection(
         collectionId: String,
@@ -94,48 +104,6 @@ interface BrowseApi {
         offset: Int = 0,
         include: String = ARTIST_CREDITS,
     ): BrowseRecordingsResponse
-
-    suspend fun browseReleasesByArea(
-        areaId: String,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-        include: String = ARTIST_CREDITS,
-    ): BrowseReleasesResponse
-
-    suspend fun browseReleasesByArtist(
-        artistId: String,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-        include: String = ARTIST_CREDITS,
-    ): BrowseReleasesResponse
-
-    suspend fun browseReleasesByCollection(
-        collectionId: String,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-        include: String = ARTIST_CREDITS,
-    ): BrowseReleasesResponse
-
-    suspend fun browseReleasesByLabel(
-        labelId: String,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-        include: String = "$ARTIST_CREDITS+$LABELS",
-    ): BrowseReleasesResponse
-
-    suspend fun browseReleasesByRecording(
-        recordingId: String,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-        include: String = ARTIST_CREDITS,
-    ): BrowseReleasesResponse
-
-    suspend fun browseReleasesByReleaseGroup(
-        releaseGroupId: String,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-        include: String = ARTIST_CREDITS,
-    ): BrowseReleasesResponse
 
     suspend fun browseReleaseGroupsByArtist(
         artistId: String,
@@ -398,8 +366,9 @@ interface BrowseApiImpl : BrowseApi {
         }.body()
     }
 
-    override suspend fun browseReleasesByArea(
-        areaId: String,
+    override suspend fun browseReleasesByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
         include: String,
@@ -408,153 +377,8 @@ interface BrowseApiImpl : BrowseApi {
             url {
                 appendPathSegments("release")
                 parameter(
-                    "area",
-                    areaId,
-                )
-                parameter(
-                    "limit",
-                    limit,
-                )
-                parameter(
-                    "offset",
-                    offset,
-                )
-                parameter(
-                    "inc",
-                    include,
-                )
-            }
-        }.body()
-    }
-
-    override suspend fun browseReleasesByArtist(
-        artistId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseReleasesResponse {
-        return httpClient.get {
-            url {
-                appendPathSegments("release")
-                parameter(
-                    "artist",
-                    artistId,
-                )
-                parameter(
-                    "limit",
-                    limit,
-                )
-                parameter(
-                    "offset",
-                    offset,
-                )
-                parameter(
-                    "inc",
-                    include,
-                )
-            }
-        }.body()
-    }
-
-    override suspend fun browseReleasesByCollection(
-        collectionId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseReleasesResponse {
-        return httpClient.get {
-            url {
-                appendPathSegments("release")
-                parameter(
-                    "collection",
-                    collectionId,
-                )
-                parameter(
-                    "limit",
-                    limit,
-                )
-                parameter(
-                    "offset",
-                    offset,
-                )
-                parameter(
-                    "inc",
-                    include,
-                )
-            }
-        }.body()
-    }
-
-    override suspend fun browseReleasesByLabel(
-        labelId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseReleasesResponse {
-        return httpClient.get {
-            url {
-                appendPathSegments("release")
-                parameter(
-                    "label",
-                    labelId,
-                )
-                parameter(
-                    "limit",
-                    limit,
-                )
-                parameter(
-                    "offset",
-                    offset,
-                )
-                parameter(
-                    "inc",
-                    include,
-                )
-            }
-        }.body()
-    }
-
-    override suspend fun browseReleasesByRecording(
-        recordingId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseReleasesResponse {
-        return httpClient.get {
-            url {
-                appendPathSegments("release")
-                parameter(
-                    "recording",
-                    recordingId,
-                )
-                parameter(
-                    "limit",
-                    limit,
-                )
-                parameter(
-                    "offset",
-                    offset,
-                )
-                parameter(
-                    "inc",
-                    include,
-                )
-            }
-        }.body()
-    }
-
-    override suspend fun browseReleasesByReleaseGroup(
-        releaseGroupId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseReleasesResponse {
-        return httpClient.get {
-            url {
-                appendPathSegments("release")
-                parameter(
-                    "release-group",
-                    releaseGroupId,
+                    entity.resourceUri,
+                    entityId,
                 )
                 parameter(
                     "limit",

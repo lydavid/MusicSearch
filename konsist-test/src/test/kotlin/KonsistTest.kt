@@ -94,7 +94,6 @@ class KonsistTest {
 
     // https://docs.konsist.lemonappdev.com/inspiration/snippets/test-snippets
 
-    // Currently only tests itself, cause all other tests uses org.junit.Test
     @Test
     fun `classes with 'Test' Annotation should have 'Test' suffix`() {
         Konsist
@@ -104,7 +103,8 @@ class KonsistTest {
             )
             .classes()
             .filter {
-                it.functions().any { func -> func.hasAnnotationOf(Test::class) }
+                it.functions().any { func -> func.hasAnnotationOf(Test::class) } ||
+                    it.functions().any { func -> func.hasAnnotationWithName("org.junit.Test") }
             }
             .assertTrue { it.hasNameEndingWith("Test") }
     }

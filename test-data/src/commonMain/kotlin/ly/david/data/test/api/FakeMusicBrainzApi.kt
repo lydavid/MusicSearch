@@ -197,53 +197,9 @@ class FakeMusicBrainzApi : MusicBrainzApi {
         return browseRecordingsResponse
     }
 
-    override suspend fun browseReleasesByArea(
-        areaId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseReleasesResponse {
-        return browseReleasesResponse
-    }
-
-    override suspend fun browseReleasesByArtist(
-        artistId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseReleasesResponse {
-        return browseReleasesResponse
-    }
-
-    override suspend fun browseReleasesByCollection(
-        collectionId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseReleasesResponse {
-        return browseReleasesResponse
-    }
-
-    override suspend fun browseReleasesByLabel(
-        labelId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseReleasesResponse {
-        return browseReleasesResponse
-    }
-
-    override suspend fun browseReleasesByRecording(
-        recordingId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseReleasesResponse {
-        return browseReleasesResponse
-    }
-
-    override suspend fun browseReleasesByReleaseGroup(
-        releaseGroupId: String,
+    override suspend fun browseReleasesByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
         include: String,
