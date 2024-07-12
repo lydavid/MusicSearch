@@ -1,6 +1,3 @@
-stable class DomainModule {
-  <runtime stability> = Stable
-}
 runtime class GetAreasByEntity {
   runtime val areasByEntityRepository: AreasByEntityRepository
   <runtime stability> = Uncertain(AreasByEntityRepository)

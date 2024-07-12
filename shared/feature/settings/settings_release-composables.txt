@@ -56,7 +56,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
   stable versionName: String? = @static ""
   stable versionCode: Int = @static 0
 )
-fun present(
+scheme("[presenter]") fun present(
   stable <this>: SettingsPresenter
 ): SettingsUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ProfileCard(

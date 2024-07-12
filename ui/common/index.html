@@ -160,7 +160,7 @@ footer {
           </tr>
           <tr>
             <th>Known Stable Arguments</th>
-            <td>3235</td>
+            <td>3247</td>
           </tr>
           <tr>
             <th>Known Unstable Arguments</th>
@@ -172,7 +172,7 @@ footer {
           </tr>
           <tr>
             <th>Total Arguments</th>
-            <td>3353</td>
+            <td>3365</td>
           </tr>
           <tr>
             <th>Marked Stable Classes</th>
@@ -307,7 +307,7 @@ footer {
             <td>0</td>
             <td>0</td>
             <td>1</td>
-            <td>6</td>
+            <td>7</td>
           </tr>
           <tr>
             <td>ly.david.musicsearch.ui.common.artist.ArtistsListScreen</td>
@@ -405,7 +405,7 @@ footer {
             <td>0</td>
             <td>0</td>
             <td>1</td>
-            <td>6</td>
+            <td>7</td>
           </tr>
           <tr>
             <td>ly.david.musicsearch.ui.common.event.EventsListScreen</td>
@@ -531,7 +531,7 @@ footer {
             <td>0</td>
             <td>0</td>
             <td>1</td>
-            <td>6</td>
+            <td>7</td>
           </tr>
           <tr>
             <td>ly.david.musicsearch.ui.common.label.LabelsListScreen</td>
@@ -699,7 +699,7 @@ footer {
             <td>0</td>
             <td>0</td>
             <td>1</td>
-            <td>5</td>
+            <td>6</td>
           </tr>
           <tr>
             <td>ly.david.musicsearch.ui.common.place.PlacesListScreen</td>
@@ -797,7 +797,7 @@ footer {
             <td>0</td>
             <td>0</td>
             <td>1</td>
-            <td>5</td>
+            <td>6</td>
           </tr>
           <tr>
             <td>ly.david.musicsearch.ui.common.release.ReleaseListItem</td>
@@ -825,7 +825,7 @@ footer {
             <td>0</td>
             <td>0</td>
             <td>1</td>
-            <td>8</td>
+            <td>9</td>
           </tr>
           <tr>
             <td>ly.david.musicsearch.ui.common.release.ReleasesListScreen</td>
@@ -5743,11 +5743,17 @@ Stable</span></span><span class="code"> class ArtistsByEntityUiState</span></h3>
                     <tr style="color:#000000;background-color:#B2DFDB;">
                       <td>2</td>
                       <td>STABLE</td>
+                      <td class="code">val artistsLazyListState</td>
+                      <td class="code">LazyListState</td>
+                    </tr>
+                    <tr style="color:#000000;background-color:#B2DFDB;">
+                      <td>3</td>
+                      <td>STABLE</td>
                       <td class="code">val showMoreInfo</td>
                       <td class="code">Boolean</td>
                     </tr>
                     <tr style="color:#000000;background-color:#B2DFDB;">
-                      <td>3</td>
+                      <td>4</td>
                       <td>STABLE</td>
                       <td class="code">val eventSink</td>
                       <td class="code">Function1&lt;ArtistsByEntityUiEvent, Unit&gt;</td>
@@ -5855,6 +5861,12 @@ Stable</span></span><span class="code"> class EventsByEntityUiState</span></h3>
                     <tr style="color:#000000;background-color:#B2DFDB;">
                       <td>2</td>
                       <td>STABLE</td>
+                      <td class="code">val eventsLazyListState</td>
+                      <td class="code">LazyListState</td>
+                    </tr>
+                    <tr style="color:#000000;background-color:#B2DFDB;">
+                      <td>3</td>
+                      <td>STABLE</td>
                       <td class="code">val eventSink</td>
                       <td class="code">Function1&lt;EventsByEntityUiEvent, Unit&gt;</td>
                     </tr>
@@ -5960,6 +5972,12 @@ Stable</span></span><span class="code"> class LabelsByEntityUiState</span></h3>
                     </tr>
                     <tr style="color:#000000;background-color:#B2DFDB;">
                       <td>2</td>
+                      <td>STABLE</td>
+                      <td class="code">val labelsLazyListState</td>
+                      <td class="code">LazyListState</td>
+                    </tr>
+                    <tr style="color:#000000;background-color:#B2DFDB;">
+                      <td>3</td>
                       <td>STABLE</td>
                       <td class="code">val eventSink</td>
                       <td class="code">Function1&lt;LabelsByEntityUiEvent, Unit&gt;</td>
@@ -6088,6 +6106,12 @@ Stable</span></span><span class="code"> class PlacesByEntityUiState</span></h3>
                     </tr>
                     <tr style="color:#000000;background-color:#B2DFDB;">
                       <td>2</td>
+                      <td>STABLE</td>
+                      <td class="code">val placesLazyListState</td>
+                      <td class="code">LazyListState</td>
+                    </tr>
+                    <tr style="color:#000000;background-color:#B2DFDB;">
+                      <td>3</td>
                       <td>STABLE</td>
                       <td class="code">val eventSink</td>
                       <td class="code">Function1&lt;PlacesByEntityUiEvent, Unit&gt;</td>
@@ -6295,6 +6319,12 @@ Stable</span></span><span class="code"> class RelationsUiState</span></h3>
                     <tr style="color:#000000;background-color:#B2DFDB;">
                       <td>2</td>
                       <td>STABLE</td>
+                      <td class="code">val relationsLazyListState</td>
+                      <td class="code">LazyListState</td>
+                    </tr>
+                    <tr style="color:#000000;background-color:#B2DFDB;">
+                      <td>3</td>
+                      <td>STABLE</td>
                       <td class="code">val eventSink</td>
                       <td class="code">Function1&lt;RelationsUiEvent, Unit&gt;</td>
                     </tr>
@@ -6463,11 +6493,17 @@ Stable</span></span><span class="code"> class ReleasesByEntityUiState</span></h3
                     <tr style="color:#000000;background-color:#B2DFDB;">
                       <td>2</td>
                       <td>STABLE</td>
+                      <td class="code">val releasesLazyListState</td>
+                      <td class="code">LazyListState</td>
+                    </tr>
+                    <tr style="color:#000000;background-color:#B2DFDB;">
+                      <td>3</td>
+                      <td>STABLE</td>
                       <td class="code">val showMoreInfo</td>
                       <td class="code">Boolean</td>
                     </tr>
                     <tr style="color:#000000;background-color:#B2DFDB;">
-                      <td>3</td>
+                      <td>4</td>
                       <td>STABLE</td>
                       <td class="code">val eventSink</td>
                       <td class="code">Function1&lt;ReleasesByEntityUiEvent, Unit&gt;</td>

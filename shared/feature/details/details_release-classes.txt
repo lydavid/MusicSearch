@@ -19,6 +19,7 @@ stable class AreaUiState {
   unstable val tabs: List<AreaTab>
   stable val selectedTab: AreaTab
   stable val query: String
+  stable val detailsLazyListState: LazyListState
   stable val artistsByEntityUiState: ArtistsByEntityUiState
   stable val eventsByEntityUiState: EventsByEntityUiState
   stable val labelsByEntityUiState: LabelsByEntityUiState

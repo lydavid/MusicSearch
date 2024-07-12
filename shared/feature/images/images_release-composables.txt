@@ -7,11 +7,12 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArts
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsUi(
   stable modifier: Modifier? = @static Companion
+  stable isCompact: Boolean = @static false
   imageUrlsList: ImmutableList<ImageUrls>? = @static persistentListOf()
   stable onBack: Function0<Unit>? = @static {
 
 }
 
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsUiOne()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsUiMultiple()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsUiCompact()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsUiNonCompact()

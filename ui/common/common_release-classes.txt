@@ -14,6 +14,7 @@ stable class UpdateQuery {
 }
 stable class ArtistsByEntityUiState {
   runtime val lazyPagingItems: LazyPagingItems<ArtistListItemModel>
+  stable val artistsLazyListState: LazyListState
   stable val showMoreInfo: Boolean
   stable val eventSink: Function1<ArtistsByEntityUiEvent, Unit>
 }
@@ -33,6 +34,7 @@ stable class UpdateQuery {
 }
 stable class EventsByEntityUiState {
   runtime val lazyPagingItems: LazyPagingItems<EventListItemModel>
+  stable val eventsLazyListState: LazyListState
   stable val eventSink: Function1<EventsByEntityUiEvent, Unit>
 }
 stable class LabelsByEntityPresenter {
@@ -51,6 +53,7 @@ stable class UpdateQuery {
 }
 stable class LabelsByEntityUiState {
   runtime val lazyPagingItems: LazyPagingItems<LabelListItemModel>
+  stable val labelsLazyListState: LazyListState
   stable val eventSink: Function1<LabelsByEntityUiEvent, Unit>
 }
 stable class State {
@@ -83,6 +86,7 @@ stable class UpdateQuery {
 }
 stable class PlacesByEntityUiState {
   runtime val lazyPagingItems: LazyPagingItems<PlaceListItemModel>
+  stable val placesLazyListState: LazyListState
   stable val eventSink: Function1<PlacesByEntityUiEvent, Unit>
 }
 stable class RecordingsByEntityPresenter {
@@ -118,6 +122,7 @@ stable class UpdateQuery {
 }
 stable class RelationsUiState {
   runtime val lazyPagingItems: LazyPagingItems<RelationListItemModel>
+  stable val relationsLazyListState: LazyListState
   stable val eventSink: Function1<RelationsUiEvent, Unit>
 }
 stable class ReleasesByEntityPresenter {
@@ -147,6 +152,7 @@ stable class RequestForMissingCoverArtUrl {
 }
 stable class ReleasesByEntityUiState {
   runtime val lazyPagingItems: LazyPagingItems<ReleaseListItemModel>
+  stable val releasesLazyListState: LazyListState
   stable val showMoreInfo: Boolean
   stable val eventSink: Function1<ReleasesByEntityUiEvent, Unit>
 }
