@@ -69,8 +69,6 @@ interface LookupApi {
                 WORK_REL
     }
 
-    // TODO: lookup with all rels might be a bit too much, especially since there's no pagination
-    //  It takes 10s to retrieve 7.6MB of data for the city of New York, with 19381 relationships...
     suspend fun lookupArea(
         areaId: String,
 

@@ -4,7 +4,6 @@ import app.cash.paging.PagingSource
 import app.cash.paging.PagingState
 import app.cash.paging.RemoteMediator
 import kotlinx.coroutines.delay
-import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
@@ -24,6 +23,11 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.core.models.release.TextRepresentationUiModel
 import ly.david.musicsearch.core.models.work.WorkAttributeUiModel
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
+import ly.david.musicsearch.data.musicbrainz.DELAY_PAGED_API_CALLS_MS
+import ly.david.musicsearch.data.musicbrainz.STARTING_OFFSET
+import ly.david.musicsearch.data.musicbrainz.api.SearchApi
+import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.CoverArtArchiveMusicBrainzModel
@@ -40,10 +44,6 @@ import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.TextRepresentationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkAttributeMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.DELAY_PAGED_API_CALLS_MS
-import ly.david.musicsearch.data.musicbrainz.STARTING_OFFSET
-import ly.david.musicsearch.data.musicbrainz.api.SearchApi
-import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 
 /**
  * This is not a [RemoteMediator] compared to [BrowseEntityRemoteMediator] and [LookupEntityRemoteMediator].
@@ -246,15 +246,11 @@ internal class SearchMusicBrainzPagingSource(
                 )
             }
 
-            // TODO: The following are not searchable. Is there a better model to switch on?
             MusicBrainzEntity.COLLECTION,
             MusicBrainzEntity.GENRE,
             MusicBrainzEntity.URL,
             -> {
-                QueryResults(
-                    offset = 0,
-                    data = listOf(),
-                )
+                error(IllegalStateException("Cannot search $entity"))
             }
         }
     }
