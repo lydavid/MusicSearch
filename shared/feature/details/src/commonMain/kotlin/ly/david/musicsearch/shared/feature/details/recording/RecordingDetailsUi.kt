@@ -9,7 +9,7 @@ import ly.david.musicsearch.core.models.common.ifNotNull
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.common.toDisplayTime
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.recording.RecordingScaffoldModel
+import ly.david.musicsearch.core.models.recording.RecordingDetailsModel
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -17,7 +17,7 @@ import ly.david.musicsearch.ui.common.url.UrlsSection
 
 @Composable
 internal fun RecordingDetailsUi(
-    recording: RecordingScaffoldModel,
+    recording: RecordingDetailsModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),

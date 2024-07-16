@@ -6,7 +6,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.core.models.area.AreaType.COUNTRY
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.listitem.LabelListItemModel
-import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
+import ly.david.musicsearch.core.models.release.ReleaseDetailsModel
 import ly.david.musicsearch.core.models.release.TextRepresentationUiModel
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
@@ -16,7 +16,7 @@ internal fun PreviewReleaseDetailsUi() {
     PreviewTheme {
         Surface {
             ReleaseDetailsUi(
-                release = ReleaseScaffoldModel(
+                release = ReleaseDetailsModel(
                     id = "r1",
                     name = "Release",
                     date = "1000-10-10",

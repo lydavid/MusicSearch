@@ -6,7 +6,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.work.WorkAttributeUiModel
-import ly.david.musicsearch.core.models.work.WorkScaffoldModel
+import ly.david.musicsearch.core.models.work.WorkDetailsModel
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
@@ -15,7 +15,7 @@ internal fun PreviewWorkDetailsUi() {
     PreviewTheme {
         Surface {
             WorkDetailsUi(
-                work = WorkScaffoldModel(
+                work = WorkDetailsModel(
                     id = "w1",
                     name = "Work",
                     type = "Song",

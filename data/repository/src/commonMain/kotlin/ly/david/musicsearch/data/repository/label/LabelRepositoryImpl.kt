@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.label
 
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.core.models.label.LabelScaffoldModel
+import ly.david.musicsearch.core.models.label.LabelDetailsModel
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.label.LabelRepository
@@ -14,7 +14,7 @@ class LabelRepositoryImpl(
     private val relationRepository: RelationRepository,
 ) : LabelRepository {
 
-    override suspend fun lookupLabel(labelId: String): LabelScaffoldModel {
+    override suspend fun lookupLabel(labelId: String): LabelDetailsModel {
         val label = labelDao.getLabelForDetails(labelId)
         val urlRelations = relationRepository.getEntityUrlRelationships(labelId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(labelId)

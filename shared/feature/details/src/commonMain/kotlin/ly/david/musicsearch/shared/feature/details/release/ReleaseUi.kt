@@ -164,7 +164,7 @@ internal fun ReleaseUi(
                         onRefresh = {
                             eventSink(ReleaseUiEvent.ForceRefresh)
                         },
-                        scaffoldModel = state.release,
+                        detailsModel = state.release,
                     ) { release ->
                         ReleaseDetailsUi(
                             release = release,

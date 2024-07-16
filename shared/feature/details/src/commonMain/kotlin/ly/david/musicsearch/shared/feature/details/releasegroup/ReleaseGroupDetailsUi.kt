@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
-import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupScaffoldModel
+import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -16,7 +16,7 @@ import ly.david.musicsearch.ui.image.LargeImage
 
 @Composable
 internal fun ReleaseGroupDetailsUi(
-    releaseGroup: ReleaseGroupScaffoldModel,
+    releaseGroup: ReleaseGroupDetailsModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
     imageUrl: String = "",

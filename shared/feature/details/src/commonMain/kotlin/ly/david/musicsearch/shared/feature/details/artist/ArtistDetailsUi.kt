@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.core.models.artist.ArtistScaffoldModel
+import ly.david.musicsearch.core.models.artist.ArtistDetailsModel
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.LocalStrings
@@ -20,7 +20,7 @@ import ly.david.musicsearch.ui.common.url.UrlsSection
 
 @Composable
 internal fun ArtistDetailsUi(
-    artist: ArtistScaffoldModel,
+    artist: ArtistDetailsModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
     imageUrl: String = "",

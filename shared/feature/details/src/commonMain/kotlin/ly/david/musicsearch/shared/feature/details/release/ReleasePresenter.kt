@@ -21,7 +21,7 @@ import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
+import ly.david.musicsearch.core.models.release.ReleaseDetailsModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
@@ -57,7 +57,7 @@ internal class ReleasePresenter(
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
-        var release: ReleaseScaffoldModel? by remember { mutableStateOf(null) }
+        var release: ReleaseDetailsModel? by remember { mutableStateOf(null) }
         var imageUrl by rememberSaveable { mutableStateOf("") }
         val tabs: ImmutableList<ReleaseTab> = ReleaseTab.entries.toPersistentList()
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
@@ -74,13 +74,13 @@ internal class ReleasePresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val releaseScaffoldModel = repository.lookupRelease(screen.id)
+                val releaseDetailsModel = repository.lookupRelease(screen.id)
                 if (title.isEmpty()) {
-                    title = releaseScaffoldModel.getNameWithDisambiguation()
+                    title = releaseDetailsModel.getNameWithDisambiguation()
                 }
-                subtitle = "Release by ${releaseScaffoldModel.artistCredits.getDisplayNames()}"
-                release = releaseScaffoldModel
-                imageUrl = fetchReleaseImage(releaseScaffoldModel)
+                subtitle = "Release by ${releaseDetailsModel.artistCredits.getDisplayNames()}"
+                release = releaseDetailsModel
+                imageUrl = fetchReleaseImage(releaseDetailsModel)
 
                 isError = false
             } catch (ex: RecoverableNetworkException) {
@@ -202,11 +202,11 @@ internal class ReleasePresenter(
     }
 
     private suspend fun fetchReleaseImage(
-        releaseScaffoldModel: ReleaseScaffoldModel,
+        releaseDetailsModel: ReleaseDetailsModel,
     ): String {
-        val imageUrl = releaseScaffoldModel.imageUrl
+        val imageUrl = releaseDetailsModel.imageUrl
         return imageUrl ?: releaseImageRepository.getReleaseCoverArtUrlsFromNetworkAndSave(
-            releaseId = releaseScaffoldModel.id,
+            releaseId = releaseDetailsModel.id,
             thumbnail = false,
         )
     }
@@ -217,7 +217,7 @@ internal data class ReleaseUiState(
     val title: String,
     val subtitle: String,
     val isError: Boolean,
-    val release: ReleaseScaffoldModel?,
+    val release: ReleaseDetailsModel?,
     val imageUrl: String,
     val tabs: ImmutableList<ReleaseTab>,
     val selectedTab: ReleaseTab,

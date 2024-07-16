@@ -15,7 +15,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.core.models.event.EventScaffoldModel
+import ly.david.musicsearch.core.models.event.EventDetailsModel
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -42,7 +42,7 @@ internal class EventPresenter(
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
-        var event: EventScaffoldModel? by remember { mutableStateOf(null) }
+        var event: EventDetailsModel? by remember { mutableStateOf(null) }
         val tabs: List<EventTab> by rememberSaveable {
             mutableStateOf(EventTab.entries)
         }
@@ -151,7 +151,7 @@ internal class EventPresenter(
 internal data class EventUiState(
     val title: String,
     val isError: Boolean,
-    val event: EventScaffoldModel?,
+    val event: EventDetailsModel?,
     val tabs: List<EventTab>,
     val selectedTab: EventTab,
     val query: String,

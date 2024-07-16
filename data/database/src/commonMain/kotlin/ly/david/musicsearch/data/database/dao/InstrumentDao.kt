@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
-import ly.david.musicsearch.core.models.instrument.InstrumentScaffoldModel
+import ly.david.musicsearch.core.models.instrument.InstrumentDetailsModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Instrument
 
@@ -33,20 +33,20 @@ class InstrumentDao(
         }
     }
 
-    fun getInstrumentForDetails(instrumentId: String): InstrumentScaffoldModel? {
+    fun getInstrumentForDetails(instrumentId: String): InstrumentDetailsModel? {
         return transacter.getInstrument(
             instrumentId,
-            mapper = ::toInstrumentScaffoldModel,
+            mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
     }
 
-    private fun toInstrumentScaffoldModel(
+    private fun toDetailsModel(
         id: String,
         name: String,
         disambiguation: String?,
         description: String?,
         type: String?,
-    ) = InstrumentScaffoldModel(
+    ) = InstrumentDetailsModel(
         id = id,
         name = name,
         disambiguation = disambiguation,

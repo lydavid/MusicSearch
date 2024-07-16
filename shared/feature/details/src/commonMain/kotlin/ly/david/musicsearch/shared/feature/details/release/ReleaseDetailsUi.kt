@@ -12,7 +12,7 @@ import ly.david.musicsearch.core.models.common.toDisplayTime
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
+import ly.david.musicsearch.core.models.release.ReleaseDetailsModel
 import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.LargeImage
@@ -25,7 +25,7 @@ import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 
 @Composable
 internal fun ReleaseDetailsUi(
-    release: ReleaseScaffoldModel,
+    release: ReleaseDetailsModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
     imageUrl: String = "",

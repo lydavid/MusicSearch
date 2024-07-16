@@ -9,7 +9,7 @@ import ly.david.musicsearch.core.models.common.ifNotNull
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.place.PlaceScaffoldModel
+import ly.david.musicsearch.core.models.place.PlaceDetailsModel
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -19,7 +19,7 @@ import ly.david.musicsearch.ui.common.url.UrlsSection
 
 @Composable
 internal fun PlaceDetailsUi(
-    place: PlaceScaffoldModel,
+    place: PlaceDetailsModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),

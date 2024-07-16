@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.instrument
 
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.core.models.instrument.InstrumentScaffoldModel
+import ly.david.musicsearch.core.models.instrument.InstrumentDetailsModel
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
@@ -14,7 +14,7 @@ class InstrumentRepositoryImpl(
     private val relationRepository: RelationRepository,
 ) : InstrumentRepository {
 
-    override suspend fun lookupInstrument(instrumentId: String): InstrumentScaffoldModel {
+    override suspend fun lookupInstrument(instrumentId: String): InstrumentDetailsModel {
         val instrument = instrumentDao.getInstrumentForDetails(instrumentId)
         val urlRelations = relationRepository.getEntityUrlRelationships(instrumentId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(instrumentId)

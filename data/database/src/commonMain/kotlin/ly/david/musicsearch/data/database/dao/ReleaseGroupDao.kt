@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupForRelease
-import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupScaffoldModel
+import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import lydavidmusicsearchdatadatabase.Release_group
@@ -9,7 +9,7 @@ import lydavidmusicsearchdatadatabase.Release_group
 interface ReleaseGroupDao : EntityDao {
     fun insert(releaseGroup: ReleaseGroupMusicBrainzModel)
     fun insertAll(releaseGroups: List<ReleaseGroupMusicBrainzModel>)
-    fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupScaffoldModel?
+    fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupDetailsModel?
     fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease?
 }
 
@@ -48,7 +48,7 @@ class ReleaseGroupDaoImpl(
         }
     }
 
-    override fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupScaffoldModel? =
+    override fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupDetailsModel? =
         transacter.getReleaseGroupForDetails(
             releaseGroupId = releaseGroupId,
             mapper = ::mapToReleaseGroupForDetails,
@@ -62,7 +62,7 @@ class ReleaseGroupDaoImpl(
         primaryType: String?,
         secondaryTypes: List<String>?,
         thumbnailUrl: String?,
-    ) = ReleaseGroupScaffoldModel(
+    ) = ReleaseGroupDetailsModel(
         id = id,
         name = name,
         firstReleaseDate = firstReleaseDate,

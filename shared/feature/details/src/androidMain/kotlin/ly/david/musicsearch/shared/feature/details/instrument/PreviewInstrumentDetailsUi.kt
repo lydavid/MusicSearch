@@ -3,8 +3,7 @@ package ly.david.musicsearch.shared.feature.details.instrument
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import ly.david.musicsearch.core.models.instrument.InstrumentScaffoldModel
-import ly.david.musicsearch.ui.core.preview.DefaultPreviews
+import ly.david.musicsearch.core.models.instrument.InstrumentDetailsModel
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
@@ -13,7 +12,7 @@ internal fun PreviewInstrumentDetailsUi() {
     PreviewTheme {
         Surface {
             InstrumentDetailsUi(
-                instrument = InstrumentScaffoldModel(
+                instrument = InstrumentDetailsModel(
                     id = "i1",
                     name = "baroque guitar",
                     disambiguation = "Baroque gut string guitar",

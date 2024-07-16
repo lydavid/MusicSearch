@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.core.models.LifeSpanUiModel
-import ly.david.musicsearch.core.models.artist.ArtistScaffoldModel
+import ly.david.musicsearch.core.models.artist.ArtistDetailsModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Artist
 
@@ -39,10 +39,10 @@ class ArtistDao(
         }
     }
 
-    fun getArtistForDetails(artistId: String): ArtistScaffoldModel? {
+    fun getArtistForDetails(artistId: String): ArtistDetailsModel? {
         return transacter.getArtistForDetails(
             artistId,
-            mapper = ::toArtistScaffoldModel,
+            mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
     }
 
@@ -50,7 +50,7 @@ class ArtistDao(
         transacter.delete(artistId)
     }
 
-    private fun toArtistScaffoldModel(
+    private fun toDetailsModel(
         id: String,
         name: String,
         sortName: String,
@@ -62,7 +62,7 @@ class ArtistDao(
         end: String?,
         ended: Boolean?,
         largeUrl: String?,
-    ) = ArtistScaffoldModel(
+    ) = ArtistDetailsModel(
         id = id,
         name = name,
         sortName = sortName,

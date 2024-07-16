@@ -128,7 +128,7 @@ internal fun SeriesUi(
                         onRefresh = {
                             eventSink(SeriesUiEvent.ForceRefresh)
                         },
-                        scaffoldModel = state.series,
+                        detailsModel = state.series,
                     ) { series ->
                         SeriesDetailsUi(
                             series = series,

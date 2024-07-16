@@ -19,7 +19,7 @@ import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.recording.RecordingScaffoldModel
+import ly.david.musicsearch.core.models.recording.RecordingDetailsModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.recording.RecordingRepository
@@ -48,7 +48,7 @@ internal class RecordingPresenter(
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
-        var recording: RecordingScaffoldModel? by remember { mutableStateOf(null) }
+        var recording: RecordingDetailsModel? by remember { mutableStateOf(null) }
         val tabs: List<RecordingTab> by rememberSaveable {
             mutableStateOf(RecordingTab.entries)
         }
@@ -62,12 +62,12 @@ internal class RecordingPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val recordingScaffoldModel = repository.lookupRecording(screen.id)
+                val recordingDetailsModel = repository.lookupRecording(screen.id)
                 if (title.isEmpty()) {
-                    title = recordingScaffoldModel.getNameWithDisambiguation()
+                    title = recordingDetailsModel.getNameWithDisambiguation()
                 }
-                subtitle = "Recording by ${recordingScaffoldModel.artistCredits.getDisplayNames()}"
-                recording = recordingScaffoldModel
+                subtitle = "Recording by ${recordingDetailsModel.artistCredits.getDisplayNames()}"
+                recording = recordingDetailsModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
@@ -172,7 +172,7 @@ internal data class RecordingUiState(
     val title: String,
     val subtitle: String,
     val isError: Boolean,
-    val recording: RecordingScaffoldModel?,
+    val recording: RecordingDetailsModel?,
     val tabs: List<RecordingTab>,
     val selectedTab: RecordingTab,
     val query: String,

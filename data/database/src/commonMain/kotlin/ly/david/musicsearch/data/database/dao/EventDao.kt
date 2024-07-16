@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
 import ly.david.musicsearch.core.models.LifeSpanUiModel
-import ly.david.musicsearch.core.models.event.EventScaffoldModel
+import ly.david.musicsearch.core.models.event.EventDetailsModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Event
 
@@ -38,14 +38,14 @@ class EventDao(
         }
     }
 
-    fun getEventForDetails(eventId: String): EventScaffoldModel? {
+    fun getEventForDetails(eventId: String): EventDetailsModel? {
         return transacter.getEvent(
             eventId,
-            mapper = ::toEventScaffoldModel,
+            mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
     }
 
-    private fun toEventScaffoldModel(
+    private fun toDetailsModel(
         id: String,
         name: String,
         disambiguation: String?,
@@ -55,7 +55,7 @@ class EventDao(
         begin: String?,
         end: String?,
         ended: Boolean?,
-    ) = EventScaffoldModel(
+    ) = EventDetailsModel(
         id = id,
         name = name,
         disambiguation = disambiguation,

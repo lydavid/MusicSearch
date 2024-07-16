@@ -3,7 +3,7 @@ package ly.david.musicsearch.core.models.area
 import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 
-data class AreaScaffoldModel(
+data class AreaDetailsModel(
     override val id: String,
     override val name: String,
     override val sortName: String = "",

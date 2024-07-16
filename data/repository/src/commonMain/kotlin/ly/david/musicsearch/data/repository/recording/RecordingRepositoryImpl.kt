@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.recording
 
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.core.models.recording.RecordingScaffoldModel
+import ly.david.musicsearch.core.models.recording.RecordingDetailsModel
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
@@ -16,7 +16,7 @@ class RecordingRepositoryImpl(
     private val relationRepository: RelationRepository,
 ) : RecordingRepository {
 
-    override suspend fun lookupRecording(recordingId: String): RecordingScaffoldModel {
+    override suspend fun lookupRecording(recordingId: String): RecordingDetailsModel {
         val recording = recordingDao.getRecordingForDetails(recordingId)
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(recordingId)
         val urlRelations = relationRepository.getEntityUrlRelationships(recordingId)

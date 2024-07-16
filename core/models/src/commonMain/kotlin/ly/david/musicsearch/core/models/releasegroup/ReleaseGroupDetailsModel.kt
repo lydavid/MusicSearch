@@ -3,7 +3,7 @@ package ly.david.musicsearch.core.models.releasegroup
 import ly.david.musicsearch.core.models.artist.ArtistCreditUiModel
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 
-data class ReleaseGroupScaffoldModel(
+data class ReleaseGroupDetailsModel(
     override val id: String,
     override val name: String,
     override val firstReleaseDate: String = "",

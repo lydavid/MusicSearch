@@ -4,7 +4,7 @@ import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 
-data class PlaceScaffoldModel(
+data class PlaceDetailsModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String? = null,

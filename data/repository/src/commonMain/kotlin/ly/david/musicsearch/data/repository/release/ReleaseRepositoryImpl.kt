@@ -16,7 +16,7 @@ import ly.david.musicsearch.core.models.listitem.ListSeparator
 import ly.david.musicsearch.core.models.listitem.TrackListItemModel
 import ly.david.musicsearch.core.models.listitem.toAreaListItemModel
 import ly.david.musicsearch.core.models.listitem.toLabelListItemModel
-import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
+import ly.david.musicsearch.core.models.release.ReleaseDetailsModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.CountryCodeDao
@@ -53,7 +53,7 @@ class ReleaseRepositoryImpl(
     // TODO: split up what data to include when calling from details/tracks tabs?
     //  initial load only requires 1 api call to display data on both tabs
     //  but swipe to refresh should only refresh its own tab
-    override suspend fun lookupRelease(releaseId: String): ReleaseScaffoldModel {
+    override suspend fun lookupRelease(releaseId: String): ReleaseDetailsModel {
         val releaseForDetails = releaseDao.getReleaseForDetails(releaseId)
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseId)
         val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId)

@@ -17,7 +17,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.core.models.area.AreaScaffoldModel
+import ly.david.musicsearch.core.models.area.AreaDetailsModel
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -64,7 +64,7 @@ internal class AreaPresenter(
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
-        var area: AreaScaffoldModel? by remember { mutableStateOf(null) }
+        var area: AreaDetailsModel? by remember { mutableStateOf(null) }
         val tabs: List<AreaTab> by rememberSaveable {
             mutableStateOf(AreaTab.entries)
         }
@@ -87,12 +87,12 @@ internal class AreaPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val areaScaffoldModel = repository.lookupArea(screen.id)
+                val areaDetailsModel = repository.lookupArea(screen.id)
                 if (title.isEmpty()) {
-                    title = areaScaffoldModel.getNameWithDisambiguation()
+                    title = areaDetailsModel.getNameWithDisambiguation()
                 }
 
-                area = areaScaffoldModel
+                area = areaDetailsModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
@@ -242,7 +242,7 @@ internal class AreaPresenter(
 internal data class AreaUiState(
     val title: String,
     val isError: Boolean = false,
-    val area: AreaScaffoldModel? = null,
+    val area: AreaDetailsModel? = null,
     val tabs: List<AreaTab> = AreaTab.entries,
     val selectedTab: AreaTab = AreaTab.DETAILS,
     val query: String = "",

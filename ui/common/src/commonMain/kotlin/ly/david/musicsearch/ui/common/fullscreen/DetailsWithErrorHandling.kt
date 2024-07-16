@@ -10,14 +10,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 /**
- * For displaying a [detailsScreen], showing a loading indicator when [scaffoldModel] is null,
+ * For displaying a [detailsScreen], showing a loading indicator when [detailsModel] is null,
  * handling errors when [showError], and delegating retry with [onRefresh].
  * Supports pull to refresh, delegating to [onRefresh].
  */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun <T> DetailsWithErrorHandling(
-    scaffoldModel: T?,
+    detailsModel: T?,
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
     showLoading: Boolean = false,
@@ -38,12 +38,12 @@ fun <T> DetailsWithErrorHandling(
                 )
             }
 
-            scaffoldModel == null -> {
+            detailsModel == null -> {
                 FullScreenLoadingIndicator()
             }
 
             else -> {
-                detailsScreen(scaffoldModel)
+                detailsScreen(detailsModel)
 
                 PullRefreshIndicator(
                     refreshing = showLoading,

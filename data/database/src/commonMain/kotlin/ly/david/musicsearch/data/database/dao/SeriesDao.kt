@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
-import ly.david.musicsearch.core.models.series.SeriesScaffoldModel
+import ly.david.musicsearch.core.models.series.SeriesDetailsModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Series
 import lydavidmusicsearchdatadatabase.SeriesQueries
@@ -33,19 +33,19 @@ class SeriesDao(
         }
     }
 
-    fun getSeriesForDetails(seriesId: String): SeriesScaffoldModel? {
+    fun getSeriesForDetails(seriesId: String): SeriesDetailsModel? {
         return transacter.getSeries(
             seriesId,
-            mapper = ::toSeriesScaffoldModel,
+            mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
     }
 
-    private fun toSeriesScaffoldModel(
+    private fun toDetailsModel(
         id: String,
         name: String,
         disambiguation: String?,
         type: String?,
-    ) = SeriesScaffoldModel(
+    ) = SeriesDetailsModel(
         id = id,
         name = name,
         disambiguation = disambiguation,

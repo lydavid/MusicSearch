@@ -128,7 +128,7 @@ internal fun EventUi(
                         onRefresh = {
                             eventSink(EventUiEvent.ForceRefresh)
                         },
-                        scaffoldModel = state.event,
+                        detailsModel = state.event,
                     ) { event ->
                         EventDetailsUi(
                             event = event,

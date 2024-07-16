@@ -128,7 +128,7 @@ internal fun InstrumentUi(
                         onRefresh = {
                             eventSink(InstrumentUiEvent.ForceRefresh)
                         },
-                        scaffoldModel = state.instrument,
+                        detailsModel = state.instrument,
                     ) { instrument ->
                         InstrumentDetailsUi(
                             instrument = instrument,

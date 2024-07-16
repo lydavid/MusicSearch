@@ -18,7 +18,7 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.work.WorkScaffoldModel
+import ly.david.musicsearch.core.models.work.WorkDetailsModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.work.WorkRepository
@@ -50,7 +50,7 @@ internal class WorkPresenter(
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
-        var work: WorkScaffoldModel? by remember { mutableStateOf(null) }
+        var work: WorkDetailsModel? by remember { mutableStateOf(null) }
         val tabs: List<WorkTab> by rememberSaveable {
             mutableStateOf(WorkTab.entries)
         }
@@ -66,11 +66,11 @@ internal class WorkPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val workScaffoldModel = repository.lookupWork(screen.id)
+                val workDetailsModel = repository.lookupWork(screen.id)
                 if (title.isEmpty()) {
-                    title = workScaffoldModel.getNameWithDisambiguation()
+                    title = workDetailsModel.getNameWithDisambiguation()
                 }
-                work = workScaffoldModel
+                work = workDetailsModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
@@ -184,7 +184,7 @@ internal class WorkPresenter(
 internal data class WorkUiState(
     val title: String,
     val isError: Boolean,
-    val work: WorkScaffoldModel?,
+    val work: WorkDetailsModel?,
     val tabs: List<WorkTab>,
     val selectedTab: WorkTab,
     val query: String,

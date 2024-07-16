@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.area
 
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.core.models.area.AreaScaffoldModel
+import ly.david.musicsearch.core.models.area.AreaDetailsModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.CountryCodeDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
@@ -21,7 +21,7 @@ class AreaRepositoryImpl(
      *
      * Lookup area, and stores all relevant data.
      */
-    override suspend fun lookupArea(areaId: String): AreaScaffoldModel {
+    override suspend fun lookupArea(areaId: String): AreaDetailsModel {
         val area = areaDao.getAreaForDetails(areaId)
         val countryCodes: List<String> = countryCodeDao.getCountryCodesForArea(areaId)
         val urlRelations = relationRepository.getEntityUrlRelationships(areaId)

@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.feature.details.recording
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import ly.david.musicsearch.core.models.recording.RecordingScaffoldModel
+import ly.david.musicsearch.core.models.recording.RecordingDetailsModel
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
@@ -12,7 +12,7 @@ internal fun PreviewRecordingDetailsUi() {
     PreviewTheme {
         Surface {
             RecordingDetailsUi(
-                recording = RecordingScaffoldModel(
+                recording = RecordingDetailsModel(
                     id = "132a508b-624a-4f1d-b61f-f6616121bab5",
                     name = "プライド革命",
                     length = 235000,

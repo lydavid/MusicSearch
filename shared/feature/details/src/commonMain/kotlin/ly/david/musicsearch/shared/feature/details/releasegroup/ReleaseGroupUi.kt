@@ -170,7 +170,7 @@ internal fun ReleaseGroupUi(
                         onRefresh = {
                             eventSink(ReleaseGroupUiEvent.ForceRefresh)
                         },
-                        scaffoldModel = state.releaseGroup,
+                        detailsModel = state.releaseGroup,
                     ) { releaseGroup ->
                         ReleaseGroupDetailsUi(
                             releaseGroup = releaseGroup,

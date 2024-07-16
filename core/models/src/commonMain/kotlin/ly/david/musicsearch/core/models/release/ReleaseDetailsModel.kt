@@ -6,7 +6,7 @@ import ly.david.musicsearch.core.models.listitem.LabelListItemModel
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupForRelease
 
-data class ReleaseScaffoldModel(
+data class ReleaseDetailsModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String = "",

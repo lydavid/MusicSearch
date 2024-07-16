@@ -18,7 +18,7 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.place.PlaceScaffoldModel
+import ly.david.musicsearch.core.models.place.PlaceDetailsModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
@@ -46,7 +46,7 @@ internal class PlacePresenter(
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
-        var place: PlaceScaffoldModel? by remember { mutableStateOf(null) }
+        var place: PlaceDetailsModel? by remember { mutableStateOf(null) }
         val tabs: List<PlaceTab> by rememberSaveable {
             mutableStateOf(PlaceTab.entries)
         }
@@ -60,11 +60,11 @@ internal class PlacePresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val placeScaffoldModel = repository.lookupPlace(screen.id)
+                val placeDetailsModel = repository.lookupPlace(screen.id)
                 if (title.isEmpty()) {
-                    title = placeScaffoldModel.getNameWithDisambiguation()
+                    title = placeDetailsModel.getNameWithDisambiguation()
                 }
-                place = placeScaffoldModel
+                place = placeDetailsModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
@@ -167,7 +167,7 @@ internal class PlacePresenter(
 internal data class PlaceUiState(
     val title: String,
     val isError: Boolean,
-    val place: PlaceScaffoldModel?,
+    val place: PlaceDetailsModel?,
     val tabs: List<PlaceTab>,
     val selectedTab: PlaceTab,
     val query: String,

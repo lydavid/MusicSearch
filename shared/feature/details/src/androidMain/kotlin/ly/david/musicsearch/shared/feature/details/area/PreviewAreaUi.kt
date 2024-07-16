@@ -7,7 +7,7 @@ import androidx.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.core.models.LifeSpanUiModel
-import ly.david.musicsearch.core.models.area.AreaScaffoldModel
+import ly.david.musicsearch.core.models.area.AreaDetailsModel
 import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
 import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.core.models.listitem.LabelListItemModel
@@ -458,7 +458,7 @@ private val canadianRelations = MutableStateFlow(
     ),
 )
 
-private val country = AreaScaffoldModel(
+private val country = AreaDetailsModel(
     id = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
     name = "Canada",
     type = "Country",

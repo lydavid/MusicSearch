@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
-import ly.david.musicsearch.core.models.instrument.InstrumentScaffoldModel
+import ly.david.musicsearch.core.models.instrument.InstrumentDetailsModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -21,7 +21,7 @@ import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 internal fun InstrumentDetailsUi(
-    instrument: InstrumentScaffoldModel,
+    instrument: InstrumentDetailsModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),

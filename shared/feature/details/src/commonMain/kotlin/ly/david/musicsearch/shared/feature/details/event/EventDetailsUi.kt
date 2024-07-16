@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.event.EventScaffoldModel
+import ly.david.musicsearch.core.models.event.EventDetailsModel
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -24,7 +24,7 @@ import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 internal fun EventDetailsUi(
-    event: EventScaffoldModel,
+    event: EventDetailsModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),

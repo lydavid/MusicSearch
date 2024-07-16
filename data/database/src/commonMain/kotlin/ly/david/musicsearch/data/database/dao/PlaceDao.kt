@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.database.dao
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
 import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.core.models.place.CoordinatesUiModel
-import ly.david.musicsearch.core.models.place.PlaceScaffoldModel
+import ly.david.musicsearch.core.models.place.PlaceDetailsModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Place
 
@@ -40,14 +40,14 @@ class PlaceDao(
         }
     }
 
-    fun getPlaceForDetails(placeId: String): PlaceScaffoldModel? {
+    fun getPlaceForDetails(placeId: String): PlaceDetailsModel? {
         return transacter.getPlace(
             placeId,
-            mapper = ::mapToPlaceScaffoldModel,
+            mapper = ::mapToDetailsModel,
         ).executeAsOneOrNull()
     }
 
-    private fun mapToPlaceScaffoldModel(
+    private fun mapToDetailsModel(
         id: String,
         name: String,
         disambiguation: String?,
@@ -58,7 +58,7 @@ class PlaceDao(
         begin: String?,
         end: String?,
         ended: Boolean?,
-    ) = PlaceScaffoldModel(
+    ) = PlaceDetailsModel(
         id = id,
         name = name,
         disambiguation = disambiguation,

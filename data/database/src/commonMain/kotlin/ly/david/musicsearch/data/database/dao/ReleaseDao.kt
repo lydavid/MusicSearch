@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.database.dao
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.core.models.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.core.models.release.FormatTrackCount
-import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
+import ly.david.musicsearch.core.models.release.ReleaseDetailsModel
 import ly.david.musicsearch.core.models.release.TextRepresentationUiModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Release
@@ -59,13 +59,13 @@ class ReleaseDao(
         transacter.deleteRelease(releaseId)
     }
 
-    fun getReleaseForDetails(releaseId: String): ReleaseScaffoldModel? =
+    fun getReleaseForDetails(releaseId: String): ReleaseDetailsModel? =
         transacter.getReleaseForDetails(
             releaseId = releaseId,
-            mapper = ::toReleaseScaffoldModel,
+            mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
 
-    private fun toReleaseScaffoldModel(
+    private fun toDetailsModel(
         id: String,
         name: String,
         disambiguation: String,
@@ -84,7 +84,7 @@ class ReleaseDao(
         imageUrl: String?,
         releaseLength: Double?,
         hasNullLength: Boolean,
-    ) = ReleaseScaffoldModel(
+    ) = ReleaseDetailsModel(
         id = id,
         name = name,
         disambiguation = disambiguation,

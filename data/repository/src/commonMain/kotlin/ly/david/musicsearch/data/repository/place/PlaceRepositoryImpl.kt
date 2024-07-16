@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.place
 
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.core.models.place.PlaceScaffoldModel
+import ly.david.musicsearch.core.models.place.PlaceDetailsModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
@@ -18,7 +18,7 @@ class PlaceRepositoryImpl(
     private val relationRepository: RelationRepository,
 ) : PlaceRepository {
 
-    override suspend fun lookupPlace(placeId: String): PlaceScaffoldModel {
+    override suspend fun lookupPlace(placeId: String): PlaceDetailsModel {
         val place = placeDao.getPlaceForDetails(placeId)
         val area = areaPlaceDao.getAreaByPlace(placeId)
         val urlRelations = relationRepository.getEntityUrlRelationships(placeId)

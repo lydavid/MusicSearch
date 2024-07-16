@@ -141,7 +141,7 @@ internal fun LabelUi(
                         onRefresh = {
                             eventSink(LabelUiEvent.ForceRefresh)
                         },
-                        scaffoldModel = state.label,
+                        detailsModel = state.label,
                     ) { label ->
                         LabelDetailsUi(
                             label = label,

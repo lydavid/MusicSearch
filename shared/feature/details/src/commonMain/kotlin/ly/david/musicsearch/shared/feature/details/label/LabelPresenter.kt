@@ -17,7 +17,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
-import ly.david.musicsearch.core.models.label.LabelScaffoldModel
+import ly.david.musicsearch.core.models.label.LabelDetailsModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
@@ -46,7 +46,7 @@ internal class LabelPresenter(
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
-        var label: LabelScaffoldModel? by remember { mutableStateOf(null) }
+        var label: LabelDetailsModel? by remember { mutableStateOf(null) }
         val tabs: List<LabelTab> by rememberSaveable {
             mutableStateOf(LabelTab.entries)
         }
@@ -60,11 +60,11 @@ internal class LabelPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val labelScaffoldModel = repository.lookupLabel(screen.id)
+                val labelDetailsModel = repository.lookupLabel(screen.id)
                 if (title.isEmpty()) {
-                    title = labelScaffoldModel.getNameWithDisambiguation()
+                    title = labelDetailsModel.getNameWithDisambiguation()
                 }
-                label = labelScaffoldModel
+                label = labelDetailsModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
@@ -167,7 +167,7 @@ internal class LabelPresenter(
 internal data class LabelUiState(
     val title: String,
     val isError: Boolean,
-    val label: LabelScaffoldModel?,
+    val label: LabelDetailsModel?,
     val tabs: List<LabelTab>,
     val selectedTab: LabelTab,
     val query: String,

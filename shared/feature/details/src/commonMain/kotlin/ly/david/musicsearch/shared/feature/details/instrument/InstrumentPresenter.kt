@@ -17,7 +17,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
-import ly.david.musicsearch.core.models.instrument.InstrumentScaffoldModel
+import ly.david.musicsearch.core.models.instrument.InstrumentDetailsModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
@@ -42,7 +42,7 @@ internal class InstrumentPresenter(
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
-        var instrument: InstrumentScaffoldModel? by remember { mutableStateOf(null) }
+        var instrument: InstrumentDetailsModel? by remember { mutableStateOf(null) }
         val tabs: List<InstrumentTab> by rememberSaveable {
             mutableStateOf(InstrumentTab.entries)
         }
@@ -54,11 +54,11 @@ internal class InstrumentPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val instrumentScaffoldModel = repository.lookupInstrument(screen.id)
+                val instrumentDetailsModel = repository.lookupInstrument(screen.id)
                 if (title.isEmpty()) {
-                    title = instrumentScaffoldModel.getNameWithDisambiguation()
+                    title = instrumentDetailsModel.getNameWithDisambiguation()
                 }
-                instrument = instrumentScaffoldModel
+                instrument = instrumentDetailsModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
@@ -150,7 +150,7 @@ internal class InstrumentPresenter(
 internal data class InstrumentUiState(
     val title: String,
     val isError: Boolean,
-    val instrument: InstrumentScaffoldModel?,
+    val instrument: InstrumentDetailsModel?,
     val tabs: List<InstrumentTab>,
     val selectedTab: InstrumentTab,
     val query: String,

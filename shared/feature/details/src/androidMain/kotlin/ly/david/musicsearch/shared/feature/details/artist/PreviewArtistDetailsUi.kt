@@ -4,7 +4,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.core.models.LifeSpanUiModel
-import ly.david.musicsearch.core.models.artist.ArtistScaffoldModel
+import ly.david.musicsearch.core.models.artist.ArtistDetailsModel
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 // region Previews
@@ -14,7 +14,7 @@ internal fun PreviewArtistDetailsUi() {
     PreviewTheme {
         Surface {
             ArtistDetailsUi(
-                artist = ArtistScaffoldModel(
+                artist = ArtistDetailsModel(
                     id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                     name = "The Beatles",
                     type = "Group",

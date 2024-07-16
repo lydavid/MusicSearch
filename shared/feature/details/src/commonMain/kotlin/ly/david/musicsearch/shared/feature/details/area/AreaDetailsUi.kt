@@ -5,7 +5,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.core.models.area.AreaScaffoldModel
+import ly.david.musicsearch.core.models.area.AreaDetailsModel
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.LocalStrings
@@ -16,7 +16,7 @@ import ly.david.musicsearch.ui.common.url.UrlsSection
 
 @Composable
 internal fun AreaDetailsUi(
-    area: AreaScaffoldModel,
+    area: AreaDetailsModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),

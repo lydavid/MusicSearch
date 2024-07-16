@@ -127,7 +127,7 @@ internal fun WorkUi(
                         onRefresh = {
                             eventSink(WorkUiEvent.ForceRefresh)
                         },
-                        scaffoldModel = state.work,
+                        detailsModel = state.work,
                     ) { work ->
                         WorkDetailsUi(
                             work = work,

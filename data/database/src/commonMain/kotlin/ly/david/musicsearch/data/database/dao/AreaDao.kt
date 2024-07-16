@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.core.models.LifeSpanUiModel
-import ly.david.musicsearch.core.models.area.AreaScaffoldModel
+import ly.david.musicsearch.core.models.area.AreaDetailsModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.AreaQueries
@@ -38,14 +38,14 @@ class AreaDao(
         }
     }
 
-    fun getAreaForDetails(areaId: String): AreaScaffoldModel? {
+    fun getAreaForDetails(areaId: String): AreaDetailsModel? {
         return transacter.getArea(
             id = areaId,
-            mapper = ::toAreaScaffoldModel,
+            mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
     }
 
-    private fun toAreaScaffoldModel(
+    private fun toDetailsModel(
         id: String,
         name: String,
         disambiguation: String?,
@@ -53,7 +53,7 @@ class AreaDao(
         begin: String?,
         end: String?,
         ended: Boolean?,
-    ) = AreaScaffoldModel(
+    ) = AreaDetailsModel(
         id = id,
         name = name,
         disambiguation = disambiguation,

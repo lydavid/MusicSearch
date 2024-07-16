@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
 import ly.david.musicsearch.core.models.LifeSpanUiModel
-import ly.david.musicsearch.core.models.label.LabelScaffoldModel
+import ly.david.musicsearch.core.models.label.LabelDetailsModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Label
 
@@ -37,14 +37,14 @@ class LabelDao(
         }
     }
 
-    fun getLabelForDetails(labelId: String): LabelScaffoldModel? {
+    fun getLabelForDetails(labelId: String): LabelDetailsModel? {
         return transacter.getLabel(
             id = labelId,
-            mapper = ::toLabelScaffoldModel,
+            mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
     }
 
-    private fun toLabelScaffoldModel(
+    private fun toDetailsModel(
         id: String,
         name: String,
         disambiguation: String?,
@@ -53,7 +53,7 @@ class LabelDao(
         begin: String?,
         end: String?,
         ended: Boolean?,
-    ) = LabelScaffoldModel(
+    ) = LabelDetailsModel(
         id = id,
         name = name,
         disambiguation = disambiguation,

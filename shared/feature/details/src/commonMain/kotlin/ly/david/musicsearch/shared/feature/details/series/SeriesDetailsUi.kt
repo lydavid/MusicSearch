@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.series.SeriesScaffoldModel
+import ly.david.musicsearch.core.models.series.SeriesDetailsModel
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -15,7 +15,7 @@ import ly.david.musicsearch.ui.common.url.UrlsSection
 
 @Composable
 internal fun SeriesDetailsUi(
-    series: SeriesScaffoldModel,
+    series: SeriesDetailsModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),

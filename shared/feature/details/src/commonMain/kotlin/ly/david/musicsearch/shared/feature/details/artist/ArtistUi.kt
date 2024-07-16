@@ -163,7 +163,7 @@ internal fun ArtistUi(
                         onRefresh = {
                             eventSink(ArtistUiEvent.ForceRefresh)
                         },
-                        scaffoldModel = state.artist,
+                        detailsModel = state.artist,
                     ) { artist ->
                         ArtistDetailsUi(
                             artist = artist,

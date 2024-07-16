@@ -163,7 +163,7 @@ internal fun RecordingUi(
                         onRefresh = {
                             eventSink(RecordingUiEvent.ForceRefresh)
                         },
-                        scaffoldModel = state.recording,
+                        detailsModel = state.recording,
                     ) { recording ->
                         RecordingDetailsUi(
                             recording = recording,

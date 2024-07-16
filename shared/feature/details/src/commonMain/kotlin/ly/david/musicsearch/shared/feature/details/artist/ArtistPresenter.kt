@@ -15,7 +15,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.core.models.artist.ArtistScaffoldModel
+import ly.david.musicsearch.core.models.artist.ArtistDetailsModel
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
@@ -64,7 +64,7 @@ internal class ArtistPresenter(
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
-        var artist: ArtistScaffoldModel? by remember { mutableStateOf(null) }
+        var artist: ArtistDetailsModel? by remember { mutableStateOf(null) }
         var imageUrl by rememberSaveable { mutableStateOf("") }
         val tabs: List<ArtistTab> by rememberSaveable {
             mutableStateOf(ArtistTab.entries)
@@ -88,15 +88,15 @@ internal class ArtistPresenter(
         LaunchedEffect(forceRefreshDetails) {
             try {
                 isLoading = true
-                val artistScaffoldModel = repository.lookupArtist(
+                val artistDetailsModel = repository.lookupArtist(
                     artistId = screen.id,
                     forceRefresh = forceRefreshDetails,
                 )
                 if (title.isEmpty()) {
-                    title = artistScaffoldModel.getNameWithDisambiguation()
+                    title = artistDetailsModel.getNameWithDisambiguation()
                 }
-                artist = artistScaffoldModel
-                imageUrl = fetchArtistImage(artistScaffoldModel)
+                artist = artistDetailsModel
+                imageUrl = fetchArtistImage(artistDetailsModel)
                 isError = false
             } catch (ex: Exception) {
                 logger.e(ex)
@@ -245,7 +245,7 @@ internal class ArtistPresenter(
     }
 
     private suspend fun fetchArtistImage(
-        artist: ArtistScaffoldModel,
+        artist: ArtistDetailsModel,
     ): String {
         val imageUrl = artist.imageUrl
         return if (imageUrl == null) {
@@ -266,7 +266,7 @@ internal data class ArtistUiState(
     val title: String,
     val isLoading: Boolean,
     val isError: Boolean,
-    val artist: ArtistScaffoldModel?,
+    val artist: ArtistDetailsModel?,
     val imageUrl: String,
     val tabs: List<ArtistTab>,
     val selectedTab: ArtistTab,

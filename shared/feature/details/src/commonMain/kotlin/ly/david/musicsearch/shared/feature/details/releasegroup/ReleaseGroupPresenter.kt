@@ -19,7 +19,7 @@ import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupScaffoldModel
+import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
@@ -50,7 +50,7 @@ internal class ReleaseGroupPresenter(
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
-        var releaseGroup: ReleaseGroupScaffoldModel? by remember { mutableStateOf(null) }
+        var releaseGroup: ReleaseGroupDetailsModel? by remember { mutableStateOf(null) }
         var imageUrl by rememberSaveable { mutableStateOf("") }
         val tabs: List<ReleaseGroupTab> by rememberSaveable {
             mutableStateOf(ReleaseGroupTab.entries)
@@ -65,13 +65,13 @@ internal class ReleaseGroupPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val releaseGroupScaffoldModel = repository.lookupReleaseGroup(screen.id)
+                val releaseGroupDetailsModel = repository.lookupReleaseGroup(screen.id)
                 if (title.isEmpty()) {
-                    title = releaseGroupScaffoldModel.getNameWithDisambiguation()
+                    title = releaseGroupDetailsModel.getNameWithDisambiguation()
                 }
-                subtitle = "Release Group by ${releaseGroupScaffoldModel.artistCredits.getDisplayNames()}"
-                releaseGroup = releaseGroupScaffoldModel
-                imageUrl = fetchReleaseGroupImage(releaseGroupScaffoldModel)
+                subtitle = "Release Group by ${releaseGroupDetailsModel.artistCredits.getDisplayNames()}"
+                releaseGroup = releaseGroupDetailsModel
+                imageUrl = fetchReleaseGroupImage(releaseGroupDetailsModel)
 
                 isError = false
             } catch (ex: RecoverableNetworkException) {
@@ -173,11 +173,11 @@ internal class ReleaseGroupPresenter(
     }
 
     private suspend fun fetchReleaseGroupImage(
-        releaseGroupScaffoldModel: ReleaseGroupScaffoldModel,
+        releaseGroupDetailsModel: ReleaseGroupDetailsModel,
     ): String {
-        val imageUrl = releaseGroupScaffoldModel.imageUrl
+        val imageUrl = releaseGroupDetailsModel.imageUrl
         return imageUrl ?: releaseGroupImageRepository.getReleaseGroupCoverArtUrlFromNetwork(
-            releaseGroupId = releaseGroupScaffoldModel.id,
+            releaseGroupId = releaseGroupDetailsModel.id,
             thumbnail = false,
         )
     }
@@ -188,7 +188,7 @@ internal data class ReleaseGroupUiState(
     val title: String,
     val subtitle: String,
     val isError: Boolean,
-    val releaseGroup: ReleaseGroupScaffoldModel?,
+    val releaseGroup: ReleaseGroupDetailsModel?,
     val imageUrl: String,
     val tabs: List<ReleaseGroupTab>,
     val selectedTab: ReleaseGroupTab,

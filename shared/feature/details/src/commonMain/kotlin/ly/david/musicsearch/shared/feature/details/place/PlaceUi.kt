@@ -125,7 +125,7 @@ internal fun PlaceUi(
                         onRefresh = {
                             eventSink(PlaceUiEvent.ForceRefresh)
                         },
-                        scaffoldModel = state.place,
+                        detailsModel = state.place,
                     ) { place ->
                         PlaceDetailsUi(
                             place = place,

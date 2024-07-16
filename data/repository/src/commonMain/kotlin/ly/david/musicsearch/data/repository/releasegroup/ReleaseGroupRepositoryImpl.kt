@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
-import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupScaffoldModel
+import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
@@ -16,7 +16,7 @@ class ReleaseGroupRepositoryImpl(
     private val relationRepository: RelationRepository,
 ) : ReleaseGroupRepository {
 
-    override suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupScaffoldModel {
+    override suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupDetailsModel {
         val releaseGroup = releaseGroupDao.getReleaseGroupForDetails(releaseGroupId)
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseGroupId)
         val urlRelations = relationRepository.getEntityUrlRelationships(releaseGroupId)

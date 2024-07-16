@@ -18,7 +18,7 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.series.SeriesScaffoldModel
+import ly.david.musicsearch.core.models.series.SeriesDetailsModel
 import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.series.SeriesRepository
@@ -42,7 +42,7 @@ internal class SeriesPresenter(
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
-        var series: SeriesScaffoldModel? by remember { mutableStateOf(null) }
+        var series: SeriesDetailsModel? by remember { mutableStateOf(null) }
         val tabs: List<SeriesTab> by rememberSaveable {
             mutableStateOf(SeriesTab.entries)
         }
@@ -54,11 +54,11 @@ internal class SeriesPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val seriesScaffoldModel = repository.lookupSeries(screen.id)
+                val seriesDetailsModel = repository.lookupSeries(screen.id)
                 if (title.isEmpty()) {
-                    title = seriesScaffoldModel.getNameWithDisambiguation()
+                    title = seriesDetailsModel.getNameWithDisambiguation()
                 }
-                series = seriesScaffoldModel
+                series = seriesDetailsModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
@@ -150,7 +150,7 @@ internal class SeriesPresenter(
 internal data class SeriesUiState(
     val title: String,
     val isError: Boolean,
-    val series: SeriesScaffoldModel?,
+    val series: SeriesDetailsModel?,
     val tabs: List<SeriesTab>,
     val selectedTab: SeriesTab,
     val query: String,

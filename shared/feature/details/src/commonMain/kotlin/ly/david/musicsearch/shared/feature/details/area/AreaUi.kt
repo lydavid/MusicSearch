@@ -168,7 +168,7 @@ internal fun AreaUi(
                         onRefresh = {
                             eventSink(AreaUiEvent.ForceRefresh)
                         },
-                        scaffoldModel = state.area,
+                        detailsModel = state.area,
                     ) {
                         AreaDetailsUi(
                             area = it,

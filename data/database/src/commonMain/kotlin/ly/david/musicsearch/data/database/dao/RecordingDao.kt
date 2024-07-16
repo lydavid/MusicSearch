@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import kotlinx.collections.immutable.toImmutableList
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
-import ly.david.musicsearch.core.models.recording.RecordingScaffoldModel
+import ly.david.musicsearch.core.models.recording.RecordingDetailsModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Recording
 
@@ -40,14 +40,14 @@ class RecordingDao(
         }
     }
 
-    fun getRecordingForDetails(recordingId: String): RecordingScaffoldModel? {
+    fun getRecordingForDetails(recordingId: String): RecordingDetailsModel? {
         return transacter.getRecording(
             recordingId,
-            mapper = ::toRecordingScaffoldModel,
+            mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
     }
 
-    private fun toRecordingScaffoldModel(
+    private fun toDetailsModel(
         id: String,
         name: String,
         disambiguation: String,
@@ -55,7 +55,7 @@ class RecordingDao(
         length: Int?,
         video: Boolean,
         isrcs: List<String>?,
-    ) = RecordingScaffoldModel(
+    ) = RecordingDetailsModel(
         id = id,
         name = name,
         firstReleaseDate = firstReleaseDate,
