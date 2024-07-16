@@ -30,9 +30,6 @@ class NowPlayingHistoryRepositoryImpl(
             },
         ).flow.map { pagingData ->
             pagingData
-                // TODO: cannot use app.cash.paging here due to:
-                //  Cannot inline bytecode built with JVM target 11 into bytecode that is being built
-                //  with JVM target 1.8. Please specify proper '-jvm-target' option
                 .map(NowPlayingHistory::toNowPlayingHistoryListItemModel)
                 .insertSeparators(generator = ::generator)
         }

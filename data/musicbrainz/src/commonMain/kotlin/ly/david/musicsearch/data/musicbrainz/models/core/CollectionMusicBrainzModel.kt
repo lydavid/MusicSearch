@@ -8,7 +8,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 data class CollectionMusicBrainzModel(
     @SerialName("id") override val id: String,
     @SerialName("name") override val name: String,
-    override val disambiguation: String? = null, // TODO: unused, is MusicBrainzModel too strict?
+    override val disambiguation: String? = null,
     @SerialName("entity-type") val entity: MusicBrainzEntity,
     @SerialName("type") val type: String? = null,
     @SerialName("type-id") val typeId: String? = null,
