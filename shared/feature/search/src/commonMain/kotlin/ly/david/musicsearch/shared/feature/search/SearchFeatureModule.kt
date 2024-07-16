@@ -4,7 +4,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.shared.feature.search.internal.SearchPresenter
-import ly.david.musicsearch.shared.feature.search.internal.Search
+import ly.david.musicsearch.shared.feature.search.internal.SearchUi
 import ly.david.musicsearch.shared.feature.search.internal.SearchUiState
 import ly.david.musicsearch.ui.common.screen.SearchScreen
 import org.koin.core.module.Module
@@ -33,7 +33,7 @@ val searchFeatureModule: Module = module {
             when (screen) {
                 is SearchScreen -> {
                     ui<SearchUiState> { state, modifier ->
-                        Search(
+                        SearchUi(
                             state = state,
                             modifier = modifier,
                         )

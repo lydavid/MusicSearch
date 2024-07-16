@@ -34,7 +34,7 @@ internal fun PreviewCollectionList() {
             ),
         )
 
-        CollectionList(
+        CollectionListUi(
             lazyPagingItems = items.collectAsLazyPagingItems(),
         )
     }

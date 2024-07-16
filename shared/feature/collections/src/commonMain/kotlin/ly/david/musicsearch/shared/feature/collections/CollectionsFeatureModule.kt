@@ -6,7 +6,7 @@ import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.shared.feature.collections.add.AddToCollectionPresenter
 import ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUi
 import ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUiState
-import ly.david.musicsearch.shared.feature.collections.list.CollectionList
+import ly.david.musicsearch.shared.feature.collections.list.CollectionListUi
 import ly.david.musicsearch.shared.feature.collections.list.CollectionListPresenter
 import ly.david.musicsearch.shared.feature.collections.list.CollectionListUiState
 import ly.david.musicsearch.shared.feature.collections.single.CollectionPresenter
@@ -65,7 +65,7 @@ val collectionsFeatureModule = module {
             when (screen) {
                 is CollectionListScreen -> {
                     ui<CollectionListUiState> { state, modifier ->
-                        CollectionList(
+                        CollectionListUi(
                             state = state,
                             modifier = modifier,
                         )

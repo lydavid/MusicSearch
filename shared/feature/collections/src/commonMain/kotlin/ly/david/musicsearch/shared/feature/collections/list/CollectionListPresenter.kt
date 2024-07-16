@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.feature.collections.list
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
@@ -39,6 +41,7 @@ internal class CollectionListPresenter(
             query = query,
             sortOption = sortOption,
         ).collectAsLazyPagingItems()
+        val lazyListState = rememberLazyListState()
 
         fun eventSink(event: CollectionListUiEvent) {
             when (event) {
@@ -78,6 +81,7 @@ internal class CollectionListPresenter(
             showLocal = showLocal,
             showRemote = showRemote,
             sortOption = sortOption,
+            lazyListState = lazyListState,
             lazyPagingItems = lazyPagingItems,
             eventSink = ::eventSink,
         )
@@ -91,6 +95,7 @@ internal data class CollectionListUiState(
     val showRemote: Boolean,
     val sortOption: CollectionSortOption,
     val lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
+    val lazyListState: LazyListState,
     val eventSink: (CollectionListUiEvent) -> Unit,
 ) : CircuitUiState
 

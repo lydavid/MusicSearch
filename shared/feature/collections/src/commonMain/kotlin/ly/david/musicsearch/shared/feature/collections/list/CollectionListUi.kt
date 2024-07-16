@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.collections.list
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,7 +37,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun CollectionList(
+internal fun CollectionListUi(
     state: CollectionListUiState,
     modifier: Modifier = Modifier,
 ) {
@@ -58,10 +59,11 @@ internal fun CollectionList(
         )
     }
 
-    CollectionList(
-        sortOption = state.sortOption,
+    CollectionListUi(
         lazyPagingItems = state.lazyPagingItems,
+        lazyListState = state.lazyListState,
         modifier = modifier,
+        sortOption = state.sortOption,
         filterText = state.query,
         onFilterTextChange = { eventSink(CollectionListUiEvent.UpdateQuery(it)) },
         onCreateCollectionClick = {
@@ -112,9 +114,10 @@ internal fun CollectionList(
     ExperimentalMaterial3Api::class,
 )
 @Composable
-internal fun CollectionList(
+internal fun CollectionListUi(
     lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
     modifier: Modifier = Modifier,
+    lazyListState: LazyListState = LazyListState(),
     filterText: String = "",
     onFilterTextChange: (String) -> Unit = {},
     onCreateCollectionClick: () -> Unit = {},
@@ -166,6 +169,7 @@ internal fun CollectionList(
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             lazyPagingItems = lazyPagingItems,
+            lazyListState = lazyListState,
         ) { collectionListItemModel: CollectionListItemModel? ->
             when (collectionListItemModel) {
                 is CollectionListItemModel -> {

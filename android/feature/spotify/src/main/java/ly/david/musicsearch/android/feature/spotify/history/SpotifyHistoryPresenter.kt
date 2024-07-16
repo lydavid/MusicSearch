@@ -1,5 +1,7 @@
 package ly.david.musicsearch.android.feature.spotify.history
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -31,6 +33,7 @@ internal class SpotifyHistoryPresenter(
         val lazyPagingItems: LazyPagingItems<ListItemModel> = spotifyHistoryRepository.observeSpotifyHistory(
             query = query,
         ).collectAsLazyPagingItems()
+        val lazyListState = rememberLazyListState()
 
         fun eventSink(event: SpotifyUiEvent) {
             when (event) {
@@ -79,6 +82,7 @@ internal class SpotifyHistoryPresenter(
         return SpotifyUiState(
             query = query,
             lazyPagingItems = lazyPagingItems,
+            lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
     }
@@ -88,6 +92,7 @@ internal class SpotifyHistoryPresenter(
 internal data class SpotifyUiState(
     val query: String,
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val lazyListState: LazyListState,
     val eventSink: (SpotifyUiEvent) -> Unit,
 ) : CircuitUiState
 

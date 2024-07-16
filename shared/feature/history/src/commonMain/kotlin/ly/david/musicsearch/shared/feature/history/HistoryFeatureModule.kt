@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.feature.history
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
-import ly.david.musicsearch.shared.feature.history.internal.History
+import ly.david.musicsearch.shared.feature.history.internal.HistoryUi
 import ly.david.musicsearch.shared.feature.history.internal.HistoryPresenter
 import ly.david.musicsearch.shared.feature.history.internal.HistoryUiState
 import ly.david.musicsearch.ui.common.screen.HistoryScreen
@@ -32,7 +32,7 @@ val historyFeatureModule = module {
             when (screen) {
                 is HistoryScreen -> {
                     ui<HistoryUiState> { state, modifier ->
-                        History(
+                        HistoryUi(
                             state = state,
                             modifier = modifier,
                         )

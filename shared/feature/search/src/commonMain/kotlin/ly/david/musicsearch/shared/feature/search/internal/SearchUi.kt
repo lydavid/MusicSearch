@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,13 +25,13 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import ly.david.musicsearch.core.models.network.searchableEntities
 import ly.david.musicsearch.shared.feature.search.SearchScreenTestTag
-import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.ExposedDropdownMenuBox
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.musicsearch.ui.core.LocalStrings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun Search(
+internal fun SearchUi(
     state: SearchUiState,
     modifier: Modifier = Modifier,
 ) {
@@ -41,7 +40,7 @@ internal fun Search(
 
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        contentWindowInsets = WindowInsets(0),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             ScrollableTopAppBar(
@@ -50,7 +49,7 @@ internal fun Search(
             )
         },
     ) { innerPadding ->
-        Search(
+        SearchUi(
             state = state,
             modifier = Modifier.padding(innerPadding),
             snackbarHostState = snackbarHostState,
@@ -59,15 +58,14 @@ internal fun Search(
 }
 
 @Composable
-private fun Search(
+private fun SearchUi(
     state: SearchUiState,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
 ) {
     val strings = LocalStrings.current
     val eventSink = state.eventSink
-    val searchResultsListState = rememberLazyListState()
-    val searchHistoryListState = rememberLazyListState()
+
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
@@ -117,7 +115,7 @@ private fun Search(
         if (state.query.isBlank()) {
             SearchHistoryScreen(
                 lazyPagingItems = state.searchHistory,
-                lazyListState = searchHistoryListState,
+                lazyListState = state.searchHistoryListState,
                 onItemClick = { entity, query ->
                     eventSink(SearchUiEvent.UpdateEntity(entity))
                     eventSink(SearchUiEvent.UpdateQuery(query))
@@ -132,7 +130,7 @@ private fun Search(
         } else {
             SearchResultsScreen(
                 lazyPagingItems = state.searchResults,
-                lazyListState = searchResultsListState,
+                lazyListState = state.searchResultsListState,
                 snackbarHostState = snackbarHostState,
                 onItemClick = { entity, id, title ->
                     focusManager.clearFocus()

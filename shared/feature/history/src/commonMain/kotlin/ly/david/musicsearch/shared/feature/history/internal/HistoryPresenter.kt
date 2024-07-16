@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.feature.history.internal
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
@@ -43,6 +45,7 @@ internal class HistoryPresenter(
             query = query,
             sortOption = sortOption,
         ).collectAsLazyPagingItems()
+        val lazyListState = rememberLazyListState()
 
         fun eventSink(event: HistoryUiEvent) {
             when (event) {
@@ -102,6 +105,7 @@ internal class HistoryPresenter(
             query = query,
             sortOption = sortOption,
             lazyPagingItems = lazyPagingItems,
+            lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
     }
@@ -112,6 +116,7 @@ internal data class HistoryUiState(
     val query: String,
     val sortOption: HistorySortOption,
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val lazyListState: LazyListState = LazyListState(),
     val eventSink: (HistoryUiEvent) -> Unit,
 ) : CircuitUiState
 

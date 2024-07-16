@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.history.internal
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -39,7 +40,7 @@ import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun History(
+internal fun HistoryUi(
     state: HistoryUiState,
     modifier: Modifier = Modifier,
 ) {
@@ -136,11 +137,12 @@ internal fun History(
             }
         },
     ) { innerPadding ->
-        History(
+        HistoryUi(
             lazyPagingItems = state.lazyPagingItems,
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
+            lazyListState = state.lazyListState,
             onItemClick = { entity, id, title ->
                 eventSink(
                     HistoryUiEvent.ClickItem(
@@ -178,15 +180,17 @@ internal fun History(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun History(
+internal fun HistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
+    lazyListState: LazyListState = LazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onDeleteItem: (LookupHistoryListItemModel) -> Unit = {},
 ) {
     ScreenWithPagingLoadingAndError(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
+        lazyListState = lazyListState,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is ListSeparator -> {

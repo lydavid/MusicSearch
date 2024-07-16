@@ -235,13 +235,13 @@ private fun CollectionUi(
     when (entity) {
         MusicBrainzEntity.ARTIST -> {
             ArtistsListScreen(
-                lazyListState = lazyListState,
+                lazyListState = artistsByEntityUiState.lazyListState,
+                lazyPagingItems = artistsByEntityUiState.lazyPagingItems,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 snackbarHostState = snackbarHostState,
-                lazyPagingItems = artistsByEntityUiState.lazyPagingItems,
                 onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
@@ -254,13 +254,13 @@ private fun CollectionUi(
 
         MusicBrainzEntity.EVENT -> {
             EventsListScreen(
-                lazyListState = lazyListState,
+                lazyPagingItems = eventsByEntityUiState.lazyPagingItems,
+                lazyListState = eventsByEntityUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 snackbarHostState = snackbarHostState,
-                lazyPagingItems = eventsByEntityUiState.lazyPagingItems,
                 onEventClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
@@ -273,13 +273,13 @@ private fun CollectionUi(
 
         MusicBrainzEntity.LABEL -> {
             LabelsListScreen(
-                lazyListState = lazyListState,
+                lazyPagingItems = labelsByEntityUiState.lazyPagingItems,
+                lazyListState = labelsByEntityUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 snackbarHostState = snackbarHostState,
-                lazyPagingItems = labelsByEntityUiState.lazyPagingItems,
                 onLabelClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
@@ -292,13 +292,13 @@ private fun CollectionUi(
 
         MusicBrainzEntity.RELEASE -> {
             ReleasesListScreen(
-                lazyListState = lazyListState,
+                lazyPagingItems = releasesByEntityUiState.lazyPagingItems,
+                lazyListState = releasesByEntityUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 snackbarHostState = snackbarHostState,
-                lazyPagingItems = releasesByEntityUiState.lazyPagingItems,
                 showMoreInfo = releasesByEntityUiState.showMoreInfo,
                 onReleaseClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
@@ -317,13 +317,13 @@ private fun CollectionUi(
 
         MusicBrainzEntity.RELEASE_GROUP -> {
             ReleaseGroupsListScreen(
-                lazyListState = lazyListState,
+                lazyPagingItems = releaseGroupsByEntityUiState.lazyPagingItems,
+                lazyListState = releaseGroupsByEntityUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 snackbarHostState = snackbarHostState,
-                lazyPagingItems = releaseGroupsByEntityUiState.lazyPagingItems,
                 onReleaseGroupClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
@@ -341,13 +341,13 @@ private fun CollectionUi(
 
         MusicBrainzEntity.WORK -> {
             WorksListScreen(
-                lazyListState = lazyListState,
+                lazyPagingItems = worksByEntityUiState.lazyPagingItems,
+                lazyListState = worksByEntityUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 snackbarHostState = snackbarHostState,
-                lazyPagingItems = worksByEntityUiState.lazyPagingItems,
                 onWorkClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(

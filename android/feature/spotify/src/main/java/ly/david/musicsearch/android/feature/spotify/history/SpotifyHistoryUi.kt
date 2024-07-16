@@ -3,6 +3,7 @@ package ly.david.musicsearch.android.feature.spotify.history
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
@@ -53,6 +54,7 @@ internal fun SpotifyHistoryUi(
 
     SpotifyHistoryUi(
         lazyPagingItems = state.lazyPagingItems,
+        lazyListState = state.lazyListState,
         modifier = modifier,
         onBack = {
             eventSink(SpotifyUiEvent.NavigateUp)
@@ -86,6 +88,7 @@ internal fun SpotifyHistoryUi(
 private fun SpotifyHistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
+    lazyListState: LazyListState = LazyListState(),
     onBack: () -> Unit = {},
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
     filterText: String = "",
@@ -161,6 +164,7 @@ private fun SpotifyHistoryUi(
 private fun SpotifyHistoryContent(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
+    lazyListState: LazyListState = LazyListState(),
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
     onDelete: (SpotifyHistoryListItemModel) -> Unit = {},
 ) {
@@ -185,6 +189,7 @@ private fun SpotifyHistoryContent(
 
     ScreenWithPagingLoadingAndError(
         lazyPagingItems = lazyPagingItems,
+        lazyListState = lazyListState,
         modifier = modifier,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {

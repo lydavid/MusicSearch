@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.feature.search.internal
 
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,7 +41,9 @@ internal class SearchPresenter(
         var query by rememberSaveable { mutableStateOf(screen.query.orEmpty()) }
         var entity by rememberSaveable { mutableStateOf(screen.entity ?: MusicBrainzEntity.ARTIST) }
         var searchResults by remember { mutableStateOf(emptyFlow<PagingData<ListItemModel>>()) }
+        val searchResultsListState = rememberLazyListState()
         var searchHistory by remember { mutableStateOf(emptyFlow<PagingData<ListItemModel>>()) }
+        val searchHistoryListState = rememberLazyListState()
 
         LaunchedEffect(
             key1 = query,
@@ -107,7 +110,9 @@ internal class SearchPresenter(
             query = query,
             entity = entity,
             searchResults = searchResults.collectAsLazyPagingItems(),
+            searchResultsListState = searchResultsListState,
             searchHistory = searchHistory.collectAsLazyPagingItems(),
+            searchHistoryListState = searchHistoryListState,
             eventSink = ::eventSink,
         )
     }

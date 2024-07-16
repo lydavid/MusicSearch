@@ -3,6 +3,7 @@ package ly.david.musicsearch.android.feature.nowplaying.internal
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -37,6 +38,7 @@ internal fun NowPlayingHistoryUi(
 
     NowPlayingHistoryUi(
         lazyPagingItems = state.lazyPagingItems,
+        lazyListState = state.lazyListState,
         modifier = modifier,
         onBack = {
             eventSink(NowPlayingHistoryUiEvent.NavigateUp)
@@ -64,6 +66,7 @@ internal fun NowPlayingHistoryUi(
 private fun NowPlayingHistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
+    lazyListState: LazyListState = LazyListState(),
     onBack: () -> Unit = {},
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
     filterText: String = "",
@@ -89,6 +92,7 @@ private fun NowPlayingHistoryUi(
     ) { innerPadding ->
         NowPlayingHistoryContent(
             lazyPagingItems = lazyPagingItems,
+            lazyListState = lazyListState,
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -103,11 +107,13 @@ private fun NowPlayingHistoryUi(
 private fun NowPlayingHistoryContent(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
+    lazyListState: LazyListState = LazyListState(),
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
     onDelete: (String) -> Unit = {},
 ) {
     ScreenWithPagingLoadingAndError(
         lazyPagingItems = lazyPagingItems,
+        lazyListState = lazyListState,
         modifier = modifier,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {

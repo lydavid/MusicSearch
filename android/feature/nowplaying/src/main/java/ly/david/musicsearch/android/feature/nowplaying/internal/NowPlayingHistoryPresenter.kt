@@ -1,5 +1,7 @@
 package ly.david.musicsearch.android.feature.nowplaying.internal
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -32,6 +34,7 @@ internal class NowPlayingHistoryPresenter(
         val lazyPagingItems: LazyPagingItems<ListItemModel> = getNowPlayingHistory(
             query = query,
         ).collectAsLazyPagingItems()
+        val lazyListState = rememberLazyListState()
 
         fun eventSink(event: NowPlayingHistoryUiEvent) {
             when (event) {
@@ -63,6 +66,7 @@ internal class NowPlayingHistoryPresenter(
         return NowPlayingHistoryUiState(
             query = query,
             lazyPagingItems = lazyPagingItems,
+            lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
     }
@@ -72,6 +76,7 @@ internal class NowPlayingHistoryPresenter(
 internal data class NowPlayingHistoryUiState(
     val query: String,
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val lazyListState: LazyListState,
     val eventSink: (NowPlayingHistoryUiEvent) -> Unit,
 ) : CircuitUiState
 
