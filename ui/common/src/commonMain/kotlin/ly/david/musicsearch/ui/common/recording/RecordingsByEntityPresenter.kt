@@ -1,5 +1,7 @@
 package ly.david.musicsearch.ui.common.recording
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,6 +29,7 @@ class RecordingsByEntityPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var recordingListItems: Flow<PagingData<RecordingListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val lazyListState: LazyListState = rememberLazyListState()
 
         LaunchedEffect(
             key1 = id,
@@ -62,6 +65,7 @@ class RecordingsByEntityPresenter(
 
         return RecordingsByEntityUiState(
             lazyPagingItems = recordingListItems.collectAsLazyPagingItems(),
+            lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
     }

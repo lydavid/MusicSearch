@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.feature.details.event
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -48,6 +50,7 @@ internal class EventPresenter(
         }
         var selectedTab by rememberSaveable { mutableStateOf(EventTab.DETAILS) }
         var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        val detailsLazyListState = rememberLazyListState()
 
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
@@ -141,6 +144,7 @@ internal class EventPresenter(
             tabs = tabs,
             selectedTab = selectedTab,
             query = query,
+            detailsLazyListState = detailsLazyListState,
             relationsUiState = relationsUiState,
             eventSink = ::eventSink,
         )
@@ -155,6 +159,7 @@ internal data class EventUiState(
     val tabs: List<EventTab>,
     val selectedTab: EventTab,
     val query: String,
+    val detailsLazyListState: LazyListState = LazyListState(),
     val relationsUiState: RelationsUiState,
     val eventSink: (EventUiEvent) -> Unit,
 ) : CircuitUiState

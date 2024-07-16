@@ -1,5 +1,7 @@
 package ly.david.musicsearch.ui.common.releasegroup
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -38,6 +40,7 @@ class ReleaseGroupsByEntityPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var releaseGroupListItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val lazyListState: LazyListState = rememberLazyListState()
 
         LaunchedEffect(
             id,
@@ -92,6 +95,7 @@ class ReleaseGroupsByEntityPresenter(
 
         return ReleaseGroupsByEntityUiState(
             lazyPagingItems = releaseGroupListItems.collectAsLazyPagingItems(),
+            lazyListState = lazyListState,
             sort = sorted,
             eventSink = ::eventSink,
         )

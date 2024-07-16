@@ -28,7 +28,7 @@ class PlacesByEntityPresenter(
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var placeListItems: Flow<PagingData<PlaceListItemModel>> by remember { mutableStateOf(emptyFlow()) }
-        val placesLazyListState: LazyListState = rememberLazyListState()
+        val lazyListState: LazyListState = rememberLazyListState()
 
         LaunchedEffect(
             key1 = id,
@@ -62,7 +62,7 @@ class PlacesByEntityPresenter(
 
         return PlacesByEntityUiState(
             lazyPagingItems = placeListItems.collectAsLazyPagingItems(),
-            placesLazyListState = placesLazyListState,
+            lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
     }

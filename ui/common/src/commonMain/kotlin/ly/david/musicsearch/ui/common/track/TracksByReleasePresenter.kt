@@ -1,5 +1,7 @@
 package ly.david.musicsearch.ui.common.track
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -27,6 +29,7 @@ class TracksByReleasePresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var id: String by rememberSaveable { mutableStateOf("") }
         var tracksListItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val lazyListState: LazyListState = rememberLazyListState()
 
         LaunchedEffect(
             key1 = id,
@@ -54,6 +57,7 @@ class TracksByReleasePresenter(
 
         return TracksByReleaseUiState(
             lazyPagingItems = tracksListItems.collectAsLazyPagingItems(),
+            lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
     }
@@ -62,6 +66,7 @@ class TracksByReleasePresenter(
 @Stable
 data class TracksByReleaseUiState(
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val lazyListState: LazyListState = LazyListState(),
     val eventSink: (TracksByEntityUiEvent) -> Unit,
 ) : CircuitUiState
 

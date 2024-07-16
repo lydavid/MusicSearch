@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.feature.details.releasegroup
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -57,6 +59,7 @@ internal class ReleaseGroupPresenter(
         }
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.DETAILS) }
         var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        val detailsLazyListState = rememberLazyListState()
 
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
@@ -166,6 +169,7 @@ internal class ReleaseGroupPresenter(
             tabs = tabs,
             selectedTab = selectedTab,
             query = query,
+            detailsLazyListState = detailsLazyListState,
             releasesByEntityUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
             eventSink = ::eventSink,
@@ -193,6 +197,7 @@ internal data class ReleaseGroupUiState(
     val tabs: List<ReleaseGroupTab>,
     val selectedTab: ReleaseGroupTab,
     val query: String,
+    val detailsLazyListState: LazyListState = LazyListState(),
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val relationsUiState: RelationsUiState,
     val eventSink: (ReleaseGroupUiEvent) -> Unit,

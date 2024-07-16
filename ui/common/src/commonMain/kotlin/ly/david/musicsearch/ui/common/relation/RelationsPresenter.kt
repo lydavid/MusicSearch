@@ -26,7 +26,7 @@ class RelationsPresenter(
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var relationListItems: Flow<PagingData<RelationListItemModel>> by remember { mutableStateOf(emptyFlow()) }
-        val relationsLazyListState = rememberLazyListState()
+        val lazyListState = rememberLazyListState()
 
         LaunchedEffect(
             key1 = id,
@@ -58,7 +58,7 @@ class RelationsPresenter(
 
         return RelationsUiState(
             lazyPagingItems = relationListItems.collectAsLazyPagingItems(),
-            relationsLazyListState = relationsLazyListState,
+            lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
     }

@@ -33,7 +33,7 @@ class EventsByEntityPresenter(
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         var eventListItems: Flow<PagingData<EventListItemModel>> by remember { mutableStateOf(emptyFlow()) }
-        val eventsLazyListState = rememberLazyListState()
+        val lazyListState = rememberLazyListState()
 
         LaunchedEffect(
             key1 = id,
@@ -69,7 +69,7 @@ class EventsByEntityPresenter(
 
         return EventsByEntityUiState(
             lazyPagingItems = eventListItems.collectAsLazyPagingItems(),
-            eventsLazyListState = eventsLazyListState,
+            lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
     }
@@ -90,6 +90,6 @@ sealed interface EventsByEntityUiEvent : CircuitUiEvent {
 @Stable
 data class EventsByEntityUiState(
     val lazyPagingItems: LazyPagingItems<EventListItemModel>,
-    val eventsLazyListState: LazyListState = LazyListState(),
+    val lazyListState: LazyListState = LazyListState(),
     val eventSink: (EventsByEntityUiEvent) -> Unit = {},
 ) : CircuitUiState

@@ -189,7 +189,7 @@ internal fun AreaUi(
 
                 AreaTab.ARTISTS -> {
                     ArtistsListScreen(
-                        lazyListState = state.artistsByEntityUiState.artistsLazyListState,
+                        lazyListState = state.artistsByEntityUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -210,7 +210,7 @@ internal fun AreaUi(
 
                 AreaTab.EVENTS -> {
                     EventsListScreen(
-                        lazyListState = state.eventsByEntityUiState.eventsLazyListState,
+                        lazyListState = state.eventsByEntityUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -231,7 +231,7 @@ internal fun AreaUi(
 
                 AreaTab.LABELS -> {
                     LabelsListScreen(
-                        lazyListState = state.labelsByEntityUiState.labelsLazyListState,
+                        lazyListState = state.labelsByEntityUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -252,7 +252,7 @@ internal fun AreaUi(
 
                 AreaTab.RELEASES -> {
                     ReleasesListScreen(
-                        lazyListState = state.releasesByEntityUiState.releasesLazyListState,
+                        lazyListState = state.releasesByEntityUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -286,7 +286,7 @@ internal fun AreaUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.relationsUiState.relationsLazyListState,
+                        lazyListState = state.relationsUiState.lazyListState,
                         snackbarHostState = snackbarHostState,
                         onItemClick = { entity, id, title ->
                             eventSink(
@@ -303,7 +303,7 @@ internal fun AreaUi(
                 AreaTab.PLACES -> {
                     PlacesListScreen(
                         snackbarHostState = snackbarHostState,
-                        lazyListState = state.placesByEntityUiState.placesLazyListState,
+                        lazyListState = state.placesByEntityUiState.lazyListState,
                         lazyPagingItems = state.placesByEntityUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)

@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.feature.details.recording
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -54,6 +56,7 @@ internal class RecordingPresenter(
         }
         var selectedTab by rememberSaveable { mutableStateOf(RecordingTab.DETAILS) }
         var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        val detailsLazyListState = rememberLazyListState()
 
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
@@ -160,6 +163,7 @@ internal class RecordingPresenter(
             tabs = tabs,
             selectedTab = selectedTab,
             query = query,
+            detailsLazyListState = detailsLazyListState,
             releasesByEntityUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
             eventSink = ::eventSink,
@@ -176,6 +180,7 @@ internal data class RecordingUiState(
     val tabs: List<RecordingTab>,
     val selectedTab: RecordingTab,
     val query: String,
+    val detailsLazyListState: LazyListState = LazyListState(),
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val relationsUiState: RelationsUiState,
     val eventSink: (RecordingUiEvent) -> Unit,

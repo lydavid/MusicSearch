@@ -4,7 +4,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -107,10 +106,6 @@ internal fun PlaceUi(
         },
     ) { innerPadding ->
 
-        val detailsLazyListState = rememberLazyListState()
-        val eventsLazyListState = rememberLazyListState()
-        val relationsLazyListState = rememberLazyListState()
-
         HorizontalPager(
             state = pagerState,
         ) { page ->
@@ -130,7 +125,7 @@ internal fun PlaceUi(
                         PlaceDetailsUi(
                             place = place,
                             filterText = state.query,
-                            lazyListState = detailsLazyListState,
+                            lazyListState = state.detailsLazyListState,
                             onItemClick = { entity, id, title ->
                                 eventSink(
                                     PlaceUiEvent.ClickItem(
@@ -146,7 +141,7 @@ internal fun PlaceUi(
 
                 PlaceTab.EVENTS -> {
                     EventsListScreen(
-                        lazyListState = eventsLazyListState,
+                        lazyListState = state.eventsByEntityUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -172,7 +167,7 @@ internal fun PlaceUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = relationsLazyListState,
+                        lazyListState = state.relationsUiState.lazyListState,
                         snackbarHostState = snackbarHostState,
                         onItemClick = { entity, id, title ->
                             eventSink(
