@@ -18,7 +18,7 @@ fun OverflowMenuScope.CopyToClipboardMenuItem(
     val clipboardManager = LocalClipboardManager.current
 
     DropdownMenuItem(
-        text = { Text("Copy to clipboard") },
+        text = { Text("Copy ID to clipboard") },
         onClick = {
             clipboardManager.setText(AnnotatedString(entityId))
             closeMenu()
