@@ -36,3 +36,4 @@ data class WorkAttributeMusicBrainzModel(
 ) : WorkAttribute
 
 const val ARTIFICIAL_LANGUAGE_CODE = "qaa"
+const val MULTIPLE_SCRIPT_CODE = "Qaaa"

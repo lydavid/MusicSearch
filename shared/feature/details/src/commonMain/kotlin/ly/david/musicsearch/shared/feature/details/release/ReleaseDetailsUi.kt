@@ -22,6 +22,7 @@ import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
+import ly.david.musicsearch.ui.common.work.getDisplayScript
 
 @Composable
 internal fun ReleaseDetailsUi(
@@ -120,7 +121,7 @@ internal fun ReleaseDetailsUi(
                     )
                 }
                 // TODO: handle script
-//                textRepresentation?.script?.ifNotNullOrEmpty { script ->
+                textRepresentation?.script?.getDisplayScript(strings).ifNotNullOrEmpty {
 //                    val scriptOrCode = if (script == "Qaaa") {
 //                        strings.multipleScripts
 //                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -131,12 +132,12 @@ internal fun ReleaseDetailsUi(
 //                    } else {
 //                        script
 //                    }
-//                    TextWithHeading(
-//                        heading = strings.script,
-//                        text = scriptOrCode,
-//                        filterText = filterText,
-//                    )
-//                }
+                    TextWithHeading(
+                        heading = strings.script,
+                        text = it,
+                        filterText = filterText,
+                    )
+                }
                 quality?.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.dataQuality,

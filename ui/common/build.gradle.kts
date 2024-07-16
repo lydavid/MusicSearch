@@ -59,6 +59,11 @@ kotlin {
                 implementation(libs.koin.test)
             }
         }
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+            }
+        }
     }
 
     // Copied from https://github.com/chrisbanes/tivi/pull/1827/commits/0840a6c769c8b91f520e03c5a2fa6292431a99ea
