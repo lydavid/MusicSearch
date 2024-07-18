@@ -7,16 +7,18 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.core.models.common.ifNotNull
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.core.theme.getSubTextColor
+import ly.david.musicsearch.ui.image.ThumbnailImage
 
 // TODO: have 2 modes: query and browse where some data is displayed differently
 /**
@@ -31,9 +33,10 @@ fun ReleaseGroupListItem(
     requestForMissingCoverArtUrl: suspend () -> Unit = {},
     onClick: ReleaseGroupListItemModel.() -> Unit = {},
 ) {
+    val latestRequestForMissingCoverArtUrl by rememberUpdatedState(requestForMissingCoverArtUrl)
     LaunchedEffect(key1 = releaseGroup.id) {
         if (releaseGroup.imageUrl == null) {
-            requestForMissingCoverArtUrl()
+            latestRequestForMissingCoverArtUrl()
         }
     }
 

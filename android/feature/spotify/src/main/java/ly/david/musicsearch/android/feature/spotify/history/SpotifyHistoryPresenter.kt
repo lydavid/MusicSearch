@@ -56,14 +56,14 @@ internal class SpotifyHistoryPresenter(
                     )
                 }
 
-                is SpotifyUiEvent.MarkAsDeleted -> {
+                is SpotifyUiEvent.MarkForDeletion -> {
                     spotifyHistoryRepository.markAsDeleted(
                         trackId = event.history.trackId,
                         listened = event.history.lastListened,
                     )
                 }
 
-                is SpotifyUiEvent.UndoMarkAsDeleted -> {
+                is SpotifyUiEvent.UndoMarkForDeletion -> {
                     spotifyHistoryRepository.undoMarkAsDeleted(
                         trackId = event.history.trackId,
                         listened = event.history.lastListened,
@@ -104,7 +104,7 @@ internal sealed interface SpotifyUiEvent : CircuitUiEvent {
         val entity: MusicBrainzEntity,
     ) : SpotifyUiEvent
 
-    data class MarkAsDeleted(val history: SpotifyHistoryListItemModel) : SpotifyUiEvent
-    data class UndoMarkAsDeleted(val history: SpotifyHistoryListItemModel) : SpotifyUiEvent
+    data class MarkForDeletion(val history: SpotifyHistoryListItemModel) : SpotifyUiEvent
+    data class UndoMarkForDeletion(val history: SpotifyHistoryListItemModel) : SpotifyUiEvent
     data class Delete(val history: SpotifyHistoryListItemModel) : SpotifyUiEvent
 }

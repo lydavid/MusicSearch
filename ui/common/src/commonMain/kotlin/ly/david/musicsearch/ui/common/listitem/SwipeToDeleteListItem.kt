@@ -24,10 +24,10 @@ import androidx.compose.ui.unit.dp
 //  this may suggest we shouldn't use swipe to delete for remote items, as the ux will be strange no matter what we do
 @Composable
 fun SwipeToDeleteListItem(
-    content: @Composable RowScope.() -> Unit,
     modifier: Modifier = Modifier,
     disable: Boolean = false,
-    onDelete: () -> Unit,
+    onDelete: () -> Unit = {},
+    content: @Composable RowScope.() -> Unit = {},
 ) {
     if (disable) {
         Row(modifier = modifier) {
