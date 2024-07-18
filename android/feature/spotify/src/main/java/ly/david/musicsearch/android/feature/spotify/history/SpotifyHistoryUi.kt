@@ -104,7 +104,7 @@ private fun SpotifyHistoryUi(
 
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        contentWindowInsets = WindowInsets(0),
         topBar = {
             TopAppBarWithFilter(
                 showBackButton = true,
@@ -127,6 +127,7 @@ private fun SpotifyHistoryUi(
     ) { innerPadding ->
         SpotifyHistoryContent(
             lazyPagingItems = lazyPagingItems,
+            lazyListState = lazyListState,
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
