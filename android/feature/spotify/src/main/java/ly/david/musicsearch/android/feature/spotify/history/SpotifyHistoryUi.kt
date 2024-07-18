@@ -71,11 +71,11 @@ internal fun SpotifyHistoryUi(
         onFilterTextChange = {
             eventSink(SpotifyUiEvent.UpdateQuery(it))
         },
-        onMarkAsDeleted = {
-            eventSink(SpotifyUiEvent.MarkAsDeleted(it))
+        onMarkForDeletion = {
+            eventSink(SpotifyUiEvent.MarkForDeletion(it))
         },
-        onUndoMarkAsDeleted = {
-            eventSink(SpotifyUiEvent.UndoMarkAsDeleted(it))
+        onUndoMarkForDeletion = {
+            eventSink(SpotifyUiEvent.UndoMarkForDeletion(it))
         },
         onDelete = {
             eventSink(SpotifyUiEvent.Delete(it))
@@ -93,8 +93,8 @@ private fun SpotifyHistoryUi(
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
     filterText: String = "",
     onFilterTextChange: (String) -> Unit = {},
-    onMarkAsDeleted: (SpotifyHistoryListItemModel) -> Unit = {},
-    onUndoMarkAsDeleted: (SpotifyHistoryListItemModel) -> Unit = {},
+    onMarkForDeletion: (SpotifyHistoryListItemModel) -> Unit = {},
+    onUndoMarkForDeletion: (SpotifyHistoryListItemModel) -> Unit = {},
     onDelete: (SpotifyHistoryListItemModel) -> Unit = {},
 ) {
     val strings = LocalStrings.current
@@ -134,7 +134,7 @@ private fun SpotifyHistoryUi(
             searchMusicBrainz = searchMusicBrainz,
             onDelete = { history ->
                 scope.launch {
-                    onMarkAsDeleted(history)
+                    onMarkForDeletion(history)
 
                     val snackbarResult = snackbarHostState.showSnackbar(
                         message = "Removed ${history.trackName}",
@@ -144,7 +144,7 @@ private fun SpotifyHistoryUi(
 
                     when (snackbarResult) {
                         SnackbarResult.ActionPerformed -> {
-                            onUndoMarkAsDeleted(history)
+                            onUndoMarkForDeletion(history)
                         }
 
                         SnackbarResult.Dismissed -> {
