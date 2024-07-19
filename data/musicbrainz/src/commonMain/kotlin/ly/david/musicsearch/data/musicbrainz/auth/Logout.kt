@@ -2,7 +2,6 @@ package ly.david.musicsearch.data.musicbrainz.auth
 
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.core.models.auth.AccessToken
 import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore
 
 class Logout(
@@ -24,10 +23,8 @@ class Logout(
             logger.e(ex)
         } finally {
             musicBrainzAuthStore.saveTokens(
-                AccessToken(
-                    accessToken = "",
-                    refreshToken = "",
-                ),
+                accessToken = "",
+                refreshToken = "",
             )
             musicBrainzAuthStore.setUsername("")
         }

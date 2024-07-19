@@ -6,7 +6,6 @@ import com.github.scribejava.core.oauth.OAuth20Service
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.core.models.auth.AccessToken
 import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 
@@ -23,11 +22,10 @@ class LoginJvm(
             object : OAuthAsyncRequestCallback<OAuth2AccessToken> {
                 override fun onCompleted(response: OAuth2AccessToken?) {
                     coroutineScope.launch {
-                        val accessToken = AccessToken(
-                            accessToken = response?.accessToken.orEmpty(),
-                            refreshToken = response?.refreshToken.orEmpty(),
+                        musicBrainzAuthStore.saveTokens(
+                            response?.accessToken.orEmpty(),
+                            response?.refreshToken.orEmpty(),
                         )
-                        musicBrainzAuthStore.saveTokens(accessToken)
 
                         try {
                             val username = musicBrainzApi.getUserInfo().username ?: return@launch

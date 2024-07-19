@@ -1,7 +1,6 @@
 package ly.david.musicsearch.data.musicbrainz.auth
 
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.core.models.auth.AccessToken
 import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import net.openid.appauth.AuthState
@@ -29,10 +28,8 @@ class LoginAndroid(
             response != null -> {
                 val authState = exchangeToken(response)
                 musicBrainzAuthStore.saveTokens(
-                    AccessToken(
-                        accessToken = authState?.accessToken.orEmpty(),
-                        refreshToken = authState?.refreshToken.orEmpty(),
-                    ),
+                    accessToken = authState?.accessToken.orEmpty(),
+                    refreshToken = authState?.refreshToken.orEmpty(),
                 )
 
                 try {

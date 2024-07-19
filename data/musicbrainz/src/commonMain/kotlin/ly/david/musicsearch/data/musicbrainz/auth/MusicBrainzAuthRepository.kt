@@ -1,7 +1,6 @@
 package ly.david.musicsearch.data.musicbrainz.auth
 
 import kotlinx.datetime.Clock
-import ly.david.musicsearch.core.models.auth.AccessToken
 import ly.david.musicsearch.data.musicbrainz.auth.api.MusicBrainzOAuthApi
 import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore
 
@@ -30,10 +29,8 @@ class MusicBrainzAuthRepository(
             val newAccessToken = musicBrainzOAuthResponse.accessToken
             val newRefreshToken = musicBrainzOAuthResponse.refreshToken
             musicBrainzAuthStore.saveTokens(
-                AccessToken(
-                    accessToken = newAccessToken,
-                    refreshToken = newRefreshToken,
-                ),
+                accessToken = newAccessToken,
+                refreshToken = newRefreshToken,
             )
             newAccessToken
         } else {

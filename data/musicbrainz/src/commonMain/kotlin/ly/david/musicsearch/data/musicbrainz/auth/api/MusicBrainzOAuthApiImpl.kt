@@ -5,7 +5,6 @@ import io.ktor.client.call.body
 import io.ktor.client.request.forms.submitForm
 import io.ktor.http.parameters
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
-import ly.david.musicsearch.core.models.auth.AccessToken
 
 class MusicBrainzOAuthApiImpl(
     val httpClient: HttpClient,
