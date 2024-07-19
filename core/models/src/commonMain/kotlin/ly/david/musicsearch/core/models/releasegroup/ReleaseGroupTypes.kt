@@ -1,6 +1,6 @@
 package ly.david.musicsearch.core.models.releasegroup
 
-import ly.david.musicsearch.core.models.network.NO_TYPE
+internal const val NO_TYPE = "Unspecified type"
 
 interface ReleaseGroupTypes {
     val primaryType: String?
