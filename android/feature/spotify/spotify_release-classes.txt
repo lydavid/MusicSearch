@@ -17,6 +17,7 @@ stable class SpotifyHistoryPresenter {
 stable class SpotifyUiState {
   stable val query: String
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable val lazyListState: LazyListState
   stable val eventSink: Function1<SpotifyUiEvent, Unit>
 }
 stable class NavigateUp {
@@ -31,11 +32,11 @@ stable class GoToSearch {
   stable val entity: MusicBrainzEntity
   <runtime stability> = Stable
 }
-stable class MarkAsDeleted {
+stable class MarkForDeletion {
   runtime val history: SpotifyHistoryListItemModel
   <runtime stability> = Stable
 }
-stable class UndoMarkAsDeleted {
+stable class UndoMarkForDeletion {
   runtime val history: SpotifyHistoryListItemModel
   <runtime stability> = Stable
 }

@@ -36,13 +36,17 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CreateNew
 }
 
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionList(
+fun present(
+  stable <this>: CollectionListPresenter
+): CollectionListUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionListUi(
   stable state: CollectionListUiState
   stable modifier: Modifier? = @static Companion
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionList(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionListUi(
   lazyPagingItems: LazyPagingItems<CollectionListItemModel>
   stable modifier: Modifier? = @static Companion
+  stable lazyListState: LazyListState? = @dynamic LazyListState()
   stable filterText: String? = @static ""
   stable onFilterTextChange: Function1<String, Unit>? = @static { it: String ->
 
@@ -72,9 +76,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
 }
 
 )
-fun present(
-  stable <this>: CollectionListPresenter
-): CollectionListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionSortBottomSheet(
   stable sortOption: CollectionSortOption
   stable onSortOptionClick: Function1<CollectionSortOption, Unit>? = @static { it: CollectionSortOption ->

@@ -4,15 +4,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecentSea
 }
 
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Search(
-  stable state: SearchUiState
-  stable modifier: Modifier? = @static Companion
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Search(
-  stable state: SearchUiState
-  stable modifier: Modifier? = @static Companion
-  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchHistoryListItem(
   searchHistory: SearchHistoryListItemModel
   stable modifier: Modifier? = @static Companion
@@ -52,6 +43,15 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchRes
 
 }
 
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchUi(
+  stable state: SearchUiState
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchUi(
+  stable state: SearchUiState
+  stable modifier: Modifier? = @static Companion
+  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecentSearchesHeader()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSearchHistoryListItem()

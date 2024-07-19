@@ -107,7 +107,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventsLis
   stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
 )
 restartable skippable fun DetailsWithErrorHandling(
-  scaffoldModel: T?
+  detailsModel: T?
   stable onRefresh: Function0<Unit>
   stable modifier: Modifier? = @static Companion
   stable showLoading: Boolean = @static false
@@ -179,10 +179,13 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ListSepar
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun SwipeToDeleteListItem(
-  stable content: @[ExtensionFunctionType] Function3<RowScope, Composer, Int, Unit>
   stable modifier: Modifier? = @static Companion
   stable disable: Boolean = @static false
-  stable onDelete: Function0<Unit>
+  stable onDelete: Function0<Unit>? = @static {
+
+}
+
+  stable content: @[ExtensionFunctionType] Function3<RowScope, Composer, Int, Unit>? = @static ComposableSingletons$SwipeToDeleteListItemKt.lambda-1
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun SwipeToDeleteListItem(
   stable dismissContent: @[ExtensionFunctionType] Function3<RowScope, Composer, Int, Unit>

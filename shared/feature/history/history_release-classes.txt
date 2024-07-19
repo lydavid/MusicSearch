@@ -11,6 +11,7 @@ stable class HistoryUiState {
   stable val query: String
   stable val sortOption: HistorySortOption
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable val lazyListState: LazyListState
   stable val eventSink: Function1<HistoryUiEvent, Unit>
 }
 stable class UpdateQuery {

@@ -35,6 +35,8 @@ stable class SearchUiState {
   stable val query: String
   stable val entity: MusicBrainzEntity
   runtime val searchResults: LazyPagingItems<ListItemModel>
+  stable val searchResultsListState: LazyListState
   runtime val searchHistory: LazyPagingItems<ListItemModel>
+  stable val searchHistoryListState: LazyListState
   stable val eventSink: Function1<SearchUiEvent, Unit>
 }

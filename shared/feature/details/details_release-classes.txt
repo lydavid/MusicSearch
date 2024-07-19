@@ -15,7 +15,7 @@ stable class AreaPresenter {
 stable class AreaUiState {
   stable val title: String
   stable val isError: Boolean
-  runtime val area: AreaScaffoldModel?
+  runtime val area: AreaDetailsModel?
   unstable val tabs: List<AreaTab>
   stable val selectedTab: AreaTab
   stable val query: String
@@ -67,11 +67,12 @@ stable class ArtistUiState {
   stable val title: String
   stable val isLoading: Boolean
   stable val isError: Boolean
-  runtime val artist: ArtistScaffoldModel?
+  runtime val artist: ArtistDetailsModel?
   stable val imageUrl: String
   unstable val tabs: List<ArtistTab>
   stable val selectedTab: ArtistTab
   stable val query: String
+  stable val detailsLazyListState: LazyListState
   stable val eventsByEntityUiState: EventsByEntityUiState
   stable val recordingsByEntityUiState: RecordingsByEntityUiState
   stable val releasesByEntityUiState: ReleasesByEntityUiState
@@ -112,10 +113,11 @@ stable class EventPresenter {
 stable class EventUiState {
   stable val title: String
   stable val isError: Boolean
-  runtime val event: EventScaffoldModel?
+  runtime val event: EventDetailsModel?
   unstable val tabs: List<EventTab>
   stable val selectedTab: EventTab
   stable val query: String
+  stable val detailsLazyListState: LazyListState
   stable val relationsUiState: RelationsUiState
   stable val eventSink: Function1<EventUiEvent, Unit>
 }
@@ -171,10 +173,11 @@ stable class InstrumentPresenter {
 stable class InstrumentUiState {
   stable val title: String
   stable val isError: Boolean
-  runtime val instrument: InstrumentScaffoldModel?
+  runtime val instrument: InstrumentDetailsModel?
   unstable val tabs: List<InstrumentTab>
   stable val selectedTab: InstrumentTab
   stable val query: String
+  stable val detailsLazyListState: LazyListState
   stable val relationsUiState: RelationsUiState
   stable val eventSink: Function1<InstrumentUiEvent, Unit>
 }
@@ -211,10 +214,11 @@ stable class LabelPresenter {
 stable class LabelUiState {
   stable val title: String
   stable val isError: Boolean
-  runtime val label: LabelScaffoldModel?
+  runtime val label: LabelDetailsModel?
   unstable val tabs: List<LabelTab>
   stable val selectedTab: LabelTab
   stable val query: String
+  stable val detailsLazyListState: LazyListState
   stable val releasesByEntityUiState: ReleasesByEntityUiState
   stable val relationsUiState: RelationsUiState
   stable val eventSink: Function1<LabelUiEvent, Unit>
@@ -252,10 +256,11 @@ stable class PlacePresenter {
 stable class PlaceUiState {
   stable val title: String
   stable val isError: Boolean
-  runtime val place: PlaceScaffoldModel?
+  runtime val place: PlaceDetailsModel?
   unstable val tabs: List<PlaceTab>
   stable val selectedTab: PlaceTab
   stable val query: String
+  stable val detailsLazyListState: LazyListState
   stable val eventsByEntityUiState: EventsByEntityUiState
   stable val relationsUiState: RelationsUiState
   stable val eventSink: Function1<PlaceUiEvent, Unit>
@@ -294,10 +299,11 @@ stable class RecordingUiState {
   stable val title: String
   stable val subtitle: String
   stable val isError: Boolean
-  runtime val recording: RecordingScaffoldModel?
+  runtime val recording: RecordingDetailsModel?
   unstable val tabs: List<RecordingTab>
   stable val selectedTab: RecordingTab
   stable val query: String
+  stable val detailsLazyListState: LazyListState
   stable val releasesByEntityUiState: ReleasesByEntityUiState
   stable val relationsUiState: RelationsUiState
   stable val eventSink: Function1<RecordingUiEvent, Unit>
@@ -338,11 +344,12 @@ stable class ReleaseUiState {
   stable val title: String
   stable val subtitle: String
   stable val isError: Boolean
-  runtime val release: ReleaseScaffoldModel?
+  runtime val release: ReleaseDetailsModel?
   stable val imageUrl: String
   stable val tabs: ImmutableList<ReleaseTab>
   stable val selectedTab: ReleaseTab
   stable val query: String
+  stable val detailsLazyListState: LazyListState
   stable val relationsUiState: RelationsUiState
   stable val tracksByReleaseUiState: TracksByReleaseUiState
   stable val artistsByEntityUiState: ArtistsByEntityUiState
@@ -386,11 +393,12 @@ stable class ReleaseGroupUiState {
   stable val title: String
   stable val subtitle: String
   stable val isError: Boolean
-  runtime val releaseGroup: ReleaseGroupScaffoldModel?
+  runtime val releaseGroup: ReleaseGroupDetailsModel?
   stable val imageUrl: String
   unstable val tabs: List<ReleaseGroupTab>
   stable val selectedTab: ReleaseGroupTab
   stable val query: String
+  stable val detailsLazyListState: LazyListState
   stable val releasesByEntityUiState: ReleasesByEntityUiState
   stable val relationsUiState: RelationsUiState
   stable val eventSink: Function1<ReleaseGroupUiEvent, Unit>
@@ -427,10 +435,11 @@ stable class SeriesPresenter {
 stable class SeriesUiState {
   stable val title: String
   stable val isError: Boolean
-  runtime val series: SeriesScaffoldModel?
+  runtime val series: SeriesDetailsModel?
   unstable val tabs: List<SeriesTab>
   stable val selectedTab: SeriesTab
   stable val query: String
+  stable val detailsLazyListState: LazyListState
   stable val relationsUiState: RelationsUiState
   stable val eventSink: Function1<SeriesUiEvent, Unit>
 }
@@ -468,10 +477,11 @@ stable class WorkPresenter {
 stable class WorkUiState {
   stable val title: String
   stable val isError: Boolean
-  runtime val work: WorkScaffoldModel?
+  runtime val work: WorkDetailsModel?
   unstable val tabs: List<WorkTab>
   stable val selectedTab: WorkTab
   stable val query: String
+  stable val detailsLazyListState: LazyListState
   stable val artistsByEntityUiState: ArtistsByEntityUiState
   stable val recordingsByEntityUiState: RecordingsByEntityUiState
   stable val relationsUiState: RelationsUiState

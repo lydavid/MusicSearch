@@ -17,6 +17,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayin
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
+  stable lazyListState: LazyListState? = @dynamic LazyListState()
   stable onBack: Function0<Unit>? = @static {
 
 }
@@ -38,6 +39,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayin
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryContent(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
+  stable lazyListState: LazyListState? = @dynamic LazyListState()
   stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: @[ParameterName(name = 'query')] String, <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity ->
 
 }

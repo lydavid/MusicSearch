@@ -1,5 +1,5 @@
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaDetailsUi(
-  area: AreaScaffoldModel
+  area: AreaDetailsModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
@@ -27,7 +27,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaUi(
 
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistDetailsUi(
-  artist: ArtistScaffoldModel
+  artist: ArtistDetailsModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable imageUrl: String? = @static ""
@@ -46,7 +46,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistUi(
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventDetailsUi(
-  event: EventScaffoldModel
+  event: EventDetailsModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
@@ -87,7 +87,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun GenreUi(
 
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentDetailsUi(
-  instrument: InstrumentScaffoldModel
+  instrument: InstrumentDetailsModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
@@ -105,7 +105,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Instrumen
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelDetailsUi(
-  label: LabelScaffoldModel
+  label: LabelDetailsModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
@@ -123,7 +123,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelUi(
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceDetailsUi(
-  place: PlaceScaffoldModel
+  place: PlaceDetailsModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
@@ -141,7 +141,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceUi(
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingDetailsUi(
-  recording: RecordingScaffoldModel
+  recording: RecordingDetailsModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
@@ -159,7 +159,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Recording
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseDetailsUi(
-  release: ReleaseScaffoldModel
+  release: ReleaseDetailsModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable imageUrl: String? = @static ""
@@ -192,7 +192,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TracksByR
 
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupDetailsUi(
-  releaseGroup: ReleaseGroupScaffoldModel
+  releaseGroup: ReleaseGroupDetailsModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable imageUrl: String? = @static ""
@@ -211,7 +211,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGr
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesDetailsUi(
-  series: SeriesScaffoldModel
+  series: SeriesDetailsModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
@@ -229,7 +229,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesUi(
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorkDetailsUi(
-  work: WorkScaffoldModel
+  work: WorkDetailsModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)

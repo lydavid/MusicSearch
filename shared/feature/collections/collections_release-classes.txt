@@ -36,6 +36,7 @@ stable class CollectionListUiState {
   stable val showRemote: Boolean
   stable val sortOption: CollectionSortOption
   runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
+  stable val lazyListState: LazyListState
   stable val eventSink: Function1<CollectionListUiEvent, Unit>
 }
 stable class UpdateQuery {

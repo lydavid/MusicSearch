@@ -30,7 +30,7 @@ stable class ReleaseEvent {
   stable val countryCode: String?
   <runtime stability> = Stable
 }
-unstable class AreaScaffoldModel {
+unstable class AreaDetailsModel {
   stable val id: String
   stable val name: String
   stable val sortName: String
@@ -47,7 +47,7 @@ stable class ArtistCreditUiModel {
   stable val joinPhrase: String?
   <runtime stability> = Stable
 }
-unstable class ArtistScaffoldModel {
+unstable class ArtistDetailsModel {
   stable val id: String
   stable val name: String
   stable val sortName: String
@@ -60,22 +60,13 @@ unstable class ArtistScaffoldModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-unstable class $serializer {
-  unstable val descriptor: SerialDescriptor
-  <runtime stability> = Unstable
-}
-stable class AccessToken {
-  stable val accessToken: String
-  stable val refreshToken: String
-  <runtime stability> = Stable
-}
 stable class BrowseEntityCount {
   stable val browseEntity: MusicBrainzEntity
   stable val localCount: Int
   stable val remoteCount: Int?
   <runtime stability> = Stable
 }
-unstable class EventScaffoldModel {
+unstable class EventDetailsModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String?
@@ -121,7 +112,7 @@ stable class ImageUrls {
   stable val largeUrl: String
   <runtime stability> = Stable
 }
-unstable class InstrumentScaffoldModel {
+unstable class InstrumentDetailsModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String?
@@ -130,7 +121,7 @@ unstable class InstrumentScaffoldModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-unstable class LabelScaffoldModel {
+unstable class LabelDetailsModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String?
@@ -360,7 +351,7 @@ stable class CoordinatesUiModel {
   stable val latitude: Double?
   <runtime stability> = Stable
 }
-unstable class PlaceScaffoldModel {
+unstable class PlaceDetailsModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String?
@@ -372,7 +363,7 @@ unstable class PlaceScaffoldModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-unstable class RecordingScaffoldModel {
+unstable class RecordingDetailsModel {
   stable val id: String
   stable val name: String
   stable val firstReleaseDate: String?
@@ -410,7 +401,7 @@ stable class FormatTrackCount {
   stable val trackCount: Int
   <runtime stability> = Stable
 }
-unstable class ReleaseScaffoldModel {
+unstable class ReleaseDetailsModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String
@@ -442,16 +433,7 @@ stable class TextRepresentationUiModel {
   stable val language: String?
   <runtime stability> = Stable
 }
-unstable class ReleaseGroupForRelease {
-  stable val id: String
-  stable val name: String
-  stable val firstReleaseDate: String
-  stable val disambiguation: String
-  stable val primaryType: String?
-  unstable val secondaryTypes: List<String>?
-  <runtime stability> = Unstable
-}
-unstable class ReleaseGroupScaffoldModel {
+unstable class ReleaseGroupDetailsModel {
   stable val id: String
   stable val name: String
   stable val firstReleaseDate: String
@@ -463,13 +445,22 @@ unstable class ReleaseGroupScaffoldModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
+unstable class ReleaseGroupForRelease {
+  stable val id: String
+  stable val name: String
+  stable val firstReleaseDate: String
+  stable val disambiguation: String
+  stable val primaryType: String?
+  unstable val secondaryTypes: List<String>?
+  <runtime stability> = Unstable
+}
 unstable class ReleaseGroupTypeCount {
   stable val primaryType: String?
   unstable val secondaryTypes: List<String>?
   stable val count: Int
   <runtime stability> = Unstable
 }
-unstable class SeriesScaffoldModel {
+unstable class SeriesDetailsModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String?
@@ -483,7 +474,7 @@ stable class WorkAttributeUiModel {
   stable val value: String
   <runtime stability> = Stable
 }
-unstable class WorkScaffoldModel {
+unstable class WorkDetailsModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String?
