@@ -1,12 +1,12 @@
 package ly.david.data.test
 
 import ly.david.musicsearch.core.models.area.AreaType
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchAreasResponse
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val canada = AreaMusicBrainzModel(
     id = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -32,14 +32,14 @@ val ontario = AreaMusicBrainzModel(
             type = "part of",
             typeId = "de7cc874-8b1b-3a05-8272-f3834c968fb7",
             direction = Direction.BACKWARD,
-            targetType = MusicBrainzEntity.AREA,
+            targetType = RelatableMusicBrainzEntity.AREA,
             area = canada,
         ),
         RelationMusicBrainzModel(
             type = "part of",
             typeId = "de7cc874-8b1b-3a05-8272-f3834c968fb7",
             direction = Direction.FORWARD,
-            targetType = MusicBrainzEntity.AREA,
+            targetType = RelatableMusicBrainzEntity.AREA,
             area = toronto,
         ),
     ),

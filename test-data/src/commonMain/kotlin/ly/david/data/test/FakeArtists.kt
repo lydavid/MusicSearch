@@ -1,14 +1,14 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchArtistsResponse
+import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val bandAid = ArtistMusicBrainzModel(
     id = "0ecaa896-58fa-4dca-b53d-8da7bc5f59c5",
@@ -49,7 +49,7 @@ val davidBowie = ArtistMusicBrainzModel(
         RelationMusicBrainzModel(
             artist = bandAid,
             direction = Direction.FORWARD,
-            targetType = MusicBrainzEntity.ARTIST,
+            targetType = RelatableMusicBrainzEntity.ARTIST,
             attributes = listOf("minor"),
             type = "collaboration",
             typeId = "75c09861-6857-4ec0-9729-84eefde7fc86",
@@ -57,7 +57,7 @@ val davidBowie = ArtistMusicBrainzModel(
         RelationMusicBrainzModel(
             artist = carlosAlomar,
             direction = Direction.BACKWARD,
-            targetType = MusicBrainzEntity.ARTIST,
+            targetType = RelatableMusicBrainzEntity.ARTIST,
             attributes = listOf("guitar"),
             type = "instrumental supporting musician",
             typeId = "ed6a7891-ce70-4e08-9839-1f2f62270497",
@@ -65,14 +65,14 @@ val davidBowie = ArtistMusicBrainzModel(
         RelationMusicBrainzModel(
             url = davidBowieSpotify,
             direction = Direction.FORWARD,
-            targetType = MusicBrainzEntity.URL,
+            targetType = RelatableMusicBrainzEntity.URL,
             type = "free streaming",
             typeId = "769085a1-c2f7-4c24-a532-2375a77693bd",
         ),
         RelationMusicBrainzModel(
             url = davidBowieDeezer,
             direction = Direction.FORWARD,
-            targetType = MusicBrainzEntity.URL,
+            targetType = RelatableMusicBrainzEntity.URL,
             type = "free streaming",
             typeId = "769085a1-c2f7-4c24-a532-2375a77693bd",
         ),

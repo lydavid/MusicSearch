@@ -1,13 +1,13 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.models.core.CoordinatesMusicBrainzModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchPlacesResponse
+import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.CoordinatesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val fakePlace = PlaceMusicBrainzModel(
     id = "place1",
@@ -19,7 +19,7 @@ val eventHeldAtPlace = RelationMusicBrainzModel(
     type = "doesn't matter",
     typeId = "e2c6f697-07dc-38b1-be0b-83d740165532",
     direction = Direction.BACKWARD,
-    targetType = MusicBrainzEntity.EVENT,
+    targetType = RelatableMusicBrainzEntity.EVENT,
     event = fakeEvent,
 )
 

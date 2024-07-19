@@ -1,11 +1,11 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchReleaseGroupsResponse
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val hotSpaceReleaseGroup = ReleaseGroupMusicBrainzModel(
     id = "3918b90b-340e-3779-9d7e-ba1593653498",
@@ -16,14 +16,17 @@ val hotSpaceReleaseGroup = ReleaseGroupMusicBrainzModel(
 val underPressureReleaseGroup = ReleaseGroupMusicBrainzModel(
     id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
     name = "Under Pressure",
-    artistCredits = listOf(davidBowieArtistCredit, queenArtistCredit),
+    artistCredits = listOf(
+        davidBowieArtistCredit,
+        queenArtistCredit,
+    ),
     primaryType = "Single",
     relations = listOf(
         RelationMusicBrainzModel(
             type = "single from",
             typeId = "fcf680a9-6871-4519-8c4b-8c6549575b35",
             direction = Direction.FORWARD,
-            targetType = MusicBrainzEntity.RELEASE_GROUP,
+            targetType = RelatableMusicBrainzEntity.RELEASE_GROUP,
             releaseGroup = hotSpaceReleaseGroup,
         ),
     ),
@@ -32,7 +35,10 @@ val underPressureReleaseGroup = ReleaseGroupMusicBrainzModel(
 val fakeReleaseGroupWithArtistCredits = ReleaseGroupMusicBrainzModel(
     id = "fakeReleaseGroup2",
     name = "Release Group With Artist Credits",
-    artistCredits = listOf(davidBowieArtistCredit, queenArtistCredit),
+    artistCredits = listOf(
+        davidBowieArtistCredit,
+        queenArtistCredit,
+    ),
 )
 
 val browseReleaseGroupsResponse = BrowseReleaseGroupsResponse(

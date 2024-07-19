@@ -1,12 +1,12 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchLabelsResponse
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val elektraMusicGroup = LabelMusicBrainzModel(
     id = "c85c94c0-f83b-42f5-bac0-6b89720de387",
@@ -24,7 +24,7 @@ val elektra = LabelMusicBrainzModel(
             type = "imprint",
             typeId = "23f8c592-006d-4214-9080-c4e5000c05d7",
             direction = Direction.BACKWARD,
-            targetType = MusicBrainzEntity.LABEL,
+            targetType = RelatableMusicBrainzEntity.LABEL,
             label = elektraMusicGroup,
         ),
     ),

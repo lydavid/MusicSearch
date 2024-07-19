@@ -72,11 +72,14 @@ enum class Direction {
 data class AttributeValue(
 
     /**
-     * https://musicbrainz.org/relationship/68330a36-44cf-4fa2-84e8-533c6fe3fc23
+     * https://musicbrainz.org/relationship-attribute/39867b3b-0f1e-40d5-b602-4f3936b7f486
      */
     @SerialName("task")
     val task: String? = null,
 
+    /**
+     * https://musicbrainz.org/relationship-attribute/a59c5830-5ec7-38fe-9a21-c7ea54f6650a
+     */
     @SerialName("number")
     val number: String? = null,
 )

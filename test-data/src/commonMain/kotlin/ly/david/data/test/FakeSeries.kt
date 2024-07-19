@@ -1,11 +1,11 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseSeriesResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchSeriesResponse
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val fakeSeries = SeriesMusicBrainzModel(
     id = "series1",
@@ -15,7 +15,7 @@ val fakeSeries = SeriesMusicBrainzModel(
             type = "",
             typeId = "281bf307-f1e8-4a56-a7b8-fe8304bb2bf3",
             direction = Direction.BACKWARD,
-            targetType = MusicBrainzEntity.AREA,
+            targetType = RelatableMusicBrainzEntity.AREA,
             area = ontario,
         ),
     ),

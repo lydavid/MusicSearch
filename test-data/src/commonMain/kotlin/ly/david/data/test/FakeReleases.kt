@@ -1,25 +1,28 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.CoverArtArchiveMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.TextRepresentationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val underPressureRemastered = ReleaseMusicBrainzModel(
     id = "eac6d0cd-1ed0-4e17-b5b0-d3cfc40547b2",
     name = "Under Pressure",
-    artistCredits = listOf(queenArtistCredit, davidBowieArtistCredit),
+    artistCredits = listOf(
+        queenArtistCredit,
+        davidBowieArtistCredit,
+    ),
     releaseGroup = underPressureReleaseGroup,
 )
 
@@ -27,7 +30,7 @@ val underPressureRemasterOf = RelationMusicBrainzModel(
     type = "remaster",
     typeId = "48e327b5-2d04-4518-93f1-fed5f0f0fa3c",
     direction = Direction.BACKWARD,
-    targetType = MusicBrainzEntity.RELEASE,
+    targetType = RelatableMusicBrainzEntity.RELEASE,
     release = underPressureRemastered,
 )
 
@@ -41,7 +44,10 @@ val underPressure = ReleaseMusicBrainzModel(
     name = "Under Pressure",
     barcode = "123",
     date = "1981-10",
-    artistCredits = listOf(queenArtistCredit, davidBowieArtistCredit),
+    artistCredits = listOf(
+        queenArtistCredit,
+        davidBowieArtistCredit,
+    ),
     releaseGroup = underPressureReleaseGroup,
     releaseEvents = listOf(
         fakeReleaseEvent,

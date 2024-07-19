@@ -1,7 +1,6 @@
 package ly.david.musicsearch.core.models.releasegroup
 
 import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
-import ly.david.musicsearch.core.models.network.NO_TYPE
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
