@@ -1,8 +1,5 @@
 package ly.david.musicsearch.core.models.network
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
 const val RESOURCE_AREA = "area"
 const val RESOURCE_ARTIST = "artist"
 const val RESOURCE_COLLECTION = "collection"
@@ -33,56 +30,36 @@ private const val PLURAL_RESOURCE_SERIES = "series"
 private const val PLURAL_RESOURCE_WORK = "works"
 private const val PLURAL_RESOURCE_URL = "urls"
 
-/**
- * These are entities available for lookup requests.
- */
-@Serializable
 enum class MusicBrainzEntity {
-    @SerialName("area")
     AREA,
 
-    @SerialName("artist")
     ARTIST,
 
     // Non-core
-    @SerialName("collection")
     COLLECTION,
 
-    @SerialName("event")
     EVENT,
 
     // Not searchable, but lookupable
-    @SerialName("genre")
     GENRE,
 
-    @SerialName("instrument")
     INSTRUMENT,
 
-    @SerialName("label")
     LABEL,
 
-    @SerialName("place")
     PLACE,
 
-    @SerialName("recording")
     RECORDING,
 
-    @SerialName("release")
     RELEASE,
 
-    // Note that target-type uses release_group, while uri uses release-group.
-    // For our internal resource, we will use release-group.
-    @SerialName("release_group")
     RELEASE_GROUP,
 
-    @SerialName("series")
     SERIES,
 
-    @SerialName("work")
     WORK,
 
     // Not searchable, but lookupable
-    @SerialName("url")
     URL,
 
     // Other searchable: annotation, tag, cd stub, editor, documentation

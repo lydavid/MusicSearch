@@ -3,7 +3,6 @@ package ly.david.musicsearch.data.musicbrainz.models.relation
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.core.models.LifeSpan
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
@@ -30,7 +29,7 @@ data class RelationMusicBrainzModel(
     // TODO: we should order with backward relations first
     @SerialName("direction") val direction: Direction,
 
-    @SerialName("target-type") val targetType: MusicBrainzEntity? = null,
+    @SerialName("target-type") val targetType: RelatableMusicBrainzEntity? = null,
 
     // prefer this credit over object's name if it exists
     @SerialName("target-credit") val targetCredit: String? = null,

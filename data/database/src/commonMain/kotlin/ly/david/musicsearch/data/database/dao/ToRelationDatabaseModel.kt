@@ -1,14 +1,14 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
-import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
 import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.core.models.common.emptyToNull
 import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.core.models.getLifeSpanForDisplay
 import ly.david.musicsearch.core.models.relation.RelationWithOrder
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
+import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
 import lydavidmusicsearchdatadatabase.Relation
 
 /**
@@ -20,13 +20,26 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
     entityId: String,
     order: Int,
 ): RelationWithOrder? {
+    val targetType = targetType
+    requireNotNull(targetType)
+
     var linkedEntityId = ""
     var linkedEntityName = ""
     var linkedEntityDisambiguation: String? = null
     var additionalInfo: String? = null
-    val linkedTargetType = targetType
-    when (linkedTargetType) {
-        MusicBrainzEntity.ARTIST -> {
+
+    val entity = targetType.entity
+    when (targetType) {
+        RelatableMusicBrainzEntity.AREA -> {
+            if (area == null) return null
+            area?.apply {
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
+            } ?: return null
+        }
+
+        RelatableMusicBrainzEntity.ARTIST -> {
             if (artist == null) return null
             artist?.apply {
                 linkedEntityId = id
@@ -36,27 +49,52 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             }
         }
 
-        MusicBrainzEntity.RELEASE_GROUP -> {
-            if (releaseGroup == null) return null
-            releaseGroup?.apply {
+        RelatableMusicBrainzEntity.EVENT -> {
+            if (event == null) return null
+            event?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
-                additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             } ?: return null
         }
 
-        MusicBrainzEntity.RELEASE -> {
-            if (release == null) return null
-            release?.apply {
+        RelatableMusicBrainzEntity.GENRE -> {
+            if (genre == null) return null
+            genre?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
-                additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             } ?: return null
         }
 
-        MusicBrainzEntity.RECORDING -> {
+        RelatableMusicBrainzEntity.INSTRUMENT -> {
+            if (instrument == null) return null
+            instrument?.apply {
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
+            } ?: return null
+        }
+
+        RelatableMusicBrainzEntity.LABEL -> {
+            if (label == null) return null
+            label?.apply {
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
+            } ?: return null
+        }
+
+        RelatableMusicBrainzEntity.PLACE -> {
+            if (place == null) return null
+            place?.apply {
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
+            } ?: return null
+        }
+
+        RelatableMusicBrainzEntity.RECORDING -> {
             if (recording == null) return null
             recording?.apply {
                 linkedEntityId = id
@@ -67,70 +105,27 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
 
-        MusicBrainzEntity.LABEL -> {
-            if (label == null) return null
-            label?.apply {
+        RelatableMusicBrainzEntity.RELEASE -> {
+            if (release == null) return null
+            release?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
+                additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             } ?: return null
         }
 
-        MusicBrainzEntity.AREA -> {
-            if (area == null) return null
-            area?.apply {
+        RelatableMusicBrainzEntity.RELEASE_GROUP -> {
+            if (releaseGroup == null) return null
+            releaseGroup?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
+                additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             } ?: return null
         }
 
-        MusicBrainzEntity.PLACE -> {
-            if (place == null) return null
-            place?.apply {
-                linkedEntityId = id
-                linkedEntityName = targetCredit.emptyToNull() ?: name
-                linkedEntityDisambiguation = disambiguation
-            } ?: return null
-        }
-
-        MusicBrainzEntity.WORK -> {
-            if (work == null) return null
-            work?.apply {
-                linkedEntityId = id
-                linkedEntityName = targetCredit.emptyToNull() ?: name
-                linkedEntityDisambiguation = disambiguation
-            } ?: return null
-        }
-
-        MusicBrainzEntity.INSTRUMENT -> {
-            if (instrument == null) return null
-            instrument?.apply {
-                linkedEntityId = id
-                linkedEntityName = targetCredit.emptyToNull() ?: name
-                linkedEntityDisambiguation = disambiguation
-            } ?: return null
-        }
-
-        MusicBrainzEntity.GENRE -> {
-            if (genre == null) return null
-            genre?.apply {
-                linkedEntityId = id
-                linkedEntityName = targetCredit.emptyToNull() ?: name
-                linkedEntityDisambiguation = disambiguation
-            } ?: return null
-        }
-
-        MusicBrainzEntity.EVENT -> {
-            if (event == null) return null
-            event?.apply {
-                linkedEntityId = id
-                linkedEntityName = targetCredit.emptyToNull() ?: name
-                linkedEntityDisambiguation = disambiguation
-            } ?: return null
-        }
-
-        MusicBrainzEntity.SERIES -> {
+        RelatableMusicBrainzEntity.SERIES -> {
             if (series == null) return null
             series?.apply {
                 linkedEntityId = id
@@ -139,7 +134,16 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
 
-        MusicBrainzEntity.URL -> {
+        RelatableMusicBrainzEntity.WORK -> {
+            if (work == null) return null
+            work?.apply {
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
+            } ?: return null
+        }
+
+        RelatableMusicBrainzEntity.URL -> {
             if (url == null) return null
             url?.apply {
                 linkedEntityId = id
@@ -147,14 +151,12 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
                 linkedEntityDisambiguation = null
             } ?: return null
         }
-
-        else -> return null
     }
 
     return RelationWithOrder(
         id = entityId,
         linkedEntityId = linkedEntityId,
-        linkedEntity = linkedTargetType,
+        linkedEntity = entity,
         order = order,
         label = getHeader(),
         name = linkedEntityName,
