@@ -1,6 +1,16 @@
 # All Features
 
-WIP
+## Feature Matrix
+
+| Feature                                                     | Android | Desktop | iOS |
+|-------------------------------------------------------------|---------|---------|-----|
+| [Browse](#browse)                                           | ✅       | ✅       | ✅   |
+| Collections                                                 | ✅       | ✅       | ⬜   |
+| [Images](#images)                                           | ✅       | ✅       | ✅   |
+| MusicBrainz OAuth                                           | ✅       | ✅       | ⬜️  |
+| Pixel Now Playing History                                   | ✅       | ❌       | ❌   |
+| Spotify Playing History                                     | ✅       | ⬜️      | ⬜️  |
+| [Up navigation from subtitle](#up-navigation-from-subtitle) | ✅       | ✅       | ✅   |
 
 ## Browse
 
@@ -11,18 +21,18 @@ Given an entity, when you click on them from anywhere in the app, you will land 
 In separate tabs, you can see all related entities listed under browsing supported.
 e.g. On an artist's page, you can see their events, recordings, releases, and release groups.
 
-| Entity        | Browsing supported                                                                                       | Browsing not yet supported | Unsupported                         |
-|---------------|----------------------------------------------------------------------------------------------------------|----------------------------|-------------------------------------|
-| area          | artists, events, labels, places, releases                                                                | collections                | recordings, works                   |
+| Entity        | Browsing supported                                                                                       | Browsing not yet supported | Unsupported                        |
+|---------------|----------------------------------------------------------------------------------------------------------|----------------------------|------------------------------------|
+| area          | artists, events, labels, places, releases                                                                | collections                | recordings, works                  |
 | artist        | events, recordings, release, release groups, works                                                       | collections                |
 | collection    | areas, artists, events, instruments, labels, places, recordings, releases, release groups, series, works |                            |
 | event         |                                                                                                          | collections                |
 | instrument    |                                                                                                          | collections                |
 | label         | releases                                                                                                 | collections                |
 | place         | events                                                                                                   | collections                |
-| recording     | releases                                                                                                 | collections                | artists                             |
-| release       | artists                                                                                                  | collections                | labels, recordings, release groups  |
-| release group | releases                                                                                                 | collections                | artists                             |
+| recording     | releases                                                                                                 | collections                | artists                            |
+| release       | artists                                                                                                  | collections                | labels, recordings, release groups |
+| release group | releases                                                                                                 | collections                | artists                            |
 | series        |                                                                                                          | collections                |
 | work          | artists, recordings                                                                                      | collections                |
 
@@ -35,6 +45,22 @@ e.g. On an artist's page, you can see their events, recordings, releases, and re
 - recordings by release have been excluded as it is the same as tracks by release which we already fetch with release lookup
 - release groups by release have been excluded as it is already fetched with initial release lookup and is displayed in the top bar dropdown menu. There is only one such release group a release may belong to
 
+## Images
+
+| Entity        | Supported |
+|---------------|-----------|
+| area          | ⬜️        |
+| artist        | ✅         |
+| collection    | ⬜️        |
+| event         | ⬜️        |
+| instrument    | ❌         |
+| label         | ⬜️        |
+| place         | ❌         |
+| recording     | ❌         |
+| release       | ✅         |
+| release group | ✅         |
+| series        | ❌         |
+| work          | ❌         |
 
 ## Up navigation from subtitle
 
