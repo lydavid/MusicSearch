@@ -63,7 +63,7 @@ internal class GraphPresenter(
 
         return GraphUiState(
             links = graphState.links,
-            winds = graphState.nodes,
+            nodes = graphState.nodes,
             eventSink = ::eventSink,
         )
     }
@@ -72,7 +72,7 @@ internal class GraphPresenter(
 @Stable
 internal data class GraphUiState(
     val links: List<LineNode> = listOf(),
-    val winds: List<CircleNode> = listOf(),
+    val nodes: List<CircleNode> = listOf(),
     val eventSink: (GraphUiEvent) -> Unit,
 ) : CircuitUiState
 

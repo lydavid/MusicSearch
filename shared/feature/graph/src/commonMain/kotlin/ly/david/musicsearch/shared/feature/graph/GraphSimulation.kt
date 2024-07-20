@@ -24,25 +24,25 @@ internal data class Entity(
     val radius: Double,
 )
 
-data class WindSimulationUiState(
+data class GraphSimulationUiState(
     val links: List<LineNode> = listOf(),
     val nodes: List<CircleNode> = listOf(),
 )
 
 class GraphSimulation {
 
-    private val _uiState = MutableStateFlow(WindSimulationUiState())
-    val uiState: StateFlow<WindSimulationUiState>
+    private val _uiState = MutableStateFlow(GraphSimulationUiState())
+    val uiState: StateFlow<GraphSimulationUiState>
         get() = _uiState
 
-    // creating the objects, only the top line is "fixed"
     private val entities = Array(100) {
         Entity(
             entity = MusicBrainzEntity.entries.random(),
-            radius = Random.nextDouble(
-                5.0,
-                15.0,
-            ),
+            radius = 10.0,
+//            radius = Random.nextDouble(
+//                5.0,
+//                15.0,
+//            ),
         )
     }.toList()
 
@@ -97,7 +97,7 @@ class GraphSimulation {
                     y1 = link.source.y
                     y2 = link.target.y
 
-                    strokeColor = Colors.Web.black
+                    strokeColor = Colors.Web.grey
                 }
             }.orEmpty()
 
@@ -139,7 +139,7 @@ private fun MusicBrainzEntity.getNodeColor(): Color {
         MusicBrainzEntity.URL -> "#00BCD4".col
     }
 
-    return baseColor.opacify(strength = 0.75)
+    return baseColor//.opacify(strength = 0.75)
 }
 
 private fun <D> ForceSimulation<D>.isRunning(): Boolean {
