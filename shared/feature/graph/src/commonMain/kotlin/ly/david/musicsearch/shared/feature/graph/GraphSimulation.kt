@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.graph
 
 import io.data2viz.color.Colors
 import io.data2viz.force.ForceLink
+import io.data2viz.force.ForceNode
 import io.data2viz.force.ForceSimulation
 import io.data2viz.force.Link
 import io.data2viz.force.forceSimulation
@@ -21,10 +22,9 @@ import kotlin.random.Random
 const val vizWidth = 900.0
 const val vizHeight = 600.0
 
-const val radius = 10.0
-
 internal data class Node(
     val position: Point,
+    val radius: Double,
 )
 
 data class WindSimulationUiState(
@@ -39,26 +39,30 @@ class GraphSimulation {
         get() = _uiState
 
     // creating the objects, only the top line is "fixed"
-    private val nodes = Array(Random.nextInt(1000)) {
+    private val nodes = Array(1000) {
         Node(
             position = Point(
                 x = Random.nextDouble(100.0),
                 y = Random.nextDouble(100.0),
             ),
+            radius = Random.nextDouble(5.0, 15.0)
         )
     }.toList()
 
     private var forceLinks: ForceLink<Node>? = null
-    private val simulation: ForceSimulation<Node> =
+    private val simulation: ForceSimulation<Node> by lazy {
         forceSimulation {
+            // If we set a decay, the simulation may stop before there are no overlapping nodes
+            intensityDecay = 0.pct
+
             initForceNode = {
                 position = domain.position
             }
 
             forceCenter {
                 center = Point(
-                    100.0,
-                    100.0,
+                    200.0,
+                    500.0,
                 )
             }
 
@@ -95,13 +99,14 @@ class GraphSimulation {
             }
 
             forceCollision {
-                radiusGet = { radius + 1 }
+                radiusGet = { domain.radius + 1 }
 //                strength = collisionForceStrength
                 iterations = 1
             }
 
             domainObjects = this@GraphSimulation.nodes
         }
+    }
 
     fun run() {
 //        _uiState.update {
@@ -165,12 +170,12 @@ class GraphSimulation {
                 }
             }
 
-            val windNodes = simulation.nodes.map {
+            val windNodes = simulation.nodes.map { node: ForceNode<Node> ->
                 CircleNode(
                     CircleGeom(
-                        x = it.x,
-                        y = it.y,
-                        radius = radius,
+                        x = node.x,
+                        y = node.y,
+                        radius = node.domain.radius,
                     ),
                 ).apply {
                     fill = Colors.rgb(
