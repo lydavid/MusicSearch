@@ -10,8 +10,6 @@ import io.data2viz.force.Link
 import io.data2viz.force.forceSimulation
 import io.data2viz.geom.CircleGeom
 import io.data2viz.geom.Point
-import io.data2viz.math.pct
-import io.data2viz.math.rad
 import io.data2viz.viz.CircleNode
 import io.data2viz.viz.LineNode
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +17,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.graph.viz.line
-import kotlin.math.atan
 import kotlin.random.Random
 
 internal data class Entity(
@@ -29,7 +26,7 @@ internal data class Entity(
 
 data class WindSimulationUiState(
     val links: List<LineNode> = listOf(),
-    val winds: List<CircleNode> = listOf(),
+    val nodes: List<CircleNode> = listOf(),
 )
 
 class GraphSimulation {
@@ -39,7 +36,7 @@ class GraphSimulation {
         get() = _uiState
 
     // creating the objects, only the top line is "fixed"
-    private val entities = Array(1000) {
+    private val entities = Array(100) {
         Entity(
             entity = MusicBrainzEntity.entries.random(),
             radius = Random.nextDouble(
@@ -57,6 +54,9 @@ class GraphSimulation {
             // If we set a decay, the simulation may stop before there are no overlapping nodes
 //            intensityDecay = 0.pct
 
+            // TODO: should be centered based on screen's dimensions
+            //  either pass it from JC
+            //  or move this to JC land
             forceCenter {
                 center = Point(
                     200.0,
@@ -67,6 +67,14 @@ class GraphSimulation {
             forceLinks = forceLink {
                 linkGet = {
                     val links = mutableListOf<Link<Entity>>()
+
+                    if (nodes.isNotEmpty()) {
+                        links += Link(
+                            source = this,
+                            target = nodes[0],
+                            distance = 100.0,
+                        )
+                    }
 //                    val currentCol = index % singleCurtainWidth
 //                    val wholeCol = index % curtainsWidth
 //                    val row = index / curtainsWidth
@@ -93,7 +101,6 @@ class GraphSimulation {
                     // return the list of links
                     links
                 }
-//                iterations = linkForceIterations
             }
 
             forceCollision {
@@ -107,26 +114,23 @@ class GraphSimulation {
         if (!simulation.isRunning()) return
 
         _uiState.update {
-            val mutableLinks = it.links.toMutableList()
+            val mutableLinks: MutableList<LineNode> = forceLinks?.links?.map {
+                line {
+                    strokeColor = Colors.Web.black
+                    strokeWidth = 1.0
+                }
+            }?.toMutableList() ?: mutableListOf()
 
-            // show the new coordinates of each links to visualize the wind effect
             forceLinks?.links?.forEachIndexed { index, link ->
                 mutableLinks[index] = line {
                     x1 = link.source.x
                     x2 = link.target.x
                     y1 = link.source.y
                     y2 = link.target.y
-
-                    val angle = (atan((y1 - y2) / (x1 - x2)) * 2).rad
-                    strokeColor = Colors.hsl(
-                        angle,
-                        100.pct,
-                        40.pct,
-                    )
                 }
             }
 
-            val windNodes = simulation.nodes.map { node: ForceNode<Entity> ->
+            val nodes = simulation.nodes.map { node: ForceNode<Entity> ->
                 CircleNode(
                     CircleGeom(
                         x = node.x,
@@ -140,7 +144,7 @@ class GraphSimulation {
 
             it.copy(
                 links = mutableLinks,
-                windNodes,
+                nodes = nodes,
             )
         }
     }

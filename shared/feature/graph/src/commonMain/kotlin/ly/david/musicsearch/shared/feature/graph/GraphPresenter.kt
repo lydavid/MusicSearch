@@ -63,7 +63,7 @@ internal class GraphPresenter(
 
         return GraphUiState(
             links = graphState.links,
-            winds = graphState.winds,
+            winds = graphState.nodes,
             eventSink = ::eventSink,
         )
     }
