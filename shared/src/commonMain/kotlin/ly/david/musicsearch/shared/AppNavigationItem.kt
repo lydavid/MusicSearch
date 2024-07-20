@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.slack.circuit.runtime.screen.Screen
 import ly.david.musicsearch.ui.common.screen.CollectionListScreen
+import ly.david.musicsearch.ui.common.screen.GraphScreen
 import ly.david.musicsearch.ui.common.screen.HistoryScreen
 import ly.david.musicsearch.ui.common.screen.SearchScreen
 import ly.david.musicsearch.ui.common.screen.SettingsScreen
@@ -22,7 +23,7 @@ internal enum class AppNavigationItem(
     ),
     History(
         Icons.Default.History,
-        HistoryScreen,
+        GraphScreen,
     ),
     Collection(
         Icons.Default.CollectionsBookmark,

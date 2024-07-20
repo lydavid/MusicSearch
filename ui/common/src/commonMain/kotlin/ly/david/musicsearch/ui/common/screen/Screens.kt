@@ -11,6 +11,9 @@ data class SearchScreen(
 ) : Screen
 
 @Parcelize
+data object GraphScreen : Screen
+
+@Parcelize
 data object HistoryScreen : Screen
 
 @Parcelize

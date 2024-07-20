@@ -17,3 +17,31 @@ SELECT
   disambiguation,
   type
 FROM series WHERE id = ?;
+
+-- https://musicbrainz.org/doc/Series#Type
+
+-- Release group series
+-- https://musicbrainz.org/relationship-attribute/a59c5830-5ec7-38fe-9a21-c7ea54f6650a
+
+countReleaseGroupSeriesRelationships:
+SELECT count(*) FROM relation
+WHERE entity_id = :entityId AND linked_entity != "url" AND
+(name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
+attributes LIKE :query OR additional_info LIKE :query);
+
+getReleaseGroupSeriesRelationships:
+SELECT
+  `linked_entity_id`,
+  `linked_entity`,
+  `order`,
+  `label`,
+  `name`,
+  `disambiguation`,
+  `attributes`,
+  `additional_info`
+FROM relation
+WHERE entity_id = :entityId AND linked_entity != "url" AND
+(name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
+attributes LIKE :query OR additional_info LIKE :query)
+ORDER BY linked_entity, label, `order`
+LIMIT :limit OFFSET :offset;
