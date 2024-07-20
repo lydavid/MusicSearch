@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.graph
 
-import androidx.compose.runtime.mutableStateListOf
 import io.data2viz.color.Colors
 import io.data2viz.force.ForceLink
 import io.data2viz.force.ForceSimulation
@@ -8,7 +7,6 @@ import io.data2viz.force.Link
 import io.data2viz.force.forceSimulation
 import io.data2viz.geom.CircleGeom
 import io.data2viz.geom.Point
-import io.data2viz.geom.point
 import io.data2viz.math.pct
 import io.data2viz.math.rad
 import io.data2viz.viz.CircleNode
@@ -45,23 +43,25 @@ class GraphSimulation {
         Node(
             position = Point(
                 x = Random.nextDouble(100.0),
-                y = Random.nextDouble(100.0)
-            )
+                y = Random.nextDouble(100.0),
+            ),
         )
     }.toList()
 
     private var forceLinks: ForceLink<Node>? = null
     private val simulation: ForceSimulation<Node> =
         forceSimulation {
-//            intensityDecay = 0.pct
-
-            // if the Stitch is "fixed", we use its current position has a fixed one (node won't move)
             initForceNode = {
                 position = domain.position
             }
 
-            // the force that creates links between the nodes
-            // each node is linked to the next one on the right and next one below
+            forceCenter {
+                center = Point(
+                    100.0,
+                    100.0,
+                )
+            }
+
             forceLinks = forceLink {
                 linkGet = {
                     val links = mutableListOf<Link<Node>>()
@@ -105,14 +105,14 @@ class GraphSimulation {
 
     fun run() {
 //        _uiState.update {
-////            val stitchLinks = mutableStateListOf<LineNode>()
-////            repeat(forceLinks?.links?.size ?: 0) {
-////                stitchLinks.add(
-////                    line {
-////                        strokeColor = Colors.Web.black
-////                    },
-////                )
-////            }
+// //            val stitchLinks = mutableStateListOf<LineNode>()
+// //            repeat(forceLinks?.links?.size ?: 0) {
+// //                stitchLinks.add(
+// //                    line {
+// //                        strokeColor = Colors.Web.black
+// //                    },
+// //                )
+// //            }
 //            val windNodes = simulation.nodes.map {
 //                CircleNode(
 //                    CircleGeom(
@@ -130,7 +130,7 @@ class GraphSimulation {
 //                }
 //            }
 //            WindSimulationUiState(
-////                links = stitchLinks,
+// //                links = stitchLinks,
 //                winds = windNodes,
 //            )
 //        }
