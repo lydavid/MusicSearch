@@ -8,11 +8,13 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val graphFeatureModule = module {
+    factory { GraphSimulation() }
     single(named("GraphPresenter")) {
         Presenter.Factory { screen, navigator, context ->
             when (screen) {
                 is GraphScreen -> GraphPresenter(
                     navigator = navigator,
+                    graphSimulation = get()
                 )
 
                 else -> null
