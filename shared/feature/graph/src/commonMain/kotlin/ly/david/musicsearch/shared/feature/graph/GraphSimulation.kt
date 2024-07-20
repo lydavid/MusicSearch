@@ -75,30 +75,6 @@ class GraphSimulation {
                             distance = 100.0,
                         )
                     }
-//                    val currentCol = index % singleCurtainWidth
-//                    val wholeCol = index % curtainsWidth
-//                    val row = index / curtainsWidth
-//
-//                    // only "link" the stitches, not the 3 nodes used for simulating the wind
-//                    if (index < totalStitches) {
-//                        // check if we had the right-next node
-//                        if (currentCol != (singleCurtainWidth - 1) && wholeCol < curtainsWidth - 1) {
-//                            links += Link(
-//                                this,
-//                                nodes[index + 1],
-//                                spacingBetweenStitch,
-//                            )
-//                        }
-//                        // check if we had the bottom-next node
-//                        if (row < curtainsLength - 1) {
-//                            links += Link(
-//                                this,
-//                                nodes[index + curtainsWidth],
-//                                spacingBetweenStitch,
-//                            )
-//                        }
-//                    }
-                    // return the list of links
                     links
                 }
             }
@@ -113,22 +89,17 @@ class GraphSimulation {
     fun run() {
         if (!simulation.isRunning()) return
 
-        _uiState.update {
-            val mutableLinks: MutableList<LineNode> = forceLinks?.links?.map {
+        _uiState.update { uiState ->
+            val links = forceLinks?.links?.map { link ->
                 line {
-                    strokeColor = Colors.Web.black
-                    strokeWidth = 1.0
-                }
-            }?.toMutableList() ?: mutableListOf()
-
-            forceLinks?.links?.forEachIndexed { index, link ->
-                mutableLinks[index] = line {
                     x1 = link.source.x
                     x2 = link.target.x
                     y1 = link.source.y
                     y2 = link.target.y
+
+                    strokeColor = Colors.Web.black
                 }
-            }
+            }.orEmpty()
 
             val nodes = simulation.nodes.map { node: ForceNode<Entity> ->
                 CircleNode(
@@ -142,8 +113,8 @@ class GraphSimulation {
                 }
             }
 
-            it.copy(
-                links = mutableLinks,
+            uiState.copy(
+                links = links,
                 nodes = nodes,
             )
         }
