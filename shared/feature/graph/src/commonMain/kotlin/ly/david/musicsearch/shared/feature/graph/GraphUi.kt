@@ -67,7 +67,6 @@ internal fun GraphUi(
             Box(
                 Modifier
                     .fillMaxSize()
-                    .size(width = vizWidth.dp, height = vizHeight.dp)
                     .drawBehind {
                         state.links.forEach {
                             render(it)

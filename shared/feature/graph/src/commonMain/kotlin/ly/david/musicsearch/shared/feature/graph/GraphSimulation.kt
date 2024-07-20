@@ -19,11 +19,7 @@ import ly.david.musicsearch.shared.feature.graph.viz.line
 import kotlin.math.atan
 import kotlin.random.Random
 
-const val vizWidth = 900.0
-const val vizHeight = 600.0
-
 internal data class Node(
-    val position: Point,
     val radius: Double,
 )
 
@@ -41,10 +37,6 @@ class GraphSimulation {
     // creating the objects, only the top line is "fixed"
     private val nodes = Array(1000) {
         Node(
-            position = Point(
-                x = Random.nextDouble(100.0),
-                y = Random.nextDouble(100.0),
-            ),
             radius = Random.nextDouble(5.0, 15.0)
         )
     }.toList()
@@ -54,10 +46,6 @@ class GraphSimulation {
         forceSimulation {
             // If we set a decay, the simulation may stop before there are no overlapping nodes
             intensityDecay = 0.pct
-
-            initForceNode = {
-                position = domain.position
-            }
 
             forceCenter {
                 center = Point(
@@ -109,37 +97,6 @@ class GraphSimulation {
     }
 
     fun run() {
-//        _uiState.update {
-// //            val stitchLinks = mutableStateListOf<LineNode>()
-// //            repeat(forceLinks?.links?.size ?: 0) {
-// //                stitchLinks.add(
-// //                    line {
-// //                        strokeColor = Colors.Web.black
-// //                    },
-// //                )
-// //            }
-//            val windNodes = simulation.nodes.map {
-//                CircleNode(
-//                    CircleGeom(
-//                        x = it.x,
-//                        y = it.y,
-//                        radius = radius,
-//                    ),
-//                ).apply {
-//                    fill = Colors.rgb(
-//                        red = 123,
-//                        green = 123,
-//                        blue = 123,
-//                        alpha = 50.pct,
-//                    )
-//                }
-//            }
-//            WindSimulationUiState(
-// //                links = stitchLinks,
-//                winds = windNodes,
-//            )
-//        }
-
         _uiState.update {
             val mutableLinks = it.links.toMutableList()
 
