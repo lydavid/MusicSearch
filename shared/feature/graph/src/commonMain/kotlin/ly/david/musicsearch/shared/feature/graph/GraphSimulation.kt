@@ -35,7 +35,7 @@ class GraphSimulation {
     val uiState: StateFlow<GraphSimulationUiState>
         get() = _uiState
 
-    private val entities = Array(100) {
+    private val entities = Array(1000) {
         Entity(
             entity = MusicBrainzEntity.entries.random(),
             radius = 10.0,
@@ -72,7 +72,7 @@ class GraphSimulation {
                         links += Link(
                             source = this,
                             target = nodes[0],
-                            distance = 100.0,
+                            distance = Random.nextDouble(30.0, 200.0),
                         )
                     }
                     links
