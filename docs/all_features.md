@@ -5,11 +5,13 @@
 | Feature                                                     | Android | Desktop | iOS |
 |-------------------------------------------------------------|---------|---------|-----|
 | [Browse](#browse)                                           | ✅       | ✅       | ✅   |
-| Collections                                                 | ✅       | ✅       | ⬜   |
+| [Collections](#collections)                                 | ✅       | ✅       | ⬜   |
 | [Images](#images)                                           | ✅       | ✅       | ✅   |
-| MusicBrainz OAuth                                           | ✅       | ✅       | ⬜️  |
+| [MusicBrainz Login](#musicbrainz-login)                     | ✅       | ✅       | ⬜️  |
 | Pixel Now Playing History                                   | ✅       | ❌       | ❌   |
-| Spotify Playing History                                     | ✅       | ⬜️      | ⬜️  |
+| [Search MusicBrainz](#search-musicbrainz)                   | ✅       | ✅       | ✅   |
+| [Spotify Playing History](#spotify-playing-history)         | ✅       | ⬜️      | ⬜️  |
+| [Swipe to Refresh](#swipe-to-refresh)                       | ⬜       | ⬜       | ⬜   |
 | [Up navigation from subtitle](#up-navigation-from-subtitle) | ✅       | ✅       | ✅   |
 
 ## Browse
@@ -45,6 +47,34 @@ e.g. On an artist's page, you can see their events, recordings, releases, and re
 - recordings by release have been excluded as it is the same as tracks by release which we already fetch with release lookup
 - release groups by release have been excluded as it is already fetched with initial release lookup and is displayed in the top bar dropdown menu. There is only one such release group a release may belong to
 
+## Collections
+
+Your personal list of entities.
+You can add to and delete items from them.
+
+New collections can be created but will only exist locally due to technical limitations.
+
+[Login](#musicbrainz-login) to see your MusicBrainz collections.
+Additions and deletions will be synced to MusicBrainz's server.
+
+A collection can only store one type of entity.
+See below for the supported types of collections.
+
+| Entity        | Supported |
+|---------------|-----------|
+| area          | ✅         |
+| artist        | ✅         |
+| collection    | ❌         |
+| event         | ✅         |
+| instrument    | ✅         |
+| label         | ✅         |
+| place         | ✅         |
+| recording     | ✅         |
+| release       | ✅         |
+| release group | ✅         |
+| series        | ✅         |
+| work          | ✅         |
+
 ## Images
 
 | Entity        | Supported |
@@ -61,6 +91,60 @@ e.g. On an artist's page, you can see their events, recordings, releases, and re
 | release group | ✅         |
 | series        | ❌         |
 | work          | ❌         |
+
+## MusicBrainz Login
+
+From the app's settings, you can login to your MusicBrianz account.
+This allows the app to fetch and display all of your collections.
+
+
+## Search MusicBrainz
+
+| Entity        | Supported |
+|---------------|-----------|
+| area          | ✅         |
+| artist        | ✅         |
+| collection    | ❌         |
+| event         | ✅         |
+| instrument    | ✅         |
+| label         | ✅         |
+| place         | ✅         |
+| recording     | ✅         |
+| release       | ✅         |
+| release group | ✅         |
+| series        | ✅         |
+| work          | ✅         |
+
+## Spotify Playing History
+
+You must enable "Device Broadcast Status" from Spotify's settings to allow this app to receive
+broadcasts from Spotify.
+Afterwards, with both Spotify and MusicSearch open, your listening history will be recorded,
+allowing you to search for recently played tracks' artists, albums (release groups),
+and tracks (recordings) in MusicBrianz.
+
+## Swipe to Refresh
+
+TODO: screenshot of details screen
+TODO: screenshot of list screen
+
+| Entity        | Details | List Screen |
+|---------------|---------|-------------|
+| area          | ⬜️      | ✅           |
+| artist        | ✅       | ✅           |
+| collection    | ❌       | ✅           |
+| event         | ⬜️      | ✅           |
+| instrument    | ⬜       | ✅           |
+| label         | ⬜️      | ✅           |
+| place         | ⬜       | ✅           |
+| recording     | ⬜       | ✅           |
+| release       | ⬜       | ✅           |
+| release group | ⬜       | ✅           |
+| series        | ⬜       | ✅           |
+| work          | ⬜       | ✅           |
+
+- A collection does not have a details screen. It only has one tab which lists all of its contents. e.g. An artist collection lists all of its artists
+- List screens are analogous to those listed under "Browsing supported" in the [browse](#browse) feature section.
 
 ## Up navigation from subtitle
 
