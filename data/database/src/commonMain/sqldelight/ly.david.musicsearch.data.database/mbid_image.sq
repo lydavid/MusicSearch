@@ -17,3 +17,7 @@ getAllUrls:
 SELECT *
 FROM mbid_image
 WHERE mbid = :mbid;
+
+deleteAllUrlsById:
+DELETE FROM mbid_image
+WHERE mbid = :mbid;

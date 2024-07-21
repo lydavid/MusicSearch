@@ -7,4 +7,6 @@ interface ImageUrlDao {
     )
 
     fun getAllUrls(mbid: String): List<ImageUrls>
+
+    fun deleteAllUrlsById(mbid: String)
 }

@@ -30,7 +30,10 @@ interface SpotifyApi {
                             val accessToken = spotifyAuthStore.getAccessToken()
                             if (accessToken.isNullOrEmpty()) return@loadTokens null
 
-                            BearerTokens(accessToken, "")
+                            BearerTokens(
+                                accessToken,
+                                "",
+                            )
                         }
                         refreshTokens {
                             val response = spotifyOAuthApi.getAccessToken(
@@ -43,7 +46,10 @@ interface SpotifyApi {
                                 accessToken = accessToken,
                             )
 
-                            BearerTokens(accessToken, "")
+                            BearerTokens(
+                                accessToken,
+                                "",
+                            )
                         }
                         sendWithoutRequest { true }
                     }

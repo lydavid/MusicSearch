@@ -40,6 +40,7 @@ kotlin {
             dependencies {
                 implementation(projects.core.logging.api)
                 implementation(projects.core.models)
+                implementation(projects.shared.domain)
                 implementation(libs.androidx.datastore.preferences.core)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.coroutines.core)

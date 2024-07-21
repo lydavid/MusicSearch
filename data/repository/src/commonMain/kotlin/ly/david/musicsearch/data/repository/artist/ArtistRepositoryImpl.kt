@@ -5,6 +5,7 @@ import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
@@ -12,6 +13,7 @@ class ArtistRepositoryImpl(
     private val musicBrainzApi: MusicBrainzApi,
     private val artistDao: ArtistDao,
     private val relationRepository: RelationRepository,
+    private val artistImageRepository: ArtistImageRepository,
 ) : ArtistRepository {
 
     override suspend fun lookupArtist(
@@ -20,6 +22,7 @@ class ArtistRepositoryImpl(
     ): ArtistDetailsModel {
         if (forceRefresh) {
             relationRepository.deleteUrlRelationshipsByEntity(artistId)
+            artistImageRepository.deleteImage(artistId)
             artistDao.delete(artistId)
         }
 

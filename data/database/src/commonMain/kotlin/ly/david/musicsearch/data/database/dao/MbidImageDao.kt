@@ -35,4 +35,8 @@ class MbidImageDao(
             },
         ).executeAsList()
     }
+
+    override fun deleteAllUrlsById(mbid: String) {
+        transacter.deleteAllUrlsById(mbid)
+    }
 }
