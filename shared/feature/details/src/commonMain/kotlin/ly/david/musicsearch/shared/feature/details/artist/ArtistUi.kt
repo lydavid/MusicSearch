@@ -160,7 +160,7 @@ internal fun ArtistUi(
                         ArtistDetailsUi(
                             artist = artist,
                             filterText = state.query,
-                            imageUrl = state.imageUrl,
+                            imageUrl = state.artist?.imageUrl.orEmpty(),
                             lazyListState = state.detailsLazyListState,
                             onItemClick = { entity, id, title ->
                                 eventSink(

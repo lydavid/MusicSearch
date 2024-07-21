@@ -21,7 +21,6 @@ import ly.david.musicsearch.core.models.artist.ArtistDetailsModel
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
@@ -55,7 +54,6 @@ internal class ArtistPresenter(
     private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
     private val worksByEntityPresenter: WorksByEntityPresenter,
     private val relationsPresenter: RelationsPresenter,
-    private val artistImageRepository: ArtistImageRepository,
     private val logger: Logger,
 ) : Presenter<ArtistUiState> {
 
@@ -67,7 +65,6 @@ internal class ArtistPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var query by rememberSaveable { mutableStateOf("") }
         var artist: ArtistDetailsModel? by remember { mutableStateOf(null) }
-        var imageUrl by rememberSaveable { mutableStateOf("") }
         val tabs: List<ArtistTab> by rememberSaveable {
             mutableStateOf(ArtistTab.entries)
         }
@@ -99,7 +96,6 @@ internal class ArtistPresenter(
                     title = artistDetailsModel.getNameWithDisambiguation()
                 }
                 artist = artistDetailsModel
-                imageUrl = fetchArtistImage(artistDetailsModel)
                 isError = false
             } catch (ex: Exception) {
                 logger.e(ex)
@@ -233,7 +229,6 @@ internal class ArtistPresenter(
             isLoading = isLoading,
             isError = isError,
             artist = artist,
-            imageUrl = imageUrl,
             tabs = tabs,
             selectedTab = selectedTab,
             query = query,
@@ -247,22 +242,6 @@ internal class ArtistPresenter(
             eventSink = ::eventSink,
         )
     }
-
-    private suspend fun fetchArtistImage(
-        artist: ArtistDetailsModel,
-    ): String {
-        val imageUrl = artist.imageUrl
-        return if (imageUrl == null) {
-            val spotifyUrl =
-                artist.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name ?: return ""
-            artistImageRepository.getArtistImageFromNetwork(
-                artistMbid = artist.id,
-                spotifyUrl = spotifyUrl,
-            )
-        } else {
-            imageUrl
-        }
-    }
 }
 
 @Stable
@@ -271,7 +250,6 @@ internal data class ArtistUiState(
     val isLoading: Boolean,
     val isError: Boolean,
     val artist: ArtistDetailsModel?,
-    val imageUrl: String,
     val tabs: List<ArtistTab>,
     val selectedTab: ArtistTab,
     val query: String,

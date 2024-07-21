@@ -29,13 +29,17 @@ class ArtistRepositoryImpl(
         val artistDetailsModel = artistDao.getArtistForDetails(artistId)
         val urlRelations = relationRepository.getEntityUrlRelationships(artistId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(artistId)
+
         if (
             artistDetailsModel != null &&
             hasUrlsBeenSavedForEntity &&
             !forceRefresh
         ) {
-            return artistDetailsModel.copy(
+            val artistWithUrls = artistDetailsModel.copy(
                 urls = urlRelations,
+            )
+            return artistWithUrls.copy(
+                imageUrl = fetchArtistImage(artistWithUrls),
             )
         }
 
@@ -45,6 +49,22 @@ class ArtistRepositoryImpl(
             artistId = artistId,
             forceRefresh = false,
         )
+    }
+
+    private suspend fun fetchArtistImage(
+        artist: ArtistDetailsModel,
+    ): String {
+        val imageUrl = artist.imageUrl
+        return if (imageUrl == null) {
+            val spotifyUrl =
+                artist.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name ?: return ""
+            artistImageRepository.getArtistImageFromNetwork(
+                artistMbid = artist.id,
+                spotifyUrl = spotifyUrl,
+            )
+        } else {
+            imageUrl
+        }
     }
 
     private fun cache(artist: ArtistMusicBrainzModel) {

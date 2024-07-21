@@ -74,11 +74,10 @@ val detailsFeatureModule = module {
                                 incrementLookupHistory = get(),
                                 eventsByEntityPresenter = get(),
                                 recordingsByEntityPresenter = get(),
-                                releaseGroupsByEntityPresenter = get(),
                                 releasesByEntityPresenter = get(),
+                                releaseGroupsByEntityPresenter = get(),
                                 worksByEntityPresenter = get(),
                                 relationsPresenter = get(),
-                                artistImageRepository = get(),
                                 logger = get(),
                             )
                         }
