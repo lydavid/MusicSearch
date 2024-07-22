@@ -74,7 +74,8 @@ class RelationDao(
     ): List<RelationListItemModel> {
         return transacter.getEntityUrlRelationships(
             entityId = entityId,
-            query = "%%", // TODO: either filter here or with Kotlin like before
+            // We filter URLs in the presentation layer
+            query = "%%",
             mapper = ::toRelationListItemModel,
         ).executeAsList()
     }

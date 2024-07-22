@@ -38,7 +38,6 @@ kotlin {
         val iosMain by getting {
             dependencies {
                 implementation(libs.coil.network.ktor)
-                implementation(libs.ktor.client.darwin)
             }
         }
     }

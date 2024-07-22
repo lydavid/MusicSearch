@@ -20,24 +20,18 @@ kotlin {
                 implementation(libs.ktor.serialization.kotlinx.json)
             }
         }
-//        val commonJvmMain by getting {
-//
-//        }
         val jvmMain by getting {
             dependencies {
-//                implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.bundles.ktor.jvm)
             }
         }
         val androidMain by getting {
             dependencies {
-//                implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.bundles.ktor.jvm)
             }
         }
         val iosMain by getting {
             dependencies {
-//                implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client.darwin)
             }
         }
