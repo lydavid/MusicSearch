@@ -16,10 +16,26 @@ private val testReleaseGroup = ReleaseGroupListItemModel(
 
 @DefaultPreviews
 @Composable
-private fun Preview() {
+internal fun PreviewReleaseGroupListItem() {
     PreviewTheme {
         Surface {
-            ReleaseGroupListItem(testReleaseGroup)
+            ReleaseGroupListItem(
+                releaseGroup = testReleaseGroup,
+                showType = false,
+            )
+        }
+    }
+}
+
+@DefaultPreviews
+@Composable
+internal fun PreviewReleaseGroupListItemWithType() {
+    PreviewTheme {
+        Surface {
+            ReleaseGroupListItem(
+                releaseGroup = testReleaseGroup,
+                showType = true,
+            )
         }
     }
 }

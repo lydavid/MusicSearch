@@ -69,8 +69,10 @@ internal fun SearchResultsScreen(
             }
 
             is ReleaseGroupListItemModel -> {
-                // TODO: should see album type rather than year
-                ReleaseGroupListItem(releaseGroup = listItemModel) {
+                ReleaseGroupListItem(
+                    releaseGroup = listItemModel,
+                    showType = true,
+                ) {
                     onItemClick(
                         MusicBrainzEntity.RELEASE_GROUP,
                         id,

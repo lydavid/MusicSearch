@@ -15,20 +15,16 @@ import ly.david.musicsearch.core.models.common.ifNotNull
 import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
 import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.core.theme.getSubTextColor
 import ly.david.musicsearch.ui.image.ThumbnailImage
 
-// TODO: have 2 modes: query and browse where some data is displayed differently
-/**
- * A release group.
- *
- * Type is not displayed because it's displayed as a separator.
- */
 @Composable
 fun ReleaseGroupListItem(
     releaseGroup: ReleaseGroupListItemModel,
+    showType: Boolean,
     modifier: Modifier = Modifier,
     requestForMissingCoverArtUrl: suspend () -> Unit = {},
     onClick: ReleaseGroupListItemModel.() -> Unit = {},
@@ -56,6 +52,16 @@ fun ReleaseGroupListItem(
                         color = getSubTextColor(),
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
+                }
+
+                if (showType) {
+                    releaseGroup.getDisplayTypes().ifNotNullOrEmpty {
+                        Text(
+                            text = it,
+                            modifier = Modifier.padding(top = 4.dp),
+                            style = TextStyles.getCardBodySubTextStyle(),
+                        )
+                    }
                 }
 
                 releaseGroup.firstReleaseDate.ifNotNullOrEmpty {
