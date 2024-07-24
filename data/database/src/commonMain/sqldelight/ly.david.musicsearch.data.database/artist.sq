@@ -53,3 +53,21 @@ INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ac.id
 WHERE re.entity_id = :artistId
 AND acn.artist_id != :artistId
 GROUP BY collaborating_artist_id;
+
+getAllCollaboratedRecordings:
+SELECT DISTINCT
+    r.id AS recording_id,
+    r.name AS recording_name
+FROM recordings_by_entity re
+INNER JOIN recording r ON r.id = re.recording_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ac.id
+WHERE re.entity_id = :artistId
+AND EXISTS (
+    SELECT 1
+    FROM artist_credit_name acn2
+    WHERE acn2.artist_credit_id = ac.id
+    AND acn2.artist_id != :artistId
+)
+GROUP BY r.id, r.name;

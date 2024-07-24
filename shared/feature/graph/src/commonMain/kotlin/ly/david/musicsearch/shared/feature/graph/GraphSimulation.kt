@@ -6,7 +6,6 @@ import io.data2viz.color.col
 import io.data2viz.force.ForceLink
 import io.data2viz.force.ForceNode
 import io.data2viz.force.ForceSimulation
-import io.data2viz.force.Link
 import io.data2viz.force.forceSimulation
 import io.data2viz.geom.CircleGeom
 import io.data2viz.geom.Point
@@ -16,14 +15,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import ly.david.musicsearch.core.models.artist.CollaboratingArtist
+import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.graph.viz.line
-import kotlin.random.Random
 
-//internal data class Entity(
-//    val entity: MusicBrainzEntity,
-//    val radius: Double,
-//)
+private data class GraphNode(
+    val name: String,
+    val entity: MusicBrainzEntity,
+    val radius: Double,
+)
 
 data class GraphSimulationUiState(
     val links: List<LineNode> = listOf(),
@@ -38,25 +38,27 @@ class GraphSimulation {
     val uiState: StateFlow<GraphSimulationUiState>
         get() = _uiState
 
-//    private val entities = Array(1000) {
-//        Entity(
-//            entity = MusicBrainzEntity.entries.random(),
-//            radius = 10.0,
-////            radius = Random.nextDouble(
-////                5.0,
-////                15.0,
-////            ),
-//        )
-//    }.toList()
-
-    private var forceLinks: ForceLink<CollaboratingArtist>? = null
-    private lateinit var simulation: ForceSimulation<CollaboratingArtist>
+    private var forceLinks: ForceLink<GraphNode>? = null
+    private lateinit var simulation: ForceSimulation<GraphNode>
 
     fun initialize(
         artists: List<CollaboratingArtist>,
+        collaboratedRecordings: List<RecordingListItemModel>,
     ) {
         simulation = forceSimulation {
-            domainObjects = artists + artists + artists + artists + artists + artists + artists + artists + artists
+            domainObjects = artists.map { artist ->
+                GraphNode(
+                    name = artist.name,
+                    entity = MusicBrainzEntity.ARTIST,
+                    radius = artist.count.toDouble() + MIN_RADIUS,
+                )
+            } + collaboratedRecordings.map { recording ->
+                GraphNode(
+                    name = recording.name,
+                    entity = MusicBrainzEntity.RECORDING,
+                    radius = MIN_RADIUS,
+                )
+            }
 
             // If we set a decay, the simulation may stop before there are no overlapping nodes
 //            intensityDecay = 0.pct
@@ -84,7 +86,7 @@ class GraphSimulation {
 //            }
 
             forceCollision {
-                radiusGet = { domain.count.toDouble() + MIN_RADIUS + 1 }
+                radiusGet = { domain.radius + 1 }
                 iterations = 1
             }
         }
@@ -105,15 +107,15 @@ class GraphSimulation {
                 }
             }.orEmpty()
 
-            val nodes = simulation.nodes.map { node: ForceNode<CollaboratingArtist> ->
+            val nodes = simulation.nodes.map { node: ForceNode<GraphNode> ->
                 CircleNode(
                     CircleGeom(
                         x = node.x,
                         y = node.y,
-                        radius = node.domain.count.toDouble() + MIN_RADIUS,
+                        radius = node.domain.radius,
                     ),
                 ).apply {
-                    fill = "#FF5722".col
+                    fill = node.domain.entity.getNodeColor()
                 }
             }
 
@@ -143,7 +145,7 @@ private fun MusicBrainzEntity.getNodeColor(): Color {
         MusicBrainzEntity.URL -> "#00BCD4".col
     }
 
-    return baseColor//.opacify(strength = 0.75)
+    return baseColor // .opacify(strength = 0.75)
 }
 
 private fun <D> ForceSimulation<D>.isRunning(): Boolean {

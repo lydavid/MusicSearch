@@ -19,6 +19,7 @@ import io.data2viz.viz.LineNode
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.artist.CollaboratingArtist
+import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
@@ -41,8 +42,15 @@ internal class GraphPresenter(
             mutableStateOf(artistRepository.getAllCollaboratingArtists(screen.id))
         }
 
+        val collaboratedRecordings: List<RecordingListItemModel> by remember {
+            mutableStateOf(artistRepository.getAllCollaboratedRecordings(screen.id))
+        }
+
         LaunchedEffect(screen.id) {
-            graphSimulation.initialize(collaboratingArtists)
+            graphSimulation.initialize(
+                collaboratingArtists,
+                collaboratedRecordings,
+            )
             println(collaboratingArtists)
             scope.launch {
                 while (true) {

@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.database.dao
 import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.core.models.artist.ArtistDetailsModel
 import ly.david.musicsearch.core.models.artist.CollaboratingArtist
+import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import lydavidmusicsearchdatadatabase.Artist
@@ -81,12 +82,25 @@ class ArtistDao(
 
     fun getAllCollaboratingArtists(artistId: String): List<CollaboratingArtist> {
         return transacter.getAllCollaboratingArtists(
-            artistId,
+            artistId = artistId,
             mapper = { id, name, count ->
                 CollaboratingArtist(
                     id = id,
                     name = name,
                     count = count,
+                )
+            },
+        ).executeAsList()
+    }
+
+    fun getAllCollaboratedRecordings(artistId: String): List<RecordingListItemModel> {
+        return transacter.getAllCollaboratedRecordings(
+            artistId = artistId,
+            mapper = { recordingId: String, recordingName: String ->
+                RecordingListItemModel(
+                    id = recordingId,
+                    name = recordingName,
+                    disambiguation = "",
                 )
             },
         ).executeAsList()
