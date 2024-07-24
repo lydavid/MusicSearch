@@ -4,7 +4,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseRecordingsResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchRecordingsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val underPressureRecording = RecordingMusicBrainzModel(
@@ -21,7 +21,7 @@ val underPressureRecording = RecordingMusicBrainzModel(
             type = "producer",
             typeId = "5c0ceac3-feb4-41f0-868d-dc06f6e27fc0",
             direction = Direction.BACKWARD,
-            targetType = RelatableMusicBrainzEntity.ARTIST,
+            targetType = SerializableMusicBrainzEntity.ARTIST,
             artist = davidBowie,
         ),
     ),

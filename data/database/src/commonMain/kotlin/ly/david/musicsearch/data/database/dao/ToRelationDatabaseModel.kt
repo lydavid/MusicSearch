@@ -5,7 +5,7 @@ import ly.david.musicsearch.core.models.common.emptyToNull
 import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.core.models.getLifeSpanForDisplay
 import ly.david.musicsearch.core.models.relation.RelationWithOrder
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
 import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
@@ -30,7 +30,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
 
     val entity = targetType.entity
     when (targetType) {
-        RelatableMusicBrainzEntity.AREA -> {
+        SerializableMusicBrainzEntity.AREA -> {
             if (area == null) return null
             area?.apply {
                 linkedEntityId = id
@@ -39,7 +39,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
 
-        RelatableMusicBrainzEntity.ARTIST -> {
+        SerializableMusicBrainzEntity.ARTIST -> {
             if (artist == null) return null
             artist?.apply {
                 linkedEntityId = id
@@ -49,7 +49,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             }
         }
 
-        RelatableMusicBrainzEntity.EVENT -> {
+        SerializableMusicBrainzEntity.EVENT -> {
             if (event == null) return null
             event?.apply {
                 linkedEntityId = id
@@ -58,7 +58,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
 
-        RelatableMusicBrainzEntity.GENRE -> {
+        SerializableMusicBrainzEntity.GENRE -> {
             if (genre == null) return null
             genre?.apply {
                 linkedEntityId = id
@@ -67,7 +67,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
 
-        RelatableMusicBrainzEntity.INSTRUMENT -> {
+        SerializableMusicBrainzEntity.INSTRUMENT -> {
             if (instrument == null) return null
             instrument?.apply {
                 linkedEntityId = id
@@ -76,7 +76,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
 
-        RelatableMusicBrainzEntity.LABEL -> {
+        SerializableMusicBrainzEntity.LABEL -> {
             if (label == null) return null
             label?.apply {
                 linkedEntityId = id
@@ -85,7 +85,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
 
-        RelatableMusicBrainzEntity.PLACE -> {
+        SerializableMusicBrainzEntity.PLACE -> {
             if (place == null) return null
             place?.apply {
                 linkedEntityId = id
@@ -94,7 +94,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
 
-        RelatableMusicBrainzEntity.RECORDING -> {
+        SerializableMusicBrainzEntity.RECORDING -> {
             if (recording == null) return null
             recording?.apply {
                 linkedEntityId = id
@@ -105,7 +105,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
 
-        RelatableMusicBrainzEntity.RELEASE -> {
+        SerializableMusicBrainzEntity.RELEASE -> {
             if (release == null) return null
             release?.apply {
                 linkedEntityId = id
@@ -115,7 +115,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
 
-        RelatableMusicBrainzEntity.RELEASE_GROUP -> {
+        SerializableMusicBrainzEntity.RELEASE_GROUP -> {
             if (releaseGroup == null) return null
             releaseGroup?.apply {
                 linkedEntityId = id
@@ -125,7 +125,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
 
-        RelatableMusicBrainzEntity.SERIES -> {
+        SerializableMusicBrainzEntity.SERIES -> {
             if (series == null) return null
             series?.apply {
                 linkedEntityId = id
@@ -134,7 +134,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
 
-        RelatableMusicBrainzEntity.WORK -> {
+        SerializableMusicBrainzEntity.WORK -> {
             if (work == null) return null
             work?.apply {
                 linkedEntityId = id
@@ -143,7 +143,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
 
-        RelatableMusicBrainzEntity.URL -> {
+        SerializableMusicBrainzEntity.URL -> {
             if (url == null) return null
             url?.apply {
                 linkedEntityId = id

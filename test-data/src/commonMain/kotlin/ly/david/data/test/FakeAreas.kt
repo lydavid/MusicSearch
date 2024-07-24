@@ -5,7 +5,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchAreasResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val canada = AreaMusicBrainzModel(
@@ -32,14 +32,14 @@ val ontario = AreaMusicBrainzModel(
             type = "part of",
             typeId = "de7cc874-8b1b-3a05-8272-f3834c968fb7",
             direction = Direction.BACKWARD,
-            targetType = RelatableMusicBrainzEntity.AREA,
+            targetType = SerializableMusicBrainzEntity.AREA,
             area = canada,
         ),
         RelationMusicBrainzModel(
             type = "part of",
             typeId = "de7cc874-8b1b-3a05-8272-f3834c968fb7",
             direction = Direction.FORWARD,
-            targetType = RelatableMusicBrainzEntity.AREA,
+            targetType = SerializableMusicBrainzEntity.AREA,
             area = toronto,
         ),
     ),

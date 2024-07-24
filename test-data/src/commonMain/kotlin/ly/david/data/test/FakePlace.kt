@@ -6,7 +6,7 @@ import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzMo
 import ly.david.musicsearch.data.musicbrainz.models.core.CoordinatesMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val fakePlace = PlaceMusicBrainzModel(
@@ -19,7 +19,7 @@ val eventHeldAtPlace = RelationMusicBrainzModel(
     type = "doesn't matter",
     typeId = "e2c6f697-07dc-38b1-be0b-83d740165532",
     direction = Direction.BACKWARD,
-    targetType = RelatableMusicBrainzEntity.EVENT,
+    targetType = SerializableMusicBrainzEntity.EVENT,
     event = fakeEvent,
 )
 

@@ -4,7 +4,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseInstrumentsResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchInstrumentsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val fakeInstrument = InstrumentMusicBrainzModel(
@@ -15,7 +15,7 @@ val fakeInstrument = InstrumentMusicBrainzModel(
             type = "",
             typeId = "0b67183b-9f36-4b09-b561-0fa531508f91",
             direction = Direction.BACKWARD,
-            targetType = RelatableMusicBrainzEntity.AREA,
+            targetType = SerializableMusicBrainzEntity.AREA,
             area = ontario,
         ),
     ),

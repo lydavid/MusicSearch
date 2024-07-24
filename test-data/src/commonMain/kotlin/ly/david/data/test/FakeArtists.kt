@@ -7,7 +7,7 @@ import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrai
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val bandAid = ArtistMusicBrainzModel(
@@ -49,7 +49,7 @@ val davidBowie = ArtistMusicBrainzModel(
         RelationMusicBrainzModel(
             artist = bandAid,
             direction = Direction.FORWARD,
-            targetType = RelatableMusicBrainzEntity.ARTIST,
+            targetType = SerializableMusicBrainzEntity.ARTIST,
             attributes = listOf("minor"),
             type = "collaboration",
             typeId = "75c09861-6857-4ec0-9729-84eefde7fc86",
@@ -57,7 +57,7 @@ val davidBowie = ArtistMusicBrainzModel(
         RelationMusicBrainzModel(
             artist = carlosAlomar,
             direction = Direction.BACKWARD,
-            targetType = RelatableMusicBrainzEntity.ARTIST,
+            targetType = SerializableMusicBrainzEntity.ARTIST,
             attributes = listOf("guitar"),
             type = "instrumental supporting musician",
             typeId = "ed6a7891-ce70-4e08-9839-1f2f62270497",
@@ -65,14 +65,14 @@ val davidBowie = ArtistMusicBrainzModel(
         RelationMusicBrainzModel(
             url = davidBowieSpotify,
             direction = Direction.FORWARD,
-            targetType = RelatableMusicBrainzEntity.URL,
+            targetType = SerializableMusicBrainzEntity.URL,
             type = "free streaming",
             typeId = "769085a1-c2f7-4c24-a532-2375a77693bd",
         ),
         RelationMusicBrainzModel(
             url = davidBowieDeezer,
             direction = Direction.FORWARD,
-            targetType = RelatableMusicBrainzEntity.URL,
+            targetType = SerializableMusicBrainzEntity.URL,
             type = "free streaming",
             typeId = "769085a1-c2f7-4c24-a532-2375a77693bd",
         ),

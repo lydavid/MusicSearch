@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 
 @Serializable
-enum class RelatableMusicBrainzEntity(val entity: MusicBrainzEntity) {
+enum class SerializableMusicBrainzEntity(val entity: MusicBrainzEntity) {
     @SerialName("area")
     AREA(MusicBrainzEntity.AREA),
 

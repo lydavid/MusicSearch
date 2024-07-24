@@ -4,7 +4,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchReleaseGroupsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val hotSpaceReleaseGroup = ReleaseGroupMusicBrainzModel(
@@ -26,7 +26,7 @@ val underPressureReleaseGroup = ReleaseGroupMusicBrainzModel(
             type = "single from",
             typeId = "fcf680a9-6871-4519-8c4b-8c6549575b35",
             direction = Direction.FORWARD,
-            targetType = RelatableMusicBrainzEntity.RELEASE_GROUP,
+            targetType = SerializableMusicBrainzEntity.RELEASE_GROUP,
             releaseGroup = hotSpaceReleaseGroup,
         ),
     ),

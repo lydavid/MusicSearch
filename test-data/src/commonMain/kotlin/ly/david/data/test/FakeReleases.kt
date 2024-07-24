@@ -13,7 +13,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.TextRepresentationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val underPressureRemastered = ReleaseMusicBrainzModel(
@@ -30,7 +30,7 @@ val underPressureRemasterOf = RelationMusicBrainzModel(
     type = "remaster",
     typeId = "48e327b5-2d04-4518-93f1-fed5f0f0fa3c",
     direction = Direction.BACKWARD,
-    targetType = RelatableMusicBrainzEntity.RELEASE,
+    targetType = SerializableMusicBrainzEntity.RELEASE,
     release = underPressureRemastered,
 )
 

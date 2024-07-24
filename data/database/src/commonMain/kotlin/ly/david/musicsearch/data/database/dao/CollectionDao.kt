@@ -40,7 +40,7 @@ class CollectionDao(
                     id = id,
                     is_remote = true,
                     name = name,
-                    entity = entity,
+                    entity = entityType.entity,
                     type = type,
                     type_id = typeId,
                     entity_count = getCount(),

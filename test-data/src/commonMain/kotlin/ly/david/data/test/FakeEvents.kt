@@ -4,7 +4,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchEventsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val fakeEvent = EventMusicBrainzModel(
@@ -15,7 +15,7 @@ val fakeEvent = EventMusicBrainzModel(
             type = "",
             typeId = "542f8484-8bc7-3ce5-a022-747850b2b928",
             direction = Direction.FORWARD,
-            targetType = RelatableMusicBrainzEntity.AREA,
+            targetType = SerializableMusicBrainzEntity.AREA,
             area = ontario,
         ),
     ),

@@ -3,13 +3,14 @@ package ly.david.musicsearch.data.musicbrainz.models.core
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 
 @Serializable
 data class CollectionMusicBrainzModel(
     @SerialName("id") override val id: String,
     @SerialName("name") override val name: String,
     override val disambiguation: String? = null,
-    @SerialName("entity-type") val entity: MusicBrainzEntity,
+    @SerialName("entity-type") val entityType: SerializableMusicBrainzEntity,
     @SerialName("type") val type: String? = null,
     @SerialName("type-id") val typeId: String? = null,
     @SerialName("editor") val editor: String = "",
@@ -28,7 +29,7 @@ data class CollectionMusicBrainzModel(
 ) : MusicBrainzModel()
 
 fun CollectionMusicBrainzModel.getCount(): Int {
-    return when (entity) {
+    return when (entityType.entity) {
         MusicBrainzEntity.AREA -> areaCount
         MusicBrainzEntity.ARTIST -> artistCount
         MusicBrainzEntity.EVENT -> eventCount

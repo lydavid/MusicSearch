@@ -5,7 +5,7 @@ import ly.david.musicsearch.data.musicbrainz.api.SearchWorksResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkAttributeMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelatableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 val fakeWorkAttribute = WorkAttributeMusicBrainzModel(
@@ -23,7 +23,7 @@ val arrangements = RelationMusicBrainzModel(
     type = "doesn't matter",
     typeId = "51975ed8-bbfa-486b-9f28-5947f4370299",
     direction = Direction.FORWARD,
-    targetType = RelatableMusicBrainzEntity.WORK,
+    targetType = SerializableMusicBrainzEntity.WORK,
     work = fakeWork2,
 )
 
