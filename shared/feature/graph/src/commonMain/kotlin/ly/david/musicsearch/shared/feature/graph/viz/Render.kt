@@ -18,50 +18,30 @@
 package ly.david.musicsearch.shared.feature.graph.viz
 
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.DrawStyle
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import io.data2viz.color.Color
 import io.data2viz.color.ColorOrGradient
 import io.data2viz.color.LinearGradient
 import io.data2viz.color.RadialGradient
-import io.data2viz.geom.Arc
-import io.data2viz.geom.ArcTo
-import io.data2viz.geom.BezierCurveTo
-import io.data2viz.geom.ClosePath
-import io.data2viz.geom.LineTo
-import io.data2viz.geom.MoveTo
-import io.data2viz.geom.QuadraticCurveTo
-import io.data2viz.geom.RectCmd
-import io.data2viz.math.toDegrees
 import io.data2viz.viz.CircleNode
-import io.data2viz.viz.FontPosture
-import io.data2viz.viz.FontWeight
 import io.data2viz.viz.LineNode
-import io.data2viz.viz.PathNode
 import io.data2viz.viz.RectNode
-import io.data2viz.viz.TextHAlign
-import io.data2viz.viz.TextNode
-import kotlin.math.abs
-import kotlin.math.absoluteValue
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.sign
-import kotlin.math.sin
 import androidx.compose.ui.graphics.Color as ComposeColor
 
-fun DrawScope.render(lineNode: LineNode) {
+fun DrawScope.render(
+    lineNode: LineNode,
+    offset: Offset,
+) {
     lineNode.strokeColor?.let {
-        val start = Offset(lineNode.x1.dp.toPx(), lineNode.y1.dp.toPx())
-        val end = Offset(lineNode.x2.dp.toPx(), lineNode.y2.dp.toPx())
+        val start = Offset(lineNode.x1.dp.toPx(), lineNode.y1.dp.toPx()) + offset
+        val end = Offset(lineNode.x2.dp.toPx(), lineNode.y2.dp.toPx()) + offset
         when (it) {
             is Color -> drawLine(
                 it.toComposeColor(),
@@ -309,10 +289,10 @@ private fun DrawScope.render(
 }
 
 fun DrawScope.render(
-    node: CircleNode,
+    circleNode: CircleNode,
     offset: Offset,
 ) {
-    with(node) {
+    with(circleNode) {
         val r = radius.dp.toPx()
         val c = Offset(x.dp.toPx(), y.dp.toPx()) + offset
         fill?.let {
@@ -336,7 +316,7 @@ fun DrawScope.render(
         }
 
         strokeColor?.let {
-            val stroke = node.strokeWidth?.toStroke(this@render)
+            val stroke = circleNode.strokeWidth?.toStroke(this@render)
                 ?: Stroke()
             when (it) {
                 is Color -> drawCircle(
