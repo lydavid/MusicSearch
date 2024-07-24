@@ -31,26 +31,40 @@ internal fun GraphUi(
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxSize()
+                .fillMaxSize(),
         ) {
             Box(
                 Modifier
                     .fillMaxSize()
                     .drawBehind {
-                        state.links.forEach {
-                            render(it)
-                        }
-                        state.nodes.forEach {
-                            render(it)
-                        }
-                    }
+                        state.links
+                            .forEach {
+                                render(it)
+                            }
+                        state.nodes
+//                            .map { node ->
+//                                CircleNode(
+//                                    circle = CircleGeom(
+//                                        x = node.circle.x,
+//                                        y = node.circle.y,
+//                                        radius = node.circle.radius,
+//                                    )
+//                                )
+//                            }
+                            .forEach { node ->
+                                render(
+                                    node = node,
+                                    offset = center,
+                                )
+                            }
+                    },
             ) {
             }
 
             Text(
                 text = "Wind Simulation",
                 modifier = Modifier
-                    .align(alignment = Alignment.CenterHorizontally)
+                    .align(alignment = Alignment.CenterHorizontally),
             )
         }
     }

@@ -41,8 +41,8 @@ internal class GraphPresenter(
             mutableStateOf(artistRepository.getAllCollaboratingArtists(screen.id))
         }
 
-        LaunchedEffect(Unit) {
-            graphSimulation.initialize()
+        LaunchedEffect(screen.id) {
+            graphSimulation.initialize(collaboratingArtists)
             println(collaboratingArtists)
             scope.launch {
                 while (true) {

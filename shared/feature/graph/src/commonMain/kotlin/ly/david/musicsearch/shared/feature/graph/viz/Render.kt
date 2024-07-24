@@ -308,10 +308,13 @@ private fun DrawScope.render(
     }
 }
 
-fun DrawScope.render(node: CircleNode) {
+fun DrawScope.render(
+    node: CircleNode,
+    offset: Offset,
+) {
     with(node) {
         val r = radius.dp.toPx()
-        val c = Offset(x.dp.toPx(), y.dp.toPx())
+        val c = Offset(x.dp.toPx(), y.dp.toPx()) + offset
         fill?.let {
             when (it) {
                 is Color -> drawCircle(

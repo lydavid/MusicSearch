@@ -15,19 +15,22 @@ import io.data2viz.viz.LineNode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import ly.david.musicsearch.core.models.artist.CollaboratingArtist
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.graph.viz.line
 import kotlin.random.Random
 
-internal data class Entity(
-    val entity: MusicBrainzEntity,
-    val radius: Double,
-)
+//internal data class Entity(
+//    val entity: MusicBrainzEntity,
+//    val radius: Double,
+//)
 
 data class GraphSimulationUiState(
     val links: List<LineNode> = listOf(),
     val nodes: List<CircleNode> = listOf(),
 )
+
+private const val MIN_RADIUS = 10.0
 
 class GraphSimulation {
 
@@ -35,54 +38,53 @@ class GraphSimulation {
     val uiState: StateFlow<GraphSimulationUiState>
         get() = _uiState
 
-    private val entities = Array(1000) {
-        Entity(
-            entity = MusicBrainzEntity.entries.random(),
-            radius = 10.0,
-//            radius = Random.nextDouble(
-//                5.0,
-//                15.0,
-//            ),
-        )
-    }.toList()
+//    private val entities = Array(1000) {
+//        Entity(
+//            entity = MusicBrainzEntity.entries.random(),
+//            radius = 10.0,
+////            radius = Random.nextDouble(
+////                5.0,
+////                15.0,
+////            ),
+//        )
+//    }.toList()
 
-    private var forceLinks: ForceLink<Entity>? = null
-    private lateinit var simulation: ForceSimulation<Entity>
+    private var forceLinks: ForceLink<CollaboratingArtist>? = null
+    private lateinit var simulation: ForceSimulation<CollaboratingArtist>
 
-    fun initialize() {
+    fun initialize(
+        artists: List<CollaboratingArtist>,
+    ) {
         simulation = forceSimulation {
-            domainObjects = this@GraphSimulation.entities
+            domainObjects = artists + artists + artists + artists + artists + artists + artists + artists + artists
 
             // If we set a decay, the simulation may stop before there are no overlapping nodes
 //            intensityDecay = 0.pct
 
-            // TODO: should be centered based on screen's dimensions
-            //  either pass it from JC
-            //  or move this to JC land
             forceCenter {
                 center = Point(
-                    200.0,
-                    500.0,
+                    0.0,
+                    0.0,
                 )
             }
 
-            forceLinks = forceLink {
-                linkGet = {
-                    val links = mutableListOf<Link<Entity>>()
-
-                    if (nodes.isNotEmpty()) {
-                        links += Link(
-                            source = this,
-                            target = nodes[0],
-                            distance = Random.nextDouble(30.0, 200.0),
-                        )
-                    }
-                    links
-                }
-            }
+//            forceLinks = forceLink {
+//                linkGet = {
+//                    val links = mutableListOf<Link<CollaboratingArtist>>()
+//
+//                    if (nodes.isNotEmpty()) {
+//                        links += Link(
+//                            source = this,
+//                            target = nodes[0],
+//                            distance = Random.nextDouble(30.0, 200.0),
+//                        )
+//                    }
+//                    links
+//                }
+//            }
 
             forceCollision {
-                radiusGet = { domain.radius + 1 }
+                radiusGet = { domain.count.toDouble() + MIN_RADIUS + 1 }
                 iterations = 1
             }
         }
@@ -103,15 +105,15 @@ class GraphSimulation {
                 }
             }.orEmpty()
 
-            val nodes = simulation.nodes.map { node: ForceNode<Entity> ->
+            val nodes = simulation.nodes.map { node: ForceNode<CollaboratingArtist> ->
                 CircleNode(
                     CircleGeom(
                         x = node.x,
                         y = node.y,
-                        radius = node.domain.radius,
+                        radius = node.domain.count.toDouble() + MIN_RADIUS,
                     ),
                 ).apply {
-                    fill = node.domain.entity.getNodeColor()
+                    fill = "#FF5722".col
                 }
             }
 
