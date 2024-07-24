@@ -18,8 +18,7 @@ import io.data2viz.viz.CircleNode
 import io.data2viz.viz.LineNode
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.core.models.artist.CollaboratingArtist
-import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
+import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
@@ -38,20 +37,15 @@ internal class GraphPresenter(
         val graphState by graphSimulation.uiState.collectAsState()
         val scope = rememberCoroutineScope()
 
-        val collaboratingArtists: List<CollaboratingArtist> by remember {
+        val collaboratingArtistAndRecordings: List<CollaboratingArtistAndRecording> by remember {
             mutableStateOf(artistRepository.getAllCollaboratingArtists(screen.id))
-        }
-
-        val collaboratedRecordings: List<RecordingListItemModel> by remember {
-            mutableStateOf(artistRepository.getAllCollaboratedRecordings(screen.id))
         }
 
         LaunchedEffect(screen.id) {
             graphSimulation.initialize(
-                collaboratingArtists,
-                collaboratedRecordings,
+                collaborations = collaboratingArtistAndRecordings,
             )
-            println(collaboratingArtists)
+            println(collaboratingArtistAndRecordings)
             scope.launch {
                 while (true) {
                     delay(16)

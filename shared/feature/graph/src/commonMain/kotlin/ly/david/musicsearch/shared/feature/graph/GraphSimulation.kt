@@ -6,6 +6,7 @@ import io.data2viz.color.col
 import io.data2viz.force.ForceLink
 import io.data2viz.force.ForceNode
 import io.data2viz.force.ForceSimulation
+import io.data2viz.force.Link
 import io.data2viz.force.forceSimulation
 import io.data2viz.geom.CircleGeom
 import io.data2viz.geom.Point
@@ -14,12 +15,14 @@ import io.data2viz.viz.LineNode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import ly.david.musicsearch.core.models.artist.CollaboratingArtist
-import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
+import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.graph.viz.line
+import kotlin.math.ln
+import kotlin.math.log2
 
 private data class GraphNode(
+    val id: String,
     val name: String,
     val entity: MusicBrainzEntity,
     val radius: Double,
@@ -41,24 +44,53 @@ class GraphSimulation {
     private var forceLinks: ForceLink<GraphNode>? = null
     private lateinit var simulation: ForceSimulation<GraphNode>
 
+    private fun calculateRadius(frequency: Int): Double {
+        val growthFactor = 5.0
+        val logBase = 1.5
+
+        return MIN_RADIUS + growthFactor * log2(frequency.toDouble()) / log2(logBase)
+    }
+
     fun initialize(
-        artists: List<CollaboratingArtist>,
-        collaboratedRecordings: List<RecordingListItemModel>,
+        collaborations: List<CollaboratingArtistAndRecording>,
     ) {
-        simulation = forceSimulation {
-            domainObjects = artists.map { artist ->
+        println(collaborations)
+        val artistFrequency = collaborations.groupingBy { it.artistId }.eachCount()
+        val recordingFrequency = collaborations.groupingBy { it.recordingId }.eachCount()
+
+        val artistNodes = collaborations
+//            .asSequence()
+            .map { it.artistId to it.artistName }
+            .distinct()
+            .map { (id, name) ->
                 GraphNode(
-                    name = artist.name,
+                    id = id,
+                    name = name,
                     entity = MusicBrainzEntity.ARTIST,
-                    radius = artist.count.toDouble() + MIN_RADIUS,
-                )
-            } + collaboratedRecordings.map { recording ->
-                GraphNode(
-                    name = recording.name,
-                    entity = MusicBrainzEntity.RECORDING,
-                    radius = MIN_RADIUS,
+                    radius = calculateRadius(artistFrequency[id] ?: 1)
                 )
             }
+
+        val recordingNodes = collaborations
+//            .asSequence()
+            .map { it.recordingId to it.recordingName }
+            .distinct()
+            .map { (id, name) ->
+                GraphNode(
+                    id = id,
+                    name = name,
+                    entity = MusicBrainzEntity.RECORDING,
+                    radius = calculateRadius(recordingFrequency[id] ?: 1)
+                )
+            }
+
+        val artistRecordingLinks = collaborations
+            .map { it.artistId to it.recordingId }
+            .distinct()
+
+
+        simulation = forceSimulation {
+            domainObjects = artistNodes + recordingNodes
 
             // If we set a decay, the simulation may stop before there are no overlapping nodes
 //            intensityDecay = 0.pct
@@ -70,20 +102,48 @@ class GraphSimulation {
                 )
             }
 
-//            forceLinks = forceLink {
-//                linkGet = {
-//                    val links = mutableListOf<Link<CollaboratingArtist>>()
+//            forceRadial {
+//                radiusGet = {
+//                    100.0
+//                }
+//                assignNodes(nodes.filter { it.domain.entity == MusicBrainzEntity.ARTIST })
+//            }
 //
+//            forceRadial {
+//                radiusGet = {
+//                    300.0
+//                }
+//                assignNodes(nodes.filter { it.domain.entity == MusicBrainzEntity.RECORDING })
+//            }
+
+            forceNBody {
+                strengthGet = {
+                    -30.0
+                }
+            }
+
+            forceLinks = forceLink {
+                linkGet = {
+                    val links = mutableListOf<Link<GraphNode>>()
+
+                    artistRecordingLinks.forEach { (artistId, recordingId) ->
+                        links += Link(
+                            source = nodes.find { it.domain.id == artistId } ?: return@forEach,
+                            target = nodes.find { it.domain.id == recordingId } ?: return@forEach,
+                            distance = 100.0,
+                        )
+                    }
+
 //                    if (nodes.isNotEmpty()) {
 //                        links += Link(
 //                            source = this,
 //                            target = nodes[0],
-//                            distance = Random.nextDouble(30.0, 200.0),
+//                            distance = 300.0,
 //                        )
 //                    }
-//                    links
-//                }
-//            }
+                    links
+                }
+            }
 
             forceCollision {
                 radiusGet = { domain.radius + 1 }
