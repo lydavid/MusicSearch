@@ -47,8 +47,10 @@ class GraphSimulation {
     }.toList()
 
     private var forceLinks: ForceLink<Entity>? = null
-    private val simulation: ForceSimulation<Entity> by lazy {
-        forceSimulation {
+    private lateinit var simulation: ForceSimulation<Entity>
+
+    fun initialize() {
+        simulation = forceSimulation {
             domainObjects = this@GraphSimulation.entities
 
             // If we set a decay, the simulation may stop before there are no overlapping nodes
@@ -86,7 +88,7 @@ class GraphSimulation {
         }
     }
 
-    fun run() {
+    fun step() {
         if (!simulation.isRunning()) return
 
         _uiState.update { uiState ->

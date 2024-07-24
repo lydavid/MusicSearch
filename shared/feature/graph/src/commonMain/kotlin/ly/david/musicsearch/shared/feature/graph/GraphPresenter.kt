@@ -5,6 +5,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
@@ -16,13 +18,18 @@ import io.data2viz.viz.CircleNode
 import io.data2viz.viz.LineNode
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.core.models.artist.CollaboratingArtist
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.artist.ArtistRepository
+import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 
 internal class GraphPresenter(
+    private val screen: ArtistCollaborationScreen,
     private val navigator: Navigator,
     private val graphSimulation: GraphSimulation,
+    private val artistRepository: ArtistRepository,
 ) : Presenter<GraphUiState> {
 
     @Composable
@@ -30,11 +37,17 @@ internal class GraphPresenter(
         val graphState by graphSimulation.uiState.collectAsState()
         val scope = rememberCoroutineScope()
 
+        val collaboratingArtists: List<CollaboratingArtist> by remember {
+            mutableStateOf(artistRepository.getAllCollaboratingArtists(screen.id))
+        }
+
         LaunchedEffect(Unit) {
+            graphSimulation.initialize()
+            println(collaboratingArtists)
             scope.launch {
                 while (true) {
                     delay(16)
-                    graphSimulation.run()
+                    graphSimulation.step()
                 }
             }
         }

@@ -11,7 +11,9 @@ data class SearchScreen(
 ) : Screen
 
 @Parcelize
-data object GraphScreen : Screen
+data class ArtistCollaborationScreen(
+    val id: String,
+) : Screen
 
 @Parcelize
 data object HistoryScreen : Screen

@@ -39,3 +39,17 @@ GROUP BY a.id;
 delete:
 DELETE FROM artist
 WHERE id = :artistId;
+
+getAllCollaboratingArtists:
+SELECT
+acn.artist_id AS collaborating_artist_id,
+acn.name AS name,
+COUNT(*) AS collaboration_count
+FROM recordings_by_entity re
+INNER JOIN recording r ON r.id = re.recording_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ac.id
+WHERE re.entity_id = :artistId
+AND acn.artist_id != :artistId
+GROUP BY collaborating_artist_id;
