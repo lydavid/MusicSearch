@@ -140,6 +140,7 @@ data class AppStrings(
     val artificialLanguage: String,
     val mostEntities: String,
     val leastEntities: String,
+    val collaborationsWith: (String) -> String,
 )
 
 object Locales {

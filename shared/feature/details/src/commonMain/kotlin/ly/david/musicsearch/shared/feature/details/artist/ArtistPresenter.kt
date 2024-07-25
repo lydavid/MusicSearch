@@ -38,8 +38,8 @@ import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiState
-import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.work.WorksByEntityPresenter
 import ly.david.musicsearch.ui.common.work.WorksByEntityUiEvent
 import ly.david.musicsearch.ui.common.work.WorksByEntityUiState
@@ -224,7 +224,14 @@ internal class ArtistPresenter(
                 }
 
                 ArtistUiEvent.NavigateToCollaboratorsGraph -> {
-                    navigator.onNavEvent(NavEvent.GoTo(ArtistCollaborationScreen(screen.id)))
+                    navigator.onNavEvent(
+                        NavEvent.GoTo(
+                            ArtistCollaborationScreen(
+                                id = screen.id,
+                                name = title,
+                            ),
+                        ),
+                    )
                 }
             }
         }

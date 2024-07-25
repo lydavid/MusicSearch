@@ -14,7 +14,6 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import io.data2viz.viz.CircleNode
 import io.data2viz.viz.LineNode
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -57,6 +56,10 @@ internal class GraphPresenter(
 
         fun eventSink(event: GraphUiEvent) {
             when (event) {
+                is GraphUiEvent.NavigateUp -> {
+                    navigator.pop()
+                }
+
                 is GraphUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
@@ -72,6 +75,7 @@ internal class GraphPresenter(
         }
 
         return GraphUiState(
+            artistName = screen.name,
             links = graphState.links,
             nodes = graphState.nodes,
             eventSink = ::eventSink,
@@ -81,12 +85,14 @@ internal class GraphPresenter(
 
 @Stable
 internal data class GraphUiState(
+    val artistName: String,
     val links: List<LineNode> = listOf(),
     val nodes: List<GraphNode> = listOf(),
     val eventSink: (GraphUiEvent) -> Unit,
 ) : CircuitUiState
 
 internal sealed interface GraphUiEvent : CircuitUiEvent {
+    data object NavigateUp : GraphUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

@@ -3,9 +3,11 @@ package ly.david.musicsearch.shared.feature.graph
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
@@ -24,8 +27,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.data2viz.viz.LineNode
 import ly.david.musicsearch.shared.feature.graph.viz.render
+import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.core.LocalStrings
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun GraphUi(
     state: GraphUiState,
@@ -37,6 +42,15 @@ internal fun GraphUi(
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
+        topBar = {
+            ScrollableTopAppBar(
+                showBackButton = true,
+                onBack = {
+                    eventSink(GraphUiEvent.NavigateUp)
+                },
+                title = strings.collaborationsWith(state.artistName),
+            )
+        },
     ) { innerPadding ->
         GraphUi(
             links = state.links,
@@ -66,7 +80,7 @@ internal fun GraphUi(
     var center by remember { mutableStateOf(Offset.Zero) }
     val textMeasurer = rememberTextMeasurer()
 
-    println(nodes)
+    val isDark = isSystemInDarkTheme()
 
     Canvas(
         modifier = modifier
@@ -82,6 +96,7 @@ internal fun GraphUi(
                     val drawOffset = panOffset + center
 
                     // TODO: when in here, nodes is []
+                    println(nodes)
 
                     val clickedNode = nodes.firstOrNull { node ->
                         val nodePosition = drawOffset + Offset(
@@ -121,11 +136,12 @@ internal fun GraphUi(
                             height = (size.height / 3f).toInt(),
                         ),
                         overflow = TextOverflow.Ellipsis,
-                        style = TextStyle(fontSize = 18.sp),
+                        style = TextStyle(fontSize = 13.sp),
                     )
 
                 drawText(
-                    measuredText,
+                    textLayoutResult = measuredText,
+                    color = if (isDark) Color.White else Color.Black,
                     topLeft = Offset(
                         node.x.dp.toPx(),
                         node.y.dp.toPx(),

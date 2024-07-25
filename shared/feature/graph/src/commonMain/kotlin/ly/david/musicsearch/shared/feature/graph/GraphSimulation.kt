@@ -8,9 +8,7 @@ import io.data2viz.force.ForceNode
 import io.data2viz.force.ForceSimulation
 import io.data2viz.force.Link
 import io.data2viz.force.forceSimulation
-import io.data2viz.geom.CircleGeom
 import io.data2viz.geom.Point
-import io.data2viz.viz.CircleNode
 import io.data2viz.viz.LineNode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,8 +16,6 @@ import kotlinx.coroutines.flow.update
 import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.graph.viz.line
-import kotlin.math.ln
-import kotlin.math.log2
 
 data class GraphNode(
     val id: String,
@@ -38,6 +34,7 @@ data class GraphSimulationUiState(
 private const val MIN_RADIUS = 10.0
 private const val LINK_DISTANCE = 250.0
 private const val MANY_BODY_STRENGTH = -30.0
+private const val COLLISION_DISTANCE = 30.0
 
 class GraphSimulation {
 
@@ -49,10 +46,7 @@ class GraphSimulation {
     private lateinit var simulation: ForceSimulation<GraphNode>
 
     private fun calculateRadius(frequency: Int): Double {
-        val growthFactor = 5.0
-        val logBase = 1.5
-
-        return MIN_RADIUS + frequency//growthFactor * log2(frequency.toDouble()) / log2(logBase)
+        return MIN_RADIUS + frequency
     }
 
     fun initialize(
@@ -70,7 +64,7 @@ class GraphSimulation {
                     id = id,
                     name = name,
                     entity = MusicBrainzEntity.ARTIST,
-                    radius = calculateRadius(artistFrequency[id] ?: 1)
+                    radius = calculateRadius(artistFrequency[id] ?: 1),
                 )
             }
 
@@ -82,14 +76,13 @@ class GraphSimulation {
                     id = id,
                     name = name,
                     entity = MusicBrainzEntity.RECORDING,
-                    radius = calculateRadius(recordingFrequency[id] ?: 1)
+                    radius = calculateRadius(recordingFrequency[id] ?: 1),
                 )
             }
 
         val artistRecordingLinks = collaborations
             .map { it.artistId to it.recordingId }
             .distinct()
-
 
         simulation = forceSimulation {
             domainObjects = artistNodes + recordingNodes
@@ -140,7 +133,7 @@ class GraphSimulation {
             }
 
             forceCollision {
-                radiusGet = { domain.radius + 1 }
+                radiusGet = { domain.radius + COLLISION_DISTANCE }
                 iterations = 1
             }
         }
@@ -166,15 +159,6 @@ class GraphSimulation {
                     x = node.x,
                     y = node.y,
                 )
-//                CircleNode(
-//                    CircleGeom(
-//                        x = node.x,
-//                        y = node.y,
-//                        radius = node.domain.radius,
-//                    ),
-//                ).apply {
-//                    fill = node.domain.entity.getNodeColor()
-//                }
             }
 
             uiState.copy(
@@ -203,7 +187,7 @@ internal fun MusicBrainzEntity.getNodeColor(): Color {
         MusicBrainzEntity.URL -> "#00BCD4".col
     }
 
-    return baseColor // .opacify(strength = 0.75)
+    return baseColor
 }
 
 private fun <D> ForceSimulation<D>.isRunning(): Boolean {

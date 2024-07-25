@@ -311,4 +311,8 @@ val EnStrings = AppStrings(
     artificialLanguage = "[Artificial (Other)]",
     mostEntities = "Most entities",
     leastEntities = "Least entities",
+    collaborationsWith = { p0 ->
+        "Collaborations with %s"
+            .fmt(p0)
+    },
 )
