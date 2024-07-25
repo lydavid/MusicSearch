@@ -1,9 +1,10 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.core.models.artist.ArtistDetailsModel
+import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import lydavidmusicsearchdatadatabase.Artist
 
 class ArtistDao(
@@ -77,4 +78,23 @@ class ArtistDao(
         ),
         imageUrl = largeUrl,
     )
+
+    fun getAllCollaboratingArtists(artistId: String): List<CollaboratingArtistAndRecording> {
+        return transacter.getAllCollaboratingArtistsAndRecordings(
+            artistId = artistId,
+            mapper = {
+                    collaboratingArtistId: String,
+                    collaboratingArtistName: String,
+                    recordingId: String,
+                    recordingName: String,
+                ->
+                CollaboratingArtistAndRecording(
+                    artistId = collaboratingArtistId,
+                    artistName = collaboratingArtistName,
+                    recordingId = recordingId,
+                    recordingName = recordingName,
+                )
+            },
+        ).executeAsList()
+    }
 }

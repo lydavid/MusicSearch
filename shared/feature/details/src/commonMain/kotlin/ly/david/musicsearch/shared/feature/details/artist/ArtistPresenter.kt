@@ -38,6 +38,7 @@ import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiState
+import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.work.WorksByEntityPresenter
 import ly.david.musicsearch.ui.common.work.WorksByEntityUiEvent
@@ -221,6 +222,17 @@ internal class ArtistPresenter(
                 ArtistUiEvent.ForceRefresh -> {
                     forceRefreshDetails = true
                 }
+
+                ArtistUiEvent.NavigateToCollaboratorsGraph -> {
+                    navigator.onNavEvent(
+                        NavEvent.GoTo(
+                            ArtistCollaborationScreen(
+                                id = screen.id,
+                                name = title,
+                            ),
+                        ),
+                    )
+                }
             }
         }
 
@@ -273,4 +285,6 @@ internal sealed interface ArtistUiEvent : CircuitUiEvent {
         val id: String,
         val title: String?,
     ) : ArtistUiEvent
+
+    data object NavigateToCollaboratorsGraph : ArtistUiEvent
 }

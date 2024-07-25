@@ -21,6 +21,7 @@ import ly.david.musicsearch.data.spotify.di.spotifyDataModule
 import ly.david.musicsearch.shared.domain.domainModule
 import ly.david.musicsearch.shared.feature.collections.collectionsFeatureModule
 import ly.david.musicsearch.shared.feature.details.detailsFeatureModule
+import ly.david.musicsearch.shared.feature.graph.graphFeatureModule
 import ly.david.musicsearch.shared.feature.history.historyFeatureModule
 import ly.david.musicsearch.shared.feature.images.imagesFeatureModule
 import ly.david.musicsearch.shared.feature.licenses.licensesFeatureModule
@@ -35,6 +36,7 @@ import org.koin.dsl.module
 val circuitModule = module {
     includes(
         searchFeatureModule,
+        graphFeatureModule,
         historyFeatureModule,
         collectionsFeatureModule,
         settingsFeatureModule,
