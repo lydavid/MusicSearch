@@ -117,7 +117,7 @@ internal fun ArtistUi(
                         )
                     }
                     DropdownMenuItem(
-                        text = { Text("See collaborators") },
+                        text = { Text(strings.seeCollaborators) },
                         onClick = {
                             eventSink(ArtistUiEvent.NavigateToCollaboratorsGraph)
                             closeMenu()

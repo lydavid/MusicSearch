@@ -1,8 +1,6 @@
 package ly.david.musicsearch.shared.feature.graph
 
-import io.data2viz.color.Color
 import io.data2viz.color.Colors
-import io.data2viz.color.col
 import io.data2viz.force.ForceLink
 import io.data2viz.force.ForceNode
 import io.data2viz.force.ForceSimulation
@@ -155,27 +153,6 @@ class GraphSimulation {
             )
         }
     }
-}
-
-internal fun MusicBrainzEntity.getNodeColor(): Color {
-    val baseColor = when (this) {
-        MusicBrainzEntity.AREA -> "#4CAF50".col
-        MusicBrainzEntity.ARTIST -> "#FF5722".col
-        MusicBrainzEntity.COLLECTION -> "#9C27B0".col
-        MusicBrainzEntity.EVENT -> "#FFC107".col
-        MusicBrainzEntity.GENRE -> "#2196F3".col
-        MusicBrainzEntity.INSTRUMENT -> "#795548".col
-        MusicBrainzEntity.LABEL -> "#F44336".col
-        MusicBrainzEntity.PLACE -> "#009688".col
-        MusicBrainzEntity.RECORDING -> "#E91E63".col
-        MusicBrainzEntity.RELEASE -> "#3F51B5".col
-        MusicBrainzEntity.RELEASE_GROUP -> "#8BC34A".col
-        MusicBrainzEntity.SERIES -> "#FF9800".col
-        MusicBrainzEntity.WORK -> "#607D8B".col
-        MusicBrainzEntity.URL -> "#00BCD4".col
-    }
-
-    return baseColor
 }
 
 private fun <D> ForceSimulation<D>.isRunning(): Boolean {

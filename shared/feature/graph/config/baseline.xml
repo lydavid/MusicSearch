@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:Render.kt$0xFF009688</ID>
+    <ID>MagicNumber:Render.kt$0xFF00BCD4</ID>
+    <ID>MagicNumber:Render.kt$0xFF2196F3</ID>
+    <ID>MagicNumber:Render.kt$0xFF3F51B5</ID>
+    <ID>MagicNumber:Render.kt$0xFF4CAF50</ID>
+    <ID>MagicNumber:Render.kt$0xFF607D8B</ID>
+    <ID>MagicNumber:Render.kt$0xFF795548</ID>
+    <ID>MagicNumber:Render.kt$0xFF8BC34A</ID>
+    <ID>MagicNumber:Render.kt$0xFF9C27B0</ID>
+    <ID>MagicNumber:Render.kt$0xFFE91E63</ID>
+    <ID>MagicNumber:Render.kt$0xFFF44336</ID>
+    <ID>MagicNumber:Render.kt$0xFFFF5722</ID>
+    <ID>MagicNumber:Render.kt$0xFFFF9800</ID>
+    <ID>MagicNumber:Render.kt$0xFFFFC107</ID>
+  </CurrentIssues>
+</SmellBaseline>

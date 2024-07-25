@@ -18,19 +18,18 @@
 package ly.david.musicsearch.shared.feature.graph.viz
 
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
-import io.data2viz.color.Color
 import io.data2viz.viz.LineNode
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.graph.GraphNode
-import ly.david.musicsearch.shared.feature.graph.getNodeColor
-import androidx.compose.ui.graphics.Color as ComposeColor
 
 fun DrawScope.render(
     lineNode: LineNode,
     offset: Offset,
-    color: androidx.compose.ui.graphics.Color,
+    color: Color,
 ) {
     lineNode.strokeColor?.let {
         val start = Offset(
@@ -61,17 +60,28 @@ fun DrawScope.render(
             y.dp.toPx(),
         ) + offset
         drawCircle(
-            color = entity.getNodeColor().toComposeColor(),
+            color = entity.getNodeColor(),
             radius = r,
             center = c,
         )
     }
 }
 
-private fun Color.toComposeColor(): ComposeColor =
-    ComposeColor(
-        (255 * alpha.value).toInt() and 0xff shl 24 or
-            (r and 0xff shl 16) or
-            (g and 0xff shl 8) or
-            (b and 0xff),
-    )
+internal fun MusicBrainzEntity.getNodeColor(): Color {
+    return when (this) {
+        MusicBrainzEntity.AREA -> Color(0xFF4CAF50)
+        MusicBrainzEntity.ARTIST -> Color(0xFFFF5722)
+        MusicBrainzEntity.COLLECTION -> Color(0xFF9C27B0)
+        MusicBrainzEntity.EVENT -> Color(0xFFFFC107)
+        MusicBrainzEntity.GENRE -> Color(0xFF2196F3)
+        MusicBrainzEntity.INSTRUMENT -> Color(0xFF795548)
+        MusicBrainzEntity.LABEL -> Color(0xFFF44336)
+        MusicBrainzEntity.PLACE -> Color(0xFF009688)
+        MusicBrainzEntity.RECORDING -> Color(0xFFE91E63)
+        MusicBrainzEntity.RELEASE -> Color(0xFF3F51B5)
+        MusicBrainzEntity.RELEASE_GROUP -> Color(0xFF8BC34A)
+        MusicBrainzEntity.SERIES -> Color(0xFFFF9800)
+        MusicBrainzEntity.WORK -> Color(0xFF607D8B)
+        MusicBrainzEntity.URL -> Color(0xFF00BCD4)
+    }
+}
