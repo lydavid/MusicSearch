@@ -15,6 +15,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import io.data2viz.viz.LineNode
 import ly.david.musicsearch.shared.feature.graph.viz.render
 import ly.david.musicsearch.ui.core.LocalStrings
 
@@ -30,56 +38,99 @@ internal fun GraphUi(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
     ) { innerPadding ->
-        var panOffset by remember { mutableStateOf(Offset.Zero) }
-        var center by remember { mutableStateOf(Offset.Zero) }
+        GraphUi(
+            links = state.links,
+            nodes = state.nodes,
+            modifier = modifier.padding(innerPadding),
+            onClick = { node ->
+                eventSink(
+                    GraphUiEvent.ClickItem(
+                        entity = node.entity,
+                        id = node.id,
+                        title = node.name,
+                    ),
+                )
+            },
+        )
+    }
+}
 
-        Canvas(
-            Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .pointerInput(Unit) {
-                    detectDragGestures { change, dragAmount ->
-                        change.consume()
-                        panOffset += dragAmount
+@Composable
+internal fun GraphUi(
+    links: List<LineNode>,
+    nodes: List<GraphNode>,
+    modifier: Modifier = Modifier,
+    onClick: (node: GraphNode) -> Unit = { },
+) {
+    var panOffset by remember { mutableStateOf(Offset.Zero) }
+    var center by remember { mutableStateOf(Offset.Zero) }
+    val textMeasurer = rememberTextMeasurer()
+
+    println(nodes)
+
+    Canvas(
+        modifier = modifier
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                detectDragGestures { change, dragAmount ->
+                    change.consume()
+                    panOffset += dragAmount
+                }
+            }
+            .pointerInput(Unit) {
+                detectTapGestures { tapOffset ->
+                    val drawOffset = panOffset + center
+
+                    // TODO: when in here, nodes is []
+
+                    val clickedNode = nodes.firstOrNull { node ->
+                        val nodePosition = drawOffset + Offset(
+                            node.x.toFloat(),
+                            node.y.toFloat(),
+                        )
+                        (tapOffset - nodePosition).getDistance() <= node.radius
+                    }
+
+                    clickedNode?.let {
+                        onClick(it)
                     }
                 }
-                .pointerInput(Unit) {
-                    detectTapGestures { tapOffset ->
-                        val drawOffset = panOffset + center
-                        println(state.nodes)
-                        val clickedNode = state.nodes.firstOrNull { node ->
-                            val nodePosition = drawOffset + Offset(
-                                node.x.toFloat(),
-                                node.y.toFloat(),
-                            )
-                            (tapOffset - nodePosition).getDistance() <= node.radius
-                        }
+            },
+    ) {
+        center = this.center
+        val drawOffset = panOffset + center
 
-                        // TODO: need to hold data, not just circle
-                        clickedNode?.let {
-                            println("clicked")
-//                                eventSink(GraphUiEvent.ClickItem(cl))
-                        }
-                    }
-                },
-        ) {
-            center = this.center
-            val drawOffset = panOffset + center
+        links
+            .forEach { node ->
+                render(
+                    lineNode = node,
+                    offset = drawOffset,
+                )
+            }
+        nodes
+            .forEach { node ->
+                render(
+                    graphNode = node,
+                    offset = drawOffset,
+                )
+                val measuredText =
+                    textMeasurer.measure(
+                        text = node.name,
+                        constraints = Constraints.fixed(
+                            width = (size.width / 3f).toInt(),
+                            height = (size.height / 3f).toInt(),
+                        ),
+                        overflow = TextOverflow.Ellipsis,
+                        style = TextStyle(fontSize = 18.sp),
+                    )
 
-            state.links
-                .forEach { node ->
-                    render(
-                        lineNode = node,
-                        offset = drawOffset,
-                    )
-                }
-            state.nodes
-                .forEach { node ->
-                    render(
-                        graphNode = node,
-                        offset = drawOffset,
-                    )
-                }
-        }
+                drawText(
+                    measuredText,
+                    topLeft = Offset(
+                        node.x.dp.toPx(),
+                        node.y.dp.toPx(),
+                    ) + drawOffset,
+                )
+            }
     }
 }
