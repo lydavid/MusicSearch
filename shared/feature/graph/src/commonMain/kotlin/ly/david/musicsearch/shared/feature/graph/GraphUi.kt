@@ -29,6 +29,7 @@ import io.data2viz.viz.LineNode
 import ly.david.musicsearch.shared.feature.graph.viz.render
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.theme.getSubTextColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -81,6 +82,7 @@ internal fun GraphUi(
     val textMeasurer = rememberTextMeasurer()
 
     val isDark = isSystemInDarkTheme()
+    val lineColor = getSubTextColor()
 
     Canvas(
         modifier = modifier
@@ -120,6 +122,7 @@ internal fun GraphUi(
                 render(
                     lineNode = node,
                     offset = drawOffset,
+                    color = lineColor,
                 )
             }
         nodes
