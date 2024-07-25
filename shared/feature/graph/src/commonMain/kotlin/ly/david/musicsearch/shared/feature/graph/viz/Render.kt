@@ -33,6 +33,8 @@ import io.data2viz.color.RadialGradient
 import io.data2viz.viz.CircleNode
 import io.data2viz.viz.LineNode
 import io.data2viz.viz.RectNode
+import ly.david.musicsearch.shared.feature.graph.GraphNode
+import ly.david.musicsearch.shared.feature.graph.getNodeColor
 import androidx.compose.ui.graphics.Color as ComposeColor
 
 fun DrawScope.render(
@@ -289,56 +291,17 @@ private fun DrawScope.render(
 }
 
 fun DrawScope.render(
-    circleNode: CircleNode,
+    graphNode: GraphNode,
     offset: Offset,
 ) {
-    with(circleNode) {
+    with(graphNode) {
         val r = radius.dp.toPx()
         val c = Offset(x.dp.toPx(), y.dp.toPx()) + offset
-        fill?.let {
-            when (it) {
-                is Color -> drawCircle(
-                    color = it.toComposeColor(),
-                    radius = r,
-                    center = c
-                )
-                is LinearGradient -> drawCircle(
-                    brush = it.toBrush(this@render),
-                    radius = r,
-                    center = c
-                )
-                is RadialGradient -> drawCircle(
-                    brush = it.toBrush(this@render),
-                    radius = r,
-                    center = c
-                )
-            }
-        }
-
-        strokeColor?.let {
-            val stroke = circleNode.strokeWidth?.toStroke(this@render)
-                ?: Stroke()
-            when (it) {
-                is Color -> drawCircle(
-                    color = it.toComposeColor(),
-                    radius = r,
-                    center = c,
-                    style = stroke
-                )
-                is LinearGradient -> drawCircle(
-                    brush = it.toBrush(this@render),
-                    radius = r,
-                    center = c,
-                    style = stroke
-                )
-                is RadialGradient -> drawCircle(
-                    brush = it.toBrush(this@render),
-                    radius = r,
-                    center = c,
-                    style = stroke
-                )
-            }
-        }
+        drawCircle(
+            color = entity.getNodeColor().toComposeColor(),
+            radius = r,
+            center = c
+        )
     }
 }
 

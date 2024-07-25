@@ -21,19 +21,23 @@ import ly.david.musicsearch.shared.feature.graph.viz.line
 import kotlin.math.ln
 import kotlin.math.log2
 
-private data class GraphNode(
+data class GraphNode(
     val id: String,
     val name: String,
     val entity: MusicBrainzEntity,
     val radius: Double,
+    val x: Double = 0.0,
+    val y: Double = 0.0,
 )
 
 data class GraphSimulationUiState(
     val links: List<LineNode> = listOf(),
-    val nodes: List<CircleNode> = listOf(),
+    val nodes: List<GraphNode> = listOf(),
 )
 
 private const val MIN_RADIUS = 10.0
+private const val LINK_DISTANCE = 250.0
+private const val MANY_BODY_STRENGTH = -30.0
 
 class GraphSimulation {
 
@@ -48,7 +52,7 @@ class GraphSimulation {
         val growthFactor = 5.0
         val logBase = 1.5
 
-        return MIN_RADIUS + growthFactor * log2(frequency.toDouble()) / log2(logBase)
+        return MIN_RADIUS + frequency//growthFactor * log2(frequency.toDouble()) / log2(logBase)
     }
 
     fun initialize(
@@ -59,7 +63,6 @@ class GraphSimulation {
         val recordingFrequency = collaborations.groupingBy { it.recordingId }.eachCount()
 
         val artistNodes = collaborations
-//            .asSequence()
             .map { it.artistId to it.artistName }
             .distinct()
             .map { (id, name) ->
@@ -72,7 +75,6 @@ class GraphSimulation {
             }
 
         val recordingNodes = collaborations
-//            .asSequence()
             .map { it.recordingId to it.recordingName }
             .distinct()
             .map { (id, name) ->
@@ -118,7 +120,7 @@ class GraphSimulation {
 
             forceNBody {
                 strengthGet = {
-                    -30.0
+                    MANY_BODY_STRENGTH
                 }
             }
 
@@ -130,17 +132,9 @@ class GraphSimulation {
                         links += Link(
                             source = nodes.find { it.domain.id == artistId } ?: return@forEach,
                             target = nodes.find { it.domain.id == recordingId } ?: return@forEach,
-                            distance = 100.0,
+                            distance = LINK_DISTANCE,
                         )
                     }
-
-//                    if (nodes.isNotEmpty()) {
-//                        links += Link(
-//                            source = this,
-//                            target = nodes[0],
-//                            distance = 300.0,
-//                        )
-//                    }
                     links
                 }
             }
@@ -168,15 +162,19 @@ class GraphSimulation {
             }.orEmpty()
 
             val nodes = simulation.nodes.map { node: ForceNode<GraphNode> ->
-                CircleNode(
-                    CircleGeom(
-                        x = node.x,
-                        y = node.y,
-                        radius = node.domain.radius,
-                    ),
-                ).apply {
-                    fill = node.domain.entity.getNodeColor()
-                }
+                node.domain.copy(
+                    x = node.x,
+                    y = node.y,
+                )
+//                CircleNode(
+//                    CircleGeom(
+//                        x = node.x,
+//                        y = node.y,
+//                        radius = node.domain.radius,
+//                    ),
+//                ).apply {
+//                    fill = node.domain.entity.getNodeColor()
+//                }
             }
 
             uiState.copy(
@@ -187,7 +185,7 @@ class GraphSimulation {
     }
 }
 
-private fun MusicBrainzEntity.getNodeColor(): Color {
+internal fun MusicBrainzEntity.getNodeColor(): Color {
     val baseColor = when (this) {
         MusicBrainzEntity.AREA -> "#4CAF50".col
         MusicBrainzEntity.ARTIST -> "#FF5722".col

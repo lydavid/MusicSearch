@@ -22,8 +22,9 @@ import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
-import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+
+private const val DELAY_FOR_60_FPS_IN_MS = 16L
 
 internal class GraphPresenter(
     private val screen: ArtistCollaborationScreen,
@@ -48,7 +49,7 @@ internal class GraphPresenter(
             println(collaboratingArtistAndRecordings)
             scope.launch {
                 while (true) {
-                    delay(16)
+                    delay(DELAY_FOR_60_FPS_IN_MS)
                     graphSimulation.step()
                 }
             }
@@ -59,17 +60,11 @@ internal class GraphPresenter(
                 is GraphUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
-                            if (event.entity == MusicBrainzEntity.COLLECTION) {
-                                CollectionScreen(
-                                    id = event.id,
-                                )
-                            } else {
-                                DetailsScreen(
-                                    entity = event.entity,
-                                    id = event.id,
-                                    title = event.title,
-                                )
-                            },
+                            DetailsScreen(
+                                entity = event.entity,
+                                id = event.id,
+                                title = event.title,
+                            ),
                         ),
                     )
                 }
@@ -87,7 +82,7 @@ internal class GraphPresenter(
 @Stable
 internal data class GraphUiState(
     val links: List<LineNode> = listOf(),
-    val nodes: List<CircleNode> = listOf(),
+    val nodes: List<GraphNode> = listOf(),
     val eventSink: (GraphUiEvent) -> Unit,
 ) : CircuitUiState
 
