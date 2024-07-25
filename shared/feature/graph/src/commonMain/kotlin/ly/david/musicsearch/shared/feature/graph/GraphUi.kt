@@ -56,7 +56,7 @@ internal fun GraphUi(
         GraphUi(
             links = state.links,
             nodes = state.nodes,
-            modifier = modifier.padding(innerPadding),
+            modifier = Modifier.padding(innerPadding),
             onClick = { node ->
                 eventSink(
                     GraphUiEvent.ClickItem(
@@ -97,7 +97,8 @@ internal fun GraphUi(
                 detectTapGestures { tapOffset ->
                     val drawOffset = panOffset + center
 
-                    // TODO: when in here, nodes is []
+                    // TODO: support clicking on nodes
+                    //  when in here, nodes is []
                     println(nodes)
 
                     val clickedNode = nodes.firstOrNull { node ->

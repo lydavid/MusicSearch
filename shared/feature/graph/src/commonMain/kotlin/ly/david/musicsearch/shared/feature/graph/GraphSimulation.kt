@@ -45,47 +45,15 @@ class GraphSimulation {
     private var forceLinks: ForceLink<GraphNode>? = null
     private lateinit var simulation: ForceSimulation<GraphNode>
 
-    private fun calculateRadius(frequency: Int): Double {
-        return MIN_RADIUS + frequency
-    }
-
     fun initialize(
         collaborations: List<CollaboratingArtistAndRecording>,
     ) {
-        println(collaborations)
-        val artistFrequency = collaborations.groupingBy { it.artistId }.eachCount()
-        val recordingFrequency = collaborations.groupingBy { it.recordingId }.eachCount()
-
-        val artistNodes = collaborations
-            .map { it.artistId to it.artistName }
-            .distinct()
-            .map { (id, name) ->
-                GraphNode(
-                    id = id,
-                    name = name,
-                    entity = MusicBrainzEntity.ARTIST,
-                    radius = calculateRadius(artistFrequency[id] ?: 1),
-                )
-            }
-
-        val recordingNodes = collaborations
-            .map { it.recordingId to it.recordingName }
-            .distinct()
-            .map { (id, name) ->
-                GraphNode(
-                    id = id,
-                    name = name,
-                    entity = MusicBrainzEntity.RECORDING,
-                    radius = calculateRadius(recordingFrequency[id] ?: 1),
-                )
-            }
-
         val artistRecordingLinks = collaborations
             .map { it.artistId to it.recordingId }
             .distinct()
 
         simulation = forceSimulation {
-            domainObjects = artistNodes + recordingNodes
+            domainObjects = generateGraphNodes(collaborations)
 
             // If we set a decay, the simulation may stop before there are no overlapping nodes
 //            intensityDecay = 0.pct
@@ -96,20 +64,6 @@ class GraphSimulation {
                     0.0,
                 )
             }
-
-//            forceRadial {
-//                radiusGet = {
-//                    100.0
-//                }
-//                assignNodes(nodes.filter { it.domain.entity == MusicBrainzEntity.ARTIST })
-//            }
-//
-//            forceRadial {
-//                radiusGet = {
-//                    300.0
-//                }
-//                assignNodes(nodes.filter { it.domain.entity == MusicBrainzEntity.RECORDING })
-//            }
 
             forceNBody {
                 strengthGet = {
@@ -137,6 +91,40 @@ class GraphSimulation {
                 iterations = 1
             }
         }
+    }
+
+    private fun generateGraphNodes(collaborations: List<CollaboratingArtistAndRecording>): List<GraphNode> {
+        val artistFrequency = collaborations.groupingBy { it.artistId }.eachCount()
+        val recordingFrequency = collaborations.groupingBy { it.recordingId }.eachCount()
+
+        val artistNodes = collaborations
+            .map { it.artistId to it.artistName }
+            .distinct()
+            .map { (id, name) ->
+                GraphNode(
+                    id = id,
+                    name = name,
+                    entity = MusicBrainzEntity.ARTIST,
+                    radius = calculateRadius(artistFrequency[id] ?: 1),
+                )
+            }
+
+        val recordingNodes = collaborations
+            .map { it.recordingId to it.recordingName }
+            .distinct()
+            .map { (id, name) ->
+                GraphNode(
+                    id = id,
+                    name = name,
+                    entity = MusicBrainzEntity.RECORDING,
+                    radius = calculateRadius(recordingFrequency[id] ?: 1),
+                )
+            }
+        return artistNodes + recordingNodes
+    }
+
+    private fun calculateRadius(frequency: Int): Double {
+        return MIN_RADIUS + frequency
     }
 
     fun step() {

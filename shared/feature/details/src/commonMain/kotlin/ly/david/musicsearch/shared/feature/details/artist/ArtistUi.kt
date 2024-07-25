@@ -23,8 +23,6 @@ import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.network.resourceUri
-import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
 import ly.david.musicsearch.ui.common.event.EventsListScreen
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.recording.RecordingsListScreen
@@ -124,7 +122,6 @@ internal fun ArtistUi(
                             eventSink(ArtistUiEvent.NavigateToCollaboratorsGraph)
                             closeMenu()
                         },
-                        modifier = modifier,
                     )
                     AddToCollectionMenuItem {
                         scope.launch {

@@ -82,7 +82,12 @@ class ArtistDao(
     fun getAllCollaboratingArtists(artistId: String): List<CollaboratingArtistAndRecording> {
         return transacter.getAllCollaboratingArtistsAndRecordings(
             artistId = artistId,
-            mapper = { collaboratingArtistId: String, collaboratingArtistName: String, recordingId: String, recordingName: String ->
+            mapper = {
+                    collaboratingArtistId: String,
+                    collaboratingArtistName: String,
+                    recordingId: String,
+                    recordingName: String,
+                ->
                 CollaboratingArtistAndRecording(
                     artistId = collaboratingArtistId,
                     artistName = collaboratingArtistName,
