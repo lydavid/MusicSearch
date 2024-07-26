@@ -1,0 +1,42 @@
+stable class GraphPresenter {
+  stable val screen: ArtistCollaborationScreen
+  stable val navigator: Navigator
+  unstable val graphSimulation: GraphSimulation
+  unstable val artistRepository: ArtistRepository
+  <runtime stability> = Stable
+}
+stable class GraphUiState {
+  stable val artistName: String
+  unstable val links: List<LineNode>
+  unstable val nodes: List<GraphNode>
+  stable val eventSink: Function1<GraphUiEvent, Unit>
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class GraphNode {
+  stable val id: String
+  stable val name: String
+  stable val entity: MusicBrainzEntity
+  stable val radius: Double
+  stable val x: Double
+  stable val y: Double
+  <runtime stability> = Stable
+}
+unstable class GraphSimulationUiState {
+  unstable val links: List<LineNode>
+  unstable val nodes: List<GraphNode>
+  <runtime stability> = Unstable
+}
+unstable class GraphSimulation {
+  unstable val _uiState: MutableStateFlow<GraphSimulationUiState>
+  unstable var forceLinks: ForceLink<GraphNode>?
+  unstable var simulation: ForceSimulation<GraphNode>
+  <runtime stability> = Unstable
+}

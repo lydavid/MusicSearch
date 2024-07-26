@@ -304,6 +304,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesL
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupListItem(
   releaseGroup: ReleaseGroupListItemModel
+  stable showType: Boolean
   stable modifier: Modifier? = @static Companion
   unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @static {
 
@@ -544,7 +545,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRe
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
   track: TrackListItemModel
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseGroupListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseGroupListItemWithType()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
   series: SeriesListItemModel
 )

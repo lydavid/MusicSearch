@@ -1,0 +1,13 @@
+fun present(
+  stable <this>: GraphPresenter
+): GraphUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun GraphUi(
+  stable state: GraphUiState
+  stable modifier: Modifier? = @static Companion
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun GraphUi(
+  unstable links: List<LineNode>
+  unstable nodes: List<GraphNode>
+  stable modifier: Modifier? = @static Companion
+  stable onClick: Function2<@[ParameterName(name = 'tapOffset')] Offset, @[ParameterName(name = 'drawOffset')] Offset, Unit>
+)

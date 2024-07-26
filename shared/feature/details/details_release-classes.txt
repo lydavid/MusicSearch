@@ -59,7 +59,6 @@ stable class ArtistPresenter {
   stable val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter
   stable val worksByEntityPresenter: WorksByEntityPresenter
   stable val relationsPresenter: RelationsPresenter
-  unstable val artistImageRepository: ArtistImageRepository
   unstable val logger: Logger
   <runtime stability> = Stable
 }
@@ -68,7 +67,6 @@ stable class ArtistUiState {
   stable val isLoading: Boolean
   stable val isError: Boolean
   runtime val artist: ArtistDetailsModel?
-  stable val imageUrl: String
   unstable val tabs: List<ArtistTab>
   stable val selectedTab: ArtistTab
   stable val query: String
@@ -99,6 +97,9 @@ stable class ClickItem {
   stable val entity: MusicBrainzEntity
   stable val id: String
   stable val title: String?
+  <runtime stability> = Stable
+}
+stable class NavigateToCollaboratorsGraph {
   <runtime stability> = Stable
 }
 stable class EventPresenter {

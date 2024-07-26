@@ -60,6 +60,13 @@ unstable class ArtistDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
+stable class CollaboratingArtistAndRecording {
+  stable val artistId: String
+  stable val artistName: String
+  stable val recordingId: String
+  stable val recordingName: String
+  <runtime stability> = Stable
+}
 stable class BrowseEntityCount {
   stable val browseEntity: MusicBrainzEntity
   stable val localCount: Int

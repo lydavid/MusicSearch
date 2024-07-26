@@ -193,6 +193,11 @@ stable class SearchScreen {
   stable val entity: MusicBrainzEntity?
   <runtime stability> = Stable
 }
+stable class ArtistCollaborationScreen {
+  stable val id: String
+  stable val name: String
+  <runtime stability> = Stable
+}
 stable class HistoryScreen {
   <runtime stability> = Stable
 }
