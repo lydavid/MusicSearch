@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.graph
 
-import io.data2viz.color.Colors
 import io.data2viz.force.ForceLink
 import io.data2viz.force.ForceNode
 import io.data2viz.force.ForceSimulation
@@ -31,7 +30,8 @@ data class GraphSimulationUiState(
 
 private const val MIN_RADIUS = 10.0
 private const val LINK_DISTANCE = 250.0
-private const val MANY_BODY_STRENGTH = -30.0
+
+// private const val MANY_BODY_STRENGTH = -30.0
 private const val COLLISION_DISTANCE = 30.0
 
 class GraphSimulation {
@@ -44,14 +44,14 @@ class GraphSimulation {
     private lateinit var simulation: ForceSimulation<GraphNode>
 
     fun initialize(
-        collaborations: List<CollaboratingArtistAndRecording>,
+        collaboratingArtistAndRecordings: List<CollaboratingArtistAndRecording>,
     ) {
-        val artistRecordingLinks = collaborations
+        val artistRecordingLinks = collaboratingArtistAndRecordings
             .map { it.artistId to it.recordingId }
             .distinct()
 
         simulation = forceSimulation {
-            domainObjects = generateGraphNodes(collaborations)
+            domainObjects = generateGraphNodes(collaboratingArtistAndRecordings)
 
             // If we set a decay, the simulation may stop before there are no overlapping nodes
 //            intensityDecay = 0.pct
@@ -63,11 +63,11 @@ class GraphSimulation {
                 )
             }
 
-            forceNBody {
-                strengthGet = {
-                    MANY_BODY_STRENGTH
-                }
-            }
+//            forceNBody {
+//                strengthGet = {
+//                    MANY_BODY_STRENGTH
+//                }
+//            }
 
             forceLinks = forceLink {
                 linkGet = {
@@ -97,7 +97,7 @@ class GraphSimulation {
 
         val artistNodes = collaborations
             .map { it.artistId to it.artistName }
-            .distinct()
+            .distinctBy { it.first }
             .map { (id, name) ->
                 GraphNode(
                     id = id,
@@ -109,7 +109,7 @@ class GraphSimulation {
 
         val recordingNodes = collaborations
             .map { it.recordingId to it.recordingName }
-            .distinct()
+            .distinctBy { it.first }
             .map { (id, name) ->
                 GraphNode(
                     id = id,
@@ -135,8 +135,6 @@ class GraphSimulation {
                     x2 = link.target.x
                     y1 = link.source.y
                     y2 = link.target.y
-
-                    strokeColor = Colors.Web.grey
                 }
             }.orEmpty()
 

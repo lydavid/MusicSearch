@@ -31,22 +31,20 @@ fun DrawScope.render(
     offset: Offset,
     color: Color,
 ) {
-    lineNode.strokeColor?.let {
-        val start = Offset(
-            lineNode.x1.dp.toPx(),
-            lineNode.y1.dp.toPx(),
-        ) + offset
-        val end = Offset(
-            lineNode.x2.dp.toPx(),
-            lineNode.y2.dp.toPx(),
-        ) + offset
-        drawLine(
-            color = color,
-            start = start,
-            end = end,
-            strokeWidth = lineNode.strokeWidth?.toFloat() ?: Stroke.HairlineWidth,
-        )
-    }
+    val start = Offset(
+        lineNode.x1.dp.toPx(),
+        lineNode.y1.dp.toPx(),
+    ) + offset
+    val end = Offset(
+        lineNode.x2.dp.toPx(),
+        lineNode.y2.dp.toPx(),
+    ) + offset
+    drawLine(
+        color = color,
+        start = start,
+        end = end,
+        strokeWidth = lineNode.strokeWidth?.toFloat() ?: Stroke.HairlineWidth,
+    )
 }
 
 fun DrawScope.render(

@@ -13,11 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -39,6 +41,7 @@ internal fun GraphUi(
 ) {
     val eventSink = state.eventSink
     val strings = LocalStrings.current
+    val density = LocalDensity.current
 
     Scaffold(
         modifier = modifier,
@@ -57,14 +60,26 @@ internal fun GraphUi(
             links = state.links,
             nodes = state.nodes,
             modifier = Modifier.padding(innerPadding),
-            onClick = { node ->
-                eventSink(
-                    GraphUiEvent.ClickItem(
-                        entity = node.entity,
-                        id = node.id,
-                        title = node.name,
-                    ),
-                )
+            onClick = { tapOffset, drawOffset ->
+                with(density) {
+                    val clickedNode = state.nodes.firstOrNull { node ->
+                        val nodePosition = drawOffset + Offset(
+                            node.x.dp.toPx(),
+                            node.y.dp.toPx(),
+                        )
+                        (tapOffset - nodePosition).getDistanceSquared() <= node.radius.dp.toPx() * node.radius.dp.toPx()
+                    }
+
+                    clickedNode?.let { node ->
+                        eventSink(
+                            GraphUiEvent.ClickItem(
+                                entity = node.entity,
+                                id = node.id,
+                                title = node.name,
+                            ),
+                        )
+                    }
+                }
             },
         )
     }
@@ -75,7 +90,7 @@ internal fun GraphUi(
     links: List<LineNode>,
     nodes: List<GraphNode>,
     modifier: Modifier = Modifier,
-    onClick: (node: GraphNode) -> Unit = { },
+    onClick: (tapOffset: Offset, drawOffset: Offset) -> Unit,
 ) {
     var panOffset by remember { mutableStateOf(Offset.Zero) }
     var center by remember { mutableStateOf(Offset.Zero) }
@@ -83,6 +98,8 @@ internal fun GraphUi(
 
     val isDark = isSystemInDarkTheme()
     val lineColor = getSubTextColor()
+
+    val currentOnClick by rememberUpdatedState(onClick)
 
     Canvas(
         modifier = modifier
@@ -97,21 +114,10 @@ internal fun GraphUi(
                 detectTapGestures { tapOffset ->
                     val drawOffset = panOffset + center
 
-                    // TODO: support clicking on nodes
-                    //  when in here, nodes is []
-                    println(nodes)
-
-                    val clickedNode = nodes.firstOrNull { node ->
-                        val nodePosition = drawOffset + Offset(
-                            node.x.toFloat(),
-                            node.y.toFloat(),
-                        )
-                        (tapOffset - nodePosition).getDistance() <= node.radius
-                    }
-
-                    clickedNode?.let {
-                        onClick(it)
-                    }
+                    currentOnClick(
+                        tapOffset,
+                        drawOffset,
+                    )
                 }
             },
     ) {

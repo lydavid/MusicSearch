@@ -37,15 +37,14 @@ internal class GraphPresenter(
         val graphState by graphSimulation.uiState.collectAsState()
         val scope = rememberCoroutineScope()
 
-        val collaboratingArtistAndRecordings: List<CollaboratingArtistAndRecording> by remember {
-            mutableStateOf(artistRepository.getAllCollaboratingArtists(screen.id))
+        val collaboratingArtistsAndRecordings: List<CollaboratingArtistAndRecording> by remember {
+            mutableStateOf(artistRepository.getAllCollaboratingArtistsAndRecordings(screen.id))
         }
 
         LaunchedEffect(screen.id) {
             graphSimulation.initialize(
-                collaborations = collaboratingArtistAndRecordings,
+                collaboratingArtistAndRecordings = collaboratingArtistsAndRecordings,
             )
-            println(collaboratingArtistAndRecordings)
             scope.launch {
                 while (true) {
                     delay(DELAY_FOR_60_FPS_IN_MS)
