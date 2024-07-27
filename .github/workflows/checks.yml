@@ -39,7 +39,7 @@ jobs:
 
       - name: Unit test all KMP modules
         if: always()
-        run: ./gradlew testAll
+        run: ./gradlew allTests
 
       - name: Verify screenshot tests
         id: screenshotsverify
