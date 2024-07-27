@@ -2,6 +2,25 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>ComplexCondition:Cover.kt$x0 &gt; x || x &gt; x1 || y0 &gt; y || y &gt; y1</ID>
+    <ID>ConstructorParameterNaming:Quadtree.kt$InternalNode$var NE_0: QuadtreeNode&lt;D&gt;? = null</ID>
+    <ID>ConstructorParameterNaming:Quadtree.kt$InternalNode$var NW_1: QuadtreeNode&lt;D&gt;? = null</ID>
+    <ID>ConstructorParameterNaming:Quadtree.kt$InternalNode$var SE_2: QuadtreeNode&lt;D&gt;? = null</ID>
+    <ID>ConstructorParameterNaming:Quadtree.kt$InternalNode$var SW_3: QuadtreeNode&lt;D&gt;? = null</ID>
+    <ID>CyclomaticComplexMethod:Add.kt$private fun &lt;D&gt; Quadtree&lt;D&gt;._add(x: Double, y: Double, datum: D)</ID>
+    <ID>CyclomaticComplexMethod:Cover.kt$public fun &lt;D&gt; Quadtree&lt;D&gt;.cover(x: Double, y: Double)</ID>
+    <ID>CyclomaticComplexMethod:ForceNBody.kt$ForceNBody$private fun applyForce( quad: QuadtreeNode&lt;ForceNode&lt;D&gt;&gt;, x0: Double, y0: Double, x1: Double, y1: Double, ): Boolean</ID>
+    <ID>ForEachOnRange:Add.kt$0 until data.size</ID>
+    <ID>ForEachOnRange:ForceCollision.kt$ForceCollision$0 until iterations</ID>
+    <ID>ForEachOnRange:ForceLink.kt$ForceLink$0 until iterations</ID>
+    <ID>FunctionNaming:Add.kt$private fun &lt;D&gt; Quadtree&lt;D&gt;._add(x: Double, y: Double, datum: D)</ID>
+    <ID>LongMethod:Add.kt$private fun &lt;D&gt; Quadtree&lt;D&gt;._add(x: Double, y: Double, datum: D)</ID>
+    <ID>LongMethod:Cover.kt$public fun &lt;D&gt; Quadtree&lt;D&gt;.cover(x: Double, y: Double)</ID>
+    <ID>LongMethod:Visit.kt$public fun &lt;D&gt; Quadtree&lt;D&gt;.visit(callback: (QuadtreeNode&lt;D&gt;, Double, Double, Double, Double) -&gt; Boolean)</ID>
+    <ID>LongMethod:Visit.kt$public fun &lt;D&gt; Quadtree&lt;D&gt;.visitAfter(callback: (QuadtreeNode&lt;D&gt;, Double, Double, Double, Double) -&gt; Unit)</ID>
+    <ID>MagicNumber:Cover.kt$3</ID>
+    <ID>MagicNumber:Force.kt$0.5</ID>
+    <ID>MagicNumber:Percent.kt$Percent$100</ID>
     <ID>MagicNumber:Render.kt$0xFF009688</ID>
     <ID>MagicNumber:Render.kt$0xFF00BCD4</ID>
     <ID>MagicNumber:Render.kt$0xFF2196F3</ID>
@@ -16,5 +35,19 @@
     <ID>MagicNumber:Render.kt$0xFFFF5722</ID>
     <ID>MagicNumber:Render.kt$0xFFFF9800</ID>
     <ID>MagicNumber:Render.kt$0xFFFFC107</ID>
+    <ID>NestedBlockDepth:ForceCollision.kt$ForceCollision$private fun applyForce( quad: QuadtreeNode&lt;ForceNode&lt;D&gt;&gt;, x0: Double, y0: Double, x1: Double, y1: Double, ): Boolean</ID>
+    <ID>NoWildcardImports:ForceSimulation.kt$import kotlin.math.*</ID>
+    <ID>ReturnCount:Add.kt$private fun &lt;D&gt; Quadtree&lt;D&gt;._add(x: Double, y: Double, datum: D)</ID>
+    <ID>ReturnCount:ForceNBody.kt$ForceNBody$private fun applyForce( quad: QuadtreeNode&lt;ForceNode&lt;D&gt;&gt;, x0: Double, y0: Double, x1: Double, y1: Double, ): Boolean</ID>
+    <ID>TopLevelPropertyNaming:ForceSimulation.kt$private const val initialRadius = 10.0</ID>
+    <ID>UnusedParameter:ForceCollision.kt$ForceCollision$x0: Double</ID>
+    <ID>UnusedParameter:ForceCollision.kt$ForceCollision$x1: Double</ID>
+    <ID>UnusedParameter:ForceCollision.kt$ForceCollision$y0: Double</ID>
+    <ID>UnusedParameter:ForceCollision.kt$ForceCollision$y1: Double</ID>
+    <ID>UnusedParameter:ForceNBody.kt$ForceNBody$x0: Double</ID>
+    <ID>UnusedParameter:ForceNBody.kt$ForceNBody$x1: Double</ID>
+    <ID>UnusedParameter:ForceNBody.kt$ForceNBody$y0: Double</ID>
+    <ID>UnusedParameter:ForceNBody.kt$ForceNBody$y1: Double</ID>
+    <ID>WildcardImport:ForceSimulation.kt$import kotlin.math.*</ID>
   </CurrentIssues>
 </SmellBaseline>
