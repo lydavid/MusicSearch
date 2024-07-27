@@ -41,6 +41,7 @@ internal class ArtistCollaborationGraphPresenter(
         }
 
         LaunchedEffect(screen.id) {
+            println(collaboratingArtistsAndRecordings)
             graphSimulation.initialize(
                 collaboratingArtistAndRecordings = collaboratingArtistsAndRecordings,
             )

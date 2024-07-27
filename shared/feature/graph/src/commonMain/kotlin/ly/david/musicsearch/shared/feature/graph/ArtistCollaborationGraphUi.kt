@@ -95,6 +95,7 @@ internal fun ArtistCollaborationGraphUi(
     var center by remember { mutableStateOf(Offset.Zero) }
     val textMeasurer = rememberTextMeasurer()
 
+    // TODO: AppPreferences.useDarkTheme()
     val isDark = isSystemInDarkTheme()
     val lineColor = getSubTextColor()
 
@@ -133,7 +134,7 @@ internal fun ArtistCollaborationGraphUi(
 //                }
 //            """.trimIndent()
 //        })
-        println(nodes.joinToString { "GraphNode(id=\"${it.id}\",name=\"${it.name}\",entity=MusicBrainzEntity.${it.entity},radius=${it.radius},x=${it.x},y=${it.y})" })
+//        println(nodes.joinToString { "GraphNode(id=\"${it.id}\",name=\"${it.name}\",entity=MusicBrainzEntity.${it.entity},radius=${it.radius},x=${it.x},y=${it.y})" })
         links
             .forEach { node ->
                 render(

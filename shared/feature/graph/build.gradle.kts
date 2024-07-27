@@ -28,21 +28,6 @@ kotlin {
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
                 implementation(libs.kotlinx.datetime)
-
-//                implementation("io.data2viz.d2v:d2v-color:0.10.7") {
-//                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
-//                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-reflect")
-//                }
-//                implementation("io.data2viz.d2v:d2v-force:0.10.7")
-//                implementation("io.data2viz.d2v:d2v-geo:0.10.7") {
-//                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
-//                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-reflect")
-//                }
-//                implementation("io.data2viz.d2v:d2v-random:0.10.7") {
-//                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
-//                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-reflect")
-//                }
-//                implementation("io.data2viz.d2v:d2v-viz:0.10.7")
             }
         }
         val androidMain by getting {
@@ -55,7 +40,7 @@ kotlin {
                 implementation(projects.ui.test.screenshot)
                 implementation(libs.junit.jupiter.engine)
                 implementation(libs.kotlinx.coroutines.test)
-                implementation("app.cash.turbine:turbine:1.1.0")
+                implementation(libs.turbine)
             }
         }
     }

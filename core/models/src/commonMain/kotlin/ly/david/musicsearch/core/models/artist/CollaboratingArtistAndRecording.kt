@@ -5,4 +5,8 @@ data class CollaboratingArtistAndRecording(
     val artistName: String,
     val recordingId: String,
     val recordingName: String,
-)
+) {
+    override fun toString(): String {
+        return "CollaboratingArtistAndRecording(artistId=\"${artistId}\",artistName=\"${artistName}\",recordingId=\"${recordingId}\",recordingName=\"${recordingName}\")"
+    }
+}

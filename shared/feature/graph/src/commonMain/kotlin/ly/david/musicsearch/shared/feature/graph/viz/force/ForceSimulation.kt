@@ -99,15 +99,18 @@ public class ForceSimulation<D> internal constructor() {
 //        stepper.stop()
 //    }
 
-    fun step() {
-        tick()
-        tickEvents.values.forEach { callback ->
-            callback(this)
-        }
-        if (intensity < intensityMin) {
+    fun step(count: Int = 1) {
+        repeat(count) {
+            tick()
+//            tickEvents.values.forEach { callback ->
+//                callback(this)
+//            }
+            if (intensity < intensityMin) {
 //            stepper.stop()
-            endEvents.values.forEach { callback ->
-                callback(this)
+//                endEvents.values.forEach { callback ->
+//                    callback(this)
+//                }
+                return@repeat
             }
         }
     }
