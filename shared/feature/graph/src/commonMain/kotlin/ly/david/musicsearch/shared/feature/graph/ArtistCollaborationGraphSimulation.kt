@@ -19,13 +19,18 @@ data class GraphNode(
     val radius: Double,
     val x: Double = 0.0,
     val y: Double = 0.0,
-)
+) {
+    override fun toString(): String {
+        return "GraphNode(id=\"${id}\",name=\"${name}\",entity=MusicBrainzEntity.$entity," +
+            "radius=$radius,x=$x,y=$y)"
+    }
+}
 
 data class GraphLink(
+    val x0: Double = 0.0,
+    val y0: Double = 0.0,
     val x1: Double = 0.0,
     val y1: Double = 0.0,
-    val x2: Double = 0.0,
-    val y2: Double = 0.0,
 )
 
 data class GraphSimulationUiState(
@@ -78,31 +83,35 @@ class ArtistCollaborationGraphSimulation {
 
             forceLinks = forceLink {
                 linkGet = {
-                    val node = this.domain
-                    val artistLinks = if (node.entity == MusicBrainzEntity.RECORDING) {
-                        artistRecordingLinks
-                            .filter { it.recordingId == node.id }
-                    } else {
-                        listOf()
-                    }
-                    val recordingLinks = if (node.entity == MusicBrainzEntity.ARTIST) {
-                        artistRecordingLinks
-                            .filter { it.artistId == node.id }
-                    } else {
-                        listOf()
-                    }
+                    when (this.domain.entity) {
+                        MusicBrainzEntity.RECORDING -> artistRecordingLinks.filter { it.recordingId == this.domain.id }
+                        MusicBrainzEntity.ARTIST -> artistRecordingLinks.filter { it.artistId == this.domain.id }
+                        else -> emptyList()
+                    }.mapNotNull { artistRecording ->
+                        val sourceId = if (this.domain.entity == MusicBrainzEntity.RECORDING) {
+                            artistRecording.artistId
+                        } else {
+                            this.domain.id
+                        }
+                        val targetId = if (this.domain.entity == MusicBrainzEntity.RECORDING) {
+                            this.domain.id
+                        } else {
+                            artistRecording.recordingId
+                        }
 
-                    val links = (artistLinks + recordingLinks)
-                        .mapNotNull { (artistId, recordingId) ->
-                            val source = nodes.find { it.domain.id == artistId } ?: return@mapNotNull null
-                            val target = nodes.find { it.domain.id == recordingId } ?: return@mapNotNull null
+                        val source = nodes.find { it.domain.id == sourceId }
+                        val target = nodes.find { it.domain.id == targetId }
+
+                        if (source != null && target != null) {
                             Link(
                                 source = source,
                                 target = target,
                                 distance = LINK_DISTANCE,
                             )
+                        } else {
+                            null
                         }
-                    links
+                    }
                 }
             }
 
@@ -154,10 +163,10 @@ class ArtistCollaborationGraphSimulation {
         _uiState.update { uiState ->
             val links = forceLinks?.links?.map { link ->
                 GraphLink(
-                    x1 = link.source.x,
-                    x2 = link.target.x,
-                    y1 = link.source.y,
-                    y2 = link.target.y,
+                    x0 = link.source.x,
+                    x1 = link.target.x,
+                    y0 = link.source.y,
+                    y1 = link.target.y,
                 )
             }.orEmpty()
 

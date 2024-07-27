@@ -124,17 +124,6 @@ internal fun ArtistCollaborationGraphUi(
         center = this.center
         val drawOffset = panOffset + center
 
-//        println(links.joinToString {
-//            """
-//                LineNode().apply {
-//                    x1 = ${it.x1}
-//                    y1 = ${it.y1}
-//                    x2 = ${it.x2}
-//                    y2 = ${it.y2}
-//                }
-//            """.trimIndent()
-//        })
-//        println(nodes.joinToString { "GraphNode(id=\"${it.id}\",name=\"${it.name}\",entity=MusicBrainzEntity.${it.entity},radius=${it.radius},x=${it.x},y=${it.y})" })
         links
             .forEach { node ->
                 render(

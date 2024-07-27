@@ -19,16 +19,15 @@ package ly.david.musicsearch.shared.feature.graph.viz.quadtree
 
 import ly.david.musicsearch.shared.feature.graph.viz.core.geom.Rectangle
 
-
 internal inline fun Boolean.toInt() = if (this) 1 else 0
 
 internal data class NodePair<D>(
     val source: QuadtreeNode<D>,
-    val target: QuadtreeNode<D>
+    val target: QuadtreeNode<D>,
 )
 
 public interface QuadtreeNode<D> {
-    public var value:Double?
+    public var value: Double?
     public var x: Double
     public var y: Double
 }
@@ -38,28 +37,28 @@ public data class InternalNode<D>(
     var NW_1: QuadtreeNode<D>? = null,
     var SE_2: QuadtreeNode<D>? = null,
     var SW_3: QuadtreeNode<D>? = null,
-    override var value:Double? = null,
+    override var value: Double? = null,
     override var x: Double = Double.NaN,
-    override var y: Double = Double.NaN
-    ) : QuadtreeNode<D>
+    override var y: Double = Double.NaN,
+) : QuadtreeNode<D>
 
 public fun <D> InternalNode<D>.toList(): List<QuadtreeNode<D>?> = listOf(this.NE_0, this.NW_1, this.SE_2, this.SW_3)
 
 public data class LeafNode<D>(
-        val data: D,
-        var next: LeafNode<D>?,
-        override var value:Double? = null,
-        override var x: Double = Double.NaN,
-        override var y: Double = Double.NaN
+    val data: D,
+    var next: LeafNode<D>?,
+    override var value: Double? = null,
+    override var x: Double = Double.NaN,
+    override var y: Double = Double.NaN,
 ) : QuadtreeNode<D>
 
 // TODO : still needed ?
 internal data class Quad<D>(
     val node: QuadtreeNode<D>?,
-    val x0:Double,
-    val y0:Double,
-    val x1:Double,
-    val y1:Double
+    val x0: Double,
+    val y0: Double,
+    val x1: Double,
+    val y1: Double,
 )
 
 internal fun <D> getNodeFromIndex(node: InternalNode<D>, index: Int): QuadtreeNode<D>? {
@@ -85,8 +84,9 @@ public fun <D> quadtree(x: (D) -> Double, y: (D) -> Double): Quadtree<D> = Quadt
 /**
  * Create quadtree and add all nodes.
  */
-public fun <D> quadtree(x: (D) -> Double, y: (D) -> Double, nodes: List<D>): Quadtree<D> = Quadtree(x,y).apply { addAll(nodes)}
-
+public fun <D> quadtree(x: (D) -> Double, y: (D) -> Double, nodes: List<D>): Quadtree<D> = Quadtree(x, y).apply {
+    addAll(nodes)
+}
 
 // TODO : remove x and y from class constructor ?
 /**
@@ -101,7 +101,8 @@ public fun <D> quadtree(x: (D) -> Double, y: (D) -> Double, nodes: List<D>): Qua
 */
 public class Quadtree<D>(
     public val x: (D) -> Double,
-    public val y: (D) -> Double) {
+    public val y: (D) -> Double,
+) {
 
     /**
      * The root node of the quadtree.
@@ -118,5 +119,4 @@ public class Quadtree<D>(
             cover(value.x0, value.y0)
             cover(value.x1, value.y1)
         }
-
 }

@@ -28,7 +28,7 @@ import kotlin.math.floor
  * not change due to floating point error.)
  */
 public fun <D> Quadtree<D>.cover(x: Double, y: Double) {
-    if (x.isNaN() || y.isNaN()) return                 // ignore invalid points
+    if (x.isNaN() || y.isNaN()) return // ignore invalid points
 
     var x0 = rectangle.x0
     var y0 = rectangle.y0
@@ -97,7 +97,9 @@ public fun <D> Quadtree<D>.cover(x: Double, y: Double) {
     }
 
     // If the quadtree covers the point already, just return.
-    else return
+    else {
+        return
+    }
 
 //    rectangle = Rectangle(
 //        x0 = x0,

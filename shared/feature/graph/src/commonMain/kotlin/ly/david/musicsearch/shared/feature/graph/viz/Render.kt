@@ -31,12 +31,12 @@ fun DrawScope.render(
     color: Color,
 ) {
     val start = Offset(
-        lineNode.x1.dp.toPx(),
-        lineNode.y1.dp.toPx(),
+        lineNode.x0.dp.toPx(),
+        lineNode.y0.dp.toPx(),
     ) + offset
     val end = Offset(
-        lineNode.x2.dp.toPx(),
-        lineNode.y2.dp.toPx(),
+        lineNode.x1.dp.toPx(),
+        lineNode.y1.dp.toPx(),
     ) + offset
     drawLine(
         color = color,

@@ -38,12 +38,24 @@ public class ForceSimulation<D> internal constructor() {
     // AVAILABLE FORCES
     public fun forceX(init: ForceX<D>.() -> Unit = {}): ForceX<D> = addForce(ForceX<D>().apply(init)) as ForceX
     public fun forceY(init: ForceY<D>.() -> Unit = {}): ForceY<D> = addForce(ForceY<D>().apply(init)) as ForceY
-    public fun forcePoint(init: ForcePoint<D>.() -> Unit = {}): ForcePoint<D> = addForce(ForcePoint<D>().apply(init)) as ForcePoint
-    public fun forceRadial(init: ForceRadial<D>.() -> Unit): ForceRadial<D> = addForce(ForceRadial<D>().apply(init)) as ForceRadial
-    public fun forceNBody(init: ForceNBody<D>.() -> Unit = {}): ForceNBody<D> = addForce(ForceNBody<D>().apply(init)) as ForceNBody
-    public fun forceCollision(init: ForceCollision<D>.() -> Unit): ForceCollision<D> = addForce(ForceCollision<D>().apply(init)) as ForceCollision
-    public fun forceCenter(init: ForceCenter<D>.() -> Unit): ForceCenter<D> = addForce(ForceCenter<D>().apply(init)) as ForceCenter
-    public fun forceLink(init: ForceLink<D>.() -> Unit = {}): ForceLink<D> = addForce(ForceLink<D>().apply(init)) as ForceLink
+    public fun forcePoint(
+        init: ForcePoint<D>.() -> Unit = {},
+    ): ForcePoint<D> = addForce(ForcePoint<D>().apply(init)) as ForcePoint
+    public fun forceRadial(
+        init: ForceRadial<D>.() -> Unit,
+    ): ForceRadial<D> = addForce(ForceRadial<D>().apply(init)) as ForceRadial
+    public fun forceNBody(
+        init: ForceNBody<D>.() -> Unit = {},
+    ): ForceNBody<D> = addForce(ForceNBody<D>().apply(init)) as ForceNBody
+    public fun forceCollision(
+        init: ForceCollision<D>.() -> Unit,
+    ): ForceCollision<D> = addForce(ForceCollision<D>().apply(init)) as ForceCollision
+    public fun forceCenter(
+        init: ForceCenter<D>.() -> Unit,
+    ): ForceCenter<D> = addForce(ForceCenter<D>().apply(init)) as ForceCenter
+    public fun forceLink(
+        init: ForceLink<D>.() -> Unit = {},
+    ): ForceLink<D> = addForce(ForceLink<D>().apply(init)) as ForceLink
 
     /**
      * The initForceNode lambda applies to each ForceNode.
@@ -80,7 +92,6 @@ public class ForceSimulation<D> internal constructor() {
     public val forces: List<Force<D>>
         get() = _forces
 
-
     private val tickEvents = mutableMapOf<String, (ForceSimulation<D>) -> Unit>()
     private val endEvents = mutableMapOf<String, (ForceSimulation<D>) -> Unit>()
 //    private val stepper = timer { step() }
@@ -114,7 +125,6 @@ public class ForceSimulation<D> internal constructor() {
             }
         }
     }
-
 
     /**
      * Sets the current intensity to the specified positive percentage in the range which defaults to 100%.
@@ -187,7 +197,7 @@ public class ForceSimulation<D> internal constructor() {
      * updateNodes is set to false when the simulation starts (this erase all nodes values) else it is set to true
      * (this update all previous nodes values)
      */
-    private fun initSimulation(updateNodes:Boolean) {
+    private fun initSimulation(updateNodes: Boolean) {
         initializeNodes(updateNodes)
         _forces.forEach { initializeForce(it) }
     }
@@ -248,7 +258,7 @@ public class ForceSimulation<D> internal constructor() {
         }
     }
 
-    private fun initializeNodes(updateNodes:Boolean) {
+    private fun initializeNodes(updateNodes: Boolean) {
         val oldNodes = _nodes.toList()
         val oldNodeSize = oldNodes.size
         _nodes = List(domainObjects.size) { ForceNode(it, domainObjects[it]) }
@@ -326,10 +336,8 @@ public class ForceSimulation<D> internal constructor() {
             SimulationEvent.END -> endEvents[name] = callback
         }
     }
-
 }
 
 public enum class SimulationEvent {
     TICK, END
 }
-
