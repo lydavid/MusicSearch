@@ -8,11 +8,11 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val graphFeatureModule = module {
-    factory { GraphSimulation() }
+    factory { ArtistCollaborationGraphSimulation() }
     single(named("GraphPresenter")) {
         Presenter.Factory { screen, navigator, context ->
             when (screen) {
-                is ArtistCollaborationScreen -> GraphPresenter(
+                is ArtistCollaborationScreen -> ArtistCollaborationGraphPresenter(
                     screen = screen,
                     navigator = navigator,
                     graphSimulation = get(),
@@ -27,8 +27,8 @@ val graphFeatureModule = module {
         Ui.Factory { screen, context ->
             when (screen) {
                 is ArtistCollaborationScreen -> {
-                    ui<GraphUiState> { state, modifier ->
-                        GraphUi(
+                    ui<ArtistCollaborationGraphUiState> { state, modifier ->
+                        ArtistCollaborationGraphUi(
                             state = state,
                             modifier = modifier,
                         )

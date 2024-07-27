@@ -14,7 +14,6 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import io.data2viz.viz.LineNode
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
@@ -25,15 +24,15 @@ import ly.david.musicsearch.ui.common.screen.DetailsScreen
 
 private const val DELAY_FOR_60_FPS_IN_MS = 16L
 
-internal class GraphPresenter(
+internal class ArtistCollaborationGraphPresenter(
     private val screen: ArtistCollaborationScreen,
     private val navigator: Navigator,
-    private val graphSimulation: GraphSimulation,
+    private val graphSimulation: ArtistCollaborationGraphSimulation,
     private val artistRepository: ArtistRepository,
-) : Presenter<GraphUiState> {
+) : Presenter<ArtistCollaborationGraphUiState> {
 
     @Composable
-    override fun present(): GraphUiState {
+    override fun present(): ArtistCollaborationGraphUiState {
         val graphState by graphSimulation.uiState.collectAsState()
         val scope = rememberCoroutineScope()
 
@@ -53,13 +52,13 @@ internal class GraphPresenter(
             }
         }
 
-        fun eventSink(event: GraphUiEvent) {
+        fun eventSink(event: ArtistCollaborationGraphUiEvent) {
             when (event) {
-                is GraphUiEvent.NavigateUp -> {
+                is ArtistCollaborationGraphUiEvent.NavigateUp -> {
                     navigator.pop()
                 }
 
-                is GraphUiEvent.ClickItem -> {
+                is ArtistCollaborationGraphUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             DetailsScreen(
@@ -73,7 +72,7 @@ internal class GraphPresenter(
             }
         }
 
-        return GraphUiState(
+        return ArtistCollaborationGraphUiState(
             artistName = screen.name,
             links = graphState.links,
             nodes = graphState.nodes,
@@ -83,18 +82,18 @@ internal class GraphPresenter(
 }
 
 @Stable
-internal data class GraphUiState(
+internal data class ArtistCollaborationGraphUiState(
     val artistName: String,
-    val links: List<LineNode> = listOf(),
+    val links: List<GraphLink> = listOf(),
     val nodes: List<GraphNode> = listOf(),
-    val eventSink: (GraphUiEvent) -> Unit,
+    val eventSink: (ArtistCollaborationGraphUiEvent) -> Unit,
 ) : CircuitUiState
 
-internal sealed interface GraphUiEvent : CircuitUiEvent {
-    data object NavigateUp : GraphUiEvent
+internal sealed interface ArtistCollaborationGraphUiEvent : CircuitUiEvent {
+    data object NavigateUp : ArtistCollaborationGraphUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,
         val title: String?,
-    ) : GraphUiEvent
+    ) : ArtistCollaborationGraphUiEvent
 }

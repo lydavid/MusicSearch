@@ -1,18 +1,16 @@
 package ly.david.musicsearch.shared.feature.graph
 
-import io.data2viz.force.ForceLink
-import io.data2viz.force.ForceNode
-import io.data2viz.force.ForceSimulation
-import io.data2viz.force.Link
-import io.data2viz.force.forceSimulation
-import io.data2viz.geom.Point
-import io.data2viz.viz.LineNode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.feature.graph.viz.line
+import ly.david.musicsearch.shared.feature.graph.viz.core.geom.Point
+import ly.david.musicsearch.shared.feature.graph.viz.force.ForceLink
+import ly.david.musicsearch.shared.feature.graph.viz.force.ForceNode
+import ly.david.musicsearch.shared.feature.graph.viz.force.ForceSimulation
+import ly.david.musicsearch.shared.feature.graph.viz.force.Link
+import ly.david.musicsearch.shared.feature.graph.viz.force.forceSimulation
 
 data class GraphNode(
     val id: String,
@@ -23,8 +21,15 @@ data class GraphNode(
     val y: Double = 0.0,
 )
 
+data class GraphLink(
+    val x1: Double = 0.0,
+    val y1: Double = 0.0,
+    val x2: Double = 0.0,
+    val y2: Double = 0.0,
+)
+
 data class GraphSimulationUiState(
-    val links: List<LineNode> = listOf(),
+    val links: List<GraphLink> = listOf(),
     val nodes: List<GraphNode> = listOf(),
 )
 
@@ -34,7 +39,7 @@ private const val LINK_DISTANCE = 250.0
 // private const val MANY_BODY_STRENGTH = -30.0
 private const val COLLISION_DISTANCE = 30.0
 
-class GraphSimulation {
+class ArtistCollaborationGraphSimulation {
 
     private val _uiState = MutableStateFlow(GraphSimulationUiState())
     val uiState: StateFlow<GraphSimulationUiState>
@@ -127,15 +132,16 @@ class GraphSimulation {
 
     fun step() {
         if (!simulation.isRunning()) return
+        simulation.step()
 
         _uiState.update { uiState ->
             val links = forceLinks?.links?.map { link ->
-                line {
-                    x1 = link.source.x
-                    x2 = link.target.x
-                    y1 = link.source.y
-                    y2 = link.target.y
-                }
+                GraphLink(
+                    x1 = link.source.x,
+                    x2 = link.target.x,
+                    y1 = link.source.y,
+                    y2 = link.target.y,
+                )
             }.orEmpty()
 
             val nodes = simulation.nodes.map { node: ForceNode<GraphNode> ->

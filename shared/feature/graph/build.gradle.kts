@@ -27,36 +27,22 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
+                implementation(libs.kotlinx.datetime)
 
-                //    implementation("io.data2viz.d2v:d2v-axis:0.10.7")
-//    implementation("io.data2viz.d2v:d2v-chord:0.10.7")
-                implementation("io.data2viz.d2v:d2v-color:0.10.7") {
-                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
-                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-reflect")
-                }
-//    implementation("io.data2viz.d2v:d2v-contour:0.10.7")
-//    implementation("io.data2viz.d2v:d2v-delaunay:0.10.7")
-//    implementation("io.data2viz.d2v:d2v-dsv:0.10.7")
-//    implementation("io.data2viz.d2v:d2v-ease:0.10.7")
-                implementation("io.data2viz.d2v:d2v-force:0.10.7")
-//    implementation("io.data2viz.d2v:d2v-format:0.10.7")
-                implementation("io.data2viz.d2v:d2v-geo:0.10.7") {
-                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
-                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-reflect")
-                }
-//    implementation("io.data2viz.d2v:d2v-hexbin:0.10.7")
-//    implementation("io.data2viz.d2v:d2v-hierarchy:0.10.7")
-//    implementation("io.data2viz.d2v:d2v-quadtree:0.10.7")
-                implementation("io.data2viz.d2v:d2v-random:0.10.7") {
-                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
-                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-reflect")
-                }
-//    implementation("io.data2viz.d2v:d2v-scale:0.10.7")
-//    implementation("io.data2viz.d2v:d2v-shape:0.10.7")
-//    implementation("io.data2viz.d2v:d2v-tile:0.10.7")
-//    implementation("io.data2viz.d2v:d2v-time:0.10.7")
-//    implementation("io.data2viz.d2v:d2v-timer:0.10.7")
-                implementation("io.data2viz.d2v:d2v-viz:0.10.7")
+//                implementation("io.data2viz.d2v:d2v-color:0.10.7") {
+//                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
+//                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-reflect")
+//                }
+//                implementation("io.data2viz.d2v:d2v-force:0.10.7")
+//                implementation("io.data2viz.d2v:d2v-geo:0.10.7") {
+//                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
+//                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-reflect")
+//                }
+//                implementation("io.data2viz.d2v:d2v-random:0.10.7") {
+//                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
+//                    exclude(group = "org.jetbrains.kotlin", module = "kotlin-reflect")
+//                }
+//                implementation("io.data2viz.d2v:d2v-viz:0.10.7")
             }
         }
         val androidMain by getting {
@@ -67,10 +53,18 @@ kotlin {
         val androidUnitTest by getting {
             dependencies {
                 implementation(projects.ui.test.screenshot)
+                implementation(libs.junit.jupiter.engine)
+                implementation(libs.kotlinx.coroutines.test)
+                implementation("app.cash.turbine:turbine:1.1.0")
             }
         }
     }
 }
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
 dependencies {
     debugImplementation(compose.uiTooling)
 }
