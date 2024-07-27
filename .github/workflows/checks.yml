@@ -25,6 +25,9 @@ jobs:
         with:
           timezoneLinux: "America/Toronto"
 
+      - name: Konsist architecture unit tests
+        run: ./gradlew konsist-test:test --rerun-tasks
+
       - name: Detekt non-KMP code smells
         if: always()
         run: ./gradlew detekt
@@ -36,10 +39,7 @@ jobs:
 
       - name: Unit test all KMP modules
         if: always()
-        run: ./gradlew testKotlinMultiplatformModules
-
-      - name: Konsist architecture unit tests
-        run: ./gradlew konsist-test:test --rerun-tasks
+        run: ./gradlew testAll
 
       - name: Verify screenshot tests
         id: screenshotsverify

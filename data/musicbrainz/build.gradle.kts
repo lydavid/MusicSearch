@@ -58,7 +58,6 @@ kotlin {
             dependencies {
                 implementation(libs.junit)
                 implementation(libs.koin.test)
-                implementation(libs.mockk)
             }
         }
         val androidMain by getting {
@@ -70,6 +69,11 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(libs.scribejava)
+            }
+        }
+        val jvmTest by getting {
+            dependencies {
+                implementation(libs.mockk)
             }
         }
         val iosMain by getting {

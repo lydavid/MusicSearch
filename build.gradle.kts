@@ -98,17 +98,6 @@ project.logger.log(
 // region Project tasks
 private val projectGroup = "MusicSearch"
 
-// this obscures the nice formatting from powerAssert
-tasks.register("testKotlinMultiplatformModules") {
-    description = "Run JVM tests on Kotlin Multiplatform modules"
-    group = projectGroup
-    dependsOn(
-        subprojects
-            .filter { it.plugins.hasPlugin("ly.david.musicsearch.kotlin.multiplatform") }
-            .map { "${it.path}:jvmTest" },
-    )
-}
-
 tasks.register("listKMPModules") {
     group = projectGroup
     subprojects
