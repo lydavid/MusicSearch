@@ -20,30 +20,29 @@ package ly.david.musicsearch.shared.feature.graph.viz
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
-import io.data2viz.viz.LineNode
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.feature.graph.GraphLink
 import ly.david.musicsearch.shared.feature.graph.GraphNode
 
 fun DrawScope.render(
-    lineNode: LineNode,
+    lineNode: GraphLink,
     offset: Offset,
     color: Color,
 ) {
     val start = Offset(
-        lineNode.x1.dp.toPx(),
-        lineNode.y1.dp.toPx(),
+        lineNode.x0.dp.toPx(),
+        lineNode.y0.dp.toPx(),
     ) + offset
     val end = Offset(
-        lineNode.x2.dp.toPx(),
-        lineNode.y2.dp.toPx(),
+        lineNode.x1.dp.toPx(),
+        lineNode.y1.dp.toPx(),
     ) + offset
     drawLine(
         color = color,
         start = start,
         end = end,
-        strokeWidth = lineNode.strokeWidth?.toFloat() ?: Stroke.HairlineWidth,
+        strokeWidth = 1f,
     )
 }
 

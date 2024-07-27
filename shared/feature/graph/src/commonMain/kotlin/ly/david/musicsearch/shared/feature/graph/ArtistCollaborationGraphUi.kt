@@ -27,7 +27,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.data2viz.viz.LineNode
 import ly.david.musicsearch.shared.feature.graph.viz.render
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.core.LocalStrings
@@ -35,8 +34,8 @@ import ly.david.musicsearch.ui.core.theme.getSubTextColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun GraphUi(
-    state: GraphUiState,
+internal fun ArtistCollaborationGraphUi(
+    state: ArtistCollaborationGraphUiState,
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
@@ -50,13 +49,13 @@ internal fun GraphUi(
             ScrollableTopAppBar(
                 showBackButton = true,
                 onBack = {
-                    eventSink(GraphUiEvent.NavigateUp)
+                    eventSink(ArtistCollaborationGraphUiEvent.NavigateUp)
                 },
                 title = strings.collaborationsWith(state.artistName),
             )
         },
     ) { innerPadding ->
-        GraphUi(
+        ArtistCollaborationGraphUi(
             links = state.links,
             nodes = state.nodes,
             modifier = Modifier.padding(innerPadding),
@@ -72,7 +71,7 @@ internal fun GraphUi(
 
                     clickedNode?.let { node ->
                         eventSink(
-                            GraphUiEvent.ClickItem(
+                            ArtistCollaborationGraphUiEvent.ClickItem(
                                 entity = node.entity,
                                 id = node.id,
                                 title = node.name,
@@ -86,16 +85,17 @@ internal fun GraphUi(
 }
 
 @Composable
-internal fun GraphUi(
-    links: List<LineNode>,
+internal fun ArtistCollaborationGraphUi(
+    links: List<GraphLink>,
     nodes: List<GraphNode>,
     modifier: Modifier = Modifier,
-    onClick: (tapOffset: Offset, drawOffset: Offset) -> Unit,
+    onClick: (tapOffset: Offset, drawOffset: Offset) -> Unit = { _, _ -> },
 ) {
     var panOffset by remember { mutableStateOf(Offset.Zero) }
     var center by remember { mutableStateOf(Offset.Zero) }
     val textMeasurer = rememberTextMeasurer()
 
+    // TODO: AppPreferences.useDarkTheme()
     val isDark = isSystemInDarkTheme()
     val lineColor = getSubTextColor()
 

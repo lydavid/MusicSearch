@@ -1,18 +1,16 @@
 package ly.david.musicsearch.shared.feature.graph
 
-import io.data2viz.force.ForceLink
-import io.data2viz.force.ForceNode
-import io.data2viz.force.ForceSimulation
-import io.data2viz.force.Link
-import io.data2viz.force.forceSimulation
-import io.data2viz.geom.Point
-import io.data2viz.viz.LineNode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.feature.graph.viz.line
+import ly.david.musicsearch.shared.feature.graph.viz.core.geom.Point
+import ly.david.musicsearch.shared.feature.graph.viz.force.ForceLink
+import ly.david.musicsearch.shared.feature.graph.viz.force.ForceNode
+import ly.david.musicsearch.shared.feature.graph.viz.force.ForceSimulation
+import ly.david.musicsearch.shared.feature.graph.viz.force.Link
+import ly.david.musicsearch.shared.feature.graph.viz.force.forceSimulation
 
 data class GraphNode(
     val id: String,
@@ -21,11 +19,28 @@ data class GraphNode(
     val radius: Double,
     val x: Double = 0.0,
     val y: Double = 0.0,
+) {
+    override fun toString(): String {
+        return "GraphNode(id=\"${id}\",name=\"${name}\",entity=MusicBrainzEntity.$entity," +
+            "radius=$radius,x=$x,y=$y)"
+    }
+}
+
+data class GraphLink(
+    val x0: Double = 0.0,
+    val y0: Double = 0.0,
+    val x1: Double = 0.0,
+    val y1: Double = 0.0,
 )
 
 data class GraphSimulationUiState(
-    val links: List<LineNode> = listOf(),
+    val links: List<GraphLink> = listOf(),
     val nodes: List<GraphNode> = listOf(),
+)
+
+private data class ArtistRecording(
+    val artistId: String,
+    val recordingId: String,
 )
 
 private const val MIN_RADIUS = 10.0
@@ -34,7 +49,7 @@ private const val LINK_DISTANCE = 250.0
 // private const val MANY_BODY_STRENGTH = -30.0
 private const val COLLISION_DISTANCE = 30.0
 
-class GraphSimulation {
+class ArtistCollaborationGraphSimulation {
 
     private val _uiState = MutableStateFlow(GraphSimulationUiState())
     val uiState: StateFlow<GraphSimulationUiState>
@@ -47,14 +62,11 @@ class GraphSimulation {
         collaboratingArtistAndRecordings: List<CollaboratingArtistAndRecording>,
     ) {
         val artistRecordingLinks = collaboratingArtistAndRecordings
-            .map { it.artistId to it.recordingId }
+            .map { ArtistRecording(artistId = it.artistId, recordingId = it.recordingId) }
             .distinct()
 
         simulation = forceSimulation {
             domainObjects = generateGraphNodes(collaboratingArtistAndRecordings)
-
-            // If we set a decay, the simulation may stop before there are no overlapping nodes
-//            intensityDecay = 0.pct
 
             forceCenter {
                 center = Point(
@@ -71,16 +83,35 @@ class GraphSimulation {
 
             forceLinks = forceLink {
                 linkGet = {
-                    val links = mutableListOf<Link<GraphNode>>()
+                    when (this.domain.entity) {
+                        MusicBrainzEntity.RECORDING -> artistRecordingLinks.filter { it.recordingId == this.domain.id }
+                        MusicBrainzEntity.ARTIST -> artistRecordingLinks.filter { it.artistId == this.domain.id }
+                        else -> emptyList()
+                    }.mapNotNull { artistRecording ->
+                        val sourceId = if (this.domain.entity == MusicBrainzEntity.RECORDING) {
+                            artistRecording.artistId
+                        } else {
+                            this.domain.id
+                        }
+                        val targetId = if (this.domain.entity == MusicBrainzEntity.RECORDING) {
+                            this.domain.id
+                        } else {
+                            artistRecording.recordingId
+                        }
 
-                    artistRecordingLinks.forEach { (artistId, recordingId) ->
-                        links += Link(
-                            source = nodes.find { it.domain.id == artistId } ?: return@forEach,
-                            target = nodes.find { it.domain.id == recordingId } ?: return@forEach,
-                            distance = LINK_DISTANCE,
-                        )
+                        val source = nodes.find { it.domain.id == sourceId }
+                        val target = nodes.find { it.domain.id == targetId }
+
+                        if (source != null && target != null) {
+                            Link(
+                                source = source,
+                                target = target,
+                                distance = LINK_DISTANCE,
+                            )
+                        } else {
+                            null
+                        }
                     }
-                    links
                 }
             }
 
@@ -127,15 +158,16 @@ class GraphSimulation {
 
     fun step() {
         if (!simulation.isRunning()) return
+        simulation.step(1)
 
         _uiState.update { uiState ->
             val links = forceLinks?.links?.map { link ->
-                line {
-                    x1 = link.source.x
-                    x2 = link.target.x
-                    y1 = link.source.y
-                    y2 = link.target.y
-                }
+                GraphLink(
+                    x0 = link.source.x,
+                    x1 = link.target.x,
+                    y0 = link.source.y,
+                    y1 = link.target.y,
+                )
             }.orEmpty()
 
             val nodes = simulation.nodes.map { node: ForceNode<GraphNode> ->

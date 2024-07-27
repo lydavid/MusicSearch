@@ -27,6 +27,7 @@ pagingMultiplatform = "3.2.0-alpha05-0.2.3"
 pagingTesting = "3.3.1"
 paparazzi = "1.3.3"
 sqldelight = "2.0.2"
+turbine = "1.1.0"
 
 [libraries]
 aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutlibraries" }
@@ -114,6 +115,7 @@ sqldelight-primitive = { module = "app.cash.sqldelight:primitive-adapters", vers
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 test-parameter-injector = "com.google.testparameterinjector:test-parameter-injector:1.16"
 timber = "com.jakewharton.timber:timber:5.0.1"
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 windowSizeClass = "dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0"
 
 [bundles]
