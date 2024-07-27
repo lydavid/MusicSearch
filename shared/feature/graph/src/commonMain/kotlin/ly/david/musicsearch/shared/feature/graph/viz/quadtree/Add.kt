@@ -116,7 +116,6 @@ public fun <D> Quadtree<D>.addAll(data: List<D>) {
     var y1 = Double.NEGATIVE_INFINITY
 
     // Compute the points and their extent.
-    // TODO min/max ?
     (0 until data.size).forEach { index ->
         val cx = xz[index]
         val cy = yz[index]

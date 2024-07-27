@@ -20,7 +20,11 @@ package ly.david.musicsearch.shared.feature.graph.viz.force
 import ly.david.musicsearch.shared.feature.graph.viz.core.geom.Point
 import ly.david.musicsearch.shared.feature.graph.viz.core.math.Percent
 import ly.david.musicsearch.shared.feature.graph.viz.core.math.pct
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 private const val initialRadius = 10.0
 private val initialAngle = PI * (3.0 - sqrt(5.0))
@@ -41,18 +45,23 @@ public class ForceSimulation<D> internal constructor() {
     public fun forcePoint(
         init: ForcePoint<D>.() -> Unit = {},
     ): ForcePoint<D> = addForce(ForcePoint<D>().apply(init)) as ForcePoint
+
     public fun forceRadial(
         init: ForceRadial<D>.() -> Unit,
     ): ForceRadial<D> = addForce(ForceRadial<D>().apply(init)) as ForceRadial
+
     public fun forceNBody(
         init: ForceNBody<D>.() -> Unit = {},
     ): ForceNBody<D> = addForce(ForceNBody<D>().apply(init)) as ForceNBody
+
     public fun forceCollision(
         init: ForceCollision<D>.() -> Unit,
     ): ForceCollision<D> = addForce(ForceCollision<D>().apply(init)) as ForceCollision
+
     public fun forceCenter(
         init: ForceCenter<D>.() -> Unit,
     ): ForceCenter<D> = addForce(ForceCenter<D>().apply(init)) as ForceCenter
+
     public fun forceLink(
         init: ForceLink<D>.() -> Unit = {},
     ): ForceLink<D> = addForce(ForceLink<D>().apply(init)) as ForceLink
@@ -227,7 +236,6 @@ public class ForceSimulation<D> internal constructor() {
      *
      * This method can be used in conjunction with simulation.stop to compute a static force layout.
      */
-    // TODO For large graphs, static layouts should be computed in a web worker to avoid freezing the user interface.
     private fun tick() {
         if (!started) {
             started = true
@@ -291,7 +299,10 @@ public class ForceSimulation<D> internal constructor() {
      * If radius is not specified, it defaults to infinity.
      * If there is no node within the search area, returns null.
      */
-    public fun find(point: Point, radius: Double = Double.POSITIVE_INFINITY): ForceNode<D>? {
+    public fun find(
+        point: Point,
+        radius: Double = Double.POSITIVE_INFINITY,
+    ): ForceNode<D>? {
         var newRadius = if (radius < Double.POSITIVE_INFINITY) radius * radius else radius
         var closest: ForceNode<D>? = null
 
@@ -329,8 +340,11 @@ public class ForceSimulation<D> internal constructor() {
      * To affect the simulation, register forces instead of modifying nodes’ positions or velocities inside a tick
      * event listener.
      */
-    // TODO : change doc and plug to dispatch (?)
-    public fun on(type: SimulationEvent, name: String, callback: (ForceSimulation<D>) -> Unit) {
+    public fun on(
+        type: SimulationEvent,
+        name: String,
+        callback: (ForceSimulation<D>) -> Unit,
+    ) {
         when (type) {
             SimulationEvent.TICK -> tickEvents[name] = callback
             SimulationEvent.END -> endEvents[name] = callback

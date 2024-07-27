@@ -20,7 +20,6 @@ package ly.david.musicsearch.shared.feature.graph.viz.force
 import kotlin.math.min
 import kotlin.math.sqrt
 
-// TODO Link rename to something more precise ?
 /**
  * A Link object records a link a source and a target ForceNode.
  * The force will try to keep the 2 nodes at the specified distance, with the specified strength.

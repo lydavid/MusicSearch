@@ -83,7 +83,7 @@ public value class Percent(
             .0,
             1.0,
         ),
-    ) // TODO: rename ?
+    )
 
     override fun toString(): String = "${value * 100}%"
 }

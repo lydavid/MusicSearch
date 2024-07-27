@@ -52,7 +52,6 @@ public data class LeafNode<D>(
     override var y: Double = Double.NaN,
 ) : QuadtreeNode<D>
 
-// TODO : still needed ?
 internal data class Quad<D>(
     val node: QuadtreeNode<D>?,
     val x0: Double,
@@ -88,7 +87,6 @@ public fun <D> quadtree(x: (D) -> Double, y: (D) -> Double, nodes: List<D>): Qua
     addAll(nodes)
 }
 
-// TODO : remove x and y from class constructor ?
 /**
  * A quadtree recursively partitions two-dimensional space into squares, dividing each square into four equally-sized
  * squares. Each distinct point exists in a unique leaf node; coincident points are represented by a linked list.
@@ -113,7 +111,6 @@ public class Quadtree<D>(
      * Expands the quadtree to cover the specified points [x0, y0] / [x1, y1].
      * The extent may also be expanded by calling quadtree.cover or quadtree.add.
      */
-    // TODO double.NaN ou null extent ?
     public var rectangle: Rectangle = Rectangle(Double.NaN, Double.NaN, Double.NaN, Double.NaN)
         set(value) {
             cover(value.x0, value.y0)
