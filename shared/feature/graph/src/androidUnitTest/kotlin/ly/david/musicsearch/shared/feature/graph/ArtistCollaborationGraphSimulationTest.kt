@@ -4,24 +4,25 @@ import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
 import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
+import org.junit.Before
+import org.junit.Test
 
 class ArtistCollaborationGraphSimulationTest {
 
     private lateinit var simulation: ArtistCollaborationGraphSimulation
 
-    @BeforeEach
+    @Before
     fun setUp() {
         simulation = ArtistCollaborationGraphSimulation()
     }
 
     @Test
     fun validateDataSet() {
-        Assertions.assertEquals(21, collaborations.size)
-        Assertions.assertEquals(9, collaborations.distinctBy { it.artistId }.size)
-        Assertions.assertEquals(17, collaborations.distinctBy { it.recordingId }.size)
+        assertEquals(21, collaborations.size)
+        assertEquals(9, collaborations.distinctBy { it.artistId }.size)
+        assertEquals(17, collaborations.distinctBy { it.recordingId }.size)
     }
 
     @Test
@@ -31,17 +32,17 @@ class ArtistCollaborationGraphSimulationTest {
         simulation.uiState.test {
             val initialState = awaitItem()
 
-            Assertions.assertEquals(0, initialState.nodes.size)
-            Assertions.assertEquals(0, initialState.links.size)
+            assertEquals(0, initialState.nodes.size)
+            assertEquals(0, initialState.links.size)
 
             simulation.step()
             val state = awaitItem()
 
-            Assertions.assertEquals(26, state.nodes.size)
-            Assertions.assertEquals(9, state.nodes.filter { it.entity == MusicBrainzEntity.ARTIST }.size)
-            Assertions.assertEquals(17, state.nodes.filter { it.entity == MusicBrainzEntity.RECORDING }.size)
+            assertEquals(26, state.nodes.size)
+            assertEquals(9, state.nodes.filter { it.entity == MusicBrainzEntity.ARTIST }.size)
+            assertEquals(17, state.nodes.filter { it.entity == MusicBrainzEntity.RECORDING }.size)
 
-            Assertions.assertEquals(42, state.links.size)
+            assertEquals(42, state.links.size)
 
             cancelAndConsumeRemainingEvents()
         }
@@ -54,8 +55,8 @@ class ArtistCollaborationGraphSimulationTest {
         simulation.uiState.test {
             val initialState = awaitItem()
 
-            Assertions.assertEquals(0, initialState.nodes.size)
-            Assertions.assertEquals(0, initialState.links.size)
+            assertEquals(0, initialState.nodes.size)
+            assertEquals(0, initialState.links.size)
 
             simulation.step()
             val state1 = awaitItem()
@@ -63,8 +64,8 @@ class ArtistCollaborationGraphSimulationTest {
             simulation.step()
             val state2 = awaitItem()
 
-            Assertions.assertNotEquals(state1.nodes, state2.nodes)
-            Assertions.assertNotEquals(state1.links, state2.links)
+            assertNotEquals(state1.nodes, state2.nodes)
+            assertNotEquals(state1.links, state2.links)
 
             cancelAndConsumeRemainingEvents()
         }

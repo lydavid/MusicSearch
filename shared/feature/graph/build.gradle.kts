@@ -38,17 +38,20 @@ kotlin {
         val androidUnitTest by getting {
             dependencies {
                 implementation(projects.ui.test.screenshot)
-                implementation(libs.junit.jupiter.engine)
+//                implementation(libs.junit.jupiter.engine)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.turbine)
+                implementation(projects.ui.test.screenshot)
+                // TODO: cannot use junit5 until screenshot base class stops using junit4
+                implementation(libs.junit)
             }
         }
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
+//tasks.withType<Test> {
+//    useJUnitPlatform()
+//}
 
 dependencies {
     debugImplementation(compose.uiTooling)
