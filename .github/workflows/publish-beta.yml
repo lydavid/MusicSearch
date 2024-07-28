@@ -37,6 +37,8 @@ jobs:
     uses: ./.github/workflows/checks.yml
     secrets:
       PAT: ${{ secrets.PAT }}
+      MUSICSEARCH_GHA_HELPER_APP_ID: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_ID }}
+      MUSICSEARCH_GHA_HELPER_APP_PRIVATE_KEY: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_PRIVATE_KEY }}
 
   test-e2e:
     needs: check
