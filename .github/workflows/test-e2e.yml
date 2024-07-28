@@ -4,6 +4,10 @@ on:
   push:
     paths-ignore:
       - "**.md"
+  workflow_call:
+    secrets:
+      PAT:
+        required: true
   workflow_dispatch:
 
 jobs:

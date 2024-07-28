@@ -29,9 +29,28 @@ jobs:
           echo "status=$status" >> $GITHUB_OUTPUT
         shell: bash
 
-  publish-beta:
+  checks:
     needs: check
     if: needs.check.outputs.status == 'deploy'
+    permissions:
+      contents: write
+    uses: ./.github/workflows/checks.yml
+    secrets:
+      PAT: ${{ secrets.PAT }}
+
+  test-e2e:
+    needs: check
+    if: needs.check.outputs.status == 'deploy'
+    permissions:
+      contents: write
+    uses: ./.github/workflows/test-e2e.yml
+    secrets:
+      PAT: ${{ secrets.PAT }}
+
+  publish-beta:
+    needs:
+      - checks
+      - test-e2e
     timeout-minutes: 60
     runs-on: ubuntu-latest
     permissions:
