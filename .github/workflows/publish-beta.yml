@@ -146,14 +146,19 @@ jobs:
           agree_to_license: 1
           command: make site
 
+      - run: |
+          mv output/download.html .
+          mv output/icon.svg .
+
       - name: Commit version code bump
         uses: stefanzweifel/git-auto-commit-action@v5.0.1
         if: always()
         with:
           commit_message: 'chore: bump version [skip ci]'
-          file_pattern: 'gradle.properties'
+          file_pattern: 'gradle.properties download.html icon.svg'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
 
+      # See .releaserc for the artifacts we include in each release
       - name: Publish to GitHub
         if: always()
         run: npx semantic-release

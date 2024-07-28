@@ -18,7 +18,7 @@ Or you can you can download its APK from the top of [all GitHub Releases](https:
         src="https://play.google.com/intl/en_ca/badges/static/images/badges/en_badge_web_generic.png" />
 </a>
 
-Desktop releases are packaged by [Conveyor](https://www.hydraulic.dev/) and available from [GitHub Releases](https://github.com/lydavid/MusicSearch/releases/).
+Desktop releases are packaged by [Conveyor](https://www.hydraulic.dev/) and available from this [download page](https://github.com/lydavid/MusicSearch/download.html).
 
 ## Features
 
