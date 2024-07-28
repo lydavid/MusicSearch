@@ -45,7 +45,7 @@ jobs:
         if: always()
         run: ./gradlew detektMetadataMain
 
-      - name: Unit test all KMP modules
+      - name: Unit test all modules
         if: always()
         run: ./gradlew allTests
 
@@ -67,7 +67,8 @@ jobs:
       - run: git pull --rebase --autostash
         if: always() && steps.screenshotsrecord.outcome == 'success'
 
-      - uses: tibdex/github-app-token@v2
+      - name: Generate GitHub app token so that commit can trigger new workflow run
+        uses: tibdex/github-app-token@v2
         id: generate-token
         with:
           app_id: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_ID }}

@@ -38,6 +38,7 @@ on:
 
 jobs:
   check:
+    if: ${{ inputs.track }} != 'production'
     runs-on: ubuntu-latest
     outputs:
       status: ${{ steps.early_exit.outputs.status }}
@@ -57,7 +58,7 @@ jobs:
 
   checks:
     needs: check
-    if: needs.check.outputs.status == 'deploy'
+    if: needs.check.outputs.status == 'deploy' || ${{ inputs.track }} == 'production'
     permissions:
       contents: write
     uses: ./.github/workflows/checks.yml
@@ -68,7 +69,7 @@ jobs:
 
   test-e2e:
     needs: check
-    if: needs.check.outputs.status == 'deploy'
+    if: needs.check.outputs.status == 'deploy' || ${{ inputs.track }} == 'production'
     permissions:
       contents: write
     uses: ./.github/workflows/test-e2e.yml
@@ -194,7 +195,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - name: Merge master back into beta
-        if: always()
+        if: always() && ${{ inputs.track }} != 'beta'
         run: |
           git checkout beta
           git merge master --ff-only --no-edit
