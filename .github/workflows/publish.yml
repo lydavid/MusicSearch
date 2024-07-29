@@ -164,12 +164,12 @@ jobs:
           mappingFile: android/app/build/outputs/mapping/release/mapping.txt
 
       - name: Create jars
-        if: always()
+        if: steps.get-next-version.outputs.new-release-published == 'true'
         run: ./gradlew jar
 
       - name: Create desktop distributions
         uses: hydraulic-software/conveyor/actions/build@v14.3
-        if: always()
+        if: steps.get-next-version.outputs.new-release-published == 'true'
         with:
           signing_key: ${{ secrets.SIGNING_KEY }}
           agree_to_license: 1
@@ -178,6 +178,7 @@ jobs:
       - run: |
           mv output/download.html .
           mv output/icon.svg .
+        if: steps.get-next-version.outputs.new-release-published == 'true'
 
       - name: Commit version code bump
         uses: stefanzweifel/git-auto-commit-action@v5.0.1
@@ -189,7 +190,7 @@ jobs:
 
       # See .releaserc for the artifacts we include in each release
       - name: Publish to GitHub
-        if: always()
+        if: steps.get-next-version.outputs.new-release-published == 'true'
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
