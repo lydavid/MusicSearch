@@ -6,8 +6,6 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import ly.david.musicsearch.ui.core.theme.DarkColorScheme
-import ly.david.musicsearch.ui.core.theme.LightColorScheme
 
 @Composable
 internal actual fun appColorScheme(

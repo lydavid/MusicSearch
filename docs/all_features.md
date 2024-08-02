@@ -7,6 +7,7 @@
 | [Browse](#browse)                                           | ✅       | ✅       | ✅   |
 | [Collections](#collections)                                 | ✅       | ✅       | ⬜   |
 | [Images](#images)                                           | ✅       | ✅       | ✅   |
+| [Graph](#graph)                                             | ✅       | ✅       | ✅   |
 | [MusicBrainz Login](#musicbrainz-login)                     | ✅       | ✅       | ⬜️  |
 | Pixel Now Playing History                                   | ✅       | ❌       | ❌   |
 | [Search MusicBrainz](#search-musicbrainz)                   | ✅       | ✅       | ✅   |
@@ -91,6 +92,12 @@ See below for the supported types of collections.
 | release group | ✅         |
 | series        | ❌         |
 | work          | ❌         |
+
+## Graph
+
+Artist/recording graph showing which artists and recordings a given artist collaborated on.
+This is currently limited to artists credited on the recording, which are primarily performers.
+It does not include composers.
 
 ## MusicBrainz Login
 

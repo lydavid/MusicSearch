@@ -74,7 +74,7 @@ internal class ArtistCollaborationGraphPresenter(
 
         return ArtistCollaborationGraphUiState(
             artistName = screen.name,
-            links = graphState.links,
+            edges = graphState.edges,
             nodes = graphState.nodes,
             eventSink = ::eventSink,
         )
@@ -84,7 +84,7 @@ internal class ArtistCollaborationGraphPresenter(
 @Stable
 internal data class ArtistCollaborationGraphUiState(
     val artistName: String,
-    val links: List<GraphLink> = listOf(),
+    val edges: List<GraphEdge> = listOf(),
     val nodes: List<GraphNode> = listOf(),
     val eventSink: (ArtistCollaborationGraphUiEvent) -> Unit,
 ) : CircuitUiState

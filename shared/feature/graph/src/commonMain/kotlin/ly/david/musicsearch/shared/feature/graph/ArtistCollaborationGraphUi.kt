@@ -3,11 +3,11 @@ package ly.david.musicsearch.shared.feature.graph
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,19 +17,17 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import ly.david.musicsearch.shared.feature.graph.viz.render
+import ly.david.musicsearch.shared.feature.graph.viz.compose.renderEdge
+import ly.david.musicsearch.shared.feature.graph.viz.compose.renderNode
+import ly.david.musicsearch.shared.feature.graph.viz.compose.renderText
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.theme.ExtendedColors
+import ly.david.musicsearch.ui.core.theme.LocalExtendedColors
 import ly.david.musicsearch.ui.core.theme.getSubTextColor
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,7 +54,7 @@ internal fun ArtistCollaborationGraphUi(
         },
     ) { innerPadding ->
         ArtistCollaborationGraphUi(
-            links = state.links,
+            edges = state.edges,
             nodes = state.nodes,
             modifier = Modifier.padding(innerPadding),
             onClick = { tapOffset, drawOffset ->
@@ -86,7 +84,7 @@ internal fun ArtistCollaborationGraphUi(
 
 @Composable
 internal fun ArtistCollaborationGraphUi(
-    links: List<GraphLink>,
+    edges: List<GraphEdge>,
     nodes: List<GraphNode>,
     modifier: Modifier = Modifier,
     onClick: (tapOffset: Offset, drawOffset: Offset) -> Unit = { _, _ -> },
@@ -95,9 +93,9 @@ internal fun ArtistCollaborationGraphUi(
     var center by remember { mutableStateOf(Offset.Zero) }
     val textMeasurer = rememberTextMeasurer()
 
-    // TODO: AppPreferences.useDarkTheme()
-    val isDark = isSystemInDarkTheme()
-    val lineColor = getSubTextColor()
+    val extendedColors: ExtendedColors = LocalExtendedColors.current
+    val textColor = MaterialTheme.colorScheme.onBackground
+    val edgeColor = getSubTextColor()
 
     val currentOnClick by rememberUpdatedState(onClick)
 
@@ -124,39 +122,25 @@ internal fun ArtistCollaborationGraphUi(
         center = this.center
         val drawOffset = panOffset + center
 
-        links
-            .forEach { node ->
-                render(
-                    lineNode = node,
-                    offset = drawOffset,
-                    color = lineColor,
-                )
-            }
-        nodes
-            .forEach { node ->
-                render(
-                    graphNode = node,
-                    offset = drawOffset,
-                )
-                val measuredText =
-                    textMeasurer.measure(
-                        text = node.name,
-                        constraints = Constraints.fixed(
-                            width = (size.width / 3f).toInt(),
-                            height = (size.height / 3f).toInt(),
-                        ),
-                        overflow = TextOverflow.Ellipsis,
-                        style = TextStyle(fontSize = 13.sp),
-                    )
-
-                drawText(
-                    textLayoutResult = measuredText,
-                    color = if (isDark) Color.White else Color.Black,
-                    topLeft = Offset(
-                        node.x.dp.toPx(),
-                        node.y.dp.toPx(),
-                    ) + drawOffset,
-                )
-            }
+        edges.forEach { edge ->
+            renderEdge(
+                edge = edge,
+                offset = drawOffset,
+                color = edgeColor,
+            )
+        }
+        nodes.forEach { node ->
+            renderNode(
+                node = node,
+                offset = drawOffset,
+                extendedColors = extendedColors,
+            )
+            renderText(
+                node = node,
+                offset = drawOffset,
+                color = textColor,
+                textMeasurer = textMeasurer,
+            )
+        }
     }
 }

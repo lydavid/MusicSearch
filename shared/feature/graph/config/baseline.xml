@@ -21,22 +21,7 @@
     <ID>MagicNumber:Cover.kt$3</ID>
     <ID>MagicNumber:Force.kt$0.5</ID>
     <ID>MagicNumber:Percent.kt$Percent$100</ID>
-    <ID>MagicNumber:Render.kt$0xFF009688</ID>
-    <ID>MagicNumber:Render.kt$0xFF00BCD4</ID>
-    <ID>MagicNumber:Render.kt$0xFF2196F3</ID>
-    <ID>MagicNumber:Render.kt$0xFF3F51B5</ID>
-    <ID>MagicNumber:Render.kt$0xFF4CAF50</ID>
-    <ID>MagicNumber:Render.kt$0xFF607D8B</ID>
-    <ID>MagicNumber:Render.kt$0xFF795548</ID>
-    <ID>MagicNumber:Render.kt$0xFF8BC34A</ID>
-    <ID>MagicNumber:Render.kt$0xFF9C27B0</ID>
-    <ID>MagicNumber:Render.kt$0xFFE91E63</ID>
-    <ID>MagicNumber:Render.kt$0xFFF44336</ID>
-    <ID>MagicNumber:Render.kt$0xFFFF5722</ID>
-    <ID>MagicNumber:Render.kt$0xFFFF9800</ID>
-    <ID>MagicNumber:Render.kt$0xFFFFC107</ID>
     <ID>NestedBlockDepth:ForceCollision.kt$ForceCollision$private fun applyForce( quad: QuadtreeNode&lt;ForceNode&lt;D&gt;&gt;, x0: Double, y0: Double, x1: Double, y1: Double, ): Boolean</ID>
-    <ID>NoWildcardImports:ForceSimulation.kt$import kotlin.math.*</ID>
     <ID>ReturnCount:Add.kt$private fun &lt;D&gt; Quadtree&lt;D&gt;._add(x: Double, y: Double, datum: D)</ID>
     <ID>ReturnCount:ForceNBody.kt$ForceNBody$private fun applyForce( quad: QuadtreeNode&lt;ForceNode&lt;D&gt;&gt;, x0: Double, y0: Double, x1: Double, y1: Double, ): Boolean</ID>
     <ID>TopLevelPropertyNaming:ForceSimulation.kt$private const val initialRadius = 10.0</ID>
@@ -48,6 +33,5 @@
     <ID>UnusedParameter:ForceNBody.kt$ForceNBody$x1: Double</ID>
     <ID>UnusedParameter:ForceNBody.kt$ForceNBody$y0: Double</ID>
     <ID>UnusedParameter:ForceNBody.kt$ForceNBody$y1: Double</ID>
-    <ID>WildcardImport:ForceSimulation.kt$import kotlin.math.*</ID>
   </CurrentIssues>
 </SmellBaseline>

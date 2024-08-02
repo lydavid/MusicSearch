@@ -33,7 +33,7 @@ class ArtistCollaborationGraphSimulationTest {
             val initialState = awaitItem()
 
             assertEquals(0, initialState.nodes.size)
-            assertEquals(0, initialState.links.size)
+            assertEquals(0, initialState.edges.size)
 
             simulation.step()
             val state = awaitItem()
@@ -42,7 +42,7 @@ class ArtistCollaborationGraphSimulationTest {
             assertEquals(9, state.nodes.filter { it.entity == MusicBrainzEntity.ARTIST }.size)
             assertEquals(17, state.nodes.filter { it.entity == MusicBrainzEntity.RECORDING }.size)
 
-            assertEquals(42, state.links.size)
+            assertEquals(42, state.edges.size)
 
             cancelAndConsumeRemainingEvents()
         }
@@ -56,7 +56,7 @@ class ArtistCollaborationGraphSimulationTest {
             val initialState = awaitItem()
 
             assertEquals(0, initialState.nodes.size)
-            assertEquals(0, initialState.links.size)
+            assertEquals(0, initialState.edges.size)
 
             simulation.step()
             val state1 = awaitItem()
@@ -65,7 +65,7 @@ class ArtistCollaborationGraphSimulationTest {
             val state2 = awaitItem()
 
             assertNotEquals(state1.nodes, state2.nodes)
-            assertNotEquals(state1.links, state2.links)
+            assertNotEquals(state1.edges, state2.edges)
 
             cancelAndConsumeRemainingEvents()
         }

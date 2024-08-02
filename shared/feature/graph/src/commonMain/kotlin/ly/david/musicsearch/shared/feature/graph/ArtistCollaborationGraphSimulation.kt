@@ -26,7 +26,7 @@ data class GraphNode(
     }
 }
 
-data class GraphLink(
+data class GraphEdge(
     val x0: Double = 0.0,
     val y0: Double = 0.0,
     val x1: Double = 0.0,
@@ -34,7 +34,7 @@ data class GraphLink(
 )
 
 data class GraphSimulationUiState(
-    val links: List<GraphLink> = listOf(),
+    val edges: List<GraphEdge> = listOf(),
     val nodes: List<GraphNode> = listOf(),
 )
 
@@ -46,7 +46,7 @@ private data class ArtistRecording(
 private const val MIN_RADIUS = 10.0
 private const val LINK_DISTANCE = 250.0
 
-// private const val MANY_BODY_STRENGTH = -30.0
+private const val MANY_BODY_STRENGTH = -60.0
 private const val COLLISION_DISTANCE = 30.0
 
 class ArtistCollaborationGraphSimulation {
@@ -75,11 +75,11 @@ class ArtistCollaborationGraphSimulation {
                 )
             }
 
-//            forceNBody {
-//                strengthGet = {
-//                    MANY_BODY_STRENGTH
-//                }
-//            }
+            forceNBody {
+                strengthGet = {
+                    MANY_BODY_STRENGTH
+                }
+            }
 
             forceLinks = forceLink {
                 linkGet = {
@@ -161,8 +161,8 @@ class ArtistCollaborationGraphSimulation {
         simulation.step(1)
 
         _uiState.update { uiState ->
-            val links = forceLinks?.links?.map { link ->
-                GraphLink(
+            val edges = forceLinks?.links?.map { link ->
+                GraphEdge(
                     x0 = link.source.x,
                     x1 = link.target.x,
                     y0 = link.source.y,
@@ -178,7 +178,7 @@ class ArtistCollaborationGraphSimulation {
             }
 
             uiState.copy(
-                links = links,
+                edges = edges,
                 nodes = nodes,
             )
         }
