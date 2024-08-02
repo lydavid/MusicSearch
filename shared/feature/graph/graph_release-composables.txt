@@ -1,13 +1,17 @@
 fun present(
-  stable <this>: GraphPresenter
-): GraphUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun GraphUi(
-  stable state: GraphUiState
+  stable <this>: ArtistCollaborationGraphPresenter
+): ArtistCollaborationGraphUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistCollaborationGraphUi(
+  stable state: ArtistCollaborationGraphUiState
   stable modifier: Modifier? = @static Companion
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun GraphUi(
-  unstable links: List<LineNode>
+restartable scheme("[androidx.compose.ui.UiComposable]") fun ArtistCollaborationGraphUi(
+  unstable links: List<GraphLink>
   unstable nodes: List<GraphNode>
   stable modifier: Modifier? = @static Companion
-  stable onClick: Function2<@[ParameterName(name = 'tapOffset')] Offset, @[ParameterName(name = 'drawOffset')] Offset, Unit>
+  stable onClick: Function2<@[ParameterName(name = 'tapOffset')] Offset, @[ParameterName(name = 'drawOffset')] Offset, Unit>? = @static { <unused var>: @[ParameterName(name = 'tapOffset')] Offset, <unused var>: @[ParameterName(name = 'drawOffset')] Offset ->
+
+}
+
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistCollaborationGraphUi()
