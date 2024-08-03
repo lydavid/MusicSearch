@@ -134,10 +134,7 @@ internal fun ArtistUi(
                         }
                     }
                 },
-                filterText = state.query,
-                onFilterTextChange = {
-                    eventSink(ArtistUiEvent.UpdateQuery(it))
-                },
+                topAppBarFilterState = state.topAppBarFilterState,
                 additionalBar = {
                     TabsBar(
                         tabsTitle = state.tabs.map { it.tab.getTitle(strings) },
@@ -168,7 +165,7 @@ internal fun ArtistUi(
                     ) { artist ->
                         ArtistDetailsUi(
                             artist = artist,
-                            filterText = state.query,
+                            filterText = state.topAppBarFilterState.filterText,
                             imageUrl = state.artist?.imageUrl.orEmpty(),
                             lazyListState = state.detailsLazyListState,
                             onItemClick = { entity, id, title ->

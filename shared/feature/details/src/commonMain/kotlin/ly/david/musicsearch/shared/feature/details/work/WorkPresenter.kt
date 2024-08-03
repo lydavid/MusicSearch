@@ -34,6 +34,8 @@ import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 internal class WorkPresenter(
     private val screen: DetailsScreen,
@@ -51,7 +53,8 @@ internal class WorkPresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        var query by rememberSaveable { mutableStateOf("") }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var work: WorkDetailsModel? by remember { mutableStateOf(null) }
         val tabs: List<WorkTab> by rememberSaveable {
             mutableStateOf(WorkTab.entries)
@@ -142,10 +145,6 @@ internal class WorkPresenter(
                     navigator.pop()
                 }
 
-                is WorkUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-
                 is WorkUiEvent.UpdateTab -> {
                     selectedTab = event.tab
                 }
@@ -174,7 +173,7 @@ internal class WorkPresenter(
             work = work,
             tabs = tabs,
             selectedTab = selectedTab,
-            query = query,
+            topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
             artistsByEntityUiState = artistsByEntityUiState,
             recordingsByEntityUiState = recordingsByEntityUiState,
@@ -191,7 +190,7 @@ internal data class WorkUiState(
     val work: WorkDetailsModel?,
     val tabs: List<WorkTab>,
     val selectedTab: WorkTab,
-    val query: String,
+    val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val recordingsByEntityUiState: RecordingsByEntityUiState,
@@ -203,7 +202,6 @@ internal sealed interface WorkUiEvent : CircuitUiEvent {
     data object NavigateUp : WorkUiEvent
     data object ForceRefresh : WorkUiEvent
     data class UpdateTab(val tab: WorkTab) : WorkUiEvent
-    data class UpdateQuery(val query: String) : WorkUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

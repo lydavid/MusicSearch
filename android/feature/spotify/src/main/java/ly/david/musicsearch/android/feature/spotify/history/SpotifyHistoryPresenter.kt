@@ -4,10 +4,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.NavEvent
@@ -21,6 +17,8 @@ import ly.david.musicsearch.core.models.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.spotify.SpotifyHistoryRepository
 import ly.david.musicsearch.ui.common.screen.SearchScreen
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 internal class SpotifyHistoryPresenter(
     private val navigator: Navigator,
@@ -29,9 +27,9 @@ internal class SpotifyHistoryPresenter(
 
     @Composable
     override fun present(): SpotifyUiState {
-        var query by rememberSaveable { mutableStateOf("") }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
         val lazyPagingItems: LazyPagingItems<ListItemModel> = spotifyHistoryRepository.observeSpotifyHistory(
-            query = query,
+            query = topAppBarFilterState.filterText,
         ).collectAsLazyPagingItems()
         val lazyListState = rememberLazyListState()
 
@@ -39,10 +37,6 @@ internal class SpotifyHistoryPresenter(
             when (event) {
                 is SpotifyUiEvent.NavigateUp -> {
                     navigator.pop()
-                }
-
-                is SpotifyUiEvent.UpdateQuery -> {
-                    query = event.query
                 }
 
                 is SpotifyUiEvent.GoToSearch -> {
@@ -80,7 +74,7 @@ internal class SpotifyHistoryPresenter(
         }
 
         return SpotifyUiState(
-            query = query,
+            topAppBarFilterState = topAppBarFilterState,
             lazyPagingItems = lazyPagingItems,
             lazyListState = lazyListState,
             eventSink = ::eventSink,
@@ -90,7 +84,7 @@ internal class SpotifyHistoryPresenter(
 
 @Stable
 internal data class SpotifyUiState(
-    val query: String,
+    val topAppBarFilterState: TopAppBarFilterState,
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState,
     val eventSink: (SpotifyUiEvent) -> Unit,
@@ -98,7 +92,6 @@ internal data class SpotifyUiState(
 
 internal sealed interface SpotifyUiEvent : CircuitUiEvent {
     data object NavigateUp : SpotifyUiEvent
-    data class UpdateQuery(val query: String) : SpotifyUiEvent
     data class GoToSearch(
         val query: String,
         val entity: MusicBrainzEntity,

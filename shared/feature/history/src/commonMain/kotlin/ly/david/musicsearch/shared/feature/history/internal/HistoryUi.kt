@@ -105,10 +105,7 @@ internal fun HistoryUi(
                 showBackButton = false,
                 title = strings.recentHistory,
                 scrollBehavior = scrollBehavior,
-                filterText = state.query,
-                onFilterTextChange = {
-                    eventSink(HistoryUiEvent.UpdateQuery(it))
-                },
+                topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = {
                     DropdownMenuItem(
                         text = { Text(strings.clearHistory) },

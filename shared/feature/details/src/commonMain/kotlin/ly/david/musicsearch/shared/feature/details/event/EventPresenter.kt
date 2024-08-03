@@ -28,6 +28,8 @@ import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 internal class EventPresenter(
     private val screen: DetailsScreen,
@@ -43,7 +45,8 @@ internal class EventPresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        var query by rememberSaveable { mutableStateOf("") }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var event: EventDetailsModel? by remember { mutableStateOf(null) }
         val tabs: List<EventTab> by rememberSaveable {
             mutableStateOf(EventTab.entries)
@@ -111,10 +114,6 @@ internal class EventPresenter(
                     navigator.pop()
                 }
 
-                is EventUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-
                 is EventUiEvent.UpdateTab -> {
                     selectedTab = event.tab
                 }
@@ -143,7 +142,7 @@ internal class EventPresenter(
             event = event,
             tabs = tabs,
             selectedTab = selectedTab,
-            query = query,
+            topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
             relationsUiState = relationsUiState,
             eventSink = ::eventSink,
@@ -158,7 +157,7 @@ internal data class EventUiState(
     val event: EventDetailsModel?,
     val tabs: List<EventTab>,
     val selectedTab: EventTab,
-    val query: String,
+    val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val relationsUiState: RelationsUiState,
     val eventSink: (EventUiEvent) -> Unit,
@@ -168,7 +167,6 @@ internal sealed interface EventUiEvent : CircuitUiEvent {
     data object NavigateUp : EventUiEvent
     data object ForceRefresh : EventUiEvent
     data class UpdateTab(val tab: EventTab) : EventUiEvent
-    data class UpdateQuery(val query: String) : EventUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

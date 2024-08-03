@@ -145,10 +145,7 @@ internal fun CollectionUi(
                         )
                     }
                 },
-                filterText = state.query,
-                onFilterTextChange = {
-                    eventSink(CollectionUiEvent.UpdateQuery(it))
-                },
+                topAppBarFilterState = state.topAppBarFilterState,
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },

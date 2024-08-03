@@ -36,6 +36,8 @@ import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 import ly.david.musicsearch.ui.common.track.TracksByEntityUiEvent
 import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
@@ -58,7 +60,8 @@ internal class ReleasePresenter(
         var subtitle by rememberSaveable { mutableStateOf("") }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        var query by rememberSaveable { mutableStateOf("") }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var release: ReleaseDetailsModel? by remember { mutableStateOf(null) }
         var imageUrl by rememberSaveable { mutableStateOf("") }
         val tabs: ImmutableList<ReleaseTab> = ReleaseTab.entries.toPersistentList()
@@ -152,10 +155,6 @@ internal class ReleasePresenter(
                     navigator.pop()
                 }
 
-                is ReleaseUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-
                 is ReleaseUiEvent.UpdateTab -> {
                     selectedTab = event.tab
                 }
@@ -196,7 +195,7 @@ internal class ReleasePresenter(
             imageUrl = imageUrl,
             tabs = tabs,
             selectedTab = selectedTab,
-            query = query,
+            topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
             relationsUiState = relationsUiState,
             tracksByReleaseUiState = tracksByReleaseUiState,
@@ -225,7 +224,7 @@ internal data class ReleaseUiState(
     val imageUrl: String,
     val tabs: ImmutableList<ReleaseTab>,
     val selectedTab: ReleaseTab,
-    val query: String,
+    val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val relationsUiState: RelationsUiState,
     val tracksByReleaseUiState: TracksByReleaseUiState,
@@ -237,7 +236,6 @@ internal sealed interface ReleaseUiEvent : CircuitUiEvent {
     data object NavigateUp : ReleaseUiEvent
     data object ForceRefresh : ReleaseUiEvent
     data class UpdateTab(val tab: ReleaseTab) : ReleaseUiEvent
-    data class UpdateQuery(val query: String) : ReleaseUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

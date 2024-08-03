@@ -5,7 +5,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -31,18 +31,14 @@ actual fun TopAppBarWithFilter(
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
 
     showFilterIcon: Boolean,
-    filterText: String,
-    onFilterTextChange: (String) -> Unit,
-    additionalActions: @Composable () -> Unit,
+    topAppBarFilterState: TopAppBarFilterState,
 
+    additionalActions: @Composable () -> Unit,
     additionalBar: @Composable () -> Unit,
 ) {
-    var isFilterMode by rememberSaveable { mutableStateOf(false) }
-
-    if (isFilterMode) {
+    if (topAppBarFilterState.isFilterMode) {
         BackHandler {
-            isFilterMode = false
-            onFilterTextChange("")
+            topAppBarFilterState.dismiss()
         }
     }
 
@@ -57,10 +53,7 @@ actual fun TopAppBarWithFilter(
         overflowDropdownMenuItems = overflowDropdownMenuItems,
         subtitleDropdownMenuItems = subtitleDropdownMenuItems,
         showFilterIcon = showFilterIcon,
-        filterText = filterText,
-        onFilterTextChange = onFilterTextChange,
-        isFilterMode = isFilterMode,
-        onFilterModeChange = { isFilterMode = it },
+        topAppBarFilterState = topAppBarFilterState,
         additionalActions = additionalActions,
         additionalBar = additionalBar,
     )
@@ -70,7 +63,7 @@ actual fun TopAppBarWithFilter(
 @OptIn(ExperimentalMaterial3Api::class)
 @PreviewLightDark
 @Composable
-private fun PreviewTopAppBarWithFilter() {
+internal fun PreviewTopAppBarWithFilter() {
     PreviewTheme {
         TopAppBarWithFilterInternal(title = "Title")
     }
@@ -79,11 +72,11 @@ private fun PreviewTopAppBarWithFilter() {
 @OptIn(ExperimentalMaterial3Api::class)
 @PreviewLightDark
 @Composable
-private fun PreviewTopAppBarWithFilterFilterMode() {
+internal fun PreviewTopAppBarWithFilterFilterMode() {
     PreviewTheme {
         TopAppBarWithFilterInternal(
             title = "Title",
-            isFilterMode = true,
+            topAppBarFilterState = TopAppBarFilterState(initialIsFilterMode = true),
         )
     }
 }
@@ -91,7 +84,22 @@ private fun PreviewTopAppBarWithFilterFilterMode() {
 @OptIn(ExperimentalMaterial3Api::class)
 @PreviewLightDark
 @Composable
-private fun PreviewTopAppBarWithFilterNoFilter() {
+internal fun PreviewTopAppBarWithFilterFilterModeWithText() {
+    PreviewTheme {
+        TopAppBarWithFilterInternal(
+            title = "Title",
+            topAppBarFilterState = TopAppBarFilterState(
+                initialFilterText = "Initial text",
+                initialIsFilterMode = true
+            ),
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@PreviewLightDark
+@Composable
+internal fun PreviewTopAppBarWithFilterNoFilter() {
     PreviewTheme {
         TopAppBarWithFilterInternal(
             title = "Title",
@@ -103,12 +111,37 @@ private fun PreviewTopAppBarWithFilterNoFilter() {
 @OptIn(ExperimentalMaterial3Api::class)
 @PreviewLightDark
 @Composable
-private fun PreviewTopAppBarWithFilterWithTabs() {
+internal fun PreviewTopAppBarWithFilterWithTabs() {
     PreviewTheme {
-        var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
+        var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
         TopAppBarWithFilterInternal(
             title = "A title that is very long so that it will go off the screen and allow us to scroll.",
+            additionalBar = {
+                TabsBar(
+                    tabsTitle = listOf(
+                        "Tab 1",
+                        "Tab 2",
+                        "Tab 3",
+                    ),
+                    selectedTabIndex = selectedTabIndex,
+                    onSelectTabIndex = { selectedTabIndex = it },
+                )
+            },
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@PreviewLightDark
+@Composable
+internal fun PreviewTopAppBarWithFilterWithTabsFilterMode() {
+    PreviewTheme {
+        var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
+
+        TopAppBarWithFilterInternal(
+            title = "A title that is very long so that it will go off the screen and allow us to scroll.",
+            topAppBarFilterState = TopAppBarFilterState(initialIsFilterMode = true),
             additionalBar = {
                 TabsBar(
                     tabsTitle = listOf(

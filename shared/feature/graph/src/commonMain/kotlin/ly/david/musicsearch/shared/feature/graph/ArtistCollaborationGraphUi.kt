@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.feature.graph.viz.compose.renderEdge
@@ -37,6 +38,7 @@ internal fun ArtistCollaborationGraphUi(
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
+    val focusManager = LocalFocusManager.current
     val strings = LocalStrings.current
     val density = LocalDensity.current
 
@@ -50,10 +52,7 @@ internal fun ArtistCollaborationGraphUi(
                     eventSink(ArtistCollaborationGraphUiEvent.NavigateUp)
                 },
                 title = strings.collaborationsWith(state.artistName),
-                filterText = state.query,
-                onFilterTextChange = {
-                    eventSink(ArtistCollaborationGraphUiEvent.UpdateQuery(it))
-                },
+                topAppBarFilterState = state.topAppBarFilterState,
             )
         },
     ) { innerPadding ->
@@ -79,6 +78,10 @@ internal fun ArtistCollaborationGraphUi(
                                 title = node.name,
                             ),
                         )
+
+                        // Not certain why clicking list items in rest of the screens auto-dismiss but not here
+                        // This will unfortunately prevent refocus when popping off back stack
+                        focusManager.clearFocus()
                     }
                 }
             },

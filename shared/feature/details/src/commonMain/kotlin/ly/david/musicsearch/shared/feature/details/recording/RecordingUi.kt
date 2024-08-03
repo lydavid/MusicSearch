@@ -129,10 +129,7 @@ internal fun RecordingUi(
                         )
                     }
                 },
-                filterText = state.query,
-                onFilterTextChange = {
-                    eventSink(RecordingUiEvent.UpdateQuery(it))
-                },
+                topAppBarFilterState = state.topAppBarFilterState,
                 additionalBar = {
                     TabsBar(
                         tabsTitle = state.tabs.map { it.tab.getTitle(strings) },
@@ -162,7 +159,7 @@ internal fun RecordingUi(
                     ) { recording ->
                         RecordingDetailsUi(
                             recording = recording,
-                            filterText = state.query,
+                            filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
                             onItemClick = { entity, id, title ->
                                 eventSink(

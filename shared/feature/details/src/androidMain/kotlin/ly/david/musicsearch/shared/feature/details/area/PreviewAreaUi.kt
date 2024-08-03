@@ -493,7 +493,6 @@ internal fun PreviewAreaDetails() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.DETAILS,
-                    query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
@@ -532,7 +531,6 @@ internal fun PreviewAreaDetailsError() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.DETAILS,
-                    query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
@@ -571,7 +569,6 @@ internal fun PreviewAreaRelationships() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.RELATIONSHIPS,
-                    query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
@@ -610,7 +607,6 @@ internal fun PreviewAreaArtists() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.ARTISTS,
-                    query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
@@ -649,7 +645,6 @@ internal fun PreviewAreaEvents() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.EVENTS,
-                    query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
@@ -688,7 +683,6 @@ internal fun PreviewAreaLabels() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.LABELS,
-                    query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
@@ -727,7 +721,6 @@ internal fun PreviewAreaReleases() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.RELEASES,
-                    query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
@@ -766,7 +759,6 @@ internal fun PreviewAreaPlaces() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.PLACES,
-                    query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
@@ -805,7 +797,6 @@ internal fun PreviewAreaStats() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.STATS,
-                    query = "",
                     artistsByEntityUiState = ArtistsByEntityUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),

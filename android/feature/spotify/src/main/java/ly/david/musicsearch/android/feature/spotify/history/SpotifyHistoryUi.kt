@@ -41,6 +41,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
@@ -67,10 +68,7 @@ internal fun SpotifyHistoryUi(
                 ),
             )
         },
-        filterText = state.query,
-        onFilterTextChange = {
-            eventSink(SpotifyUiEvent.UpdateQuery(it))
-        },
+        topAppBarFilterState = state.topAppBarFilterState,
         onMarkForDeletion = {
             eventSink(SpotifyUiEvent.MarkForDeletion(it))
         },
@@ -88,11 +86,10 @@ internal fun SpotifyHistoryUi(
 private fun SpotifyHistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
+    topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     lazyListState: LazyListState = LazyListState(),
     onBack: () -> Unit = {},
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
-    filterText: String = "",
-    onFilterTextChange: (String) -> Unit = {},
     onMarkForDeletion: (SpotifyHistoryListItemModel) -> Unit = {},
     onUndoMarkForDeletion: (SpotifyHistoryListItemModel) -> Unit = {},
     onDelete: (SpotifyHistoryListItemModel) -> Unit = {},
@@ -111,8 +108,7 @@ private fun SpotifyHistoryUi(
                 onBack = onBack,
                 title = strings.spotifyHistory,
                 scrollBehavior = scrollBehavior,
-                filterText = filterText,
-                onFilterTextChange = onFilterTextChange,
+                topAppBarFilterState = topAppBarFilterState,
             )
         },
         snackbarHost = {

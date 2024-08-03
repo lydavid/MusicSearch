@@ -29,6 +29,7 @@ import ly.david.musicsearch.shared.feature.collections.components.CollectionList
 import ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
 import ly.david.musicsearch.shared.feature.collections.create.NewCollection
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.core.LocalStrings
 
@@ -64,8 +65,7 @@ internal fun CollectionListUi(
         lazyListState = state.lazyListState,
         modifier = modifier,
         sortOption = state.sortOption,
-        filterText = state.query,
-        onFilterTextChange = { eventSink(CollectionListUiEvent.UpdateQuery(it)) },
+        topAppBarFilterState = state.topAppBarFilterState,
         onCreateCollectionClick = {
             scope.launch {
                 val result = overlayHost.show(
@@ -118,8 +118,7 @@ internal fun CollectionListUi(
     lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = LazyListState(),
-    filterText: String = "",
-    onFilterTextChange: (String) -> Unit = {},
+    topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     onCreateCollectionClick: () -> Unit = {},
     showLocal: Boolean = true,
     onShowLocalToggle: (Boolean) -> Unit = {},
@@ -140,8 +139,7 @@ internal fun CollectionListUi(
                 showBackButton = false,
                 title = strings.collections,
                 scrollBehavior = scrollBehavior,
-                filterText = filterText,
-                onFilterTextChange = onFilterTextChange,
+                topAppBarFilterState = topAppBarFilterState,
                 additionalActions = {
                     IconButton(onClick = onCreateCollectionClick) {
                         Icon(

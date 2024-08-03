@@ -40,6 +40,8 @@ import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiState
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 import ly.david.musicsearch.ui.common.work.WorksByEntityPresenter
 import ly.david.musicsearch.ui.common.work.WorksByEntityUiEvent
 import ly.david.musicsearch.ui.common.work.WorksByEntityUiState
@@ -64,7 +66,7 @@ internal class ArtistPresenter(
         var isLoading by rememberSaveable { mutableStateOf(true) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        var query by rememberSaveable { mutableStateOf("") }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
         var artist: ArtistDetailsModel? by remember { mutableStateOf(null) }
         val tabs: List<ArtistTab> by rememberSaveable {
             mutableStateOf(ArtistTab.entries)
@@ -118,7 +120,7 @@ internal class ArtistPresenter(
         }
 
         LaunchedEffect(
-            key1 = query,
+            key1 = topAppBarFilterState.filterText,
             key2 = selectedTab,
         ) {
             when (selectedTab) {
@@ -133,7 +135,7 @@ internal class ArtistPresenter(
                             byEntity = screen.entity,
                         ),
                     )
-                    relationsEventSink(RelationsUiEvent.UpdateQuery(query))
+                    relationsEventSink(RelationsUiEvent.UpdateQuery(topAppBarFilterState.filterText))
                 }
 
                 ArtistTab.RECORDINGS -> {
@@ -143,7 +145,7 @@ internal class ArtistPresenter(
                             byEntity = screen.entity,
                         ),
                     )
-                    recordingsEventSink(RecordingsByEntityUiEvent.UpdateQuery(query))
+                    recordingsEventSink(RecordingsByEntityUiEvent.UpdateQuery(topAppBarFilterState.filterText))
                 }
 
                 ArtistTab.RELEASES -> {
@@ -153,7 +155,7 @@ internal class ArtistPresenter(
                             byEntity = screen.entity,
                         ),
                     )
-                    releasesEventSink(ReleasesByEntityUiEvent.UpdateQuery(query))
+                    releasesEventSink(ReleasesByEntityUiEvent.UpdateQuery(topAppBarFilterState.filterText))
                 }
 
                 ArtistTab.RELEASE_GROUPS -> {
@@ -164,7 +166,7 @@ internal class ArtistPresenter(
                             isRemote = true,
                         ),
                     )
-                    releaseGroupsEventSink(ReleaseGroupsByEntityUiEvent.UpdateQuery(query))
+                    releaseGroupsEventSink(ReleaseGroupsByEntityUiEvent.UpdateQuery(topAppBarFilterState.filterText))
                 }
 
                 ArtistTab.EVENTS -> {
@@ -174,7 +176,7 @@ internal class ArtistPresenter(
                             byEntity = screen.entity,
                         ),
                     )
-                    eventsEventSink(EventsByEntityUiEvent.UpdateQuery(query))
+                    eventsEventSink(EventsByEntityUiEvent.UpdateQuery(topAppBarFilterState.filterText))
                 }
 
                 ArtistTab.WORKS -> {
@@ -184,7 +186,7 @@ internal class ArtistPresenter(
                             byEntity = screen.entity,
                         ),
                     )
-                    worksEventSink(WorksByEntityUiEvent.UpdateQuery(query))
+                    worksEventSink(WorksByEntityUiEvent.UpdateQuery(topAppBarFilterState.filterText))
                 }
 
                 ArtistTab.STATS -> {
@@ -197,10 +199,6 @@ internal class ArtistPresenter(
             when (event) {
                 ArtistUiEvent.NavigateUp -> {
                     navigator.pop()
-                }
-
-                is ArtistUiEvent.UpdateQuery -> {
-                    query = event.query
                 }
 
                 is ArtistUiEvent.UpdateTab -> {
@@ -243,7 +241,7 @@ internal class ArtistPresenter(
             artist = artist,
             tabs = tabs,
             selectedTab = selectedTab,
-            query = query,
+            topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
             eventsByEntityUiState = eventsByEntityUiState,
             recordingsByEntityUiState = recordingsByEntityUiState,
@@ -264,7 +262,7 @@ internal data class ArtistUiState(
     val artist: ArtistDetailsModel?,
     val tabs: List<ArtistTab>,
     val selectedTab: ArtistTab,
-    val query: String,
+    val topAppBarFilterState: TopAppBarFilterState,
     val detailsLazyListState: LazyListState = LazyListState(),
     val eventsByEntityUiState: EventsByEntityUiState,
     val recordingsByEntityUiState: RecordingsByEntityUiState,
@@ -279,7 +277,6 @@ internal sealed interface ArtistUiEvent : CircuitUiEvent {
     data object NavigateUp : ArtistUiEvent
     data object ForceRefresh : ArtistUiEvent
     data class UpdateTab(val tab: ArtistTab) : ArtistUiEvent
-    data class UpdateQuery(val query: String) : ArtistUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

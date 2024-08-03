@@ -4,10 +4,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.NavEvent
@@ -21,6 +17,8 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.DeleteNowPlayingHistory
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.GetNowPlayingHistory
 import ly.david.musicsearch.ui.common.screen.SearchScreen
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 internal class NowPlayingHistoryPresenter(
     private val navigator: Navigator,
@@ -30,9 +28,9 @@ internal class NowPlayingHistoryPresenter(
 
     @Composable
     override fun present(): NowPlayingHistoryUiState {
-        var query by rememberSaveable { mutableStateOf("") }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
         val lazyPagingItems: LazyPagingItems<ListItemModel> = getNowPlayingHistory(
-            query = query,
+            query = topAppBarFilterState.filterText,
         ).collectAsLazyPagingItems()
         val lazyListState = rememberLazyListState()
 
@@ -40,10 +38,6 @@ internal class NowPlayingHistoryPresenter(
             when (event) {
                 is NowPlayingHistoryUiEvent.NavigateUp -> {
                     navigator.pop()
-                }
-
-                is NowPlayingHistoryUiEvent.UpdateQuery -> {
-                    query = event.query
                 }
 
                 is NowPlayingHistoryUiEvent.DeleteHistory -> {
@@ -64,7 +58,7 @@ internal class NowPlayingHistoryPresenter(
         }
 
         return NowPlayingHistoryUiState(
-            query = query,
+            topAppBarFilterState = topAppBarFilterState,
             lazyPagingItems = lazyPagingItems,
             lazyListState = lazyListState,
             eventSink = ::eventSink,
@@ -74,7 +68,7 @@ internal class NowPlayingHistoryPresenter(
 
 @Stable
 internal data class NowPlayingHistoryUiState(
-    val query: String,
+    val topAppBarFilterState: TopAppBarFilterState,
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState,
     val eventSink: (NowPlayingHistoryUiEvent) -> Unit,
@@ -82,7 +76,6 @@ internal data class NowPlayingHistoryUiState(
 
 internal sealed interface NowPlayingHistoryUiEvent : CircuitUiEvent {
     data object NavigateUp : NowPlayingHistoryUiEvent
-    data class UpdateQuery(val query: String) : NowPlayingHistoryUiEvent
     data class DeleteHistory(val id: String) : NowPlayingHistoryUiEvent
     data class GoToSearch(
         val query: String,

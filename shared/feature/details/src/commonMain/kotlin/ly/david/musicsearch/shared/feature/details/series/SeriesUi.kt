@@ -95,10 +95,7 @@ internal fun SeriesUi(
                         }
                     }
                 },
-                filterText = state.query,
-                onFilterTextChange = {
-                    eventSink(SeriesUiEvent.UpdateQuery(it))
-                },
+                topAppBarFilterState = state.topAppBarFilterState,
                 additionalBar = {
                     TabsBar(
                         tabsTitle = state.tabs.map { it.tab.getTitle(strings) },
@@ -128,7 +125,7 @@ internal fun SeriesUi(
                     ) { series ->
                         SeriesDetailsUi(
                             series = series,
-                            filterText = state.query,
+                            filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
                             onItemClick = { entity, id, title ->
                                 eventSink(

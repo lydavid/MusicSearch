@@ -25,6 +25,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
@@ -51,10 +52,7 @@ internal fun NowPlayingHistoryUi(
                 ),
             )
         },
-        filterText = state.query,
-        onFilterTextChange = {
-            eventSink(NowPlayingHistoryUiEvent.UpdateQuery(it))
-        },
+        topAppBarFilterState = state.topAppBarFilterState,
         onDelete = { id ->
             eventSink(NowPlayingHistoryUiEvent.DeleteHistory(id))
         },
@@ -67,10 +65,9 @@ private fun NowPlayingHistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = LazyListState(),
+    topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     onBack: () -> Unit = {},
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
-    filterText: String = "",
-    onFilterTextChange: (String) -> Unit = {},
     onDelete: (String) -> Unit = {},
 ) {
     val strings = LocalStrings.current
@@ -85,8 +82,7 @@ private fun NowPlayingHistoryUi(
                 onBack = onBack,
                 title = strings.nowPlayingHistory,
                 scrollBehavior = scrollBehavior,
-                filterText = filterText,
-                onFilterTextChange = onFilterTextChange,
+                topAppBarFilterState = topAppBarFilterState,
             )
         },
     ) { innerPadding ->

@@ -43,6 +43,8 @@ import ly.david.musicsearch.ui.common.release.ReleasesByEntityPresenter
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 internal class AreaPresenter(
     private val screen: DetailsScreen,
@@ -63,7 +65,8 @@ internal class AreaPresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        var query by rememberSaveable { mutableStateOf("") }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var area: AreaDetailsModel? by remember { mutableStateOf(null) }
         val tabs: List<AreaTab> by rememberSaveable {
             mutableStateOf(AreaTab.entries)
@@ -111,7 +114,6 @@ internal class AreaPresenter(
             }
         }
 
-        // TODO: good candidate for extraction
         LaunchedEffect(
             key1 = query,
             key2 = selectedTab,
@@ -193,10 +195,6 @@ internal class AreaPresenter(
                     navigator.pop()
                 }
 
-                is AreaUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-
                 is AreaUiEvent.UpdateTab -> {
                     selectedTab = event.tab
                 }
@@ -225,7 +223,7 @@ internal class AreaPresenter(
             area = area,
             tabs = tabs,
             selectedTab = selectedTab,
-            query = query,
+            topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
             artistsByEntityUiState = artistsByEntityUiState,
             eventsByEntityUiState = eventsByEntityUiState,
@@ -245,7 +243,7 @@ internal data class AreaUiState(
     val area: AreaDetailsModel? = null,
     val tabs: List<AreaTab> = AreaTab.entries,
     val selectedTab: AreaTab = AreaTab.DETAILS,
-    val query: String = "",
+    val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val eventsByEntityUiState: EventsByEntityUiState,
@@ -260,7 +258,6 @@ internal sealed interface AreaUiEvent : CircuitUiEvent {
     data object NavigateUp : AreaUiEvent
     data object ForceRefresh : AreaUiEvent
     data class UpdateTab(val tab: AreaTab) : AreaUiEvent
-    data class UpdateQuery(val query: String) : AreaUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

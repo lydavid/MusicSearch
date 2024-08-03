@@ -78,10 +78,7 @@ internal fun ReleaseUi(
                 showFilterIcon = state.selectedTab !in listOf(
                     ReleaseTab.STATS,
                 ),
-                filterText = state.query,
-                onFilterTextChange = {
-                    eventSink(ReleaseUiEvent.UpdateQuery(it))
-                },
+                topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
                         entity = entity,
@@ -162,7 +159,7 @@ internal fun ReleaseUi(
                     ) { release ->
                         ReleaseDetailsUi(
                             release = release,
-                            filterText = state.query,
+                            filterText = state.topAppBarFilterState.filterText,
                             imageUrl = state.imageUrl,
                             lazyListState = state.detailsLazyListState,
                             onImageClick = {

@@ -137,10 +137,7 @@ internal fun AreaUi(
                 showFilterIcon = state.selectedTab !in listOf(
                     AreaTab.STATS,
                 ),
-                filterText = state.query,
-                onFilterTextChange = {
-                    eventSink(AreaUiEvent.UpdateQuery(it))
-                },
+                topAppBarFilterState = state.topAppBarFilterState,
                 additionalBar = {
                     TabsBar(
                         tabsTitle = state.tabs.map { it.tab.getTitle(strings) },
@@ -172,7 +169,7 @@ internal fun AreaUi(
                     ) {
                         AreaDetailsUi(
                             area = it,
-                            filterText = state.query,
+                            filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
                             onItemClick = { entity, id, title ->
                                 eventSink(

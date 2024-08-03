@@ -6,8 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
@@ -28,6 +26,8 @@ import ly.david.musicsearch.shared.domain.history.usecase.MarkLookupHistoryForDe
 import ly.david.musicsearch.shared.domain.history.usecase.UnMarkLookupHistoryForDeletion
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 internal class HistoryPresenter(
     private val navigator: Navigator,
@@ -39,7 +39,8 @@ internal class HistoryPresenter(
 ) : Presenter<HistoryUiState> {
     @Composable
     override fun present(): HistoryUiState {
-        var query by rememberSaveable { mutableStateOf("") }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         val sortOption by appPreferences.historySortOption.collectAsState(HistorySortOption.RECENTLY_VISITED)
         val lazyPagingItems: LazyPagingItems<ListItemModel> = getPagedHistory(
             query = query,
@@ -49,10 +50,6 @@ internal class HistoryPresenter(
 
         fun eventSink(event: HistoryUiEvent) {
             when (event) {
-                is HistoryUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-
                 is HistoryUiEvent.UpdateSortOption -> {
                     appPreferences.setHistorySortOption(event.sortOption)
                 }
@@ -102,7 +99,7 @@ internal class HistoryPresenter(
         }
 
         return HistoryUiState(
-            query = query,
+            topAppBarFilterState = topAppBarFilterState,
             sortOption = sortOption,
             lazyPagingItems = lazyPagingItems,
             lazyListState = lazyListState,
@@ -113,7 +110,7 @@ internal class HistoryPresenter(
 
 @Stable
 internal data class HistoryUiState(
-    val query: String,
+    val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val sortOption: HistorySortOption,
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
@@ -121,7 +118,6 @@ internal data class HistoryUiState(
 ) : CircuitUiState
 
 internal sealed interface HistoryUiEvent : CircuitUiEvent {
-    data class UpdateQuery(val query: String) : HistoryUiEvent
     data class UpdateSortOption(val sortOption: HistorySortOption) : HistoryUiEvent
     data class MarkHistoryForDeletion(val history: LookupHistoryListItemModel) : HistoryUiEvent
     data class UnMarkHistoryForDeletion(val history: LookupHistoryListItemModel) : HistoryUiEvent

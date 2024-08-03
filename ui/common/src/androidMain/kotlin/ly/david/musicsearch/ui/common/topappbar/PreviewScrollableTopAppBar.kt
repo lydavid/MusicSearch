@@ -60,3 +60,16 @@ internal fun PreviewScrollableTopAppBarWithTabs() {
         )
     }
 }
+
+// won't see anything in preview due to delay
+@OptIn(ExperimentalMaterial3Api::class)
+@PreviewLightDark
+@Composable
+internal fun PreviewScrollableTopAppBarLoading() {
+    PreviewTheme {
+        ScrollableTopAppBar(
+            title = "",
+            showBackButton = false,
+        )
+    }
+}

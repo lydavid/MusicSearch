@@ -92,10 +92,7 @@ internal fun WorkUi(
                         }
                     }
                 },
-                filterText = state.query,
-                onFilterTextChange = {
-                    eventSink(WorkUiEvent.UpdateQuery(it))
-                },
+                topAppBarFilterState = state.topAppBarFilterState,
                 additionalBar = {
                     TabsBar(
                         tabsTitle = state.tabs.map { it.tab.getTitle(strings) },
@@ -125,7 +122,7 @@ internal fun WorkUi(
                     ) { work ->
                         WorkDetailsUi(
                             work = work,
-                            filterText = state.query,
+                            filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
                             onItemClick = { entity, id, title ->
                                 eventSink(

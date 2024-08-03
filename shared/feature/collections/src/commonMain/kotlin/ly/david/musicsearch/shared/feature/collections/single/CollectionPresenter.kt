@@ -54,6 +54,8 @@ import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiState
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 import ly.david.musicsearch.ui.common.work.WorksByEntityPresenter
 import ly.david.musicsearch.ui.common.work.WorksByEntityUiEvent
 import ly.david.musicsearch.ui.common.work.WorksByEntityUiState
@@ -83,7 +85,8 @@ internal class CollectionPresenter(
         val scope = rememberCoroutineScope()
         var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
         var actionableResult: ActionableResult? by remember { mutableStateOf(null) }
-        var query by rememberSaveable { mutableStateOf("") }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         var collectableItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
@@ -308,17 +311,13 @@ internal class CollectionPresenter(
 
                 is CollectionUiEvent.DeleteItem -> {
                 }
-
-                is CollectionUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
             }
         }
 
         return CollectionUiState(
             collection = collection,
             actionableResult = actionableResult,
-            query = query,
+            topAppBarFilterState = topAppBarFilterState,
             lazyPagingItems = collectableItems.collectAsLazyPagingItems(),
             artistsByEntityUiState = artistsByEntityUiState,
             eventsByEntityUiState = eventsByEntityUiState,
@@ -335,7 +334,7 @@ internal class CollectionPresenter(
 internal data class CollectionUiState(
     val collection: CollectionListItemModel?,
     val actionableResult: ActionableResult?,
-    val query: String,
+    val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val eventsByEntityUiState: EventsByEntityUiState,
@@ -348,8 +347,6 @@ internal data class CollectionUiState(
 
 internal sealed interface CollectionUiEvent : CircuitUiEvent {
     data object NavigateUp : CollectionUiEvent
-
-    data class UpdateQuery(val query: String) : CollectionUiEvent
 
     data class MarkItemForDeletion(
         val collectableId: String,

@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
@@ -24,6 +23,8 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 private const val DELAY_FOR_60_FPS_IN_MS = 16L
 
@@ -40,15 +41,15 @@ internal class ArtistCollaborationGraphPresenter(
         val scope = rememberCoroutineScope()
         var animationJob: Job? by remember { mutableStateOf(null) }
 
-        var query by rememberSaveable { mutableStateOf("") }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
         var collaboratingArtistsAndRecordings: List<CollaboratingArtistAndRecording> by remember {
             mutableStateOf(emptyList())
         }
 
-        LaunchedEffect(key1 = screen.id, key2 = query) {
+        LaunchedEffect(key1 = screen.id, key2 = topAppBarFilterState.filterText) {
             collaboratingArtistsAndRecordings = artistRepository.getAllCollaboratingArtistsAndRecordings(
                 artistId = screen.id,
-                query = query,
+                query = topAppBarFilterState.filterText,
             )
             graphSimulation.initialize(
                 collaboratingArtistAndRecordings = collaboratingArtistsAndRecordings,
@@ -68,10 +69,6 @@ internal class ArtistCollaborationGraphPresenter(
                     navigator.pop()
                 }
 
-                is ArtistCollaborationGraphUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-
                 is ArtistCollaborationGraphUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
@@ -88,7 +85,7 @@ internal class ArtistCollaborationGraphPresenter(
 
         return ArtistCollaborationGraphUiState(
             artistName = screen.name,
-            query = query,
+            topAppBarFilterState = topAppBarFilterState,
             edges = graphState.edges,
             nodes = graphState.nodes,
             eventSink = ::eventSink,
@@ -99,7 +96,7 @@ internal class ArtistCollaborationGraphPresenter(
 @Stable
 internal data class ArtistCollaborationGraphUiState(
     val artistName: String,
-    val query: String,
+    val topAppBarFilterState: TopAppBarFilterState,
     val edges: List<GraphEdge> = listOf(),
     val nodes: List<GraphNode> = listOf(),
     val eventSink: (ArtistCollaborationGraphUiEvent) -> Unit,
@@ -107,7 +104,6 @@ internal data class ArtistCollaborationGraphUiState(
 
 internal sealed interface ArtistCollaborationGraphUiEvent : CircuitUiEvent {
     data object NavigateUp : ArtistCollaborationGraphUiEvent
-    data class UpdateQuery(val query: String) : ArtistCollaborationGraphUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,
