@@ -79,9 +79,13 @@ class ArtistDao(
         imageUrl = largeUrl,
     )
 
-    fun getAllCollaboratingArtists(artistId: String): List<CollaboratingArtistAndRecording> {
+    fun getAllCollaboratingArtists(
+        artistId: String,
+        query: String,
+    ): List<CollaboratingArtistAndRecording> {
         return transacter.getAllCollaboratingArtistsAndRecordings(
             artistId = artistId,
+            query = "%$query%",
             mapper = {
                     collaboratingArtistId: String,
                     collaboratingArtistName: String,

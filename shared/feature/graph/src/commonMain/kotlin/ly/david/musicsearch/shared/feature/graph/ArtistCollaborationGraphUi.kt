@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.feature.graph.viz.compose.renderEdge
 import ly.david.musicsearch.shared.feature.graph.viz.compose.renderNode
 import ly.david.musicsearch.shared.feature.graph.viz.compose.renderText
-import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.ExtendedColors
 import ly.david.musicsearch.ui.core.theme.LocalExtendedColors
@@ -44,12 +44,16 @@ internal fun ArtistCollaborationGraphUi(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
         topBar = {
-            ScrollableTopAppBar(
+            TopAppBarWithFilter(
                 showBackButton = true,
                 onBack = {
                     eventSink(ArtistCollaborationGraphUiEvent.NavigateUp)
                 },
                 title = strings.collaborationsWith(state.artistName),
+                filterText = state.query,
+                onFilterTextChange = {
+                    eventSink(ArtistCollaborationGraphUiEvent.UpdateQuery(it))
+                },
             )
         },
     ) { innerPadding ->

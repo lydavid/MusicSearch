@@ -8,12 +8,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
@@ -35,16 +38,23 @@ internal class ArtistCollaborationGraphPresenter(
     override fun present(): ArtistCollaborationGraphUiState {
         val graphState by graphSimulation.uiState.collectAsState()
         val scope = rememberCoroutineScope()
+        var animationJob: Job? by remember { mutableStateOf(null) }
 
-        val collaboratingArtistsAndRecordings: List<CollaboratingArtistAndRecording> by remember {
-            mutableStateOf(artistRepository.getAllCollaboratingArtistsAndRecordings(screen.id))
+        var query by rememberSaveable { mutableStateOf("") }
+        var collaboratingArtistsAndRecordings: List<CollaboratingArtistAndRecording> by remember {
+            mutableStateOf(emptyList())
         }
 
-        LaunchedEffect(screen.id) {
+        LaunchedEffect(key1 = screen.id, key2 = query) {
+            collaboratingArtistsAndRecordings = artistRepository.getAllCollaboratingArtistsAndRecordings(
+                artistId = screen.id,
+                query = query,
+            )
             graphSimulation.initialize(
                 collaboratingArtistAndRecordings = collaboratingArtistsAndRecordings,
             )
-            scope.launch {
+            animationJob?.cancel()
+            animationJob = scope.launch {
                 while (true) {
                     delay(DELAY_FOR_60_FPS_IN_MS)
                     graphSimulation.step()
@@ -56,6 +66,10 @@ internal class ArtistCollaborationGraphPresenter(
             when (event) {
                 is ArtistCollaborationGraphUiEvent.NavigateUp -> {
                     navigator.pop()
+                }
+
+                is ArtistCollaborationGraphUiEvent.UpdateQuery -> {
+                    query = event.query
                 }
 
                 is ArtistCollaborationGraphUiEvent.ClickItem -> {
@@ -74,6 +88,7 @@ internal class ArtistCollaborationGraphPresenter(
 
         return ArtistCollaborationGraphUiState(
             artistName = screen.name,
+            query = query,
             edges = graphState.edges,
             nodes = graphState.nodes,
             eventSink = ::eventSink,
@@ -84,6 +99,7 @@ internal class ArtistCollaborationGraphPresenter(
 @Stable
 internal data class ArtistCollaborationGraphUiState(
     val artistName: String,
+    val query: String,
     val edges: List<GraphEdge> = listOf(),
     val nodes: List<GraphNode> = listOf(),
     val eventSink: (ArtistCollaborationGraphUiEvent) -> Unit,
@@ -91,6 +107,7 @@ internal data class ArtistCollaborationGraphUiState(
 
 internal sealed interface ArtistCollaborationGraphUiEvent : CircuitUiEvent {
     data object NavigateUp : ArtistCollaborationGraphUiEvent
+    data class UpdateQuery(val query: String) : ArtistCollaborationGraphUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

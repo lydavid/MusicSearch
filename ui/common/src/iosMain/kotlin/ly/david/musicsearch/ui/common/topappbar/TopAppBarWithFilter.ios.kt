@@ -9,8 +9,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
-import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilterInternal
 
 /**
  * [ScrollableTopAppBar] with filtering.

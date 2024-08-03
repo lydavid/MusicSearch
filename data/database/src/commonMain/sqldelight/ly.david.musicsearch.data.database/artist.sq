@@ -52,4 +52,8 @@ INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ac.id
 WHERE re.entity_id = :artistId
-AND acn.artist_id != :artistId;
+AND acn.artist_id != :artistId
+AND (
+  collaborating_artist_name LIKE :query
+  OR recording_name LIKE :query
+);

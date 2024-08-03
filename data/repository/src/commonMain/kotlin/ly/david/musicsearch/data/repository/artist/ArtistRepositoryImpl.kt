@@ -80,6 +80,12 @@ class ArtistRepositoryImpl(
         }
     }
 
-    override fun getAllCollaboratingArtistsAndRecordings(artistId: String): List<CollaboratingArtistAndRecording> =
-        artistDao.getAllCollaboratingArtists(artistId)
+    override fun getAllCollaboratingArtistsAndRecordings(
+        artistId: String,
+        query: String,
+    ): List<CollaboratingArtistAndRecording> =
+        artistDao.getAllCollaboratingArtists(
+            artistId = artistId,
+            query = query,
+        )
 }

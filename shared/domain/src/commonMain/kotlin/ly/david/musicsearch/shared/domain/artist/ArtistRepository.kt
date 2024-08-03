@@ -9,5 +9,8 @@ interface ArtistRepository {
         forceRefresh: Boolean,
     ): ArtistDetailsModel
 
-    fun getAllCollaboratingArtistsAndRecordings(artistId: String): List<CollaboratingArtistAndRecording>
+    fun getAllCollaboratingArtistsAndRecordings(
+        artistId: String,
+        query: String,
+    ): List<CollaboratingArtistAndRecording>
 }
