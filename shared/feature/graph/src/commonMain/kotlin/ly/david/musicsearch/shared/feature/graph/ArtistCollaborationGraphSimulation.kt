@@ -43,10 +43,13 @@ private data class ArtistRecording(
     val recordingId: String,
 )
 
-private const val MIN_RADIUS = 10.0
+// https://developer.android.com/develop/ui/compose/accessibility/key-steps#minimum-target-sizes
+private const val MIN_RADIUS = 24.0 - 1.0
+
 private const val LINK_DISTANCE = 250.0
 
 private const val MANY_BODY_STRENGTH = -60.0
+
 private const val COLLISION_DISTANCE = 30.0
 
 class ArtistCollaborationGraphSimulation {

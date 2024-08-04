@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
@@ -64,20 +65,24 @@ fun DrawScope.renderText(
     val measuredText =
         textMeasurer.measure(
             text = node.name,
-            constraints = Constraints.fixed(
-                width = (size.width / 3f).toInt(),
-                height = size.height.toInt(),
+            constraints = Constraints(
+                maxWidth = (size.width / 3f).toInt(),
             ),
             overflow = TextOverflow.Ellipsis,
-            style = TextStyle(fontSize = 13.sp),
+            maxLines = 2,
+            style = TextStyle(
+                fontSize = 15.sp,
+                textAlign = TextAlign.Center,
+            ),
         )
+    val textWidth = measuredText.size.width
 
     drawText(
         textLayoutResult = measuredText,
         color = color,
         topLeft = Offset(
-            node.x.dp.toPx(),
-            node.y.dp.toPx() + node.radius.dp.toPx(),
+            node.x.dp.toPx() - textWidth / 2f,
+            node.y.dp.toPx() + node.radius.dp.toPx() + 4.dp.toPx(),
         ) + offset,
     )
 }
