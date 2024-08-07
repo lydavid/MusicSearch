@@ -20,7 +20,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.artist.ArtistRepository
+import ly.david.musicsearch.shared.domain.artist.ArtistCollaborationRepository
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
@@ -32,7 +32,7 @@ internal class ArtistCollaborationGraphPresenter(
     private val screen: ArtistCollaborationScreen,
     private val navigator: Navigator,
     private val graphSimulation: ArtistCollaborationGraphSimulation,
-    private val artistRepository: ArtistRepository,
+    private val artistCollaborationRepository: ArtistCollaborationRepository,
 ) : Presenter<ArtistCollaborationGraphUiState> {
 
     @Composable
@@ -47,7 +47,7 @@ internal class ArtistCollaborationGraphPresenter(
         }
 
         LaunchedEffect(key1 = screen.id, key2 = topAppBarFilterState.filterText) {
-            collaboratingArtistsAndRecordings = artistRepository.getAllCollaboratingArtistsAndRecordings(
+            collaboratingArtistsAndRecordings = artistCollaborationRepository.getAllCollaboratingArtistsAndRecordings(
                 artistId = screen.id,
                 query = topAppBarFilterState.filterText,
             )

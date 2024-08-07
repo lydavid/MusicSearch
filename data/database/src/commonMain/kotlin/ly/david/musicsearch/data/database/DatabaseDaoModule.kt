@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.database
 import ly.david.musicsearch.core.models.image.ImageUrlDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
+import ly.david.musicsearch.data.database.dao.ArtistCollaborationDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDaoImpl
 import ly.david.musicsearch.data.database.dao.ArtistDao
@@ -53,6 +54,7 @@ val databaseDaoModule = module {
     single { AreaPlaceDao(get(), get()) }
     singleOf(::ArtistCreditDaoImpl) bind ArtistCreditDao::class
     single { ArtistDao(get()) }
+    single { ArtistCollaborationDao(get()) }
     single { ArtistReleaseDao(get(), get()) }
     single { ArtistReleaseGroupDao(get(), get()) }
     single { BrowseEntityCountDao(get(), get()) }

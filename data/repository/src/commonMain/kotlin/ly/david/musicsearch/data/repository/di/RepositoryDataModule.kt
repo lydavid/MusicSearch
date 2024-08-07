@@ -10,6 +10,7 @@ import ly.david.musicsearch.data.repository.SearchResultsRepositoryImpl
 import ly.david.musicsearch.data.repository.SpotifyHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreasByEntityRepositoryImpl
+import ly.david.musicsearch.data.repository.artist.ArtistCollaborationRepositoryImpl
 import ly.david.musicsearch.data.repository.artist.ArtistRepositoryImpl
 import ly.david.musicsearch.data.repository.artist.ArtistsByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.event.EventRepositoryImpl
@@ -32,6 +33,7 @@ import ly.david.musicsearch.data.repository.work.WorkRepositoryImpl
 import ly.david.musicsearch.data.repository.work.WorksByEntityRepositoryImpl
 import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.area.AreasByEntityRepository
+import ly.david.musicsearch.shared.domain.artist.ArtistCollaborationRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistsByEntityRepository
 import ly.david.musicsearch.shared.domain.browse.BrowseEntityCountRepository
@@ -69,6 +71,7 @@ val repositoryDataModule = module {
     singleOf(::AreasByEntityRepositoryImpl) bind AreasByEntityRepository::class
     singleOf(::ArtistRepositoryImpl) bind ArtistRepository::class
     singleOf(::ArtistsByEntityRepositoryImpl) bind ArtistsByEntityRepository::class
+    singleOf(::ArtistCollaborationRepositoryImpl) bind ArtistCollaborationRepository::class
     singleOf(::BrowseEntityCountRepositoryImpl) bind BrowseEntityCountRepository::class
     singleOf(::CollectionRepositoryImpl) bind CollectionRepository::class
     singleOf(::EventRepositoryImpl) bind EventRepository::class

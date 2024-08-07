@@ -16,7 +16,7 @@ val graphFeatureModule = module {
                     screen = screen,
                     navigator = navigator,
                     graphSimulation = get(),
-                    artistRepository = get(),
+                    artistCollaborationRepository = get(),
                 )
 
                 else -> null
