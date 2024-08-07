@@ -72,9 +72,7 @@ internal class ReleaseGroupPresenter(
         LaunchedEffect(forceRefreshDetails) {
             try {
                 val releaseGroupDetailsModel = repository.lookupReleaseGroup(screen.id)
-                if (title.isEmpty()) {
-                    title = releaseGroupDetailsModel.getNameWithDisambiguation()
-                }
+                title = releaseGroupDetailsModel.getNameWithDisambiguation()
                 subtitle = "Release Group by ${releaseGroupDetailsModel.artistCredits.getDisplayNames()}"
                 releaseGroup = releaseGroupDetailsModel
                 imageUrl = fetchReleaseGroupImage(releaseGroupDetailsModel)

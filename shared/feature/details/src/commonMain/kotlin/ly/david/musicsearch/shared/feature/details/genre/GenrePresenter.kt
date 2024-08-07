@@ -41,9 +41,7 @@ internal class GenrePresenter(
         LaunchedEffect(forceRefreshDetails) {
             try {
                 val genreListItemModel = musicBrainzApi.lookupGenre(screen.id)
-                if (title.isEmpty()) {
-                    title = genreListItemModel.getNameWithDisambiguation()
-                }
+                title = genreListItemModel.getNameWithDisambiguation()
                 genre = genreListItemModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {

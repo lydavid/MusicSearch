@@ -67,9 +67,7 @@ internal class LabelPresenter(
         LaunchedEffect(forceRefreshDetails) {
             try {
                 val labelDetailsModel = repository.lookupLabel(screen.id)
-                if (title.isEmpty()) {
-                    title = labelDetailsModel.getNameWithDisambiguation()
-                }
+                title = labelDetailsModel.getNameWithDisambiguation()
                 label = labelDetailsModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {

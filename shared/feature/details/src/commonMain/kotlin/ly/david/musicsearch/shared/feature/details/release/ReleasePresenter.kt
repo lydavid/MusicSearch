@@ -81,9 +81,7 @@ internal class ReleasePresenter(
         LaunchedEffect(forceRefreshDetails) {
             try {
                 val releaseDetailsModel = repository.lookupRelease(screen.id)
-                if (title.isEmpty()) {
-                    title = releaseDetailsModel.getNameWithDisambiguation()
-                }
+                title = releaseDetailsModel.getNameWithDisambiguation()
                 subtitle = "Release by ${releaseDetailsModel.artistCredits.getDisplayNames()}"
                 release = releaseDetailsModel
                 imageUrl = fetchReleaseImage(releaseDetailsModel)

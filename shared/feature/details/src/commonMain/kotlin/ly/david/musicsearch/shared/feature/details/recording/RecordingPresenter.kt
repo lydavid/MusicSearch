@@ -69,9 +69,7 @@ internal class RecordingPresenter(
         LaunchedEffect(forceRefreshDetails) {
             try {
                 val recordingDetailsModel = repository.lookupRecording(screen.id)
-                if (title.isEmpty()) {
-                    title = recordingDetailsModel.getNameWithDisambiguation()
-                }
+                title = recordingDetailsModel.getNameWithDisambiguation()
                 subtitle = "Recording by ${recordingDetailsModel.artistCredits.getDisplayNames()}"
                 recording = recordingDetailsModel
                 isError = false

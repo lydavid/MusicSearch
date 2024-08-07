@@ -95,9 +95,7 @@ internal class ArtistPresenter(
                     artistId = screen.id,
                     forceRefresh = forceRefreshDetails,
                 )
-                if (title.isEmpty()) {
-                    title = artistDetailsModel.getNameWithDisambiguation()
-                }
+                title = artistDetailsModel.getNameWithDisambiguation()
                 artist = artistDetailsModel
                 isError = false
             } catch (ex: Exception) {

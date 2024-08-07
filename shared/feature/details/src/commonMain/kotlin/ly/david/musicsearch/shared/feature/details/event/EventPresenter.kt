@@ -61,9 +61,7 @@ internal class EventPresenter(
         LaunchedEffect(forceRefreshDetails) {
             try {
                 val eventListItemModel = repository.lookupEvent(screen.id)
-                if (title.isEmpty()) {
-                    title = eventListItemModel.getNameWithDisambiguation()
-                }
+                title = eventListItemModel.getNameWithDisambiguation()
                 event = eventListItemModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {

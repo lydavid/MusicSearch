@@ -61,9 +61,7 @@ internal class SeriesPresenter(
         LaunchedEffect(forceRefreshDetails) {
             try {
                 val seriesDetailsModel = repository.lookupSeries(screen.id)
-                if (title.isEmpty()) {
-                    title = seriesDetailsModel.getNameWithDisambiguation()
-                }
+                title = seriesDetailsModel.getNameWithDisambiguation()
                 series = seriesDetailsModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {

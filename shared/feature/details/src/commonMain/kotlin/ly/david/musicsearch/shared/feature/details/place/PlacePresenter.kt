@@ -67,9 +67,7 @@ internal class PlacePresenter(
         LaunchedEffect(forceRefreshDetails) {
             try {
                 val placeDetailsModel = repository.lookupPlace(screen.id)
-                if (title.isEmpty()) {
-                    title = placeDetailsModel.getNameWithDisambiguation()
-                }
+                title = placeDetailsModel.getNameWithDisambiguation()
                 place = placeDetailsModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {

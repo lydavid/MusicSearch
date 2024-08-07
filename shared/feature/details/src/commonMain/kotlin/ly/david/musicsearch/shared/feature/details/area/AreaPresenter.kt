@@ -91,9 +91,7 @@ internal class AreaPresenter(
         LaunchedEffect(forceRefreshDetails) {
             try {
                 val areaDetailsModel = repository.lookupArea(screen.id)
-                if (title.isEmpty()) {
-                    title = areaDetailsModel.getNameWithDisambiguation()
-                }
+                title = areaDetailsModel.getNameWithDisambiguation()
 
                 area = areaDetailsModel
                 isError = false

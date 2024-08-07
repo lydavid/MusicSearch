@@ -61,9 +61,7 @@ internal class InstrumentPresenter(
         LaunchedEffect(forceRefreshDetails) {
             try {
                 val instrumentDetailsModel = repository.lookupInstrument(screen.id)
-                if (title.isEmpty()) {
-                    title = instrumentDetailsModel.getNameWithDisambiguation()
-                }
+                title = instrumentDetailsModel.getNameWithDisambiguation()
                 instrument = instrumentDetailsModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {

@@ -73,9 +73,7 @@ internal class WorkPresenter(
         LaunchedEffect(forceRefreshDetails) {
             try {
                 val workDetailsModel = repository.lookupWork(screen.id)
-                if (title.isEmpty()) {
-                    title = workDetailsModel.getNameWithDisambiguation()
-                }
+                title = workDetailsModel.getNameWithDisambiguation()
                 work = workDetailsModel
                 isError = false
             } catch (ex: RecoverableNetworkException) {
