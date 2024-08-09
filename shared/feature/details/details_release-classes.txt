@@ -18,7 +18,7 @@ stable class AreaUiState {
   runtime val area: AreaDetailsModel?
   unstable val tabs: List<AreaTab>
   stable val selectedTab: AreaTab
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val artistsByEntityUiState: ArtistsByEntityUiState
   stable val eventsByEntityUiState: EventsByEntityUiState
@@ -36,10 +36,6 @@ stable class ForceRefresh {
 }
 stable class UpdateTab {
   stable val tab: AreaTab
-  <runtime stability> = Stable
-}
-stable class UpdateQuery {
-  stable val query: String
   <runtime stability> = Stable
 }
 stable class ClickItem {
@@ -69,7 +65,7 @@ stable class ArtistUiState {
   runtime val artist: ArtistDetailsModel?
   unstable val tabs: List<ArtistTab>
   stable val selectedTab: ArtistTab
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val eventsByEntityUiState: EventsByEntityUiState
   stable val recordingsByEntityUiState: RecordingsByEntityUiState
@@ -87,10 +83,6 @@ stable class ForceRefresh {
 }
 stable class UpdateTab {
   stable val tab: ArtistTab
-  <runtime stability> = Stable
-}
-stable class UpdateQuery {
-  stable val query: String
   <runtime stability> = Stable
 }
 stable class ClickItem {
@@ -117,7 +109,7 @@ stable class EventUiState {
   runtime val event: EventDetailsModel?
   unstable val tabs: List<EventTab>
   stable val selectedTab: EventTab
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val relationsUiState: RelationsUiState
   stable val eventSink: Function1<EventUiEvent, Unit>
@@ -130,10 +122,6 @@ stable class ForceRefresh {
 }
 stable class UpdateTab {
   stable val tab: EventTab
-  <runtime stability> = Stable
-}
-stable class UpdateQuery {
-  stable val query: String
   <runtime stability> = Stable
 }
 stable class ClickItem {
@@ -177,7 +165,7 @@ stable class InstrumentUiState {
   runtime val instrument: InstrumentDetailsModel?
   unstable val tabs: List<InstrumentTab>
   stable val selectedTab: InstrumentTab
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val relationsUiState: RelationsUiState
   stable val eventSink: Function1<InstrumentUiEvent, Unit>
@@ -190,10 +178,6 @@ stable class ForceRefresh {
 }
 stable class UpdateTab {
   stable val tab: InstrumentTab
-  <runtime stability> = Stable
-}
-stable class UpdateQuery {
-  stable val query: String
   <runtime stability> = Stable
 }
 stable class ClickItem {
@@ -218,7 +202,7 @@ stable class LabelUiState {
   runtime val label: LabelDetailsModel?
   unstable val tabs: List<LabelTab>
   stable val selectedTab: LabelTab
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val releasesByEntityUiState: ReleasesByEntityUiState
   stable val relationsUiState: RelationsUiState
@@ -232,10 +216,6 @@ stable class ForceRefresh {
 }
 stable class UpdateTab {
   stable val tab: LabelTab
-  <runtime stability> = Stable
-}
-stable class UpdateQuery {
-  stable val query: String
   <runtime stability> = Stable
 }
 stable class ClickItem {
@@ -260,7 +240,7 @@ stable class PlaceUiState {
   runtime val place: PlaceDetailsModel?
   unstable val tabs: List<PlaceTab>
   stable val selectedTab: PlaceTab
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val eventsByEntityUiState: EventsByEntityUiState
   stable val relationsUiState: RelationsUiState
@@ -274,10 +254,6 @@ stable class ForceRefresh {
 }
 stable class UpdateTab {
   stable val tab: PlaceTab
-  <runtime stability> = Stable
-}
-stable class UpdateQuery {
-  stable val query: String
   <runtime stability> = Stable
 }
 stable class ClickItem {
@@ -303,7 +279,7 @@ stable class RecordingUiState {
   runtime val recording: RecordingDetailsModel?
   unstable val tabs: List<RecordingTab>
   stable val selectedTab: RecordingTab
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val releasesByEntityUiState: ReleasesByEntityUiState
   stable val relationsUiState: RelationsUiState
@@ -317,10 +293,6 @@ stable class ForceRefresh {
 }
 stable class UpdateTab {
   stable val tab: RecordingTab
-  <runtime stability> = Stable
-}
-stable class UpdateQuery {
-  stable val query: String
   <runtime stability> = Stable
 }
 stable class ClickItem {
@@ -349,7 +321,7 @@ stable class ReleaseUiState {
   stable val imageUrl: String
   stable val tabs: ImmutableList<ReleaseTab>
   stable val selectedTab: ReleaseTab
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val relationsUiState: RelationsUiState
   stable val tracksByReleaseUiState: TracksByReleaseUiState
@@ -364,10 +336,6 @@ stable class ForceRefresh {
 }
 stable class UpdateTab {
   stable val tab: ReleaseTab
-  <runtime stability> = Stable
-}
-stable class UpdateQuery {
-  stable val query: String
   <runtime stability> = Stable
 }
 stable class ClickItem {
@@ -398,7 +366,7 @@ stable class ReleaseGroupUiState {
   stable val imageUrl: String
   unstable val tabs: List<ReleaseGroupTab>
   stable val selectedTab: ReleaseGroupTab
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val releasesByEntityUiState: ReleasesByEntityUiState
   stable val relationsUiState: RelationsUiState
@@ -412,10 +380,6 @@ stable class ForceRefresh {
 }
 stable class UpdateTab {
   stable val tab: ReleaseGroupTab
-  <runtime stability> = Stable
-}
-stable class UpdateQuery {
-  stable val query: String
   <runtime stability> = Stable
 }
 stable class ClickItem {
@@ -439,7 +403,7 @@ stable class SeriesUiState {
   runtime val series: SeriesDetailsModel?
   unstable val tabs: List<SeriesTab>
   stable val selectedTab: SeriesTab
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val relationsUiState: RelationsUiState
   stable val eventSink: Function1<SeriesUiEvent, Unit>
@@ -452,10 +416,6 @@ stable class ForceRefresh {
 }
 stable class UpdateTab {
   stable val tab: SeriesTab
-  <runtime stability> = Stable
-}
-stable class UpdateQuery {
-  stable val query: String
   <runtime stability> = Stable
 }
 stable class ClickItem {
@@ -481,7 +441,7 @@ stable class WorkUiState {
   runtime val work: WorkDetailsModel?
   unstable val tabs: List<WorkTab>
   stable val selectedTab: WorkTab
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val artistsByEntityUiState: ArtistsByEntityUiState
   stable val recordingsByEntityUiState: RecordingsByEntityUiState
@@ -496,10 +456,6 @@ stable class ForceRefresh {
 }
 stable class UpdateTab {
   stable val tab: WorkTab
-  <runtime stability> = Stable
-}
-stable class UpdateQuery {
-  stable val query: String
   <runtime stability> = Stable
 }
 stable class ClickItem {

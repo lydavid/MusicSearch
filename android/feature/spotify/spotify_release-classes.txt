@@ -15,16 +15,12 @@ stable class SpotifyHistoryPresenter {
   <runtime stability> = Stable
 }
 stable class SpotifyUiState {
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<SpotifyUiEvent, Unit>
 }
 stable class NavigateUp {
-  <runtime stability> = Stable
-}
-stable class UpdateQuery {
-  stable val query: String
   <runtime stability> = Stable
 }
 stable class GoToSearch {

@@ -1,10 +1,16 @@
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryCard(
   nowPlayingHistory: NowPlayingHistoryListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onClick: @[ExtensionFunctionType] Function1<NowPlayingHistoryListItemModel, Unit>? = @static {
+  stable onClick: @[ExtensionFunctionType] Function1<NowPlayingHistoryListItemModel, Unit>? = @static $composer.startReplaceableGroup(1101544640)
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
 
 }
 
+$composer.endReplaceableGroup()
+tmp0_group@ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryCard
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewNowPlayingHistoryCard()
 fun present(
@@ -18,35 +24,61 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayin
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic LazyListState()
-  stable onBack: Function0<Unit>? = @static {
+  stable topAppBarFilterState: TopAppBarFilterState? = @dynamic TopAppBarFilterState()
+  stable onBack: Function0<Unit>? = @static $composer.startReplaceableGroup(886691716)
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
 
 }
 
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: @[ParameterName(name = 'query')] String, <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity ->
+$composer.endReplaceableGroup()
+tmp0_group@ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryUi
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static $composer.startReplaceableGroup(886694285)
+val tmp1_group = $composer.cache(false) {
+  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity   ->
+
+  }
 
 }
 
-  stable filterText: String? = @static ""
-  stable onFilterTextChange: Function1<String, Unit>? = @static { it: String ->
+$composer.endReplaceableGroup()
+tmp1_group@ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryUi
+  stable onDelete: Function1<String, Unit>? = @static $composer.startReplaceableGroup(886695748)
+val tmp2_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
 
 }
 
-  stable onDelete: Function1<String, Unit>? = @static { it: String ->
-
-}
-
+$composer.endReplaceableGroup()
+tmp2_group@ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryUi
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryContent(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic LazyListState()
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static { <unused var>: @[ParameterName(name = 'query')] String, <unused var>: @[ParameterName(name = 'entity')] MusicBrainzEntity ->
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static $composer.startReplaceableGroup(1681398582)
+val tmp0_group = $composer.cache(false) {
+  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity   ->
+
+  }
 
 }
 
-  stable onDelete: Function1<String, Unit>? = @static { it: String ->
+$composer.endReplaceableGroup()
+tmp0_group@ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryContent
+  stable onDelete: Function1<String, Unit>? = @static $composer.startReplaceableGroup(1681400045)
+val tmp1_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
 
 }
 
+$composer.endReplaceableGroup()
+tmp1_group@ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryContent
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewNowPlayingHistoryUi()

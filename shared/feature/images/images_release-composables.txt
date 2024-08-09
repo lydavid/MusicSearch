@@ -9,10 +9,16 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArts
   stable modifier: Modifier? = @static Companion
   stable isCompact: Boolean = @static false
   imageUrlsList: ImmutableList<ImageUrls>? = @static persistentListOf()
-  stable onBack: Function0<Unit>? = @static {
+  stable onBack: Function0<Unit>? = @static $composer.startReplaceableGroup(1747499980)
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
 
 }
 
+$composer.endReplaceableGroup()
+tmp0_group@ly.david.musicsearch.shared.feature.images.CoverArtsUi
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsUiCompact()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsUiNonCompact()

@@ -31,17 +31,13 @@ stable class CollectionListPresenter {
   <runtime stability> = Stable
 }
 stable class CollectionListUiState {
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   stable val showLocal: Boolean
   stable val showRemote: Boolean
   stable val sortOption: CollectionSortOption
   runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<CollectionListUiEvent, Unit>
-}
-stable class UpdateQuery {
-  stable val query: String
-  <runtime stability> = Stable
 }
 stable class UpdateShowLocal {
   stable val show: Boolean
@@ -85,7 +81,7 @@ stable class CollectionPresenter {
 stable class CollectionUiState {
   runtime val collection: CollectionListItemModel?
   runtime val actionableResult: ActionableResult?
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val artistsByEntityUiState: ArtistsByEntityUiState
   stable val eventsByEntityUiState: EventsByEntityUiState
@@ -96,10 +92,6 @@ stable class CollectionUiState {
   stable val eventSink: Function1<CollectionUiEvent, Unit>
 }
 stable class NavigateUp {
-  <runtime stability> = Stable
-}
-stable class UpdateQuery {
-  stable val query: String
   <runtime stability> = Stable
 }
 stable class MarkItemForDeletion {

@@ -18,7 +18,7 @@
  "effectivelyStableClasses": 20,
  "totalClasses": 21,
  "memoizedLambdas": 35,
- "singletonLambdas": 9,
+ "singletonLambdas": 0,
  "singletonComposableLambdas": 22,
  "composableLambdas": 26,
  "totalLambdas": 36

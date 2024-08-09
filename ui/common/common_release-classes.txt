@@ -241,6 +241,10 @@ stable class NowPlayingHistoryScreen {
 stable class SpotifyHistoryScreen {
   <runtime stability> = Stable
 }
+stable class TopAppBarFilterState {
+  stable var filterText$delegate: MutableState<String>
+  stable var isFilterMode$delegate: MutableState<Boolean>
+}
 stable class TracksByReleasePresenter {
   runtime val getTracksByRelease: GetTracksByRelease
   <runtime stability> = Stable

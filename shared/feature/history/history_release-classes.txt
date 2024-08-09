@@ -8,15 +8,11 @@ stable class HistoryPresenter {
   <runtime stability> = Stable
 }
 stable class HistoryUiState {
-  stable val query: String
+  stable val topAppBarFilterState: TopAppBarFilterState
   stable val sortOption: HistorySortOption
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<HistoryUiEvent, Unit>
-}
-stable class UpdateQuery {
-  stable val query: String
-  <runtime stability> = Stable
 }
 stable class UpdateSortOption {
   stable val sortOption: HistorySortOption

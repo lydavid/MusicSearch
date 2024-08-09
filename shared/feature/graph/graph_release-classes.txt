@@ -7,7 +7,8 @@ stable class ArtistCollaborationGraphPresenter {
 }
 stable class ArtistCollaborationGraphUiState {
   stable val artistName: String
-  unstable val links: List<GraphLink>
+  stable val topAppBarFilterState: TopAppBarFilterState
+  unstable val edges: List<GraphEdge>
   unstable val nodes: List<GraphNode>
   stable val eventSink: Function1<ArtistCollaborationGraphUiEvent, Unit>
 }
@@ -29,7 +30,7 @@ stable class GraphNode {
   stable val y: Double
   <runtime stability> = Stable
 }
-stable class GraphLink {
+stable class GraphEdge {
   stable val x0: Double
   stable val y0: Double
   stable val x1: Double
@@ -37,7 +38,7 @@ stable class GraphLink {
   <runtime stability> = Stable
 }
 unstable class GraphSimulationUiState {
-  unstable val links: List<GraphLink>
+  unstable val edges: List<GraphEdge>
   unstable val nodes: List<GraphNode>
   <runtime stability> = Unstable
 }
