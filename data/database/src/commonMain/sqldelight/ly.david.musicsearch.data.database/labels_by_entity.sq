@@ -11,10 +11,10 @@ VALUES ?;
 
 deleteLabelsByEntity:
 DELETE FROM label WHERE id IN (
-  SELECT w.id
-  FROM labels_by_entity we
-  INNER JOIN label w ON w.id = we.label_id
-  WHERE we.entity_id = :entityId
+  SELECT l.id
+  FROM labels_by_entity le
+  INNER JOIN label l ON l.id = le.label_id
+  WHERE le.entity_id = :entityId
 );
 
 getNumberOfLabelsByEntity:
