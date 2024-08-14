@@ -1,11 +1,14 @@
 package ly.david.musicsearch.android.app
 
 import android.content.IntentFilter
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.DisposableEffect
 import androidx.core.content.ContextCompat
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.runtime.screen.Screen
@@ -50,8 +53,25 @@ internal class MainActivity : ComponentActivity() {
         )
 
         setContent {
+            val darkTheme = appPreferences.useDarkTheme()
+
+            // We call this again when our theme changes
+            DisposableEffect(darkTheme) {
+                enableEdgeToEdge(
+                    statusBarStyle = SystemBarStyle.auto(
+                        Color.TRANSPARENT,
+                        Color.TRANSPARENT,
+                    ) { darkTheme },
+                    navigationBarStyle = SystemBarStyle.auto(
+                        Color.TRANSPARENT,
+                        Color.TRANSPARENT,
+                    ) { darkTheme },
+                )
+                onDispose {}
+            }
+
             BaseTheme(
-                darkTheme = appPreferences.useDarkTheme(),
+                darkTheme = darkTheme,
                 materialYou = appPreferences.useMaterialYou(),
                 content = {
                     AppRoot(
