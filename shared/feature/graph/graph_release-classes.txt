@@ -2,7 +2,7 @@ stable class ArtistCollaborationGraphPresenter {
   stable val screen: ArtistCollaborationScreen
   stable val navigator: Navigator
   unstable val graphSimulation: ArtistCollaborationGraphSimulation
-  unstable val artistRepository: ArtistRepository
+  unstable val artistCollaborationRepository: ArtistCollaborationRepository
   <runtime stability> = Stable
 }
 stable class ArtistCollaborationGraphUiState {
