@@ -34,10 +34,12 @@ internal fun ArtistDetailsUi(
         state = lazyListState,
     ) {
         item {
-            LargeImage(
-                url = imageUrl,
-                id = artist.id,
-            )
+            if (filterText.isBlank()) {
+                LargeImage(
+                    url = imageUrl,
+                    id = artist.id,
+                )
+            }
 
             artist.run {
                 ListSeparatorHeader(text = strings.informationHeader(strings.artist))

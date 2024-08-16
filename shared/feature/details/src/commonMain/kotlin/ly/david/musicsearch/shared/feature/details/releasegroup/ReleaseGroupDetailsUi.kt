@@ -30,10 +30,12 @@ internal fun ReleaseGroupDetailsUi(
         state = lazyListState,
     ) {
         item {
-            LargeImage(
-                url = imageUrl,
-                id = releaseGroup.id,
-            )
+            if (filterText.isBlank()) {
+                LargeImage(
+                    url = imageUrl,
+                    id = releaseGroup.id,
+                )
+            }
         }
 
         item {

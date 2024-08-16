@@ -41,11 +41,13 @@ internal fun ReleaseDetailsUi(
         state = lazyListState,
     ) {
         item {
-            LargeImage(
-                url = imageUrl,
-                id = release.id,
-                modifier = Modifier.clickable { onImageClick() },
-            )
+            if (filterText.isBlank()) {
+                LargeImage(
+                    url = imageUrl,
+                    id = release.id,
+                    modifier = Modifier.clickable { onImageClick() },
+                )
+            }
 
             release.run {
                 ListSeparatorHeader(text = strings.informationHeader(strings.release))
