@@ -14,7 +14,7 @@
 <!-- :ui:image -->
 <g id="node1" class="node">
 <title>:ui:image</title>
-<polygon fill="#b59aff" stroke="black" points="177.04,-310 94.04,-310 94.04,-274 177.04,-274 177.04,-310"/>
+<ellipse fill="#b59aff" stroke="black" cx="135.54" cy="-292" rx="53.89" ry="18"/>
 <text text-anchor="middle" x="135.54" y="-288.3" font-family="Times,serif" font-size="14.00">:ui:image</text>
 </g>
 <!-- :core:models -->
@@ -26,8 +26,8 @@
 <!-- :ui:image&#45;&gt;:core:models -->
 <g id="edge1" class="edge">
 <title>:ui:image&#45;&gt;:core:models</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M116.57,-273.81C116.57,-273.81 116.57,-178.32 116.57,-178.32"/>
-<polygon fill="black" stroke="black" points="120.07,-178.32 116.57,-168.32 113.07,-178.32 120.07,-178.32"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M110.34,-276.02C110.34,-276.02 110.34,-179.64 110.34,-179.64"/>
+<polygon fill="black" stroke="black" points="113.84,-179.63 110.34,-169.64 106.84,-179.64 113.84,-179.63"/>
 </g>
 <!-- :ui:core -->
 <g id="node3" class="node">
@@ -38,8 +38,8 @@
 <!-- :ui:image&#45;&gt;:ui:core -->
 <g id="edge2" class="edge">
 <title>:ui:image&#45;&gt;:ui:core</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M167.05,-273.81C167.05,-273.81 167.05,-176.45 167.05,-176.45"/>
-<polygon fill="black" stroke="black" points="170.55,-176.45 167.05,-166.45 163.55,-176.45 170.55,-176.45"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M173.27,-279.11C173.27,-279.11 173.27,-179.18 173.27,-179.18"/>
+<polygon fill="black" stroke="black" points="176.77,-179.18 173.27,-169.18 169.77,-179.18 176.77,-179.18"/>
 </g>
 <!-- :shared:strings -->
 <g id="node4" class="node">
