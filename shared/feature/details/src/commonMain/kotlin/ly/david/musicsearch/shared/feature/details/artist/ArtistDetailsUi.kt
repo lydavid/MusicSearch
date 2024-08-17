@@ -10,13 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.image.LargeImage
+import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
+import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.image.LargeImage
 
 @Composable
 internal fun ArtistDetailsUi(
@@ -25,10 +26,8 @@ internal fun ArtistDetailsUi(
     filterText: String = "",
     imageUrl: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
 ) {
-    val strings = LocalStrings.current
-
     LazyColumn(
         modifier = modifier,
         state = lazyListState,
@@ -42,54 +41,9 @@ internal fun ArtistDetailsUi(
             }
 
             artist.run {
-                ListSeparatorHeader(text = strings.informationHeader(strings.artist))
-                sortName.ifNotNullOrEmpty {
-                    TextWithHeading(
-                        heading = strings.sortName,
-                        text = it,
-                        filterText = filterText,
-                    )
-                }
-                type?.ifNotNullOrEmpty {
-                    TextWithHeading(
-                        heading = strings.type,
-                        text = it,
-                        filterText = filterText,
-                    )
-                }
-                gender?.ifNotNullOrEmpty {
-                    TextWithHeading(
-                        heading = strings.gender,
-                        text = it,
-                        filterText = filterText,
-                    )
-                }
-                LifeSpanText(
-                    lifeSpan = lifeSpan,
-                    heading = strings.date,
-                    beginHeading = when (type) {
-                        "Person" -> strings.born
-                        "Character" -> strings.created
-                        else -> strings.founded
-                    },
-                    endHeading = when (type) {
-                        "Person" -> strings.died
-                        // Characters do not "die": https://musicbrainz.org/doc/Artist
-                        else -> strings.dissolved
-                    },
+                ArtistInformationSection(
                     filterText = filterText,
                 )
-
-                // TODO: begin area, area, end area
-//                countryCode?.ifNotNullOrEmpty {
-//                    TextWithHeadingRes(headingRes = strings.area, text = it.toFlagEmoji())
-//                }
-
-                // TODO: isni code
-
-                // todo: ipis code
-
-                Spacer(modifier = Modifier.padding(bottom = 16.dp))
 
                 UrlsSection(
                     urls = urls,
@@ -99,4 +53,65 @@ internal fun ArtistDetailsUi(
             }
         }
     }
+}
+
+@Composable
+private fun ArtistDetailsModel.ArtistInformationSection(
+    filterText: String = "",
+) {
+    val strings = LocalStrings.current
+
+    ListSeparatorHeader(text = strings.informationHeader(strings.artist))
+    sortName.ifNotNullOrEmpty {
+        TextWithHeading(
+            heading = strings.sortName,
+            text = it,
+            filterText = filterText,
+        )
+    }
+    type?.ifNotNullOrEmpty {
+        TextWithHeading(
+            heading = strings.type,
+            text = it,
+            filterText = filterText,
+        )
+    }
+    gender?.ifNotNullOrEmpty {
+        TextWithHeading(
+            heading = strings.gender,
+            text = it,
+            filterText = filterText,
+        )
+    }
+    LifeSpanText(
+        lifeSpan = lifeSpan,
+        heading = strings.date,
+        beginHeading = when (type) {
+            "Person" -> strings.born
+            "Character" -> strings.created
+            else -> strings.founded
+        },
+        endHeading = when (type) {
+            "Person" -> strings.died
+            // Characters do not "die": https://musicbrainz.org/doc/Artist
+            else -> strings.dissolved
+        },
+        filterText = filterText,
+    )
+
+    // TODO: begin area, area, end area
+//                countryCode?.ifNotNullOrEmpty {
+//                    TextWithHeadingRes(headingRes = strings.area, text = it.toFlagEmoji())
+//                }
+
+    // TODO: isni code
+
+    // todo: ipis code
+
+    WikipediaSection(
+        extract = wikipediaExtract,
+        filterText = filterText,
+    )
+
+    Spacer(modifier = Modifier.padding(bottom = 16.dp))
 }

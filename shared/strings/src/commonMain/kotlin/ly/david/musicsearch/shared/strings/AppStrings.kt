@@ -142,6 +142,7 @@ data class AppStrings(
     val leastEntities: String,
     val seeCollaborators: String,
     val collaborationsWith: (String) -> String,
+    val wikipedia: String,
 )
 
 object Locales {

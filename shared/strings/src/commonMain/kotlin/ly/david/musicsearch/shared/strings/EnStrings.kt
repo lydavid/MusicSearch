@@ -316,4 +316,5 @@ val EnStrings = AppStrings(
         "Collaborations with %s"
             .fmt(p0)
     },
+    wikipedia = "Wikipedia",
 )

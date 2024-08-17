@@ -54,6 +54,7 @@ include(
     ":data:musicbrainz",
     ":data:repository",
     ":data:spotify",
+    ":data:wikimedia",
     ":shared",
     ":shared:domain",
     ":shared:feature:collections",

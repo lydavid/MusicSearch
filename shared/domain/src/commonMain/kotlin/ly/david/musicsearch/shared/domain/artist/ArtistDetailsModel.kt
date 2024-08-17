@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.domain.artist
 
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 
 data class ArtistDetailsModel(
     override val id: String,
@@ -13,5 +14,6 @@ data class ArtistDetailsModel(
     override val countryCode: String? = null,
     val lifeSpan: LifeSpanUiModel? = null,
     val imageUrl: String? = null,
+    val wikipediaExtract: WikipediaExtract? = null,
     val urls: List<RelationListItemModel> = listOf(),
 ) : Artist

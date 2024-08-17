@@ -24,6 +24,7 @@ kotlin {
                 implementation(projects.data.musicbrainz)
                 implementation(projects.data.repository)
                 implementation(projects.data.spotify)
+                implementation(projects.data.wikimedia)
                 implementation(projects.shared.feature.collections)
                 implementation(projects.shared.feature.graph)
                 implementation(projects.shared.feature.history)
