@@ -75,3 +75,15 @@ jobs:
           commit_author: musicsearch-gha-helper[bot] <173635759+musicsearch-gha-helper[bot]@users.noreply.github.com>
           disable_globbing: true
           file_pattern: '*/*.png'
+
+  assemble:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - id: setup
+        uses: ./.github/actions/setup
+
+      - name: Assemble
+        run: ./gradlew assemble
