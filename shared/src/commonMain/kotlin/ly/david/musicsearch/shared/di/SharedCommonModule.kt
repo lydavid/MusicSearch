@@ -7,8 +7,7 @@ import ly.david.musicsearch.core.logging.loggingModule
 import ly.david.musicsearch.core.preferences.di.appPreferencesModule
 import ly.david.musicsearch.core.preferences.di.preferencesDataStoreModule
 import ly.david.musicsearch.data.common.network.di.HttpClientModule
-import ly.david.musicsearch.data.coverart.di.coverArtApiModule
-import ly.david.musicsearch.data.coverart.di.coverArtDataModule
+import ly.david.musicsearch.data.coverart.di.coverArtModule
 import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseDriverModule
 import ly.david.musicsearch.data.database.databaseModule
@@ -66,13 +65,12 @@ val sharedModule: Module = module {
         spotifyDataModule,
         appPreferencesModule,
         repositoryDataModule,
-        coverArtDataModule,
         musicBrainzDataModule,
         databaseModule,
         databaseDaoModule,
         stringsModule,
         coroutineDispatchersModule,
-        coverArtApiModule,
+        coverArtModule,
         spotifyApiModule,
         databaseDriverModule,
         musicBrainzApiModule,
