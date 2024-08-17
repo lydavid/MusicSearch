@@ -1,9 +1,10 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import lydavidmusicsearchdatadatabase.Artist
 
 class ArtistDao(
@@ -62,6 +63,8 @@ class ArtistDao(
         end: String?,
         ended: Boolean?,
         largeUrl: String?,
+        extract: String?,
+        wikipediaUrl: String?,
     ) = ArtistDetailsModel(
         id = id,
         name = name,
@@ -76,5 +79,13 @@ class ArtistDao(
             ended = ended,
         ),
         imageUrl = largeUrl,
+        wikipediaExtract = extract?.run {
+            wikipediaUrl?.run {
+                WikipediaExtract(
+                    extract = extract,
+                    wikipediaUrl = wikipediaUrl,
+                )
+            }
+        },
     )
 }

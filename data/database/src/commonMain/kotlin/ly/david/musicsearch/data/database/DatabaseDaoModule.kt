@@ -23,6 +23,7 @@ import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.LabelsByEntityDao
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao
 import ly.david.musicsearch.data.database.dao.MbidImageDao
+import ly.david.musicsearch.data.database.dao.MbidWikipediaDaoImpl
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.NowPlayingHistoryDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
@@ -43,6 +44,7 @@ import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.database.dao.WorksByEntityDao
+import ly.david.musicsearch.shared.domain.wikimedia.MbidWikipediaDao
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -88,4 +90,5 @@ val databaseDaoModule = module {
     single { WorkDao(get()) }
     single { WorksByEntityDao(get(), get()) }
     single { SpotifyHistoryDao(get(), get()) }
+    singleOf(::MbidWikipediaDaoImpl) bind MbidWikipediaDao::class
 }
