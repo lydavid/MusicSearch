@@ -3,7 +3,7 @@ package ly.david.musicsearch.ui.common.topappbar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 /**
  * [ScrollableTopAppBar] with filtering.

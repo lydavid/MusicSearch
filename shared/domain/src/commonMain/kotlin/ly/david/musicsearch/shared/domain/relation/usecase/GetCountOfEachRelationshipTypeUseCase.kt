@@ -1,7 +1,7 @@
 package ly.david.musicsearch.shared.domain.relation.usecase
 
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.core.models.relation.RelationTypeCount
+import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class GetCountOfEachRelationshipTypeUseCase(

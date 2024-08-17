@@ -1,6 +1,6 @@
 package ly.david.musicsearch.android.app.ui.search
 
-import ly.david.musicsearch.core.models.network.searchableEntities
+import ly.david.musicsearch.shared.domain.network.searchableEntities
 
 /**
  * Test interacting with each [searchableEntities] from [SearchScreen].

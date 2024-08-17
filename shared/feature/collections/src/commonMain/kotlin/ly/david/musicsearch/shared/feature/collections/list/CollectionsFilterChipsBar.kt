@@ -18,7 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.core.models.collection.CollectionSortOption
+import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.ui.core.LocalStrings
 
 @Composable

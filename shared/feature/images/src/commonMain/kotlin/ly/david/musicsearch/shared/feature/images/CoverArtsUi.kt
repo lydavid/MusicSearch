@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import ly.david.musicsearch.core.models.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.image.LargeImage
 

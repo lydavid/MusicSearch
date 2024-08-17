@@ -7,7 +7,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
 import ly.david.musicsearch.data.database.dao.EventsByEntityDao

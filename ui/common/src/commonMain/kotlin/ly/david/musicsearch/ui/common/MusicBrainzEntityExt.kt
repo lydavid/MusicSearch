@@ -16,7 +16,7 @@ import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.TheaterComedy
 import androidx.compose.ui.graphics.vector.ImageVector
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.strings.AppStrings
 
 /**

@@ -10,10 +10,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import app.cash.paging.compose.LazyPagingItems
-import ly.david.musicsearch.core.models.listitem.Header
-import ly.david.musicsearch.core.models.listitem.ListItemModel
-import ly.david.musicsearch.core.models.listitem.SearchHistoryListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.listitem.Header
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError

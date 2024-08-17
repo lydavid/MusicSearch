@@ -4,10 +4,10 @@ import app.cash.paging.PagingData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore
-import ly.david.musicsearch.core.models.collection.CollectionSortOption
-import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
+import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
+import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 
 @OptIn(ExperimentalCoroutinesApi::class)

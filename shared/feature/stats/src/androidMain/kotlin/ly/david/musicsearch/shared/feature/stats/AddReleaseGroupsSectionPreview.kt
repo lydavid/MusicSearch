@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.feature.stats
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupTypeCount
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.shared.feature.stats.internal.addReleaseGroupsSection
 import ly.david.musicsearch.ui.core.preview.DefaultPreviews
 import ly.david.musicsearch.ui.core.theme.PreviewTheme

@@ -11,8 +11,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(projects.shared.domain)
                 implementation(projects.core.coroutines)
-                implementation(projects.core.models)
                 implementation(libs.koin.core)
                 implementation(libs.androidx.datastore.preferences.core)
             }

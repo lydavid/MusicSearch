@@ -1,10 +1,10 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.core.models.artist.getDisplayNames
-import ly.david.musicsearch.core.models.common.emptyToNull
-import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
-import ly.david.musicsearch.core.models.getLifeSpanForDisplay
-import ly.david.musicsearch.core.models.relation.RelationWithOrder
+import ly.david.musicsearch.shared.domain.artist.getDisplayNames
+import ly.david.musicsearch.shared.domain.common.emptyToNull
+import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
+import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay

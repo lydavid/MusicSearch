@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.core.models.LifeSpanUiModel
-import ly.david.musicsearch.core.models.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 
 internal fun mapToAreaListItemModel(
     id: String,

@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.musicbrainz.models.common
 
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.core.models.LifeSpan
+import ly.david.musicsearch.shared.domain.LifeSpan
 
 @Serializable
 data class LifeSpanMusicBrainzModel(

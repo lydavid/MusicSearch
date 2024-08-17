@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 
 internal fun mapToReleaseGroupListItemModel(
     id: String,

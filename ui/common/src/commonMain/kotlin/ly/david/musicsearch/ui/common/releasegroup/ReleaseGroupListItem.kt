@@ -11,11 +11,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.core.models.common.ifNotNull
-import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
-import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
+import ly.david.musicsearch.shared.domain.common.ifNotNull
+import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.core.theme.getSubTextColor

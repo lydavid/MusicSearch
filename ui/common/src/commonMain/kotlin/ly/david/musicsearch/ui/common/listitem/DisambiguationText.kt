@@ -5,7 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.core.theme.getSubTextColor
 

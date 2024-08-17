@@ -14,8 +14,8 @@ import ly.david.data.test.searchReleasesResponse
 import ly.david.data.test.searchSeriesResponse
 import ly.david.data.test.searchWorksResponse
 import ly.david.data.test.toFakeMusicBrainzModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.network.searchableEntities
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.searchableEntities
 import ly.david.musicsearch.data.musicbrainz.api.SearchApi
 import ly.david.musicsearch.data.musicbrainz.api.SearchAreasResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchArtistsResponse

@@ -1,6 +1,6 @@
 package ly.david.musicsearch.android.app
 
-import ly.david.musicsearch.core.models.AppInfo
+import ly.david.musicsearch.shared.domain.AppInfo
 import org.koin.dsl.module
 
 val androidAppModule = module {

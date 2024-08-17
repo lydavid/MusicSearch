@@ -2,8 +2,8 @@ package ly.david.musicsearch.shared.domain.nowplaying
 
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.core.models.history.NowPlayingHistory
-import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.history.NowPlayingHistory
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 
 interface NowPlayingHistoryRepository {
     fun upsert(nowPlayingHistory: NowPlayingHistory)

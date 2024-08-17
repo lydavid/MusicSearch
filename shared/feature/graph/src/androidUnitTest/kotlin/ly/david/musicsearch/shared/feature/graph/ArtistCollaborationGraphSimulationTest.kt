@@ -2,8 +2,8 @@ package ly.david.musicsearch.shared.feature.graph
 
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndRecording
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Before

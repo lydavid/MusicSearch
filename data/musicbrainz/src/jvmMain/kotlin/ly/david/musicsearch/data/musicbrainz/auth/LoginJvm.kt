@@ -6,7 +6,7 @@ import com.github.scribejava.core.oauth.OAuth20Service
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 
 class LoginJvm(

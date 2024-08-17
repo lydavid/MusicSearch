@@ -10,7 +10,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.models)
     implementation(projects.ui.common)
     implementation(projects.shared.domain)
     implementation(libs.androidx.core)

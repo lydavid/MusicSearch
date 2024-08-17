@@ -17,10 +17,10 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.core.models.artist.ArtistDetailsModel
-import ly.david.musicsearch.core.models.getNameWithDisambiguation
-import ly.david.musicsearch.core.models.history.LookupHistory
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
+import ly.david.musicsearch.shared.domain.history.LookupHistory
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter

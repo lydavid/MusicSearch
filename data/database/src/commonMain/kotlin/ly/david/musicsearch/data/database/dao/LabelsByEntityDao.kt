@@ -7,7 +7,7 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.core.models.listitem.LabelListItemModel
+import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToLabelListItemModel
 import lydavidmusicsearchdatadatabase.Labels_by_entity

@@ -2,8 +2,8 @@ package ly.david.musicsearch.data.spotify
 
 import io.ktor.client.plugins.ClientRequestException
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.core.models.image.ImageUrlDao
-import ly.david.musicsearch.core.models.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.data.spotify.api.SpotifyApi
 import ly.david.musicsearch.data.spotify.api.getLargeImageUrl
 import ly.david.musicsearch.data.spotify.api.getThumbnailImageUrl

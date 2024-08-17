@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.core.models.LifeSpanUiModel
-import ly.david.musicsearch.core.models.area.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.AreaQueries

@@ -1,8 +1,8 @@
 package ly.david.musicsearch.ui.common.event
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.musicsearch.core.models.LifeSpanUiModel
-import ly.david.musicsearch.core.models.listitem.EventListItemModel
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith

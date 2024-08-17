@@ -3,9 +3,9 @@ package ly.david.musicsearch.data.repository.event
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.core.models.ListFilters
-import ly.david.musicsearch.core.models.listitem.EventListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.EventsByEntityDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao

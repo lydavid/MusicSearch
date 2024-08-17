@@ -6,9 +6,9 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.cash.paging.compose.LazyPagingItems
-import ly.david.musicsearch.core.models.getNameWithDisambiguation
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
+import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
 @OptIn(ExperimentalFoundationApi::class)

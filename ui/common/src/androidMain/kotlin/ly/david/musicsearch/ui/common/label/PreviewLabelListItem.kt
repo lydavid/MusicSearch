@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
-import ly.david.musicsearch.core.models.listitem.LabelListItemModel
+import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @Preview

@@ -47,7 +47,6 @@ include(
     ":core:coroutines",
     ":core:logging:api",
     ":core:logging:implementation",
-    ":core:models",
     ":core:preferences",
     ":data:common:network",
     ":data:coverart",

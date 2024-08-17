@@ -13,8 +13,8 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import ly.david.musicsearch.core.models.listitem.RelationListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
 
 class RelationsPresenter(

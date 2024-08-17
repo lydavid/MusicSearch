@@ -9,12 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.core.models.common.ifNotNull
-import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
-import ly.david.musicsearch.core.models.common.toFlagEmoji
-import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
-import ly.david.musicsearch.core.models.getLifeSpanForDisplay
-import ly.david.musicsearch.core.models.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.common.ifNotNull
+import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.common.toFlagEmoji
+import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.core.theme.TextStyles
 

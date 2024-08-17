@@ -2,9 +2,9 @@ package ly.david.musicsearch.shared.domain.place
 
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.core.models.ListFilters
-import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 interface PlacesByEntityRepository {
     fun observePlacesByEntity(

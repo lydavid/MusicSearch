@@ -10,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
-import ly.david.musicsearch.core.models.common.toDisplayTime
-import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
+import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.common.toDisplayTime
+import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.track.TrackListItem
 import ly.david.musicsearch.ui.core.theme.TextStyles

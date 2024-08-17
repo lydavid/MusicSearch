@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.musicbrainz.auth
 
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationResponse

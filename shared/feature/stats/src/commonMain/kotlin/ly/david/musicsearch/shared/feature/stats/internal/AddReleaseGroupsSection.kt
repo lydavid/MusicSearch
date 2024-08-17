@@ -13,8 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupTypeCount
-import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
+import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.core.theme.TextStyles

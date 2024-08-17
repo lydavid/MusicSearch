@@ -18,10 +18,10 @@ import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.Instant
-import ly.david.musicsearch.core.models.listitem.ListItemModel
-import ly.david.musicsearch.core.models.listitem.ListSeparator
-import ly.david.musicsearch.core.models.listitem.NowPlayingHistoryListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
+import ly.david.musicsearch.shared.domain.listitem.NowPlayingHistoryListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError

@@ -3,9 +3,9 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.core.models.history.SearchHistory
-import ly.david.musicsearch.core.models.listitem.SearchHistoryListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.history.SearchHistory
+import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
 
 class SearchHistoryDao(

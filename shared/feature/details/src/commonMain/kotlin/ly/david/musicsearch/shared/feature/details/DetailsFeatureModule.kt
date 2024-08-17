@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.feature.details
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.details.area.AreaPresenter
 import ly.david.musicsearch.shared.feature.details.area.AreaUi
 import ly.david.musicsearch.shared.feature.details.area.AreaUiState

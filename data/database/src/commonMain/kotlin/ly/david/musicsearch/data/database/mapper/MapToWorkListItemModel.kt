@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.core.models.listitem.WorkListItemModel
+import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 
 fun mapToWorkListItemModel(
     id: String,

@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
+import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 
 internal fun mapToRecordingListItemModel(
     id: String,

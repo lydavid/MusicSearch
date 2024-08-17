@@ -18,8 +18,8 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndRecording
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.artist.ArtistCollaborationRepository
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen

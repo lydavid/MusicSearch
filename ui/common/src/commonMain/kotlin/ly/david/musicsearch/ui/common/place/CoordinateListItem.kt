@@ -13,8 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.core.models.place.CoordinatesUiModel
-import ly.david.musicsearch.core.models.place.formatForDisplay
+import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
+import ly.david.musicsearch.shared.domain.place.formatForDisplay
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 

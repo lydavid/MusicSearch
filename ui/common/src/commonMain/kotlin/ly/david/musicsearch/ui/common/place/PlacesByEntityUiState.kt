@@ -4,7 +4,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Stable
 import app.cash.paging.compose.LazyPagingItems
 import com.slack.circuit.runtime.CircuitUiState
-import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
+import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 
 @Stable
 data class PlacesByEntityUiState(

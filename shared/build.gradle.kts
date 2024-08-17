@@ -16,7 +16,7 @@ kotlin {
             dependencies {
                 implementation(projects.core.coroutines)
                 implementation(projects.core.logging.implementation)
-                implementation(projects.core.models)
+                implementation(projects.shared.domain)
                 implementation(projects.core.preferences)
                 implementation(projects.data.common.network)
                 implementation(projects.data.coverart)
@@ -24,7 +24,6 @@ kotlin {
                 implementation(projects.data.musicbrainz)
                 implementation(projects.data.repository)
                 implementation(projects.data.spotify)
-                implementation(projects.shared.domain)
                 implementation(projects.shared.feature.collections)
                 implementation(projects.shared.feature.graph)
                 implementation(projects.shared.feature.history)

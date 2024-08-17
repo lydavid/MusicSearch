@@ -22,7 +22,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling

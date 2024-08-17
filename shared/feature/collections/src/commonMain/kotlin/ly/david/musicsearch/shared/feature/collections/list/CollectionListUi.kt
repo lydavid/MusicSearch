@@ -23,8 +23,8 @@ import app.cash.paging.compose.LazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import com.slack.circuitx.overlays.BasicDialogOverlay
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.core.models.collection.CollectionSortOption
-import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
+import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.feature.collections.components.CollectionListItem
 import ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
 import ly.david.musicsearch.shared.feature.collections.create.NewCollection

@@ -2,7 +2,7 @@ package ly.david.musicsearch.ui.common.releasegroup
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.ui.core.preview.DefaultPreviews
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
