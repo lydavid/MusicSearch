@@ -3,7 +3,6 @@ package ly.david.musicsearch.core.models
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-
 class FormatsAndTracksTest {
 
     @Test
