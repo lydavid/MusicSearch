@@ -14,8 +14,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
-                implementation(projects.core.preferences)
                 implementation(projects.shared.domain)
+                implementation(projects.core.preferences)
                 implementation(projects.ui.common)
                 implementation(projects.ui.image)
 

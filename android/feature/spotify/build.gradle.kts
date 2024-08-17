@@ -11,8 +11,8 @@ android {
 
 dependencies {
     implementation(projects.core.models)
-    implementation(projects.ui.common)
     implementation(projects.shared.domain)
+    implementation(projects.ui.common)
     implementation(libs.androidx.core)
     implementation(libs.circuit.foundation)
     implementation(libs.koin.core)

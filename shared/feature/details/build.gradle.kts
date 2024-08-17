@@ -15,6 +15,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
+                implementation(projects.shared.domain)
                 implementation(projects.core.preferences)
                 implementation(projects.core.logging.api)
                 implementation(projects.data.common.network)
@@ -22,7 +23,6 @@ kotlin {
                 implementation(projects.data.musicbrainz)
                 implementation(projects.data.database)
                 implementation(projects.ui.image)
-                implementation(projects.shared.domain)
                 implementation(projects.ui.common)
 
                 implementation(compose.foundation)

@@ -13,6 +13,7 @@ kotlin {
             dependencies {
                 implementation(projects.core.coroutines)
                 implementation(projects.core.models)
+                implementation(projects.shared.domain)
                 implementation(libs.koin.core)
                 implementation(libs.androidx.datastore.preferences.core)
             }

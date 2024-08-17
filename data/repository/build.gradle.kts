@@ -24,11 +24,11 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
+                implementation(projects.shared.domain)
                 implementation(projects.data.database)
                 implementation(projects.data.musicbrainz)
                 implementation(projects.data.common.network)
                 implementation(projects.core.logging.api)
-                implementation(projects.shared.domain)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.collections.immutable)
                 implementation(libs.kotlinx.coroutines.core)

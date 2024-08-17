@@ -14,8 +14,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
-                implementation(projects.ui.common)
                 implementation(projects.shared.domain)
+                implementation(projects.ui.common)
                 implementation(projects.data.database)
 
                 implementation(compose.foundation)

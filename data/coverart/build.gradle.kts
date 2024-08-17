@@ -8,6 +8,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.logging.api)
+                implementation(projects.shared.domain)
                 implementation(projects.core.models)
                 implementation(projects.shared.domain)
                 implementation(libs.koin.core)

@@ -46,6 +46,7 @@ kotlin {
             dependencies {
                 implementation(projects.core.logging.api)
                 implementation(projects.core.models)
+                implementation(projects.shared.domain)
                 implementation(libs.koin.core)
                 implementation(libs.androidx.datastore.preferences.core)
                 implementation(project.dependencies.platform(libs.ktor.bom))
