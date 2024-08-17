@@ -20,6 +20,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(libs.kotlinx.datetime)
+                implementation(libs.kotlinx.coroutines.core)
                 implementation(compose.runtime)
             }
         }
