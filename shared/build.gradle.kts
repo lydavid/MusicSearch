@@ -16,7 +16,6 @@ kotlin {
             dependencies {
                 implementation(projects.core.coroutines)
                 implementation(projects.core.logging.implementation)
-                implementation(projects.core.models)
                 implementation(projects.shared.domain)
                 implementation(projects.core.preferences)
                 implementation(projects.data.common.network)

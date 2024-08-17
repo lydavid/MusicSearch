@@ -16,7 +16,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.core.models)
                 api(projects.shared.domain)
                 api(projects.ui.core)
                 implementation(projects.data.coverart)

@@ -10,7 +10,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.models)
     implementation(projects.shared.domain)
     implementation(projects.ui.common)
     testImplementation(projects.ui.test.screenshot)

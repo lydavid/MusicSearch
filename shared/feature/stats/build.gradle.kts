@@ -13,9 +13,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.core.models)
-                implementation(projects.shared.domain)
                 implementation(projects.ui.common)
+                implementation(projects.shared.domain)
                 implementation(projects.data.database)
 
                 implementation(compose.foundation)

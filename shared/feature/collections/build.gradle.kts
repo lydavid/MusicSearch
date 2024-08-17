@@ -14,10 +14,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.core.models)
+                implementation(projects.ui.common)
                 implementation(projects.shared.domain)
                 implementation(projects.core.preferences)
-                implementation(projects.ui.common)
 
                 implementation(compose.foundation)
                 implementation(compose.material3)
