@@ -13,7 +13,7 @@ SPOTIFY_CLIENT_SECRET=<your Spotify client secret>
 - Create 2 projects with analytics and crashlytics with the following package ids:
   - `io.github.lydavid.musicsearch.debug` for debug
   - `io.github.lydavid.musicsearch` for release
-- Download and add `google-services.json` to `app/src/debug` and `app/src/release` directory
+- Download and add `google-services.json` to `android/app/src/debug` and `android/app/src/release`
 
 ## MusicBrainz
 - Go to https://musicbrainz.org/account/applications/register
