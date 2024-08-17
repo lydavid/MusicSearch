@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.artist
 
-import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
+import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndRecording
 
 interface ArtistCollaborationRepository {
     fun getAllCollaboratingArtistsAndRecordings(

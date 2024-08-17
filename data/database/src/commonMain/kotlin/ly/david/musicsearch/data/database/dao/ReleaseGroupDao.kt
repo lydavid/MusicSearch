@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupForRelease
-import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import lydavidmusicsearchdatadatabase.Release_group

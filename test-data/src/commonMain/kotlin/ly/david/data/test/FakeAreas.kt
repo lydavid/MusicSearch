@@ -1,6 +1,6 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.core.models.area.AreaType
+import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchAreasResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel

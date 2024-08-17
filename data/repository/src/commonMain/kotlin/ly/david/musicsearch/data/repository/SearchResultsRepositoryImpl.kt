@@ -3,8 +3,8 @@ package ly.david.musicsearch.data.repository
 import app.cash.paging.Pager
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.core.models.listitem.EndOfList
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.listitem.EndOfList
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.SearchMusicBrainzPagingSource
 import ly.david.musicsearch.data.repository.internal.paging.insertFooterItemForNonEmpty

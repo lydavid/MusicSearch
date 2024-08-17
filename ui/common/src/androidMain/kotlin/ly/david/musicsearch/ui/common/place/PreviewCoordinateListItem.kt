@@ -3,7 +3,7 @@ package ly.david.musicsearch.ui.common.place
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import ly.david.musicsearch.core.models.place.CoordinatesUiModel
+import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark

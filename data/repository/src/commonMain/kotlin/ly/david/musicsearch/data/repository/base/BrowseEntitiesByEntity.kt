@@ -7,10 +7,10 @@ import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.Browsable
-import ly.david.musicsearch.core.models.ListFilters
-import ly.david.musicsearch.core.models.listitem.ListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.network.resourceUriPlural
+import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.resourceUriPlural
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig

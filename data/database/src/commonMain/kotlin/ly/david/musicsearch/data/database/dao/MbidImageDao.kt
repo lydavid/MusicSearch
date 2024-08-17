@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.core.models.image.ImageUrlDao
-import ly.david.musicsearch.core.models.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.data.database.Database
 
 class MbidImageDao(

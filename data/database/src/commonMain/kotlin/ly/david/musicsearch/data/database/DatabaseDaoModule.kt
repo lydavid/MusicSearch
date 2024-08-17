@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database
 
-import ly.david.musicsearch.core.models.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ArtistCollaborationDao

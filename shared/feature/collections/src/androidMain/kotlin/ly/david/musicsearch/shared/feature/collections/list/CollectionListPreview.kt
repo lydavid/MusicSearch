@@ -6,8 +6,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import app.cash.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

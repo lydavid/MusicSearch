@@ -3,11 +3,11 @@ package ly.david.musicsearch.shared.feature.details.release
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import ly.david.musicsearch.core.models.area.AreaType.COUNTRY
-import ly.david.musicsearch.core.models.listitem.AreaListItemModel
-import ly.david.musicsearch.core.models.listitem.LabelListItemModel
-import ly.david.musicsearch.core.models.release.ReleaseDetailsModel
-import ly.david.musicsearch.core.models.release.TextRepresentationUiModel
+import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark

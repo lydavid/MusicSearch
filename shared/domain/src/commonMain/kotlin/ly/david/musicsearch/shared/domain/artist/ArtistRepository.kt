@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.artist
 
-import ly.david.musicsearch.core.models.artist.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 
 interface ArtistRepository {
     suspend fun lookupArtist(

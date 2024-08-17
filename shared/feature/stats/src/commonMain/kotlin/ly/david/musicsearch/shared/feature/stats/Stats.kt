@@ -3,8 +3,8 @@ package ly.david.musicsearch.shared.feature.stats
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import ly.david.musicsearch.core.models.relation.RelationTypeCount
-import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupTypeCount
+import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 
 @Stable
 internal data class Stats(

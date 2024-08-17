@@ -4,8 +4,8 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Stable
 import app.cash.paging.compose.LazyPagingItems
 import com.slack.circuit.runtime.CircuitUiState
-import ly.david.musicsearch.core.models.listitem.ListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 @Stable
 internal data class SearchUiState(

@@ -3,8 +3,8 @@ package ly.david.musicsearch.ui.common.area
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import ly.david.musicsearch.core.models.area.AreaType.COUNTRY
-import ly.david.musicsearch.core.models.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark

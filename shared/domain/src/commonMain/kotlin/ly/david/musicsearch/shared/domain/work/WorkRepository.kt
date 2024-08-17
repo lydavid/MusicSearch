@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.work
 
-import ly.david.musicsearch.core.models.work.WorkDetailsModel
+import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
 
 interface WorkRepository {
     suspend fun lookupWork(

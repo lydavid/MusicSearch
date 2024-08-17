@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository.artist
 
-import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
+import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndRecording
 import ly.david.musicsearch.data.database.dao.ArtistCollaborationDao
 import ly.david.musicsearch.shared.domain.artist.ArtistCollaborationRepository
 

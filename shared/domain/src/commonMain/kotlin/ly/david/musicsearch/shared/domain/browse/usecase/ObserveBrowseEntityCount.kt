@@ -1,8 +1,8 @@
 package ly.david.musicsearch.shared.domain.browse.usecase
 
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.core.models.browse.BrowseEntityCount
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.browse.BrowseEntityCount
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.browse.BrowseEntityCountRepository
 
 class ObserveBrowseEntityCount(

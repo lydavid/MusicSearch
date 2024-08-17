@@ -1,8 +1,8 @@
 package ly.david.musicsearch.core.preferences
 
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.core.models.collection.CollectionSortOption
-import ly.david.musicsearch.core.models.history.HistorySortOption
+import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
+import ly.david.musicsearch.shared.domain.history.HistorySortOption
 
 interface AppPreferences {
 

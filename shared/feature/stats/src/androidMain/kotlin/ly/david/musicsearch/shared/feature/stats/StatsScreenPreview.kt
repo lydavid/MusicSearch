@@ -3,9 +3,9 @@ package ly.david.musicsearch.shared.feature.stats
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import kotlinx.collections.immutable.persistentListOf
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.core.models.relation.RelationTypeCount
-import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupTypeCount
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.core.preview.DefaultPreviews
 import ly.david.musicsearch.ui.core.theme.PreviewTheme

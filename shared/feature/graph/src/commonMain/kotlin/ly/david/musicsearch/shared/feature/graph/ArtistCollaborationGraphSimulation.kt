@@ -3,8 +3,8 @@ package ly.david.musicsearch.shared.feature.graph
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import ly.david.musicsearch.core.models.artist.CollaboratingArtistAndRecording
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndRecording
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.graph.viz.core.geom.Point
 import ly.david.musicsearch.shared.feature.graph.viz.force.ForceLink
 import ly.david.musicsearch.shared.feature.graph.viz.force.ForceNode

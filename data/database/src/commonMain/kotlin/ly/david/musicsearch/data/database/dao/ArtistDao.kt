@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.core.models.LifeSpanUiModel
-import ly.david.musicsearch.core.models.artist.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import lydavidmusicsearchdatadatabase.Artist

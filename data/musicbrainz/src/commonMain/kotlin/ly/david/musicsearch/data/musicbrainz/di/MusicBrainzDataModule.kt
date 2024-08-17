@@ -4,7 +4,7 @@ import MusicSearch.data.musicbrainz.BuildConfig
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthRepository
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
-import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.data.musicbrainz.auth.store.MusicBrainzAuthStoreImpl
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind

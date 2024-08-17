@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.core.models.relation.RelationTypeCount
+import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.getDisplayText

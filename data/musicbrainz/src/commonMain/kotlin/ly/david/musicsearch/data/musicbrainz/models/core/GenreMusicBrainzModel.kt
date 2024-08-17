@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.musicbrainz.models.core
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.core.models.genre.Genre
+import ly.david.musicsearch.shared.domain.genre.Genre
 
 @Serializable
 data class GenreMusicBrainzModel(

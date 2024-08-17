@@ -4,11 +4,11 @@ import app.cash.paging.Pager
 import app.cash.paging.insertSeparators
 import app.cash.paging.map
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.core.models.common.getDateFormatted
-import ly.david.musicsearch.core.models.history.NowPlayingHistory
-import ly.david.musicsearch.core.models.listitem.ListSeparator
-import ly.david.musicsearch.core.models.listitem.NowPlayingHistoryListItemModel
-import ly.david.musicsearch.core.models.listitem.toNowPlayingHistoryListItemModel
+import ly.david.musicsearch.shared.domain.common.getDateFormatted
+import ly.david.musicsearch.shared.domain.history.NowPlayingHistory
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
+import ly.david.musicsearch.shared.domain.listitem.NowPlayingHistoryListItemModel
+import ly.david.musicsearch.shared.domain.listitem.toNowPlayingHistoryListItemModel
 import ly.david.musicsearch.data.database.dao.NowPlayingHistoryDao
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.nowplaying.NowPlayingHistoryRepository

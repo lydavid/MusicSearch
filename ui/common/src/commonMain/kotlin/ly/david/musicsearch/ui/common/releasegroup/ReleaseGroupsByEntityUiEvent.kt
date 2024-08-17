@@ -1,7 +1,7 @@
 package ly.david.musicsearch.ui.common.releasegroup
 
 import com.slack.circuit.runtime.CircuitUiEvent
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 sealed interface ReleaseGroupsByEntityUiEvent : CircuitUiEvent {
     data class Get(

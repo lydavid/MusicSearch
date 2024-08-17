@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.event
 
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.core.models.event.EventDetailsModel
+import ly.david.musicsearch.shared.domain.event.EventDetailsModel
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.event.EventRepository

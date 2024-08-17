@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.musicbrainz.auth
 
 import kotlinx.datetime.Clock
 import ly.david.musicsearch.data.musicbrainz.auth.api.MusicBrainzOAuthApi
-import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 
 private const val REFRESH_TOKEN = "refresh_token"
 

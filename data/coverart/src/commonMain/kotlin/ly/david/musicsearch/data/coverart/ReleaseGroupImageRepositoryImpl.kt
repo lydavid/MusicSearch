@@ -3,8 +3,8 @@ package ly.david.musicsearch.data.coverart
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.http.HttpStatusCode
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.core.models.image.ImageUrlDao
-import ly.david.musicsearch.core.models.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.getFrontCoverArtUrl
 import ly.david.musicsearch.data.coverart.api.getFrontThumbnailCoverArtUrl

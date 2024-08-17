@@ -14,11 +14,11 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
-import ly.david.musicsearch.core.models.common.toFlagEmoji
-import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
-import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.common.toFlagEmoji
+import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.core.theme.TextStyles

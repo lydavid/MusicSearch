@@ -7,7 +7,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.core.models.auth.MusicBrainzAuthStore
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.data.musicbrainz.auth.Logout
 

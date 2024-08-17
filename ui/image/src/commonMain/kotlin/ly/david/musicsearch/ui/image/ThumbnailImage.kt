@@ -17,7 +17,7 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import coil3.size.Scale
 import coil3.size.Size
-import ly.david.musicsearch.core.models.common.useHttps
+import ly.david.musicsearch.shared.domain.common.useHttps
 import ly.david.musicsearch.ui.core.SMALL_IMAGE_SIZE
 import ly.david.musicsearch.ui.image.internal.PlaceholderIcon
 

@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.release
 
-import ly.david.musicsearch.core.models.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageUrls
 
 /**
  * Logic to retrieve release cover art path.

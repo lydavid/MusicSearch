@@ -16,8 +16,8 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
-import ly.david.musicsearch.core.models.listitem.ListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.search.history.usecase.DeleteSearchHistory
 import ly.david.musicsearch.shared.domain.search.history.usecase.GetSearchHistory
 import ly.david.musicsearch.shared.domain.search.history.usecase.RecordSearchHistory

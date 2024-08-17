@@ -2,8 +2,8 @@ package ly.david.musicsearch.data.musicbrainz.models.core
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.core.models.place.Coordinates
-import ly.david.musicsearch.core.models.place.Place
+import ly.david.musicsearch.shared.domain.place.Coordinates
+import ly.david.musicsearch.shared.domain.place.Place
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 

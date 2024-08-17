@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.series
 
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.core.models.series.SeriesDetailsModel
+import ly.david.musicsearch.shared.domain.series.SeriesDetailsModel
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.relation.RelationRepository

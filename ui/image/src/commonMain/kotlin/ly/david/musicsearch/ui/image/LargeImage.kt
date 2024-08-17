@@ -10,7 +10,7 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import ly.david.musicsearch.core.models.common.useHttps
+import ly.david.musicsearch.shared.domain.common.useHttps
 
 /**
  * @param id A unique ID that we use as a cache key.

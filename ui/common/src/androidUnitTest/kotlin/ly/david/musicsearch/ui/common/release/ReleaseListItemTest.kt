@@ -1,6 +1,6 @@
 package ly.david.musicsearch.ui.common.release
 
-import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 

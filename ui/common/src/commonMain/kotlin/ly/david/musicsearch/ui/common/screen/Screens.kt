@@ -1,7 +1,7 @@
 package ly.david.musicsearch.ui.common.screen
 
 import com.slack.circuit.runtime.screen.Screen
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
 @Parcelize

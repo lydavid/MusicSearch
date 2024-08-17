@@ -2,10 +2,10 @@ package ly.david.musicsearch.data.musicbrainz.models.core
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.core.models.NameWithDisambiguation
-import ly.david.musicsearch.core.models.release.CoverArtArchive
-import ly.david.musicsearch.core.models.release.Release
-import ly.david.musicsearch.core.models.release.TextRepresentation
+import ly.david.musicsearch.shared.domain.NameWithDisambiguation
+import ly.david.musicsearch.shared.domain.release.CoverArtArchive
+import ly.david.musicsearch.shared.domain.release.Release
+import ly.david.musicsearch.shared.domain.release.TextRepresentation
 import ly.david.musicsearch.data.musicbrainz.models.MediumMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel

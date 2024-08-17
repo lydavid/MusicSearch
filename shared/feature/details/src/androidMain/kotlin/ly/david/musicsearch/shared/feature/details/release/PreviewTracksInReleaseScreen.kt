@@ -6,8 +6,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import app.cash.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.musicsearch.core.models.listitem.ListSeparator
-import ly.david.musicsearch.core.models.listitem.TrackListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
+import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
