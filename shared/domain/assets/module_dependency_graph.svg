@@ -14,7 +14,7 @@
 <!-- :shared:domain -->
 <g id="node1" class="node">
 <title>:shared:domain</title>
-<ellipse fill="#b59aff" stroke="black" cx="116.5" cy="-155" rx="82.59" ry="18"/>
+<polygon fill="#b59aff" stroke="black" points="180,-173 53,-173 53,-137 180,-137 180,-173"/>
 <text text-anchor="middle" x="116.5" y="-151.3" font-family="Times,serif" font-size="14.00">:shared:domain</text>
 </g>
 <!-- :core:models -->

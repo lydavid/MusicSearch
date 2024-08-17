@@ -14,7 +14,7 @@
 <!-- :konsist&#45;test -->
 <g id="node1" class="node">
 <title>:konsist&#45;test</title>
-<ellipse fill="#b59aff" stroke="black" cx="116.5" cy="-292" rx="67.69" ry="18"/>
+<polygon fill="#b59aff" stroke="black" points="168.5,-310 64.5,-310 64.5,-274 168.5,-274 168.5,-310"/>
 <text text-anchor="middle" x="116.5" y="-288.3" font-family="Times,serif" font-size="14.00">:konsist&#45;test</text>
 </g>
 <!-- :ui:core -->

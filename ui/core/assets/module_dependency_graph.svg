@@ -14,7 +14,7 @@
 <!-- :ui:core -->
 <g id="node1" class="node">
 <title>:ui:core</title>
-<ellipse fill="#b59aff" stroke="black" cx="116.5" cy="-155" rx="45.49" ry="18"/>
+<polygon fill="#b59aff" stroke="black" points="151.5,-173 81.5,-173 81.5,-137 151.5,-137 151.5,-173"/>
 <text text-anchor="middle" x="116.5" y="-151.3" font-family="Times,serif" font-size="14.00">:ui:core</text>
 </g>
 <!-- :shared:strings -->

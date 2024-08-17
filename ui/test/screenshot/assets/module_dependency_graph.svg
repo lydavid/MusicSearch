@@ -14,7 +14,7 @@
 <!-- :ui:test:screenshot -->
 <g id="node1" class="node">
 <title>:ui:test:screenshot</title>
-<ellipse fill="#9affb5" stroke="black" cx="144.24" cy="-292" rx="96.68" ry="18"/>
+<polygon fill="#9affb5" stroke="black" points="218.74,-310 69.74,-310 69.74,-274 218.74,-274 218.74,-310"/>
 <text text-anchor="middle" x="144.24" y="-288.3" font-family="Times,serif" font-size="14.00">:ui:test:screenshot</text>
 </g>
 <!-- :ui:core -->
@@ -26,8 +26,8 @@
 <!-- :ui:test:screenshot&#45;&gt;:ui:core -->
 <g id="edge1" class="edge">
 <title>:ui:test:screenshot&#45;&gt;:ui:core</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M87.07,-277.34C87.07,-277.34 87.07,-183.01 87.07,-183.01"/>
-<polygon fill="black" stroke="black" points="90.57,-183.01 87.07,-173.01 83.57,-183.01 90.57,-183.01"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M98.24,-273.81C98.24,-273.81 98.24,-181.97 98.24,-181.97"/>
+<polygon fill="black" stroke="black" points="101.74,-181.97 98.24,-171.97 94.74,-181.97 101.74,-181.97"/>
 </g>
 <!-- :test:image -->
 <g id="node3" class="node">
@@ -38,8 +38,8 @@
 <!-- :ui:test:screenshot&#45;&gt;:test:image -->
 <g id="edge2" class="edge">
 <title>:ui:test:screenshot&#45;&gt;:test:image</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M193.14,-276.28C193.14,-276.28 193.14,-182.69 193.14,-182.69"/>
-<polygon fill="black" stroke="black" points="196.64,-182.69 193.14,-172.69 189.64,-182.69 196.64,-182.69"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M181.97,-273.81C181.97,-273.81 181.97,-181.55 181.97,-181.55"/>
+<polygon fill="black" stroke="black" points="185.47,-181.55 181.97,-171.55 178.47,-181.55 185.47,-181.55"/>
 </g>
 <!-- :shared:strings -->
 <g id="node4" class="node">
