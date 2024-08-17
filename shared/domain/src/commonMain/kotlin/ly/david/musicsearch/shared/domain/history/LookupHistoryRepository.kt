@@ -2,8 +2,6 @@ package ly.david.musicsearch.shared.domain.history
 
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.history.HistorySortOption
-import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 
 interface LookupHistoryRepository {

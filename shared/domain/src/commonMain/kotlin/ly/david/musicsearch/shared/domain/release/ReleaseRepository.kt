@@ -3,7 +3,6 @@ package ly.david.musicsearch.shared.domain.release
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 
 interface ReleaseRepository {
     suspend fun lookupRelease(releaseId: String): ReleaseDetailsModel

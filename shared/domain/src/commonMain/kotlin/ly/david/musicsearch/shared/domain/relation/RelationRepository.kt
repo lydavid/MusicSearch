@@ -3,9 +3,7 @@ package ly.david.musicsearch.shared.domain.relation
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 
 interface RelationRepository {
     fun hasUrlsBeenSavedFor(entityId: String): Boolean
