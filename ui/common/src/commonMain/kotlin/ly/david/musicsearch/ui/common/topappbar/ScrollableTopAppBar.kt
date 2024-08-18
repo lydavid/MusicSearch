@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common.topappbar
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -217,22 +218,24 @@ private fun OverflowMenu(
     }
 
     if (overflowDropdownMenuItems != null) {
-        IconButton(onClick = { showMenu = !showMenu }) {
-            Icon(
-                imageVector = Icons.Default.MoreVert,
-                contentDescription = strings.moreActions,
+        Box {
+            IconButton(onClick = { showMenu = !showMenu }) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = strings.moreActions,
+                )
+            }
+            DropdownMenu(
+                expanded = showMenu,
+                onDismissRequest = { showMenu = false },
+                content = {
+                    // We lose out on the ability to control these items within a Column,
+                    // but now each item can close itself.
+                    Column {
+                        overflowDropdownMenuItems.invoke(scope)
+                    }
+                },
             )
         }
-        DropdownMenu(
-            expanded = showMenu,
-            onDismissRequest = { showMenu = false },
-            content = {
-                // We lose out on the ability to control these items within a Column,
-                // but now each item can close itself.
-                Column {
-                    overflowDropdownMenuItems.invoke(scope)
-                }
-            },
-        )
     }
 }
