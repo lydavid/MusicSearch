@@ -41,4 +41,12 @@ appId: io.github.lydavid.musicsearch.debug
     text: "Back"
     index: 0
 - assertVisible: "Search MusicBrainz"
+
+- tapOn: History
+- tapOn: "ずっと真夜中でいいのに。 (Japanese pop band)"
+- assertVisible: "ずっと真夜中でいいのに。 (Japanese pop band)"
+- assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
+- assertVisible: "Type: Group"
+- assertVisible: "Founded: 2018"
+
 - stopRecording
