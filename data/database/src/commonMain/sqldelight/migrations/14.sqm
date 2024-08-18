@@ -1,0 +1,6 @@
+-- Create new table
+CREATE TABLE IF NOT EXISTS mbid_wikipedia (
+  `mbid` TEXT NOT NULL PRIMARY KEY,
+  `extract` TEXT NOT NULL,
+  `url` TEXT NOT NULL
+);

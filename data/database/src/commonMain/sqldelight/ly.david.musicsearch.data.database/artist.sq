@@ -30,9 +30,12 @@ SELECT
   a.begin,
   a.end,
   a.ended,
-  mi.large_url
+  mi.large_url,
+  mw.extract,
+  mw.url
 FROM artist a
 LEFT JOIN mbid_image mi ON mi.mbid = a.id
+LEFT JOIN mbid_wikipedia mw ON mw.mbid = a.id
 WHERE a.id = :artistId
 GROUP BY a.id;
 

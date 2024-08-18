@@ -91,7 +91,7 @@ internal class ArtistPresenter(
         LaunchedEffect(forceRefreshDetails) {
             try {
                 isLoading = true
-                val artistDetailsModel = repository.lookupArtist(
+                val artistDetailsModel = repository.lookupArtistDetails(
                     artistId = screen.id,
                     forceRefresh = forceRefreshDetails,
                 )
