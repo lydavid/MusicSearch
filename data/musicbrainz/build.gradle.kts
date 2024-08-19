@@ -48,7 +48,7 @@ kotlin {
                 implementation(projects.core.logging.api)
                 implementation(libs.koin.core)
                 implementation(libs.androidx.datastore.preferences.core)
-                implementation(project.dependencies.platform(libs.ktor.bom))
+//                implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client.auth)
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.serialization.kotlinx.json)

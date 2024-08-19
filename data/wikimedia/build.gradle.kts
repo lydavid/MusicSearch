@@ -10,7 +10,7 @@ kotlin {
                 implementation(projects.shared.domain)
                 implementation(projects.core.logging.api)
                 implementation(libs.koin.core)
-                implementation(project.dependencies.platform(libs.ktor.bom))
+//                implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.serialization.kotlinx.json)
             }
