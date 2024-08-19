@@ -3,6 +3,10 @@ package ly.david.convention
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension.Companion.DEFAULT_SRC_DIR_JAVA
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension.Companion.DEFAULT_SRC_DIR_KOTLIN
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension.Companion.DEFAULT_TEST_SRC_DIR_JAVA
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension.Companion.DEFAULT_TEST_SRC_DIR_KOTLIN
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
@@ -25,6 +29,15 @@ fun Project.configureDetekt() {
         parallel = true
 
         config.setFrom(files("${project.rootDir}/config/detekt.yml"))
+        source.setFrom(
+            files(
+                DEFAULT_SRC_DIR_JAVA,
+                DEFAULT_TEST_SRC_DIR_JAVA,
+                DEFAULT_SRC_DIR_KOTLIN,
+                DEFAULT_TEST_SRC_DIR_KOTLIN,
+                "build.gradle.kts",
+            ),
+        )
 
         // Each module has its own baseline otherwise they overwrite each other
         baseline = file("$projectDir/config/baseline.xml")

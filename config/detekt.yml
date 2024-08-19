@@ -38,6 +38,8 @@ style:
       - "Test"
   ReturnCount:
     excludeGuardClauses: true
+  UnusedPrivateProperty:
+    allowedNames: '(_|ignored|expected|((android(UnitTest|InstrumentedTest)?|common|ios|jvm)(Main|Test)?))'
   UnusedPrivateMember:
     ignoreAnnotated:
       - "DefaultPreviews"

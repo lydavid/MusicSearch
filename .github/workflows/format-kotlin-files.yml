@@ -1,0 +1,39 @@
+name: Format Kotlin files
+
+on:
+  push:
+    branches: [ "beta" ]
+    paths:
+      - "**.kt"
+      - "**.kts"
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  format-kotlin-files:
+    name: Format Kotlin files
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@v1
+        with:
+          token: ${{ secrets.PAT }}
+
+      - id: setup
+        uses: ./.github/actions/setup
+
+      - name: Detekt non-KMP code smells
+        if: always()
+        run: ./gradlew detekt
+
+      - name: Detekt KMP code smells
+        if: always()
+        run: ./gradlew detektMetadataMain
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v5.0.1
+        with:
+          commit_message: 'chore: format Kotlin files [skip ci]'
+          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
