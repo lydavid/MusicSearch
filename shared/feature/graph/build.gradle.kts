@@ -48,9 +48,9 @@ kotlin {
     }
 }
 
-//tasks.withType<Test> {
+// tasks.withType<Test> {
 //    useJUnitPlatform()
-//}
+// }
 
 dependencies {
     debugImplementation(compose.uiTooling)

@@ -1,5 +1,8 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues></CurrentIssues>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:AreaPresenter.kt$AreaPresenter$@Composable override fun present(): AreaUiState</ID>
+    <ID>CyclomaticComplexMethod:ArtistPresenter.kt$ArtistPresenter$@Composable override fun present(): ArtistUiState</ID>
+  </CurrentIssues>
 </SmellBaseline>
