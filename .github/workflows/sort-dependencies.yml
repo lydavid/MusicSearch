@@ -1,0 +1,29 @@
+name: Sort Dependencies
+
+on:
+  push:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  sort-dependencies:
+    name: Sort Dependencies
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@v1
+        with:
+          token: ${{ secrets.PAT }}
+
+      - id: setup
+        uses: ./.github/actions/setup
+
+      - run: ./gradlew sortDependencies
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v5.0.1
+        with:
+          commit_message: 'chore: sort gradle dependencies [skip ci]'
+          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>

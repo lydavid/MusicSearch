@@ -154,3 +154,4 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.4"
+sort-dependencies = "com.squareup.sort-dependencies:0.8"
