@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common.artist
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
@@ -37,7 +38,7 @@ internal class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistL
     )
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 private fun Preview(
     @PreviewParameter(ArtistPreviewParameterProvider::class) artist: ArtistListItemModel,
