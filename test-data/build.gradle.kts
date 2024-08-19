@@ -6,13 +6,13 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.shared.domain)
-                implementation(projects.data.common.network)
-                implementation(projects.data.musicbrainz)
-                implementation(projects.data.coverart)
-                implementation(projects.data.spotify)
-                implementation(libs.koin.core)
-            }
+            implementation(libs.koin.core)
+            implementation(projects.data.common.network)
+            implementation(projects.data.coverart)
+            implementation(projects.data.musicbrainz)
+            implementation(projects.data.spotify)
+            implementation(projects.shared.domain)
+        }
         }
     }
 }

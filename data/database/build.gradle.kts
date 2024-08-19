@@ -9,21 +9,21 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.shared.domain)
-                implementation(projects.core.coroutines)
-                implementation(projects.data.musicbrainz)
-                implementation(libs.koin.core)
-                implementation(libs.kotlinx.collections.immutable)
-                implementation(libs.paging.common)
-                implementation(libs.sqldelight.coroutines)
-                implementation(libs.sqldelight.paging)
-                implementation(libs.sqldelight.primitive)
-            }
+            implementation(libs.koin.core)
+            implementation(libs.kotlinx.collections.immutable)
+            implementation(libs.paging.common)
+            implementation(libs.sqldelight.coroutines)
+            implementation(libs.sqldelight.paging)
+            implementation(libs.sqldelight.primitive)
+            implementation(projects.core.coroutines)
+            implementation(projects.data.musicbrainz)
+            implementation(projects.shared.domain)
+        }
         }
         val commonTest by getting {
             dependencies {
-                implementation(libs.junit)
-            }
+            implementation(libs.junit)
+        }
         }
         val jvmCommon by creating {
             dependsOn(commonMain)
@@ -31,19 +31,19 @@ kotlin {
         val androidMain by getting {
             dependsOn(jvmCommon)
             dependencies {
-                implementation(libs.sqldelight.android.driver)
-            }
+            implementation(libs.sqldelight.android.driver)
+        }
         }
         val jvmMain by getting {
             dependsOn(jvmCommon)
             dependencies {
-                implementation(libs.sqldelight.sqlite.driver)
-            }
+            implementation(libs.sqldelight.sqlite.driver)
+        }
         }
         val iosMain by getting {
             dependencies {
-                implementation(libs.sqldelight.native.driver)
-            }
+            implementation(libs.sqldelight.native.driver)
+        }
         }
     }
 }

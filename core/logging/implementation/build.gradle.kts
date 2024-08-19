@@ -11,14 +11,14 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.core.logging.api)
-                implementation(libs.koin.core)
-            }
+            implementation(libs.koin.core)
+            implementation(projects.core.logging.api)
+        }
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.timber)
-            }
+            implementation(libs.timber)
+        }
         }
     }
 }

@@ -44,42 +44,41 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.shared.domain)
-                implementation(projects.core.logging.api)
-                implementation(libs.koin.core)
-                implementation(libs.androidx.datastore.preferences.core)
-//                implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(libs.ktor.client.auth)
-                implementation(libs.ktor.client.core)
-                implementation(libs.ktor.serialization.kotlinx.json)
-            }
+            implementation(libs.androidx.datastore.preferences.core)
+            implementation(libs.koin.core)
+            //                implementation(project.dependencies.platform(libs.ktor.bom))
+            implementation(libs.ktor.client.auth)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(projects.core.logging.api)
+            implementation(projects.shared.domain)
+        }
         }
         val commonTest by getting {
             dependencies {
-                implementation(libs.junit)
-                implementation(libs.koin.test)
-            }
+            implementation(libs.junit)
+            implementation(libs.koin.test)
+        }
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.appauth)
-            }
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.appauth)
+        }
         }
         val jvmMain by getting {
             dependencies {
-                implementation(libs.scribejava)
-            }
+            implementation(libs.scribejava)
+        }
         }
         val jvmTest by getting {
             dependencies {
-                implementation(libs.mockk)
-            }
+            implementation(libs.mockk)
+        }
         }
         val iosMain by getting {
             dependencies {
-                // TODO: OAuth
-            }
+        }
         }
     }
 }

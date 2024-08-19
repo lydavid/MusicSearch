@@ -12,33 +12,32 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.shared.domain)
-                implementation(projects.ui.core)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.ui)
-                implementation(libs.koin.core)
-
-                implementation(libs.coil)
-                implementation(libs.coil.compose)
-            }
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(compose.ui)
+            implementation(libs.coil)
+            implementation(libs.coil.compose)
+            implementation(libs.koin.core)
+            implementation(projects.shared.domain)
+            implementation(projects.ui.core)
+        }
         }
         val androidMain by getting {
             dependencies {
-                implementation(compose.preview)
-                implementation(libs.coil.network.okhttp)
-            }
+            implementation(compose.preview)
+            implementation(libs.coil.network.okhttp)
+        }
         }
         val jvmMain by getting {
             dependencies {
-                implementation(libs.coil.network.okhttp)
-            }
+            implementation(libs.coil.network.okhttp)
+        }
         }
         val iosMain by getting {
             dependencies {
-                implementation(libs.coil.network.ktor2)
-            }
+            implementation(libs.coil.network.ktor2)
+        }
         }
     }
 }

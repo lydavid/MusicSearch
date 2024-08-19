@@ -7,18 +7,18 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.shared.domain)
-                implementation(projects.core.logging.api)
-                implementation(libs.koin.core)
-//                implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(libs.ktor.client.core)
-                implementation(libs.ktor.serialization.kotlinx.json)
-            }
+            implementation(libs.koin.core)
+            //                implementation(project.dependencies.platform(libs.ktor.bom))
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(projects.core.logging.api)
+            implementation(projects.shared.domain)
+        }
         }
         val commonTest by getting {
             dependencies {
-                implementation(libs.kotlin.test)
-            }
+            implementation(libs.kotlin.test)
+        }
         }
     }
 }

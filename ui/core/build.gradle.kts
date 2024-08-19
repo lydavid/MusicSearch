@@ -13,17 +13,17 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.shared.strings)
-                implementation(libs.lyricist.library)
+            api(projects.shared.strings)
 
-                implementation(compose.foundation)
-                implementation(compose.material3)
-            }
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(libs.lyricist.library)
+        }
         }
         val androidMain by getting {
             dependencies {
-                implementation(compose.preview)
-            }
+            implementation(compose.preview)
+        }
         }
     }
 }

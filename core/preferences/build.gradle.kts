@@ -11,11 +11,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.shared.domain)
-                implementation(projects.core.coroutines)
-                implementation(libs.koin.core)
-                implementation(libs.androidx.datastore.preferences.core)
-            }
+            implementation(libs.androidx.datastore.preferences.core)
+            implementation(libs.koin.core)
+            implementation(projects.core.coroutines)
+            implementation(projects.shared.domain)
+        }
         }
         val jvmCommon by creating {
             dependsOn(commonMain)
@@ -26,8 +26,8 @@ kotlin {
         val androidMain by getting {
             dependsOn(jvmCommon)
             dependencies {
-                implementation(libs.androidx.datastore.preferences.android)
-            }
+            implementation(libs.androidx.datastore.preferences.android)
+        }
         }
     }
 }

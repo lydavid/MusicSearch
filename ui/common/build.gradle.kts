@@ -16,28 +16,27 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.shared.domain)
-                api(projects.ui.core)
-                implementation(projects.data.coverart)
-                implementation(projects.data.musicbrainz)
-                implementation(projects.core.preferences)
-                implementation(projects.core.logging.api)
-                implementation(projects.ui.image)
+            api(projects.shared.domain)
+            api(projects.ui.core)
 
-                implementation(compose.foundation)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.material)
-                implementation(compose.material3)
-                implementation(compose.ui)
-
-                implementation(libs.circuit.foundation)
-                implementation(libs.circuit.overlay)
-                implementation(libs.circuitx.overlays)
-                implementation(libs.koin.core)
-                implementation(libs.lyricist.library)
-                implementation(libs.paging.common)
-                implementation(libs.paging.compose)
-            }
+            implementation(compose.foundation)
+            implementation(compose.material)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(compose.ui)
+            implementation(libs.circuit.foundation)
+            implementation(libs.circuit.overlay)
+            implementation(libs.circuitx.overlays)
+            implementation(libs.koin.core)
+            implementation(libs.lyricist.library)
+            implementation(libs.paging.common)
+            implementation(libs.paging.compose)
+            implementation(projects.core.logging.api)
+            implementation(projects.core.preferences)
+            implementation(projects.data.coverart)
+            implementation(projects.data.musicbrainz)
+            implementation(projects.ui.image)
+        }
         }
         val jvmCommon by creating {
             dependsOn(commonMain)
@@ -45,23 +44,23 @@ kotlin {
         val androidMain by getting {
             dependsOn(jvmCommon)
             dependencies {
-                implementation(libs.androidx.activity.compose)
-            }
+            implementation(libs.androidx.activity.compose)
+        }
         }
         val jvmMain by getting {
             dependsOn(jvmCommon)
         }
         val androidUnitTest by getting {
             dependencies {
-                implementation(projects.ui.test.screenshot)
-                implementation(libs.test.parameter.injector)
-                implementation(libs.koin.test)
-            }
+            implementation(libs.koin.test)
+            implementation(libs.test.parameter.injector)
+            implementation(projects.ui.test.screenshot)
+        }
         }
         val commonTest by getting {
             dependencies {
-                implementation(libs.kotlin.test)
-            }
+            implementation(libs.kotlin.test)
+        }
         }
     }
 
@@ -86,5 +85,6 @@ kotlin {
 
 dependencies {
     implementation(compose.preview)
+
     debugImplementation(compose.uiTooling)
 }
