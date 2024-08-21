@@ -8,6 +8,11 @@ insert:
 INSERT OR IGNORE INTO mbid_wikipedia
 VALUES ?;
 
+get:
+SELECT * FROM mbid_wikipedia
+WHERE mbid = :mbid
+LIMIT 1;
+
 deleteById:
 DELETE FROM mbid_wikipedia
 WHERE mbid = :mbid;

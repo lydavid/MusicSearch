@@ -6,5 +6,7 @@ interface MbidWikipediaDao {
         wikipediaExtract: WikipediaExtract,
     )
 
+    fun get(mbid: String): WikipediaExtract?
+
     fun deleteById(mbid: String)
 }

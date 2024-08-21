@@ -1,12 +1,8 @@
 package ly.david.musicsearch.shared.domain.artist
 
 interface ArtistImageRepository {
-    suspend fun getArtistImageFromNetwork(
-        artistMbid: String,
-        spotifyUrl: String,
+    suspend fun getArtistImageUrl(
+        artistDetailsModel: ArtistDetailsModel,
+        forceRefresh: Boolean,
     ): String
-
-    fun deleteImage(
-        artistMbid: String,
-    )
 }

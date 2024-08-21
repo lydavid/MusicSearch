@@ -1,25 +1,59 @@
 package ly.david.musicsearch.data.wikimedia
 
+import io.ktor.client.plugins.ClientRequestException
+import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.wikimedia.api.WikimediaApi
+import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.wikimedia.MbidWikipediaDao
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 
 internal class WikimediaRepositoryImpl(
-    private val api: WikimediaApi,
+    private val wikimediaApi: WikimediaApi,
     private val mbidWikipediaDao: MbidWikipediaDao,
+    private val logger: Logger,
 ) : WikimediaRepository {
-    override suspend fun getWikipediaExtractFromNetwork(
+
+    override suspend fun getWikipediaExtract(
         mbid: String,
-        wikidataUrl: String,
+        urls: List<RelationListItemModel>,
+        forceRefresh: Boolean,
     ): WikipediaExtract {
-        val wikidataId = wikidataUrl.split("/").last()
-        val wikipediaExtract = api.getWikipediaExtract(wikidataId = wikidataId)
-        mbidWikipediaDao.save(mbid, wikipediaExtract)
-        return wikipediaExtract
+        if (forceRefresh) {
+            mbidWikipediaDao.deleteById(mbid)
+        }
+
+        return mbidWikipediaDao.get(mbid) ?: getWikipediaExtractFromNetwork(
+            mbid = mbid,
+            urls = urls,
+        )
     }
 
-    override fun deleteWikipediaExtract(mbid: String) {
-        mbidWikipediaDao.deleteById(mbid)
+    private suspend fun getWikipediaExtractFromNetwork(
+        mbid: String,
+        urls: List<RelationListItemModel>,
+    ): WikipediaExtract {
+        return try {
+            val wikidataUrl =
+                urls.firstOrNull { it.name.contains("www.wikidata.org/wiki/") }?.name
+                    ?: return WikipediaExtract()
+            val wikidataId = wikidataUrl.split("/").last()
+            val wikipediaExtract = wikimediaApi.getWikipediaExtract(wikidataId = wikidataId)
+            cache(mbid, wikipediaExtract)
+            wikipediaExtract
+        } catch (ex: ClientRequestException) {
+            logger.e(ex)
+            WikipediaExtract()
+        }
+    }
+
+    private fun cache(
+        mbid: String,
+        wikipediaExtract: WikipediaExtract,
+    ) {
+        mbidWikipediaDao.save(
+            mbid = mbid,
+            wikipediaExtract = wikipediaExtract,
+        )
     }
 }

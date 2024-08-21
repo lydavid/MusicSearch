@@ -25,6 +25,17 @@ class MbidWikipediaDaoImpl(
         }
     }
 
+    override fun get(mbid: String): WikipediaExtract? =
+        transacter.get(
+            mbid = mbid,
+            mapper = { _: String, extract: String, url: String ->
+                WikipediaExtract(
+                    extract = extract,
+                    wikipediaUrl = url,
+                )
+            },
+        ).executeAsOneOrNull()
+
     override fun deleteById(mbid: String) {
         transacter.deleteById(mbid)
     }
