@@ -18,11 +18,14 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
+import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
@@ -50,6 +53,8 @@ internal class ArtistPresenter(
     private val screen: DetailsScreen,
     private val navigator: Navigator,
     private val repository: ArtistRepository,
+    private val artistImageRepository: ArtistImageRepository,
+    private val wikimediaRepository: WikimediaRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
     private val eventsByEntityPresenter: EventsByEntityPresenter,
     private val recordingsByEntityPresenter: RecordingsByEntityPresenter,
@@ -68,6 +73,8 @@ internal class ArtistPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         var artist: ArtistDetailsModel? by remember { mutableStateOf(null) }
+        var imageUrl: String? by remember { mutableStateOf(null) }
+        var wikipediaExtract: WikipediaExtract by remember { mutableStateOf(WikipediaExtract()) }
         val tabs: List<ArtistTab> by rememberSaveable {
             mutableStateOf(ArtistTab.entries)
         }
@@ -115,6 +122,25 @@ internal class ArtistPresenter(
             }
             isLoading = false
             forceRefreshDetails = false
+        }
+
+        LaunchedEffect(forceRefreshDetails, artist) {
+            artist?.let { artist ->
+                imageUrl = artistImageRepository.getArtistImageUrl(
+                    artistDetailsModel = artist,
+                    forceRefresh = forceRefreshDetails,
+                )
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, artist) {
+            artist?.let { artist ->
+                wikipediaExtract = wikimediaRepository.getWikipediaExtract(
+                    mbid = artist.id,
+                    urls = artist.urls,
+                    forceRefresh = forceRefreshDetails,
+                )
+            }
         }
 
         LaunchedEffect(
@@ -237,6 +263,8 @@ internal class ArtistPresenter(
             isLoading = isLoading,
             isError = isError,
             artist = artist,
+            imageUrl = imageUrl,
+            wikipediaExtract = wikipediaExtract,
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
@@ -258,6 +286,8 @@ internal data class ArtistUiState(
     val isLoading: Boolean,
     val isError: Boolean,
     val artist: ArtistDetailsModel?,
+    val imageUrl: String?,
+    val wikipediaExtract: WikipediaExtract,
     val tabs: List<ArtistTab>,
     val selectedTab: ArtistTab,
     val topAppBarFilterState: TopAppBarFilterState,

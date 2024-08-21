@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
+import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -25,6 +26,7 @@ internal fun ArtistDetailsUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     imageUrl: String = "",
+    wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
 ) {
@@ -42,6 +44,7 @@ internal fun ArtistDetailsUi(
 
             artist.run {
                 ArtistInformationSection(
+                    wikipediaExtract = wikipediaExtract,
                     filterText = filterText,
                 )
 
@@ -57,6 +60,7 @@ internal fun ArtistDetailsUi(
 
 @Composable
 private fun ArtistDetailsModel.ArtistInformationSection(
+    wikipediaExtract: WikipediaExtract,
     filterText: String = "",
 ) {
     val strings = LocalStrings.current

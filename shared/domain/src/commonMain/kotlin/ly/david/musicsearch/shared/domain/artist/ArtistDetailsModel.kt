@@ -13,7 +13,7 @@ data class ArtistDetailsModel(
     override val gender: String? = null,
     override val countryCode: String? = null,
     val lifeSpan: LifeSpanUiModel? = null,
+    val urls: List<RelationListItemModel> = listOf(),
     val imageUrl: String? = null,
     val wikipediaExtract: WikipediaExtract? = null,
-    val urls: List<RelationListItemModel> = listOf(),
 ) : Artist

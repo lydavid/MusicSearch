@@ -1,23 +1,17 @@
 package ly.david.musicsearch.shared.domain.wikimedia
 
+import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+
 interface WikimediaRepository {
 
     /**
-     * Given a [wikidataUrl] (e.g. https://www.wikidata.org/wiki/Q20019100),
+     * Given [urls] that may include a Wikidata url (e.g. https://www.wikidata.org/wiki/Q20019100),
      * return a Wikipedia extract for display.
      * Also, cache it for the given [mbid].
-     *
-     * If cached, we return this data together with the entity via SQL joins, rather than here.
      */
-    suspend fun getWikipediaExtractFromNetwork(
+    suspend fun getWikipediaExtract(
         mbid: String,
-        wikidataUrl: String,
+        urls: List<RelationListItemModel>,
+        forceRefresh: Boolean,
     ): WikipediaExtract
-
-    /**
-     * Delete the cached Wikipedia extract for the given [mbid].
-     */
-    fun deleteWikipediaExtract(
-        mbid: String,
-    )
 }

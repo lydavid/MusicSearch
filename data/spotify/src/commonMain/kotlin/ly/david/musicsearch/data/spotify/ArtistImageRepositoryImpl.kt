@@ -2,16 +2,15 @@ package ly.david.musicsearch.data.spotify
 
 import io.ktor.client.plugins.ClientRequestException
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.shared.domain.image.ImageUrlDao
-import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.data.spotify.api.SpotifyApi
+import ly.david.musicsearch.data.spotify.api.SpotifyArtist
 import ly.david.musicsearch.data.spotify.api.getLargeImageUrl
 import ly.david.musicsearch.data.spotify.api.getThumbnailImageUrl
+import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.ImageUrls
 
-/**
- * Logic to retrieve release cover art path.
- */
 class ArtistImageRepositoryImpl(
     private val spotifyApi: SpotifyApi,
     private val imageUrlDao: ImageUrlDao,
@@ -24,24 +23,36 @@ class ArtistImageRepositoryImpl(
      *
      * Also saves it to db.
      */
-    override suspend fun getArtistImageFromNetwork(
-        artistMbid: String,
-        spotifyUrl: String,
+    override suspend fun getArtistImageUrl(
+        artistDetailsModel: ArtistDetailsModel,
+        forceRefresh: Boolean,
+    ): String {
+        if (forceRefresh) {
+            imageUrlDao.deleteAllUrlsById(artistDetailsModel.id)
+        }
+
+        val cachedImageUrls = imageUrlDao.getAllUrls(artistDetailsModel.id)
+        return if (cachedImageUrls.isNotEmpty()) {
+            return cachedImageUrls.first().largeUrl
+        } else {
+            getArtistImageUrlFromNetwork(artistDetailsModel)
+        }
+    }
+
+    private suspend fun getArtistImageUrlFromNetwork(
+        artistDetailsModel: ArtistDetailsModel,
     ): String {
         return try {
+            val spotifyUrl =
+                artistDetailsModel.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name
+                    ?: return ""
             val spotifyArtistId = spotifyUrl.split("/").last()
 
-            val spotifyArtist = spotifyApi.getArtist(spotifyArtistId)
-            val thumbnailUrl = spotifyArtist.getThumbnailImageUrl()
+            val spotifyArtist: SpotifyArtist = spotifyApi.getArtist(spotifyArtistId)
             val largeUrl = spotifyArtist.getLargeImageUrl()
-            imageUrlDao.saveUrls(
-                mbid = artistMbid,
-                imageUrls = listOf(
-                    ImageUrls(
-                        thumbnailUrl = thumbnailUrl,
-                        largeUrl = largeUrl,
-                    ),
-                ),
+            cache(
+                artistDetailsModel = artistDetailsModel,
+                spotifyArtist = spotifyArtist,
             )
             largeUrl
         } catch (ex: ClientRequestException) {
@@ -50,9 +61,18 @@ class ArtistImageRepositoryImpl(
         }
     }
 
-    override fun deleteImage(
-        artistMbid: String,
+    private fun cache(
+        artistDetailsModel: ArtistDetailsModel,
+        spotifyArtist: SpotifyArtist,
     ) {
-        imageUrlDao.deleteAllUrlsById(artistMbid)
+        imageUrlDao.saveUrls(
+            mbid = artistDetailsModel.id,
+            imageUrls = listOf(
+                ImageUrls(
+                    thumbnailUrl = spotifyArtist.getThumbnailImageUrl(),
+                    largeUrl = spotifyArtist.getLargeImageUrl(),
+                ),
+            ),
+        )
     }
 }
