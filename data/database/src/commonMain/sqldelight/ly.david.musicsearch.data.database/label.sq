@@ -1,5 +1,7 @@
 import kotlin.Boolean;
 import kotlin.Int;
+import kotlin.String;
+import kotlin.collections.List;
 
 CREATE TABLE IF NOT EXISTS label (
   id TEXT PRIMARY KEY NOT NULL,
@@ -8,6 +10,8 @@ CREATE TABLE IF NOT EXISTS label (
   type TEXT,
   type_id TEXT,
   label_code INTEGER AS Int,
+  ipis TEXT AS List<String>,
+  isnis TEXT AS List<String>,
   begin TEXT,
   end TEXT,
   ended INTEGER AS Boolean
@@ -24,6 +28,8 @@ SELECT
   disambiguation,
   type,
   label_code,
+  ipis,
+  isnis,
   begin,
   end,
   ended

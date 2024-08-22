@@ -1,0 +1,5 @@
+import kotlin.String;
+import kotlin.collections.List;
+
+ALTER TABLE label ADD COLUMN ipis TEXT AS List<String>;
+ALTER TABLE label ADD COLUMN isnis TEXT AS List<String>;

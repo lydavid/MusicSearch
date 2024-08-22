@@ -41,6 +41,8 @@ fun createDatabase(driver: SqlDriver): Database {
         ),
         labelAdapter = Label.Adapter(
             label_codeAdapter = IntColumnAdapter,
+            ipisAdapter = ListStringColumnAdapter,
+            isnisAdapter = ListStringColumnAdapter,
         ),
         recordingAdapter = Recording.Adapter(
             lengthAdapter = IntColumnAdapter,

@@ -46,6 +46,22 @@ internal fun LabelDetailsUi(
                     )
                 }
 
+                ipis?.ifNotNullOrEmpty {
+                    TextWithHeading(
+                        heading = strings.ipi,
+                        text = it.joinToString(", "),
+                        filterText = filterText,
+                    )
+                }
+
+                isnis?.ifNotNullOrEmpty {
+                    TextWithHeading(
+                        heading = strings.isni,
+                        text = it.joinToString(", "),
+                        filterText = filterText,
+                    )
+                }
+
                 // TODO: lifespan, founded, defunct for end
 
                 // TODO: area

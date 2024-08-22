@@ -14,6 +14,8 @@ data class LabelMusicBrainzModel(
     @SerialName("type") override val type: String? = null,
     @SerialName("type-id") val typeId: String? = null,
     @SerialName("label-code") override val labelCode: Int? = null,
+    @SerialName("ipis") val ipis: List<String>? = null,
+    @SerialName("isnis") val isnis: List<String>? = null,
     @SerialName("life-span") val lifeSpan: LifeSpanMusicBrainzModel? = null,
 
     @SerialName("area") val area: AreaMusicBrainzModel? = null,

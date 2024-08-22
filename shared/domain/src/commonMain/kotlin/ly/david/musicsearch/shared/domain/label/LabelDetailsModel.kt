@@ -9,6 +9,8 @@ data class LabelDetailsModel(
     override val disambiguation: String? = null,
     override val type: String? = null,
     override val labelCode: Int? = null,
+    val ipis: List<String>? = null,
+    val isnis: List<String>? = null,
     val lifeSpan: LifeSpanUiModel? = null,
     val urls: List<RelationListItemModel> = listOf(),
 ) : Label
