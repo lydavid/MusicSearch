@@ -90,6 +90,8 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
                 type = "Original Production",
                 type_id = "7aaa37fe-2def-3476-b359-80245850062d",
                 label_code = null,
+                ipis = null,
+                isnis = null,
                 begin = null,
                 ended = null,
                 end = null,
