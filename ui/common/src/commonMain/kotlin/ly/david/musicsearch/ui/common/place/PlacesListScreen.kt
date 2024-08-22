@@ -30,7 +30,6 @@ fun PlacesListScreen(
             is PlaceListItemModel -> {
                 PlaceListItem(
                     place = placeListItemModel,
-                    modifier = Modifier.animateItemPlacement(),
                 ) {
                     onPlaceClick(
                         MusicBrainzEntity.PLACE,

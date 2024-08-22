@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.listitem.Header
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
@@ -18,7 +17,6 @@ import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun SearchHistoryScreen(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
@@ -57,7 +55,6 @@ internal fun SearchHistoryScreen(
             is SearchHistoryListItemModel -> {
                 SearchHistoryListItem(
                     searchHistory = listItemModel,
-                    modifier = Modifier.animateItemPlacement(),
                     onItemClick = onItemClick,
                     onDeleteItem = onDeleteItem,
                 )

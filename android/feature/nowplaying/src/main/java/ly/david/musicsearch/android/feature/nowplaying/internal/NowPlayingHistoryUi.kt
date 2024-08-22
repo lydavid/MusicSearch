@@ -122,7 +122,6 @@ private fun NowPlayingHistoryContent(
                     content = {
                         NowPlayingHistoryCard(
                             nowPlayingHistory = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
                             onClick = {
                                 searchMusicBrainz(
                                     "\"$title\" artist:\"$artist\"",

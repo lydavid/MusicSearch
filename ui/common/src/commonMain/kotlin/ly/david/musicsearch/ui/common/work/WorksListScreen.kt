@@ -35,7 +35,6 @@ fun WorksListScreen(
                     content = {
                         WorkListItem(
                             work = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
                         ) {
                             onWorkClick(
                                 MusicBrainzEntity.WORK,

@@ -405,7 +405,6 @@ internal fun CollectionUi(
                     content = {
                         AreaListItem(
                             area = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
                         ) {
                             onItemClick(
                                 entity,
@@ -428,7 +427,6 @@ internal fun CollectionUi(
                     content = {
                         InstrumentListItem(
                             instrument = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
                         ) {
                             onItemClick(
                                 entity,
@@ -451,7 +449,6 @@ internal fun CollectionUi(
                     content = {
                         PlaceListItem(
                             place = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
                         ) {
                             onItemClick(
                                 entity,
@@ -474,7 +471,6 @@ internal fun CollectionUi(
                     content = {
                         RecordingListItem(
                             recording = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
                         ) {
                             onItemClick(
                                 entity,
@@ -497,7 +493,6 @@ internal fun CollectionUi(
                     content = {
                         SeriesListItem(
                             series = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
                         ) {
                             onItemClick(
                                 entity,

@@ -197,7 +197,6 @@ internal fun HistoryUi(
             is LookupHistoryListItemModel -> {
                 HistoryListItem(
                     lookupHistory = listItemModel,
-                    modifier = Modifier.animateItemPlacement(),
                     onItemClick = onItemClick,
                     onDeleteItem = onDeleteItem,
                 )

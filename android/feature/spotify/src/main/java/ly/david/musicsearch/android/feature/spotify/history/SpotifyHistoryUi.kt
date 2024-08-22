@@ -199,7 +199,6 @@ private fun SpotifyHistoryContent(
                     content = {
                         SpotifyHistoryCard(
                             spotifyHistory = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
                             onClick = {
                                 clickListItem = this
                             },

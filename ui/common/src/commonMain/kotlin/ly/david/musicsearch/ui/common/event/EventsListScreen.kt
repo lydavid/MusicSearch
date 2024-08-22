@@ -34,7 +34,6 @@ fun EventsListScreen(
                     content = {
                         EventListItem(
                             event = eventListItemModel,
-                            modifier = Modifier.animateItemPlacement(),
                         ) {
                             onEventClick(
                                 MusicBrainzEntity.EVENT,

@@ -31,7 +31,6 @@ fun RecordingsListScreen(
             is RecordingListItemModel -> {
                 RecordingListItem(
                     recording = recordingListItemModel,
-                    modifier = Modifier.animateItemPlacement(),
                 ) {
                     onRecordingClick(
                         MusicBrainzEntity.RECORDING,

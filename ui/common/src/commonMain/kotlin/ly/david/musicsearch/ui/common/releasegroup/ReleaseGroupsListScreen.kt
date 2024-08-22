@@ -40,7 +40,6 @@ fun ReleaseGroupsListScreen(
                         ReleaseGroupListItem(
                             releaseGroup = listItemModel,
                             showType = false,
-                            modifier = Modifier.animateItemPlacement(),
                             requestForMissingCoverArtUrl = {
                                 requestForMissingCoverArtUrl(listItemModel.id)
                             },

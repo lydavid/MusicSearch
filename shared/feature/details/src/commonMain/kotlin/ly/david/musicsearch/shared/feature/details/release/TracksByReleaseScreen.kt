@@ -39,7 +39,6 @@ internal fun TracksByReleaseScreen(
             is TrackListItemModel -> {
                 TrackListItem(
                     track = listItemModel,
-                    modifier = Modifier.animateItemPlacement(),
                     onRecordingClick = onRecordingClick,
                 )
             }

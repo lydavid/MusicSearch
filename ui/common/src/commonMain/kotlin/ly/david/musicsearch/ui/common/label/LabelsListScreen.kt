@@ -35,7 +35,6 @@ fun LabelsListScreen(
                     content = {
                         LabelListItem(
                             label = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
                         ) {
                             onLabelClick(
                                 MusicBrainzEntity.LABEL,

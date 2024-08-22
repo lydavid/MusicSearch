@@ -37,7 +37,6 @@ fun ReleasesListScreen(
                     content = {
                         ReleaseListItem(
                             release = releaseListItemModel,
-                            modifier = Modifier.animateItemPlacement(),
                             showMoreInfo = showMoreInfo,
                             requestForMissingCoverArtUrl = {
                                 requestForMissingCoverArtUrl(releaseListItemModel.id)

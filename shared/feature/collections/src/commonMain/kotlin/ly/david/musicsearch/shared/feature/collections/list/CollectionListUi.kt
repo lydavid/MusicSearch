@@ -173,8 +173,6 @@ internal fun CollectionListUi(
                 is CollectionListItemModel -> {
                     CollectionListItem(
                         collection = collectionListItemModel,
-                        // TODO: animateItemPlacement messes up UI in emulator
-//                        modifier = Modifier.animateItemPlacement(),
                         onClick = { onCollectionClick(id) },
                     )
                 }

@@ -64,7 +64,6 @@ internal fun ColumnScope.CollectionBottomSheetContent(
                 is CollectionListItemModel -> {
                     CollectionListItem(
                         collection = collection,
-                        modifier = Modifier.animateItemPlacement(),
                         onClick = {
                             onAddToCollection(collection.id)
                         },

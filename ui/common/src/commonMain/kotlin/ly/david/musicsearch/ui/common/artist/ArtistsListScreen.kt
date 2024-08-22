@@ -34,7 +34,6 @@ fun ArtistsListScreen(
                     content = {
                         ArtistListItem(
                             artist = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
                         ) {
                             onItemClick(
                                 MusicBrainzEntity.ARTIST,
