@@ -15,6 +15,8 @@ data class ArtistMusicBrainzModel(
     @SerialName("type") override val type: String? = null,
     @SerialName("type-id") val typeId: String? = null,
     @SerialName("gender") override val gender: String? = null,
+    @SerialName("ipis") val ipis: List<String>? = null,
+    @SerialName("isnis") val isnis: List<String>? = null,
     @SerialName("country") override val countryCode: String? = null,
     @SerialName("life-span") val lifeSpan: LifeSpanMusicBrainzModel? = null,
 

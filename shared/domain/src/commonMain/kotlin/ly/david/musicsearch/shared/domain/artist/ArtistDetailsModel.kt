@@ -12,6 +12,8 @@ data class ArtistDetailsModel(
     override val type: String? = null,
     override val gender: String? = null,
     override val countryCode: String? = null,
+    val ipis: List<String>? = null,
+    val isnis: List<String>? = null,
     val lifeSpan: LifeSpanUiModel? = null,
     val urls: List<RelationListItemModel> = listOf(),
     val imageUrl: String? = null,

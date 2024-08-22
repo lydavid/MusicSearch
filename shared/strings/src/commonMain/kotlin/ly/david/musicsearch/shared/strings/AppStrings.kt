@@ -91,6 +91,8 @@ data class AppStrings(
     val asin: String,
     val iswc: String,
     val isrc: String,
+    val ipi: String,
+    val isni: String,
     val iso31661: String,
     val releaseEvents: String,
     val informationHeader: (String) -> String,

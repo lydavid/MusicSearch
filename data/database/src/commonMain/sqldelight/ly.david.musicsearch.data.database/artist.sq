@@ -1,4 +1,6 @@
 import kotlin.Boolean;
+import kotlin.String;
+import kotlin.collections.List;
 
 CREATE TABLE IF NOT EXISTS artist (
   id TEXT PRIMARY KEY NOT NULL,
@@ -8,6 +10,8 @@ CREATE TABLE IF NOT EXISTS artist (
   type TEXT,
   type_id TEXT,
   gender TEXT,
+  ipis TEXT AS List<String>,
+  isnis TEXT AS List<String>,
   country_code TEXT,
   begin TEXT,
   end TEXT,
@@ -26,6 +30,8 @@ SELECT
   a.disambiguation,
   a.type,
   a.gender,
+  a.ipis,
+  a.isnis,
   a.country_code,
   a.begin,
   a.end,

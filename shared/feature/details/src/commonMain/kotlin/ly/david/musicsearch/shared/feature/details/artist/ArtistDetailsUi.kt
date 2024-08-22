@@ -103,14 +103,26 @@ private fun ArtistDetailsModel.ArtistInformationSection(
         filterText = filterText,
     )
 
+    ipis?.ifNotNullOrEmpty {
+        TextWithHeading(
+            heading = strings.ipi,
+            text = it.joinToString(", "),
+            filterText = filterText,
+        )
+    }
+
+    isnis?.ifNotNullOrEmpty {
+        TextWithHeading(
+            heading = strings.isni,
+            text = it.joinToString(", "),
+            filterText = filterText,
+        )
+    }
+
     // TODO: begin area, area, end area
 //                countryCode?.ifNotNullOrEmpty {
 //                    TextWithHeadingRes(headingRes = strings.area, text = it.toFlagEmoji())
 //                }
-
-    // TODO: isni code
-
-    // todo: ipis code
 
     WikipediaSection(
         extract = wikipediaExtract,

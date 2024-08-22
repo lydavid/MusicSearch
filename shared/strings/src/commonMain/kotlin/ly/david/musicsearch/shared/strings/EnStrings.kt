@@ -181,6 +181,10 @@ val EnStrings = AppStrings(
 
     isrc = "ISRC",
 
+    ipi = "IPI code",
+
+    isni = "ISNI code",
+
     iso31661 = "ISO 3166–1",
 
     releaseEvents = "Release events",

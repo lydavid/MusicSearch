@@ -49,7 +49,7 @@ internal fun WorkDetailsUi(
                 iswcs?.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.iswc,
-                        text = it.joinToString("\n"),
+                        text = it.joinToString(", "),
                         filterText = filterText,
                     )
                 }

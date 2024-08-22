@@ -5,6 +5,7 @@ import app.cash.sqldelight.db.SqlDriver
 import ly.david.musicsearch.data.database.adapter.InstantLongColumnAdapter
 import ly.david.musicsearch.data.database.adapter.ListStringColumnAdapter
 import ly.david.musicsearch.data.database.adapter.MusicBrainzEntityStringColumnAdapter
+import lydavidmusicsearchdatadatabase.Artist
 import lydavidmusicsearchdatadatabase.Artist_credit_name
 import lydavidmusicsearchdatadatabase.Browse_entity_count
 import lydavidmusicsearchdatadatabase.Collection
@@ -83,6 +84,10 @@ fun createDatabase(driver: SqlDriver): Database {
         ),
         spotify_track_listenAdapter = Spotify_track_listen.Adapter(
             listenedAdapter = InstantLongColumnAdapter,
+        ),
+        artistAdapter = Artist.Adapter(
+            ipisAdapter = ListStringColumnAdapter,
+            isnisAdapter = ListStringColumnAdapter,
         ),
     )
 }

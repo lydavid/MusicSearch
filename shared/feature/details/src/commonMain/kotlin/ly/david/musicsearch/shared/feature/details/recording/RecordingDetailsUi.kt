@@ -49,7 +49,7 @@ internal fun RecordingDetailsUi(
                 isrcs?.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.isrc,
-                        text = it.joinToString("\n"),
+                        text = it.joinToString(", "),
                         filterText = filterText,
                     )
                 }
