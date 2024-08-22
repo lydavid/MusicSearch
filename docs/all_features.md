@@ -2,6 +2,10 @@
 
 ## Feature Matrix
 
+This represents whether a feature is available (✅) on a platform, planned (⬜), or not supported (❌).
+Some ✅ features are still work-in-progress, and their progress are tracked under their respective sections.
+Inspired by [Spotless' feature matrix](https://github.com/diffplug/spotless?tab=readme-ov-file#current-feature-matrix).
+
 | Feature                                                     | Android | Desktop | iOS |
 |-------------------------------------------------------------|---------|---------|-----|
 | [Browse](#browse)                                           | ✅       | ✅       | ✅   |
@@ -12,8 +16,9 @@
 | Pixel Now Playing History                                   | ✅       | ❌       | ❌   |
 | [Search MusicBrainz](#search-musicbrainz)                   | ✅       | ✅       | ✅   |
 | [Spotify Playing History](#spotify-playing-history)         | ✅       | ⬜️      | ⬜️  |
-| [Swipe to Refresh](#swipe-to-refresh)                       | ⬜       | ⬜       | ⬜   |
+| [Swipe to Refresh](#swipe-to-refresh)                       | ✅       | ✅       | ✅   |
 | [Up navigation from subtitle](#up-navigation-from-subtitle) | ✅       | ✅       | ✅   |
+| [Wikipedia Extract](#wikipedia-extract)                     | ✅       | ✅       | ✅   |
 
 ## Browse
 
@@ -104,7 +109,6 @@ It does not include composers.
 From the app's settings, you can login to your MusicBrianz account.
 This allows the app to fetch and display all of your collections.
 
-
 ## Search MusicBrainz
 
 | Entity        | Supported |
@@ -162,3 +166,25 @@ From the subtitle of the following screens, you can navigate "up" without having
 - Recording -> Artist
 - Release -> Artist, Release Group
 - Release Group -> Artist
+
+## Wikipedia extract
+
+Displays a Wikipedia excerpt of the entity along with a link to deep link into Wikipedia to read more.
+This depends on the existence of a [Wikidata link](https://musicbrainz.org/doc/Wikidata).
+If an entity is missing one, consider adding it to [MusicBrainz](https://musicbrainz.org/), and/or to [Wikidata](https://www.wikidata.org).
+
+At the moment, we always get the English Wikipedia article's extract.
+
+| Entity        | Details |
+|---------------|---------|
+| area          | ⬜️      |
+| artist        | ✅       |
+| event         | ⬜️      |
+| instrument    | ⬜       |
+| label         | ⬜️      |
+| place         | ⬜       |
+| recording     | ⬜       |
+| release       | ⬜       |
+| release group | ⬜       |
+| series        | ⬜       |
+| work          | ⬜       |
