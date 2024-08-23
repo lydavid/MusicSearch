@@ -1,5 +1,5 @@
 [versions]
-aboutlibraries = "11.2.2"
+aboutlibraries = "11.2.3"
 androidGradlePlugin = "8.5.2"
 chucker = "4.0.0"
 circuit = "0.23.1"
