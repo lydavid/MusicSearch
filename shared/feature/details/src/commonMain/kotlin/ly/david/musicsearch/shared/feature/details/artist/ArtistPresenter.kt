@@ -242,7 +242,39 @@ internal class ArtistPresenter(
                 }
 
                 ArtistUiEvent.ForceRefresh -> {
-                    forceRefreshDetails = true
+                    when (selectedTab) {
+                        ArtistTab.DETAILS -> {
+                            forceRefreshDetails = true
+                        }
+
+                        ArtistTab.RELEASE_GROUPS -> {
+                            releaseGroupsByEntityUiState.lazyPagingItems.refresh()
+                        }
+
+                        ArtistTab.RELEASES -> {
+                            releasesByEntityUiState.lazyPagingItems.refresh()
+                        }
+
+                        ArtistTab.RECORDINGS -> {
+                            recordingsByEntityUiState.lazyPagingItems.refresh()
+                        }
+
+                        ArtistTab.WORKS -> {
+                            worksByEntityUiState.lazyPagingItems.refresh()
+                        }
+
+                        ArtistTab.EVENTS -> {
+                            eventsByEntityUiState.lazyPagingItems.refresh()
+                        }
+
+                        ArtistTab.RELATIONSHIPS -> {
+                            relationsUiState.lazyPagingItems.refresh()
+                        }
+
+                        ArtistTab.STATS -> {
+                            // No-op.
+                        }
+                    }
                 }
 
                 ArtistUiEvent.NavigateToCollaboratorsGraph -> {

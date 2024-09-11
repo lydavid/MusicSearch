@@ -37,6 +37,7 @@ import ly.david.musicsearch.ui.common.screen.showInBottomSheet
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -87,6 +88,9 @@ internal fun ArtistUi(
                     ArtistTab.STATS,
                 ),
                 overflowDropdownMenuItems = {
+                    RefreshMenuItem {
+                        eventSink(ArtistUiEvent.ForceRefresh)
+                    }
                     OpenInBrowserMenuItem(
                         entity = entity,
                         entityId = entityId,

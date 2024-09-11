@@ -29,6 +29,7 @@ import ly.david.musicsearch.shared.feature.collections.components.CollectionList
 import ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
 import ly.david.musicsearch.shared.feature.collections.create.NewCollection
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.core.LocalStrings
@@ -146,6 +147,11 @@ internal fun CollectionListUi(
                             imageVector = Icons.Default.Add,
                             contentDescription = strings.createCollection,
                         )
+                    }
+                },
+                overflowDropdownMenuItems = {
+                    RefreshMenuItem {
+                        lazyPagingItems.refresh()
                     }
                 },
                 additionalBar = {
