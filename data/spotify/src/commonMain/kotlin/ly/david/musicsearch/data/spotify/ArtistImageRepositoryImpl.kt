@@ -17,12 +17,6 @@ class ArtistImageRepositoryImpl(
     private val logger: Logger,
 ) : ArtistImageRepository {
 
-    /**
-     * Returns a url to the artist image.
-     * Empty if none found.
-     *
-     * Also saves it to db.
-     */
     override suspend fun getArtistImageUrl(
         artistDetailsModel: ArtistDetailsModel,
         forceRefresh: Boolean,

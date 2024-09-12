@@ -3,10 +3,10 @@ package ly.david.musicsearch.data.coverart
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.http.HttpStatusCode
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.shared.domain.image.ImageUrlDao
-import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.toImageUrlsList
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 
 internal class ReleaseImageRepositoryImpl(
@@ -14,31 +14,49 @@ internal class ReleaseImageRepositoryImpl(
     private val imageUrlDao: ImageUrlDao,
     private val logger: Logger,
 ) : ReleaseImageRepository {
-    override suspend fun getReleaseCoverArtUrlsFromNetworkAndSave(
+
+    override suspend fun getReleaseImageUrl(
+        releaseId: String,
+        thumbnail: Boolean,
+        forceRefresh: Boolean,
+    ): String {
+        if (forceRefresh) {
+            imageUrlDao.deleteAllUrlsById(releaseId)
+        }
+
+        val cachedImageUrls = imageUrlDao.getAllUrls(releaseId)
+        return if (cachedImageUrls.isNotEmpty()) {
+            val frontCoverArt = cachedImageUrls.first()
+            return if (thumbnail) frontCoverArt.thumbnailUrl else frontCoverArt.largeUrl
+        } else {
+            getReleaseImageUrlFromNetwork(releaseId, thumbnail)
+        }
+    }
+
+    private suspend fun getReleaseImageUrlFromNetwork(
         releaseId: String,
         thumbnail: Boolean,
     ): String {
         return try {
             val coverArts = coverArtArchiveApi.getReleaseCoverArts(releaseId)
             val imageUrls: MutableList<ImageUrls> = coverArts.toImageUrlsList().toMutableList()
+
+            // We use an empty ImageUrls to represent that we've searched but failed to find any images.
             if (imageUrls.isEmpty()) {
                 imageUrls.add(ImageUrls())
             }
+
             imageUrlDao.saveUrls(
                 mbid = releaseId,
                 imageUrls = imageUrls,
             )
-            return if (thumbnail) imageUrls.first().thumbnailUrl else imageUrls.first().largeUrl
+            val frontCoverArt = imageUrls.first()
+            return if (thumbnail) frontCoverArt.thumbnailUrl else frontCoverArt.largeUrl
         } catch (ex: ClientRequestException) {
             if (ex.response.status == HttpStatusCode.NotFound) {
                 imageUrlDao.saveUrls(
                     mbid = releaseId,
-                    imageUrls = listOf(
-                        ImageUrls(
-                            thumbnailUrl = "",
-                            largeUrl = "",
-                        ),
-                    ),
+                    imageUrls = listOf(ImageUrls()),
                 )
             } else {
                 logger.e(ex)

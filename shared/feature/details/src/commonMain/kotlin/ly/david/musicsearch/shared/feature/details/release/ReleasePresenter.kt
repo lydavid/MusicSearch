@@ -19,13 +19,13 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
+import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
-import ly.david.musicsearch.data.common.network.RecoverableNetworkException
-import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
@@ -87,7 +87,6 @@ internal class ReleasePresenter(
                 title = releaseDetailsModel.getNameWithDisambiguation()
                 subtitle = "Release by ${releaseDetailsModel.artistCredits.getDisplayNames()}"
                 release = releaseDetailsModel
-                imageUrl = fetchReleaseImage(releaseDetailsModel)
                 isError = false
             } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
@@ -102,6 +101,16 @@ internal class ReleasePresenter(
                     ),
                 )
                 recordedHistory = true
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, release) {
+            release?.let { release ->
+                imageUrl = releaseImageRepository.getReleaseImageUrl(
+                    releaseId = release.id,
+                    thumbnail = false,
+                    forceRefresh = forceRefreshDetails,
+                )
             }
         }
 
@@ -203,16 +212,6 @@ internal class ReleasePresenter(
             eventSink = ::eventSink,
         )
     }
-
-    private suspend fun fetchReleaseImage(
-        releaseDetailsModel: ReleaseDetailsModel,
-    ): String {
-        val imageUrl = releaseDetailsModel.imageUrl
-        return imageUrl ?: releaseImageRepository.getReleaseCoverArtUrlsFromNetworkAndSave(
-            releaseId = releaseDetailsModel.id,
-            thumbnail = false,
-        )
-    }
 }
 
 @Stable
@@ -241,5 +240,6 @@ internal sealed interface ReleaseUiEvent : CircuitUiEvent {
         val id: String,
         val title: String?,
     ) : ReleaseUiEvent
+
     data object ClickImage : ReleaseUiEvent
 }

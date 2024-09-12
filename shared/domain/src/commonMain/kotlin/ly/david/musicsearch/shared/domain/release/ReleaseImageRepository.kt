@@ -14,9 +14,10 @@ interface ReleaseImageRepository {
      *
      * Make sure to handle non-404 errors at call site.
      */
-    suspend fun getReleaseCoverArtUrlsFromNetworkAndSave(
+    suspend fun getReleaseImageUrl(
         releaseId: String,
         thumbnail: Boolean,
+        forceRefresh: Boolean,
     ): String
 
     fun getAllUrls(mbid: String): List<ImageUrls>
