@@ -57,7 +57,7 @@ class MusicBrainzLoginActivityResultContract(
         intent: Intent?,
     ): Result {
         val response = intent?.run { AuthorizationResponse.fromIntent(intent) }
-        val exception = AuthorizationException.fromIntent(intent)
+        val exception = intent?.run { AuthorizationException.fromIntent(intent) }
         return Result(
             response = response,
             exception = exception,
