@@ -26,11 +26,11 @@ LEFT JOIN country_code cc ON cc.area_id = a.id
 WHERE r.id = :releaseId
 ORDER BY a.name;
 
+deleteCountriesByReleaseLinks:
+DELETE FROM release_country
+WHERE release_id = :releaseId;
 
 -- releases by country
-
-deleteReleaseCountryLinks:
-DELETE FROM release_country WHERE country_id = :areaId;
 
 getNumberOfReleasesByCountry:
 SELECT IFNULL(
@@ -91,3 +91,7 @@ DELETE FROM release WHERE id IN (
   INNER JOIN area a ON a.id = rc.country_id
   WHERE a.id = :areaId
 );
+
+deleteReleasesByCountryLinks:
+DELETE FROM release_country
+WHERE country_id = :areaId;

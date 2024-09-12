@@ -5,7 +5,10 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 
 interface ReleaseRepository {
-    suspend fun lookupRelease(releaseId: String): ReleaseDetailsModel
+    suspend fun lookupRelease(
+        releaseId: String,
+        forceRefresh: Boolean,
+    ): ReleaseDetailsModel
 
     fun observeTracksByRelease(
         releaseId: String,

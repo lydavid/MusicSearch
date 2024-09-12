@@ -149,7 +149,7 @@ TODO: screenshot of list screen
 | label         | ⬜️      | ✅           |
 | place         | ⬜       | ✅           |
 | recording     | ⬜       | ✅           |
-| release       | ⬜       | ✅           |
+| release       | ✅       | ✅           |
 | release group | ⬜       | ✅           |
 | series        | ⬜       | ✅           |
 | work          | ⬜       | ✅           |

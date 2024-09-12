@@ -19,8 +19,7 @@ class ArtistRepositoryImpl(
         forceRefresh: Boolean,
     ): ArtistDetailsModel {
         if (forceRefresh) {
-            relationRepository.deleteUrlRelationshipsByEntity(artistId)
-            artistDao.delete(artistId)
+            delete(artistId)
         }
 
         val artistDetailsModel = artistDao.getArtistForDetails(artistId)
@@ -44,6 +43,13 @@ class ArtistRepositoryImpl(
             artistId = artistId,
             forceRefresh = false,
         )
+    }
+
+    private fun delete(artistId: String) {
+        artistDao.withTransaction {
+            artistDao.delete(artistId = artistId)
+            relationRepository.deleteUrlRelationshipsByEntity(entityId = artistId)
+        }
     }
 
     private fun cache(artist: ArtistMusicBrainzModel) {

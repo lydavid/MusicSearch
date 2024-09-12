@@ -68,6 +68,10 @@ class ReleaseCountryDao(
             )
         },
     ).executeAsList()
+
+    fun deleteCountriesByReleaseLinks(releaseId: String) {
+        transacter.deleteCountriesByReleaseLinks(releaseId = releaseId)
+    }
     // endregion
 
     // region releases by country
@@ -120,8 +124,8 @@ class ReleaseCountryDao(
 
     fun deleteReleasesByCountry(areaId: String) {
         withTransaction {
-            transacter.deleteReleasesByCountry(areaId)
-            transacter.deleteReleaseCountryLinks(areaId)
+            transacter.deleteReleasesByCountry(areaId = areaId)
+            transacter.deleteReleasesByCountryLinks(areaId = areaId)
         }
     }
     // endregion

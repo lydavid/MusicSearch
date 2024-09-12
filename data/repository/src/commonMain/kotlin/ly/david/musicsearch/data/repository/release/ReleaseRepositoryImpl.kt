@@ -53,8 +53,15 @@ class ReleaseRepositoryImpl(
     // TODO: split up what data to include when calling from details/tracks tabs?
     //  initial load only requires 1 api call to display data on both tabs
     //  but swipe to refresh should only refresh its own tab
-    override suspend fun lookupRelease(releaseId: String): ReleaseDetailsModel {
-        val releaseForDetails = releaseDao.getReleaseForDetails(releaseId)
+    override suspend fun lookupRelease(
+        releaseId: String,
+        forceRefresh: Boolean,
+    ): ReleaseDetailsModel {
+        if (forceRefresh) {
+            delete(releaseId)
+        }
+
+        val releaseDetailsModel = releaseDao.getReleaseForDetails(releaseId)
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseId)
         val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId)
         val formatTrackCounts = releaseDao.getReleaseFormatTrackCount(releaseId)
@@ -62,14 +69,17 @@ class ReleaseRepositoryImpl(
         val releaseEvents = releaseCountryDao.getCountriesByRelease(releaseId)
         val urlRelations = relationRepository.getEntityUrlRelationships(releaseId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseId)
-        if (releaseForDetails != null &&
+
+        if (
+            releaseDetailsModel != null &&
             releaseGroup != null &&
             artistCredits.isNotEmpty() &&
-            hasUrlsBeenSavedForEntity
+            hasUrlsBeenSavedForEntity &&
+            !forceRefresh
         ) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits and a release group.
-            return releaseForDetails.copy(
+            return releaseDetailsModel.copy(
                 artistCredits = artistCredits,
                 releaseGroup = releaseGroup,
                 formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
@@ -82,7 +92,20 @@ class ReleaseRepositoryImpl(
 
         val releaseMusicBrainzModel = musicBrainzApi.lookupRelease(releaseId)
         cache(releaseMusicBrainzModel)
-        return lookupRelease(releaseId)
+        return lookupRelease(
+            releaseId = releaseId,
+            forceRefresh = false,
+        )
+    }
+
+    private fun delete(releaseId: String) {
+        releaseDao.withTransaction {
+            releaseDao.delete(releaseId = releaseId)
+            releaseReleaseGroupDao.deleteReleaseGroupByReleaseLink(releaseId = releaseId)
+            releaseLabelDao.deleteLabelsByReleaseLinks(releaseId = releaseId)
+            releaseCountryDao.deleteCountriesByReleaseLinks(releaseId = releaseId)
+            relationRepository.deleteUrlRelationshipsByEntity(entityId = releaseId)
+        }
     }
 
     private fun cache(release: ReleaseMusicBrainzModel) {
@@ -138,7 +161,7 @@ class ReleaseRepositoryImpl(
             config = CommonPagingConfig.pagingConfig,
             remoteMediator = LookupEntityRemoteMediator(
                 hasEntityBeenStored = { hasReleaseTracksBeenStored(releaseId) },
-                lookupEntity = { lookupRelease(releaseId) },
+                lookupEntity = { lookupRelease(releaseId = releaseId, forceRefresh = false) },
                 deleteLocalEntity = { deleteMediaAndTracksByRelease(releaseId) },
             ),
             pagingSourceFactory = {

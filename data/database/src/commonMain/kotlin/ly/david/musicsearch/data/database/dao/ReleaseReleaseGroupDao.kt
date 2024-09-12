@@ -7,9 +7,9 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import lydavidmusicsearchdatadatabase.Release_release_group
 
 class ReleaseReleaseGroupDao(
@@ -47,8 +47,14 @@ class ReleaseReleaseGroupDao(
     fun deleteReleasesByReleaseGroup(releaseGroupId: String) {
         withTransaction {
             transacter.deleteReleasesByReleaseGroup(releaseGroupId)
-            transacter.deleteReleaseReleaseGroupLinks(releaseGroupId)
+            transacter.deleteReleasesByReleaseGroupLinks(releaseGroupId)
         }
+    }
+
+    fun deleteReleaseGroupByReleaseLink(
+        releaseId: String,
+    ) {
+        transacter.deleteReleaseReleaseGroupLink(releaseId = releaseId)
     }
 
     fun getNumberOfReleasesByReleaseGroup(releaseGroupId: String): Flow<Int> =

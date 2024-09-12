@@ -26,8 +26,13 @@ DELETE FROM release WHERE id IN (
   WHERE rg.id = :releaseGroupId
 );
 
-deleteReleaseReleaseGroupLinks:
-DELETE FROM release_release_group WHERE release_group_id = :releaseGroupId;
+deleteReleasesByReleaseGroupLinks:
+DELETE FROM release_release_group
+WHERE release_group_id = :releaseGroupId;
+
+deleteReleaseReleaseGroupLink:
+DELETE FROM release_release_group
+WHERE release_id = :releaseId;
 
 getNumberOfReleasesByReleaseGroup:
 SELECT IFNULL(

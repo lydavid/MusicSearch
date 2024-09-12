@@ -80,12 +80,14 @@ internal class ReleasePresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val releaseDetailsModel = repository.lookupRelease(screen.id)
+                val releaseDetailsModel = repository.lookupRelease(
+                    releaseId = screen.id,
+                    forceRefresh = forceRefreshDetails,
+                )
                 title = releaseDetailsModel.getNameWithDisambiguation()
                 subtitle = "Release by ${releaseDetailsModel.artistCredits.getDisplayNames()}"
                 release = releaseDetailsModel
                 imageUrl = fetchReleaseImage(releaseDetailsModel)
-
                 isError = false
             } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)

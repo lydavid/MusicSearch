@@ -78,6 +78,12 @@ class ReleaseLabelDao(
         labelCode = labelCode,
         catalogNumber = catalogNumber,
     )
+
+    fun deleteLabelsByReleaseLinks(releaseId: String) {
+        withTransaction {
+            transacter.deleteLabelsByReleaseLinks(releaseId = releaseId)
+        }
+    }
     // endregion
 
     fun getNumberOfReleasesByLabel(labelId: String): Flow<Int> =
@@ -130,8 +136,8 @@ class ReleaseLabelDao(
 
     fun deleteReleasesByLabel(labelId: String) {
         withTransaction {
-            transacter.deleteReleasesByLabel(labelId)
-            transacter.deleteLabelReleaseLinks(labelId)
+            transacter.deleteReleasesByLabel(labelId = labelId)
+            transacter.deleteReleasesByLabelLinks(labelId = labelId)
         }
     }
     // endregion
