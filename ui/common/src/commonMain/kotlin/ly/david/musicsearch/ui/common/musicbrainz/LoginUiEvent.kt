@@ -1,8 +1,8 @@
-package ly.david.musicsearch.shared.feature.settings.internal
+package ly.david.musicsearch.ui.common.musicbrainz
 
 import com.slack.circuit.runtime.CircuitUiEvent
 
-internal sealed interface LoginUiEvent : CircuitUiEvent {
+sealed interface LoginUiEvent : CircuitUiEvent {
     data object StartLogin : LoginUiEvent
     data object DismissDialog : LoginUiEvent
     data class SubmitAuthCode(val authCode: String) : LoginUiEvent

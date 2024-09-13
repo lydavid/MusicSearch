@@ -81,6 +81,7 @@ val detailsFeatureModule = module {
                                 worksByEntityPresenter = get(),
                                 relationsPresenter = get(),
                                 logger = get(),
+                                loginPresenter = get(),
                             )
                         }
 

@@ -11,8 +11,6 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val settingsFeatureModule = module {
-    includes(platformModule)
-
     single(named("SettingsScreen")) {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {

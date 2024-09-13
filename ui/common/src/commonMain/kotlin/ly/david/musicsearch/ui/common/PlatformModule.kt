@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.settings
+package ly.david.musicsearch.ui.common
 
 import org.koin.core.module.Module
 

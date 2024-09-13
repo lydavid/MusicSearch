@@ -1,8 +1,8 @@
-package ly.david.musicsearch.shared.feature.settings.internal
+package ly.david.musicsearch.ui.common.musicbrainz
 
 import com.slack.circuit.runtime.CircuitUiState
 
-internal data class LoginUiState(
+data class LoginUiState(
     val showDialog: Boolean = false,
     val eventSink: (LoginUiEvent) -> Unit,
 ) : CircuitUiState

@@ -36,6 +36,7 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "Artist"
 - tapOn: "OK"
 - tapOn: "Artists"
+- assertVisible: "Added to Artists."
 
 - tapOn:
     text: "Back"

@@ -13,6 +13,7 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -30,6 +31,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.event.EventsListScreen
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.recording.RecordingsListScreen
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
@@ -72,6 +74,8 @@ internal fun ArtistUi(
 
     val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
     val releaseGroupsByEntityEventSink = state.releaseGroupsByEntityUiState.eventSink
+
+    val loginEventSink = state.loginUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(ArtistUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
@@ -149,12 +153,22 @@ internal fun ArtistUi(
                                 ),
                             )
                             result.message.ifNotNullOrEmpty {
-                                snackbarHostState.showSnackbar(
+                                val snackbarResult = snackbarHostState.showSnackbar(
                                     message = result.message,
                                     actionLabel = result.actionLabel,
                                     duration = SnackbarDuration.Short,
                                     withDismissAction = true,
                                 )
+
+                                when (snackbarResult) {
+                                    SnackbarResult.ActionPerformed -> {
+                                        loginEventSink(LoginUiEvent.StartLogin)
+                                    }
+
+                                    SnackbarResult.Dismissed -> {
+                                        // Do nothing.
+                                    }
+                                }
                             }
                         }
                     }

@@ -15,6 +15,8 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val commonUiModule = module {
+    includes(platformModule)
+
     singleOf(::ArtistsByEntityPresenter)
     singleOf(::EventsByEntityPresenter)
     singleOf(::LabelsByEntityPresenter)

@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.settings.internal
+package ly.david.musicsearch.ui.common.musicbrainz
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.runtime.Composable

@@ -23,6 +23,7 @@ import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 
