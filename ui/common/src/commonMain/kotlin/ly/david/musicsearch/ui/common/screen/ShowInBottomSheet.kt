@@ -9,17 +9,17 @@ import com.slack.circuitx.overlays.BottomSheetOverlay
 
 suspend fun OverlayHost.showInBottomSheet(
     screen: Screen,
-): Unit = show(
+): SnackbarPopResult = show(
     @OptIn(ExperimentalMaterial3Api::class)
     BottomSheetOverlay(
         model = Unit,
-        onDismiss = {}, // Crashes if we don't include this
+        onDismiss = { SnackbarPopResult() },
     ) { _, overlayNavigator ->
         CircuitContent(
             screen = screen,
             onNavEvent = { event ->
                 when (event) {
-                    is NavEvent.Pop -> overlayNavigator.finish(Unit)
+                    is NavEvent.Pop -> overlayNavigator.finish(event.result as SnackbarPopResult)
                     else -> {}
                 }
             },

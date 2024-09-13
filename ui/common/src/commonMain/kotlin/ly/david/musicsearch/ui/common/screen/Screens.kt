@@ -1,5 +1,6 @@
 package ly.david.musicsearch.ui.common.screen
 
+import com.slack.circuit.runtime.screen.PopResult
 import com.slack.circuit.runtime.screen.Screen
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.topappbar.Tab
@@ -32,6 +33,12 @@ data class AddToCollectionScreen(
     val entity: MusicBrainzEntity,
     val id: String,
 ) : Screen
+
+@Parcelize
+data class SnackbarPopResult(
+    val message: String = "",
+    val actionLabel: String? = null,
+) : PopResult
 
 @Parcelize
 data class DetailsScreen(

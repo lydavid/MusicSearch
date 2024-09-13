@@ -10,12 +10,14 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.ActionableResult
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.shared.feature.collections.create.NewCollection
 import ly.david.musicsearch.ui.common.screen.AddToCollectionScreen
+import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 
 internal class AddToCollectionPresenter(
     private val screen: AddToCollectionScreen,
@@ -46,12 +48,12 @@ internal class AddToCollectionPresenter(
 
                 is AddToCollectionUiEvent.AddToCollection -> {
                     scope.launch {
-                        collectionRepository.addToCollection(
+                        val result: ActionableResult = collectionRepository.addToCollection(
                             collectionId = event.id,
                             entity = screen.entity,
                             entityId = screen.id,
                         )
-                        navigator.pop()
+                        navigator.pop(SnackbarPopResult(message = result.message, actionLabel = result.actionLabel))
                     }
                 }
             }

@@ -9,10 +9,14 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -22,6 +26,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.event.EventsListScreen
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
@@ -74,8 +79,16 @@ internal fun ArtistUi(
 
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        contentWindowInsets = WindowInsets(0),
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
+                SwipeToDismissBox(
+                    state = rememberSwipeToDismissBoxState(),
+                    backgroundContent = {},
+                    content = { Snackbar(snackbarData) },
+                )
+            }
+        },
         topBar = {
             TopAppBarWithFilter(
                 onBack = {
@@ -129,12 +142,20 @@ internal fun ArtistUi(
                     )
                     AddToCollectionMenuItem {
                         scope.launch {
-                            overlayHost.showInBottomSheet(
+                            val result = overlayHost.showInBottomSheet(
                                 AddToCollectionScreen(
                                     entity = entity,
                                     id = entityId,
                                 ),
                             )
+                            result.message.ifNotNullOrEmpty {
+                                snackbarHostState.showSnackbar(
+                                    message = result.message,
+                                    actionLabel = result.actionLabel,
+                                    duration = SnackbarDuration.Short,
+                                    withDismissAction = true,
+                                )
+                            }
                         }
                     }
                 },
