@@ -1,7 +1,6 @@
 package ly.david.musicsearch.android.app
 
 import android.app.Application
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import ly.david.musicsearch.shared.di.sharedModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -16,7 +15,7 @@ internal class MusicSearchApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {
-            Timber.plant(CrashlyticsTree(FirebaseCrashlytics.getInstance()))
+            Timber.plant(CrashlyticsTree())
         }
 
         startKoin {
@@ -27,18 +26,5 @@ internal class MusicSearchApplication : Application() {
                 androidAppModule,
             )
         }
-    }
-}
-
-private class CrashlyticsTree(
-    private val firebaseCrashlytics: FirebaseCrashlytics,
-) : Timber.Tree() {
-    override fun log(
-        priority: Int,
-        tag: String?,
-        message: String,
-        t: Throwable?,
-    ) {
-        firebaseCrashlytics.log(message)
     }
 }

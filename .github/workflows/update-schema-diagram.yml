@@ -42,7 +42,7 @@ jobs:
           disable-animations: true
           disk-size: 4G
           script: |
-            ./gradlew installDebug
+            ./gradlew installFDroidDebug
             # Installing is not enough to initialize the SQLDelight database, need to launch the app
             adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/history"
             sleep 10

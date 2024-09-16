@@ -1,0 +1,9 @@
+### Bug Fixes
+
+* crash when intent is null
+* show snackbar informing user of the status when adding artists to collection
+
+
+### Features
+
+* support login from snackbar from artist screen
