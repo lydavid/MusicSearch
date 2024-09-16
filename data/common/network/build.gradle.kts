@@ -12,38 +12,39 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.core.logging.api)
-                implementation(libs.koin.core)
-                implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(libs.ktor.client.content.negotiation)
-                implementation(libs.ktor.client.core)
-                implementation(libs.ktor.serialization.kotlinx.json)
-            }
+            implementation(libs.koin.core)
+            //                implementation(project.dependencies.platform(libs.ktor.bom))
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(projects.core.logging.api)
+        }
         }
         val jvmMain by getting {
             dependencies {
-                implementation(libs.bundles.ktor.jvm)
-            }
+            implementation(libs.bundles.ktor.jvm)
+        }
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.bundles.ktor.jvm)
-            }
+            implementation(libs.bundles.ktor.jvm)
+        }
         }
         val iosMain by getting {
             dependencies {
-                implementation(libs.ktor.client.darwin)
-            }
+            implementation(libs.ktor.client.darwin)
+        }
         }
         val commonTest by getting {
             dependencies {
-                implementation(libs.junit)
-            }
+            implementation(libs.junit)
+        }
         }
     }
 }
 
 dependencies {
-    debugImplementation(libs.chucker)
     releaseImplementation(libs.chucker.noop)
+
+    debugImplementation(libs.chucker)
 }

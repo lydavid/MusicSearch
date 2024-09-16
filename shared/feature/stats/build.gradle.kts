@@ -13,29 +13,28 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.ui.common)
-                implementation(projects.shared.domain)
-                implementation(projects.data.database)
-
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.ui)
-
-                implementation(libs.kotlinx.collections.immutable)
-                implementation(libs.circuit.foundation)
-                implementation(libs.koin.core)
-            }
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.ui)
+            implementation(libs.circuit.foundation)
+            implementation(libs.koin.core)
+            implementation(libs.kotlinx.collections.immutable)
+            implementation(projects.data.database)
+            implementation(projects.shared.domain)
+            implementation(projects.ui.common)
+        }
         }
         val androidUnitTest by getting {
             dependencies {
-                implementation(projects.ui.test.screenshot)
-                implementation(libs.test.parameter.injector)
-            }
+            implementation(libs.test.parameter.injector)
+            implementation(projects.ui.test.screenshot)
+        }
         }
     }
 }
 
 dependencies {
     implementation(compose.preview)
+
     debugImplementation(compose.uiTooling)
 }

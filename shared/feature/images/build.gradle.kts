@@ -13,32 +13,30 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.shared.domain)
-                implementation(projects.ui.image)
-                implementation(projects.ui.common)
-
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.ui)
-
-                implementation(libs.circuit.foundation)
-                implementation(libs.koin.core)
-                implementation(libs.windowSizeClass)
-            }
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(compose.ui)
+            implementation(libs.circuit.foundation)
+            implementation(libs.koin.core)
+            implementation(libs.windowSizeClass)
+            implementation(projects.shared.domain)
+            implementation(projects.ui.common)
+            implementation(projects.ui.image)
+        }
         }
         val androidMain by getting {
             dependencies {
-                implementation(projects.test.image)
-                implementation(compose.preview)
-            }
+            implementation(compose.preview)
+            implementation(projects.test.image)
+        }
         }
 
         val androidUnitTest by getting {
             dependencies {
-                implementation(projects.ui.test.screenshot)
-                implementation(libs.junit)
-            }
+            implementation(libs.junit)
+            implementation(projects.ui.test.screenshot)
+        }
         }
     }
 }

@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import java.io.BufferedReader
 
@@ -19,6 +18,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.sqldelight) apply false
     alias(libs.plugins.kotlin.powerAssert) apply false
+    alias(libs.plugins.sort.dependencies) apply false
 
     alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.dependency.analysis)
@@ -31,6 +31,10 @@ buildscript {
         // Workaround for CMP and buildconfig mismatch: https://github.com/gmazzo/gradle-buildconfig-plugin/issues/131
         classpath("com.squareup:kotlinpoet:1.18.1")
     }
+}
+
+allprojects {
+    apply(plugin = "com.squareup.sort-dependencies")
 }
 
 subprojects {

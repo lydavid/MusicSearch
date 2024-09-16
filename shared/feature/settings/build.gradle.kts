@@ -25,38 +25,37 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.ui.common)
-                implementation(projects.shared.domain)
-                implementation(projects.core.preferences)
-                implementation(projects.data.musicbrainz) // TODO: remove after extracting MusicBrainzAuthStore
-
-                implementation(compose.foundation)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.material3)
-                implementation(compose.ui)
-
-                implementation(libs.circuit.foundation)
-                implementation(libs.koin.core)
-            }
+            // TODO: remove after extracting MusicBrainzAuthStore
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(compose.ui)
+            implementation(libs.circuit.foundation)
+            implementation(libs.koin.core)
+            implementation(projects.core.preferences)
+            implementation(projects.data.musicbrainz)
+            implementation(projects.shared.domain)
+            implementation(projects.ui.common)
+        }
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.appauth)
-
-                implementation(libs.androidx.activity.compose)
-            }
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.appauth)
+        }
         }
         val androidUnitTest by getting {
             dependencies {
-                implementation(projects.ui.test.screenshot)
-                implementation(libs.test.parameter.injector)
-                implementation(libs.bundles.kotlinx.coroutines)
-            }
+            implementation(libs.bundles.kotlinx.coroutines)
+            implementation(libs.test.parameter.injector)
+            implementation(projects.ui.test.screenshot)
+        }
         }
     }
 }
 
 dependencies {
     implementation(compose.preview)
+
     debugImplementation(compose.uiTooling)
 }

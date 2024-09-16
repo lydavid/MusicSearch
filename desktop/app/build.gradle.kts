@@ -18,20 +18,21 @@ aboutLibraries {
 }
 
 dependencies {
-    implementation(projects.shared)
-
-    // TODO: eventually, the only dependent project should be shared
-    //  where shared exposes the root entry point
-    implementation(projects.ui.common)
-    implementation(projects.core.preferences)
-
     linuxAmd64(compose.desktop.linux_x64)
-    macAmd64(compose.desktop.macos_x64)
+
     macAarch64(compose.desktop.macos_arm64)
+
+    macAmd64(compose.desktop.macos_x64)
+
     windowsAmd64(compose.desktop.windows_x64)
 
     implementation(libs.circuit.foundation)
     implementation(libs.koin.core)
+    implementation(projects.core.preferences)
+    implementation(projects.shared)
+    // TODO: eventually, the only dependent project should be shared
+    //  where shared exposes the root entry point
+    implementation(projects.ui.common)
 }
 
 // region Work around temporary Compose bugs.

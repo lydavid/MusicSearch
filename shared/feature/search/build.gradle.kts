@@ -12,18 +12,16 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.ui.common)
-                implementation(projects.shared.domain)
-
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.ui)
-
-                implementation(libs.circuit.foundation)
-                implementation(libs.koin.core)
-                implementation(libs.paging.common)
-                implementation(libs.paging.compose)
-            }
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.ui)
+            implementation(libs.circuit.foundation)
+            implementation(libs.koin.core)
+            implementation(libs.paging.common)
+            implementation(libs.paging.compose)
+            implementation(projects.shared.domain)
+            implementation(projects.ui.common)
+        }
         }
         val androidMain by getting
         val jvmMain by getting
@@ -32,5 +30,6 @@ kotlin {
 
 dependencies {
     implementation(compose.preview)
+
     debugImplementation(compose.uiTooling)
 }

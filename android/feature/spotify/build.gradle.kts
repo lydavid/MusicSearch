@@ -10,20 +10,20 @@ android {
 }
 
 dependencies {
-    implementation(projects.ui.common)
-    implementation(projects.shared.domain)
     implementation(libs.androidx.core)
     implementation(libs.circuit.foundation)
-    implementation(libs.koin.core)
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.preview)
-    implementation(libs.paging.compose)
+    implementation(libs.koin.core)
     implementation(libs.paging.common)
+    implementation(libs.paging.compose)
+    implementation(projects.shared.domain)
+    implementation(projects.ui.common)
 
     debugImplementation(libs.compose.ui.tooling)
 
-    testImplementation(projects.ui.test.screenshot)
     testImplementation(libs.test.parameter.injector)
+    testImplementation(projects.ui.test.screenshot)
 }

@@ -23,37 +23,37 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.shared.domain)
-                implementation(projects.data.database)
-                implementation(projects.data.musicbrainz)
-                implementation(projects.data.common.network)
-                implementation(projects.core.logging.api)
-                implementation(libs.koin.core)
-                implementation(libs.kotlinx.collections.immutable)
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.paging.common)
-            }
+            implementation(libs.koin.core)
+            implementation(libs.kotlinx.collections.immutable)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.paging.common)
+            implementation(projects.core.logging.api)
+            implementation(projects.data.common.network)
+            implementation(projects.data.database)
+            implementation(projects.data.musicbrainz)
+            implementation(projects.shared.domain)
+        }
         }
         val commonTest by getting {
             dependencies {
-                implementation(projects.testData)
-                implementation(projects.core.coroutines)
-                implementation(libs.kotlin.test)
-                implementation(libs.koin.test)
-                implementation(libs.junit)
-                implementation(libs.kotlinx.coroutines.test)
-                implementation(libs.androidx.paging.testing)
-            }
+            implementation(libs.androidx.paging.testing)
+            implementation(libs.junit)
+            implementation(libs.koin.test)
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(projects.core.coroutines)
+            implementation(projects.testData)
+        }
         }
         val androidUnitTest by getting {
             dependencies {
-                implementation(libs.sqldelight.sqlite.driver)
-            }
+            implementation(libs.sqldelight.sqlite.driver)
+        }
         }
         val jvmTest by getting {
             dependencies {
-                implementation(libs.sqldelight.sqlite.driver)
-            }
+            implementation(libs.sqldelight.sqlite.driver)
+        }
         }
     }
 }

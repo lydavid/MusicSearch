@@ -14,35 +14,33 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.ui.common)
-                implementation(projects.shared.domain)
-                implementation(projects.core.preferences)
-
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.ui)
-
-                implementation(libs.circuit.foundation)
-                implementation(libs.circuit.overlay)
-                implementation(libs.circuitx.overlays)
-                implementation(libs.koin.core)
-                implementation(libs.paging.common)
-                implementation(libs.paging.compose)
-            }
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(compose.ui)
+            implementation(libs.circuit.foundation)
+            implementation(libs.circuit.overlay)
+            implementation(libs.circuitx.overlays)
+            implementation(libs.koin.core)
+            implementation(libs.paging.common)
+            implementation(libs.paging.compose)
+            implementation(projects.core.preferences)
+            implementation(projects.shared.domain)
+            implementation(projects.ui.common)
+        }
         }
         val androidMain by getting {
             dependencies {
-                implementation(compose.preview)
-            }
+            implementation(compose.preview)
+        }
         }
 
         val androidUnitTest by getting {
             dependencies {
-                implementation(projects.ui.test.screenshot)
-                implementation(libs.test.parameter.injector)
-                implementation(libs.bundles.kotlinx.coroutines)
-            }
+            implementation(libs.bundles.kotlinx.coroutines)
+            implementation(libs.test.parameter.injector)
+            implementation(projects.ui.test.screenshot)
+        }
         }
     }
 }

@@ -13,17 +13,15 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.ui.common)
-
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.ui)
-
-                implementation(libs.aboutlibraries.compose.m3)
-                implementation(libs.aboutlibraries.core)
-                implementation(libs.circuit.foundation)
-                implementation(libs.koin.core)
-            }
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.ui)
+            implementation(libs.aboutlibraries.compose.m3)
+            implementation(libs.aboutlibraries.core)
+            implementation(libs.circuit.foundation)
+            implementation(libs.koin.core)
+            implementation(projects.ui.common)
+        }
         }
     }
 }
