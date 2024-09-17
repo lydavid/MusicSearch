@@ -39,11 +39,11 @@ See [all features here](./docs/all_features.md).
 
 | Search artist                             | Artist details                             | Release groups by artist                          | Release details                             |
 |-------------------------------------------|--------------------------------------------|---------------------------------------------------|---------------------------------------------|
-| ![](assets/screenshots/search_artist.png) | ![](assets/screenshots/artist_details.png) | ![](assets/screenshots/artist_release_groups.png) | ![](assets/screenshots/release_details.png) | 
+| ![](fastlane/metadata/android/en-US/images/phoneScreenshots/1_search_artist.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/2_artist_details.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/3_artist_release_groups.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/4_release_details.png) | 
 
 | Release tracks                             | All collections                             | Collection of releases                 | Lookup history                             |
 |--------------------------------------------|---------------------------------------------|----------------------------------------|--------------------------------------------|
-| ![](assets/screenshots/release_tracks.png) | ![](assets/screenshots/all_collections.png) | ![](assets/screenshots/collection.png) | ![](assets/screenshots/lookup_history.png) |
+| ![](fastlane/metadata/android/en-US/images/phoneScreenshots/5_release_tracks.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/6_all_collections.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/7_collection.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/8_lookup_history.png) |
 
 ## Development
 
