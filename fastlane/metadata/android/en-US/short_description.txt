@@ -1,0 +1,1 @@
+MusicSearch is an app for browsing songs, artists, and anything related to them

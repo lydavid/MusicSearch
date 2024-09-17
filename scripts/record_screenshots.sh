@@ -7,17 +7,17 @@ set -e
 # - You are logged into MusicBrainz (required for collections screenshot)
 #   - Although this collection is public, we currently don't support loading a single collection from network, so this won't work for anyone else atm
 
-SCREENSHOT_FOLDER="../assets/screenshots"
+SCREENSHOT_FOLDER="../fastlane/metadata/android/en-US/images/phoneScreenshots"
 
 file_names=(
-  "search_artist"
-  "artist_details"
-  "artist_release_groups"
-  "release_details"
-  "release_tracks"
-  "all_collections"
-  "collection"
-  "lookup_history"
+  "1_search_artist"
+  "2_artist_details"
+  "3_artist_release_groups"
+  "4_release_details"
+  "5_release_tracks"
+  "6_all_collections"
+  "7_collection"
+  "8_lookup_history"
 )
 
 commands=(

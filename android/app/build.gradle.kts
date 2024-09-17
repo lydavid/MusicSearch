@@ -6,6 +6,7 @@ plugins {
     id("ly.david.musicsearch.compose.multiplatform")
 }
 
+// For F-Droid, remove google-services.json and we will not apply these plugins.
 if (file("google-services.json").exists() ||
     file("src/debug/google-services.json").exists() ||
     file("src/release/google-services.json").exists()
@@ -59,6 +60,17 @@ android {
             signingConfig = signingConfigs["release"]
         }
     }
+
+    flavorDimensions += "appStore"
+    productFlavors {
+        create("fDroid") {
+            dimension = "appStore"
+        }
+        create("googlePlay") {
+            dimension = "appStore"
+        }
+    }
+
     packaging {
         resources {
             excludes += setOf(
@@ -81,13 +93,14 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.appauth)
     implementation(libs.circuit.foundation)
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.crashlytics)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.kotlinx.collections.immutable)
     implementation(libs.timber)
+
+    googlePlayImplementation(platform(libs.firebase.bom))
+    googlePlayImplementation(libs.firebase.analytics)
+    googlePlayImplementation(libs.firebase.crashlytics)
 
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.leakcanary.android)
@@ -107,3 +120,6 @@ dependencies {
     androidTestImplementation(libs.sqldelight.android.driver)
     androidTestImplementation(libs.test.parameter.injector)
 }
+
+fun DependencyHandler.googlePlayImplementation(dependencyNotation: Any) =
+    add("googlePlayImplementation", dependencyNotation)

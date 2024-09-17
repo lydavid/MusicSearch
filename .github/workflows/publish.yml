@@ -137,14 +137,17 @@ jobs:
           echo "keyPassword=${{ secrets.RELEASE_KEY_PASSWORD }}" >> keystore.properties
         shell: bash
 
-      - name: Convert base64 to files
-        run: |
-          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d >> android/app/google-services.json
-          echo "${{ secrets.RELEASE_KEYSTORE_JKS_BASE64 }}" | base64 -d >> release-keystore.jks
-        shell: bash
+      - name: Decrypt release keystore
+        run: echo "${{ secrets.RELEASE_KEYSTORE_JKS_BASE64 }}" | base64 -d >> release-keystore.jks
 
-      - name: Assemble apk, bundle aab
-        run: ./gradlew assembleRelease bundleRelease
+      - name: Assemble F-Droid APK
+        run: ./gradlew assembleFDroidRelease
+
+      - name: Decrypt Google Services file
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d >> android/app/google-services.json
+
+      - name: Assemble Google Play APK, bundle AAB
+        run: ./gradlew assembleGooglePlayRelease bundleGooglePlayRelease
 
       - name: Authenticate to Google Cloud
         id: auth
