@@ -13,7 +13,7 @@
       "@semantic-release/github",
       {
         "assets": [
-            "android/app/build/outputs/apk/release/*.apk",
+            "android/app/build/outputs/apk/**/*.apk",
             "output/*"
         ],
         "successComment": false,

@@ -163,8 +163,8 @@ jobs:
           serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
           packageName: io.github.lydavid.musicsearch
           track: ${{ inputs.track }}
-          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
-          mappingFile: android/app/build/outputs/mapping/release/mapping.txt
+          releaseFiles: android/app/build/outputs/bundle/googlePlayRelease/app-googlePlay-release.aab
+          mappingFile: android/app/build/outputs/mapping/googlePlayRelease/mapping.txt
 
       - name: Create jars
         if: steps.get-next-version.outputs.new-release-published == 'true'
