@@ -164,6 +164,7 @@ val detailsFeatureModule = module {
                                 tracksByReleasePresenter = get(),
                                 artistsByEntityPresenter = get(),
                                 logger = get(),
+                                loginPresenter = get(),
                             )
                         }
 

@@ -31,6 +31,8 @@ import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
+import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
+import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
@@ -52,6 +54,7 @@ internal class ReleasePresenter(
     private val tracksByReleasePresenter: TracksByReleasePresenter,
     private val artistsByEntityPresenter: ArtistsByEntityPresenter,
     private val logger: Logger,
+    private val loginPresenter: LoginPresenter,
 ) : Presenter<ReleaseUiState> {
 
     @Composable
@@ -77,6 +80,8 @@ internal class ReleasePresenter(
 
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
+
+        val loginUiState = loginPresenter.present()
 
         LaunchedEffect(forceRefreshDetails) {
             try {
@@ -209,6 +214,7 @@ internal class ReleasePresenter(
             relationsUiState = relationsUiState,
             tracksByReleaseUiState = tracksByReleaseUiState,
             artistsByEntityUiState = artistsByEntityUiState,
+            loginUiState = loginUiState,
             eventSink = ::eventSink,
         )
     }
@@ -228,6 +234,7 @@ internal data class ReleaseUiState(
     val relationsUiState: RelationsUiState,
     val tracksByReleaseUiState: TracksByReleaseUiState,
     val artistsByEntityUiState: ArtistsByEntityUiState,
+    val loginUiState: LoginUiState,
     val eventSink: (ReleaseUiEvent) -> Unit,
 ) : CircuitUiState
 
