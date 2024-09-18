@@ -486,7 +486,7 @@ private val country = AreaDetailsModel(
 internal fun PreviewAreaDetails() {
     PreviewTheme {
         Surface {
-            AreaUi(
+            AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
                     isError = false,
@@ -523,7 +523,7 @@ internal fun PreviewAreaDetails() {
 internal fun PreviewAreaDetailsError() {
     PreviewTheme {
         Surface {
-            AreaUi(
+            AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
                     isError = true,
@@ -560,7 +560,7 @@ internal fun PreviewAreaDetailsError() {
 internal fun PreviewAreaRelationships() {
     PreviewTheme {
         Surface {
-            AreaUi(
+            AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
                     isError = false,
@@ -597,7 +597,7 @@ internal fun PreviewAreaRelationships() {
 internal fun PreviewAreaArtists() {
     PreviewTheme {
         Surface {
-            AreaUi(
+            AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
                     isError = false,
@@ -634,7 +634,7 @@ internal fun PreviewAreaArtists() {
 internal fun PreviewAreaEvents() {
     PreviewTheme {
         Surface {
-            AreaUi(
+            AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
                     isError = false,
@@ -671,7 +671,7 @@ internal fun PreviewAreaEvents() {
 internal fun PreviewAreaLabels() {
     PreviewTheme {
         Surface {
-            AreaUi(
+            AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
                     isError = false,
@@ -708,7 +708,7 @@ internal fun PreviewAreaLabels() {
 internal fun PreviewAreaReleases() {
     PreviewTheme {
         Surface {
-            AreaUi(
+            AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
                     isError = false,
@@ -745,7 +745,7 @@ internal fun PreviewAreaReleases() {
 internal fun PreviewAreaPlaces() {
     PreviewTheme {
         Surface {
-            AreaUi(
+            AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
                     isError = false,
@@ -782,7 +782,7 @@ internal fun PreviewAreaPlaces() {
 internal fun PreviewAreaStats() {
     PreviewTheme {
         Surface {
-            AreaUi(
+            AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
                     isError = false,

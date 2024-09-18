@@ -22,10 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
-import com.slack.circuit.overlay.OverlayHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.artist.ArtistsListScreen
 import ly.david.musicsearch.ui.common.event.EventsListScreen
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
@@ -39,27 +39,81 @@ import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
 import ly.david.musicsearch.ui.core.LocalStrings
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-    ExperimentalFoundationApi::class,
-)
 @Composable
 internal fun AreaUi(
     state: AreaUiState,
     entityId: String,
     modifier: Modifier = Modifier,
-    overlayHost: OverlayHost = LocalOverlayHost.current,
-    scope: CoroutineScope = rememberCoroutineScope(),
 ) {
+    val entity = MusicBrainzEntity.AREA
+
     val strings = LocalStrings.current
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+    val overlayHost = LocalOverlayHost.current
+
+    val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
+    val loginEventSink = state.loginUiState.eventSink
+
+    AreaUiInternal(
+        state = state,
+        entityId = entityId,
+        modifier = modifier,
+        overflowDropdownMenuItems = {
+            OpenInBrowserMenuItem(
+                entity = entity,
+                entityId = entityId,
+            )
+            CopyToClipboardMenuItem(entityId)
+            if (state.selectedTab == AreaTab.RELEASES) {
+                ToggleMenuItem(
+                    toggleOnText = strings.showMoreInfo,
+                    toggleOffText = strings.showLessInfo,
+                    toggled = state.releasesByEntityUiState.showMoreInfo,
+                    onToggle = {
+                        releasesByEntityEventSink(
+                            ReleasesByEntityUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
+                        )
+                    },
+                )
+            }
+            AddToCollectionMenuItem(
+                entity = entity,
+                entityId = entityId,
+                overlayHost = overlayHost,
+                coroutineScope = scope,
+                snackbarHostState = snackbarHostState,
+                onLoginClick = {
+                    loginEventSink(LoginUiEvent.StartLogin)
+                },
+            )
+        },
+        strings = strings,
+    )
+}
+
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalFoundationApi::class,
+)
+@Composable
+internal fun AreaUiInternal(
+    state: AreaUiState,
+    entityId: String,
+    modifier: Modifier = Modifier,
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
+    overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
+    scope: CoroutineScope = rememberCoroutineScope(),
+    strings: AppStrings = LocalStrings.current,
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     val entity = MusicBrainzEntity.AREA
     val eventSink = state.eventSink
@@ -68,8 +122,6 @@ internal fun AreaUi(
         initialPage = state.tabs.indexOf(state.selectedTab),
         pageCount = state.tabs::size,
     )
-
-    val loginEventSink = state.loginUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(AreaUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
@@ -95,35 +147,7 @@ internal fun AreaUi(
                 entity = entity,
                 title = state.title,
                 scrollBehavior = scrollBehavior,
-                overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(
-                        entity = MusicBrainzEntity.AREA,
-                        entityId = entityId,
-                    )
-                    CopyToClipboardMenuItem(entityId)
-                    if (state.selectedTab == AreaTab.RELEASES) {
-                        ToggleMenuItem(
-                            toggleOnText = strings.showMoreInfo,
-                            toggleOffText = strings.showLessInfo,
-                            toggled = state.releasesByEntityUiState.showMoreInfo,
-                            onToggle = {
-                                releasesByEntityEventSink(
-                                    ReleasesByEntityUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
-                                )
-                            },
-                        )
-                    }
-                    AddToCollectionMenuItem(
-                        entity = entity,
-                        entityId = entityId,
-                        overlayHost = overlayHost,
-                        coroutineScope = scope,
-                        snackbarHostState = snackbarHostState,
-                        onLoginClick = {
-                            loginEventSink(LoginUiEvent.StartLogin)
-                        },
-                    )
-                },
+                overflowDropdownMenuItems = overflowDropdownMenuItems,
                 showFilterIcon = state.selectedTab !in listOf(
                     AreaTab.STATS,
                 ),
