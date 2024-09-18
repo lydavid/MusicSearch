@@ -8,6 +8,7 @@ import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.defaultRequest
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthRepository
+import ly.david.musicsearch.shared.domain.network.RESOURCE_COLLECTION
 
 private const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
 private const val USER_AGENT_VALUE = "MusicSearch (https://github.com/lydavid/MusicSearch)"
@@ -38,7 +39,8 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
                             }
                         }
                         sendWithoutRequest { request ->
-                            request.url.parameters["collection"] != null ||
+                            request.url.parameters[RESOURCE_COLLECTION] != null ||
+                                request.url.pathSegments.contains(RESOURCE_COLLECTION) ||
                                 request.url.pathSegments.contains(USER_INFO)
                         }
                     }
