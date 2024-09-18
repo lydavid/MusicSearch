@@ -17,15 +17,17 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
+import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
-import ly.david.musicsearch.data.common.network.RecoverableNetworkException
-import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
+import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
+import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
@@ -45,6 +47,7 @@ internal class ReleaseGroupPresenter(
     private val relationsPresenter: RelationsPresenter,
     private val releaseGroupImageRepository: ReleaseGroupImageRepository,
     private val logger: Logger,
+    private val loginPresenter: LoginPresenter,
 ) : Presenter<ReleaseGroupUiState> {
 
     @Composable
@@ -68,6 +71,8 @@ internal class ReleaseGroupPresenter(
         val releasesEventSink = releasesByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
+
+        val loginUiState = loginPresenter.present()
 
         LaunchedEffect(forceRefreshDetails) {
             try {
@@ -169,6 +174,7 @@ internal class ReleaseGroupPresenter(
             detailsLazyListState = detailsLazyListState,
             releasesByEntityUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
+            loginUiState = loginUiState,
             eventSink = ::eventSink,
         )
     }
@@ -197,6 +203,7 @@ internal data class ReleaseGroupUiState(
     val detailsLazyListState: LazyListState = LazyListState(),
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val relationsUiState: RelationsUiState,
+    val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (ReleaseGroupUiEvent) -> Unit,
 ) : CircuitUiState
 

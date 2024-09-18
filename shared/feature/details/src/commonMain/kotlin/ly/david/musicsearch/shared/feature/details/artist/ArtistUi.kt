@@ -10,10 +10,8 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -27,7 +25,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.event.EventsListScreen
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
@@ -38,9 +35,7 @@ import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListScreen
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListScreen
-import ly.david.musicsearch.ui.common.screen.AddToCollectionScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
-import ly.david.musicsearch.ui.common.screen.showInBottomSheet
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
@@ -65,7 +60,7 @@ internal fun ArtistUi(
     val overlayHost = LocalOverlayHost.current
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
     val entity = MusicBrainzEntity.ARTIST
@@ -144,34 +139,16 @@ internal fun ArtistUi(
                             closeMenu()
                         },
                     )
-                    AddToCollectionMenuItem {
-                        scope.launch {
-                            val result = overlayHost.showInBottomSheet(
-                                AddToCollectionScreen(
-                                    entity = entity,
-                                    id = entityId,
-                                ),
-                            )
-                            result.message.ifNotNullOrEmpty {
-                                val snackbarResult = snackbarHostState.showSnackbar(
-                                    message = result.message,
-                                    actionLabel = result.actionLabel,
-                                    duration = SnackbarDuration.Short,
-                                    withDismissAction = true,
-                                )
-
-                                when (snackbarResult) {
-                                    SnackbarResult.ActionPerformed -> {
-                                        loginEventSink(LoginUiEvent.StartLogin)
-                                    }
-
-                                    SnackbarResult.Dismissed -> {
-                                        // Do nothing.
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    AddToCollectionMenuItem(
+                        entity = entity,
+                        entityId = entityId,
+                        overlayHost = overlayHost,
+                        coroutineScope = scope,
+                        snackbarHostState = snackbarHostState,
+                        onLoginClick = {
+                            loginEventSink(LoginUiEvent.StartLogin)
+                        },
+                    )
                 },
                 topAppBarFilterState = state.topAppBarFilterState,
                 additionalBar = {

@@ -17,16 +17,18 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
+import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
-import ly.david.musicsearch.data.common.network.RecoverableNetworkException
-import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.work.WorkRepository
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
+import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
+import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.recording.RecordingsByEntityPresenter
 import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiEvent
 import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiState
@@ -46,6 +48,7 @@ internal class WorkPresenter(
     private val recordingsByEntityPresenter: RecordingsByEntityPresenter,
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
+    private val loginPresenter: LoginPresenter,
 ) : Presenter<WorkUiState> {
 
     @Composable
@@ -69,6 +72,8 @@ internal class WorkPresenter(
         val recordingsEventSink = recordingsByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
+
+        val loginUiState = loginPresenter.present()
 
         LaunchedEffect(forceRefreshDetails) {
             try {
@@ -176,6 +181,7 @@ internal class WorkPresenter(
             artistsByEntityUiState = artistsByEntityUiState,
             recordingsByEntityUiState = recordingsByEntityUiState,
             relationsUiState = relationsUiState,
+            loginUiState = loginUiState,
             eventSink = ::eventSink,
         )
     }
@@ -193,6 +199,7 @@ internal data class WorkUiState(
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val recordingsByEntityUiState: RecordingsByEntityUiState,
     val relationsUiState: RelationsUiState,
+    val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (WorkUiEvent) -> Unit,
 ) : CircuitUiState
 

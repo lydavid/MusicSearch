@@ -27,6 +27,8 @@ import ly.david.musicsearch.shared.domain.place.PlaceRepository
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
+import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
+import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
@@ -42,6 +44,7 @@ internal class PlacePresenter(
     private val eventsByEntityPresenter: EventsByEntityPresenter,
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
+    private val loginPresenter: LoginPresenter,
 ) : Presenter<PlaceUiState> {
 
     @Composable
@@ -63,6 +66,8 @@ internal class PlacePresenter(
         val eventsEventSink = eventsByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
+
+        val loginUiState = loginPresenter.present()
 
         LaunchedEffect(forceRefreshDetails) {
             try {
@@ -159,6 +164,7 @@ internal class PlacePresenter(
             detailsLazyListState = detailsLazyListState,
             eventsByEntityUiState = eventsByEntityUiState,
             relationsUiState = relationsUiState,
+            loginUiState = loginUiState,
             eventSink = ::eventSink,
         )
     }
@@ -175,6 +181,7 @@ internal data class PlaceUiState(
     val detailsLazyListState: LazyListState = LazyListState(),
     val eventsByEntityUiState: EventsByEntityUiState,
     val relationsUiState: RelationsUiState,
+    val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (PlaceUiEvent) -> Unit,
 ) : CircuitUiState
 

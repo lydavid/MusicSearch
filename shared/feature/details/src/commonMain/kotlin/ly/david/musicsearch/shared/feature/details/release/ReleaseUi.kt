@@ -102,34 +102,16 @@ internal fun ReleaseUi(
                         entityId = entityId,
                     )
                     CopyToClipboardMenuItem(entityId)
-                    AddToCollectionMenuItem {
-                        scope.launch {
-                            val result = overlayHost.showInBottomSheet(
-                                AddToCollectionScreen(
-                                    entity = entity,
-                                    id = entityId,
-                                ),
-                            )
-                            result.message.ifNotNullOrEmpty {
-                                val snackbarResult = snackbarHostState.showSnackbar(
-                                    message = result.message,
-                                    actionLabel = result.actionLabel,
-                                    duration = SnackbarDuration.Short,
-                                    withDismissAction = true,
-                                )
-
-                                when (snackbarResult) {
-                                    SnackbarResult.ActionPerformed -> {
-                                        loginEventSink(LoginUiEvent.StartLogin)
-                                    }
-
-                                    SnackbarResult.Dismissed -> {
-                                        // Do nothing.
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    AddToCollectionMenuItem(
+                        entity = entity,
+                        entityId = entityId,
+                        overlayHost = overlayHost,
+                        coroutineScope = scope,
+                        snackbarHostState = snackbarHostState,
+                        onLoginClick = {
+                            loginEventSink(LoginUiEvent.StartLogin)
+                        },
+                    )
                 },
                 subtitleDropdownMenuItems = {
                     state.release?.artistCredits?.forEach { artistCredit ->

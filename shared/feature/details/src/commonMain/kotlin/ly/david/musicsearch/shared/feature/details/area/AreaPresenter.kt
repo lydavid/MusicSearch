@@ -17,13 +17,13 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.data.common.network.RecoverableNetworkException
-import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
@@ -33,6 +33,8 @@ import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
 import ly.david.musicsearch.ui.common.label.LabelsByEntityPresenter
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiEvent
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
+import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
+import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.place.PlacesByEntityPresenter
 import ly.david.musicsearch.ui.common.place.PlacesByEntityUiEvent
 import ly.david.musicsearch.ui.common.place.PlacesByEntityUiState
@@ -58,6 +60,7 @@ internal class AreaPresenter(
     private val placesByEntityPresenter: PlacesByEntityPresenter,
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
+    private val loginPresenter: LoginPresenter,
 ) : Presenter<AreaUiState> {
 
     @Composable
@@ -87,6 +90,8 @@ internal class AreaPresenter(
         val placesEventSink = placesByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
+
+        val loginUiState = loginPresenter.present()
 
         LaunchedEffect(forceRefreshDetails) {
             try {
@@ -229,6 +234,7 @@ internal class AreaPresenter(
             placesByEntityUiState = placesByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
+            loginUiState = loginUiState,
             eventSink = ::eventSink,
         )
     }
@@ -249,6 +255,7 @@ internal data class AreaUiState(
     val placesByEntityUiState: PlacesByEntityUiState,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val relationsUiState: RelationsUiState,
+    val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (AreaUiEvent) -> Unit = {},
 ) : CircuitUiState
 

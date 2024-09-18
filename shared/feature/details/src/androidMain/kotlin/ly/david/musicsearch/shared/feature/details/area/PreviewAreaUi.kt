@@ -513,7 +513,6 @@ internal fun PreviewAreaDetails() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                onAddToCollectionClick = {},
             )
         }
     }
@@ -551,7 +550,6 @@ internal fun PreviewAreaDetailsError() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                onAddToCollectionClick = {},
             )
         }
     }
@@ -589,7 +587,6 @@ internal fun PreviewAreaRelationships() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                onAddToCollectionClick = {},
             )
         }
     }
@@ -627,7 +624,6 @@ internal fun PreviewAreaArtists() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                onAddToCollectionClick = {},
             )
         }
     }
@@ -665,7 +661,6 @@ internal fun PreviewAreaEvents() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                onAddToCollectionClick = {},
             )
         }
     }
@@ -703,7 +698,6 @@ internal fun PreviewAreaLabels() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                onAddToCollectionClick = {},
             )
         }
     }
@@ -741,7 +735,6 @@ internal fun PreviewAreaReleases() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                onAddToCollectionClick = {},
             )
         }
     }
@@ -779,7 +772,6 @@ internal fun PreviewAreaPlaces() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                onAddToCollectionClick = {},
             )
         }
     }
@@ -817,7 +809,6 @@ internal fun PreviewAreaStats() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                onAddToCollectionClick = {},
             )
         }
     }

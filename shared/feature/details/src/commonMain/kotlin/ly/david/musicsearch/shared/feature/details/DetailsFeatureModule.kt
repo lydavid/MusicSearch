@@ -63,6 +63,7 @@ val detailsFeatureModule = module {
                                 releasesByEntityPresenter = get(),
                                 relationsPresenter = get(),
                                 logger = get(),
+                                loginPresenter = get(),
                             )
                         }
 
@@ -93,6 +94,7 @@ val detailsFeatureModule = module {
                                 incrementLookupHistory = get(),
                                 relationsPresenter = get(),
                                 logger = get(),
+                                loginPresenter = get(),
                             )
                         }
 
@@ -114,6 +116,7 @@ val detailsFeatureModule = module {
                                 incrementLookupHistory = get(),
                                 relationsPresenter = get(),
                                 logger = get(),
+                                loginPresenter = get(),
                             )
                         }
 
@@ -126,6 +129,7 @@ val detailsFeatureModule = module {
                                 releasesByEntityPresenter = get(),
                                 relationsPresenter = get(),
                                 logger = get(),
+                                loginPresenter = get(),
                             )
                         }
 
@@ -138,6 +142,7 @@ val detailsFeatureModule = module {
                                 eventsByEntityPresenter = get(),
                                 relationsPresenter = get(),
                                 logger = get(),
+                                loginPresenter = get(),
                             )
                         }
 
@@ -150,6 +155,7 @@ val detailsFeatureModule = module {
                                 releasesByEntityPresenter = get(),
                                 relationsPresenter = get(),
                                 logger = get(),
+                                loginPresenter = get(),
                             )
                         }
 
@@ -178,6 +184,7 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 releaseGroupImageRepository = get(),
                                 logger = get(),
+                                loginPresenter = get(),
                             )
                         }
 
@@ -189,6 +196,7 @@ val detailsFeatureModule = module {
                                 incrementLookupHistory = get(),
                                 relationsPresenter = get(),
                                 logger = get(),
+                                loginPresenter = get(),
                             )
                         }
 
@@ -202,6 +210,7 @@ val detailsFeatureModule = module {
                                 artistsByEntityPresenter = get(),
                                 recordingsByEntityPresenter = get(),
                                 logger = get(),
+                                loginPresenter = get(),
                             )
                         }
 
