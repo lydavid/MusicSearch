@@ -12,7 +12,7 @@ class MusicBrainzAuthRepository(
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
 ) {
 
-    suspend fun getAuthState(): String? {
+    suspend fun getAccessToken(): String? {
         val accessToken = musicBrainzAuthStore.getAccessToken()
         val refreshToken = musicBrainzAuthStore.getRefreshToken()
         if (accessToken.isNullOrEmpty() || refreshToken.isNullOrEmpty()) return null

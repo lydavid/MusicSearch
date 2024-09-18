@@ -29,12 +29,12 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
                 install(Auth) {
                     bearer {
                         loadTokens {
-                            musicBrainzAuthRepository.getAuthState()?.let {
+                            musicBrainzAuthRepository.getAccessToken()?.let {
                                 BearerTokens(it, "")
                             }
                         }
                         refreshTokens {
-                            musicBrainzAuthRepository.getAuthState()?.let {
+                            musicBrainzAuthRepository.getAccessToken()?.let {
                                 BearerTokens(it, "")
                             }
                         }
