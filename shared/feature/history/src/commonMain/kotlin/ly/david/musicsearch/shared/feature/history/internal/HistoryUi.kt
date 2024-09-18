@@ -99,7 +99,7 @@ internal fun HistoryUi(
 
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        contentWindowInsets = WindowInsets(0),
         topBar = {
             TopAppBarWithFilter(
                 showBackButton = false,

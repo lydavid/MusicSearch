@@ -60,7 +60,7 @@ internal fun GenreUi(
 
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        contentWindowInsets = WindowInsets(0),
         topBar = {
             ScrollableTopAppBar(
                 entity = entity,

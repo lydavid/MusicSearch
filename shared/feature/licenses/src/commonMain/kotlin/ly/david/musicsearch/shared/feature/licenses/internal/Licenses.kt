@@ -20,7 +20,7 @@ internal fun Licenses(
 
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        contentWindowInsets = WindowInsets(0),
         topBar = {
             ScrollableTopAppBar(
                 onBack = { eventSink(LicensesUiEvent.NavigateUp) },
