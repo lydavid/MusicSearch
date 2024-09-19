@@ -13,10 +13,6 @@ on:
         required: true
       MUSICSEARCH_GHA_HELPER_APP_PRIVATE_KEY:
         required: true
-      ORG_GRADLE_PROJECT_MUSICBRAINZ_CLIENT_ID:
-        required: true
-      ORG_GRADLE_PROJECT_MUSICBRAINZ_CLIENT_SECRET:
-        required: true
       ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID:
         required: true
       ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET:
@@ -86,8 +82,6 @@ jobs:
       contents: write
       id-token: write # This is required for requesting the JWT
     env:
-      ORG_GRADLE_PROJECT_MUSICBRAINZ_CLIENT_ID: ${{ secrets.ORG_GRADLE_PROJECT_MUSICBRAINZ_CLIENT_ID }}
-      ORG_GRADLE_PROJECT_MUSICBRAINZ_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_MUSICBRAINZ_CLIENT_SECRET }}
       ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID }}
       ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET }}
     steps:
@@ -136,6 +130,12 @@ jobs:
           echo "storePassword=${{ secrets.RELEASE_STORE_PASSWORD }}" >> keystore.properties
           echo "keyPassword=${{ secrets.RELEASE_KEY_PASSWORD }}" >> keystore.properties
         shell: bash
+
+      # Necessary because the debug and release version of the app has a different redirect
+      - name: Replace debug MusicBrainz client id/secret with release versions
+        run: |
+          echo "TVVTSUNCUkFJTlpfQ0xJRU5UX0lEPWtpbVpiWXlaYUVia2Ewb0Npb1ExNUdINWhlNFp4dGtXCg==" | base64 -d > not_so_secret.properties
+          echo "TVVTSUNCUkFJTlpfQ0xJRU5UX1NFQ1JFVD00ZVlINmpqRzBVVm1GRGN1Yk1CSThrVVlxT18xVkxHRAo=" | base64 -d >> not_so_secret.properties
 
       - name: Decrypt release keystore
         run: echo "${{ secrets.RELEASE_KEYSTORE_JKS_BASE64 }}" | base64 -d >> release-keystore.jks

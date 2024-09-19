@@ -16,7 +16,7 @@ buildConfig {
     var musicBrainzClientSecret = project.properties["MUSICBRAINZ_CLIENT_SECRET"] as String?
 
     if (musicBrainzClientId.isNullOrEmpty() || musicBrainzClientSecret.isNullOrEmpty()) {
-        val secretsPropertiesFile = rootProject.file("secrets.properties")
+        val secretsPropertiesFile = rootProject.file("not_so_secret.properties")
         val secretsProperties = if (secretsPropertiesFile.exists()) {
             Properties().apply {
                 load(secretsPropertiesFile.inputStream())

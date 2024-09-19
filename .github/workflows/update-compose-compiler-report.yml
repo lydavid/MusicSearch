@@ -38,6 +38,12 @@ jobs:
           echo "keyPassword=${{ secrets.RELEASE_KEY_PASSWORD }}" >> keystore.properties
         shell: bash
 
+      # Necessary because the debug and release version of the app has a different redirect
+      - name: Replace debug MusicBrainz client id/secret with release versions
+        run: |
+          echo "TVVTSUNCUkFJTlpfQ0xJRU5UX0lEPWtpbVpiWXlaYUVia2Ewb0Npb1ExNUdINWhlNFp4dGtXCg==" | base64 -d > not_so_secret.properties
+          echo "TVVTSUNCUkFJTlpfQ0xJRU5UX1NFQ1JFVD00ZVlINmpqRzBVVm1GRGN1Yk1CSThrVVlxT18xVkxHRAo=" | base64 -d >> not_so_secret.properties
+
       - name: Convert base64 to files
         run: |
           echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d >> android/app/google-services.json
