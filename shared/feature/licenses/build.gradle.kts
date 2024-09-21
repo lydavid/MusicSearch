@@ -27,3 +27,7 @@ kotlin {
         }
     }
 }
+
+aboutLibraries {
+    excludeFields = arrayOf("generated")
+}
