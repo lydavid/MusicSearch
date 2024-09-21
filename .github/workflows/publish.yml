@@ -81,9 +81,6 @@ jobs:
     permissions:
       contents: write
       id-token: write # This is required for requesting the JWT
-    env:
-      ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID }}
-      ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET }}
     steps:
       - name: Checkout
         uses: nschloe/action-cached-lfs-checkout@v1
@@ -148,6 +145,9 @@ jobs:
 
       - name: Assemble Google Play APK, bundle AAB
         run: ./gradlew assembleGooglePlayRelease bundleGooglePlayRelease
+        env:
+          ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID }}
+          ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET }}
 
       - name: Authenticate to Google Cloud
         id: auth
