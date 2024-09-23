@@ -12,4 +12,5 @@ data class ArtistListItemModel(
     override val gender: String? = null,
     override val countryCode: String? = null,
     val lifeSpan: LifeSpanUiModel? = null,
+    val imageUrl: String? = null,
 ) : ListItemModel(), Artist

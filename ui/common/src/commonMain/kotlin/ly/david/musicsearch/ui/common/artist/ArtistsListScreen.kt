@@ -1,6 +1,5 @@
 package ly.david.musicsearch.ui.common.artist
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -12,7 +11,6 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ArtistsListScreen(
     snackbarHostState: SnackbarHostState,

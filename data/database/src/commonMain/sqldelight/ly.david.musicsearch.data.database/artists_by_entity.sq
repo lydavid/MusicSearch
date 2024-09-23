@@ -47,9 +47,11 @@ SELECT
   a.country_code,
   a.begin,
   a.end,
-  a.ended
+  a.ended,
+  mi.thumbnail_url
 FROM artists_by_entity ae
 INNER JOIN artist a ON a.id = ae.artist_id
+LEFT JOIN mbid_image mi ON mi.mbid = a.id
 WHERE ae.entity_id = :entityId
 AND (
   a.name LIKE :query OR
