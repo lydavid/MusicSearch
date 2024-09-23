@@ -12,10 +12,12 @@ import ly.david.musicsearch.ui.core.theme.PreviewTheme
 internal fun PreviewArtistListItemSimple() {
     PreviewTheme {
         Surface {
-            ArtistListItemModel(
-                id = "1",
-                name = "artist name",
-                sortName = "sort name should not be seen",
+            ArtistListItem(
+                artist = ArtistListItemModel(
+                    id = "1",
+                    name = "artist name",
+                    sortName = "sort name should not be seen",
+                ),
             )
         }
     }
@@ -26,11 +28,13 @@ internal fun PreviewArtistListItemSimple() {
 internal fun PreviewArtistListItemCountryCode() {
     PreviewTheme {
         Surface {
-            ArtistListItemModel(
-                id = "1",
-                name = "artist name",
-                sortName = "sort name should not be seen",
-                countryCode = "CA",
+            ArtistListItem(
+                artist = ArtistListItemModel(
+                    id = "1",
+                    name = "artist name",
+                    sortName = "sort name should not be seen",
+                    countryCode = "CA",
+                ),
             )
         }
     }
