@@ -49,7 +49,7 @@ internal class SearchPresenter(
             key1 = query,
             key2 = entity,
         ) {
-            if (query.isEmpty()) {
+            if (query.isBlank()) {
                 searchHistory = getSearchHistory(
                     entity = entity,
                 )
