@@ -2,7 +2,6 @@ package ly.david.musicsearch.ui.common.place
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.cash.paging.compose.LazyPagingItems
@@ -14,7 +13,6 @@ import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PlacesListScreen(
-    snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
     lazyPagingItems: LazyPagingItems<PlaceListItemModel>,
     modifier: Modifier = Modifier,
@@ -24,7 +22,6 @@ fun PlacesListScreen(
         lazyPagingItems = lazyPagingItems,
         modifier = modifier,
         lazyListState = lazyListState,
-        snackbarHostState = snackbarHostState,
     ) { placeListItemModel: PlaceListItemModel? ->
         when (placeListItemModel) {
             is PlaceListItemModel -> {

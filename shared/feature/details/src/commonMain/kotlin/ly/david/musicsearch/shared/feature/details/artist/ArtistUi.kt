@@ -200,13 +200,12 @@ internal fun ArtistUi(
 
                 ArtistTab.RELEASE_GROUPS -> {
                     ReleaseGroupsListScreen(
-                        lazyListState = state.releaseGroupsByEntityUiState.lazyListState,
+                        lazyPagingItems = state.releaseGroupsByEntityUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.releaseGroupsByEntityUiState.lazyPagingItems,
+                        lazyListState = state.releaseGroupsByEntityUiState.lazyListState,
                         onReleaseGroupClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
@@ -228,13 +227,12 @@ internal fun ArtistUi(
 
                 ArtistTab.RELEASES -> {
                     ReleasesListScreen(
-                        lazyListState = state.releasesByEntityUiState.lazyListState,
+                        lazyPagingItems = state.releasesByEntityUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.releasesByEntityUiState.lazyPagingItems,
+                        lazyListState = state.releasesByEntityUiState.lazyListState,
                         showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
                         onReleaseClick = { entity, id, title ->
                             eventSink(
@@ -257,13 +255,12 @@ internal fun ArtistUi(
 
                 ArtistTab.RECORDINGS -> {
                     RecordingsListScreen(
-                        lazyListState = state.recordingsByEntityUiState.lazyListState,
+                        lazyPagingItems = state.recordingsByEntityUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.recordingsByEntityUiState.lazyPagingItems,
+                        lazyListState = state.recordingsByEntityUiState.lazyListState,
                         onRecordingClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
@@ -278,13 +275,12 @@ internal fun ArtistUi(
 
                 ArtistTab.WORKS -> {
                     WorksListScreen(
-                        lazyListState = state.worksByEntityUiState.lazyListState,
+                        lazyPagingItems = state.worksByEntityUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.worksByEntityUiState.lazyPagingItems,
+                        lazyListState = state.worksByEntityUiState.lazyListState,
                         onWorkClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
@@ -300,12 +296,11 @@ internal fun ArtistUi(
                 ArtistTab.EVENTS -> {
                     EventsListScreen(
                         lazyListState = state.eventsByEntityUiState.lazyListState,
+                        lazyPagingItems = state.eventsByEntityUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.eventsByEntityUiState.lazyPagingItems,
                         onEventClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
@@ -326,7 +321,6 @@ internal fun ArtistUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.relationsUiState.lazyListState,
-                        snackbarHostState = snackbarHostState,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(

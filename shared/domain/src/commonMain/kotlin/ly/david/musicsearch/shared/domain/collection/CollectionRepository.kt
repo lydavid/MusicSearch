@@ -2,7 +2,7 @@ package ly.david.musicsearch.shared.domain.collection
 
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.ActionableResult
+import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 

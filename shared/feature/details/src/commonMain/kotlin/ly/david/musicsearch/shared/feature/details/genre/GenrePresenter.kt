@@ -15,7 +15,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
-import ly.david.musicsearch.data.common.network.RecoverableNetworkException
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
@@ -44,7 +44,7 @@ internal class GenrePresenter(
                 title = genreListItemModel.getNameWithDisambiguation()
                 genre = genreListItemModel
                 isError = false
-            } catch (ex: RecoverableNetworkException) {
+            } catch (ex: HandledException) {
                 logger.e(ex)
                 isError = true
             }

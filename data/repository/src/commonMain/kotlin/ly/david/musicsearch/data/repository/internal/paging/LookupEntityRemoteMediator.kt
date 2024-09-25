@@ -4,7 +4,7 @@ import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.LoadType
 import app.cash.paging.PagingState
 import app.cash.paging.RemoteMediator
-import ly.david.musicsearch.data.common.network.RecoverableNetworkException
+import ly.david.musicsearch.shared.domain.error.HandledException
 
 /**
  * When using [LoadType.REFRESH], [hasEntityBeenStored] does not need to be checked.
@@ -40,7 +40,7 @@ internal class LookupEntityRemoteMediator<DM : Any>(
             }
 
             MediatorResult.Success(endOfPaginationReached = true)
-        } catch (ex: RecoverableNetworkException) {
+        } catch (ex: HandledException) {
             MediatorResult.Error(ex)
         }
     }

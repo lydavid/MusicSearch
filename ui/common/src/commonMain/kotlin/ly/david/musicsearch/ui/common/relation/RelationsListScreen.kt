@@ -2,7 +2,6 @@ package ly.david.musicsearch.ui.common.relation
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.cash.paging.compose.LazyPagingItems
@@ -16,14 +15,12 @@ fun RelationsListScreen(
     lazyPagingItems: LazyPagingItems<RelationListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
-    snackbarHostState: SnackbarHostState = SnackbarHostState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     ScreenWithPagingLoadingAndError(
-        modifier = modifier,
         lazyPagingItems = lazyPagingItems,
+        modifier = modifier,
         lazyListState = lazyListState,
-        snackbarHostState = snackbarHostState,
     ) { listItemModel: ListItemModel? ->
 
         when (listItemModel) {

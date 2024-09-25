@@ -7,6 +7,5 @@
     <ID>LongMethod:RelationRepositoryImpl.kt$RelationRepositoryImpl$private suspend fun lookupEntityWithRelations( entity: MusicBrainzEntity, entityId: String, ): List&lt;RelationMusicBrainzModel&gt;?</ID>
     <ID>LongMethod:SearchMusicBrainzPagingSource.kt$SearchMusicBrainzPagingSource$private suspend fun getQueryResults( searchApi: SearchApi, entity: MusicBrainzEntity, queryString: String, currentOffset: Int, limit: Int, ): QueryResults</ID>
     <ID>ReturnCount:BrowseEntityRemoteMediator.kt$BrowseEntityRemoteMediator$override suspend fun load( loadType: LoadType, state: PagingState&lt;Int, DM&gt;, ): MediatorResult</ID>
-    <ID>SwallowedException:CollectionRepositoryImpl.kt$CollectionRepositoryImpl$ex: RecoverableNetworkException</ID>
   </CurrentIssues>
 </SmellBaseline>

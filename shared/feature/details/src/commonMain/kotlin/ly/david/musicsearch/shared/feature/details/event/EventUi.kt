@@ -160,7 +160,6 @@ internal fun EventUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.relationsUiState.lazyListState,
-                        snackbarHostState = snackbarHostState,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 EventUiEvent.ClickItem(

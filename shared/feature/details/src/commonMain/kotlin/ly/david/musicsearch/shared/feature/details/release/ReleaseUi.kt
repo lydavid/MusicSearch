@@ -192,13 +192,12 @@ internal fun ReleaseUi(
 
                 ReleaseTab.TRACKS -> {
                     TracksByReleaseScreen(
-                        lazyListState = state.tracksByReleaseUiState.lazyListState,
+                        lazyPagingItems = state.tracksByReleaseUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.tracksByReleaseUiState.lazyPagingItems,
+                        lazyListState = state.tracksByReleaseUiState.lazyListState,
                         onRecordingClick = { id, title ->
                             eventSink(
                                 ReleaseUiEvent.ClickItem(
@@ -214,12 +213,11 @@ internal fun ReleaseUi(
                 ReleaseTab.ARTISTS -> {
                     ArtistsListScreen(
                         lazyListState = state.artistsByEntityUiState.lazyListState,
+                        lazyPagingItems = state.artistsByEntityUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.artistsByEntityUiState.lazyPagingItems,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 ReleaseUiEvent.ClickItem(
@@ -240,7 +238,6 @@ internal fun ReleaseUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.relationsUiState.lazyListState,
-                        snackbarHostState = snackbarHostState,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 ReleaseUiEvent.ClickItem(

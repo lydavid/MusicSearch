@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -45,7 +44,6 @@ import ly.david.musicsearch.ui.common.work.WorkListItem
 internal fun SearchResultsScreen(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     lazyListState: LazyListState = rememberLazyListState(),
-    snackbarHostState: SnackbarHostState = SnackbarHostState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     val strings = LocalStrings.current
@@ -53,7 +51,6 @@ internal fun SearchResultsScreen(
     ScreenWithPagingLoadingAndError(
         lazyPagingItems = lazyPagingItems,
         lazyListState = lazyListState,
-        snackbarHostState = snackbarHostState,
         customNoResultsText = strings.noResultsFoundSearch,
         keyed = false,
     ) { listItemModel: ListItemModel? ->

@@ -17,7 +17,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.data.common.network.RecoverableNetworkException
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
@@ -100,7 +100,7 @@ internal class AreaPresenter(
 
                 area = areaDetailsModel
                 isError = false
-            } catch (ex: RecoverableNetworkException) {
+            } catch (ex: HandledException) {
                 logger.e(ex)
                 isError = true
             }

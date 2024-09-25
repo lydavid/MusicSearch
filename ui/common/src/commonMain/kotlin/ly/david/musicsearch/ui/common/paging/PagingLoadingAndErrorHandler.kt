@@ -15,9 +15,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -51,7 +49,6 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     lazyPagingItems: LazyPagingItems<T>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
-    snackbarHostState: SnackbarHostState? = null,
     customNoResultsText: String = "",
     keyed: Boolean = true,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit,
@@ -76,14 +73,10 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
             }
 
             lazyPagingItems.loadState.refresh is LoadStateError -> {
-                // TODO: going to another tab, and coming back will show same error message (doesn't make another call)
-                LaunchedEffect(Unit) {
-                    val errorMessage = (lazyPagingItems.loadState.refresh as LoadStateError).error.message
-                    val displayMessage = "Failed to fetch data: ${errorMessage ?: "unknown"}"
-                    snackbarHostState?.showSnackbar(displayMessage)
-                }
-
-                FullScreenErrorWithRetry(onClick = { lazyPagingItems.refresh() })
+                FullScreenErrorWithRetry(
+                    throwable = (lazyPagingItems.loadState.refresh as LoadStateError).error,
+                    onClick = { lazyPagingItems.refresh() },
+                )
             }
 
             lazyPagingItems.loadState.append.endOfPaginationReached &&

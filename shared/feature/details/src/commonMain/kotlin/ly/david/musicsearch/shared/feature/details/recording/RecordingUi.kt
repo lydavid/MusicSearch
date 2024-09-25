@@ -188,13 +188,12 @@ internal fun RecordingUi(
 
                 RecordingTab.RELEASES -> {
                     ReleasesListScreen(
-                        lazyListState = state.releasesByEntityUiState.lazyListState,
+                        lazyPagingItems = state.releasesByEntityUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        lazyPagingItems = state.releasesByEntityUiState.lazyPagingItems,
+                        lazyListState = state.releasesByEntityUiState.lazyListState,
                         showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
                         onReleaseClick = { entity, id, title ->
                             eventSink(
@@ -223,7 +222,6 @@ internal fun RecordingUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.relationsUiState.lazyListState,
-                        snackbarHostState = snackbarHostState,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 RecordingUiEvent.ClickItem(

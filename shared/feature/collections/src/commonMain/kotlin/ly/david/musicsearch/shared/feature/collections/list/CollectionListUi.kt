@@ -169,10 +169,10 @@ internal fun CollectionListUi(
     ) { innerPadding ->
 
         ScreenWithPagingLoadingAndError(
+            lazyPagingItems = lazyPagingItems,
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-            lazyPagingItems = lazyPagingItems,
             lazyListState = lazyListState,
         ) { collectionListItemModel: CollectionListItemModel? ->
             when (collectionListItemModel) {

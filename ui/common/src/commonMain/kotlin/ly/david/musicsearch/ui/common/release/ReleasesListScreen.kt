@@ -2,7 +2,6 @@ package ly.david.musicsearch.ui.common.release
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.cash.paging.compose.LazyPagingItems
@@ -16,7 +15,6 @@ import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 fun ReleasesListScreen(
     lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     modifier: Modifier = Modifier,
-    snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
     showMoreInfo: Boolean = true,
     onReleaseClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
@@ -24,10 +22,9 @@ fun ReleasesListScreen(
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = {},
 ) {
     ScreenWithPagingLoadingAndError(
+        lazyPagingItems = lazyPagingItems,
         modifier = modifier,
         lazyListState = lazyListState,
-        lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState,
     ) { releaseListItemModel: ReleaseListItemModel? ->
         when (releaseListItemModel) {
             is ReleaseListItemModel -> {
