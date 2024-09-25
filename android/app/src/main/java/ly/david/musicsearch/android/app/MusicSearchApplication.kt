@@ -12,7 +12,7 @@ internal class MusicSearchApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.FLAVOR == "fDroid") {
             Timber.plant(Timber.DebugTree())
         } else {
             Timber.plant(CrashlyticsTree())
