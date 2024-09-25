@@ -17,7 +17,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
@@ -75,7 +75,7 @@ internal class LabelPresenter(
                 title = labelDetailsModel.getNameWithDisambiguation()
                 label = labelDetailsModel
                 isError = false
-            } catch (ex: HandledException) {
+            } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
                 isError = true
             }

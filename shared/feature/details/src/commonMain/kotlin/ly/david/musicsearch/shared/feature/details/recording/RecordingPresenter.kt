@@ -22,7 +22,7 @@ import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
-import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.recording.RecordingRepository
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
@@ -78,7 +78,7 @@ internal class RecordingPresenter(
                 subtitle = "Recording by ${recordingDetailsModel.artistCredits.getDisplayNames()}"
                 recording = recordingDetailsModel
                 isError = false
-            } catch (ex: HandledException) {
+            } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
                 isError = true
             }

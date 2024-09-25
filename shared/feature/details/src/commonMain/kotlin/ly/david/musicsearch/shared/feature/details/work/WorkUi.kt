@@ -152,11 +152,12 @@ internal fun WorkUi(
                 WorkTab.ARTISTS -> {
                     ArtistsListScreen(
                         lazyListState = state.artistsByEntityUiState.lazyListState,
-                        lazyPagingItems = state.artistsByEntityUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.artistsByEntityUiState.lazyPagingItems,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 WorkUiEvent.ClickItem(
@@ -171,12 +172,13 @@ internal fun WorkUi(
 
                 WorkTab.RECORDINGS -> {
                     RecordingsListScreen(
-                        lazyPagingItems = state.recordingsByEntityUiState.lazyPagingItems,
+                        lazyListState = state.recordingsByEntityUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.recordingsByEntityUiState.lazyListState,
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.recordingsByEntityUiState.lazyPagingItems,
                         onRecordingClick = { entity, id, title ->
                             eventSink(
                                 WorkUiEvent.ClickItem(
@@ -197,6 +199,7 @@ internal fun WorkUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.relationsUiState.lazyListState,
+                        snackbarHostState = snackbarHostState,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 WorkUiEvent.ClickItem(

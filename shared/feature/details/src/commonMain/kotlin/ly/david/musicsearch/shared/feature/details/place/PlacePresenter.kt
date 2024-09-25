@@ -21,7 +21,7 @@ import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
-import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
@@ -75,7 +75,7 @@ internal class PlacePresenter(
                 title = placeDetailsModel.getNameWithDisambiguation()
                 place = placeDetailsModel
                 isError = false
-            } catch (ex: HandledException) {
+            } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
                 isError = true
             }

@@ -151,11 +151,12 @@ internal fun PlaceUi(
                 PlaceTab.EVENTS -> {
                     EventsListScreen(
                         lazyListState = state.eventsByEntityUiState.lazyListState,
-                        lazyPagingItems = state.eventsByEntityUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.eventsByEntityUiState.lazyPagingItems,
                         onEventClick = { entity, id, title ->
                             eventSink(
                                 PlaceUiEvent.ClickItem(
@@ -176,6 +177,7 @@ internal fun PlaceUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.relationsUiState.lazyListState,
+                        snackbarHostState = snackbarHostState,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 PlaceUiEvent.ClickItem(

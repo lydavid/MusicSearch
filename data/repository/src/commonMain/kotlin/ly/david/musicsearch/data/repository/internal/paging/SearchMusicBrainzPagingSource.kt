@@ -23,7 +23,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
-import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.data.musicbrainz.DELAY_PAGED_API_CALLS_MS
 import ly.david.musicsearch.data.musicbrainz.STARTING_OFFSET
 import ly.david.musicsearch.data.musicbrainz.api.SearchApi
@@ -96,7 +96,7 @@ internal class SearchMusicBrainzPagingSource(
                 prevKey = if (currentOffset == STARTING_OFFSET) null else currentOffset,
                 nextKey = nextOffset,
             )
-        } catch (exception: HandledException) {
+        } catch (exception: RecoverableNetworkException) {
             LoadResult.Error(exception)
         }
     }

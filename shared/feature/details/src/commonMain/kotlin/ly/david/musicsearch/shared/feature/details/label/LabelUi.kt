@@ -166,12 +166,13 @@ internal fun LabelUi(
 
                 LabelTab.RELEASES -> {
                     ReleasesListScreen(
-                        lazyPagingItems = state.releasesByEntityUiState.lazyPagingItems,
+                        lazyListState = state.relationsUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.relationsUiState.lazyListState,
+                        snackbarHostState = snackbarHostState,
+                        lazyPagingItems = state.releasesByEntityUiState.lazyPagingItems,
                         showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
                         onReleaseClick = { entity, id, title ->
                             eventSink(
@@ -200,6 +201,7 @@ internal fun LabelUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.relationsUiState.lazyListState,
+                        snackbarHostState = snackbarHostState,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 LabelUiEvent.ClickItem(

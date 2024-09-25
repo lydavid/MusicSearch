@@ -5,6 +5,7 @@ import app.cash.paging.LoadType
 import app.cash.paging.PagingState
 import app.cash.paging.RemoteMediator
 import kotlinx.coroutines.delay
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.data.musicbrainz.DELAY_PAGED_API_CALLS_MS
 import ly.david.musicsearch.data.musicbrainz.SEARCH_BROWSE_LIMIT
 
@@ -69,7 +70,7 @@ internal class BrowseEntityRemoteMediator<DM : Any>(
 
             // Assuming all Browse uses this limit.
             MediatorResult.Success(endOfPaginationReached = browseEntity(nextOffset) < SEARCH_BROWSE_LIMIT)
-        } catch (ex: Exception) {
+        } catch (ex: RecoverableNetworkException) {
             MediatorResult.Error(ex)
         }
     }

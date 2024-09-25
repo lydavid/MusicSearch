@@ -49,17 +49,19 @@ internal fun SearchUi(
             )
         },
     ) { innerPadding ->
-        InternalSearchUi(
+        SearchUi(
             state = state,
             modifier = Modifier.padding(innerPadding),
+            snackbarHostState = snackbarHostState,
         )
     }
 }
 
 @Composable
-private fun InternalSearchUi(
+private fun SearchUi(
     state: SearchUiState,
     modifier: Modifier = Modifier,
+    snackbarHostState: SnackbarHostState = SnackbarHostState(),
 ) {
     val strings = LocalStrings.current
     val eventSink = state.eventSink
@@ -129,6 +131,7 @@ private fun InternalSearchUi(
             SearchResultsScreen(
                 lazyPagingItems = state.searchResults,
                 lazyListState = state.searchResultsListState,
+                snackbarHostState = snackbarHostState,
                 onItemClick = { entity, id, title ->
                     focusManager.clearFocus()
                     eventSink(SearchUiEvent.RecordSearch)

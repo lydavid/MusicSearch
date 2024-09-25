@@ -13,7 +13,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.logging.api)
-                implementation(projects.shared.domain)
                 implementation(libs.koin.core)
                 implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client.content.negotiation)

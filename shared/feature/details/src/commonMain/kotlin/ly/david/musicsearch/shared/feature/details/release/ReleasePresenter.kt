@@ -19,7 +19,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
@@ -93,7 +93,7 @@ internal class ReleasePresenter(
                 subtitle = "Release by ${releaseDetailsModel.artistCredits.getDisplayNames()}"
                 release = releaseDetailsModel
                 isError = false
-            } catch (ex: HandledException) {
+            } catch (ex: RecoverableNetworkException) {
                 logger.e(ex)
                 isError = true
             }

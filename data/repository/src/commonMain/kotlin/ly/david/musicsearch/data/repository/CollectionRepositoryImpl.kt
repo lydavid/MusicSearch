@@ -4,11 +4,13 @@ import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.error.ActionableResult
+import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.shared.domain.ActionableResult
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUriPlural
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
@@ -19,8 +21,6 @@ import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMe
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.browse.BrowseEntityCountRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
-import ly.david.musicsearch.shared.domain.error.ErrorResolution
-import ly.david.musicsearch.shared.domain.error.HandledException
 import lydavidmusicsearchdatadatabase.Browse_entity_count
 
 class CollectionRepositoryImpl(
@@ -29,6 +29,7 @@ class CollectionRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val browseEntityCountRepository: BrowseEntityCountRepository,
+    private val logger: Logger,
 ) : CollectionRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -139,12 +140,11 @@ class CollectionRepositoryImpl(
                     resourceUriPlural = collection.entity.resourceUriPlural,
                     mbids = entityId,
                 )
-            } catch (ex: HandledException) {
-                val userFacingError = "Failed to delete from collection ${collection.name}. ${ex.userMessage}"
+            } catch (ex: RecoverableNetworkException) {
+                val userFacingError = "Failed to delete from remote collection ${collection.name}. Not logged in."
                 return ActionableResult(
                     message = userFacingError,
-                    actionLabel = "Login".takeIf { ex.errorResolution == ErrorResolution.Login },
-                    errorResolution = ex.errorResolution,
+                    actionLabel = "Login",
                 )
             }
         }
@@ -173,12 +173,12 @@ class CollectionRepositoryImpl(
                     resourceUriPlural = entity.resourceUriPlural,
                     mbids = entityId,
                 )
-            } catch (ex: HandledException) {
-                val userFacingError = "Failed to add to ${collection.name}. ${ex.userMessage}"
+            } catch (ex: RecoverableNetworkException) {
+                val userFacingError = "Failed to add to ${collection.name}. Login has expired."
+                logger.e(ex)
                 return ActionableResult(
                     message = userFacingError,
-                    actionLabel = "Login".takeIf { ex.errorResolution == ErrorResolution.Login },
-                    errorResolution = ex.errorResolution,
+                    actionLabel = "Login",
                 )
             }
         }

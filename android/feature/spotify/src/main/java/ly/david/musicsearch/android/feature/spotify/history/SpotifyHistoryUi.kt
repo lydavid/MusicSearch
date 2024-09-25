@@ -186,8 +186,8 @@ private fun SpotifyHistoryContent(
 
     ScreenWithPagingLoadingAndError(
         lazyPagingItems = lazyPagingItems,
-        modifier = modifier,
         lazyListState = lazyListState,
+        modifier = modifier,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is ListSeparator -> {

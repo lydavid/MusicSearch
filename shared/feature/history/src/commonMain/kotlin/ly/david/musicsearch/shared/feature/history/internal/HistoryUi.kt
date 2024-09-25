@@ -185,8 +185,8 @@ internal fun HistoryUi(
     onDeleteItem: (LookupHistoryListItemModel) -> Unit = {},
 ) {
     ScreenWithPagingLoadingAndError(
-        lazyPagingItems = lazyPagingItems,
         modifier = modifier,
+        lazyPagingItems = lazyPagingItems,
         lazyListState = lazyListState,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {

@@ -3,6 +3,7 @@ package ly.david.musicsearch.ui.common.releasegroup
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.cash.paging.compose.LazyPagingItems
@@ -20,15 +21,17 @@ import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 fun ReleaseGroupsListScreen(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
+    snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
     onReleaseGroupClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = {},
 ) {
     ScreenWithPagingLoadingAndError(
-        lazyPagingItems = lazyPagingItems,
         modifier = modifier,
         lazyListState = lazyListState,
+        lazyPagingItems = lazyPagingItems,
+        snackbarHostState = snackbarHostState,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is ReleaseGroupListItemModel -> {

@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common.event
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.cash.paging.compose.LazyPagingItems
@@ -14,6 +15,7 @@ import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EventsListScreen(
+    snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
     lazyPagingItems: LazyPagingItems<EventListItemModel>,
     modifier: Modifier = Modifier,
@@ -21,9 +23,10 @@ fun EventsListScreen(
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
 ) {
     ScreenWithPagingLoadingAndError(
-        lazyPagingItems = lazyPagingItems,
         modifier = modifier,
         lazyListState = lazyListState,
+        lazyPagingItems = lazyPagingItems,
+        snackbarHostState = snackbarHostState,
     ) { eventListItemModel: EventListItemModel? ->
         when (eventListItemModel) {
             is EventListItemModel -> {
