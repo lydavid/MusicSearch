@@ -96,8 +96,8 @@ internal class SearchMusicBrainzPagingSource(
                 prevKey = if (currentOffset == STARTING_OFFSET) null else currentOffset,
                 nextKey = nextOffset,
             )
-        } catch (exception: HandledException) {
-            LoadResult.Error(exception)
+        } catch (ex: HandledException) {
+            LoadResult.Error(ex)
         }
     }
 

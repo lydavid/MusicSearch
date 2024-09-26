@@ -1,13 +1,13 @@
 package ly.david.musicsearch.data.coverart
 
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.http.HttpStatusCode
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.shared.domain.image.ImageUrlDao
-import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.getFrontCoverArtUrl
 import ly.david.musicsearch.data.coverart.api.getFrontThumbnailCoverArtUrl
+import ly.david.musicsearch.shared.domain.error.ErrorResolution
+import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
 
 internal class ReleaseGroupImageRepositoryImpl(
@@ -33,8 +33,8 @@ internal class ReleaseGroupImageRepositoryImpl(
                 ),
             )
             return if (thumbnail) thumbnailUrl else largeUrl
-        } catch (ex: ClientRequestException) {
-            if (ex.response.status == HttpStatusCode.NotFound) {
+        } catch (ex: HandledException) {
+            if (ex.errorResolution == ErrorResolution.None) {
                 imageUrlDao.saveUrls(
                     mbid = releaseGroupId,
                     imageUrls = listOf(

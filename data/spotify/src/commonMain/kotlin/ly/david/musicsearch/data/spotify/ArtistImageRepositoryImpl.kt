@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.spotify
 
-import io.ktor.client.plugins.ClientRequestException
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.spotify.api.SpotifyApi
 import ly.david.musicsearch.data.spotify.api.SpotifyArtist
@@ -8,6 +7,8 @@ import ly.david.musicsearch.data.spotify.api.getLargeImageUrl
 import ly.david.musicsearch.data.spotify.api.getThumbnailImageUrl
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
+import ly.david.musicsearch.shared.domain.error.ErrorResolution
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImageUrls
 
@@ -49,8 +50,13 @@ class ArtistImageRepositoryImpl(
                 spotifyArtist = spotifyArtist,
             )
             largeUrl
-        } catch (ex: ClientRequestException) {
-            logger.e(ex)
+        } catch (ex: HandledException) {
+            // TODO: if 400, prompt user to input their own Spotify client secret if they want to load artist images.
+            //  UI should allow dismissing if they don't want to.
+            //  Then don't reprompt. But allow inputting client secret from settings.
+            if (ex.errorResolution != ErrorResolution.None) {
+                logger.e(ex)
+            }
             ""
         }
     }

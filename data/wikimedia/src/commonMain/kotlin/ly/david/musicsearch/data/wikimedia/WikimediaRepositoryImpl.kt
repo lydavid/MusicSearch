@@ -1,8 +1,9 @@
 package ly.david.musicsearch.data.wikimedia
 
-import io.ktor.client.plugins.ClientRequestException
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.wikimedia.api.WikimediaApi
+import ly.david.musicsearch.shared.domain.error.ErrorResolution
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.wikimedia.MbidWikipediaDao
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
@@ -41,8 +42,10 @@ internal class WikimediaRepositoryImpl(
             val wikipediaExtract = wikimediaApi.getWikipediaExtract(wikidataId = wikidataId)
             cache(mbid, wikipediaExtract)
             wikipediaExtract
-        } catch (ex: ClientRequestException) {
-            logger.e(ex)
+        } catch (ex: HandledException) {
+            if (ex.errorResolution != ErrorResolution.None) {
+                logger.e(ex)
+            }
             WikipediaExtract()
         }
     }
