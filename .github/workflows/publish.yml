@@ -6,31 +6,6 @@ on:
       track:
         required: true
         type: string
-    secrets:
-      PAT:
-        required: true
-      MUSICSEARCH_GHA_HELPER_APP_ID:
-        required: true
-      MUSICSEARCH_GHA_HELPER_APP_PRIVATE_KEY:
-        required: true
-      ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID:
-        required: true
-      ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET:
-        required: true
-      RELEASE_STORE_PASSWORD:
-        required: true
-      RELEASE_KEY_PASSWORD:
-        required: true
-      GOOGLE_SERVICES_JSON_BASE64:
-        required: true
-      RELEASE_KEYSTORE_JKS_BASE64:
-        required: true
-      WORKLOAD_IDENTITY_PROVIDER:
-        required: true
-      SERVICE_ACCOUNT:
-        required: true
-      SIGNING_KEY:
-        required: true
 
 jobs:
   check:
@@ -58,10 +33,7 @@ jobs:
     permissions:
       contents: write
     uses: ./.github/workflows/checks.yml
-    secrets:
-      PAT: ${{ secrets.PAT }}
-      MUSICSEARCH_GHA_HELPER_APP_ID: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_ID }}
-      MUSICSEARCH_GHA_HELPER_APP_PRIVATE_KEY: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_PRIVATE_KEY }}
+    secrets: inherit
 
   test-e2e:
     needs: check
@@ -69,8 +41,7 @@ jobs:
     permissions:
       contents: write
     uses: ./.github/workflows/test-e2e.yml
-    secrets:
-      PAT: ${{ secrets.PAT }}
+    secrets: inherit
 
   publish:
     needs:

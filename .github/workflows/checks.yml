@@ -5,13 +5,6 @@ on:
     paths-ignore:
       - "**.md"
   workflow_call:
-    secrets:
-      PAT:
-        required: true
-      MUSICSEARCH_GHA_HELPER_APP_ID:
-        required: true
-      MUSICSEARCH_GHA_HELPER_APP_PRIVATE_KEY:
-        required: true
 
 jobs:
   # When we change the name of this job, make sure to update GitHub's branch protection to the new name
