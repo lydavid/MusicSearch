@@ -45,8 +45,9 @@ jobs:
       - name: Install Maestro
         run: curl -Ls "https://get.maestro.mobile.dev" | bash
 
-      - name: Decrypt debug Google Services file
-        run: echo "${{ secrets.GOOGLE_SERVICES_DEBUG_JSON_BASE64 }}" | base64 -d > android/app/google-services.json
+      # If I ever need to diagnose a crash that's not reported in logcat
+#      - name: Decrypt debug Google Services file
+#        run: echo "${{ secrets.GOOGLE_SERVICES_DEBUG_JSON_BASE64 }}" | base64 -d > android/app/google-services.json
 
       - name: Install app on emulator, run Maestro tests
         id: test
@@ -59,9 +60,10 @@ jobs:
           disable-animations: true
           sdcard-path-or-size: 100M
           script: |
-            ./gradlew installGooglePlayDebug
+            ./gradlew installFDroidDebug
             adb shell settings put system show_touches 1
             $HOME/.maestro/bin/maestro test .maestro
+            adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat
 
       - name: Store outputs on failure
         if: always()
@@ -71,3 +73,4 @@ jobs:
           path: |
             /home/runner/.maestro/tests/
             *.mp4
+            logcat
