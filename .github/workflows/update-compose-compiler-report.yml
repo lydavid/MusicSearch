@@ -46,8 +46,8 @@ jobs:
 
       - name: Convert base64 to files
         run: |
-          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d >> android/app/google-services.json
-          echo "${{ secrets.RELEASE_KEYSTORE_JKS_BASE64 }}" | base64 -d >> release-keystore.jks
+          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d > android/app/google-services.json
+          echo "${{ secrets.RELEASE_KEYSTORE_JKS_BASE64 }}" | base64 -d > release-keystore.jks
         shell: bash
 
       - name: Assemble apk with compose compiler reports enabled

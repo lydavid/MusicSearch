@@ -49,7 +49,7 @@ jobs:
         run: curl -Ls "https://get.maestro.mobile.dev" | bash
 
       - name: Decrypt debug Google Services file
-        run: echo "${{ secrets.GOOGLE_SERVICES_DEBUG_JSON_BASE64 }}" | base64 -d >> android/app/google-services.json
+        run: echo "${{ secrets.GOOGLE_SERVICES_DEBUG_JSON_BASE64 }}" | base64 -d > android/app/google-services.json
 
       - name: Install app on emulator, run Maestro tests
         id: test
