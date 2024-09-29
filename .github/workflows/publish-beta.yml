@@ -32,6 +32,7 @@ jobs:
 
   publish-beta:
     if: needs.check.outputs.status == 'deploy'
+    needs: check
     permissions:
       contents: write
       id-token: write
