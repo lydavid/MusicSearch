@@ -64,9 +64,10 @@ class ReleaseGroupsByEntityPresenter(
             when (event) {
                 is ReleaseGroupsByEntityUiEvent.RequestForMissingCoverArtUrl -> {
                     scope.launch {
-                        releaseGroupImageRepository.getReleaseGroupCoverArtUrlFromNetwork(
+                        releaseGroupImageRepository.getReleaseGroupImageUrl(
                             releaseGroupId = event.entityId,
                             thumbnail = true,
+                            forceRefresh = false,
                         )
                     }
                 }

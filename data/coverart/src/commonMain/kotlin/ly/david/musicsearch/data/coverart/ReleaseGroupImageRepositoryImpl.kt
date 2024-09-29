@@ -15,7 +15,26 @@ internal class ReleaseGroupImageRepositoryImpl(
     private val imageUrlDao: ImageUrlDao,
     private val logger: Logger,
 ) : ReleaseGroupImageRepository {
-    override suspend fun getReleaseGroupCoverArtUrlFromNetwork(
+
+    override suspend fun getReleaseGroupImageUrl(
+        releaseGroupId: String,
+        thumbnail: Boolean,
+        forceRefresh: Boolean,
+    ): String {
+        if (forceRefresh) {
+            imageUrlDao.deleteAllUrlsById(releaseGroupId)
+        }
+
+        val cachedImageUrls = imageUrlDao.getAllUrls(releaseGroupId)
+        return if (cachedImageUrls.isNotEmpty()) {
+            val frontCoverArt = cachedImageUrls.first()
+            return if (thumbnail) frontCoverArt.thumbnailUrl else frontCoverArt.largeUrl
+        } else {
+            getReleaseGroupCoverArtUrlFromNetwork(releaseGroupId, thumbnail)
+        }
+    }
+
+    private suspend fun getReleaseGroupCoverArtUrlFromNetwork(
         releaseGroupId: String,
         thumbnail: Boolean,
     ): String {
@@ -37,12 +56,7 @@ internal class ReleaseGroupImageRepositoryImpl(
             if (ex.errorResolution == ErrorResolution.None) {
                 imageUrlDao.saveUrls(
                     mbid = releaseGroupId,
-                    imageUrls = listOf(
-                        ImageUrls(
-                            thumbnailUrl = "",
-                            largeUrl = "",
-                        ),
-                    ),
+                    imageUrls = listOf(ImageUrls()),
                 )
             } else {
                 logger.e(ex)

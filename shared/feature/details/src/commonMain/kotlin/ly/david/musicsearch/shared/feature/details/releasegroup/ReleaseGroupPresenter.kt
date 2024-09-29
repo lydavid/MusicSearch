@@ -80,7 +80,6 @@ internal class ReleaseGroupPresenter(
                 title = releaseGroupDetailsModel.getNameWithDisambiguation()
                 subtitle = "Release Group by ${releaseGroupDetailsModel.artistCredits.getDisplayNames()}"
                 releaseGroup = releaseGroupDetailsModel
-                imageUrl = fetchReleaseGroupImage(releaseGroupDetailsModel)
 
                 isError = false
             } catch (ex: HandledException) {
@@ -96,6 +95,16 @@ internal class ReleaseGroupPresenter(
                     ),
                 )
                 recordedHistory = true
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, releaseGroup) {
+            releaseGroup?.let { releaseGroup ->
+                imageUrl = releaseGroupImageRepository.getReleaseGroupImageUrl(
+                    releaseGroupId = releaseGroup.id,
+                    thumbnail = false,
+                    forceRefresh = forceRefreshDetails,
+                )
             }
         }
 
@@ -176,16 +185,6 @@ internal class ReleaseGroupPresenter(
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
-        )
-    }
-
-    private suspend fun fetchReleaseGroupImage(
-        releaseGroupDetailsModel: ReleaseGroupDetailsModel,
-    ): String {
-        val imageUrl = releaseGroupDetailsModel.imageUrl
-        return imageUrl ?: releaseGroupImageRepository.getReleaseGroupCoverArtUrlFromNetwork(
-            releaseGroupId = releaseGroupDetailsModel.id,
-            thumbnail = false,
         )
     }
 }

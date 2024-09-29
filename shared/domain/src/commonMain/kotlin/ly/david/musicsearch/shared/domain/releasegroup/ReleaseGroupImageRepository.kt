@@ -12,8 +12,9 @@ interface ReleaseGroupImageRepository {
      *
      * Make sure to handle non-404 errors at call site.
      */
-    suspend fun getReleaseGroupCoverArtUrlFromNetwork(
+    suspend fun getReleaseGroupImageUrl(
         releaseGroupId: String,
         thumbnail: Boolean,
+        forceRefresh: Boolean,
     ): String
 }
