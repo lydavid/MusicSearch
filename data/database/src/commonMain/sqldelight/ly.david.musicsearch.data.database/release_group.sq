@@ -35,4 +35,5 @@ SELECT rg.*
 FROM release_group rg
 INNER JOIN release_release_group rrg ON rg.id = rrg.release_group_id
 INNER JOIN release r ON rrg.release_id = r.id
-WHERE r.id = :releaseId;
+WHERE r.id = :releaseId
+LIMIT 1;
