@@ -17,11 +17,10 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
 import ly.david.musicsearch.shared.domain.releasegroup.usecase.GetReleaseGroupsByEntity
 
@@ -29,7 +28,6 @@ class ReleaseGroupsByEntityPresenter(
     private val getReleaseGroupsByEntity: GetReleaseGroupsByEntity,
     private val appPreferences: AppPreferences,
     private val releaseGroupImageRepository: ReleaseGroupImageRepository,
-    private val logger: Logger,
 ) : Presenter<ReleaseGroupsByEntityUiState> {
     @Composable
     override fun present(): ReleaseGroupsByEntityUiState {
@@ -66,14 +64,10 @@ class ReleaseGroupsByEntityPresenter(
             when (event) {
                 is ReleaseGroupsByEntityUiEvent.RequestForMissingCoverArtUrl -> {
                     scope.launch {
-                        try {
-                            releaseGroupImageRepository.getReleaseGroupCoverArtUrlFromNetwork(
-                                releaseGroupId = event.entityId,
-                                thumbnail = true,
-                            )
-                        } catch (ex: Exception) {
-                            logger.e(ex)
-                        }
+                        releaseGroupImageRepository.getReleaseGroupCoverArtUrlFromNetwork(
+                            releaseGroupId = event.entityId,
+                            thumbnail = true,
+                        )
                     }
                 }
 

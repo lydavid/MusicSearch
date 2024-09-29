@@ -62,6 +62,9 @@ internal class ReleaseImageRepositoryImpl(
                 logger.e(ex)
             }
             ""
+        } catch (ex: Exception) {
+            logger.e(ex)
+            ""
         }
     }
 

@@ -58,6 +58,9 @@ class ArtistImageRepositoryImpl(
                 logger.e(ex)
             }
             ""
+        } catch (ex: Exception) {
+            logger.e(ex)
+            ""
         }
     }
 

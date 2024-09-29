@@ -21,11 +21,10 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.shared.domain.release.usecase.GetReleasesByEntity
 
@@ -33,7 +32,6 @@ class ReleasesByEntityPresenter(
     private val getReleasesByEntity: GetReleasesByEntity,
     private val appPreferences: AppPreferences,
     private val releaseImageRepository: ReleaseImageRepository,
-    private val logger: Logger,
 ) : Presenter<ReleasesByEntityUiState> {
     @Composable
     override fun present(): ReleasesByEntityUiState {
@@ -68,15 +66,11 @@ class ReleasesByEntityPresenter(
             when (event) {
                 is ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl -> {
                     scope.launch {
-                        try {
-                            releaseImageRepository.getReleaseImageUrl(
-                                releaseId = event.entityId,
-                                thumbnail = true,
-                                forceRefresh = false,
-                            )
-                        } catch (ex: Exception) {
-                            logger.e(ex)
-                        }
+                        releaseImageRepository.getReleaseImageUrl(
+                            releaseId = event.entityId,
+                            thumbnail = true,
+                            forceRefresh = false,
+                        )
                     }
                 }
 
