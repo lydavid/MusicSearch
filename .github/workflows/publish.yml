@@ -8,36 +8,13 @@ on:
         type: string
 
 jobs:
-  check:
-    if: ${{ inputs.track }} != 'production'
-    runs-on: ubuntu-latest
-    outputs:
-      status: ${{ steps.early_exit.outputs.status }}
-    steps:
-      - name: Checkout
-        uses: nschloe/action-cached-lfs-checkout@v1
-
-      # Cannot early exit jobs with GHA yet
-      # Workaround: https://github.com/actions/runner/issues/662#issuecomment-1372855726
-      - name: Determine whether to exit early if previous commit was a version bump
-        id: early_exit
-        run: |
-          status='skip'
-          if ! (git log --oneline -n 1 | grep -c 'chore\: bump version \[skip ci\]'); then status='deploy'; fi
-          echo "status=$status" >> $GITHUB_OUTPUT
-        shell: bash
-
   checks:
-    needs: check
-    if: needs.check.outputs.status == 'deploy' || ${{ inputs.track }} == 'production'
     permissions:
       contents: write
     uses: ./.github/workflows/checks.yml
     secrets: inherit
 
   test-e2e:
-    needs: check
-    if: needs.check.outputs.status == 'deploy' || ${{ inputs.track }} == 'production'
     permissions:
       contents: write
     uses: ./.github/workflows/test-e2e.yml

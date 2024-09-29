@@ -11,7 +11,27 @@ on:
   workflow_dispatch:
 
 jobs:
+  check:
+    if: ${{ inputs.track }} != 'production'
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.early_exit.outputs.status }}
+    steps:
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@v1
+
+      # Cannot early exit jobs with GHA yet
+      # Workaround: https://github.com/actions/runner/issues/662#issuecomment-1372855726
+      - name: Determine whether to exit early if previous commit was a version bump
+        id: early_exit
+        run: |
+          status='skip'
+          if ! (git log --oneline -n 1 | grep -c 'chore\: bump version'); then status='deploy'; fi
+          echo "status=$status" >> $GITHUB_OUTPUT
+        shell: bash
+
   publish-beta:
+    if: needs.check.outputs.status == 'deploy'
     permissions:
       contents: write
       id-token: write
