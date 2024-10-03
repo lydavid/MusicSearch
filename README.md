@@ -59,7 +59,3 @@ See [all features here](./docs/all_features.md).
 ## Privacy Policy
 
 See [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
-
-## Database schema
-
-![](assets/musicsearch_db_schema.svg)
