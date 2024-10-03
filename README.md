@@ -11,7 +11,14 @@ The [master branch](https://github.com/lydavid/MusicSearch/tree/master) Android 
 Or you can you can download its APK from the [latest GitHub Release](https://github.com/lydavid/MusicSearch/releases/latest/).
 
 The [beta branch](https://github.com/lydavid/MusicSearch) Android app is available on Google Play as a beta tester.
+Or you can download it from F-Droid.
 Or you can you can download its APK from the top of [all GitHub Releases](https://github.com/lydavid/MusicSearch/releases/).
+
+<a href="https://f-droid.org/packages/io.github.lydavid.musicsearch">
+    <img src="https://f-droid.org/badge/get-it-on.png"
+    alt="Get it on F-Droid"
+    height="80">
+</a>
 
 <a href="https://play.google.com/store/apps/details?id=io.github.lydavid.musicsearch">
     <img alt="Get it on Google Play" height="80"
