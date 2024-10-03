@@ -145,6 +145,7 @@ data class AppStrings(
     val seeCollaborators: String,
     val collaborationsWith: (String) -> String,
     val wikipedia: String,
+    val numberOfImages: String,
 )
 
 object Locales {

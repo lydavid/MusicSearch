@@ -321,4 +321,6 @@ val EnStrings = AppStrings(
             .fmt(p0)
     },
     wikipedia = "Wikipedia",
+
+    numberOfImages = "Number of Images",
 )

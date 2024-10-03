@@ -19,8 +19,8 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
@@ -67,6 +67,7 @@ internal class ReleasePresenter(
         val query = topAppBarFilterState.filterText
         var release: ReleaseDetailsModel? by remember { mutableStateOf(null) }
         var imageUrl by rememberSaveable { mutableStateOf("") }
+        var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
         val tabs: ImmutableList<ReleaseTab> = ReleaseTab.entries.toPersistentList()
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
         var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
@@ -116,6 +117,7 @@ internal class ReleasePresenter(
                     thumbnail = false,
                     forceRefresh = forceRefreshDetails,
                 )
+                numberOfImages = releaseImageRepository.getNumberOfImages(release.id)
             }
         }
 
@@ -204,13 +206,16 @@ internal class ReleasePresenter(
         return ReleaseUiState(
             title = title,
             subtitle = subtitle,
-            isError = isError,
-            release = release,
-            imageUrl = imageUrl,
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
-            detailsLazyListState = detailsLazyListState,
+            release = release,
+            releaseDetailsUiState = ReleaseDetailsUiState(
+                isError = isError,
+                imageUrl = imageUrl,
+                numberOfImages = numberOfImages,
+                lazyListState = detailsLazyListState,
+            ),
             relationsUiState = relationsUiState,
             tracksByReleaseUiState = tracksByReleaseUiState,
             artistsByEntityUiState = artistsByEntityUiState,
@@ -224,19 +229,24 @@ internal class ReleasePresenter(
 internal data class ReleaseUiState(
     val title: String,
     val subtitle: String,
-    val isError: Boolean,
-    val release: ReleaseDetailsModel?,
-    val imageUrl: String,
     val tabs: ImmutableList<ReleaseTab>,
     val selectedTab: ReleaseTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
-    val detailsLazyListState: LazyListState = LazyListState(),
+    val release: ReleaseDetailsModel?,
+    val releaseDetailsUiState: ReleaseDetailsUiState,
     val relationsUiState: RelationsUiState,
     val tracksByReleaseUiState: TracksByReleaseUiState,
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val loginUiState: LoginUiState,
     val eventSink: (ReleaseUiEvent) -> Unit,
 ) : CircuitUiState
+
+internal data class ReleaseDetailsUiState(
+    val isError: Boolean = false,
+    val imageUrl: String = "",
+    val numberOfImages: Int? = null,
+    val lazyListState: LazyListState = LazyListState(),
+)
 
 internal sealed interface ReleaseUiEvent : CircuitUiEvent {
     data object NavigateUp : ReleaseUiEvent

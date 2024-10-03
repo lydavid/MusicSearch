@@ -21,4 +21,6 @@ interface ReleaseImageRepository {
     ): String
 
     fun getAllUrls(mbid: String): List<ImageUrls>
+
+    fun getNumberOfImages(mbid: String): Int
 }

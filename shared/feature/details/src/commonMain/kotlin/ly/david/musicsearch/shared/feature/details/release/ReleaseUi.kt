@@ -163,7 +163,7 @@ internal fun ReleaseUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        showError = state.isError,
+                        showError = state.releaseDetailsUiState.isError,
                         onRefresh = {
                             eventSink(ReleaseUiEvent.ForceRefresh)
                         },
@@ -171,9 +171,8 @@ internal fun ReleaseUi(
                     ) { release ->
                         ReleaseDetailsUi(
                             release = release,
+                            releaseDetailsUiState = state.releaseDetailsUiState,
                             filterText = state.topAppBarFilterState.filterText,
-                            imageUrl = state.imageUrl,
-                            lazyListState = state.detailsLazyListState,
                             onImageClick = {
                                 eventSink(ReleaseUiEvent.ClickImage)
                             },

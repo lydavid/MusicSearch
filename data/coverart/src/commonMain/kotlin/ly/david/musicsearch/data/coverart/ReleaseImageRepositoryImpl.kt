@@ -71,4 +71,8 @@ internal class ReleaseImageRepositoryImpl(
     override fun getAllUrls(mbid: String): List<ImageUrls> {
         return imageUrlDao.getAllUrls(mbid = mbid)
     }
+
+    override fun getNumberOfImages(mbid: String): Int {
+        return imageUrlDao.getNumberOfImages(mbid).toInt()
+    }
 }

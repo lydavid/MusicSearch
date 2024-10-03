@@ -2,11 +2,10 @@ package ly.david.musicsearch.shared.feature.details.release
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.UNKNOWN_TIME
+import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
@@ -14,8 +13,6 @@ import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.image.LargeImage
 import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.label.LabelListItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -23,27 +20,28 @@ import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.work.getDisplayScript
+import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.image.LargeImage
 
 @Composable
 internal fun ReleaseDetailsUi(
     release: ReleaseDetailsModel,
+    releaseDetailsUiState: ReleaseDetailsUiState,
     modifier: Modifier = Modifier,
     filterText: String = "",
-    imageUrl: String = "",
     onImageClick: () -> Unit = {},
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
-    lazyListState: LazyListState = rememberLazyListState(),
 ) {
     val strings = LocalStrings.current
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState,
+        state = releaseDetailsUiState.lazyListState,
     ) {
         item {
             if (filterText.isBlank()) {
                 LargeImage(
-                    url = imageUrl,
+                    url = releaseDetailsUiState.imageUrl,
                     id = release.id,
                     modifier = Modifier.clickable { onImageClick() },
                 )
@@ -51,6 +49,13 @@ internal fun ReleaseDetailsUi(
 
             release.run {
                 ListSeparatorHeader(text = strings.informationHeader(strings.release))
+                releaseDetailsUiState.numberOfImages?.ifNotNull {
+                    TextWithHeading(
+                        heading = strings.numberOfImages,
+                        text = "$it",
+                        filterText = filterText,
+                    )
+                }
                 barcode?.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.barcode,

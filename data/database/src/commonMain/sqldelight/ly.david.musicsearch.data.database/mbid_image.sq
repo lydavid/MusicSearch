@@ -21,3 +21,13 @@ WHERE mbid = :mbid;
 deleteAllUrlsById:
 DELETE FROM mbid_image
 WHERE mbid = :mbid;
+
+-- Do not include the filler empty url
+getNumberOfImages:
+SELECT COUNT(*)
+FROM mbid_image
+WHERE mbid = :mbid
+AND (
+  thumbnail_url != ''
+  OR large_url != ''
+);
