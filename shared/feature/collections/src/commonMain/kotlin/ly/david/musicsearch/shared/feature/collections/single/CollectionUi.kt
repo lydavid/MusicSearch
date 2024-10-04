@@ -35,6 +35,8 @@ import ly.david.musicsearch.ui.common.artist.ArtistsListScreen
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
 import ly.david.musicsearch.ui.common.event.EventsListScreen
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
+import ly.david.musicsearch.ui.common.genre.GenresByEntityUiState
+import ly.david.musicsearch.ui.common.genre.GenresListScreen
 import ly.david.musicsearch.ui.common.instrument.InstrumentListItem
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
 import ly.david.musicsearch.ui.common.label.LabelsListScreen
@@ -160,6 +162,7 @@ internal fun CollectionUi(
                 lazyPagingItems = state.lazyPagingItems,
                 artistsByEntityUiState = state.artistsByEntityUiState,
                 eventsByEntityUiState = state.eventsByEntityUiState,
+                genresByEntityUiState = state.genresByEntityUiState,
                 labelsByEntityUiState = state.labelsByEntityUiState,
                 releasesByEntityUiState = state.releasesByEntityUiState,
                 releaseGroupsByEntityUiState = state.releaseGroupsByEntityUiState,
@@ -212,6 +215,7 @@ private fun CollectionUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     artistsByEntityUiState: ArtistsByEntityUiState,
     eventsByEntityUiState: EventsByEntityUiState,
+    genresByEntityUiState: GenresByEntityUiState,
     labelsByEntityUiState: LabelsByEntityUiState,
     releasesByEntityUiState: ReleasesByEntityUiState,
     releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
@@ -254,6 +258,24 @@ private fun CollectionUi(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 onEventClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
+            )
+        }
+
+        MusicBrainzEntity.GENRE -> {
+            GenresListScreen(
+                lazyPagingItems = genresByEntityUiState.lazyPagingItems,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                lazyListState = genresByEntityUiState.lazyListState,
+                onGenreClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,
