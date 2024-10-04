@@ -22,6 +22,9 @@ kotlin {
         }
         val jvmMain by getting {
             dependsOn(jvmCommon)
+            dependencies {
+                implementation(libs.multiplatform.paths)
+            }
         }
         val androidMain by getting {
             dependsOn(jvmCommon)
