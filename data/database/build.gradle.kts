@@ -38,6 +38,7 @@ kotlin {
             dependsOn(jvmCommon)
             dependencies {
                 implementation(libs.sqldelight.sqlite.driver)
+                implementation(libs.multiplatform.paths)
             }
         }
         val iosMain by getting {

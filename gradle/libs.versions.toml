@@ -22,6 +22,7 @@ ksp = "2.0.20-1.0.25"
 leakcanaryAndroid = "2.14"
 lyricist = "1.7.0"
 mockk = "1.13.12"
+multiplatformPaths = "0.2.2"
 okhttp = "4.12.0"
 pagingMultiplatform = "3.2.0-alpha05-0.2.3"
 pagingTesting = "3.3.2"
@@ -101,6 +102,7 @@ leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", ve
 lyricist-core = { module = "cafe.adriel.lyricist:lyricist-core", version.ref = "lyricist" }
 lyricist-library = { module = "cafe.adriel.lyricist:lyricist", version.ref = "lyricist" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+multiplatform-paths = { module = "me.sujanpoudel.multiplatform.utils:multiplatform-paths", version.ref = "multiplatformPaths" }
 okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 paging-common = { module = "app.cash.paging:paging-common", version.ref = "pagingMultiplatform" }
 paging-compose = { module = "app.cash.paging:paging-runtime-composeui", version.ref = "pagingMultiplatform" }
