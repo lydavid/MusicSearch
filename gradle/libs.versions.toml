@@ -115,7 +115,7 @@ sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", versi
 sqldelight-paging = { module = "app.cash.sqldelight:androidx-paging3-extensions", version.ref = "sqldelight" }
 sqldelight-primitive = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
-test-parameter-injector = "com.google.testparameterinjector:test-parameter-injector:1.17"
+test-parameter-injector = "com.google.testparameterinjector:test-parameter-injector:1.18"
 timber = "com.jakewharton.timber:timber:5.0.1"
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 windowSizeClass = "dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0"
