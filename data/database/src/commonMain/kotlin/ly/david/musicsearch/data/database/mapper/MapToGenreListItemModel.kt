@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.core.models.listitem.GenreListItemModel
+import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
+
 
 fun mapToGenreListItemModel(
     id: String,

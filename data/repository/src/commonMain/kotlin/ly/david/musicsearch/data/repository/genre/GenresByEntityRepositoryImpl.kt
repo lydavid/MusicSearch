@@ -3,9 +3,6 @@ package ly.david.musicsearch.data.repository.genre
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.core.models.ListFilters
-import ly.david.musicsearch.core.models.listitem.GenreListItemModel
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.GenreDao
@@ -13,7 +10,10 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseGenresResponse
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.genre.GenresByEntityRepository
+import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class GenresByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
