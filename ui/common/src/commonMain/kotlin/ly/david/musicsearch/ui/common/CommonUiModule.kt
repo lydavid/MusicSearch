@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common
 
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
+import ly.david.musicsearch.ui.common.genre.GenresByEntityPresenter
 import ly.david.musicsearch.ui.common.label.LabelsByEntityPresenter
 import ly.david.musicsearch.ui.common.paging.RelationsList
 import ly.david.musicsearch.ui.common.place.PlacesByEntityPresenter
@@ -19,6 +20,7 @@ val commonUiModule = module {
 
     singleOf(::ArtistsByEntityPresenter)
     singleOf(::EventsByEntityPresenter)
+    singleOf(::GenresByEntityPresenter)
     singleOf(::LabelsByEntityPresenter)
     singleOf(::PlacesByEntityPresenter)
     singleOf(::RecordingsByEntityPresenter)

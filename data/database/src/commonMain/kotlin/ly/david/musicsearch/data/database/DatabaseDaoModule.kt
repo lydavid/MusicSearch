@@ -18,6 +18,7 @@ import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.EventsByEntityDao
+import ly.david.musicsearch.data.database.dao.GenreDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.LabelsByEntityDao
@@ -67,6 +68,7 @@ val databaseDaoModule = module {
     single { EntityHasUrlsDao(get()) }
     single { EventDao(get()) }
     single { InstrumentDao(get()) }
+    single { GenreDao(get()) }
     single { LabelDao(get()) }
     single { LabelsByEntityDao(get(), get()) }
     single { LookupHistoryDao(get(), get()) }

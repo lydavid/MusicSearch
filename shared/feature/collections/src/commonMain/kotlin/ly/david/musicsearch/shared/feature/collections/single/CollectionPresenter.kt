@@ -43,6 +43,9 @@ import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
+import ly.david.musicsearch.ui.common.genre.GenresByEntityPresenter
+import ly.david.musicsearch.ui.common.genre.GenresByEntityUiEvent
+import ly.david.musicsearch.ui.common.genre.GenresByEntityUiState
 import ly.david.musicsearch.ui.common.label.LabelsByEntityPresenter
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiEvent
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
@@ -72,6 +75,7 @@ internal class CollectionPresenter(
     private val getPlacesByEntity: GetPlacesByEntity,
     private val getRecordingsByEntity: GetRecordingsByEntity,
     private val eventsByEntityPresenter: EventsByEntityPresenter,
+    private val genresByEntityPresenter: GenresByEntityPresenter,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
     private val worksByEntityPresenter: WorksByEntityPresenter,
@@ -94,6 +98,8 @@ internal class CollectionPresenter(
         val artistsEventSink = artistsByEntityUiState.eventSink
         val eventsByEntityUiState = eventsByEntityPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
+        val genresByEntityUiState = genresByEntityPresenter.present()
+        val genresEventSink = genresByEntityUiState.eventSink
         val labelsByEntityUiState = labelsByEntityPresenter.present()
         val labelsEventSink = labelsByEntityUiState.eventSink
         val releasesByEntityUiState = releasesByEntityPresenter.present()
@@ -159,6 +165,17 @@ internal class CollectionPresenter(
                         ),
                     )
                     eventsEventSink(EventsByEntityUiEvent.UpdateQuery(query))
+                }
+
+                MusicBrainzEntity.GENRE -> {
+                    genresEventSink(
+                        GenresByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
+                            isRemote = isRemote,
+                        ),
+                    )
+                    genresEventSink(GenresByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.INSTRUMENT -> {
@@ -266,7 +283,6 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.COLLECTION,
-                MusicBrainzEntity.GENRE,
                 MusicBrainzEntity.URL,
                 -> {
                     error("${collection?.entity} by collection not supported")
@@ -321,6 +337,7 @@ internal class CollectionPresenter(
             lazyPagingItems = collectableItems.collectAsLazyPagingItems(),
             artistsByEntityUiState = artistsByEntityUiState,
             eventsByEntityUiState = eventsByEntityUiState,
+            genresByEntityUiState = genresByEntityUiState,
             labelsByEntityUiState = labelsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
@@ -338,6 +355,7 @@ internal data class CollectionUiState(
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val eventsByEntityUiState: EventsByEntityUiState,
+    val genresByEntityUiState: GenresByEntityUiState,
     val labelsByEntityUiState: LabelsByEntityUiState,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
