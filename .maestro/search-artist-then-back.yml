@@ -26,6 +26,9 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "wiki"
 - assertVisible: "https://en.wikipedia.org/wiki/Zutomayo"
 - assertVisible: "https://www.wikidata.org/wiki/Q60989925"
+- tapOn: Clear filter text
+- inputText: "japan"
+- assertVisible: "Japan"
 - tapOn: Cancel
 - tapOn: "More actions"
 - tapOn: "Add to collection"
@@ -45,9 +48,33 @@ appId: io.github.lydavid.musicsearch.debug
 
 - tapOn: History
 - tapOn: "ずっと真夜中でいいのに。 (Japanese pop band)"
+
+# Repeat tests with cached data
 - assertVisible: "ずっと真夜中でいいのに。 (Japanese pop band)"
 - assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
 - assertVisible: "Type: Group"
 - assertVisible: "Founded: 2018"
+- tapOn: "Filter"
+- inputText: "spotify"
+- "hideKeyboard"
+- assertVisible: "https://open.spotify.com/artist/38WbKH6oKAZskBhqDFA8Uj"
+- assertNotVisible: "Sort name: Zutto Mayonaka De Iinoni."
+- assertNotVisible: "Type: Group"
+- assertNotVisible: "Founded: 2018"
+- tapOn: Clear filter text
+- assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
+- assertVisible: "Type: Group"
+- assertVisible: "Founded: 2018"
+- inputText: "wiki"
+- assertVisible: "https://en.wikipedia.org/wiki/Zutomayo"
+- assertVisible: "https://www.wikidata.org/wiki/Q60989925"
+- tapOn: Clear filter text
+- inputText: "japan"
+- assertVisible: "Japan"
+- tapOn: Cancel
+- tapOn: "More actions"
+- tapOn: "Add to collection"
+- tapOn: "Artists"
+- assertVisible: "Already in Artists."
 
 - stopRecording
