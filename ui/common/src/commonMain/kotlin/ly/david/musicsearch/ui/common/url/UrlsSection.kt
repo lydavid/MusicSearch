@@ -21,7 +21,10 @@ fun UrlsSection(
     Column(modifier = modifier) {
         ListSeparatorHeader("Links")
         urls
-            .filter { it.name.contains(filterText) || it.label.contains(filterText) }
+            .filter {
+                it.name.contains(filterText, ignoreCase = true) ||
+                    it.label.contains(filterText, ignoreCase = true)
+            }
             .forEach {
                 RelationListItem(
                     relation = it,

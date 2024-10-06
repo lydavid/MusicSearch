@@ -32,7 +32,9 @@ fun WikipediaSection(
         Column(
             modifier = modifier,
         ) {
-            if (extract.extract.isNotBlank() && extract.extract.contains(filterText)) {
+            if (extract.extract.isNotBlank() &&
+                extract.extract.contains(filterText, ignoreCase = true)
+            ) {
                 var expanded by remember { mutableStateOf(false) }
 
                 // TODO: consider expand/collapse icon button, then make text selectable
@@ -49,7 +51,9 @@ fun WikipediaSection(
                 )
             }
 
-            if (extract.wikipediaUrl.isNotBlank() && extract.wikipediaUrl.contains(filterText)) {
+            if (extract.wikipediaUrl.isNotBlank() &&
+                extract.wikipediaUrl.contains(filterText, ignoreCase = true)
+            ) {
                 val uriHandler = LocalUriHandler.current
                 val strings = LocalStrings.current
 

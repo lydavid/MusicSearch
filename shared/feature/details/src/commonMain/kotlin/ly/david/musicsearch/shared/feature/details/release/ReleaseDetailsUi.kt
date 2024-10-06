@@ -164,7 +164,9 @@ internal fun ReleaseDetailsUi(
                     ListSeparatorHeader(strings.labels)
                 }
                 labels
-                    .filter { it.getNameWithDisambiguation().contains(filterText) }
+                    .filter {
+                        it.getNameWithDisambiguation().contains(filterText, ignoreCase = true)
+                    }
                     .forEach { label ->
                         LabelListItem(
                             label = label,
@@ -182,7 +184,9 @@ internal fun ReleaseDetailsUi(
                     ListSeparatorHeader(strings.releaseEvents)
                 }
                 areas
-                    .filter { it.getNameWithDisambiguation().contains(filterText) }
+                    .filter {
+                        it.getNameWithDisambiguation().contains(filterText, ignoreCase = true)
+                    }
                     .forEach { area: AreaListItemModel ->
                         AreaListItem(
                             area = area,

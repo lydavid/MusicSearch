@@ -67,7 +67,7 @@ internal fun PlaceDetailsUi(
 
                 area?.ifNotNull {
                     val areaName = it.getNameWithDisambiguation()
-                    if (areaName.contains(filterText)) {
+                    if (areaName.contains(filterText, ignoreCase = true)) {
                         ListSeparatorHeader(strings.area)
                         AreaListItem(
                             area = it,

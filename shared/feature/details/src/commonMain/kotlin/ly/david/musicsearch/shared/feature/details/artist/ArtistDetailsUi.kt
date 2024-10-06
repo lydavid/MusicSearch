@@ -149,7 +149,7 @@ private fun AreaSection(
     areaListItemModel?.run {
         ListSeparatorHeader(text = strings.area)
 
-        if (name.contains(filterText)) {
+        if (name.contains(filterText, ignoreCase = true)) {
             AreaListItem(
                 area = this,
                 showType = false,
