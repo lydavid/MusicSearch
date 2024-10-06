@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
@@ -25,6 +26,11 @@ internal fun PreviewArtistDetailsUi() {
                         ended = true,
                     ),
                     sortName = "Beatles, The",
+                    areaListItemModel = AreaListItemModel(
+                        id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+                        name = "United Kingdom",
+                        countryCodes = listOf("GB"),
+                    )
                 ),
                 imageUrl = "https://i.scdn.co/image/ab6761610000e5ebe9348cc01ff5d55971b22433",
                 wikipediaExtract = WikipediaExtract(

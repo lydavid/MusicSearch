@@ -1,11 +1,11 @@
 package ly.david.musicsearch.data.repository.area
 
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.CountryCodeDao
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
@@ -26,7 +26,7 @@ class AreaRepositoryImpl(
         val countryCodes: List<String> = countryCodeDao.getCountryCodesForArea(areaId)
         val urlRelations = relationRepository.getEntityUrlRelationships(areaId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(areaId)
-        if (area != null && hasUrlsBeenSavedForEntity) {
+        if (area?.type != null && hasUrlsBeenSavedForEntity) {
             return area.copy(
                 countryCodes = countryCodes,
                 urls = urlRelations,
@@ -40,7 +40,11 @@ class AreaRepositoryImpl(
 
     private fun cache(area: AreaMusicBrainzModel) {
         areaDao.withTransaction {
-            areaDao.insert(area)
+            areaDao.insertReplace(
+                area.copy(
+                    type = area.type ?: "",
+                ),
+            )
 
             val relationWithOrderList = area.relations.toRelationWithOrderList(area.id)
             relationRepository.insertAllUrlRelations(

@@ -10,8 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
+import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -47,6 +50,14 @@ internal fun ArtistDetailsUi(
                     wikipediaExtract = wikipediaExtract,
                     filterText = filterText,
                 )
+
+                AreaSection(
+                    areaListItemModel = areaListItemModel,
+                    filterText = filterText,
+                    onItemClick = onItemClick,
+                )
+
+                // TODO: begin area, end area
 
                 UrlsSection(
                     urls = urls,
@@ -119,15 +130,37 @@ private fun ArtistDetailsModel.ArtistInformationSection(
         )
     }
 
-    // TODO: begin area, area, end area
-//                countryCode?.ifNotNullOrEmpty {
-//                    TextWithHeadingRes(headingRes = strings.area, text = it.toFlagEmoji())
-//                }
-
     WikipediaSection(
         extract = wikipediaExtract,
         filterText = filterText,
     )
 
     Spacer(modifier = Modifier.padding(bottom = 16.dp))
+}
+
+@Composable
+private fun AreaSection(
+    areaListItemModel: AreaListItemModel?,
+    filterText: String = "",
+    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
+) {
+    val strings = LocalStrings.current
+
+    areaListItemModel?.run {
+        ListSeparatorHeader(text = strings.area)
+
+        if (name.contains(filterText)) {
+            AreaListItem(
+                area = this,
+                showType = false,
+                onAreaClick = {
+                    onItemClick(
+                        MusicBrainzEntity.AREA,
+                        id,
+                        name,
+                    )
+                },
+            )
+        }
+    }
 }

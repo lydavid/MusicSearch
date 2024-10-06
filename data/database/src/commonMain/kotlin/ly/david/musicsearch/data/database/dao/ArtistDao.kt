@@ -4,6 +4,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import lydavidmusicsearchdatadatabase.Artist
 
 class ArtistDao(
@@ -61,24 +62,37 @@ class ArtistDao(
         gender: String?,
         ipis: List<String>?,
         isnis: List<String>?,
-        countryCode: String?,
         begin: String?,
         end: String?,
         ended: Boolean?,
-    ) = ArtistDetailsModel(
-        id = id,
-        name = name,
-        sortName = sortName,
-        disambiguation = disambiguation,
-        type = type,
-        gender = gender,
-        ipis = ipis,
-        isnis = isnis,
-        countryCode = countryCode,
-        lifeSpan = LifeSpanUiModel(
-            begin = begin,
-            end = end,
-            ended = ended,
-        ),
-    )
+        areaId: String?,
+        areaName: String?,
+        countryCode: String?,
+    ): ArtistDetailsModel {
+        val area = if (areaId != null && areaName != null) {
+            AreaListItemModel(
+                id = areaId,
+                name = areaName,
+                countryCodes = listOfNotNull(countryCode),
+            )
+        } else {
+            null
+        }
+        return ArtistDetailsModel(
+            id = id,
+            name = name,
+            sortName = sortName,
+            disambiguation = disambiguation,
+            type = type,
+            gender = gender,
+            ipis = ipis,
+            isnis = isnis,
+            lifeSpan = LifeSpanUiModel(
+                begin = begin,
+                end = end,
+                ended = ended,
+            ),
+            areaListItemModel = area,
+        )
+    }
 }

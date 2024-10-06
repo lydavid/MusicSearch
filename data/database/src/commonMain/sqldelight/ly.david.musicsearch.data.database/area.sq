@@ -16,6 +16,10 @@ insert:
 INSERT OR IGNORE INTO area
 VALUES ?;
 
+insertReplace:
+INSERT OR REPLACE INTO area
+VALUES ?;
+
 getArea:
 SELECT
   id,

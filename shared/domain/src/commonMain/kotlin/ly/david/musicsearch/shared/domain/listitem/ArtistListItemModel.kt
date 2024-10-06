@@ -10,7 +10,7 @@ data class ArtistListItemModel(
     override val disambiguation: String? = null,
     override val type: String? = null,
     override val gender: String? = null,
-    override val countryCode: String? = null,
+    val countryCode: String? = null,
     val lifeSpan: LifeSpanUiModel? = null,
     val imageUrl: String? = null,
 ) : ListItemModel(), Artist

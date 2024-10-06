@@ -32,11 +32,16 @@ SELECT
   a.gender,
   a.ipis,
   a.isnis,
-  a.country_code,
   a.begin,
   a.end,
-  a.ended
+  a.ended,
+  area.id,
+  area.name,
+  cc.code
 FROM artist a
+INNER JOIN artists_by_entity ae ON a.id = ae.artist_id
+INNER JOIN area ON ae.entity_id = area.id
+LEFT JOIN country_code cc ON area.id = cc.area_id
 WHERE a.id = :artistId
 GROUP BY a.id;
 

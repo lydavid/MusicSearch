@@ -35,6 +35,28 @@ class AreaDao(
         }
     }
 
+    fun insertReplace(area: AreaMusicBrainzModel?) {
+        area?.run {
+            transacter.insertReplace(
+                Area(
+                    id = id,
+                    name = name,
+                    sort_name = sortName,
+                    disambiguation = disambiguation,
+                    type = type,
+                    type_id = typeId,
+                    begin = lifeSpan?.begin,
+                    end = lifeSpan?.end,
+                    ended = lifeSpan?.ended,
+                ),
+            )
+            countryCodeDao.insertCountryCodesForArea(
+                areaId = area.id,
+                countryCodes = area.countryCodes.orEmpty(),
+            )
+        }
+    }
+
     fun insertAll(areas: List<AreaMusicBrainzModel>) {
         transacter.transaction {
             areas.forEach { area ->
