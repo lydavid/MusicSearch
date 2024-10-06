@@ -9,11 +9,12 @@ import lydavidmusicsearchdatadatabase.AreaQueries
 
 class AreaDao(
     database: Database,
+    private val countryCodeDao: CountryCodeDao,
 ) : EntityDao {
     override val transacter: AreaQueries = database.areaQueries
 
-    fun insert(area: AreaMusicBrainzModel) {
-        area.run {
+    fun insert(area: AreaMusicBrainzModel?) {
+        area?.run {
             transacter.insert(
                 Area(
                     id = id,
@@ -26,6 +27,10 @@ class AreaDao(
                     end = lifeSpan?.end,
                     ended = lifeSpan?.ended,
                 ),
+            )
+            countryCodeDao.insertCountryCodesForArea(
+                areaId = area.id,
+                countryCodes = area.countryCodes.orEmpty(),
             )
         }
     }
