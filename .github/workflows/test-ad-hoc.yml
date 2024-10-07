@@ -58,18 +58,20 @@ jobs:
           script: |
             ./gradlew installFDroidDebug
             adb shell settings put system show_touches 1
-            adb shell cmd overlay disable com.android.internal.systemui.navbar.gestural
-            adb shell cmd overlay enable com.android.internal.systemui.navbar.threebutton
+            adb shell cmd overlay disable com.android.internal.systemui.navbar.gestural || true
+            adb shell cmd overlay enable com.android.internal.systemui.navbar.threebutton || true
             $HOME/.maestro/bin/maestro test .maestro/threebutton-back.yml
             adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat-${{ matrix.api-level }}
 
-      - run: mv threebutton-back.mp4 threebutton-back-${{ matrix.api-level }}.mp4
+      - run: mv threebutton-back.mp4 "threebutton-back-$api".mp4
+        env:
+          api: ${{ matrix.api-level }}
 
       - name: Save recordings
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-android-apis-outputs
+          name: test-android-apis-outputs-${{ matrix.api-level }}
           path: |
             /home/runner/.maestro/tests/
             *.mp4
