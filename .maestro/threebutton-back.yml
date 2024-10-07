@@ -1,0 +1,17 @@
+appId: io.github.lydavid.musicsearch.debug
+---
+- launchApp
+- startRecording: threebutton-back
+
+- tapOn: "Settings"
+- scrollUntilVisible:
+    element: "Spotify"
+- tapOn: "Spotify"
+- tapOn:
+    id: "com.android.systemui:id/back"
+- assertVisible: "Spotify"
+- tapOn:
+    id: "com.android.systemui:id/back"
+- assertNotVisible: "Spotify"
+
+- stopRecording
