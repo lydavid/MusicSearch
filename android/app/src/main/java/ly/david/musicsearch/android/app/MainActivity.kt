@@ -89,6 +89,7 @@ internal class MainActivity : ComponentActivity() {
                     )
 
                     if (Build.VERSION.SDK_INT <= 33) {
+                        // This unfortunately disables predictive back
                         BackHandler {
                             if (navigator.pop() == null) finish()
                         }
