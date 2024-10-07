@@ -3,21 +3,27 @@ package ly.david.musicsearch.android.app
 import android.content.IntentFilter
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.DisposableEffect
 import androidx.core.content.ContextCompat
+import com.slack.circuit.backstack.SaveableBackStack
+import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.rememberCircuitNavigator
+import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.toImmutableList
 import ly.david.musicsearch.android.feature.spotify.BroadcastTypes
 import ly.david.musicsearch.android.feature.spotify.SpotifyBroadcastReceiver
-import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
 import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.AppRoot
+import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
 import ly.david.musicsearch.shared.useDarkTheme
 import ly.david.musicsearch.shared.useMaterialYou
 import ly.david.musicsearch.ui.common.screen.CollectionListScreen
@@ -74,9 +80,25 @@ internal class MainActivity : ComponentActivity() {
                 darkTheme = darkTheme,
                 materialYou = appPreferences.useMaterialYou(),
                 content = {
-                    AppRoot(
-                        circuit = circuit,
+                    val backStack: SaveableBackStack = rememberSaveableBackStack(
                         initialScreens = getInitialScreens(intent.data).toImmutableList(),
+                    )
+                    val navigator: Navigator = rememberCircuitNavigator(
+                        backStack = backStack,
+                        onRootPop = {},
+                    )
+
+                    if (Build.VERSION.SDK_INT <= 33) {
+                        // This unfortunately disables predictive back
+                        BackHandler {
+                            if (navigator.pop() == null) finish()
+                        }
+                    }
+
+                    AppRoot(
+                        backStack = backStack,
+                        navigator = navigator,
+                        circuit = circuit,
                     )
                 },
             )

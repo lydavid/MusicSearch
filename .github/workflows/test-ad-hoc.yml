@@ -1,18 +1,18 @@
-name: Test E2E
+name: Test Ad Hoc
 
 on:
-  push:
-    paths-ignore:
-      - "**.md"
-  workflow_call:
   workflow_dispatch:
 
 jobs:
-  test-e2e:
+  test-ad-hoc:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        api-level: [ 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34 ]
     steps:
       - name: Checkout
         uses: nschloe/action-cached-lfs-checkout@v1
@@ -45,15 +45,11 @@ jobs:
       - name: Install Maestro
         run: curl -Ls "https://get.maestro.mobile.dev" | bash
 
-      # If I ever need to diagnose a crash that's not reported in logcat
-#      - name: Decrypt debug Google Services file
-#        run: echo "${{ secrets.GOOGLE_SERVICES_DEBUG_JSON_BASE64 }}" | base64 -d > android/app/google-services.json
-
       - name: Install app on emulator, run Maestro tests
         id: test
         uses: reactivecircus/android-emulator-runner@v2.32.0
         with:
-          api-level: 30
+          api-level: ${{ matrix.api-level }}
           arch: x86_64
           profile: pixel_3a
           emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
@@ -62,15 +58,19 @@ jobs:
           script: |
             ./gradlew installFDroidDebug
             adb shell settings put system show_touches 1
-            $HOME/.maestro/bin/maestro test .maestro
-            adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat
+            $HOME/.maestro/bin/maestro test .maestro/threebutton-back.yml
+            adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat-${{ matrix.api-level }}
+
+      - run: mv threebutton-back.mp4 "threebutton-back-$api".mp4
+        env:
+          api: ${{ matrix.api-level }}
 
       - name: Save recordings
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: musicsearch_test_e2e_outputs
+          name: test-android-apis-outputs-${{ matrix.api-level }}
           path: |
             /home/runner/.maestro/tests/
             *.mp4
-            logcat
+            logcat*
