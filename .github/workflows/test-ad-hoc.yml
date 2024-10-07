@@ -1,7 +1,6 @@
 name: Test Ad Hoc
 
 on:
-  push: # TODO: remove
   workflow_dispatch:
 
 jobs:
