@@ -2,8 +2,7 @@ package ly.david.musicsearch.data.repository.artist
 
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
-import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.api.LookupArtistApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
@@ -11,11 +10,10 @@ import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class ArtistRepositoryImpl(
-    private val musicBrainzApi: MusicBrainzApi,
     private val artistDao: ArtistDao,
     private val relationRepository: RelationRepository,
     private val areaDao: AreaDao,
-    private val artistsByEntityDao: ArtistsByEntityDao,
+    private val lookupArtistApi: LookupArtistApi,
 ) : ArtistRepository {
 
     override suspend fun lookupArtistDetails(
@@ -41,7 +39,7 @@ class ArtistRepositoryImpl(
             return artistWithUrls
         }
 
-        val artistMusicBrainzModel = musicBrainzApi.lookupArtist(artistId)
+        val artistMusicBrainzModel = lookupArtistApi.lookupArtist(artistId)
         cache(artistMusicBrainzModel)
         return lookupArtistDetails(
             artistId = artistId,
@@ -58,10 +56,9 @@ class ArtistRepositoryImpl(
 
     private fun cache(artist: ArtistMusicBrainzModel) {
         artistDao.withTransaction {
-            artistDao.insert(artist)
+            artistDao.insertReplace(artist)
             artist.area?.let { area ->
                 areaDao.insert(area)
-                artistsByEntityDao.insert(entityId = area.id, artistId = artist.id)
             }
 
             val relationWithOrderList = artist.relations.toRelationWithOrderList(artist.id)

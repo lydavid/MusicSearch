@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -22,7 +21,7 @@ import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 
 class RelationRepositoryImpl(
-    private val musicBrainzApi: MusicBrainzApi,
+    private val lookupApi: LookupApi,
     private val entityHasRelationsDao: EntityHasRelationsDao,
     private val entityHasUrlsDao: EntityHasUrlsDao,
     private val relationDao: RelationDao,
@@ -54,77 +53,77 @@ class RelationRepositoryImpl(
     ): List<RelationMusicBrainzModel>? {
         return when (entity) {
             MusicBrainzEntity.AREA -> {
-                musicBrainzApi.lookupArea(
+                lookupApi.lookupArea(
                     areaId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
 
             MusicBrainzEntity.ARTIST -> {
-                musicBrainzApi.lookupArtist(
+                lookupApi.lookupArtist(
                     artistId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
 
             MusicBrainzEntity.EVENT -> {
-                musicBrainzApi.lookupEvent(
+                lookupApi.lookupEvent(
                     eventId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
 
             MusicBrainzEntity.INSTRUMENT -> {
-                musicBrainzApi.lookupInstrument(
+                lookupApi.lookupInstrument(
                     instrumentId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
 
             MusicBrainzEntity.LABEL -> {
-                musicBrainzApi.lookupLabel(
+                lookupApi.lookupLabel(
                     labelId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
 
             MusicBrainzEntity.PLACE -> {
-                musicBrainzApi.lookupPlace(
+                lookupApi.lookupPlace(
                     placeId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_EVENTS_URLS,
                 ).relations
             }
 
             MusicBrainzEntity.RECORDING -> {
-                musicBrainzApi.lookupRecording(
+                lookupApi.lookupRecording(
                     recordingId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
 
             MusicBrainzEntity.RELEASE -> {
-                musicBrainzApi.lookupRelease(
+                lookupApi.lookupRelease(
                     releaseId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
 
             MusicBrainzEntity.RELEASE_GROUP -> {
-                musicBrainzApi.lookupReleaseGroup(
+                lookupApi.lookupReleaseGroup(
                     releaseGroupId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
 
             MusicBrainzEntity.SERIES -> {
-                musicBrainzApi.lookupSeries(
+                lookupApi.lookupSeries(
                     seriesId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
 
             MusicBrainzEntity.WORK -> {
-                musicBrainzApi.lookupWork(
+                lookupApi.lookupWork(
                     workId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations

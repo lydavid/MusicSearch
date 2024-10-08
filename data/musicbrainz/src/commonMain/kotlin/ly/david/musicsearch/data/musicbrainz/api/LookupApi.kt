@@ -32,13 +32,20 @@ private const val SERIES_REL = "series-rels"
 const val URL_REL = "url-rels"
 private const val WORK_REL = "work-rels"
 
+interface LookupArtistApi {
+    suspend fun lookupArtist(
+        artistId: String,
+        include: String? = URL_REL,
+    ): ArtistMusicBrainzModel
+}
+
 /**
  * See [lookup API](https://wiki.musicbrainz.org/MusicBrainz_API#Lookups).
  *
  * Gets information for a specific entity.
  * Can include additional information related to the entity. Max of 25.
  */
-interface LookupApi {
+interface LookupApi : LookupArtistApi {
 
     companion object {
         const val INC_ALL_RELATIONS_EXCEPT_URLS =
@@ -81,11 +88,6 @@ interface LookupApi {
         // TODO: place-rels doesn't return anything
         //  it isn't enough to get the data on this page: https://musicbrainz.org/area/74e50e58-5deb-4b99-93a2-decbb365c07f/places
     ): AreaMusicBrainzModel
-
-    suspend fun lookupArtist(
-        artistId: String,
-        include: String? = URL_REL,
-    ): ArtistMusicBrainzModel
 
     suspend fun lookupEvent(
         eventId: String,

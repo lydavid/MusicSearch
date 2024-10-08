@@ -12,9 +12,9 @@ class ArtistDao(
 ) : EntityDao {
     override val transacter = database.artistQueries
 
-    fun insert(artist: ArtistMusicBrainzModel) {
+    fun insertReplace(artist: ArtistMusicBrainzModel) {
         artist.run {
-            transacter.insert(
+            transacter.insertReplace(
                 Artist(
                     id = id,
                     name = name,
@@ -29,6 +29,7 @@ class ArtistDao(
                     begin = lifeSpan?.begin,
                     end = lifeSpan?.end,
                     ended = lifeSpan?.ended,
+                    area_id = area?.id, // does not exist when browsing artists
                 ),
             )
         }
@@ -37,7 +38,7 @@ class ArtistDao(
     fun insertAll(artists: List<ArtistMusicBrainzModel>) {
         transacter.transaction {
             artists.forEach { artist ->
-                insert(artist)
+                insertReplace(artist)
             }
         }
     }
