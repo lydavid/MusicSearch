@@ -4,6 +4,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseApi
 import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.api.LookupArtistApi
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzUserApi
 import ly.david.musicsearch.data.musicbrainz.api.SearchApi
@@ -28,6 +29,7 @@ val musicBrainzApiModule = module {
         CollectionApi::class,
         MusicBrainzUserApi::class,
         BrowseReleaseApi::class,
+        LookupArtistApi::class,
     )
     singleOf(::MusicBrainzOAuthApiImpl) bind MusicBrainzOAuthApi::class
 }
