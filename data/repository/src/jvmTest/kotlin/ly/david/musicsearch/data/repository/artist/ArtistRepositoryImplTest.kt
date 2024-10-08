@@ -15,6 +15,7 @@ import ly.david.musicsearch.data.repository.KoinTestRule
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -96,11 +97,11 @@ class ArtistRepositoryImplTest : KoinTest {
                     ended = true,
                 ),
                 sortName = "Beatles, The",
-//                areaListItemModel = AreaListItemModel(
-//                    id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
-//                    name = "United Kingdom",
-//                    countryCodes = listOf("GB"),
-//                ),
+                areaListItemModel = AreaListItemModel(
+                    id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+                    name = "United Kingdom",
+                    countryCodes = listOf("GB"),
+                ),
             ),
             artistDetailsModel,
         )
