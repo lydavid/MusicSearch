@@ -7,7 +7,6 @@ import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
-import ly.david.musicsearch.data.musicbrainz.api.LookupArtistApi
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
@@ -53,7 +52,7 @@ class ArtistRepositoryImplTest : KoinTest {
             artistDao = artistDao,
             relationRepository = relationRepository,
             areaDao = areaDao,
-            lookupArtistApi = object : LookupArtistApi {
+            lookupArtistApi = object : FakeLookupApi() {
                 override suspend fun lookupArtist(
                     artistId: String,
                     include: String?,

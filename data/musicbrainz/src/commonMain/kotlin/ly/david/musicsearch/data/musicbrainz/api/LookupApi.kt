@@ -32,20 +32,13 @@ private const val SERIES_REL = "series-rels"
 const val URL_REL = "url-rels"
 private const val WORK_REL = "work-rels"
 
-interface LookupArtistApi {
-    suspend fun lookupArtist(
-        artistId: String,
-        include: String? = URL_REL,
-    ): ArtistMusicBrainzModel
-}
-
 /**
  * See [lookup API](https://wiki.musicbrainz.org/MusicBrainz_API#Lookups).
  *
  * Gets information for a specific entity.
  * Can include additional information related to the entity. Max of 25.
  */
-interface LookupApi : LookupArtistApi {
+interface LookupApi {
 
     companion object {
         const val INC_ALL_RELATIONS_EXCEPT_URLS =
@@ -88,6 +81,11 @@ interface LookupApi : LookupArtistApi {
         // TODO: place-rels doesn't return anything
         //  it isn't enough to get the data on this page: https://musicbrainz.org/area/74e50e58-5deb-4b99-93a2-decbb365c07f/places
     ): AreaMusicBrainzModel
+
+    suspend fun lookupArtist(
+        artistId: String,
+        include: String? = URL_REL,
+    ): ArtistMusicBrainzModel
 
     suspend fun lookupEvent(
         eventId: String,
@@ -147,7 +145,10 @@ interface LookupApi : LookupArtistApi {
 interface LookupApiImpl : LookupApi {
     val httpClient: HttpClient
 
-    override suspend fun lookupArea(areaId: String, include: String?): AreaMusicBrainzModel {
+    override suspend fun lookupArea(
+        areaId: String,
+        include: String?,
+    ): AreaMusicBrainzModel {
         return httpClient.get {
             url {
                 appendPathSegments("area", areaId)
@@ -156,7 +157,10 @@ interface LookupApiImpl : LookupApi {
         }.body()
     }
 
-    override suspend fun lookupArtist(artistId: String, include: String?): ArtistMusicBrainzModel {
+    override suspend fun lookupArtist(
+        artistId: String,
+        include: String?,
+    ): ArtistMusicBrainzModel {
         return httpClient.get {
             url {
                 appendPathSegments("artist", artistId)
@@ -166,7 +170,10 @@ interface LookupApiImpl : LookupApi {
         }.body()
     }
 
-    override suspend fun lookupEvent(eventId: String, include: String?): EventMusicBrainzModel {
+    override suspend fun lookupEvent(
+        eventId: String,
+        include: String?,
+    ): EventMusicBrainzModel {
         return httpClient.get {
             url {
                 appendPathSegments("event", eventId)
@@ -175,7 +182,10 @@ interface LookupApiImpl : LookupApi {
         }.body()
     }
 
-    override suspend fun lookupGenre(genreId: String, include: String?): GenreMusicBrainzModel {
+    override suspend fun lookupGenre(
+        genreId: String,
+        include: String?,
+    ): GenreMusicBrainzModel {
         return httpClient.get {
             url {
                 appendPathSegments("genre", genreId)
@@ -184,7 +194,10 @@ interface LookupApiImpl : LookupApi {
         }.body()
     }
 
-    override suspend fun lookupInstrument(instrumentId: String, include: String): InstrumentMusicBrainzModel {
+    override suspend fun lookupInstrument(
+        instrumentId: String,
+        include: String,
+    ): InstrumentMusicBrainzModel {
         return httpClient.get {
             url {
                 appendPathSegments("instrument", instrumentId)
@@ -193,7 +206,10 @@ interface LookupApiImpl : LookupApi {
         }.body()
     }
 
-    override suspend fun lookupLabel(labelId: String, include: String): LabelMusicBrainzModel {
+    override suspend fun lookupLabel(
+        labelId: String,
+        include: String,
+    ): LabelMusicBrainzModel {
         return httpClient.get {
             url {
                 appendPathSegments("label", labelId)
@@ -202,7 +218,10 @@ interface LookupApiImpl : LookupApi {
         }.body()
     }
 
-    override suspend fun lookupPlace(placeId: String, include: String?): PlaceMusicBrainzModel {
+    override suspend fun lookupPlace(
+        placeId: String,
+        include: String?,
+    ): PlaceMusicBrainzModel {
         return httpClient.get {
             url {
                 appendPathSegments("place", placeId)
@@ -211,7 +230,10 @@ interface LookupApiImpl : LookupApi {
         }.body()
     }
 
-    override suspend fun lookupRecording(recordingId: String, include: String): RecordingMusicBrainzModel {
+    override suspend fun lookupRecording(
+        recordingId: String,
+        include: String,
+    ): RecordingMusicBrainzModel {
         return httpClient.get {
             url {
                 appendPathSegments("recording", recordingId)
@@ -220,7 +242,10 @@ interface LookupApiImpl : LookupApi {
         }.body()
     }
 
-    override suspend fun lookupRelease(releaseId: String, include: String): ReleaseMusicBrainzModel {
+    override suspend fun lookupRelease(
+        releaseId: String,
+        include: String,
+    ): ReleaseMusicBrainzModel {
         return httpClient.get {
             url {
                 appendPathSegments("release", releaseId)
@@ -229,7 +254,10 @@ interface LookupApiImpl : LookupApi {
         }.body()
     }
 
-    override suspend fun lookupReleaseGroup(releaseGroupId: String, include: String): ReleaseGroupMusicBrainzModel {
+    override suspend fun lookupReleaseGroup(
+        releaseGroupId: String,
+        include: String,
+    ): ReleaseGroupMusicBrainzModel {
         return httpClient.get {
             url {
                 appendPathSegments("release-group", releaseGroupId)
@@ -238,7 +266,10 @@ interface LookupApiImpl : LookupApi {
         }.body()
     }
 
-    override suspend fun lookupSeries(seriesId: String, include: String?): SeriesMusicBrainzModel {
+    override suspend fun lookupSeries(
+        seriesId: String,
+        include: String?,
+    ): SeriesMusicBrainzModel {
         return httpClient.get {
             url {
                 appendPathSegments("series", seriesId)
@@ -247,7 +278,10 @@ interface LookupApiImpl : LookupApi {
         }.body()
     }
 
-    override suspend fun lookupWork(workId: String, include: String?): WorkMusicBrainzModel {
+    override suspend fun lookupWork(
+        workId: String,
+        include: String?,
+    ): WorkMusicBrainzModel {
         return httpClient.get {
             url {
                 appendPathSegments("work", workId)

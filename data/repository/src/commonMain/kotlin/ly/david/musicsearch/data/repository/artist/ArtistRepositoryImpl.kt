@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.artist
 
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
-import ly.david.musicsearch.data.musicbrainz.api.LookupArtistApi
+import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
@@ -13,7 +13,7 @@ class ArtistRepositoryImpl(
     private val artistDao: ArtistDao,
     private val relationRepository: RelationRepository,
     private val areaDao: AreaDao,
-    private val lookupArtistApi: LookupArtistApi,
+    private val lookupArtistApi: LookupApi,
 ) : ArtistRepository {
 
     override suspend fun lookupArtistDetails(
