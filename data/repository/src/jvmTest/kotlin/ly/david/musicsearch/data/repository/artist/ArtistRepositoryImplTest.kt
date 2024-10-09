@@ -81,6 +81,7 @@ class ArtistRepositoryImplTest : KoinTest {
                     name = "United Kingdom",
                     countryCodes = listOf("GB"),
                 ),
+                isnis = listOf("0000000121707484"),
             ),
         )
 
@@ -101,6 +102,56 @@ class ArtistRepositoryImplTest : KoinTest {
                     name = "United Kingdom",
                     countryCodes = listOf("GB"),
                 ),
+                isnis = listOf("0000000121707484"),
+            ),
+            artistDetailsModel,
+        )
+    }
+
+    @Test
+    fun `lookup artist - area without iso-3166-1 code`() = runTest {
+        val sut = createRepositoryWithFakeNetworkData(
+            artistMusicBrainzModel = ArtistMusicBrainzModel(
+                id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
+                name = "David Bowie",
+                type = "Person",
+                gender = "Male",
+                lifeSpan = LifeSpanMusicBrainzModel(
+                    begin = "1947-01-08",
+                    end = "2016-01-10",
+                    ended = true,
+                ),
+                sortName = "Bowie, David",
+                area = AreaMusicBrainzModel(
+                    id = "9d5dd675-3cf4-4296-9e39-67865ebee758",
+                    name = "England",
+                    countrySubDivisionCodes = listOf("GB-ENG"),
+                ),
+                ipis = listOf("00003960406", "00015471209"),
+                isnis = listOf("0000000114448576", "0000000458257298"),
+            ),
+        )
+
+        val artistDetailsModel = sut.lookupArtistDetails("5441c29d-3602-4898-b1a1-b77fa23b8e50", false)
+        assertEquals(
+            ArtistDetailsModel(
+                id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
+                name = "David Bowie",
+                type = "Person",
+                gender = "Male",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1947-01-08",
+                    end = "2016-01-10",
+                    ended = true,
+                ),
+                sortName = "Bowie, David",
+                areaListItemModel = AreaListItemModel(
+                    id = "9d5dd675-3cf4-4296-9e39-67865ebee758",
+                    name = "England",
+                    countryCodes = listOf(),
+                ),
+                ipis = listOf("00003960406", "00015471209"),
+                isnis = listOf("0000000114448576", "0000000458257298"),
             ),
             artistDetailsModel,
         )
