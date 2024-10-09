@@ -27,23 +27,13 @@ import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 const val ARTIST_CREDITS = "artist-credits"
 const val LABELS = "labels"
 
-interface BrowseReleaseApi {
-    suspend fun browseReleasesByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-        include: String = ARTIST_CREDITS,
-    ): BrowseReleasesResponse
-}
-
 /**
  * See [browse API](https://wiki.musicbrainz.org/MusicBrainz_API#Browse).
  *
  * Get entities directly linked to another entity. Such as all release groups by an artist.
  * This is the only type of request with pagination.
  */
-interface BrowseApi : BrowseReleaseApi {
+interface BrowseApi {
 
     suspend fun browseAreasByCollection(
         collectionId: String,
@@ -104,6 +94,14 @@ interface BrowseApi : BrowseReleaseApi {
         offset: Int = 0,
         include: String = ARTIST_CREDITS,
     ): BrowseRecordingsResponse
+
+    suspend fun browseReleasesByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
+        include: String = ARTIST_CREDITS,
+    ): BrowseReleasesResponse
 
     suspend fun browseReleaseGroupsByArtist(
         artistId: String,

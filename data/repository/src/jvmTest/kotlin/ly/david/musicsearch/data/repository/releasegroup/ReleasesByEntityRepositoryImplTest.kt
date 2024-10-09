@@ -4,10 +4,8 @@ import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
+import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.releaseWith3CatalogNumbersWithSameLabel
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
@@ -17,11 +15,13 @@ import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
-import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.repository.KoinTestRule
 import ly.david.musicsearch.data.repository.release.ReleasesByEntityRepositoryImpl
+import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.Label
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -51,7 +51,7 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
             artistReleaseDao = artistReleaseDao,
             browseEntityCountDao = browseEntityCountDao,
             collectionEntityDao = collectionEntityDao,
-            browseReleaseApi = object : BrowseReleaseApi {
+            browseApi = object : FakeBrowseApi() {
                 override suspend fun browseReleasesByEntity(
                     entityId: String,
                     entity: MusicBrainzEntity,

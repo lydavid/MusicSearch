@@ -5,7 +5,6 @@ import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -13,6 +12,7 @@ import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.shared.domain.artist.ArtistsByEntityRepository
 
@@ -21,7 +21,7 @@ class ArtistsByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val artistDao: ArtistDao,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val browseApi: BrowseApi,
 ) : ArtistsByEntityRepository,
     BrowseEntitiesByEntity<ArtistListItemModel, ArtistMusicBrainzModel, BrowseArtistsResponse>(
         browseEntity = MusicBrainzEntity.ARTIST,
@@ -89,7 +89,7 @@ class ArtistsByEntityRepositoryImpl(
         entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseArtistsResponse {
-        return musicBrainzApi.browseArtistsByEntity(
+        return browseApi.browseArtistsByEntity(
             entityId = entityId,
             entity = entity,
             offset = offset,
