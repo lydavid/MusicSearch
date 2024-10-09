@@ -6,6 +6,7 @@ complexity:
   LongMethod:
     ignoreAnnotated:
       - "Composable"
+      - "Test"
   TooManyFunctions:
     active: false
 exceptions:

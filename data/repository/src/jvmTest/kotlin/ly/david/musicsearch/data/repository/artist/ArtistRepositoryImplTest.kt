@@ -1,20 +1,31 @@
 package ly.david.musicsearch.data.repository.artist
 
+import androidx.paging.PagingData
+import androidx.paging.testing.asSnapshot
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
+import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
+import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.repository.KoinTestRule
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -31,6 +42,9 @@ class ArtistRepositoryImplTest : KoinTest {
     private val entityHasUrlsDao: EntityHasUrlsDao by inject()
     private val relationDao: RelationDao by inject()
     private val areaDao: AreaDao by inject()
+    private val artistsByEntityDao: ArtistsByEntityDao by inject()
+    private val browseEntityCountDao: BrowseEntityCountDao by inject()
+    private val collectionEntityDao: CollectionEntityDao by inject()
 
     private fun createRepositoryWithFakeNetworkData(
         artistMusicBrainzModel: ArtistMusicBrainzModel,
@@ -65,7 +79,7 @@ class ArtistRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup artist`() = runTest {
-        val sut = createRepositoryWithFakeNetworkData(
+        val artistRepositoryImpl = createRepositoryWithFakeNetworkData(
             artistMusicBrainzModel = ArtistMusicBrainzModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
@@ -85,7 +99,10 @@ class ArtistRepositoryImplTest : KoinTest {
             ),
         )
 
-        val artistDetailsModel = sut.lookupArtistDetails("b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d", false)
+        val artistDetailsModel = artistRepositoryImpl.lookupArtistDetails(
+            "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+            false,
+        )
         assertEquals(
             ArtistDetailsModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
@@ -110,7 +127,7 @@ class ArtistRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup artist - area without iso-3166-1 code`() = runTest {
-        val sut = createRepositoryWithFakeNetworkData(
+        val artistRepositoryImpl = createRepositoryWithFakeNetworkData(
             artistMusicBrainzModel = ArtistMusicBrainzModel(
                 id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
                 name = "David Bowie",
@@ -132,7 +149,10 @@ class ArtistRepositoryImplTest : KoinTest {
             ),
         )
 
-        val artistDetailsModel = sut.lookupArtistDetails("5441c29d-3602-4898-b1a1-b77fa23b8e50", false)
+        val artistDetailsModel = artistRepositoryImpl.lookupArtistDetails(
+            "5441c29d-3602-4898-b1a1-b77fa23b8e50",
+            false,
+        )
         assertEquals(
             ArtistDetailsModel(
                 id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
@@ -152,6 +172,119 @@ class ArtistRepositoryImplTest : KoinTest {
                 ),
                 ipis = listOf("00003960406", "00015471209"),
                 isnis = listOf("0000000114448576", "0000000458257298"),
+            ),
+            artistDetailsModel,
+        )
+    }
+
+    @Test
+    fun `browse first, then lookup should overwrite with more data`() = runTest {
+        val artistsByEntityRepositoryImpl = ArtistsByEntityRepositoryImpl(
+            artistsByEntityDao,
+            browseEntityCountDao,
+            collectionEntityDao,
+            artistDao,
+            browseApi = object : FakeBrowseApi() {
+                override suspend fun browseArtistsByEntity(
+                    entityId: String,
+                    entity: MusicBrainzEntity,
+                    limit: Int,
+                    offset: Int
+                ): BrowseArtistsResponse {
+                    return BrowseArtistsResponse(
+                        1,
+                        0,
+                        listOf(
+                            ArtistMusicBrainzModel(
+                                id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+                                name = "The Beatles",
+                                type = "Group",
+                                lifeSpan = LifeSpanMusicBrainzModel(
+                                    begin = "1960",
+                                    end = "1970-04-10",
+                                    ended = true,
+                                ),
+                                sortName = "Beatles, The",
+                                area = AreaMusicBrainzModel(
+                                    id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+                                    name = "United Kingdom",
+                                    countryCodes = listOf("GB"),
+                                ),
+                                countryCode = "GB",
+                                isnis = listOf("0000000121707484"),
+                            ),
+                        )
+                    )
+                }
+            },
+        )
+        val flow: Flow<PagingData<ArtistListItemModel>> = artistsByEntityRepositoryImpl.observeArtistsByEntity(
+            entityId = "area-id",
+            entity = MusicBrainzEntity.AREA,
+            listFilters = ListFilters(),
+        )
+        val artists: List<ArtistListItemModel> = flow.asSnapshot()
+        assertEquals(
+            1,
+            artists.size,
+        )
+        val artistListItem = artists.first()
+        assertEquals(
+            ArtistListItemModel(
+                id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+                name = "The Beatles",
+                type = "Group",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1960",
+                    end = "1970-04-10",
+                    ended = true,
+                ),
+                sortName = "Beatles, The",
+                countryCode = "GB",
+            ),
+            artistListItem,
+        )
+
+        val artistRepositoryImpl = createRepositoryWithFakeNetworkData(
+            artistMusicBrainzModel = ArtistMusicBrainzModel(
+                id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+                name = "The Beatles",
+                type = "Group",
+                lifeSpan = LifeSpanMusicBrainzModel(
+                    begin = "1960",
+                    end = "1970-04-10",
+                    ended = true,
+                ),
+                sortName = "Beatles, The",
+                area = AreaMusicBrainzModel(
+                    id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+                    name = "United Kingdom",
+                    countryCodes = listOf("GB"),
+                ),
+                isnis = listOf("0000000121707484"),
+            ),
+        )
+        val artistDetailsModel = artistRepositoryImpl.lookupArtistDetails(
+            "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+            false,
+        )
+        assertEquals(
+            ArtistDetailsModel(
+                id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+                name = "The Beatles",
+                type = "Group",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1960",
+                    end = "1970-04-10",
+                    ended = true,
+                ),
+                sortName = "Beatles, The",
+                areaListItemModel = AreaListItemModel(
+                    id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+                    name = "United Kingdom",
+                    countryCodes = listOf("GB"),
+                ),
+                isnis = listOf("0000000121707484"),
             ),
             artistDetailsModel,
         )

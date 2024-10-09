@@ -29,7 +29,7 @@ class ArtistDao(
                     begin = lifeSpan?.begin,
                     end = lifeSpan?.end,
                     ended = lifeSpan?.ended,
-                    area_id = area?.id, // does not exist when browsing artists
+                    area_id = area?.id,
                 ),
             )
         }
