@@ -95,9 +95,11 @@ internal class AreaPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val areaDetailsModel = repository.lookupArea(screen.id)
+                val areaDetailsModel = repository.lookupArea(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = areaDetailsModel.getNameWithDisambiguation()
-
                 area = areaDetailsModel
                 isError = false
             } catch (ex: HandledException) {

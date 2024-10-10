@@ -80,6 +80,7 @@ class AreaDao(
         begin: String?,
         end: String?,
         ended: Boolean?,
+        countryCode: String?,
     ) = AreaDetailsModel(
         id = id,
         name = name,
@@ -90,5 +91,13 @@ class AreaDao(
             end = end,
             ended = ended,
         ),
+        countryCodes = listOfNotNull(countryCode),
     )
+
+    fun delete(areaId: String) {
+        withTransaction {
+            countryCodeDao.delete(areaId)
+            transacter.delete(areaId)
+        }
+    }
 }

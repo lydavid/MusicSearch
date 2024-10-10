@@ -45,7 +45,8 @@ e.g. On an artist's page, you can see their events, recordings, releases, and re
 | work          | artists, recordings                                                                                      | collections                |
 
 - There are no url details screen, clicking a url will just go to that url, either opening it in the browser, or deep linking to an app that supports it
-- labels by release have been excluded, as we fetch all labels in the initial lookup with `inc=labels`, displaying it in the Details tab
+- labels by release have been excluded, as we fetch all labels in the initial lookup with
+  `inc=labels`, displaying it in the Details tab
 - releases by track (which releases a given track is found in) is not supported as we don't have a track details screen. Clicking a track goes to its associated recording
 - releases by track_artist may eventually be supported, but is not planned. This would be found in an artist's details screen
 - artists by recording have been excluded as it is already fetched with initial recording lookup and is displayed as artist credits in the top bar
@@ -141,7 +142,7 @@ TODO: screenshot of list screen
 
 | Entity        | Details | List Screen |
 |---------------|---------|-------------|
-| area          | ⬜️      | ✅           |
+| area          | ✅       | ✅           |
 | artist        | ✅       | ✅           |
 | collection    | ❌       | ✅           |
 | event         | ⬜️      | ✅           |

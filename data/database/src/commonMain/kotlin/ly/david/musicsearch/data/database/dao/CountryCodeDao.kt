@@ -29,6 +29,7 @@ class CountryCodeDao(
         }
     }
 
-    fun getCountryCodesForArea(areaId: String): List<String> =
-        transacter.getCountryCodesForArea(areaId).executeAsList()
+    fun delete(areaId: String) {
+        transacter.delete(areaId)
+    }
 }

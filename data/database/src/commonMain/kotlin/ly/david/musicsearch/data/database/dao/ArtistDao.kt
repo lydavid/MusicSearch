@@ -50,10 +50,6 @@ class ArtistDao(
         ).executeAsOneOrNull()
     }
 
-    fun delete(artistId: String) {
-        transacter.delete(artistId)
-    }
-
     private fun toDetailsModel(
         id: String,
         name: String,
@@ -95,5 +91,9 @@ class ArtistDao(
             ),
             areaListItemModel = area,
         )
+    }
+
+    fun delete(artistId: String) {
+        transacter.delete(artistId)
     }
 }
