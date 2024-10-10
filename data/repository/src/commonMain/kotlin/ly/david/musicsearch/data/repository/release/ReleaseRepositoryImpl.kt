@@ -19,7 +19,6 @@ import ly.david.musicsearch.shared.domain.listitem.toLabelListItemModel
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
-import ly.david.musicsearch.data.database.dao.CountryCodeDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
@@ -42,7 +41,6 @@ class ReleaseRepositoryImpl(
     private val artistCreditDao: ArtistCreditDao,
     private val releaseCountryDao: ReleaseCountryDao,
     private val areaDao: AreaDao,
-    private val countryCodeDao: CountryCodeDao,
     private val labelDao: LabelDao,
     private val releaseLabelDao: ReleaseLabelDao,
     private val relationRepository: RelationRepository,
@@ -132,12 +130,6 @@ class ReleaseRepositoryImpl(
                     it.area
                 }.orEmpty(),
             )
-            release.releaseEvents?.forEach {
-                countryCodeDao.insertCountryCodesForArea(
-                    areaId = it.area?.id ?: return@forEach,
-                    countryCodes = it.area?.countryCodes,
-                )
-            }
             releaseCountryDao.linkCountriesByRelease(
                 releaseId = release.id,
                 releaseEvents = release.releaseEvents,
