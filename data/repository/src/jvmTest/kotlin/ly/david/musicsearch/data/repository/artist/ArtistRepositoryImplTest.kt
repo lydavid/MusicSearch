@@ -189,7 +189,7 @@ class ArtistRepositoryImplTest : KoinTest {
                     entityId: String,
                     entity: MusicBrainzEntity,
                     limit: Int,
-                    offset: Int
+                    offset: Int,
                 ): BrowseArtistsResponse {
                     return BrowseArtistsResponse(
                         1,
@@ -213,7 +213,7 @@ class ArtistRepositoryImplTest : KoinTest {
                                 countryCode = "GB",
                                 isnis = listOf("0000000121707484"),
                             ),
-                        )
+                        ),
                     )
                 }
             },
@@ -287,6 +287,82 @@ class ArtistRepositoryImplTest : KoinTest {
                 isnis = listOf("0000000121707484"),
             ),
             artistDetailsModel,
+        )
+    }
+
+    @Test
+    fun `lookup is cached, and force refresh invalidates cache`() = runTest {
+        val sparseArtistRepository = createRepositoryWithFakeNetworkData(
+            artistMusicBrainzModel = ArtistMusicBrainzModel(
+                id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+                name = "The Beatles",
+            ),
+        )
+        val sparseArtistDetailsModel = sparseArtistRepository.lookupArtistDetails(
+            "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+            false,
+        )
+        assertEquals(
+            ArtistDetailsModel(
+                id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+                name = "The Beatles",
+            ),
+            sparseArtistDetailsModel,
+        )
+
+        val allDataArtistRepository = createRepositoryWithFakeNetworkData(
+            artistMusicBrainzModel = ArtistMusicBrainzModel(
+                id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+                name = "The Beatles",
+                type = "Group",
+                sortName = "Beatles, The",
+                lifeSpan = LifeSpanMusicBrainzModel(
+                    begin = "1960",
+                    end = "1970-04-10",
+                    ended = true,
+                ),
+                area = AreaMusicBrainzModel(
+                    id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+                    name = "United Kingdom",
+                    countryCodes = listOf("GB"),
+                ),
+                isnis = listOf("0000000121707484"),
+            ),
+        )
+        var allDataArtistDetailsModel = allDataArtistRepository.lookupArtistDetails(
+            "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+            false,
+        )
+        assertEquals(
+            ArtistDetailsModel(
+                id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+                name = "The Beatles",
+            ),
+            allDataArtistDetailsModel,
+        )
+        allDataArtistDetailsModel = allDataArtistRepository.lookupArtistDetails(
+            "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+            true,
+        )
+        assertEquals(
+            ArtistDetailsModel(
+                id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+                name = "The Beatles",
+                type = "Group",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1960",
+                    end = "1970-04-10",
+                    ended = true,
+                ),
+                sortName = "Beatles, The",
+                areaListItemModel = AreaListItemModel(
+                    id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+                    name = "United Kingdom",
+                    countryCodes = listOf("GB"),
+                ),
+                isnis = listOf("0000000121707484"),
+            ),
+            allDataArtistDetailsModel,
         )
     }
 }
