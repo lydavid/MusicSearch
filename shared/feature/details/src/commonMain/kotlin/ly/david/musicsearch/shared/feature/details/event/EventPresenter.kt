@@ -65,7 +65,10 @@ internal class EventPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val eventListItemModel = repository.lookupEvent(screen.id)
+                val eventListItemModel = repository.lookupEvent(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = eventListItemModel.getNameWithDisambiguation()
                 event = eventListItemModel
                 isError = false

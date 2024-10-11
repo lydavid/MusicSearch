@@ -68,4 +68,8 @@ class EventDao(
             ended = ended,
         ),
     )
+
+    fun delete(id: String) {
+        transacter.delete(id)
+    }
 }

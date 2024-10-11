@@ -29,3 +29,7 @@ SELECT
   end,
   ended
 FROM event WHERE id = ?;
+
+delete:
+DELETE FROM event
+WHERE id = :id;

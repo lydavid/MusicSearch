@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common.event
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
@@ -32,7 +33,7 @@ internal class EventPreviewParameterProvider : PreviewParameterProvider<EventLis
     )
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 private fun Preview(
     @PreviewParameter(EventPreviewParameterProvider::class) event: EventListItemModel,
