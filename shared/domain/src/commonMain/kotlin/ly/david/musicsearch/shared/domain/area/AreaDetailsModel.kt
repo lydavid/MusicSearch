@@ -7,9 +7,9 @@ data class AreaDetailsModel(
     override val id: String,
     override val name: String,
     override val sortName: String = "",
-    override val disambiguation: String? = "",
+    override val disambiguation: String? = null,
     override val type: String? = "",
-    override val lifeSpan: LifeSpanUiModel? = null,
-    val countryCodes: List<String>? = null,
+    override val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
+    val countryCodes: List<String> = listOf(),
     val urls: List<RelationListItemModel> = listOf(),
 ) : Area

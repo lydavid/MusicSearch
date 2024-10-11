@@ -13,7 +13,7 @@ class ArtistRepositoryImpl(
     private val artistDao: ArtistDao,
     private val relationRepository: RelationRepository,
     private val areaDao: AreaDao,
-    private val lookupArtistApi: LookupApi,
+    private val lookupApi: LookupApi,
 ) : ArtistRepository {
 
     override suspend fun lookupArtistDetails(
@@ -39,7 +39,7 @@ class ArtistRepositoryImpl(
             return artistWithUrls
         }
 
-        val artistMusicBrainzModel = lookupArtistApi.lookupArtist(artistId)
+        val artistMusicBrainzModel = lookupApi.lookupArtist(artistId)
         cache(artistMusicBrainzModel)
         return lookupArtistDetails(
             artistId = artistId,

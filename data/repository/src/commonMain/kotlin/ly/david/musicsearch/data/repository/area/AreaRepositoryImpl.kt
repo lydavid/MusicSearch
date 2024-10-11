@@ -9,9 +9,9 @@ import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class AreaRepositoryImpl(
-    private val lookupApi: LookupApi,
     private val areaDao: AreaDao,
     private val relationRepository: RelationRepository,
+    private val lookupApi: LookupApi,
 ) : AreaRepository {
 
     override suspend fun lookupArea(

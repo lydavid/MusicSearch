@@ -66,7 +66,7 @@ class ArtistRepositoryImplTest : KoinTest {
             artistDao = artistDao,
             relationRepository = relationRepository,
             areaDao = areaDao,
-            lookupArtistApi = object : FakeLookupApi() {
+            lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupArtist(
                     artistId: String,
                     include: String?,
