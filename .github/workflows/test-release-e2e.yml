@@ -1,10 +1,10 @@
 name: Test Release E2E
 
 on:
-  # TODO: replace with paths: - "**.sqm" on beta
   push:
-    branches:
-      - dl/release-e2e-2
+    branches: [ "beta" ]
+    paths:
+      - "**.sqm"
   schedule:
     - cron: '42 6 * * 6'
   # Meant to be triggered manually because we rebase beta onto master without a PR
