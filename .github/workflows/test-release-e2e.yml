@@ -69,7 +69,6 @@ jobs:
           script: echo "Generated AVD snapshot for caching."
 
       - name: Install app on emulator, run Maestro tests
-        id: test
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
           api-level: 30
@@ -94,7 +93,6 @@ jobs:
       - uses: ./.github/actions/setup
 
       - name: Install app on emulator, run Maestro tests
-        id: test
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
           api-level: 30
