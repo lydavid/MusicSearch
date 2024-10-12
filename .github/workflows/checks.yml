@@ -29,18 +29,15 @@ jobs:
       - name: Konsist architecture unit tests
         run: ./gradlew konsist-test:test --rerun-tasks
 
-      - name: Detekt non-KMP code smells
-        if: always()
-        run: ./gradlew detekt
-
       # https://github.com/detekt/detekt/issues/3665
       - name: Detekt KMP code smells
         if: always()
         run: ./gradlew detektMetadataMain
 
-      - name: Unit test all modules
+      # Includes detekt, verifySqlDelightMigration
+      - name: Perform checks on all modules
         if: always()
-        run: ./gradlew allTests
+        run: ./gradlew check
 
       - name: Verify screenshot tests
         id: screenshotsverify
