@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - dl/release-e2e-2
+  schedule:
+    - cron: '42 6 * * 6'
   # Meant to be triggered manually because we rebase beta onto master without a PR
   workflow_dispatch:
 
@@ -27,7 +29,6 @@ jobs:
           # this might remove tools that are actually needed,
           # if set to "true" but frees about 6 GB
           tool-cache: false
-
           android: false
           dotnet: true
           haskell: true
@@ -69,6 +70,7 @@ jobs:
           sdcard-path-or-size: 100M
           script: echo "Generated AVD snapshot for caching."
 
+      # If we -no-snapshot-save, then the next run will not have the previous app installed
       - name: Install app on emulator, run Maestro tests
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
