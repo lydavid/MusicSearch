@@ -5,6 +5,9 @@ on:
     branches: [ "beta" ]
     paths:
       - "**.sqm"
+  pull_request:
+    paths:
+      - "**.sqm"
   schedule:
     - cron: '42 6 * * 6'
   # Meant to be triggered manually because we rebase beta onto master without a PR
