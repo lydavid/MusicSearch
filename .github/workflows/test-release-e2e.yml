@@ -1,0 +1,122 @@
+name: Test Release E2E
+
+on:
+  # TODO: remove
+  push:
+    branches:
+      - dl/release-e2e-2
+  # Meant to be triggered manually because we rebase beta onto master without a PR
+  workflow_dispatch:
+
+jobs:
+  test-release-e2e:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@v1
+        with:
+          token: ${{ secrets.PAT }}
+          ref: master
+
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: false
+          swap-storage: true
+
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - id: setup
+        uses: ./.github/actions/setup
+
+      - name: Install Maestro
+        run: curl -Ls "https://get.maestro.mobile.dev" | bash
+
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-release
+
+      - name: create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2.31.0
+        with:
+          api-level: 30
+          arch: x86_64
+          profile: pixel_3a
+          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          sdcard-path-or-size: 100M
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: Install app on emulator, run Maestro tests
+        id: test
+        uses: reactivecircus/android-emulator-runner@v2.33.0
+        with:
+          api-level: 30
+          arch: x86_64
+          profile: pixel_3a
+          force-avd-creation: false
+          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          sdcard-path-or-size: 100M
+          script: |
+            ./gradlew installFDroidDebug
+            adb shell settings put system show_touches 1
+            $HOME/.maestro/bin/maestro test .maestro
+            adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat-master
+            mv search-artist-then-back.mp4 search-artist-then-back-master.mp4
+
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@v1
+        with:
+          token: ${{ secrets.PAT }}
+
+      - uses: ./.github/actions/setup
+
+      - name: Install app on emulator, run Maestro tests
+        id: test
+        uses: reactivecircus/android-emulator-runner@v2.33.0
+        with:
+          api-level: 30
+          arch: x86_64
+          profile: pixel_3a
+          force-avd-creation: false
+          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          sdcard-path-or-size: 100M
+          script: |
+            ./gradlew installFDroidDebug
+            adb shell settings put system show_touches 1
+            $HOME/.maestro/bin/maestro test .maestro
+            adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat-beta
+            mv search-artist-then-back.mp4 search-artist-then-back-beta.mp4
+
+      - name: Save recordings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: musicsearch_test_release_e2e_outputs
+          path: |
+            /home/runner/.maestro/tests/
+            *.mp4
+            logcat*
