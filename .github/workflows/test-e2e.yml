@@ -51,7 +51,7 @@ jobs:
 
       - name: Install app on emulator, run Maestro tests
         id: test
-        uses: reactivecircus/android-emulator-runner@v2.32.0
+        uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
           api-level: 30
           arch: x86_64
