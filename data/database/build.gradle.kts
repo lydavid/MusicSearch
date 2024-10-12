@@ -53,6 +53,7 @@ sqldelight {
     databases {
         create("Database") {
             packageName.set("ly.david.musicsearch.data.database")
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight/databases"))
         }
     }
 }

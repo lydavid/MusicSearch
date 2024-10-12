@@ -6,3 +6,4 @@
 *.mockup binary
 *.png binary
 *.svg binary
+*.db binary
