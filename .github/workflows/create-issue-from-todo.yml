@@ -3,6 +3,11 @@ on:
   push:
     branches:
       - beta
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   create-todo:
     runs-on: ubuntu-latest

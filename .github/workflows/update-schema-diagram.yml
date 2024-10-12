@@ -2,10 +2,14 @@ name: Update Schema Diagram
 
 on:
   push:
-    branches: ["beta"]
+    branches: [ "beta" ]
     paths:
       - "**.sqm"
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   update-schema-diagram:
