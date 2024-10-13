@@ -17,3 +17,7 @@ SELECT
   disambiguation,
   type
 FROM series WHERE id = ?;
+
+delete:
+DELETE FROM series
+WHERE id = :id;

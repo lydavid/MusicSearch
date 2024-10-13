@@ -152,7 +152,7 @@ TODO: screenshot of list screen
 | recording     | ⬜       | ✅           |
 | release       | ✅       | ✅           |
 | release group | ✅️      | ✅           |
-| series        | ⬜       | ✅           |
+| series        | ✅       | ✅           |
 | work          | ✅       | ✅           |
 
 - A collection does not have a details screen. It only has one tab which lists all of its contents. e.g. An artist collection lists all of its artists

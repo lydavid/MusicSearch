@@ -65,7 +65,10 @@ internal class SeriesPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val seriesDetailsModel = repository.lookupSeries(screen.id)
+                val seriesDetailsModel = repository.lookupSeries(
+                    seriesId = screen.id,
+                    forceRefresh = forceRefreshDetails,
+                )
                 title = seriesDetailsModel.getNameWithDisambiguation()
                 series = seriesDetailsModel
                 isError = false
