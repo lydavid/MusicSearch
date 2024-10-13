@@ -17,8 +17,8 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
@@ -76,7 +76,10 @@ internal class ReleaseGroupPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val releaseGroupDetailsModel = repository.lookupReleaseGroup(screen.id)
+                val releaseGroupDetailsModel = repository.lookupReleaseGroup(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = releaseGroupDetailsModel.getNameWithDisambiguation()
                 subtitle = "Release Group by ${releaseGroupDetailsModel.artistCredits.getDisplayNames()}"
                 releaseGroup = releaseGroupDetailsModel

@@ -11,6 +11,7 @@ interface ReleaseGroupDao : EntityDao {
     fun insertAll(releaseGroups: List<ReleaseGroupMusicBrainzModel>)
     fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupDetailsModel?
     fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease?
+    fun delete(id: String)
 }
 
 class ReleaseGroupDaoImpl(
@@ -86,4 +87,8 @@ class ReleaseGroupDaoImpl(
                 )
             },
         ).executeAsOneOrNull()
+
+    override fun delete(id: String) {
+        transacter.delete(id)
+    }
 }
