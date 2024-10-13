@@ -24,27 +24,30 @@ class ReleaseGroupRepositoryImpl(
             delete(releaseGroupId)
         }
 
+        val cachedData = getCachedData(releaseGroupId)
+        return if (cachedData != null && !forceRefresh) {
+            cachedData
+        } else {
+            val releaseGroupMusicBrainzModel = lookupApi.lookupReleaseGroup(releaseGroupId)
+            cache(releaseGroupMusicBrainzModel)
+            getCachedData(releaseGroupId) ?: error("Failed to get cached data")
+        }
+    }
+
+    private fun getCachedData(releaseGroupId: String): ReleaseGroupDetailsModel? {
         val releaseGroup = releaseGroupDao.getReleaseGroupForDetails(releaseGroupId)
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseGroupId)
         val urlRelations = relationRepository.getEntityUrlRelationships(releaseGroupId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseGroupId)
-        if (releaseGroup != null &&
-            artistCredits.isNotEmpty() &&
-            hasUrlsBeenSavedForEntity &&
-            !forceRefresh
-        ) {
-            return releaseGroup.copy(
+
+        return if (releaseGroup != null && artistCredits.isNotEmpty() && hasUrlsBeenSavedForEntity) {
+            releaseGroup.copy(
                 artistCredits = artistCredits,
                 urls = urlRelations,
             )
+        } else {
+            null
         }
-
-        val releaseGroupMusicBrainzModel = lookupApi.lookupReleaseGroup(releaseGroupId)
-        cache(releaseGroupMusicBrainzModel)
-        return lookupReleaseGroup(
-            releaseGroupId = releaseGroupId,
-            forceRefresh = false,
-        )
     }
 
     private fun delete(id: String) {
