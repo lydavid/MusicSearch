@@ -151,9 +151,9 @@ TODO: screenshot of list screen
 | place         | ⬜       | ✅           |
 | recording     | ⬜       | ✅           |
 | release       | ✅       | ✅           |
-| release group | ⬜       | ✅           |
+| release group | ✅️      | ✅           |
 | series        | ⬜       | ✅           |
-| work          | ⬜       | ✅           |
+| work          | ✅       | ✅           |
 
 - A collection does not have a details screen. It only has one tab which lists all of its contents. e.g. An artist collection lists all of its artists
 - List screens are analogous to those listed under "Browsing supported" in the [browse](#browse) feature section.

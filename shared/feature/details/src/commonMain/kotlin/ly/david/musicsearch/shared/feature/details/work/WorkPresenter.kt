@@ -77,7 +77,10 @@ internal class WorkPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val workDetailsModel = repository.lookupWork(screen.id)
+                val workDetailsModel = repository.lookupWork(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = workDetailsModel.getNameWithDisambiguation()
                 work = workDetailsModel
                 isError = false

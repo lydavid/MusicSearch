@@ -24,3 +24,7 @@ SELECT
   language,
   iswcs
 FROM work WHERE id = ?;
+
+delete:
+DELETE FROM work
+WHERE id = :id;
