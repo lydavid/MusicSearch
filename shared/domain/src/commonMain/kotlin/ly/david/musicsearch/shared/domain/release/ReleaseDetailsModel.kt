@@ -21,11 +21,11 @@ data class ReleaseDetailsModel(
     override val quality: String? = null,
 
     val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
-    val textRepresentation: TextRepresentationUiModel? = null,
+    val textRepresentation: TextRepresentationUiModel = TextRepresentationUiModel(),
     val imageUrl: String? = null,
 
-    val formattedFormats: String? = null,
-    val formattedTracks: String? = null,
+    val formattedFormats: String = "",
+    val formattedTracks: String = "",
 
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
 

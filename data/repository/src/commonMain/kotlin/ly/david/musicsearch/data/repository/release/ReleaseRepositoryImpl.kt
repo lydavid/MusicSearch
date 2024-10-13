@@ -6,17 +6,6 @@ import app.cash.paging.PagingData
 import app.cash.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
-import ly.david.musicsearch.shared.domain.getFormatsForDisplay
-import ly.david.musicsearch.shared.domain.getTracksForDisplay
-import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ListSeparator
-import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
-import ly.david.musicsearch.shared.domain.listitem.toAreaListItemModel
-import ly.david.musicsearch.shared.domain.listitem.toLabelListItemModel
-import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.LabelDao
@@ -27,14 +16,24 @@ import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.TrackDao
+import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.getFormatsForDisplay
+import ly.david.musicsearch.shared.domain.getTracksForDisplay
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
+import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
+import ly.david.musicsearch.shared.domain.listitem.toAreaListItemModel
+import ly.david.musicsearch.shared.domain.listitem.toLabelListItemModel
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 
 class ReleaseRepositoryImpl(
-    private val musicBrainzApi: MusicBrainzApi,
     private val releaseDao: ReleaseDao,
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
     private val releaseGroupDao: ReleaseGroupDao,
@@ -46,6 +45,7 @@ class ReleaseRepositoryImpl(
     private val relationRepository: RelationRepository,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
+    private val lookupApi: LookupApi,
 ) : ReleaseRepository {
 
     // TODO: split up what data to include when calling from details/tracks tabs?
@@ -88,7 +88,7 @@ class ReleaseRepositoryImpl(
             )
         }
 
-        val releaseMusicBrainzModel = musicBrainzApi.lookupRelease(releaseId)
+        val releaseMusicBrainzModel = lookupApi.lookupRelease(releaseId)
         cache(releaseMusicBrainzModel)
         return lookupRelease(
             releaseId = releaseId,
