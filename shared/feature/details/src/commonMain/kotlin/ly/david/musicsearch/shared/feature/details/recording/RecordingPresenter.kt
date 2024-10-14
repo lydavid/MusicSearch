@@ -18,12 +18,12 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
+import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
-import ly.david.musicsearch.shared.domain.error.HandledException
-import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.recording.RecordingRepository
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
@@ -73,7 +73,10 @@ internal class RecordingPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val recordingDetailsModel = repository.lookupRecording(screen.id)
+                val recordingDetailsModel = repository.lookupRecording(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = recordingDetailsModel.getNameWithDisambiguation()
                 subtitle = "Recording by ${recordingDetailsModel.artistCredits.getDisplayNames()}"
                 recording = recordingDetailsModel

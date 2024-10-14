@@ -149,7 +149,7 @@ TODO: screenshot of list screen
 | instrument    | ⬜       | ✅           |
 | label         | ⬜️      | ✅           |
 | place         | ⬜       | ✅           |
-| recording     | ⬜       | ✅           |
+| recording     | ✅       | ✅           |
 | release       | ✅       | ✅           |
 | release group | ✅️      | ✅           |
 | series        | ✅       | ✅           |

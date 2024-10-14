@@ -19,3 +19,7 @@ VALUES ?;
 
 getRecording:
 SELECT * FROM recording WHERE id = ?;
+
+delete:
+DELETE FROM recording
+WHERE id = :id;
