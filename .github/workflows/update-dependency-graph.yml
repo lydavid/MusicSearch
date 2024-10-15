@@ -11,10 +11,6 @@ on:
         required: true
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   update-dependency-graph:
     name: Update dependency graph
