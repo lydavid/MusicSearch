@@ -53,4 +53,8 @@ class InstrumentDao(
         description = description,
         type = type,
     )
+
+    fun delete(id: String) {
+        transacter.delete(id)
+    }
 }

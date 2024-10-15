@@ -65,7 +65,10 @@ internal class InstrumentPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val instrumentDetailsModel = repository.lookupInstrument(screen.id)
+                val instrumentDetailsModel = repository.lookupInstrument(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = instrumentDetailsModel.getNameWithDisambiguation()
                 instrument = instrumentDetailsModel
                 isError = false

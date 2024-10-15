@@ -2,10 +2,10 @@ package ly.david.musicsearch.ui.common.instrument
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
-import ly.david.musicsearch.ui.core.preview.DefaultPreviews
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 // Cannot be private.
@@ -37,7 +37,7 @@ internal class InstrumentCardPreviewParameterProvider : PreviewParameterProvider
     )
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 private fun Preview(
     @PreviewParameter(InstrumentCardPreviewParameterProvider::class) instrument: InstrumentListItemModel,

@@ -99,7 +99,7 @@ interface LookupApi {
 
     suspend fun lookupInstrument(
         instrumentId: String,
-        include: String = "artist-rels+$URL_REL+area-rels+instrument-rels+genre-rels+label-rels",
+        include: String = URL_REL,
     ): InstrumentMusicBrainzModel
 
     suspend fun lookupLabel(

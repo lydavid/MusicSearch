@@ -146,7 +146,7 @@ TODO: screenshot of list screen
 | artist        | ✅       | ✅           |
 | collection    | ❌       | ✅           |
 | event         | ✅️      | ✅           |
-| instrument    | ⬜       | ✅           |
+| instrument    | ✅       | ✅           |
 | label         | ⬜️      | ✅           |
 | place         | ⬜       | ✅           |
 | recording     | ✅       | ✅           |
