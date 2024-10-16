@@ -104,7 +104,7 @@ interface LookupApi {
 
     suspend fun lookupLabel(
         labelId: String,
-        include: String = "artist-rels+label-rels+$URL_REL",
+        include: String = URL_REL,
     ): LabelMusicBrainzModel
 
     suspend fun lookupPlace(

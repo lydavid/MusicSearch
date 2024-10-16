@@ -71,7 +71,10 @@ internal class LabelPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val labelDetailsModel = repository.lookupLabel(screen.id)
+                val labelDetailsModel = repository.lookupLabel(
+                    labelId = screen.id,
+                    forceRefresh = forceRefreshDetails,
+                )
                 title = labelDetailsModel.getNameWithDisambiguation()
                 label = labelDetailsModel
                 isError = false

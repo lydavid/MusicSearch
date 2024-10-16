@@ -150,7 +150,7 @@ TODO: screenshot of list screen
 | collection    | ❌       | ✅           |
 | event         | ✅️      | ✅           |
 | instrument    | ✅       | ✅           |
-| label         | ⬜️      | ✅           |
+| label         | ✅️      | ✅           |
 | place         | ⬜       | ✅           |
 | recording     | ✅       | ✅           |
 | release       | ✅       | ✅           |

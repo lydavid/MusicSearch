@@ -34,3 +34,7 @@ SELECT
   end,
   ended
 FROM label WHERE id = ?;
+
+delete:
+DELETE FROM label
+WHERE id = :id;

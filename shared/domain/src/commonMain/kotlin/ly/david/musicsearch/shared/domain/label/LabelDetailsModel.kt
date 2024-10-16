@@ -11,6 +11,6 @@ data class LabelDetailsModel(
     override val labelCode: Int? = null,
     val ipis: List<String>? = null,
     val isnis: List<String>? = null,
-    val lifeSpan: LifeSpanUiModel? = null,
+    val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val urls: List<RelationListItemModel> = listOf(),
 ) : Label
