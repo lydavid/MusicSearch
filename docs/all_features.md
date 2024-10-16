@@ -103,7 +103,10 @@ See below for the supported types of collections.
 
 Artist/recording graph showing which artists and recordings a given artist collaborated on.
 This is currently limited to artists credited on the recording, which are primarily performers.
-It does not include composers.
+It does not include other types of artist credits that only shows up relationships such as composers.
+
+Inspired by [Obsidian](https://github.com/obsidianmd/obsidian-releases)'s graph view.
+
 
 ## MusicBrainz Login
 

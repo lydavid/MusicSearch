@@ -116,6 +116,7 @@ internal fun PreviewArtistCollaborationGraphUi() {
                         y = -111.3471010505625,
                     ),
                 ),
+                filterText = "",
             )
         }
     }

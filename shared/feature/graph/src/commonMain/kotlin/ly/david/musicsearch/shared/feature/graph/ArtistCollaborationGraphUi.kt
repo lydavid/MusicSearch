@@ -10,6 +10,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -59,6 +60,7 @@ internal fun ArtistCollaborationGraphUi(
         ArtistCollaborationGraphUi(
             edges = state.edges,
             nodes = state.nodes,
+            filterText = state.topAppBarFilterState.filterText,
             modifier = Modifier.padding(innerPadding),
             onClick = { tapOffset, drawOffset ->
                 with(density) {
@@ -93,6 +95,7 @@ internal fun ArtistCollaborationGraphUi(
 internal fun ArtistCollaborationGraphUi(
     edges: List<GraphEdge>,
     nodes: List<GraphNode>,
+    filterText: String,
     modifier: Modifier = Modifier,
     onClick: (tapOffset: Offset, drawOffset: Offset) -> Unit = { _, _ -> },
 ) {
@@ -105,6 +108,11 @@ internal fun ArtistCollaborationGraphUi(
     val edgeColor = getSubTextColor()
 
     val currentOnClick by rememberUpdatedState(onClick)
+
+    LaunchedEffect(filterText) {
+        panOffset = Offset.Zero
+        center = Offset.Zero
+    }
 
     Canvas(
         modifier = modifier
