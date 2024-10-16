@@ -151,7 +151,7 @@ TODO: screenshot of list screen
 | event         | ✅️      | ✅           |
 | instrument    | ✅       | ✅           |
 | label         | ✅️      | ✅           |
-| place         | ⬜       | ✅           |
+| place         | ✅       | ✅           |
 | recording     | ✅       | ✅           |
 | release       | ✅       | ✅           |
 | release group | ✅️      | ✅           |

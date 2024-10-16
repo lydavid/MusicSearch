@@ -17,12 +17,12 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
+import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
-import ly.david.musicsearch.shared.domain.error.HandledException
-import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
@@ -71,7 +71,10 @@ internal class PlacePresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val placeDetailsModel = repository.lookupPlace(screen.id)
+                val placeDetailsModel = repository.lookupPlace(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = placeDetailsModel.getNameWithDisambiguation()
                 place = placeDetailsModel
                 isError = false

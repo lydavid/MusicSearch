@@ -10,8 +10,8 @@ data class PlaceDetailsModel(
     override val disambiguation: String? = null,
     override val address: String,
     override val type: String? = null,
-    override val coordinates: CoordinatesUiModel? = null,
-    override val lifeSpan: LifeSpanUiModel? = null,
+    override val coordinates: CoordinatesUiModel = CoordinatesUiModel(),
+    override val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val area: AreaListItemModel? = null,
     val urls: List<RelationListItemModel> = listOf(),
 ) : Place

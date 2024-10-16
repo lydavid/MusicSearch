@@ -9,7 +9,9 @@ insert:
 INSERT OR IGNORE INTO area_place
 VALUES ?;
 
-getAreasByPlace:
+-- area by place
+
+getAreaByPlace:
 SELECT
   a.id,
   a.name,
@@ -24,6 +26,9 @@ INNER JOIN area_place ap ON a.id = ap.area_id
 WHERE ap.place_id = :placeId
 LIMIT 1;
 
+deleteAreaPlaceLink:
+DELETE FROM area_place
+WHERE place_id = :placeId;
 
 -- places by area
 

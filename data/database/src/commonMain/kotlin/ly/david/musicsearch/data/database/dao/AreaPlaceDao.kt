@@ -33,10 +33,14 @@ class AreaPlaceDao(
     }
 
     fun getAreaByPlace(placeId: String): AreaListItemModel? =
-        transacter.getAreasByPlace(
-            placeId,
+        transacter.getAreaByPlace(
+            placeId = placeId,
             mapper = ::mapToAreaListItemModel,
         ).executeAsOneOrNull()
+
+    fun deleteAreaPlaceLink(placeId: String) {
+        transacter.deleteAreaPlaceLink(placeId = placeId)
+    }
 
     // region places by area
     fun linkAreaWithPlaces(
