@@ -88,7 +88,7 @@ jobs:
       - name: Assemble F-Droid APK
         run: |
           sed -i -e '/firebase/d' -e '/google.services/d' build.gradle.kts
-          ./gradlew assembleFDroidRelease
+          ./gradlew clean assembleFDroidRelease
 
       - name: Decrypt Google Services file
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d > android/app/google-services.json
