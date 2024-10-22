@@ -13,4 +13,5 @@ data class ArtistListItemModel(
     val countryCode: String? = null,
     val lifeSpan: LifeSpanUiModel? = null,
     val imageUrl: String? = null,
+    val visited: Boolean = false,
 ) : ListItemModel(), Artist

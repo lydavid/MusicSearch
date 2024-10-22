@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
@@ -38,6 +39,7 @@ fun ArtistListItem(
             Text(
                 text = artist.name,
                 style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = if (artist.visited) FontWeight.Normal else FontWeight.Bold,
             )
         },
         modifier = modifier.clickable {
@@ -45,13 +47,17 @@ fun ArtistListItem(
         },
         supportingContent = {
             Column {
-                DisambiguationText(disambiguation = artist.disambiguation)
+                DisambiguationText(
+                    disambiguation = artist.disambiguation,
+                    bold = !artist.visited,
+                )
 
                 artist.type.ifNotNullOrEmpty {
                     Text(
                         text = it,
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = if (artist.visited) FontWeight.Normal else FontWeight.Bold,
                     )
                 }
 
@@ -60,6 +66,7 @@ fun ArtistListItem(
                         text = it.getLifeSpanForDisplay(),
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = if (artist.visited) FontWeight.Normal else FontWeight.Bold,
                     )
                 }
             }

@@ -109,11 +109,13 @@ SELECT
   a.begin,
   a.end,
   a.ended,
-  mi.thumbnail_url
+  mi.thumbnail_url,
+  visited.has_urls
 FROM artist a
 INNER JOIN collection_entity ce ON a.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 LEFT JOIN mbid_image mi ON mi.mbid = a.id
+LEFT JOIN mb_entity_has_urls visited ON visited.entity_id = a.id
 WHERE c.id = :collectionId
 AND (
   a.name LIKE :query OR
