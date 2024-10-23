@@ -250,8 +250,11 @@ internal data class ReleaseDetailsUiState(
 
 internal sealed interface ReleaseUiEvent : CircuitUiEvent {
     data object NavigateUp : ReleaseUiEvent
+
     data object ForceRefresh : ReleaseUiEvent
+
     data class UpdateTab(val tab: ReleaseTab) : ReleaseUiEvent
+
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

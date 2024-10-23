@@ -30,6 +30,7 @@ class TracksByReleasePresenter(
         var id: String by rememberSaveable { mutableStateOf("") }
         var tracksListItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val lazyListState: LazyListState = rememberLazyListState()
+        var collapsedMediumIds: Set<Long> by rememberSaveable { mutableStateOf(setOf()) }
 
         LaunchedEffect(
             key1 = id,
@@ -52,12 +53,22 @@ class TracksByReleasePresenter(
                 is TracksByEntityUiEvent.UpdateQuery -> {
                     query = event.query
                 }
+
+                is TracksByEntityUiEvent.ToggleMedium -> {
+                    val mediumId = event.id.toLong()
+                    collapsedMediumIds = if (collapsedMediumIds.contains(mediumId)) {
+                        collapsedMediumIds.filter { it != mediumId }.toSet()
+                    } else {
+                        collapsedMediumIds + setOf(mediumId)
+                    }
+                }
             }
         }
 
         return TracksByReleaseUiState(
             lazyPagingItems = tracksListItems.collectAsLazyPagingItems(),
             lazyListState = lazyListState,
+            collapsedMediumIds = collapsedMediumIds,
             eventSink = ::eventSink,
         )
     }
@@ -67,6 +78,7 @@ class TracksByReleasePresenter(
 data class TracksByReleaseUiState(
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
+    val collapsedMediumIds: Set<Long> = setOf(),
     val eventSink: (TracksByEntityUiEvent) -> Unit,
 ) : CircuitUiState
 
@@ -77,5 +89,9 @@ sealed interface TracksByEntityUiEvent : CircuitUiEvent {
 
     data class UpdateQuery(
         val query: String,
+    ) : TracksByEntityUiEvent
+
+    data class ToggleMedium(
+        val id: String,
     ) : TracksByEntityUiEvent
 }

@@ -19,33 +19,48 @@ internal fun PreviewTracksInReleaseScreen() {
                 PagingData.from(
                     listOf(
                         ListSeparator(
-                            id = "separator1",
+                            id = "1",
                             text = "7\" Vinyl 1",
                         ),
                         TrackListItemModel(
-                            id = "1",
+                            id = "1111",
                             position = 1,
                             number = "A1",
                             title = "Track name",
                             length = 295000,
+                            mediumId = 1,
                         ),
                         ListSeparator(
-                            id = "separator2",
+                            id = "2",
                             text = "7\" Vinyl 2",
                         ),
                         TrackListItemModel(
-                            id = "2",
+                            id = "2222",
                             position = 1,
                             number = "B1",
+                            title = "Should not be shown",
+                            length = 199000,
+                            mediumId = 2,
+                        ),
+                        ListSeparator(
+                            id = "3",
+                            text = "7\" Vinyl 3",
+                        ),
+                        TrackListItemModel(
+                            id = "3333",
+                            position = 1,
+                            number = "C1",
                             title = "Another track name",
                             length = 199000,
+                            mediumId = 3,
                         ),
                     ),
                 ),
             )
 
-            TracksByReleaseScreen(
+            TracksByReleaseUi(
                 lazyPagingItems = items.collectAsLazyPagingItems(),
+                collapsedMediumIds = setOf(2),
             )
         }
     }
