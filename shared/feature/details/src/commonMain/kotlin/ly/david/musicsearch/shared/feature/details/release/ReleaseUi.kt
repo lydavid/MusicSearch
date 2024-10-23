@@ -191,13 +191,11 @@ internal fun ReleaseUi(
 
                 ReleaseTab.TRACKS -> {
                     TracksByReleaseUi(
-                        lazyPagingItems = state.tracksByReleaseUiState.lazyPagingItems,
+                        uiState = state.tracksByReleaseUiState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.tracksByReleaseUiState.lazyListState,
-                        collapsedMediumIds = state.tracksByReleaseUiState.collapsedMediumIds,
                         onRecordingClick = { id, title ->
                             eventSink(
                                 ReleaseUiEvent.ClickItem(
@@ -206,9 +204,6 @@ internal fun ReleaseUi(
                                     title = title,
                                 ),
                             )
-                        },
-                        onToggleMedium = { id ->
-                            eventSink(ReleaseUiEvent.ToggleMedium(id))
                         },
                     )
                 }

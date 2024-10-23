@@ -12,6 +12,28 @@ import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.track.TrackListItem
+import ly.david.musicsearch.ui.common.track.TracksByEntityUiEvent
+import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
+
+@Composable
+internal fun TracksByReleaseUi(
+    uiState: TracksByReleaseUiState,
+    modifier: Modifier,
+    onRecordingClick: (id: String, title: String) -> Unit = { _, _ -> },
+) {
+    val eventSink = uiState.eventSink
+
+    TracksByReleaseUi(
+        lazyPagingItems = uiState.lazyPagingItems,
+        modifier = modifier,
+        lazyListState = uiState.lazyListState,
+        collapsedMediumIds = uiState.collapsedMediumIds,
+        onRecordingClick = onRecordingClick,
+        onToggleMedium = { id ->
+            eventSink(TracksByEntityUiEvent.ToggleMedium(id))
+        },
+    )
+}
 
 /**
  * Shows all tracks in all media in this release.

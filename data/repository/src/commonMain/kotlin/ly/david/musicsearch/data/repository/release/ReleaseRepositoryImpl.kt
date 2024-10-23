@@ -148,7 +148,6 @@ class ReleaseRepositoryImpl(
     override fun observeTracksByRelease(
         releaseId: String,
         query: String,
-        collapsedMediumIds: Set<Long>,
     ): Flow<PagingData<ListItemModel>> {
         return Pager(
             config = CommonPagingConfig.pagingConfig,

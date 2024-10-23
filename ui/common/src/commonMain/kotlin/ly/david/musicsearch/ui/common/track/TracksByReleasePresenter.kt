@@ -41,7 +41,6 @@ class TracksByReleasePresenter(
             tracksListItems = getTracksByRelease(
                 releaseId = id,
                 query = query,
-                collapsedMediumIds = collapsedMediumIds,
             )
         }
 

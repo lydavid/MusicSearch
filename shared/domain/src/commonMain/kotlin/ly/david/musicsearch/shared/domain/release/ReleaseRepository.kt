@@ -13,6 +13,5 @@ interface ReleaseRepository {
     fun observeTracksByRelease(
         releaseId: String,
         query: String,
-        collapsedMediumIds: Set<Long>,
     ): Flow<PagingData<ListItemModel>>
 }

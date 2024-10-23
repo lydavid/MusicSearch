@@ -200,10 +200,6 @@ internal class ReleasePresenter(
                         ),
                     )
                 }
-
-                is ReleaseUiEvent.ToggleMedium -> {
-                    tracksEventSink(TracksByEntityUiEvent.ToggleMedium(event.id))
-                }
             }
         }
 
@@ -266,8 +262,4 @@ internal sealed interface ReleaseUiEvent : CircuitUiEvent {
     ) : ReleaseUiEvent
 
     data object ClickImage : ReleaseUiEvent
-
-    data class ToggleMedium(
-        val id: String,
-    ) : ReleaseUiEvent
 }
