@@ -18,7 +18,7 @@ import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
 @Composable
 internal fun TracksByReleaseUi(
     uiState: TracksByReleaseUiState,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     onRecordingClick: (id: String, title: String) -> Unit = { _, _ -> },
 ) {
     val eventSink = uiState.eventSink

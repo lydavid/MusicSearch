@@ -1,0 +1,29 @@
+appId: io.github.lydavid.musicsearch.debug
+---
+- launchApp
+- startRecording: collapse-medium-navigate-then-back
+- tapOn: "Resource"
+- tapOn: "Release"
+- tapOn:
+      text: "Search"
+      index: 0
+- inputText: "Mozart Complete Edition mediums:170"
+- tapOn:
+      text: "Mozart Complete Edition"
+      index: 1
+- assertVisible: "Barcode: 5028421942513"
+- tapOn: "Tracks"
+- assertVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
+- tapOn: "CD 1, expanded"
+- assertNotVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
+- tapOn: "CD 2"
+- tapOn: "CD 1"
+- assertVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
+- tapOn: "CD 1, expanded"
+- tapOn: "Filter"
+- inputText: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
+- tapOn: "CD 1"
+- assertVisible:
+      text: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
+      index: 1
+- stopRecording
