@@ -14,16 +14,20 @@ appId: io.github.lydavid.musicsearch.debug
 - assertVisible: "Barcode: 5028421942513"
 - tapOn: "Tracks"
 - assertVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
-- tapOn: "CD 1, expanded"
+- tapOn: "CD 1"
 - assertNotVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
 - tapOn: "CD 2"
+- tapOn: "Symphony No. 14 in A Major, K. 114: I. Allegro moderato"
+- tapOn: "Back"
+- assertNotVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
 - tapOn: "CD 1"
 - assertVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
-- tapOn: "CD 1, expanded"
+- tapOn: "CD 1"
 - tapOn: "Filter"
 - inputText: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
 - tapOn: "CD 1"
 - assertVisible:
       text: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
       index: 1
+
 - stopRecording
