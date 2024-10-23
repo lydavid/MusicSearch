@@ -200,6 +200,10 @@ internal class ReleasePresenter(
                         ),
                     )
                 }
+
+                is ReleaseUiEvent.ToggleMedium -> {
+                    tracksEventSink(TracksByEntityUiEvent.ToggleMedium(event.id))
+                }
             }
         }
 
@@ -250,8 +254,11 @@ internal data class ReleaseDetailsUiState(
 
 internal sealed interface ReleaseUiEvent : CircuitUiEvent {
     data object NavigateUp : ReleaseUiEvent
+
     data object ForceRefresh : ReleaseUiEvent
+
     data class UpdateTab(val tab: ReleaseTab) : ReleaseUiEvent
+
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,
@@ -259,4 +266,8 @@ internal sealed interface ReleaseUiEvent : CircuitUiEvent {
     ) : ReleaseUiEvent
 
     data object ClickImage : ReleaseUiEvent
+
+    data class ToggleMedium(
+        val id: String,
+    ) : ReleaseUiEvent
 }

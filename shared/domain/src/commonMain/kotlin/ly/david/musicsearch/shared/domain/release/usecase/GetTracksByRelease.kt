@@ -11,8 +11,10 @@ class GetTracksByRelease(
     operator fun invoke(
         releaseId: String,
         query: String,
+        collapsedMediumIds: Set<Long>,
     ): Flow<PagingData<ListItemModel>> = releaseRepository.observeTracksByRelease(
         releaseId = releaseId,
         query = query,
+        collapsedMediumIds = collapsedMediumIds,
     )
 }

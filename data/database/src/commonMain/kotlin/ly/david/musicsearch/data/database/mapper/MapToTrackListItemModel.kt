@@ -11,6 +11,7 @@ internal fun mapToTrackListItemModel(
     title: String,
     length: Int?,
     formattedArtistCreditNames: String,
+    collapsed: Boolean,
 ) = TrackListItemModel(
     id = id,
     position = position,
@@ -20,4 +21,5 @@ internal fun mapToTrackListItemModel(
     mediumId = mediumId,
     recordingId = recordingId,
     formattedArtistCredits = formattedArtistCreditNames,
+    collapsed = collapsed,
 )

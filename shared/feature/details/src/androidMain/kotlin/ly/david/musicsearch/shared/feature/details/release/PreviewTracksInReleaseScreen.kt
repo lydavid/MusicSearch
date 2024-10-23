@@ -6,7 +6,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import app.cash.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.musicsearch.shared.domain.listitem.ListSeparator
+import ly.david.musicsearch.shared.domain.listitem.CollapsibleListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
@@ -18,7 +18,7 @@ internal fun PreviewTracksInReleaseScreen() {
             val items = MutableStateFlow(
                 PagingData.from(
                     listOf(
-                        ListSeparator(
+                        CollapsibleListSeparator(
                             id = "separator1",
                             text = "7\" Vinyl 1",
                         ),
@@ -29,7 +29,7 @@ internal fun PreviewTracksInReleaseScreen() {
                             title = "Track name",
                             length = 295000,
                         ),
-                        ListSeparator(
+                        CollapsibleListSeparator(
                             id = "separator2",
                             text = "7\" Vinyl 2",
                         ),
@@ -44,7 +44,7 @@ internal fun PreviewTracksInReleaseScreen() {
                 ),
             )
 
-            TracksByReleaseScreen(
+            TracksByReleaseUi(
                 lazyPagingItems = items.collectAsLazyPagingItems(),
             )
         }

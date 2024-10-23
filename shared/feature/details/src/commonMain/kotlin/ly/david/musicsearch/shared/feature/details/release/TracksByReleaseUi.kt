@@ -6,26 +6,27 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.cash.paging.compose.LazyPagingItems
+import ly.david.musicsearch.shared.domain.listitem.CollapsibleListSeparator
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
-import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.track.TrackListItem
 
 /**
- * Main screen for Release lookup. Shows all tracks in all media in this release.
+ * Shows all tracks in all media in this release.
  *
- * Tracks are recordings that are part of a release. It includes reference to recording,
- * but some of its details might be different for a given release.
+ * Tracks are recordings that are part of a release. A track references a recording,
+ * but some of its details (e.g. name) might be different for a given release.
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun TracksByReleaseScreen(
+internal fun TracksByReleaseUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     onRecordingClick: (id: String, title: String) -> Unit = { _, _ -> },
+    onToggleMedium: (id: String) -> Unit = {},
 ) {
     ScreenWithPagingLoadingAndError(
         lazyPagingItems = lazyPagingItems,
@@ -40,8 +41,12 @@ internal fun TracksByReleaseScreen(
                 )
             }
 
-            is ListSeparator -> {
-                ListSeparatorHeader(text = listItemModel.text)
+            is CollapsibleListSeparator -> {
+                CollapsibleListSeparatorHeader(
+                    text = listItemModel.text,
+                    collapsed = listItemModel.collapsed,
+                    onClick = { onToggleMedium(listItemModel.id) },
+                )
             }
 
             else -> {

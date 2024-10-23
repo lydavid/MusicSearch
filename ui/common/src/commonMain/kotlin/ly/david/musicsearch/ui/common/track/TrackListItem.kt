@@ -22,41 +22,43 @@ fun TrackListItem(
     modifier: Modifier = Modifier,
     onRecordingClick: (id: String, title: String) -> Unit = { _, _ -> },
 ) {
-    ListItem(
-        headlineContent = {
-            Text(
-                text = track.title,
-                style = TextStyles.getCardBodyTextStyle(),
-            )
-        },
-        modifier = modifier.clickable {
-            onRecordingClick(
-                track.recordingId,
-                track.title,
-            )
-        },
-        leadingContent = {
-            Text(
-                text = track.number,
-                style = TextStyles.getCardBodySubTextStyle(),
-            )
-        },
-        trailingContent = {
-            Text(
-                text = track.length.toDisplayTime(),
-                style = TextStyles.getCardBodySubTextStyle(),
-            )
-        },
-        supportingContent = {
-            track.formattedArtistCredits.ifNotNullOrEmpty {
+    if (!track.collapsed) {
+        ListItem(
+            headlineContent = {
                 Text(
-                    text = it,
-                    modifier = Modifier
-                        .padding(top = 4.dp)
-                        .fillMaxWidth(),
+                    text = track.title,
+                    style = TextStyles.getCardBodyTextStyle(),
+                )
+            },
+            modifier = modifier.clickable {
+                onRecordingClick(
+                    track.recordingId,
+                    track.title,
+                )
+            },
+            leadingContent = {
+                Text(
+                    text = track.number,
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
-            }
-        },
-    )
+            },
+            trailingContent = {
+                Text(
+                    text = track.length.toDisplayTime(),
+                    style = TextStyles.getCardBodySubTextStyle(),
+                )
+            },
+            supportingContent = {
+                track.formattedArtistCredits.ifNotNullOrEmpty {
+                    Text(
+                        text = it,
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                            .fillMaxWidth(),
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+                }
+            },
+        )
+    }
 }

@@ -24,8 +24,8 @@ import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getFormatsForDisplay
 import ly.david.musicsearch.shared.domain.getTracksForDisplay
+import ly.david.musicsearch.shared.domain.listitem.CollapsibleListSeparator
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toAreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toLabelListItemModel
@@ -148,6 +148,7 @@ class ReleaseRepositoryImpl(
     override fun observeTracksByRelease(
         releaseId: String,
         query: String,
+        collapsedMediumIds: Set<Long>,
     ): Flow<PagingData<ListItemModel>> {
         return Pager(
             config = CommonPagingConfig.pagingConfig,
@@ -160,6 +161,7 @@ class ReleaseRepositoryImpl(
                 trackDao.getTracksByRelease(
                     releaseId = releaseId,
                     query = "%$query%",
+                    collapsedMediumIds = collapsedMediumIds,
                 )
             },
         ).flow.map { pagingData ->
@@ -169,17 +171,19 @@ class ReleaseRepositoryImpl(
                         val medium =
                             mediumDao.getMediumForTrack(after.id) ?: return@insertSeparators null
 
-                        ListSeparator(
+                        CollapsibleListSeparator(
                             id = "${medium.id}",
                             text = medium.format.orEmpty() +
                                 (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
                                 medium.name.transformThisIfNotNullOrEmpty { " ($it)" },
+                            collapsed = collapsedMediumIds.contains(medium.id),
                         )
                     } else {
                         null
                     }
                 }
         }
+
     }
 
     private fun hasReleaseTracksBeenStored(releaseId: String): Boolean {

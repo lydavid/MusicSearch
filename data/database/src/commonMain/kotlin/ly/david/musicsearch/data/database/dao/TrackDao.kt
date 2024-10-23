@@ -62,6 +62,7 @@ class TrackDao(
     fun getTracksByRelease(
         releaseId: String,
         query: String,
+        collapsedMediumIds: Set<Long>,
     ): PagingSource<Int, TrackListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfTracksByRelease(
             releaseId = releaseId,
@@ -72,6 +73,7 @@ class TrackDao(
         queryProvider = { limit, offset ->
             transacter.getTracksByRelease(
                 releaseId = releaseId,
+                collapsedMediumIds = collapsedMediumIds,
                 query = query,
                 limit = limit,
                 offset = offset,

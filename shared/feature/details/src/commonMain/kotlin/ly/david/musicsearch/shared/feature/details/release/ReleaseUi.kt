@@ -190,7 +190,7 @@ internal fun ReleaseUi(
                 }
 
                 ReleaseTab.TRACKS -> {
-                    TracksByReleaseScreen(
+                    TracksByReleaseUi(
                         lazyPagingItems = state.tracksByReleaseUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
@@ -205,6 +205,9 @@ internal fun ReleaseUi(
                                     title = title,
                                 ),
                             )
+                        },
+                        onToggleMedium = { id ->
+                            eventSink(ReleaseUiEvent.ToggleMedium(id))
                         },
                     )
                 }

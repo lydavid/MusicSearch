@@ -30,16 +30,19 @@ class TracksByReleasePresenter(
         var id: String by rememberSaveable { mutableStateOf("") }
         var tracksListItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val lazyListState: LazyListState = rememberLazyListState()
+        var collapsedMediumIds: Set<Long> by rememberSaveable { mutableStateOf(setOf()) }
 
         LaunchedEffect(
             key1 = id,
             key2 = query,
+            key3 = collapsedMediumIds,
         ) {
             if (id.isEmpty()) return@LaunchedEffect
 
             tracksListItems = getTracksByRelease(
                 releaseId = id,
                 query = query,
+                collapsedMediumIds = collapsedMediumIds,
             )
         }
 
@@ -51,6 +54,15 @@ class TracksByReleasePresenter(
 
                 is TracksByEntityUiEvent.UpdateQuery -> {
                     query = event.query
+                }
+
+                is TracksByEntityUiEvent.ToggleMedium -> {
+                    val mediumId = event.id.toLong()
+                    collapsedMediumIds = if (collapsedMediumIds.contains(mediumId)) {
+                        collapsedMediumIds.filter { it != mediumId }.toSet()
+                    } else {
+                        collapsedMediumIds + setOf(mediumId)
+                    }
                 }
             }
         }
@@ -77,5 +89,9 @@ sealed interface TracksByEntityUiEvent : CircuitUiEvent {
 
     data class UpdateQuery(
         val query: String,
+    ) : TracksByEntityUiEvent
+
+    data class ToggleMedium(
+        val id: String,
     ) : TracksByEntityUiEvent
 }
