@@ -6,8 +6,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.cash.paging.compose.LazyPagingItems
-import ly.david.musicsearch.shared.domain.listitem.CollapsibleListSeparator
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
@@ -44,7 +44,7 @@ internal fun TracksByReleaseUi(
                 }
             }
 
-            is CollapsibleListSeparator -> {
+            is ListSeparator -> {
                 CollapsibleListSeparatorHeader(
                     text = listItemModel.text,
                     collapsed = collapsedMediumIds.contains(listItemModel.id.toLong()),

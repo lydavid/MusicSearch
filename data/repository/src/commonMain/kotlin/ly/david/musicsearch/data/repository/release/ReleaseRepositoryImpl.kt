@@ -24,8 +24,8 @@ import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getFormatsForDisplay
 import ly.david.musicsearch.shared.domain.getTracksForDisplay
-import ly.david.musicsearch.shared.domain.listitem.CollapsibleListSeparator
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toAreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toLabelListItemModel
@@ -170,7 +170,7 @@ class ReleaseRepositoryImpl(
                         val medium =
                             mediumDao.getMediumForTrack(after.id) ?: return@insertSeparators null
 
-                        CollapsibleListSeparator(
+                        ListSeparator(
                             id = "${medium.id}",
                             text = medium.format.orEmpty() +
                                 (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +

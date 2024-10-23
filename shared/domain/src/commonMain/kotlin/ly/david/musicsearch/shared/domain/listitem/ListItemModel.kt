@@ -29,13 +29,3 @@ class ListSeparator(
     override val id: String,
     val text: String,
 ) : ListItemModel()
-
-/**
- * Represents a separator with [text] that can be inserted between two list items.
- * When [collapsed], all items below it until the next separator should be hidden.
- */
-class CollapsibleListSeparator(
-    override val id: String,
-    val text: String,
-    val collapsed: Boolean = false,
-) : ListItemModel()
