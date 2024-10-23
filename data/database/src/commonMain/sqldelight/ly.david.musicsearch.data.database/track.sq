@@ -40,8 +40,7 @@ SELECT IFNULL(
 getTracksByRelease:
 SELECT
   t.*,
-  ac.name AS artist_credits,
-  t.medium_id IN :collapsedMediumIds AS collapsed
+  ac.name AS artist_credits
 FROM track t
 INNER JOIN medium m ON t.medium_id = m.id
 INNER JOIN `release` r ON m.release_id = r.id

@@ -161,7 +161,6 @@ class ReleaseRepositoryImpl(
                 trackDao.getTracksByRelease(
                     releaseId = releaseId,
                     query = "%$query%",
-                    collapsedMediumIds = collapsedMediumIds,
                 )
             },
         ).flow.map { pagingData ->
@@ -176,7 +175,6 @@ class ReleaseRepositoryImpl(
                             text = medium.format.orEmpty() +
                                 (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
                                 medium.name.transformThisIfNotNullOrEmpty { " ($it)" },
-                            collapsed = collapsedMediumIds.contains(medium.id),
                         )
                     } else {
                         null

@@ -11,5 +11,4 @@ data class TrackListItemModel(
     val mediumId: Long = 0,
     val recordingId: String = "",
     val formattedArtistCredits: String? = null,
-    val collapsed: Boolean = false,
 ) : ListItemModel(), Track

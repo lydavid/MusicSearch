@@ -197,6 +197,7 @@ internal fun ReleaseUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.tracksByReleaseUiState.lazyListState,
+                        collapsedMediumIds = state.tracksByReleaseUiState.collapsedMediumIds,
                         onRecordingClick = { id, title ->
                             eventSink(
                                 ReleaseUiEvent.ClickItem(

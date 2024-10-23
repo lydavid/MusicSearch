@@ -25,6 +25,7 @@ internal fun TracksByReleaseUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
+    collapsedMediumIds: Set<Long> = setOf(),
     onRecordingClick: (id: String, title: String) -> Unit = { _, _ -> },
     onToggleMedium: (id: String) -> Unit = {},
 ) {
@@ -35,16 +36,18 @@ internal fun TracksByReleaseUi(
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is TrackListItemModel -> {
-                TrackListItem(
-                    track = listItemModel,
-                    onRecordingClick = onRecordingClick,
-                )
+                if (!collapsedMediumIds.contains(listItemModel.mediumId)) {
+                    TrackListItem(
+                        track = listItemModel,
+                        onRecordingClick = onRecordingClick,
+                    )
+                }
             }
 
             is CollapsibleListSeparator -> {
                 CollapsibleListSeparatorHeader(
                     text = listItemModel.text,
-                    collapsed = listItemModel.collapsed,
+                    collapsed = collapsedMediumIds.contains(listItemModel.id.toLong()),
                     onClick = { onToggleMedium(listItemModel.id) },
                 )
             }

@@ -35,7 +35,6 @@ class TracksByReleasePresenter(
         LaunchedEffect(
             key1 = id,
             key2 = query,
-            key3 = collapsedMediumIds,
         ) {
             if (id.isEmpty()) return@LaunchedEffect
 
@@ -70,6 +69,7 @@ class TracksByReleasePresenter(
         return TracksByReleaseUiState(
             lazyPagingItems = tracksListItems.collectAsLazyPagingItems(),
             lazyListState = lazyListState,
+            collapsedMediumIds = collapsedMediumIds,
             eventSink = ::eventSink,
         )
     }
@@ -79,6 +79,7 @@ class TracksByReleasePresenter(
 data class TracksByReleaseUiState(
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
+    val collapsedMediumIds: Set<Long> = setOf(),
     val eventSink: (TracksByEntityUiEvent) -> Unit,
 ) : CircuitUiState
 
