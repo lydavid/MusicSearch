@@ -4,7 +4,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
+import ly.david.musicsearch.data.database.dao.VisitedDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.repository.KoinTestRule
@@ -23,7 +23,7 @@ class AreaRepositoryImplTest : KoinTest {
     val koinTestRule = KoinTestRule()
 
     private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val entityHasUrlsDao: EntityHasUrlsDao by inject()
+    private val visitedDao: VisitedDao by inject()
     private val relationDao: RelationDao by inject()
     private val areaDao: AreaDao by inject()
 
@@ -40,7 +40,7 @@ class AreaRepositoryImplTest : KoinTest {
                 }
             },
             entityHasRelationsDao = entityHasRelationsDao,
-            entityHasUrlsDao = entityHasUrlsDao,
+            visitedDao = visitedDao,
             relationDao = relationDao,
         )
         return AreaRepositoryImpl(

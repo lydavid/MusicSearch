@@ -24,9 +24,9 @@ class SeriesRepositoryImpl(
 
         val series = seriesDao.getSeriesForDetails(seriesId)
         val urlRelations = relationRepository.getEntityUrlRelationships(seriesId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(seriesId)
+        val visited = relationRepository.visited(seriesId)
         if (series != null &&
-            hasUrlsBeenSavedForEntity &&
+            visited &&
             !forceRefresh
         ) {
             return series.copy(

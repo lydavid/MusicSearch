@@ -5,7 +5,7 @@ import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
+import ly.david.musicsearch.data.database.dao.VisitedDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
@@ -36,7 +36,7 @@ class PlaceRepositoryImplTest : KoinTest {
     val koinTestRule = KoinTestRule()
 
     private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val entityHasUrlsDao: EntityHasUrlsDao by inject()
+    private val visitedDao: VisitedDao by inject()
     private val relationDao: RelationDao by inject()
     private val placeDao: PlaceDao by inject()
     private val areaPlaceDao: AreaPlaceDao by inject()
@@ -55,7 +55,7 @@ class PlaceRepositoryImplTest : KoinTest {
                 }
             },
             entityHasRelationsDao = entityHasRelationsDao,
-            entityHasUrlsDao = entityHasUrlsDao,
+            visitedDao = visitedDao,
             relationDao = relationDao,
         )
         return PlaceRepositoryImpl(

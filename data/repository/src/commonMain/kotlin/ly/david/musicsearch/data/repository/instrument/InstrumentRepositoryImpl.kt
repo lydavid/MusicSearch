@@ -24,8 +24,8 @@ class InstrumentRepositoryImpl(
 
         val instrument = instrumentDao.getInstrumentForDetails(instrumentId)
         val urlRelations = relationRepository.getEntityUrlRelationships(instrumentId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(instrumentId)
-        if (instrument != null && hasUrlsBeenSavedForEntity) {
+        val visited = relationRepository.visited(instrumentId)
+        if (instrument != null && visited) {
             return instrument.copy(urls = urlRelations)
         }
 

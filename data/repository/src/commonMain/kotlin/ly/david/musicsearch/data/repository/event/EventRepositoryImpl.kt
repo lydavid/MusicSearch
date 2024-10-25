@@ -24,9 +24,9 @@ class EventRepositoryImpl(
 
         val event = eventDao.getEventForDetails(eventId)
         val urlRelations = relationRepository.getEntityUrlRelationships(eventId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(eventId)
+        val visited = relationRepository.visited(eventId)
         if (event != null &&
-            hasUrlsBeenSavedForEntity &&
+            visited &&
             !forceRefresh
         ) {
             return event.copy(

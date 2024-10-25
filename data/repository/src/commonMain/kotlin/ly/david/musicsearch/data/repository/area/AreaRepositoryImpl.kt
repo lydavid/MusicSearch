@@ -24,9 +24,9 @@ class AreaRepositoryImpl(
 
         val area = areaDao.getAreaForDetails(areaId)
         val urlRelations = relationRepository.getEntityUrlRelationships(areaId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(areaId)
+        val visited = relationRepository.visited(areaId)
         if (area?.type != null &&
-            hasUrlsBeenSavedForEntity &&
+            visited &&
             !forceRefresh
         ) {
             return area.copy(

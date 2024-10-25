@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.work
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
+import ly.david.musicsearch.data.database.dao.VisitedDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
@@ -31,7 +31,7 @@ class WorkRepositoryImplTest : KoinTest {
     val koinTestRule = KoinTestRule()
 
     private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val entityHasUrlsDao: EntityHasUrlsDao by inject()
+    private val visitedDao: VisitedDao by inject()
     private val relationDao: RelationDao by inject()
     private val workDao: WorkDao by inject()
     private val workAttributeDao: WorkAttributeDao by inject()
@@ -49,7 +49,7 @@ class WorkRepositoryImplTest : KoinTest {
                 }
             },
             entityHasRelationsDao = entityHasRelationsDao,
-            entityHasUrlsDao = entityHasUrlsDao,
+            visitedDao = visitedDao,
             relationDao = relationDao,
         )
         return WorkRepositoryImpl(

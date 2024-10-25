@@ -38,9 +38,9 @@ class ReleaseGroupRepositoryImpl(
         val releaseGroup = releaseGroupDao.getReleaseGroupForDetails(releaseGroupId)
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseGroupId)
         val urlRelations = relationRepository.getEntityUrlRelationships(releaseGroupId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseGroupId)
+        val visited = relationRepository.visited(releaseGroupId)
 
-        return if (releaseGroup != null && artistCredits.isNotEmpty() && hasUrlsBeenSavedForEntity) {
+        return if (releaseGroup != null && artistCredits.isNotEmpty() && visited) {
             releaseGroup.copy(
                 artistCredits = artistCredits,
                 urls = urlRelations,

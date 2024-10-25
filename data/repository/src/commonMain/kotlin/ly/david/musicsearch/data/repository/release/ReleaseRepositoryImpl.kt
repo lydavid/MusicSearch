@@ -66,13 +66,13 @@ class ReleaseRepositoryImpl(
         val labels = releaseLabelDao.getLabelsByRelease(releaseId)
         val releaseEvents = releaseCountryDao.getCountriesByRelease(releaseId)
         val urlRelations = relationRepository.getEntityUrlRelationships(releaseId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseId)
+        val visited = relationRepository.visited(releaseId)
 
         if (
             releaseDetailsModel != null &&
             releaseGroup != null &&
             artistCredits.isNotEmpty() &&
-            hasUrlsBeenSavedForEntity &&
+            visited &&
             !forceRefresh
         ) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema

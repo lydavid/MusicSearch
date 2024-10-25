@@ -12,7 +12,7 @@ import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
+import ly.david.musicsearch.data.database.dao.VisitedDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
@@ -39,7 +39,7 @@ class ArtistRepositoryImplTest : KoinTest {
 
     private val artistDao: ArtistDao by inject()
     private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val entityHasUrlsDao: EntityHasUrlsDao by inject()
+    private val visitedDao: VisitedDao by inject()
     private val relationDao: RelationDao by inject()
     private val areaDao: AreaDao by inject()
     private val artistsByEntityDao: ArtistsByEntityDao by inject()
@@ -59,7 +59,7 @@ class ArtistRepositoryImplTest : KoinTest {
                 }
             },
             entityHasRelationsDao = entityHasRelationsDao,
-            entityHasUrlsDao = entityHasUrlsDao,
+            visitedDao = visitedDao,
             relationDao = relationDao,
         )
         return ArtistRepositoryImpl(
