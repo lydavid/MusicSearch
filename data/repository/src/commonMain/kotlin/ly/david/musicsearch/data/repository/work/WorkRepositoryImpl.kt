@@ -27,8 +27,8 @@ class WorkRepositoryImpl(
         val work = workDao.getWorkForDetails(workId)
         val workAttributes = workAttributeDao.getWorkAttributesForWork(workId)
         val urlRelations = relationRepository.getEntityUrlRelationships(workId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(workId)
-        if (work != null && hasUrlsBeenSavedForEntity) {
+        val visited = relationRepository.visited(workId)
+        if (work != null && visited) {
             return work.copy(
                 attributes = workAttributes,
                 urls = urlRelations,

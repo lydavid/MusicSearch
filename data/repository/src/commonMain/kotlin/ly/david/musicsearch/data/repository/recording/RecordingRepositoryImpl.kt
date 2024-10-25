@@ -38,10 +38,10 @@ class RecordingRepositoryImpl(
         val recording = recordingDao.getRecordingForDetails(recordingId)
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(recordingId)
         val urlRelations = relationRepository.getEntityUrlRelationships(recordingId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(recordingId)
+        val visited = relationRepository.visited(recordingId)
         return if (recording != null &&
             artistCredits.isNotEmpty() &&
-            hasUrlsBeenSavedForEntity
+            visited
         ) {
             recording.copy(
                 artistCredits = artistCredits,

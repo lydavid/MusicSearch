@@ -1,0 +1,17 @@
+import kotlin.Boolean;
+
+CREATE TABLE IF NOT EXISTS visited (
+  entity_id TEXT PRIMARY KEY NOT NULL
+);
+
+insert:
+INSERT OR IGNORE INTO visited (
+  entity_id
+)
+VALUES (
+  :entity_id
+);
+
+hasUrls:
+SELECT * FROM visited
+WHERE entity_id = :entityId;

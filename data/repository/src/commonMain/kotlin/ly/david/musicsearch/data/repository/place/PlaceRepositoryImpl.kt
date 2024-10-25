@@ -29,9 +29,9 @@ class PlaceRepositoryImpl(
         val place = placeDao.getPlaceForDetails(placeId)
         val area = areaPlaceDao.getAreaByPlace(placeId)
         val urlRelations = relationRepository.getEntityUrlRelationships(placeId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(placeId)
+        val visited = relationRepository.visited(placeId)
         if (place != null &&
-            hasUrlsBeenSavedForEntity &&
+            visited &&
             !forceRefresh
         ) {
             return place.copy(

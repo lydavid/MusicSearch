@@ -12,7 +12,7 @@ import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
+import ly.david.musicsearch.data.database.dao.VisitedDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
@@ -23,7 +23,7 @@ import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 class RelationRepositoryImpl(
     private val lookupApi: LookupApi,
     private val entityHasRelationsDao: EntityHasRelationsDao,
-    private val entityHasUrlsDao: EntityHasUrlsDao,
+    private val visitedDao: VisitedDao,
     private val relationDao: RelationDao,
 ) : RelationRepository {
     override fun insertAllUrlRelations(
@@ -31,7 +31,7 @@ class RelationRepositoryImpl(
         relationWithOrderList: List<RelationWithOrder>?,
     ) {
         relationDao.insertAll(relationWithOrderList)
-        entityHasUrlsDao.markEntityHasUrls(entityId)
+        visitedDao.insert(entityId)
     }
 
     override suspend fun insertAllRelationsExcludingUrls(
@@ -136,8 +136,8 @@ class RelationRepositoryImpl(
         }
     }
 
-    override fun hasUrlsBeenSavedFor(entityId: String): Boolean =
-        entityHasUrlsDao.hasUrls(entityId)
+    override fun visited(entityId: String): Boolean =
+        visitedDao.visited(entityId)
 
     @OptIn(ExperimentalPagingApi::class)
     override fun observeEntityRelationshipsExcludingUrls(

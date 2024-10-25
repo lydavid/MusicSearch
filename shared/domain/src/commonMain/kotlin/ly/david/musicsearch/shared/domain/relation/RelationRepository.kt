@@ -6,7 +6,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 interface RelationRepository {
-    fun hasUrlsBeenSavedFor(entityId: String): Boolean
+    fun visited(entityId: String): Boolean
 
     fun insertAllUrlRelations(
         entityId: String,

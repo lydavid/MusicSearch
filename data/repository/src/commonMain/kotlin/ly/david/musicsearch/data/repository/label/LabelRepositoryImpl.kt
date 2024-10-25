@@ -24,8 +24,8 @@ class LabelRepositoryImpl(
 
         val label = labelDao.getLabelForDetails(labelId)
         val urlRelations = relationRepository.getEntityUrlRelationships(labelId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(labelId)
-        if (label != null && hasUrlsBeenSavedForEntity) {
+        val visited = relationRepository.visited(labelId)
+        if (label != null && visited) {
             return label.copy(urls = urlRelations)
         }
 

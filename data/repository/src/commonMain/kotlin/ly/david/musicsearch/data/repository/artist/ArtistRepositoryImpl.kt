@@ -26,11 +26,11 @@ class ArtistRepositoryImpl(
 
         val artistDetailsModel = artistDao.getArtistForDetails(artistId)
         val urlRelations = relationRepository.getEntityUrlRelationships(artistId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(artistId)
+        val visited = relationRepository.visited(artistId)
 
         if (
             artistDetailsModel != null &&
-            hasUrlsBeenSavedForEntity &&
+            visited &&
             !forceRefresh
         ) {
             val artistWithUrls = artistDetailsModel.copy(
