@@ -77,6 +77,13 @@ class ReleaseListItemTest : ScreenshotTest() {
     }
 
     @Test
+    fun visited() {
+        snapshot {
+            PreviewReleaseListItemVisited()
+        }
+    }
+
+    @Test
     fun withCoverArt() {
         snapshot {
             ReleaseListItem(

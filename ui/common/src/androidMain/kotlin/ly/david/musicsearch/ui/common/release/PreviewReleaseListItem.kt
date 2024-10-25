@@ -190,3 +190,26 @@ internal fun PreviewReleaseListItemCatalog() {
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewReleaseListItemVisited() {
+    PreviewTheme {
+        Surface {
+            ReleaseListItem(
+                release = ReleaseListItemModel(
+                    id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
+                    name = "ウタの歌 ONE PIECE FILM RED",
+                    disambiguation = "初回限定盤",
+                    date = "2022-08-10",
+                    countryCode = "JP",
+                    catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
+                    formattedFormats = "2×CD + Blu-ray",
+                    formattedTracks = "15 + 8 + 24",
+                    visited = true,
+                ),
+                showMoreInfo = true,
+            )
+        }
+    }
+}
