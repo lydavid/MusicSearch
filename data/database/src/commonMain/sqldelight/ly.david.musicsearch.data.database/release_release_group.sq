@@ -66,13 +66,15 @@ SELECT
     INNER JOIN release_country rc ON rc.release_id = `release`.id
     INNER JOIN country_code cc ON cc.area_id = rc.country_id
     WHERE r.id = `release`.id
-  ) AS releaseCountryCount
+  ) AS releaseCountryCount,
+  visited.entity_id IS NOT NULL AS visited
 FROM `release` r
 INNER JOIN release_release_group rrg ON r.id = rrg.release_id
 INNER JOIN release_group rg ON rg.id = rrg.release_group_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = r.id
+LEFT JOIN visited ON visited.entity_id = r.id
 WHERE rg.id = :releaseGroupId
 AND (
   r.name LIKE :query

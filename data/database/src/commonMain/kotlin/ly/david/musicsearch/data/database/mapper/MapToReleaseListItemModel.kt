@@ -24,6 +24,7 @@ internal fun mapToReleaseListItemModel(
     formattedArtistCreditNames: String,
     thumbnailUrl: String?,
     releaseCountryCount: Long,
+    visited: Boolean?,
 ) = ReleaseListItemModel(
     id = id,
     name = name,
@@ -47,8 +48,12 @@ internal fun mapToReleaseListItemModel(
     formattedArtistCredits = formattedArtistCreditNames,
     imageUrl = thumbnailUrl,
     releaseCountryCount = releaseCountryCount.toInt(),
+    visited = visited == true,
 )
 
+/**
+ * With [catalogNumber].
+ */
 internal fun mapToReleaseListItemModel(
     id: String,
     name: String,
@@ -69,6 +74,7 @@ internal fun mapToReleaseListItemModel(
     formattedArtistCreditNames: String,
     thumbnailUrl: String?,
     releaseCountryCount: Long,
+    visited: Boolean?,
 ) = ReleaseListItemModel(
     id = id,
     name = name,
@@ -93,4 +99,5 @@ internal fun mapToReleaseListItemModel(
     formattedArtistCredits = formattedArtistCreditNames,
     imageUrl = thumbnailUrl,
     releaseCountryCount = releaseCountryCount.toInt(),
+    visited = visited == true,
 )
