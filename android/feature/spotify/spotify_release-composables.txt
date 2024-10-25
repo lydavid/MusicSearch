@@ -1,6 +1,6 @@
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchSpotifyBottomSheetContent(
   spotifyHistory: SpotifyHistoryListItemModel?
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntity, Unit>? = @static $composer.startReplaceableGroup(-977796127)
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntity, Unit>? = @static $composer.startReplaceableGroup(-977795935)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity   ->
 
@@ -15,7 +15,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSe
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHistoryCard(
   spotifyHistory: SpotifyHistoryListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onClick: @[ExtensionFunctionType] Function1<SpotifyHistoryListItemModel, Unit>? = @static $composer.startReplaceableGroup(-1240323347)
+  stable onClick: @[ExtensionFunctionType] Function1<SpotifyHistoryListItemModel, Unit>? = @static $composer.startReplaceableGroup(-1240323155)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -39,7 +39,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHi
   stable modifier: Modifier? = @static Companion
   stable topAppBarFilterState: TopAppBarFilterState? = @dynamic TopAppBarFilterState()
   stable lazyListState: LazyListState? = @dynamic LazyListState()
-  stable onBack: Function0<Unit>? = @static $composer.startReplaceableGroup(-1064316719)
+  stable onBack: Function0<Unit>? = @static $composer.startReplaceableGroup(-1064316399)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -49,7 +49,7 @@ val tmp0_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp0_group@ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryUi
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static $composer.startReplaceableGroup(-1064314150)
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static $composer.startReplaceableGroup(-1064313830)
 val tmp1_group = $composer.cache(false) {
   {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity   ->
 
@@ -59,7 +59,7 @@ val tmp1_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp1_group@ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryUi
-  stable onMarkForDeletion: Function1<SpotifyHistoryListItemModel, Unit>? = @static $composer.startReplaceableGroup(-1064311727)
+  stable onMarkForDeletion: Function1<SpotifyHistoryListItemModel, Unit>? = @static $composer.startReplaceableGroup(-1064311407)
 val tmp2_group = $composer.cache(false) {
   {     it  :   SpotifyHistoryListItemModel   ->
 
@@ -69,7 +69,7 @@ val tmp2_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp2_group@ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryUi
-  stable onUndoMarkForDeletion: Function1<SpotifyHistoryListItemModel, Unit>? = @static $composer.startReplaceableGroup(-1064309455)
+  stable onUndoMarkForDeletion: Function1<SpotifyHistoryListItemModel, Unit>? = @static $composer.startReplaceableGroup(-1064309135)
 val tmp3_group = $composer.cache(false) {
   {     it  :   SpotifyHistoryListItemModel   ->
 
@@ -79,7 +79,7 @@ val tmp3_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp3_group@ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryUi
-  stable onDelete: Function1<SpotifyHistoryListItemModel, Unit>? = @static $composer.startReplaceableGroup(-1064307599)
+  stable onDelete: Function1<SpotifyHistoryListItemModel, Unit>? = @static $composer.startReplaceableGroup(-1064307279)
 val tmp4_group = $composer.cache(false) {
   {     it  :   SpotifyHistoryListItemModel   ->
 
@@ -94,7 +94,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHi
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic LazyListState()
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static $composer.startReplaceableGroup(-1875964055)
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static $composer.startReplaceableGroup(-1875963735)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity   ->
 
@@ -104,7 +104,7 @@ val tmp0_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp0_group@ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryContent
-  stable onDelete: Function1<SpotifyHistoryListItemModel, Unit>? = @static $composer.startReplaceableGroup(-1875961920)
+  stable onDelete: Function1<SpotifyHistoryListItemModel, Unit>? = @static $composer.startReplaceableGroup(-1875961600)
 val tmp1_group = $composer.cache(false) {
   {     it  :   SpotifyHistoryListItemModel   ->
 

@@ -1,3 +1,39 @@
+unstable class EventPreviewParameterProvider {
+  unstable val values: Sequence<EventListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class InstrumentCardPreviewParameterProvider {
+  unstable val values: Sequence<InstrumentListItemModel>
+  <runtime stability> = Unstable
+}
+stable class LabelCardPreviewParameterProvider {
+  <runtime stability> = Stable
+}
+unstable class LifeSpanPreviewParameterProvider {
+  unstable val values: Sequence<LifeSpanUiModel>
+  <runtime stability> = Unstable
+}
+stable class LoginPresenterAndroid {
+  unstable val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract
+  unstable val login: LoginAndroid
+  <runtime stability> = Stable
+}
+unstable class PlacePreviewParameterProvider {
+  unstable val values: Sequence<PlaceListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class RecordingPreviewParameterProvider {
+  unstable val values: Sequence<RecordingListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class TrackCardPreviewParameterProvider {
+  unstable val values: Sequence<TrackListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class SeriesPreviewParameterProvider {
+  unstable val values: Sequence<SeriesListItemModel>
+  <runtime stability> = Unstable
+}
 stable class ArtistsByEntityPresenter {
   runtime val getArtistsByEntity: GetArtistsByEntity
   <runtime stability> = Stable
@@ -55,6 +91,21 @@ stable class LabelsByEntityUiState {
   runtime val lazyPagingItems: LazyPagingItems<LabelListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<LabelsByEntityUiEvent, Unit>
+}
+stable class StartLogin {
+  <runtime stability> = Stable
+}
+stable class DismissDialog {
+  <runtime stability> = Stable
+}
+stable class SubmitAuthCode {
+  stable val authCode: String
+  <runtime stability> = Stable
+}
+stable class LoginUiState {
+  stable val showDialog: Boolean
+  stable val eventSink: Function1<LoginUiEvent, Unit>
+  <runtime stability> = Stable
 }
 stable class State {
   stable val entityId: String
@@ -130,7 +181,6 @@ stable class ReleasesByEntityPresenter {
   runtime val getReleasesByEntity: GetReleasesByEntity
   unstable val appPreferences: AppPreferences
   unstable val releaseImageRepository: ReleaseImageRepository
-  unstable val logger: Logger
   <runtime stability> = Stable
 }
 stable class Get {
@@ -161,7 +211,6 @@ stable class ReleaseGroupsByEntityPresenter {
   runtime val getReleaseGroupsByEntity: GetReleaseGroupsByEntity
   unstable val appPreferences: AppPreferences
   unstable val releaseGroupImageRepository: ReleaseGroupImageRepository
-  unstable val logger: Logger
   <runtime stability> = Stable
 }
 stable class Get {
@@ -213,6 +262,11 @@ stable class AddToCollectionScreen {
   stable val id: String
   <runtime stability> = Stable
 }
+stable class SnackbarPopResult {
+  stable val message: String
+  stable val actionLabel: String?
+  <runtime stability> = Stable
+}
 stable class DetailsScreen {
   stable val entity: MusicBrainzEntity
   stable val id: String
@@ -252,6 +306,7 @@ stable class TracksByReleasePresenter {
 stable class TracksByReleaseUiState {
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
+  unstable val collapsedMediumIds: Set<Long>
   stable val eventSink: Function1<TracksByEntityUiEvent, Unit>
 }
 stable class Get {
@@ -260,6 +315,10 @@ stable class Get {
 }
 stable class UpdateQuery {
   stable val query: String
+  <runtime stability> = Stable
+}
+stable class ToggleMedium {
+  stable val id: String
   <runtime stability> = Stable
 }
 stable class WorksByEntityPresenter {
@@ -280,39 +339,4 @@ stable class WorksByEntityUiState {
   runtime val lazyPagingItems: LazyPagingItems<WorkListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<WorksByEntityUiEvent, Unit>
-}
-unstable class ArtistPreviewParameterProvider {
-  unstable val values: Sequence<ArtistListItemModel>
-  <runtime stability> = Unstable
-}
-unstable class EventPreviewParameterProvider {
-  unstable val values: Sequence<EventListItemModel>
-  <runtime stability> = Unstable
-}
-unstable class InstrumentCardPreviewParameterProvider {
-  unstable val values: Sequence<InstrumentListItemModel>
-  <runtime stability> = Unstable
-}
-stable class LabelCardPreviewParameterProvider {
-  <runtime stability> = Stable
-}
-unstable class LifeSpanPreviewParameterProvider {
-  unstable val values: Sequence<LifeSpanUiModel>
-  <runtime stability> = Unstable
-}
-unstable class PlacePreviewParameterProvider {
-  unstable val values: Sequence<PlaceListItemModel>
-  <runtime stability> = Unstable
-}
-unstable class RecordingPreviewParameterProvider {
-  unstable val values: Sequence<RecordingListItemModel>
-  <runtime stability> = Unstable
-}
-unstable class TrackCardPreviewParameterProvider {
-  unstable val values: Sequence<TrackListItemModel>
-  <runtime stability> = Unstable
-}
-unstable class SeriesPreviewParameterProvider {
-  unstable val values: Sequence<SeriesListItemModel>
-  <runtime stability> = Unstable
 }

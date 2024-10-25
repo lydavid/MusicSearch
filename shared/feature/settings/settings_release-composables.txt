@@ -1,3 +1,15 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
+  stable state: SettingsUiState
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingsScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingsScreenNotificationListenerEnable()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewProfileCardLoggedOut()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewProfileCardLoggedIn()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewProfileCardLoggedInWaitingForUsername()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingSwitchChecked()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingSwitchUnchecked()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingWithDialogChoices()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DevSettingsSection()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
   stable state: SettingsUiState
@@ -5,7 +17,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
   stable modifier: Modifier? = @static Companion
   stable isAndroid12: Boolean = @static false
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceableGroup(1381719920)
+  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceableGroup(1381721936)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -20,7 +32,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
   stable modifier: Modifier? = @static Companion
   stable username: String? = @static ""
   stable showLogin: Boolean = @static true
-  stable onLoginClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1381790544)
+  stable onLoginClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1381792272)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -30,7 +42,7 @@ val tmp0_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
-  stable onLogoutClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1381791696)
+  stable onLogoutClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1381793424)
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -40,7 +52,7 @@ val tmp1_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp1_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
-  stable onDestinationClick: Function1<Screen, Unit>? = @static $composer.startReplaceableGroup(1381793200)
+  stable onDestinationClick: Function1<Screen, Unit>? = @static $composer.startReplaceableGroup(1381794928)
 val tmp2_group = $composer.cache(false) {
   {     it  :   Screen   ->
 
@@ -53,7 +65,7 @@ tmp2_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
   stable showAndroidSettings: Boolean = @static true
   stable isAndroid12: Boolean = @static false
   stable theme: Theme? = @static Theme.SYSTEM
-  stable onThemeChange: Function1<Theme, Unit>? = @static $composer.startReplaceableGroup(1381799408)
+  stable onThemeChange: Function1<Theme, Unit>? = @static $composer.startReplaceableGroup(1381801136)
 val tmp3_group = $composer.cache(false) {
   {     it  :   Theme   ->
 
@@ -64,7 +76,7 @@ val tmp3_group = $composer.cache(false) {
 $composer.endReplaceableGroup()
 tmp3_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
   stable useMaterialYou: Boolean = @static true
-  stable onUseMaterialYouChange: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1381802224)
+  stable onUseMaterialYouChange: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1381803952)
 val tmp4_group = $composer.cache(false) {
   {     it  :   Boolean   ->
 
@@ -75,7 +87,7 @@ val tmp4_group = $composer.cache(false) {
 $composer.endReplaceableGroup()
 tmp4_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
   stable showMoreInfoInReleaseListItem: Boolean = @static true
-  stable onShowMoreInfoInReleaseListItemChange: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1381806000)
+  stable onShowMoreInfoInReleaseListItemChange: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1381807728)
 val tmp5_group = $composer.cache(false) {
   {     it  :   Boolean   ->
 
@@ -86,7 +98,7 @@ val tmp5_group = $composer.cache(false) {
 $composer.endReplaceableGroup()
 tmp5_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
   stable sortReleaseGroupListItems: Boolean = @static false
-  stable onSortReleaseGroupListItemsChange: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1381809552)
+  stable onSortReleaseGroupListItemsChange: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1381811280)
 val tmp6_group = $composer.cache(false) {
   {     it  :   Boolean   ->
 
@@ -97,7 +109,7 @@ val tmp6_group = $composer.cache(false) {
 $composer.endReplaceableGroup()
 tmp6_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceableGroup(1381813040)
+  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceableGroup(1381814768)
 val tmp7_group = $composer.cache(false) {
   {
 
@@ -167,18 +179,3 @@ val tmp0_group = $composer.cache(false) {
 $composer.endReplaceableGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
 )
-fun present(
-  stable <this>: LoginPresenterAndroid
-): LoginUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
-  stable state: SettingsUiState
-  stable modifier: Modifier? = @static Companion
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingsScreen()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingsScreenNotificationListenerEnable()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewProfileCardLoggedOut()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewProfileCardLoggedIn()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewProfileCardLoggedInWaitingForUsername()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingSwitchChecked()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingSwitchUnchecked()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingWithDialogChoices()

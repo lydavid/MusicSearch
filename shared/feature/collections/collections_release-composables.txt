@@ -1,3 +1,9 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionBottomSheet()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListItem(
+  stable isRemote: Boolean = @static true
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCreateNewCollectionDialogContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionList()
 fun present(
   stable <this>: AddToCollectionPresenter
 ): AddToCollectionUiState
@@ -8,7 +14,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AddToColl
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionBottomSheetContent(
   unused stable <this>: ColumnScope
   collections: LazyPagingItems<CollectionListItemModel>
-  stable onCreateCollectionClick: Function0<Unit>? = @static $composer.startReplaceableGroup(-1484862817)
+  stable onCreateCollectionClick: Function0<Unit>? = @static $composer.startReplaceableGroup(-1484862753)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -18,7 +24,7 @@ val tmp0_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.collections.components.CollectionBottomSheetContent
-  stable onAddToCollection: Function1<@[ParameterName(name = 'collectionId')] String, Unit>? = @static $composer.startReplaceableGroup(-1484860897)
+  stable onAddToCollection: Function1<@[ParameterName(name = 'collectionId')] String, Unit>? = @static $composer.startReplaceableGroup(-1484860833)
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -32,7 +38,7 @@ tmp1_group@ly.david.musicsearch.shared.feature.collections.components.Collection
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionListItem(
   collection: CollectionListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onClick: @[ExtensionFunctionType] Function1<CollectionListItemModel, Unit>? = @static $composer.startReplaceableGroup(-934155989)
+  stable onClick: @[ExtensionFunctionType] Function1<CollectionListItemModel, Unit>? = @static $composer.startReplaceableGroup(-934155925)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -45,7 +51,7 @@ tmp0_group@ly.david.musicsearch.shared.feature.collections.components.Collection
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CreateNewCollectionDialogContent(
   stable modifier: Modifier? = @static Companion
-  stable onDismiss: Function0<Unit>? = @static $composer.startReplaceableGroup(-1230149051)
+  stable onDismiss: Function0<Unit>? = @static $composer.startReplaceableGroup(-1230148923)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -55,7 +61,7 @@ val tmp0_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
-  stable onSubmit: Function2<@[ParameterName(name = 'name')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static $composer.startReplaceableGroup(-1230146802)
+  stable onSubmit: Function2<@[ParameterName(name = 'name')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static $composer.startReplaceableGroup(-1230146674)
 val tmp1_group = $composer.cache(false) {
   {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity   ->
 
@@ -78,7 +84,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic LazyListState()
   stable topAppBarFilterState: TopAppBarFilterState? = @dynamic TopAppBarFilterState()
-  stable onCreateCollectionClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1805856292)
+  stable onCreateCollectionClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1805858468)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -89,7 +95,7 @@ val tmp0_group = $composer.cache(false) {
 $composer.endReplaceableGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.collections.list.CollectionListUi
   stable showLocal: Boolean = @static true
-  stable onShowLocalToggle: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1805858788)
+  stable onShowLocalToggle: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1805860964)
 val tmp1_group = $composer.cache(false) {
   {     it  :   Boolean   ->
 
@@ -100,7 +106,7 @@ val tmp1_group = $composer.cache(false) {
 $composer.endReplaceableGroup()
 tmp1_group@ly.david.musicsearch.shared.feature.collections.list.CollectionListUi
   stable showRemote: Boolean = @static true
-  stable onShowRemoteToggle: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1805861348)
+  stable onShowRemoteToggle: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1805863524)
 val tmp2_group = $composer.cache(false) {
   {     it  :   Boolean   ->
 
@@ -110,7 +116,7 @@ val tmp2_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp2_group@ly.david.musicsearch.shared.feature.collections.list.CollectionListUi
-  stable onCollectionClick: Function1<String, Unit>? = @static $composer.startReplaceableGroup(1805862820)
+  stable onCollectionClick: Function1<String, Unit>? = @static $composer.startReplaceableGroup(1805864996)
 val tmp3_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -121,7 +127,7 @@ val tmp3_group = $composer.cache(false) {
 $composer.endReplaceableGroup()
 tmp3_group@ly.david.musicsearch.shared.feature.collections.list.CollectionListUi
   stable sortOption: CollectionSortOption? = @static CollectionSortOption.ALPHABETICALLY
-  stable onSortClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1805866340)
+  stable onSortClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1805868516)
 val tmp4_group = $composer.cache(false) {
   {
 
@@ -134,7 +140,7 @@ tmp4_group@ly.david.musicsearch.shared.feature.collections.list.CollectionListUi
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionSortBottomSheet(
   stable sortOption: CollectionSortOption
-  stable onSortOptionClick: Function1<CollectionSortOption, Unit>? = @static $composer.startReplaceableGroup(-303520792)
+  stable onSortOptionClick: Function1<CollectionSortOption, Unit>? = @static $composer.startReplaceableGroup(-303520728)
 val tmp0_group = $composer.cache(false) {
   {     it  :   CollectionSortOption   ->
 
@@ -145,7 +151,7 @@ val tmp0_group = $composer.cache(false) {
 $composer.endReplaceableGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.collections.list.CollectionSortBottomSheet
   stable bottomSheetState: SheetState? = @dynamic rememberModalBottomSheetState(false, null, $composer, 0, 0b0011)
-  stable onDismiss: Function0<Unit>? = @static $composer.startReplaceableGroup(-303517592)
+  stable onDismiss: Function0<Unit>? = @static $composer.startReplaceableGroup(-303517528)
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -158,7 +164,7 @@ tmp1_group@ly.david.musicsearch.shared.feature.collections.list.CollectionSortBo
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionSortBottomSheetContent(
   stable sortOption: CollectionSortOption? = @static CollectionSortOption.ALPHABETICALLY
-  stable onSortOptionClick: Function1<CollectionSortOption, Unit>? = @static $composer.startReplaceableGroup(-1529822123)
+  stable onSortOptionClick: Function1<CollectionSortOption, Unit>? = @static $composer.startReplaceableGroup(-1529822059)
 val tmp0_group = $composer.cache(false) {
   {     it  :   CollectionSortOption   ->
 
@@ -173,7 +179,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
   stable sortOption: CollectionSortOption
   stable modifier: Modifier? = @static Companion
   stable showLocal: Boolean = @static true
-  stable onShowLocalToggle: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1769535241)
+  stable onShowLocalToggle: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1769535305)
 val tmp0_group = $composer.cache(false) {
   {     it  :   Boolean   ->
 
@@ -184,7 +190,7 @@ val tmp0_group = $composer.cache(false) {
 $composer.endReplaceableGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.collections.list.CollectionsFilterChipsBar
   stable showRemote: Boolean = @static true
-  stable onShowRemoteToggle: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1769537801)
+  stable onShowRemoteToggle: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1769537865)
 val tmp1_group = $composer.cache(false) {
   {     it  :   Boolean   ->
 
@@ -194,7 +200,7 @@ val tmp1_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp1_group@ly.david.musicsearch.shared.feature.collections.list.CollectionsFilterChipsBar
-  stable onSortClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1769538889)
+  stable onSortClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1769538953)
 val tmp2_group = $composer.cache(false) {
   {
 
@@ -221,11 +227,10 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
   stable releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState
   stable worksByEntityUiState: WorksByEntityUiState
   stable entity: MusicBrainzEntity
-  stable snackbarHostState: SnackbarHostState
   stable innerPadding: PaddingValues
   stable scrollBehavior: TopAppBarScrollBehavior
   stable modifier: Modifier? = @static Companion
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceableGroup(-364668568)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceableGroup(-364673336)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String   ->
 
@@ -235,7 +240,7 @@ val tmp0_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.collections.single.CollectionUi
-  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static $composer.startReplaceableGroup(-364665787)
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static $composer.startReplaceableGroup(-364670555)
 val tmp1_group = $composer.cache(false) {
   {     <unused var>  :   String  ,   <unused var>  :   String   ->
 
@@ -245,7 +250,7 @@ val tmp1_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp1_group@ly.david.musicsearch.shared.feature.collections.single.CollectionUi
-  stable requestForMissingCoverArtUrl: Function1<@[ParameterName(name = 'entityId')] String, Unit>? = @static $composer.startReplaceableGroup(-364663364)
+  stable requestForMissingCoverArtUrl: Function1<@[ParameterName(name = 'entityId')] String, Unit>? = @static $composer.startReplaceableGroup(-364668132)
 val tmp2_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -260,11 +265,10 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Collectio
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable lazyListState: LazyListState
   stable entity: MusicBrainzEntity
-  stable snackbarHostState: SnackbarHostState
   stable innerPadding: PaddingValues
   stable scrollBehavior: TopAppBarScrollBehavior
   stable modifier: Modifier? = @static Companion
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceableGroup(-364474744)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceableGroup(-364494392)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String   ->
 
@@ -274,7 +278,7 @@ val tmp0_group = $composer.cache(false) {
 
 $composer.endReplaceableGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.collections.single.CollectionUi
-  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static $composer.startReplaceableGroup(-364471963)
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static $composer.startReplaceableGroup(-364491611)
 val tmp1_group = $composer.cache(false) {
   {     <unused var>  :   String  ,   <unused var>  :   String   ->
 
@@ -285,9 +289,3 @@ val tmp1_group = $composer.cache(false) {
 $composer.endReplaceableGroup()
 tmp1_group@ly.david.musicsearch.shared.feature.collections.single.CollectionUi
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionBottomSheet()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListItem(
-  stable isRemote: Boolean = @static true
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCreateNewCollectionDialogContent()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionList()
