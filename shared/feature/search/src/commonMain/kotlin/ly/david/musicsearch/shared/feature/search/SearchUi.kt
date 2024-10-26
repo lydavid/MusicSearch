@@ -51,17 +51,18 @@ internal fun SearchUi(
         SearchUiContent(
             state = state,
             modifier = Modifier.padding(innerPadding),
+            eventSink = state.eventSink,
         )
     }
 }
 
 @Composable
-private fun SearchUiContent(
+internal fun SearchUiContent(
     state: SearchUiState,
     modifier: Modifier = Modifier,
+    eventSink: (SearchUiEvent) -> Unit = {},
 ) {
     val strings = LocalStrings.current
-    val eventSink = state.eventSink
 
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
