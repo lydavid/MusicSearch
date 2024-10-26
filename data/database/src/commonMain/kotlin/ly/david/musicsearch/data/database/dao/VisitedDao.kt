@@ -11,8 +11,8 @@ class VisitedDao(
         )
     }
 
-    fun visited(entityId: String): Boolean {
-        return database.visitedQueries.hasUrls(entityId = entityId)
+    fun contains(entityId: String): Boolean {
+        return database.visitedQueries.contains(entityId = entityId)
             .executeAsOneOrNull() != null
     }
 }

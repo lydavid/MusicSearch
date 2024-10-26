@@ -12,6 +12,6 @@ VALUES (
   :entity_id
 );
 
-hasUrls:
+contains:
 SELECT * FROM visited
 WHERE entity_id = :entityId;

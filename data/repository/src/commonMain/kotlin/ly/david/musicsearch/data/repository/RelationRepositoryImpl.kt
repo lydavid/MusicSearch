@@ -137,7 +137,7 @@ class RelationRepositoryImpl(
     }
 
     override fun visited(entityId: String): Boolean =
-        visitedDao.visited(entityId)
+        visitedDao.contains(entityId)
 
     @OptIn(ExperimentalPagingApi::class)
     override fun observeEntityRelationshipsExcludingUrls(
