@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.collectableEntities
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.common.ExposedDropdownMenuBox
+import ly.david.musicsearch.ui.common.ResourceDropdownPicker
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
@@ -96,7 +96,7 @@ fun CreateNewCollectionDialogContent(
             },
         )
 
-        ExposedDropdownMenuBox(
+        ResourceDropdownPicker(
             modifier = Modifier
                 .padding(top = 16.dp)
                 .focusable(),

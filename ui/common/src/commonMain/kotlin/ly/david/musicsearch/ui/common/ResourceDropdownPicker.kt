@@ -28,11 +28,11 @@ import ly.david.musicsearch.ui.core.LocalStrings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExposedDropdownMenuBox(
+fun ResourceDropdownPicker(
     options: List<MusicBrainzEntity>,
     selectedOption: MusicBrainzEntity,
     modifier: Modifier = Modifier,
-    onSelectOption: (MusicBrainzEntity) -> Unit,
+    onSelectOption: (MusicBrainzEntity) -> Unit = {},
 ) {
     val strings = LocalStrings.current
     var expanded by rememberSaveable { mutableStateOf(false) }
