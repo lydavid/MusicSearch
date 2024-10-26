@@ -68,10 +68,10 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5.0.1
         if: always() && steps.screenshotsrecord.outcome == 'success'
         with:
-          file_pattern: '*/*.png'
-          disable_globbing: true
           commit_message: "chore: rerecord snapshot tests"
           token: ${{ steps.generate-token.outputs.token }}
           commit_user_name: musicsearch-gha-helper[bot]
           commit_user_email: 173635759+musicsearch-gha-helper[bot]@users.noreply.github.com
           commit_author: musicsearch-gha-helper[bot] <173635759+musicsearch-gha-helper[bot]@users.noreply.github.com>
+          disable_globbing: true
+          file_pattern: '*/*.png'

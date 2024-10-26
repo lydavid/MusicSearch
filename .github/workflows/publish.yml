@@ -143,8 +143,8 @@ jobs:
         if: always()
         with:
           commit_message: 'chore: bump version [skip ci]'
-          file_pattern: 'gradle.properties download.html icon.svg'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          file_pattern: 'gradle.properties download.html icon.svg'
 
       # See .releaserc for the artifacts we include in each release
       - name: Publish to GitHub
