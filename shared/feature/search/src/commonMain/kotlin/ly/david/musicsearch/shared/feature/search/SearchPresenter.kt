@@ -1,22 +1,28 @@
-package ly.david.musicsearch.shared.feature.search.internal
+package ly.david.musicsearch.shared.feature.search
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
+import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.search.history.usecase.DeleteSearchHistory
 import ly.david.musicsearch.shared.domain.search.history.usecase.GetSearchHistory
@@ -117,4 +123,28 @@ internal class SearchPresenter(
             eventSink = ::eventSink,
         )
     }
+}
+
+@Stable
+internal data class SearchUiState(
+    val query: String,
+    val entity: MusicBrainzEntity,
+    val searchResults: LazyPagingItems<ListItemModel>,
+    val searchResultsListState: LazyListState = LazyListState(),
+    val searchHistory: LazyPagingItems<ListItemModel>,
+    val searchHistoryListState: LazyListState = LazyListState(),
+    val eventSink: (SearchUiEvent) -> Unit,
+) : CircuitUiState
+
+internal sealed interface SearchUiEvent : CircuitUiEvent {
+    data class UpdateEntity(val entity: MusicBrainzEntity) : SearchUiEvent
+    data class UpdateQuery(val query: String) : SearchUiEvent
+    data object RecordSearch : SearchUiEvent
+    data class DeleteSearchHistory(val item: SearchHistoryListItemModel) : SearchUiEvent
+    data object DeleteAllEntitySearchHistory : SearchUiEvent
+    data class ClickItem(
+        val entity: MusicBrainzEntity,
+        val id: String,
+        val title: String?,
+    ) : SearchUiEvent
 }

@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.search.internal
+package ly.david.musicsearch.shared.feature.search
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -17,7 +17,7 @@ import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
 @Composable
-internal fun SearchHistoryScreen(
+internal fun SearchHistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, query: String) -> Unit = { _, _ -> },

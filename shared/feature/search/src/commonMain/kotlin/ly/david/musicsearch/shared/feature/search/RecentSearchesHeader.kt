@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.search.internal
+package ly.david.musicsearch.shared.feature.search
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

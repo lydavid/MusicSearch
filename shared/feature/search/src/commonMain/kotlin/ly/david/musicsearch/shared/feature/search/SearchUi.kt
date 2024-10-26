@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.search.internal
+package ly.david.musicsearch.shared.feature.search
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,7 +24,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import ly.david.musicsearch.shared.domain.network.searchableEntities
-import ly.david.musicsearch.shared.feature.search.SearchScreenTestTag
 import ly.david.musicsearch.ui.common.ExposedDropdownMenuBox
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.core.LocalStrings
@@ -49,7 +48,7 @@ internal fun SearchUi(
             )
         },
     ) { innerPadding ->
-        InternalSearchUi(
+        SearchUiContent(
             state = state,
             modifier = Modifier.padding(innerPadding),
         )
@@ -57,7 +56,7 @@ internal fun SearchUi(
 }
 
 @Composable
-private fun InternalSearchUi(
+private fun SearchUiContent(
     state: SearchUiState,
     modifier: Modifier = Modifier,
 ) {
@@ -111,7 +110,7 @@ private fun InternalSearchUi(
         }
 
         if (state.query.isBlank()) {
-            SearchHistoryScreen(
+            SearchHistoryUi(
                 lazyPagingItems = state.searchHistory,
                 lazyListState = state.searchHistoryListState,
                 onItemClick = { entity, query ->
@@ -126,7 +125,7 @@ private fun InternalSearchUi(
                 },
             )
         } else {
-            SearchResultsScreen(
+            SearchResultsUi(
                 lazyPagingItems = state.searchResults,
                 lazyListState = state.searchResultsListState,
                 onItemClick = { entity, id, title ->

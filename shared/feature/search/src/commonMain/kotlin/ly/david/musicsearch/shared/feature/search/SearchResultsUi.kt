@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.search.internal
+package ly.david.musicsearch.shared.feature.search
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -41,7 +41,7 @@ import ly.david.musicsearch.ui.common.series.SeriesListItem
 import ly.david.musicsearch.ui.common.work.WorkListItem
 
 @Composable
-internal fun SearchResultsScreen(
+internal fun SearchResultsUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
