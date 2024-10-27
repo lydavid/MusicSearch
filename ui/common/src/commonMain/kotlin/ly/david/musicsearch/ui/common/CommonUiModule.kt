@@ -3,7 +3,6 @@ package ly.david.musicsearch.ui.common
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
 import ly.david.musicsearch.ui.common.label.LabelsByEntityPresenter
-import ly.david.musicsearch.ui.common.paging.RelationsList
 import ly.david.musicsearch.ui.common.place.PlacesByEntityPresenter
 import ly.david.musicsearch.ui.common.recording.RecordingsByEntityPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
@@ -27,8 +26,4 @@ val commonUiModule = module {
     singleOf(::ReleaseGroupsByEntityPresenter)
     singleOf(::TracksByReleasePresenter)
     singleOf(::WorksByEntityPresenter)
-
-    factory {
-        RelationsList(get())
-    }
 }
