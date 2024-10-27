@@ -65,7 +65,7 @@ internal class SearchPresenter(
                     entity = entity,
                     query = query,
                 )
-                searchResultsListState.scrollToItem(0)
+//                searchResultsListState.scrollToItem(0)
             }
         }
 

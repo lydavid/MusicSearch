@@ -18,6 +18,7 @@ import lydavidmusicsearchdatadatabase.Relation
 import lydavidmusicsearchdatadatabase.Release
 import lydavidmusicsearchdatadatabase.Release_group
 import lydavidmusicsearchdatadatabase.Search_history
+import lydavidmusicsearchdatadatabase.Search_result_metadata
 import lydavidmusicsearchdatadatabase.Spotify_track
 import lydavidmusicsearchdatadatabase.Spotify_track_listen
 import lydavidmusicsearchdatadatabase.Track
@@ -91,5 +92,9 @@ fun createDatabase(driver: SqlDriver): Database {
             ipisAdapter = ListStringColumnAdapter,
             isnisAdapter = ListStringColumnAdapter,
         ),
+        search_result_metadataAdapter = Search_result_metadata.Adapter(
+            remote_countAdapter = IntColumnAdapter,
+            entityAdapter = MusicBrainzEntityStringColumnAdapter,
+        )
     )
 }

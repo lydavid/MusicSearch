@@ -1,74 +1,86 @@
 package ly.david.musicsearch.data.repository.internal.paging
 
-import app.cash.paging.PagingSource
+import androidx.paging.ExperimentalPagingApi
+import app.cash.paging.LoadType
 import app.cash.paging.PagingState
 import app.cash.paging.RemoteMediator
 import kotlinx.coroutines.delay
+import ly.david.musicsearch.data.database.dao.ArtistDao
+import ly.david.musicsearch.data.database.dao.SearchResultDao
 import ly.david.musicsearch.data.musicbrainz.DELAY_PAGED_API_CALLS_MS
-import ly.david.musicsearch.data.musicbrainz.STARTING_OFFSET
+import ly.david.musicsearch.data.musicbrainz.SEARCH_BROWSE_LIMIT
 import ly.david.musicsearch.data.musicbrainz.api.SearchApi
 import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzModel
-import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 /**
- * This is not a [RemoteMediator] compared to [BrowseEntityRemoteMediator] and [LookupEntityRemoteMediator].
- *
- * We are not storing search results locally.
- * We want all search results to always be fresh.
+ * Compared with [BrowseEntityRemoteMediator] and [LookupEntityRemoteMediator].
  */
-internal class SearchMusicBrainzPagingSource(
+@ExperimentalPagingApi
+internal class SearchMusicBrainzRemoteMediator(
     private val searchApi: SearchApi,
+    private val searchResultDao: SearchResultDao,
+    private val artistDao: ArtistDao,
     private val entity: MusicBrainzEntity,
     private val queryString: String,
-) : PagingSource<Int, ListItemModel>() {
+) : RemoteMediator<Int, ListItemModel>() {
 
-    override fun getRefreshKey(state: PagingState<Int, ListItemModel>): Int? {
-        // We need to get the previous key (or next key if previous is null) of the page
-        // that was closest to the most recently accessed index.
-        // Anchor position is the most recently accessed index.
-        return state.anchorPosition?.let { anchorPosition ->
-            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+    override suspend fun initialize(): InitializeAction {
+        val metadata = searchResultDao.getMetadata()
+        return if (metadata == null || metadata.query != queryString || metadata.entity != entity) {
+            InitializeAction.LAUNCH_INITIAL_REFRESH
+        } else {
+            InitializeAction.SKIP_INITIAL_REFRESH
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ListItemModel> {
+    override suspend fun load(
+        loadType: LoadType,
+        state: PagingState<Int, ListItemModel>,
+    ): MediatorResult {
         return try {
-            val currentOffset = if (params is LoadParams.Refresh) {
-                STARTING_OFFSET
-            } else {
-                delay(DELAY_PAGED_API_CALLS_MS)
-                params.key ?: STARTING_OFFSET
+            val nextOffset: Int = when (loadType) {
+                LoadType.REFRESH -> {
+                    searchResultDao.removeAll()
+                    0
+                }
+
+                LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
+
+                LoadType.APPEND -> {
+                    val localCount = searchResultDao.getLocalCount().toInt()
+                    val remoteCount = searchResultDao.getMetadata()?.remoteCount
+
+                    if (localCount == remoteCount) {
+                        return MediatorResult.Success(endOfPaginationReached = true)
+                    }
+
+                    delay(DELAY_PAGED_API_CALLS_MS)
+                    // TODO: this count doesn't always match up due to dupe results showing up
+                    //  so we should join a different table from our normal entity tables
+                    localCount
+                }
             }
 
-            val limit = params.loadSize
             val response = getQueryResults(
                 entity = entity,
                 queryString = queryString,
-                currentOffset = currentOffset,
-                limit = limit,
+                currentOffset = nextOffset,
+                limit = 100,
             )
-            val searchResults = response.data
-            val nextOffset = if (searchResults.size < limit) {
-                null
-            } else {
-                currentOffset + searchResults.size
-            }
 
-            LoadResult.Page(
-                data = searchResults.map { it.toListItemModel() },
-                prevKey = if (currentOffset == STARTING_OFFSET) null else currentOffset,
-                nextKey = nextOffset,
+            MediatorResult.Success(
+                endOfPaginationReached = response.data.size < SEARCH_BROWSE_LIMIT,
             )
-        } catch (ex: HandledException) {
-            LoadResult.Error(ex)
+        } catch (ex: Exception) {
+            MediatorResult.Error(ex)
         }
     }
 
     private data class QueryResults(
         val offset: Int,
+        val count: Int,
         val data: List<MusicBrainzModel>,
     )
 
@@ -85,9 +97,20 @@ internal class SearchMusicBrainzPagingSource(
                     offset = currentOffset,
                     limit = limit,
                 )
+                artistDao.withTransaction {
+                    artistDao.insertAll(queryArtists.artists)
+                    searchResultDao.insertAll(queryArtists.artists.map { it.id })
+                    // TODO: don't need to do this on append
+                    searchResultDao.rewriteMetadata(
+                        entity = entity,
+                        query = queryString,
+                        count = queryArtists.count
+                    )
+                }
                 QueryResults(
-                    queryArtists.offset,
-                    queryArtists.artists,
+                    offset = queryArtists.offset,
+                    count = queryArtists.count,
+                    data = queryArtists.artists,
                 )
             }
 
@@ -97,9 +120,11 @@ internal class SearchMusicBrainzPagingSource(
                     offset = currentOffset,
                     limit = limit,
                 )
+                // TODO: store rest of entities
                 QueryResults(
-                    queryReleaseGroups.offset,
-                    queryReleaseGroups.releaseGroups,
+                    offset = queryReleaseGroups.offset,
+                    count = queryReleaseGroups.count,
+                    data = queryReleaseGroups.releaseGroups,
                 )
             }
 
@@ -111,6 +136,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
                 QueryResults(
                     queryReleases.offset,
+                    queryReleases.count,
                     queryReleases.releases,
                 )
             }
@@ -123,6 +149,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
                 QueryResults(
                     queryRecordings.offset,
+                    queryRecordings.count,
                     queryRecordings.recordings,
                 )
             }
@@ -135,6 +162,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
                 QueryResults(
                     queryWorks.offset,
+                    queryWorks.count,
                     queryWorks.works,
                 )
             }
@@ -147,6 +175,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
                 QueryResults(
                     queryAreas.offset,
+                    queryAreas.count,
                     queryAreas.areas,
                 )
             }
@@ -159,6 +188,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
                 QueryResults(
                     queryPlaces.offset,
+                    queryPlaces.count,
                     queryPlaces.places,
                 )
             }
@@ -171,6 +201,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
                 QueryResults(
                     queryInstruments.offset,
+                    queryInstruments.count,
                     queryInstruments.instruments,
                 )
             }
@@ -183,6 +214,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
                 QueryResults(
                     queryLabels.offset,
+                    queryLabels.count,
                     queryLabels.labels,
                 )
             }
@@ -195,19 +227,21 @@ internal class SearchMusicBrainzPagingSource(
                 )
                 QueryResults(
                     queryEvents.offset,
+                    queryEvents.count,
                     queryEvents.events,
                 )
             }
 
             MusicBrainzEntity.SERIES -> {
-                val queryEvents = searchApi.querySeries(
+                val series = searchApi.querySeries(
                     query = queryString,
                     offset = currentOffset,
                     limit = limit,
                 )
                 QueryResults(
-                    queryEvents.offset,
-                    queryEvents.series,
+                    series.offset,
+                    series.count,
+                    series.series,
                 )
             }
 

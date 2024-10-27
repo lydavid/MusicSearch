@@ -28,7 +28,7 @@ import ly.david.musicsearch.data.musicbrainz.api.SearchReleaseGroupsResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchSeriesResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchWorksResponse
-import ly.david.musicsearch.data.repository.internal.paging.SearchMusicBrainzPagingSource
+import ly.david.musicsearch.data.repository.internal.paging.SearchMusicBrainzRemoteMediator
 import ly.david.musicsearch.data.repository.internal.paging.toListItemModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -36,7 +36,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 @RunWith(Parameterized::class)
-internal class SearchMusicBrainzPagingSourceTest(private val entity: MusicBrainzEntity) {
+internal class SearchMusicBrainzRemoteMediatorTest(private val entity: MusicBrainzEntity) {
 
     private class FakeSearchApi : SearchApi {
         // region Search
@@ -132,7 +132,7 @@ internal class SearchMusicBrainzPagingSourceTest(private val entity: MusicBrainz
 
     @Test
     fun loadEachEntity() = runTest {
-        val pagingSource = SearchMusicBrainzPagingSource(
+        val pagingSource = SearchMusicBrainzRemoteMediator(
             FakeSearchApi(),
             entity,
             "",

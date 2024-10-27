@@ -1,0 +1,77 @@
+import kotlin.Int;
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
+
+CREATE TABLE IF NOT EXISTS search_result (
+  entity_id TEXT PRIMARY KEY NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS search_result_metadata (
+  `entity` TEXT AS MusicBrainzEntity NOT NULL,
+  `query` TEXT NOT NULL,
+  `remote_count` INTEGER AS Int,
+
+  PRIMARY KEY(`entity`, `query`)
+);
+
+getMetadata:
+SELECT *
+FROM search_result_metadata;
+
+removeMetadata:
+DELETE FROM search_result_metadata;
+
+setMetadata:
+INSERT OR REPLACE INTO search_result_metadata (
+  entity,
+  query,
+  remote_count
+)
+VALUES (
+  :entity,
+  :query,
+  :count
+);
+
+insert:
+INSERT OR IGNORE INTO search_result (
+  entity_id
+)
+VALUES (
+  :entity_id
+);
+
+getSearchResults:
+SELECT * FROM search_result;
+
+getNumberOfArtistsSearchResult:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM search_result sr
+    INNER JOIN artist a ON a.id = sr.entity_id
+  ),
+  0
+) AS count;
+
+getArtistsSearchResult:
+SELECT
+  a.id,
+  a.name,
+  a.sort_name,
+  a.disambiguation,
+  a.type,
+  a.gender,
+  a.country_code,
+  a.begin,
+  a.end,
+  a.ended,
+  mi.thumbnail_url,
+  visited.entity_id IS NOT NULL AS visited
+FROM search_result sr
+INNER JOIN artist a ON a.id = sr.entity_id
+LEFT JOIN mbid_image mi ON mi.mbid = a.id
+LEFT JOIN visited ON visited.entity_id = a.id
+LIMIT :limit OFFSET :offset;
+
+removeAll:
+DELETE FROM search_result;
