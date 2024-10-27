@@ -38,27 +38,30 @@ class SearchResultDao(
     fun rewriteMetadata(
         entity: MusicBrainzEntity,
         query: String,
-        count: Int,
+        localCount: Int,
+        remoteCount: Int,
     ) {
         withTransaction {
             transacter.removeMetadata()
-            transacter.setMetadata(entity = entity, query = query, count = count)
+            transacter.setMetadata(
+                entity = entity,
+                query = query,
+                localCount = localCount,
+                remoteCount = remoteCount,
+            )
         }
     }
 
     fun getMetadata(): SearchResultMetadata? = transacter.getMetadata(
-        mapper = { entity, query, remoteCount ->
+        mapper = { entity, query, localCount, remoteCount ->
             SearchResultMetadata(
                 entity = entity,
                 query = query,
+                localCount = localCount ?: 0,
                 remoteCount = remoteCount ?: 0,
             )
         },
     ).executeAsOneOrNull()
-
-    fun getLocalCount(): Long =
-        transacter.getNumberOfArtistsSearchResult()
-            .executeAsOne()
 
     fun getArtistsSearchResult(): PagingSource<Int, ListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfArtistsSearchResult(),

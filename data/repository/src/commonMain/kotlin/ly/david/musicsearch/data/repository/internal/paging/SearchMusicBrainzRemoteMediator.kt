@@ -29,8 +29,10 @@ internal class SearchMusicBrainzRemoteMediator(
     override suspend fun initialize(): InitializeAction {
         val metadata = searchResultDao.getMetadata()
         return if (metadata == null || metadata.query != queryString || metadata.entity != entity) {
+            println("LAUNCH_INITIAL_REFRESH")
             InitializeAction.LAUNCH_INITIAL_REFRESH
         } else {
+            println("SKIP_INITIAL_REFRESH")
             InitializeAction.SKIP_INITIAL_REFRESH
         }
     }
@@ -40,16 +42,23 @@ internal class SearchMusicBrainzRemoteMediator(
         state: PagingState<Int, ListItemModel>,
     ): MediatorResult {
         return try {
+            println(loadType.name)
+            println(state)
             val nextOffset: Int = when (loadType) {
                 LoadType.REFRESH -> {
                     searchResultDao.removeAll()
                     0
                 }
 
-                LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
+                LoadType.PREPEND -> {
+                    println(state.firstItemOrNull())
+                    println(state.lastItemOrNull())
+
+                    return MediatorResult.Success(endOfPaginationReached = true)
+                }
 
                 LoadType.APPEND -> {
-                    val localCount = searchResultDao.getLocalCount().toInt()
+                    val localCount = searchResultDao.getMetadata()?.localCount ?: 0
                     val remoteCount = searchResultDao.getMetadata()?.remoteCount
 
                     if (localCount == remoteCount) {
@@ -62,12 +71,13 @@ internal class SearchMusicBrainzRemoteMediator(
                     localCount
                 }
             }
+            println("==============\n")
 
             val response = getQueryResults(
                 entity = entity,
                 queryString = queryString,
                 currentOffset = nextOffset,
-                limit = 100,
+                limit = SEARCH_BROWSE_LIMIT,
             )
 
             MediatorResult.Success(
@@ -100,11 +110,11 @@ internal class SearchMusicBrainzRemoteMediator(
                 artistDao.withTransaction {
                     artistDao.insertAll(queryArtists.artists)
                     searchResultDao.insertAll(queryArtists.artists.map { it.id })
-                    // TODO: don't need to do this on append
                     searchResultDao.rewriteMetadata(
                         entity = entity,
                         query = queryString,
-                        count = queryArtists.count
+                        localCount = currentOffset + queryArtists.artists.size,
+                        remoteCount = queryArtists.count
                     )
                 }
                 QueryResults(

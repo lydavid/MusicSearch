@@ -93,8 +93,9 @@ fun createDatabase(driver: SqlDriver): Database {
             isnisAdapter = ListStringColumnAdapter,
         ),
         search_result_metadataAdapter = Search_result_metadata.Adapter(
-            remote_countAdapter = IntColumnAdapter,
             entityAdapter = MusicBrainzEntityStringColumnAdapter,
+            local_countAdapter = IntColumnAdapter,
+            remote_countAdapter = IntColumnAdapter,
         )
     )
 }

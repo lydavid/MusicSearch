@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS search_result (
 CREATE TABLE IF NOT EXISTS search_result_metadata (
   `entity` TEXT AS MusicBrainzEntity NOT NULL,
   `query` TEXT NOT NULL,
+  `local_count` INTEGER AS Int,
   `remote_count` INTEGER AS Int,
 
   PRIMARY KEY(`entity`, `query`)
