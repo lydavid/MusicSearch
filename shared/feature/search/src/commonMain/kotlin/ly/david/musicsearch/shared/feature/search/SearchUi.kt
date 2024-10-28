@@ -112,6 +112,9 @@ internal fun SearchUiContent(
                 selectedOption = state.entity,
                 onSelectOption = { entity ->
                     eventSink(SearchUiEvent.UpdateEntity(entity))
+                    scope.launch {
+                        state.searchResultsListState.scrollToItem(0)
+                    }
                 },
             )
         }
