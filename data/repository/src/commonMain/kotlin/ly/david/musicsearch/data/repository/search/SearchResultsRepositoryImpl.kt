@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.repository
+package ly.david.musicsearch.data.repository.search
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
@@ -20,7 +20,6 @@ import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.SearchApi
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
-import ly.david.musicsearch.data.repository.internal.paging.SearchMusicBrainzRemoteMediator
 import ly.david.musicsearch.data.repository.internal.paging.insertFooterItemForNonEmpty
 import ly.david.musicsearch.shared.domain.listitem.EndOfList
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
@@ -28,7 +27,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.search.results.SearchResultsRepository
 
 @OptIn(ExperimentalPagingApi::class)
-class SearchResultsRepositoryImpl(
+internal class SearchResultsRepositoryImpl(
     private val searchApi: SearchApi,
     private val searchResultDao: SearchResultDao,
     private val areaDao: AreaDao,

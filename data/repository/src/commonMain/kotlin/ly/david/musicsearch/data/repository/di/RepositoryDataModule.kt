@@ -5,8 +5,8 @@ import ly.david.musicsearch.data.repository.CollectionRepositoryImpl
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.NowPlayingHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
-import ly.david.musicsearch.data.repository.SearchHistoryRepositoryImpl
-import ly.david.musicsearch.data.repository.SearchResultsRepositoryImpl
+import ly.david.musicsearch.data.repository.search.SearchHistoryRepositoryImpl
+import ly.david.musicsearch.data.repository.search.SearchResultsRepositoryImpl
 import ly.david.musicsearch.data.repository.SpotifyHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreasByEntityRepositoryImpl
