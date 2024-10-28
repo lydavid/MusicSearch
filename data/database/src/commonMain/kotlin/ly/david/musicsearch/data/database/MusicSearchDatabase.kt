@@ -96,6 +96,6 @@ fun createDatabase(driver: SqlDriver): Database {
             entityAdapter = MusicBrainzEntityStringColumnAdapter,
             local_countAdapter = IntColumnAdapter,
             remote_countAdapter = IntColumnAdapter,
-        )
+        ),
     )
 }
