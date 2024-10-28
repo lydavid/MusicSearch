@@ -2,7 +2,8 @@ import kotlin.Int;
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
 
 CREATE TABLE IF NOT EXISTS search_result (
-  entity_id TEXT PRIMARY KEY NOT NULL
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  `entity_id` TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS search_result_metadata (
@@ -37,7 +38,7 @@ VALUES (
 
 insert:
 INSERT OR IGNORE INTO search_result (
-  entity_id
+  `entity_id`
 )
 VALUES (
   :entity_id
@@ -70,6 +71,7 @@ SELECT
 FROM area a
 INNER JOIN search_result sr ON a.id = sr.entity_id
 LEFT JOIN visited ON visited.entity_id = a.id
+ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
 
@@ -89,10 +91,11 @@ SELECT
   a.ended,
   mi.thumbnail_url,
   visited.entity_id IS NOT NULL AS visited
-FROM artist a
-INNER JOIN search_result sr ON sr.entity_id = a.id
+FROM search_result sr
+INNER JOIN artist a ON sr.entity_id = a.id
 LEFT JOIN mbid_image mi ON mi.mbid = a.id
 LEFT JOIN visited ON visited.entity_id = a.id
+ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
 
@@ -109,9 +112,10 @@ SELECT
   e.begin,
   e.end,
   e.ended
-FROM event e
-INNER JOIN search_result sr ON sr.entity_id = e.id
+FROM search_result sr
+INNER JOIN event e ON sr.entity_id = e.id
 LEFT JOIN visited ON visited.entity_id = e.id
+ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
 
@@ -124,9 +128,10 @@ SELECT
   i.disambiguation,
   i.description,
   i.type
-FROM instrument i
-INNER JOIN search_result sr ON sr.entity_id = i.id
+FROM search_result sr
+INNER JOIN instrument i ON sr.entity_id = i.id
 LEFT JOIN visited ON visited.entity_id = i.id
+ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
 
@@ -139,9 +144,10 @@ SELECT
   l.disambiguation,
   l.type,
   l.label_code
-FROM label l
-INNER JOIN search_result sr ON sr.entity_id = l.id
+FROM search_result sr
+INNER JOIN label l ON sr.entity_id = l.id
 LEFT JOIN visited ON visited.entity_id = l.id
+ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
 
@@ -159,9 +165,10 @@ SELECT
   p.begin,
   p.end,
   p.ended
-FROM place p
-INNER JOIN search_result sr ON sr.entity_id = p.id
+FROM search_result sr
+INNER JOIN place p ON sr.entity_id = p.id
 LEFT JOIN visited ON visited.entity_id = p.id
+ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
 
@@ -176,12 +183,13 @@ SELECT
   r.length,
   r.video,
   ac.name AS artist_credits
-FROM recording r
-INNER JOIN search_result sr ON sr.entity_id = r.id
+FROM search_result sr
+INNER JOIN recording r ON sr.entity_id = r.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN visited ON visited.entity_id = r.id
 GROUP BY r.id
+ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
 
@@ -200,13 +208,14 @@ SELECT
     WHERE r.id = `release`.id
   ) AS releaseCountryCount,
   visited.entity_id IS NOT NULL AS visited
-FROM `release` r
-INNER JOIN search_result sr ON sr.entity_id = r.id
+FROM search_result sr
+INNER JOIN `release` r ON sr.entity_id = r.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = r.id
 LEFT JOIN visited ON visited.entity_id = r.id
 GROUP BY r.id
+ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
 
@@ -222,13 +231,14 @@ SELECT
   rg.secondary_types,
   ac.name AS artist_credits,
   mi.thumbnail_url
-FROM release_group rg
-INNER JOIN search_result sr ON sr.entity_id = rg.id
+FROM search_result sr
+INNER JOIN release_group rg ON sr.entity_id = rg.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = rg.id
 LEFT JOIN visited ON visited.entity_id = rg.id
 GROUP BY rg.id
+ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
 
@@ -240,9 +250,10 @@ SELECT
   s.name,
   s.disambiguation,
   s.type
-FROM series s
-INNER JOIN search_result sr ON sr.entity_id = s.id
+FROM search_result sr
+INNER JOIN series s ON sr.entity_id = s.id
 LEFT JOIN visited ON visited.entity_id = s.id
+ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
 
@@ -256,7 +267,8 @@ SELECT
   w.type,
   w.language,
   w.iswcs
-FROM work w
-INNER JOIN search_result sr ON sr.entity_id = w.id
+FROM search_result sr
+INNER JOIN work w ON sr.entity_id = w.id
 LEFT JOIN visited ON visited.entity_id = w.id
+ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
