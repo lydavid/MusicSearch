@@ -60,10 +60,12 @@ SELECT
   a.type,
   a.begin,
   a.end,
-  a.ended
+  a.ended,
+  visited.entity_id IS NOT NULL AS visited
 FROM area a
 INNER JOIN collection_entity ce ON a.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = a.id
 WHERE c.id = :collectionId
 AND (
   a.name LIKE :query OR

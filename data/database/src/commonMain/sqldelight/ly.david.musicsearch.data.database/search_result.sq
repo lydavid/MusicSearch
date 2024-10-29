@@ -67,7 +67,8 @@ SELECT
   a.type,
   a.begin,
   a.end,
-  a.ended
+  a.ended,
+  visited.entity_id IS NOT NULL AS visited
 FROM area a
 INNER JOIN search_result sr ON a.id = sr.entity_id
 LEFT JOIN visited ON visited.entity_id = a.id

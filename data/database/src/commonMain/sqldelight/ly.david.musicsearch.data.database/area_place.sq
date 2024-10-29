@@ -20,9 +20,11 @@ SELECT
   a.type,
   a.begin,
   a.end,
-  a.ended
+  a.ended,
+  visited.entity_id IS NOT NULL AS visited
 FROM area a
 INNER JOIN area_place ap ON a.id = ap.area_id
+LEFT JOIN visited ON visited.entity_id = a.id
 WHERE ap.place_id = :placeId
 LIMIT 1;
 

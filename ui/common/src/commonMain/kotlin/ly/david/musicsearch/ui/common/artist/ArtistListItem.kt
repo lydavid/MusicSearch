@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
@@ -20,6 +19,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.release.ReleaseListItem
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.image.ThumbnailImage
 
@@ -39,7 +39,7 @@ fun ArtistListItem(
             Text(
                 text = artist.name,
                 style = TextStyles.getCardBodyTextStyle(),
-                fontWeight = if (artist.visited) FontWeight.Normal else FontWeight.Bold,
+                fontWeight = artist.fontWeight,
             )
         },
         modifier = modifier.clickable {
@@ -49,7 +49,7 @@ fun ArtistListItem(
             Column {
                 DisambiguationText(
                     disambiguation = artist.disambiguation,
-                    bold = !artist.visited,
+                    fontWeight = artist.fontWeight,
                 )
 
                 artist.type.ifNotNullOrEmpty {
@@ -57,7 +57,7 @@ fun ArtistListItem(
                         text = it,
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = if (artist.visited) FontWeight.Normal else FontWeight.Bold,
+                        fontWeight = artist.fontWeight,
                     )
                 }
 
@@ -66,7 +66,7 @@ fun ArtistListItem(
                         text = it.getLifeSpanForDisplay(),
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = if (artist.visited) FontWeight.Normal else FontWeight.Bold,
+                        fontWeight = artist.fontWeight,
                     )
                 }
             }

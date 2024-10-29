@@ -17,7 +17,7 @@ import ly.david.musicsearch.ui.core.theme.getSubTextColor
 fun DisambiguationText(
     disambiguation: String?,
     modifier: Modifier = Modifier,
-    bold: Boolean = false,
+    fontWeight: FontWeight? = null,
 ) {
     disambiguation.ifNotNullOrEmpty {
         Text(
@@ -25,7 +25,7 @@ fun DisambiguationText(
             modifier = modifier.padding(top = 4.dp),
             color = getSubTextColor(),
             style = TextStyles.getCardBodyTextStyle(),
-            fontWeight = if (bold) FontWeight.Bold else FontWeight.Normal,
+            fontWeight = fontWeight,
         )
     }
 }

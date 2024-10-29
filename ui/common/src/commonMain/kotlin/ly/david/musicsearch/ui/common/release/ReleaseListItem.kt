@@ -12,7 +12,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
@@ -22,6 +21,7 @@ import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.image.ThumbnailImage
 
@@ -47,7 +47,7 @@ fun ReleaseListItem(
             Text(
                 text = release.name,
                 style = TextStyles.getCardBodyTextStyle(),
-                fontWeight = if (release.visited) FontWeight.Normal else FontWeight.Bold,
+                fontWeight = release.fontWeight,
             )
         },
         modifier = modifier.clickable { onClick(release) },
@@ -55,7 +55,7 @@ fun ReleaseListItem(
             Column {
                 DisambiguationText(
                     disambiguation = release.disambiguation,
-                    bold = !release.visited,
+                    fontWeight = release.fontWeight,
                 )
 
                 if (showMoreInfo) {
@@ -67,7 +67,7 @@ fun ReleaseListItem(
                                     .padding(top = 4.dp)
                                     .weight(1f),
                                 style = TextStyles.getCardBodySubTextStyle(),
-                                fontWeight = if (release.visited) FontWeight.Normal else FontWeight.Bold,
+                                fontWeight = release.fontWeight,
                             )
                         }
 
@@ -86,7 +86,7 @@ fun ReleaseListItem(
                                     .weight(1f),
                                 style = TextStyles.getCardBodySubTextStyle(),
                                 textAlign = TextAlign.End,
-                                fontWeight = if (release.visited) FontWeight.Normal else FontWeight.Bold,
+                                fontWeight = release.fontWeight,
                             )
                         }
                     }
@@ -99,7 +99,7 @@ fun ReleaseListItem(
                                     .weight(1f),
                                 text = it,
                                 style = TextStyles.getCardBodySubTextStyle(),
-                                fontWeight = if (release.visited) FontWeight.Normal else FontWeight.Bold,
+                                fontWeight = release.fontWeight,
                             )
                         }
 
@@ -111,7 +111,7 @@ fun ReleaseListItem(
                                 text = it,
                                 style = TextStyles.getCardBodySubTextStyle(),
                                 textAlign = TextAlign.End,
-                                fontWeight = if (release.visited) FontWeight.Normal else FontWeight.Bold,
+                                fontWeight = release.fontWeight,
                             )
                         }
                     }
@@ -123,7 +123,7 @@ fun ReleaseListItem(
                                 .padding(top = 4.dp)
                                 .fillMaxWidth(),
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = if (release.visited) FontWeight.Normal else FontWeight.Bold,
+                            fontWeight = release.fontWeight,
                         )
                     }
 
@@ -134,7 +134,7 @@ fun ReleaseListItem(
                                 .padding(top = 4.dp)
                                 .fillMaxWidth(),
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = if (release.visited) FontWeight.Normal else FontWeight.Bold,
+                            fontWeight = release.fontWeight,
                         )
                     }
                 }

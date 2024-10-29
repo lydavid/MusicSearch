@@ -59,12 +59,13 @@ class ReleaseCountryDao(
         releaseId: String,
     ): List<ReleaseEvent> = transacter.getCountriesByRelease(
         releaseId = releaseId,
-        mapper = { id, name, date, countryCode ->
+        mapper = { id, name, date, countryCode, visited ->
             ReleaseEvent(
                 id = id,
                 name = name,
                 date = date,
                 countryCode = countryCode,
+                visited = visited,
             )
         },
     ).executeAsList()

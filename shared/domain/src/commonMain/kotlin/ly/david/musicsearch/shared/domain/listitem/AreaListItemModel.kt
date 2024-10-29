@@ -13,11 +13,13 @@ data class AreaListItemModel(
     override val lifeSpan: LifeSpanUiModel? = LifeSpanUiModel(),
     val countryCodes: List<String>? = null,
     val date: String? = null,
-) : Area, ListItemModel()
+    override val visited: Boolean = false,
+) : Area, ListItemModel(), Visitable
 
 fun ReleaseEvent.toAreaListItemModel() = AreaListItemModel(
     id = id,
     name = name,
     date = date,
     countryCodes = countryCode?.let { listOf(it) },
+    visited = visited,
 )

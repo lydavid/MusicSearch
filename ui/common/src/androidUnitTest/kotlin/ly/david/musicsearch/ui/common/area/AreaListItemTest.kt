@@ -40,9 +40,16 @@ class AreaListItemTest : ScreenshotTest() {
     }
 
     @Test
-    fun releaseEventNoDate() {
+    fun visited() {
         snapshot {
-            PreviewReleaseEventNoDate()
+            PreviewAreaListItemVisited()
+        }
+    }
+
+    @Test
+    fun releaseEventVisited() {
+        snapshot {
+            PreviewReleaseEventVisited()
         }
     }
 }

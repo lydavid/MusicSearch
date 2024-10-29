@@ -29,3 +29,7 @@ class ListSeparator(
     override val id: String,
     val text: String,
 ) : ListItemModel()
+
+interface Visitable {
+    val visited: Boolean
+}

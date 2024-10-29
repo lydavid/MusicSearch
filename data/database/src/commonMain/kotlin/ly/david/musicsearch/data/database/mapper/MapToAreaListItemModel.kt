@@ -12,6 +12,7 @@ internal fun mapToAreaListItemModel(
     begin: String?,
     end: String?,
     ended: Boolean?,
+    visited: Boolean?,
 ) = AreaListItemModel(
     id = id,
     name = name,
@@ -23,4 +24,5 @@ internal fun mapToAreaListItemModel(
         end = end,
         ended = ended,
     ),
+    visited = visited == true,
 )

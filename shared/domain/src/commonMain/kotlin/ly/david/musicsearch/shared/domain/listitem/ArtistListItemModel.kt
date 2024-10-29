@@ -13,5 +13,5 @@ data class ArtistListItemModel(
     val countryCode: String? = null,
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val imageUrl: String? = null,
-    val visited: Boolean = false,
-) : ListItemModel(), Artist
+    override val visited: Boolean = false,
+) : ListItemModel(), Artist, Visitable
