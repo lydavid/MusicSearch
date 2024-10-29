@@ -5,13 +5,13 @@ import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.shared.domain.area.AreasByEntityRepository
 
@@ -19,7 +19,7 @@ class AreasByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val areaDao: AreaDao,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val browseApi: BrowseApi,
 ) : AreasByEntityRepository,
     BrowseEntitiesByEntity<AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
         browseEntity = MusicBrainzEntity.AREA,
@@ -82,7 +82,7 @@ class AreasByEntityRepositoryImpl(
     ): BrowseAreasResponse {
         return when (entity) {
             MusicBrainzEntity.COLLECTION -> {
-                musicBrainzApi.browseAreasByCollection(
+                browseApi.browseAreasByCollection(
                     collectionId = entityId,
                     offset = offset,
                 )

@@ -3,17 +3,17 @@ package ly.david.musicsearch.data.repository.recording
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.BrowseRecordingsResponse
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RecordingsByEntityDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
+import ly.david.musicsearch.data.musicbrainz.api.BrowseRecordingsResponse
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingsByEntityRepository
 
 class RecordingsByEntityRepositoryImpl(
@@ -21,7 +21,7 @@ class RecordingsByEntityRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
     private val recordingDao: RecordingDao,
     private val recordingsByEntityDao: RecordingsByEntityDao,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val browseApi: BrowseApi,
 ) : RecordingsByEntityRepository,
     BrowseEntitiesByEntity<RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
         browseEntity = MusicBrainzEntity.RECORDING,
@@ -89,7 +89,7 @@ class RecordingsByEntityRepositoryImpl(
         entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseRecordingsResponse {
-        return musicBrainzApi.browseRecordingsByEntity(
+        return browseApi.browseRecordingsByEntity(
             entityId = entityId,
             entity = entity,
             offset = offset,

@@ -102,7 +102,7 @@ val detailsFeatureModule = module {
                             GenrePresenter(
                                 screen = screen,
                                 navigator = navigator,
-                                musicBrainzApi = get(),
+                                lookupApi = get(),
                                 incrementLookupHistory = get(),
                                 logger = get(),
                             )

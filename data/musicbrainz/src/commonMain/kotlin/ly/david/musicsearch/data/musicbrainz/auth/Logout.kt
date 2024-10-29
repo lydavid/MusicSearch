@@ -1,12 +1,12 @@
 package ly.david.musicsearch.data.musicbrainz.auth
 
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzUserApi
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 
 class Logout(
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val musicBrainzUserApi: MusicBrainzUserApi,
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
     private val logger: Logger,
 ) {
@@ -14,7 +14,7 @@ class Logout(
         val refreshToken = musicBrainzAuthStore.getRefreshToken()
         if (refreshToken.isNullOrEmpty()) return
         try {
-            musicBrainzApi.logout(
+            musicBrainzUserApi.logout(
                 token = refreshToken,
                 clientId = musicBrainzOAuthInfo.clientId,
                 clientSecret = musicBrainzOAuthInfo.clientSecret,

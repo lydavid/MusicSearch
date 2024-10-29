@@ -14,7 +14,6 @@ import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.browse.BrowseEntityCountRepository
@@ -24,7 +23,7 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import lydavidmusicsearchdatadatabase.Browse_entity_count
 
 class CollectionRepositoryImpl(
-    private val musicBrainzApi: MusicBrainzApi,
+    private val collectionApi: CollectionApi,
     private val collectionDao: CollectionDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
@@ -70,7 +69,7 @@ class CollectionRepositoryImpl(
         entityId: String,
         nextOffset: Int,
     ): Int {
-        val response = musicBrainzApi.browseCollectionsByUser(
+        val response = collectionApi.browseCollectionsByUser(
             username = entityId,
             offset = nextOffset,
             include = CollectionApi.USER_COLLECTIONS,
@@ -134,7 +133,7 @@ class CollectionRepositoryImpl(
         val collection = collectionDao.getCollection(collectionId)
         if (collection.isRemote) {
             try {
-                musicBrainzApi.deleteFromCollection(
+                collectionApi.deleteFromCollection(
                     collectionId = collectionId,
                     resourceUriPlural = collection.entity.resourceUriPlural,
                     mbids = entityId,
@@ -168,7 +167,7 @@ class CollectionRepositoryImpl(
         val collection = collectionDao.getCollection(collectionId)
         if (collection.isRemote) {
             try {
-                musicBrainzApi.uploadToCollection(
+                collectionApi.uploadToCollection(
                     collectionId = collectionId,
                     resourceUriPlural = entity.resourceUriPlural,
                     mbids = entityId,

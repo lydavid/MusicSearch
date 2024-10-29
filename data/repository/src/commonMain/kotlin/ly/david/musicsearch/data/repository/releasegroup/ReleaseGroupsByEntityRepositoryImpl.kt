@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
@@ -18,6 +17,7 @@ import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsByEntityRepository
 
@@ -25,7 +25,7 @@ class ReleaseGroupsByEntityRepositoryImpl(
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val browseApi: BrowseApi,
     private val releaseGroupDao: ReleaseGroupDao,
 ) : ReleaseGroupsByEntityRepository,
     BrowseEntitiesByEntity<ReleaseGroupListItemModel, ReleaseGroupMusicBrainzModel, BrowseReleaseGroupsResponse>(
@@ -116,14 +116,14 @@ class ReleaseGroupsByEntityRepositoryImpl(
     ): BrowseReleaseGroupsResponse {
         return when (entity) {
             MusicBrainzEntity.ARTIST -> {
-                musicBrainzApi.browseReleaseGroupsByArtist(
+                browseApi.browseReleaseGroupsByArtist(
                     artistId = entityId,
                     offset = offset,
                 )
             }
 
             MusicBrainzEntity.COLLECTION -> {
-                musicBrainzApi.browseReleaseGroupsByCollection(
+                browseApi.browseReleaseGroupsByCollection(
                     collectionId = entityId,
                     offset = offset,
                 )

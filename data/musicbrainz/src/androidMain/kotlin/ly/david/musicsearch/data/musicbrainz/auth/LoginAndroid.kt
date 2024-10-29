@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.musicbrainz.auth
 
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzUserApi
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationResponse
 import net.openid.appauth.AuthorizationService
@@ -14,7 +14,7 @@ class LoginAndroid(
     private val authService: AuthorizationService,
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val musicBrainzUserApi: MusicBrainzUserApi,
     private val logger: Logger,
 ) {
     suspend operator fun invoke(result: MusicBrainzLoginActivityResultContract.Result) {
@@ -33,7 +33,7 @@ class LoginAndroid(
                 )
 
                 try {
-                    val username = musicBrainzApi.getUserInfo().username ?: return
+                    val username = musicBrainzUserApi.getUserInfo().username ?: return
                     musicBrainzAuthStore.setUsername(username)
                 } catch (ex: Exception) {
                     logger.e(ex)

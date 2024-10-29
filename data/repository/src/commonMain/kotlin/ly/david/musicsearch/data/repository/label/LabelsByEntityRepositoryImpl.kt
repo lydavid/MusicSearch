@@ -10,8 +10,8 @@ import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.LabelsByEntityDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.shared.domain.label.LabelsByEntityRepository
@@ -21,7 +21,7 @@ class LabelsByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val labelDao: LabelDao,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val browseApi: BrowseApi,
 ) : LabelsByEntityRepository,
     BrowseEntitiesByEntity<LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
         browseEntity = MusicBrainzEntity.LABEL,
@@ -89,7 +89,7 @@ class LabelsByEntityRepositoryImpl(
         entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseLabelsResponse {
-        return musicBrainzApi.browseLabelsByEntity(
+        return browseApi.browseLabelsByEntity(
             entityId = entityId,
             entity = entity,
             offset = offset,

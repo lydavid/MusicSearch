@@ -13,10 +13,10 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.error.HandledException
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
@@ -25,7 +25,7 @@ import ly.david.musicsearch.ui.common.screen.DetailsScreen
 internal class GenrePresenter(
     private val screen: DetailsScreen,
     private val navigator: Navigator,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val lookupApi: LookupApi,
     private val incrementLookupHistory: IncrementLookupHistory,
     private val logger: Logger,
 ) : Presenter<GenreUiState> {
@@ -40,7 +40,7 @@ internal class GenrePresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val genreListItemModel = musicBrainzApi.lookupGenre(screen.id)
+                val genreListItemModel = lookupApi.lookupGenre(screen.id)
                 title = genreListItemModel.getNameWithDisambiguation()
                 genre = genreListItemModel
                 isError = false

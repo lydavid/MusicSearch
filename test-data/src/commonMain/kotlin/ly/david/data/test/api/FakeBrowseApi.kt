@@ -3,7 +3,6 @@ package ly.david.data.test.api
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
-import ly.david.musicsearch.data.musicbrainz.api.BrowseCollectionsResponse
 import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.musicsearch.data.musicbrainz.api.BrowseInstrumentsResponse
 import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
@@ -35,19 +34,6 @@ open class FakeBrowseApi : BrowseApi {
         offset: Int,
     ): BrowseArtistsResponse {
         return BrowseArtistsResponse(
-            count = 0,
-            offset = 0,
-            musicBrainzModels = listOf(),
-        )
-    }
-
-    override suspend fun browseCollectionsByUser(
-        username: String,
-        limit: Int,
-        offset: Int,
-        include: String?,
-    ): BrowseCollectionsResponse {
-        return BrowseCollectionsResponse(
             count = 0,
             offset = 0,
             musicBrainzModels = listOf(),

@@ -5,13 +5,13 @@ import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseInstrumentsResponse
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.shared.domain.instrument.InstrumentsByEntityRepository
 
@@ -19,7 +19,7 @@ class InstrumentsByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val instrumentDao: InstrumentDao,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val browseApi: BrowseApi,
 ) : InstrumentsByEntityRepository,
     BrowseEntitiesByEntity<InstrumentListItemModel, InstrumentMusicBrainzModel, BrowseInstrumentsResponse>(
         browseEntity = MusicBrainzEntity.INSTRUMENT,
@@ -82,7 +82,7 @@ class InstrumentsByEntityRepositoryImpl(
     ): BrowseInstrumentsResponse {
         return when (entity) {
             MusicBrainzEntity.COLLECTION -> {
-                musicBrainzApi.browseInstrumentsByCollection(
+                browseApi.browseInstrumentsByCollection(
                     collectionId = entityId,
                     offset = offset,
                 )

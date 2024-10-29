@@ -48,13 +48,6 @@ interface BrowseApi {
         offset: Int = 0,
     ): BrowseArtistsResponse
 
-    suspend fun browseCollectionsByUser(
-        username: String,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-        include: String? = null,
-    ): BrowseCollectionsResponse
-
     suspend fun browseEventsByEntity(
         entityId: String,
         entity: MusicBrainzEntity,
@@ -178,35 +171,6 @@ interface BrowseApiImpl : BrowseApi {
                 parameter(
                     "offset",
                     offset,
-                )
-            }
-        }.body()
-    }
-
-    override suspend fun browseCollectionsByUser(
-        username: String,
-        limit: Int,
-        offset: Int,
-        include: String?,
-    ): BrowseCollectionsResponse {
-        return httpClient.get {
-            url {
-                appendPathSegments("collection")
-                parameter(
-                    "editor",
-                    username,
-                )
-                parameter(
-                    "limit",
-                    limit,
-                )
-                parameter(
-                    "offset",
-                    offset,
-                )
-                parameter(
-                    "inc",
-                    include,
                 )
             }
         }.body()
