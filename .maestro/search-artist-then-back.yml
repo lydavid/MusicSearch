@@ -89,7 +89,6 @@ appId: io.github.lydavid.musicsearch.debug
     direction: RIGHT
 - tapOn: "Back"
 
-- tapOn: "More actions"
 - tapOn: "Edit"
 - assertVisible: "Editing..."
 - tapOn: "Filter"
