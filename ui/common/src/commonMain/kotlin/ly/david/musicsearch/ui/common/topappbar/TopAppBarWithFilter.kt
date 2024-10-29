@@ -14,7 +14,9 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.FindInPage
+import androidx.compose.material.icons.outlined.ImportContacts
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -62,6 +64,7 @@ expect fun TopAppBarWithFilter(
 
     showFilterIcon: Boolean = true,
     topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
+    topAppBarEditState: TopAppBarEditState = TopAppBarEditState(),
 
     additionalActions: @Composable () -> Unit = {},
     additionalBar: @Composable () -> Unit = {},
@@ -83,6 +86,7 @@ internal fun TopAppBarWithFilterInternal(
 
     showFilterIcon: Boolean = true,
     topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
+    topAppBarEditState: TopAppBarEditState = TopAppBarEditState(),
 
     additionalActions: @Composable () -> Unit = {},
     additionalBar: @Composable () -> Unit = {},
@@ -171,12 +175,23 @@ internal fun TopAppBarWithFilterInternal(
         }
 
         ScrollableTopAppBar(
-            onBack = onBack,
+            onBack = {
+                if (topAppBarEditState.isEditMode) {
+                    topAppBarEditState.dismiss()
+                } else {
+                    onBack()
+                }
+            },
             showBackButton = showBackButton,
             entity = entity,
-            title = title,
+            title = if (topAppBarEditState.isEditMode) {
+                "Editing..."
+            } else {
+                title
+            },
             subtitle = subtitle,
             scrollBehavior = scrollBehavior,
+            isEditMode = topAppBarEditState.isEditMode,
             actions = {
                 if (showFilterIcon) {
                     IconButton(onClick = {
@@ -185,6 +200,24 @@ internal fun TopAppBarWithFilterInternal(
                         Icon(
                             imageVector = Icons.Outlined.FindInPage,
                             contentDescription = strings.filter,
+                        )
+                    }
+                }
+                if (topAppBarEditState.showEditIcon) {
+                    IconButton(onClick = {
+                        topAppBarEditState.toggleEditMode()
+                    }) {
+                        Icon(
+                            imageVector = if (topAppBarEditState.isEditMode) {
+                                Icons.Outlined.ImportContacts
+                            } else {
+                                Icons.Outlined.Edit
+                            },
+                            contentDescription = if (topAppBarEditState.isEditMode) {
+                                "View"
+                            } else {
+                                "Edit"
+                            },
                         )
                     }
                 }

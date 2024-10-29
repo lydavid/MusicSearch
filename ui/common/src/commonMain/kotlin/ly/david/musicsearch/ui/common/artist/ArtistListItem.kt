@@ -19,9 +19,9 @@ import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.release.ReleaseListItem
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.image.ThumbnailImage
-import ly.david.musicsearch.ui.common.release.ReleaseListItem
 
 /**
  * Displays the artist's image if it exists.

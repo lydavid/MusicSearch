@@ -17,6 +17,7 @@ fun EventsListScreen(
     lazyListState: LazyListState,
     lazyPagingItems: LazyPagingItems<EventListItemModel>,
     modifier: Modifier = Modifier,
+    isEditMode: Boolean = false,
     onEventClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
 ) {
@@ -39,7 +40,7 @@ fun EventsListScreen(
                             )
                         }
                     },
-                    disable = onDeleteFromCollection == null,
+                    disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection?.invoke(
                             eventListItemModel.id,

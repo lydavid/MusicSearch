@@ -23,17 +23,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.history.LookupHistory
-import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.area.usecase.GetAreasByEntity
 import ly.david.musicsearch.shared.domain.collection.usecase.DeleteFromCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
+import ly.david.musicsearch.shared.domain.error.ActionableResult
+import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.instrument.usecase.GetInstrumentsByEntity
+import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.shared.domain.recording.usecase.GetRecordingsByEntity
 import ly.david.musicsearch.shared.domain.series.usecase.GetSeriesByEntity
@@ -54,7 +54,9 @@ import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiState
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 import ly.david.musicsearch.ui.common.work.WorksByEntityPresenter
 import ly.david.musicsearch.ui.common.work.WorksByEntityUiEvent
@@ -84,12 +86,15 @@ internal class CollectionPresenter(
 
         val scope = rememberCoroutineScope()
         var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
+        var title: String by rememberSaveable { mutableStateOf("") }
         var actionableResult: ActionableResult? by remember { mutableStateOf(null) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         var collectableItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val topAppBarEditState: TopAppBarEditState = rememberTopAppBarEditState()
+
         val artistsByEntityUiState = artistsByEntityPresenter.present()
         val artistsEventSink = artistsByEntityUiState.eventSink
         val eventsByEntityUiState = eventsByEntityPresenter.present()
@@ -107,6 +112,7 @@ internal class CollectionPresenter(
             val nonNullCollection = getCollectionUseCase(collectionId)
             collection = nonNullCollection
             isRemote = nonNullCollection.isRemote
+            title = nonNullCollection.name
 
             if (!recordedHistory) {
                 incrementLookupHistory(
@@ -315,10 +321,12 @@ internal class CollectionPresenter(
         }
 
         return CollectionUiState(
+            title = title,
             collection = collection,
             actionableResult = actionableResult,
             topAppBarFilterState = topAppBarFilterState,
             lazyPagingItems = collectableItems.collectAsLazyPagingItems(),
+            topAppBarEditState = topAppBarEditState,
             artistsByEntityUiState = artistsByEntityUiState,
             eventsByEntityUiState = eventsByEntityUiState,
             labelsByEntityUiState = labelsByEntityUiState,
@@ -332,10 +340,12 @@ internal class CollectionPresenter(
 
 @Stable
 internal data class CollectionUiState(
+    val title: String,
     val collection: CollectionListItemModel?,
     val actionableResult: ActionableResult?,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val topAppBarEditState: TopAppBarEditState,
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val eventsByEntityUiState: EventsByEntityUiState,
     val labelsByEntityUiState: LabelsByEntityUiState,

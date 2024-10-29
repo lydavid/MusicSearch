@@ -21,6 +21,7 @@ fun ReleaseGroupsListScreen(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
+    isEditMode: Boolean = false,
     onReleaseGroupClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = {},
@@ -48,7 +49,7 @@ fun ReleaseGroupsListScreen(
                             )
                         }
                     },
-                    disable = onDeleteFromCollection == null,
+                    disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection?.invoke(
                             listItemModel.id,

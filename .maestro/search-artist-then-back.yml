@@ -48,6 +48,7 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: History
 - tapOn: "ずっと真夜中でいいのに。 (Japanese pop band)"
 
+
 # Repeat tests with cached data
 - assertVisible: "ずっと真夜中でいいのに。 (Japanese pop band)"
 - assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
@@ -75,5 +76,30 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "Add to collection"
 - tapOn: "Artists"
 - assertVisible: "Already in Artists."
+
+
+- tapOn: Collections
+- tapOn: "Filter"
+- inputText: "art"
+- tapOn: "Artists"
+
+# Attempt to swipe in view mode ends up clicking into the item
+- swipe:
+    from: "ずっと真夜中でいいのに。"
+    direction: RIGHT
+- tapOn: "Back"
+
+- tapOn: "More actions"
+- tapOn: "Edit"
+- assertVisible: "Editing..."
+- tapOn: "Filter"
+- inputText: "zutto"
+- swipe:
+      from: "ずっと真夜中でいいのに。"
+      direction: RIGHT
+- assertVisible: "Deleted ずっと真夜中でいいのに。 from Artists."
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: "Back"
 
 - stopRecording

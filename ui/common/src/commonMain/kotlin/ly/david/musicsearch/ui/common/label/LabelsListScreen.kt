@@ -18,6 +18,7 @@ fun LabelsListScreen(
     lazyPagingItems: LazyPagingItems<LabelListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
+    isEditMode: Boolean = false,
     onLabelClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
 ) {
@@ -40,7 +41,7 @@ fun LabelsListScreen(
                             )
                         }
                     },
-                    disable = onDeleteFromCollection == null,
+                    disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection?.invoke(
                             listItemModel.id,

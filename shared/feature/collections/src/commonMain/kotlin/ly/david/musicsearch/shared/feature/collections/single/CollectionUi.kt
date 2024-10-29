@@ -112,7 +112,7 @@ internal fun CollectionUi(
                 onBack = {
                     eventSink(CollectionUiEvent.NavigateUp)
                 },
-                title = collection?.name.orEmpty(),
+                title = state.title,
                 scrollBehavior = scrollBehavior,
                 showFilterIcon = true,
                 overflowDropdownMenuItems = {
@@ -145,6 +145,7 @@ internal fun CollectionUi(
                     }
                 },
                 topAppBarFilterState = state.topAppBarFilterState,
+                topAppBarEditState = state.topAppBarEditState,
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -157,6 +158,7 @@ internal fun CollectionUi(
             )
         } else {
             CollectionUi(
+                isEditMode = state.topAppBarEditState.isEditMode,
                 lazyPagingItems = state.lazyPagingItems,
                 artistsByEntityUiState = state.artistsByEntityUiState,
                 eventsByEntityUiState = state.eventsByEntityUiState,
@@ -209,6 +211,7 @@ internal fun CollectionUi(
 )
 @Composable
 private fun CollectionUi(
+    isEditMode: Boolean,
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     artistsByEntityUiState: ArtistsByEntityUiState,
     eventsByEntityUiState: EventsByEntityUiState,
@@ -235,6 +238,7 @@ private fun CollectionUi(
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
+                isEditMode = isEditMode,
                 onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
@@ -253,6 +257,7 @@ private fun CollectionUi(
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
+                isEditMode = isEditMode,
                 onEventClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
@@ -271,6 +276,7 @@ private fun CollectionUi(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 lazyListState = labelsByEntityUiState.lazyListState,
+                isEditMode = isEditMode,
                 onLabelClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
@@ -289,6 +295,7 @@ private fun CollectionUi(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 lazyListState = releasesByEntityUiState.lazyListState,
+                isEditMode = isEditMode,
                 showMoreInfo = releasesByEntityUiState.showMoreInfo,
                 onReleaseClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
@@ -313,6 +320,7 @@ private fun CollectionUi(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 lazyListState = releaseGroupsByEntityUiState.lazyListState,
+                isEditMode = isEditMode,
                 onReleaseGroupClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
@@ -336,6 +344,7 @@ private fun CollectionUi(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 lazyListState = worksByEntityUiState.lazyListState,
+                isEditMode = isEditMode,
                 onWorkClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
@@ -348,6 +357,7 @@ private fun CollectionUi(
 
         else -> {
             CollectionUi(
+                isEditMode = isEditMode,
                 lazyPagingItems = lazyPagingItems,
                 lazyListState = lazyListState,
                 entity = entity,
@@ -366,6 +376,7 @@ private fun CollectionUi(
 )
 @Composable
 internal fun CollectionUi(
+    isEditMode: Boolean,
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     lazyListState: LazyListState,
     entity: MusicBrainzEntity,
@@ -400,6 +411,7 @@ internal fun CollectionUi(
                             )
                         }
                     },
+                    disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection(
                             listItemModel.id,
@@ -422,6 +434,7 @@ internal fun CollectionUi(
                             )
                         }
                     },
+                    disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection(
                             listItemModel.id,
@@ -444,6 +457,7 @@ internal fun CollectionUi(
                             )
                         }
                     },
+                    disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection(
                             listItemModel.id,
@@ -466,6 +480,7 @@ internal fun CollectionUi(
                             )
                         }
                     },
+                    disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection(
                             listItemModel.id,
@@ -488,6 +503,7 @@ internal fun CollectionUi(
                             )
                         }
                     },
+                    disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection(
                             listItemModel.id,

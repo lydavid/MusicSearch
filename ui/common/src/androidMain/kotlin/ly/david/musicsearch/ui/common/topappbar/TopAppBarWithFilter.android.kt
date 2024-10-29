@@ -32,13 +32,18 @@ actual fun TopAppBarWithFilter(
 
     showFilterIcon: Boolean,
     topAppBarFilterState: TopAppBarFilterState,
+    topAppBarEditState: TopAppBarEditState,
 
     additionalActions: @Composable () -> Unit,
     additionalBar: @Composable () -> Unit,
 ) {
-    if (topAppBarFilterState.isFilterMode) {
+    if (topAppBarFilterState.isFilterMode || topAppBarEditState.isEditMode) {
         BackHandler {
-            topAppBarFilterState.dismiss()
+            if (topAppBarFilterState.isFilterMode) {
+                topAppBarFilterState.dismiss()
+            } else if (topAppBarEditState.isEditMode) {
+                topAppBarEditState.dismiss()
+            }
         }
     }
 
@@ -54,6 +59,7 @@ actual fun TopAppBarWithFilter(
         subtitleDropdownMenuItems = subtitleDropdownMenuItems,
         showFilterIcon = showFilterIcon,
         topAppBarFilterState = topAppBarFilterState,
+        topAppBarEditState = topAppBarEditState,
         additionalActions = additionalActions,
         additionalBar = additionalBar,
     )
@@ -153,6 +159,32 @@ internal fun PreviewTopAppBarWithFilterWithTabsFilterMode() {
                     onSelectTabIndex = { selectedTabIndex = it },
                 )
             },
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@PreviewLightDark
+@Composable
+internal fun PreviewTopAppBarWithFilterWithEditMode() {
+    PreviewTheme {
+        val topAppBarEditState = rememberTopAppBarEditState()
+        TopAppBarWithFilterInternal(
+            title = "Title",
+            topAppBarEditState = topAppBarEditState,
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@PreviewLightDark
+@Composable
+internal fun PreviewTopAppBarWithFilterWithEditModeActive() {
+    PreviewTheme {
+        val topAppBarEditState = rememberTopAppBarEditState(initialIsEditMode = true)
+        TopAppBarWithFilterInternal(
+            title = "Title",
+            topAppBarEditState = topAppBarEditState,
         )
     }
 }
