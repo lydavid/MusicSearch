@@ -20,13 +20,20 @@ import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.SearchApi
 import ly.david.musicsearch.data.musicbrainz.api.SearchAreasResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchArtistsResponse
+import ly.david.musicsearch.data.musicbrainz.api.SearchEventsResponse
+import ly.david.musicsearch.data.musicbrainz.api.SearchReleasesResponse
+import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.repository.KoinTestRule
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EndOfList
+import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert
 import org.junit.Rule
@@ -122,11 +129,9 @@ class SearchResultsRepositoryImplTest : KoinTest {
             2,
             searchResults.size,
         )
-
-        val footer = searchResults.last()
         Assert.assertEquals(
-            footer,
             EndOfList,
+            searchResults.last(),
         )
     }
 
@@ -175,20 +180,32 @@ class SearchResultsRepositoryImplTest : KoinTest {
             searchResults.size,
         )
         Assert.assertEquals(
-            "Various Artists",
-            (searchResults[0] as ArtistListItemModel).name,
+            ArtistListItemModel(
+                id = "89ad4ac3-39f7-470e-963a-56509c546377",
+                name = "Various Artists",
+            ),
+            (searchResults[0] as ArtistListItemModel),
         )
         Assert.assertEquals(
-            "Wolfgang Amadeus Mozart",
-            (searchResults[1] as ArtistListItemModel).name,
+            ArtistListItemModel(
+                id = "b972f589-fb0e-474e-b64a-803b0364fa75",
+                name = "Wolfgang Amadeus Mozart",
+            ),
+            (searchResults[1] as ArtistListItemModel),
         )
         Assert.assertEquals(
-            "[unknown]",
-            (searchResults[2] as ArtistListItemModel).name,
+            ArtistListItemModel(
+                id = "125ec42a-7229-4250-afc5-e057484327fe",
+                name = "[unknown]",
+            ),
+            (searchResults[2] as ArtistListItemModel),
         )
         Assert.assertEquals(
-            "a-ha",
-            (searchResults[3] as ArtistListItemModel).name,
+            ArtistListItemModel(
+                id = "7364dea6-ca9a-48e3-be01-b44ad0d19897",
+                name = "a-ha",
+            ),
+            (searchResults[3] as ArtistListItemModel),
         )
     }
 
@@ -240,8 +257,11 @@ class SearchResultsRepositoryImplTest : KoinTest {
             searchResults.size,
         )
         Assert.assertEquals(
-            "Various Artists",
-            (searchResults[0] as ArtistListItemModel).name,
+            ArtistListItemModel(
+                id = "89ad4ac3-39f7-470e-963a-56509c546377",
+                name = "Various Artists",
+            ),
+            (searchResults[0] as ArtistListItemModel),
         )
 
         flow = sut.observeSearchResults(
@@ -254,8 +274,123 @@ class SearchResultsRepositoryImplTest : KoinTest {
             searchResults.size,
         )
         Assert.assertEquals(
-            "A Coruña",
-            (searchResults[0] as AreaListItemModel).name,
+            AreaListItemModel(
+                id = "f42c1e2a-b7db-4acf-9742-1889b9c6d530",
+                name = "A Coruña",
+            ),
+            (searchResults[0] as AreaListItemModel),
+        )
+    }
+
+    // This shouldn't be a problem as long as our LazyColumn is not keyed
+    @Test
+    fun `duplicates are shown`() = runTest {
+        val repository = createRepositoryWithFakeNetworkData(
+            searchApi = object : FakeSearchApi() {
+                override suspend fun queryEvents(
+                    query: String,
+                    limit: Int,
+                    offset: Int,
+                ): SearchEventsResponse {
+                    return SearchEventsResponse(
+                        count = 2,
+                        events = listOf(
+                            EventMusicBrainzModel(
+                                id = "1bc74971-d5c8-4a21-b761-c24e74efb9b4",
+                                name = "Lollapalooza 2024",
+                            ),
+                            EventMusicBrainzModel(
+                                id = "1bc74971-d5c8-4a21-b761-c24e74efb9b4",
+                                name = "Lollapalooza 2024",
+                            ),
+                        ),
+                    )
+                }
+            },
+        )
+
+        val flow: Flow<PagingData<ListItemModel>> = repository.observeSearchResults(
+            entity = MusicBrainzEntity.EVENT,
+            query = "a",
+        )
+        val searchResults: List<ListItemModel> = flow.asSnapshot()
+
+        Assert.assertEquals(
+            3,
+            searchResults.size,
+        )
+        Assert.assertEquals(
+            EventListItemModel(
+                id = "1bc74971-d5c8-4a21-b761-c24e74efb9b4",
+                name = "Lollapalooza 2024",
+            ),
+            (searchResults[0] as EventListItemModel),
+        )
+        Assert.assertEquals(
+            EventListItemModel(
+                id = "1bc74971-d5c8-4a21-b761-c24e74efb9b4",
+                name = "Lollapalooza 2024",
+            ),
+            (searchResults[1] as EventListItemModel),
+        )
+        Assert.assertEquals(
+            EndOfList,
+            searchResults.last(),
+        )
+    }
+
+    @Test
+    fun `release must include artist credits`() = runTest {
+        val repository = createRepositoryWithFakeNetworkData(
+            searchApi = object : FakeSearchApi() {
+                override suspend fun queryReleases(
+                    query: String,
+                    limit: Int,
+                    offset: Int,
+                ): SearchReleasesResponse {
+                    return SearchReleasesResponse(
+                        count = 1,
+                        releases = listOf(
+                            ReleaseMusicBrainzModel(
+                                id = "0bc23883-16c2-4f9b-b3f5-b3685e530435",
+                                name = "Keep The Beats!",
+                                artistCredits = listOf(
+                                    ArtistCreditMusicBrainzModel(
+                                        artist = ArtistMusicBrainzModel(
+                                            id = "122cce39-8303-4801-989e-cefa438bd98d",
+                                            name = "Girls Dead Monster",
+                                        ),
+                                        name = "Girls Dead Monster",
+                                    ),
+                                ),
+                            ),
+                        ),
+                    )
+                }
+            },
+        )
+
+        val flow: Flow<PagingData<ListItemModel>> = repository.observeSearchResults(
+            entity = MusicBrainzEntity.RELEASE,
+            query = "a",
+        )
+        val searchResults: List<ListItemModel> = flow.asSnapshot()
+
+        Assert.assertEquals(
+            2,
+            searchResults.size,
+        )
+        Assert.assertEquals(
+            ReleaseListItemModel(
+                id = "0bc23883-16c2-4f9b-b3f5-b3685e530435",
+                name = "Keep The Beats!",
+                formattedArtistCredits = "Girls Dead Monster",
+            ),
+            (searchResults[0] as ReleaseListItemModel),
+        )
+        Assert.assertEquals(
+            EndOfList,
+            searchResults.last(),
         )
     }
 }

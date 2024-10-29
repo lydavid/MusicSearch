@@ -7,11 +7,14 @@ import app.cash.paging.RemoteMediator
 import kotlinx.coroutines.delay
 import ly.david.musicsearch.data.database.dao.SearchResultDao
 import ly.david.musicsearch.data.musicbrainz.DELAY_PAGED_API_CALLS_MS
+import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
+import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 /**
- * Compared with [BrowseEntityRemoteMediator] and [LookupEntityRemoteMediator].
+ * Mediates search results from network.
+ * Compare with [BrowseEntityRemoteMediator] and [LookupEntityRemoteMediator].
  *
  * @param fetchAndStore Fetch from remote with offset and store in database.
  *  Remove all local data if refreshing. We delegate to call site so that it can be executed in a single transaction.

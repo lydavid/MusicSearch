@@ -21,7 +21,7 @@ data class ReleaseListItemModel(
     val catalogNumbers: String? = null,
 
     val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
-    val textRepresentation: TextRepresentationUiModel? = null,
+    val textRepresentation: TextRepresentationUiModel? = TextRepresentationUiModel(),
     val imageUrl: String? = null,
 
     val formattedFormats: String? = null,
