@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.repository.releasegroup
+package ly.david.musicsearch.data.repository.release
 
 import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
@@ -18,12 +18,11 @@ import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.repository.KoinTestRule
-import ly.david.musicsearch.data.repository.release.ReleasesByEntityRepositoryImpl
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.Label
-import org.junit.Assert.assertEquals
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
@@ -118,16 +117,16 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
         )
         val releases: List<ReleaseListItemModel> = flow.asSnapshot()
 
-        assertEquals(
+        Assert.assertEquals(
             1,
             releases.size,
         )
         val release: ReleaseListItemModel = releases[0]
-        assertEquals(
+        Assert.assertEquals(
             "ウタの歌 ONE PIECE FILM RED",
             release.name,
         )
-        assertEquals(
+        Assert.assertEquals(
             "TYBX-10260, TYCT-69245, TYCX-60187",
             release.catalogNumbers,
         )

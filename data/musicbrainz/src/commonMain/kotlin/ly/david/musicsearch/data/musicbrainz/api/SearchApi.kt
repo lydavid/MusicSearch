@@ -219,77 +219,77 @@ interface SearchApiImpl : SearchApi {
 
 @Serializable
 data class SearchAreasResponse(
-    @SerialName("count") val count: Int, // Total hits
-    @SerialName("offset") val offset: Int,
-    @SerialName("areas") val areas: List<AreaMusicBrainzModel>,
+    @SerialName("count") val count: Int = 0,
+    @SerialName("offset") val offset: Int = 0,
+    @SerialName("areas") val areas: List<AreaMusicBrainzModel> = listOf(),
 )
 
 @Serializable
 data class SearchArtistsResponse(
-    @SerialName("count") val count: Int, // Total hits
-    @SerialName("offset") val offset: Int,
-    @SerialName("artists") val artists: List<ArtistMusicBrainzModel>,
+    @SerialName("count") val count: Int = 0,
+    @SerialName("offset") val offset: Int = 0,
+    @SerialName("artists") val artists: List<ArtistMusicBrainzModel> = listOf(),
 )
 
 @Serializable
 data class SearchEventsResponse(
-    @SerialName("count") val count: Int, // Total hits
-    @SerialName("offset") val offset: Int,
-    @SerialName("events") val events: List<EventMusicBrainzModel>,
+    @SerialName("count") val count: Int = 0,
+    @SerialName("offset") val offset: Int = 0,
+    @SerialName("events") val events: List<EventMusicBrainzModel> = listOf(),
 )
 
 @Serializable
 data class SearchInstrumentsResponse(
-    @SerialName("count") val count: Int, // Total hits
-    @SerialName("offset") val offset: Int,
-    @SerialName("instruments") val instruments: List<InstrumentMusicBrainzModel>,
+    @SerialName("count") val count: Int = 0,
+    @SerialName("offset") val offset: Int = 0,
+    @SerialName("instruments") val instruments: List<InstrumentMusicBrainzModel> = listOf(),
 )
 
 @Serializable
 data class SearchLabelsResponse(
-    @SerialName("count") val count: Int, // Total hits
-    @SerialName("offset") val offset: Int,
-    @SerialName("labels") val labels: List<LabelMusicBrainzModel>,
+    @SerialName("count") val count: Int = 0,
+    @SerialName("offset") val offset: Int = 0,
+    @SerialName("labels") val labels: List<LabelMusicBrainzModel> = listOf(),
 )
 
 @Serializable
 data class SearchPlacesResponse(
-    @SerialName("count") val count: Int, // Total hits
-    @SerialName("offset") val offset: Int,
-    @SerialName("places") val places: List<PlaceMusicBrainzModel>,
+    @SerialName("count") val count: Int = 0,
+    @SerialName("offset") val offset: Int = 0,
+    @SerialName("places") val places: List<PlaceMusicBrainzModel> = listOf(),
 )
 
 @Serializable
 data class SearchRecordingsResponse(
-    @SerialName("count") val count: Int, // Total hits
-    @SerialName("offset") val offset: Int,
-    @SerialName("recordings") val recordings: List<RecordingMusicBrainzModel>,
+    @SerialName("count") val count: Int = 0,
+    @SerialName("offset") val offset: Int = 0,
+    @SerialName("recordings") val recordings: List<RecordingMusicBrainzModel> = listOf(),
 )
 
 @Serializable
 data class SearchReleasesResponse(
-    @SerialName("count") val count: Int, // Total hits
-    @SerialName("offset") val offset: Int,
-    @SerialName("releases") val releases: List<ReleaseMusicBrainzModel>,
+    @SerialName("count") val count: Int = 0,
+    @SerialName("offset") val offset: Int = 0,
+    @SerialName("releases") val releases: List<ReleaseMusicBrainzModel> = listOf(),
 )
 
 @Serializable
 data class SearchReleaseGroupsResponse(
-    @SerialName("count") val count: Int, // Total hits
-    @SerialName("offset") val offset: Int,
-    @SerialName("release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel>,
+    @SerialName("count") val count: Int = 0,
+    @SerialName("offset") val offset: Int = 0,
+    @SerialName("release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel> = listOf(),
 )
 
 @Serializable
 data class SearchSeriesResponse(
-    @SerialName("count") val count: Int, // Total hits
-    @SerialName("offset") val offset: Int,
-    @SerialName("series") val series: List<SeriesMusicBrainzModel>,
+    @SerialName("count") val count: Int = 0,
+    @SerialName("offset") val offset: Int = 0,
+    @SerialName("series") val series: List<SeriesMusicBrainzModel> = listOf(),
 )
 
 @Serializable
 data class SearchWorksResponse(
-    @SerialName("count") val count: Int, // Total hits
-    @SerialName("offset") val offset: Int,
-    @SerialName("works") val works: List<WorkMusicBrainzModel>,
+    @SerialName("count") val count: Int = 0,
+    @SerialName("offset") val offset: Int = 0,
+    @SerialName("works") val works: List<WorkMusicBrainzModel> = listOf(),
 )

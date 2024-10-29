@@ -14,9 +14,9 @@ VALUES (
   nullif(:id, 0),
   :name
 );
+
 lastInsertRowId:
 SELECT last_insert_rowid();
-
 
 getArtistCreditByName:
 SELECT *

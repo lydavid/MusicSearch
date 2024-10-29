@@ -33,6 +33,7 @@ internal fun PreviewSearchUiSearchResults() {
                             lifeSpan = LifeSpanUiModel(
                                 ended = false,
                             ),
+                            visited = true,
                         ),
                         ArtistListItemModel(
                             id = "22e5522d-84da-4168-844d-ee55655b5067",

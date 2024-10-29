@@ -17,12 +17,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
+import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.network.searchableEntities
 import ly.david.musicsearch.ui.common.ResourceDropdownPicker
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
@@ -66,6 +68,7 @@ internal fun SearchUiContent(
 
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
+    val scope = rememberCoroutineScope()
 
     Column(modifier = modifier) {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -95,6 +98,9 @@ internal fun SearchUiContent(
                 onValueChange = { newText ->
                     if (!newText.contains("\n")) {
                         eventSink(SearchUiEvent.UpdateQuery(newText))
+                        scope.launch {
+                            state.searchResultsListState.scrollToItem(0)
+                        }
                     }
                 },
             )
@@ -106,6 +112,9 @@ internal fun SearchUiContent(
                 selectedOption = state.entity,
                 onSelectOption = { entity ->
                     eventSink(SearchUiEvent.UpdateEntity(entity))
+                    scope.launch {
+                        state.searchResultsListState.scrollToItem(0)
+                    }
                 },
             )
         }

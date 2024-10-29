@@ -1,5 +1,3 @@
-import kotlin.Boolean;
-
 CREATE TABLE IF NOT EXISTS visited (
   entity_id TEXT PRIMARY KEY NOT NULL
 );
