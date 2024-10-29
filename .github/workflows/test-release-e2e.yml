@@ -85,7 +85,7 @@ jobs:
           disable-animations: true
           sdcard-path-or-size: 100M
           script: |
-            ./gradlew installFDroidDebug
+            ./gradlew assembleFDroidDebug installFDroidDebug
             adb shell settings put system show_touches 1
             $HOME/.maestro/bin/maestro test .maestro
             adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat
@@ -99,6 +99,7 @@ jobs:
             /home/runner/.maestro/tests/
             *.mp4
             logcat
+            android/app/build/outputs/apk/fDroid/debug/app-fDroid-debug.apk
 
       - name: Checkout
         uses: nschloe/action-cached-lfs-checkout@v1
@@ -120,7 +121,7 @@ jobs:
           disable-animations: true
           sdcard-path-or-size: 100M
           script: |
-            ./gradlew installFDroidDebug
+            ./gradlew assembleFDroidDebug installFDroidDebug
             adb shell settings put system show_touches 1
             $HOME/.maestro/bin/maestro test .maestro
             adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat
@@ -135,3 +136,4 @@ jobs:
             /home/runner/.maestro/tests/
             *.mp4
             logcat
+            android/app/build/outputs/apk/fDroid/debug/app-fDroid-debug.apk
