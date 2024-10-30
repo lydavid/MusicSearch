@@ -37,7 +37,7 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
-                implementation(libs.coil.network.ktor2)
+                implementation(libs.coil.network.ktor3)
             }
         }
     }
