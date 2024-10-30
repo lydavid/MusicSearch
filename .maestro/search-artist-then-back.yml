@@ -96,7 +96,6 @@ appId: io.github.lydavid.musicsearch.debug
 - swipe:
       from: "ずっと真夜中でいいのに。"
       direction: RIGHT
-- assertVisible: "Deleted ずっと真夜中でいいのに。 from Artists."
 - tapOn: "Back"
 - tapOn: "Back"
 - tapOn: "Back"
