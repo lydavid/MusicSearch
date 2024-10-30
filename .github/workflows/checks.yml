@@ -76,7 +76,7 @@ jobs:
           disable_globbing: true
           file_pattern: '*/*.png'
 
-  assemble:
+  ios-checks:
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -85,5 +85,4 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
-      - name: Assemble
-        run: ./gradlew iosSimulatorArm64Test
+      - run: ./gradlew iosSimulatorArm64Test
