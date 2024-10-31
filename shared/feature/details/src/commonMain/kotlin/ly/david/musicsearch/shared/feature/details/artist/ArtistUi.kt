@@ -182,8 +182,6 @@ internal fun ArtistUi(
                         ArtistDetailsUi(
                             artist = artist,
                             filterText = state.topAppBarFilterState.filterText,
-                            imageUrl = state.imageUrl.orEmpty(),
-                            wikipediaExtract = state.wikipediaExtract,
                             lazyListState = state.detailsLazyListState,
                             onItemClick = { entity, id, title ->
                                 eventSink(

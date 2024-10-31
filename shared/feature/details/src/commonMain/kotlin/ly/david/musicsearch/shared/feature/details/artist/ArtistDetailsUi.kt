@@ -28,8 +28,6 @@ internal fun ArtistDetailsUi(
     artist: ArtistDetailsModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
-    imageUrl: String = "",
-    wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
 ) {
@@ -40,7 +38,7 @@ internal fun ArtistDetailsUi(
         item {
             if (filterText.isBlank()) {
                 LargeImage(
-                    url = imageUrl,
+                    url = artist.imageUrl.orEmpty(),
                     id = artist.id,
                 )
             }

@@ -26,7 +26,6 @@ import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
-import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
@@ -77,8 +76,6 @@ internal class ArtistPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         var artist: ArtistDetailsModel? by remember { mutableStateOf(null) }
-        var imageUrl: String? by remember { mutableStateOf(null) }
-        var wikipediaExtract: WikipediaExtract by remember { mutableStateOf(WikipediaExtract()) }
         val tabs: List<ArtistTab> by rememberSaveable {
             mutableStateOf(ArtistTab.entries)
         }
@@ -130,22 +127,22 @@ internal class ArtistPresenter(
         }
 
         LaunchedEffect(forceRefreshDetails, artist) {
-            artist?.let { artist ->
+            artist = artist?.copy(
                 imageUrl = artistImageRepository.getArtistImageUrl(
-                    artistDetailsModel = artist,
+                    artistDetailsModel = artist ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
-                )
-            }
+                ),
+            )
         }
 
         LaunchedEffect(forceRefreshDetails, artist) {
-            artist?.let { artist ->
+            artist = artist?.copy(
                 wikipediaExtract = wikimediaRepository.getWikipediaExtract(
-                    mbid = artist.id,
-                    urls = artist.urls,
+                    mbid = artist?.id ?: return@LaunchedEffect,
+                    urls = artist?.urls ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
-                )
-            }
+                ),
+            )
         }
 
         LaunchedEffect(
@@ -300,8 +297,6 @@ internal class ArtistPresenter(
             isLoading = isLoading,
             isError = isError,
             artist = artist,
-            imageUrl = imageUrl,
-            wikipediaExtract = wikipediaExtract,
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
@@ -324,8 +319,6 @@ internal data class ArtistUiState(
     val isLoading: Boolean,
     val isError: Boolean,
     val artist: ArtistDetailsModel?,
-    val imageUrl: String?,
-    val wikipediaExtract: WikipediaExtract,
     val tabs: List<ArtistTab>,
     val selectedTab: ArtistTab,
     val topAppBarFilterState: TopAppBarFilterState,

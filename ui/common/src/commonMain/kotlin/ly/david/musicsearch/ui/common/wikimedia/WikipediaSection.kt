@@ -24,52 +24,50 @@ import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 fun WikipediaSection(
-    extract: WikipediaExtract?,
+    extract: WikipediaExtract,
     modifier: Modifier = Modifier,
     filterText: String = "",
 ) {
-    if (extract != null) {
-        Column(
-            modifier = modifier,
+    Column(
+        modifier = modifier,
+    ) {
+        if (extract.extract.isNotBlank() &&
+            extract.extract.contains(filterText, ignoreCase = true)
         ) {
-            if (extract.extract.isNotBlank() &&
-                extract.extract.contains(filterText, ignoreCase = true)
-            ) {
-                var expanded by remember { mutableStateOf(false) }
+            var expanded by remember { mutableStateOf(false) }
 
-                // TODO: consider expand/collapse icon button, then make text selectable
-                Text(
-                    text = extract.extract,
-                    modifier = Modifier
-                        .clickable { expanded = !expanded }
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .animateContentSize(),
-                    maxLines = if (expanded) Int.MAX_VALUE else 4,
-                    overflow = TextOverflow.Ellipsis,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = TextStyles.getCardBodyTextStyle(),
-                )
-            }
+            // TODO: consider expand/collapse icon button, then make text selectable
+            Text(
+                text = extract.extract,
+                modifier = Modifier
+                    .clickable { expanded = !expanded }
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .animateContentSize(),
+                maxLines = if (expanded) Int.MAX_VALUE else 4,
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onBackground,
+                style = TextStyles.getCardBodyTextStyle(),
+            )
+        }
 
-            if (extract.wikipediaUrl.isNotBlank() &&
-                extract.wikipediaUrl.contains(filterText, ignoreCase = true)
-            ) {
-                val uriHandler = LocalUriHandler.current
-                val strings = LocalStrings.current
+        if (extract.wikipediaUrl.isNotBlank() &&
+            extract.wikipediaUrl.contains(filterText, ignoreCase = true)
+        ) {
+            val uriHandler = LocalUriHandler.current
+            val strings = LocalStrings.current
 
-                RelationListItem(
-                    relation = RelationListItemModel(
-                        id = "doesn't matter",
-                        label = strings.wikipedia,
-                        linkedEntity = MusicBrainzEntity.URL,
-                        name = extract.wikipediaUrl,
-                        linkedEntityId = "doesn't matter",
-                    ),
-                    onItemClick = { _, _, _ ->
-                        uriHandler.openUri(extract.wikipediaUrl)
-                    },
-                )
-            }
+            RelationListItem(
+                relation = RelationListItemModel(
+                    id = "doesn't matter",
+                    label = strings.wikipedia,
+                    linkedEntity = MusicBrainzEntity.URL,
+                    name = extract.wikipediaUrl,
+                    linkedEntityId = "doesn't matter",
+                ),
+                onItemClick = { _, _, _ ->
+                    uriHandler.openUri(extract.wikipediaUrl)
+                },
+            )
         }
     }
 }

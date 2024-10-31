@@ -17,6 +17,6 @@ data class ArtistDetailsModel(
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val urls: List<RelationListItemModel> = listOf(),
     val imageUrl: String? = null,
-    val wikipediaExtract: WikipediaExtract? = null,
+    val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     val areaListItemModel: AreaListItemModel? = null,
 ) : Artist
