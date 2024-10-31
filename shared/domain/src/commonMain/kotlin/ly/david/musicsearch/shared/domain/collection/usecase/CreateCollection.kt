@@ -15,7 +15,7 @@ class CreateCollection(
             id = getUUID(),
             name = name,
             entity = entity,
-            entityCount = 0,
+            cachedEntityCount = 0,
             isRemote = false,
         ),
     )

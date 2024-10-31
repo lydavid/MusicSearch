@@ -22,7 +22,7 @@ internal fun PreviewCollectionListItem(
                     name = "My collection with a very long title",
                     description = "Some songs",
                     entity = MusicBrainzEntity.RECORDING,
-                    entityCount = 9999,
+                    cachedEntityCount = 9999,
                     visited = visited,
                 ),
             )

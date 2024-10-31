@@ -27,7 +27,7 @@ class CollectionDao(
                     entity = entity,
                     type = null,
                     type_id = null,
-                    entity_count = entityCount,
+                    entity_count = cachedEntityCount,
                 ),
             )
         }
@@ -107,7 +107,7 @@ class CollectionDao(
         isRemote = isRemote,
         name = name,
         entity = entity,
-        entityCount = entityCount.toInt(),
+        cachedEntityCount = entityCount.toInt(),
         visited = visited == true,
     )
 

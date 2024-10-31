@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.domain.listitem
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 /**
- * @param entityCount The number of entities in this collection in our local database.
+ * @param cachedEntityCount The number of entities in this collection in our local database.
  */
 data class CollectionListItemModel(
     override val id: String,
@@ -11,6 +11,6 @@ data class CollectionListItemModel(
     val name: String,
     val description: String = "",
     val entity: MusicBrainzEntity,
-    val entityCount: Int = 0,
+    val cachedEntityCount: Int = 0,
     override val visited: Boolean = false,
 ) : ListItemModel(), Visitable

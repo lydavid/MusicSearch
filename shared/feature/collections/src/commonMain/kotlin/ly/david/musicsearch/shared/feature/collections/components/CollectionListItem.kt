@@ -51,7 +51,7 @@ internal fun CollectionListItem(
             Row {
                 // TODO: not accurate for remote collections we have not clicked into yet
                 Text(
-                    text = collection.entityCount.toString(),
+                    text = "${collection.cachedEntityCount}",
                     modifier = Modifier.padding(end = 8.dp),
                     style = TextStyles.getCardBodyTextStyle(),
                     fontWeight = collection.fontWeight,

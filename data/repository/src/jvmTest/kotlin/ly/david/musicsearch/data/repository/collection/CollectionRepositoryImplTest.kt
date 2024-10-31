@@ -259,14 +259,14 @@ class CollectionRepositoryImplTest : KoinTest {
                     name = "Artists",
                     entity = MusicBrainzEntity.ARTIST,
                     isRemote = true,
-                    entityCount = 0, // Because we have not clicked into the collection
+                    cachedEntityCount = 0, // Because we have not clicked into the collection
                 ),
                 CollectionListItemModel(
                     id = "2",
                     isRemote = true,
                     name = "Areas",
                     entity = MusicBrainzEntity.AREA,
-                    entityCount = 0,
+                    cachedEntityCount = 0,
                 ),
             ),
             collections,
