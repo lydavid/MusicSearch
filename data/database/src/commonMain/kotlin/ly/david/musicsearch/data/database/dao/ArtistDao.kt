@@ -65,12 +65,14 @@ class ArtistDao(
         areaId: String?,
         areaName: String?,
         countryCode: String?,
+        visited: Boolean?,
     ): ArtistDetailsModel {
         val area = if (areaId != null && areaName != null) {
             AreaListItemModel(
                 id = areaId,
                 name = areaName,
                 countryCodes = listOfNotNull(countryCode),
+                visited = visited == true,
             )
         } else {
             null

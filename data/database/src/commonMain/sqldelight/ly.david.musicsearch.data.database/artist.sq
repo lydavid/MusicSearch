@@ -38,10 +38,12 @@ SELECT
   artist.ended,
   area.id,
   area.name,
-  cc.code
+  cc.code,
+  visited.entity_id IS NOT NULL AS visited
 FROM artist
 LEFT JOIN area ON artist.area_id = area.id
 LEFT JOIN country_code cc ON area.id = cc.area_id
+LEFT JOIN visited ON visited.entity_id = area.id
 WHERE artist.id = :artistId
 GROUP BY artist.id;
 
