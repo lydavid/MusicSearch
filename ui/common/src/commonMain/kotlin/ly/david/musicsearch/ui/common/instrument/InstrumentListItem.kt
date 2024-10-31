@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
@@ -26,6 +27,7 @@ fun InstrumentListItem(
                     Text(
                         text = name,
                         style = TextStyles.getCardBodyTextStyle(),
+                        fontWeight = instrument.fontWeight,
                     )
 
                     DisambiguationText(disambiguation = disambiguation)
@@ -35,6 +37,7 @@ fun InstrumentListItem(
                             text = it,
                             modifier = Modifier.padding(top = 4.dp),
                             style = TextStyles.getCardBodySubTextStyle(),
+                            fontWeight = instrument.fontWeight,
                         )
                     }
 
@@ -43,6 +46,7 @@ fun InstrumentListItem(
                             modifier = Modifier.padding(top = 4.dp),
                             text = it,
                             style = TextStyles.getCardBodySubTextStyle(),
+                            fontWeight = instrument.fontWeight,
                         )
                     }
                 }

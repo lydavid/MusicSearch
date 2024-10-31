@@ -8,10 +8,12 @@ fun mapToInstrumentListItemModel(
     disambiguation: String?,
     description: String?,
     type: String?,
+    visited: Boolean?,
 ) = InstrumentListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
     description = description,
     type = type,
+    visited = visited == true,
 )

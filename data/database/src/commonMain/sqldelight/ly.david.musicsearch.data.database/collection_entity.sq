@@ -202,10 +202,12 @@ SELECT
   i.name,
   i.disambiguation,
   i.description,
-  i.type
+  i.type,
+  visited.entity_id IS NOT NULL AS visited
 FROM instrument i
 INNER JOIN collection_entity ce ON i.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = c.id
 WHERE c.id = :collectionId
 AND (
   i.name LIKE :query OR
