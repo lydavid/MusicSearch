@@ -11,7 +11,7 @@ data class LabelListItemModel(
     override val labelCode: Int? = null,
 
     val catalogNumber: String? = null,
-) : Label, ListItemModel()
+) : ListItemModel(), Label
 
 fun LabelWithCatalog.toLabelListItemModel() =
     LabelListItemModel(

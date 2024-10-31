@@ -15,4 +15,4 @@ data class PlaceListItemModel(
     override val lifeSpan: LifeSpanUiModel? = null,
 
     val area: AreaListItemModel? = null,
-) : Place, ListItemModel()
+) : ListItemModel(), Place
