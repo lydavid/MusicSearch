@@ -23,12 +23,13 @@ getNumberOfCollections:
 SELECT IFNULL(
   (
     SELECT count(*) FROM collection
-    WHERE id IN
-      (SELECT id FROM collection
+    WHERE id IN (
+      SELECT id FROM collection
       WHERE is_remote = 0 AND :showLocal
       UNION
       SELECT id FROM collection
-      WHERE is_remote AND :showRemote)
+      WHERE is_remote AND :showRemote
+    )
     AND name LIKE :query
     AND (:entity = NULL OR entity = :entity)
   ),
@@ -48,12 +49,13 @@ LEFT JOIN (
   FROM collection_entity
   GROUP BY id
 ) ce ON c.id = ce.id
-WHERE c.id IN
-  (SELECT id FROM collection
+WHERE c.id IN (
+  SELECT id FROM collection
   WHERE is_remote = 0 AND :showLocal
   UNION
   SELECT id FROM collection
-  WHERE is_remote AND :showRemote)
+  WHERE is_remote AND :showRemote
+)
 AND name LIKE :query
 AND (:entity = NULL OR entity = :entity)
 ORDER BY

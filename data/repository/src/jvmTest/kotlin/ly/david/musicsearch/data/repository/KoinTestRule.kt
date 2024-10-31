@@ -7,6 +7,7 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.createDatabase
 import ly.david.musicsearch.data.database.databaseDaoModule
+import ly.david.musicsearch.data.repository.di.repositoryDataModule
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 import org.koin.core.context.startKoin
@@ -46,6 +47,7 @@ class KoinTestRule : TestWatcher() {
         startKoin {
             modules(
                 databaseDaoModule,
+                repositoryDataModule,
                 testCoroutineDispatchersModule,
                 testDatabaseModule,
             )

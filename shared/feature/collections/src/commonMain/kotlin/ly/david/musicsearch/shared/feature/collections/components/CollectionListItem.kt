@@ -32,8 +32,7 @@ internal fun CollectionListItem(
         },
         modifier = modifier.clickable { onClick(collection) },
         supportingContent = {
-            // TODO: if we add more content to this column, it messes up any BottomModalSheet
-            //  problem seems to appear when list is of certain length (eg. 4 items) regardless of this
+            // We currently don't support adding descriptions. Descriptions are not returned from MB's API either.
             Text(
                 text = collection.description,
                 style = TextStyles.getCardBodyTextStyle(),

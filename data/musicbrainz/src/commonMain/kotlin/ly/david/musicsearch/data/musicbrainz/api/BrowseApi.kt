@@ -491,9 +491,9 @@ data class BrowseArtistsResponse(
 
 @Serializable
 data class BrowseCollectionsResponse(
-    @SerialName("collection-count") override val count: Int,
-    @SerialName("collection-offset") override val offset: Int,
-    @SerialName("collections") override val musicBrainzModels: List<CollectionMusicBrainzModel>,
+    @SerialName("collection-count") override val count: Int = 0,
+    @SerialName("collection-offset") override val offset: Int = 0,
+    @SerialName("collections") override val musicBrainzModels: List<CollectionMusicBrainzModel> = listOf(),
 ) : Browsable<CollectionMusicBrainzModel>
 
 @Serializable

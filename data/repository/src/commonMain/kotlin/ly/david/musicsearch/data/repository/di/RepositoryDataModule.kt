@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.di
 
 import ly.david.musicsearch.data.repository.BrowseEntityCountRepositoryImpl
-import ly.david.musicsearch.data.repository.CollectionRepositoryImpl
+import ly.david.musicsearch.data.repository.collection.CollectionRepositoryImpl
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.NowPlayingHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
