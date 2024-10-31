@@ -9,7 +9,10 @@ import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
 @Composable
-internal fun PreviewCollectionListItem(isRemote: Boolean = true) {
+internal fun PreviewCollectionListItem(
+    isRemote: Boolean = true,
+    visited: Boolean = true,
+) {
     PreviewTheme {
         Surface {
             CollectionListItem(
@@ -20,6 +23,7 @@ internal fun PreviewCollectionListItem(isRemote: Boolean = true) {
                     description = "Some songs",
                     entity = MusicBrainzEntity.RECORDING,
                     entityCount = 9999,
+                    visited = visited,
                 ),
             )
         }

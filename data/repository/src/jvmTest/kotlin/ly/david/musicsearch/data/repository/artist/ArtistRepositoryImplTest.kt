@@ -12,7 +12,7 @@ import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.data.database.dao.VisitedDao
+import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel

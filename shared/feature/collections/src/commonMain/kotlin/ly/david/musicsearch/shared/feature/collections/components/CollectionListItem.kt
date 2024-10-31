@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.ui.common.EntityIcon
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.SMALL_IMAGE_SIZE
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
@@ -28,6 +29,7 @@ internal fun CollectionListItem(
             Text(
                 text = collection.name,
                 style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = collection.fontWeight,
             )
         },
         modifier = modifier.clickable { onClick(collection) },
@@ -36,6 +38,7 @@ internal fun CollectionListItem(
             Text(
                 text = collection.description,
                 style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = collection.fontWeight,
             )
         },
         leadingContent = {
@@ -51,6 +54,7 @@ internal fun CollectionListItem(
                     text = collection.entityCount.toString(),
                     modifier = Modifier.padding(end = 8.dp),
                     style = TextStyles.getCardBodyTextStyle(),
+                    fontWeight = collection.fontWeight,
                 )
                 if (collection.isRemote) {
                     Icon(

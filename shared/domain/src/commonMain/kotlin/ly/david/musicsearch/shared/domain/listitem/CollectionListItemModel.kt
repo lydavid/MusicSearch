@@ -12,4 +12,5 @@ data class CollectionListItemModel(
     val description: String = "",
     val entity: MusicBrainzEntity,
     val entityCount: Int = 0,
-) : ListItemModel()
+    override val visited: Boolean = false,
+) : ListItemModel(), Visitable

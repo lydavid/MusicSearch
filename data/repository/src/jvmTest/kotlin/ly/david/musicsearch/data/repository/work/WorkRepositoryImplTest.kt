@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.work
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.data.database.dao.VisitedDao
+import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao

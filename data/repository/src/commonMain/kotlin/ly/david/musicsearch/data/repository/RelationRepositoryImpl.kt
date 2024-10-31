@@ -12,11 +12,11 @@ import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.data.database.dao.VisitedDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 
