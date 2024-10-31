@@ -13,6 +13,7 @@ fun mapToEventListItemModel(
     begin: String?,
     end: String?,
     ended: Boolean?,
+    visited: Boolean?,
 ) = EventListItemModel(
     id = id,
     name = name,
@@ -25,4 +26,5 @@ fun mapToEventListItemModel(
         end = end,
         ended = ended,
     ),
+    visited = visited == true,
 )
