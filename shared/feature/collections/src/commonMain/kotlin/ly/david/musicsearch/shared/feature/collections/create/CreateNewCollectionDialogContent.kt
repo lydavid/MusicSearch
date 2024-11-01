@@ -38,12 +38,13 @@ import ly.david.musicsearch.ui.core.theme.TextStyles
 @Composable
 fun CreateNewCollectionDialogContent(
     modifier: Modifier = Modifier,
+    defaultEntity: MusicBrainzEntity = MusicBrainzEntity.RELEASE,
     onDismiss: () -> Unit = {},
     onSubmit: (name: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
 ) {
     val strings = LocalStrings.current
     var name by rememberSaveable { mutableStateOf("") }
-    var selectedEntity by rememberSaveable { mutableStateOf(MusicBrainzEntity.RELEASE) }
+    var selectedEntity by rememberSaveable { mutableStateOf(defaultEntity) }
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
 
