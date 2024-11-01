@@ -146,7 +146,8 @@ SELECT
   l.name,
   l.disambiguation,
   l.type,
-  l.label_code
+  l.label_code,
+  visited.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN label l ON sr.entity_id = l.id
 LEFT JOIN visited ON visited.entity_id = l.id

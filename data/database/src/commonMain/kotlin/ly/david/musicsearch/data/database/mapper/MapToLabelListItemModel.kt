@@ -8,10 +8,12 @@ fun mapToLabelListItemModel(
     disambiguation: String?,
     type: String?,
     labelCode: Int?,
+    visited: Boolean?,
 ) = LabelListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
     type = type,
     labelCode = labelCode,
+    visited = visited == true,
 )

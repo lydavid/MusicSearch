@@ -12,6 +12,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.core.theme.getSubTextColor
@@ -30,6 +31,7 @@ fun LabelListItem(
                 Text(
                     text = label.getNameWithDisambiguation(),
                     style = TextStyles.getCardBodyTextStyle(),
+                    fontWeight = label.fontWeight,
                 )
 
                 label.type?.ifNotNullOrEmpty {
@@ -38,6 +40,7 @@ fun LabelListItem(
                         text = it,
                         color = getSubTextColor(),
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = label.fontWeight,
                     )
                 }
 
@@ -46,18 +49,16 @@ fun LabelListItem(
                         modifier = Modifier.padding(top = 4.dp),
                         text = strings.lc(it),
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = label.fontWeight,
                     )
                 }
-
-                // TODO: area
-
-                // TODO: lifespan
 
                 label.catalogNumber.ifNotNullOrEmpty {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
                         text = it,
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = label.fontWeight,
                     )
                 }
             }
