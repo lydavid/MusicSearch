@@ -28,7 +28,7 @@ pagingMultiplatform = "3.3.0-alpha02-0.5.1"
 pagingTesting = "3.3.2"
 paparazzi = "1.3.3"
 sqldelight = "2.0.2"
-stately = "2.0.5"
+stately = "2.1.0"
 turbine = "1.2.0"
 
 [libraries]
