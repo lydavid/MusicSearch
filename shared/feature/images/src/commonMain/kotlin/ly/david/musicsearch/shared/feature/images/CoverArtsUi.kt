@@ -80,7 +80,7 @@ internal fun CoverArtsUi(
         ) {
             HorizontalPager(
                 state = pagerState,
-                beyondBoundsPageCount = 1,
+                beyondViewportPageCount = 1,
             ) { page ->
                 val url = imageUrlsList[page]
                 Column(

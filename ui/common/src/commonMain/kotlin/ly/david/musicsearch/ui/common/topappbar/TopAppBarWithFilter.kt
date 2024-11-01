@@ -125,7 +125,7 @@ internal fun TopAppBarWithFilterInternal(
                             .fillMaxWidth(),
                         maxLines = 1,
                         singleLine = true,
-                        colors = TextFieldDefaults.textFieldColors(
+                        colors = TextFieldDefaults.colors(
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
                             disabledIndicatorColor = Color.Transparent,
