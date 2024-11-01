@@ -1,7 +1,6 @@
 package ly.david.musicsearch.shared.feature.collections.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,61 +21,60 @@ import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
-@Suppress("UnusedReceiverParameter")
-@OptIn(
-    ExperimentalFoundationApi::class,
-)
 @Composable
-internal fun ColumnScope.CollectionBottomSheetContent(
+internal fun CollectionBottomSheetContent(
     collections: LazyPagingItems<CollectionListItemModel>,
+    modifier: Modifier = Modifier,
     onCreateCollectionClick: () -> Unit = {},
     onAddToCollection: (collectionId: String) -> Unit = {},
 ) {
-    val strings = LocalStrings.current
+    Column(modifier = modifier) {
+        val strings = LocalStrings.current
 
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Text(
-            text = strings.addToCollection,
-            modifier = Modifier
-                .padding(horizontal = 16.dp),
-            style = TextStyles.getCardBodyTextStyle(),
-        )
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        IconButton(onClick = onCreateCollectionClick) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = strings.createCollection,
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = strings.addToCollection,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp),
+                style = TextStyles.getCardBodyTextStyle(),
             )
-        }
-    }
 
-    Divider(modifier = Modifier.padding(top = 16.dp))
+            Spacer(modifier = Modifier.weight(1f))
 
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        items(
-            count = collections.itemCount,
-        ) { index ->
-            when (val collection = collections[index]) {
-                is CollectionListItemModel -> {
-                    CollectionListItem(
-                        collection = collection,
-                        onClick = {
-                            onAddToCollection(collection.id)
-                        },
-                    )
-                }
-
-                else -> {
-                    // Do nothing.
-                }
+            IconButton(onClick = onCreateCollectionClick) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = strings.createCollection,
+                )
             }
         }
-        item {
-            Spacer(modifier = Modifier.padding(bottom = 16.dp))
+
+        Divider(modifier = Modifier.padding(top = 16.dp))
+
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            items(
+                count = collections.itemCount,
+            ) { index ->
+                when (val collection = collections[index]) {
+                    is CollectionListItemModel -> {
+                        CollectionListItem(
+                            collection = collection,
+                            onClick = {
+                                onAddToCollection(collection.id)
+                            },
+                        )
+                    }
+
+                    else -> {
+                        // Do nothing.
+                    }
+                }
+            }
+            item {
+                Spacer(modifier = Modifier.padding(bottom = 16.dp))
+            }
         }
     }
 }

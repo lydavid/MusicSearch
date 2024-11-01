@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.collections.add
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,15 +44,14 @@ internal fun AddToCollectionUi(
         }
     }
 
-    Column(modifier = modifier) {
-        CollectionBottomSheetContent(
-            collections = state.lazyPagingItems,
-            onCreateCollectionClick = {
-                showDialog = true
-            },
-            onAddToCollection = { collectionId ->
-                eventSink(AddToCollectionUiEvent.AddToCollection(collectionId))
-            },
-        )
-    }
+    CollectionBottomSheetContent(
+        collections = state.lazyPagingItems,
+        modifier = modifier,
+        onCreateCollectionClick = {
+            showDialog = true
+        },
+        onAddToCollection = { collectionId ->
+            eventSink(AddToCollectionUiEvent.AddToCollection(collectionId))
+        },
+    )
 }
