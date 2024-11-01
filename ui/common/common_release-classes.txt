@@ -1,14 +1,3 @@
-unstable class EventPreviewParameterProvider {
-  unstable val values: Sequence<EventListItemModel>
-  <runtime stability> = Unstable
-}
-unstable class InstrumentCardPreviewParameterProvider {
-  unstable val values: Sequence<InstrumentListItemModel>
-  <runtime stability> = Unstable
-}
-stable class LabelCardPreviewParameterProvider {
-  <runtime stability> = Stable
-}
 unstable class LifeSpanPreviewParameterProvider {
   unstable val values: Sequence<LifeSpanUiModel>
   <runtime stability> = Unstable
@@ -17,10 +6,6 @@ stable class LoginPresenterAndroid {
   unstable val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract
   unstable val login: LoginAndroid
   <runtime stability> = Stable
-}
-unstable class PlacePreviewParameterProvider {
-  unstable val values: Sequence<PlaceListItemModel>
-  <runtime stability> = Unstable
 }
 unstable class RecordingPreviewParameterProvider {
   unstable val values: Sequence<RecordingListItemModel>
@@ -106,21 +91,6 @@ stable class LoginUiState {
   stable val showDialog: Boolean
   stable val eventSink: Function1<LoginUiEvent, Unit>
   <runtime stability> = Stable
-}
-stable class State {
-  stable val entityId: String
-  stable val query: String
-  <runtime stability> = Stable
-}
-unstable class RelationsList {
-  runtime val getEntityRelationships: GetEntityRelationships
-  unstable val entityId: MutableStateFlow<String>
-  unstable val query: MutableStateFlow<String>
-  unstable val paramState: Flow<State>
-  unstable var scope: CoroutineScope
-  stable var entity: MusicBrainzEntity
-  unstable val pagedRelations$delegate: Lazy<Flow<PagingData<RelationListItemModel>>>
-  <runtime stability> = Unstable
 }
 stable class PlacesByEntityPresenter {
   runtime val getPlacesByEntity: GetPlacesByEntity
@@ -294,6 +264,10 @@ stable class NowPlayingHistoryScreen {
 }
 stable class SpotifyHistoryScreen {
   <runtime stability> = Stable
+}
+stable class TopAppBarEditState {
+  stable val showEditIcon: Boolean
+  stable var isEditMode$delegate: MutableState<Boolean>
 }
 stable class TopAppBarFilterState {
   stable var filterText$delegate: MutableState<String>

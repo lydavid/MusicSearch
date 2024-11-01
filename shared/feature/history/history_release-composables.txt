@@ -11,7 +11,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewHi
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistoryListItem(
   lookupHistory: LookupHistoryListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceableGroup(1830518465)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1830518465)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
 
@@ -19,9 +19,9 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.history.internal.HistoryListItem
-  stable onDeleteItem: Function1<LookupHistoryListItemModel, Unit>? = @static $composer.startReplaceableGroup(1830520789)
+  stable onDeleteItem: Function1<LookupHistoryListItemModel, Unit>? = @static $composer.startReplaceGroup(1830520789)
 val tmp1_group = $composer.cache(false) {
   {     it  :   LookupHistoryListItemModel   ->
 
@@ -29,7 +29,7 @@ val tmp1_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.shared.feature.history.internal.HistoryListItem
 )
 fun present(
@@ -37,7 +37,7 @@ fun present(
 ): HistoryUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistorySortBottomSheet(
   stable sortOption: HistorySortOption
-  stable onSortOptionClick: Function1<HistorySortOption, Unit>? = @static $composer.startReplaceableGroup(1086965238)
+  stable onSortOptionClick: Function1<HistorySortOption, Unit>? = @static $composer.startReplaceGroup(1086965238)
 val tmp0_group = $composer.cache(false) {
   {     it  :   HistorySortOption   ->
 
@@ -45,10 +45,10 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.history.internal.HistorySortBottomSheet
   stable bottomSheetState: SheetState? = @dynamic rememberModalBottomSheetState(false, null, $composer, 0, 0b0011)
-  stable onDismiss: Function0<Unit>? = @static $composer.startReplaceableGroup(1086968438)
+  stable onDismiss: Function0<Unit>? = @static $composer.startReplaceGroup(1086968438)
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -56,12 +56,12 @@ val tmp1_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.shared.feature.history.internal.HistorySortBottomSheet
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistorySortBottomSheetContent(
   stable sortOption: HistorySortOption? = @static HistorySortOption.RECENTLY_VISITED
-  stable onSortOptionClick: Function1<HistorySortOption, Unit>? = @static $composer.startReplaceableGroup(-419512921)
+  stable onSortOptionClick: Function1<HistorySortOption, Unit>? = @static $composer.startReplaceGroup(-419512921)
 val tmp0_group = $composer.cache(false) {
   {     it  :   HistorySortOption   ->
 
@@ -69,7 +69,7 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.history.internal.HistorySortBottomSheetContent
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistoryUi(
@@ -80,7 +80,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistoryUi
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic LazyListState()
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceableGroup(2112597092)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(2112597092)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
 
@@ -88,9 +88,9 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.history.internal.HistoryUi
-  stable onDeleteItem: Function1<LookupHistoryListItemModel, Unit>? = @static $composer.startReplaceableGroup(2112599416)
+  stable onDeleteItem: Function1<LookupHistoryListItemModel, Unit>? = @static $composer.startReplaceGroup(2112599416)
 val tmp1_group = $composer.cache(false) {
   {     it  :   LookupHistoryListItemModel   ->
 
@@ -98,6 +98,6 @@ val tmp1_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.shared.feature.history.internal.HistoryUi
 )

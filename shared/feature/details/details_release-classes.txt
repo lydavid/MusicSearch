@@ -68,8 +68,6 @@ stable class ArtistUiState {
   stable val isLoading: Boolean
   stable val isError: Boolean
   runtime val artist: ArtistDetailsModel?
-  stable val imageUrl: String?
-  runtime val wikipediaExtract: WikipediaExtract
   unstable val tabs: List<ArtistTab>
   stable val selectedTab: ArtistTab
   stable val topAppBarFilterState: TopAppBarFilterState
@@ -143,7 +141,7 @@ stable class ClickItem {
 stable class GenrePresenter {
   stable val screen: DetailsScreen
   stable val navigator: Navigator
-  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val lookupApi: LookupApi
   runtime val incrementLookupHistory: IncrementLookupHistory
   unstable val logger: Logger
   <runtime stability> = Stable

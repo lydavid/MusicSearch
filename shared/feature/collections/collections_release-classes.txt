@@ -7,6 +7,7 @@ stable class AddToCollectionPresenter {
   <runtime stability> = Stable
 }
 stable class AddToCollectionUiState {
+  stable val defaultEntity: MusicBrainzEntity
   runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
   stable val eventSink: Function1<AddToCollectionUiEvent, Unit>
 }
@@ -79,10 +80,12 @@ stable class CollectionPresenter {
   <runtime stability> = Stable
 }
 stable class CollectionUiState {
+  stable val title: String
   runtime val collection: CollectionListItemModel?
   runtime val actionableResult: ActionableResult?
   stable val topAppBarFilterState: TopAppBarFilterState
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable val topAppBarEditState: TopAppBarEditState
   stable val artistsByEntityUiState: ArtistsByEntityUiState
   stable val eventsByEntityUiState: EventsByEntityUiState
   stable val labelsByEntityUiState: LabelsByEntityUiState

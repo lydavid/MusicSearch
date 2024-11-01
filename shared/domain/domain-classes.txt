@@ -23,6 +23,7 @@ stable class ReleaseEvent {
   stable val name: String
   stable val date: String?
   stable val countryCode: String?
+  stable val visited: Boolean
   <runtime stability> = Stable
 }
 unstable class AreaDetailsModel {
@@ -58,7 +59,7 @@ unstable class ArtistDetailsModel {
   stable val lifeSpan: LifeSpanUiModel
   unstable val urls: List<RelationListItemModel>
   stable val imageUrl: String?
-  stable val wikipediaExtract: WikipediaExtract?
+  stable val wikipediaExtract: WikipediaExtract
   unstable val areaListItemModel: AreaListItemModel?
   <runtime stability> = Unstable
 }
@@ -96,9 +97,10 @@ stable class GetAllCollections {
   runtime val musicBrainzAuthStore: MusicBrainzAuthStore
   <runtime stability> = 
 }
-runtime class GetCollection {
+stable class GetCollection {
   runtime val collectionRepository: CollectionRepository
-  <runtime stability> = Uncertain(CollectionRepository)
+  runtime val visitedDao: VisitedDao
+  <runtime stability> = 
 }
 stable class ActionableResult {
   stable val message: String
@@ -228,6 +230,7 @@ unstable class AreaListItemModel {
   stable val lifeSpan: LifeSpanUiModel?
   unstable val countryCodes: List<String>?
   stable val date: String?
+  stable val visited: Boolean
   <runtime stability> = Unstable
 }
 stable class ArtistListItemModel {
@@ -238,7 +241,7 @@ stable class ArtistListItemModel {
   stable val type: String?
   stable val gender: String?
   stable val countryCode: String?
-  stable val lifeSpan: LifeSpanUiModel?
+  stable val lifeSpan: LifeSpanUiModel
   stable val imageUrl: String?
   stable val visited: Boolean
   <runtime stability> = Stable
@@ -249,7 +252,8 @@ stable class CollectionListItemModel {
   stable val name: String
   stable val description: String
   stable val entity: MusicBrainzEntity
-  stable val entityCount: Int
+  stable val cachedEntityCount: Int
+  stable val visited: Boolean
   <runtime stability> = Stable
 }
 stable class EventListItemModel {
@@ -259,7 +263,8 @@ stable class EventListItemModel {
   stable val type: String?
   stable val time: String?
   stable val cancelled: Boolean?
-  stable val lifeSpan: LifeSpanUiModel?
+  stable val lifeSpan: LifeSpanUiModel
+  stable val visited: Boolean
   <runtime stability> = Stable
 }
 stable class GenreListItemModel {
@@ -274,6 +279,7 @@ stable class InstrumentListItemModel {
   stable val disambiguation: String?
   stable val description: String?
   stable val type: String?
+  stable val visited: Boolean
   <runtime stability> = Stable
 }
 stable class LabelListItemModel {
@@ -283,6 +289,7 @@ stable class LabelListItemModel {
   stable val type: String?
   stable val labelCode: Int?
   stable val catalogNumber: String?
+  stable val visited: Boolean
   <runtime stability> = Stable
 }
 stable class ListItemModel {
@@ -317,7 +324,7 @@ unstable class NowPlayingHistoryListItemModel {
   unstable val lastPlayed: Instant
   <runtime stability> = Unstable
 }
-unstable class PlaceListItemModel {
+runtime class PlaceListItemModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String?
@@ -325,8 +332,8 @@ unstable class PlaceListItemModel {
   stable val type: String?
   runtime val coordinates: Coordinates?
   stable val lifeSpan: LifeSpanUiModel?
-  unstable val area: AreaListItemModel?
-  <runtime stability> = Unstable
+  stable val visited: Boolean
+  <runtime stability> = Uncertain(Coordinates)
 }
 stable class RecordingListItemModel {
   stable val id: String
@@ -494,9 +501,10 @@ runtime class GetCountOfEachRelationshipTypeUseCase {
   runtime val relationRepository: RelationRepository
   <runtime stability> = Uncertain(RelationRepository)
 }
-runtime class GetEntityRelationships {
+unstable class GetEntityRelationships {
   runtime val relationRepository: RelationRepository
-  <runtime stability> = Uncertain(RelationRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 stable class CoverArtArchiveUiModel {
   stable val count: Int
@@ -589,6 +597,13 @@ runtime class GetSearchHistory {
 runtime class RecordSearchHistory {
   runtime val searchHistoryRepository: SearchHistoryRepository
   <runtime stability> = Uncertain(SearchHistoryRepository)
+}
+stable class SearchResultMetadata {
+  stable val entity: MusicBrainzEntity
+  stable val query: String
+  stable val localCount: Int
+  stable val remoteCount: Int
+  <runtime stability> = Stable
 }
 runtime class GetSearchResults {
   runtime val searchResultsRepository: SearchResultsRepository
