@@ -291,10 +291,12 @@ SELECT
   p.latitude,
   p.begin,
   p.end,
-  p.ended
+  p.ended,
+  visited.entity_id IS NOT NULL AS visited
 FROM place p
 INNER JOIN collection_entity ce ON p.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = c.id
 WHERE c.id = :collectionId
 AND (
   p.name LIKE :query OR

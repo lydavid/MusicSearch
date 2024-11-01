@@ -168,7 +168,8 @@ SELECT
   p.latitude,
   p.begin,
   p.end,
-  p.ended
+  p.ended,
+  visited.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN place p ON sr.entity_id = p.id
 LEFT JOIN visited ON visited.entity_id = p.id

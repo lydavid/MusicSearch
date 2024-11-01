@@ -67,10 +67,12 @@ SELECT
   p.latitude,
   p.begin,
   p.end,
-  p.ended
+  p.ended,
+  visited.entity_id IS NOT NULL AS visited
 FROM place p
 INNER JOIN area_place ap ON p.id = ap.place_id
 INNER JOIN area a ON a.id = ap.area_id
+LEFT JOIN visited ON visited.entity_id = p.id
 WHERE a.id = :areaId
 AND (p.name LIKE :query OR p.disambiguation LIKE :query OR p.type LIKE :query)
 ORDER BY p.name, p.address
