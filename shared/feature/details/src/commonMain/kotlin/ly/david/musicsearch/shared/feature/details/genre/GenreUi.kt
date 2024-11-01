@@ -11,29 +11,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.network.resourceUri
-import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
-import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
-import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenContent
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 internal fun GenreUi(
     state: GenreUiState,
-    entityId: String,
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
 
     GenreUi(
         title = state.title,
-        entityId = entityId,
-        isError = state.isError,
         genre = state.genre,
+        url = state.url,
+        isError = state.isError,
         modifier = modifier,
         onBack = {
             eventSink(GenreUiEvent.NavigateUp)
@@ -46,8 +43,8 @@ internal fun GenreUi(
 @Composable
 internal fun GenreUi(
     title: String,
-    entityId: String,
-    genre: GenreMusicBrainzModel?,
+    genre: GenreListItemModel?,
+    url: String,
     modifier: Modifier = Modifier,
     isError: Boolean = false,
     onBack: () -> Unit = {},
@@ -85,7 +82,7 @@ internal fun GenreUi(
 
                 Button(
                     onClick = {
-                        uriHandler.openUri("$MUSIC_BRAINZ_BASE_URL/${entity.resourceUri}/$entityId")
+                        uriHandler.openUri(url)
                     },
                 ) {
                     Text(strings.openInBrowser)

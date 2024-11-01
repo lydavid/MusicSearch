@@ -19,8 +19,6 @@ kotlin {
                 implementation(projects.core.preferences)
                 implementation(projects.core.logging.api)
                 implementation(projects.data.spotify)
-                implementation(projects.data.musicbrainz)
-                implementation(projects.data.database)
                 implementation(projects.ui.image)
 
                 implementation(compose.foundation)

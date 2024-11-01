@@ -102,9 +102,10 @@ val detailsFeatureModule = module {
                             GenrePresenter(
                                 screen = screen,
                                 navigator = navigator,
-                                lookupApi = get(),
+                                repository = get(),
                                 incrementLookupHistory = get(),
                                 logger = get(),
+                                get(),
                             )
                         }
 
@@ -261,7 +262,6 @@ val detailsFeatureModule = module {
                             ui<GenreUiState> { state, modifier ->
                                 GenreUi(
                                     state = state,
-                                    entityId = screen.id,
                                     modifier = modifier,
                                 )
                             }

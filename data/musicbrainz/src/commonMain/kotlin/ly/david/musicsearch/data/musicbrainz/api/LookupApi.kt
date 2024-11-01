@@ -94,7 +94,7 @@ interface LookupApi {
 
     suspend fun lookupGenre(
         genreId: String,
-        include: String? = null,
+        include: String? = URL_REL,
     ): GenreMusicBrainzModel
 
     suspend fun lookupInstrument(
