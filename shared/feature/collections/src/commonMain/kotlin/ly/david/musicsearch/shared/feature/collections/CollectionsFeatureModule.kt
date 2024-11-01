@@ -46,6 +46,7 @@ val collectionsFeatureModule = module {
                     worksByEntityPresenter = get(),
                     getSeriesByEntity = get(),
                     deleteFromCollection = get(),
+                    getMusicBrainzUrl = get(),
                 )
 
                 is AddToCollectionScreen -> AddToCollectionPresenter(

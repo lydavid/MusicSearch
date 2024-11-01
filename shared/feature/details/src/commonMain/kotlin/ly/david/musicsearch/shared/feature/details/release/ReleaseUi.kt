@@ -91,8 +91,7 @@ internal fun ReleaseUi(
                 topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
-                        entity = entity,
-                        entityId = entityId,
+                        url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
                     AddToCollectionMenuItem(

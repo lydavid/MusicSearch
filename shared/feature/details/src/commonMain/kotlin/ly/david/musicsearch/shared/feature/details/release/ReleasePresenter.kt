@@ -24,6 +24,7 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
@@ -55,6 +56,7 @@ internal class ReleasePresenter(
     private val artistsByEntityPresenter: ArtistsByEntityPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
 ) : Presenter<ReleaseUiState> {
 
     @Composable
@@ -210,6 +212,7 @@ internal class ReleasePresenter(
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             release = release,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             releaseDetailsUiState = ReleaseDetailsUiState(
                 isError = isError,
                 imageUrl = imageUrl,
@@ -233,6 +236,7 @@ internal data class ReleaseUiState(
     val selectedTab: ReleaseTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val release: ReleaseDetailsModel?,
+    val url: String = "",
     val releaseDetailsUiState: ReleaseDetailsUiState,
     val relationsUiState: RelationsUiState,
     val tracksByReleaseUiState: TracksByReleaseUiState,

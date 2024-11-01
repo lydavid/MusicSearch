@@ -18,7 +18,6 @@ kotlin {
                 implementation(projects.shared.domain)
                 implementation(projects.core.preferences)
                 implementation(projects.core.logging.api)
-                implementation(projects.data.spotify)
                 implementation(projects.ui.image)
 
                 implementation(compose.foundation)

@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.musicbrainz
 /**
  * MusicBrainz base url for API and web.
  */
-const val MUSIC_BRAINZ_BASE_URL = "https://musicbrainz.org"
+internal const val MUSIC_BRAINZ_BASE_URL = "https://musicbrainz.org"
 
 /**
  * Prevent making more than 1 API call per second to not violate rate limit.

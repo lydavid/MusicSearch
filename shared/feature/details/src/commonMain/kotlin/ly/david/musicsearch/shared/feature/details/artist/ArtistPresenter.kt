@@ -24,6 +24,7 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
@@ -66,6 +67,7 @@ internal class ArtistPresenter(
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
 ) : Presenter<ArtistUiState> {
 
     @Composable
@@ -297,6 +299,7 @@ internal class ArtistPresenter(
             isLoading = isLoading,
             isError = isError,
             artist = artist,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
@@ -319,6 +322,7 @@ internal data class ArtistUiState(
     val isLoading: Boolean,
     val isError: Boolean,
     val artist: ArtistDetailsModel?,
+    val url: String = "",
     val tabs: List<ArtistTab>,
     val selectedTab: ArtistTab,
     val topAppBarFilterState: TopAppBarFilterState,

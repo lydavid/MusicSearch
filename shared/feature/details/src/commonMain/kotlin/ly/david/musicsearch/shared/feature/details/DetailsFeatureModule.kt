@@ -64,6 +64,7 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 
@@ -83,6 +84,7 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 
@@ -95,6 +97,7 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 
@@ -105,7 +108,7 @@ val detailsFeatureModule = module {
                                 repository = get(),
                                 incrementLookupHistory = get(),
                                 logger = get(),
-                                get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 
@@ -118,6 +121,7 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 
@@ -131,6 +135,7 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 
@@ -144,6 +149,7 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 
@@ -157,6 +163,7 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 
@@ -172,6 +179,7 @@ val detailsFeatureModule = module {
                                 artistsByEntityPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 
@@ -186,6 +194,7 @@ val detailsFeatureModule = module {
                                 releaseGroupImageRepository = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 
@@ -198,6 +207,7 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 
@@ -212,6 +222,7 @@ val detailsFeatureModule = module {
                                 recordingsByEntityPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 

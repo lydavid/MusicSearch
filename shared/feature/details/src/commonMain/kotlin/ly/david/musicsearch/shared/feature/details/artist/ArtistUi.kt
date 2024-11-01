@@ -102,8 +102,7 @@ internal fun ArtistUi(
                         eventSink(ArtistUiEvent.ForceRefresh)
                     }
                     OpenInBrowserMenuItem(
-                        entity = entity,
-                        entityId = entityId,
+                        url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
                     if (state.selectedTab == ArtistTab.RELEASE_GROUPS) {

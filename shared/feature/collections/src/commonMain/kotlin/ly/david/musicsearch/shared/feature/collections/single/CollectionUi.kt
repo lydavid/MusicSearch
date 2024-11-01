@@ -118,8 +118,7 @@ internal fun CollectionUi(
                 overflowDropdownMenuItems = {
                     if (collection?.isRemote == true) {
                         OpenInBrowserMenuItem(
-                            entity = MusicBrainzEntity.COLLECTION,
-                            entityId = collection.id,
+                            url = state.url,
                         )
                     }
                     CopyToClipboardMenuItem(collection?.id.orEmpty())

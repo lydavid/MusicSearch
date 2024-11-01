@@ -94,8 +94,7 @@ internal fun RecordingUi(
                 ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
-                        entity = entity,
-                        entityId = entityId,
+                        url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
                     if (state.selectedTab == RecordingTab.RELEASES) {

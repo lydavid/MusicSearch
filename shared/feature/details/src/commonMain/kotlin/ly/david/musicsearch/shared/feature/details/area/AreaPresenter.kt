@@ -23,6 +23,7 @@ import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
@@ -61,6 +62,7 @@ internal class AreaPresenter(
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
 ) : Presenter<AreaUiState> {
 
     @Composable
@@ -226,6 +228,7 @@ internal class AreaPresenter(
             title = title,
             isError = isError,
             area = area,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
@@ -247,6 +250,7 @@ internal data class AreaUiState(
     val title: String,
     val isError: Boolean = false,
     val area: AreaDetailsModel? = null,
+    val url: String = "",
     val tabs: List<AreaTab> = AreaTab.entries,
     val selectedTab: AreaTab = AreaTab.DETAILS,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),

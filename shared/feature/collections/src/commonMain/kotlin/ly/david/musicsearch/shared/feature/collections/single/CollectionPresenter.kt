@@ -33,6 +33,7 @@ import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.instrument.usecase.GetInstrumentsByEntity
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.shared.domain.recording.usecase.GetRecordingsByEntity
@@ -79,6 +80,7 @@ internal class CollectionPresenter(
     private val worksByEntityPresenter: WorksByEntityPresenter,
     private val getSeriesByEntity: GetSeriesByEntity,
     private val deleteFromCollection: DeleteFromCollection,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
 ) : Presenter<CollectionUiState> {
     @Composable
     override fun present(): CollectionUiState {
@@ -323,6 +325,7 @@ internal class CollectionPresenter(
         return CollectionUiState(
             title = title,
             collection = collection,
+            url = getMusicBrainzUrl(MusicBrainzEntity.COLLECTION, screen.id),
             actionableResult = actionableResult,
             topAppBarFilterState = topAppBarFilterState,
             lazyPagingItems = collectableItems.collectAsLazyPagingItems(),
@@ -344,6 +347,7 @@ internal data class CollectionUiState(
     val collection: CollectionListItemModel?,
     val actionableResult: ActionableResult?,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
+    val url: String,
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val topAppBarEditState: TopAppBarEditState,
     val artistsByEntityUiState: ArtistsByEntityUiState,

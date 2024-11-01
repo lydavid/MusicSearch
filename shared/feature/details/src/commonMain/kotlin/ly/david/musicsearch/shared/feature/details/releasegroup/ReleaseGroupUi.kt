@@ -99,8 +99,7 @@ internal fun ReleaseGroupUi(
                 ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
-                        entity = entity,
-                        entityId = entityId,
+                        url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
                     if (state.selectedTab == ReleaseGroupTab.RELEASES) {

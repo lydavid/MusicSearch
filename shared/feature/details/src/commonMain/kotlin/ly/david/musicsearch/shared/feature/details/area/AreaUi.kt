@@ -67,8 +67,7 @@ internal fun AreaUi(
         modifier = modifier,
         overflowDropdownMenuItems = {
             OpenInBrowserMenuItem(
-                entity = entity,
-                entityId = entityId,
+                url = state.url,
             )
             CopyToClipboardMenuItem(entityId)
             if (state.selectedTab == AreaTab.RELEASES) {

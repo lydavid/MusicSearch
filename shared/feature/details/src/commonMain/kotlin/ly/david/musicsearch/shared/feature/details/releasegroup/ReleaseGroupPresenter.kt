@@ -22,6 +22,7 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
@@ -48,6 +49,7 @@ internal class ReleaseGroupPresenter(
     private val releaseGroupImageRepository: ReleaseGroupImageRepository,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
 ) : Presenter<ReleaseGroupUiState> {
 
     @Composable
@@ -179,6 +181,7 @@ internal class ReleaseGroupPresenter(
             subtitle = subtitle,
             isError = isError,
             releaseGroup = releaseGroup,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             imageUrl = imageUrl,
             tabs = tabs,
             selectedTab = selectedTab,
@@ -198,6 +201,7 @@ internal data class ReleaseGroupUiState(
     val subtitle: String,
     val isError: Boolean,
     val releaseGroup: ReleaseGroupDetailsModel?,
+    val url: String = "",
     val imageUrl: String,
     val tabs: List<ReleaseGroupTab>,
     val selectedTab: ReleaseGroupTab,

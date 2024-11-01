@@ -23,6 +23,7 @@ import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
@@ -41,6 +42,7 @@ internal class EventPresenter(
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
 ) : Presenter<EventUiState> {
 
     @Composable
@@ -146,6 +148,7 @@ internal class EventPresenter(
             title = title,
             isError = isError,
             event = event,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
@@ -162,6 +165,7 @@ internal data class EventUiState(
     val title: String,
     val isError: Boolean,
     val event: EventDetailsModel?,
+    val url: String = "",
     val tabs: List<EventTab>,
     val selectedTab: EventTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),

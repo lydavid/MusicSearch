@@ -19,8 +19,7 @@ import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
-import ly.david.musicsearch.shared.domain.musicbrainz.MusicbrainzRepository
-import ly.david.musicsearch.shared.domain.network.resourceUri
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 
 internal class GenrePresenter(
@@ -29,7 +28,7 @@ internal class GenrePresenter(
     private val repository: GenreRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
     private val logger: Logger,
-    private val musicbrainzRepository: MusicbrainzRepository,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
 ) : Presenter<GenreUiState> {
 
     @Composable
@@ -82,7 +81,7 @@ internal class GenrePresenter(
             title = title,
             isError = isError,
             genre = genre,
-            url = "${musicbrainzRepository.getBaseUrl()}/${screen.entity.resourceUri}/${screen.id}",
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             eventSink = ::genreSink,
         )
     }
@@ -93,7 +92,7 @@ internal data class GenreUiState(
     val title: String,
     val isError: Boolean,
     val genre: GenreListItemModel?,
-    val url: String,
+    val url: String = "",
     val eventSink: (GenreUiEvent) -> Unit,
 ) : CircuitUiState
 

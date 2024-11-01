@@ -22,6 +22,7 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.recording.RecordingRepository
@@ -46,6 +47,7 @@ internal class RecordingPresenter(
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
 ) : Presenter<RecordingUiState> {
 
     @Composable
@@ -165,6 +167,7 @@ internal class RecordingPresenter(
             subtitle = subtitle,
             isError = isError,
             recording = recording,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
@@ -183,6 +186,7 @@ internal data class RecordingUiState(
     val subtitle: String,
     val isError: Boolean,
     val recording: RecordingDetailsModel?,
+    val url: String = "",
     val tabs: List<RecordingTab>,
     val selectedTab: RecordingTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
