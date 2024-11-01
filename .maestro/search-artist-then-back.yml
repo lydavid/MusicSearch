@@ -34,8 +34,6 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "Add to collection"
 - tapOn: "Create a collection"
 - inputText: "Artists"
-- tapOn: "Resource"
-- tapOn: "Artist"
 - tapOn: "OK"
 - tapOn: "Artists"
 
