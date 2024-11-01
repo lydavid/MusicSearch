@@ -1,6 +1,5 @@
 package ly.david.musicsearch.android.feature.spotify.history
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
@@ -154,7 +153,6 @@ private fun SpotifyHistoryUi(
 }
 
 @OptIn(
-    ExperimentalFoundationApi::class,
     ExperimentalMaterial3Api::class,
 )
 @Composable

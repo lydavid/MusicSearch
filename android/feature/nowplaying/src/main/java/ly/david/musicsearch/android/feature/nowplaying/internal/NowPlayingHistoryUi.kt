@@ -1,6 +1,5 @@
 package ly.david.musicsearch.android.feature.nowplaying.internal
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
@@ -98,7 +97,6 @@ private fun NowPlayingHistoryUi(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun NowPlayingHistoryContent(
     lazyPagingItems: LazyPagingItems<ListItemModel>,

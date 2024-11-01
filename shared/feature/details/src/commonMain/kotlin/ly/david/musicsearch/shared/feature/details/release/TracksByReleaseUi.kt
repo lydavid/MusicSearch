@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.release
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -41,7 +40,6 @@ internal fun TracksByReleaseUi(
  * Tracks are recordings that are part of a release. A track references a recording,
  * but some of its details (e.g. name) might be different for a given release.
  */
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun TracksByReleaseUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,

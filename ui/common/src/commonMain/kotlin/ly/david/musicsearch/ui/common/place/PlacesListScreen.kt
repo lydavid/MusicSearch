@@ -1,6 +1,5 @@
 package ly.david.musicsearch.ui.common.place
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,7 +9,6 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PlacesListScreen(
     lazyListState: LazyListState,

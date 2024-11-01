@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.history.internal
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
@@ -32,11 +31,11 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.musicsearch.ui.core.LocalStrings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -175,7 +174,6 @@ internal fun HistoryUi(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun HistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
