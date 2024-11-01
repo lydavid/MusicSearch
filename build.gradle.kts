@@ -207,6 +207,7 @@ allprojects {
 
             // Don't create an svg for projects with no dependencies
             if (dependencies.isEmpty()) {
+                file(dependenciesGraphAbsolutePath).delete()
                 return@doLast
             }
 
@@ -303,6 +304,7 @@ allprojects {
             }
 
             if (dependents.isEmpty()) {
+                file(dependentsGraphAbsolutePath).delete()
                 return@doLast
             }
 
