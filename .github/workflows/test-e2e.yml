@@ -62,13 +62,9 @@ jobs:
           script: |
             ./gradlew installFDroidDebug
             adb shell settings put system show_touches 1
-            set +e
-            $HOME/.maestro/bin/maestro test .maestro
-            MAESTRO_EXIT_CODE=$?
-            set -e
+            $HOME/.maestro/bin/maestro test .maestro/search-artist-then-back.yml
             adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat
             adb shell "run-as io.github.lydavid.musicsearch.debug cat /data/data/io.github.lydavid.musicsearch.debug/databases/musicsearch.db" > musicsearch.db
-            exit $MAESTRO_EXIT_CODE
 
       - name: Save recordings
         if: always()
