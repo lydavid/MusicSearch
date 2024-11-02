@@ -236,7 +236,8 @@ SELECT
   rg.primary_type,
   rg.secondary_types,
   ac.name AS artist_credits,
-  mi.thumbnail_url
+  mi.thumbnail_url,
+  visited.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN release_group rg ON sr.entity_id = rg.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id

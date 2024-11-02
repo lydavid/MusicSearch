@@ -17,6 +17,7 @@ import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.core.theme.getSubTextColor
 import ly.david.musicsearch.ui.image.ThumbnailImage
@@ -41,6 +42,7 @@ fun ReleaseGroupListItem(
             Text(
                 text = releaseGroup.name,
                 style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = releaseGroup.fontWeight,
             )
         },
         modifier = modifier.clickable { onClick(releaseGroup) },
@@ -51,6 +53,7 @@ fun ReleaseGroupListItem(
                         text = "($it)",
                         color = getSubTextColor(),
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = releaseGroup.fontWeight,
                     )
                 }
 
@@ -60,6 +63,7 @@ fun ReleaseGroupListItem(
                             text = it,
                             modifier = Modifier.padding(top = 4.dp),
                             style = TextStyles.getCardBodySubTextStyle(),
+                            fontWeight = releaseGroup.fontWeight,
                         )
                     }
                 }
@@ -69,6 +73,7 @@ fun ReleaseGroupListItem(
                         text = it,
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = releaseGroup.fontWeight,
                     )
                 }
 
@@ -77,6 +82,7 @@ fun ReleaseGroupListItem(
                         text = it,
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = releaseGroup.fontWeight,
                     )
                 }
             }
