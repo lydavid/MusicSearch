@@ -58,6 +58,27 @@ internal fun PreviewUrlRelationListItem() {
                     linkedEntity = MusicBrainzEntity.URL,
                     label = "Stream for free",
                     name = "https://www.example.com",
+                    visited = true,
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewRecordingRelationListItemVisited() {
+    PreviewTheme {
+        Surface {
+            RelationListItem(
+                relation = RelationListItemModel(
+                    id = "2_1",
+                    linkedEntityId = "2",
+                    linkedEntity = MusicBrainzEntity.RECORDING,
+                    label = "DJ-mixes",
+                    name = "Recording Name",
+                    additionalInfo = "by Artist Names (order: 10)",
+                    visited = true,
                 ),
             )
         }

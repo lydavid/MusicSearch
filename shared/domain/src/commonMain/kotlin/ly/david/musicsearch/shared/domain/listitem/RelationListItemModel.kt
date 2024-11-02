@@ -19,4 +19,5 @@ data class RelationListItemModel(
     override val attributes: String? = null,
     override val additionalInfo: String? = null,
     override val linkedEntity: MusicBrainzEntity,
-) : ListItemModel(), Relation
+    override val visited: Boolean = false,
+) : ListItemModel(), Relation, Visitable

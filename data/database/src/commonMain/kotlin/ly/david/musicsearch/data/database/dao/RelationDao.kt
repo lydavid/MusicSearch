@@ -58,7 +58,7 @@ class RelationDao(
                 query = query,
                 limit = limit,
                 offset = offset,
-                mapper = ::toRelationListItemModel,
+                mapper = ::mapToRelationListItemModel,
             )
         },
     )
@@ -76,7 +76,7 @@ class RelationDao(
             entityId = entityId,
             // We filter URLs in the presentation layer
             query = "%%",
-            mapper = ::toRelationListItemModel,
+            mapper = ::mapToRelationListItemModel,
         ).executeAsList()
     }
 
@@ -86,7 +86,29 @@ class RelationDao(
         transacter.deleteUrlRelationshipssByEntity(entityId)
     }
 
-    private fun toRelationListItemModel(
+    private fun mapToRelationListItemModel(
+        linkedEntityId: String,
+        linkedEntity: MusicBrainzEntity,
+        order: Int,
+        label: String,
+        name: String,
+        disambiguation: String?,
+        attributes: String?,
+        additionalInfo: String?,
+        visited: Boolean?,
+    ) = RelationListItemModel(
+        id = "${linkedEntityId}_$order",
+        linkedEntityId = linkedEntityId,
+        linkedEntity = linkedEntity,
+        label = label,
+        name = name,
+        disambiguation = disambiguation,
+        attributes = attributes,
+        additionalInfo = additionalInfo,
+        visited = visited == true,
+    )
+
+    private fun mapToRelationListItemModel(
         linkedEntityId: String,
         linkedEntity: MusicBrainzEntity,
         order: Int,
@@ -104,6 +126,7 @@ class RelationDao(
         disambiguation = disambiguation,
         attributes = attributes,
         additionalInfo = additionalInfo,
+        visited = true,
     )
 
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<CountOfEachRelationshipType>> =

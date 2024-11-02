@@ -15,12 +15,14 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.EntityIcon
+import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
-import ly.david.musicsearch.ui.core.theme.getSubTextColor
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -38,6 +40,7 @@ fun RelationListItem(
                 Text(
                     text = "${relation.label}:",
                     style = TextStyles.getCardBodySubTextStyle(),
+                    fontWeight = relation.fontWeight,
                 )
 
                 Row(
@@ -52,34 +55,30 @@ fun RelationListItem(
                     Text(
                         text = relation.name,
                         style = TextStyles.getCardBodyTextStyle(),
+                        fontWeight = relation.fontWeight,
                     )
                 }
 
-                val disambiguation = relation.disambiguation
-                if (!disambiguation.isNullOrEmpty()) {
+                DisambiguationText(
+                    disambiguation = relation.disambiguation,
+                    fontWeight = relation.fontWeight,
+                )
+
+                relation.attributes.ifNotNullOrEmpty {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
-                        text = "($disambiguation)",
+                        text = "($it)",
                         style = TextStyles.getCardBodySubTextStyle(),
-                        color = getSubTextColor(),
+                        fontWeight = relation.fontWeight,
                     )
                 }
 
-                val attributes = relation.attributes
-                if (!attributes.isNullOrEmpty()) {
+                relation.additionalInfo.ifNotNullOrEmpty {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
-                        text = "($attributes)",
+                        text = it,
                         style = TextStyles.getCardBodySubTextStyle(),
-                    )
-                }
-
-                val additionalInfo = relation.additionalInfo
-                if (!additionalInfo.isNullOrEmpty()) {
-                    Text(
-                        modifier = Modifier.padding(top = 4.dp),
-                        text = additionalInfo,
-                        style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = relation.fontWeight,
                     )
                 }
             }

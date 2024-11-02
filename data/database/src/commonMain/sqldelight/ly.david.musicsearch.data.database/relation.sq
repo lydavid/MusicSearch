@@ -44,10 +44,17 @@ INSERT OR IGNORE INTO relation
 VALUES ?;
 
 countEntityRelationshipsExcludingUrls:
-SELECT count(*) FROM relation
-WHERE entity_id = :entityId AND linked_entity != "url" AND
-(name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
-attributes LIKE :query OR additional_info LIKE :query);
+SELECT count(*)
+FROM relation
+WHERE entity_id = :entityId
+AND linked_entity != "url"
+AND (
+  name LIKE :query
+  OR disambiguation LIKE :query
+  OR label LIKE :query
+  OR attributes LIKE :query
+  OR additional_info LIKE :query
+);
 
 getEntityRelationshipsExcludingUrls:
 SELECT
@@ -58,11 +65,19 @@ SELECT
   `name`,
   `disambiguation`,
   `attributes`,
-  `additional_info`
+  `additional_info`,
+  visited.entity_id IS NOT NULL AS visited
 FROM relation
-WHERE entity_id = :entityId AND linked_entity != "url" AND
-(name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
-attributes LIKE :query OR additional_info LIKE :query)
+LEFT JOIN visited ON visited.entity_id = linked_entity_id
+WHERE relation.entity_id = :entityId
+AND linked_entity != "url"
+AND (
+  name LIKE :query
+  OR disambiguation LIKE :query
+  OR label LIKE :query
+  OR attributes LIKE :query
+  OR additional_info LIKE :query
+)
 ORDER BY linked_entity, label, `order`
 LIMIT :limit OFFSET :offset;
 
@@ -81,9 +96,15 @@ SELECT
   `attributes`,
   `additional_info`
 FROM relation
-WHERE entity_id = :entityId AND linked_entity = "url" AND
-(name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
-attributes LIKE :query OR additional_info LIKE :query)
+WHERE entity_id = :entityId
+AND linked_entity = "url"
+AND (
+  name LIKE :query
+  OR disambiguation LIKE :query
+  OR label LIKE :query
+  OR attributes LIKE :query
+  OR additional_info LIKE :query
+)
 ORDER BY linked_entity, label, `order`;
 
 deleteUrlRelationshipssByEntity:
