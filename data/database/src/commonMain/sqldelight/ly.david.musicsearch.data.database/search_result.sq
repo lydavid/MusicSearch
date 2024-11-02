@@ -187,7 +187,8 @@ SELECT
   r.first_release_date,
   r.length,
   r.video,
-  ac.name AS artist_credits
+  ac.name AS artist_credits,
+  visited.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN recording r ON sr.entity_id = r.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id

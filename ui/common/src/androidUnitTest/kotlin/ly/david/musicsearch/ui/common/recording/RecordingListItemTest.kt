@@ -1,40 +1,28 @@
 package ly.david.musicsearch.ui.common.recording
 
-import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(TestParameterInjector::class)
 class RecordingListItemTest : ScreenshotTest() {
 
     @Test
     fun simple() {
         snapshot {
-            RecordingListItem(
-                recording = RecordingListItemModel(
-                    id = "1",
-                    name = "Recording name",
-                ),
-            )
+            PreviewRecordingListItem()
         }
     }
 
     @Test
     fun allInfo() {
         snapshot {
-            RecordingListItem(
-                recording = RecordingListItemModel(
-                    id = "2",
-                    name = "Recording name",
-                    firstReleaseDate = "2022-05-23",
-                    disambiguation = "that one",
-                    length = 25300000,
-                    video = false,
-                    formattedArtistCredits = "Some artist feat. Other artist",
-                ),
-            )
+            PreviewRecordingListItemAllInfo()
+        }
+    }
+
+    @Test
+    fun visited() {
+        snapshot {
+            PreviewRecordingListItemVisited()
         }
     }
 }
