@@ -32,7 +32,10 @@ fun EventListItem(
                         fontWeight = event.fontWeight,
                     )
 
-                    DisambiguationText(disambiguation = disambiguation)
+                    DisambiguationText(
+                        disambiguation = disambiguation,
+                        fontWeight = event.fontWeight,
+                    )
 
                     type.ifNotNullOrEmpty {
                         Text(

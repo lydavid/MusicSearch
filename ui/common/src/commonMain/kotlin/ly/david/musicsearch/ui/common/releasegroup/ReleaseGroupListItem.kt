@@ -17,9 +17,9 @@ import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
-import ly.david.musicsearch.ui.core.theme.getSubTextColor
 import ly.david.musicsearch.ui.image.ThumbnailImage
 
 @Composable
@@ -48,14 +48,10 @@ fun ReleaseGroupListItem(
         modifier = modifier.clickable { onClick(releaseGroup) },
         supportingContent = {
             Column {
-                releaseGroup.disambiguation.ifNotNullOrEmpty {
-                    Text(
-                        text = "($it)",
-                        color = getSubTextColor(),
-                        style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = releaseGroup.fontWeight,
-                    )
-                }
+                DisambiguationText(
+                    disambiguation = releaseGroup.disambiguation,
+                    fontWeight = releaseGroup.fontWeight,
+                )
 
                 if (showType) {
                     releaseGroup.getDisplayTypes().ifNotNullOrEmpty {

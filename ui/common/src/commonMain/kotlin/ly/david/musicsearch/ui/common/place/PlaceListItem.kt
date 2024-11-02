@@ -32,7 +32,10 @@ fun PlaceListItem(
                         fontWeight = place.fontWeight,
                     )
 
-                    DisambiguationText(disambiguation = disambiguation)
+                    DisambiguationText(
+                        disambiguation = disambiguation,
+                        fontWeight = place.fontWeight,
+                    )
 
                     type.ifNotNullOrEmpty {
                         Text(

@@ -256,7 +256,8 @@ SELECT
   s.id,
   s.name,
   s.disambiguation,
-  s.type
+  s.type,
+  visited.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN series s ON sr.entity_id = s.id
 LEFT JOIN visited ON visited.entity_id = s.id

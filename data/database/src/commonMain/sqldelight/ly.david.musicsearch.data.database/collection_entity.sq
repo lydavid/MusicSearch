@@ -497,10 +497,12 @@ SELECT
   s.id,
   s.name,
   s.disambiguation,
-  s.type
+  s.type,
+  visited.entity_id IS NOT NULL AS visited
 FROM series s
 INNER JOIN collection_entity ce ON s.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = s.id
 WHERE c.id = :collectionId
 AND (
   s.name LIKE :query

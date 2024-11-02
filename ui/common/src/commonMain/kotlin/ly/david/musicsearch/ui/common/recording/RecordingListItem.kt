@@ -40,7 +40,10 @@ fun RecordingListItem(
         },
         supportingContent = {
             Column {
-                DisambiguationText(disambiguation = recording.disambiguation)
+                DisambiguationText(
+                    disambiguation = recording.disambiguation,
+                    fontWeight = recording.fontWeight,
+                )
 
                 recording.formattedArtistCredits.ifNotNullOrEmpty {
                     Text(

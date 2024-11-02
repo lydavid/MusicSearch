@@ -11,6 +11,7 @@ private val testReleaseGroup = ReleaseGroupListItemModel(
     name = "欠けた心象、世のよすが",
     primaryType = "EP",
     firstReleaseDate = "2021-09-08",
+    disambiguation = "That one",
     formattedArtistCredits = "Some artist feat. some other artist",
 )
 
@@ -51,6 +52,7 @@ internal fun PreviewReleaseGroupListItemVisited() {
                     name = "欠けた心象、世のよすが",
                     primaryType = "EP",
                     firstReleaseDate = "2021-09-08",
+                    disambiguation = "That one",
                     formattedArtistCredits = "Some artist feat. some other artist",
                     visited = true,
                 ),

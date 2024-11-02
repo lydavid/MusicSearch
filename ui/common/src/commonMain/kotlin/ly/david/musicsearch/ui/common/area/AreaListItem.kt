@@ -45,7 +45,10 @@ fun AreaListItem(
         },
         supportingContent = {
             Column {
-                DisambiguationText(disambiguation = area.disambiguation)
+                DisambiguationText(
+                    disambiguation = area.disambiguation,
+                    fontWeight = area.fontWeight,
+                )
 
                 val type = area.type
                 if (showType && !type.isNullOrEmpty()) {

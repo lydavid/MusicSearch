@@ -30,7 +30,10 @@ fun InstrumentListItem(
                         fontWeight = instrument.fontWeight,
                     )
 
-                    DisambiguationText(disambiguation = disambiguation)
+                    DisambiguationText(
+                        disambiguation = disambiguation,
+                        fontWeight = instrument.fontWeight,
+                    )
 
                     type.ifNotNullOrEmpty {
                         Text(
