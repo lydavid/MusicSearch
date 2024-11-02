@@ -11,6 +11,8 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
+import ly.david.musicsearch.ui.common.recording.RecordingListItem
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 /**
@@ -27,6 +29,7 @@ fun TrackListItem(
             Text(
                 text = track.title,
                 style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = track.fontWeight,
             )
         },
         modifier = modifier.clickable {
@@ -39,12 +42,14 @@ fun TrackListItem(
             Text(
                 text = track.number,
                 style = TextStyles.getCardBodySubTextStyle(),
+                fontWeight = track.fontWeight,
             )
         },
         trailingContent = {
             Text(
                 text = track.length.toDisplayTime(),
                 style = TextStyles.getCardBodySubTextStyle(),
+                fontWeight = track.fontWeight,
             )
         },
         supportingContent = {
@@ -55,6 +60,7 @@ fun TrackListItem(
                         .padding(top = 4.dp)
                         .fillMaxWidth(),
                     style = TextStyles.getCardBodySubTextStyle(),
+                    fontWeight = track.fontWeight,
                 )
             }
         },
