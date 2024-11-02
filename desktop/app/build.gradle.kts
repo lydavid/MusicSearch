@@ -29,6 +29,7 @@ dependencies {
     macAarch64(compose.desktop.macos_arm64)
     windowsAmd64(compose.desktop.windows_x64)
 
+    implementation(libs.kotlinx.coroutines.swing)
     implementation(libs.circuit.foundation)
     implementation(libs.koin.core)
 }
