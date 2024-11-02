@@ -274,7 +274,8 @@ SELECT
   w.disambiguation,
   w.type,
   w.language,
-  w.iswcs
+  w.iswcs,
+  visited.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN work w ON sr.entity_id = w.id
 LEFT JOIN visited ON visited.entity_id = w.id

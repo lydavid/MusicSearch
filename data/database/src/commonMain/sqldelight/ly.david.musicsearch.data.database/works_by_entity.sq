@@ -42,9 +42,11 @@ SELECT
   w.disambiguation,
   w.type,
   w.language,
-  w.iswcs
+  w.iswcs,
+  visited.entity_id IS NOT NULL AS visited
 FROM works_by_entity we
 INNER JOIN work w ON w.id = we.work_id
+LEFT JOIN visited ON visited.entity_id = w.id
 WHERE we.entity_id = :entityId
 AND (
   w.name LIKE :query

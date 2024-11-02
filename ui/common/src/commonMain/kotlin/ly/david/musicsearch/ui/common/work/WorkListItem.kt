@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
@@ -25,36 +26,40 @@ fun WorkListItem(
             Text(
                 text = work.name,
                 style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = work.fontWeight,
             )
         },
         supportingContent = {
             Column {
                 work.run {
-                    DisambiguationText(disambiguation = disambiguation)
+                    DisambiguationText(
+                        disambiguation = disambiguation,
+                        fontWeight = work.fontWeight,
+                    )
                     iswcs?.ifNotNullOrEmpty {
                         Text(
                             text = it.joinToString("\n"),
                             style = TextStyles.getCardBodySubTextStyle(),
+                            fontWeight = work.fontWeight,
                         )
                     }
                     type?.ifNotNullOrEmpty {
                         Text(
                             text = it,
                             style = TextStyles.getCardBodySubTextStyle(),
+                            fontWeight = work.fontWeight,
                         )
                     }
                     language?.getDisplayLanguage(strings).ifNotNullOrEmpty {
                         Text(
                             text = it,
                             style = TextStyles.getCardBodySubTextStyle(),
+                            fontWeight = work.fontWeight,
                         )
                     }
 
                     // TODO: writers
                     //  these come from relations
-
-                    // TODO: artists
-                    //  these are the artists from each recording
                 }
             }
         },

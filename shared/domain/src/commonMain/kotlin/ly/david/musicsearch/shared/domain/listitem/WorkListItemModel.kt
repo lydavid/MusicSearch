@@ -11,4 +11,5 @@ data class WorkListItemModel(
     override val language: String? = null,
     override val iswcs: List<String>? = null,
     val attributes: List<WorkAttributeUiModel> = listOf(),
-) : ListItemModel(), Work
+    override val visited: Boolean = false,
+) : ListItemModel(), Work, Visitable
