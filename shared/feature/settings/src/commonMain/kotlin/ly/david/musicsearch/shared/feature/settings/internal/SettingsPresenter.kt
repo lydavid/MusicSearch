@@ -8,8 +8,8 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
+import ly.david.musicsearch.shared.domain.auth.usecase.Logout
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
-import ly.david.musicsearch.data.musicbrainz.auth.Logout
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 
 internal class SettingsPresenter(
