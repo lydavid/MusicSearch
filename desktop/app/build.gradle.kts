@@ -23,7 +23,6 @@ dependencies {
     // TODO: eventually, the only dependent project should be shared
     //  where shared exposes the root entry point
     implementation(projects.ui.common)
-    implementation(projects.core.preferences)
 
     linuxAmd64(compose.desktop.linux_x64)
     macAmd64(compose.desktop.macos_x64)

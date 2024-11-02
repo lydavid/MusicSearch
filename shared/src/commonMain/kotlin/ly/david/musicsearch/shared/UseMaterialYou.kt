@@ -2,7 +2,7 @@ package ly.david.musicsearch.shared
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import ly.david.musicsearch.core.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 
 @Composable
 fun AppPreferences.useMaterialYou(): Boolean {

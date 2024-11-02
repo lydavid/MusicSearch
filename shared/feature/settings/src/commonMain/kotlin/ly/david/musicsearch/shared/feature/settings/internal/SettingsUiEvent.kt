@@ -2,7 +2,7 @@ package ly.david.musicsearch.shared.feature.settings.internal
 
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.screen.Screen
-import ly.david.musicsearch.core.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 
 internal sealed interface SettingsUiEvent : CircuitUiEvent {
     data class UpdateTheme(val theme: AppPreferences.Theme) : SettingsUiEvent

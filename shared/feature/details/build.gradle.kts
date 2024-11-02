@@ -16,7 +16,6 @@ kotlin {
             dependencies {
                 implementation(projects.ui.common)
                 implementation(projects.shared.domain)
-                implementation(projects.core.preferences)
                 implementation(projects.core.logging.api)
                 implementation(projects.ui.image)
 

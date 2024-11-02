@@ -1,4 +1,4 @@
-package ly.david.musicsearch.core.preferences
+package ly.david.musicsearch.shared.domain.preferences
 
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption

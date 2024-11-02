@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 
 private const val THEME_KEY = "theme"
 private val THEME_PREFERENCE = stringPreferencesKey(THEME_KEY)
@@ -30,7 +31,7 @@ private const val SHOW_REMOTE_COLLECTIONS = "showRemoteCollections"
 private val SHOW_REMOTE_COLLECTIONS_PREFERENCE =
     booleanPreferencesKey(SHOW_REMOTE_COLLECTIONS)
 
-class AppPreferencesImpl(
+internal class AppPreferencesImpl(
     private val preferencesDataStore: DataStore<Preferences>,
     private val coroutineScope: CoroutineScope,
 ) : AppPreferences {

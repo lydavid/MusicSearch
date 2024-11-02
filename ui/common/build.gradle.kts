@@ -20,7 +20,6 @@ kotlin {
                 api(projects.ui.core)
                 implementation(projects.data.coverart)
                 implementation(projects.data.musicbrainz)
-                implementation(projects.core.preferences)
                 implementation(projects.core.logging.api)
                 implementation(projects.ui.image)
 

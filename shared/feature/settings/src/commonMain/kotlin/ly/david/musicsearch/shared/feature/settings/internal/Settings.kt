@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.toImmutableList
-import ly.david.musicsearch.core.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
