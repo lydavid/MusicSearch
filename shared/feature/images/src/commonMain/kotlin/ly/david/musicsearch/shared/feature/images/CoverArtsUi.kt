@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.feature.images
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,12 +19,23 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.image.LargeImage
@@ -57,7 +69,13 @@ internal fun CoverArtsUi(
     imageUrlsList: ImmutableList<ImageUrls> = persistentListOf(),
     onBack: () -> Unit = {},
 ) {
+    val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = { imageUrlsList.size })
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
     Scaffold(
         modifier = modifier,
@@ -74,7 +92,31 @@ internal fun CoverArtsUi(
         Box(
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .onKeyEvent {
+                    if (it.type == KeyEventType.KeyUp) {
+                        when (it.key) {
+                            Key.DirectionLeft -> {
+                                coroutineScope.launch {
+                                    pagerState.scrollToPage(pagerState.currentPage - 1)
+                                }
+                                true
+                            }
+                            Key.DirectionRight -> {
+                                coroutineScope.launch {
+                                    pagerState.scrollToPage(pagerState.currentPage + 1)
+                                }
+                                true
+                            }
+                            else -> false
+                        }
+                    } else {
+                        // Let other handlers receive this event
+                        false
+                    }
+                }
+                .focusRequester(focusRequester)
+                .focusable(),
         ) {
             HorizontalPager(
                 state = pagerState,
@@ -82,15 +124,13 @@ internal fun CoverArtsUi(
             ) { page ->
                 val url = imageUrlsList[page]
                 Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     LargeImage(
                         url = url.largeUrl,
                         id = url.largeUrl,
-                        modifier = Modifier,
                         isCompact = isCompact,
                     )
                 }
