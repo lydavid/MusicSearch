@@ -65,10 +65,6 @@ jobs:
             $HOME/.maestro/bin/maestro test .maestro/collapse-medium-with-many-tracks.yml
             adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat-${{ matrix.api-level }}
 
-      - run: mv threebutton-back.mp4 "threebutton-back-$api".mp4
-        env:
-          api: ${{ matrix.api-level }}
-
       - name: Save recordings
         if: always()
         uses: actions/upload-artifact@v4
