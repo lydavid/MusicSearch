@@ -1,6 +1,7 @@
 name: Test Ad Hoc
 
 on:
+  push:
   workflow_dispatch:
 
 jobs:
@@ -61,7 +62,7 @@ jobs:
           script: |
             ./gradlew clean installFDroidDebug
             adb shell settings put system show_touches 1
-            $HOME/.maestro/bin/maestro test .maestro/search-artist-then-back.yml
+            $HOME/.maestro/bin/maestro test .maestro/collapse-medium-with-many-tracks.yml
             adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat-${{ matrix.api-level }}
 
       - run: mv threebutton-back.mp4 "threebutton-back-$api".mp4
