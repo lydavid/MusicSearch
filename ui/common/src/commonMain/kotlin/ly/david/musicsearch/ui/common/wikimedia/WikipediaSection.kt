@@ -1,7 +1,8 @@
 package ly.david.musicsearch.ui.common.wikimedia
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
@@ -12,7 +13,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -22,12 +27,16 @@ import ly.david.musicsearch.ui.common.relation.RelationListItem
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun WikipediaSection(
     extract: WikipediaExtract,
     modifier: Modifier = Modifier,
     filterText: String = "",
 ) {
+    val haptics = LocalHapticFeedback.current
+    val clipboardManager = LocalClipboardManager.current
+
     Column(
         modifier = modifier,
     ) {
@@ -36,11 +45,18 @@ fun WikipediaSection(
         ) {
             var expanded by remember { mutableStateOf(false) }
 
-            // TODO: consider expand/collapse icon button, then make text selectable
             Text(
                 text = extract.extract,
                 modifier = Modifier
-                    .clickable { expanded = !expanded }
+                    .combinedClickable(
+                        onClick = {
+                            expanded = !expanded
+                        },
+                        onLongClick = {
+                            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                            clipboardManager.setText(AnnotatedString(extract.extract))
+                        },
+                    )
                     .padding(horizontal = 16.dp, vertical = 8.dp)
                     .animateContentSize(),
                 maxLines = if (expanded) Int.MAX_VALUE else 4,
@@ -58,11 +74,11 @@ fun WikipediaSection(
 
             RelationListItem(
                 relation = RelationListItemModel(
-                    id = "doesn't matter",
+                    id = "wikipedia_section",
                     label = strings.wikipedia,
                     linkedEntity = MusicBrainzEntity.URL,
                     name = extract.wikipediaUrl,
-                    linkedEntityId = "doesn't matter",
+                    linkedEntityId = "wikipedia_section",
                 ),
                 onItemClick = { _, _, _ ->
                     uriHandler.openUri(extract.wikipediaUrl)
