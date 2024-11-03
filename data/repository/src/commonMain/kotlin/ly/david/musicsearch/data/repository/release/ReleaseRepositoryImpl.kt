@@ -28,7 +28,6 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toAreaListItemModel
-import ly.david.musicsearch.shared.domain.listitem.toLabelListItemModel
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
@@ -82,7 +81,7 @@ class ReleaseRepositoryImpl(
                 releaseGroup = releaseGroup,
                 formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
                 formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
-                labels = labels.map { it.toLabelListItemModel() },
+                labels = labels,
                 areas = releaseEvents.map { it.toAreaListItemModel() },
                 urls = urlRelations,
             )
