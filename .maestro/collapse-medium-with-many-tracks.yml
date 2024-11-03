@@ -1,0 +1,29 @@
+appId: io.github.lydavid.musicsearch.debug
+---
+- launchApp
+- startRecording: collapse-medium-with-many-tracks
+- tapOn: "Resource"
+- tapOn: "Release"
+- tapOn:
+      text: "Search"
+      index: 0
+- inputText: "\"Shin Megami Tensei 30th Anniversary Special Sound Compilation\""
+- tapOn: "Shin Megami Tensei 30th Anniversary Special Sound Compilation"
+- tapOn: "Release by ATLUS Sound Team"
+- tapOn: "真・女神転生30th Anniversary Special Sound Compilation"
+- tapOn: "Releases"
+- tapOn:
+      text: "真・女神転生30th Anniversary Special Sound Compilation"
+      index: 1
+
+- tapOn: "Tracks"
+- tapOn: "CD 1 (SFC版「真・女神転生」)"
+- tapOn: "CD 2 (SFC版「真・女神転生Ⅱ」)"
+- tapOn: "CD 3 (メガCD版「真・女神転生」)"
+- tapOn: "CD 4 (SFC版「真・女神転生if. . .」)"
+- tapOn: "CD 5 (Xbox版「真・女神転生NINE」)"
+- assertVisible: タイトルループ1
+- tapOn: "USB Flash Drive 6"
+- assertNotVisible: タイトルループ1
+
+- stopRecording
