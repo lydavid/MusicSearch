@@ -139,6 +139,7 @@ class EventRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                 ),
             ),

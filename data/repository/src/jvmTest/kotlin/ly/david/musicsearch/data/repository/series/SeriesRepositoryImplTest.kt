@@ -141,6 +141,7 @@ class SeriesRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "e4a5db48-cae3-404f-921d-0f1c3947f874_0",
@@ -151,6 +152,7 @@ class SeriesRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                 ),
             ),

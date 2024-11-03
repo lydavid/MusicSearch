@@ -165,6 +165,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "a_1",
@@ -175,6 +176,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "a_2",
@@ -185,6 +187,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "a_0",
@@ -195,6 +198,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                 ),
             ),

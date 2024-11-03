@@ -187,6 +187,7 @@ class RecordingRepositoryImplTest : KoinTest {
                         attributes = "video",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                 ),
             ),

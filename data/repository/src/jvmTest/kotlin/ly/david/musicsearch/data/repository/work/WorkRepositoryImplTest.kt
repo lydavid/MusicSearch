@@ -325,6 +325,7 @@ class WorkRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "6ea47967-a4d4-4a20-8f91-76d2aa9be8b2_0",
@@ -335,6 +336,7 @@ class WorkRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "31bcc221-ed6d-4e96-b357-f50ead407b91_1",
@@ -345,6 +347,7 @@ class WorkRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "756081cd-7baf-4925-982e-bd97b927090b_2",
@@ -355,6 +358,7 @@ class WorkRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "6165fd43-2792-4dfa-8a19-966955880e21_3",
@@ -365,6 +369,7 @@ class WorkRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "8afd628c-6e91-4d02-8687-3aa8c6153a1f_4",
@@ -375,6 +380,7 @@ class WorkRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "c2515300-2774-45aa-a5ef-9f0fdd02b934_5",
@@ -385,6 +391,7 @@ class WorkRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "d027f956-33f2-4f9f-912f-9a8109900554_6",
@@ -395,6 +402,7 @@ class WorkRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "c93bcd02-08b0-42c6-b878-eba62c64ce61_7",
@@ -405,6 +413,7 @@ class WorkRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "93c15008-8020-4fa3-b894-37571d7d7fb4_8",
@@ -415,6 +424,7 @@ class WorkRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "3f8747c7-3c36-45a1-9990-6003bec56ffc_9",
@@ -425,6 +435,7 @@ class WorkRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "689eb1a6-2551-4ed0-9499-1eb4e217fece_10",
@@ -435,6 +446,7 @@ class WorkRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                     RelationListItemModel(
                         id = "db86680c-9f2c-422b-8b36-928516b2f4a1_11",
@@ -445,6 +457,7 @@ class WorkRepositoryImplTest : KoinTest {
                         attributes = "",
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
+                        visited = true,
                     ),
                 ),
             ),
