@@ -197,4 +197,14 @@ class CollectionRepositoryImpl(
 
         return result
     }
+
+    override suspend fun deleteCollection(
+        collectionId: String,
+        collectionName: String,
+    ): ActionableResult {
+        collectionEntityDao.deleteCollection(
+            collectionId,
+        )
+        return ActionableResult("Deleted $collectionName.")
+    }
 }

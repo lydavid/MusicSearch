@@ -8,6 +8,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Cloud
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemColors
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,6 +24,7 @@ import ly.david.musicsearch.ui.core.theme.TextStyles
 internal fun CollectionListItem(
     collection: CollectionListItemModel,
     modifier: Modifier = Modifier,
+    colors: ListItemColors = ListItemDefaults.colors(),
     onClick: CollectionListItemModel.() -> Unit = {},
 ) {
     ListItem(
@@ -33,6 +36,7 @@ internal fun CollectionListItem(
             )
         },
         modifier = modifier.clickable { onClick(collection) },
+        colors = colors,
         supportingContent = {
             // We currently don't support adding descriptions. Descriptions are not returned from MB's API either.
             Text(

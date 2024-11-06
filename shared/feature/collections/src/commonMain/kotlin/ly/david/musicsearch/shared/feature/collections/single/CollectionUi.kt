@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -51,6 +52,7 @@ import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiState
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListScreen
 import ly.david.musicsearch.ui.common.series.SeriesListItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
+import ly.david.musicsearch.ui.common.topappbar.EditToggle
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -115,6 +117,13 @@ internal fun CollectionUi(
                 title = state.title,
                 scrollBehavior = scrollBehavior,
                 showFilterIcon = true,
+                additionalActions = {
+                    IconButton(onClick = {
+                        state.topAppBarEditState.toggleEditMode()
+                    }) {
+                        EditToggle(state.topAppBarEditState)
+                    }
+                },
                 overflowDropdownMenuItems = {
                     if (collection?.isRemote == true) {
                         OpenInBrowserMenuItem(

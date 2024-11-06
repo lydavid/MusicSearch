@@ -80,6 +80,12 @@ class CollectionEntityDao(
         )
     }
 
+    fun deleteCollection(
+        collectionId: String,
+    ) {
+        transacter.deleteCollection(collectionId)
+    }
+
     fun getAreasByCollection(
         collectionId: String,
         query: String,

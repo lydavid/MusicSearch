@@ -33,4 +33,9 @@ interface CollectionRepository {
         entity: MusicBrainzEntity,
         entityId: String,
     ): ActionableResult
+
+    suspend fun deleteCollection(
+        collectionId: String,
+        collectionName: String,
+    ): ActionableResult
 }

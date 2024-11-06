@@ -23,13 +23,21 @@ INNER JOIN collection c ON c.id = ce.id
 WHERE c.id = :collectionId;
 
 deleteAllFromCollection:
-DELETE FROM collection_entity WHERE id = :collectionId;
+DELETE FROM collection_entity
+WHERE id = :collectionId;
 
 deleteFromCollection:
 DELETE FROM collection_entity
 WHERE id = :collectionId
 AND entity_id = :collectableId;
 
+deleteCollection {
+DELETE FROM collection
+WHERE id = :collectionId;
+
+DELETE FROM collection_entity
+WHERE id = :collectionId;
+}
 
 -- areas by collection
 

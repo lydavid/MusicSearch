@@ -14,9 +14,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.FindInPage
-import androidx.compose.material.icons.outlined.ImportContacts
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -200,24 +198,6 @@ internal fun TopAppBarWithFilterInternal(
                         Icon(
                             imageVector = Icons.Outlined.FindInPage,
                             contentDescription = strings.filter,
-                        )
-                    }
-                }
-                if (topAppBarEditState.showEditIcon) {
-                    IconButton(onClick = {
-                        topAppBarEditState.toggleEditMode()
-                    }) {
-                        Icon(
-                            imageVector = if (topAppBarEditState.isEditMode) {
-                                Icons.Outlined.ImportContacts
-                            } else {
-                                Icons.Outlined.Edit
-                            },
-                            contentDescription = if (topAppBarEditState.isEditMode) {
-                                "View"
-                            } else {
-                                "Edit"
-                            },
                         )
                     }
                 }

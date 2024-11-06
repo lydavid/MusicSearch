@@ -27,6 +27,7 @@ val collectionsFeatureModule = module {
                     appPreferences = get(),
                     getAllCollections = get(),
                     createCollection = get(),
+                    deleteCollection = get(),
                 )
 
                 is CollectionScreen -> CollectionPresenter(
