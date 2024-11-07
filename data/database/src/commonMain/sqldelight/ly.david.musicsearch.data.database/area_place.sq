@@ -33,8 +33,6 @@ WHERE ap.place_id = :placeId;
 
 -- An area that does not have a type is the area for a place that has never been visited.
 -- We only delete this one so that we don't delete the rest of its containment.
--- TODO: however, if we have clicked on it, then we can't ever change a place's area?
---   this is a good reason to not reuse area_place for both directions
 deleteAreaPlaceLink:
 DELETE FROM area_place WHERE area_id IN (
   SELECT a.id
