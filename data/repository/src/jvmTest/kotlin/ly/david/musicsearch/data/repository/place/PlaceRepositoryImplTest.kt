@@ -556,5 +556,31 @@ class PlaceRepositoryImplTest : KoinTest {
             ),
             artistDetailsModel,
         )
+        artistDetailsModel = placeRepository.lookupPlace(
+            placeId = placeId,
+            forceRefresh = true,
+        )
+        assertEquals(
+            PlaceDetailsModel(
+                id = placeId,
+                name = "日本武道館",
+                address = "〒102-8321 東京都千代田区北の丸公園2-3",
+                type = "Indoor arena",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1964-10-03",
+                ),
+                coordinates = CoordinatesUiModel(
+                    longitude = 139.75,
+                    latitude = 35.69333,
+                ),
+                area = AreaListItemModel(
+                    id = districtId,
+                    name = "Kitanomaru Kōen",
+                    type = "District",
+                    visited = true,
+                ),
+            ),
+            artistDetailsModel,
+        )
     }
 }
