@@ -110,7 +110,7 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
 
         val flow: Flow<PagingData<ReleaseListItemModel>> = sut.observeReleasesByEntity(
             entityId = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
-            MusicBrainzEntity.LABEL,
+            entity = MusicBrainzEntity.LABEL,
             listFilters = ListFilters(
                 query = "ウタ",
             ),

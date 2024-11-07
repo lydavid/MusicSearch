@@ -1,13 +1,20 @@
 package ly.david.musicsearch.data.repository.place
 
+import androidx.paging.PagingData
+import androidx.paging.testing.asSnapshot
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
+import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
@@ -18,8 +25,11 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.KoinTestRule
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
+import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
@@ -41,8 +51,10 @@ class PlaceRepositoryImplTest : KoinTest {
     private val placeDao: PlaceDao by inject()
     private val areaPlaceDao: AreaPlaceDao by inject()
     private val areaDao: AreaDao by inject()
+    private val browseEntityCountDao: BrowseEntityCountDao by inject()
+    private val collectionEntityDao: CollectionEntityDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createPlaceRepositoryWithFakeNetworkData(
         musicBrainzModel: PlaceMusicBrainzModel,
     ): PlaceRepositoryImpl {
         val relationRepository = RelationRepositoryImpl(
@@ -74,9 +86,39 @@ class PlaceRepositoryImplTest : KoinTest {
         )
     }
 
+    private fun createAreaRepositoryWithFakeNetworkData(
+        musicBrainzModel: AreaMusicBrainzModel,
+    ): AreaRepositoryImpl {
+        val relationRepository = RelationRepositoryImpl(
+            lookupApi = object : FakeLookupApi() {
+                override suspend fun lookupArea(
+                    areaId: String,
+                    include: String?,
+                ): AreaMusicBrainzModel {
+                    return musicBrainzModel
+                }
+            },
+            entityHasRelationsDao = entityHasRelationsDao,
+            visitedDao = visitedDao,
+            relationDao = relationDao,
+        )
+        return AreaRepositoryImpl(
+            areaDao = areaDao,
+            relationRepository = relationRepository,
+            lookupApi = object : FakeLookupApi() {
+                override suspend fun lookupArea(
+                    areaId: String,
+                    include: String?,
+                ): AreaMusicBrainzModel {
+                    return musicBrainzModel
+                }
+            },
+        )
+    }
+
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepositoryWithFakeNetworkData(
+        val sparseRepository = createPlaceRepositoryWithFakeNetworkData(
             musicBrainzModel = PlaceMusicBrainzModel(
                 id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
                 name = "日本武道館",
@@ -96,7 +138,7 @@ class PlaceRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepositoryWithFakeNetworkData(
+        val allDataRepository = createPlaceRepositoryWithFakeNetworkData(
             musicBrainzModel = PlaceMusicBrainzModel(
                 id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
                 name = "日本武道館",
@@ -323,6 +365,222 @@ class PlaceRepositoryImplTest : KoinTest {
                 ),
             ),
             allDataArtistDetailsModel,
+        )
+    }
+
+    @Test
+    fun `place will use the most specific area`() = runTest {
+        val countryId = "2db42837-c832-3c27-b4a3-08198f75693c"
+        val districtId = "e24c0f02-9b5a-4f4f-9fe0-f8b3e67874f8"
+
+        val placeId = "4d43b9d8-162d-4ac5-8068-dfb009722484"
+        val placeMusicBrainzModel = PlaceMusicBrainzModel(
+            id = placeId,
+            name = "日本武道館",
+            address = "〒102-8321 東京都千代田区北の丸公園2-3",
+            type = "Indoor arena",
+            typeId = "a77c11f6-82fa-3cc0-9041-ac60e5f6e024",
+            lifeSpan = LifeSpanMusicBrainzModel(
+                begin = "1964-10-03",
+            ),
+            coordinates = CoordinatesMusicBrainzModel(
+                longitude = 139.75,
+                latitude = 35.69333,
+            ),
+            area = AreaMusicBrainzModel(
+                id = districtId,
+                name = "Kitanomaru Kōen",
+            ),
+        )
+
+        // Lookup a country
+        val countryAreaRepository = createAreaRepositoryWithFakeNetworkData(
+            musicBrainzModel = AreaMusicBrainzModel(
+                id = countryId,
+                name = "Japan",
+                type = "Country",
+                countryCodes = listOf("JP"),
+            ),
+        )
+        countryAreaRepository.lookupArea(
+            areaId = countryId,
+            forceRefresh = false,
+        )
+
+        // Browse places in the country
+        val placesByEntityRepository = PlacesByEntityRepositoryImpl(
+            browseEntityCountDao = browseEntityCountDao,
+            collectionEntityDao = collectionEntityDao,
+            placeDao = placeDao,
+            areaPlaceDao = areaPlaceDao,
+            browseApi = object : FakeBrowseApi() {
+                override suspend fun browsePlacesByArea(
+                    areaId: String,
+                    limit: Int,
+                    offset: Int,
+                ): BrowsePlacesResponse {
+                    return BrowsePlacesResponse(
+                        count = 1,
+                        offset = 0,
+                        musicBrainzModels = listOf(
+                            placeMusicBrainzModel,
+                        ),
+                    )
+                }
+            },
+        )
+        val flow: Flow<PagingData<PlaceListItemModel>> = placesByEntityRepository.observePlacesByEntity(
+            entityId = countryId,
+            entity = MusicBrainzEntity.AREA,
+        )
+        val places = flow.asSnapshot()
+        assertEquals(
+            1,
+            places.size,
+        )
+        assertEquals(
+            PlaceListItemModel(
+                id = placeId,
+                name = "日本武道館",
+                address = "〒102-8321 東京都千代田区北の丸公園2-3",
+                type = "Indoor arena",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1964-10-03",
+                ),
+                coordinates = CoordinatesUiModel(
+                    longitude = 139.75,
+                    latitude = 35.69333,
+                ),
+            ),
+            places[0],
+        )
+
+        // Lookup a place whose area is a more specific area in the country
+        val placeRepository = createPlaceRepositoryWithFakeNetworkData(
+            musicBrainzModel = placeMusicBrainzModel,
+        )
+        var artistDetailsModel = placeRepository.lookupPlace(
+            placeId = placeId,
+            forceRefresh = false,
+        )
+        assertEquals(
+            PlaceDetailsModel(
+                id = placeId,
+                name = "日本武道館",
+                address = "〒102-8321 東京都千代田区北の丸公園2-3",
+                type = "Indoor arena",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1964-10-03",
+                ),
+                coordinates = CoordinatesUiModel(
+                    longitude = 139.75,
+                    latitude = 35.69333,
+                ),
+                area = AreaListItemModel(
+                    id = districtId,
+                    name = "Kitanomaru Kōen",
+                ),
+            ),
+            artistDetailsModel,
+        )
+        artistDetailsModel = placeRepository.lookupPlace(
+            placeId = placeId,
+            forceRefresh = true,
+        )
+        assertEquals(
+            PlaceDetailsModel(
+                id = placeId,
+                name = "日本武道館",
+                address = "〒102-8321 東京都千代田区北の丸公園2-3",
+                type = "Indoor arena",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1964-10-03",
+                ),
+                coordinates = CoordinatesUiModel(
+                    longitude = 139.75,
+                    latitude = 35.69333,
+                ),
+                area = AreaListItemModel(
+                    id = districtId,
+                    name = "Kitanomaru Kōen",
+                ),
+            ),
+            artistDetailsModel,
+        )
+
+        // Lookup the more specific area
+        val districtAreaRepository = createAreaRepositoryWithFakeNetworkData(
+            musicBrainzModel = AreaMusicBrainzModel(
+                id = districtId,
+                name = "Kitanomaru Kōen",
+                type = "District",
+            ),
+        )
+        val district = districtAreaRepository.lookupArea(
+            areaId = districtId,
+            forceRefresh = false,
+        )
+        assertEquals(
+            AreaDetailsModel(
+                id = districtId,
+                name = "Kitanomaru Kōen",
+                type = "District",
+            ),
+            district,
+        )
+
+        // Return back to the place
+        artistDetailsModel = placeRepository.lookupPlace(
+            placeId = placeId,
+            forceRefresh = false,
+        )
+        assertEquals(
+            PlaceDetailsModel(
+                id = placeId,
+                name = "日本武道館",
+                address = "〒102-8321 東京都千代田区北の丸公園2-3",
+                type = "Indoor arena",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1964-10-03",
+                ),
+                coordinates = CoordinatesUiModel(
+                    longitude = 139.75,
+                    latitude = 35.69333,
+                ),
+                area = AreaListItemModel(
+                    id = districtId,
+                    name = "Kitanomaru Kōen",
+                    type = "District",
+                    visited = true,
+                ),
+            ),
+            artistDetailsModel,
+        )
+        artistDetailsModel = placeRepository.lookupPlace(
+            placeId = placeId,
+            forceRefresh = true,
+        )
+        assertEquals(
+            PlaceDetailsModel(
+                id = placeId,
+                name = "日本武道館",
+                address = "〒102-8321 東京都千代田区北の丸公園2-3",
+                type = "Indoor arena",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1964-10-03",
+                ),
+                coordinates = CoordinatesUiModel(
+                    longitude = 139.75,
+                    latitude = 35.69333,
+                ),
+                area = AreaListItemModel(
+                    id = districtId,
+                    name = "Kitanomaru Kōen",
+                    type = "District",
+                    visited = true,
+                ),
+            ),
+            artistDetailsModel,
         )
     }
 }
