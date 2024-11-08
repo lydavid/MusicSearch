@@ -12,6 +12,8 @@ import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMe
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
+private const val SEARCH_DELAY_MS = 500L
+
 /**
  * Mediates search results from network.
  * Compare with [BrowseEntityRemoteMediator] and [LookupEntityRemoteMediator].
@@ -44,6 +46,7 @@ internal class SearchMusicBrainzRemoteMediator(
         return try {
             val nextOffset: Int = when (loadType) {
                 LoadType.REFRESH -> {
+                    delay(SEARCH_DELAY_MS)
                     0
                 }
 
