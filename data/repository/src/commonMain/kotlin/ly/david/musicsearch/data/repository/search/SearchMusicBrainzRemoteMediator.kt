@@ -12,7 +12,6 @@ import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMe
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
-
 /**
  * Mediates search results from network.
  * Compare with [BrowseEntityRemoteMediator] and [LookupEntityRemoteMediator].
