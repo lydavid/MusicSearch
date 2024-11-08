@@ -24,18 +24,17 @@ class RelationsPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
-        val relationListItems: Flow<PagingData<RelationListItemModel>> by
-            rememberRetained(id, entity, query) {
-                if (id.isEmpty()) return@rememberRetained mutableStateOf(emptyFlow())
-                val capturedEntity = entity ?: return@rememberRetained mutableStateOf(emptyFlow())
-                mutableStateOf(
-                    getEntityRelationships(
-                        entityId = id,
-                        entity = capturedEntity,
-                        query = query,
-                    ),
-                )
-            }
+        val relationListItems: Flow<PagingData<RelationListItemModel>> by rememberRetained(id, entity, query) {
+            if (id.isEmpty()) return@rememberRetained mutableStateOf(emptyFlow())
+            val capturedEntity = entity ?: return@rememberRetained mutableStateOf(emptyFlow())
+            mutableStateOf(
+                getEntityRelationships(
+                    entityId = id,
+                    entity = capturedEntity,
+                    query = query,
+                ),
+            )
+        }
         val lazyListState = rememberLazyListState()
 
         fun eventSink(event: RelationsUiEvent) {
