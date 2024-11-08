@@ -1,9 +1,12 @@
 package ly.david.musicsearch.shared.domain.releasegroup.usecase
 
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsByEntityRepository
 
 class GetReleaseGroupsByEntity(
@@ -11,11 +14,16 @@ class GetReleaseGroupsByEntity(
 ) : GetEntitiesByEntity<ListItemModel> {
     override operator fun invoke(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
-    ) = releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-        entityId = entityId,
-        entity = entity,
-        listFilters = listFilters,
-    )
+    ): Flow<PagingData<ListItemModel>> {
+        return when {
+            entityId.isEmpty() || entity == null -> emptyFlow()
+            else -> releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
+                entityId = entityId,
+                entity = entity,
+                listFilters = listFilters,
+            )
+        }
+    }
 }

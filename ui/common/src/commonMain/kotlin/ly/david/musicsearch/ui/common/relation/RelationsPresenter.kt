@@ -11,7 +11,6 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
@@ -25,12 +24,10 @@ class RelationsPresenter(
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         val relationListItems: Flow<PagingData<RelationListItemModel>> by rememberRetained(id, entity, query) {
-            if (id.isEmpty()) return@rememberRetained mutableStateOf(emptyFlow())
-            val capturedEntity = entity ?: return@rememberRetained mutableStateOf(emptyFlow())
             mutableStateOf(
                 getEntityRelationships(
                     entityId = id,
-                    entity = capturedEntity,
+                    entity = entity,
                     query = query,
                 ),
             )

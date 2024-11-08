@@ -16,7 +16,6 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.event.usecase.GetEventsByEntity
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
@@ -32,12 +31,10 @@ class EventsByEntityPresenter(
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val eventListItems: Flow<PagingData<EventListItemModel>> by rememberRetained(query, id, entity) {
-            if (id.isEmpty()) return@rememberRetained mutableStateOf(emptyFlow())
-            val capturedEntity = entity ?: return@rememberRetained mutableStateOf(emptyFlow())
             mutableStateOf(
                 getEventsByEntity(
                     entityId = id,
-                    entity = capturedEntity,
+                    entity = entity,
                     listFilters = ListFilters(
                         query = query,
                         isRemote = isRemote,

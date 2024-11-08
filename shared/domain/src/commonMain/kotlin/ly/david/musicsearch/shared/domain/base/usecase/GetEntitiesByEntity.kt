@@ -9,7 +9,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 interface GetEntitiesByEntity<LI : ListItemModel> {
     operator fun invoke(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<LI>>
 }

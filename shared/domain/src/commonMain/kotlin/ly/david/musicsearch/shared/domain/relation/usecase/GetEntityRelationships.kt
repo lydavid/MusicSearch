@@ -5,6 +5,7 @@ import app.cash.paging.cachedIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
@@ -14,14 +15,19 @@ class GetEntityRelationships(
     private val coroutineScope: CoroutineScope,
 ) {
     operator fun invoke(
-        entity: MusicBrainzEntity,
         entityId: String,
+        entity: MusicBrainzEntity?,
         query: String,
-    ): Flow<PagingData<RelationListItemModel>> = relationRepository.observeEntityRelationshipsExcludingUrls(
-        entity = entity,
-        entityId = entityId,
-        query = query,
-    )
-        .distinctUntilChanged()
-        .cachedIn(scope = coroutineScope)
+    ): Flow<PagingData<RelationListItemModel>> {
+        return when {
+            entityId.isEmpty() || entity == null -> emptyFlow()
+            else -> relationRepository.observeEntityRelationshipsExcludingUrls(
+                entityId = entityId,
+                entity = entity,
+                query = query,
+            )
+                .distinctUntilChanged()
+                .cachedIn(scope = coroutineScope)
+        }
+    }
 }
