@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
-import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
@@ -30,7 +29,8 @@ import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.common.area.AreaListItem
+import ly.david.musicsearch.ui.common.area.AreasByEntityUiState
+import ly.david.musicsearch.ui.common.area.AreasListScreen
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
 import ly.david.musicsearch.ui.common.artist.ArtistsListScreen
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
@@ -168,6 +168,7 @@ internal fun CollectionUi(
             CollectionUi(
                 isEditMode = state.topAppBarEditState.isEditMode,
                 lazyPagingItems = state.lazyPagingItems,
+                areasByEntityUiState = state.areasByEntityUiState,
                 artistsByEntityUiState = state.artistsByEntityUiState,
                 eventsByEntityUiState = state.eventsByEntityUiState,
                 labelsByEntityUiState = state.labelsByEntityUiState,
@@ -221,6 +222,7 @@ internal fun CollectionUi(
 private fun CollectionUi(
     isEditMode: Boolean,
     lazyPagingItems: LazyPagingItems<ListItemModel>,
+    areasByEntityUiState: AreasByEntityUiState,
     artistsByEntityUiState: ArtistsByEntityUiState,
     eventsByEntityUiState: EventsByEntityUiState,
     labelsByEntityUiState: LabelsByEntityUiState,
@@ -238,6 +240,25 @@ private fun CollectionUi(
     val lazyListState = rememberLazyListState()
 
     when (entity) {
+        MusicBrainzEntity.AREA -> {
+            AreasListScreen(
+                lazyListState = areasByEntityUiState.lazyListState,
+                lazyPagingItems = areasByEntityUiState.lazyPagingItems,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                isEditMode = isEditMode,
+                onItemClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
+            )
+        }
+
         MusicBrainzEntity.ARTIST -> {
             ArtistsListScreen(
                 lazyListState = artistsByEntityUiState.lazyListState,
@@ -404,29 +425,6 @@ internal fun CollectionUi(
         when (listItemModel) {
             is ListSeparator -> {
                 ListSeparatorHeader(text = listItemModel.text)
-            }
-
-            is AreaListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        AreaListItem(
-                            area = listItemModel,
-                        ) {
-                            onItemClick(
-                                entity,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
-                )
             }
 
             is InstrumentListItemModel -> {

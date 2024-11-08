@@ -1,5 +1,6 @@
 package ly.david.musicsearch.ui.common
 
+import ly.david.musicsearch.ui.common.area.AreasByEntityPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
 import ly.david.musicsearch.ui.common.label.LabelsByEntityPresenter
@@ -16,6 +17,7 @@ import org.koin.dsl.module
 val commonUiModule = module {
     includes(platformModule)
 
+    singleOf(::AreasByEntityPresenter)
     singleOf(::ArtistsByEntityPresenter)
     singleOf(::EventsByEntityPresenter)
     singleOf(::LabelsByEntityPresenter)

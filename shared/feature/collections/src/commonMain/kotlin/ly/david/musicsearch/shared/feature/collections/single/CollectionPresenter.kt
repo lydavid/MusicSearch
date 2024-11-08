@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.area.usecase.GetAreasByEntity
 import ly.david.musicsearch.shared.domain.collection.usecase.DeleteFromCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.shared.domain.error.ActionableResult
@@ -38,6 +37,9 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.shared.domain.recording.usecase.GetRecordingsByEntity
 import ly.david.musicsearch.shared.domain.series.usecase.GetSeriesByEntity
+import ly.david.musicsearch.ui.common.area.AreasByEntityPresenter
+import ly.david.musicsearch.ui.common.area.AreasByEntityUiEvent
+import ly.david.musicsearch.ui.common.area.AreasByEntityUiState
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
@@ -68,7 +70,7 @@ internal class CollectionPresenter(
     private val navigator: Navigator,
     private val getCollectionUseCase: GetCollection,
     private val incrementLookupHistory: IncrementLookupHistory,
-    private val getAreasByEntity: GetAreasByEntity,
+    private val areasByEntityPresenter: AreasByEntityPresenter,
     private val artistsByEntityPresenter: ArtistsByEntityPresenter,
     private val getInstrumentsByEntity: GetInstrumentsByEntity,
     private val labelsByEntityPresenter: LabelsByEntityPresenter,
@@ -97,6 +99,8 @@ internal class CollectionPresenter(
         var collectableItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val topAppBarEditState: TopAppBarEditState = rememberTopAppBarEditState()
 
+        val areasByEntityUiState = areasByEntityPresenter.present()
+        val areasEventSink = areasByEntityUiState.eventSink
         val artistsByEntityUiState = artistsByEntityPresenter.present()
         val artistsEventSink = artistsByEntityUiState.eventSink
         val eventsByEntityUiState = eventsByEntityPresenter.present()
@@ -133,18 +137,14 @@ internal class CollectionPresenter(
         ) {
             when (collection?.entity) {
                 MusicBrainzEntity.AREA -> {
-                    collectableItems = getAreasByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    areasEventSink(
+                        AreasByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    areasEventSink(AreasByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.ARTIST -> {
@@ -330,6 +330,7 @@ internal class CollectionPresenter(
             topAppBarFilterState = topAppBarFilterState,
             lazyPagingItems = collectableItems.collectAsLazyPagingItems(),
             topAppBarEditState = topAppBarEditState,
+            areasByEntityUiState = areasByEntityUiState,
             artistsByEntityUiState = artistsByEntityUiState,
             eventsByEntityUiState = eventsByEntityUiState,
             labelsByEntityUiState = labelsByEntityUiState,
@@ -350,6 +351,7 @@ internal data class CollectionUiState(
     val url: String,
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val topAppBarEditState: TopAppBarEditState,
+    val areasByEntityUiState: AreasByEntityUiState,
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val eventsByEntityUiState: EventsByEntityUiState,
     val labelsByEntityUiState: LabelsByEntityUiState,
