@@ -243,7 +243,7 @@ internal fun AreaUiInternal(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.labelsByEntityUiState.lazyListState,
-                        onLabelClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
                                     entity = entity,

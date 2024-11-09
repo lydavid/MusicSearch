@@ -10,6 +10,7 @@ import ly.david.musicsearch.ui.common.recording.RecordingsByEntityPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityPresenter
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
+import ly.david.musicsearch.ui.common.series.SeriesByEntityPresenter
 import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
 import ly.david.musicsearch.ui.common.work.WorksByEntityPresenter
 import org.koin.core.module.dsl.singleOf
@@ -29,5 +30,6 @@ val commonUiModule = module {
     singleOf(::ReleasesByEntityPresenter)
     singleOf(::ReleaseGroupsByEntityPresenter)
     singleOf(::TracksByReleasePresenter)
+    singleOf(::SeriesByEntityPresenter)
     singleOf(::WorksByEntityPresenter)
 }

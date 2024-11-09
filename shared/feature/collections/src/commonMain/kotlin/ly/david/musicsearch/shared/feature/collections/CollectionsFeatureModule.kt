@@ -45,7 +45,7 @@ val collectionsFeatureModule = module {
                     releasesByEntityPresenter = get(),
                     releaseGroupsByEntityPresenter = get(),
                     worksByEntityPresenter = get(),
-                    getSeriesByEntity = get(),
+                    seriesByEntityPresenter = get(),
                     deleteFromCollection = get(),
                     getMusicBrainzUrl = get(),
                 )

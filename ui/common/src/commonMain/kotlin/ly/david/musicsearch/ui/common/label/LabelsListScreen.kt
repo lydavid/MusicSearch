@@ -17,7 +17,7 @@ fun LabelsListScreen(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     isEditMode: Boolean = false,
-    onLabelClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
 ) {
     ScreenWithPagingLoadingAndError(
@@ -32,7 +32,7 @@ fun LabelsListScreen(
                         LabelListItem(
                             label = listItemModel,
                         ) {
-                            onLabelClick(
+                            onItemClick(
                                 MusicBrainzEntity.LABEL,
                                 id,
                                 getNameWithDisambiguation(),

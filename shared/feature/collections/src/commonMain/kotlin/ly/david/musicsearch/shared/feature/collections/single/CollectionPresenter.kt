@@ -12,7 +12,6 @@ import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
-import app.cash.paging.insertSeparators
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
 import com.slack.circuit.runtime.CircuitUiEvent
@@ -21,9 +20,7 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.collection.usecase.DeleteFromCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.shared.domain.error.ActionableResult
@@ -33,7 +30,6 @@ import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.series.usecase.GetSeriesByEntity
 import ly.david.musicsearch.ui.common.area.AreasByEntityPresenter
 import ly.david.musicsearch.ui.common.area.AreasByEntityUiEvent
 import ly.david.musicsearch.ui.common.area.AreasByEntityUiState
@@ -63,6 +59,9 @@ import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiState
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.series.SeriesByEntityPresenter
+import ly.david.musicsearch.ui.common.series.SeriesByEntityUiEvent
+import ly.david.musicsearch.ui.common.series.SeriesByEntityUiState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarEditState
@@ -85,7 +84,7 @@ internal class CollectionPresenter(
     private val recordingsByEntityPresenter: RecordingsByEntityPresenter,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
-    private val getSeriesByEntity: GetSeriesByEntity,
+    private val seriesByEntityPresenter: SeriesByEntityPresenter,
     private val worksByEntityPresenter: WorksByEntityPresenter,
     private val deleteFromCollection: DeleteFromCollection,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
@@ -123,6 +122,8 @@ internal class CollectionPresenter(
         val releasesEventSink = releasesByEntityUiState.eventSink
         val releaseGroupsByEntityUiState = releaseGroupsByEntityPresenter.present()
         val releaseGroupsEventSink = releaseGroupsByEntityUiState.eventSink
+        val seriesByEntityUiState = seriesByEntityPresenter.present()
+        val seriesEventSink = seriesByEntityUiState.eventSink
         val worksByEntityUiState = worksByEntityPresenter.present()
         val worksEventSink = worksByEntityUiState.eventSink
 
@@ -248,18 +249,14 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.SERIES -> {
-                    collectableItems = getSeriesByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    seriesEventSink(
+                        SeriesByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    seriesEventSink(SeriesByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.WORK -> {
@@ -339,6 +336,7 @@ internal class CollectionPresenter(
             recordingsByEntityUiState = recordingsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
+            seriesByEntityUiState = seriesByEntityUiState,
             worksByEntityUiState = worksByEntityUiState,
             eventSink = ::eventSink,
         )
@@ -363,6 +361,7 @@ internal data class CollectionUiState(
     val recordingsByEntityUiState: RecordingsByEntityUiState,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
+    val seriesByEntityUiState: SeriesByEntityUiState,
     val worksByEntityUiState: WorksByEntityUiState,
     val eventSink: (CollectionUiEvent) -> Unit,
 ) : CircuitUiState
