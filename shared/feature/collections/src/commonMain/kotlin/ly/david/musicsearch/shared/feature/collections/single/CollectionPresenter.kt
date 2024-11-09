@@ -34,7 +34,6 @@ import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.place.usecase.GetPlacesByEntity
 import ly.david.musicsearch.shared.domain.recording.usecase.GetRecordingsByEntity
 import ly.david.musicsearch.shared.domain.series.usecase.GetSeriesByEntity
 import ly.david.musicsearch.ui.common.area.AreasByEntityPresenter
