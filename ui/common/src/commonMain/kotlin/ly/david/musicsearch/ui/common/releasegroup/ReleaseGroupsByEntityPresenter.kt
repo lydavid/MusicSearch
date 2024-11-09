@@ -11,6 +11,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
@@ -30,7 +31,7 @@ class ReleaseGroupsByEntityPresenter(
     @Composable
     override fun present(): ReleaseGroupsByEntityUiState {
         val scope = rememberCoroutineScope()
-        val sorted by appPreferences.sortReleaseGroupListItems.collectAsState(true)
+        val sorted by appPreferences.sortReleaseGroupListItems.collectAsRetainedState(true)
         var query by rememberSaveable { mutableStateOf("") }
         var id: String by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }

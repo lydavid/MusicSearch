@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -51,7 +52,7 @@ class ReleasesByEntityPresenter(
         }
         val lazyListState: LazyListState = rememberLazyListState()
         val scope = rememberCoroutineScope()
-        val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsState(true)
+        val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
 
         fun eventSink(event: ReleasesByEntityUiEvent) {
             when (event) {

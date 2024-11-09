@@ -4,7 +4,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -12,6 +11,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -45,9 +45,11 @@ internal class CollectionListPresenter(
         val topAppBarEditState = rememberTopAppBarEditState()
         val scope = rememberCoroutineScope()
         val query = topAppBarFilterState.filterText
-        val showLocal by appPreferences.showLocalCollections.collectAsState(true)
-        val showRemote by appPreferences.showRemoteCollections.collectAsState(true)
-        val sortOption by appPreferences.collectionSortOption.collectAsState(CollectionSortOption.ALPHABETICALLY)
+        val showLocal by appPreferences.showLocalCollections.collectAsRetainedState(true)
+        val showRemote by appPreferences.showRemoteCollections.collectAsRetainedState(true)
+        val sortOption by appPreferences.collectionSortOption.collectAsRetainedState(
+            CollectionSortOption.ALPHABETICALLY,
+        )
         val listItems by rememberRetained(showLocal, showRemote, query, sortOption) {
             mutableStateOf(
                 getAllCollections(
