@@ -50,6 +50,7 @@ import ly.david.musicsearch.ui.common.label.LabelsByEntityUiEvent
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
 import ly.david.musicsearch.ui.common.place.PlacesByEntityPresenter
 import ly.david.musicsearch.ui.common.place.PlacesByEntityUiEvent
+import ly.david.musicsearch.ui.common.place.PlacesByEntityUiState
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityPresenter
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
@@ -332,6 +333,7 @@ internal class CollectionPresenter(
             areasByEntityUiState = areasByEntityUiState,
             artistsByEntityUiState = artistsByEntityUiState,
             eventsByEntityUiState = eventsByEntityUiState,
+            placesByEntityUiState = placesByEntityUiState,
             labelsByEntityUiState = labelsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
@@ -353,6 +355,7 @@ internal data class CollectionUiState(
     val areasByEntityUiState: AreasByEntityUiState,
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val eventsByEntityUiState: EventsByEntityUiState,
+    val placesByEntityUiState: PlacesByEntityUiState,
     val labelsByEntityUiState: LabelsByEntityUiState,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
