@@ -17,7 +17,7 @@ fun WorksListScreen(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     isEditMode: Boolean = false,
-    onWorkClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
 ) {
     ScreenWithPagingLoadingAndError(
@@ -32,7 +32,7 @@ fun WorksListScreen(
                         WorkListItem(
                             work = listItemModel,
                         ) {
-                            onWorkClick(
+                            onItemClick(
                                 MusicBrainzEntity.WORK,
                                 id,
                                 getNameWithDisambiguation(),

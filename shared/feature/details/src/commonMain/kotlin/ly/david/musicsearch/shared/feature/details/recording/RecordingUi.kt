@@ -192,7 +192,7 @@ internal fun RecordingUi(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.releasesByEntityUiState.lazyListState,
                         showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
-                        onReleaseClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 RecordingUiEvent.ClickItem(
                                     entity = entity,

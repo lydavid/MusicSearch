@@ -170,7 +170,7 @@ internal fun LabelUi(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.relationsUiState.lazyListState,
                         showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
-                        onReleaseClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 LabelUiEvent.ClickItem(
                                     entity = entity,

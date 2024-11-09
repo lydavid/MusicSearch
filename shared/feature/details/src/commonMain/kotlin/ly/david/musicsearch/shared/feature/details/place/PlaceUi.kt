@@ -153,7 +153,7 @@ internal fun PlaceUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        onEventClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 PlaceUiEvent.ClickItem(
                                     entity = entity,

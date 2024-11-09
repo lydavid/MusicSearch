@@ -223,7 +223,7 @@ internal fun AreaUiInternal(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        onEventClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
                                     entity = entity,
@@ -264,7 +264,7 @@ internal fun AreaUiInternal(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.releasesByEntityUiState.lazyListState,
                         showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
-                        onReleaseClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
                                     entity = entity,

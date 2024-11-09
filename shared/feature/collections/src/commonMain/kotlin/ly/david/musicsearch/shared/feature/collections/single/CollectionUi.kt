@@ -293,7 +293,7 @@ private fun CollectionUi(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 isEditMode = isEditMode,
-                onEventClick = onItemClick,
+                onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,
@@ -389,7 +389,7 @@ private fun CollectionUi(
                 lazyListState = releasesByEntityUiState.lazyListState,
                 isEditMode = isEditMode,
                 showMoreInfo = releasesByEntityUiState.showMoreInfo,
-                onReleaseClick = onItemClick,
+                onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,
@@ -413,7 +413,7 @@ private fun CollectionUi(
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 lazyListState = releaseGroupsByEntityUiState.lazyListState,
                 isEditMode = isEditMode,
-                onReleaseGroupClick = onItemClick,
+                onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,
@@ -437,7 +437,7 @@ private fun CollectionUi(
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 lazyListState = worksByEntityUiState.lazyListState,
                 isEditMode = isEditMode,
-                onWorkClick = onItemClick,
+                onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,

@@ -20,7 +20,7 @@ fun ReleaseGroupsListScreen(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     isEditMode: Boolean = false,
-    onReleaseGroupClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = {},
 ) {
@@ -40,7 +40,7 @@ fun ReleaseGroupsListScreen(
                                 requestForMissingCoverArtUrl(listItemModel.id)
                             },
                         ) {
-                            onReleaseGroupClick(
+                            onItemClick(
                                 MusicBrainzEntity.RELEASE_GROUP,
                                 id,
                                 getNameWithDisambiguation(),

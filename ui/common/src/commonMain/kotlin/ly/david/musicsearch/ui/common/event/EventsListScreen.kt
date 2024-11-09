@@ -16,7 +16,7 @@ fun EventsListScreen(
     lazyPagingItems: LazyPagingItems<EventListItemModel>,
     modifier: Modifier = Modifier,
     isEditMode: Boolean = false,
-    onEventClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
 ) {
     ScreenWithPagingLoadingAndError(
@@ -31,7 +31,7 @@ fun EventsListScreen(
                         EventListItem(
                             event = eventListItemModel,
                         ) {
-                            onEventClick(
+                            onItemClick(
                                 MusicBrainzEntity.EVENT,
                                 id,
                                 getNameWithDisambiguation(),
