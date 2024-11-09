@@ -4,10 +4,13 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -29,9 +32,14 @@ internal class NowPlayingHistoryPresenter(
     @Composable
     override fun present(): NowPlayingHistoryUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
-        val lazyPagingItems: LazyPagingItems<ListItemModel> = getNowPlayingHistory(
-            query = topAppBarFilterState.filterText,
-        ).collectAsLazyPagingItems()
+        val query = topAppBarFilterState.filterText
+        val listItems by rememberRetained(query) {
+            mutableStateOf(
+                getNowPlayingHistory(
+                    query = query,
+                ),
+            )
+        }
         val lazyListState = rememberLazyListState()
 
         fun eventSink(event: NowPlayingHistoryUiEvent) {
@@ -59,7 +67,7 @@ internal class NowPlayingHistoryPresenter(
 
         return NowPlayingHistoryUiState(
             topAppBarFilterState = topAppBarFilterState,
-            lazyPagingItems = lazyPagingItems,
+            lazyPagingItems = listItems.collectAsLazyPagingItems(),
             lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
