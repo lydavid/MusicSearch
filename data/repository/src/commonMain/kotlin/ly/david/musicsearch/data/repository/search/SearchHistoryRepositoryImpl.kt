@@ -28,7 +28,7 @@ internal class SearchHistoryRepositoryImpl(
         ).flow.map { pagingData ->
             pagingData
                 .insertSeparators { before: SearchHistoryListItemModel?, _: SearchHistoryListItemModel? ->
-                    if (before == null) Header() else null
+                    if (before == null) Header else null
                 }
         }
 
