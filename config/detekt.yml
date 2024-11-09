@@ -1,6 +1,7 @@
 complexity:
   CyclomaticComplexMethod:
     ignoreSimpleWhenEntries: true
+    ignoreSingleWhenExpression: true
   LongParameterList:
     active: false
   LongMethod:

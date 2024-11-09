@@ -21,8 +21,10 @@ import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.SearchApi
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.insertFooterItemForNonEmpty
+import ly.david.musicsearch.data.repository.internal.paging.insertHeaderItemForNonEmpty
 import ly.david.musicsearch.shared.domain.listitem.EndOfList
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.SearchHeader
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.search.results.SearchResultsRepository
 
@@ -57,7 +59,11 @@ internal class SearchResultsRepositoryImpl(
             searchResultDao.getSearchResults(entity)
         },
     ).flow.map { pagingData ->
-        pagingData.insertFooterItemForNonEmpty(item = EndOfList)
+        pagingData
+            .insertHeaderItemForNonEmpty(
+                item = SearchHeader(remoteCount = searchResultDao.getMetadata()?.remoteCount ?: 0),
+            )
+            .insertFooterItemForNonEmpty(item = EndOfList)
     }
 
     private fun getRemoteMediator(

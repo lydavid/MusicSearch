@@ -10,6 +10,7 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.Header
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.SearchHeader
 import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
@@ -20,8 +21,11 @@ internal fun PreviewSearchUiSearchResults() {
     PreviewTheme {
         Surface {
             val searchResults = MutableStateFlow(
-                PagingData.from<ListItemModel>(
+                PagingData.from(
                     listOf(
+                        SearchHeader(
+                            remoteCount = 37,
+                        ),
                         ArtistListItemModel(
                             id = "9388cee2-7d57-4598-905f-106019b267d3",
                             name = "Aimer",
@@ -136,7 +140,7 @@ internal fun PreviewSearchUiSearchHistory() {
             val searchHistory = MutableStateFlow(
                 PagingData.from(
                     listOf(
-                        Header(),
+                        Header,
                         SearchHistoryListItemModel(
                             id = "a",
                             query = "aimer",
