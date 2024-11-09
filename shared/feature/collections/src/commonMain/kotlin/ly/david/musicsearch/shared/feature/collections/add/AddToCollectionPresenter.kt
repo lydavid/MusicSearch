@@ -2,13 +2,18 @@ package ly.david.musicsearch.shared.feature.collections.add
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.paging.PagingData
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
@@ -30,11 +35,15 @@ internal class AddToCollectionPresenter(
     @Composable
     override fun present(): AddToCollectionUiState {
         val scope = rememberCoroutineScope()
-        val lazyPagingItems: LazyPagingItems<CollectionListItemModel> = getAllCollections(
-            showLocal = true,
-            showRemote = true,
-            entity = screen.entity,
-        ).collectAsLazyPagingItems()
+        val listItems: Flow<PagingData<CollectionListItemModel>> by rememberRetained {
+            mutableStateOf(
+                getAllCollections(
+                    showLocal = true,
+                    showRemote = true,
+                    entity = screen.entity,
+                ),
+            )
+        }
 
         fun eventSink(event: AddToCollectionUiEvent) {
             when (event) {
@@ -62,7 +71,7 @@ internal class AddToCollectionPresenter(
 
         return AddToCollectionUiState(
             defaultEntity = screen.entity,
-            lazyPagingItems = lazyPagingItems,
+            lazyPagingItems = listItems.collectAsLazyPagingItems(),
             eventSink = ::eventSink,
         )
     }

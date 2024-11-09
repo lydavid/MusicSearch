@@ -12,6 +12,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -47,12 +48,16 @@ internal class CollectionListPresenter(
         val showLocal by appPreferences.showLocalCollections.collectAsState(true)
         val showRemote by appPreferences.showRemoteCollections.collectAsState(true)
         val sortOption by appPreferences.collectionSortOption.collectAsState(CollectionSortOption.ALPHABETICALLY)
-        val lazyPagingItems: LazyPagingItems<CollectionListItemModel> = getAllCollections(
-            showLocal = showLocal,
-            showRemote = showRemote,
-            query = query,
-            sortOption = sortOption,
-        ).collectAsLazyPagingItems()
+        val listItems by rememberRetained(showLocal, showRemote, query, sortOption) {
+            mutableStateOf(
+                getAllCollections(
+                    showLocal = showLocal,
+                    showRemote = showRemote,
+                    query = query,
+                    sortOption = sortOption,
+                ),
+            )
+        }
         val lazyListState = rememberLazyListState()
 
         var actionableResult: ActionableResult? by remember { mutableStateOf(null) }
@@ -102,7 +107,7 @@ internal class CollectionListPresenter(
             showRemote = showRemote,
             sortOption = sortOption,
             lazyListState = lazyListState,
-            lazyPagingItems = lazyPagingItems,
+            lazyPagingItems = listItems.collectAsLazyPagingItems(),
             actionableResult = actionableResult,
             eventSink = ::eventSink,
         )

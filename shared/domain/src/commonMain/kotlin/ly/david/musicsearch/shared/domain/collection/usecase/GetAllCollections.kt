@@ -1,8 +1,11 @@
 package ly.david.musicsearch.shared.domain.collection.usecase
 
 import app.cash.paging.PagingData
+import app.cash.paging.cachedIn
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
@@ -14,6 +17,7 @@ import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 class GetAllCollections(
     private val collectionRepository: CollectionRepository,
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
+    private val coroutineScope: CoroutineScope,
 ) {
     operator fun invoke(
         entity: MusicBrainzEntity? = null,
@@ -32,5 +36,7 @@ class GetAllCollections(
                 sortOption = sortOption,
             )
         }
+            .distinctUntilChanged()
+            .cachedIn(coroutineScope)
     }
 }
