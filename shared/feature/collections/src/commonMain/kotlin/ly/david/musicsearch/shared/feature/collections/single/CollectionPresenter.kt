@@ -49,6 +49,8 @@ import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
 import ly.david.musicsearch.ui.common.label.LabelsByEntityPresenter
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiEvent
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
+import ly.david.musicsearch.ui.common.place.PlacesByEntityPresenter
+import ly.david.musicsearch.ui.common.place.PlacesByEntityUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityPresenter
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
@@ -74,7 +76,7 @@ internal class CollectionPresenter(
     private val artistsByEntityPresenter: ArtistsByEntityPresenter,
     private val getInstrumentsByEntity: GetInstrumentsByEntity,
     private val labelsByEntityPresenter: LabelsByEntityPresenter,
-    private val getPlacesByEntity: GetPlacesByEntity,
+    private val placesByEntityPresenter: PlacesByEntityPresenter,
     private val getRecordingsByEntity: GetRecordingsByEntity,
     private val eventsByEntityPresenter: EventsByEntityPresenter,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
@@ -107,6 +109,8 @@ internal class CollectionPresenter(
         val eventsEventSink = eventsByEntityUiState.eventSink
         val labelsByEntityUiState = labelsByEntityPresenter.present()
         val labelsEventSink = labelsByEntityUiState.eventSink
+        val placesByEntityUiState = placesByEntityPresenter.present()
+        val placesEventSink = placesByEntityUiState.eventSink
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
         val releaseGroupsByEntityUiState = releaseGroupsByEntityPresenter.present()
@@ -196,18 +200,14 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.PLACE -> {
-                    collectableItems = getPlacesByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    placesEventSink(
+                        PlacesByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    placesEventSink(PlacesByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.RECORDING -> {
