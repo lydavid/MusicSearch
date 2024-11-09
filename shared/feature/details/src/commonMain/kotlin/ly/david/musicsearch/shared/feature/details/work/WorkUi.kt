@@ -174,7 +174,7 @@ internal fun WorkUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.recordingsByEntityUiState.lazyListState,
-                        onRecordingClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 WorkUiEvent.ClickItem(
                                     entity = entity,

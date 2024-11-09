@@ -256,7 +256,7 @@ internal fun ArtistUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.recordingsByEntityUiState.lazyListState,
-                        onRecordingClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
                                     entity = entity,

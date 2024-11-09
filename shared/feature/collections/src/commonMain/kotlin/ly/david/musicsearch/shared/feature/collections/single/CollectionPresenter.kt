@@ -34,7 +34,6 @@ import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.recording.usecase.GetRecordingsByEntity
 import ly.david.musicsearch.shared.domain.series.usecase.GetSeriesByEntity
 import ly.david.musicsearch.ui.common.area.AreasByEntityPresenter
 import ly.david.musicsearch.ui.common.area.AreasByEntityUiEvent
@@ -51,6 +50,9 @@ import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
 import ly.david.musicsearch.ui.common.place.PlacesByEntityPresenter
 import ly.david.musicsearch.ui.common.place.PlacesByEntityUiEvent
 import ly.david.musicsearch.ui.common.place.PlacesByEntityUiState
+import ly.david.musicsearch.ui.common.recording.RecordingsByEntityPresenter
+import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiEvent
+import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiState
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityPresenter
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
@@ -77,8 +79,8 @@ internal class CollectionPresenter(
     private val getInstrumentsByEntity: GetInstrumentsByEntity,
     private val labelsByEntityPresenter: LabelsByEntityPresenter,
     private val placesByEntityPresenter: PlacesByEntityPresenter,
-    private val getRecordingsByEntity: GetRecordingsByEntity,
     private val eventsByEntityPresenter: EventsByEntityPresenter,
+    private val recordingsByEntityPresenter: RecordingsByEntityPresenter,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
     private val worksByEntityPresenter: WorksByEntityPresenter,
@@ -111,6 +113,8 @@ internal class CollectionPresenter(
         val labelsEventSink = labelsByEntityUiState.eventSink
         val placesByEntityUiState = placesByEntityPresenter.present()
         val placesEventSink = placesByEntityUiState.eventSink
+        val recordingsByEntityUiState = recordingsByEntityPresenter.present()
+        val recordingsEventSink = recordingsByEntityUiState.eventSink
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
         val releaseGroupsByEntityUiState = releaseGroupsByEntityPresenter.present()
@@ -211,18 +215,14 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.RECORDING -> {
-                    collectableItems = getRecordingsByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    recordingsEventSink(
+                        RecordingsByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    recordingsEventSink(RecordingsByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.RELEASE -> {
@@ -335,6 +335,7 @@ internal class CollectionPresenter(
             eventsByEntityUiState = eventsByEntityUiState,
             placesByEntityUiState = placesByEntityUiState,
             labelsByEntityUiState = labelsByEntityUiState,
+            recordingsByEntityUiState = recordingsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
             worksByEntityUiState = worksByEntityUiState,
@@ -357,6 +358,7 @@ internal data class CollectionUiState(
     val eventsByEntityUiState: EventsByEntityUiState,
     val placesByEntityUiState: PlacesByEntityUiState,
     val labelsByEntityUiState: LabelsByEntityUiState,
+    val recordingsByEntityUiState: RecordingsByEntityUiState,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
     val worksByEntityUiState: WorksByEntityUiState,

@@ -25,7 +25,6 @@ import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
-import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.area.AreasByEntityUiState
@@ -43,7 +42,8 @@ import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.place.PlacesByEntityUiState
 import ly.david.musicsearch.ui.common.place.PlacesListScreen
-import ly.david.musicsearch.ui.common.recording.RecordingListItem
+import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiState
+import ly.david.musicsearch.ui.common.recording.RecordingsListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListScreen
@@ -173,6 +173,7 @@ internal fun CollectionUi(
                 eventsByEntityUiState = state.eventsByEntityUiState,
                 placesByEntityUiState = state.placesByEntityUiState,
                 labelsByEntityUiState = state.labelsByEntityUiState,
+                recordingsByEntityUiState = state.recordingsByEntityUiState,
                 releasesByEntityUiState = state.releasesByEntityUiState,
                 releaseGroupsByEntityUiState = state.releaseGroupsByEntityUiState,
                 worksByEntityUiState = state.worksByEntityUiState,
@@ -228,6 +229,7 @@ private fun CollectionUi(
     eventsByEntityUiState: EventsByEntityUiState,
     placesByEntityUiState: PlacesByEntityUiState,
     labelsByEntityUiState: LabelsByEntityUiState,
+    recordingsByEntityUiState: RecordingsByEntityUiState,
     releasesByEntityUiState: ReleasesByEntityUiState,
     releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
     worksByEntityUiState: WorksByEntityUiState,
@@ -328,6 +330,25 @@ private fun CollectionUi(
                 lazyListState = labelsByEntityUiState.lazyListState,
                 isEditMode = isEditMode,
                 onLabelClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
+            )
+        }
+
+        MusicBrainzEntity.RECORDING -> {
+            RecordingsListScreen(
+                lazyPagingItems = recordingsByEntityUiState.lazyPagingItems,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                lazyListState = recordingsByEntityUiState.lazyListState,
+                isEditMode = isEditMode,
+                onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,
@@ -453,29 +474,6 @@ internal fun CollectionUi(
                     content = {
                         InstrumentListItem(
                             instrument = listItemModel,
-                        ) {
-                            onItemClick(
-                                entity,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
-                )
-            }
-
-            is RecordingListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        RecordingListItem(
-                            recording = listItemModel,
                         ) {
                             onItemClick(
                                 entity,
