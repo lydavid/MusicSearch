@@ -1,20 +1,27 @@
 package ly.david.musicsearch.shared.domain.history.usecase
 
 import app.cash.paging.PagingData
+import app.cash.paging.cachedIn
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.history.LookupHistoryRepository
 
 class GetPagedHistory(
     private val lookupHistoryRepository: LookupHistoryRepository,
+    private val coroutineScope: CoroutineScope,
 ) {
     operator fun invoke(
         query: String,
         sortOption: HistorySortOption,
-    ): Flow<PagingData<ListItemModel>> =
-        lookupHistoryRepository.observeAllLookupHistory(
-            query,
-            sortOption,
+    ): Flow<PagingData<ListItemModel>> {
+        return lookupHistoryRepository.observeAllLookupHistory(
+            query = query,
+            sortOption = sortOption,
         )
+            .distinctUntilChanged()
+            .cachedIn(scope = coroutineScope)
+    }
 }
