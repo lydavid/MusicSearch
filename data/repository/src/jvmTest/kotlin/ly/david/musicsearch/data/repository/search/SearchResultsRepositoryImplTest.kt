@@ -34,6 +34,7 @@ import ly.david.musicsearch.shared.domain.listitem.EndOfList
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.domain.listitem.SearchHeader
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert
 import org.junit.Rule
@@ -126,8 +127,14 @@ class SearchResultsRepositoryImplTest : KoinTest {
         val searchResults: List<ListItemModel> = flow.asSnapshot()
 
         Assert.assertEquals(
-            2,
+            3,
             searchResults.size,
+        )
+        Assert.assertEquals(
+            SearchHeader(
+                remoteCount = 1,
+            ),
+            searchResults.first(),
         )
         Assert.assertEquals(
             EndOfList,
@@ -176,7 +183,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
         val searchResults: List<ListItemModel> = flow.asSnapshot()
 
         Assert.assertEquals(
-            5,
+            6,
             searchResults.size,
         )
         Assert.assertEquals(
@@ -184,28 +191,28 @@ class SearchResultsRepositoryImplTest : KoinTest {
                 id = "89ad4ac3-39f7-470e-963a-56509c546377",
                 name = "Various Artists",
             ),
-            (searchResults[0] as ArtistListItemModel),
+            (searchResults[1] as ArtistListItemModel),
         )
         Assert.assertEquals(
             ArtistListItemModel(
                 id = "b972f589-fb0e-474e-b64a-803b0364fa75",
                 name = "Wolfgang Amadeus Mozart",
             ),
-            (searchResults[1] as ArtistListItemModel),
+            (searchResults[2] as ArtistListItemModel),
         )
         Assert.assertEquals(
             ArtistListItemModel(
                 id = "125ec42a-7229-4250-afc5-e057484327fe",
                 name = "[unknown]",
             ),
-            (searchResults[2] as ArtistListItemModel),
+            (searchResults[3] as ArtistListItemModel),
         )
         Assert.assertEquals(
             ArtistListItemModel(
                 id = "7364dea6-ca9a-48e3-be01-b44ad0d19897",
                 name = "a-ha",
             ),
-            (searchResults[3] as ArtistListItemModel),
+            (searchResults[4] as ArtistListItemModel),
         )
     }
 
@@ -253,7 +260,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
         )
         var searchResults: List<ListItemModel> = flow.asSnapshot()
         Assert.assertEquals(
-            2,
+            3,
             searchResults.size,
         )
         Assert.assertEquals(
@@ -261,7 +268,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
                 id = "89ad4ac3-39f7-470e-963a-56509c546377",
                 name = "Various Artists",
             ),
-            (searchResults[0] as ArtistListItemModel),
+            (searchResults[1] as ArtistListItemModel),
         )
 
         flow = sut.observeSearchResults(
@@ -270,7 +277,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
         )
         searchResults = flow.asSnapshot()
         Assert.assertEquals(
-            2,
+            3,
             searchResults.size,
         )
         Assert.assertEquals(
@@ -278,7 +285,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
                 id = "f42c1e2a-b7db-4acf-9742-1889b9c6d530",
                 name = "A Coruña",
             ),
-            (searchResults[0] as AreaListItemModel),
+            (searchResults[1] as AreaListItemModel),
         )
     }
 
@@ -316,7 +323,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
         val searchResults: List<ListItemModel> = flow.asSnapshot()
 
         Assert.assertEquals(
-            3,
+            4,
             searchResults.size,
         )
         Assert.assertEquals(
@@ -324,14 +331,14 @@ class SearchResultsRepositoryImplTest : KoinTest {
                 id = "1bc74971-d5c8-4a21-b761-c24e74efb9b4",
                 name = "Lollapalooza 2024",
             ),
-            (searchResults[0] as EventListItemModel),
+            (searchResults[1] as EventListItemModel),
         )
         Assert.assertEquals(
             EventListItemModel(
                 id = "1bc74971-d5c8-4a21-b761-c24e74efb9b4",
                 name = "Lollapalooza 2024",
             ),
-            (searchResults[1] as EventListItemModel),
+            (searchResults[2] as EventListItemModel),
         )
         Assert.assertEquals(
             EndOfList,
@@ -377,7 +384,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
         val searchResults: List<ListItemModel> = flow.asSnapshot()
 
         Assert.assertEquals(
-            2,
+            3,
             searchResults.size,
         )
         Assert.assertEquals(
@@ -386,7 +393,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
                 name = "Keep The Beats!",
                 formattedArtistCredits = "Girls Dead Monster",
             ),
-            (searchResults[0] as ReleaseListItemModel),
+            (searchResults[1] as ReleaseListItemModel),
         )
         Assert.assertEquals(
             EndOfList,
