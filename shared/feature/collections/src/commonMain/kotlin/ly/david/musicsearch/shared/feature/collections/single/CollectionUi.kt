@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
-import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
@@ -34,7 +33,8 @@ import ly.david.musicsearch.ui.common.artist.ArtistsListScreen
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
 import ly.david.musicsearch.ui.common.event.EventsListScreen
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
-import ly.david.musicsearch.ui.common.instrument.InstrumentListItem
+import ly.david.musicsearch.ui.common.instrument.InstrumentsByEntityUiState
+import ly.david.musicsearch.ui.common.instrument.InstrumentsListScreen
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
 import ly.david.musicsearch.ui.common.label.LabelsListScreen
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -171,8 +171,9 @@ internal fun CollectionUi(
                 areasByEntityUiState = state.areasByEntityUiState,
                 artistsByEntityUiState = state.artistsByEntityUiState,
                 eventsByEntityUiState = state.eventsByEntityUiState,
-                placesByEntityUiState = state.placesByEntityUiState,
+                instrumentsByEntityUiState = state.instrumentsByEntityUiState,
                 labelsByEntityUiState = state.labelsByEntityUiState,
+                placesByEntityUiState = state.placesByEntityUiState,
                 recordingsByEntityUiState = state.recordingsByEntityUiState,
                 releasesByEntityUiState = state.releasesByEntityUiState,
                 releaseGroupsByEntityUiState = state.releaseGroupsByEntityUiState,
@@ -227,8 +228,9 @@ private fun CollectionUi(
     areasByEntityUiState: AreasByEntityUiState,
     artistsByEntityUiState: ArtistsByEntityUiState,
     eventsByEntityUiState: EventsByEntityUiState,
-    placesByEntityUiState: PlacesByEntityUiState,
+    instrumentsByEntityUiState: InstrumentsByEntityUiState,
     labelsByEntityUiState: LabelsByEntityUiState,
+    placesByEntityUiState: PlacesByEntityUiState,
     recordingsByEntityUiState: RecordingsByEntityUiState,
     releasesByEntityUiState: ReleasesByEntityUiState,
     releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
@@ -301,14 +303,14 @@ private fun CollectionUi(
             )
         }
 
-        MusicBrainzEntity.PLACE -> {
-            PlacesListScreen(
-                lazyListState = placesByEntityUiState.lazyListState,
-                lazyPagingItems = placesByEntityUiState.lazyPagingItems,
+        MusicBrainzEntity.INSTRUMENT -> {
+            InstrumentsListScreen(
+                lazyPagingItems = instrumentsByEntityUiState.lazyPagingItems,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
+                lazyListState = instrumentsByEntityUiState.lazyListState,
                 isEditMode = isEditMode,
                 onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
@@ -330,6 +332,25 @@ private fun CollectionUi(
                 lazyListState = labelsByEntityUiState.lazyListState,
                 isEditMode = isEditMode,
                 onLabelClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
+            )
+        }
+
+        MusicBrainzEntity.PLACE -> {
+            PlacesListScreen(
+                lazyListState = placesByEntityUiState.lazyListState,
+                lazyPagingItems = placesByEntityUiState.lazyPagingItems,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                isEditMode = isEditMode,
+                onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,
@@ -467,29 +488,6 @@ internal fun CollectionUi(
         when (listItemModel) {
             is ListSeparator -> {
                 ListSeparatorHeader(text = listItemModel.text)
-            }
-
-            is InstrumentListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        InstrumentListItem(
-                            instrument = listItemModel,
-                        ) {
-                            onItemClick(
-                                entity,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
-                )
             }
 
             is SeriesListItemModel -> {
