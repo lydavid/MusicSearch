@@ -2,10 +2,14 @@ package ly.david.musicsearch.shared.domain.history.usecase
 
 import ly.david.musicsearch.shared.domain.history.LookupHistoryRepository
 
-class MarkLookupHistoryForDeletion(
+interface MarkLookupHistoryForDeletion {
+    operator fun invoke(mbid: String = "")
+}
+
+class MarkLookupHistoryForDeletionImpl(
     private val lookupHistoryRepository: LookupHistoryRepository,
-) {
-    operator fun invoke(mbid: String = "") {
+) : MarkLookupHistoryForDeletion {
+    override operator fun invoke(mbid: String) {
         if (mbid.isEmpty()) {
             lookupHistoryRepository.markAllHistoryAsDeleted()
         } else {

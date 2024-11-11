@@ -48,6 +48,7 @@ kotlin {
                 implementation(libs.bundles.kotlinx.coroutines)
                 implementation(libs.junit)
                 implementation(libs.koin.test)
+                implementation(libs.circuit.test)
             }
         }
         val androidInstrumentedTest by getting {
@@ -61,7 +62,6 @@ kotlin {
                 implementation(libs.koin.test)
                 implementation(libs.sqldelight.android.driver)
                 implementation(libs.test.parameter.injector)
-                implementation(libs.circuit.test)
             }
         }
     }

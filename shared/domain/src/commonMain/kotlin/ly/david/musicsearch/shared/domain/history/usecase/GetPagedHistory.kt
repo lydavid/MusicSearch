@@ -9,11 +9,18 @@ import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.history.LookupHistoryRepository
 
-class GetPagedHistory(
+interface GetPagedHistory {
+    operator fun invoke(
+        query: String,
+        sortOption: HistorySortOption,
+    ): Flow<PagingData<ListItemModel>>
+}
+
+class GetPagedHistoryImpl(
     private val lookupHistoryRepository: LookupHistoryRepository,
     private val coroutineScope: CoroutineScope,
-) {
-    operator fun invoke(
+) : GetPagedHistory {
+    override operator fun invoke(
         query: String,
         sortOption: HistorySortOption,
     ): Flow<PagingData<ListItemModel>> {

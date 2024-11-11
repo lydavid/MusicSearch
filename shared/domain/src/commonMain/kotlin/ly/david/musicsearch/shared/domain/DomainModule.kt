@@ -10,13 +10,19 @@ import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.shared.domain.event.usecase.GetEventsByEntity
 import ly.david.musicsearch.shared.domain.history.usecase.DeleteLookupHistory
+import ly.david.musicsearch.shared.domain.history.usecase.DeleteLookupHistoryImpl
 import ly.david.musicsearch.shared.domain.history.usecase.GetPagedHistory
+import ly.david.musicsearch.shared.domain.history.usecase.GetPagedHistoryImpl
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistoryImpl
 import ly.david.musicsearch.shared.domain.history.usecase.MarkLookupHistoryForDeletion
+import ly.david.musicsearch.shared.domain.history.usecase.MarkLookupHistoryForDeletionImpl
 import ly.david.musicsearch.shared.domain.history.usecase.UnMarkLookupHistoryForDeletion
+import ly.david.musicsearch.shared.domain.history.usecase.UnMarkLookupHistoryForDeletionImpl
 import ly.david.musicsearch.shared.domain.instrument.usecase.GetInstrumentsByEntity
 import ly.david.musicsearch.shared.domain.label.usecase.GetLabelsByEntity
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrlImpl
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.DeleteNowPlayingHistory
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.GetNowPlayingHistory
 import ly.david.musicsearch.shared.domain.place.usecase.GetPlacesByEntity
@@ -33,6 +39,7 @@ import ly.david.musicsearch.shared.domain.search.results.usecase.GetSearchResult
 import ly.david.musicsearch.shared.domain.series.usecase.GetSeriesByEntity
 import ly.david.musicsearch.shared.domain.work.usecase.GetWorksByEntity
 import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val domainModule = module {
@@ -46,11 +53,11 @@ val domainModule = module {
     singleOf(::GetCollection)
     singleOf(::GetCollection)
     singleOf(::GetEventsByEntity)
-    singleOf(::DeleteLookupHistory)
-    singleOf(::GetPagedHistory)
-    singleOf(::IncrementLookupHistory)
-    singleOf(::MarkLookupHistoryForDeletion)
-    singleOf(::UnMarkLookupHistoryForDeletion)
+    singleOf(::DeleteLookupHistoryImpl) bind DeleteLookupHistory::class
+    singleOf(::GetPagedHistoryImpl) bind GetPagedHistory::class
+    singleOf(::IncrementLookupHistoryImpl) bind IncrementLookupHistory::class
+    singleOf(::MarkLookupHistoryForDeletionImpl) bind MarkLookupHistoryForDeletion::class
+    singleOf(::UnMarkLookupHistoryForDeletionImpl) bind UnMarkLookupHistoryForDeletion::class
     singleOf(::GetInstrumentsByEntity)
     singleOf(::GetLabelsByEntity)
     singleOf(::DeleteNowPlayingHistory)
@@ -68,5 +75,5 @@ val domainModule = module {
     singleOf(::GetSeriesByEntity)
     singleOf(::GetWorksByEntity)
     singleOf(::GetSearchResults)
-    singleOf(::GetMusicBrainzUrl)
+    singleOf(::GetMusicBrainzUrlImpl) bind GetMusicBrainzUrl::class
 }

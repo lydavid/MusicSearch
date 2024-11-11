@@ -163,11 +163,11 @@ internal class EventPresenter(
 @Stable
 internal data class EventUiState(
     val title: String,
-    val isError: Boolean,
-    val event: EventDetailsModel?,
+    val isError: Boolean = false,
+    val event: EventDetailsModel? = null,
     val url: String = "",
-    val tabs: List<EventTab>,
-    val selectedTab: EventTab,
+    val tabs: List<EventTab> = listOf(),
+    val selectedTab: EventTab = EventTab.DETAILS,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val relationsUiState: RelationsUiState,

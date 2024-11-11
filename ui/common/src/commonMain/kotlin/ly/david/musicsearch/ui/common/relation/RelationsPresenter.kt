@@ -15,9 +15,11 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
 
-class RelationsPresenter(
+interface RelationsPresenter : Presenter<RelationsUiState>
+
+class RelationsPresenterImpl(
     private val getEntityRelationships: GetEntityRelationships,
-) : Presenter<RelationsUiState> {
+) : RelationsPresenter {
     @Composable
     override fun present(): RelationsUiState {
         var query by rememberSaveable { mutableStateOf("") }
