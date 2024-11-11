@@ -7,10 +7,8 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn:
       text: "Search"
       index: 0
-- inputText: "Mozart Complete Edition mediums:170"
-- tapOn:
-      text: "Mozart Complete Edition"
-      index: 1
+- inputText: "reid:18572d3b-b8d6-4ac1-8cda-6951a8f625d5"
+- tapOn: "Mozart Complete Edition"
 
 # Make sure we're on the right release
 - assertVisible: "Barcode: 5028421942513"
