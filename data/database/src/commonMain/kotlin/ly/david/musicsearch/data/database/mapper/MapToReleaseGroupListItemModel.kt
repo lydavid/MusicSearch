@@ -18,7 +18,7 @@ internal fun mapToReleaseGroupListItemModel(
     disambiguation = disambiguation,
     firstReleaseDate = firstReleaseDate,
     primaryType = primaryType,
-    secondaryTypes = secondaryTypes,
+    secondaryTypes = secondaryTypes.orEmpty(),
     formattedArtistCredits = formattedArtistCreditNames,
     imageUrl = thumbnailUrl,
     visited = visited == true,
