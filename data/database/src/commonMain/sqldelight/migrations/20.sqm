@@ -1,0 +1,5 @@
+import kotlin.String;
+import kotlinx.collections.immutable.ImmutableList;
+
+ALTER TABLE mbid_image ADD COLUMN `types` TEXT AS ImmutableList<String>;
+ALTER TABLE mbid_image ADD COLUMN `comment` TEXT;

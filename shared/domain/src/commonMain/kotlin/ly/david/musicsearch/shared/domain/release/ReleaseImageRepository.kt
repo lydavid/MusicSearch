@@ -20,6 +20,8 @@ interface ReleaseImageRepository {
         forceRefresh: Boolean,
     ): String
 
+    // TODO: up till now we used a mbid as the placeholder key
+    //  but a release can have multiple images
     fun getAllUrls(mbid: String): List<ImageUrls>
 
     fun getNumberOfImages(mbid: String): Int

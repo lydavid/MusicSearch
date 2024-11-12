@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.database
 
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.db.SqlDriver
+import ly.david.musicsearch.data.database.adapter.ImmutableListStringColumnAdapter
 import ly.david.musicsearch.data.database.adapter.InstantLongColumnAdapter
 import ly.david.musicsearch.data.database.adapter.ListStringColumnAdapter
 import ly.david.musicsearch.data.database.adapter.MusicBrainzEntityStringColumnAdapter
@@ -11,6 +12,7 @@ import lydavidmusicsearchdatadatabase.Browse_entity_count
 import lydavidmusicsearchdatadatabase.Collection
 import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Lookup_history
+import lydavidmusicsearchdatadatabase.Mbid_image
 import lydavidmusicsearchdatadatabase.Medium
 import lydavidmusicsearchdatadatabase.Now_playing_history
 import lydavidmusicsearchdatadatabase.Recording
@@ -97,5 +99,8 @@ fun createDatabase(driver: SqlDriver): Database {
             local_countAdapter = IntColumnAdapter,
             remote_countAdapter = IntColumnAdapter,
         ),
+        mbid_imageAdapter = Mbid_image.Adapter(
+            typesAdapter = ImmutableListStringColumnAdapter,
+        )
     )
 }

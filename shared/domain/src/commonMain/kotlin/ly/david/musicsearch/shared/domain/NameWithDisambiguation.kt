@@ -17,4 +17,7 @@ interface NameWithDisambiguation {
  * Get name, and optionally disambiguation if it's not null or empty.
  */
 fun NameWithDisambiguation.getNameWithDisambiguation(): String =
-    name.orEmpty() + disambiguation.transformThisIfNotNullOrEmpty { " ($it)" }
+    name.orEmpty().appendOptionalText(disambiguation)
+
+fun String.appendOptionalText(optionalText: String?): String =
+    this + optionalText.transformThisIfNotNullOrEmpty { " ($it)" }

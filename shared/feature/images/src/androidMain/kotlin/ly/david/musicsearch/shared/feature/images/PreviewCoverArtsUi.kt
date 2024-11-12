@@ -16,15 +16,18 @@ internal fun PreviewCoverArtsUiCompact() {
     PreviewTheme {
         Surface {
             CoverArtsUi(
-                isCompact = true,
-                imageUrlsList = persistentListOf(
-                    ImageUrls(
-                        largeUrl = "https://www.example.com/image.jpg",
-                    ),
-                    ImageUrls(
-                        largeUrl = "https://www.example.com/image.jpg",
+                state = CoverArtsUiState(
+                    id = "",
+                    imageUrls = persistentListOf(
+                        ImageUrls(
+                            largeUrl = "https://www.example.com/image.jpg",
+                        ),
+                        ImageUrls(
+                            largeUrl = "https://www.example.com/image.jpg",
+                        ),
                     ),
                 ),
+                isCompact = true,
             )
         }
     }
@@ -37,12 +40,15 @@ internal fun PreviewCoverArtsUiNonCompact() {
     PreviewTheme {
         Surface {
             CoverArtsUi(
-                imageUrlsList = persistentListOf(
-                    ImageUrls(
-                        largeUrl = "https://www.example.com/image.jpg",
-                    ),
-                    ImageUrls(
-                        largeUrl = "https://www.example.com/image.jpg",
+                state = CoverArtsUiState(
+                    id = "",
+                    imageUrls = persistentListOf(
+                        ImageUrls(
+                            largeUrl = "https://www.example.com/image.jpg",
+                        ),
+                        ImageUrls(
+                            largeUrl = "https://www.example.com/image.jpg",
+                        ),
                     ),
                 ),
             )

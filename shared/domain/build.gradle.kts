@@ -20,10 +20,10 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(libs.kotlinx.datetime)
+                api(libs.kotlinx.collections.immutable)
 
                 implementation(compose.runtime)
                 implementation(libs.koin.core)
-                implementation(libs.kotlinx.collections.immutable)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.paging.common)
             }
