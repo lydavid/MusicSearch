@@ -23,6 +23,7 @@ val collectionsFeatureModule = module {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is CollectionListScreen -> CollectionListPresenter(
+                    screen = screen,
                     navigator = navigator,
                     appPreferences = get(),
                     getAllCollections = get(),
@@ -33,7 +34,7 @@ val collectionsFeatureModule = module {
                 is CollectionScreen -> CollectionPresenter(
                     screen = screen,
                     navigator = navigator,
-                    getCollectionUseCase = get(),
+                    getCollection = get(),
                     incrementLookupHistory = get(),
                     areasByEntityPresenter = get(),
                     artistsByEntityPresenter = get(),
@@ -48,6 +49,7 @@ val collectionsFeatureModule = module {
                     seriesByEntityPresenter = get(),
                     deleteFromCollection = get(),
                     getMusicBrainzUrl = get(),
+                    collectionRepository = get(),
                 )
 
                 is AddToCollectionScreen -> AddToCollectionPresenter(

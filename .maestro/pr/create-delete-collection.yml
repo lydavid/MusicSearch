@@ -1,7 +1,7 @@
 appId: io.github.lydavid.musicsearch.debug
 ---
 - launchApp
-- startRecording: collections
+- startRecording: create-delete-collection
 
 - tapOn: Collections
 
