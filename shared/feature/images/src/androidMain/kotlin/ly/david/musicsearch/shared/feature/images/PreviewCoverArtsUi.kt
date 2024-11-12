@@ -9,23 +9,50 @@ import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.core.preview.DefaultPreviews
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
+
 @PreviewLightDark
 @Composable
-internal fun PreviewCoverArtsUiCompact() {
+internal fun PreviewCoverArtsGrid() {
     InitializeFakeImageLoader()
     PreviewTheme {
         Surface {
             CoverArtsUi(
                 state = CoverArtsUiState(
-                    id = "",
+                    id = "a",
+                    title = "Cover arts",
                     imageUrls = persistentListOf(
                         ImageUrls(
-                            largeUrl = "https://www.example.com/image.jpg",
+                            thumbnailUrl = "https://www.example.com/blue.jpg",
                         ),
                         ImageUrls(
-                            largeUrl = "https://www.example.com/image.jpg",
+                            thumbnailUrl = "https://www.example.com/red.jpg",
                         ),
                     ),
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewCoverArtsPagerCompact() {
+    InitializeFakeImageLoader()
+    PreviewTheme {
+        Surface {
+            CoverArtsUi(
+                state = CoverArtsUiState(
+                    id = "a",
+                    title = "Front",
+                    imageUrls = persistentListOf(
+                        ImageUrls(
+                            largeUrl = "https://www.example.com/blue.jpg",
+                        ),
+                        ImageUrls(
+                            largeUrl = "https://www.example.com/blue.jpg",
+                        ),
+                    ),
+                    selectedImageIndex = 0,
                 ),
                 isCompact = true,
             )
@@ -35,21 +62,23 @@ internal fun PreviewCoverArtsUiCompact() {
 
 @DefaultPreviews
 @Composable
-internal fun PreviewCoverArtsUiNonCompact() {
+internal fun PreviewCoverArtsPagerNonCompact() {
     InitializeFakeImageLoader()
     PreviewTheme {
         Surface {
             CoverArtsUi(
                 state = CoverArtsUiState(
-                    id = "",
+                    id = "a",
+                    title = "Front",
                     imageUrls = persistentListOf(
                         ImageUrls(
-                            largeUrl = "https://www.example.com/image.jpg",
+                            largeUrl = "https://www.example.com/blue.jpg",
                         ),
                         ImageUrls(
-                            largeUrl = "https://www.example.com/image.jpg",
+                            largeUrl = "https://www.example.com/blue.jpg",
                         ),
                     ),
+                    selectedImageIndex = 0,
                 ),
             )
         }
