@@ -101,6 +101,6 @@ fun createDatabase(driver: SqlDriver): Database {
         ),
         mbid_imageAdapter = Mbid_image.Adapter(
             typesAdapter = ImmutableListStringColumnAdapter,
-        )
+        ),
     )
 }

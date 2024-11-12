@@ -14,8 +14,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,19 +40,20 @@ internal fun CoverArtsPager(
     mbid: String,
     imageUrls: ImmutableList<ImageUrls>,
     selectedImageIndex: Int,
-    modifier: Modifier,
     isCompact: Boolean,
+    modifier: Modifier = Modifier,
     onImageChange: (index: Int) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
 
+    val latestOnImageChange by rememberUpdatedState(onImageChange)
     val pagerState = rememberPagerState(
         initialPage = selectedImageIndex,
         pageCount = { imageUrls.size },
     )
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
-            onImageChange(page)
+            latestOnImageChange(page)
         }
     }
 
