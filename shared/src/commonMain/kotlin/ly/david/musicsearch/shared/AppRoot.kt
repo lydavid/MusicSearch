@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -33,7 +34,7 @@ fun AppRoot(
             val windowSizeClass = calculateWindowSizeClass()
 
             Scaffold(
-                modifier = modifier,
+                modifier = modifier.navigationBarsPadding(),
                 contentWindowInsets = WindowInsets(0),
                 bottomBar = {
                     if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
