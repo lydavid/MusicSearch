@@ -140,44 +140,7 @@ private fun getInitialScreens(
         }
 
         "collection" -> {
-            if (pathSegments.size > 1) {
-                when (pathSegments[1]) {
-                    "create" -> {
-                        initialScreens.add(
-                            CollectionListScreen(
-                                newCollectionId = uri.getQueryParameter(ID),
-                                newCollectionName = uri.getQueryParameter(NAME),
-                                newCollectionEntity = uri.getQueryParameter(TYPE)?.toMusicBrainzEntity(),
-                            ),
-                        )
-                    }
-
-                    else -> {
-                        if (pathSegments.size > 2 && pathSegments[2] == "add") {
-                            val collectionId = pathSegments[1]
-                            initialScreens.addAll(
-                                listOf(
-                                    CollectionListScreen(),
-                                    CollectionScreen(
-                                        collectionId = collectionId,
-                                        collectableId = uri.getQueryParameter(ID),
-                                    ),
-                                ),
-                            )
-                        } else {
-                            val collectionId = pathSegments.last()
-                            initialScreens.addAll(
-                                listOf(
-                                    CollectionListScreen(),
-                                    CollectionScreen(
-                                        collectionId = collectionId,
-                                    ),
-                                ),
-                            )
-                        }
-                    }
-                }
-            }
+            initialScreens.addAll(getCollectionScreens(uri))
         }
 
         "settings" -> {
@@ -201,4 +164,31 @@ private fun getInitialScreens(
     }
 
     return initialScreens
+}
+
+private fun getCollectionScreens(uri: Uri): List<Screen> {
+    if (uri.pathSegments.size <= 1) return listOf(CollectionListScreen())
+
+    return when (uri.pathSegments[1]) {
+        "create" -> listOf(
+            CollectionListScreen(
+                newCollectionId = uri.getQueryParameter(ID),
+                newCollectionName = uri.getQueryParameter(NAME),
+                newCollectionEntity = uri.getQueryParameter(TYPE)?.toMusicBrainzEntity(),
+            ),
+        )
+
+        else -> {
+            val collectionId = uri.pathSegments[1]
+            val isAddOperation = uri.pathSegments.getOrNull(2) == "add"
+
+            listOf(
+                CollectionListScreen(),
+                CollectionScreen(
+                    collectionId = collectionId,
+                    collectableId = if (isAddOperation) uri.getQueryParameter(ID) else null,
+                ),
+            )
+        }
+    }
 }
