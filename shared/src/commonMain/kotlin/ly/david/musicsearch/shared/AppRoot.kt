@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -31,12 +32,13 @@ fun AppRoot(
     CircuitCompositionLocals(circuit) {
         ContentWithOverlays {
             val windowSizeClass = calculateWindowSizeClass()
+            val isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
 
             Scaffold(
                 modifier = modifier,
                 contentWindowInsets = WindowInsets(0),
                 bottomBar = {
-                    if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+                    if (isCompact) {
                         AppBottomNavigationBar(
                             currentTopLevelScreen = backStack.last().screen,
                             navigateToTopLevelScreen = { screen ->
@@ -45,13 +47,13 @@ fun AppRoot(
                         )
                     }
                 },
-            ) { _ ->
+            ) { innerPadding ->
 
                 Row(
                     modifier = Modifier
-                        .navigationBarsPadding(),
+                        .padding(innerPadding),
                 ) {
-                    if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact) {
+                    if (!isCompact) {
                         AppNavigationRail(
                             currentTopLevelScreen = backStack.last().screen,
                             navigateToTopLevelScreen = { screen ->
@@ -60,9 +62,15 @@ fun AppRoot(
                         )
                     }
 
+                    val contentModifier: Modifier = if (isCompact) {
+                        Modifier
+                    } else {
+                        Modifier.navigationBarsPadding()
+                    }
                     NavigableCircuitContent(
                         navigator = navigator,
                         backStack = backStack,
+                        modifier = contentModifier,
                         decoration = GestureNavigationDecoration(
                             onBackInvoked = navigator::pop,
                         ),
