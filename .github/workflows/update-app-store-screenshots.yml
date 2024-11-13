@@ -39,8 +39,6 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
-      - run: avdmanager list device
-
       - name: Install app on phone emulator, record screenshots
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
@@ -59,7 +57,7 @@ jobs:
         with:
           api-level: 35
           arch: x86_64
-          profile: pixel_3a
+          profile: pixel_tablet
           emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           sdcard-path-or-size: 100M
