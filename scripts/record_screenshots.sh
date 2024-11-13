@@ -9,6 +9,40 @@ set -e
 
 SCREENSHOT_FOLDER="../fastlane/metadata/android/en-US/images/phoneScreenshots"
 
+# Setup
+
+collection_id="6690b309-fbbe-41ac-a955-5aaa287a1aaa"
+
+setup() {
+  adb shell "cmd uimode night yes" # change device theme to dark mode
+  sleep 1
+
+  adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=My collection&type=release-group&id=$collection_id"'
+  sleep 3
+
+  visit_then_add_to_collection() {
+    collectable_id=$1
+    adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/release-group/$collectable_id"
+    sleep 3
+    adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/collection/$collection_id/add?id=$collectable_id"
+    sleep 3
+  }
+
+  visit_then_add_to_collection "f5b85956-16ef-41c4-a4fe-e2044e2c1a0e"
+  visit_then_add_to_collection "3cd6db35-1ef6-423f-b22d-19eaf97f5bec"
+  visit_then_add_to_collection "ee0aed4c-0ab5-4ce4-b809-bd479577d4fe"
+  visit_then_add_to_collection "e838586e-2e43-451a-81df-b2ea4aa28e11"
+  visit_then_add_to_collection "1b7b8e19-9f17-40af-b63e-18911918fd83"
+  visit_then_add_to_collection "d7e5e3ae-5aa9-449e-9199-e79173ab1f88"
+  visit_then_add_to_collection "92f914f2-b537-4573-bc14-8e8f2450ec63"
+  visit_then_add_to_collection "ae5d56e6-f0d9-4379-bb50-59c44284a12f"
+  visit_then_add_to_collection "0dd51230-c886-4422-8385-072d0688ce36"
+}
+
+setup
+
+# Go to specific screens to record
+
 file_names=(
   "1_search_artist"
   "2_artist_details"
@@ -21,13 +55,13 @@ file_names=(
 )
 
 commands=(
-  "adb shell am start -a android.intent.action.VIEW -d '\"io.github.lydavid.musicsearch.debug://app/search?query=aimer&type=artist\"'"
-  "adb shell am start -a android.intent.action.VIEW -d 'io.github.lydavid.musicsearch.debug://app/artist/dfc6a151-3792-4695-8fda-f64723eaa788'"
+  "adb shell am start -a android.intent.action.VIEW -d '\"io.github.lydavid.musicsearch.debug://app/search?query=bump&type=artist\"'"
+  "adb shell am start -a android.intent.action.VIEW -d 'io.github.lydavid.musicsearch.debug://app/artist/0f718079-e5ea-4cfb-b512-b2d04da66901'"
   "adb shell input swipe 900 500 100 500"
-  "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/release/3cd31605-0f7e-45ee-aacb-637a53e4c367' -a android.intent.action.VIEW"
+  "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/release/9322eb2e-b53e-4510-810b-5bb61bf4a952' -a android.intent.action.VIEW"
   "adb shell input swipe 900 500 100 500"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/collection'"
-  "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/collection/debe8581-e0c8-45ee-8fda-3ddcb5233f91'"
+  "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/collection/$collection_id'"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/history'"
 )
 
