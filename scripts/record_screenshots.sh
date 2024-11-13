@@ -15,17 +15,29 @@ collection_id="6690b309-fbbe-41ac-a955-5aaa287a1aaa"
 
 setup() {
   adb shell "cmd uimode night yes" # change device theme to dark mode
-  sleep 1
+  sleep 5
 
   adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=My collection&type=release-group&id=$collection_id"'
-  sleep 3
+  sleep 5
+  adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=Releases&type=release&id=6690b309-fbbe-41ac-a955-5aaa287a1aab"'
+  sleep 5
+  adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=Artists&type=artist&id=6690b309-fbbe-41ac-a955-5aaa287a1aac"'
+  sleep 5
+  adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=Labels&type=label&id=6690b309-fbbe-41ac-a955-5aaa287a1aad"'
+  sleep 5
+  adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=Events&type=event&id=6690b309-fbbe-41ac-a955-5aaa287a1aae"'
+  sleep 5
+  adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=Works&type=work&id=6690b309-fbbe-41ac-a955-5aaa287a1aaf"'
+  sleep 5
+  adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=Recordings&type=recording&id=6690b309-fbbe-41ac-a955-5aaa287a1ab1"'
+  sleep 5
 
   visit_then_add_to_collection() {
     collectable_id=$1
     adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/release-group/$collectable_id"
-    sleep 3
+    sleep 5
     adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/collection/$collection_id/add?id=$collectable_id"
-    sleep 3
+    sleep 5
   }
 
   visit_then_add_to_collection "f5b85956-16ef-41c4-a4fe-e2044e2c1a0e"

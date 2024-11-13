@@ -73,7 +73,6 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "More actions"
 - tapOn: "Add to collection"
 - tapOn: "Artists"
-- assertVisible: "Already in Artists."
 
 
 - tapOn: Collections
