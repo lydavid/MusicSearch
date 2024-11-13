@@ -1,13 +1,7 @@
 #!/bin/bash
 set -e
 
-# Pre-conditions:
-# - You are in the scripts directory
-# - The app is installed
-# - You are logged into MusicBrainz (required for collections screenshot)
-#   - Although this collection is public, we currently don't support loading a single collection from network, so this won't work for anyone else atm
-
-SCREENSHOT_FOLDER="../fastlane/metadata/android/en-US/images/phoneScreenshots"
+SCREENSHOT_FOLDER=$1
 
 # Setup
 

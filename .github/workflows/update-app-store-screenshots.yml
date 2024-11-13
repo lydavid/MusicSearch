@@ -39,7 +39,9 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
-      - name: Install app on emulator, record screenshots
+      - run: avdmanager list device
+
+      - name: Install app on phone emulator, record screenshots
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
           api-level: 35
@@ -50,9 +52,20 @@ jobs:
           sdcard-path-or-size: 100M
           script: |
             ./gradlew installFDroidDebug
-            pwd
-            cd scripts && ./record_screenshots.sh
-            pwd
+            ./scripts/record_screenshots.sh fastlane/metadata/android/en-US/images/phoneScreenshots
+
+      - name: Install app on tablet emulator, record screenshots
+        uses: reactivecircus/android-emulator-runner@v2.33.0
+        with:
+          api-level: 35
+          arch: x86_64
+          profile: pixel_3a
+          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          sdcard-path-or-size: 100M
+          script: |
+            ./gradlew installFDroidDebug
+            ./scripts/record_screenshots.sh fastlane/metadata/android/en-US/images/sevenInchScreenshots
 
       - run: git pull --rebase --autostash
 
