@@ -16,12 +16,12 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
+import ly.david.musicsearch.shared.domain.collection.CreateNewCollectionResult
 import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.feature.collections.create.NewCollection
 import ly.david.musicsearch.ui.common.screen.AddToCollectionScreen
 import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 
@@ -48,11 +48,13 @@ internal class AddToCollectionPresenter(
         fun eventSink(event: AddToCollectionUiEvent) {
             when (event) {
                 is AddToCollectionUiEvent.CreateNewCollection -> {
-                    val name = event.newCollection.name ?: return
-                    val entity = event.newCollection.entity ?: return
+                    val name = event.newCollection.name
+                    val entity = event.newCollection.entity
                     createCollection(
-                        name = name,
-                        entity = entity,
+                        newCollection = CreateNewCollectionResult.NewCollection(
+                            name = name,
+                            entity = entity,
+                        ),
                     )
                 }
 
@@ -85,7 +87,7 @@ internal data class AddToCollectionUiState(
 ) : CircuitUiState
 
 internal sealed interface AddToCollectionUiEvent : CircuitUiEvent {
-    data class CreateNewCollection(val newCollection: NewCollection) : AddToCollectionUiEvent
+    data class CreateNewCollection(val newCollection: CreateNewCollectionResult.NewCollection) : AddToCollectionUiEvent
     data class AddToCollection(
         val id: String,
     ) : AddToCollectionUiEvent

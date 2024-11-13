@@ -35,11 +35,11 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import com.slack.circuitx.overlays.BasicDialogOverlay
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
+import ly.david.musicsearch.shared.domain.collection.CreateNewCollectionResult
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.feature.collections.components.CollectionListItem
 import ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
-import ly.david.musicsearch.shared.feature.collections.create.NewCollection
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.topappbar.EditToggle
@@ -85,29 +85,29 @@ internal fun CollectionListUi(
         topAppBarEditState = state.topAppBarEditState,
         onCreateCollectionClick = {
             scope.launch {
-                val result = overlayHost.show(
-                    BasicDialogOverlay(
-                        model = Unit,
-                        onDismissRequest = {
-                            // This is expecting a non-null Result,
-                            // so a dismissal emits this with all null arguments
-                            NewCollection()
-                        },
-                    ) { _, overlayNavigator ->
-                        CreateNewCollectionDialogContent(
-                            onDismiss = { overlayNavigator.finish(NewCollection()) },
-                            onSubmit = { name, entity ->
-                                overlayNavigator.finish(
-                                    NewCollection(
-                                        name,
-                                        entity,
-                                    ),
-                                )
-                            },
-                        )
+                val basicDialogOverlay: BasicDialogOverlay<Unit, CreateNewCollectionResult> = BasicDialogOverlay(
+                    model = Unit,
+                    onDismissRequest = {
+                        // The result must not be null, so we use a sealed interface.
+                        CreateNewCollectionResult.Dismissed
                     },
-                )
-                eventSink(CollectionListUiEvent.CreateNewCollection(result))
+                ) { _, overlayNavigator ->
+                    CreateNewCollectionDialogContent(
+                        onDismiss = { overlayNavigator.finish(CreateNewCollectionResult.Dismissed) },
+                        onSubmit = { name, entity ->
+                            overlayNavigator.finish(
+                                CreateNewCollectionResult.NewCollection(
+                                    name = name,
+                                    entity = entity,
+                                ),
+                            )
+                        },
+                    )
+                }
+                val result: CreateNewCollectionResult = overlayHost.show(basicDialogOverlay)
+                if (result is CreateNewCollectionResult.NewCollection) {
+                    eventSink(CollectionListUiEvent.CreateNewCollection(result))
+                }
             }
         },
         showLocal = state.showLocal,

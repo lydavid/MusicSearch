@@ -8,9 +8,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Dialog
+import ly.david.musicsearch.shared.domain.collection.CreateNewCollectionResult
 import ly.david.musicsearch.shared.feature.collections.components.CollectionBottomSheetContent
 import ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
-import ly.david.musicsearch.shared.feature.collections.create.NewCollection
 
 @Composable
 internal fun AddToCollectionUi(
@@ -33,9 +33,9 @@ internal fun AddToCollectionUi(
                     onSubmit = { name, entity ->
                         eventSink(
                             AddToCollectionUiEvent.CreateNewCollection(
-                                NewCollection(
-                                    name,
-                                    entity,
+                                CreateNewCollectionResult.NewCollection(
+                                    name = name,
+                                    entity = entity,
                                 ),
                             ),
                         )

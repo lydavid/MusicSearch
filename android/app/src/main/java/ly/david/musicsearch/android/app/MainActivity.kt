@@ -21,9 +21,9 @@ import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.toImmutableList
 import ly.david.musicsearch.android.feature.spotify.BroadcastTypes
 import ly.david.musicsearch.android.feature.spotify.SpotifyBroadcastReceiver
-import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.AppRoot
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.useDarkTheme
 import ly.david.musicsearch.shared.useMaterialYou
 import ly.david.musicsearch.ui.common.screen.CollectionListScreen
@@ -112,8 +112,11 @@ internal class MainActivity : ComponentActivity() {
 }
 
 private const val QUERY = "query"
+private const val NAME = "name"
+private const val ID = "id"
 private const val TYPE = "type"
 
+@Suppress("LongMethod")
 private fun getInitialScreens(
     uri: Uri?,
 ): List<Screen> {
@@ -137,15 +140,7 @@ private fun getInitialScreens(
         }
 
         "collection" -> {
-            initialScreens.add(CollectionListScreen)
-            if (pathSegments.size > 1) {
-                val collectionId = pathSegments.last()
-                initialScreens.add(
-                    CollectionScreen(
-                        id = collectionId,
-                    ),
-                )
-            }
+            initialScreens.addAll(getCollectionScreens(uri))
         }
 
         "settings" -> {
@@ -169,4 +164,31 @@ private fun getInitialScreens(
     }
 
     return initialScreens
+}
+
+private fun getCollectionScreens(uri: Uri): List<Screen> {
+    if (uri.pathSegments.size <= 1) return listOf(CollectionListScreen())
+
+    return when (uri.pathSegments[1]) {
+        "create" -> listOf(
+            CollectionListScreen(
+                newCollectionId = uri.getQueryParameter(ID),
+                newCollectionName = uri.getQueryParameter(NAME),
+                newCollectionEntity = uri.getQueryParameter(TYPE)?.toMusicBrainzEntity(),
+            ),
+        )
+
+        else -> {
+            val collectionId = uri.pathSegments[1]
+            val isAddOperation = uri.pathSegments.getOrNull(2) == "add"
+
+            listOf(
+                CollectionListScreen(),
+                CollectionScreen(
+                    collectionId = collectionId,
+                    collectableId = if (isAddOperation) uri.getQueryParameter(ID) else null,
+                ),
+            )
+        }
+    }
 }

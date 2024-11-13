@@ -90,7 +90,7 @@ internal class HistoryPresenter(
                         NavEvent.GoTo(
                             if (event.entity == MusicBrainzEntity.COLLECTION) {
                                 CollectionScreen(
-                                    id = event.id,
+                                    collectionId = event.id,
                                 )
                             } else {
                                 DetailsScreen(

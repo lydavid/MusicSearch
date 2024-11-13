@@ -76,6 +76,17 @@ adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsear
 adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/collection/debe8581-e0c8-45ee-8fda-3ddcb5233f91" # My CD collection
 ```
 
+Create a collection.
+```shell
+adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=My collection&type=release-group&id=6690b309-fbbe-41ac-a955-5aaa287a1aaa"'
+```
+
+Add to collection. Make sure the type is correct.
+```shell
+adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/6690b309-fbbe-41ac-a955-5aaa287a1aa/add?id=f5b85956-16ef-41c4-a4fe-e2044e2c1a0e"'
+```
+
+
 ## Area
 
 ```shell

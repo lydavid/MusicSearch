@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.collections.list
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,13 +20,15 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
+import ly.david.musicsearch.shared.domain.collection.CreateNewCollectionResult
 import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.DeleteCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
-import ly.david.musicsearch.shared.feature.collections.create.NewCollection
+import ly.david.musicsearch.ui.common.screen.CollectionListScreen
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
@@ -33,6 +36,7 @@ import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 internal class CollectionListPresenter(
+    private val screen: CollectionListScreen,
     private val navigator: Navigator,
     private val appPreferences: AppPreferences,
     private val getAllCollections: GetAllCollections,
@@ -61,8 +65,32 @@ internal class CollectionListPresenter(
             )
         }
         val lazyListState = rememberLazyListState()
-
         var actionableResult: ActionableResult? by remember { mutableStateOf(null) }
+
+        var oneShotNewCollectionId: String? by rememberRetained {
+            mutableStateOf(screen.newCollectionId)
+        }
+        var oneShotNewCollectionName: String? by rememberRetained {
+            mutableStateOf(screen.newCollectionName)
+        }
+        var oneShotNewCollectionType: MusicBrainzEntity? by rememberRetained {
+            mutableStateOf(screen.newCollectionEntity)
+        }
+        LaunchedEffect(Unit) {
+            val id = oneShotNewCollectionId
+            val name = oneShotNewCollectionName ?: return@LaunchedEffect
+            val entity = oneShotNewCollectionType ?: return@LaunchedEffect
+            createCollection(
+                newCollection = CreateNewCollectionResult.NewCollection(
+                    id = id,
+                    name = name,
+                    entity = entity,
+                ),
+            )
+            oneShotNewCollectionId = null
+            oneShotNewCollectionName = null
+            oneShotNewCollectionType = null
+        }
 
         fun eventSink(event: CollectionListUiEvent) {
             when (event) {
@@ -79,11 +107,13 @@ internal class CollectionListPresenter(
                 }
 
                 is CollectionListUiEvent.CreateNewCollection -> {
-                    val name = event.newCollection.name ?: return
-                    val entity = event.newCollection.entity ?: return
+                    val name = event.newCollection.name
+                    val entity = event.newCollection.entity
                     createCollection(
-                        name = name,
-                        entity = entity,
+                        newCollection = CreateNewCollectionResult.NewCollection(
+                            name = name,
+                            entity = entity,
+                        ),
                     )
                 }
 
@@ -133,7 +163,7 @@ internal sealed interface CollectionListUiEvent : CircuitUiEvent {
     data class UpdateShowLocal(val show: Boolean) : CollectionListUiEvent
     data class UpdateShowRemote(val show: Boolean) : CollectionListUiEvent
     data class UpdateSortOption(val sortOption: CollectionSortOption) : CollectionListUiEvent
-    data class CreateNewCollection(val newCollection: NewCollection) : CollectionListUiEvent
+    data class CreateNewCollection(val newCollection: CreateNewCollectionResult.NewCollection) : CollectionListUiEvent
     data class GoToCollection(
         val id: String,
     ) : CollectionListUiEvent
