@@ -17,7 +17,7 @@ setup() {
   adb shell "cmd uimode night yes" # change device theme to dark mode
   sleep 5
 
-  adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=My collection&type=release-group&id=$collection_id"'
+  adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=My collection&type=release-group&id=f2888482-1633-4989-a8d3-313a6c66235e"'
   sleep 5
   adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=Releases&type=release&id=6690b309-fbbe-41ac-a955-5aaa287a1aab"'
   sleep 5
