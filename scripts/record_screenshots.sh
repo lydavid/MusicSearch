@@ -11,7 +11,7 @@ SCREENSHOT_FOLDER="../fastlane/metadata/android/en-US/images/phoneScreenshots"
 
 # Setup
 
-collection_id="6690b309-fbbe-41ac-a955-5aaa287a1aaa"
+collection_id="f2888482-1633-4989-a8d3-313a6c66235e"
 
 setup() {
   adb shell "cmd uimode night yes" # change device theme to dark mode

@@ -78,12 +78,12 @@ adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsear
 
 Create a collection.
 ```shell
-adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=My collection&type=release-group&id=6690b309-fbbe-41ac-a955-5aaa287a1aaa"'
+adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=My collection&type=release-group&id=f2888482-1633-4989-a8d3-313a6c66235e"'
 ```
 
 Add to collection. Make sure the type is correct.
 ```shell
-adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/6690b309-fbbe-41ac-a955-5aaa287a1aa/add?id=f5b85956-16ef-41c4-a4fe-e2044e2c1a0e"'
+adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/f2888482-1633-4989-a8d3-313a6c66235e/add?id=f5b85956-16ef-41c4-a4fe-e2044e2c1a0e"'
 ```
 
 
