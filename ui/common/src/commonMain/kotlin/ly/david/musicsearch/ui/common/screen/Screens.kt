@@ -21,11 +21,16 @@ data class ArtistCollaborationScreen(
 data object HistoryScreen : Screen
 
 @Parcelize
-data object CollectionListScreen : Screen
+data class CollectionListScreen(
+    val newCollectionId: String? = null,
+    val newCollectionName: String? = null,
+    val newCollectionEntity: MusicBrainzEntity? = null,
+) : Screen
 
 @Parcelize
 data class CollectionScreen(
-    val id: String,
+    val collectionId: String,
+    val collectableId: String? = null,
 ) : Screen
 
 @Parcelize

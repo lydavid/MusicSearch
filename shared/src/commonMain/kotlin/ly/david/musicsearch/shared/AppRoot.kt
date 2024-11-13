@@ -3,7 +3,6 @@ package ly.david.musicsearch.shared
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -34,11 +33,10 @@ fun AppRoot(
             val windowSizeClass = calculateWindowSizeClass()
 
             Scaffold(
-                modifier = modifier.navigationBarsPadding(),
+                modifier = modifier,
                 contentWindowInsets = WindowInsets(0),
                 bottomBar = {
                     if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
-                        // TODO: This seems to add a blank space of equal height to iOS's screen
                         AppBottomNavigationBar(
                             currentTopLevelScreen = backStack.last().screen,
                             navigateToTopLevelScreen = { screen ->
@@ -47,23 +45,24 @@ fun AppRoot(
                         )
                     }
                 },
-            ) { innerPadding ->
+            ) { _ ->
 
-                Row {
+                Row(
+                    modifier = Modifier
+                        .navigationBarsPadding(),
+                ) {
                     if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact) {
                         AppNavigationRail(
                             currentTopLevelScreen = backStack.last().screen,
                             navigateToTopLevelScreen = { screen ->
                                 navigator.resetRoot(screen)
                             },
-                            modifier = Modifier.padding(innerPadding),
                         )
                     }
 
                     NavigableCircuitContent(
                         navigator = navigator,
                         backStack = backStack,
-                        modifier = Modifier.padding(innerPadding),
                         decoration = GestureNavigationDecoration(
                             onBackInvoked = navigator::pop,
                         ),

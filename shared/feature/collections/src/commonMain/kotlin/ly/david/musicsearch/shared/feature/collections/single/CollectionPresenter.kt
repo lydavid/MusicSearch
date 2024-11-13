@@ -9,25 +9,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import app.cash.paging.PagingData
-import app.cash.paging.compose.LazyPagingItems
-import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.usecase.DeleteFromCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.area.AreasByEntityPresenter
@@ -73,7 +69,7 @@ import ly.david.musicsearch.ui.common.work.WorksByEntityUiState
 internal class CollectionPresenter(
     private val screen: CollectionScreen,
     private val navigator: Navigator,
-    private val getCollectionUseCase: GetCollection,
+    private val getCollection: GetCollection,
     private val incrementLookupHistory: IncrementLookupHistory,
     private val areasByEntityPresenter: AreasByEntityPresenter,
     private val artistsByEntityPresenter: ArtistsByEntityPresenter,
@@ -88,10 +84,11 @@ internal class CollectionPresenter(
     private val worksByEntityPresenter: WorksByEntityPresenter,
     private val deleteFromCollection: DeleteFromCollection,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val collectionRepository: CollectionRepository,
 ) : Presenter<CollectionUiState> {
     @Composable
     override fun present(): CollectionUiState {
-        val collectionId = screen.id
+        val collectionId = screen.collectionId
 
         val scope = rememberCoroutineScope()
         var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
@@ -101,7 +98,6 @@ internal class CollectionPresenter(
         val query = topAppBarFilterState.filterText
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        var collectableItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val topAppBarEditState: TopAppBarEditState = rememberTopAppBarEditState()
 
         val areasByEntityUiState = areasByEntityPresenter.present()
@@ -127,8 +123,12 @@ internal class CollectionPresenter(
         val worksByEntityUiState = worksByEntityPresenter.present()
         val worksEventSink = worksByEntityUiState.eventSink
 
+        var oneShotNewCollectableId: String? by rememberRetained {
+            mutableStateOf(screen.collectableId)
+        }
+
         LaunchedEffect(Unit) {
-            val nonNullCollection = getCollectionUseCase(collectionId)
+            val nonNullCollection = getCollection(collectionId)
             collection = nonNullCollection
             isRemote = nonNullCollection.isRemote
             title = nonNullCollection.name
@@ -143,6 +143,13 @@ internal class CollectionPresenter(
                 )
                 recordedHistory = true
             }
+
+            collectionRepository.addToCollection(
+                collectionId = nonNullCollection.id,
+                entity = nonNullCollection.entity,
+                entityId = oneShotNewCollectableId ?: return@LaunchedEffect,
+            )
+            oneShotNewCollectableId = null
         }
 
         LaunchedEffect(
@@ -322,10 +329,9 @@ internal class CollectionPresenter(
         return CollectionUiState(
             title = title,
             collection = collection,
-            url = getMusicBrainzUrl(MusicBrainzEntity.COLLECTION, screen.id),
+            url = getMusicBrainzUrl(MusicBrainzEntity.COLLECTION, screen.collectionId),
             actionableResult = actionableResult,
             topAppBarFilterState = topAppBarFilterState,
-            lazyPagingItems = collectableItems.collectAsLazyPagingItems(),
             topAppBarEditState = topAppBarEditState,
             areasByEntityUiState = areasByEntityUiState,
             artistsByEntityUiState = artistsByEntityUiState,
@@ -350,7 +356,6 @@ internal data class CollectionUiState(
     val actionableResult: ActionableResult?,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val url: String,
-    val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val topAppBarEditState: TopAppBarEditState,
     val areasByEntityUiState: AreasByEntityUiState,
     val artistsByEntityUiState: ArtistsByEntityUiState,

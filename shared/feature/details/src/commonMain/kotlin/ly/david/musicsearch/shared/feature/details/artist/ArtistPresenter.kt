@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -77,12 +78,12 @@ internal class ArtistPresenter(
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
-        var artist: ArtistDetailsModel? by remember { mutableStateOf(null) }
+        var artist: ArtistDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<ArtistTab> by rememberSaveable {
             mutableStateOf(ArtistTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
-        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
 
         val eventsByEntityUiState = eventsByEntityPresenter.present()

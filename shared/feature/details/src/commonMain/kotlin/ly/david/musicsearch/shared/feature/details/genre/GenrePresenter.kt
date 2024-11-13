@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -36,8 +37,8 @@ internal class GenrePresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        var genre: GenreListItemModel? by remember { mutableStateOf(null) }
-        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        var genre: GenreListItemModel? by rememberRetained { mutableStateOf(null) }
+        var forceRefreshDetails by remember { mutableStateOf(false) }
 
         LaunchedEffect(forceRefreshDetails) {
             try {

@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -52,12 +53,12 @@ internal class InstrumentPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        var instrument: InstrumentDetailsModel? by remember { mutableStateOf(null) }
+        var instrument: InstrumentDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<InstrumentTab> by rememberSaveable {
             mutableStateOf(InstrumentTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(InstrumentTab.DETAILS) }
-        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
 
         val relationsUiState = relationsPresenter.present()
