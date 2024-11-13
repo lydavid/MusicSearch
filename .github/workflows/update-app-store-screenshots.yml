@@ -50,8 +50,9 @@ jobs:
           sdcard-path-or-size: 100M
           script: |
             ./gradlew installFDroidDebug
-            cd scripts
-            ./record_screenshots.sh
+            pwd
+            cd scripts && ./record_screenshots.sh
+            pwd
 
       - run: git pull --rebase --autostash
 
