@@ -87,8 +87,6 @@ jobs:
           script: |
             ./gradlew assembleFDroidDebug installFDroidDebug
             adb shell settings put system show_touches 1
-            adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
-            adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
             $HOME/.maestro/bin/maestro test .maestro
             adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat
 
