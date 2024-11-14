@@ -94,6 +94,7 @@ appId: io.github.lydavid.musicsearch.debug
 - swipe:
       from: "ずっと真夜中でいいのに。"
       direction: RIGHT
+- tapOn: Cancel
 - tapOn: "Back"
 - tapOn: "Back"
 - tapOn: "Back"
