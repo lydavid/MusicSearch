@@ -50,6 +50,8 @@ jobs:
           sdcard-path-or-size: 100M
           script: |
             ./gradlew installFDroidDebug
+            adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
+            adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
             ./scripts/record_screenshots.sh fastlane/metadata/android/en-US/images/phoneScreenshots
 
       - name: Install app on tablet emulator, record screenshots
@@ -63,6 +65,8 @@ jobs:
           sdcard-path-or-size: 100M
           script: |
             ./gradlew installFDroidDebug
+            adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
+            adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
             ./scripts/record_screenshots.sh fastlane/metadata/android/en-US/images/sevenInchScreenshots
 
       - run: git pull --rebase --autostash
