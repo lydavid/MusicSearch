@@ -35,7 +35,7 @@ setup() {
   }
 
   visit_then_add_to_collection "f5b85956-16ef-41c4-a4fe-e2044e2c1a0e"
-  visit_then_add_to_collection "3cd6db35-1ef6-423f-b22d-19eaf97f5bec"
+  visit_then_add_to_collection "05483278-e5c7-30c5-a511-54fafd779297"
   visit_then_add_to_collection "ee0aed4c-0ab5-4ce4-b809-bd479577d4fe"
   visit_then_add_to_collection "e838586e-2e43-451a-81df-b2ea4aa28e11"
   visit_then_add_to_collection "1b7b8e19-9f17-40af-b63e-18911918fd83"
@@ -63,9 +63,9 @@ file_names=(
 commands=(
   "adb shell am start -a android.intent.action.VIEW -d '\"io.github.lydavid.musicsearch.debug://app/search?query=bump&type=artist\"'"
   "adb shell am start -a android.intent.action.VIEW -d 'io.github.lydavid.musicsearch.debug://app/artist/0f718079-e5ea-4cfb-b512-b2d04da66901'"
-  "adb shell input swipe 900 500 100 500"
-  "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/release/9322eb2e-b53e-4510-810b-5bb61bf4a952' -a android.intent.action.VIEW"
-  "adb shell input swipe 900 500 100 500"
+  "adb shell input swipe 1100 500 0 500"
+  "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/release/fd84da73-e859-4b2b-a24f-9dd4c118fdf5' -a android.intent.action.VIEW"
+  "adb shell input swipe 1100 500 0 500"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/collection'"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/collection/$collection_id'"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/history'"
