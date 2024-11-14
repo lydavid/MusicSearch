@@ -3,6 +3,15 @@ name: Update app store screenshots
 on:
   push: # TODO: remove
   workflow_dispatch:
+    inputs:
+      phone:
+        type: boolean
+        description: "Record phone"
+        default: true
+      tablet:
+        type: boolean
+        description: "Record tablet"
+        default: true
 
 jobs:
   update-app-store-screenshots:
@@ -40,6 +49,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Install app on phone emulator, record screenshots
+        if: ${{ github.event.inputs.phone == 'true' }}
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
           api-level: 35
@@ -55,6 +65,7 @@ jobs:
             ./scripts/record_screenshots.sh
 
       - name: Install app on tablet emulator, record screenshots
+        if: ${{ github.event.inputs.tablet == 'true' }}
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
           api-level: 35
