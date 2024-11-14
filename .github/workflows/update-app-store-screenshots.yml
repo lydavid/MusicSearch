@@ -52,7 +52,7 @@ jobs:
             ./gradlew installFDroidDebug
             adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
             adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
-            ./scripts/record_screenshots.sh fastlane/metadata/android/en-US/images/phoneScreenshots
+            ./scripts/record_screenshots.sh
 
       - name: Install app on tablet emulator, record screenshots
         uses: reactivecircus/android-emulator-runner@v2.33.0
@@ -67,7 +67,7 @@ jobs:
             ./gradlew installFDroidDebug
             adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
             adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
-            ./scripts/record_screenshots.sh fastlane/metadata/android/en-US/images/sevenInchScreenshots
+            ./scripts/record_screenshots.sh -t
 
       - run: git pull --rebase --autostash
 

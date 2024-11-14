@@ -1,9 +1,18 @@
 #!/bin/bash
 set -e
 
-SCREENSHOT_FOLDER=$1
+while getopts "t" flag; do
+    case "${flag}" in
+        t) IS_TABLET=true ;;
+        *)
+    esac
+done
 
-# Setup
+if [ "$IS_TABLET" = true ]; then
+  screenshot_destination="fastlane/metadata/android/en-US/images/sevenInchScreenshots"
+else
+  screenshot_destination="fastlane/metadata/android/en-US/images/phoneScreenshots"
+fi
 
 collection_id="f2888482-1633-4989-a8d3-313a6c66235e"
 
@@ -47,8 +56,6 @@ setup() {
 
 setup
 
-# Go to specific screens to record
-
 file_names=(
   "1_search_artist"
   "2_artist_details"
@@ -60,12 +67,18 @@ file_names=(
   "8_lookup_history"
 )
 
+if [ "$IS_TABLET" = true ]; then
+  start_x=1200
+else
+  start_x=900
+fi
+
 commands=(
   "adb shell am start -a android.intent.action.VIEW -d '\"io.github.lydavid.musicsearch.debug://app/search?query=bump&type=artist\"'"
   "adb shell am start -a android.intent.action.VIEW -d 'io.github.lydavid.musicsearch.debug://app/artist/0f718079-e5ea-4cfb-b512-b2d04da66901'"
-  "adb shell input swipe 1100 500 0 500"
+  "adb shell input swipe $start_x 500 0 500"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/release/fd84da73-e859-4b2b-a24f-9dd4c118fdf5' -a android.intent.action.VIEW"
-  "adb shell input swipe 1100 500 0 500"
+  "adb shell input swipe $start_x 500 0 500"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/collection'"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/collection/$collection_id'"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/history'"
@@ -76,5 +89,5 @@ for ((i = 0; i < ${#file_names[@]}; i++)); do
   command="${commands[i]}"
   eval "$command"
   sleep 5
-  adb exec-out screencap -p >"$SCREENSHOT_FOLDER/$file_name.png"
+  adb exec-out screencap -p >"$screenshot_destination/$file_name.png"
 done
