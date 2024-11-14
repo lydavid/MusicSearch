@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain
 
-import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.common.appendOptionalText
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 /**
@@ -18,6 +18,3 @@ interface NameWithDisambiguation {
  */
 fun NameWithDisambiguation.getNameWithDisambiguation(): String =
     name.orEmpty().appendOptionalText(disambiguation)
-
-fun String.appendOptionalText(optionalText: String?): String =
-    this + optionalText.transformThisIfNotNullOrEmpty { " ($it)" }

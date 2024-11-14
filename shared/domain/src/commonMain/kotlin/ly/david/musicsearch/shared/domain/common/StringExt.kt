@@ -51,3 +51,6 @@ fun String?.emptyToNull(): String? {
  * @return Flag emoji of country code, or globe emoji for global.
  */
 expect fun String.toFlagEmoji(): String
+
+fun String.appendOptionalText(optionalText: String?): String =
+    this + optionalText.transformThisIfNotNullOrEmpty { " ($it)" }
