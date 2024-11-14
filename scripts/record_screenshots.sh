@@ -68,7 +68,7 @@ file_names=(
 )
 
 if [ "$IS_TABLET" = true ]; then
-  start_x=1500
+  start_x=1200
 else
   start_x=900
 fi
@@ -76,9 +76,9 @@ fi
 commands=(
   "adb shell am start -a android.intent.action.VIEW -d '\"io.github.lydavid.musicsearch.debug://app/search?query=bump&type=artist\"'"
   "adb shell am start -a android.intent.action.VIEW -d 'io.github.lydavid.musicsearch.debug://app/artist/0f718079-e5ea-4cfb-b512-b2d04da66901'"
-  "adb shell input swipe $start_x 1000 0 1000"
+  "adb shell input swipe $start_x 800 200 800"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/release/fd84da73-e859-4b2b-a24f-9dd4c118fdf5' -a android.intent.action.VIEW"
-  "adb shell input swipe $start_x 1000 0 1000"
+  "adb shell input swipe $start_x 800 200 800"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/collection'"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/collection/$collection_id'"
   "adb shell am start -d 'io.github.lydavid.musicsearch.debug://app/history'"
