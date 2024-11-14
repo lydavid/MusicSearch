@@ -1,0 +1,88 @@
+name: Update app store screenshots
+
+on:
+  workflow_dispatch:
+    inputs:
+      phone:
+        type: boolean
+        description: "Record phone"
+        default: true
+      tablet:
+        type: boolean
+        description: "Record tablet"
+        default: true
+
+jobs:
+  update-app-store-screenshots:
+    name: Update app store screenshots
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@v1
+        with:
+          token: ${{ secrets.PAT }}
+
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: false
+          swap-storage: true
+
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - id: setup
+        uses: ./.github/actions/setup
+
+      - name: Install app on phone emulator, record screenshots
+        if: ${{ github.event.inputs.phone != 'false' }}
+        uses: reactivecircus/android-emulator-runner@v2.33.0
+        with:
+          api-level: 35
+          arch: x86_64
+          profile: pixel_6
+          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          sdcard-path-or-size: 100M
+          script: |
+            ./gradlew installFDroidDebug
+            adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
+            adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
+            ./scripts/record_screenshots.sh
+
+      - name: Install app on tablet emulator, record screenshots
+        if: ${{ github.event.inputs.tablet != 'false' }}
+        uses: reactivecircus/android-emulator-runner@v2.33.0
+        with:
+          api-level: 35
+          arch: x86_64
+          profile: pixel_c
+          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          sdcard-path-or-size: 100M
+          script: |
+            ./gradlew installFDroidDebug
+            adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
+            adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
+            ./scripts/record_screenshots.sh -t
+
+      - run: git pull --rebase --autostash
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v5.0.1
+        with:
+          commit_message: 'chore: update app store screenshots [skip ci]'
+          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
