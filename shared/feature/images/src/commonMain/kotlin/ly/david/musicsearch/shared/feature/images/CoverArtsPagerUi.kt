@@ -6,12 +6,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,13 +37,69 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.image.LargeImage
 import ly.david.musicsearch.ui.image.getPlaceholderKey
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-internal fun CoverArtsPager(
+internal fun CoverArtsPagerUi(
+    state: CoverArtsPagerUiState,
+    modifier: Modifier = Modifier,
+) {
+    val windowSizeClass: WindowSizeClass = calculateWindowSizeClass()
+
+    CoverArtsPagerUi(
+        state = state,
+        isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
+        modifier = modifier,
+    )
+}
+
+@OptIn(
+    ExperimentalMaterial3Api::class,
+)
+@Composable
+internal fun CoverArtsPagerUi(
+    state: CoverArtsPagerUiState,
+    isCompact: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    val eventSink = state.eventSink
+
+    Scaffold(
+        modifier = modifier,
+        contentWindowInsets = WindowInsets(0),
+        topBar = {
+            ScrollableTopAppBar(
+                showBackButton = true,
+                onBack = {
+                    eventSink(CoverArtsPagerUiEvent.NavigateUp)
+                },
+                title = state.title,
+            )
+        },
+    ) { innerPadding ->
+        val imageUrls = state.imageUrls.toImmutableList()
+        val selectedImageIndex = state.selectedImageIndex
+        CoverArtsPager(
+            mbid = state.id,
+            imageUrls = imageUrls,
+            selectedImageIndex = selectedImageIndex,
+            modifier = Modifier.padding(innerPadding),
+            isCompact = isCompact,
+            onImageChange = {
+                eventSink(CoverArtsPagerUiEvent.ChangeImage(it))
+            },
+        )
+    }
+}
+
+@Composable
+private fun CoverArtsPager(
     mbid: String,
     imageUrls: ImmutableList<ImageUrls>,
     selectedImageIndex: Int,

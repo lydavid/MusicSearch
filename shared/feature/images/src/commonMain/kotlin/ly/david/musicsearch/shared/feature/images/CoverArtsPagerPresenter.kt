@@ -13,52 +13,42 @@ import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.shared.domain.common.appendOptionalText
 import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
-import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
+import ly.david.musicsearch.ui.common.screen.CoverArtsPagerScreen
 
-internal const val NO_IMAGE_SELECTED_INDEX = -1
-
-internal class CoverArtsPresenter(
-    private val screen: CoverArtsScreen,
+internal class CoverArtsPagerPresenter(
+    private val screen: CoverArtsPagerScreen,
     private val navigator: Navigator,
     private val releaseImageRepository: ReleaseImageRepository,
-) : Presenter<CoverArtsUiState> {
+) : Presenter<CoverArtsPagerUiState> {
 
     @Composable
-    override fun present(): CoverArtsUiState {
+    override fun present(): CoverArtsPagerUiState {
         val imageUrls by rememberRetained {
             mutableStateOf(releaseImageRepository.getAllUrls(screen.id))
         }
         var selectedImageIndex by rememberRetained {
-            mutableStateOf(NO_IMAGE_SELECTED_INDEX)
+            mutableStateOf(screen.index)
         }
         val title by rememberRetained(selectedImageIndex) {
+            val imageUrl = imageUrls[selectedImageIndex]
             mutableStateOf(
-                if (selectedImageIndex == NO_IMAGE_SELECTED_INDEX) {
-                    "Cover arts"
-                } else {
-                    val imageUrl = imageUrls[selectedImageIndex]
-                    imageUrl.types.joinToString().appendOptionalText(imageUrl.comment)
-                },
+                imageUrl.types.joinToString().appendOptionalText(imageUrl.comment),
             )
         }
 
-        fun eventSink(event: CoverArtsUiEvent) {
+        fun eventSink(event: CoverArtsPagerUiEvent) {
             when (event) {
-                CoverArtsUiEvent.NavigateUp -> {
-                    if (selectedImageIndex == NO_IMAGE_SELECTED_INDEX) {
-                        navigator.pop()
-                    } else {
-                        selectedImageIndex = NO_IMAGE_SELECTED_INDEX
-                    }
+                CoverArtsPagerUiEvent.NavigateUp -> {
+                    navigator.pop()
                 }
 
-                is CoverArtsUiEvent.SelectImage -> {
+                is CoverArtsPagerUiEvent.ChangeImage -> {
                     selectedImageIndex = event.index
                 }
             }
         }
 
-        return CoverArtsUiState(
+        return CoverArtsPagerUiState(
             id = screen.id,
             title = title,
             imageUrls = imageUrls,
@@ -69,16 +59,16 @@ internal class CoverArtsPresenter(
 }
 
 @Stable
-internal data class CoverArtsUiState(
+internal data class CoverArtsPagerUiState(
     val id: String,
     val title: String = "",
     val imageUrls: List<ImageUrls>,
-    val selectedImageIndex: Int = NO_IMAGE_SELECTED_INDEX,
-    val eventSink: (CoverArtsUiEvent) -> Unit = {},
+    val selectedImageIndex: Int = 0,
+    val eventSink: (CoverArtsPagerUiEvent) -> Unit = {},
 ) : CircuitUiState
 
-internal sealed interface CoverArtsUiEvent : CircuitUiEvent {
-    data object NavigateUp : CoverArtsUiEvent
+internal sealed interface CoverArtsPagerUiEvent : CircuitUiEvent {
+    data object NavigateUp : CoverArtsPagerUiEvent
 
-    data class SelectImage(val index: Int) : CoverArtsUiEvent
+    data class ChangeImage(val index: Int) : CoverArtsPagerUiEvent
 }
