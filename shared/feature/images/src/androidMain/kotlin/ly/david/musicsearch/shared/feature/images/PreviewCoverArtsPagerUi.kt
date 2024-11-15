@@ -19,6 +19,7 @@ internal fun PreviewCoverArtsPagerUiCompact() {
                 state = CoverArtsPagerUiState(
                     id = "a",
                     title = "Front",
+                    subtitle = "1/2",
                     imageUrls = persistentListOf(
                         ImageUrls(
                             largeUrl = "https://www.example.com/blue.jpg",
@@ -44,6 +45,7 @@ internal fun PreviewCoverArtsPagerUiNonCompact() {
                 state = CoverArtsPagerUiState(
                     id = "a",
                     title = "Front",
+                    subtitle = "1/2",
                     imageUrls = persistentListOf(
                         ImageUrls(
                             largeUrl = "https://www.example.com/blue.jpg",
