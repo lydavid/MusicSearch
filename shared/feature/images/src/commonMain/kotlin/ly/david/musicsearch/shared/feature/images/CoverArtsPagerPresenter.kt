@@ -31,9 +31,15 @@ internal class CoverArtsPagerPresenter(
         }
         val title by rememberRetained(selectedImageIndex) {
             val imageUrl = imageUrls[selectedImageIndex]
+            val typeAndComment = imageUrl.types.joinToString().appendOptionalText(imageUrl.comment)
             mutableStateOf(
-                imageUrl.types.joinToString().appendOptionalText(imageUrl.comment),
+                // Previously cached images will not have a type or comment stored,
+                // so make sure we don't show a loading indicator
+                typeAndComment.ifEmpty { " " },
             )
+        }
+        val subtitle by rememberRetained(selectedImageIndex) {
+            mutableStateOf("${selectedImageIndex + 1} / ${imageUrls.size}")
         }
 
         fun eventSink(event: CoverArtsPagerUiEvent) {
@@ -51,6 +57,7 @@ internal class CoverArtsPagerPresenter(
         return CoverArtsPagerUiState(
             id = screen.id,
             title = title,
+            subtitle = subtitle,
             imageUrls = imageUrls,
             selectedImageIndex = selectedImageIndex,
             eventSink = ::eventSink,
@@ -62,6 +69,7 @@ internal class CoverArtsPagerPresenter(
 internal data class CoverArtsPagerUiState(
     val id: String,
     val title: String = "",
+    val subtitle: String = "",
     val imageUrls: List<ImageUrls>,
     val selectedImageIndex: Int = 0,
     val eventSink: (CoverArtsPagerUiEvent) -> Unit = {},
