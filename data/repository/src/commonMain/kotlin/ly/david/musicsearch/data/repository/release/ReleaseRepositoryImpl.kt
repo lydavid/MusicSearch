@@ -168,9 +168,7 @@ class ReleaseRepositoryImpl(
             .map { pagingData ->
                 pagingData
                     .map { it.toTrackListItemModel() }
-                    .insertSeparators(
-                        terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
-                    ) { before: TrackListItemModel?, after: TrackListItemModel? ->
+                    .insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
                         if (before?.mediumId != after?.mediumId && after != null) {
                             ListSeparator(
                                 id = "${after.mediumId}",
