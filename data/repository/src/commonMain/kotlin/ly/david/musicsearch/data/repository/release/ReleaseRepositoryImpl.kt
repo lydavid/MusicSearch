@@ -1,9 +1,11 @@
 package ly.david.musicsearch.data.repository.release
 
+import androidx.paging.TerminalSeparatorType
 import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import app.cash.paging.insertSeparators
+import app.cash.paging.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.dao.AreaDao
@@ -15,6 +17,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.TrackAndMedium
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
@@ -161,24 +164,25 @@ class ReleaseRepositoryImpl(
                     query = "%$query%",
                 )
             },
-        ).flow.map { pagingData ->
-            pagingData
-                .insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
-                    if (before?.mediumId != after?.mediumId && after != null) {
-                        val medium =
-                            mediumDao.getMediumForTrack(after.id) ?: return@insertSeparators null
-
-                        ListSeparator(
-                            id = "${medium.id}",
-                            text = medium.format.orEmpty() +
-                                (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
-                                medium.name.transformThisIfNotNullOrEmpty { " ($it)" },
-                        )
-                    } else {
-                        null
+        ).flow
+            .map { pagingData ->
+                pagingData
+                    .map { it.toTrackListItemModel() }
+                    .insertSeparators(
+                        terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
+                    ) { before: TrackListItemModel?, after: TrackListItemModel? ->
+                        if (before?.mediumId != after?.mediumId && after != null) {
+                            ListSeparator(
+                                id = "${after.mediumId}",
+                                text = after.format.orEmpty() +
+                                    (after.mediumPosition?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
+                                    after.mediumName.transformThisIfNotNullOrEmpty { " ($it)" },
+                            )
+                        } else {
+                            null
+                        }
                     }
-                }
-        }
+            }
     }
 
     private fun hasReleaseTracksBeenStored(releaseId: String): Boolean {
@@ -194,3 +198,13 @@ class ReleaseRepositoryImpl(
     }
     // endregion
 }
+
+fun TrackAndMedium.toTrackListItemModel() =
+    TrackListItemModel(
+        id = id,
+        position = position, number = number, title = title, length = length, mediumId = mediumId,
+        recordingId = recordingId, formattedArtistCredits = formattedArtistCredits, visited = visited,
+        mediumPosition, mediumName, trackCount, format,
+    )
+
+// fun TrackAndMedium.toMediumSeparator() =
