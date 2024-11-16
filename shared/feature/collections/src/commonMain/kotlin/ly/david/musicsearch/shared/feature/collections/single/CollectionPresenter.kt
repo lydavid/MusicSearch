@@ -128,7 +128,7 @@ internal class CollectionPresenter(
         }
 
         LaunchedEffect(Unit) {
-            val nonNullCollection = getCollection(collectionId)
+            val nonNullCollection = getCollection(collectionId) ?: return@LaunchedEffect
             collection = nonNullCollection
             isRemote = nonNullCollection.isRemote
             title = nonNullCollection.name

@@ -57,11 +57,11 @@ class CollectionDao(
         }
     }
 
-    fun getCollection(id: String): CollectionListItemModel =
+    fun getCollection(id: String): CollectionListItemModel? =
         transacter.getCollection(
             id,
             mapper = ::mapToCollectionListItem,
-        ).executeAsOne()
+        ).executeAsOneOrNull()
 
     fun getAllCollections(
         entity: MusicBrainzEntity?,

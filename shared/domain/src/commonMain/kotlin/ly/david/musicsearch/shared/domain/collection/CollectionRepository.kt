@@ -16,7 +16,7 @@ interface CollectionRepository {
         sortOption: CollectionSortOption,
     ): Flow<PagingData<CollectionListItemModel>>
 
-    fun getCollection(entityId: String): CollectionListItemModel
+    fun getCollection(entityId: String): CollectionListItemModel?
 
     fun insertLocal(
         collection: CollectionListItemModel,

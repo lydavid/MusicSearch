@@ -10,7 +10,7 @@ class GetCollection(
 ) {
     operator fun invoke(
         entityId: String,
-    ): CollectionListItemModel {
+    ): CollectionListItemModel? {
         visitedDao.insert(entityId)
         return collectionRepository.getCollection(entityId)
     }
