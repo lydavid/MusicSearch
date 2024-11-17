@@ -21,6 +21,7 @@ import ly.david.musicsearch.shared.domain.history.usecase.UnMarkLookupHistoryFor
 import ly.david.musicsearch.shared.domain.history.usecase.UnMarkLookupHistoryForDeletionImpl
 import ly.david.musicsearch.shared.domain.instrument.usecase.GetInstrumentsByEntity
 import ly.david.musicsearch.shared.domain.label.usecase.GetLabelsByEntity
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrlImpl
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.DeleteNowPlayingHistory
@@ -76,4 +77,5 @@ val domainModule = module {
     singleOf(::GetWorksByEntity)
     singleOf(::GetSearchResults)
     singleOf(::GetMusicBrainzUrlImpl) bind GetMusicBrainzUrl::class
+    singleOf(::GetMusicBrainzCoverArtUrl)
 }

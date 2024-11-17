@@ -10,6 +10,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.ui.common.screen.CoverArtsGridScreen
 import ly.david.musicsearch.ui.common.screen.CoverArtsPagerScreen
@@ -18,6 +19,7 @@ internal class CoverArtsGridPresenter(
     private val screen: CoverArtsGridScreen,
     private val navigator: Navigator,
     private val releaseImageRepository: ReleaseImageRepository,
+    private val getMusicBrainzCoverArtUrl: GetMusicBrainzCoverArtUrl,
 ) : Presenter<CoverArtsGridUiState> {
 
     @Composable
@@ -51,6 +53,7 @@ internal class CoverArtsGridPresenter(
         return CoverArtsGridUiState(
             id = screen.id,
             title = title,
+            url = getMusicBrainzCoverArtUrl(screen.id),
             imageUrls = imageUrls,
             eventSink = ::eventSink,
         )
@@ -61,6 +64,7 @@ internal class CoverArtsGridPresenter(
 internal data class CoverArtsGridUiState(
     val id: String,
     val title: String = "",
+    val url: String = "",
     val imageUrls: List<ImageUrls>,
     val eventSink: (CoverArtsGridUiEvent) -> Unit = {},
 ) : CircuitUiState

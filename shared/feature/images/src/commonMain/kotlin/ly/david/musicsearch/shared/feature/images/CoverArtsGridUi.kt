@@ -21,6 +21,7 @@ import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.screen.screenContainerSize
+import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.image.ThumbnailImage
 import ly.david.musicsearch.ui.image.getPlaceholderKey
@@ -47,6 +48,11 @@ internal fun CoverArtsGridUi(
                     eventSink(CoverArtsGridUiEvent.NavigateUp)
                 },
                 title = state.title,
+                overflowDropdownMenuItems = {
+                    OpenInBrowserMenuItem(
+                        url = state.url,
+                    )
+                },
             )
         },
     ) { innerPadding ->
