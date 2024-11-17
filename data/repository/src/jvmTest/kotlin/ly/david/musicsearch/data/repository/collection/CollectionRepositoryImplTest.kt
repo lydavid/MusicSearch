@@ -23,6 +23,8 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
+private const val NEW_COLLECTION_ID = "f3fff548-8282-4c9a-9cea-0e2af40029fe"
+
 class CollectionRepositoryImplTest : KoinTest {
 
     @get:Rule(order = 0)
@@ -395,6 +397,138 @@ class CollectionRepositoryImplTest : KoinTest {
                 ),
             ),
             collections,
+        )
+    }
+
+    private fun testAddingACollection(repository: CollectionRepositoryImpl) = runTest {
+        val flow: Flow<PagingData<CollectionListItemModel>> = repository.observeAllCollections(
+            username = "",
+            entity = null,
+            query = "",
+            showLocal = true,
+            showRemote = true,
+            sortOption = CollectionSortOption.ALPHABETICALLY,
+        )
+        var collections: List<CollectionListItemModel> = flow.asSnapshot()
+        Assert.assertEquals(
+            0,
+            collections.size,
+        )
+
+        repository.insertLocal(
+            collection = CollectionListItemModel(
+                id = NEW_COLLECTION_ID,
+                isRemote = false,
+                name = "New collection",
+                entity = MusicBrainzEntity.ARTIST,
+            ),
+        )
+        collections = flow.asSnapshot()
+        Assert.assertEquals(
+            1,
+            collections.size,
+        )
+        Assert.assertEquals(
+            collections[0],
+            CollectionListItemModel(
+                id = NEW_COLLECTION_ID,
+                isRemote = false,
+                name = "New collection",
+                entity = MusicBrainzEntity.ARTIST,
+            ),
+        )
+    }
+
+    @Test
+    fun `add local collection`() = runTest {
+        val repository: CollectionRepositoryImpl = createRepositoryWithFakeNetworkData(
+            collectionApi = object : FakeCollectionApi() {
+                override suspend fun browseCollectionsByUser(
+                    username: String,
+                    limit: Int,
+                    offset: Int,
+                    include: String?,
+                ): BrowseCollectionsResponse {
+                    return BrowseCollectionsResponse(
+                        count = 0,
+                        offset = 0,
+                        musicBrainzModels = listOf(),
+                    )
+                }
+            },
+        )
+
+        testAddingACollection(repository)
+    }
+
+    private suspend fun testDeletingACollection(repository: CollectionRepositoryImpl) {
+        repository.deleteCollection(
+            collectionId = NEW_COLLECTION_ID,
+            collectionName = "New collection",
+        )
+        val flow: Flow<PagingData<CollectionListItemModel>> = repository.observeAllCollections(
+            username = "",
+            entity = null,
+            query = "",
+            showLocal = true,
+            showRemote = true,
+            sortOption = CollectionSortOption.ALPHABETICALLY,
+        )
+        val collections: List<CollectionListItemModel> = flow.asSnapshot()
+        Assert.assertEquals(
+            0,
+            collections.size,
+        )
+    }
+
+    @Test
+    fun `delete local collection`() = runTest {
+        val repository: CollectionRepositoryImpl = createRepositoryWithFakeNetworkData(
+            collectionApi = object : FakeCollectionApi() {
+                override suspend fun browseCollectionsByUser(
+                    username: String,
+                    limit: Int,
+                    offset: Int,
+                    include: String?,
+                ): BrowseCollectionsResponse {
+                    return BrowseCollectionsResponse(
+                        count = 0,
+                        offset = 0,
+                        musicBrainzModels = listOf(),
+                    )
+                }
+            },
+        )
+
+        testAddingACollection(repository)
+        testDeletingACollection(repository)
+    }
+
+    @Test
+    fun `try to access a deleted collection`() = runTest {
+        val repository: CollectionRepositoryImpl = createRepositoryWithFakeNetworkData(
+            collectionApi = object : FakeCollectionApi() {
+                override suspend fun browseCollectionsByUser(
+                    username: String,
+                    limit: Int,
+                    offset: Int,
+                    include: String?,
+                ): BrowseCollectionsResponse {
+                    return BrowseCollectionsResponse(
+                        count = 0,
+                        offset = 0,
+                        musicBrainzModels = listOf(),
+                    )
+                }
+            },
+        )
+
+        testAddingACollection(repository)
+        testDeletingACollection(repository)
+        val collection = repository.getCollection(NEW_COLLECTION_ID)
+        Assert.assertEquals(
+            collection,
+            null,
         )
     }
 }

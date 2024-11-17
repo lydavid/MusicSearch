@@ -119,7 +119,7 @@ class CollectionRepositoryImpl(
         }
     }
 
-    override fun getCollection(entityId: String): CollectionListItemModel {
+    override fun getCollection(entityId: String): CollectionListItemModel? {
         return collectionDao.getCollection(entityId)
     }
 
@@ -132,7 +132,7 @@ class CollectionRepositoryImpl(
         entityId: String,
         entityName: String,
     ): ActionableResult {
-        val collection = collectionDao.getCollection(collectionId)
+        val collection = collectionDao.getCollection(collectionId) ?: return ActionableResult("Does not exist")
         if (collection.isRemote) {
             try {
                 collectionApi.deleteFromCollection(
@@ -164,9 +164,9 @@ class CollectionRepositoryImpl(
         entity: MusicBrainzEntity,
         entityId: String,
     ): ActionableResult {
-        var result = ActionableResult()
+        val collection = collectionDao.getCollection(collectionId) ?: return ActionableResult("Does not exist")
 
-        val collection = collectionDao.getCollection(collectionId)
+        var result = ActionableResult()
         if (collection.isRemote) {
             try {
                 collectionApi.uploadToCollection(
