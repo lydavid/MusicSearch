@@ -64,7 +64,7 @@ jobs:
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
-          api-level: 31
+          api-level: 32
           arch: x86_64
           profile: pixel_3a
           force-avd-creation: false
@@ -77,7 +77,7 @@ jobs:
       - name: Install master app on emulator, run Maestro tests
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
-          api-level: 31
+          api-level: 32
           arch: x86_64
           profile: pixel_3a
           force-avd-creation: false
@@ -113,7 +113,7 @@ jobs:
       - name: Install beta app on emulator, run Maestro tests
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
-          api-level: 31
+          api-level: 32
           arch: x86_64
           profile: pixel_3a
           force-avd-creation: false
