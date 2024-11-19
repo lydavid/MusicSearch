@@ -14,10 +14,25 @@ import coil3.test.intercept
 fun getFakeImageLoader(context: Context): ImageLoader {
     val engine = FakeImageLoaderEngine.Builder()
         .intercept(
-            "https://www.example.com/image.jpg",
+            data = "https://www.example.com/image.jpg",
             createColorSquare(
-                context,
-                1,
+                context = context,
+                size = 1,
+            ),
+        )
+        .intercept(
+            data = "https://www.example.com/blue.jpg",
+            createColorSquare(
+                context = context,
+                size = 1,
+            ),
+        )
+        .intercept(
+            data = "https://www.example.com/red.jpg",
+            createColorSquare(
+                context = context,
+                size = 1,
+                color = Color.RED,
             ),
         )
         .default(ColorDrawable(Color.RED))

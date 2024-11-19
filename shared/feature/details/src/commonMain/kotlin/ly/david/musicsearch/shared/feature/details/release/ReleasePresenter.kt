@@ -38,7 +38,7 @@ import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
-import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
+import ly.david.musicsearch.ui.common.screen.CoverArtsGridScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
@@ -197,7 +197,7 @@ internal class ReleasePresenter(
                 is ReleaseUiEvent.ClickImage -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
-                            CoverArtsScreen(
+                            CoverArtsGridScreen(
                                 id = screen.id,
                             ),
                         ),

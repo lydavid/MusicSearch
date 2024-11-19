@@ -53,8 +53,14 @@ data class DetailsScreen(
 ) : Screen
 
 @Parcelize
-data class CoverArtsScreen(
+data class CoverArtsGridScreen(
     val id: String,
+) : Screen
+
+@Parcelize
+data class CoverArtsPagerScreen(
+    val id: String,
+    val index: Int,
 ) : Screen
 
 @Parcelize

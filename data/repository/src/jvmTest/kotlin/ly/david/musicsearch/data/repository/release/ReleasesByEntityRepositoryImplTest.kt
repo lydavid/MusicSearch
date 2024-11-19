@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.repository.release
 
 import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.api.FakeBrowseApi
@@ -99,13 +100,17 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
 
         database.mbid_imageQueries.insert(
             mbid = releaseWith3CatalogNumbersWithSameLabel.id,
-            thumbnail_url = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-            large_url = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-1200.jpg",
+            thumbnailUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+            largeUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-1200.jpg",
+            types = persistentListOf(),
+            comment = null,
         )
         database.mbid_imageQueries.insert(
             mbid = releaseWith3CatalogNumbersWithSameLabel.id,
-            thumbnail_url = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-250.jpg",
-            large_url = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-1200.jpg",
+            thumbnailUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-250.jpg",
+            largeUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-1200.jpg",
+            types = persistentListOf(),
+            comment = null,
         )
 
         val flow: Flow<PagingData<ReleaseListItemModel>> = sut.observeReleasesByEntity(

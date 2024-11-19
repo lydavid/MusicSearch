@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.data.database.Database
@@ -17,8 +18,10 @@ class MbidImageDao(
             imageUrls.forEach { urls ->
                 transacter.insert(
                     mbid = mbid,
-                    thumbnail_url = urls.thumbnailUrl,
-                    large_url = urls.largeUrl,
+                    thumbnailUrl = urls.thumbnailUrl,
+                    largeUrl = urls.largeUrl,
+                    types = urls.types,
+                    comment = urls.comment,
                 )
             }
         }
@@ -27,10 +30,12 @@ class MbidImageDao(
     override fun getAllUrls(mbid: String): List<ImageUrls> {
         return transacter.getAllUrls(
             mbid = mbid,
-            mapper = { _, _, thumbnailUrl, largeUrl ->
+            mapper = { _, _, thumbnailUrl, largeUrl, types, comment ->
                 ImageUrls(
                     thumbnailUrl = thumbnailUrl,
                     largeUrl = largeUrl,
+                    types = types ?: persistentListOf(),
+                    comment = comment.orEmpty(),
                 )
             },
         ).executeAsList()
