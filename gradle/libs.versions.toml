@@ -143,7 +143,7 @@ ktor-jvm = [
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
-build-config = "com.github.gmazzo.buildconfig:5.5.0"
+build-config = "com.github.gmazzo.buildconfig:5.5.1"
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 dependency-analysis = "com.autonomousapps.dependency-analysis:2.4.1"
