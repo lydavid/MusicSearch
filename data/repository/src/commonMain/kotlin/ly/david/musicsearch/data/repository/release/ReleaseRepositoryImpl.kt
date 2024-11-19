@@ -155,7 +155,12 @@ class ReleaseRepositoryImpl(
             config = CommonPagingConfig.pagingConfig,
             remoteMediator = LookupEntityRemoteMediator(
                 hasEntityBeenStored = { hasReleaseTracksBeenStored(releaseId) },
-                lookupEntity = { lookupRelease(releaseId = releaseId, forceRefresh = false) },
+                lookupEntity = {
+                    lookupRelease(
+                        releaseId = releaseId,
+                        forceRefresh = false,
+                    )
+                },
                 deleteLocalEntity = { deleteMediaAndTracksByRelease(releaseId) },
             ),
             pagingSourceFactory = {
@@ -199,12 +204,19 @@ class ReleaseRepositoryImpl(
     // endregion
 }
 
-fun TrackAndMedium.toTrackListItemModel() =
+private fun TrackAndMedium.toTrackListItemModel() =
     TrackListItemModel(
         id = id,
-        position = position, number = number, title = title, length = length, mediumId = mediumId,
-        recordingId = recordingId, formattedArtistCredits = formattedArtistCredits, visited = visited,
-        mediumPosition, mediumName, trackCount, format,
+        position = position,
+        number = number,
+        title = title,
+        length = length,
+        mediumId = mediumId,
+        recordingId = recordingId,
+        formattedArtistCredits = formattedArtistCredits,
+        visited = visited,
+        mediumPosition = mediumPosition,
+        mediumName = mediumName,
+        trackCount = trackCount,
+        format = format,
     )
-
-// fun TrackAndMedium.toMediumSeparator() =
