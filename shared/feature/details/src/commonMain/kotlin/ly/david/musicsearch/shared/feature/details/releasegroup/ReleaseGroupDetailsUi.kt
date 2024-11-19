@@ -13,6 +13,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
 import ly.david.musicsearch.ui.image.LargeImage
+import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 @Composable
 internal fun ReleaseGroupDetailsUi(
@@ -33,7 +34,7 @@ internal fun ReleaseGroupDetailsUi(
             if (filterText.isBlank()) {
                 LargeImage(
                     url = imageUrl,
-                    id = releaseGroup.id,
+                    placeholderKey = getPlaceholderKey(releaseGroup.id),
                 )
             }
         }

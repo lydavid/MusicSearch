@@ -24,6 +24,7 @@ import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.image.ThumbnailImage
+import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 // TODO: rethink showing release country -> could be misleading, and expensive joins
 //  with cover art loaded by default, we can prob hide the other info by default
@@ -143,7 +144,7 @@ fun ReleaseListItem(
         leadingContent = {
             ThumbnailImage(
                 url = release.imageUrl.orEmpty(),
-                mbid = release.id,
+                placeholderKey = getPlaceholderKey(release.id),
                 placeholderIcon = MusicBrainzEntity.RELEASE.getIcon(),
             )
         },

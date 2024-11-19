@@ -22,6 +22,7 @@ import ly.david.musicsearch.ui.common.url.UrlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.LargeImage
+import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 @Composable
 internal fun ArtistDetailsUi(
@@ -39,7 +40,7 @@ internal fun ArtistDetailsUi(
             if (filterText.isBlank()) {
                 LargeImage(
                     url = artist.imageUrl.orEmpty(),
-                    id = artist.id,
+                    placeholderKey = getPlaceholderKey(artist.id),
                 )
             }
 
