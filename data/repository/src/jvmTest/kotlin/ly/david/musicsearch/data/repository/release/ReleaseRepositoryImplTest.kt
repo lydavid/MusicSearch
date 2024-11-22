@@ -802,7 +802,7 @@ class ReleaseRepositoryImplTest : KoinTest {
                 ),
                 urls = listOf(
                     RelationListItemModel(
-                        id = "8248e638-ee4d-4e03-a6c3-ba4ad7af00c1_0",
+                        id = "8248e638-ee4d-4e03-a6c3-ba4ad7af00c1_4",
                         linkedEntityId = "8248e638-ee4d-4e03-a6c3-ba4ad7af00c1",
                         label = "ASIN",
                         name = "https://www.amazon.co.jp/gp/product/B004GJ33BO",
@@ -813,7 +813,7 @@ class ReleaseRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "6f72b1ec-2634-4c23-a912-6e262ace69ea_1",
+                        id = "6f72b1ec-2634-4c23-a912-6e262ace69ea_5",
                         linkedEntityId = "6f72b1ec-2634-4c23-a912-6e262ace69ea",
                         label = "Discogs",
                         name = "https://www.discogs.com/release/2899823",
@@ -824,7 +824,7 @@ class ReleaseRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "9093d520-297d-4811-addb-93804d0723b8_3",
+                        id = "9093d520-297d-4811-addb-93804d0723b8_7",
                         linkedEntityId = "9093d520-297d-4811-addb-93804d0723b8",
                         label = "VGMdb",
                         name = "https://vgmdb.net/album/28417",
@@ -835,7 +835,7 @@ class ReleaseRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "c7ee5a1d-c11d-4511-809f-f5ba138a38d3_2",
+                        id = "c7ee5a1d-c11d-4511-809f-f5ba138a38d3_6",
                         linkedEntityId = "c7ee5a1d-c11d-4511-809f-f5ba138a38d3",
                         label = "other databases",
                         name = "https://rateyourmusic.com/release/album/supercell_f2/today_is_a_beautiful_day_f1/",
