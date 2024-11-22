@@ -179,7 +179,7 @@ class RecordingRepositoryImplTest : KoinTest {
                 video = true,
                 urls = listOf(
                     RelationListItemModel(
-                        id = "b5322490-3003-42e9-a043-d26a83bd1bbd_0",
+                        id = "b5322490-3003-42e9-a043-d26a83bd1bbd_1",
                         linkedEntityId = "b5322490-3003-42e9-a043-d26a83bd1bbd",
                         label = "free streaming",
                         name = "https://music.youtube.com/watch?v=2vkgqu3-_Pk",

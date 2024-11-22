@@ -185,7 +185,7 @@ class LabelRepositoryImplTest : KoinTest {
                 ),
                 urls = listOf(
                     RelationListItemModel(
-                        id = "2741a789-1c8a-453a-a8d3-fb8a5cc6f090_0",
+                        id = "2741a789-1c8a-453a-a8d3-fb8a5cc6f090_5",
                         linkedEntityId = "2741a789-1c8a-453a-a8d3-fb8a5cc6f090",
                         label = "Discogs",
                         name = "https://www.discogs.com/label/57296",
@@ -196,7 +196,7 @@ class LabelRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "ff7c8fd7-b8d4-4b79-b1f7-b562210ade1a_2",
+                        id = "ff7c8fd7-b8d4-4b79-b1f7-b562210ade1a_7",
                         linkedEntityId = "ff7c8fd7-b8d4-4b79-b1f7-b562210ade1a",
                         label = "VGMdb",
                         name = "https://vgmdb.net/org/2391",
@@ -207,7 +207,7 @@ class LabelRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "44117bb6-9193-402b-a216-16b34555ca08_3",
+                        id = "44117bb6-9193-402b-a216-16b34555ca08_8",
                         linkedEntityId = "44117bb6-9193-402b-a216-16b34555ca08",
                         label = "VGMdb",
                         name = "https://vgmdb.net/org/533",
@@ -218,7 +218,7 @@ class LabelRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "24284c01-4cbd-488f-a042-f15dbc852633_4",
+                        id = "24284c01-4cbd-488f-a042-f15dbc852633_9",
                         linkedEntityId = "24284c01-4cbd-488f-a042-f15dbc852633",
                         label = "Wikidata",
                         name = "https://www.wikidata.org/wiki/Q112654575",
@@ -229,7 +229,7 @@ class LabelRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "f58627cb-4d36-475e-a11b-82cd4be31c13_1",
+                        id = "f58627cb-4d36-475e-a11b-82cd4be31c13_6",
                         linkedEntityId = "f58627cb-4d36-475e-a11b-82cd4be31c13",
                         label = "social networking",
                         name = "https://twitter.com/UNIVERSAL_J",

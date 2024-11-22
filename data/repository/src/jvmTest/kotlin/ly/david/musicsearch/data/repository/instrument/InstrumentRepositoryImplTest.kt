@@ -157,7 +157,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                 type = "String instrument",
                 urls = listOf(
                     RelationListItemModel(
-                        id = "a_3",
+                        id = "a_7",
                         linkedEntityId = "a",
                         label = "Wikidata",
                         name = "https://www.wikidata.org/wiki/Q719120",
@@ -168,7 +168,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "a_1",
+                        id = "a_5",
                         linkedEntityId = "a",
                         label = "other databases",
                         name = "https://saisaibatake.ame-zaiku.com/gakki/guitar/gakki_guitar_classic.html",
@@ -179,7 +179,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "a_2",
+                        id = "a_6",
                         linkedEntityId = "a",
                         label = "other databases",
                         name = "https://saisaibatake.ame-zaiku.com/gakki/guitar/gakki_guitar_gut.html",
@@ -190,7 +190,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "a_0",
+                        id = "a_4",
                         linkedEntityId = "a",
                         label = "picture",
                         name = "https://static.metabrainz.org/irombook/guitar/guitar_acoustic_classical.png",
