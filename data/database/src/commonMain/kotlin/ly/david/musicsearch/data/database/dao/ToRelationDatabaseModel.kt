@@ -31,7 +31,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
     val entity = targetType.entity
     when (targetType) {
         SerializableMusicBrainzEntity.AREA -> {
-            if (area == null) return null
             area?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -40,7 +39,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.ARTIST -> {
-            if (artist == null) return null
             artist?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -50,7 +48,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.EVENT -> {
-            if (event == null) return null
             event?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -59,7 +56,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.GENRE -> {
-            if (genre == null) return null
             genre?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -68,7 +64,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.INSTRUMENT -> {
-            if (instrument == null) return null
             instrument?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -77,7 +72,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.LABEL -> {
-            if (label == null) return null
             label?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -86,7 +80,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.PLACE -> {
-            if (place == null) return null
             place?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -95,7 +88,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.RECORDING -> {
-            if (recording == null) return null
             recording?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -106,7 +98,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.RELEASE -> {
-            if (release == null) return null
             release?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -116,7 +107,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.RELEASE_GROUP -> {
-            if (releaseGroup == null) return null
             releaseGroup?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -126,7 +116,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.SERIES -> {
-            if (series == null) return null
             series?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -135,7 +124,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.WORK -> {
-            if (work == null) return null
             work?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -144,7 +132,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.URL -> {
-            if (url == null) return null
             url?.apply {
                 linkedEntityId = id
                 linkedEntityName = resource.decodeUrl()
