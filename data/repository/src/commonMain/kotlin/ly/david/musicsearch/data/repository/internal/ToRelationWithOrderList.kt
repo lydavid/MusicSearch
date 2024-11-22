@@ -10,6 +10,7 @@ internal fun List<RelationMusicBrainzModel>?.toRelationWithOrderList(
     this?.mapIndexedNotNull { index, relationMusicBrainzModel ->
         relationMusicBrainzModel.toRelationDatabaseModel(
             entityId = entityId,
-            order = index,
+            index = index,
+            numberOfRelationships = this.size,
         )
     }.orEmpty()

@@ -26,7 +26,6 @@ data class RelationMusicBrainzModel(
     @SerialName("type") val type: String,
     @SerialName("type-id") val typeId: String,
 
-    // TODO: we should order with backward relations first
     @SerialName("direction") val direction: Direction,
 
     @SerialName("target-type") val targetType: SerializableMusicBrainzEntity? = null,
@@ -40,6 +39,8 @@ data class RelationMusicBrainzModel(
     @SerialName("begin") override val begin: String? = null,
     @SerialName("end") override val end: String? = null,
     @SerialName("ended") override val ended: Boolean? = null,
+
+    @SerialName("ordering-key") val orderingKey: Int? = null,
 
     @SerialName("area") val area: AreaMusicBrainzModel? = null,
     @SerialName("artist") val artist: ArtistMusicBrainzModel? = null, // could be composer, arranger, etc

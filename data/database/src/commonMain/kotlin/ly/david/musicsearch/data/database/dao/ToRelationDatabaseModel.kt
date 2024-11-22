@@ -1,24 +1,19 @@
 package ly.david.musicsearch.data.database.dao
 
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
+import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.emptyToNull
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
-import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
-import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
-import lydavidmusicsearchdatadatabase.Relation
 
-/**
- * We cannot guarantee that a [Relation] will be created in the scenario that target-type points to a resource
- * but that object is null. It's possible that this is never the case, but our models are currently structured such
- * that any of them are nullable.
- */
 fun RelationMusicBrainzModel.toRelationDatabaseModel(
     entityId: String,
-    order: Int,
+    index: Int,
+    numberOfRelationships: Int,
 ): RelationWithOrder? {
     val targetType = targetType
     requireNotNull(targetType)
@@ -139,6 +134,8 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
     }
+
+    val order: Int = orderingKey.takeIf { it != null } ?: (numberOfRelationships + index)
 
     return RelationWithOrder(
         id = entityId,
