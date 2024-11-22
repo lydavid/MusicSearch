@@ -317,7 +317,7 @@ class WorkRepositoryImplTest : KoinTest {
                 ),
                 urls = listOf(
                     RelationListItemModel(
-                        id = "7fb958bb-035c-4405-ac74-65dd33af6ac4_12",
+                        id = "7fb958bb-035c-4405-ac74-65dd33af6ac4_25",
                         linkedEntityId = "7fb958bb-035c-4405-ac74-65dd33af6ac4",
                         label = "Wikidata",
                         name = "https://www.wikidata.org/wiki/Q1131046",
@@ -328,7 +328,7 @@ class WorkRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "6ea47967-a4d4-4a20-8f91-76d2aa9be8b2_0",
+                        id = "6ea47967-a4d4-4a20-8f91-76d2aa9be8b2_13",
                         linkedEntityId = "6ea47967-a4d4-4a20-8f91-76d2aa9be8b2",
                         label = "lyrics page",
                         name = "http://kids.utamap.com/pc/showkasi_pc.php?surl=E12387",
@@ -339,7 +339,7 @@ class WorkRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "31bcc221-ed6d-4e96-b357-f50ead407b91_1",
+                        id = "31bcc221-ed6d-4e96-b357-f50ead407b91_14",
                         linkedEntityId = "31bcc221-ed6d-4e96-b357-f50ead407b91",
                         label = "lyrics page",
                         name = "http://lyric.evesta.jp/l79a26e.html",
@@ -350,7 +350,7 @@ class WorkRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "756081cd-7baf-4925-982e-bd97b927090b_2",
+                        id = "756081cd-7baf-4925-982e-bd97b927090b_15",
                         linkedEntityId = "756081cd-7baf-4925-982e-bd97b927090b",
                         label = "lyrics page",
                         name = "https://j-lyric.net/artist/a054f0a/l024c87.html",
@@ -361,7 +361,7 @@ class WorkRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "6165fd43-2792-4dfa-8a19-966955880e21_3",
+                        id = "6165fd43-2792-4dfa-8a19-966955880e21_16",
                         linkedEntityId = "6165fd43-2792-4dfa-8a19-966955880e21",
                         label = "lyrics page",
                         name = "https://kashinavi.com/song_view.html?37443",
@@ -372,7 +372,7 @@ class WorkRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "8afd628c-6e91-4d02-8687-3aa8c6153a1f_4",
+                        id = "8afd628c-6e91-4d02-8687-3aa8c6153a1f_17",
                         linkedEntityId = "8afd628c-6e91-4d02-8687-3aa8c6153a1f",
                         label = "lyrics page",
                         name = "https://petitlyrics.com/lyrics/136544",
@@ -383,7 +383,7 @@ class WorkRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "c2515300-2774-45aa-a5ef-9f0fdd02b934_5",
+                        id = "c2515300-2774-45aa-a5ef-9f0fdd02b934_18",
                         linkedEntityId = "c2515300-2774-45aa-a5ef-9f0fdd02b934",
                         label = "lyrics page",
                         name = "https://petitlyrics.com/lyrics/17763",
@@ -394,7 +394,7 @@ class WorkRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "d027f956-33f2-4f9f-912f-9a8109900554_6",
+                        id = "d027f956-33f2-4f9f-912f-9a8109900554_19",
                         linkedEntityId = "d027f956-33f2-4f9f-912f-9a8109900554",
                         label = "lyrics page",
                         name = "https://utaten.com/lyric/jb70908028/",
@@ -405,7 +405,7 @@ class WorkRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "c93bcd02-08b0-42c6-b878-eba62c64ce61_7",
+                        id = "c93bcd02-08b0-42c6-b878-eba62c64ce61_20",
                         linkedEntityId = "c93bcd02-08b0-42c6-b878-eba62c64ce61",
                         label = "lyrics page",
                         name = "https://utaten.com/lyric/supercell/君の知らない物語",
@@ -416,7 +416,7 @@ class WorkRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "93c15008-8020-4fa3-b894-37571d7d7fb4_8",
+                        id = "93c15008-8020-4fa3-b894-37571d7d7fb4_21",
                         linkedEntityId = "93c15008-8020-4fa3-b894-37571d7d7fb4",
                         label = "lyrics page",
                         name = "https://www.joysound.com/web/search/song/133769",
@@ -427,7 +427,7 @@ class WorkRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "3f8747c7-3c36-45a1-9990-6003bec56ffc_9",
+                        id = "3f8747c7-3c36-45a1-9990-6003bec56ffc_22",
                         linkedEntityId = "3f8747c7-3c36-45a1-9990-6003bec56ffc",
                         label = "lyrics page",
                         name = "https://www.musixmatch.com/lyrics/supercell/君の知らない物語",
@@ -438,7 +438,7 @@ class WorkRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "689eb1a6-2551-4ed0-9499-1eb4e217fece_10",
+                        id = "689eb1a6-2551-4ed0-9499-1eb4e217fece_23",
                         linkedEntityId = "689eb1a6-2551-4ed0-9499-1eb4e217fece",
                         label = "lyrics page",
                         name = "https://www.utamap.com/showkasi.php?surl=E12387",
@@ -449,7 +449,7 @@ class WorkRepositoryImplTest : KoinTest {
                         visited = true,
                     ),
                     RelationListItemModel(
-                        id = "db86680c-9f2c-422b-8b36-928516b2f4a1_11",
+                        id = "db86680c-9f2c-422b-8b36-928516b2f4a1_24",
                         linkedEntityId = "db86680c-9f2c-422b-8b36-928516b2f4a1",
                         label = "lyrics page",
                         name = "https://www.uta-net.com/song/82447/",
