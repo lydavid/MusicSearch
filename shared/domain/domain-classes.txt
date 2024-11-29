@@ -37,9 +37,10 @@ unstable class AreaDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-runtime class GetAreasByEntity {
+unstable class GetAreasByEntity {
   runtime val areasByEntityRepository: AreasByEntityRepository
-  <runtime stability> = Uncertain(AreasByEntityRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 stable class ArtistCreditUiModel {
   stable val artistId: String
@@ -70,9 +71,10 @@ stable class CollaboratingArtistAndRecording {
   stable val recordingName: String
   <runtime stability> = Stable
 }
-runtime class GetArtistsByEntity {
+unstable class GetArtistsByEntity {
   runtime val artistsByEntityRepository: ArtistsByEntityRepository
-  <runtime stability> = Uncertain(ArtistsByEntityRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 stable class BrowseEntityCount {
   stable val browseEntity: MusicBrainzEntity
@@ -84,7 +86,20 @@ runtime class ObserveBrowseEntityCount {
   runtime val browseEntityCountRepository: BrowseEntityCountRepository
   <runtime stability> = Uncertain(BrowseEntityCountRepository)
 }
+stable class NewCollection {
+  stable val id: String?
+  stable val name: String
+  stable val entity: MusicBrainzEntity
+  <runtime stability> = Stable
+}
+stable class Dismissed {
+  <runtime stability> = Stable
+}
 runtime class CreateCollection {
+  runtime val collectionRepository: CollectionRepository
+  <runtime stability> = Uncertain(CollectionRepository)
+}
+runtime class DeleteCollection {
   runtime val collectionRepository: CollectionRepository
   <runtime stability> = Uncertain(CollectionRepository)
 }
@@ -92,10 +107,11 @@ runtime class DeleteFromCollection {
   runtime val collectionRepository: CollectionRepository
   <runtime stability> = Uncertain(CollectionRepository)
 }
-stable class GetAllCollections {
+unstable class GetAllCollections {
   runtime val collectionRepository: CollectionRepository
   runtime val musicBrainzAuthStore: MusicBrainzAuthStore
-  <runtime stability> = 
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 stable class GetCollection {
   runtime val collectionRepository: CollectionRepository
@@ -124,9 +140,10 @@ unstable class EventDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-runtime class GetEventsByEntity {
+unstable class GetEventsByEntity {
   runtime val eventsByEntityRepository: EventsByEntityRepository
-  <runtime stability> = Uncertain(EventsByEntityRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 unstable class LookupHistory {
   stable val mbid: String
@@ -158,30 +175,33 @@ unstable class SpotifyHistory {
   unstable val lastListened: Instant
   <runtime stability> = Unstable
 }
-runtime class DeleteLookupHistory {
+runtime class DeleteLookupHistoryImpl {
   runtime val lookupHistoryRepository: LookupHistoryRepository
   <runtime stability> = Uncertain(LookupHistoryRepository)
 }
-runtime class GetPagedHistory {
+unstable class GetPagedHistoryImpl {
+  runtime val lookupHistoryRepository: LookupHistoryRepository
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
+}
+runtime class IncrementLookupHistoryImpl {
   runtime val lookupHistoryRepository: LookupHistoryRepository
   <runtime stability> = Uncertain(LookupHistoryRepository)
 }
-runtime class IncrementLookupHistory {
+runtime class MarkLookupHistoryForDeletionImpl {
   runtime val lookupHistoryRepository: LookupHistoryRepository
   <runtime stability> = Uncertain(LookupHistoryRepository)
 }
-runtime class MarkLookupHistoryForDeletion {
-  runtime val lookupHistoryRepository: LookupHistoryRepository
-  <runtime stability> = Uncertain(LookupHistoryRepository)
-}
-runtime class UnMarkLookupHistoryForDeletion {
+runtime class UnMarkLookupHistoryForDeletionImpl {
   runtime val lookupHistoryRepository: LookupHistoryRepository
   <runtime stability> = Uncertain(LookupHistoryRepository)
 }
 stable class ImageUrls {
   stable val thumbnailUrl: String
   stable val largeUrl: String
-  <runtime stability> = Stable
+  stable val types: ImmutableList<String>
+  stable val comment: String
+  <runtime stability> = 
 }
 unstable class InstrumentDetailsModel {
   stable val id: String
@@ -192,9 +212,10 @@ unstable class InstrumentDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-runtime class GetInstrumentsByEntity {
+unstable class GetInstrumentsByEntity {
   runtime val instrumentsByEntityRepository: InstrumentsByEntityRepository
-  <runtime stability> = Uncertain(InstrumentsByEntityRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 unstable class LabelDetailsModel {
   stable val id: String
@@ -208,18 +229,10 @@ unstable class LabelDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-stable class LabelWithCatalog {
-  stable val id: String
-  stable val name: String
-  stable val disambiguation: String?
-  stable val type: String?
-  stable val labelCode: Int?
-  stable val catalogNumber: String
-  <runtime stability> = Stable
-}
-runtime class GetLabelsByEntity {
+unstable class GetLabelsByEntity {
   runtime val labelsByEntityRepository: LabelsByEntityRepository
-  <runtime stability> = Uncertain(LabelsByEntityRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 unstable class AreaListItemModel {
   stable val id: String
@@ -256,6 +269,10 @@ stable class CollectionListItemModel {
   stable val visited: Boolean
   <runtime stability> = Stable
 }
+stable class EndOfList {
+  stable val id: String
+  <runtime stability> = Stable
+}
 stable class EventListItemModel {
   stable val id: String
   stable val name: String
@@ -271,6 +288,10 @@ stable class GenreListItemModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String?
+  <runtime stability> = Stable
+}
+stable class Header {
+  stable val id: String
   <runtime stability> = Stable
 }
 stable class InstrumentListItemModel {
@@ -293,14 +314,6 @@ stable class LabelListItemModel {
   <runtime stability> = Stable
 }
 stable class ListItemModel {
-  <runtime stability> = Stable
-}
-stable class Header {
-  stable val id: String
-  <runtime stability> = Stable
-}
-stable class EndOfList {
-  stable val id: String
   <runtime stability> = Stable
 }
 stable class ListSeparator {
@@ -343,6 +356,7 @@ stable class RecordingListItemModel {
   stable val length: Int?
   stable val video: Boolean
   stable val formattedArtistCredits: String?
+  stable val visited: Boolean
   <runtime stability> = Stable
 }
 stable class RelationListItemModel {
@@ -354,6 +368,7 @@ stable class RelationListItemModel {
   stable val attributes: String?
   stable val additionalInfo: String?
   stable val linkedEntity: MusicBrainzEntity
+  stable val visited: Boolean
   <runtime stability> = Stable
 }
 unstable class ReleaseGroupListItemModel {
@@ -365,6 +380,7 @@ unstable class ReleaseGroupListItemModel {
   unstable val secondaryTypes: List<String>?
   stable val formattedArtistCredits: String?
   stable val imageUrl: String?
+  stable val visited: Boolean
   <runtime stability> = Unstable
 }
 stable class ReleaseListItemModel {
@@ -391,6 +407,11 @@ stable class ReleaseListItemModel {
   stable val visited: Boolean
   <runtime stability> = Stable
 }
+stable class SearchHeader {
+  stable val id: String
+  stable val remoteCount: Int
+  <runtime stability> = Stable
+}
 stable class SearchHistoryListItemModel {
   stable val id: String
   stable val query: String
@@ -402,6 +423,7 @@ stable class SeriesListItemModel {
   stable val name: String
   stable val disambiguation: String?
   stable val type: String?
+  stable val visited: Boolean
   <runtime stability> = Stable
 }
 unstable class SpotifyHistoryListItemModel {
@@ -423,6 +445,11 @@ stable class TrackListItemModel {
   stable val mediumId: Long
   stable val recordingId: String
   stable val formattedArtistCredits: String?
+  stable val visited: Boolean
+  stable val mediumPosition: Int?
+  stable val mediumName: String?
+  stable val trackCount: Int
+  stable val format: String?
   <runtime stability> = Stable
 }
 unstable class WorkListItemModel {
@@ -433,15 +460,25 @@ unstable class WorkListItemModel {
   stable val language: String?
   unstable val iswcs: List<String>?
   unstable val attributes: List<WorkAttributeUiModel>
+  stable val visited: Boolean
   <runtime stability> = Unstable
+}
+runtime class GetMusicBrainzCoverArtUrl {
+  runtime val getMusicBrainzUrl: GetMusicBrainzUrl
+  <runtime stability> = Uncertain(GetMusicBrainzUrl)
+}
+runtime class GetMusicBrainzUrlImpl {
+  runtime val musicbrainzRepository: MusicbrainzRepository
+  <runtime stability> = Uncertain(MusicbrainzRepository)
 }
 runtime class DeleteNowPlayingHistory {
   runtime val nowPlayingHistoryRepository: NowPlayingHistoryRepository
   <runtime stability> = Uncertain(NowPlayingHistoryRepository)
 }
-runtime class GetNowPlayingHistory {
+unstable class GetNowPlayingHistory {
   runtime val nowPlayingHistoryRepository: NowPlayingHistoryRepository
-  <runtime stability> = Uncertain(NowPlayingHistoryRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 stable class CoordinatesUiModel {
   stable val longitude: Double?
@@ -460,9 +497,10 @@ unstable class PlaceDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-runtime class GetPlacesByEntity {
+unstable class GetPlacesByEntity {
   runtime val placesByEntityRepository: PlacesByEntityRepository
-  <runtime stability> = Uncertain(PlacesByEntityRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 unstable class RecordingDetailsModel {
   stable val id: String
@@ -476,9 +514,10 @@ unstable class RecordingDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-runtime class GetRecordingsByEntity {
+unstable class GetRecordingsByEntity {
   runtime val recordingsByEntityRepository: RecordingsByEntityRepository
-  <runtime stability> = Uncertain(RecordingsByEntityRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 stable class RelationTypeCount {
   stable val linkedEntity: MusicBrainzEntity
@@ -547,13 +586,15 @@ stable class TextRepresentationUiModel {
   stable val language: String?
   <runtime stability> = Stable
 }
-runtime class GetReleasesByEntity {
+unstable class GetReleasesByEntity {
   runtime val releasesByEntityRepository: ReleasesByEntityRepository
-  <runtime stability> = Uncertain(ReleasesByEntityRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
-runtime class GetTracksByRelease {
+unstable class GetTracksByRelease {
   runtime val releaseRepository: ReleaseRepository
-  <runtime stability> = Uncertain(ReleaseRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 unstable class ReleaseGroupDetailsModel {
   stable val id: String
@@ -582,17 +623,19 @@ unstable class ReleaseGroupTypeCount {
   stable val count: Int
   <runtime stability> = Unstable
 }
-runtime class GetReleaseGroupsByEntity {
+unstable class GetReleaseGroupsByEntity {
   runtime val releaseGroupsByEntityRepository: ReleaseGroupsByEntityRepository
-  <runtime stability> = Uncertain(ReleaseGroupsByEntityRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 runtime class DeleteSearchHistory {
   runtime val searchHistoryRepository: SearchHistoryRepository
   <runtime stability> = Uncertain(SearchHistoryRepository)
 }
-runtime class GetSearchHistory {
+unstable class GetSearchHistory {
   runtime val searchHistoryRepository: SearchHistoryRepository
-  <runtime stability> = Uncertain(SearchHistoryRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 runtime class RecordSearchHistory {
   runtime val searchHistoryRepository: SearchHistoryRepository
@@ -605,9 +648,10 @@ stable class SearchResultMetadata {
   stable val remoteCount: Int
   <runtime stability> = Stable
 }
-runtime class GetSearchResults {
+unstable class GetSearchResults {
   runtime val searchResultsRepository: SearchResultsRepository
-  <runtime stability> = Uncertain(SearchResultsRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 unstable class SeriesDetailsModel {
   stable val id: String
@@ -617,9 +661,10 @@ unstable class SeriesDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-runtime class GetSeriesByEntity {
+unstable class GetSeriesByEntity {
   runtime val seriesByEntityRepository: SeriesByEntityRepository
-  <runtime stability> = Uncertain(SeriesByEntityRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }
 stable class WikipediaExtract {
   stable val extract: String
@@ -643,7 +688,8 @@ unstable class WorkDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-runtime class GetWorksByEntity {
+unstable class GetWorksByEntity {
   runtime val worksByEntityRepository: WorksByEntityRepository
-  <runtime stability> = Uncertain(WorksByEntityRepository)
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
 }

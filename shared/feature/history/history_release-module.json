@@ -7,24 +7,25 @@
   "totalGroups": 46,
   "staticArguments": 70,
   "certainArguments": 8,
-  "knownStableArguments": 368,
-  "knownUnstableArguments": 2,
+  "knownStableArguments": 371,
+  "knownUnstableArguments": 3,
   "unknownStableArguments": 7,
-  "totalArguments": 377,
+  "totalArguments": 381,
   "markedStableClasses": 1,
   "inferredStableClasses": 9,
   "inferredUnstableClasses": 0,
   "inferredUncertainClasses": 0,
   "effectivelyStableClasses": 10,
   "totalClasses": 10,
-  "memoizedLambdas": 45,
+  "memoizedLambdas": 46,
   "singletonLambdas": 0,
   "singletonComposableLambdas": 4,
   "composableLambdas": 24,
-  "totalLambdas": 45,
+  "totalLambdas": 46,
   "featureFlags": {
     "StrongSkipping": true,
     "IntrinsicRemember": true,
-    "OptimizeNonSkippingGroups": false
+    "OptimizeNonSkippingGroups": false,
+    "PausableComposition": false
   }
 }

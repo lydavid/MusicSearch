@@ -1,15 +1,16 @@
 restartable skippable fun InitializeImageLoader()
 restartable skippable fun LargeImage(
   stable url: String
-  stable id: String
+  stable placeholderKey: String
   stable modifier: Modifier? = @static Companion
   stable isCompact: Boolean = @static true
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ThumbnailImage(
   stable url: String
-  stable mbid: String
+  stable placeholderKey: String
   stable placeholderIcon: ImageVector?
   stable modifier: Modifier? = @static Companion
+  stable size: Dp = @static 56.dp
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceholderIcon(
   stable modifier: Modifier? = @static Companion
