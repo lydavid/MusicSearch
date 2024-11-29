@@ -3,7 +3,7 @@ ly.david.musicsearch.android.feature.spotify.history.SearchSpotifyBottomSheetCon
 ly.david.musicsearch.android.feature.spotify.history.PreviewSearchSpotifyBottomSheetContent,PreviewSearchSpotifyBottomSheetContent,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryCard,SpotifyHistoryCard,1,1,1,0,0,0,0,0,1,4,
 ly.david.musicsearch.android.feature.spotify.history.PreviewSpotifyHistoryCard,PreviewSpotifyHistoryCard,1,1,1,0,0,0,0,0,1,1,
-ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryPresenter.present,present,1,0,0,0,0,0,0,0,1,3,
+ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryPresenter.present,present,1,0,0,0,0,0,0,0,1,4,
 ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryUi,SpotifyHistoryUi,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryUi,SpotifyHistoryUi,1,1,1,0,0,0,1,0,2,7,
 ly.david.musicsearch.android.feature.spotify.history.SpotifyHistoryContent,SpotifyHistoryContent,1,1,1,0,0,0,1,0,3,5,

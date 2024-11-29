@@ -1,10 +1,10 @@
 stable class HistoryPresenter {
   stable val navigator: Navigator
   unstable val appPreferences: AppPreferences
-  runtime val getPagedHistory: GetPagedHistory
-  runtime val markLookupHistoryForDeletion: MarkLookupHistoryForDeletion
-  runtime val unMarkLookupHistoryForDeletion: UnMarkLookupHistoryForDeletion
-  runtime val deleteLookupHistory: DeleteLookupHistory
+  unstable val getPagedHistory: GetPagedHistory
+  unstable val markLookupHistoryForDeletion: MarkLookupHistoryForDeletion
+  unstable val unMarkLookupHistoryForDeletion: UnMarkLookupHistoryForDeletion
+  unstable val deleteLookupHistory: DeleteLookupHistory
   <runtime stability> = Stable
 }
 stable class HistoryUiState {

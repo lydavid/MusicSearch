@@ -1,14 +1,42 @@
-stable class CoverArtsPresenter {
-  stable val screen: CoverArtsScreen
+stable class CoverArtsGridPresenter {
+  stable val screen: CoverArtsGridScreen
+  stable val navigator: Navigator
+  unstable val releaseImageRepository: ReleaseImageRepository
+  runtime val getMusicBrainzCoverArtUrl: GetMusicBrainzCoverArtUrl
+  <runtime stability> = Stable
+}
+stable class CoverArtsGridUiState {
+  stable val id: String
+  stable val title: String
+  stable val url: String
+  unstable val imageUrls: List<ImageUrls>
+  stable val eventSink: Function1<CoverArtsGridUiEvent, Unit>
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class SelectImage {
+  stable val index: Int
+  <runtime stability> = Stable
+}
+stable class CoverArtsPagerPresenter {
+  stable val screen: CoverArtsPagerScreen
   stable val navigator: Navigator
   unstable val releaseImageRepository: ReleaseImageRepository
   <runtime stability> = Stable
 }
-stable class CoverArtsUiState {
+stable class CoverArtsPagerUiState {
   stable val id: String
+  stable val title: String
+  stable val subtitle: String
   unstable val imageUrls: List<ImageUrls>
-  stable val eventSink: Function1<CoverArtsUiEvent, Unit>
+  stable val selectedImageIndex: Int
+  stable val eventSink: Function1<CoverArtsPagerUiEvent, Unit>
 }
 stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ChangeImage {
+  stable val index: Int
   <runtime stability> = Stable
 }

@@ -12,11 +12,11 @@
   "unknownStableArguments": 0,
   "totalArguments": 0,
   "markedStableClasses": 0,
-  "inferredStableClasses": 39,
-  "inferredUnstableClasses": 24,
-  "inferredUncertainClasses": 28,
-  "effectivelyStableClasses": 39,
-  "totalClasses": 91,
+  "inferredStableClasses": 40,
+  "inferredUnstableClasses": 41,
+  "inferredUncertainClasses": 15,
+  "effectivelyStableClasses": 40,
+  "totalClasses": 96,
   "memoizedLambdas": 0,
   "singletonLambdas": 0,
   "singletonComposableLambdas": 0,
@@ -25,6 +25,7 @@
   "featureFlags": {
     "StrongSkipping": true,
     "IntrinsicRemember": true,
-    "OptimizeNonSkippingGroups": false
+    "OptimizeNonSkippingGroups": false,
+    "PausableComposition": false
   }
 }

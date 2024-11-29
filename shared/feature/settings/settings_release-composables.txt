@@ -17,7 +17,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
   stable modifier: Modifier? = @static Companion
   stable isAndroid12: Boolean = @static false
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceGroup(1381721936)
+  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceGroup(1381722224)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -32,7 +32,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
   stable modifier: Modifier? = @static Companion
   stable username: String? = @static ""
   stable showLogin: Boolean = @static true
-  stable onLoginClick: Function0<Unit>? = @static $composer.startReplaceGroup(1381792272)
+  stable onLoginClick: Function0<Unit>? = @static $composer.startReplaceGroup(1381792560)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -42,7 +42,7 @@ val tmp0_group = $composer.cache(false) {
 
 $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
-  stable onLogoutClick: Function0<Unit>? = @static $composer.startReplaceGroup(1381793424)
+  stable onLogoutClick: Function0<Unit>? = @static $composer.startReplaceGroup(1381793712)
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -52,7 +52,7 @@ val tmp1_group = $composer.cache(false) {
 
 $composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
-  stable onDestinationClick: Function1<Screen, Unit>? = @static $composer.startReplaceGroup(1381794928)
+  stable onDestinationClick: Function1<Screen, Unit>? = @static $composer.startReplaceGroup(1381795216)
 val tmp2_group = $composer.cache(false) {
   {     it  :   Screen   ->
 
@@ -65,7 +65,7 @@ tmp2_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
   stable showAndroidSettings: Boolean = @static true
   stable isAndroid12: Boolean = @static false
   stable theme: Theme? = @static Theme.SYSTEM
-  stable onThemeChange: Function1<Theme, Unit>? = @static $composer.startReplaceGroup(1381801136)
+  stable onThemeChange: Function1<Theme, Unit>? = @static $composer.startReplaceGroup(1381801424)
 val tmp3_group = $composer.cache(false) {
   {     it  :   Theme   ->
 
@@ -76,7 +76,7 @@ val tmp3_group = $composer.cache(false) {
 $composer.endReplaceGroup()
 tmp3_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
   stable useMaterialYou: Boolean = @static true
-  stable onUseMaterialYouChange: Function1<Boolean, Unit>? = @static $composer.startReplaceGroup(1381803952)
+  stable onUseMaterialYouChange: Function1<Boolean, Unit>? = @static $composer.startReplaceGroup(1381804240)
 val tmp4_group = $composer.cache(false) {
   {     it  :   Boolean   ->
 
@@ -87,7 +87,7 @@ val tmp4_group = $composer.cache(false) {
 $composer.endReplaceGroup()
 tmp4_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
   stable showMoreInfoInReleaseListItem: Boolean = @static true
-  stable onShowMoreInfoInReleaseListItemChange: Function1<Boolean, Unit>? = @static $composer.startReplaceGroup(1381807728)
+  stable onShowMoreInfoInReleaseListItemChange: Function1<Boolean, Unit>? = @static $composer.startReplaceGroup(1381808016)
 val tmp5_group = $composer.cache(false) {
   {     it  :   Boolean   ->
 
@@ -98,7 +98,7 @@ val tmp5_group = $composer.cache(false) {
 $composer.endReplaceGroup()
 tmp5_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
   stable sortReleaseGroupListItems: Boolean = @static false
-  stable onSortReleaseGroupListItemsChange: Function1<Boolean, Unit>? = @static $composer.startReplaceGroup(1381811280)
+  stable onSortReleaseGroupListItemsChange: Function1<Boolean, Unit>? = @static $composer.startReplaceGroup(1381811568)
 val tmp6_group = $composer.cache(false) {
   {     it  :   Boolean   ->
 
@@ -109,7 +109,7 @@ val tmp6_group = $composer.cache(false) {
 $composer.endReplaceGroup()
 tmp6_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceGroup(1381814768)
+  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceGroup(1381815056)
 val tmp7_group = $composer.cache(false) {
   {
 
