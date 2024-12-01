@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.release
 
+import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AreaDao
@@ -37,7 +38,10 @@ import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
@@ -850,6 +854,278 @@ class ReleaseRepositoryImplTest : KoinTest {
                 hasNullLength = false,
             ),
             allDataArtistDetailsModel,
+        )
+    }
+
+    private fun createRepositoryWithMedia(
+        media: List<MediumMusicBrainzModel>?,
+    ): ReleaseRepositoryImpl {
+        return createRepositoryWithFakeNetworkData(
+            musicBrainzModel = ReleaseMusicBrainzModel(
+                id = "f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0",
+                name = "真・女神転生30th Anniversary Special Sound Compilation",
+                date = "2023-07-26",
+                status = "Official",
+                statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+                barcode = "4573471821543",
+                countryCode = "JP",
+                packaging = "Box",
+                packagingId = "c1668fc7-8944-4a00-bc3e-46e8d861d211",
+                asin = null,
+                quality = "normal",
+                coverArtArchive = CoverArtArchiveMusicBrainzModel(
+                    count = 26,
+                ),
+                textRepresentation = TextRepresentationMusicBrainzModel(
+                    script = "Jpan",
+                    language = "jpn",
+                ),
+                releaseEvents = listOf(
+                    ReleaseEventMusicBrainzModel(
+                        area = AreaMusicBrainzModel(
+                            id = "2db42837-c832-3c27-b4a3-08198f75693c",
+                            name = "Japan",
+                            sortName = "Japan",
+                            countryCodes = listOf("JP"),
+                        ),
+                        date = "2023-07-26",
+                    ),
+                ),
+                media = media,
+                artistCredits = listOf(
+                    ArtistCreditMusicBrainzModel(
+                        name = "アトラスサウンドチーム",
+                        artist = ArtistMusicBrainzModel(
+                            id = "37e85ee8-366a-4f17-a011-de94b6632408",
+                            name = "アトラスサウンドチーム",
+                            sortName = "ATLUS Sound Team",
+                            type = "Group",
+                            typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+                            disambiguation = "",
+                        ),
+                        joinPhrase = "",
+                    ),
+                ),
+                releaseGroup = ReleaseGroupMusicBrainzModel(
+                    id = "a5a83577-ddca-4428-bf6b-b852296bc5f3",
+                    primaryType = "Album",
+                    secondaryTypes = listOf(
+                        "Compilation",
+                        "Soundtrack",
+                    ),
+                    name = "真・女神転生30th Anniversary Special Sound Compilation",
+                    firstReleaseDate = "2011-03-16",
+                ),
+            ),
+        )
+    }
+
+    @Test
+    fun `refresh release tracks after changing artist credits`() = runTest {
+        val releaseId = "f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0"
+        val releaseRepositoryBeforeEdit = createRepositoryWithMedia(
+            listOf(
+                MediumMusicBrainzModel(
+                    position = 1,
+                    formatId = "9712d52a-4509-3d4b-a1a2-67c88c643e31",
+                    format = "CD",
+                    trackCount = 1,
+                    title = "SFC版「真・女神転生」",
+                    tracks = listOf(
+                        TrackMusicBrainzModel(
+                            id = "c9700f84-638f-3dec-9170-a15eb4f0cc96",
+                            position = 1,
+                            number = "1",
+                            title = "Demo",
+                            length = 18733,
+                            artistCredits = listOf(
+                                ArtistCreditMusicBrainzModel(
+                                    name = "アトラスサウンドチーム",
+                                    artist = ArtistMusicBrainzModel(
+                                        id = "37e85ee8-366a-4f17-a011-de94b6632408",
+                                        name = "アトラスサウンドチーム",
+                                        sortName = "ATLUS Sound Team",
+                                        type = "Group",
+                                        typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+                                        disambiguation = "",
+                                    ),
+                                    joinPhrase = "",
+                                ),
+                            ),
+                            recording = RecordingMusicBrainzModel(
+                                id = "994b2961-3527-43f7-830d-7c817d286577",
+                                name = "Demo",
+                                length = 18733,
+                                firstReleaseDate = "2023-07-26",
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        )
+        val artistDetailsModelBeforeEdit = releaseRepositoryBeforeEdit.lookupRelease(
+            releaseId = releaseId,
+            forceRefresh = false,
+        )
+        assertEquals(
+            ReleaseDetailsModel(
+                id = releaseId,
+                name = "真・女神転生30th Anniversary Special Sound Compilation",
+                disambiguation = "",
+                date = "2023-07-26",
+                barcode = "4573471821543",
+                status = "Official",
+                statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+                countryCode = "JP",
+                packaging = "Box",
+                packagingId = "c1668fc7-8944-4a00-bc3e-46e8d861d211",
+                asin = null,
+                quality = "normal",
+                coverArtArchive = CoverArtArchiveUiModel(count = 26),
+                textRepresentation = TextRepresentationUiModel(
+                    script = "Jpan",
+                    language = "jpn",
+                ),
+                imageUrl = null,
+                formattedFormats = "CD",
+                formattedTracks = "1",
+                artistCredits = listOf(
+                    ArtistCreditUiModel(
+                        artistId = "37e85ee8-366a-4f17-a011-de94b6632408",
+                        name = "アトラスサウンドチーム",
+                        joinPhrase = "",
+                    ),
+                ),
+                releaseGroup = ReleaseGroupForRelease(
+                    id = "a5a83577-ddca-4428-bf6b-b852296bc5f3",
+                    name = "真・女神転生30th Anniversary Special Sound Compilation",
+                    firstReleaseDate = "2011-03-16",
+                    disambiguation = "",
+                    primaryType = "Album",
+                    secondaryTypes = listOf(
+                        "Compilation",
+                        "Soundtrack",
+                    ),
+                ),
+                areas = listOf(
+                    AreaListItemModel(
+                        id = "2db42837-c832-3c27-b4a3-08198f75693c",
+                        name = "Japan",
+                        sortName = "",
+                        disambiguation = null,
+                        type = null,
+                        countryCodes = listOf("JP"),
+                        date = "2023-07-26",
+                        visited = false,
+                    ),
+                ),
+                labels = emptyList(),
+                urls = emptyList(),
+                releaseLength = 18733,
+                hasNullLength = false,
+            ),
+            artistDetailsModelBeforeEdit,
+        )
+        val tracksFlowBeforeEdit = releaseRepositoryBeforeEdit.observeTracksByRelease(
+            releaseId,
+            "",
+        )
+        val listItemModelsBeforeEdit: List<ListItemModel> = tracksFlowBeforeEdit.asSnapshot()
+        assertEquals(
+            listOf(
+                ListSeparator(
+                    id = "1",
+                    text = "CD 1 (SFC版「真・女神転生」)",
+                ),
+                TrackListItemModel(
+                    id = "c9700f84-638f-3dec-9170-a15eb4f0cc96",
+                    position = 1,
+                    number = "1",
+                    title = "Demo",
+                    length = 18733,
+                    mediumId = 1,
+                    recordingId = "994b2961-3527-43f7-830d-7c817d286577",
+                    formattedArtistCredits = "アトラスサウンドチーム",
+                    visited = false,
+                    mediumPosition = 1,
+                    mediumName = "SFC版「真・女神転生」",
+                    trackCount = 1,
+                    format = "CD",
+                ),
+            ),
+            listItemModelsBeforeEdit,
+        )
+
+        val releaseRepositoryAfterEdit = createRepositoryWithMedia(
+            media = listOf(
+                MediumMusicBrainzModel(
+                    position = 1,
+                    formatId = "9712d52a-4509-3d4b-a1a2-67c88c643e31",
+                    format = "CD",
+                    trackCount = 1,
+                    title = "SFC版「真・女神転生」",
+                    tracks = listOf(
+                        TrackMusicBrainzModel(
+                            id = "c9700f84-638f-3dec-9170-a15eb4f0cc96",
+                            position = 1,
+                            number = "1",
+                            title = "Demo",
+                            length = 18733,
+                            artistCredits = listOf(
+                                ArtistCreditMusicBrainzModel(
+                                    name = "増子司",
+                                    artist = ArtistMusicBrainzModel(
+                                        id = "ff3c73e4-234e-41ba-8000-6948a2d0fd6d",
+                                        name = "増子司",
+                                        sortName = "Masuko, Tsukasa",
+                                        type = "Person",
+                                        typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+                                        disambiguation = "video game music composer",
+                                    ),
+                                    joinPhrase = "",
+                                ),
+                            ),
+                            recording = RecordingMusicBrainzModel(
+                                id = "994b2961-3527-43f7-830d-7c817d286577",
+                                name = "Demo",
+                                length = 18733,
+                                firstReleaseDate = "2023-07-26",
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        )
+        val tracksFlowAfterEdit = releaseRepositoryAfterEdit.observeTracksByRelease(
+            releaseId,
+            "",
+        )
+        val listItemModelsAfterEdit: List<ListItemModel> = tracksFlowAfterEdit.asSnapshot {
+            refresh()
+        }
+        assertEquals(
+            listOf(
+                ListSeparator(
+                    id = "2",
+                    text = "CD 1 (SFC版「真・女神転生」)",
+                ),
+                TrackListItemModel(
+                    id = "c9700f84-638f-3dec-9170-a15eb4f0cc96",
+                    position = 1,
+                    number = "1",
+                    title = "Demo",
+                    length = 18733,
+                    mediumId = 2,
+                    recordingId = "994b2961-3527-43f7-830d-7c817d286577",
+                    formattedArtistCredits = "増子司",
+                    visited = false,
+                    mediumPosition = 1,
+                    mediumName = "SFC版「真・女神転生」",
+                    trackCount = 1,
+                    format = "CD",
+                ),
+            ),
+            listItemModelsAfterEdit,
         )
     }
 }

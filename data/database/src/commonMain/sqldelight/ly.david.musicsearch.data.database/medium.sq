@@ -37,8 +37,20 @@ VALUES (
 lastInsertRowId:
 SELECT last_insert_rowid();
 
-deleteMediaByRelease:
-DELETE FROM medium WHERE release_id = :releaseId;
+deleteMediaByRelease {
+DELETE FROM artist_credit_entity
+WHERE entity_id IN
+  (
+    SELECT t.id
+    FROM track t
+    INNER JOIN medium m ON t.medium_id = m.id
+    INNER JOIN `release` r ON m.release_id = r.id
+    WHERE r.id = :releaseId
+  );
+
+DELETE FROM medium
+WHERE release_id = :releaseId;
+}
 
 getMediumForTrack:
 SELECT m.*
