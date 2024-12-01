@@ -185,6 +185,10 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/dd216
 
 ## Release
 
+```shell
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0" -a android.intent.action.VIEW # release with medium with 338 tracks
+```
+
 ```sh
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5" -a android.intent.action.VIEW # release with multiple catalog number; release with multiple cover art
 ```

@@ -197,8 +197,8 @@ class ReleaseRepositoryImpl(
 
     private fun deleteMediaAndTracksByRelease(releaseId: String) {
         releaseDao.withTransaction {
-            releaseDao.delete(releaseId)
             mediumDao.deleteMediaByRelease(releaseId)
+            releaseDao.delete(releaseId)
         }
     }
     // endregion
