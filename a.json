@@ -1,0 +1,226 @@
+{
+  "asin": null,
+  "text-representation": {
+    "script": "Jpan",
+    "language": "jpn"
+  },
+  "artist-credit": [{
+    "name": "アトラスサウンドチーム",
+    "joinphrase": "",
+    "artist": {
+      "type": "Group",
+      "disambiguation": "",
+      "sort-name": "ATLUS Sound Team",
+      "name": "アトラスサウンドチーム",
+      "id": "37e85ee8-366a-4f17-a011-de94b6632408",
+      "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b"
+    }
+  }],
+  "title": "真・女神転生30th Anniversary Special Sound Compilation",
+  "release-events": [{
+    "date": "2023-07-26",
+    "area": {
+      "disambiguation": "",
+      "type": null,
+      "type-id": null,
+      "id": "2db42837-c832-3c27-b4a3-08198f75693c",
+      "name": "Japan",
+      "iso-3166-1-codes": ["JP"],
+      "sort-name": "Japan"
+    }
+  }],
+  "packaging-id": "c1668fc7-8944-4a00-bc3e-46e8d861d211",
+  "media": [
+    {
+      "track-count": 1,
+      "format-id": "9712d52a-4509-3d4b-a1a2-67c88c643e31",
+      "position": 1,
+      "title": "SFC版「真・女神転生」",
+      "tracks": [
+        {
+          "recording": {
+            "title": "Demo",
+            "id": "994b2961-3527-43f7-830d-7c817d286577",
+            "video": false,
+            "length": 18733,
+            "first-release-date": "2023-07-26",
+            "disambiguation": "",
+            "artist-credit": [
+              {
+                "joinphrase": "",
+                "name": "アトラスサウンドチーム",
+                "artist": {
+                  "disambiguation": "",
+                  "type": "Group",
+                  "id": "37e85ee8-366a-4f17-a011-de94b6632408",
+                  "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+                  "name": "アトラスサウンドチーム",
+                  "sort-name": "ATLUS Sound Team"
+                }
+              }
+            ]
+          },
+          "id": "d66d44df-43de-40e4-a43b-cb780cb42cd7",
+          "title": "Demo",
+          "length": 18733,
+          "position": 1,
+          "artist-credit": [
+            {
+              "joinphrase": "",
+              "name": "アトラスサウンドチーム",
+              "artist": {
+                "disambiguation": "",
+                "type": "Group",
+                "id": "37e85ee8-366a-4f17-a011-de94b6632408",
+                "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+                "name": "アトラスサウンドチーム",
+                "sort-name": "ATLUS Sound Team"
+              }
+            }
+          ],
+          "number": "1"
+        }
+      ]
+    }
+    ],
+  "date": "2023-07-26",
+  "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+  "cover-art-archive": {
+    "darkened": false,
+    "back": true,
+    "front": true,
+    "artwork": true,
+    "count": 26
+  },
+  "label-info": [{
+    "catalog-number": "LNCM-1470",
+    "label": {
+      "name": "Mastard Records",
+      "type-id": "b6285b2a-3514-3d43-80df-fcf528824ded",
+      "id": "51b59ef4-ee7e-42e9-8475-4525363e9a2c",
+      "sort-name": "Mastard Records",
+      "disambiguation": "",
+      "type": "Imprint",
+      "label-code": null
+    }
+  }, {
+    "label": {
+      "disambiguation": "",
+      "label-code": null,
+      "type": "Imprint",
+      "type-id": "b6285b2a-3514-3d43-80df-fcf528824ded",
+      "id": "51b59ef4-ee7e-42e9-8475-4525363e9a2c",
+      "name": "Mastard Records",
+      "sort-name": "Mastard Records"
+    },
+    "catalog-number": "LNCM-1471"
+  }, {
+    "label": {
+      "type": "Imprint",
+      "label-code": null,
+      "disambiguation": "",
+      "sort-name": "Mastard Records",
+      "id": "51b59ef4-ee7e-42e9-8475-4525363e9a2c",
+      "type-id": "b6285b2a-3514-3d43-80df-fcf528824ded",
+      "name": "Mastard Records"
+    },
+    "catalog-number": "LNCM-1472"
+  }, {
+    "catalog-number": "LNCM-1473",
+    "label": {
+      "label-code": null,
+      "type": "Imprint",
+      "disambiguation": "",
+      "sort-name": "Mastard Records",
+      "name": "Mastard Records",
+      "id": "51b59ef4-ee7e-42e9-8475-4525363e9a2c",
+      "type-id": "b6285b2a-3514-3d43-80df-fcf528824ded"
+    }
+  }, {
+    "catalog-number": "LNCM-1474",
+    "label": {
+      "sort-name": "Mastard Records",
+      "id": "51b59ef4-ee7e-42e9-8475-4525363e9a2c",
+      "type-id": "b6285b2a-3514-3d43-80df-fcf528824ded",
+      "name": "Mastard Records",
+      "label-code": null,
+      "type": "Imprint",
+      "disambiguation": ""
+    }
+  }, {
+    "label": {
+      "label-code": null,
+      "type": "Imprint",
+      "disambiguation": "",
+      "sort-name": "Mastard Records",
+      "name": "Mastard Records",
+      "type-id": "b6285b2a-3514-3d43-80df-fcf528824ded",
+      "id": "51b59ef4-ee7e-42e9-8475-4525363e9a2c"
+    },
+    "catalog-number": "LNCM-1475"
+  }],
+  "status": "Official",
+  "release-group": {
+    "first-release-date": "2023-07-26",
+    "disambiguation": "",
+    "artist-credit": [{
+      "artist": {
+        "id": "37e85ee8-366a-4f17-a011-de94b6632408",
+        "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+        "name": "アトラスサウンドチーム",
+        "sort-name": "ATLUS Sound Team",
+        "disambiguation": "",
+        "type": "Group"
+      },
+      "joinphrase": "",
+      "name": "アトラスサウンドチーム"
+    }],
+    "secondary-types": ["Compilation", "Soundtrack"],
+    "primary-type": "Album",
+    "secondary-type-ids": ["dd2a21e1-0c00-3729-a7a0-de60b84eb5d1", "22a628ad-c082-3c4f-b1b6-d41665107b88"],
+    "id": "a5a83577-ddca-4428-bf6b-b852296bc5f3",
+    "primary-type-id": "f529b476-6e62-324f-b0aa-1f3e33d313fc",
+    "title": "真・女神転生30th Anniversary Special Sound Compilation"
+  },
+  "disambiguation": "",
+  "barcode": "4573471821543",
+  "relations": [{
+    "direction": "forward",
+    "target-credit": "",
+    "attribute-values": {},
+    "attributes": [],
+    "attribute-ids": {},
+    "begin": null,
+    "target-type": "url",
+    "type": "discography entry",
+    "end": null,
+    "ended": false,
+    "url": {
+      "resource": "https://mastardrecords.com/artist/megaten/discography/post-160",
+      "id": "4bdbf59d-ab50-4b3f-889f-59ad9d0a6230"
+    },
+    "type-id": "823656dd-0309-4247-b282-b92d287d59c5",
+    "source-credit": ""
+  }, {
+    "type-id": "6af0134a-df6a-425a-96e2-895f9cd342ba",
+    "url": {
+      "id": "669def3f-962a-4054-8ca7-cce98b80b9b5",
+      "resource": "https://vgmdb.net/album/129463"
+    },
+    "source-credit": "",
+    "ended": false,
+    "type": "vgmdb",
+    "end": null,
+    "attributes": [],
+    "target-type": "url",
+    "begin": null,
+    "attribute-ids": {},
+    "direction": "forward",
+    "target-credit": "",
+    "attribute-values": {}
+  }],
+  "quality": "normal",
+  "country": "JP",
+  "packaging": "Box",
+  "id": "f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0"
+}
