@@ -79,6 +79,7 @@ internal class ArtistPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         var artist: ArtistDetailsModel? by rememberRetained { mutableStateOf(null) }
+        var collapsedSections: Set<ArtistDetailsSection> by rememberSaveable { mutableStateOf(setOf()) }
         val tabs: List<ArtistTab> by rememberSaveable {
             mutableStateOf(ArtistTab.entries)
         }
@@ -129,7 +130,10 @@ internal class ArtistPresenter(
             forceRefreshDetails = false
         }
 
-        LaunchedEffect(forceRefreshDetails, artist) {
+        LaunchedEffect(
+            forceRefreshDetails,
+            artist,
+        ) {
             artist = artist?.copy(
                 imageUrl = artistImageRepository.getArtistImageUrl(
                     artistDetailsModel = artist ?: return@LaunchedEffect,
@@ -138,7 +142,10 @@ internal class ArtistPresenter(
             )
         }
 
-        LaunchedEffect(forceRefreshDetails, artist) {
+        LaunchedEffect(
+            forceRefreshDetails,
+            artist,
+        ) {
             artist = artist?.copy(
                 wikipediaExtract = wikimediaRepository.getWikipediaExtract(
                     mbid = artist?.id ?: return@LaunchedEffect,
@@ -292,6 +299,15 @@ internal class ArtistPresenter(
                         ),
                     )
                 }
+
+                is ArtistUiEvent.ToggleSection -> {
+                    val section = event.section
+                    collapsedSections = if (collapsedSections.contains(section)) {
+                        collapsedSections.filter { it != section }.toSet()
+                    } else {
+                        collapsedSections + section
+                    }
+                }
             }
         }
 
@@ -300,7 +316,11 @@ internal class ArtistPresenter(
             isLoading = isLoading,
             isError = isError,
             artist = artist,
-            url = getMusicBrainzUrl(screen.entity, screen.id),
+            collapsedSections = collapsedSections,
+            url = getMusicBrainzUrl(
+                screen.entity,
+                screen.id,
+            ),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
@@ -323,6 +343,7 @@ internal data class ArtistUiState(
     val isLoading: Boolean,
     val isError: Boolean,
     val artist: ArtistDetailsModel?,
+    val collapsedSections: Set<ArtistDetailsSection>,
     val url: String = "",
     val tabs: List<ArtistTab>,
     val selectedTab: ArtistTab,
@@ -349,4 +370,6 @@ internal sealed interface ArtistUiEvent : CircuitUiEvent {
     ) : ArtistUiEvent
 
     data object NavigateToCollaboratorsGraph : ArtistUiEvent
+
+    data class ToggleSection(val section: ArtistDetailsSection) : ArtistUiEvent
 }

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
+import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
@@ -147,6 +148,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         disambiguation = linkedEntityDisambiguation,
         attributes = getFormattedAttributesForDisplay(),
         additionalInfo = additionalInfo,
+        isForwardDirection = direction == Direction.FORWARD,
     )
 }
 

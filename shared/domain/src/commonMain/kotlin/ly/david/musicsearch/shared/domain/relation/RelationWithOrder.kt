@@ -11,5 +11,6 @@ data class RelationWithOrder(
     override val attributes: String? = null,
     override val additionalInfo: String? = null,
     override val linkedEntity: MusicBrainzEntity,
+    override val isForwardDirection: Boolean? = null,
     val order: Int,
 ) : Relation

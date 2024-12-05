@@ -13,6 +13,16 @@ interface RelationRepository {
         relationWithOrderList: List<RelationWithOrder>?,
     )
 
+    fun getRelationshipsByType(
+        entityId: String,
+        entity: MusicBrainzEntity = MusicBrainzEntity.URL,
+    ): List<RelationListItemModel>
+
+    fun deleteRelationshipsByType(
+        entityId: String,
+        entity: MusicBrainzEntity = MusicBrainzEntity.URL,
+    )
+
     suspend fun insertAllRelationsExcludingUrls(
         entity: MusicBrainzEntity,
         entityId: String,
@@ -23,14 +33,6 @@ interface RelationRepository {
         entityId: String,
         query: String,
     ): Flow<PagingData<RelationListItemModel>>
-
-    fun getEntityUrlRelationships(
-        entityId: String,
-    ): List<RelationListItemModel>
-
-    fun deleteUrlRelationshipsByEntity(
-        entityId: String,
-    )
 
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>>
 }

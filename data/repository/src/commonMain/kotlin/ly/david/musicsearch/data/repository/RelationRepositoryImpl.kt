@@ -194,14 +194,22 @@ class RelationRepositoryImpl(
         relationDao.deleteRelationshipsExcludingUrlsByEntity(entityId)
     }
 
-    override fun getEntityUrlRelationships(
+    override fun getRelationshipsByType(
         entityId: String,
-    ): List<RelationListItemModel> = relationDao.getEntityUrlRelationships(
+        entity: MusicBrainzEntity,
+    ): List<RelationListItemModel> = relationDao.getRelationshipsByType(
         entityId = entityId,
+        entity = entity,
     )
 
-    override fun deleteUrlRelationshipsByEntity(entityId: String) {
-        relationDao.deleteUrlRelationshipsByEntity(entityId)
+    override fun deleteRelationshipsByType(
+        entityId: String,
+        entity: MusicBrainzEntity,
+    ) {
+        relationDao.deleteRelationshipsByType(
+            entityId = entityId,
+            entity = entity,
+        )
     }
 
     override fun getCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>> =
