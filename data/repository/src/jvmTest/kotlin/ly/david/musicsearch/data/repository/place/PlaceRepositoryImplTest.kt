@@ -11,7 +11,6 @@ import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
@@ -28,6 +27,7 @@ import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -284,6 +284,7 @@ class PlaceRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "95cb03e2-8126-417d-82c1-84ef0274b6f8_14",
@@ -295,6 +296,7 @@ class PlaceRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "4674bf4a-5ae8-4154-a223-4c26338622bd_15",
@@ -306,6 +308,7 @@ class PlaceRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "4adeee43-1b70-4144-8dfb-96713e868b33_10",
@@ -317,6 +320,7 @@ class PlaceRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "ab71b5f3-9c59-4595-abdc-6b047db1eb20_11",
@@ -328,6 +332,7 @@ class PlaceRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "860a6bef-cee3-406e-a19e-54938a456926_12",
@@ -339,6 +344,7 @@ class PlaceRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "66fa274b-74d5-47c4-85aa-d168fff294ea_9",
@@ -350,6 +356,7 @@ class PlaceRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "d1d588f8-abb9-4f12-b421-b2e9a2acf800_13",
@@ -361,6 +368,7 @@ class PlaceRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                 ),
             ),

@@ -209,6 +209,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "c6d64f5a-dcde-425c-b9d6-a84a74a805c3_5",
@@ -220,6 +221,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "03620ecf-4ea0-4833-9cd7-2e9b73dd23bd_3",
@@ -231,6 +233,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                 ),
             ),
