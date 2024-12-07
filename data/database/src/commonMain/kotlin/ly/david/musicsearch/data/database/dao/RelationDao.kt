@@ -7,6 +7,7 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
@@ -31,6 +32,9 @@ class RelationDao(
                 attributes = attributes,
                 additional_info = additionalInfo,
                 is_forward_direction = isForwardDirection,
+                begin = lifeSpan.begin,
+                end = lifeSpan.end,
+                ended = lifeSpan.ended,
             )
         }
     }
@@ -104,6 +108,9 @@ class RelationDao(
         additionalInfo: String?,
         visited: Boolean?,
         isForwardDirection: Boolean?,
+        begin: String?,
+        end: String?,
+        ended: Boolean?,
     ) = RelationListItemModel(
         id = "${linkedEntityId}_$order",
         linkedEntityId = linkedEntityId,
@@ -115,6 +122,11 @@ class RelationDao(
         additionalInfo = additionalInfo,
         visited = visited == true || linkedEntity == MusicBrainzEntity.URL,
         isForwardDirection = isForwardDirection,
+        lifeSpan = LifeSpanUiModel(
+            begin = begin,
+            end = end,
+            ended = ended,
+        ),
     )
 
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<CountOfEachRelationshipType>> =

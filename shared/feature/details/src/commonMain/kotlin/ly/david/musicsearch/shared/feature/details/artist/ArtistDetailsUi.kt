@@ -194,7 +194,7 @@ private fun BandsAndMembersSection(
     Column(modifier = modifier) {
         BandsOrMembersSection(
             section = ArtistDetailsSection.PartOfGroups,
-            artists = artists.filter { it.isForwardDirection == true && it.additionalInfo?.contains("to") == false },
+            artists = artists.filter { it.isForwardDirection == true && it.lifeSpan.ended == false },
             collapsedSections = collapsedSections,
             onCollapseSection = onCollapseSection,
             filterText = filterText,
@@ -202,7 +202,7 @@ private fun BandsAndMembersSection(
         )
         BandsOrMembersSection(
             section = ArtistDetailsSection.PreviouslyPartOfGroups,
-            artists = artists.filter { it.isForwardDirection == true && it.additionalInfo?.contains("to") == true },
+            artists = artists.filter { it.isForwardDirection == true && it.lifeSpan.ended == true },
             collapsedSections = collapsedSections,
             onCollapseSection = onCollapseSection,
             filterText = filterText,
@@ -211,7 +211,7 @@ private fun BandsAndMembersSection(
 
         BandsOrMembersSection(
             section = ArtistDetailsSection.MembersOfGroup,
-            artists = artists.filter { it.isForwardDirection == false && it.additionalInfo?.contains("to") == false },
+            artists = artists.filter { it.isForwardDirection == false && it.lifeSpan.ended == false },
             collapsedSections = collapsedSections,
             onCollapseSection = onCollapseSection,
             filterText = filterText,
@@ -219,7 +219,7 @@ private fun BandsAndMembersSection(
         )
         BandsOrMembersSection(
             section = ArtistDetailsSection.PreviousMembersOfGroup,
-            artists = artists.filter { it.isForwardDirection == false && it.additionalInfo?.contains("to") == true },
+            artists = artists.filter { it.isForwardDirection == false && it.lifeSpan.ended == true },
             collapsedSections = collapsedSections,
             onCollapseSection = onCollapseSection,
             filterText = filterText,

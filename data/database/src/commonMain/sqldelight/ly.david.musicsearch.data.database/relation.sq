@@ -13,6 +13,9 @@ CREATE TABLE IF NOT EXISTS relation (
   `attributes` TEXT,
   `additional_info` TEXT,
   `is_forward_direction` INTEGER AS Boolean,
+  `begin` TEXT,
+  `end` TEXT,
+  `ended` INTEGER AS Boolean,
 
   PRIMARY KEY (entity_id, linked_entity_id, `order`)
 );
@@ -28,7 +31,10 @@ INSERT OR IGNORE INTO relation (
   `disambiguation`,
   `attributes`,
   `additional_info`,
-  `is_forward_direction`
+  `is_forward_direction`,
+  `begin`,
+  `end`,
+  `ended`
 )
 VALUES (
   :`entity_id`,
@@ -40,7 +46,10 @@ VALUES (
   :`disambiguation`,
   :`attributes`,
   :`additional_info`,
-  :`is_forward_direction`
+  :`is_forward_direction`,
+  :`begin`,
+  :`end`,
+  :`ended`
 );
 
 insertEntity:
@@ -71,7 +80,10 @@ SELECT
   `attributes`,
   `additional_info`,
   visited.entity_id IS NOT NULL AS visited,
-  `is_forward_direction`
+  `is_forward_direction`,
+  `begin`,
+  `end`,
+  `ended`
 FROM relation
 LEFT JOIN visited ON visited.entity_id = linked_entity_id
 WHERE relation.entity_id = :entityId
@@ -101,7 +113,10 @@ SELECT
   `attributes`,
   `additional_info`,
   visited.entity_id IS NOT NULL AS visited,
-  `is_forward_direction`
+  `is_forward_direction`,
+  `begin`,
+  `end`,
+  `ended`
 FROM relation
 LEFT JOIN visited ON visited.entity_id = linked_entity_id
 WHERE relation.entity_id = :entityId

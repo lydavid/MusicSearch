@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.domain.relation
 
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 data class RelationWithOrder(
@@ -13,4 +14,5 @@ data class RelationWithOrder(
     override val linkedEntity: MusicBrainzEntity,
     override val isForwardDirection: Boolean? = null,
     val order: Int,
+    val lifeSpan: LifeSpanUiModel,
 ) : Relation

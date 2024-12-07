@@ -5,6 +5,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
 import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.emptyToNull
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
@@ -149,6 +150,11 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         attributes = getFormattedAttributesForDisplay(),
         additionalInfo = additionalInfo,
         isForwardDirection = direction == Direction.FORWARD,
+        lifeSpan = LifeSpanUiModel(
+            begin = begin,
+            end = end,
+            ended = ended,
+        )
     )
 }
 
