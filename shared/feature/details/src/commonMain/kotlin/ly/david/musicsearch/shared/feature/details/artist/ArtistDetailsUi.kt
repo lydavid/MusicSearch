@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
+import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -240,6 +242,9 @@ private fun BandsOrMembersSection(
     if (artists.isEmpty()) return
 
     val collapsed = collapsedSections.contains(section)
+
+    // The size may be misleading because a member could appear multiple times
+    // if they are credited with multiple roles, or joined and left the group multiple times
     CollapsibleListSeparatorHeader(
         "${section.title} (${artists.size})",
         collapsed = collapsed,
@@ -249,8 +254,12 @@ private fun BandsOrMembersSection(
     if (!collapsed) {
         artists
             .filter {
-                it.name.contains(filterText, ignoreCase = true) ||
+                it.getNameWithDisambiguation().contains(filterText, ignoreCase = true) ||
                     it.label.contains(filterText, ignoreCase = true)
+            }
+            .filter {
+                it.additionalInfo?.contains(filterText, ignoreCase = true) == true ||
+                    it.lifeSpan.getLifeSpanForDisplay().contains(filterText, ignoreCase = true)
             }
             .forEach {
                 RelationListItem(
