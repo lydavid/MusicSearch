@@ -66,8 +66,8 @@ internal fun ArtistDetailsUi(
 
                 // TODO: begin area, end area
 
-                BandsAndMembersSection(
-                    artists = artists,
+                MembersAndGroupsSection(
+                    artist = artist,
                     filterText = filterText,
                     collapsedSections = collapsedSections,
                     onItemClick = onItemClick,
@@ -185,8 +185,8 @@ private fun AreaSection(
 }
 
 @Composable
-private fun BandsAndMembersSection(
-    artists: List<RelationListItemModel>,
+private fun MembersAndGroupsSection(
+    artist: ArtistDetailsModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
     collapsedSections: Set<ArtistDetailsSection> = setOf(),
@@ -194,34 +194,34 @@ private fun BandsAndMembersSection(
     onCollapseSection: (ArtistDetailsSection) -> Unit = {},
 ) {
     Column(modifier = modifier) {
-        BandsOrMembersSection(
+        MembersOrGroupsSection(
             section = ArtistDetailsSection.PartOfGroups,
-            artists = artists.filter { it.isForwardDirection == true && it.lifeSpan.ended == false },
+            artists = artist.membersAndGroups.partOfGroups,
             collapsedSections = collapsedSections,
             onCollapseSection = onCollapseSection,
             filterText = filterText,
             onItemClick = onItemClick,
         )
-        BandsOrMembersSection(
+        MembersOrGroupsSection(
             section = ArtistDetailsSection.PreviouslyPartOfGroups,
-            artists = artists.filter { it.isForwardDirection == true && it.lifeSpan.ended == true },
+            artists = artist.membersAndGroups.previouslyPartOfGroups,
             collapsedSections = collapsedSections,
             onCollapseSection = onCollapseSection,
             filterText = filterText,
             onItemClick = onItemClick,
         )
 
-        BandsOrMembersSection(
+        MembersOrGroupsSection(
             section = ArtistDetailsSection.MembersOfGroup,
-            artists = artists.filter { it.isForwardDirection == false && it.lifeSpan.ended == false },
+            artists = artist.membersAndGroups.membersOfGroup,
             collapsedSections = collapsedSections,
             onCollapseSection = onCollapseSection,
             filterText = filterText,
             onItemClick = onItemClick,
         )
-        BandsOrMembersSection(
+        MembersOrGroupsSection(
             section = ArtistDetailsSection.PreviousMembersOfGroup,
-            artists = artists.filter { it.isForwardDirection == false && it.lifeSpan.ended == true },
+            artists = artist.membersAndGroups.previousMembersOfGroup,
             collapsedSections = collapsedSections,
             onCollapseSection = onCollapseSection,
             filterText = filterText,
@@ -231,7 +231,7 @@ private fun BandsAndMembersSection(
 }
 
 @Composable
-private fun BandsOrMembersSection(
+private fun MembersOrGroupsSection(
     section: ArtistDetailsSection,
     artists: List<RelationListItemModel>,
     collapsedSections: Set<ArtistDetailsSection>,
@@ -255,15 +255,13 @@ private fun BandsOrMembersSection(
         artists
             .filter {
                 it.getNameWithDisambiguation().contains(filterText, ignoreCase = true) ||
-                    it.label.contains(filterText, ignoreCase = true)
-            }
-            .filter {
-                it.additionalInfo?.contains(filterText, ignoreCase = true) == true ||
+                    it.additionalInfo?.contains(filterText, ignoreCase = true) == true ||
                     it.lifeSpan.getLifeSpanForDisplay().contains(filterText, ignoreCase = true)
             }
             .forEach {
                 RelationListItem(
                     relation = it,
+                    showLabel = false,
                     onItemClick = onItemClick,
                 )
             }

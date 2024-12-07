@@ -13,6 +13,13 @@ class RelationListItemTest : ScreenshotTest() {
     }
 
     @Test
+    fun artistWithoutLabel() {
+        snapshot {
+            PreviewArtistWithoutLabelRelationListItem()
+        }
+    }
+
+    @Test
     fun recording() {
         snapshot {
             PreviewRecordingRelationListItem()

@@ -7,6 +7,8 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
+import ly.david.musicsearch.shared.domain.artist.MembersAndGroups
+import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
@@ -42,9 +44,7 @@ class ArtistRepositoryImpl(
             !forceRefresh
         ) {
             val artistWithUrls = artistDetailsModel.copy(
-                artists = artistRelations.filter {
-                    it.isForwardDirection != null && it.label == "member of band"
-                },
+                membersAndGroups = artistRelations.filterAndSplit(),
                 urls = urlRelations,
             )
             return artistWithUrls
@@ -85,5 +85,18 @@ class ArtistRepositoryImpl(
                 relationWithOrderList = relationWithOrderList,
             )
         }
+    }
+
+    private fun List<RelationListItemModel>.filterAndSplit(): MembersAndGroups {
+        val artists: List<RelationListItemModel> = filter {
+            it.isForwardDirection != null && it.label == "member of band"
+        }
+
+        return MembersAndGroups(
+            partOfGroups = artists.filter { it.isForwardDirection == true && it.lifeSpan.ended == false },
+            previouslyPartOfGroups = artists.filter { it.isForwardDirection == true && it.lifeSpan.ended == true },
+            membersOfGroup = artists.filter { it.isForwardDirection == false && it.lifeSpan.ended == false },
+            previousMembersOfGroup = artists.filter { it.isForwardDirection == false && it.lifeSpan.ended == true },
+        )
     }
 }

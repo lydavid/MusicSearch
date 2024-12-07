@@ -111,6 +111,7 @@ class RelationDao(
         begin: String?,
         end: String?,
         ended: Boolean?,
+        thumbnailUrl: String?,
     ) = RelationListItemModel(
         id = "${linkedEntityId}_$order",
         linkedEntityId = linkedEntityId,
@@ -127,6 +128,7 @@ class RelationDao(
             end = end,
             ended = ended,
         ),
+        imageUrl = thumbnailUrl,
     )
 
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<CountOfEachRelationshipType>> =

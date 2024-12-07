@@ -83,9 +83,11 @@ SELECT
   `is_forward_direction`,
   `begin`,
   `end`,
-  `ended`
+  `ended`,
+  mi.thumbnail_url
 FROM relation
 LEFT JOIN visited ON visited.entity_id = linked_entity_id
+LEFT JOIN mbid_image mi ON mi.mbid = linked_entity_id
 WHERE relation.entity_id = :entityId
 AND linked_entity != "url"
 AND (
@@ -116,9 +118,11 @@ SELECT
   `is_forward_direction`,
   `begin`,
   `end`,
-  `ended`
+  `ended`,
+  mi.thumbnail_url
 FROM relation
 LEFT JOIN visited ON visited.entity_id = linked_entity_id
+LEFT JOIN mbid_image mi ON mi.mbid = linked_entity_id
 WHERE relation.entity_id = :entityId
 AND linked_entity = :entityType
 AND (

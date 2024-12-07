@@ -29,6 +29,27 @@ internal fun PreviewArtistRelationListItem() {
 
 @PreviewLightDark
 @Composable
+internal fun PreviewArtistWithoutLabelRelationListItem() {
+    PreviewTheme {
+        Surface {
+            RelationListItem(
+                relation = RelationListItemModel(
+                    id = "2_0",
+                    linkedEntityId = "2",
+                    linkedEntity = MusicBrainzEntity.ARTIST,
+                    label = "miscellaneous support",
+                    name = "Artist Name",
+                    disambiguation = "that guy",
+                    attributes = "task: director & organizer, strings",
+                ),
+                showLabel = false,
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
 internal fun PreviewRecordingRelationListItem() {
     PreviewTheme {
         Surface {
