@@ -1,7 +1,7 @@
 [versions]
 aboutlibraries = "11.2.3"
 androidGradlePlugin = "8.7.3"
-chucker = "4.0.0"
+chucker = "4.1.0"
 circuit = "0.25.0"
 coil = "3.0.3"
 compose-foundation = "1.7.5"
