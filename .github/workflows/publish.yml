@@ -126,7 +126,7 @@ jobs:
           ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET }}
 
       - name: Create desktop distributions
-        uses: hydraulic-software/conveyor/actions/build@v15.1
+        uses: hydraulic-software/conveyor/actions/build@v16.0
         if: steps.get-next-version.outputs.new-release-published == 'true'
         with:
           signing_key: ${{ secrets.SIGNING_KEY }}
