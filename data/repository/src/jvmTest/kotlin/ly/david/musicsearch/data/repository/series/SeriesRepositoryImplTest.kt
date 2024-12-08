@@ -151,6 +151,7 @@ class SeriesRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "e4a5db48-cae3-404f-921d-0f1c3947f874_2",
@@ -162,6 +163,7 @@ class SeriesRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                 ),
             ),
@@ -277,6 +279,7 @@ class SeriesRepositoryImplTest : KoinTest {
                     additionalInfo = null,
                     linkedEntity = MusicBrainzEntity.LABEL,
                     visited = false,
+                    isForwardDirection = false,
                 ),
                 RelationListItemModel(
                     id = "bad6d0fa-938e-45a2-95fd-b37ea37b783c_6",
@@ -288,6 +291,7 @@ class SeriesRepositoryImplTest : KoinTest {
                     additionalInfo = null,
                     linkedEntity = MusicBrainzEntity.LABEL,
                     visited = false,
+                    isForwardDirection = false,
                 ),
                 RelationListItemModel(
                     id = "5d286f5b-7cc3-3f78-b1cf-a24d496af34b_1",
@@ -299,6 +303,7 @@ class SeriesRepositoryImplTest : KoinTest {
                     additionalInfo = "",
                     linkedEntity = MusicBrainzEntity.RELEASE_GROUP,
                     visited = false,
+                    isForwardDirection = false,
                 ),
                 RelationListItemModel(
                     id = "b22e3f3e-6c90-3df9-915f-12d8f86c240b_2",
@@ -310,6 +315,7 @@ class SeriesRepositoryImplTest : KoinTest {
                     additionalInfo = "",
                     linkedEntity = MusicBrainzEntity.RELEASE_GROUP,
                     visited = false,
+                    isForwardDirection = false,
                 ),
                 RelationListItemModel(
                     id = "fbca86fc-1509-40d6-b985-f50e45796187_9",
@@ -321,6 +327,7 @@ class SeriesRepositoryImplTest : KoinTest {
                     additionalInfo = null,
                     linkedEntity = MusicBrainzEntity.SERIES,
                     visited = false,
+                    isForwardDirection = true,
                 ),
             ),
             seriesRelationships,

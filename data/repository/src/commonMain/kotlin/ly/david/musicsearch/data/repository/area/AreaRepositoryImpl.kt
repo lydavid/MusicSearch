@@ -23,7 +23,7 @@ class AreaRepositoryImpl(
         }
 
         val area = areaDao.getAreaForDetails(areaId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(areaId)
+        val urlRelations = relationRepository.getRelationshipsByType(areaId)
         val visited = relationRepository.visited(areaId)
         if (area?.type != null &&
             visited &&
@@ -45,7 +45,7 @@ class AreaRepositoryImpl(
     private fun delete(areaId: String) {
         areaDao.withTransaction {
             areaDao.delete(areaId)
-            relationRepository.deleteUrlRelationshipsByEntity(entityId = areaId)
+            relationRepository.deleteRelationshipsByType(entityId = areaId)
         }
     }
 

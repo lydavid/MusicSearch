@@ -815,6 +815,7 @@ class ReleaseRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "6f72b1ec-2634-4c23-a912-6e262ace69ea_5",
@@ -826,6 +827,7 @@ class ReleaseRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "9093d520-297d-4811-addb-93804d0723b8_7",
@@ -837,6 +839,7 @@ class ReleaseRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "c7ee5a1d-c11d-4511-809f-f5ba138a38d3_6",
@@ -848,6 +851,7 @@ class ReleaseRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                 ),
                 releaseLength = 4156000,

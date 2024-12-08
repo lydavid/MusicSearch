@@ -7,6 +7,9 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
+import ly.david.musicsearch.shared.domain.artist.MembersAndGroups
+import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class ArtistRepositoryImpl(
@@ -25,7 +28,14 @@ class ArtistRepositoryImpl(
         }
 
         val artistDetailsModel = artistDao.getArtistForDetails(artistId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(artistId)
+        val urlRelations = relationRepository.getRelationshipsByType(
+            entityId = artistId,
+            entity = MusicBrainzEntity.URL,
+        )
+        val artistRelations = relationRepository.getRelationshipsByType(
+            entityId = artistId,
+            entity = MusicBrainzEntity.ARTIST,
+        )
         val visited = relationRepository.visited(artistId)
 
         if (
@@ -34,6 +44,7 @@ class ArtistRepositoryImpl(
             !forceRefresh
         ) {
             val artistWithUrls = artistDetailsModel.copy(
+                membersAndGroups = artistRelations.filterAndSplit(),
                 urls = urlRelations,
             )
             return artistWithUrls
@@ -50,7 +61,14 @@ class ArtistRepositoryImpl(
     private fun delete(artistId: String) {
         artistDao.withTransaction {
             artistDao.delete(artistId = artistId)
-            relationRepository.deleteUrlRelationshipsByEntity(entityId = artistId)
+            relationRepository.deleteRelationshipsByType(
+                entityId = artistId,
+                entity = MusicBrainzEntity.URL,
+            )
+            relationRepository.deleteRelationshipsByType(
+                entityId = artistId,
+                entity = MusicBrainzEntity.ARTIST,
+            )
         }
     }
 
@@ -67,5 +85,18 @@ class ArtistRepositoryImpl(
                 relationWithOrderList = relationWithOrderList,
             )
         }
+    }
+
+    private fun List<RelationListItemModel>.filterAndSplit(): MembersAndGroups {
+        val artists: List<RelationListItemModel> = filter {
+            it.isForwardDirection != null && it.label == "member of band"
+        }
+
+        return MembersAndGroups(
+            partOfGroups = artists.filter { it.isForwardDirection == true && it.lifeSpan.ended == false },
+            previouslyPartOfGroups = artists.filter { it.isForwardDirection == true && it.lifeSpan.ended == true },
+            membersOfGroup = artists.filter { it.isForwardDirection == false && it.lifeSpan.ended == false },
+            previousMembersOfGroup = artists.filter { it.isForwardDirection == false && it.lifeSpan.ended == true },
+        )
     }
 }

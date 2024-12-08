@@ -84,7 +84,7 @@ interface LookupApi {
 
     suspend fun lookupArtist(
         artistId: String,
-        include: String? = URL_REL,
+        include: String? = "$ARTIST_REL+$URL_REL",
     ): ArtistMusicBrainzModel
 
     suspend fun lookupEvent(

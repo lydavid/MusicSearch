@@ -23,7 +23,7 @@ class InstrumentRepositoryImpl(
         }
 
         val instrument = instrumentDao.getInstrumentForDetails(instrumentId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(instrumentId)
+        val urlRelations = relationRepository.getRelationshipsByType(instrumentId)
         val visited = relationRepository.visited(instrumentId)
         if (instrument != null && visited) {
             return instrument.copy(urls = urlRelations)
@@ -37,7 +37,7 @@ class InstrumentRepositoryImpl(
     private fun delete(id: String) {
         instrumentDao.withTransaction {
             instrumentDao.delete(id)
-            relationRepository.deleteUrlRelationshipsByEntity(id)
+            relationRepository.deleteRelationshipsByType(id)
         }
     }
 
