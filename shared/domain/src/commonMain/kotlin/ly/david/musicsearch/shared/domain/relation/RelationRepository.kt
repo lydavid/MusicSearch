@@ -4,6 +4,7 @@ import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.relatableEntities
 
 interface RelationRepository {
     fun visited(entityId: String): Boolean
@@ -23,14 +24,16 @@ interface RelationRepository {
         entity: MusicBrainzEntity = MusicBrainzEntity.URL,
     )
 
-    suspend fun insertAllRelationsExcludingUrls(
+    suspend fun insertAllRelations(
         entity: MusicBrainzEntity,
         entityId: String,
+        excludedEntitiesFromNetwork: List<MusicBrainzEntity> = listOf(MusicBrainzEntity.URL),
     )
 
-    fun observeEntityRelationshipsExcludingUrls(
+    fun observeEntityRelationships(
         entity: MusicBrainzEntity,
         entityId: String,
+        relatedEntities: List<MusicBrainzEntity> = relatableEntities.filter { it != MusicBrainzEntity.URL },
         query: String,
     ): Flow<PagingData<RelationListItemModel>>
 

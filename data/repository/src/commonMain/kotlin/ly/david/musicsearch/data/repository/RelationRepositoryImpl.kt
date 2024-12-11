@@ -34,22 +34,26 @@ class RelationRepositoryImpl(
         visitedDao.insert(entityId)
     }
 
-    override suspend fun insertAllRelationsExcludingUrls(
+    override suspend fun insertAllRelations(
         entity: MusicBrainzEntity,
         entityId: String,
+        relatedEntities: List<MusicBrainzEntity>,
     ) {
         val relationMusicBrainzModels = lookupEntityWithRelations(
             entity = entity,
             entityId = entityId,
+            relatedEntities = relatedEntities,
         )
         val relationWithOrderList = relationMusicBrainzModels.toRelationWithOrderList(entityId)
         relationDao.insertAll(relationWithOrderList)
         entityHasRelationsDao.markEntityHasRelationsStored(entityId)
     }
 
+    // TODO: build include out of relatedEntities
     private suspend fun lookupEntityWithRelations(
         entity: MusicBrainzEntity,
         entityId: String,
+        relatedEntities: List<MusicBrainzEntity>,
     ): List<RelationMusicBrainzModel>? {
         return when (entity) {
             MusicBrainzEntity.AREA -> {
@@ -139,10 +143,17 @@ class RelationRepositoryImpl(
     override fun visited(entityId: String): Boolean =
         visitedDao.contains(entityId)
 
+    // TODO: reuse this one implementation
+    //  pass in a list of entities that
+    //  - we fetch from network
+    //  - store
+    //  - query
+    //  - delete
     @OptIn(ExperimentalPagingApi::class)
-    override fun observeEntityRelationshipsExcludingUrls(
+    override fun observeEntityRelationships(
         entity: MusicBrainzEntity,
         entityId: String,
+        relatedEntities: List<MusicBrainzEntity>,
         query: String,
     ): Flow<PagingData<RelationListItemModel>> {
         return Pager(
@@ -153,16 +164,21 @@ class RelationRepositoryImpl(
                     lookupRelationsAndStore(
                         entity = entity,
                         entityId = entityId,
+                        relatedEntities = relatedEntities,
                         forceRefresh = forceRefresh,
                     )
                 },
                 deleteLocalEntity = {
-                    deleteEntityRelationships(entityId)
+                    deleteEntityRelationships(
+                        entityId = entityId,
+                        relatedEntities = relatedEntities,
+                    )
                 },
             ),
             pagingSourceFactory = {
-                relationDao.getEntityRelationshipsExcludingUrls(
+                relationDao.getEntityRelationships(
                     entityId = entityId,
+                    relatedEntities = relatedEntities,
                     query = "%$query%",
                 )
             },
@@ -178,20 +194,26 @@ class RelationRepositoryImpl(
     private suspend fun lookupRelationsAndStore(
         entity: MusicBrainzEntity,
         entityId: String,
+        relatedEntities: List<MusicBrainzEntity>,
         forceRefresh: Boolean,
     ) {
         if (!forceRefresh) return
 
-        insertAllRelationsExcludingUrls(
+        insertAllRelations(
             entity = entity,
             entityId = entityId,
+            relatedEntities = relatedEntities,
         )
     }
 
     private fun deleteEntityRelationships(
         entityId: String,
+        relatedEntities: List<MusicBrainzEntity>,
     ) {
-        relationDao.deleteRelationshipsExcludingUrlsByEntity(entityId)
+        relationDao.deleteRelationshipsExcludingUrlsByEntity(
+            entityId = entityId,
+            relatedEntities = relatedEntities,
+        )
     }
 
     override fun getRelationshipsByType(

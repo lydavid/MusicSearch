@@ -7,6 +7,7 @@ sealed interface RelationsUiEvent : CircuitUiEvent {
     data class GetRelations(
         val byEntityId: String,
         val byEntity: MusicBrainzEntity,
+        val excludedEntities: List<MusicBrainzEntity> = listOf(MusicBrainzEntity.URL),
     ) : RelationsUiEvent
 
     data class UpdateQuery(

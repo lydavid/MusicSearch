@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS relation (
   `end` TEXT,
   `ended` INTEGER AS Boolean,
 
+  -- an entity can be linked to another entity multiple times, possibly with the same label
   PRIMARY KEY (entity_id, linked_entity_id, `order`)
 );
 
@@ -69,7 +70,7 @@ AND (
   OR additional_info LIKE :query
 );
 
-getEntityRelationshipsExcludingUrls:
+getEntityRelationships:
 SELECT
   `linked_entity_id`,
   `linked_entity`,
@@ -89,7 +90,7 @@ FROM relation
 LEFT JOIN visited ON visited.entity_id = linked_entity_id
 LEFT JOIN mbid_image mi ON mi.mbid = linked_entity_id
 WHERE relation.entity_id = :entityId
-AND linked_entity != "url"
+AND linked_entity IN :relatedEntities
 AND (
   name LIKE :query
   OR disambiguation LIKE :query
@@ -100,9 +101,10 @@ AND (
 ORDER BY linked_entity, label, `order`
 LIMIT :limit OFFSET :offset;
 
-deleteRelationshipsExcludingUrlsByEntity:
+deleteRelationships:
 DELETE FROM relation
-WHERE entity_id = :entityId AND linked_entity != "url";
+WHERE entity_id = :entityId
+AND linked_entity IN :relatedEntities;
 
 getRelationshipsByType:
 SELECT

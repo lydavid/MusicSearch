@@ -99,6 +99,23 @@ val collectableEntities: List<MusicBrainzEntity>
         MusicBrainzEntity.WORK,
     )
 
+val relatableEntities: List<MusicBrainzEntity>
+    get() = listOf(
+        MusicBrainzEntity.AREA,
+        MusicBrainzEntity.ARTIST,
+        MusicBrainzEntity.EVENT,
+        MusicBrainzEntity.GENRE,
+        MusicBrainzEntity.INSTRUMENT,
+        MusicBrainzEntity.LABEL,
+        MusicBrainzEntity.PLACE,
+        MusicBrainzEntity.RECORDING,
+        MusicBrainzEntity.RELEASE,
+        MusicBrainzEntity.RELEASE_GROUP,
+        MusicBrainzEntity.SERIES,
+        MusicBrainzEntity.WORK,
+        MusicBrainzEntity.URL,
+    )
+
 fun String.toMusicBrainzEntity(): MusicBrainzEntity? =
     MusicBrainzEntity.entries.firstOrNull { this == it.resourceUri }
 

@@ -13,6 +13,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.relatableEntities
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
 
 interface RelationsPresenter : Presenter<RelationsUiState>
@@ -25,11 +26,17 @@ class RelationsPresenterImpl(
         var query by rememberSaveable { mutableStateOf("") }
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
+        var excludedEntities: List<MusicBrainzEntity> by rememberSaveable {
+            mutableStateOf(
+                listOf(MusicBrainzEntity.URL),
+            )
+        }
         val relationListItems: Flow<PagingData<RelationListItemModel>> by rememberRetained(id, entity, query) {
             mutableStateOf(
                 getEntityRelationships(
                     entityId = id,
                     entity = entity,
+                    relatedEntities = relatableEntities.filterNot { excludedEntities.contains(it) },
                     query = query,
                 ),
             )
@@ -41,6 +48,7 @@ class RelationsPresenterImpl(
                 is RelationsUiEvent.GetRelations -> {
                     id = event.byEntityId
                     entity = event.byEntity
+                    excludedEntities = event.excludedEntities
                 }
 
                 is RelationsUiEvent.UpdateQuery -> {

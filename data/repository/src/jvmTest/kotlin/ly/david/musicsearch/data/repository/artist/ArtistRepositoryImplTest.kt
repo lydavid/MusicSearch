@@ -14,6 +14,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
+import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
@@ -31,6 +32,7 @@ import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -51,9 +53,7 @@ class ArtistRepositoryImplTest : KoinTest {
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
-        artistMusicBrainzModel: ArtistMusicBrainzModel,
-    ): ArtistRepositoryImpl {
+    private fun createFakeRelationRepository(artistMusicBrainzModel: ArtistMusicBrainzModel): RelationRepositoryImpl {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupArtist(
@@ -67,9 +67,15 @@ class ArtistRepositoryImplTest : KoinTest {
             visitedDao = visitedDao,
             relationDao = relationDao,
         )
+        return relationRepository
+    }
+
+    private fun createRepositoryWithFakeNetworkData(
+        artistMusicBrainzModel: ArtistMusicBrainzModel,
+    ): ArtistRepositoryImpl {
         return ArtistRepositoryImpl(
             artistDao = artistDao,
-            relationRepository = relationRepository,
+            relationRepository = createFakeRelationRepository(artistMusicBrainzModel),
             areaDao = areaDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupArtist(
@@ -673,6 +679,251 @@ class ArtistRepositoryImplTest : KoinTest {
                 ),
             ),
             allDataArtistDetailsModel,
+        )
+    }
+
+    @Test
+    fun `lookup group, then relationships should not duplicate artists`() = runTest {
+        val artistRepositoryImpl = createRepositoryWithFakeNetworkData(
+            artistMusicBrainzModel = ArtistMusicBrainzModel(
+                id = "dfc6a151-3792-4695-8fda-f64723eaa788",
+                name = "ヨルシカ",
+                type = "Group",
+                lifeSpan = LifeSpanMusicBrainzModel(
+                    begin = "2017-04",
+                ),
+                sortName = "Yorushika",
+                area = AreaMusicBrainzModel(
+                    id = "2db42837-c832-3c27-b4a3-08198f75693c",
+                    name = "Japan",
+                    countryCodes = listOf("JP"),
+                ),
+                isnis = listOf("0000000470771409"),
+                relations = listOf(
+                    RelationMusicBrainzModel(
+                        type = "founder",
+                        typeId = "6ed4bfc4-0a0d-44c0-b025-b7fc4d900b67",
+                        direction = Direction.BACKWARD,
+                        targetType = SerializableMusicBrainzEntity.ARTIST,
+                        ended = false,
+                        artist = ArtistMusicBrainzModel(
+                            id = "e963b252-7f3e-450e-b3d8-85bb495e96c1",
+                            name = "n-buna",
+                            sortName = "nabuna",
+                            type = "Person",
+                            typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+                        ),
+                    ),
+                    RelationMusicBrainzModel(
+                        type = "instrumental supporting musician",
+                        typeId = "ed6a7891-ce70-4e08-9839-1f2f62270497",
+                        direction = Direction.BACKWARD,
+                        targetType = SerializableMusicBrainzEntity.ARTIST,
+                        ended = false,
+                        attributes = listOf("piano"),
+                        artist = ArtistMusicBrainzModel(
+                            id = "57ff31f6-1432-4dc5-b7e2-59e6d7064387",
+                            name = "平畑徹也",
+                            sortName = "Hirahata, Tetsuya",
+                            type = "Person",
+                            typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+                        ),
+                    ),
+                    RelationMusicBrainzModel(
+                        type = "instrumental supporting musician",
+                        typeId = "ed6a7891-ce70-4e08-9839-1f2f62270497",
+                        direction = Direction.BACKWARD,
+                        targetType = SerializableMusicBrainzEntity.ARTIST,
+                        ended = false,
+                        attributes = listOf("bass guitar"),
+                        artist = ArtistMusicBrainzModel(
+                            id = "80b3cb83-b7a3-4f79-ad42-8325cefb3626",
+                            name = "キタニタツヤ",
+                            sortName = "Kitani, Tatsuya",
+                            type = "Person",
+                            typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+                        ),
+                    ),
+                    RelationMusicBrainzModel(
+                        type = "instrumental supporting musician",
+                        typeId = "ed6a7891-ce70-4e08-9839-1f2f62270497",
+                        direction = Direction.BACKWARD,
+                        targetType = SerializableMusicBrainzEntity.ARTIST,
+                        ended = false,
+                        attributes = listOf("drums (drum set)"),
+                        artist = ArtistMusicBrainzModel(
+                            id = "77bd7c2f-3288-4a0b-836d-325af998485b",
+                            name = "Masack",
+                            sortName = "Masack",
+                            type = "Person",
+                            typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+                        ),
+                    ),
+                    RelationMusicBrainzModel(
+                        type = "instrumental supporting musician",
+                        typeId = "ed6a7891-ce70-4e08-9839-1f2f62270497",
+                        direction = Direction.BACKWARD,
+                        targetType = SerializableMusicBrainzEntity.ARTIST,
+                        ended = false,
+                        attributes = listOf("guitar"),
+                        artist = ArtistMusicBrainzModel(
+                            id = "3f1795dd-a925-4410-ba1f-43dce8161368",
+                            name = "下鶴光康",
+                            sortName = "Shimozuru, Mitsuyasu",
+                            type = "Person",
+                            typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+                        ),
+                    ),
+                    RelationMusicBrainzModel(
+                        type = "member of band",
+                        typeId = "5be4c609-9afa-4ea0-910b-12ffb71e3821",
+                        direction = Direction.BACKWARD,
+                        targetType = SerializableMusicBrainzEntity.ARTIST,
+                        begin = "2017-04",
+                        ended = false,
+                        attributes = listOf("guitar", "original"),
+                        artist = ArtistMusicBrainzModel(
+                            id = "e963b252-7f3e-450e-b3d8-85bb495e96c1",
+                            name = "n-buna",
+                            sortName = "nabuna",
+                            type = "Person",
+                            typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+                        ),
+                    ),
+                    RelationMusicBrainzModel(
+                        type = "member of band",
+                        typeId = "5be4c609-9afa-4ea0-910b-12ffb71e3821",
+                        direction = Direction.BACKWARD,
+                        targetType = SerializableMusicBrainzEntity.ARTIST,
+                        begin = "2017-04",
+                        ended = false,
+                        attributes = listOf("lead vocals", "original"),
+                        artist = ArtistMusicBrainzModel(
+                            id = "b2de971f-b3d6-409f-9ed0-ecfc09e8b4e3",
+                            name = "suis",
+                            sortName = "suis",
+                            type = "Person",
+                            typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+                            disambiguation = "member of ヨルシカ",
+                        ),
+                    ),
+                    RelationMusicBrainzModel(
+                        type = "official homepage",
+                        typeId = "fe33d22f-c3b0-4d68-bd53-a856badf2b15",
+                        direction = Direction.FORWARD,
+                        targetType = SerializableMusicBrainzEntity.URL,
+                        ended = false,
+                        url = UrlMusicBrainzModel(
+                            id = "32aeb6df-2f03-4231-9fae-0a2fce135f87",
+                            resource = "https://yorushika.com/",
+                        ),
+                    ),
+                ),
+            ),
+        )
+
+        val artistDetailsModel = artistRepositoryImpl.lookupArtistDetails(
+            "dfc6a151-3792-4695-8fda-f64723eaa788",
+            false,
+        )
+        assertEquals(
+            ArtistDetailsModel(
+                id = "dfc6a151-3792-4695-8fda-f64723eaa788",
+                name = "ヨルシカ",
+                sortName = "Yorushika",
+                disambiguation = null,
+                type = "Group",
+                gender = null,
+                ipis = null,
+                isnis = listOf("0000000470771409"),
+                lifeSpan = LifeSpanUiModel(begin = "2017-04", end = null, ended = null),
+                imageUrl = null,
+                wikipediaExtract = WikipediaExtract(extract = "", wikipediaUrl = ""),
+                areaListItemModel = AreaListItemModel(
+                    id = "2db42837-c832-3c27-b4a3-08198f75693c",
+                    name = "Japan",
+                    sortName = "",
+                    disambiguation = null,
+                    type = null,
+                    lifeSpan = LifeSpanUiModel(begin = null, end = null, ended = null),
+                    countryCodes = listOf("JP"),
+                    date = null,
+                    visited = false,
+                ),
+            ),
+            artistDetailsModel,
+        )
+
+        val relationRepository = createFakeRelationRepository(
+            artistMusicBrainzModel = ArtistMusicBrainzModel(
+                id = "dfc6a151-3792-4695-8fda-f64723eaa788",
+                name = "ヨルシカ",
+                type = "Group",
+                lifeSpan = LifeSpanMusicBrainzModel(
+                    begin = "2017-04",
+                ),
+                sortName = "Yorushika",
+                area = AreaMusicBrainzModel(
+                    id = "2db42837-c832-3c27-b4a3-08198f75693c",
+                    name = "Japan",
+                    countryCodes = listOf("JP"),
+                ),
+                isnis = listOf("0000000470771409"),
+                relations = listOf(),
+            ),
+        )
+        val flow = relationRepository.observeEntityRelationships(
+            entity = MusicBrainzEntity.ARTIST,
+            entityId = "dfc6a151-3792-4695-8fda-f64723eaa788",
+            query = "",
+        )
+        val relationListItemModels = flow.asSnapshot()
+        assertEquals(
+            listOf(
+                RelationListItemModel(
+                    id = "e963b252-7f3e-450e-b3d8-85bb495e96c1_2",
+                    linkedEntityId = "e963b252-7f3e-450e-b3d8-85bb495e96c1",
+                    label = "member of band",
+                    name = "n-buna",
+                    disambiguation = null,
+                    attributes = "guitar, original",
+                    additionalInfo = "(2017-04)",
+                    linkedEntity = MusicBrainzEntity.ARTIST,
+                    visited = false,
+                    isForwardDirection = false,
+                    lifeSpan = LifeSpanUiModel(begin = "2017-04", end = null, ended = false),
+                    imageUrl = null,
+                ),
+                RelationListItemModel(
+                    id = "b2de971f-b3d6-409f-9ed0-ecfc09e8b4e3_3",
+                    linkedEntityId = "b2de971f-b3d6-409f-9ed0-ecfc09e8b4e3",
+                    label = "member of band",
+                    name = "suis",
+                    disambiguation = "member of ヨルシカ",
+                    attributes = "lead vocals, original",
+                    additionalInfo = "(2017-04)",
+                    linkedEntity = MusicBrainzEntity.ARTIST,
+                    visited = false,
+                    isForwardDirection = false,
+                    lifeSpan = LifeSpanUiModel(begin = "2017-04", end = null, ended = false),
+                    imageUrl = null,
+                ),
+                RelationListItemModel(
+                    id = "32aeb6df-2f03-4231-9fae-0a2fce135f87_15",
+                    linkedEntityId = "32aeb6df-2f03-4231-9fae-0a2fce135f87",
+                    label = "official homepages",
+                    name = "https://yorushika.com/",
+                    disambiguation = null,
+                    attributes = "",
+                    additionalInfo = null,
+                    linkedEntity = MusicBrainzEntity.URL,
+                    visited = true,
+                    isForwardDirection = true,
+                    lifeSpan = LifeSpanUiModel(begin = null, end = null, ended = false),
+                    imageUrl = null,
+                ),
+            ),
+            relationListItemModels,
         )
     }
 }

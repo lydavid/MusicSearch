@@ -27,6 +27,7 @@ import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.relatableEntities
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
@@ -65,6 +66,7 @@ internal class ArtistPresenter(
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
     private val worksByEntityPresenter: WorksByEntityPresenter,
+    private val artistsAndUrlsRelationsPresenter: RelationsPresenter,
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
@@ -86,6 +88,9 @@ internal class ArtistPresenter(
         var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+
+        val artistsAndUrlsRelationsUiState = artistsAndUrlsRelationsPresenter.present()
+        val artistsAndUrlsRelationsEventSink = artistsAndUrlsRelationsUiState.eventSink
 
         val eventsByEntityUiState = eventsByEntityPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
@@ -155,13 +160,22 @@ internal class ArtistPresenter(
             )
         }
 
+        // TODO: after refreshing, artist and url rel are not shown until we return to screen
         LaunchedEffect(
             key1 = topAppBarFilterState.filterText,
             key2 = selectedTab,
+            artist,
         ) {
             when (selectedTab) {
                 ArtistTab.DETAILS -> {
-                    // Loaded above
+                    artistsAndUrlsRelationsEventSink(
+                        RelationsUiEvent.GetRelations(
+                            byEntityId = screen.id,
+                            byEntity = screen.entity,
+                            excludedEntities = relatableEntities.filterNot { listOf(MusicBrainzEntity.ARTIST, MusicBrainzEntity.URL).contains(it) }
+                        ),
+                    )
+                    artistsAndUrlsRelationsEventSink(RelationsUiEvent.UpdateQuery(topAppBarFilterState.filterText))
                 }
 
                 ArtistTab.RELATIONSHIPS -> {
@@ -169,6 +183,7 @@ internal class ArtistPresenter(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
+                            excludedEntities = listOf(MusicBrainzEntity.ARTIST, MusicBrainzEntity.URL)
                         ),
                     )
                     relationsEventSink(RelationsUiEvent.UpdateQuery(topAppBarFilterState.filterText))
@@ -257,6 +272,7 @@ internal class ArtistPresenter(
                     when (selectedTab) {
                         ArtistTab.DETAILS -> {
                             forceRefreshDetails = true
+//                            artistsAndUrlsRelationsUiState.lazyPagingItems.refresh()
                         }
 
                         ArtistTab.RELEASE_GROUPS -> {
@@ -330,6 +346,7 @@ internal class ArtistPresenter(
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             worksByEntityUiState = worksByEntityUiState,
+            artistsAndUrlsRelationsUiState = artistsAndUrlsRelationsUiState,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
@@ -354,6 +371,7 @@ internal data class ArtistUiState(
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
     val worksByEntityUiState: WorksByEntityUiState,
+    val artistsAndUrlsRelationsUiState: RelationsUiState,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState,
     val eventSink: (ArtistUiEvent) -> Unit,

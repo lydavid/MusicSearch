@@ -173,7 +173,7 @@ class SeriesRepositoryImplTest : KoinTest {
 
     @Test
     fun `is ordered by ordering-key if it exists`() = runTest {
-        val seriesRepositoryImpl = createFakeRelationRepository(
+        val relationRepository = createFakeRelationRepository(
             musicBrainzModel = SeriesMusicBrainzModel(
                 id = "eca82a1b-1efa-4d6b-9278-e278523267f8",
                 name = "東方Project",
@@ -261,7 +261,7 @@ class SeriesRepositoryImplTest : KoinTest {
             ),
         )
 
-        val flow = seriesRepositoryImpl.observeEntityRelationshipsExcludingUrls(
+        val flow = relationRepository.observeEntityRelationships(
             entity = MusicBrainzEntity.SERIES,
             entityId = "eca82a1b-1efa-4d6b-9278-e278523267f8",
             query = "",

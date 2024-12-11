@@ -47,9 +47,10 @@ class RelationDao(
         }
     }
 
-    fun getEntityRelationshipsExcludingUrls(
+    fun getEntityRelationships(
         entityId: String,
         query: String = "%%",
+        relatedEntities: List<MusicBrainzEntity>,
     ): PagingSource<Int, RelationListItemModel> = QueryPagingSource(
         countQuery = transacter.countEntityRelationshipsExcludingUrls(
             entityId = entityId,
@@ -58,8 +59,9 @@ class RelationDao(
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
-            transacter.getEntityRelationshipsExcludingUrls(
+            transacter.getEntityRelationships(
                 entityId = entityId,
+                relatedEntities = relatedEntities,
                 query = query,
                 limit = limit,
                 offset = offset,
@@ -70,8 +72,12 @@ class RelationDao(
 
     fun deleteRelationshipsExcludingUrlsByEntity(
         entityId: String,
+        relatedEntities: List<MusicBrainzEntity>,
     ) {
-        transacter.deleteRelationshipsExcludingUrlsByEntity(entityId)
+        transacter.deleteRelationships(
+            entityId = entityId,
+            relatedEntities = relatedEntities,
+        )
     }
 
     fun getRelationshipsByType(

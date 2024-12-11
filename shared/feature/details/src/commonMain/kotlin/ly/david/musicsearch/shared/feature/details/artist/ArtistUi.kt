@@ -181,6 +181,7 @@ internal fun ArtistUi(
                             filterText = state.topAppBarFilterState.filterText,
                             collapsedSections = state.collapsedSections,
                             lazyListState = state.detailsLazyListState,
+                            artistsAndUrlsRelationsUiState = state.artistsAndUrlsRelationsUiState,
                             onItemClick = { entity, id, title ->
                                 eventSink(
                                     ArtistUiEvent.ClickItem(

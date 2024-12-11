@@ -1,5 +1,7 @@
 package ly.david.musicsearch.data.repository.artist
 
+import app.cash.paging.PagingData
+import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -10,6 +12,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.artist.MembersAndGroups
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.relatableEntities
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class ArtistRepositoryImpl(
@@ -28,14 +31,6 @@ class ArtistRepositoryImpl(
         }
 
         val artistDetailsModel = artistDao.getArtistForDetails(artistId)
-        val urlRelations = relationRepository.getRelationshipsByType(
-            entityId = artistId,
-            entity = MusicBrainzEntity.URL,
-        )
-        val artistRelations = relationRepository.getRelationshipsByType(
-            entityId = artistId,
-            entity = MusicBrainzEntity.ARTIST,
-        )
         val visited = relationRepository.visited(artistId)
 
         if (
@@ -43,11 +38,7 @@ class ArtistRepositoryImpl(
             visited &&
             !forceRefresh
         ) {
-            val artistWithUrls = artistDetailsModel.copy(
-                membersAndGroups = artistRelations.filterAndSplit(),
-                urls = urlRelations,
-            )
-            return artistWithUrls
+            return artistDetailsModel
         }
 
         val artistMusicBrainzModel = lookupApi.lookupArtist(artistId)
