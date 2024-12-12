@@ -98,6 +98,7 @@ AND (
   OR attributes LIKE :query
   OR additional_info LIKE :query
 )
+GROUP BY linked_entity, label, `order`
 ORDER BY linked_entity, label, `order`
 LIMIT :limit OFFSET :offset;
 

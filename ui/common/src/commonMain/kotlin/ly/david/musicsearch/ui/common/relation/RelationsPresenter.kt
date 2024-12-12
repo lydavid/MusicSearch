@@ -26,9 +26,9 @@ class RelationsPresenterImpl(
         var query by rememberSaveable { mutableStateOf("") }
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
-        var excludedEntities: List<MusicBrainzEntity> by rememberSaveable {
+        var excludedEntities: Set<MusicBrainzEntity> by rememberSaveable {
             mutableStateOf(
-                listOf(MusicBrainzEntity.URL),
+                setOf(MusicBrainzEntity.URL),
             )
         }
         val relationListItems: Flow<PagingData<RelationListItemModel>> by rememberRetained(id, entity, query) {
@@ -36,7 +36,7 @@ class RelationsPresenterImpl(
                 getEntityRelationships(
                     entityId = id,
                     entity = entity,
-                    relatedEntities = relatableEntities.filterNot { excludedEntities.contains(it) },
+                    relatedEntities = relatableEntities subtract excludedEntities,
                     query = query,
                 ),
             )

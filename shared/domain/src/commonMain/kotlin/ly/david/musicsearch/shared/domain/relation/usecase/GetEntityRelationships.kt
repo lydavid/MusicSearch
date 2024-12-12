@@ -17,7 +17,7 @@ class GetEntityRelationships(
     operator fun invoke(
         entityId: String,
         entity: MusicBrainzEntity?,
-        relatedEntities: List<MusicBrainzEntity>,
+        relatedEntities: Set<MusicBrainzEntity>,
         query: String,
     ): Flow<PagingData<RelationListItemModel>> {
         return when {

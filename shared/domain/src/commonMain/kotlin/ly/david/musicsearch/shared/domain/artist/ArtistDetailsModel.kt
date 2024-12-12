@@ -15,16 +15,8 @@ data class ArtistDetailsModel(
     val ipis: List<String>? = null,
     val isnis: List<String>? = null,
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
-    val membersAndGroups: MembersAndGroups = MembersAndGroups(),
     val urls: List<RelationListItemModel> = listOf(),
     val imageUrl: String? = null,
     val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     val areaListItemModel: AreaListItemModel? = null,
 ) : Artist
-
-data class MembersAndGroups(
-    val membersOfGroup: List<RelationListItemModel> = listOf(),
-    val previousMembersOfGroup: List<RelationListItemModel> = listOf(),
-    val partOfGroups: List<RelationListItemModel> = listOf(),
-    val previouslyPartOfGroups: List<RelationListItemModel> = listOf(),
-)

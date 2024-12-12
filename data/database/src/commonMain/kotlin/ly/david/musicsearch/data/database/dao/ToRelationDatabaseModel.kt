@@ -40,6 +40,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
+                // This is the lifespan of the relationship, not the artist
                 additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             }
         }
@@ -49,6 +50,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
+                additionalInfo = lifeSpan.getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             } ?: return null
         }
 

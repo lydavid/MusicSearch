@@ -27,7 +27,6 @@ import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.network.relatableEntities
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
@@ -66,7 +65,6 @@ internal class ArtistPresenter(
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
     private val worksByEntityPresenter: WorksByEntityPresenter,
-    private val artistsAndUrlsRelationsPresenter: RelationsPresenter,
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
@@ -81,16 +79,12 @@ internal class ArtistPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         var artist: ArtistDetailsModel? by rememberRetained { mutableStateOf(null) }
-        var collapsedSections: Set<ArtistDetailsSection> by rememberSaveable { mutableStateOf(setOf()) }
         val tabs: List<ArtistTab> by rememberSaveable {
             mutableStateOf(ArtistTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
-
-        val artistsAndUrlsRelationsUiState = artistsAndUrlsRelationsPresenter.present()
-        val artistsAndUrlsRelationsEventSink = artistsAndUrlsRelationsUiState.eventSink
 
         val eventsByEntityUiState = eventsByEntityPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
@@ -135,10 +129,7 @@ internal class ArtistPresenter(
             forceRefreshDetails = false
         }
 
-        LaunchedEffect(
-            forceRefreshDetails,
-            artist,
-        ) {
+        LaunchedEffect(forceRefreshDetails, artist) {
             artist = artist?.copy(
                 imageUrl = artistImageRepository.getArtistImageUrl(
                     artistDetailsModel = artist ?: return@LaunchedEffect,
@@ -147,10 +138,7 @@ internal class ArtistPresenter(
             )
         }
 
-        LaunchedEffect(
-            forceRefreshDetails,
-            artist,
-        ) {
+        LaunchedEffect(forceRefreshDetails, artist) {
             artist = artist?.copy(
                 wikipediaExtract = wikimediaRepository.getWikipediaExtract(
                     mbid = artist?.id ?: return@LaunchedEffect,
@@ -160,22 +148,13 @@ internal class ArtistPresenter(
             )
         }
 
-        // TODO: after refreshing, artist and url rel are not shown until we return to screen
         LaunchedEffect(
             key1 = topAppBarFilterState.filterText,
             key2 = selectedTab,
-            artist,
         ) {
             when (selectedTab) {
                 ArtistTab.DETAILS -> {
-                    artistsAndUrlsRelationsEventSink(
-                        RelationsUiEvent.GetRelations(
-                            byEntityId = screen.id,
-                            byEntity = screen.entity,
-                            excludedEntities = relatableEntities.filterNot { listOf(MusicBrainzEntity.ARTIST, MusicBrainzEntity.URL).contains(it) }
-                        ),
-                    )
-                    artistsAndUrlsRelationsEventSink(RelationsUiEvent.UpdateQuery(topAppBarFilterState.filterText))
+                    // Loaded above
                 }
 
                 ArtistTab.RELATIONSHIPS -> {
@@ -183,7 +162,6 @@ internal class ArtistPresenter(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
-                            excludedEntities = listOf(MusicBrainzEntity.ARTIST, MusicBrainzEntity.URL)
                         ),
                     )
                     relationsEventSink(RelationsUiEvent.UpdateQuery(topAppBarFilterState.filterText))
@@ -272,7 +250,6 @@ internal class ArtistPresenter(
                     when (selectedTab) {
                         ArtistTab.DETAILS -> {
                             forceRefreshDetails = true
-//                            artistsAndUrlsRelationsUiState.lazyPagingItems.refresh()
                         }
 
                         ArtistTab.RELEASE_GROUPS -> {
@@ -315,15 +292,6 @@ internal class ArtistPresenter(
                         ),
                     )
                 }
-
-                is ArtistUiEvent.ToggleSection -> {
-                    val section = event.section
-                    collapsedSections = if (collapsedSections.contains(section)) {
-                        collapsedSections.filter { it != section }.toSet()
-                    } else {
-                        collapsedSections + section
-                    }
-                }
             }
         }
 
@@ -332,11 +300,7 @@ internal class ArtistPresenter(
             isLoading = isLoading,
             isError = isError,
             artist = artist,
-            collapsedSections = collapsedSections,
-            url = getMusicBrainzUrl(
-                screen.entity,
-                screen.id,
-            ),
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
@@ -346,7 +310,6 @@ internal class ArtistPresenter(
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             worksByEntityUiState = worksByEntityUiState,
-            artistsAndUrlsRelationsUiState = artistsAndUrlsRelationsUiState,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
@@ -360,7 +323,6 @@ internal data class ArtistUiState(
     val isLoading: Boolean,
     val isError: Boolean,
     val artist: ArtistDetailsModel?,
-    val collapsedSections: Set<ArtistDetailsSection>,
     val url: String = "",
     val tabs: List<ArtistTab>,
     val selectedTab: ArtistTab,
@@ -371,7 +333,6 @@ internal data class ArtistUiState(
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
     val worksByEntityUiState: WorksByEntityUiState,
-    val artistsAndUrlsRelationsUiState: RelationsUiState,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState,
     val eventSink: (ArtistUiEvent) -> Unit,
@@ -388,6 +349,4 @@ internal sealed interface ArtistUiEvent : CircuitUiEvent {
     ) : ArtistUiEvent
 
     data object NavigateToCollaboratorsGraph : ArtistUiEvent
-
-    data class ToggleSection(val section: ArtistDetailsSection) : ArtistUiEvent
 }

@@ -27,13 +27,13 @@ interface RelationRepository {
     suspend fun insertAllRelations(
         entity: MusicBrainzEntity,
         entityId: String,
-        excludedEntitiesFromNetwork: List<MusicBrainzEntity> = listOf(MusicBrainzEntity.URL),
+        relatedEntities: Set<MusicBrainzEntity>,
     )
 
     fun observeEntityRelationships(
         entity: MusicBrainzEntity,
         entityId: String,
-        relatedEntities: List<MusicBrainzEntity> = relatableEntities.filter { it != MusicBrainzEntity.URL },
+        relatedEntities: Set<MusicBrainzEntity> = relatableEntities subtract setOf(MusicBrainzEntity.URL),
         query: String,
     ): Flow<PagingData<RelationListItemModel>>
 

@@ -50,7 +50,7 @@ class RelationDao(
     fun getEntityRelationships(
         entityId: String,
         query: String = "%%",
-        relatedEntities: List<MusicBrainzEntity>,
+        relatedEntities: Set<MusicBrainzEntity>,
     ): PagingSource<Int, RelationListItemModel> = QueryPagingSource(
         countQuery = transacter.countEntityRelationshipsExcludingUrls(
             entityId = entityId,
@@ -72,7 +72,7 @@ class RelationDao(
 
     fun deleteRelationshipsExcludingUrlsByEntity(
         entityId: String,
-        relatedEntities: List<MusicBrainzEntity>,
+        relatedEntities: Set<MusicBrainzEntity>,
     ) {
         transacter.deleteRelationships(
             entityId = entityId,

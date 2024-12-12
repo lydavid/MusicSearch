@@ -179,9 +179,7 @@ internal fun ArtistUi(
                         ArtistDetailsUi(
                             artist = artist,
                             filterText = state.topAppBarFilterState.filterText,
-                            collapsedSections = state.collapsedSections,
                             lazyListState = state.detailsLazyListState,
-                            artistsAndUrlsRelationsUiState = state.artistsAndUrlsRelationsUiState,
                             onItemClick = { entity, id, title ->
                                 eventSink(
                                     ArtistUiEvent.ClickItem(
@@ -190,9 +188,6 @@ internal fun ArtistUi(
                                         title = title,
                                     ),
                                 )
-                            },
-                            onCollapseSection = {
-                                eventSink(ArtistUiEvent.ToggleSection(it))
                             },
                         )
                     }

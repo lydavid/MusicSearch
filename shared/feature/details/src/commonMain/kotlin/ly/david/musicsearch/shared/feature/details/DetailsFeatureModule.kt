@@ -81,7 +81,6 @@ val detailsFeatureModule = module {
                                 releasesByEntityPresenter = get(),
                                 releaseGroupsByEntityPresenter = get(),
                                 worksByEntityPresenter = get(),
-                                artistsAndUrlsRelationsPresenter = get(),
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
