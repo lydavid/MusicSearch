@@ -6,10 +6,11 @@ import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
+import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
-import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 
 class RelationDao(
@@ -30,6 +31,10 @@ class RelationDao(
                 disambiguation = disambiguation,
                 attributes = attributes,
                 additional_info = additionalInfo,
+                is_forward_direction = isForwardDirection,
+                begin = lifeSpan.begin,
+                end = lifeSpan.end,
+                ended = lifeSpan.ended,
             )
         }
     }
@@ -42,19 +47,22 @@ class RelationDao(
         }
     }
 
-    fun getEntityRelationshipsExcludingUrls(
+    fun getEntityRelationships(
         entityId: String,
         query: String = "%%",
+        relatedEntities: Set<MusicBrainzEntity>,
     ): PagingSource<Int, RelationListItemModel> = QueryPagingSource(
-        countQuery = transacter.countEntityRelationshipsExcludingUrls(
+        countQuery = transacter.countEntityRelationships(
             entityId = entityId,
+            relatedEntities = relatedEntities,
             query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
-            transacter.getEntityRelationshipsExcludingUrls(
+            transacter.getEntityRelationships(
                 entityId = entityId,
+                relatedEntities = relatedEntities,
                 query = query,
                 limit = limit,
                 offset = offset,
@@ -65,25 +73,35 @@ class RelationDao(
 
     fun deleteRelationshipsExcludingUrlsByEntity(
         entityId: String,
+        relatedEntities: Set<MusicBrainzEntity>,
     ) {
-        transacter.deleteRelationshipsExcludingUrlsByEntity(entityId)
+        transacter.deleteRelationships(
+            entityId = entityId,
+            relatedEntities = relatedEntities,
+        )
     }
 
-    fun getEntityUrlRelationships(
+    fun getRelationshipsByType(
         entityId: String,
+        entity: MusicBrainzEntity,
     ): List<RelationListItemModel> {
-        return transacter.getEntityUrlRelationships(
+        return transacter.getRelationshipsByType(
             entityId = entityId,
+            entityType = entity,
             // We filter URLs in the presentation layer
             query = "%%",
             mapper = ::mapToRelationListItemModel,
         ).executeAsList()
     }
 
-    fun deleteUrlRelationshipsByEntity(
+    fun deleteRelationshipsByType(
         entityId: String,
+        entity: MusicBrainzEntity,
     ) {
-        transacter.deleteUrlRelationshipssByEntity(entityId)
+        transacter.deleteRelationshipsByType(
+            entityId = entityId,
+            entityType = entity,
+        )
     }
 
     private fun mapToRelationListItemModel(
@@ -96,6 +114,11 @@ class RelationDao(
         attributes: String?,
         additionalInfo: String?,
         visited: Boolean?,
+        isForwardDirection: Boolean?,
+        begin: String?,
+        end: String?,
+        ended: Boolean?,
+        thumbnailUrl: String?,
     ) = RelationListItemModel(
         id = "${linkedEntityId}_$order",
         linkedEntityId = linkedEntityId,
@@ -105,28 +128,14 @@ class RelationDao(
         disambiguation = disambiguation,
         attributes = attributes,
         additionalInfo = additionalInfo,
-        visited = visited == true,
-    )
-
-    private fun mapToRelationListItemModel(
-        linkedEntityId: String,
-        linkedEntity: MusicBrainzEntity,
-        order: Int,
-        label: String,
-        name: String,
-        disambiguation: String?,
-        attributes: String?,
-        additionalInfo: String?,
-    ) = RelationListItemModel(
-        id = "${linkedEntityId}_$order",
-        linkedEntityId = linkedEntityId,
-        linkedEntity = linkedEntity,
-        label = label,
-        name = name,
-        disambiguation = disambiguation,
-        attributes = attributes,
-        additionalInfo = additionalInfo,
-        visited = true,
+        visited = visited == true || linkedEntity == MusicBrainzEntity.URL,
+        isForwardDirection = isForwardDirection,
+        lifeSpan = LifeSpanUiModel(
+            begin = begin,
+            end = end,
+            ended = ended,
+        ),
+        imageUrl = thumbnailUrl,
     )
 
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<CountOfEachRelationshipType>> =

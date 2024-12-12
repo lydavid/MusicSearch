@@ -23,7 +23,7 @@ class LabelRepositoryImpl(
         }
 
         val label = labelDao.getLabelForDetails(labelId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(labelId)
+        val urlRelations = relationRepository.getRelationshipsByType(labelId)
         val visited = relationRepository.visited(labelId)
         if (label != null && visited) {
             return label.copy(urls = urlRelations)
@@ -37,7 +37,7 @@ class LabelRepositoryImpl(
     private fun delete(id: String) {
         labelDao.withTransaction {
             labelDao.delete(id)
-            relationRepository.deleteUrlRelationshipsByEntity(id)
+            relationRepository.deleteRelationshipsByType(id)
         }
     }
 

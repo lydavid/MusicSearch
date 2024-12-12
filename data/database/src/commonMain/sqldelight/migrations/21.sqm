@@ -1,0 +1,3 @@
+import kotlin.Boolean;
+
+ALTER TABLE `relation` ADD COLUMN `is_forward_direction` INTEGER AS Boolean;

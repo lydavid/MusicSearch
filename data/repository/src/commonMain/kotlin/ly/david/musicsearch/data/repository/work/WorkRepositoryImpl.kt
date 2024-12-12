@@ -26,7 +26,7 @@ class WorkRepositoryImpl(
 
         val work = workDao.getWorkForDetails(workId)
         val workAttributes = workAttributeDao.getWorkAttributesForWork(workId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(workId)
+        val urlRelations = relationRepository.getRelationshipsByType(workId)
         val visited = relationRepository.visited(workId)
         if (work != null && visited) {
             return work.copy(
@@ -43,7 +43,7 @@ class WorkRepositoryImpl(
     private fun delete(id: String) {
         workDao.withTransaction {
             workDao.delete(id)
-            relationRepository.deleteUrlRelationshipsByEntity(id)
+            relationRepository.deleteRelationshipsByType(id)
         }
     }
 

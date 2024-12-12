@@ -48,25 +48,6 @@ internal fun PreviewRecordingRelationListItem() {
 
 @PreviewLightDark
 @Composable
-internal fun PreviewUrlRelationListItem() {
-    PreviewTheme {
-        Surface {
-            RelationListItem(
-                relation = RelationListItemModel(
-                    id = "2_1",
-                    linkedEntityId = "3",
-                    linkedEntity = MusicBrainzEntity.URL,
-                    label = "Stream for free",
-                    name = "https://www.example.com",
-                    visited = true,
-                ),
-            )
-        }
-    }
-}
-
-@PreviewLightDark
-@Composable
 internal fun PreviewRecordingRelationListItemVisited() {
     PreviewTheme {
         Surface {

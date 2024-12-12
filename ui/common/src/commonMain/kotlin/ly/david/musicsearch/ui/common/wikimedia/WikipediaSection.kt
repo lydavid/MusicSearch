@@ -16,14 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
-import ly.david.musicsearch.ui.common.relation.RelationListItem
+import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
@@ -69,10 +68,9 @@ fun WikipediaSection(
         if (extract.wikipediaUrl.isNotBlank() &&
             extract.wikipediaUrl.contains(filterText, ignoreCase = true)
         ) {
-            val uriHandler = LocalUriHandler.current
             val strings = LocalStrings.current
 
-            RelationListItem(
+            UrlListItem(
                 relation = RelationListItemModel(
                     id = "wikipedia_section",
                     label = strings.wikipedia,
@@ -80,9 +78,6 @@ fun WikipediaSection(
                     name = extract.wikipediaUrl,
                     linkedEntityId = "wikipedia_section",
                 ),
-                onItemClick = { _, _, _ ->
-                    uriHandler.openUri(extract.wikipediaUrl)
-                },
             )
         }
     }

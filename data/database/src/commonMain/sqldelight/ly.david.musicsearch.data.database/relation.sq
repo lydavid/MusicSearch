@@ -1,4 +1,5 @@
 import kotlin.Int;
+import kotlin.Boolean;
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
 
 CREATE TABLE IF NOT EXISTS relation (
@@ -11,7 +12,12 @@ CREATE TABLE IF NOT EXISTS relation (
   `disambiguation` TEXT,
   `attributes` TEXT,
   `additional_info` TEXT,
+  `is_forward_direction` INTEGER AS Boolean,
+  `begin` TEXT,
+  `end` TEXT,
+  `ended` INTEGER AS Boolean,
 
+  -- an entity can be linked to another entity multiple times, possibly with the same label
   PRIMARY KEY (entity_id, linked_entity_id, `order`)
 );
 
@@ -25,7 +31,11 @@ INSERT OR IGNORE INTO relation (
   `name`,
   `disambiguation`,
   `attributes`,
-  `additional_info`
+  `additional_info`,
+  `is_forward_direction`,
+  `begin`,
+  `end`,
+  `ended`
 )
 VALUES (
   :`entity_id`,
@@ -36,18 +46,22 @@ VALUES (
   :`name`,
   :`disambiguation`,
   :`attributes`,
-  :`additional_info`
+  :`additional_info`,
+  :`is_forward_direction`,
+  :`begin`,
+  :`end`,
+  :`ended`
 );
 
 insertEntity:
 INSERT OR IGNORE INTO relation
 VALUES ?;
 
-countEntityRelationshipsExcludingUrls:
+countEntityRelationships:
 SELECT count(*)
 FROM relation
 WHERE entity_id = :entityId
-AND linked_entity != "url"
+AND linked_entity IN :relatedEntities
 AND (
   name LIKE :query
   OR disambiguation LIKE :query
@@ -56,7 +70,7 @@ AND (
   OR additional_info LIKE :query
 );
 
-getEntityRelationshipsExcludingUrls:
+getEntityRelationships:
 SELECT
   `linked_entity_id`,
   `linked_entity`,
@@ -66,11 +80,17 @@ SELECT
   `disambiguation`,
   `attributes`,
   `additional_info`,
-  visited.entity_id IS NOT NULL AS visited
+  visited.entity_id IS NOT NULL AS visited,
+  `is_forward_direction`,
+  `begin`,
+  `end`,
+  `ended`,
+  mi.thumbnail_url
 FROM relation
 LEFT JOIN visited ON visited.entity_id = linked_entity_id
+LEFT JOIN mbid_image mi ON mi.mbid = linked_entity_id
 WHERE relation.entity_id = :entityId
-AND linked_entity != "url"
+AND linked_entity IN :relatedEntities
 AND (
   name LIKE :query
   OR disambiguation LIKE :query
@@ -78,14 +98,16 @@ AND (
   OR attributes LIKE :query
   OR additional_info LIKE :query
 )
+GROUP BY linked_entity, label, `order`
 ORDER BY linked_entity, label, `order`
 LIMIT :limit OFFSET :offset;
 
-deleteRelationshipsExcludingUrlsByEntity:
+deleteRelationships:
 DELETE FROM relation
-WHERE entity_id = :entityId AND linked_entity != "url";
+WHERE entity_id = :entityId
+AND linked_entity IN :relatedEntities;
 
-getEntityUrlRelationships:
+getRelationshipsByType:
 SELECT
   `linked_entity_id`,
   `linked_entity`,
@@ -94,10 +116,18 @@ SELECT
   `name`,
   `disambiguation`,
   `attributes`,
-  `additional_info`
+  `additional_info`,
+  visited.entity_id IS NOT NULL AS visited,
+  `is_forward_direction`,
+  `begin`,
+  `end`,
+  `ended`,
+  mi.thumbnail_url
 FROM relation
-WHERE entity_id = :entityId
-AND linked_entity = "url"
+LEFT JOIN visited ON visited.entity_id = linked_entity_id
+LEFT JOIN mbid_image mi ON mi.mbid = linked_entity_id
+WHERE relation.entity_id = :entityId
+AND linked_entity = :entityType
 AND (
   name LIKE :query
   OR disambiguation LIKE :query
@@ -107,9 +137,9 @@ AND (
 )
 ORDER BY linked_entity, label, `order`;
 
-deleteUrlRelationshipssByEntity:
+deleteRelationshipsByType:
 DELETE FROM relation
-WHERE entity_id = :entityId AND linked_entity = "url";
+WHERE entity_id = :entityId AND linked_entity = :entityType;
 
 countOfEachRelationshipType:
 SELECT linked_entity, count(entity_id) AS entity_count

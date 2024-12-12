@@ -7,6 +7,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class ArtistRepositoryImpl(
@@ -25,7 +26,10 @@ class ArtistRepositoryImpl(
         }
 
         val artistDetailsModel = artistDao.getArtistForDetails(artistId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(artistId)
+        val urlRelations = relationRepository.getRelationshipsByType(
+            entityId = artistId,
+            entity = MusicBrainzEntity.URL,
+        )
         val visited = relationRepository.visited(artistId)
 
         if (
@@ -50,7 +54,10 @@ class ArtistRepositoryImpl(
     private fun delete(artistId: String) {
         artistDao.withTransaction {
             artistDao.delete(artistId = artistId)
-            relationRepository.deleteUrlRelationshipsByEntity(entityId = artistId)
+            relationRepository.deleteRelationshipsByType(
+                entityId = artistId,
+                entity = MusicBrainzEntity.URL,
+            )
         }
     }
 

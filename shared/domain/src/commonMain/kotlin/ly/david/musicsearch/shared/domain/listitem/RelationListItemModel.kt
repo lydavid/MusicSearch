@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.domain.listitem
 
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.Relation
 
@@ -20,4 +21,7 @@ data class RelationListItemModel(
     override val additionalInfo: String? = null,
     override val linkedEntity: MusicBrainzEntity,
     override val visited: Boolean = true,
+    override val isForwardDirection: Boolean? = null,
+    val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
+    val imageUrl: String? = null,
 ) : ListItemModel(), Relation, Visitable

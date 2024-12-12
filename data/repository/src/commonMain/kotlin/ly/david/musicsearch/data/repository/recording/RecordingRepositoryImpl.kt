@@ -37,7 +37,7 @@ class RecordingRepositoryImpl(
     private fun getCachedData(recordingId: String): RecordingDetailsModel? {
         val recording = recordingDao.getRecordingForDetails(recordingId)
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(recordingId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(recordingId)
+        val urlRelations = relationRepository.getRelationshipsByType(recordingId)
         val visited = relationRepository.visited(recordingId)
         return if (recording != null &&
             artistCredits.isNotEmpty() &&
@@ -55,7 +55,7 @@ class RecordingRepositoryImpl(
     private fun delete(id: String) {
         recordingDao.withTransaction {
             recordingDao.delete(id)
-            relationRepository.deleteUrlRelationshipsByEntity(id)
+            relationRepository.deleteRelationshipsByType(id)
         }
     }
 
