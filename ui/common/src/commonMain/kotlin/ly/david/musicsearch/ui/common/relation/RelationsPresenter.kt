@@ -26,17 +26,12 @@ class RelationsPresenterImpl(
         var query by rememberSaveable { mutableStateOf("") }
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
-        var excludedEntities: Set<MusicBrainzEntity> by rememberSaveable {
-            mutableStateOf(
-                setOf(MusicBrainzEntity.URL),
-            )
-        }
         val relationListItems: Flow<PagingData<RelationListItemModel>> by rememberRetained(id, entity, query) {
             mutableStateOf(
                 getEntityRelationships(
                     entityId = id,
                     entity = entity,
-                    relatedEntities = relatableEntities subtract excludedEntities,
+                    relatedEntities = relatableEntities subtract setOf(MusicBrainzEntity.URL),
                     query = query,
                 ),
             )
@@ -48,7 +43,6 @@ class RelationsPresenterImpl(
                 is RelationsUiEvent.GetRelations -> {
                     id = event.byEntityId
                     entity = event.byEntity
-                    excludedEntities = event.excludedEntities
                 }
 
                 is RelationsUiEvent.UpdateQuery -> {

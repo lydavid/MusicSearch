@@ -57,11 +57,11 @@ insertEntity:
 INSERT OR IGNORE INTO relation
 VALUES ?;
 
-countEntityRelationshipsExcludingUrls:
+countEntityRelationships:
 SELECT count(*)
 FROM relation
 WHERE entity_id = :entityId
-AND linked_entity != "url"
+AND linked_entity IN :relatedEntities
 AND (
   name LIKE :query
   OR disambiguation LIKE :query

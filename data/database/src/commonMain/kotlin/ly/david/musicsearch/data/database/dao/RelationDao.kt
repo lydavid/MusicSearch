@@ -52,8 +52,9 @@ class RelationDao(
         query: String = "%%",
         relatedEntities: Set<MusicBrainzEntity>,
     ): PagingSource<Int, RelationListItemModel> = QueryPagingSource(
-        countQuery = transacter.countEntityRelationshipsExcludingUrls(
+        countQuery = transacter.countEntityRelationships(
             entityId = entityId,
+            relatedEntities = relatedEntities,
             query = query,
         ),
         transacter = transacter,

@@ -147,12 +147,6 @@ class RelationRepositoryImpl(
     override fun visited(entityId: String): Boolean =
         visitedDao.contains(entityId)
 
-    // TODO: reuse this one implementation
-    //  pass in a list of entities that
-    //  - we fetch from network
-    //  - store
-    //  - query
-    //  - delete
     @OptIn(ExperimentalPagingApi::class)
     override fun observeEntityRelationships(
         entity: MusicBrainzEntity,
