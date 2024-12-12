@@ -156,7 +156,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             begin = begin,
             end = end,
             ended = ended,
-        )
+        ),
     )
 }
 

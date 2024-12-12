@@ -31,7 +31,6 @@ import ly.david.musicsearch.ui.image.getPlaceholderKey
 fun RelationListItem(
     relation: RelationListItemModel,
     modifier: Modifier = Modifier,
-    showLabel: Boolean = true,
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     val haptics = LocalHapticFeedback.current
@@ -53,13 +52,11 @@ fun RelationListItem(
         },
         headlineContent = {
             Column {
-                if (showLabel) {
-                    Text(
-                        text = "${relation.label}:",
-                        style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = relation.fontWeight,
-                    )
-                }
+                Text(
+                    text = "${relation.label}:",
+                    style = TextStyles.getCardBodySubTextStyle(),
+                    fontWeight = relation.fontWeight,
+                )
 
                 Text(
                     text = relation.name,

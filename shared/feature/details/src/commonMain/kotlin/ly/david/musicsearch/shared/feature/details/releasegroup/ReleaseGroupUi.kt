@@ -178,15 +178,6 @@ internal fun ReleaseGroupUi(
                             filterText = state.topAppBarFilterState.filterText,
                             imageUrl = state.imageUrl,
                             lazyListState = state.detailsLazyListState,
-                            onItemClick = { entity, id, title ->
-                                eventSink(
-                                    ReleaseGroupUiEvent.ClickItem(
-                                        entity = entity,
-                                        id = id,
-                                        title = title,
-                                    ),
-                                )
-                            },
                         )
                     }
                 }

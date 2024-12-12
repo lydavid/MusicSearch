@@ -133,15 +133,6 @@ internal fun WorkUi(
                             work = work,
                             filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
-                            onItemClick = { entity, id, title ->
-                                eventSink(
-                                    WorkUiEvent.ClickItem(
-                                        entity = entity,
-                                        id = id,
-                                        title = title,
-                                    ),
-                                )
-                            },
                         )
                     }
                 }

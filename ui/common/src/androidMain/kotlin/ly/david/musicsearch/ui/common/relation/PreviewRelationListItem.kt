@@ -29,27 +29,6 @@ internal fun PreviewArtistRelationListItem() {
 
 @PreviewLightDark
 @Composable
-internal fun PreviewArtistWithoutLabelRelationListItem() {
-    PreviewTheme {
-        Surface {
-            RelationListItem(
-                relation = RelationListItemModel(
-                    id = "2_0",
-                    linkedEntityId = "2",
-                    linkedEntity = MusicBrainzEntity.ARTIST,
-                    label = "miscellaneous support",
-                    name = "Artist Name",
-                    disambiguation = "that guy",
-                    attributes = "task: director & organizer, strings",
-                ),
-                showLabel = false,
-            )
-        }
-    }
-}
-
-@PreviewLightDark
-@Composable
 internal fun PreviewRecordingRelationListItem() {
     PreviewTheme {
         Surface {
@@ -61,25 +40,6 @@ internal fun PreviewRecordingRelationListItem() {
                     label = "DJ-mixes",
                     name = "Recording Name",
                     additionalInfo = "by Artist Names (order: 10)",
-                ),
-            )
-        }
-    }
-}
-
-@PreviewLightDark
-@Composable
-internal fun PreviewUrlRelationListItem() {
-    PreviewTheme {
-        Surface {
-            RelationListItem(
-                relation = RelationListItemModel(
-                    id = "2_1",
-                    linkedEntityId = "3",
-                    linkedEntity = MusicBrainzEntity.URL,
-                    label = "Stream for free",
-                    name = "https://www.example.com",
-                    visited = true,
                 ),
             )
         }

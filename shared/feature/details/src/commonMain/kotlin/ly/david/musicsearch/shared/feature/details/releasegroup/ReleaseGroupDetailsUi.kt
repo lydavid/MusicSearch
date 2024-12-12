@@ -5,7 +5,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -22,7 +21,6 @@ internal fun ReleaseGroupDetailsUi(
     filterText: String = "",
     imageUrl: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     val strings = LocalStrings.current
 
@@ -51,7 +49,6 @@ internal fun ReleaseGroupDetailsUi(
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick,
                 )
             }
         }

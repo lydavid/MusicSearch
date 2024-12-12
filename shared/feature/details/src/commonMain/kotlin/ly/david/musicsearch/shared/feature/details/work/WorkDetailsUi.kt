@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.core.LocalStrings
@@ -21,7 +20,6 @@ internal fun WorkDetailsUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     val strings = LocalStrings.current
 
@@ -72,7 +70,6 @@ internal fun WorkDetailsUi(
             UrlsSection(
                 urls = work.urls,
                 filterText = filterText,
-                onItemClick = onItemClick,
             )
         }
     }

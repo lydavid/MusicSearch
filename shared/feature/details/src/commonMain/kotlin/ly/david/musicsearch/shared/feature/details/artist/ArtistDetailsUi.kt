@@ -61,7 +61,6 @@ internal fun ArtistDetailsUi(
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick,
                 )
             }
         }

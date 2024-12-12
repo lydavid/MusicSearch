@@ -136,15 +136,6 @@ internal fun EventUi(
                             event = event,
                             filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
-                            onItemClick = { entity, id, title ->
-                                eventSink(
-                                    EventUiEvent.ClickItem(
-                                        entity = entity,
-                                        id = id,
-                                        title = title,
-                                    ),
-                                )
-                            },
                         )
                     }
                 }

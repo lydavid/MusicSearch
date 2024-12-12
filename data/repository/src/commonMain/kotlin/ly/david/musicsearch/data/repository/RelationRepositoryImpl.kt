@@ -98,7 +98,7 @@ class RelationRepositoryImpl(
             MusicBrainzEntity.PLACE -> {
                 lookupApi.lookupPlace(
                     placeId = entityId,
-                    include = LookupApi.INC_ALL_RELATIONS_EXCEPT_EVENTS_URLS,
+                    include = include,
                 ).relations
             }
 
