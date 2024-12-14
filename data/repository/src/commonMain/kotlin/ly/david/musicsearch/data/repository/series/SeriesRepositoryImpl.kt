@@ -23,7 +23,7 @@ class SeriesRepositoryImpl(
         }
 
         val series = seriesDao.getSeriesForDetails(seriesId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(seriesId)
+        val urlRelations = relationRepository.getRelationshipsByType(seriesId)
         val visited = relationRepository.visited(seriesId)
         if (series != null &&
             visited &&
@@ -42,7 +42,7 @@ class SeriesRepositoryImpl(
     private fun delete(id: String) {
         seriesDao.withTransaction {
             seriesDao.delete(id)
-            relationRepository.deleteUrlRelationshipsByEntity(id)
+            relationRepository.deleteRelationshipsByType(id)
         }
     }
 

@@ -18,19 +18,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 
-private const val AREA_REL = "area-rels"
-private const val ARTIST_REL = "artist-rels"
-private const val EVENT_REL = "event-rels"
-private const val GENRE_REL = "genre-rels"
-private const val INSTRUMENT_REL = "instrument-rels"
-private const val LABEL_REL = "label-rels"
-private const val PLACE_REL = "place-rels"
-private const val RECORDING_REL = "recording-rels"
-private const val RELEASE_REL = "release-rels"
-private const val RELEASE_GROUP_REL = "release-group-rels"
-private const val SERIES_REL = "series-rels"
 const val URL_REL = "url-rels"
-private const val WORK_REL = "work-rels"
 
 /**
  * See [lookup API](https://wiki.musicbrainz.org/MusicBrainz_API#Lookups).
@@ -39,35 +27,6 @@ private const val WORK_REL = "work-rels"
  * Can include additional information related to the entity. Max of 25.
  */
 interface LookupApi {
-
-    companion object {
-        const val INC_ALL_RELATIONS_EXCEPT_URLS =
-            "$AREA_REL+" +
-                "$ARTIST_REL+" +
-                "$EVENT_REL+" +
-                "$GENRE_REL+" +
-                "$INSTRUMENT_REL+" +
-                "$LABEL_REL+" +
-                "$PLACE_REL+" +
-                "$RECORDING_REL+" +
-                "$RELEASE_REL+" +
-                "$RELEASE_GROUP_REL+" +
-                "$SERIES_REL+" +
-                WORK_REL
-
-        const val INC_ALL_RELATIONS_EXCEPT_EVENTS_URLS =
-            "$AREA_REL+" +
-                "$ARTIST_REL+" +
-                "$GENRE_REL+" +
-                "$INSTRUMENT_REL+" +
-                "$LABEL_REL+" +
-                "$PLACE_REL+" +
-                "$RECORDING_REL+" +
-                "$RELEASE_REL+" +
-                "$RELEASE_GROUP_REL+" +
-                "$SERIES_REL+" +
-                WORK_REL
-    }
 
     suspend fun lookupArea(
         areaId: String,

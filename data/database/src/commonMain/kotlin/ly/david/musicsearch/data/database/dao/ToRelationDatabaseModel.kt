@@ -1,9 +1,11 @@
 package ly.david.musicsearch.data.database.dao
 
+import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
 import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.emptyToNull
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
@@ -38,6 +40,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
+                // This is the lifespan of the relationship, not the artist
                 additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             }
         }
@@ -147,6 +150,12 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         disambiguation = linkedEntityDisambiguation,
         attributes = getFormattedAttributesForDisplay(),
         additionalInfo = additionalInfo,
+        isForwardDirection = direction == Direction.FORWARD,
+        lifeSpan = LifeSpanUiModel(
+            begin = begin,
+            end = end,
+            ended = ended,
+        ),
     )
 }
 

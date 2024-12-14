@@ -96,7 +96,6 @@ internal fun PlaceDetailsUi(
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick,
                 )
             }
         }

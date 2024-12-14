@@ -194,6 +194,7 @@ class LabelRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "ff7c8fd7-b8d4-4b79-b1f7-b562210ade1a_7",
@@ -205,6 +206,7 @@ class LabelRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "44117bb6-9193-402b-a216-16b34555ca08_8",
@@ -216,6 +218,7 @@ class LabelRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "24284c01-4cbd-488f-a042-f15dbc852633_9",
@@ -227,6 +230,7 @@ class LabelRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                     RelationListItemModel(
                         id = "f58627cb-4d36-475e-a11b-82cd4be31c13_6",
@@ -238,6 +242,7 @@ class LabelRepositoryImplTest : KoinTest {
                         additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
+                        isForwardDirection = true,
                     ),
                 ),
             ),

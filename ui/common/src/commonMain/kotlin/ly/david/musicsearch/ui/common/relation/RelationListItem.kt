@@ -3,13 +3,13 @@ package ly.david.musicsearch.ui.common.relation
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -19,10 +19,12 @@ import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.common.EntityIcon
+import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.image.ThumbnailImage
+import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -35,6 +37,19 @@ fun RelationListItem(
     val clipboardManager = LocalClipboardManager.current
 
     ListItem(
+        leadingContent = {
+            val clipModifier = if (relation.linkedEntity == MusicBrainzEntity.ARTIST) {
+                Modifier.clip(CircleShape)
+            } else {
+                Modifier
+            }
+            ThumbnailImage(
+                url = relation.imageUrl.orEmpty(),
+                placeholderKey = getPlaceholderKey(relation.linkedEntityId),
+                placeholderIcon = relation.linkedEntity.getIcon(),
+                modifier = clipModifier,
+            )
+        },
         headlineContent = {
             Column {
                 Text(
@@ -43,22 +58,15 @@ fun RelationListItem(
                     fontWeight = relation.fontWeight,
                 )
 
-                Row(
-                    modifier = Modifier.padding(top = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    EntityIcon(
-                        entity = relation.linkedEntity,
-                        modifier = Modifier.padding(end = 8.dp),
-                    )
-
-                    Text(
-                        text = relation.name,
-                        style = TextStyles.getCardBodyTextStyle(),
-                        fontWeight = relation.fontWeight,
-                    )
-                }
-
+                Text(
+                    text = relation.name,
+                    style = TextStyles.getCardBodyTextStyle(),
+                    fontWeight = relation.fontWeight,
+                )
+            }
+        },
+        supportingContent = {
+            Column {
                 DisambiguationText(
                     disambiguation = relation.disambiguation,
                     fontWeight = relation.fontWeight,

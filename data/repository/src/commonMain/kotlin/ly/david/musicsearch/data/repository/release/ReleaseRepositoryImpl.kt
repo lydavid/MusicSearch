@@ -67,7 +67,7 @@ class ReleaseRepositoryImpl(
         val formatTrackCounts = releaseDao.getReleaseFormatTrackCount(releaseId)
         val labels = releaseLabelDao.getLabelsByRelease(releaseId)
         val releaseEvents = releaseCountryDao.getCountriesByRelease(releaseId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(releaseId)
+        val urlRelations = relationRepository.getRelationshipsByType(releaseId)
         val visited = relationRepository.visited(releaseId)
 
         if (
@@ -104,7 +104,7 @@ class ReleaseRepositoryImpl(
             releaseReleaseGroupDao.deleteReleaseGroupByReleaseLink(releaseId = releaseId)
             releaseLabelDao.deleteLabelsByReleaseLinks(releaseId = releaseId)
             releaseCountryDao.deleteCountriesByReleaseLinks(releaseId = releaseId)
-            relationRepository.deleteUrlRelationshipsByEntity(entityId = releaseId)
+            relationRepository.deleteRelationshipsByType(entityId = releaseId)
         }
     }
 

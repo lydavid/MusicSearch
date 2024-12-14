@@ -24,6 +24,7 @@ import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.relatableEntities
 import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
@@ -111,6 +112,10 @@ internal class PlacePresenter(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
+                            relatedEntities = relatableEntities subtract setOf(
+                                MusicBrainzEntity.EVENT,
+                                MusicBrainzEntity.URL,
+                            ),
                         ),
                     )
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))

@@ -28,7 +28,7 @@ class PlaceRepositoryImpl(
 
         val place = placeDao.getPlaceForDetails(placeId)
         val area = areaPlaceDao.getAreaByPlace(placeId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(placeId)
+        val urlRelations = relationRepository.getRelationshipsByType(placeId)
         val visited = relationRepository.visited(placeId)
         if (place != null &&
             visited &&
@@ -49,7 +49,7 @@ class PlaceRepositoryImpl(
         placeDao.withTransaction {
             placeDao.delete(id)
             areaPlaceDao.deleteAreaPlaceLink(id)
-            relationRepository.deleteUrlRelationshipsByEntity(id)
+            relationRepository.deleteRelationshipsByType(id)
         }
     }
 

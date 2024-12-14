@@ -1,0 +1,5 @@
+import kotlin.Boolean;
+
+ALTER TABLE `relation` ADD COLUMN `begin` TEXT;
+ALTER TABLE `relation` ADD COLUMN `end` TEXT;
+ALTER TABLE `relation` ADD COLUMN `ended` INTEGER AS Boolean;

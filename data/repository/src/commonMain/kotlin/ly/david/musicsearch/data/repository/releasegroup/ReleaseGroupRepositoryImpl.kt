@@ -37,7 +37,7 @@ class ReleaseGroupRepositoryImpl(
     private fun getCachedData(releaseGroupId: String): ReleaseGroupDetailsModel? {
         val releaseGroup = releaseGroupDao.getReleaseGroupForDetails(releaseGroupId)
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseGroupId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(releaseGroupId)
+        val urlRelations = relationRepository.getRelationshipsByType(releaseGroupId)
         val visited = relationRepository.visited(releaseGroupId)
 
         return if (releaseGroup != null && artistCredits.isNotEmpty() && visited) {
@@ -53,7 +53,7 @@ class ReleaseGroupRepositoryImpl(
     private fun delete(id: String) {
         releaseGroupDao.withTransaction {
             releaseGroupDao.delete(id)
-            relationRepository.deleteUrlRelationshipsByEntity(id)
+            relationRepository.deleteRelationshipsByType(id)
         }
     }
 

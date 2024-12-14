@@ -17,13 +17,15 @@ class GetEntityRelationships(
     operator fun invoke(
         entityId: String,
         entity: MusicBrainzEntity?,
+        relatedEntities: Set<MusicBrainzEntity>,
         query: String,
     ): Flow<PagingData<RelationListItemModel>> {
         return when {
             entityId.isEmpty() || entity == null -> emptyFlow()
-            else -> relationRepository.observeEntityRelationshipsExcludingUrls(
+            else -> relationRepository.observeEntityRelationships(
                 entityId = entityId,
                 entity = entity,
+                relatedEntities = relatedEntities,
                 query = query,
             )
                 .distinctUntilChanged()

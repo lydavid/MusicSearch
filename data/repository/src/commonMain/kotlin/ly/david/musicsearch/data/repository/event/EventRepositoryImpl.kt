@@ -23,7 +23,7 @@ class EventRepositoryImpl(
         }
 
         val event = eventDao.getEventForDetails(eventId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(eventId)
+        val urlRelations = relationRepository.getRelationshipsByType(eventId)
         val visited = relationRepository.visited(eventId)
         if (event != null &&
             visited &&
@@ -45,7 +45,7 @@ class EventRepositoryImpl(
     private fun delete(id: String) {
         eventDao.withTransaction {
             eventDao.delete(id)
-            relationRepository.deleteUrlRelationshipsByEntity(entityId = id)
+            relationRepository.deleteRelationshipsByType(entityId = id)
         }
     }
 
