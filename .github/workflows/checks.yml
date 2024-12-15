@@ -77,6 +77,7 @@ jobs:
           file_pattern: '*/*.png'
 
   ios-checks:
+    timeout-minutes: 60
     runs-on: macos-latest
     steps:
       - name: Checkout
