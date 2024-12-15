@@ -2,15 +2,20 @@ package ly.david.musicsearch.data.database
 
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
+import ly.david.musicsearch.shared.domain.ExportDatabase
 import ly.david.musicsearch.shared.domain.PACKAGE_NAME
 import me.sujanpoudel.utils.paths.appCacheDirectory
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import java.util.Properties
 import org.koin.dsl.module
 
-actual val databaseDriverModule = module {
+actual val databasePlatformModule = module {
     single {
         DriverFactory().createDriver()
     }
+
+    singleOf(::ExportDatabaseImpl) bind ExportDatabase::class
 }
 
 private class DriverFactory {

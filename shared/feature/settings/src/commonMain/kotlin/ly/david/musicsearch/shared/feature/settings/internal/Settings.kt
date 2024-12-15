@@ -6,26 +6,39 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.toImmutableList
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
-import ly.david.musicsearch.ui.common.screen.LicensesScreen
-import ly.david.musicsearch.ui.common.screen.NowPlayingHistoryScreen
-import ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen
 import ly.david.musicsearch.shared.strings.AppStrings
-import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
+import ly.david.musicsearch.ui.common.screen.LicensesScreen
+import ly.david.musicsearch.ui.common.screen.NowPlayingHistoryScreen
+import ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
 internal expect fun Settings(
@@ -46,6 +59,13 @@ internal fun Settings(
     val strings = LocalStrings.current
     val eventSink = state.eventSink
     val loginEventSink = state.loginState.eventSink
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    state.snackbarMessage?.let { message ->
+        LaunchedEffect(message) {
+            snackbarHostState.showSnackbar(message = message)
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -55,6 +75,15 @@ internal fun Settings(
                 showBackButton = false,
                 title = strings.settings,
             )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
+                SwipeToDismissBox(
+                    state = rememberSwipeToDismissBoxState(),
+                    backgroundContent = {},
+                    content = { Snackbar(snackbarData) },
+                )
+            }
         },
     ) { innerPadding ->
         Settings(
@@ -92,6 +121,9 @@ internal fun Settings(
             onGoToNotificationListenerSettings = onGoToNotificationListenerSettings,
             versionName = BuildConfig.VERSION_NAME,
             versionCode = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
+            export = {
+                eventSink(SettingsUiEvent.ExportDatabase)
+            },
         )
     }
 }
@@ -116,6 +148,7 @@ internal fun Settings(
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
     isNotificationListenerEnabled: Boolean = false,
     onGoToNotificationListenerSettings: () -> Unit = {},
+    export: () -> Unit = {},
     versionName: String = "",
     versionCode: Int = 0,
 ) {
@@ -184,6 +217,17 @@ internal fun Settings(
                     onClick = {
                         onDestinationClick(SpotifyHistoryScreen)
                     },
+                )
+            }
+
+            ListSeparatorHeader(text = "Database")
+
+            TextButton(onClick = export) {
+                Icon(imageVector = Icons.Default.Download, contentDescription = null)
+                Text(
+                    text = "Save database to Downloads",
+                    modifier = Modifier.padding(start = 8.dp),
+                    style = TextStyles.getCardBodyTextStyle(),
                 )
             }
 

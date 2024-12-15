@@ -20,6 +20,7 @@ val settingsFeatureModule = module {
                     musicBrainzAuthStore = get(),
                     loginPresenter = get(),
                     logout = get(),
+                    exportDatabase = get(),
                 )
 
                 else -> null

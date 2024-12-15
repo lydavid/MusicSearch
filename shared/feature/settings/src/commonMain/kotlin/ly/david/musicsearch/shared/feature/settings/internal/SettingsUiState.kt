@@ -12,5 +12,6 @@ internal data class SettingsUiState(
     val showMoreInfoInReleaseListItem: Boolean = true,
     val sortReleaseGroupListItems: Boolean = false,
     val loginState: LoginUiState,
+    val snackbarMessage: String? = null,
     val eventSink: (SettingsUiEvent) -> Unit,
 ) : CircuitUiState

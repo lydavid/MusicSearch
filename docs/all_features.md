@@ -10,6 +10,7 @@ Inspired by [Spotless' feature matrix](https://github.com/diffplug/spotless?tab=
 |-------------------------------------------------------------|---------|---------|-----|
 | [Browse](#browse)                                           | ✅       | ✅       | ✅   |
 | [Collections](#collections)                                 | ✅       | ✅       | ⬜   |
+| [Export](#export)                                           | ✅       | ⬜       | ⬜   |
 | [Images](#images)                                           | ✅       | ✅       | ✅   |
 | [Graph](#graph)                                             | ✅       | ✅       | ✅   |
 | [MusicBrainz Login](#musicbrainz-login)                     | ✅       | ✅       | ⬜️  |
@@ -81,6 +82,14 @@ See below for the supported types of collections.
 | release group | ✅         |
 | series        | ✅         |
 | work          | ✅         |
+
+
+## Export
+
+Exporting the app's database as a sqlite database is supported.
+
+You will need to use a tool such as [SQLite's CLI](https://www.sqlite.org/cli.html) to interact with it.
+
 
 ## Images
 

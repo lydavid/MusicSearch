@@ -3,10 +3,14 @@ package ly.david.musicsearch.shared.feature.settings.internal
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.ExportDatabase
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.auth.usecase.Logout
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
@@ -18,6 +22,7 @@ internal class SettingsPresenter(
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val loginPresenter: LoginPresenter,
     private val logout: Logout,
+    private val exportDatabase: ExportDatabase,
 ) : Presenter<SettingsUiState> {
     @Composable
     override fun present(): SettingsUiState {
@@ -27,6 +32,7 @@ internal class SettingsPresenter(
         val useMaterialYou by appPreferences.useMaterialYou.collectAsState(initial = true)
         val sortReleaseGroupListItems by appPreferences.sortReleaseGroupListItems.collectAsState(initial = true)
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val scope = rememberCoroutineScope()
         val loginUiState = loginPresenter.present()
@@ -58,6 +64,10 @@ internal class SettingsPresenter(
                         logout()
                     }
                 }
+
+                is SettingsUiEvent.ExportDatabase -> {
+                    snackbarMessage = exportDatabase()
+                }
             }
         }
 
@@ -69,6 +79,7 @@ internal class SettingsPresenter(
             sortReleaseGroupListItems = sortReleaseGroupListItems,
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
             loginState = loginUiState,
+            snackbarMessage = snackbarMessage,
             eventSink = ::eventSink,
         )
     }
