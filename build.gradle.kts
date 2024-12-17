@@ -189,6 +189,7 @@ allprojects {
                         .map { it.dependencyProject }
                         .filter { currentProject != rootProject }
                         .filter { currentProject != it }
+                        .filter { dependency -> dependency.path != ":android:baselineprofile" }
                         .forEach inner@{ dependency ->
 
                             projects.add(currentProject)
@@ -290,6 +291,7 @@ allprojects {
                         .map { it.dependencyProject }
                         .filter { currentProject != rootProject }
                         .filter { currentProject != it }
+                        .filter { dependency -> dependency.path != ":android:baselineprofile" }
                         .forEach inner@{ dependency ->
                             if (dependency == project) {
                                 val traits = mutableListOf<String>()
