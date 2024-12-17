@@ -21,6 +21,10 @@ gradlePlugin {
             id = "ly.david.android.library"
             implementationClass = "ly.david.convention.plugin.AndroidLibraryConventionPlugin"
         }
+        register("androidTest") {
+            id = "ly.david.android.test"
+            implementationClass = "ly.david.convention.plugin.AndroidTestConventionPlugin"
+        }
         register("composeMultiplatform") {
             id = "ly.david.musicsearch.compose.multiplatform"
             implementationClass = "ly.david.convention.plugin.ComposeMultiplatformConventionPlugin"

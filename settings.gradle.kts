@@ -41,6 +41,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(
     ":android:app",
+    ":android:baselineprofile",
     ":android:feature:nowplaying",
     ":android:feature:spotify",
     ":desktop:app",
