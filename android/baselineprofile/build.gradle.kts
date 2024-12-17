@@ -1,31 +1,13 @@
 import com.android.build.api.dsl.ManagedVirtualDevice
 
 plugins {
-    alias(libs.plugins.android.test)
+    id("ly.david.android.test")
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.baselineprofile)
 }
 
 android {
     namespace = "ly.david.musicsearch.baselineprofile"
-    compileSdk = 34
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-
-    defaultConfig {
-        minSdk = 28
-        targetSdk = 34
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArguments["androidx.benchmark.suppressErrors"] = "EMULATOR"
-    }
 
     targetProjectPath = ":android:app"
 
@@ -66,7 +48,7 @@ androidComponents {
         val artifactsLoader = v.artifacts.getBuiltArtifactsLoader()
         v.instrumentationRunnerArguments.put(
             "io.github.lydavid.musicsearch",
-            v.testedApks.map { artifactsLoader.load(it)?.applicationId.orEmpty() }
+            v.testedApks.map { artifactsLoader.load(it)?.applicationId.orEmpty() },
         )
     }
 }
