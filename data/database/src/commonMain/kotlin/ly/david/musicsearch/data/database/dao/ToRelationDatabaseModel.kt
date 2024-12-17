@@ -50,6 +50,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
+                additionalInfo = lifeSpan.getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             } ?: return null
         }
 
