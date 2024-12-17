@@ -98,9 +98,9 @@ internal fun ArtistUi(
                     ArtistTab.STATS,
                 ),
                 overflowDropdownMenuItems = {
-                    RefreshMenuItem {
-                        eventSink(ArtistUiEvent.ForceRefresh)
-                    }
+                    RefreshMenuItem(
+                        onClick = { eventSink(ArtistUiEvent.ForceRefresh) },
+                    )
                     OpenInBrowserMenuItem(
                         url = state.url,
                     )

@@ -191,9 +191,9 @@ internal fun CollectionListUi(
                     }
                 },
                 overflowDropdownMenuItems = {
-                    RefreshMenuItem {
-                        lazyPagingItems.refresh()
-                    }
+                    RefreshMenuItem(
+                        onClick = { lazyPagingItems.refresh() },
+                    )
                     DropdownMenuItem(
                         text = {
                             EditToggle(
