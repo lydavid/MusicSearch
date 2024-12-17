@@ -4,6 +4,7 @@ import java.util.Properties
 plugins {
     id("ly.david.android.application")
     id("ly.david.musicsearch.compose.multiplatform")
+    alias(libs.plugins.baselineprofile)
 }
 
 // For F-Droid, remove google-services.json and we will not apply these plugins.
@@ -104,6 +105,8 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.kotlinx.collections.immutable)
     implementation(libs.timber)
+    implementation(libs.androidx.profileinstaller)
+    "baselineProfile"(project(":android:baselineprofile"))
 
     googlePlayImplementation(platform(libs.firebase.bom))
     googlePlayImplementation(libs.firebase.analytics)
