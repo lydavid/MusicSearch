@@ -23,8 +23,8 @@ fun OverflowMenuScope.AddToCollectionMenuItem(
     overlayHost: OverlayHost,
     coroutineScope: CoroutineScope,
     snackbarHostState: SnackbarHostState,
-    modifier: Modifier = Modifier,
     onLoginClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val strings = LocalStrings.current
 

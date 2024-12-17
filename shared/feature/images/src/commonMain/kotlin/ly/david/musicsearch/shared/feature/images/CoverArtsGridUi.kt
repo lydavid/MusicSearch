@@ -75,9 +75,9 @@ private const val GRID_SIZE = 4
 internal fun CoverArtsGrid(
     mbid: String,
     imageUrls: ImmutableList<ImageUrls>,
+    onImageClick: (index: Int) -> Unit,
     modifier: Modifier = Modifier,
     lazyGridState: LazyGridState = rememberLazyGridState(),
-    onImageClick: (index: Int) -> Unit,
 ) {
     val density: Density = LocalDensity.current
     val screenWidth: Int = screenContainerSize().width

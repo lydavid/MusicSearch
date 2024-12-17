@@ -100,8 +100,8 @@ private fun CoverArtsPager(
     imageUrls: ImmutableList<ImageUrls>,
     selectedImageIndex: Int,
     isCompact: Boolean,
-    modifier: Modifier = Modifier,
     onImageChange: (index: Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val coroutineScope = rememberCoroutineScope()
 

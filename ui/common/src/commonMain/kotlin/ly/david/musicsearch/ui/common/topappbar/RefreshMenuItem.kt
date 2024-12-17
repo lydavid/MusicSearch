@@ -8,8 +8,8 @@ import ly.david.musicsearch.ui.core.LocalStrings
 
 @Composable
 fun OverflowMenuScope.RefreshMenuItem(
-    modifier: Modifier = Modifier,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val strings = LocalStrings.current
 
