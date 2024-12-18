@@ -1,0 +1,2 @@
+CREATE INDEX IF NOT EXISTS idx_mbid_image_mbid ON mbid_image(`mbid`);
+CREATE INDEX IF NOT EXISTS idx_relation_linked_entity_id ON relation(`linked_entity_id`);

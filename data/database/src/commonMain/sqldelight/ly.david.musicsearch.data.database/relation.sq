@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS relation (
   PRIMARY KEY (entity_id, linked_entity_id, `order`)
 );
 
+CREATE INDEX IF NOT EXISTS idx_relation_linked_entity_id ON relation(`linked_entity_id`);
+
 insert:
 INSERT OR IGNORE INTO relation (
   `entity_id`,
@@ -98,7 +100,7 @@ AND (
   OR attributes LIKE :query
   OR additional_info LIKE :query
 )
-GROUP BY linked_entity, label, `order`
+GROUP BY linked_entity_id, `order`
 ORDER BY linked_entity, label, `order`
 LIMIT :limit OFFSET :offset;
 
