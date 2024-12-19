@@ -74,6 +74,12 @@ internal fun ArtistUi(
         eventSink(ArtistUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
     }
 
+    state.snackbarMessage?.let { message ->
+        LaunchedEffect(message) {
+            snackbarHostState.showSnackbar(message = message)
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),

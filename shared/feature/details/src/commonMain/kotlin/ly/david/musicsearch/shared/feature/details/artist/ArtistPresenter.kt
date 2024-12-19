@@ -85,6 +85,7 @@ internal class ArtistPresenter(
         var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val eventsByEntityUiState = eventsByEntityPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
@@ -139,13 +140,17 @@ internal class ArtistPresenter(
         }
 
         LaunchedEffect(forceRefreshDetails, artist) {
-            artist = artist?.copy(
-                wikipediaExtract = wikimediaRepository.getWikipediaExtract(
-                    mbid = artist?.id ?: return@LaunchedEffect,
-                    urls = artist?.urls ?: return@LaunchedEffect,
-                    forceRefresh = forceRefreshDetails,
-                ),
-            )
+            wikimediaRepository.getWikipediaExtract(
+                mbid = artist?.id ?: return@LaunchedEffect,
+                urls = artist?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                artist = artist?.copy(
+                    wikipediaExtract = wikipediaExtract,
+                )
+            }.onFailure {
+                snackbarMessage = it.message
+            }
         }
 
         LaunchedEffect(
@@ -305,6 +310,7 @@ internal class ArtistPresenter(
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
+            snackbarMessage = snackbarMessage,
             eventsByEntityUiState = eventsByEntityUiState,
             recordingsByEntityUiState = recordingsByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
@@ -328,6 +334,7 @@ internal data class ArtistUiState(
     val selectedTab: ArtistTab,
     val topAppBarFilterState: TopAppBarFilterState,
     val detailsLazyListState: LazyListState = LazyListState(),
+    val snackbarMessage: String? = null,
     val eventsByEntityUiState: EventsByEntityUiState,
     val recordingsByEntityUiState: RecordingsByEntityUiState,
     val releasesByEntityUiState: ReleasesByEntityUiState,

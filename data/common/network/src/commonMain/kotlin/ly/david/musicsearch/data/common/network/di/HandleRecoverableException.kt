@@ -26,7 +26,7 @@ internal suspend fun handleRecoverableException(
             val handledException: HandledException
             when (exceptionResponse.status) {
                 HttpStatusCode.BadRequest -> {
-                    handledException = HandledException("Client id/secret not set.", ErrorResolution.None)
+                    handledException = HandledException("Bad request.", ErrorResolution.None)
                 }
 
                 HttpStatusCode.Unauthorized -> {
@@ -57,7 +57,7 @@ internal suspend fun handleRecoverableException(
             when (exceptionResponse.status) {
                 HttpStatusCode.InternalServerError -> {
                     handledException = HandledException(
-                        "${exception.response.request.url} may be experiencing issues. Try again later.",
+                        "${exception.response.request.url.host} may be experiencing issues. Try again later.",
                         ErrorResolution.Retry,
                     )
                 }

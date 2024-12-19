@@ -13,5 +13,5 @@ interface WikimediaRepository {
         mbid: String,
         urls: List<RelationListItemModel>,
         forceRefresh: Boolean,
-    ): WikipediaExtract
+    ): Result<WikipediaExtract>
 }
