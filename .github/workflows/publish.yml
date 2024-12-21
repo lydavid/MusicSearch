@@ -156,10 +156,3 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
-
-      - name: Merge master back into beta
-        if: always() && github.ref == 'refs/heads/master'
-        run: |
-          git checkout beta
-          git merge master --ff-only --no-edit
-          git push origin beta
