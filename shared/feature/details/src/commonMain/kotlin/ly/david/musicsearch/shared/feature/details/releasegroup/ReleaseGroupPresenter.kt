@@ -28,6 +28,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
@@ -51,6 +52,7 @@ internal class ReleaseGroupPresenter(
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val wikimediaRepository: WikimediaRepository,
 ) : Presenter<ReleaseGroupUiState> {
 
     @Composable
@@ -69,6 +71,7 @@ internal class ReleaseGroupPresenter(
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.DETAILS) }
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
@@ -111,6 +114,20 @@ internal class ReleaseGroupPresenter(
                     thumbnail = false,
                     forceRefresh = forceRefreshDetails,
                 )
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, releaseGroup) {
+            wikimediaRepository.getWikipediaExtract(
+                mbid = releaseGroup?.id ?: return@LaunchedEffect,
+                urls = releaseGroup?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                releaseGroup = releaseGroup?.copy(
+                    wikipediaExtract = wikipediaExtract,
+                )
+            }.onFailure {
+                snackbarMessage = it.message
             }
         }
 
@@ -188,6 +205,7 @@ internal class ReleaseGroupPresenter(
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
+            snackbarMessage = snackbarMessage,
             releasesByEntityUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
@@ -208,6 +226,7 @@ internal data class ReleaseGroupUiState(
     val selectedTab: ReleaseGroupTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
+    val snackbarMessage: String? = null,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState = LoginUiState(),

@@ -19,6 +19,7 @@ import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
@@ -71,6 +72,11 @@ internal fun EventDetailsUi(
                         )
                     }
                 }
+
+                WikipediaSection(
+                    extract = wikipediaExtract,
+                    filterText = filterText,
+                )
 
                 // TODO: set list
                 //  api for this seems like some kind markdown?

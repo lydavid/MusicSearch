@@ -24,6 +24,7 @@ import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.work.WorkRepository
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
@@ -52,6 +53,7 @@ internal class WorkPresenter(
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val wikimediaRepository: WikimediaRepository,
 ) : Presenter<WorkUiState> {
 
     @Composable
@@ -68,6 +70,7 @@ internal class WorkPresenter(
         var selectedTab by rememberSaveable { mutableStateOf(WorkTab.DETAILS) }
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val artistsByEntityUiState = artistsByEntityPresenter.present()
         val artistsEventSink = artistsByEntityUiState.eventSink
@@ -100,6 +103,20 @@ internal class WorkPresenter(
                     ),
                 )
                 recordedHistory = true
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, work) {
+            wikimediaRepository.getWikipediaExtract(
+                mbid = work?.id ?: return@LaunchedEffect,
+                urls = work?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                work = work?.copy(
+                    wikipediaExtract = wikipediaExtract,
+                )
+            }.onFailure {
+                snackbarMessage = it.message
             }
         }
 
@@ -185,6 +202,7 @@ internal class WorkPresenter(
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
+            snackbarMessage = snackbarMessage,
             artistsByEntityUiState = artistsByEntityUiState,
             recordingsByEntityUiState = recordingsByEntityUiState,
             relationsUiState = relationsUiState,
@@ -204,6 +222,7 @@ internal data class WorkUiState(
     val selectedTab: WorkTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
+    val snackbarMessage: String? = null,
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val recordingsByEntityUiState: RecordingsByEntityUiState,
     val relationsUiState: RelationsUiState,

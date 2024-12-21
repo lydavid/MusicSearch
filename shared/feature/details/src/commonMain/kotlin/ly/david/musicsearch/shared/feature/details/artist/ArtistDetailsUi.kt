@@ -46,7 +46,6 @@ internal fun ArtistDetailsUi(
 
             artist.run {
                 ArtistInformationSection(
-                    wikipediaExtract = wikipediaExtract,
                     filterText = filterText,
                 )
 
@@ -69,7 +68,6 @@ internal fun ArtistDetailsUi(
 
 @Composable
 private fun ArtistDetailsModel.ArtistInformationSection(
-    wikipediaExtract: WikipediaExtract,
     filterText: String = "",
 ) {
     val strings = LocalStrings.current

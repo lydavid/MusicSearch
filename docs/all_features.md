@@ -189,14 +189,14 @@ At the moment, we always get the English Wikipedia article's extract.
 
 | Entity        | Details |
 |---------------|---------|
-| area          | ⬜️      |
+| area          | ✅️      |
 | artist        | ✅       |
-| event         | ⬜️      |
-| instrument    | ⬜       |
-| label         | ⬜️      |
-| place         | ⬜       |
-| recording     | ⬜       |
-| release       | ⬜       |
-| release group | ⬜       |
-| series        | ⬜       |
-| work          | ⬜       |
+| event         | ✅️      |
+| instrument    | ✅       |
+| label         | ✅️      |
+| place         | ✅       |
+| recording     | ✅       |
+| release       | ✅       |
+| release group | ✅       |
+| series        | ✅       |
+| work          | ✅       |

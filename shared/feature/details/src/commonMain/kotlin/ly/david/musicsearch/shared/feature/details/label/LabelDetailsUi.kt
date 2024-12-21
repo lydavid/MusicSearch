@@ -12,6 +12,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 
 @Composable
 internal fun LabelDetailsUi(
@@ -63,6 +64,11 @@ internal fun LabelDetailsUi(
                 // TODO: lifespan, founded, defunct for end
 
                 // TODO: area
+
+                WikipediaSection(
+                    extract = wikipediaExtract,
+                    filterText = filterText,
+                )
 
                 UrlsSection(
                     urls = urls,

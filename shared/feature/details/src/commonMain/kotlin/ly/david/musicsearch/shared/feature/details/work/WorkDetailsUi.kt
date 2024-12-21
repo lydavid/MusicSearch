@@ -12,6 +12,7 @@ import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 
 @Composable
@@ -67,6 +68,11 @@ internal fun WorkDetailsUi(
         }
 
         item {
+            WikipediaSection(
+                extract = work.wikipediaExtract,
+                filterText = filterText,
+            )
+
             UrlsSection(
                 urls = work.urls,
                 filterText = filterText,

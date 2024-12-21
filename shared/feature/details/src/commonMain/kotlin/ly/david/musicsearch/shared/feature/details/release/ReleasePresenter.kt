@@ -30,6 +30,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
@@ -58,6 +59,7 @@ internal class ReleasePresenter(
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val wikimediaRepository: WikimediaRepository,
 ) : Presenter<ReleaseUiState> {
 
     @Composable
@@ -75,6 +77,7 @@ internal class ReleasePresenter(
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val tracksByReleaseUiState = tracksByReleasePresenter.present()
         val tracksEventSink = tracksByReleaseUiState.eventSink
@@ -121,6 +124,20 @@ internal class ReleasePresenter(
                     forceRefresh = forceRefreshDetails,
                 )
                 numberOfImages = releaseImageRepository.getNumberOfImages(release.id)
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, release) {
+            wikimediaRepository.getWikipediaExtract(
+                mbid = release?.id ?: return@LaunchedEffect,
+                urls = release?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                release = release?.copy(
+                    wikipediaExtract = wikipediaExtract,
+                )
+            }.onFailure {
+                snackbarMessage = it.message
             }
         }
 

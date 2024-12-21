@@ -16,6 +16,7 @@ import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.place.CoordinateListItem
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 
 @Composable
 internal fun PlaceDetailsUi(
@@ -83,15 +84,20 @@ internal fun PlaceDetailsUi(
                     }
                 }
 
-                coordinates?.let {
+                coordinates.let {
                     ListSeparatorHeader(strings.coordinates)
                     val label = place.name +
-                        if (place.lifeSpan?.ended == true) " (${strings.closed})" else ""
+                        if (place.lifeSpan.ended == true) " (${strings.closed})" else ""
                     CoordinateListItem(
                         coordinates = it,
                         label = label,
                     )
                 }
+
+                WikipediaSection(
+                    extract = wikipediaExtract,
+                    filterText = filterText,
+                )
 
                 UrlsSection(
                     urls = urls,

@@ -11,6 +11,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 
 @Composable
 internal fun SeriesDetailsUi(
@@ -36,8 +37,10 @@ internal fun SeriesDetailsUi(
                     )
                 }
 
-                // TODO: not enough info to warrant its own tab?
-                //  move to subtitle
+                WikipediaSection(
+                    extract = wikipediaExtract,
+                    filterText = filterText,
+                )
 
                 UrlsSection(
                     urls = urls,
