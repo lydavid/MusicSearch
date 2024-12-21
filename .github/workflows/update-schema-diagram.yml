@@ -2,7 +2,7 @@ name: Update Schema Diagram
 
 on:
   push:
-    branches: ["beta"]
+    branches: ["main"]
     paths:
       - "**.sqm"
   workflow_dispatch:

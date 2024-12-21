@@ -3,7 +3,7 @@ name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 
 on:
   push:
-    branches: ["beta"]
+    branches: ["main"]
     paths:
       - "*.md"
       - "*.html"

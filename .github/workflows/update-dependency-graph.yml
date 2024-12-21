@@ -2,7 +2,7 @@ name: Update dependency graph
 
 on:
   push:
-    branches: [ "beta" ]
+    branches: [ "main" ]
     paths:
       - "**.kts"
   workflow_call:

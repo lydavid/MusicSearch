@@ -2,7 +2,7 @@ name: "Create issue from TODO comments"
 on:
   push:
     branches:
-      - beta
+      - main
 jobs:
   create-todo:
     runs-on: ubuntu-latest

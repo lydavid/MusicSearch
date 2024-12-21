@@ -19,11 +19,11 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout beta
+      - name: Checkout main
         uses: nschloe/action-cached-lfs-checkout@v1
         with:
           token: ${{ secrets.PAT }}
-          ref: beta
+          ref: main
 
       - name: Free disk space
         uses: jlumbroso/free-disk-space@main
@@ -73,7 +73,7 @@ jobs:
           script: echo "Generated AVD snapshot for caching."
 
       # We exclude -no-snapshot-save so that in the next emulator step, we install on top of this
-      - name: Install beta app on emulator, run Maestro tests
+      - name: Install main app on emulator, run Maestro tests
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
           api-level: 32
@@ -98,7 +98,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: musicsearch_test_release_e2e_beta_outputs
+          name: musicsearch_test_release_e2e_main_outputs
           path: |
             /home/runner/.maestro/tests/
             *.mp4
@@ -113,7 +113,7 @@ jobs:
       - uses: ./.github/actions/setup
 
       # After this installation, we want to cache the AVD for future runs, so we need to uninstall
-      # so that we don't run into INSTALL_FAILED_VERSION_DOWNGRADE in the next beta installation.
+      # so that we don't run into INSTALL_FAILED_VERSION_DOWNGRADE in the next main installation.
       - name: Install PR app on emulator, run Maestro tests
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
