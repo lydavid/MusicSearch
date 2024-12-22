@@ -145,9 +145,6 @@ internal fun AreaUiInternal(
                 title = state.title,
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = overflowDropdownMenuItems,
-                showFilterIcon = state.selectedTab !in listOf(
-                    AreaTab.STATS,
-                ),
                 topAppBarFilterState = state.topAppBarFilterState,
                 additionalBar = {
                     TabsBar(

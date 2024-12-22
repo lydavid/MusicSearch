@@ -57,13 +57,13 @@ internal class LabelPresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        val topAppBarFilterState = rememberTopAppBarFilterState()
-        val query = topAppBarFilterState.filterText
         var label: LabelDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<LabelTab> by rememberSaveable {
             mutableStateOf(LabelTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(LabelTab.DETAILS) }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -118,6 +118,11 @@ internal class LabelPresenter(
             key1 = query,
             key2 = selectedTab,
         ) {
+            topAppBarFilterState.show(
+                selectedTab !in listOf(
+                    LabelTab.STATS,
+                )
+            )
             when (selectedTab) {
                 LabelTab.DETAILS -> {
                     // Loaded above

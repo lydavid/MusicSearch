@@ -45,7 +45,6 @@ internal class ReleaseImageRepositoryImpl(
                 imageUrls.add(ImageUrls())
             }
 
-//            imageUrlDao.deleteAllUrlsById(releaseId)
             imageUrlDao.saveUrls(
                 mbid = releaseId,
                 imageUrls = imageUrls,

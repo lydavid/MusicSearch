@@ -53,13 +53,13 @@ internal class SeriesPresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        val topAppBarFilterState = rememberTopAppBarFilterState()
-        val query = topAppBarFilterState.filterText
         var series: SeriesDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<SeriesTab> by rememberSaveable {
             mutableStateOf(SeriesTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(SeriesTab.DETAILS) }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -112,6 +112,11 @@ internal class SeriesPresenter(
             key1 = query,
             key2 = selectedTab,
         ) {
+            topAppBarFilterState.show(
+                selectedTab !in listOf(
+                    SeriesTab.STATS,
+                )
+            )
             when (selectedTab) {
                 SeriesTab.DETAILS -> {
                     // Loaded above

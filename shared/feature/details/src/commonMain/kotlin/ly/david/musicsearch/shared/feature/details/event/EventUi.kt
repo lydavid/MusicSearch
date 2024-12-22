@@ -85,9 +85,6 @@ internal fun EventUi(
                 entity = entity,
                 title = state.title,
                 scrollBehavior = scrollBehavior,
-                showFilterIcon = state.selectedTab !in listOf(
-                    EventTab.STATS,
-                ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
                         url = state.url,

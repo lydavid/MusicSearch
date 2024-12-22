@@ -61,13 +61,13 @@ internal class ReleaseGroupPresenter(
         var subtitle by rememberSaveable { mutableStateOf("") }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        val topAppBarFilterState = rememberTopAppBarFilterState()
-        val query = topAppBarFilterState.filterText
         var releaseGroup: ReleaseGroupDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<ReleaseGroupTab> by rememberSaveable {
             mutableStateOf(ReleaseGroupTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.DETAILS) }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -134,6 +134,11 @@ internal class ReleaseGroupPresenter(
             key1 = query,
             key2 = selectedTab,
         ) {
+            topAppBarFilterState.show(
+                selectedTab !in listOf(
+                    ReleaseGroupTab.STATS,
+                )
+            )
             when (selectedTab) {
                 ReleaseGroupTab.DETAILS -> {
                     // Loaded above

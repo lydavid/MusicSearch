@@ -107,7 +107,6 @@ internal fun CollectionUi(
                 },
                 title = state.title,
                 scrollBehavior = scrollBehavior,
-                showFilterIcon = true,
                 additionalActions = {
                     IconButton(onClick = {
                         state.topAppBarEditState.toggleEditMode()

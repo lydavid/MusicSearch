@@ -77,12 +77,12 @@ internal class ArtistPresenter(
         var isLoading by rememberSaveable { mutableStateOf(true) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        val topAppBarFilterState = rememberTopAppBarFilterState()
         var artist: ArtistDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<ArtistTab> by rememberSaveable {
             mutableStateOf(ArtistTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -157,6 +157,11 @@ internal class ArtistPresenter(
             key1 = topAppBarFilterState.filterText,
             key2 = selectedTab,
         ) {
+            topAppBarFilterState.show(
+                selectedTab !in listOf(
+                    ArtistTab.STATS,
+                )
+            )
             when (selectedTab) {
                 ArtistTab.DETAILS -> {
                     // Loaded above

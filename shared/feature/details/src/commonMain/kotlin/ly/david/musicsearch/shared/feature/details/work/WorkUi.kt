@@ -82,9 +82,6 @@ internal fun WorkUi(
                 entity = entity,
                 title = state.title,
                 scrollBehavior = scrollBehavior,
-                showFilterIcon = state.selectedTab !in listOf(
-                    WorkTab.STATS,
-                ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
                         url = state.url,

@@ -68,12 +68,12 @@ internal class ReleasePresenter(
         var subtitle by rememberSaveable { mutableStateOf("") }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        val topAppBarFilterState = rememberTopAppBarFilterState()
-        val query = topAppBarFilterState.filterText
         var release: ReleaseDetailsModel? by rememberRetained { mutableStateOf(null) }
         var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
         val tabs: ImmutableList<ReleaseTab> = ReleaseTab.entries.toPersistentList()
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -147,6 +147,11 @@ internal class ReleasePresenter(
             key1 = query,
             key2 = selectedTab,
         ) {
+            topAppBarFilterState.show(
+                selectedTab !in listOf(
+                    ReleaseTab.STATS,
+                )
+            )
             when (selectedTab) {
                 ReleaseTab.DETAILS -> {
                     // Loaded above

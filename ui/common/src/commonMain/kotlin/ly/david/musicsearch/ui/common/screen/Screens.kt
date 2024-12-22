@@ -58,13 +58,6 @@ data class CoverArtsGridScreen(
 ) : Screen
 
 @Parcelize
-data class CoverArtsPagerScreen(
-    val id: String,
-    val index: Int,
-    val query: String,
-) : Screen
-
-@Parcelize
 data class StatsScreen(
     val entity: MusicBrainzEntity,
     val id: String,

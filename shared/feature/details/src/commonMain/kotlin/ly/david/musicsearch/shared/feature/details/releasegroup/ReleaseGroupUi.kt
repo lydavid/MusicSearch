@@ -94,9 +94,6 @@ internal fun ReleaseGroupUi(
                 title = state.title,
                 subtitle = state.subtitle,
                 scrollBehavior = scrollBehavior,
-                showFilterIcon = state.selectedTab !in listOf(
-                    ReleaseGroupTab.STATS,
-                ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
                         url = state.url,

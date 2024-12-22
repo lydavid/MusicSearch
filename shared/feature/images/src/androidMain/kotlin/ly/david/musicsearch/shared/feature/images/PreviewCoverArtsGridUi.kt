@@ -31,3 +31,55 @@ internal fun PreviewCoverArtsGridUi() {
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewCoverArtsPagerUiCompact() {
+    InitializeFakeImageLoader()
+    PreviewTheme {
+        Surface {
+            CoverArtsGridUi(
+                state = CoverArtsGridUiState(
+                    id = "a",
+                    title = "Cover arts",
+                    imageUrls = persistentListOf(
+                        ImageUrls(
+                            thumbnailUrl = "https://www.example.com/blue.jpg",
+                        ),
+                        ImageUrls(
+                            thumbnailUrl = "https://www.example.com/red.jpg",
+                        ),
+                    ),
+                    selectedImageIndex = 0,
+                ),
+                isCompact = true,
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewCoverArtsPagerUiNonCompact() {
+    InitializeFakeImageLoader()
+    PreviewTheme {
+        Surface {
+            CoverArtsGridUi(
+                state = CoverArtsGridUiState(
+                    id = "a",
+                    title = "Cover arts",
+                    imageUrls = persistentListOf(
+                        ImageUrls(
+                            thumbnailUrl = "https://www.example.com/blue.jpg",
+                        ),
+                        ImageUrls(
+                            thumbnailUrl = "https://www.example.com/red.jpg",
+                        ),
+                    ),
+                    selectedImageIndex = 0,
+                ),
+                isCompact = false,
+            )
+        }
+    }
+}

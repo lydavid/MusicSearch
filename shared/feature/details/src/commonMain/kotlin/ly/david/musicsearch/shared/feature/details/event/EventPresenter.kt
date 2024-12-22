@@ -53,13 +53,13 @@ internal class EventPresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        val topAppBarFilterState = rememberTopAppBarFilterState()
-        val query = topAppBarFilterState.filterText
         var event: EventDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<EventTab> by rememberSaveable {
             mutableStateOf(EventTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(EventTab.DETAILS) }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -113,6 +113,11 @@ internal class EventPresenter(
             key1 = query,
             key2 = selectedTab,
         ) {
+            topAppBarFilterState.show(
+                selectedTab !in listOf(
+                    EventTab.STATS,
+                )
+            )
             when (selectedTab) {
                 EventTab.DETAILS -> {
                     // Loaded above

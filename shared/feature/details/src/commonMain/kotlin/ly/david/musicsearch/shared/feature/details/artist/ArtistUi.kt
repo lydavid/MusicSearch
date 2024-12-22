@@ -100,9 +100,6 @@ internal fun ArtistUi(
                 entity = entity,
                 title = state.title,
                 scrollBehavior = scrollBehavior,
-                showFilterIcon = state.selectedTab !in listOf(
-                    ArtistTab.STATS,
-                ),
                 overflowDropdownMenuItems = {
                     RefreshMenuItem(
                         onClick = { eventSink(ArtistUiEvent.ForceRefresh) },

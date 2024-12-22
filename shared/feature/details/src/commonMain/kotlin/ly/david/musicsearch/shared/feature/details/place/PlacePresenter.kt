@@ -58,13 +58,13 @@ internal class PlacePresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        val topAppBarFilterState = rememberTopAppBarFilterState()
-        val query = topAppBarFilterState.filterText
         var place: PlaceDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<PlaceTab> by rememberSaveable {
             mutableStateOf(PlaceTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(PlaceTab.DETAILS) }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -119,6 +119,11 @@ internal class PlacePresenter(
             key1 = query,
             key2 = selectedTab,
         ) {
+            topAppBarFilterState.show(
+                selectedTab !in listOf(
+                    PlaceTab.STATS,
+                )
+            )
             when (selectedTab) {
                 PlaceTab.DETAILS -> {
                     // Loaded above

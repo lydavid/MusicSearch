@@ -85,9 +85,6 @@ internal fun ReleaseUi(
                 title = state.title,
                 subtitle = state.subtitle,
                 scrollBehavior = scrollBehavior,
-                showFilterIcon = state.selectedTab !in listOf(
-                    ReleaseTab.STATS,
-                ),
                 topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(

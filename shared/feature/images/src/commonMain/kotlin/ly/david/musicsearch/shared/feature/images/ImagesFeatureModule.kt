@@ -4,7 +4,6 @@ import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.ui.common.screen.CoverArtsGridScreen
-import ly.david.musicsearch.ui.common.screen.CoverArtsPagerScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -21,14 +20,6 @@ val imagesFeatureModule = module {
                     )
                 }
 
-                is CoverArtsPagerScreen -> {
-                    CoverArtsPagerPresenter(
-                        screen = screen,
-                        navigator = navigator,
-                        releaseImageRepository = get(),
-                    )
-                }
-
                 else -> null
             }
         }
@@ -39,15 +30,6 @@ val imagesFeatureModule = module {
                 is CoverArtsGridScreen -> {
                     ui<CoverArtsGridUiState> { state, modifier ->
                         CoverArtsGridUi(
-                            state = state,
-                            modifier = modifier,
-                        )
-                    }
-                }
-
-                is CoverArtsPagerScreen -> {
-                    ui<CoverArtsPagerUiState> { state, modifier ->
-                        CoverArtsPagerUi(
                             state = state,
                             modifier = modifier,
                         )

@@ -89,9 +89,6 @@ internal fun RecordingUi(
                 title = state.title,
                 subtitle = state.subtitle,
                 scrollBehavior = scrollBehavior,
-                showFilterIcon = state.selectedTab !in listOf(
-                    RecordingTab.STATS,
-                ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
                         url = state.url,

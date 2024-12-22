@@ -85,9 +85,6 @@ internal fun LabelUi(
                 entity = entity,
                 title = state.title,
                 scrollBehavior = scrollBehavior,
-                showFilterIcon = state.selectedTab !in listOf(
-                    LabelTab.STATS,
-                ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
                         url = state.url,
