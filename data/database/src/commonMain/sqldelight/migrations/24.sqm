@@ -1,0 +1,4 @@
+UPDATE mbid_image 
+SET
+  types = COALESCE(types, ''),
+  comment = COALESCE(comment, '');
