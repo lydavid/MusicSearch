@@ -6,6 +6,10 @@ on:
       - "**.md"
   workflow_call:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # When we change the name of this job, make sure to update GitHub's branch protection to the new name
   checks:
