@@ -22,9 +22,8 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.screen.screenContainerSize
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.image.ThumbnailImage
-import ly.david.musicsearch.ui.image.getPlaceholderKey
 import kotlin.math.roundToInt
 
 @OptIn(
@@ -42,12 +41,13 @@ internal fun CoverArtsGridUi(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
         topBar = {
-            ScrollableTopAppBar(
+            TopAppBarWithFilter(
                 showBackButton = true,
                 onBack = {
                     eventSink(CoverArtsGridUiEvent.NavigateUp)
                 },
                 title = state.title,
+                topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
                         url = state.url,
@@ -58,13 +58,12 @@ internal fun CoverArtsGridUi(
     ) { innerPadding ->
         val imageUrls = state.imageUrls.toImmutableList()
         CoverArtsGrid(
-            mbid = state.id,
             imageUrls = imageUrls,
-            modifier = Modifier.padding(innerPadding),
-            lazyGridState = lazyGridState,
             onImageClick = {
                 eventSink(CoverArtsGridUiEvent.SelectImage(it))
             },
+            modifier = Modifier.padding(innerPadding),
+            lazyGridState = lazyGridState,
         )
     }
 }
@@ -73,7 +72,6 @@ private const val GRID_SIZE = 4
 
 @Composable
 internal fun CoverArtsGrid(
-    mbid: String,
     imageUrls: ImmutableList<ImageUrls>,
     onImageClick: (index: Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -92,10 +90,13 @@ internal fun CoverArtsGrid(
         modifier = modifier,
     ) {
         items(imageUrls.size) { index ->
-            val url = imageUrls[index]
+            val imageUrl = imageUrls[index]
+
+            // Because the number of images displayed can change when we filter
+            // the placeholder key must not depend on the index of the initial set of images
             ThumbnailImage(
-                url = url.thumbnailUrl,
-                placeholderKey = getPlaceholderKey(mbid, index),
+                url = imageUrl.thumbnailUrl,
+                placeholderKey = imageUrl.databaseId.toString(),
                 placeholderIcon = MusicBrainzEntity.RELEASE.getIcon(),
                 size = size,
                 modifier = Modifier.clickable {

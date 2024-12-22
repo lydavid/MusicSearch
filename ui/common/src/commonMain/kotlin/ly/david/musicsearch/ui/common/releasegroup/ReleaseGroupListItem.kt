@@ -21,7 +21,6 @@ import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.image.ThumbnailImage
-import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 @Composable
 fun ReleaseGroupListItem(
@@ -87,7 +86,7 @@ fun ReleaseGroupListItem(
         leadingContent = {
             ThumbnailImage(
                 url = releaseGroup.imageUrl.orEmpty(),
-                placeholderKey = getPlaceholderKey(releaseGroup.id),
+                placeholderKey = releaseGroup.placeholderKey.toString(),
                 placeholderIcon = MusicBrainzEntity.RELEASE_GROUP.getIcon(),
             )
         },

@@ -18,7 +18,6 @@ import ly.david.musicsearch.ui.common.getDisplayText
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.core.theme.TextStyles
-import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 @Composable
 internal fun HistoryListItem(
@@ -60,7 +59,7 @@ internal fun HistoryListItem(
                     }
                     ThumbnailImage(
                         url = lookupHistory.imageUrl.orEmpty(),
-                        placeholderKey = getPlaceholderKey(lookupHistory.id),
+                        placeholderKey = lookupHistory.placeholderKey.toString(),
                         placeholderIcon = lookupHistory.entity.getIcon(),
                         modifier = clipModifier,
                     )

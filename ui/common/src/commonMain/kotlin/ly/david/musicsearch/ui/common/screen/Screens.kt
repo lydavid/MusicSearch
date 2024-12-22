@@ -61,6 +61,7 @@ data class CoverArtsGridScreen(
 data class CoverArtsPagerScreen(
     val id: String,
     val index: Int,
+    val query: String,
 ) : Screen
 
 @Parcelize

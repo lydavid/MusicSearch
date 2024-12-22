@@ -24,4 +24,5 @@ data class RelationListItemModel(
     override val isForwardDirection: Boolean? = null,
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val imageUrl: String? = null,
+    val placeholderKey: Long? = null,
 ) : ListItemModel(), Relation, Visitable

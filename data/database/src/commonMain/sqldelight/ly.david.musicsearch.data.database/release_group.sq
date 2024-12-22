@@ -24,7 +24,9 @@ SELECT
   rg.disambiguation,
   rg.primary_type,
   rg.secondary_types,
-  mi.large_url
+  -- TODO: release and artist details doesn't join images
+  mi.large_url,
+  mi.id AS placeholderKey
 FROM release_group rg
 LEFT JOIN mbid_image mi ON mi.mbid = rg.id
 WHERE rg.id = :releaseGroupId

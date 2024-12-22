@@ -11,6 +11,7 @@ internal fun mapToReleaseGroupListItemModel(
     secondaryTypes: List<String>?,
     formattedArtistCreditNames: String,
     thumbnailUrl: String?,
+    placeholderKey: Long?,
     visited: Boolean?,
 ) = ReleaseGroupListItemModel(
     id = id,
@@ -21,5 +22,6 @@ internal fun mapToReleaseGroupListItemModel(
     secondaryTypes = secondaryTypes.orEmpty(),
     formattedArtistCredits = formattedArtistCreditNames,
     imageUrl = thumbnailUrl,
+    placeholderKey = placeholderKey,
     visited = visited == true,
 )

@@ -49,6 +49,7 @@ SELECT
   a.end,
   a.ended,
   mi.thumbnail_url,
+  mi.id AS placeholderKey,
   visited.entity_id IS NOT NULL AS visited
 FROM artists_by_entity ae
 INNER JOIN artist a ON a.id = ae.artist_id

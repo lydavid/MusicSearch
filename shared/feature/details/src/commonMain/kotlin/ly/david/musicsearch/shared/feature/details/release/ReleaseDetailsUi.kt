@@ -23,7 +23,6 @@ import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.work.getDisplayScript
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.LargeImage
-import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 @Composable
 internal fun ReleaseDetailsUi(
@@ -44,7 +43,7 @@ internal fun ReleaseDetailsUi(
             if (filterText.isBlank()) {
                 LargeImage(
                     url = releaseDetailsUiState.imageUrl,
-                    placeholderKey = getPlaceholderKey(release.id),
+                    placeholderKey = releaseDetailsUiState.placeholderKey.toString(),
                     modifier = Modifier.clickable { onImageClick() },
                 )
             }

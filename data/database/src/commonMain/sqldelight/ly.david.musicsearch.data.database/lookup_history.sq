@@ -45,7 +45,14 @@ WHERE
   );
 
 getAllLookupHistory:
-SELECT lh.mbid, lh.title, lh.entity, lh.number_of_visits, lh.last_accessed, mi.thumbnail_url
+SELECT
+  lh.mbid,
+  lh.title,
+  lh.entity,
+  lh.number_of_visits,
+  lh.last_accessed,
+  mi.thumbnail_url,
+  mi.id AS placeholderKey
 FROM lookup_history lh
 LEFT JOIN mbid_image mi ON mi.mbid = lh.mbid
 WHERE

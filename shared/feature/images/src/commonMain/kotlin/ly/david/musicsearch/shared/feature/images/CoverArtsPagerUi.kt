@@ -37,7 +37,6 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.image.LargeImage
-import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
@@ -82,21 +81,19 @@ internal fun CoverArtsPagerUi(
         val imageUrls = state.imageUrls.toImmutableList()
         val selectedImageIndex = state.selectedImageIndex
         CoverArtsPager(
-            mbid = state.id,
             imageUrls = imageUrls,
             selectedImageIndex = selectedImageIndex,
-            modifier = Modifier.padding(innerPadding),
             isCompact = isCompact,
             onImageChange = {
                 eventSink(CoverArtsPagerUiEvent.ChangeImage(it))
             },
+            modifier = Modifier.padding(innerPadding),
         )
     }
 }
 
 @Composable
 private fun CoverArtsPager(
-    mbid: String,
     imageUrls: ImmutableList<ImageUrls>,
     selectedImageIndex: Int,
     isCompact: Boolean,
@@ -155,15 +152,15 @@ private fun CoverArtsPager(
             state = pagerState,
             beyondViewportPageCount = 1,
         ) { page ->
-            val url = imageUrls[page]
+            val imageUrl = imageUrls[page]
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 LargeImage(
-                    url = url.largeUrl,
-                    placeholderKey = getPlaceholderKey(mbid, page),
+                    url = imageUrl.largeUrl,
+                    placeholderKey = imageUrl.databaseId.toString(),
                     isCompact = isCompact,
                 )
             }

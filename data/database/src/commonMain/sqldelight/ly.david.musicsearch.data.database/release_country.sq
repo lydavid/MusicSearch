@@ -64,6 +64,7 @@ SELECT
   r.*,
   ac.name AS artistCreditNames,
   mi.thumbnail_url,
+  mi.id AS placeholderKey,
   (
     SELECT COUNT(cc.area_id)
     FROM `release`

@@ -12,6 +12,7 @@ data class ReleaseGroupDetailsModel(
     override val primaryType: String? = null,
     override val secondaryTypes: List<String>? = null,
     val imageUrl: String? = null,
+    val placeholderKey: Long? = null,
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
     val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     val urls: List<RelationListItemModel> = listOf(),

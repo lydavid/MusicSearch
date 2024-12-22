@@ -14,6 +14,8 @@ import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCove
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.ui.common.screen.CoverArtsGridScreen
 import ly.david.musicsearch.ui.common.screen.CoverArtsPagerScreen
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 internal class CoverArtsGridPresenter(
     private val screen: CoverArtsGridScreen,
@@ -24,12 +26,18 @@ internal class CoverArtsGridPresenter(
 
     @Composable
     override fun present(): CoverArtsGridUiState {
-        val imageUrls by rememberRetained {
-            mutableStateOf(releaseImageRepository.getAllUrlsById(screen.id))
-        }
         val title by rememberRetained {
             mutableStateOf(
                 "Cover arts",
+            )
+        }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val imageUrls by rememberRetained(topAppBarFilterState.filterText) {
+            mutableStateOf(
+                releaseImageRepository.getAllUrlsById(
+                    mbid = screen.id,
+                    query = topAppBarFilterState.filterText,
+                ),
             )
         }
 
@@ -39,11 +47,16 @@ internal class CoverArtsGridPresenter(
                     navigator.pop()
                 }
 
+                is CoverArtsGridUiEvent.UpdateQuery -> {
+                    topAppBarFilterState.updateFilterText(event.query)
+                }
+
                 is CoverArtsGridUiEvent.SelectImage -> {
                     navigator.goTo(
                         CoverArtsPagerScreen(
                             id = screen.id,
                             index = event.index,
+                            query = topAppBarFilterState.filterText,
                         ),
                     )
                 }
@@ -55,6 +68,7 @@ internal class CoverArtsGridPresenter(
             title = title,
             url = getMusicBrainzCoverArtUrl(screen.id),
             imageUrls = imageUrls,
+            topAppBarFilterState = topAppBarFilterState,
             eventSink = ::eventSink,
         )
     }
@@ -66,11 +80,14 @@ internal data class CoverArtsGridUiState(
     val title: String = "",
     val url: String = "",
     val imageUrls: List<ImageUrls>,
+    val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val eventSink: (CoverArtsGridUiEvent) -> Unit = {},
 ) : CircuitUiState
 
 internal sealed interface CoverArtsGridUiEvent : CircuitUiEvent {
     data object NavigateUp : CoverArtsGridUiEvent
+
+    data class UpdateQuery(val query: String) : CoverArtsGridUiEvent
 
     data class SelectImage(val index: Int) : CoverArtsGridUiEvent
 }

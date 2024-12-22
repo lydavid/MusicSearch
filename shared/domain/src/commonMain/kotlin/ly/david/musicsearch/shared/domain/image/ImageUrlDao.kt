@@ -6,7 +6,12 @@ interface ImageUrlDao {
         imageUrls: List<ImageUrls>,
     )
 
-    fun getAllUrlsById(mbid: String): List<ImageUrls>
+    fun getFrontCoverUrl(mbid: String): ImageUrls?
+
+    fun getAllUrlsById(
+        mbid: String,
+        query: String = "",
+    ): List<ImageUrls>
 
     fun deleteAllUrlsById(mbid: String)
 

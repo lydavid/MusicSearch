@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
@@ -15,6 +16,8 @@ import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.ui.common.screen.CoverArtsPagerScreen
 
+// TODO: combine this with grid so that we don't make a second query
+//  which is causing issues when filtering
 internal class CoverArtsPagerPresenter(
     private val screen: CoverArtsPagerScreen,
     private val navigator: Navigator,
@@ -23,13 +26,18 @@ internal class CoverArtsPagerPresenter(
 
     @Composable
     override fun present(): CoverArtsPagerUiState {
-        val imageUrls by rememberRetained {
-            mutableStateOf(releaseImageRepository.getAllUrlsById(screen.id))
+        val imageUrls by remember {
+            mutableStateOf(
+                releaseImageRepository.getAllUrlsById(
+                    mbid = screen.id,
+                    query = screen.query,
+                ),
+            )
         }
-        var selectedImageIndex by rememberRetained {
+        var selectedImageIndex by remember {
             mutableStateOf(screen.index)
         }
-        val title by rememberRetained(selectedImageIndex) {
+        val title by remember(imageUrls, selectedImageIndex) {
             val imageUrl = imageUrls[selectedImageIndex]
             val typeAndComment = imageUrl.types.joinToString().appendOptionalText(imageUrl.comment)
             mutableStateOf(
