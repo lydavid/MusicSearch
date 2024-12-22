@@ -36,6 +36,7 @@ FROM mbid_image
 WHERE mbid = :mbid
 LIMIT 1;
 
+-- TODO: if types or comment is null, this will not show them at all
 getAllUrlsById:
 SELECT *
 FROM mbid_image

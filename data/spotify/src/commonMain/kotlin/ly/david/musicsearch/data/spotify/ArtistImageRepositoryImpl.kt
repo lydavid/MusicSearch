@@ -7,6 +7,8 @@ import ly.david.musicsearch.data.spotify.api.getLargeImageUrl
 import ly.david.musicsearch.data.spotify.api.getThumbnailImageUrl
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
+import ly.david.musicsearch.shared.domain.error.ErrorResolution
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImageUrls
 
@@ -55,12 +57,17 @@ class ArtistImageRepositoryImpl(
                 mbid = artistDetailsModel.id,
                 imageUrls = listOf(imageUrl),
             )
+        } catch (ex: HandledException) {
+            if (ex.errorResolution == ErrorResolution.None) {
+                imageUrlDao.saveUrls(
+                    mbid = artistDetailsModel.id,
+                    imageUrls = listOf(ImageUrls()),
+                )
+            } else {
+                logger.e(ex)
+            }
         } catch (ex: Exception) {
             logger.e(ex)
-            imageUrlDao.saveUrls(
-                mbid = artistDetailsModel.id,
-                imageUrls = listOf(ImageUrls()),
-            )
         }
     }
 }
