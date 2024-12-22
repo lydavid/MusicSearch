@@ -27,8 +27,8 @@ class MbidImageDao(
         }
     }
 
-    override fun getAllUrls(mbid: String): List<ImageUrls> {
-        return transacter.getAllUrls(
+    override fun getAllUrlsById(mbid: String): List<ImageUrls> {
+        return transacter.getAllUrlsById(
             mbid = mbid,
             mapper = { _, _, thumbnailUrl, largeUrl, types, comment ->
                 ImageUrls(
@@ -45,7 +45,7 @@ class MbidImageDao(
         transacter.deleteAllUrlsById(mbid)
     }
 
-    override fun getNumberOfImages(mbid: String): Long {
-        return transacter.getNumberOfImages(mbid).executeAsOne()
+    override fun getNumberOfImagesById(mbid: String): Long {
+        return transacter.getNumberOfImagesById(mbid).executeAsOne()
     }
 }

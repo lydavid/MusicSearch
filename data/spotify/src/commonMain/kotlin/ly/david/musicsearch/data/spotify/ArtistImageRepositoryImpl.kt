@@ -26,7 +26,7 @@ class ArtistImageRepositoryImpl(
             imageUrlDao.deleteAllUrlsById(artistDetailsModel.id)
         }
 
-        val cachedImageUrls = imageUrlDao.getAllUrls(artistDetailsModel.id)
+        val cachedImageUrls = imageUrlDao.getAllUrlsById(artistDetailsModel.id)
         return if (cachedImageUrls.isNotEmpty()) {
             return cachedImageUrls.first().largeUrl
         } else {

@@ -123,7 +123,7 @@ internal class ReleasePresenter(
                     thumbnail = false,
                     forceRefresh = forceRefreshDetails,
                 )
-                numberOfImages = releaseImageRepository.getNumberOfImages(release.id)
+                numberOfImages = releaseImageRepository.getNumberOfImagesById(release.id)
             }
         }
 

@@ -25,7 +25,7 @@ internal class ReleaseGroupImageRepositoryImpl(
             imageUrlDao.deleteAllUrlsById(releaseGroupId)
         }
 
-        val cachedImageUrls = imageUrlDao.getAllUrls(releaseGroupId)
+        val cachedImageUrls = imageUrlDao.getAllUrlsById(releaseGroupId)
         return if (cachedImageUrls.isNotEmpty()) {
             val frontCoverArt = cachedImageUrls.first()
             return if (thumbnail) frontCoverArt.thumbnailUrl else frontCoverArt.largeUrl

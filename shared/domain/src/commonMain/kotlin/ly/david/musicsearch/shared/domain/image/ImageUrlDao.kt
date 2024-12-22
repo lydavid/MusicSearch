@@ -6,9 +6,9 @@ interface ImageUrlDao {
         imageUrls: List<ImageUrls>,
     )
 
-    fun getAllUrls(mbid: String): List<ImageUrls>
+    fun getAllUrlsById(mbid: String): List<ImageUrls>
 
     fun deleteAllUrlsById(mbid: String)
 
-    fun getNumberOfImages(mbid: String): Long
+    fun getNumberOfImagesById(mbid: String): Long
 }

@@ -20,7 +20,7 @@ interface ReleaseImageRepository {
         forceRefresh: Boolean,
     ): String
 
-    fun getAllUrls(mbid: String): List<ImageUrls>
+    fun getAllUrlsById(mbid: String): List<ImageUrls>
 
-    fun getNumberOfImages(mbid: String): Int
+    fun getNumberOfImagesById(mbid: String): Int
 }

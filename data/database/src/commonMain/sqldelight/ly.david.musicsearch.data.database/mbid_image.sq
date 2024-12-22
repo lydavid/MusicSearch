@@ -30,7 +30,7 @@ VALUES (
   :comment
 );
 
-getAllUrls:
+getAllUrlsById:
 SELECT *
 FROM mbid_image
 WHERE mbid = :mbid;
@@ -40,7 +40,7 @@ DELETE FROM mbid_image
 WHERE mbid = :mbid;
 
 -- Do not include the filler empty url
-getNumberOfImages:
+getNumberOfImagesById:
 SELECT COUNT(*)
 FROM mbid_image
 WHERE mbid = :mbid

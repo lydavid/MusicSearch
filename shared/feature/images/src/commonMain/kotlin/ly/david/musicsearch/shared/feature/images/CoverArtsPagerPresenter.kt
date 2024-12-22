@@ -24,7 +24,7 @@ internal class CoverArtsPagerPresenter(
     @Composable
     override fun present(): CoverArtsPagerUiState {
         val imageUrls by rememberRetained {
-            mutableStateOf(releaseImageRepository.getAllUrls(screen.id))
+            mutableStateOf(releaseImageRepository.getAllUrlsById(screen.id))
         }
         var selectedImageIndex by rememberRetained {
             mutableStateOf(screen.index)

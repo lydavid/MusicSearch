@@ -25,7 +25,7 @@ internal class ReleaseImageRepositoryImpl(
             imageUrlDao.deleteAllUrlsById(releaseId)
         }
 
-        val cachedImageUrls = imageUrlDao.getAllUrls(releaseId)
+        val cachedImageUrls = imageUrlDao.getAllUrlsById(releaseId)
         return if (cachedImageUrls.isNotEmpty()) {
             val frontCoverArt = cachedImageUrls.first()
             return if (thumbnail) frontCoverArt.thumbnailUrl else frontCoverArt.largeUrl
@@ -69,11 +69,11 @@ internal class ReleaseImageRepositoryImpl(
         }
     }
 
-    override fun getAllUrls(mbid: String): List<ImageUrls> {
-        return imageUrlDao.getAllUrls(mbid = mbid)
+    override fun getAllUrlsById(mbid: String): List<ImageUrls> {
+        return imageUrlDao.getAllUrlsById(mbid = mbid)
     }
 
-    override fun getNumberOfImages(mbid: String): Int {
-        return imageUrlDao.getNumberOfImages(mbid).toInt()
+    override fun getNumberOfImagesById(mbid: String): Int {
+        return imageUrlDao.getNumberOfImagesById(mbid).toInt()
     }
 }

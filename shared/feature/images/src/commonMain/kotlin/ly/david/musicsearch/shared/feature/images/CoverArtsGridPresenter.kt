@@ -25,7 +25,7 @@ internal class CoverArtsGridPresenter(
     @Composable
     override fun present(): CoverArtsGridUiState {
         val imageUrls by rememberRetained {
-            mutableStateOf(releaseImageRepository.getAllUrls(screen.id))
+            mutableStateOf(releaseImageRepository.getAllUrlsById(screen.id))
         }
         val title by rememberRetained {
             mutableStateOf(
