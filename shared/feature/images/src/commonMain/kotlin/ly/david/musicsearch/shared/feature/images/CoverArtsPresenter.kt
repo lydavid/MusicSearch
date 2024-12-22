@@ -78,8 +78,8 @@ internal class CoverArtsGridPresenter(
                         selectedImageIndex = null
                         if (topAppBarFilterState.filterText.isNotEmpty()) {
                             topAppBarFilterState.toggleFilterMode(true)
-                            topAppBarFilterState.show(true)
                         }
+                        topAppBarFilterState.show(true)
                     }
                 }
 
@@ -106,11 +106,6 @@ internal class CoverArtsGridPresenter(
             eventSink = ::eventSink,
         )
     }
-}
-
-internal enum class View {
-    Grid,
-    Pager,
 }
 
 @Stable

@@ -27,10 +27,7 @@ internal class ReleaseGroupImageRepositoryImpl(
         val cachedImageUrls = imageUrlDao.getFrontCoverUrl(releaseGroupId)
         return if (cachedImageUrls == null) {
             saveReleaseGroupCoverArtUrlFromNetwork(releaseGroupId)
-            getReleaseGroupImageUrl(
-                releaseGroupId = releaseGroupId,
-                forceRefresh = false,
-            )
+            imageUrlDao.getFrontCoverUrl(releaseGroupId) ?: ImageUrls()
         } else {
             cachedImageUrls
         }
@@ -44,7 +41,6 @@ internal class ReleaseGroupImageRepositoryImpl(
             val thumbnailUrl = coverArts.getFrontThumbnailCoverArtUrl().orEmpty()
             val largeUrl = coverArts.getFrontCoverArtUrl().orEmpty()
 
-            imageUrlDao.deleteAllUrlsById(releaseGroupId)
             imageUrlDao.saveUrls(
                 mbid = releaseGroupId,
                 imageUrls = listOf(
