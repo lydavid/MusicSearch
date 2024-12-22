@@ -42,7 +42,6 @@ fun LargeImage(
             model = ImageRequest.Builder(LocalPlatformContext.current)
                 .data(url.useHttps())
                 .crossfade(true)
-                .memoryCacheKey(placeholderKey)
                 .placeholderMemoryCacheKey(placeholderKey)
                 .build(),
             contentDescription = null,
