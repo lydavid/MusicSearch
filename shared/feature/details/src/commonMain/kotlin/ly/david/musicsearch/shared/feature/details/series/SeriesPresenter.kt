@@ -115,7 +115,7 @@ internal class SeriesPresenter(
             topAppBarFilterState.show(
                 selectedTab !in listOf(
                     SeriesTab.STATS,
-                )
+                ),
             )
             when (selectedTab) {
                 SeriesTab.DETAILS -> {
