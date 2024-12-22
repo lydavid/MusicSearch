@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.artist
 
+import ly.david.musicsearch.shared.domain.image.ImageUrls
+
 interface ArtistImageRepository {
 
     /**
@@ -11,5 +13,5 @@ interface ArtistImageRepository {
     suspend fun getArtistImageUrl(
         artistDetailsModel: ArtistDetailsModel,
         forceRefresh: Boolean,
-    ): String
+    ): ImageUrls
 }

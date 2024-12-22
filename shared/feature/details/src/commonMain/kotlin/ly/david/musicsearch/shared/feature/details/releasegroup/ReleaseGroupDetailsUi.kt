@@ -19,7 +19,6 @@ internal fun ReleaseGroupDetailsUi(
     releaseGroup: ReleaseGroupDetailsModel,
     modifier: Modifier = Modifier,
     filterText: String = "",
-    imageUrl: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
 ) {
     val strings = LocalStrings.current
@@ -31,8 +30,8 @@ internal fun ReleaseGroupDetailsUi(
         item {
             if (filterText.isBlank()) {
                 LargeImage(
-                    url = imageUrl,
-                    placeholderKey = releaseGroup.placeholderKey.toString(),
+                    url = releaseGroup.imageUrls.largeUrl,
+                    placeholderKey = releaseGroup.imageUrls.databaseId.toString(),
                 )
             }
         }

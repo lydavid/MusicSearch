@@ -62,8 +62,6 @@ class ReleaseGroupDaoImpl(
         disambiguation: String,
         primaryType: String?,
         secondaryTypes: List<String>?,
-        thumbnailUrl: String?,
-        placeholderKey: Long?,
     ) = ReleaseGroupDetailsModel(
         id = id,
         name = name,
@@ -71,8 +69,6 @@ class ReleaseGroupDaoImpl(
         disambiguation = disambiguation,
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
-        imageUrl = thumbnailUrl,
-        placeholderKey = placeholderKey,
     )
 
     override fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease? =

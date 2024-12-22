@@ -31,7 +31,6 @@ internal fun PreviewArtistDetailsUi() {
                         name = "United Kingdom",
                         countryCodes = listOf("GB"),
                     ),
-                    imageUrl = "https://i.scdn.co/image/ab6761610000e5ebe9348cc01ff5d55971b22433",
                     wikipediaExtract = WikipediaExtract(
                         extract = "The Beatles were an English rock band formed in Liverpool in 1960, comprising John Lennon, Paul McCartney, George Harrison and Ringo Starr. They are widely regarded as the most influential band of all time and were integral to the development of 1960s counterculture and the recognition of popular music as an art form. Rooted in skiffle, beat and 1950s rock 'n' roll, their sound incorporated elements of classical music and traditional pop in innovative ways. The band also explored music styles ranging from folk and Indian music to psychedelia and hard rock. As pioneers in recording, songwriting and artistic presentation, the Beatles revolutionized many aspects of the music industry and were often publicized as leaders of the era's youth and sociocultural movements.\n" +
                             "Led by primary songwriters Lennon and McCartney, the Beatles evolved from Lennon's previous group, the Quarrymen, and built their reputation by playing clubs in Liverpool and Hamburg, Germany, over three years from 1960, initially with Stuart Sutcliffe playing bass. The core trio of Lennon, McCartney and Harrison, together since 1958, went through a succession of drummers, including Pete Best, before inviting Starr to join them in 1962. Manager Brian Epstein moulded them into a professional act, and producer George Martin guided and developed their recordings, greatly expanding their domestic success after they signed with EMI Records and achieved their first hit, \"Love Me Do\", in late 1962. As their popularity grew into the intense fan frenzy dubbed \"Beatlemania\", the band acquired the nickname \"the Fab Four\". Epstein, Martin or other members of the band's entourage were sometimes informally referred to as a \"fifth Beatle\".\n" +
@@ -56,7 +55,6 @@ internal fun PreviewArtistDetailsUiWithWikipediaUrlButNoExtract() {
                     name = "Various Artists",
                     type = "Other",
                     sortName = "Various Artists",
-                    imageUrl = "https://i.scdn.co/image/ab6761610000e5ebe9348cc01ff5d55971b22433",
                     wikipediaExtract = WikipediaExtract(
                         wikipediaUrl = "https://en.wikipedia.org/wiki/Various_artists",
                     ),

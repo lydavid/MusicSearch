@@ -132,7 +132,7 @@ internal class ArtistPresenter(
 
         LaunchedEffect(forceRefreshDetails, artist) {
             artist = artist?.copy(
-                imageUrl = artistImageRepository.getArtistImageUrl(
+                imageUrls = artistImageRepository.getArtistImageUrl(
                     artistDetailsModel = artist ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
                 ),

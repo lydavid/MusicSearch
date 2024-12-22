@@ -71,8 +71,6 @@ internal class ReleasePresenter(
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var release: ReleaseDetailsModel? by rememberRetained { mutableStateOf(null) }
-        var imageUrl by rememberSaveable { mutableStateOf("") }
-        var placeholderKey: Long? by rememberSaveable { mutableStateOf(0L) }
         var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
         val tabs: ImmutableList<ReleaseTab> = ReleaseTab.entries.toPersistentList()
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
@@ -119,14 +117,13 @@ internal class ReleasePresenter(
 
         // Image fetching was split off from details model so that we can display data before images load
         LaunchedEffect(forceRefreshDetails, release) {
-            release?.let { release ->
-                val imageUrlAndPlaceholderKey = releaseImageRepository.getReleaseImageUrl(
-                    releaseId = release.id,
-                    thumbnail = false,
+            release = release?.copy(
+                imageUrls = releaseImageRepository.getReleaseImageUrl(
+                    releaseId = release?.id ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
                 )
-                imageUrl = imageUrlAndPlaceholderKey.first
-                placeholderKey = imageUrlAndPlaceholderKey.second
+            )
+            release?.let { release ->
                 numberOfImages = releaseImageRepository.getNumberOfImagesById(release.id)
             }
         }
@@ -237,7 +234,6 @@ internal class ReleasePresenter(
             url = getMusicBrainzUrl(screen.entity, screen.id),
             releaseDetailsUiState = ReleaseDetailsUiState(
                 isError = isError,
-                imageUrl = imageUrl,
                 numberOfImages = numberOfImages,
                 lazyListState = detailsLazyListState,
             ),
@@ -269,8 +265,6 @@ internal data class ReleaseUiState(
 
 internal data class ReleaseDetailsUiState(
     val isError: Boolean = false,
-    val imageUrl: String = "",
-    val placeholderKey: Long = 0L,
     val numberOfImages: Int? = null,
     val lazyListState: LazyListState = LazyListState(),
 )

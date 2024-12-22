@@ -64,7 +64,6 @@ internal class ReleaseGroupPresenter(
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var releaseGroup: ReleaseGroupDetailsModel? by rememberRetained { mutableStateOf(null) }
-        var imageUrl by rememberSaveable { mutableStateOf("") }
         val tabs: List<ReleaseGroupTab> by rememberSaveable {
             mutableStateOf(ReleaseGroupTab.entries)
         }
@@ -108,13 +107,12 @@ internal class ReleaseGroupPresenter(
         }
 
         LaunchedEffect(forceRefreshDetails, releaseGroup) {
-            releaseGroup?.let { releaseGroup ->
-                imageUrl = releaseGroupImageRepository.getReleaseGroupImageUrl(
-                    releaseGroupId = releaseGroup.id,
-                    thumbnail = false,
+            releaseGroup = releaseGroup?.copy(
+                imageUrls = releaseGroupImageRepository.getReleaseGroupImageUrl(
+                    releaseGroupId = releaseGroup?.id ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
                 )
-            }
+            )
         }
 
         LaunchedEffect(forceRefreshDetails, releaseGroup) {
@@ -200,7 +198,6 @@ internal class ReleaseGroupPresenter(
             isError = isError,
             releaseGroup = releaseGroup,
             url = getMusicBrainzUrl(screen.entity, screen.id),
-            imageUrl = imageUrl,
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
@@ -221,7 +218,6 @@ internal data class ReleaseGroupUiState(
     val isError: Boolean,
     val releaseGroup: ReleaseGroupDetailsModel?,
     val url: String = "",
-    val imageUrl: String,
     val tabs: List<ReleaseGroupTab>,
     val selectedTab: ReleaseGroupTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),

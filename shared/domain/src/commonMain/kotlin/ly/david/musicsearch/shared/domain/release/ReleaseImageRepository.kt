@@ -16,9 +16,8 @@ interface ReleaseImageRepository {
      */
     suspend fun getReleaseImageUrl(
         releaseId: String,
-        thumbnail: Boolean,
         forceRefresh: Boolean,
-    ): Pair<String, Long>
+    ): ImageUrls
 
     fun getAllUrlsById(
         mbid: String,
