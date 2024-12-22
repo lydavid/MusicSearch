@@ -4,6 +4,8 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
 import ly.david.musicsearch.data.coverart.api.toImageUrlsList
+import ly.david.musicsearch.shared.domain.error.ErrorResolution
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
@@ -48,12 +50,17 @@ internal class ReleaseImageRepositoryImpl(
                 mbid = releaseId,
                 imageUrls = imageUrls,
             )
+        } catch (ex: HandledException) {
+            if (ex.errorResolution == ErrorResolution.None) {
+                imageUrlDao.saveUrls(
+                    mbid = releaseId,
+                    imageUrls = listOf(ImageUrls()),
+                )
+            } else {
+                logger.e(ex)
+            }
         } catch (ex: Exception) {
             logger.e(ex)
-            imageUrlDao.saveUrls(
-                mbid = releaseId,
-                imageUrls = listOf(ImageUrls()),
-            )
         }
     }
 
