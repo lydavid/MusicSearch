@@ -25,7 +25,6 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
-import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
@@ -72,7 +71,6 @@ internal class ReleasePresenter(
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var release: ReleaseDetailsModel? by rememberRetained { mutableStateOf(null) }
-        var imageUrls: ImageUrls by remember { mutableStateOf(ImageUrls()) }
         var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
         val tabs: ImmutableList<ReleaseTab> = ReleaseTab.entries.toPersistentList()
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
@@ -120,11 +118,13 @@ internal class ReleasePresenter(
 
         // Image fetching was split off from details model so that we can display data before images load
         LaunchedEffect(forceRefreshDetails, release) {
-            release?.let { release ->
+            release = release?.copy(
                 imageUrls = releaseImageRepository.getReleaseImageUrl(
-                    releaseId = release.id,
+                    releaseId = release?.id ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
                 )
+            )
+            release?.let { release ->
                 numberOfImages = releaseImageRepository.getNumberOfImagesById(release.id)
             }
         }
@@ -235,7 +235,6 @@ internal class ReleasePresenter(
             url = getMusicBrainzUrl(screen.entity, screen.id),
             releaseDetailsUiState = ReleaseDetailsUiState(
                 isError = isError,
-                imageUrls = imageUrls,
                 numberOfImages = numberOfImages,
                 lazyListState = detailsLazyListState,
             ),
@@ -267,7 +266,6 @@ internal data class ReleaseUiState(
 
 internal data class ReleaseDetailsUiState(
     val isError: Boolean = false,
-    val imageUrls: ImageUrls = ImageUrls(),
     val numberOfImages: Int? = null,
     val lazyListState: LazyListState = LazyListState(),
 )

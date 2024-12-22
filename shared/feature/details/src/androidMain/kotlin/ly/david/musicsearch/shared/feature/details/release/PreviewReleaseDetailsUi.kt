@@ -63,11 +63,11 @@ internal fun PreviewReleaseDetailsUi() {
                     ),
                     releaseLength = 8000,
                     hasNullLength = true,
-                ),
-                releaseDetailsUiState = ReleaseDetailsUiState(
                     imageUrls = ImageUrls(
                         largeUrl = "https://i.scdn.co/image/ab6761610000f1786761852cd2852fceb64e8cd9",
                     ),
+                ),
+                releaseDetailsUiState = ReleaseDetailsUiState(
                     numberOfImages = 1,
                 ),
             )
