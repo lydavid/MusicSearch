@@ -122,7 +122,7 @@ internal class ReleasePresenter(
                 imageUrls = releaseImageRepository.getReleaseImageUrl(
                     releaseId = release?.id ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
-                )
+                ),
             )
             release?.let { release ->
                 numberOfImages = releaseImageRepository.getNumberOfImagesById(release.id)
@@ -150,7 +150,7 @@ internal class ReleasePresenter(
             topAppBarFilterState.show(
                 selectedTab !in listOf(
                     ReleaseTab.STATS,
-                )
+                ),
             )
             when (selectedTab) {
                 ReleaseTab.DETAILS -> {

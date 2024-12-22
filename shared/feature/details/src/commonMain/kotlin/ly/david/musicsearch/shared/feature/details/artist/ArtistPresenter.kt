@@ -160,7 +160,7 @@ internal class ArtistPresenter(
             topAppBarFilterState.show(
                 selectedTab !in listOf(
                     ArtistTab.STATS,
-                )
+                ),
             )
             when (selectedTab) {
                 ArtistTab.DETAILS -> {

@@ -124,7 +124,7 @@ internal class RecordingPresenter(
             topAppBarFilterState.show(
                 selectedTab !in listOf(
                     RecordingTab.STATS,
-                )
+                ),
             )
             when (selectedTab) {
                 RecordingTab.DETAILS -> {

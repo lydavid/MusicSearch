@@ -112,7 +112,7 @@ internal class ReleaseGroupPresenter(
                 imageUrls = releaseGroupImageRepository.getReleaseGroupImageUrl(
                     releaseGroupId = releaseGroup?.id ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
-                )
+                ),
             )
         }
 
@@ -137,7 +137,7 @@ internal class ReleaseGroupPresenter(
             topAppBarFilterState.show(
                 selectedTab !in listOf(
                     ReleaseGroupTab.STATS,
-                )
+                ),
             )
             when (selectedTab) {
                 ReleaseGroupTab.DETAILS -> {

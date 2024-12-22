@@ -122,7 +122,7 @@ internal class PlacePresenter(
             topAppBarFilterState.show(
                 selectedTab !in listOf(
                     PlaceTab.STATS,
-                )
+                ),
             )
             when (selectedTab) {
                 PlaceTab.DETAILS -> {

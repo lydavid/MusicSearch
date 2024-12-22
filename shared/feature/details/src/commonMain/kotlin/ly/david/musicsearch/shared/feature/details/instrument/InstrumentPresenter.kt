@@ -115,7 +115,7 @@ internal class InstrumentPresenter(
             topAppBarFilterState.show(
                 selectedTab !in listOf(
                     InstrumentTab.STATS,
-                )
+                ),
             )
             when (selectedTab) {
                 InstrumentTab.DETAILS -> {

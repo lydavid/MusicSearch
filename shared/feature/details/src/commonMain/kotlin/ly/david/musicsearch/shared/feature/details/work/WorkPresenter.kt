@@ -127,7 +127,7 @@ internal class WorkPresenter(
             topAppBarFilterState.show(
                 selectedTab !in listOf(
                     WorkTab.STATS,
-                )
+                ),
             )
             when (selectedTab) {
                 WorkTab.DETAILS -> {

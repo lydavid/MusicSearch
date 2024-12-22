@@ -146,7 +146,7 @@ internal class AreaPresenter(
             topAppBarFilterState.show(
                 selectedTab !in listOf(
                     AreaTab.STATS,
-                )
+                ),
             )
             when (selectedTab) {
                 AreaTab.DETAILS -> {

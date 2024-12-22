@@ -121,7 +121,7 @@ internal class LabelPresenter(
             topAppBarFilterState.show(
                 selectedTab !in listOf(
                     LabelTab.STATS,
-                )
+                ),
             )
             when (selectedTab) {
                 LabelTab.DETAILS -> {

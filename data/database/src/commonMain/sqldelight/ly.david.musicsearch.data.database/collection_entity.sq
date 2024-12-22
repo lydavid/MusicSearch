@@ -136,6 +136,7 @@ AND (
   a.gender LIKE :query OR
   a.country_code LIKE :query
 )
+GROUP BY a.id
 ORDER BY a.begin, a.end, a.name
 LIMIT :limit OFFSET :offset;
 

@@ -116,7 +116,7 @@ internal class EventPresenter(
             topAppBarFilterState.show(
                 selectedTab !in listOf(
                     EventTab.STATS,
-                )
+                ),
             )
             when (selectedTab) {
                 EventTab.DETAILS -> {
