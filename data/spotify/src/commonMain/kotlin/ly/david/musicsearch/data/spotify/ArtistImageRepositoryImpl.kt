@@ -25,14 +25,11 @@ class ArtistImageRepositoryImpl(
         }
 
         val cachedImageUrl = imageUrlDao.getFrontCoverUrl(artistDetailsModel.id)
-        return if (cachedImageUrl != null) {
-            cachedImageUrl
-        } else {
+        return if (cachedImageUrl == null) {
             saveArtistImageUrlFromNetwork(artistDetailsModel)
-            getArtistImageUrl(
-                artistDetailsModel = artistDetailsModel,
-                forceRefresh = false,
-            )
+            imageUrlDao.getFrontCoverUrl(artistDetailsModel.id) ?: ImageUrls()
+        } else {
+            cachedImageUrl
         }
     }
 

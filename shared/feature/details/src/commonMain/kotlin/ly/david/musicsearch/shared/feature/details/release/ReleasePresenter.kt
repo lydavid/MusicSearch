@@ -113,6 +113,7 @@ internal class ReleasePresenter(
                 )
                 recordedHistory = true
             }
+            forceRefreshDetails = false
         }
 
         // Image fetching was split off from details model so that we can display data before images load

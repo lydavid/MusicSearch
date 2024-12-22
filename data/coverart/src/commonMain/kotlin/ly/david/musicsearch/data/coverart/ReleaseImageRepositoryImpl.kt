@@ -23,15 +23,12 @@ internal class ReleaseImageRepositoryImpl(
         }
 
         val cachedImageUrl = imageUrlDao.getFrontCoverUrl(releaseId)
-        if (cachedImageUrl != null && !forceRefresh) {
-            return cachedImageUrl
+        return if (cachedImageUrl == null) {
+            saveReleaseImageUrlFromNetwork(releaseId)
+            imageUrlDao.getFrontCoverUrl(releaseId) ?: ImageUrls()
+        } else {
+            cachedImageUrl
         }
-
-        saveReleaseImageUrlFromNetwork(releaseId)
-        return getReleaseImageUrl(
-            releaseId = releaseId,
-            forceRefresh = false,
-        )
     }
 
     private suspend fun saveReleaseImageUrlFromNetwork(

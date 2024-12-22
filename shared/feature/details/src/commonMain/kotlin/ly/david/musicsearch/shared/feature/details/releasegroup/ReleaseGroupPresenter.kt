@@ -104,6 +104,7 @@ internal class ReleaseGroupPresenter(
                 )
                 recordedHistory = true
             }
+            forceRefreshDetails = false
         }
 
         LaunchedEffect(forceRefreshDetails, releaseGroup) {
