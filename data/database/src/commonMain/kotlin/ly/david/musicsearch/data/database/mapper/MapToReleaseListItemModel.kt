@@ -48,7 +48,7 @@ internal fun mapToReleaseListItemModel(
     ),
     formattedArtistCredits = formattedArtistCreditNames,
     imageUrl = thumbnailUrl,
-    placeholderKey = placeholderKey,
+    imageId = placeholderKey ?: 0L,
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited == true,
 )
@@ -101,7 +101,7 @@ internal fun mapToReleaseListItemModel(
     catalogNumbers = catalogNumber,
     formattedArtistCredits = formattedArtistCreditNames,
     imageUrl = thumbnailUrl,
-    placeholderKey = placeholderKey,
+    imageId = placeholderKey ?: 0L,
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited == true,
 )

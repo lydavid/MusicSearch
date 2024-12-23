@@ -57,7 +57,6 @@ class MbidImageDao(
 
 private fun mapToImageUrls(
     id: Long,
-    mbid: String,
     thumbnailUrl: String,
     largeUrl: String,
     types: ImmutableList<String>?,

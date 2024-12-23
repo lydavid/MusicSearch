@@ -11,5 +11,5 @@ data class LookupHistoryListItemModel(
     val numberOfVisits: Int = 1,
     val lastAccessed: Instant = Clock.System.now(),
     val imageUrl: String? = null,
-    val placeholderKey: Long? = null,
+    val imageId: Long = 0L,
 ) : ListItemModel()

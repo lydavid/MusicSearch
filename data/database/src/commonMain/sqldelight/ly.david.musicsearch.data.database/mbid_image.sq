@@ -31,14 +31,24 @@ VALUES (
 );
 
 getFrontCoverUrl:
-SELECT *
+SELECT
+  `id`,
+  `thumbnail_url`,
+  `large_url`,
+  `types`,
+  `comment`
 FROM mbid_image
 WHERE mbid = :mbid
 LIMIT 1;
 
 -- if types or comment is null, this will not show them at all (fix in 24.sqm)
 getAllUrlsById:
-SELECT *
+SELECT
+  `id`,
+  `thumbnail_url`,
+  `large_url`,
+  `types`,
+  `comment`
 FROM mbid_image
 WHERE mbid = :mbid
 AND (

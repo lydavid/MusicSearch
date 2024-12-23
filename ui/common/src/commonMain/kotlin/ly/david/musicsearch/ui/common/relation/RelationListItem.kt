@@ -44,7 +44,7 @@ fun RelationListItem(
             }
             ThumbnailImage(
                 url = relation.imageUrl.orEmpty(),
-                placeholderKey = relation.placeholderKey.toString(),
+                placeholderKey = relation.imageId.toString(),
                 placeholderIcon = relation.linkedEntity.getIcon(),
                 modifier = clipModifier,
             )

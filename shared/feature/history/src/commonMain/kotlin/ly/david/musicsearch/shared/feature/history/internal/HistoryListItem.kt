@@ -59,7 +59,7 @@ internal fun HistoryListItem(
                     }
                     ThumbnailImage(
                         url = lookupHistory.imageUrl.orEmpty(),
-                        placeholderKey = lookupHistory.placeholderKey.toString(),
+                        placeholderKey = lookupHistory.imageId.toString(),
                         placeholderIcon = lookupHistory.entity.getIcon(),
                         modifier = clipModifier,
                     )

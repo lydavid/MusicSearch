@@ -97,5 +97,5 @@ private fun mapToLookupHistoryListItemModel(
     numberOfVisits = numberOfVisits,
     lastAccessed = lastAccessed,
     imageUrl = imageUrl,
-    placeholderKey = placeholderKey,
+    imageId = placeholderKey ?: 0L,
 )

@@ -31,6 +31,6 @@ fun mapToArtistListItemModel(
         ended = ended,
     ),
     imageUrl = thumbnailUrl,
-    placeholderKey = placeholderKey,
+    imageId = placeholderKey ?: 0L,
     visited = visited == true,
 )

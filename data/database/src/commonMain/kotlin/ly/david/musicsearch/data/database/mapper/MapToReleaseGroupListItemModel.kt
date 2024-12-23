@@ -22,6 +22,6 @@ internal fun mapToReleaseGroupListItemModel(
     secondaryTypes = secondaryTypes.orEmpty(),
     formattedArtistCredits = formattedArtistCreditNames,
     imageUrl = thumbnailUrl,
-    placeholderKey = placeholderKey,
+    imageId = placeholderKey ?: 0L,
     visited = visited == true,
 )

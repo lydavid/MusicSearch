@@ -143,7 +143,7 @@ fun ReleaseListItem(
         leadingContent = {
             ThumbnailImage(
                 url = release.imageUrl.orEmpty(),
-                placeholderKey = release.placeholderKey.toString(),
+                placeholderKey = release.imageId.toString(),
                 placeholderIcon = MusicBrainzEntity.RELEASE.getIcon(),
             )
         },

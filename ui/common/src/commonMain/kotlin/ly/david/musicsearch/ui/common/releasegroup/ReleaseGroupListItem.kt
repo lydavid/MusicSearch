@@ -86,7 +86,7 @@ fun ReleaseGroupListItem(
         leadingContent = {
             ThumbnailImage(
                 url = releaseGroup.imageUrl.orEmpty(),
-                placeholderKey = releaseGroup.placeholderKey.toString(),
+                placeholderKey = releaseGroup.imageId.toString(),
                 placeholderIcon = MusicBrainzEntity.RELEASE_GROUP.getIcon(),
             )
         },

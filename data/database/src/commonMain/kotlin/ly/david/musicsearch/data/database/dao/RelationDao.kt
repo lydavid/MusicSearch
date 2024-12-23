@@ -137,7 +137,7 @@ class RelationDao(
             ended = ended,
         ),
         imageUrl = thumbnailUrl,
-        placeholderKey = placeholderKey,
+        imageId = placeholderKey ?: 0L,
     )
 
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<CountOfEachRelationshipType>> =
