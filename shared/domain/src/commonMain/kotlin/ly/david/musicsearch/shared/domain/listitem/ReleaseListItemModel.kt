@@ -23,6 +23,7 @@ data class ReleaseListItemModel(
     val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
     val textRepresentation: TextRepresentationUiModel? = TextRepresentationUiModel(),
     val imageUrl: String? = null,
+    val imageId: Long = 0L,
 
     val formattedFormats: String? = null,
     val formattedTracks: String? = null,

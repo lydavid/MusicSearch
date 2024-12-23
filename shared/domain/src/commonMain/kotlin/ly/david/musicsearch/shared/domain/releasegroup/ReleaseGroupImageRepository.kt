@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.releasegroup
 
+import ly.david.musicsearch.shared.domain.image.ImageUrls
+
 /**
  * Logic to retrieve release group cover art path.
  */
@@ -14,7 +16,6 @@ interface ReleaseGroupImageRepository {
      */
     suspend fun getReleaseGroupImageUrl(
         releaseGroupId: String,
-        thumbnail: Boolean,
         forceRefresh: Boolean,
-    ): String
+    ): ImageUrls
 }

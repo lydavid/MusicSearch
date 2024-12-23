@@ -1,9 +1,10 @@
 package ly.david.musicsearch.data.database.dao
 
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImageUrls
-import ly.david.musicsearch.data.database.Database
 
 class MbidImageDao(
     database: Database,
@@ -27,17 +28,21 @@ class MbidImageDao(
         }
     }
 
-    override fun getAllUrlsById(mbid: String): List<ImageUrls> {
+    override fun getFrontCoverUrl(mbid: String): ImageUrls? {
+        return transacter.getFrontCoverUrl(
+            mbid = mbid,
+            mapper = ::mapToImageUrls,
+        ).executeAsOneOrNull()
+    }
+
+    override fun getAllUrlsById(
+        mbid: String,
+        query: String,
+    ): List<ImageUrls> {
         return transacter.getAllUrlsById(
             mbid = mbid,
-            mapper = { _, _, thumbnailUrl, largeUrl, types, comment ->
-                ImageUrls(
-                    thumbnailUrl = thumbnailUrl,
-                    largeUrl = largeUrl,
-                    types = types ?: persistentListOf(),
-                    comment = comment.orEmpty(),
-                )
-            },
+            query = "%$query%",
+            mapper = ::mapToImageUrls,
         ).executeAsList()
     }
 
@@ -49,3 +54,17 @@ class MbidImageDao(
         return transacter.getNumberOfImagesById(mbid).executeAsOne()
     }
 }
+
+private fun mapToImageUrls(
+    id: Long,
+    thumbnailUrl: String,
+    largeUrl: String,
+    types: ImmutableList<String>?,
+    comment: String?,
+) = ImageUrls(
+    databaseId = id,
+    thumbnailUrl = thumbnailUrl,
+    largeUrl = largeUrl,
+    types = types ?: persistentListOf(),
+    comment = comment.orEmpty(),
+)

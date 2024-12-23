@@ -53,13 +53,13 @@ internal class InstrumentPresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        val topAppBarFilterState = rememberTopAppBarFilterState()
-        val query = topAppBarFilterState.filterText
         var instrument: InstrumentDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<InstrumentTab> by rememberSaveable {
             mutableStateOf(InstrumentTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(InstrumentTab.DETAILS) }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -112,6 +112,11 @@ internal class InstrumentPresenter(
             key1 = query,
             key2 = selectedTab,
         ) {
+            topAppBarFilterState.show(
+                selectedTab !in listOf(
+                    InstrumentTab.STATS,
+                ),
+            )
             when (selectedTab) {
                 InstrumentTab.DETAILS -> {
                     // Loaded above

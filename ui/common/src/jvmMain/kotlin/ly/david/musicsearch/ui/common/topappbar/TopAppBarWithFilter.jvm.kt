@@ -22,7 +22,6 @@ actual fun TopAppBarWithFilter(
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
 
-    showFilterIcon: Boolean,
     topAppBarFilterState: TopAppBarFilterState,
     topAppBarEditState: TopAppBarEditState,
 
@@ -39,7 +38,6 @@ actual fun TopAppBarWithFilter(
         scrollBehavior = scrollBehavior,
         overflowDropdownMenuItems = overflowDropdownMenuItems,
         subtitleDropdownMenuItems = subtitleDropdownMenuItems,
-        showFilterIcon = showFilterIcon,
         topAppBarFilterState = topAppBarFilterState,
         topAppBarEditState = topAppBarEditState,
         additionalActions = additionalActions,

@@ -11,5 +11,6 @@ data class ReleaseGroupListItemModel(
     override val secondaryTypes: List<String>? = null,
     val formattedArtistCredits: String? = null,
     val imageUrl: String? = null,
+    val imageId: Long = 0L,
     override val visited: Boolean = false,
 ) : ListItemModel(), ReleaseGroup, Visitable

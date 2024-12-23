@@ -81,9 +81,6 @@ internal fun PlaceUi(
                 entity = entity,
                 title = state.title,
                 scrollBehavior = scrollBehavior,
-                showFilterIcon = state.selectedTab !in listOf(
-                    PlaceTab.STATS,
-                ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
                         url = state.url,

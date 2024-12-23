@@ -87,7 +87,8 @@ SELECT
   `begin`,
   `end`,
   `ended`,
-  mi.thumbnail_url
+  mi.thumbnail_url,
+  mi.id AS placeholderKey
 FROM relation
 LEFT JOIN visited ON visited.entity_id = linked_entity_id
 LEFT JOIN mbid_image mi ON mi.mbid = linked_entity_id
@@ -124,7 +125,8 @@ SELECT
   `begin`,
   `end`,
   `ended`,
-  mi.thumbnail_url
+  mi.thumbnail_url,
+  mi.id AS placeholderKey
 FROM relation
 LEFT JOIN visited ON visited.entity_id = linked_entity_id
 LEFT JOIN mbid_image mi ON mi.mbid = linked_entity_id

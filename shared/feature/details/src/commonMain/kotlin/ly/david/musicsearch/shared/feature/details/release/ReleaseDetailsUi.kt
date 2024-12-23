@@ -23,7 +23,6 @@ import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.work.getDisplayScript
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.LargeImage
-import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 @Composable
 internal fun ReleaseDetailsUi(
@@ -43,8 +42,8 @@ internal fun ReleaseDetailsUi(
         item {
             if (filterText.isBlank()) {
                 LargeImage(
-                    url = releaseDetailsUiState.imageUrl,
-                    placeholderKey = getPlaceholderKey(release.id),
+                    url = release.imageUrls.largeUrl,
+                    placeholderKey = release.imageUrls.databaseId.toString(),
                     modifier = Modifier.clickable { onImageClick() },
                 )
             }
@@ -65,14 +64,14 @@ internal fun ReleaseDetailsUi(
                         filterText = filterText,
                     )
                 }
-                formattedFormats?.ifNotNullOrEmpty {
+                formattedFormats.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.format,
                         text = it,
                         filterText = filterText,
                     )
                 }
-                formattedTracks?.ifNotNullOrEmpty {
+                formattedTracks.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.tracks,
                         text = it,
@@ -122,7 +121,7 @@ internal fun ReleaseDetailsUi(
                         filterText = filterText,
                     )
                 }
-                textRepresentation?.language?.getDisplayLanguage(strings).ifNotNullOrEmpty {
+                textRepresentation.language?.getDisplayLanguage(strings).ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.language,
                         text = it,

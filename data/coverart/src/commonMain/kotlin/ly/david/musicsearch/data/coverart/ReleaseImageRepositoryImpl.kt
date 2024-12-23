@@ -18,27 +18,25 @@ internal class ReleaseImageRepositoryImpl(
 
     override suspend fun getReleaseImageUrl(
         releaseId: String,
-        thumbnail: Boolean,
         forceRefresh: Boolean,
-    ): String {
+    ): ImageUrls {
         if (forceRefresh) {
             imageUrlDao.deleteAllUrlsById(releaseId)
         }
 
-        val cachedImageUrls = imageUrlDao.getAllUrlsById(releaseId)
-        return if (cachedImageUrls.isNotEmpty()) {
-            val frontCoverArt = cachedImageUrls.first()
-            return if (thumbnail) frontCoverArt.thumbnailUrl else frontCoverArt.largeUrl
+        val cachedImageUrl = imageUrlDao.getFrontCoverUrl(releaseId)
+        return if (cachedImageUrl == null) {
+            saveReleaseImageUrlFromNetwork(releaseId)
+            imageUrlDao.getFrontCoverUrl(releaseId) ?: ImageUrls()
         } else {
-            getReleaseImageUrlFromNetwork(releaseId, thumbnail)
+            cachedImageUrl
         }
     }
 
-    private suspend fun getReleaseImageUrlFromNetwork(
+    private suspend fun saveReleaseImageUrlFromNetwork(
         releaseId: String,
-        thumbnail: Boolean,
-    ): String {
-        return try {
+    ) {
+        try {
             val coverArts: CoverArtsResponse = coverArtArchiveApi.getReleaseCoverArts(releaseId)
             val imageUrls: MutableList<ImageUrls> = coverArts.toImageUrlsList().toMutableList()
 
@@ -51,8 +49,6 @@ internal class ReleaseImageRepositoryImpl(
                 mbid = releaseId,
                 imageUrls = imageUrls,
             )
-            val frontCoverArt = imageUrls.first()
-            return if (thumbnail) frontCoverArt.thumbnailUrl else frontCoverArt.largeUrl
         } catch (ex: HandledException) {
             if (ex.errorResolution == ErrorResolution.None) {
                 imageUrlDao.saveUrls(
@@ -62,15 +58,19 @@ internal class ReleaseImageRepositoryImpl(
             } else {
                 logger.e(ex)
             }
-            ""
         } catch (ex: Exception) {
             logger.e(ex)
-            ""
         }
     }
 
-    override fun getAllUrlsById(mbid: String): List<ImageUrls> {
-        return imageUrlDao.getAllUrlsById(mbid = mbid)
+    override fun getAllUrlsById(
+        mbid: String,
+        query: String,
+    ): List<ImageUrls> {
+        return imageUrlDao.getAllUrlsById(
+            mbid = mbid,
+            query = query,
+        )
     }
 
     override fun getNumberOfImagesById(mbid: String): Int {

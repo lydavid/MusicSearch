@@ -24,7 +24,6 @@ import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.image.ThumbnailImage
-import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -45,7 +44,7 @@ fun RelationListItem(
             }
             ThumbnailImage(
                 url = relation.imageUrl.orEmpty(),
-                placeholderKey = getPlaceholderKey(relation.linkedEntityId),
+                placeholderKey = relation.imageId.toString(),
                 placeholderIcon = relation.linkedEntity.getIcon(),
                 modifier = clipModifier,
             )

@@ -61,13 +61,13 @@ internal class WorkPresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        val topAppBarFilterState = rememberTopAppBarFilterState()
-        val query = topAppBarFilterState.filterText
         var work: WorkDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<WorkTab> by rememberSaveable {
             mutableStateOf(WorkTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(WorkTab.DETAILS) }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -124,6 +124,11 @@ internal class WorkPresenter(
             key1 = query,
             key2 = selectedTab,
         ) {
+            topAppBarFilterState.show(
+                selectedTab !in listOf(
+                    WorkTab.STATS,
+                ),
+            )
             when (selectedTab) {
                 WorkTab.DETAILS -> {
                     // Loaded above

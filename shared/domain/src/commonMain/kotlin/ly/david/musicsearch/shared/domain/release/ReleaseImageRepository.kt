@@ -16,11 +16,13 @@ interface ReleaseImageRepository {
      */
     suspend fun getReleaseImageUrl(
         releaseId: String,
-        thumbnail: Boolean,
         forceRefresh: Boolean,
-    ): String
+    ): ImageUrls
 
-    fun getAllUrlsById(mbid: String): List<ImageUrls>
+    fun getAllUrlsById(
+        mbid: String,
+        query: String,
+    ): List<ImageUrls>
 
     fun getNumberOfImagesById(mbid: String): Int
 }

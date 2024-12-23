@@ -25,11 +25,15 @@ fun rememberTopAppBarFilterState(
 class TopAppBarFilterState(
     initialFilterText: String = "",
     initialIsFilterMode: Boolean = false,
+    initialShow: Boolean = true,
 ) {
     var filterText by mutableStateOf(initialFilterText)
         private set
 
     var isFilterMode by mutableStateOf(initialIsFilterMode)
+        private set
+
+    var show by mutableStateOf(initialShow)
         private set
 
     fun updateFilterText(newText: String) {
@@ -49,13 +53,18 @@ class TopAppBarFilterState(
         clear()
     }
 
+    fun show(show: Boolean) {
+        this.show = show
+    }
+
     companion object {
         val Saver = listSaver<TopAppBarFilterState, Any>(
-            save = { listOf(it.filterText, it.isFilterMode) },
+            save = { listOf(it.filterText, it.isFilterMode, it.show) },
             restore = {
                 TopAppBarFilterState(
                     initialFilterText = it[0] as String,
                     initialIsFilterMode = it[1] as Boolean,
+                    initialShow = it[2] as Boolean,
                 )
             },
         )

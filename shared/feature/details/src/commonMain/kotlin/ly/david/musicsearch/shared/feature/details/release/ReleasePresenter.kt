@@ -68,13 +68,12 @@ internal class ReleasePresenter(
         var subtitle by rememberSaveable { mutableStateOf("") }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        val topAppBarFilterState = rememberTopAppBarFilterState()
-        val query = topAppBarFilterState.filterText
         var release: ReleaseDetailsModel? by rememberRetained { mutableStateOf(null) }
-        var imageUrl by rememberSaveable { mutableStateOf("") }
         var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
         val tabs: ImmutableList<ReleaseTab> = ReleaseTab.entries.toPersistentList()
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -114,15 +113,18 @@ internal class ReleasePresenter(
                 )
                 recordedHistory = true
             }
+            forceRefreshDetails = false
         }
 
+        // Image fetching was split off from details model so that we can display data before images load
         LaunchedEffect(forceRefreshDetails, release) {
-            release?.let { release ->
-                imageUrl = releaseImageRepository.getReleaseImageUrl(
-                    releaseId = release.id,
-                    thumbnail = false,
+            release = release?.copy(
+                imageUrls = releaseImageRepository.getReleaseImageUrl(
+                    releaseId = release?.id ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
-                )
+                ),
+            )
+            release?.let { release ->
                 numberOfImages = releaseImageRepository.getNumberOfImagesById(release.id)
             }
         }
@@ -145,6 +147,11 @@ internal class ReleasePresenter(
             key1 = query,
             key2 = selectedTab,
         ) {
+            topAppBarFilterState.show(
+                selectedTab !in listOf(
+                    ReleaseTab.STATS,
+                ),
+            )
             when (selectedTab) {
                 ReleaseTab.DETAILS -> {
                     // Loaded above
@@ -233,7 +240,6 @@ internal class ReleasePresenter(
             url = getMusicBrainzUrl(screen.entity, screen.id),
             releaseDetailsUiState = ReleaseDetailsUiState(
                 isError = isError,
-                imageUrl = imageUrl,
                 numberOfImages = numberOfImages,
                 lazyListState = detailsLazyListState,
             ),
@@ -265,7 +271,6 @@ internal data class ReleaseUiState(
 
 internal data class ReleaseDetailsUiState(
     val isError: Boolean = false,
-    val imageUrl: String = "",
     val numberOfImages: Int? = null,
     val lazyListState: LazyListState = LazyListState(),
 )

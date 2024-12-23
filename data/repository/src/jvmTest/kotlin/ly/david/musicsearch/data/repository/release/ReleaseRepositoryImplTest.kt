@@ -990,7 +990,6 @@ class ReleaseRepositoryImplTest : KoinTest {
                     script = "Jpan",
                     language = "jpn",
                 ),
-                imageUrl = null,
                 formattedFormats = "CD",
                 formattedTracks = "1",
                 artistCredits = listOf(

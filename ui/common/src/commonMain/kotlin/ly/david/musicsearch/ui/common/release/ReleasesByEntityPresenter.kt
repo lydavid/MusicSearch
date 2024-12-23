@@ -59,7 +59,6 @@ class ReleasesByEntityPresenter(
                     scope.launch {
                         releaseImageRepository.getReleaseImageUrl(
                             releaseId = event.entityId,
-                            thumbnail = true,
                             forceRefresh = false,
                         )
                     }

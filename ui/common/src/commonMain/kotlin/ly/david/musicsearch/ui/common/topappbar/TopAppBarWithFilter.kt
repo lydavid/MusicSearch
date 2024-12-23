@@ -60,7 +60,6 @@ expect fun TopAppBarWithFilter(
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 
-    showFilterIcon: Boolean = true,
     topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     topAppBarEditState: TopAppBarEditState = TopAppBarEditState(),
 
@@ -82,7 +81,6 @@ internal fun TopAppBarWithFilterInternal(
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 
-    showFilterIcon: Boolean = true,
     topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     topAppBarEditState: TopAppBarEditState = TopAppBarEditState(),
 
@@ -191,7 +189,7 @@ internal fun TopAppBarWithFilterInternal(
             scrollBehavior = scrollBehavior,
             isEditMode = topAppBarEditState.isEditMode,
             actions = {
-                if (showFilterIcon) {
+                if (topAppBarFilterState.show) {
                     IconButton(onClick = {
                         topAppBarFilterState.toggleFilterMode(true)
                     }) {

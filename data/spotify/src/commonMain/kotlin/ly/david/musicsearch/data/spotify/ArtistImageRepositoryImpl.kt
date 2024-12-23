@@ -21,61 +21,53 @@ class ArtistImageRepositoryImpl(
     override suspend fun getArtistImageUrl(
         artistDetailsModel: ArtistDetailsModel,
         forceRefresh: Boolean,
-    ): String {
+    ): ImageUrls {
         if (forceRefresh) {
             imageUrlDao.deleteAllUrlsById(artistDetailsModel.id)
         }
 
-        val cachedImageUrls = imageUrlDao.getAllUrlsById(artistDetailsModel.id)
-        return if (cachedImageUrls.isNotEmpty()) {
-            return cachedImageUrls.first().largeUrl
+        val cachedImageUrl = imageUrlDao.getFrontCoverUrl(artistDetailsModel.id)
+        return if (cachedImageUrl == null) {
+            saveArtistImageUrlFromNetwork(artistDetailsModel)
+            imageUrlDao.getFrontCoverUrl(artistDetailsModel.id) ?: ImageUrls()
         } else {
-            getArtistImageUrlFromNetwork(artistDetailsModel)
+            cachedImageUrl
         }
     }
 
-    private suspend fun getArtistImageUrlFromNetwork(
+    private suspend fun saveArtistImageUrlFromNetwork(
         artistDetailsModel: ArtistDetailsModel,
-    ): String {
-        return try {
+    ) {
+        try {
             val spotifyUrl =
                 artistDetailsModel.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name
-                    ?: return ""
-            val spotifyArtistId = spotifyUrl.split("/").last()
 
-            val spotifyArtist: SpotifyArtist = spotifyApi.getArtist(spotifyArtistId)
-            val largeUrl = spotifyArtist.getLargeImageUrl()
-            cache(
-                artistDetailsModel = artistDetailsModel,
-                spotifyArtist = spotifyArtist,
-            )
-            largeUrl
-        } catch (ex: HandledException) {
-            // TODO: if 400, prompt user to input their own Spotify client secret if they want to load artist images.
-            //  UI should allow dismissing if they don't want to.
-            //  Then don't reprompt. But allow inputting client secret from settings.
-            if (ex.errorResolution != ErrorResolution.None) {
-                logger.e(ex)
-            }
-            ""
-        } catch (ex: Exception) {
-            logger.e(ex)
-            ""
-        }
-    }
-
-    private fun cache(
-        artistDetailsModel: ArtistDetailsModel,
-        spotifyArtist: SpotifyArtist,
-    ) {
-        imageUrlDao.saveUrls(
-            mbid = artistDetailsModel.id,
-            imageUrls = listOf(
+            val imageUrl: ImageUrls = if (spotifyUrl == null) {
+                ImageUrls()
+            } else {
+                val spotifyArtistId = spotifyUrl.split("/").last()
+                val spotifyArtist: SpotifyArtist = spotifyApi.getArtist(spotifyArtistId)
                 ImageUrls(
                     thumbnailUrl = spotifyArtist.getThumbnailImageUrl(),
                     largeUrl = spotifyArtist.getLargeImageUrl(),
-                ),
-            ),
-        )
+                )
+            }
+
+            imageUrlDao.saveUrls(
+                mbid = artistDetailsModel.id,
+                imageUrls = listOf(imageUrl),
+            )
+        } catch (ex: HandledException) {
+            if (ex.errorResolution == ErrorResolution.None) {
+                imageUrlDao.saveUrls(
+                    mbid = artistDetailsModel.id,
+                    imageUrls = listOf(ImageUrls()),
+                )
+            } else {
+                logger.e(ex)
+            }
+        } catch (ex: Exception) {
+            logger.e(ex)
+        }
     }
 }

@@ -28,7 +28,6 @@ DELETE FROM `release` WHERE id = :releaseId;
 getReleaseForDetails:
 SELECT
   `release`.*,
-  mi.large_url AS imageUrl,
   (
     SELECT SUM(t.length)
     FROM track t
@@ -45,7 +44,6 @@ SELECT
     AND t.length IS NULL
   ) AS hasNullLength
 FROM `release`
-LEFT JOIN mbid_image mi ON mi.mbid = `release`.id
 WHERE `release`.id = :releaseId
 LIMIT 1;
 

@@ -18,30 +18,29 @@ internal class ReleaseGroupImageRepositoryImpl(
 
     override suspend fun getReleaseGroupImageUrl(
         releaseGroupId: String,
-        thumbnail: Boolean,
         forceRefresh: Boolean,
-    ): String {
+    ): ImageUrls {
         if (forceRefresh) {
             imageUrlDao.deleteAllUrlsById(releaseGroupId)
         }
 
-        val cachedImageUrls = imageUrlDao.getAllUrlsById(releaseGroupId)
-        return if (cachedImageUrls.isNotEmpty()) {
-            val frontCoverArt = cachedImageUrls.first()
-            return if (thumbnail) frontCoverArt.thumbnailUrl else frontCoverArt.largeUrl
+        val cachedImageUrls = imageUrlDao.getFrontCoverUrl(releaseGroupId)
+        return if (cachedImageUrls == null) {
+            saveReleaseGroupCoverArtUrlFromNetwork(releaseGroupId)
+            imageUrlDao.getFrontCoverUrl(releaseGroupId) ?: ImageUrls()
         } else {
-            getReleaseGroupCoverArtUrlFromNetwork(releaseGroupId, thumbnail)
+            cachedImageUrls
         }
     }
 
-    private suspend fun getReleaseGroupCoverArtUrlFromNetwork(
+    private suspend fun saveReleaseGroupCoverArtUrlFromNetwork(
         releaseGroupId: String,
-        thumbnail: Boolean,
-    ): String {
-        return try {
+    ) {
+        try {
             val coverArts = coverArtArchiveApi.getReleaseGroupCoverArts(releaseGroupId)
             val thumbnailUrl = coverArts.getFrontThumbnailCoverArtUrl().orEmpty()
             val largeUrl = coverArts.getFrontCoverArtUrl().orEmpty()
+
             imageUrlDao.saveUrls(
                 mbid = releaseGroupId,
                 imageUrls = listOf(
@@ -51,7 +50,6 @@ internal class ReleaseGroupImageRepositoryImpl(
                     ),
                 ),
             )
-            return if (thumbnail) thumbnailUrl else largeUrl
         } catch (ex: HandledException) {
             if (ex.errorResolution == ErrorResolution.None) {
                 imageUrlDao.saveUrls(
@@ -61,10 +59,8 @@ internal class ReleaseGroupImageRepositoryImpl(
             } else {
                 logger.e(ex)
             }
-            ""
         } catch (ex: Exception) {
             logger.e(ex)
-            ""
         }
     }
 }

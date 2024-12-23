@@ -30,10 +30,49 @@ VALUES (
   :comment
 );
 
-getAllUrlsById:
-SELECT *
+getFrontCoverUrl:
+SELECT
+  `id`,
+  `thumbnail_url`,
+  `large_url`,
+  `types`,
+  `comment`
 FROM mbid_image
-WHERE mbid = :mbid;
+WHERE mbid = :mbid
+LIMIT 1;
+
+-- if types or comment is null, this will not show them at all (fix in 24.sqm)
+getAllUrlsById:
+SELECT
+  `id`,
+  `thumbnail_url`,
+  `large_url`,
+  `types`,
+  `comment`
+FROM mbid_image
+WHERE mbid = :mbid
+AND (
+  types LIKE :query
+  OR comment LIKE :query
+);
+
+getAllUrls:
+SELECT
+  mbid_image.*,
+  coalesce(artist.name, `release`.name, release_group.name) AS name,
+  CASE
+    WHEN artist.name IS NOT NULL THEN 'artist'
+    WHEN `release`.name IS NOT NULL THEN 'release'
+    WHEN release_group.name IS NOT NULL THEN 'release_group'
+  END AS entity
+FROM mbid_image
+LEFT JOIN artist ON artist.id = mbid_image.mbid
+LEFT JOIN `release` ON `release`.id = mbid_image.mbid
+LEFT JOIN release_group ON release_group.id = mbid_image.mbid
+WHERE thumbnail_url != ''
+AND (artist.name LIKE '%%'
+OR `release`.name LIKE '%%'
+OR release_group.name LIKE '%%');
 
 deleteAllUrlsById:
 DELETE FROM mbid_image

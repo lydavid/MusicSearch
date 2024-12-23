@@ -91,6 +91,7 @@ SELECT
   a.end,
   a.ended,
   mi.thumbnail_url,
+  mi.id AS placeholderKey,
   visited.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN artist a ON sr.entity_id = a.id
@@ -206,6 +207,7 @@ SELECT
   r.*,
   ac.name AS artistCreditNames,
   mi.thumbnail_url,
+  mi.id AS placeholderKey,
   (
     SELECT COUNT(cc.area_id)
     FROM `release`
@@ -237,6 +239,7 @@ SELECT
   rg.secondary_types,
   ac.name AS artist_credits,
   mi.thumbnail_url,
+  mi.id AS placeholderKey,
   visited.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN release_group rg ON sr.entity_id = rg.id

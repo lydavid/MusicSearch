@@ -58,6 +58,7 @@ SELECT
   rg.secondary_types,
   ac.name AS artist_credits,
   mi.thumbnail_url,
+  mi.id AS placeholderKey,
   visited.entity_id IS NOT NULL AS visited
 FROM release_group rg
 INNER JOIN artist_release_group arg ON rg.id = arg.release_group_id
