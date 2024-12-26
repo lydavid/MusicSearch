@@ -91,7 +91,7 @@ internal class ReleaseImageRepositoryImpl(
                     query = query,
                 )
             }
-        }
+        },
     ).flow
         .distinctUntilChanged()
         .cachedIn(scope = coroutineScope)
