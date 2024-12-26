@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,9 +38,9 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
+import app.cash.paging.compose.LazyPagingItems
+import app.cash.paging.compose.itemKey
 import com.slack.circuit.foundation.internal.BackHandler
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.image.ImageUrls
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -83,7 +82,6 @@ internal fun CoverArtsGridUi(
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
-    val lazyGridState = rememberLazyGridState()
 
     Scaffold(
         modifier = modifier,
@@ -98,31 +96,33 @@ internal fun CoverArtsGridUi(
                 subtitle = state.subtitle,
                 topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(
-                        url = state.url,
-                    )
+                    state.url?.let { url ->
+                        OpenInBrowserMenuItem(
+                            url = url,
+                        )
+                    }
                 },
             )
         },
     ) { innerPadding ->
-        val imageUrls = state.imageUrls.toImmutableList()
+        val imageUrls = state.imageUrls
         val capturedSelectedImageIndex = state.selectedImageIndex
         if (capturedSelectedImageIndex == null) {
             CoverArtsGrid(
                 imageUrls = imageUrls,
-                onImageClick = {
-                    eventSink(CoverArtsGridUiEvent.SelectImage(it))
+                onImageClick = { index ->
+                    eventSink(CoverArtsGridUiEvent.SelectImage(index))
                 },
+                lazyGridState = state.lazyGridState,
                 modifier = Modifier.padding(innerPadding),
-                lazyGridState = lazyGridState,
             )
         } else {
             CoverArtsPager(
                 imageUrls = imageUrls,
                 selectedImageIndex = capturedSelectedImageIndex,
                 isCompact = isCompact,
-                onImageChange = {
-                    eventSink(CoverArtsGridUiEvent.SelectImage(it))
+                onImageChange = { index ->
+                    eventSink(CoverArtsGridUiEvent.SelectImage(index))
                 },
                 modifier = Modifier.padding(innerPadding),
             )
@@ -134,10 +134,10 @@ private const val GRID_SIZE = 4
 
 @Composable
 private fun CoverArtsGrid(
-    imageUrls: ImmutableList<ImageUrls>,
+    imageUrls: LazyPagingItems<ImageUrls>,
     onImageClick: (index: Int) -> Unit,
+    lazyGridState: LazyGridState,
     modifier: Modifier = Modifier,
-    lazyGridState: LazyGridState = rememberLazyGridState(),
 ) {
     val density: Density = LocalDensity.current
     val screenWidth: Int = screenContainerSize().width
@@ -151,27 +151,31 @@ private fun CoverArtsGrid(
         state = lazyGridState,
         modifier = modifier,
     ) {
-        items(imageUrls.size) { index ->
-            val imageUrl = imageUrls[index]
-
-            // Because the number of images displayed can change when we filter
-            // the placeholder key must not depend on the index of the initial set of images
-            ThumbnailImage(
-                url = imageUrl.thumbnailUrl,
-                placeholderKey = imageUrl.databaseId.toString(),
-                placeholderIcon = MusicBrainzEntity.RELEASE.getIcon(),
-                size = size,
-                modifier = Modifier.clickable {
-                    onImageClick(index)
-                },
-            )
+        items(
+            count = imageUrls.itemCount,
+            key = imageUrls.itemKey { it.databaseId },
+            contentType = { ImageUrls() },
+        ) { index ->
+            imageUrls[index]?.let { imageUrl ->
+                // Because the number of images displayed can change when we filter
+                // the placeholder key must not depend on the index of the initial set of images
+                ThumbnailImage(
+                    url = imageUrl.thumbnailUrl,
+                    placeholderKey = imageUrl.databaseId.toString(),
+                    placeholderIcon = MusicBrainzEntity.RELEASE.getIcon(),
+                    size = size,
+                    modifier = Modifier.clickable {
+                        onImageClick(index)
+                    },
+                )
+            }
         }
     }
 }
 
 @Composable
 private fun CoverArtsPager(
-    imageUrls: ImmutableList<ImageUrls>,
+    imageUrls: LazyPagingItems<ImageUrls>,
     selectedImageIndex: Int,
     isCompact: Boolean,
     onImageChange: (index: Int) -> Unit,
@@ -182,7 +186,7 @@ private fun CoverArtsPager(
     val latestOnImageChange by rememberUpdatedState(onImageChange)
     val pagerState = rememberPagerState(
         initialPage = selectedImageIndex,
-        pageCount = { imageUrls.size },
+        pageCount = { imageUrls.itemCount },
     )
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
@@ -229,7 +233,7 @@ private fun CoverArtsPager(
             state = pagerState,
             beyondViewportPageCount = 1,
         ) { page ->
-            val imageUrl = imageUrls[page]
+            val imageUrl = imageUrls[page] ?: return@HorizontalPager
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,

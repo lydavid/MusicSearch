@@ -1,13 +1,17 @@
 package ly.david.musicsearch.data.database.dao
 
+import app.cash.paging.PagingSource
+import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImageUrls
 
 class MbidImageDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao, ImageUrlDao {
     override val transacter = database.mbid_imageQueries
 
@@ -37,13 +41,45 @@ class MbidImageDao(
 
     override fun getAllUrlsById(
         mbid: String,
+        query: String
+    ): PagingSource<Int, ImageUrls> {
+        return QueryPagingSource(
+            countQuery = transacter.getAllUrlsByIdCount(
+                mbid = mbid,
+                query = "%$query%",
+            ),
+            transacter = transacter,
+            context = coroutineDispatchers.io,
+            queryProvider = { limit, offset ->
+                transacter.getAllUrlsById(
+                    mbid = mbid,
+                    query = "%$query%",
+                    limit = limit,
+                    offset = offset,
+                    mapper = ::mapToImageUrls,
+                )
+            }
+        )
+    }
+
+    override fun getAllUrls(
         query: String,
-    ): List<ImageUrls> {
-        return transacter.getAllUrlsById(
-            mbid = mbid,
-            query = "%$query%",
-            mapper = ::mapToImageUrls,
-        ).executeAsList()
+    ): PagingSource<Int, ImageUrls> {
+        return QueryPagingSource(
+            countQuery = transacter.getAllUrlsCount(
+                query = "%$query%",
+            ),
+            transacter = transacter,
+            context = coroutineDispatchers.io,
+            queryProvider = { limit, offset ->
+                transacter.getAllUrls(
+                    query = "%$query%",
+                    limit = limit,
+                    offset = offset,
+                    mapper = ::mapToImageUrls,
+                )
+            }
+        )
     }
 
     override fun deleteAllUrlsById(mbid: String) {

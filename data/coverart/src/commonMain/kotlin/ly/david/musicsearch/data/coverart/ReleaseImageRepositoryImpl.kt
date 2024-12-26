@@ -1,5 +1,12 @@
 package ly.david.musicsearch.data.coverart
 
+import androidx.paging.cachedIn
+import app.cash.paging.Pager
+import app.cash.paging.PagingConfig
+import app.cash.paging.PagingData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
@@ -14,6 +21,7 @@ internal class ReleaseImageRepositoryImpl(
     private val coverArtArchiveApi: CoverArtArchiveApi,
     private val imageUrlDao: ImageUrlDao,
     private val logger: Logger,
+    private val coroutineScope: CoroutineScope,
 ) : ReleaseImageRepository {
 
     override suspend fun getReleaseImageUrl(
@@ -63,15 +71,30 @@ internal class ReleaseImageRepositoryImpl(
         }
     }
 
-    override fun getAllUrlsById(
-        mbid: String,
+    override fun observeAllImageUrls(
+        mbid: String?,
         query: String,
-    ): List<ImageUrls> {
-        return imageUrlDao.getAllUrlsById(
-            mbid = mbid,
-            query = query,
-        )
-    }
+    ): Flow<PagingData<ImageUrls>> = Pager(
+        config = PagingConfig(
+            pageSize = 100,
+            initialLoadSize = 100,
+            prefetchDistance = 50,
+        ),
+        pagingSourceFactory = {
+            if (mbid == null) {
+                imageUrlDao.getAllUrls(
+                    query = query,
+                )
+            } else {
+                imageUrlDao.getAllUrlsById(
+                    mbid = mbid,
+                    query = query,
+                )
+            }
+        }
+    ).flow
+        .distinctUntilChanged()
+        .cachedIn(scope = coroutineScope)
 
     override fun getNumberOfImagesById(mbid: String): Int {
         return imageUrlDao.getNumberOfImagesById(mbid).toInt()

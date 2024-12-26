@@ -13,6 +13,7 @@ kotlin {
                 implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.paging.common)
             }
         }
         val commonTest by getting {

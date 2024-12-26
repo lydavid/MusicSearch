@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.image
 
+import app.cash.paging.PagingSource
+
 interface ImageUrlDao {
     fun saveUrls(
         mbid: String,
@@ -11,7 +13,11 @@ interface ImageUrlDao {
     fun getAllUrlsById(
         mbid: String,
         query: String = "",
-    ): List<ImageUrls>
+    ): PagingSource<Int, ImageUrls>
+
+    fun getAllUrls(
+        query: String = "",
+    ): PagingSource<Int, ImageUrls>
 
     fun deleteAllUrlsById(mbid: String)
 

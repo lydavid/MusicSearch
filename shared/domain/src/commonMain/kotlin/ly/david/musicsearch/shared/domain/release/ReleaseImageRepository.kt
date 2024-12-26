@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.release
 
+import app.cash.paging.PagingData
+import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.image.ImageUrls
 
 /**
@@ -19,10 +21,10 @@ interface ReleaseImageRepository {
         forceRefresh: Boolean,
     ): ImageUrls
 
-    fun getAllUrlsById(
-        mbid: String,
+    fun observeAllImageUrls(
+        mbid: String?,
         query: String,
-    ): List<ImageUrls>
+    ): Flow<PagingData<ImageUrls>>
 
     fun getNumberOfImagesById(mbid: String): Int
 }
