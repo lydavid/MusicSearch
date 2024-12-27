@@ -4,7 +4,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
-import app.cash.paparazzi.detectEnvironment
 import coil3.SingletonImageLoader
 import coil3.annotation.DelicateCoilApi
 import com.android.ide.common.rendering.api.SessionParams
@@ -40,15 +39,6 @@ abstract class ScreenshotTest(
     @get:Rule
     val paparazzi: Paparazzi by lazy {
         Paparazzi(
-            environment = detectEnvironment().run {
-                copy(
-                    compileSdkVersion = 33,
-                    platformDir = platformDir.replace(
-                        "35",
-                        "33",
-                    ),
-                )
-            },
             deviceConfig = DeviceConfig.PIXEL_5.copy(nightMode = nightMode),
             theme = PAPARAZZI_THEME,
             renderingMode = if (isFullScreen) {
