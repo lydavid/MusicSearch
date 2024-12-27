@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
-import ly.david.musicsearch.data.coverart.api.toImageUrlsList
+import ly.david.musicsearch.data.coverart.api.toImageMetadataList
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 
 internal class ReleaseImageRepositoryImpl(
@@ -24,44 +24,44 @@ internal class ReleaseImageRepositoryImpl(
     private val coroutineScope: CoroutineScope,
 ) : ReleaseImageRepository {
 
-    override suspend fun getReleaseImageUrl(
+    override suspend fun getReleaseImageMetadata(
         releaseId: String,
         forceRefresh: Boolean,
-    ): ImageUrls {
+    ): ImageMetadata {
         if (forceRefresh) {
-            imageUrlDao.deleteAllUrlsById(releaseId)
+            imageUrlDao.deleteAllImageMetadtaById(releaseId)
         }
 
-        val cachedImageUrl = imageUrlDao.getFrontCoverUrl(releaseId)
+        val cachedImageUrl = imageUrlDao.getFrontImageMetadata(releaseId)
         return if (cachedImageUrl == null) {
-            saveReleaseImageUrlFromNetwork(releaseId)
-            imageUrlDao.getFrontCoverUrl(releaseId) ?: ImageUrls()
+            saveReleaseImageMetadataFromNetwork(releaseId)
+            imageUrlDao.getFrontImageMetadata(releaseId) ?: ImageMetadata()
         } else {
             cachedImageUrl
         }
     }
 
-    private suspend fun saveReleaseImageUrlFromNetwork(
+    private suspend fun saveReleaseImageMetadataFromNetwork(
         releaseId: String,
     ) {
         try {
             val coverArts: CoverArtsResponse = coverArtArchiveApi.getReleaseCoverArts(releaseId)
-            val imageUrls: MutableList<ImageUrls> = coverArts.toImageUrlsList().toMutableList()
+            val imageMetadataList: MutableList<ImageMetadata> = coverArts.toImageMetadataList().toMutableList()
 
             // We use an empty ImageUrls to represent that we've searched but failed to find any images.
-            if (imageUrls.isEmpty()) {
-                imageUrls.add(ImageUrls())
+            if (imageMetadataList.isEmpty()) {
+                imageMetadataList.add(ImageMetadata())
             }
 
-            imageUrlDao.saveUrls(
+            imageUrlDao.saveImageMetadata(
                 mbid = releaseId,
-                imageUrls = imageUrls,
+                imageMetadataList = imageMetadataList,
             )
         } catch (ex: HandledException) {
             if (ex.errorResolution == ErrorResolution.None) {
-                imageUrlDao.saveUrls(
+                imageUrlDao.saveImageMetadata(
                     mbid = releaseId,
-                    imageUrls = listOf(ImageUrls()),
+                    imageMetadataList = listOf(ImageMetadata()),
                 )
             } else {
                 logger.e(ex)
@@ -71,10 +71,10 @@ internal class ReleaseImageRepositoryImpl(
         }
     }
 
-    override fun observeAllImageUrls(
+    override fun observeAllImageMetadata(
         mbid: String?,
         query: String,
-    ): Flow<PagingData<ImageUrls>> = Pager(
+    ): Flow<PagingData<ImageMetadata>> = Pager(
         config = PagingConfig(
             pageSize = 100,
             initialLoadSize = 100,
@@ -82,11 +82,11 @@ internal class ReleaseImageRepositoryImpl(
         ),
         pagingSourceFactory = {
             if (mbid == null) {
-                imageUrlDao.getAllUrls(
+                imageUrlDao.getAllImageMetadata(
                     query = query,
                 )
             } else {
-                imageUrlDao.getAllUrlsById(
+                imageUrlDao.getAllImageMetadataById(
                     mbid = mbid,
                     query = query,
                 )

@@ -4,7 +4,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
@@ -63,7 +63,7 @@ internal fun PreviewReleaseDetailsUi() {
                     ),
                     releaseLength = 8000,
                     hasNullLength = true,
-                    imageUrls = ImageUrls(
+                    imageMetadata = ImageMetadata(
                         largeUrl = "https://i.scdn.co/image/ab6761610000f1786761852cd2852fceb64e8cd9",
                     ),
                 ),

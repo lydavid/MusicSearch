@@ -10,7 +10,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 
 class ArtistImageRepositoryImpl(
     private val spotifyApi: SpotifyApi,
@@ -18,50 +18,50 @@ class ArtistImageRepositoryImpl(
     private val logger: Logger,
 ) : ArtistImageRepository {
 
-    override suspend fun getArtistImageUrl(
+    override suspend fun getArtistImageMetadata(
         artistDetailsModel: ArtistDetailsModel,
         forceRefresh: Boolean,
-    ): ImageUrls {
+    ): ImageMetadata {
         if (forceRefresh) {
-            imageUrlDao.deleteAllUrlsById(artistDetailsModel.id)
+            imageUrlDao.deleteAllImageMetadtaById(artistDetailsModel.id)
         }
 
-        val cachedImageUrl = imageUrlDao.getFrontCoverUrl(artistDetailsModel.id)
+        val cachedImageUrl = imageUrlDao.getFrontImageMetadata(artistDetailsModel.id)
         return if (cachedImageUrl == null) {
-            saveArtistImageUrlFromNetwork(artistDetailsModel)
-            imageUrlDao.getFrontCoverUrl(artistDetailsModel.id) ?: ImageUrls()
+            saveArtistImageMetadataFromNetwork(artistDetailsModel)
+            imageUrlDao.getFrontImageMetadata(artistDetailsModel.id) ?: ImageMetadata()
         } else {
             cachedImageUrl
         }
     }
 
-    private suspend fun saveArtistImageUrlFromNetwork(
+    private suspend fun saveArtistImageMetadataFromNetwork(
         artistDetailsModel: ArtistDetailsModel,
     ) {
         try {
             val spotifyUrl =
                 artistDetailsModel.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name
 
-            val imageUrl: ImageUrls = if (spotifyUrl == null) {
-                ImageUrls()
+            val imageMetadata: ImageMetadata = if (spotifyUrl == null) {
+                ImageMetadata()
             } else {
                 val spotifyArtistId = spotifyUrl.split("/").last()
                 val spotifyArtist: SpotifyArtist = spotifyApi.getArtist(spotifyArtistId)
-                ImageUrls(
+                ImageMetadata(
                     thumbnailUrl = spotifyArtist.getThumbnailImageUrl(),
                     largeUrl = spotifyArtist.getLargeImageUrl(),
                 )
             }
 
-            imageUrlDao.saveUrls(
+            imageUrlDao.saveImageMetadata(
                 mbid = artistDetailsModel.id,
-                imageUrls = listOf(imageUrl),
+                imageMetadataList = listOf(imageMetadata),
             )
         } catch (ex: HandledException) {
             if (ex.errorResolution == ErrorResolution.None) {
-                imageUrlDao.saveUrls(
+                imageUrlDao.saveImageMetadata(
                     mbid = artistDetailsModel.id,
-                    imageUrls = listOf(ImageUrls()),
+                    imageMetadataList = listOf(ImageMetadata()),
                 )
             } else {
                 logger.e(ex)

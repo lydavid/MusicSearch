@@ -30,7 +30,7 @@ VALUES (
   :comment
 );
 
-getFrontCoverUrl:
+getFrontImageMetadata:
 SELECT
   `id`,
   `thumbnail_url`,
@@ -41,7 +41,7 @@ FROM mbid_image
 WHERE mbid = :mbid
 LIMIT 1;
 
-getAllUrlsByIdCount:
+getAllImageMetadataByIdCount:
 SELECT count(`id`)
 FROM mbid_image
 WHERE mbid = :mbid
@@ -51,7 +51,7 @@ AND (
 );
 
 -- if types or comment is null, this will not show them at all (fix in 24.sqm)
-getAllUrlsById:
+getAllImageMetadataById:
 SELECT
   `id`,
   `thumbnail_url`,
@@ -67,7 +67,7 @@ AND (
 LIMIT :limit
 OFFSET :offset;
 
-getAllUrlsCount:
+getAllImageMetadataCount:
 SELECT count(mbid_image.`id`)
 FROM mbid_image
 LEFT JOIN artist ON artist.id = mbid_image.mbid
@@ -86,7 +86,7 @@ AND (
   release_group.disambiguation LIKE :query
 );
 
-getAllUrls:
+getAllImageMetadata:
 SELECT
   mbid_image.`id`,
   mbid_image.`thumbnail_url`,
@@ -118,11 +118,11 @@ AND (
 LIMIT :limit
 OFFSET :offset;
 
-deleteAllUrlsById:
+deleteAllImageMetadtaById:
 DELETE FROM mbid_image
 WHERE mbid = :mbid;
 
--- Do not include the filler empty url
+-- Do not count the filler empty url
 getNumberOfImagesById:
 SELECT COUNT(*)
 FROM mbid_image

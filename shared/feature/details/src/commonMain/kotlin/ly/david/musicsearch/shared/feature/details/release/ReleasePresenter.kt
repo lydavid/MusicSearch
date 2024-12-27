@@ -119,7 +119,7 @@ internal class ReleasePresenter(
         // Image fetching was split off from details model so that we can display data before images load
         LaunchedEffect(forceRefreshDetails, release) {
             release = release?.copy(
-                imageUrls = releaseImageRepository.getReleaseImageUrl(
+                imageMetadata = releaseImageRepository.getReleaseImageMetadata(
                     releaseId = release?.id ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
                 ),

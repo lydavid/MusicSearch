@@ -7,7 +7,7 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 
 class MbidImageDao(
     database: Database,
@@ -15,12 +15,12 @@ class MbidImageDao(
 ) : EntityDao, ImageUrlDao {
     override val transacter = database.mbid_imageQueries
 
-    override fun saveUrls(
+    override fun saveImageMetadata(
         mbid: String,
-        imageUrls: List<ImageUrls>,
+        imageMetadataList: List<ImageMetadata>,
     ) {
         transacter.transaction {
-            imageUrls.forEach { urls ->
+            imageMetadataList.forEach { urls ->
                 transacter.insert(
                     mbid = mbid,
                     thumbnailUrl = urls.thumbnailUrl,
@@ -32,58 +32,58 @@ class MbidImageDao(
         }
     }
 
-    override fun getFrontCoverUrl(mbid: String): ImageUrls? {
-        return transacter.getFrontCoverUrl(
+    override fun getFrontImageMetadata(mbid: String): ImageMetadata? {
+        return transacter.getFrontImageMetadata(
             mbid = mbid,
-            mapper = ::mapToImageUrls,
+            mapper = ::mapToImageMetadata,
         ).executeAsOneOrNull()
     }
 
-    override fun getAllUrlsById(
+    override fun getAllImageMetadataById(
         mbid: String,
         query: String,
-    ): PagingSource<Int, ImageUrls> {
+    ): PagingSource<Int, ImageMetadata> {
         return QueryPagingSource(
-            countQuery = transacter.getAllUrlsByIdCount(
+            countQuery = transacter.getAllImageMetadataByIdCount(
                 mbid = mbid,
                 query = "%$query%",
             ),
             transacter = transacter,
             context = coroutineDispatchers.io,
             queryProvider = { limit, offset ->
-                transacter.getAllUrlsById(
+                transacter.getAllImageMetadataById(
                     mbid = mbid,
                     query = "%$query%",
                     limit = limit,
                     offset = offset,
-                    mapper = ::mapToImageUrls,
+                    mapper = ::mapToImageMetadata,
                 )
             },
         )
     }
 
-    override fun getAllUrls(
+    override fun getAllImageMetadata(
         query: String,
-    ): PagingSource<Int, ImageUrls> {
+    ): PagingSource<Int, ImageMetadata> {
         return QueryPagingSource(
-            countQuery = transacter.getAllUrlsCount(
+            countQuery = transacter.getAllImageMetadataCount(
                 query = "%$query%",
             ),
             transacter = transacter,
             context = coroutineDispatchers.io,
             queryProvider = { limit, offset ->
-                transacter.getAllUrls(
+                transacter.getAllImageMetadata(
                     query = "%$query%",
                     limit = limit,
                     offset = offset,
-                    mapper = ::mapToImageUrls,
+                    mapper = ::mapToImageMetadata,
                 )
             },
         )
     }
 
-    override fun deleteAllUrlsById(mbid: String) {
-        transacter.deleteAllUrlsById(mbid)
+    override fun deleteAllImageMetadtaById(mbid: String) {
+        transacter.deleteAllImageMetadtaById(mbid)
     }
 
     override fun getNumberOfImagesById(mbid: String): Long {
@@ -91,13 +91,13 @@ class MbidImageDao(
     }
 }
 
-private fun mapToImageUrls(
+private fun mapToImageMetadata(
     id: Long,
     thumbnailUrl: String,
     largeUrl: String,
     types: ImmutableList<String>?,
     comment: String?,
-) = ImageUrls(
+) = ImageMetadata(
     databaseId = id,
     thumbnailUrl = thumbnailUrl,
     largeUrl = largeUrl,

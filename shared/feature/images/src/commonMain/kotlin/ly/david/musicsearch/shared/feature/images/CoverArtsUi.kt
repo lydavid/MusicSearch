@@ -42,7 +42,7 @@ import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.itemKey
 import com.slack.circuit.foundation.internal.BackHandler
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.screen.screenContainerSize
@@ -105,11 +105,11 @@ internal fun CoverArtsGridUi(
             )
         },
     ) { innerPadding ->
-        val imageUrls = state.imageUrls
+        val imageUrls = state.imageMetadataList
         val capturedSelectedImageIndex = state.selectedImageIndex
         if (capturedSelectedImageIndex == null) {
             CoverArtsGrid(
-                imageUrls = imageUrls,
+                imageMetadataList = imageUrls,
                 onImageClick = { index ->
                     eventSink(CoverArtsGridUiEvent.SelectImage(index))
                 },
@@ -118,7 +118,7 @@ internal fun CoverArtsGridUi(
             )
         } else {
             CoverArtsPager(
-                imageUrls = imageUrls,
+                imageMetadataList = imageUrls,
                 selectedImageIndex = capturedSelectedImageIndex,
                 isCompact = isCompact,
                 onImageChange = { index ->
@@ -134,7 +134,7 @@ private const val GRID_SIZE = 4
 
 @Composable
 private fun CoverArtsGrid(
-    imageUrls: LazyPagingItems<ImageUrls>,
+    imageMetadataList: LazyPagingItems<ImageMetadata>,
     onImageClick: (index: Int) -> Unit,
     lazyGridState: LazyGridState,
     modifier: Modifier = Modifier,
@@ -152,11 +152,11 @@ private fun CoverArtsGrid(
         modifier = modifier,
     ) {
         items(
-            count = imageUrls.itemCount,
-            key = imageUrls.itemKey { it.databaseId },
-            contentType = { ImageUrls() },
+            count = imageMetadataList.itemCount,
+            key = imageMetadataList.itemKey { it.databaseId },
+            contentType = { ImageMetadata() },
         ) { index ->
-            imageUrls[index]?.let { imageUrl ->
+            imageMetadataList[index]?.let { imageUrl ->
                 // Because the number of images displayed can change when we filter
                 // the placeholder key must not depend on the index of the initial set of images
                 ThumbnailImage(
@@ -175,7 +175,7 @@ private fun CoverArtsGrid(
 
 @Composable
 private fun CoverArtsPager(
-    imageUrls: LazyPagingItems<ImageUrls>,
+    imageMetadataList: LazyPagingItems<ImageMetadata>,
     selectedImageIndex: Int,
     isCompact: Boolean,
     onImageChange: (index: Int) -> Unit,
@@ -186,7 +186,7 @@ private fun CoverArtsPager(
     val latestOnImageChange by rememberUpdatedState(onImageChange)
     val pagerState = rememberPagerState(
         initialPage = selectedImageIndex,
-        pageCount = { imageUrls.itemCount },
+        pageCount = { imageMetadataList.itemCount },
     )
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
@@ -233,18 +233,19 @@ private fun CoverArtsPager(
             state = pagerState,
             beyondViewportPageCount = 1,
         ) { page ->
-            val imageUrl = imageUrls[page] ?: return@HorizontalPager
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                LargeImage(
-                    url = imageUrl.largeUrl,
-                    placeholderKey = imageUrl.databaseId.toString(),
-                    isCompact = isCompact,
-                    zoomEnabled = true,
-                )
+            imageMetadataList[page]?.let { imageMetadata ->
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    LargeImage(
+                        url = imageMetadata.largeUrl,
+                        placeholderKey = imageMetadata.databaseId.toString(),
+                        isCompact = isCompact,
+                        zoomEnabled = true,
+                    )
+                }
             }
         }
     }

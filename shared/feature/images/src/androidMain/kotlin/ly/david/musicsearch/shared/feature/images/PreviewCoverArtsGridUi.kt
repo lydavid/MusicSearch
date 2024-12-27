@@ -7,22 +7,22 @@ import androidx.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.core.preview.DefaultPreviews
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
-val imageUrls = MutableStateFlow(
+val images = MutableStateFlow(
     PagingData.from(
         listOf(
-            ImageUrls(
+            ImageMetadata(
                 databaseId = 1,
                 thumbnailUrl = "https://www.example.com/blue.jpg",
                 largeUrl = "https://www.example.com/blue.jpg",
                 types = persistentListOf("Front"),
                 comment = "",
             ),
-            ImageUrls(
+            ImageMetadata(
                 databaseId = 2,
                 thumbnailUrl = "https://www.example.com/red.jpg",
                 largeUrl = "https://www.example.com/red.jpg",
@@ -42,7 +42,7 @@ internal fun PreviewCoverArtsGridUi() {
             CoverArtsGridUi(
                 state = CoverArtsGridUiState(
                     title = "Cover arts",
-                    imageUrls = imageUrls.collectAsLazyPagingItems(),
+                    imageMetadataList = images.collectAsLazyPagingItems(),
                 ),
             )
         }
@@ -59,7 +59,7 @@ internal fun PreviewCoverArtsPagerUiCompact() {
                 state = CoverArtsGridUiState(
                     title = "Front",
                     subtitle = "1/2",
-                    imageUrls = imageUrls.collectAsLazyPagingItems(),
+                    imageMetadataList = images.collectAsLazyPagingItems(),
                     selectedImageIndex = 0,
                 ),
                 isCompact = true,
@@ -78,7 +78,7 @@ internal fun PreviewCoverArtsPagerUiNonCompact() {
                 state = CoverArtsGridUiState(
                     title = "Front",
                     subtitle = "1/2",
-                    imageUrls = imageUrls.collectAsLazyPagingItems(),
+                    imageMetadataList = images.collectAsLazyPagingItems(),
                     selectedImageIndex = 0,
                 ),
                 isCompact = false,

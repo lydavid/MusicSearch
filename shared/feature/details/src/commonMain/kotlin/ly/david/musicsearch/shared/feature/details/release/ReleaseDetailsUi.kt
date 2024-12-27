@@ -41,8 +41,8 @@ internal fun ReleaseDetailsUi(
         item {
             if (filterText.isBlank()) {
                 LargeImage(
-                    url = release.imageUrls.largeUrl,
-                    placeholderKey = release.imageUrls.databaseId.toString(),
+                    url = release.imageMetadata.largeUrl,
+                    placeholderKey = release.imageMetadata.databaseId.toString(),
                     onClick = onImageClick,
                 )
             }

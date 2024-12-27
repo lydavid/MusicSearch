@@ -37,8 +37,8 @@ internal fun ArtistDetailsUi(
         item {
             if (filterText.isBlank()) {
                 LargeImage(
-                    url = artist.imageUrls.largeUrl,
-                    placeholderKey = artist.imageUrls.databaseId.toString(),
+                    url = artist.imageMetadata.largeUrl,
+                    placeholderKey = artist.imageMetadata.databaseId.toString(),
                 )
             }
 

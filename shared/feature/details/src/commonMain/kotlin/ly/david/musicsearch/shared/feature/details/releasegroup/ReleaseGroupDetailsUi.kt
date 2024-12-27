@@ -30,8 +30,8 @@ internal fun ReleaseGroupDetailsUi(
         item {
             if (filterText.isBlank()) {
                 LargeImage(
-                    url = releaseGroup.imageUrls.largeUrl,
-                    placeholderKey = releaseGroup.imageUrls.databaseId.toString(),
+                    url = releaseGroup.imageMetadata.largeUrl,
+                    placeholderKey = releaseGroup.imageMetadata.databaseId.toString(),
                 )
             }
         }

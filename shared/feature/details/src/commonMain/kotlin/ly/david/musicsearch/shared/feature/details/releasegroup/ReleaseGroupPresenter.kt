@@ -109,7 +109,7 @@ internal class ReleaseGroupPresenter(
 
         LaunchedEffect(forceRefreshDetails, releaseGroup) {
             releaseGroup = releaseGroup?.copy(
-                imageUrls = releaseGroupImageRepository.getReleaseGroupImageUrl(
+                imageMetadata = releaseGroupImageRepository.getReleaseGroupImageMetadata(
                     releaseGroupId = releaseGroup?.id ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
                 ),

@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.artist
 
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 
 interface ArtistImageRepository {
 
@@ -10,8 +10,8 @@ interface ArtistImageRepository {
      *
      * Also saves it to db.
      */
-    suspend fun getArtistImageUrl(
+    suspend fun getArtistImageMetadata(
         artistDetailsModel: ArtistDetailsModel,
         forceRefresh: Boolean,
-    ): ImageUrls
+    ): ImageMetadata
 }

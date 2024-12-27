@@ -19,7 +19,7 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.common.appendOptionalText
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
@@ -36,15 +36,15 @@ internal class CoverArtsGridPresenter(
     @Composable
     override fun present(): CoverArtsGridUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
-        val imageUrlsFlow: Flow<PagingData<ImageUrls>> by rememberRetained(topAppBarFilterState.filterText) {
+        val imageMetadataFlow: Flow<PagingData<ImageMetadata>> by rememberRetained(topAppBarFilterState.filterText) {
             mutableStateOf(
-                releaseImageRepository.observeAllImageUrls(
+                releaseImageRepository.observeAllImageMetadata(
                     mbid = screen.id,
                     query = topAppBarFilterState.filterText,
                 ),
             )
         }
-        val imageUrls: LazyPagingItems<ImageUrls> = imageUrlsFlow.collectAsLazyPagingItems()
+        val imageMetadataList: LazyPagingItems<ImageMetadata> = imageMetadataFlow.collectAsLazyPagingItems()
         val lazyGridState: LazyGridState = rememberLazyGridState()
         var selectedImageIndex: Int? by remember {
             mutableStateOf(null)
@@ -58,7 +58,7 @@ internal class CoverArtsGridPresenter(
                 if (capturedSelectedImageIndex == null) {
                     "Cover arts"
                 } else {
-                    val imageUrl = imageUrls[capturedSelectedImageIndex]
+                    val imageUrl = imageMetadataList[capturedSelectedImageIndex]
                     val typeAndComment = imageUrl?.types?.joinToString()?.appendOptionalText(imageUrl.comment).orEmpty()
                     typeAndComment.ifEmpty { " " }
                 },
@@ -73,7 +73,7 @@ internal class CoverArtsGridPresenter(
                 if (capturedSelectedImageIndex == null) {
                     ""
                 } else {
-                    "${capturedSelectedImageIndex + 1} / ${imageUrls.itemCount}"
+                    "${capturedSelectedImageIndex + 1} / ${imageMetadataList.itemCount}"
                 },
             )
         }
@@ -86,7 +86,7 @@ internal class CoverArtsGridPresenter(
                 if (capturedSelectedImageIndex == null) {
                     screen.id?.let { getMusicBrainzCoverArtUrl(it) }
                 } else {
-                    imageUrls[capturedSelectedImageIndex]?.largeUrl
+                    imageMetadataList[capturedSelectedImageIndex]?.largeUrl
                 },
             )
         }
@@ -122,7 +122,7 @@ internal class CoverArtsGridPresenter(
             subtitle = subtitle,
             url = url,
             selectedImageIndex = selectedImageIndex,
-            imageUrls = imageUrlsFlow.collectAsLazyPagingItems(),
+            imageMetadataList = imageMetadataFlow.collectAsLazyPagingItems(),
             lazyGridState = lazyGridState,
             topAppBarFilterState = topAppBarFilterState,
             eventSink = ::eventSink,
@@ -135,7 +135,7 @@ internal data class CoverArtsGridUiState(
     val title: String = "",
     val subtitle: String = "",
     val url: String? = null,
-    val imageUrls: LazyPagingItems<ImageUrls>,
+    val imageMetadataList: LazyPagingItems<ImageMetadata>,
     val lazyGridState: LazyGridState = LazyGridState(),
     val selectedImageIndex: Int? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),

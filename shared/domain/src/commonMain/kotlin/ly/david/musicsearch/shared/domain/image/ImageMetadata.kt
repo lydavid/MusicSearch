@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.domain.image
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-data class ImageUrls(
+data class ImageMetadata(
     val databaseId: Long = 0L,
     val thumbnailUrl: String = "",
     val largeUrl: String = "",

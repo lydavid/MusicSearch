@@ -7,7 +7,7 @@ import ly.david.musicsearch.data.coverart.api.getFrontThumbnailCoverArtUrl
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
 
 internal class ReleaseGroupImageRepositoryImpl(
@@ -16,24 +16,24 @@ internal class ReleaseGroupImageRepositoryImpl(
     private val logger: Logger,
 ) : ReleaseGroupImageRepository {
 
-    override suspend fun getReleaseGroupImageUrl(
+    override suspend fun getReleaseGroupImageMetadata(
         releaseGroupId: String,
         forceRefresh: Boolean,
-    ): ImageUrls {
+    ): ImageMetadata {
         if (forceRefresh) {
-            imageUrlDao.deleteAllUrlsById(releaseGroupId)
+            imageUrlDao.deleteAllImageMetadtaById(releaseGroupId)
         }
 
-        val cachedImageUrls = imageUrlDao.getFrontCoverUrl(releaseGroupId)
+        val cachedImageUrls = imageUrlDao.getFrontImageMetadata(releaseGroupId)
         return if (cachedImageUrls == null) {
-            saveReleaseGroupCoverArtUrlFromNetwork(releaseGroupId)
-            imageUrlDao.getFrontCoverUrl(releaseGroupId) ?: ImageUrls()
+            saveReleaseGroupImageMetadataFromNetwork(releaseGroupId)
+            imageUrlDao.getFrontImageMetadata(releaseGroupId) ?: ImageMetadata()
         } else {
             cachedImageUrls
         }
     }
 
-    private suspend fun saveReleaseGroupCoverArtUrlFromNetwork(
+    private suspend fun saveReleaseGroupImageMetadataFromNetwork(
         releaseGroupId: String,
     ) {
         try {
@@ -41,10 +41,10 @@ internal class ReleaseGroupImageRepositoryImpl(
             val thumbnailUrl = coverArts.getFrontThumbnailCoverArtUrl().orEmpty()
             val largeUrl = coverArts.getFrontCoverArtUrl().orEmpty()
 
-            imageUrlDao.saveUrls(
+            imageUrlDao.saveImageMetadata(
                 mbid = releaseGroupId,
-                imageUrls = listOf(
-                    ImageUrls(
+                imageMetadataList = listOf(
+                    ImageMetadata(
                         thumbnailUrl = thumbnailUrl.removeFileExtension(),
                         largeUrl = largeUrl.removeFileExtension(),
                     ),
@@ -52,9 +52,9 @@ internal class ReleaseGroupImageRepositoryImpl(
             )
         } catch (ex: HandledException) {
             if (ex.errorResolution == ErrorResolution.None) {
-                imageUrlDao.saveUrls(
+                imageUrlDao.saveImageMetadata(
                     mbid = releaseGroupId,
-                    imageUrls = listOf(ImageUrls()),
+                    imageMetadataList = listOf(ImageMetadata()),
                 )
             } else {
                 logger.e(ex)
