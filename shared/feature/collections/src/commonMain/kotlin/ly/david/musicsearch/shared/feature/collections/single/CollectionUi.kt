@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.area.AreasByEntityUiState
 import ly.david.musicsearch.ui.common.area.AreasListScreen
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
@@ -228,7 +229,7 @@ private fun CollectionUi(
     entity: MusicBrainzEntity,
     innerPadding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
-    onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
+    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     requestForMissingCoverArtUrl: (entityId: String) -> Unit = {},
 ) {

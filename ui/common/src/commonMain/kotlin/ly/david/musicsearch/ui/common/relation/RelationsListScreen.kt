@@ -8,6 +8,7 @@ import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
 @Composable
@@ -15,7 +16,7 @@ fun RelationsListScreen(
     lazyPagingItems: LazyPagingItems<RelationListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
 ) {
     ScreenWithPagingLoadingAndError(
         lazyPagingItems = lazyPagingItems,
