@@ -27,7 +27,9 @@ fun LargeImage(
     zoomEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
-    val zoomState = rememberZoomState()
+    val zoomState = rememberZoomState(
+        maxScale = 8f,
+    )
 
     val imageModifier = modifier.testTag(LargeImageTestTag.IMAGE.name)
         .then(
@@ -45,8 +47,8 @@ fun LargeImage(
                 if (!zoomEnabled) return@zoomable
 
                 val targetScale = when {
-                    zoomState.scale < 2f -> 2f
                     zoomState.scale < 4f -> 4f
+                    zoomState.scale < 8f -> 8f
                     else -> 1f
                 }
                 zoomState.changeScale(targetScale, position)
