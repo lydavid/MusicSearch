@@ -34,6 +34,7 @@ sqldelight = "2.0.2"
 stately = "2.1.0"
 turbine = "1.2.0"
 uiautomator = "2.3.0"
+zoomable = "2.0.0"
 
 [libraries]
 aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutlibraries" }
@@ -131,6 +132,7 @@ test-parameter-injector = "com.google.testparameterinjector:test-parameter-injec
 timber = "com.jakewharton.timber:timber:5.0.1"
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 windowSizeClass = "dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0"
+zoomable = { module = "net.engawapg.lib:zoomable", version.ref = "zoomable" }
 
 [bundles]
 kotlinx-coroutines = [

@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.release
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -44,7 +43,7 @@ internal fun ReleaseDetailsUi(
                 LargeImage(
                     url = release.imageUrls.largeUrl,
                     placeholderKey = release.imageUrls.databaseId.toString(),
-                    modifier = Modifier.clickable { onImageClick() },
+                    onClick = onImageClick,
                 )
             }
 

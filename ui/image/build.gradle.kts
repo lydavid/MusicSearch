@@ -22,6 +22,7 @@ kotlin {
 
                 implementation(libs.coil)
                 implementation(libs.coil.compose)
+                implementation(libs.zoomable)
             }
         }
         val androidMain by getting {

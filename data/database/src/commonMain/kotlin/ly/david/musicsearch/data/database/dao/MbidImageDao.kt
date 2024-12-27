@@ -41,7 +41,7 @@ class MbidImageDao(
 
     override fun getAllUrlsById(
         mbid: String,
-        query: String
+        query: String,
     ): PagingSource<Int, ImageUrls> {
         return QueryPagingSource(
             countQuery = transacter.getAllUrlsByIdCount(
@@ -58,7 +58,7 @@ class MbidImageDao(
                     offset = offset,
                     mapper = ::mapToImageUrls,
                 )
-            }
+            },
         )
     }
 
@@ -78,7 +78,7 @@ class MbidImageDao(
                     offset = offset,
                     mapper = ::mapToImageUrls,
                 )
-            }
+            },
         )
     }
 

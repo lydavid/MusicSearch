@@ -243,6 +243,7 @@ private fun CoverArtsPager(
                     url = imageUrl.largeUrl,
                     placeholderKey = imageUrl.databaseId.toString(),
                     isCompact = isCompact,
+                    zoomEnabled = true,
                 )
             }
         }

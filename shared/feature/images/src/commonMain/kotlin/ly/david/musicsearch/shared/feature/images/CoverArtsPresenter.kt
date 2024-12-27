@@ -87,7 +87,7 @@ internal class CoverArtsGridPresenter(
                     screen.id?.let { getMusicBrainzCoverArtUrl(it) }
                 } else {
                     imageUrls[capturedSelectedImageIndex]?.largeUrl
-                }
+                },
             )
         }
 
