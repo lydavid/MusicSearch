@@ -191,9 +191,8 @@ internal fun Settings(
                 onCheckedChange = onSortReleaseGroupListItemsChange,
             )
 
+            ListSeparatorHeader(text = strings.experimentalSearch)
             if (showAndroidSettings) {
-                ListSeparatorHeader(text = strings.experimentalSearch)
-
                 if (isNotificationListenerEnabled) {
                     ClickableItem(
                         title = strings.nowPlayingHistory,
@@ -219,15 +218,14 @@ internal fun Settings(
                         onDestinationClick(SpotifyHistoryScreen)
                     },
                 )
-
-                ClickableItem(
-                    title = "Browse local database images",
-                    endIcon = Icons.Default.ChevronRight,
-                    onClick = {
-                        onDestinationClick(CoverArtsScreen())
-                    },
-                )
             }
+            ClickableItem(
+                title = "Browse local database images",
+                endIcon = Icons.Default.ChevronRight,
+                onClick = {
+                    onDestinationClick(CoverArtsScreen())
+                },
+            )
 
             ListSeparatorHeader(text = "Database")
 
