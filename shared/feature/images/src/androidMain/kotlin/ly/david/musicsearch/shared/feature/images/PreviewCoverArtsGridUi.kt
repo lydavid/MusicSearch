@@ -40,7 +40,7 @@ internal fun PreviewCoverArtsGridUi() {
     PreviewTheme {
         Surface {
             CoverArtsGridUi(
-                state = CoverArtsGridUiState(
+                state = CoverArtsUiState(
                     title = "Cover arts",
                     imageMetadataList = images.collectAsLazyPagingItems(),
                 ),
@@ -56,7 +56,7 @@ internal fun PreviewCoverArtsPagerUiCompact() {
     PreviewTheme {
         Surface {
             CoverArtsGridUi(
-                state = CoverArtsGridUiState(
+                state = CoverArtsUiState(
                     title = "Front",
                     subtitle = "1/2",
                     imageMetadataList = images.collectAsLazyPagingItems(),
@@ -75,7 +75,7 @@ internal fun PreviewCoverArtsPagerUiNonCompact() {
     PreviewTheme {
         Surface {
             CoverArtsGridUi(
-                state = CoverArtsGridUiState(
+                state = CoverArtsUiState(
                     title = "Front",
                     subtitle = "1/2",
                     imageMetadataList = images.collectAsLazyPagingItems(),

@@ -92,13 +92,23 @@ SELECT
   mbid_image.`thumbnail_url`,
   mbid_image.`large_url`,
   mbid_image.`types`,
-  mbid_image.`comment`
---   coalesce(artist.name, `release`.name, release_group.name) AS name,
---   CASE
---     WHEN artist.name IS NOT NULL THEN 'artist'
---     WHEN `release`.name IS NOT NULL THEN 'release'
---     WHEN release_group.name IS NOT NULL THEN 'release_group'
---   END AS entity
+  mbid_image.`comment`,
+  mbid_image.mbid,
+  coalesce(
+    artist.name,
+    `release`.name,
+    release_group.name
+  ) AS name,
+  coalesce(
+    artist.disambiguation,
+    `release`.disambiguation,
+    release_group.disambiguation
+  ) AS disambiguation,
+  CASE
+    WHEN artist.name IS NOT NULL THEN 'artist'
+    WHEN `release`.name IS NOT NULL THEN 'release'
+    WHEN release_group.name IS NOT NULL THEN 'release-group'
+  END AS entity
 FROM mbid_image
 LEFT JOIN artist ON artist.id = mbid_image.mbid
 LEFT JOIN `release` ON `release`.id = mbid_image.mbid

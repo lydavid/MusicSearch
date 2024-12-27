@@ -28,7 +28,7 @@ val imagesFeatureModule = module {
         Ui.Factory { screen, _ ->
             when (screen) {
                 is CoverArtsScreen -> {
-                    ui<CoverArtsGridUiState> { state, modifier ->
+                    ui<CoverArtsUiState> { state, modifier ->
                         CoverArtsGridUi(
                             state = state,
                             modifier = modifier,

@@ -6,8 +6,9 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
 
 class MbidImageDao(
     database: Database,
@@ -103,4 +104,26 @@ private fun mapToImageMetadata(
     largeUrl = largeUrl,
     types = types ?: persistentListOf(),
     comment = comment.orEmpty(),
+)
+
+private fun mapToImageMetadata(
+    id: Long,
+    thumbnailUrl: String,
+    largeUrl: String,
+    types: ImmutableList<String>?,
+    comment: String?,
+    mbid: String? = null,
+    name: String? = null,
+    disambiguation: String? = null,
+    entity: String? = null,
+) = ImageMetadata(
+    databaseId = id,
+    thumbnailUrl = thumbnailUrl,
+    largeUrl = largeUrl,
+    types = types ?: persistentListOf(),
+    comment = comment.orEmpty(),
+    mbid = mbid,
+    name = name,
+    disambiguation = disambiguation,
+    entity = entity?.toMusicBrainzEntity(),
 )

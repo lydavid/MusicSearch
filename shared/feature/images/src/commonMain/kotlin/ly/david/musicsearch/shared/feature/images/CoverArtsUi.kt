@@ -13,8 +13,10 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -44,6 +46,7 @@ import com.slack.circuit.foundation.internal.BackHandler
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.screen.screenContainerSize
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
@@ -55,13 +58,13 @@ import kotlin.math.roundToInt
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 internal fun CoverArtsGridUi(
-    state: CoverArtsGridUiState,
+    state: CoverArtsUiState,
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
 
     BackHandler {
-        eventSink(CoverArtsGridUiEvent.NavigateUp)
+        eventSink(CoverArtsUiEvent.NavigateUp)
     }
 
     val windowSizeClass: WindowSizeClass = calculateWindowSizeClass()
@@ -77,7 +80,7 @@ internal fun CoverArtsGridUi(
 )
 @Composable
 internal fun CoverArtsGridUi(
-    state: CoverArtsGridUiState,
+    state: CoverArtsUiState,
     isCompact: Boolean,
     modifier: Modifier = Modifier,
 ) {
@@ -90,7 +93,7 @@ internal fun CoverArtsGridUi(
             TopAppBarWithFilter(
                 showBackButton = true,
                 onBack = {
-                    eventSink(CoverArtsGridUiEvent.NavigateUp)
+                    eventSink(CoverArtsUiEvent.NavigateUp)
                 },
                 title = state.title,
                 subtitle = state.subtitle,
@@ -102,6 +105,25 @@ internal fun CoverArtsGridUi(
                         )
                     }
                 },
+                subtitleDropdownMenuItems = {
+                    val name = state.selectedImageMetadata?.name ?: return@TopAppBarWithFilter
+                    val entity = state.selectedImageMetadata.entity ?: return@TopAppBarWithFilter
+                    val id = state.selectedImageMetadata.mbid ?: return@TopAppBarWithFilter
+
+                    DropdownMenuItem(
+                        text = { Text(name) },
+                        leadingIcon = { EntityIcon(entity = entity) },
+                        onClick = {
+                            closeMenu()
+                            eventSink(
+                                CoverArtsUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                ),
+                            )
+                        },
+                    )
+                },
             )
         },
     ) { innerPadding ->
@@ -111,7 +133,7 @@ internal fun CoverArtsGridUi(
             CoverArtsGrid(
                 imageMetadataList = imageUrls,
                 onImageClick = { index ->
-                    eventSink(CoverArtsGridUiEvent.SelectImage(index))
+                    eventSink(CoverArtsUiEvent.SelectImage(index))
                 },
                 lazyGridState = state.lazyGridState,
                 modifier = Modifier.padding(innerPadding),
@@ -122,7 +144,7 @@ internal fun CoverArtsGridUi(
                 selectedImageIndex = capturedSelectedImageIndex,
                 isCompact = isCompact,
                 onImageChange = { index ->
-                    eventSink(CoverArtsGridUiEvent.SelectImage(index))
+                    eventSink(CoverArtsUiEvent.SelectImage(index))
                 },
                 modifier = Modifier.padding(innerPadding),
             )
