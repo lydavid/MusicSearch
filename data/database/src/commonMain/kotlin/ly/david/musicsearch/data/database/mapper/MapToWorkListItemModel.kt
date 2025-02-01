@@ -9,6 +9,7 @@ fun mapToWorkListItemModel(
     type: String?,
     language: String?,
     iswcs: List<String>?,
+    visited: Boolean?,
 ) = WorkListItemModel(
     id = id,
     name = name,
@@ -16,4 +17,5 @@ fun mapToWorkListItemModel(
     type = type,
     language = language,
     iswcs = iswcs,
+    visited = visited == true,
 )

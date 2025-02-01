@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain
 
-import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.common.appendOptionalText
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 /**
@@ -17,4 +17,4 @@ interface NameWithDisambiguation {
  * Get name, and optionally disambiguation if it's not null or empty.
  */
 fun NameWithDisambiguation.getNameWithDisambiguation(): String =
-    name.orEmpty() + disambiguation.transformThisIfNotNullOrEmpty { " ($it)" }
+    name.orEmpty().appendOptionalText(disambiguation)

@@ -3,9 +3,10 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>ComplexCondition:ReleaseGroupsByEntityRepositoryImpl.kt$ReleaseGroupsByEntityRepositoryImpl$listFilters.sorted &amp;&amp; rg2 != null &amp;&amp; (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)</ID>
-    <ID>ComplexCondition:ReleaseRepositoryImpl.kt$ReleaseRepositoryImpl$releaseDetailsModel != null &amp;&amp; releaseGroup != null &amp;&amp; artistCredits.isNotEmpty() &amp;&amp; hasUrlsBeenSavedForEntity &amp;&amp; !forceRefresh</ID>
-    <ID>LongMethod:RelationRepositoryImpl.kt$RelationRepositoryImpl$private suspend fun lookupEntityWithRelations( entity: MusicBrainzEntity, entityId: String, ): List&lt;RelationMusicBrainzModel&gt;?</ID>
-    <ID>LongMethod:SearchMusicBrainzPagingSource.kt$SearchMusicBrainzPagingSource$private suspend fun getQueryResults( searchApi: SearchApi, entity: MusicBrainzEntity, queryString: String, currentOffset: Int, limit: Int, ): QueryResults</ID>
+    <ID>ComplexCondition:ReleaseRepositoryImpl.kt$ReleaseRepositoryImpl$releaseDetailsModel != null &amp;&amp; releaseGroup != null &amp;&amp; artistCredits.isNotEmpty() &amp;&amp; visited &amp;&amp; !forceRefresh</ID>
+    <ID>LongMethod:RelationRepositoryImpl.kt$RelationRepositoryImpl$private suspend fun lookupEntityWithRelations( entity: MusicBrainzEntity, entityId: String, relatedEntities: Set&lt;MusicBrainzEntity&gt;, ): List&lt;RelationMusicBrainzModel&gt;?</ID>
+    <ID>LongMethod:SearchResultsRepositoryImpl.kt$SearchResultsRepositoryImpl$private suspend fun fetchAndStore( entity: MusicBrainzEntity, query: String, offset: Int, limit: Int, removeAll: () -&gt; Unit, ): Int</ID>
     <ID>ReturnCount:BrowseEntityRemoteMediator.kt$BrowseEntityRemoteMediator$override suspend fun load( loadType: LoadType, state: PagingState&lt;Int, DM&gt;, ): MediatorResult</ID>
+    <ID>ReturnCount:SearchMusicBrainzRemoteMediator.kt$SearchMusicBrainzRemoteMediator$override suspend fun load( loadType: LoadType, state: PagingState&lt;Int, ListItemModel&gt;, ): MediatorResult</ID>
   </CurrentIssues>
 </SmellBaseline>

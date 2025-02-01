@@ -8,16 +8,18 @@ data class AreaListItemModel(
     override val id: String,
     override val name: String,
     override val sortName: String = "",
-    override val disambiguation: String? = "",
-    override val type: String? = "",
-    override val lifeSpan: LifeSpanUiModel? = null,
+    override val disambiguation: String? = null,
+    override val type: String? = null,
+    override val lifeSpan: LifeSpanUiModel? = LifeSpanUiModel(),
     val countryCodes: List<String>? = null,
     val date: String? = null,
-) : Area, ListItemModel()
+    override val visited: Boolean = false,
+) : ListItemModel(), Area, Visitable
 
 fun ReleaseEvent.toAreaListItemModel() = AreaListItemModel(
     id = id,
     name = name,
     date = date,
     countryCodes = countryCode?.let { listOf(it) },
+    visited = visited,
 )

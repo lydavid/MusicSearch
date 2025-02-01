@@ -6,7 +6,7 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import org.koin.dsl.module
 
 val coroutinesScopesModule = module {
-    single {
+    single<CoroutineScope> {
         CoroutineScope(SupervisorJob() + get<CoroutineDispatchers>().default)
     }
 }

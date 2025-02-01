@@ -12,19 +12,22 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
+import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
-import ly.david.musicsearch.shared.domain.error.HandledException
-import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.recording.RecordingRepository
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
@@ -46,6 +49,8 @@ internal class RecordingPresenter(
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val wikimediaRepository: WikimediaRepository,
 ) : Presenter<RecordingUiState> {
 
     @Composable
@@ -56,13 +61,14 @@ internal class RecordingPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        var recording: RecordingDetailsModel? by remember { mutableStateOf(null) }
+        var recording: RecordingDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<RecordingTab> by rememberSaveable {
             mutableStateOf(RecordingTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(RecordingTab.DETAILS) }
-        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
@@ -73,7 +79,10 @@ internal class RecordingPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val recordingDetailsModel = repository.lookupRecording(screen.id)
+                val recordingDetailsModel = repository.lookupRecording(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = recordingDetailsModel.getNameWithDisambiguation()
                 subtitle = "Recording by ${recordingDetailsModel.artistCredits.getDisplayNames()}"
                 recording = recordingDetailsModel
@@ -91,6 +100,20 @@ internal class RecordingPresenter(
                     ),
                 )
                 recordedHistory = true
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, recording) {
+            wikimediaRepository.getWikipediaExtract(
+                mbid = recording?.id ?: return@LaunchedEffect,
+                urls = recording?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                recording = recording?.copy(
+                    wikipediaExtract = wikipediaExtract,
+                )
+            }.onFailure {
+                snackbarMessage = it.message
             }
         }
 
@@ -162,10 +185,12 @@ internal class RecordingPresenter(
             subtitle = subtitle,
             isError = isError,
             recording = recording,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
+            snackbarMessage = snackbarMessage,
             releasesByEntityUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
@@ -180,10 +205,12 @@ internal data class RecordingUiState(
     val subtitle: String,
     val isError: Boolean,
     val recording: RecordingDetailsModel?,
+    val url: String = "",
     val tabs: List<RecordingTab>,
     val selectedTab: RecordingTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
+    val snackbarMessage: String? = null,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState = LoginUiState(),

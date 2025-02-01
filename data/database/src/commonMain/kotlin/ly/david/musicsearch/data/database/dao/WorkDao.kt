@@ -1,9 +1,9 @@
 package ly.david.musicsearch.data.database.dao
 
 import kotlinx.collections.immutable.toImmutableList
+import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
-import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Work
 import lydavidmusicsearchdatadatabase.WorkQueries
 
@@ -58,4 +58,8 @@ class WorkDao(
         language = language,
         iswcs = iswcs,
     )
+
+    fun delete(id: String) {
+        transacter.delete(id)
+    }
 }

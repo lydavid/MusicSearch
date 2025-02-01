@@ -23,13 +23,21 @@ INNER JOIN collection c ON c.id = ce.id
 WHERE c.id = :collectionId;
 
 deleteAllFromCollection:
-DELETE FROM collection_entity WHERE id = :collectionId;
+DELETE FROM collection_entity
+WHERE id = :collectionId;
 
 deleteFromCollection:
 DELETE FROM collection_entity
 WHERE id = :collectionId
 AND entity_id = :collectableId;
 
+deleteCollection {
+DELETE FROM collection
+WHERE id = :collectionId;
+
+DELETE FROM collection_entity
+WHERE id = :collectionId;
+}
 
 -- areas by collection
 
@@ -60,10 +68,12 @@ SELECT
   a.type,
   a.begin,
   a.end,
-  a.ended
+  a.ended,
+  visited.entity_id IS NOT NULL AS visited
 FROM area a
 INNER JOIN collection_entity ce ON a.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = a.id
 WHERE c.id = :collectionId
 AND (
   a.name LIKE :query OR
@@ -109,11 +119,13 @@ SELECT
   a.begin,
   a.end,
   a.ended,
-  mi.thumbnail_url
+  mi.thumbnail_url,
+  visited.entity_id IS NOT NULL AS visited
 FROM artist a
 INNER JOIN collection_entity ce ON a.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 LEFT JOIN mbid_image mi ON mi.mbid = a.id
+LEFT JOIN visited ON visited.entity_id = a.id
 WHERE c.id = :collectionId
 AND (
   a.name LIKE :query OR
@@ -156,10 +168,12 @@ SELECT
   e.cancelled,
   e.begin,
   e.end,
-  e.ended
+  e.ended,
+  visited.entity_id IS NOT NULL AS visited
 FROM event e
 INNER JOIN collection_entity ce ON e.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = e.id
 WHERE c.id = :collectionId
 AND (
   e.name LIKE :query OR
@@ -230,10 +244,12 @@ SELECT
   i.name,
   i.disambiguation,
   i.description,
-  i.type
+  i.type,
+  visited.entity_id IS NOT NULL AS visited
 FROM instrument i
 INNER JOIN collection_entity ce ON i.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = i.id
 WHERE c.id = :collectionId
 AND (
   i.name LIKE :query OR
@@ -270,10 +286,12 @@ SELECT
   l.name,
   l.disambiguation,
   l.type,
-  l.label_code
+  l.label_code,
+  visited.entity_id IS NOT NULL AS visited
 FROM label l
 INNER JOIN collection_entity ce ON l.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = l.id
 WHERE c.id = :collectionId
 AND (
   l.name LIKE :query OR
@@ -315,10 +333,12 @@ SELECT
   p.latitude,
   p.begin,
   p.end,
-  p.ended
+  p.ended,
+  visited.entity_id IS NOT NULL AS visited
 FROM place p
 INNER JOIN collection_entity ce ON p.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = p.id
 WHERE c.id = :collectionId
 AND (
   p.name LIKE :query OR
@@ -360,12 +380,14 @@ SELECT
   r.first_release_date,
   r.length,
   r.video,
-  ac.name AS artist_credits
+  ac.name AS artist_credits,
+  visited.entity_id IS NOT NULL AS visited
 FROM recording r
 INNER JOIN collection_entity ce ON r.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN visited ON visited.entity_id = r.id
 WHERE c.id = :collectionId
 AND (
   r.name LIKE :query
@@ -412,13 +434,15 @@ SELECT
     INNER JOIN release_country rc ON rc.release_id = `release`.id
     INNER JOIN country_code cc ON cc.area_id = rc.country_id
     WHERE r.id = `release`.id
-  ) AS releaseCountryCount
+  ) AS releaseCountryCount,
+  visited.entity_id IS NOT NULL AS visited
 FROM `release` r
 INNER JOIN collection_entity ce ON r.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = r.id
+LEFT JOIN visited ON visited.entity_id = r.id
 WHERE c.id = :collectionId
 AND (
   r.name LIKE :query
@@ -465,13 +489,15 @@ SELECT
   rg.primary_type,
   rg.secondary_types,
   ac.name AS artist_credits,
-  mi.thumbnail_url
+  mi.thumbnail_url,
+  visited.entity_id IS NOT NULL AS visited
 FROM release_group rg
 INNER JOIN collection_entity ce ON rg.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = rg.id
+LEFT JOIN visited ON visited.entity_id = rg.id
 WHERE c.id = :collectionId
 AND (
   rg.name LIKE :query
@@ -513,10 +539,12 @@ SELECT
   s.id,
   s.name,
   s.disambiguation,
-  s.type
+  s.type,
+  visited.entity_id IS NOT NULL AS visited
 FROM series s
 INNER JOIN collection_entity ce ON s.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = s.id
 WHERE c.id = :collectionId
 AND (
   s.name LIKE :query
@@ -554,10 +582,12 @@ SELECT
   w.disambiguation,
   w.type,
   w.language,
-  w.iswcs
+  w.iswcs,
+  visited.entity_id IS NOT NULL AS visited
 FROM work w
 INNER JOIN collection_entity ce ON w.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = w.id
 WHERE c.id = :collectionId
 AND (
   w.name LIKE :query

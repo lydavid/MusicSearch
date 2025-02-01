@@ -43,9 +43,11 @@ SELECT
   e.cancelled,
   e.begin,
   e.end,
-  e.ended
+  e.ended,
+  visited.entity_id IS NOT NULL AS visited
 FROM events_by_entity ee
 INNER JOIN event e ON e.id = ee.event_id
+LEFT JOIN visited ON visited.entity_id = e.id
 WHERE ee.entity_id = :entityId
 AND (
   e.name LIKE :query OR

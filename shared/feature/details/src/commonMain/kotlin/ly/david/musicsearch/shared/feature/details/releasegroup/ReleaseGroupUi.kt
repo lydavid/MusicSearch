@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.releasegroup
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -49,7 +48,6 @@ import ly.david.musicsearch.ui.core.LocalStrings
  */
 @OptIn(
     ExperimentalMaterial3Api::class,
-    ExperimentalFoundationApi::class,
 )
 @Composable
 internal fun ReleaseGroupUi(
@@ -101,8 +99,7 @@ internal fun ReleaseGroupUi(
                 ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
-                        entity = entity,
-                        entityId = entityId,
+                        url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
                     if (state.selectedTab == ReleaseGroupTab.RELEASES) {
@@ -181,15 +178,6 @@ internal fun ReleaseGroupUi(
                             filterText = state.topAppBarFilterState.filterText,
                             imageUrl = state.imageUrl,
                             lazyListState = state.detailsLazyListState,
-                            onItemClick = { entity, id, title ->
-                                eventSink(
-                                    ReleaseGroupUiEvent.ClickItem(
-                                        entity = entity,
-                                        id = id,
-                                        title = title,
-                                    ),
-                                )
-                            },
                         )
                     }
                 }
@@ -203,7 +191,7 @@ internal fun ReleaseGroupUi(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.releasesByEntityUiState.lazyListState,
                         showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
-                        onReleaseClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 ReleaseGroupUiEvent.ClickItem(
                                     entity = entity,

@@ -7,12 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
+import ly.david.musicsearch.ui.core.LocalStrings
 
 @Composable
 internal fun AreaDetailsUi(
@@ -20,7 +20,6 @@ internal fun AreaDetailsUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     val strings = LocalStrings.current
 
@@ -46,7 +45,7 @@ internal fun AreaDetailsUi(
                     endHeading = strings.endDate,
                     filterText = filterText,
                 )
-                countryCodes?.ifNotNullOrEmpty {
+                countryCodes.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.iso31661,
                         text = it.joinToString(", "),
@@ -54,13 +53,17 @@ internal fun AreaDetailsUi(
                     )
                 }
 
+                WikipediaSection(
+                    extract = wikipediaExtract,
+                    filterText = filterText,
+                )
+
                 // TODO: api doesn't seem to include area containment
                 //  but we could get its parent area via relations "part of" "backward"
 
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick,
                 )
             }
         }

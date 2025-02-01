@@ -3,21 +3,27 @@ package ly.david.musicsearch.android.app
 import android.content.IntentFilter
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.DisposableEffect
 import androidx.core.content.ContextCompat
+import com.slack.circuit.backstack.SaveableBackStack
+import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.rememberCircuitNavigator
+import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.toImmutableList
 import ly.david.musicsearch.android.feature.spotify.BroadcastTypes
 import ly.david.musicsearch.android.feature.spotify.SpotifyBroadcastReceiver
-import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
-import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.AppRoot
+import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.useDarkTheme
 import ly.david.musicsearch.shared.useMaterialYou
 import ly.david.musicsearch.ui.common.screen.CollectionListScreen
@@ -74,9 +80,25 @@ internal class MainActivity : ComponentActivity() {
                 darkTheme = darkTheme,
                 materialYou = appPreferences.useMaterialYou(),
                 content = {
-                    AppRoot(
-                        circuit = circuit,
+                    val backStack: SaveableBackStack = rememberSaveableBackStack(
                         initialScreens = getInitialScreens(intent.data).toImmutableList(),
+                    )
+                    val navigator: Navigator = rememberCircuitNavigator(
+                        backStack = backStack,
+                        onRootPop = {},
+                    )
+
+                    if (Build.VERSION.SDK_INT <= 33) {
+                        // This unfortunately disables predictive back
+                        BackHandler {
+                            if (navigator.pop() == null) finish()
+                        }
+                    }
+
+                    AppRoot(
+                        backStack = backStack,
+                        navigator = navigator,
+                        circuit = circuit,
                     )
                 },
             )
@@ -90,8 +112,11 @@ internal class MainActivity : ComponentActivity() {
 }
 
 private const val QUERY = "query"
+private const val NAME = "name"
+private const val ID = "id"
 private const val TYPE = "type"
 
+@Suppress("LongMethod")
 private fun getInitialScreens(
     uri: Uri?,
 ): List<Screen> {
@@ -115,15 +140,7 @@ private fun getInitialScreens(
         }
 
         "collection" -> {
-            initialScreens.add(CollectionListScreen)
-            if (pathSegments.size > 1) {
-                val collectionId = pathSegments.last()
-                initialScreens.add(
-                    CollectionScreen(
-                        id = collectionId,
-                    ),
-                )
-            }
+            initialScreens.addAll(getCollectionScreens(uri))
         }
 
         "settings" -> {
@@ -147,4 +164,31 @@ private fun getInitialScreens(
     }
 
     return initialScreens
+}
+
+private fun getCollectionScreens(uri: Uri): List<Screen> {
+    if (uri.pathSegments.size <= 1) return listOf(CollectionListScreen())
+
+    return when (uri.pathSegments[1]) {
+        "create" -> listOf(
+            CollectionListScreen(
+                newCollectionId = uri.getQueryParameter(ID),
+                newCollectionName = uri.getQueryParameter(NAME),
+                newCollectionEntity = uri.getQueryParameter(TYPE)?.toMusicBrainzEntity(),
+            ),
+        )
+
+        else -> {
+            val collectionId = uri.pathSegments[1]
+            val isAddOperation = uri.pathSegments.getOrNull(2) == "add"
+
+            listOf(
+                CollectionListScreen(),
+                CollectionScreen(
+                    collectionId = collectionId,
+                    collectableId = if (isAddOperation) uri.getQueryParameter(ID) else null,
+                ),
+            )
+        }
+    }
 }

@@ -1,5 +1,5 @@
 package,name,composable,skippable,restartable,readonly,inline,isLambda,hasDefaults,defaultsGroup,groups,calls,
-ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphPresenter.present,present,1,0,0,0,0,0,0,0,1,4,
-ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUi,ArtistCollaborationGraphUi,1,1,1,0,0,0,0,0,1,4,
-ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUi,ArtistCollaborationGraphUi,1,0,1,0,0,0,0,0,1,6,
 ly.david.musicsearch.shared.feature.graph.PreviewArtistCollaborationGraphUi,PreviewArtistCollaborationGraphUi,1,1,1,0,0,0,0,0,1,1,
+ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphPresenter.present,present,1,0,0,0,0,0,0,0,1,4,
+ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUi,ArtistCollaborationGraphUi,1,1,1,0,0,0,0,0,1,6,
+ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUi,ArtistCollaborationGraphUi,1,1,1,0,0,0,0,0,1,7,

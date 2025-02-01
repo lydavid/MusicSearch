@@ -7,12 +7,13 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.label.LabelWithCatalog
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.mapper.mapToLabelListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import lydavidmusicsearchdatadatabase.Release_label
 
 /**
@@ -58,26 +59,10 @@ class ReleaseLabelDao(
 
     fun getLabelsByRelease(
         releaseId: String,
-    ): List<LabelWithCatalog> = transacter.getLabelsByRelease(
+    ): List<LabelListItemModel> = transacter.getLabelsByRelease(
         releaseId = releaseId,
-        mapper = ::mapToLabelWithCatalog,
+        mapper = ::mapToLabelListItemModel,
     ).executeAsList()
-
-    private fun mapToLabelWithCatalog(
-        id: String,
-        name: String,
-        disambiguation: String?,
-        type: String?,
-        labelCode: Int?,
-        catalogNumber: String,
-    ) = LabelWithCatalog(
-        id = id,
-        name = name,
-        disambiguation = disambiguation,
-        type = type,
-        labelCode = labelCode,
-        catalogNumber = catalogNumber,
-    )
 
     fun deleteLabelsByReleaseLinks(releaseId: String) {
         withTransaction {

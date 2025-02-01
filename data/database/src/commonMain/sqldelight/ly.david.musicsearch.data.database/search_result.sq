@@ -1,0 +1,283 @@
+import kotlin.Int;
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
+
+CREATE TABLE IF NOT EXISTS search_result (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  `entity_id` TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS search_result_metadata (
+  `entity` TEXT AS MusicBrainzEntity NOT NULL,
+  `query` TEXT NOT NULL,
+  `local_count` INTEGER AS Int,
+  `remote_count` INTEGER AS Int,
+
+  PRIMARY KEY(`entity`, `query`)
+);
+
+getMetadata:
+SELECT *
+FROM search_result_metadata;
+
+removeMetadata:
+DELETE FROM search_result_metadata;
+
+setMetadata:
+INSERT OR REPLACE INTO search_result_metadata (
+  entity,
+  query,
+  local_count,
+  remote_count
+)
+VALUES (
+  :entity,
+  :query,
+  :localCount,
+  :remoteCount
+);
+
+insert:
+INSERT OR IGNORE INTO search_result (
+  `entity_id`
+)
+VALUES (
+  :entity_id
+);
+
+removeAll:
+DELETE FROM search_result;
+
+getNumberOfSearchResults:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM search_result
+  ),
+  0
+) AS count;
+
+-- areas
+
+getAreaSearchResults:
+SELECT
+  a.id,
+  a.name,
+  a.sort_name,
+  a.disambiguation,
+  a.type,
+  a.begin,
+  a.end,
+  a.ended,
+  visited.entity_id IS NOT NULL AS visited
+FROM area a
+INNER JOIN search_result sr ON a.id = sr.entity_id
+LEFT JOIN visited ON visited.entity_id = a.id
+ORDER BY sr.id
+LIMIT :limit OFFSET :offset;
+
+
+-- aritsts
+
+getArtistSearchResults:
+SELECT
+  a.id,
+  a.name,
+  a.sort_name,
+  a.disambiguation,
+  a.type,
+  a.gender,
+  a.country_code,
+  a.begin,
+  a.end,
+  a.ended,
+  mi.thumbnail_url,
+  visited.entity_id IS NOT NULL AS visited
+FROM search_result sr
+INNER JOIN artist a ON sr.entity_id = a.id
+LEFT JOIN mbid_image mi ON mi.mbid = a.id
+LEFT JOIN visited ON visited.entity_id = a.id
+ORDER BY sr.id
+LIMIT :limit OFFSET :offset;
+
+
+-- events
+
+getEventSearchResults:
+SELECT
+  e.id,
+  e.name,
+  e.disambiguation,
+  e.type,
+  e.time,
+  e.cancelled,
+  e.begin,
+  e.end,
+  e.ended,
+  visited.entity_id IS NOT NULL AS visited
+FROM search_result sr
+INNER JOIN event e ON sr.entity_id = e.id
+LEFT JOIN visited ON visited.entity_id = e.id
+ORDER BY sr.id
+LIMIT :limit OFFSET :offset;
+
+
+-- instruments
+
+getInstrumentSearchResults:
+SELECT
+  i.id,
+  i.name,
+  i.disambiguation,
+  i.description,
+  i.type,
+  visited.entity_id IS NOT NULL AS visited
+FROM search_result sr
+INNER JOIN instrument i ON sr.entity_id = i.id
+LEFT JOIN visited ON visited.entity_id = i.id
+ORDER BY sr.id
+LIMIT :limit OFFSET :offset;
+
+
+-- labels
+
+getLabelSearchResults:
+SELECT
+  l.id,
+  l.name,
+  l.disambiguation,
+  l.type,
+  l.label_code,
+  visited.entity_id IS NOT NULL AS visited
+FROM search_result sr
+INNER JOIN label l ON sr.entity_id = l.id
+LEFT JOIN visited ON visited.entity_id = l.id
+ORDER BY sr.id
+LIMIT :limit OFFSET :offset;
+
+
+-- places
+
+getPlaceSearchResults:
+SELECT
+  p.id,
+  p.name,
+  p.disambiguation,
+  p.address,
+  p.type,
+  p.longitude,
+  p.latitude,
+  p.begin,
+  p.end,
+  p.ended,
+  visited.entity_id IS NOT NULL AS visited
+FROM search_result sr
+INNER JOIN place p ON sr.entity_id = p.id
+LEFT JOIN visited ON visited.entity_id = p.id
+ORDER BY sr.id
+LIMIT :limit OFFSET :offset;
+
+
+-- recordings
+
+getRecordingSearchResults:
+SELECT
+  r.id,
+  r.name,
+  r.disambiguation,
+  r.first_release_date,
+  r.length,
+  r.video,
+  ac.name AS artist_credits,
+  visited.entity_id IS NOT NULL AS visited
+FROM search_result sr
+INNER JOIN recording r ON sr.entity_id = r.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN visited ON visited.entity_id = r.id
+GROUP BY r.id
+ORDER BY sr.id
+LIMIT :limit OFFSET :offset;
+
+
+-- releases
+
+getReleaseSearchResults:
+SELECT
+  r.*,
+  ac.name AS artistCreditNames,
+  mi.thumbnail_url,
+  (
+    SELECT COUNT(cc.area_id)
+    FROM `release`
+    INNER JOIN release_country rc ON rc.release_id = `release`.id
+    INNER JOIN country_code cc ON cc.area_id = rc.country_id
+    WHERE r.id = `release`.id
+  ) AS releaseCountryCount,
+  visited.entity_id IS NOT NULL AS visited
+FROM search_result sr
+INNER JOIN `release` r ON sr.entity_id = r.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN mbid_image mi ON mi.mbid = r.id
+LEFT JOIN visited ON visited.entity_id = r.id
+GROUP BY r.id
+ORDER BY sr.id
+LIMIT :limit OFFSET :offset;
+
+
+-- release groups
+
+getReleaseGroupSearchResults:
+SELECT
+  rg.id,
+  rg.name,
+  rg.first_release_date,
+  rg.disambiguation,
+  rg.primary_type,
+  rg.secondary_types,
+  ac.name AS artist_credits,
+  mi.thumbnail_url,
+  visited.entity_id IS NOT NULL AS visited
+FROM search_result sr
+INNER JOIN release_group rg ON sr.entity_id = rg.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN mbid_image mi ON mi.mbid = rg.id
+LEFT JOIN visited ON visited.entity_id = rg.id
+GROUP BY rg.id
+ORDER BY sr.id
+LIMIT :limit OFFSET :offset;
+
+
+-- series
+
+getSeriesSearchResults:
+SELECT
+  s.id,
+  s.name,
+  s.disambiguation,
+  s.type,
+  visited.entity_id IS NOT NULL AS visited
+FROM search_result sr
+INNER JOIN series s ON sr.entity_id = s.id
+LEFT JOIN visited ON visited.entity_id = s.id
+ORDER BY sr.id
+LIMIT :limit OFFSET :offset;
+
+
+-- work
+
+getWorkSearchResults:
+SELECT
+  w.id,
+  w.name,
+  w.disambiguation,
+  w.type,
+  w.language,
+  w.iswcs,
+  visited.entity_id IS NOT NULL AS visited
+FROM search_result sr
+INNER JOIN work w ON sr.entity_id = w.id
+LEFT JOIN visited ON visited.entity_id = w.id
+ORDER BY sr.id
+LIMIT :limit OFFSET :offset;

@@ -5,7 +5,6 @@ import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -13,6 +12,7 @@ import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.shared.domain.place.PlacesByEntityRepository
 
@@ -21,7 +21,7 @@ class PlacesByEntityRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
     private val placeDao: PlaceDao,
     private val areaPlaceDao: AreaPlaceDao,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val browseApi: BrowseApi,
 ) : PlacesByEntityRepository,
     BrowseEntitiesByEntity<PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
         browseEntity = MusicBrainzEntity.PLACE,
@@ -95,14 +95,14 @@ class PlacesByEntityRepositoryImpl(
     ): BrowsePlacesResponse {
         return when (entity) {
             MusicBrainzEntity.AREA -> {
-                musicBrainzApi.browsePlacesByArea(
+                browseApi.browsePlacesByArea(
                     areaId = entityId,
                     offset = offset,
                 )
             }
 
             MusicBrainzEntity.COLLECTION -> {
-                musicBrainzApi.browsePlacesByCollection(
+                browseApi.browsePlacesByCollection(
                     collectionId = entityId,
                     offset = offset,
                 )

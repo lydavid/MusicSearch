@@ -9,34 +9,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import app.cash.paging.PagingData
-import app.cash.paging.compose.LazyPagingItems
-import app.cash.paging.compose.collectAsLazyPagingItems
-import app.cash.paging.insertSeparators
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.error.ActionableResult
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.history.LookupHistory
-import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.area.usecase.GetAreasByEntity
+import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.usecase.DeleteFromCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
+import ly.david.musicsearch.shared.domain.error.ActionableResult
+import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
-import ly.david.musicsearch.shared.domain.instrument.usecase.GetInstrumentsByEntity
-import ly.david.musicsearch.shared.domain.place.usecase.GetPlacesByEntity
-import ly.david.musicsearch.shared.domain.recording.usecase.GetRecordingsByEntity
-import ly.david.musicsearch.shared.domain.series.usecase.GetSeriesByEntity
+import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.area.AreasByEntityPresenter
+import ly.david.musicsearch.ui.common.area.AreasByEntityUiEvent
+import ly.david.musicsearch.ui.common.area.AreasByEntityUiState
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
@@ -46,9 +38,18 @@ import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
 import ly.david.musicsearch.ui.common.genre.GenresByEntityPresenter
 import ly.david.musicsearch.ui.common.genre.GenresByEntityUiEvent
 import ly.david.musicsearch.ui.common.genre.GenresByEntityUiState
+import ly.david.musicsearch.ui.common.instrument.InstrumentsByEntityPresenter
+import ly.david.musicsearch.ui.common.instrument.InstrumentsByEntityUiEvent
+import ly.david.musicsearch.ui.common.instrument.InstrumentsByEntityUiState
 import ly.david.musicsearch.ui.common.label.LabelsByEntityPresenter
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiEvent
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
+import ly.david.musicsearch.ui.common.place.PlacesByEntityPresenter
+import ly.david.musicsearch.ui.common.place.PlacesByEntityUiEvent
+import ly.david.musicsearch.ui.common.place.PlacesByEntityUiState
+import ly.david.musicsearch.ui.common.recording.RecordingsByEntityPresenter
+import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiEvent
+import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiState
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityPresenter
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
@@ -57,7 +58,12 @@ import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiState
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.series.SeriesByEntityPresenter
+import ly.david.musicsearch.ui.common.series.SeriesByEntityUiEvent
+import ly.david.musicsearch.ui.common.series.SeriesByEntityUiState
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 import ly.david.musicsearch.ui.common.work.WorksByEntityPresenter
 import ly.david.musicsearch.ui.common.work.WorksByEntityUiEvent
@@ -66,53 +72,72 @@ import ly.david.musicsearch.ui.common.work.WorksByEntityUiState
 internal class CollectionPresenter(
     private val screen: CollectionScreen,
     private val navigator: Navigator,
-    private val getCollectionUseCase: GetCollection,
+    private val getCollection: GetCollection,
     private val incrementLookupHistory: IncrementLookupHistory,
-    private val getAreasByEntity: GetAreasByEntity,
+    private val areasByEntityPresenter: AreasByEntityPresenter,
     private val artistsByEntityPresenter: ArtistsByEntityPresenter,
-    private val getInstrumentsByEntity: GetInstrumentsByEntity,
-    private val labelsByEntityPresenter: LabelsByEntityPresenter,
-    private val getPlacesByEntity: GetPlacesByEntity,
-    private val getRecordingsByEntity: GetRecordingsByEntity,
     private val eventsByEntityPresenter: EventsByEntityPresenter,
     private val genresByEntityPresenter: GenresByEntityPresenter,
+    private val instrumentsByEntityPresenter: InstrumentsByEntityPresenter,
+    private val labelsByEntityPresenter: LabelsByEntityPresenter,
+    private val placesByEntityPresenter: PlacesByEntityPresenter,
+    private val recordingsByEntityPresenter: RecordingsByEntityPresenter,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
+    private val seriesByEntityPresenter: SeriesByEntityPresenter,
     private val worksByEntityPresenter: WorksByEntityPresenter,
-    private val getSeriesByEntity: GetSeriesByEntity,
     private val deleteFromCollection: DeleteFromCollection,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val collectionRepository: CollectionRepository,
 ) : Presenter<CollectionUiState> {
     @Composable
     override fun present(): CollectionUiState {
-        val collectionId = screen.id
+        val collectionId = screen.collectionId
 
         val scope = rememberCoroutineScope()
         var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
+        var title: String by rememberSaveable { mutableStateOf("") }
         var actionableResult: ActionableResult? by remember { mutableStateOf(null) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        var collectableItems: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val topAppBarEditState: TopAppBarEditState = rememberTopAppBarEditState()
+
+        val areasByEntityUiState = areasByEntityPresenter.present()
+        val areasEventSink = areasByEntityUiState.eventSink
         val artistsByEntityUiState = artistsByEntityPresenter.present()
         val artistsEventSink = artistsByEntityUiState.eventSink
         val eventsByEntityUiState = eventsByEntityPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
         val genresByEntityUiState = genresByEntityPresenter.present()
         val genresEventSink = genresByEntityUiState.eventSink
+        val instrumentsByEntityUiState = instrumentsByEntityPresenter.present()
+        val instrumentsEventSink = instrumentsByEntityUiState.eventSink
         val labelsByEntityUiState = labelsByEntityPresenter.present()
         val labelsEventSink = labelsByEntityUiState.eventSink
+        val placesByEntityUiState = placesByEntityPresenter.present()
+        val placesEventSink = placesByEntityUiState.eventSink
+        val recordingsByEntityUiState = recordingsByEntityPresenter.present()
+        val recordingsEventSink = recordingsByEntityUiState.eventSink
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
         val releaseGroupsByEntityUiState = releaseGroupsByEntityPresenter.present()
         val releaseGroupsEventSink = releaseGroupsByEntityUiState.eventSink
+        val seriesByEntityUiState = seriesByEntityPresenter.present()
+        val seriesEventSink = seriesByEntityUiState.eventSink
         val worksByEntityUiState = worksByEntityPresenter.present()
         val worksEventSink = worksByEntityUiState.eventSink
 
+        var oneShotNewCollectableId: String? by rememberRetained {
+            mutableStateOf(screen.collectableId)
+        }
+
         LaunchedEffect(Unit) {
-            val nonNullCollection = getCollectionUseCase(collectionId)
+            val nonNullCollection = getCollection(collectionId) ?: return@LaunchedEffect
             collection = nonNullCollection
             isRemote = nonNullCollection.isRemote
+            title = nonNullCollection.name
 
             if (!recordedHistory) {
                 incrementLookupHistory(
@@ -124,6 +149,13 @@ internal class CollectionPresenter(
                 )
                 recordedHistory = true
             }
+
+            collectionRepository.addToCollection(
+                collectionId = nonNullCollection.id,
+                entity = nonNullCollection.entity,
+                entityId = oneShotNewCollectableId ?: return@LaunchedEffect,
+            )
+            oneShotNewCollectableId = null
         }
 
         LaunchedEffect(
@@ -131,18 +163,14 @@ internal class CollectionPresenter(
         ) {
             when (collection?.entity) {
                 MusicBrainzEntity.AREA -> {
-                    collectableItems = getAreasByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    areasEventSink(
+                        AreasByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    areasEventSink(AreasByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.ARTIST -> {
@@ -179,18 +207,14 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.INSTRUMENT -> {
-                    collectableItems = getInstrumentsByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    instrumentsEventSink(
+                        InstrumentsByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    instrumentsEventSink(InstrumentsByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.LABEL -> {
@@ -205,33 +229,25 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.PLACE -> {
-                    collectableItems = getPlacesByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    placesEventSink(
+                        PlacesByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    placesEventSink(PlacesByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.RECORDING -> {
-                    collectableItems = getRecordingsByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    recordingsEventSink(
+                        RecordingsByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    recordingsEventSink(RecordingsByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.RELEASE -> {
@@ -257,18 +273,14 @@ internal class CollectionPresenter(
                 }
 
                 MusicBrainzEntity.SERIES -> {
-                    collectableItems = getSeriesByEntity(
-                        entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
-                        listFilters = ListFilters(
-                            query = query,
+                    seriesEventSink(
+                        SeriesByEntityUiEvent.Get(
+                            byEntityId = collectionId,
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
-                    ).map { pagingData ->
-                        pagingData.insertSeparators { _, _ ->
-                            null
-                        }
-                    }
+                    )
+                    seriesEventSink(SeriesByEntityUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.WORK -> {
@@ -331,16 +343,23 @@ internal class CollectionPresenter(
         }
 
         return CollectionUiState(
+            title = title,
             collection = collection,
+            url = getMusicBrainzUrl(MusicBrainzEntity.COLLECTION, screen.collectionId),
             actionableResult = actionableResult,
             topAppBarFilterState = topAppBarFilterState,
-            lazyPagingItems = collectableItems.collectAsLazyPagingItems(),
+            topAppBarEditState = topAppBarEditState,
+            areasByEntityUiState = areasByEntityUiState,
             artistsByEntityUiState = artistsByEntityUiState,
             eventsByEntityUiState = eventsByEntityUiState,
             genresByEntityUiState = genresByEntityUiState,
+            instrumentsByEntityUiState = instrumentsByEntityUiState,
             labelsByEntityUiState = labelsByEntityUiState,
+            placesByEntityUiState = placesByEntityUiState,
+            recordingsByEntityUiState = recordingsByEntityUiState,
             releasesByEntityUiState = releasesByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
+            seriesByEntityUiState = seriesByEntityUiState,
             worksByEntityUiState = worksByEntityUiState,
             eventSink = ::eventSink,
         )
@@ -349,16 +368,23 @@ internal class CollectionPresenter(
 
 @Stable
 internal data class CollectionUiState(
+    val title: String,
     val collection: CollectionListItemModel?,
     val actionableResult: ActionableResult?,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
-    val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val url: String,
+    val topAppBarEditState: TopAppBarEditState,
+    val areasByEntityUiState: AreasByEntityUiState,
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val eventsByEntityUiState: EventsByEntityUiState,
     val genresByEntityUiState: GenresByEntityUiState,
+    val instrumentsByEntityUiState: InstrumentsByEntityUiState,
     val labelsByEntityUiState: LabelsByEntityUiState,
+    val placesByEntityUiState: PlacesByEntityUiState,
+    val recordingsByEntityUiState: RecordingsByEntityUiState,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
+    val seriesByEntityUiState: SeriesByEntityUiState,
     val worksByEntityUiState: WorksByEntityUiState,
     val eventSink: (CollectionUiEvent) -> Unit,
 ) : CircuitUiState

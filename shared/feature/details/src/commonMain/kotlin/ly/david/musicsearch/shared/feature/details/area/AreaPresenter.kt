@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -23,7 +24,9 @@ import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
@@ -61,6 +64,8 @@ internal class AreaPresenter(
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val wikimediaRepository: WikimediaRepository,
 ) : Presenter<AreaUiState> {
 
     @Composable
@@ -70,13 +75,14 @@ internal class AreaPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        var area: AreaDetailsModel? by remember { mutableStateOf(null) }
+        var area: AreaDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<AreaTab> by rememberSaveable {
             mutableStateOf(AreaTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(AreaTab.DETAILS) }
-        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val artistsByEntityUiState = artistsByEntityPresenter.present()
         val artistsEventSink = artistsByEntityUiState.eventSink
@@ -95,9 +101,11 @@ internal class AreaPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val areaDetailsModel = repository.lookupArea(screen.id)
+                val areaDetailsModel = repository.lookupArea(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = areaDetailsModel.getNameWithDisambiguation()
-
                 area = areaDetailsModel
                 isError = false
             } catch (ex: HandledException) {
@@ -114,6 +122,20 @@ internal class AreaPresenter(
                     ),
                 )
                 recordedHistory = true
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, area) {
+            wikimediaRepository.getWikipediaExtract(
+                mbid = area?.id ?: return@LaunchedEffect,
+                urls = area?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                area = area?.copy(
+                    wikipediaExtract = wikipediaExtract,
+                )
+            }.onFailure {
+                snackbarMessage = it.message
             }
         }
 
@@ -224,10 +246,12 @@ internal class AreaPresenter(
             title = title,
             isError = isError,
             area = area,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
+            snackbarMessage = snackbarMessage,
             artistsByEntityUiState = artistsByEntityUiState,
             eventsByEntityUiState = eventsByEntityUiState,
             labelsByEntityUiState = labelsByEntityUiState,
@@ -245,10 +269,12 @@ internal data class AreaUiState(
     val title: String,
     val isError: Boolean = false,
     val area: AreaDetailsModel? = null,
+    val url: String = "",
     val tabs: List<AreaTab> = AreaTab.entries,
     val selectedTab: AreaTab = AreaTab.DETAILS,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
+    val snackbarMessage: String? = null,
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val eventsByEntityUiState: EventsByEntityUiState,
     val labelsByEntityUiState: LabelsByEntityUiState,

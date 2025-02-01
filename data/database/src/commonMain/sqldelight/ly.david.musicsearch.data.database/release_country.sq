@@ -18,11 +18,17 @@ VALUES ?;
 -- countries by release
 
 getCountriesByRelease:
-SELECT a.id, a.name, rc.date, cc.code
+SELECT
+  a.id,
+  a.name,
+  rc.date,
+  cc.code,
+  visited.entity_id IS NOT NULL AS visited
 FROM area a
 INNER JOIN release_country rc ON rc.country_id = a.id
 INNER JOIN `release` r ON r.id = rc.release_id
 LEFT JOIN country_code cc ON cc.area_id = a.id
+LEFT JOIN visited ON visited.entity_id = a.id
 WHERE r.id = :releaseId
 ORDER BY a.name;
 
@@ -64,13 +70,15 @@ SELECT
     INNER JOIN release_country ON release_country.release_id = `release`.id
     INNER JOIN country_code cc ON cc.area_id = release_country.country_id
     WHERE r.id = `release`.id
-  ) AS releaseCountryCount
+  ) AS releaseCountryCount,
+  visited.entity_id IS NOT NULL AS visited
 FROM `release` r
 INNER JOIN release_country rc ON r.id = rc.release_id
 INNER JOIN area a ON a.id = rc.country_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = r.id
+LEFT JOIN visited ON visited.entity_id = r.id
 WHERE a.id = :areaId
 AND (
   r.name LIKE :query

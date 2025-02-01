@@ -7,11 +7,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzUserApi
 
 class LoginJvm(
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val musicBrainzUserApi: MusicBrainzUserApi,
     private val logger: Logger,
     private val coroutineScope: CoroutineScope,
     private val oAuth20Service: OAuth20Service,
@@ -28,7 +28,7 @@ class LoginJvm(
                         )
 
                         try {
-                            val username = musicBrainzApi.getUserInfo().username ?: return@launch
+                            val username = musicBrainzUserApi.getUserInfo().username ?: return@launch
                             musicBrainzAuthStore.setUsername(username)
                         } catch (ex: Exception) {
                             logger.e(ex)

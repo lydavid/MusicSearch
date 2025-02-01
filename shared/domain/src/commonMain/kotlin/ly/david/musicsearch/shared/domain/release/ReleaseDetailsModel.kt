@@ -5,6 +5,7 @@ import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
+import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 
 data class ReleaseDetailsModel(
     override val id: String,
@@ -21,17 +22,18 @@ data class ReleaseDetailsModel(
     override val quality: String? = null,
 
     val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
-    val textRepresentation: TextRepresentationUiModel? = null,
+    val textRepresentation: TextRepresentationUiModel = TextRepresentationUiModel(),
     val imageUrl: String? = null,
 
-    val formattedFormats: String? = null,
-    val formattedTracks: String? = null,
+    val formattedFormats: String = "",
+    val formattedTracks: String = "",
 
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
 
     val releaseGroup: ReleaseGroupForRelease? = null,
     val areas: List<AreaListItemModel> = listOf(),
     val labels: List<LabelListItemModel> = listOf(),
+    val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     val urls: List<RelationListItemModel> = listOf(),
 
     val releaseLength: Int? = null,

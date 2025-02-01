@@ -10,5 +10,6 @@ data class EventListItemModel(
     override val type: String? = null,
     override val time: String? = null,
     override val cancelled: Boolean? = null,
-    override val lifeSpan: LifeSpanUiModel? = null,
-) : Event, ListItemModel()
+    override val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
+    override val visited: Boolean = false,
+) : ListItemModel(), Event, Visitable

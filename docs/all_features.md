@@ -10,6 +10,7 @@ Inspired by [Spotless' feature matrix](https://github.com/diffplug/spotless?tab=
 |-------------------------------------------------------------|---------|---------|-----|
 | [Browse](#browse)                                           | ✅       | ✅       | ✅   |
 | [Collections](#collections)                                 | ✅       | ✅       | ⬜   |
+| [Export](#export)                                           | ✅       | ⬜       | ⬜   |
 | [Images](#images)                                           | ✅       | ✅       | ✅   |
 | [Graph](#graph)                                             | ✅       | ✅       | ✅   |
 | [MusicBrainz Login](#musicbrainz-login)                     | ✅       | ✅       | ⬜️  |
@@ -45,7 +46,8 @@ e.g. On an artist's page, you can see their events, recordings, releases, and re
 | work          | artists, recordings                                                                                      | collections                |
 
 - There are no url details screen, clicking a url will just go to that url, either opening it in the browser, or deep linking to an app that supports it
-- labels by release have been excluded, as we fetch all labels in the initial lookup with `inc=labels`, displaying it in the Details tab
+- labels by release have been excluded, as we fetch all labels in the initial lookup with
+  `inc=labels`, displaying it in the Details tab
 - releases by track (which releases a given track is found in) is not supported as we don't have a track details screen. Clicking a track goes to its associated recording
 - releases by track_artist may eventually be supported, but is not planned. This would be found in an artist's details screen
 - artists by recording have been excluded as it is already fetched with initial recording lookup and is displayed as artist credits in the top bar
@@ -81,6 +83,14 @@ See below for the supported types of collections.
 | series        | ✅         |
 | work          | ✅         |
 
+
+## Export
+
+Exporting the app's database as a sqlite database is supported.
+
+You will need to use a tool such as [SQLite's CLI](https://www.sqlite.org/cli.html) to interact with it.
+
+
 ## Images
 
 | Entity        | Supported |
@@ -100,9 +110,11 @@ See below for the supported types of collections.
 
 ## Graph
 
-Artist/recording graph showing which artists and recordings a given artist collaborated on.
+Artist/recording graph showing which artists and recordings a given artist collaborated with and on.
 This is currently limited to artists credited on the recording, which are primarily performers.
-It does not include composers.
+
+Inspired by [Obsidian](https://github.com/obsidianmd/obsidian-releases)'s graph view.
+
 
 ## MusicBrainz Login
 
@@ -141,18 +153,18 @@ TODO: screenshot of list screen
 
 | Entity        | Details | List Screen |
 |---------------|---------|-------------|
-| area          | ⬜️      | ✅           |
+| area          | ✅       | ✅           |
 | artist        | ✅       | ✅           |
 | collection    | ❌       | ✅           |
-| event         | ⬜️      | ✅           |
-| instrument    | ⬜       | ✅           |
-| label         | ⬜️      | ✅           |
-| place         | ⬜       | ✅           |
-| recording     | ⬜       | ✅           |
+| event         | ✅️      | ✅           |
+| instrument    | ✅       | ✅           |
+| label         | ✅️      | ✅           |
+| place         | ✅       | ✅           |
+| recording     | ✅       | ✅           |
 | release       | ✅       | ✅           |
-| release group | ⬜       | ✅           |
-| series        | ⬜       | ✅           |
-| work          | ⬜       | ✅           |
+| release group | ✅️      | ✅           |
+| series        | ✅       | ✅           |
+| work          | ✅       | ✅           |
 
 - A collection does not have a details screen. It only has one tab which lists all of its contents. e.g. An artist collection lists all of its artists
 - List screens are analogous to those listed under "Browsing supported" in the [browse](#browse) feature section.
@@ -177,14 +189,14 @@ At the moment, we always get the English Wikipedia article's extract.
 
 | Entity        | Details |
 |---------------|---------|
-| area          | ⬜️      |
+| area          | ✅️      |
 | artist        | ✅       |
-| event         | ⬜️      |
-| instrument    | ⬜       |
-| label         | ⬜️      |
-| place         | ⬜       |
-| recording     | ⬜       |
-| release       | ⬜       |
-| release group | ⬜       |
-| series        | ⬜       |
-| work          | ⬜       |
+| event         | ✅️      |
+| instrument    | ✅       |
+| label         | ✅️      |
+| place         | ✅       |
+| recording     | ✅       |
+| release       | ✅       |
+| release group | ✅       |
+| series        | ✅       |
+| work          | ✅       |

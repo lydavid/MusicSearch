@@ -40,9 +40,11 @@ SELECT
   l.name,
   l.disambiguation,
   l.type,
-  l.label_code
+  l.label_code,
+  visited.entity_id IS NOT NULL AS visited
 FROM labels_by_entity le
 INNER JOIN label l ON l.id = le.label_id
+LEFT JOIN visited ON visited.entity_id = l.id
 WHERE le.entity_id = :entityId
 AND (
   l.name LIKE :query OR

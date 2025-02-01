@@ -27,7 +27,7 @@ class CollectionDao(
                     entity = entity,
                     type = null,
                     type_id = null,
-                    entity_count = entityCount,
+                    entity_count = cachedEntityCount,
                 ),
             )
         }
@@ -57,11 +57,11 @@ class CollectionDao(
         }
     }
 
-    fun getCollection(id: String): CollectionListItemModel =
+    fun getCollection(id: String): CollectionListItemModel? =
         transacter.getCollection(
             id,
             mapper = ::mapToCollectionListItem,
-        ).executeAsOne()
+        ).executeAsOneOrNull()
 
     fun getAllCollections(
         entity: MusicBrainzEntity?,
@@ -101,12 +101,14 @@ class CollectionDao(
         name: String,
         entity: MusicBrainzEntity,
         entityCount: Long,
+        visited: Boolean?,
     ) = CollectionListItemModel(
         id = id,
         isRemote = isRemote,
         name = name,
         entity = entity,
-        entityCount = entityCount.toInt(),
+        cachedEntityCount = entityCount.toInt(),
+        visited = visited == true,
     )
 
     fun deleteMusicBrainzCollections() {

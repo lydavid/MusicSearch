@@ -1,3 +1,7 @@
+
+-- An area can have many places
+-- A place belongs to an area, and all areas that contains that area
+-- When viewing a place, we will show the most specific area
 CREATE TABLE IF NOT EXISTS area_place (
   area_id TEXT NOT NULL,
   place_id TEXT NOT NULL,
@@ -9,6 +13,8 @@ insert:
 INSERT OR IGNORE INTO area_place
 VALUES ?;
 
+-- area by place
+
 getAreasByPlace:
 SELECT
   a.id,
@@ -18,12 +24,24 @@ SELECT
   a.type,
   a.begin,
   a.end,
-  a.ended
+  a.ended,
+  visited.entity_id IS NOT NULL AS visited
 FROM area a
 INNER JOIN area_place ap ON a.id = ap.area_id
-WHERE ap.place_id = :placeId
-LIMIT 1;
+LEFT JOIN visited ON visited.entity_id = a.id
+WHERE ap.place_id = :placeId;
 
+-- An area that does not have a type is the area for a place that has never been visited.
+-- We only delete this one so that we don't delete the rest of its containment.
+deleteAreaPlaceLink:
+DELETE FROM area_place WHERE area_id IN (
+  SELECT a.id
+  FROM place p
+  INNER JOIN area_place ap ON p.id = ap.place_id
+  INNER JOIN area a ON a.id = ap.area_id
+  WHERE place_id = :placeId
+  AND a.type IS NULL
+);
 
 -- places by area
 
@@ -60,10 +78,12 @@ SELECT
   p.latitude,
   p.begin,
   p.end,
-  p.ended
+  p.ended,
+  visited.entity_id IS NOT NULL AS visited
 FROM place p
 INNER JOIN area_place ap ON p.id = ap.place_id
 INNER JOIN area a ON a.id = ap.area_id
+LEFT JOIN visited ON visited.entity_id = p.id
 WHERE a.id = :areaId
 AND (p.name LIKE :query OR p.disambiguation LIKE :query OR p.type LIKE :query)
 ORDER BY p.name, p.address

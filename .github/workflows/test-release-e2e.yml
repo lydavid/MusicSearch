@@ -1,0 +1,148 @@
+name: Test Release E2E
+
+# When making database changes, prefer to create a PR so that this runs
+on:
+  push:
+    paths:
+      - "**.sqm"
+  pull_request:
+    paths:
+      - "**.sqm"
+  schedule:
+    - cron: '42 6 * * 6'
+  workflow_dispatch:
+
+jobs:
+  test-release-e2e:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout beta
+        uses: nschloe/action-cached-lfs-checkout@v1
+        with:
+          token: ${{ secrets.PAT }}
+          ref: beta
+
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: false
+          swap-storage: true
+
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - id: setup
+        uses: ./.github/actions/setup
+
+      - name: Install Maestro
+        run: curl -Ls "https://get.maestro.mobile.dev" | bash
+
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-31-x86_64
+
+      - name: create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2.33.0
+        with:
+          api-level: 32
+          arch: x86_64
+          profile: pixel_3a
+          force-avd-creation: false
+          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          sdcard-path-or-size: 100M
+          script: echo "Generated AVD snapshot for caching."
+
+      # We exclude -no-snapshot-save so that in the next emulator step, we install on top of this
+      - name: Install beta app on emulator, run Maestro tests
+        uses: reactivecircus/android-emulator-runner@v2.33.0
+        with:
+          api-level: 32
+          arch: x86_64
+          profile: pixel_3a
+          force-avd-creation: false
+          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          sdcard-path-or-size: 100M
+          script: |
+            ./gradlew assembleFDroidDebug installFDroidDebug
+            adb shell settings put system show_touches 1
+            adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
+            adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
+            $HOME/.maestro/bin/maestro test .maestro/pr
+            adb shell cmd overlay enable com.android.internal.systemui.navbar.threebutton
+            adb shell cmd overlay disable com.android.internal.systemui.navbar.gestural
+            $HOME/.maestro/bin/maestro test .maestro/threebutton
+            adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat
+
+      - name: Save recordings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: musicsearch_test_release_e2e_beta_outputs
+          path: |
+            /home/runner/.maestro/tests/
+            *.mp4
+            logcat
+            android/app/build/outputs/apk/fDroid/debug/app-fDroid-debug.apk
+
+      - name: Checkout PR
+        uses: nschloe/action-cached-lfs-checkout@v1
+        with:
+          token: ${{ secrets.PAT }}
+
+      - uses: ./.github/actions/setup
+
+      # After this installation, we want to cache the AVD for future runs, so we need to uninstall
+      # so that we don't run into INSTALL_FAILED_VERSION_DOWNGRADE in the next beta installation.
+      - name: Install PR app on emulator, run Maestro tests
+        uses: reactivecircus/android-emulator-runner@v2.33.0
+        with:
+          api-level: 32
+          arch: x86_64
+          profile: pixel_3a
+          force-avd-creation: false
+          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          sdcard-path-or-size: 100M
+          script: |
+            ./gradlew assembleFDroidDebug installFDroidDebug
+            adb shell settings put system show_touches 1
+            adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
+            adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
+            $HOME/.maestro/bin/maestro test .maestro/pr
+            adb shell cmd overlay enable com.android.internal.systemui.navbar.threebutton
+            adb shell cmd overlay disable com.android.internal.systemui.navbar.gestural
+            $HOME/.maestro/bin/maestro test .maestro/threebutton
+            adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat
+            adb uninstall io.github.lydavid.musicsearch.debug
+
+      - name: Save recordings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: musicsearch_test_release_e2e_pr_outputs
+          path: |
+            /home/runner/.maestro/tests/
+            *.mp4
+            logcat
+            android/app/build/outputs/apk/fDroid/debug/app-fDroid-debug.apk

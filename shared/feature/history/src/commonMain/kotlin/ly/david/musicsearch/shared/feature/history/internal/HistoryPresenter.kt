@@ -4,26 +4,29 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import app.cash.paging.PagingData
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.collectAsRetainedState
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
-import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.history.usecase.DeleteLookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.GetPagedHistory
 import ly.david.musicsearch.shared.domain.history.usecase.MarkLookupHistoryForDeletion
 import ly.david.musicsearch.shared.domain.history.usecase.UnMarkLookupHistoryForDeletion
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
@@ -41,11 +44,15 @@ internal class HistoryPresenter(
     override fun present(): HistoryUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        val sortOption by appPreferences.historySortOption.collectAsState(HistorySortOption.RECENTLY_VISITED)
-        val lazyPagingItems: LazyPagingItems<ListItemModel> = getPagedHistory(
-            query = query,
-            sortOption = sortOption,
-        ).collectAsLazyPagingItems()
+        val sortOption by appPreferences.historySortOption.collectAsRetainedState(HistorySortOption.RECENTLY_VISITED)
+        val listItems: Flow<PagingData<ListItemModel>> by rememberRetained(query, sortOption) {
+            mutableStateOf(
+                getPagedHistory(
+                    query = query,
+                    sortOption = sortOption,
+                ),
+            )
+        }
         val lazyListState = rememberLazyListState()
 
         fun eventSink(event: HistoryUiEvent) {
@@ -83,7 +90,7 @@ internal class HistoryPresenter(
                         NavEvent.GoTo(
                             if (event.entity == MusicBrainzEntity.COLLECTION) {
                                 CollectionScreen(
-                                    id = event.id,
+                                    collectionId = event.id,
                                 )
                             } else {
                                 DetailsScreen(
@@ -101,7 +108,7 @@ internal class HistoryPresenter(
         return HistoryUiState(
             topAppBarFilterState = topAppBarFilterState,
             sortOption = sortOption,
-            lazyPagingItems = lazyPagingItems,
+            lazyPagingItems = listItems.collectAsLazyPagingItems(),
             lazyListState = lazyListState,
             eventSink = ::eventSink,
         )

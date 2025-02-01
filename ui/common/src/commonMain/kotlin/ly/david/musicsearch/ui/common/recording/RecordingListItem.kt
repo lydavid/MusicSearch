@@ -14,6 +14,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.track.TrackListItem
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
@@ -31,6 +32,7 @@ fun RecordingListItem(
             Text(
                 text = recording.name,
                 style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = recording.fontWeight,
             )
         },
         modifier = modifier.clickable {
@@ -38,7 +40,10 @@ fun RecordingListItem(
         },
         supportingContent = {
             Column {
-                DisambiguationText(disambiguation = recording.disambiguation)
+                DisambiguationText(
+                    disambiguation = recording.disambiguation,
+                    fontWeight = recording.fontWeight,
+                )
 
                 recording.formattedArtistCredits.ifNotNullOrEmpty {
                     Text(
@@ -47,6 +52,7 @@ fun RecordingListItem(
                             .padding(top = 4.dp)
                             .fillMaxWidth(),
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = recording.fontWeight,
                     )
                 }
             }
@@ -57,12 +63,14 @@ fun RecordingListItem(
                     Text(
                         text = it,
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = recording.fontWeight,
                     )
                 }
 
                 Text(
                     text = recording.length.toDisplayTime(),
                     style = TextStyles.getCardBodySubTextStyle(),
+                    fontWeight = recording.fontWeight,
                 )
             }
         },

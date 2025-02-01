@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.artist
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -49,7 +48,6 @@ import ly.david.musicsearch.ui.core.LocalStrings
 
 @OptIn(
     ExperimentalMaterial3Api::class,
-    ExperimentalFoundationApi::class,
 )
 @Composable
 internal fun ArtistUi(
@@ -76,6 +74,12 @@ internal fun ArtistUi(
         eventSink(ArtistUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
     }
 
+    state.snackbarMessage?.let { message ->
+        LaunchedEffect(message) {
+            snackbarHostState.showSnackbar(message = message)
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
@@ -100,12 +104,11 @@ internal fun ArtistUi(
                     ArtistTab.STATS,
                 ),
                 overflowDropdownMenuItems = {
-                    RefreshMenuItem {
-                        eventSink(ArtistUiEvent.ForceRefresh)
-                    }
+                    RefreshMenuItem(
+                        onClick = { eventSink(ArtistUiEvent.ForceRefresh) },
+                    )
                     OpenInBrowserMenuItem(
-                        entity = entity,
-                        entityId = entityId,
+                        url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
                     if (state.selectedTab == ArtistTab.RELEASE_GROUPS) {
@@ -182,8 +185,6 @@ internal fun ArtistUi(
                         ArtistDetailsUi(
                             artist = artist,
                             filterText = state.topAppBarFilterState.filterText,
-                            imageUrl = state.imageUrl.orEmpty(),
-                            wikipediaExtract = state.wikipediaExtract,
                             lazyListState = state.detailsLazyListState,
                             onItemClick = { entity, id, title ->
                                 eventSink(
@@ -206,7 +207,7 @@ internal fun ArtistUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.releaseGroupsByEntityUiState.lazyListState,
-                        onReleaseGroupClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
                                     entity = entity,
@@ -234,7 +235,7 @@ internal fun ArtistUi(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.releasesByEntityUiState.lazyListState,
                         showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
-                        onReleaseClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
                                     entity = entity,
@@ -261,7 +262,7 @@ internal fun ArtistUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.recordingsByEntityUiState.lazyListState,
-                        onRecordingClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
                                     entity = entity,
@@ -281,7 +282,7 @@ internal fun ArtistUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.worksByEntityUiState.lazyListState,
-                        onWorkClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
                                     entity = entity,
@@ -301,7 +302,7 @@ internal fun ArtistUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        onEventClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
                                     entity = entity,

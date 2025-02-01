@@ -1,7 +1,6 @@
 {
   "branches": [
-    "master",
-    {"name": "beta", "prerelease": true}
+    "beta"
   ],
   "repositoryUrl": "https://github.com/lydavid/MusicSearch",
   "debug": "false",

@@ -51,9 +51,9 @@ jobs:
 
       - name: Install app on emulator, run Maestro tests
         id: test
-        uses: reactivecircus/android-emulator-runner@v2.32.0
+        uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
-          api-level: 30
+          api-level: 32
           arch: x86_64
           profile: pixel_3a
           emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
@@ -62,10 +62,13 @@ jobs:
           script: |
             ./gradlew installFDroidDebug
             adb shell settings put system show_touches 1
-            $HOME/.maestro/bin/maestro test .maestro
+            adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
+            adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
+            $HOME/.maestro/bin/maestro test .maestro/pr
             adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat
+            adb shell "run-as io.github.lydavid.musicsearch.debug cat /data/data/io.github.lydavid.musicsearch.debug/databases/musicsearch.db" > musicsearch.db
 
-      - name: Store outputs on failure
+      - name: Save recordings
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -74,3 +77,4 @@ jobs:
             /home/runner/.maestro/tests/
             *.mp4
             logcat
+            musicsearch.db

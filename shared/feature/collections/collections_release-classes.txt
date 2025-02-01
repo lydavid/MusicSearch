@@ -7,36 +7,36 @@ stable class AddToCollectionPresenter {
   <runtime stability> = Stable
 }
 stable class AddToCollectionUiState {
+  stable val defaultEntity: MusicBrainzEntity
   runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
   stable val eventSink: Function1<AddToCollectionUiEvent, Unit>
 }
 stable class CreateNewCollection {
-  stable val newCollection: NewCollection
+  runtime val newCollection: NewCollection
   <runtime stability> = Stable
 }
 stable class AddToCollection {
   stable val id: String
   <runtime stability> = Stable
 }
-stable class NewCollection {
-  stable val name: String?
-  stable val entity: MusicBrainzEntity?
-  <runtime stability> = Stable
-}
 stable class CollectionListPresenter {
+  stable val screen: CollectionListScreen
   stable val navigator: Navigator
   unstable val appPreferences: AppPreferences
   runtime val getAllCollections: GetAllCollections
   runtime val createCollection: CreateCollection
+  runtime val deleteCollection: DeleteCollection
   <runtime stability> = Stable
 }
 stable class CollectionListUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
+  stable val topAppBarEditState: TopAppBarEditState
   stable val showLocal: Boolean
   stable val showRemote: Boolean
   stable val sortOption: CollectionSortOption
   runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
   stable val lazyListState: LazyListState
+  runtime val actionableResult: ActionableResult?
   stable val eventSink: Function1<CollectionListUiEvent, Unit>
 }
 stable class UpdateShowLocal {
@@ -52,42 +52,56 @@ stable class UpdateSortOption {
   <runtime stability> = Stable
 }
 stable class CreateNewCollection {
-  stable val newCollection: NewCollection
+  runtime val newCollection: NewCollection
   <runtime stability> = Stable
 }
 stable class GoToCollection {
   stable val id: String
   <runtime stability> = Stable
 }
+stable class DeleteCollection {
+  stable val id: String
+  stable val name: String
+  <runtime stability> = Stable
+}
 stable class CollectionPresenter {
   stable val screen: CollectionScreen
   stable val navigator: Navigator
-  runtime val getCollectionUseCase: GetCollection
-  runtime val incrementLookupHistory: IncrementLookupHistory
-  runtime val getAreasByEntity: GetAreasByEntity
+  runtime val getCollection: GetCollection
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  stable val areasByEntityPresenter: AreasByEntityPresenter
   stable val artistsByEntityPresenter: ArtistsByEntityPresenter
-  runtime val getInstrumentsByEntity: GetInstrumentsByEntity
-  stable val labelsByEntityPresenter: LabelsByEntityPresenter
-  runtime val getPlacesByEntity: GetPlacesByEntity
-  runtime val getRecordingsByEntity: GetRecordingsByEntity
   stable val eventsByEntityPresenter: EventsByEntityPresenter
+  stable val instrumentsByEntityPresenter: InstrumentsByEntityPresenter
+  stable val labelsByEntityPresenter: LabelsByEntityPresenter
+  stable val placesByEntityPresenter: PlacesByEntityPresenter
+  stable val recordingsByEntityPresenter: RecordingsByEntityPresenter
   stable val releasesByEntityPresenter: ReleasesByEntityPresenter
   stable val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter
+  stable val seriesByEntityPresenter: SeriesByEntityPresenter
   stable val worksByEntityPresenter: WorksByEntityPresenter
-  runtime val getSeriesByEntity: GetSeriesByEntity
   runtime val deleteFromCollection: DeleteFromCollection
+  unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  unstable val collectionRepository: CollectionRepository
   <runtime stability> = Stable
 }
 stable class CollectionUiState {
+  stable val title: String
   runtime val collection: CollectionListItemModel?
   runtime val actionableResult: ActionableResult?
   stable val topAppBarFilterState: TopAppBarFilterState
-  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable val url: String
+  stable val topAppBarEditState: TopAppBarEditState
+  stable val areasByEntityUiState: AreasByEntityUiState
   stable val artistsByEntityUiState: ArtistsByEntityUiState
   stable val eventsByEntityUiState: EventsByEntityUiState
+  stable val instrumentsByEntityUiState: InstrumentsByEntityUiState
   stable val labelsByEntityUiState: LabelsByEntityUiState
+  stable val placesByEntityUiState: PlacesByEntityUiState
+  stable val recordingsByEntityUiState: RecordingsByEntityUiState
   stable val releasesByEntityUiState: ReleasesByEntityUiState
   stable val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState
+  stable val seriesByEntityUiState: SeriesByEntityUiState
   stable val worksByEntityUiState: WorksByEntityUiState
   stable val eventSink: Function1<CollectionUiEvent, Unit>
 }

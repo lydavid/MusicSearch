@@ -12,11 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
@@ -25,7 +25,6 @@ internal fun InstrumentDetailsUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     val strings = LocalStrings.current
 
@@ -60,10 +59,14 @@ internal fun InstrumentDetailsUi(
                     }
                 }
 
+                WikipediaSection(
+                    extract = wikipediaExtract,
+                    filterText = filterText,
+                )
+
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick,
                 )
             }
         }

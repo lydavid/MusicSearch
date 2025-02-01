@@ -1,24 +1,21 @@
 package ly.david.musicsearch.data.database.dao
 
+import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
+import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.emptyToNull
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
-import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
-import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
-import lydavidmusicsearchdatadatabase.Relation
 
-/**
- * We cannot guarantee that a [Relation] will be created in the scenario that target-type points to a resource
- * but that object is null. It's possible that this is never the case, but our models are currently structured such
- * that any of them are nullable.
- */
 fun RelationMusicBrainzModel.toRelationDatabaseModel(
     entityId: String,
-    order: Int,
+    index: Int,
+    numberOfRelationships: Int,
 ): RelationWithOrder? {
     val targetType = targetType
     requireNotNull(targetType)
@@ -31,7 +28,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
     val entity = targetType.entity
     when (targetType) {
         SerializableMusicBrainzEntity.AREA -> {
-            if (area == null) return null
             area?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -40,26 +36,25 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.ARTIST -> {
-            if (artist == null) return null
             artist?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
+                // This is the lifespan of the relationship, not the artist
                 additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             }
         }
 
         SerializableMusicBrainzEntity.EVENT -> {
-            if (event == null) return null
             event?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
+                additionalInfo = lifeSpan.getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             } ?: return null
         }
 
         SerializableMusicBrainzEntity.GENRE -> {
-            if (genre == null) return null
             genre?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -68,7 +63,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.INSTRUMENT -> {
-            if (instrument == null) return null
             instrument?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -77,7 +71,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.LABEL -> {
-            if (label == null) return null
             label?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -86,7 +79,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.PLACE -> {
-            if (place == null) return null
             place?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -95,7 +87,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.RECORDING -> {
-            if (recording == null) return null
             recording?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -106,7 +97,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.RELEASE -> {
-            if (release == null) return null
             release?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -116,7 +106,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.RELEASE_GROUP -> {
-            if (releaseGroup == null) return null
             releaseGroup?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -126,7 +115,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.SERIES -> {
-            if (series == null) return null
             series?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -135,7 +123,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.WORK -> {
-            if (work == null) return null
             work?.apply {
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
@@ -144,7 +131,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         }
 
         SerializableMusicBrainzEntity.URL -> {
-            if (url == null) return null
             url?.apply {
                 linkedEntityId = id
                 linkedEntityName = resource.decodeUrl()
@@ -152,6 +138,8 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
             } ?: return null
         }
     }
+
+    val order: Int = orderingKey.takeIf { it != null } ?: (numberOfRelationships + index)
 
     return RelationWithOrder(
         id = entityId,
@@ -163,6 +151,12 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         disambiguation = linkedEntityDisambiguation,
         attributes = getFormattedAttributesForDisplay(),
         additionalInfo = additionalInfo,
+        isForwardDirection = direction == Direction.FORWARD,
+        lifeSpan = LifeSpanUiModel(
+            begin = begin,
+            end = end,
+            ended = ended,
+        ),
     )
 }
 

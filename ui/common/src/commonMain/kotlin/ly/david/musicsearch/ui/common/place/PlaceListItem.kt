@@ -13,6 +13,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
@@ -28,15 +29,20 @@ fun PlaceListItem(
                     Text(
                         text = name,
                         style = TextStyles.getCardBodyTextStyle(),
+                        fontWeight = place.fontWeight,
                     )
 
-                    DisambiguationText(disambiguation = disambiguation)
+                    DisambiguationText(
+                        disambiguation = disambiguation,
+                        fontWeight = place.fontWeight,
+                    )
 
                     type.ifNotNullOrEmpty {
                         Text(
                             text = it,
                             modifier = Modifier.padding(top = 4.dp),
                             style = TextStyles.getCardBodySubTextStyle(),
+                            fontWeight = place.fontWeight,
                         )
                     }
 
@@ -45,23 +51,16 @@ fun PlaceListItem(
                             modifier = Modifier.padding(top = 4.dp),
                             text = it,
                             style = TextStyles.getCardBodySubTextStyle(),
+                            fontWeight = place.fontWeight,
                         )
                     }
-
-                    // TODO: too much information on list item?
-//                area.ifNotNull {
-//                    Text(
-//                        modifier = Modifier.padding(top = 4.dp),
-//                        text = it.name,
-//                        style = TextStyles.getCardBodyTextStyle(),
-//                    )
-//                }
 
                     lifeSpan.ifNotNull {
                         Text(
                             modifier = Modifier.padding(top = 4.dp),
                             text = it.getLifeSpanForDisplay(),
                             style = TextStyles.getCardBodySubTextStyle(),
+                            fontWeight = place.fontWeight,
                         )
                     }
                 }

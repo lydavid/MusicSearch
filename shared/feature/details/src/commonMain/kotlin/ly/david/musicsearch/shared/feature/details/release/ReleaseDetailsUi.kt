@@ -18,10 +18,12 @@ import ly.david.musicsearch.ui.common.label.LabelListItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.work.getDisplayScript
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.LargeImage
+import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 @Composable
 internal fun ReleaseDetailsUi(
@@ -42,7 +44,7 @@ internal fun ReleaseDetailsUi(
             if (filterText.isBlank()) {
                 LargeImage(
                     url = releaseDetailsUiState.imageUrl,
-                    id = release.id,
+                    placeholderKey = getPlaceholderKey(release.id),
                     modifier = Modifier.clickable { onImageClick() },
                 )
             }
@@ -128,7 +130,7 @@ internal fun ReleaseDetailsUi(
                     )
                 }
                 // TODO: handle script
-                textRepresentation?.script?.getDisplayScript(strings).ifNotNullOrEmpty {
+                textRepresentation.script?.getDisplayScript(strings).ifNotNullOrEmpty {
 //                    val scriptOrCode = if (script == "Qaaa") {
 //                        strings.multipleScripts
 //                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -160,11 +162,18 @@ internal fun ReleaseDetailsUi(
                     )
                 }
 
+                WikipediaSection(
+                    extract = wikipediaExtract,
+                    filterText = filterText,
+                )
+
                 labels.ifNotNullOrEmpty {
                     ListSeparatorHeader(strings.labels)
                 }
                 labels
-                    .filter { it.getNameWithDisambiguation().contains(filterText) }
+                    .filter {
+                        it.getNameWithDisambiguation().contains(filterText, ignoreCase = true)
+                    }
                     .forEach { label ->
                         LabelListItem(
                             label = label,
@@ -182,7 +191,9 @@ internal fun ReleaseDetailsUi(
                     ListSeparatorHeader(strings.releaseEvents)
                 }
                 areas
-                    .filter { it.getNameWithDisambiguation().contains(filterText) }
+                    .filter {
+                        it.getNameWithDisambiguation().contains(filterText, ignoreCase = true)
+                    }
                     .forEach { area: AreaListItemModel ->
                         AreaListItem(
                             area = area,
@@ -200,7 +211,6 @@ internal fun ReleaseDetailsUi(
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick,
                 )
             }
         }

@@ -18,9 +18,10 @@ import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.release.ReleaseListItem
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.image.ThumbnailImage
-import ly.david.musicsearch.ui.common.release.ReleaseListItem
 
 /**
  * Displays the artist's image if it exists.
@@ -38,6 +39,7 @@ fun ArtistListItem(
             Text(
                 text = artist.name,
                 style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = artist.fontWeight,
             )
         },
         modifier = modifier.clickable {
@@ -45,13 +47,17 @@ fun ArtistListItem(
         },
         supportingContent = {
             Column {
-                DisambiguationText(disambiguation = artist.disambiguation)
+                DisambiguationText(
+                    disambiguation = artist.disambiguation,
+                    fontWeight = artist.fontWeight,
+                )
 
                 artist.type.ifNotNullOrEmpty {
                     Text(
                         text = it,
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = artist.fontWeight,
                     )
                 }
 
@@ -60,6 +66,7 @@ fun ArtistListItem(
                         text = it.getLifeSpanForDisplay(),
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = artist.fontWeight,
                     )
                 }
             }
@@ -75,7 +82,7 @@ fun ArtistListItem(
         leadingContent = {
             ThumbnailImage(
                 url = artist.imageUrl.orEmpty(),
-                mbid = artist.id,
+                placeholderKey = artist.id,
                 placeholderIcon = MusicBrainzEntity.ARTIST.getIcon(),
                 modifier = Modifier.clip(CircleShape),
             )

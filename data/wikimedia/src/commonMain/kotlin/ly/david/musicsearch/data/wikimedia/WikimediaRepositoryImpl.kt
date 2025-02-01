@@ -19,34 +19,39 @@ internal class WikimediaRepositoryImpl(
         mbid: String,
         urls: List<RelationListItemModel>,
         forceRefresh: Boolean,
-    ): WikipediaExtract {
+    ): Result<WikipediaExtract> {
         if (forceRefresh) {
             mbidWikipediaDao.deleteById(mbid)
         }
 
-        return mbidWikipediaDao.get(mbid) ?: getWikipediaExtractFromNetwork(
-            mbid = mbid,
-            urls = urls,
-        )
+        val cachedExtract = mbidWikipediaDao.get(mbid)
+        return if (cachedExtract == null) {
+            getWikipediaExtractFromNetwork(
+                mbid = mbid,
+                urls = urls,
+            )
+        } else {
+            Result.success(cachedExtract)
+        }
     }
 
     private suspend fun getWikipediaExtractFromNetwork(
         mbid: String,
         urls: List<RelationListItemModel>,
-    ): WikipediaExtract {
+    ): Result<WikipediaExtract> {
         return try {
             val wikidataUrl =
                 urls.firstOrNull { it.name.contains("www.wikidata.org/wiki/") }?.name
-                    ?: return WikipediaExtract()
+                    ?: return Result.success(WikipediaExtract())
             val wikidataId = wikidataUrl.split("/").last()
             val wikipediaExtract = wikimediaApi.getWikipediaExtract(wikidataId = wikidataId)
             cache(mbid, wikipediaExtract)
-            wikipediaExtract
+            Result.success(wikipediaExtract)
         } catch (ex: HandledException) {
             if (ex.errorResolution != ErrorResolution.None) {
                 logger.e(ex)
             }
-            WikipediaExtract()
+            Result.failure(ex)
         }
     }
 

@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.work
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -40,7 +39,6 @@ import ly.david.musicsearch.ui.core.LocalStrings
 
 @OptIn(
     ExperimentalMaterial3Api::class,
-    ExperimentalFoundationApi::class,
 )
 @Composable
 internal fun WorkUi(
@@ -89,8 +87,7 @@ internal fun WorkUi(
                 ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
-                        entity = entity,
-                        entityId = entityId,
+                        url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
                     AddToCollectionMenuItem(
@@ -136,15 +133,6 @@ internal fun WorkUi(
                             work = work,
                             filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
-                            onItemClick = { entity, id, title ->
-                                eventSink(
-                                    WorkUiEvent.ClickItem(
-                                        entity = entity,
-                                        id = id,
-                                        title = title,
-                                    ),
-                                )
-                            },
                         )
                     }
                 }
@@ -177,7 +165,7 @@ internal fun WorkUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.recordingsByEntityUiState.lazyListState,
-                        onRecordingClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 WorkUiEvent.ClickItem(
                                     entity = entity,

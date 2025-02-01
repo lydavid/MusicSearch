@@ -1,0 +1,26 @@
+appId: io.github.lydavid.musicsearch.debug
+---
+- launchApp
+- startRecording: create-delete-collection
+
+- tapOn: Collections
+
+- tapOn: "Create a collection"
+- inputText: "Delete me"
+- tapOn: "OK"
+- assertVisible: "Delete me"
+
+- tapOn: "Remote"
+- assertVisible: "Delete me"
+- tapOn: "Local"
+- assertNotVisible: "Delete me"
+- tapOn: "Local"
+- tapOn: "Remote"
+
+- tapOn: "More actions"
+- tapOn: "Edit"
+- swipe:
+      from: "Delete me"
+      direction: LEFT
+
+- stopRecording

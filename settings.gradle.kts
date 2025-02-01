@@ -15,7 +15,7 @@ dependencyResolutionManagement {
 }
 
 plugins {
-    id("com.gradle.enterprise") version "3.18.1"
+    id("com.gradle.enterprise") version "3.19"
 }
 
 gradleEnterprise {
@@ -41,6 +41,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(
     ":android:app",
+    ":android:baselineprofile",
     ":android:feature:nowplaying",
     ":android:feature:spotify",
     ":desktop:app",

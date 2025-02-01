@@ -3,8 +3,8 @@ package ly.david.musicsearch.shared.domain.place
 import kotlin.math.abs
 
 data class CoordinatesUiModel(
-    override val longitude: Double?,
-    override val latitude: Double?,
+    override val longitude: Double? = null,
+    override val latitude: Double? = null,
 ) : Coordinates
 
 /**

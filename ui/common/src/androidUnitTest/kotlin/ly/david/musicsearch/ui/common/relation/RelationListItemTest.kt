@@ -20,9 +20,9 @@ class RelationListItemTest : ScreenshotTest() {
     }
 
     @Test
-    fun relation() {
+    fun recordingVisited() {
         snapshot {
-            PreviewUrlRelationListItem()
+            PreviewRecordingRelationListItemVisited()
         }
     }
 }

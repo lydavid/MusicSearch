@@ -16,6 +16,10 @@ insert:
 INSERT OR IGNORE INTO area
 VALUES ?;
 
+insertReplace:
+INSERT OR REPLACE INTO area
+VALUES ?;
+
 getArea:
 SELECT
   id,
@@ -24,5 +28,13 @@ SELECT
   type,
   begin,
   end,
-  ended
-FROM area WHERE id = ?;
+  ended,
+  cc.code
+FROM area
+LEFT JOIN country_code cc ON id = cc.area_id
+WHERE id = ?
+GROUP BY id;
+
+delete:
+DELETE FROM area
+WHERE id = :areaId;

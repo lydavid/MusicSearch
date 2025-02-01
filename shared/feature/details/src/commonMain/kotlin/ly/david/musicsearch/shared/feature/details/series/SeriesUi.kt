@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.series
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -43,7 +42,6 @@ import ly.david.musicsearch.ui.core.LocalStrings
  */
 @OptIn(
     ExperimentalMaterial3Api::class,
-    ExperimentalFoundationApi::class,
 )
 @Composable
 internal fun SeriesUi(
@@ -92,8 +90,7 @@ internal fun SeriesUi(
                 ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
-                        entity = entity,
-                        entityId = entityId,
+                        url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
                     AddToCollectionMenuItem(
@@ -139,15 +136,6 @@ internal fun SeriesUi(
                             series = series,
                             filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
-                            onItemClick = { entity, id, title ->
-                                eventSink(
-                                    SeriesUiEvent.ClickItem(
-                                        entity = entity,
-                                        id = id,
-                                        title = title,
-                                    ),
-                                )
-                            },
                         )
                     }
                 }

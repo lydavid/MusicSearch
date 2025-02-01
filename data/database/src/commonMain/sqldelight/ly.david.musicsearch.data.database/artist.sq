@@ -15,30 +15,37 @@ CREATE TABLE IF NOT EXISTS artist (
   country_code TEXT,
   begin TEXT,
   end TEXT,
-  ended INTEGER AS Boolean
+  ended INTEGER AS Boolean,
+  area_id TEXT
 );
 
-insert:
-INSERT OR IGNORE INTO artist
+insertReplace:
+INSERT OR REPLACE INTO artist
 VALUES ?;
 
 getArtistForDetails:
 SELECT
-  a.id,
-  a.name,
-  a.sort_name,
-  a.disambiguation,
-  a.type,
-  a.gender,
-  a.ipis,
-  a.isnis,
-  a.country_code,
-  a.begin,
-  a.end,
-  a.ended
-FROM artist a
-WHERE a.id = :artistId
-GROUP BY a.id;
+  artist.id,
+  artist.name,
+  artist.sort_name,
+  artist.disambiguation,
+  artist.type,
+  artist.gender,
+  artist.ipis,
+  artist.isnis,
+  artist.begin,
+  artist.end,
+  artist.ended,
+  area.id,
+  area.name,
+  cc.code,
+  visited.entity_id IS NOT NULL AS visited
+FROM artist
+LEFT JOIN area ON artist.area_id = area.id
+LEFT JOIN country_code cc ON area.id = cc.area_id
+LEFT JOIN visited ON visited.entity_id = area.id
+WHERE artist.id = :artistId
+GROUP BY artist.id;
 
 delete:
 DELETE FROM artist

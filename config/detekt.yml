@@ -1,11 +1,13 @@
 complexity:
   CyclomaticComplexMethod:
     ignoreSimpleWhenEntries: true
+    ignoreSingleWhenExpression: true
   LongParameterList:
     active: false
   LongMethod:
     ignoreAnnotated:
       - "Composable"
+      - "Test"
   TooManyFunctions:
     active: false
 exceptions:

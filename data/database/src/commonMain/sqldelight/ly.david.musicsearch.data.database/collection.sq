@@ -23,12 +23,13 @@ getNumberOfCollections:
 SELECT IFNULL(
   (
     SELECT count(*) FROM collection
-    WHERE id IN
-      (SELECT id FROM collection
+    WHERE id IN (
+      SELECT id FROM collection
       WHERE is_remote = 0 AND :showLocal
       UNION
       SELECT id FROM collection
-      WHERE is_remote AND :showRemote)
+      WHERE is_remote AND :showRemote
+    )
     AND name LIKE :query
     AND (:entity = NULL OR entity = :entity)
   ),
@@ -41,19 +42,22 @@ SELECT
   c.is_remote,
   c.name,
   c.entity,
-  COALESCE(ce.entity_count, 0) AS entity_count
+  COALESCE(ce.entity_count, 0) AS entity_count,
+  visited.entity_id IS NOT NULL AS visited
 FROM collection c
 LEFT JOIN (
   SELECT id, COUNT(entity_id) AS entity_count
   FROM collection_entity
   GROUP BY id
 ) ce ON c.id = ce.id
-WHERE c.id IN
-  (SELECT id FROM collection
+LEFT JOIN visited ON visited.entity_id = c.id
+WHERE c.id IN (
+  SELECT id FROM collection
   WHERE is_remote = 0 AND :showLocal
   UNION
   SELECT id FROM collection
-  WHERE is_remote AND :showRemote)
+  WHERE is_remote AND :showRemote
+)
 AND name LIKE :query
 AND (:entity = NULL OR entity = :entity)
 ORDER BY
@@ -79,11 +83,13 @@ SELECT
   c.is_remote,
   c.name,
   c.entity,
-  COALESCE(ce.entity_count, 0) AS entity_count
+  COALESCE(ce.entity_count, 0) AS entity_count,
+  visited.entity_id IS NOT NULL AS visited
 FROM collection c
 LEFT JOIN (
   SELECT id, COUNT(entity_id) AS entity_count
   FROM collection_entity
   GROUP BY id
 ) ce ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = c.id
 WHERE c.id = :id;

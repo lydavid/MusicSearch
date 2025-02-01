@@ -64,6 +64,8 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
+                                wikimediaRepository = get(),
                             )
                         }
 
@@ -83,6 +85,7 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 
@@ -95,6 +98,8 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
+                                wikimediaRepository = get(),
                             )
                         }
 
@@ -102,9 +107,10 @@ val detailsFeatureModule = module {
                             GenrePresenter(
                                 screen = screen,
                                 navigator = navigator,
-                                musicBrainzApi = get(),
+                                repository = get(),
                                 incrementLookupHistory = get(),
                                 logger = get(),
+                                getMusicBrainzUrl = get(),
                             )
                         }
 
@@ -117,6 +123,8 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
+                                wikimediaRepository = get(),
                             )
                         }
 
@@ -130,6 +138,8 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
+                                wikimediaRepository = get(),
                             )
                         }
 
@@ -143,6 +153,8 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
+                                wikimediaRepository = get(),
                             )
                         }
 
@@ -156,6 +168,8 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
+                                wikimediaRepository = get(),
                             )
                         }
 
@@ -171,6 +185,8 @@ val detailsFeatureModule = module {
                                 artistsByEntityPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
+                                wikimediaRepository = get(),
                             )
                         }
 
@@ -185,6 +201,8 @@ val detailsFeatureModule = module {
                                 releaseGroupImageRepository = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
+                                wikimediaRepository = get(),
                             )
                         }
 
@@ -197,6 +215,8 @@ val detailsFeatureModule = module {
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
+                                wikimediaRepository = get(),
                             )
                         }
 
@@ -211,6 +231,8 @@ val detailsFeatureModule = module {
                                 recordingsByEntityPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
+                                getMusicBrainzUrl = get(),
+                                wikimediaRepository = get(),
                             )
                         }
 
@@ -261,7 +283,6 @@ val detailsFeatureModule = module {
                             ui<GenreUiState> { state, modifier ->
                                 GenreUi(
                                     state = state,
-                                    entityId = screen.id,
                                     modifier = modifier,
                                 )
                             }

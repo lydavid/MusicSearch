@@ -1,0 +1,76 @@
+name: Test Ad Hoc
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-ad-hoc:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        api-level: [ 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 ]
+    steps:
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@v1
+        with:
+          token: ${{ secrets.PAT }}
+
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: false
+          swap-storage: true
+
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - id: setup
+        uses: ./.github/actions/setup
+
+      - name: Install Maestro
+        run: curl -Ls "https://get.maestro.mobile.dev" | bash
+
+      - name: Install app on emulator, run Maestro tests
+        id: test
+        uses: reactivecircus/android-emulator-runner@v2.33.0
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: x86_64
+          profile: pixel_3a
+          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          sdcard-path-or-size: 100M
+          script: |
+            ./gradlew clean installFDroidDebug
+            adb shell settings put system show_touches 1
+            $HOME/.maestro/bin/maestro test .maestro/search-artist-then-back.yml
+            adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat-${{ matrix.api-level }}
+
+      - run: mv threebutton-back.mp4 "threebutton-back-$api".mp4
+        env:
+          api: ${{ matrix.api-level }}
+
+      - name: Save recordings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-android-apis-outputs-${{ matrix.api-level }}
+          path: |
+            /home/runner/.maestro/tests/
+            *.mp4
+            logcat*

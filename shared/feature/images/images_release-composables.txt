@@ -1,24 +1,37 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsGridUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsPagerUiCompact()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsPagerUiNonCompact()
 fun present(
-  stable <this>: CoverArtsPresenter
-): CoverArtsUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsUi(
-  stable state: CoverArtsUiState
+  stable <this>: CoverArtsGridPresenter
+): CoverArtsGridUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsGridUi(
+  stable state: CoverArtsGridUiState
   stable modifier: Modifier? = @static Companion
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsGrid(
+  stable mbid: String
+  imageUrls: ImmutableList<ImageUrls>
   stable modifier: Modifier? = @static Companion
-  stable isCompact: Boolean = @static false
-  imageUrlsList: ImmutableList<ImageUrls>? = @static persistentListOf()
-  stable onBack: Function0<Unit>? = @static $composer.startReplaceableGroup(1747499980)
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp0_group@ly.david.musicsearch.shared.feature.images.CoverArtsUi
+  stable lazyGridState: LazyGridState? = @dynamic rememberLazyGridState(0, 0, $composer, 0, 0b0011)
+  stable onImageClick: Function1<@[ParameterName(name = 'index')] Int, Unit>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsUiCompact()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsUiNonCompact()
+fun present(
+  stable <this>: CoverArtsPagerPresenter
+): CoverArtsPagerUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsPagerUi(
+  stable state: CoverArtsPagerUiState
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsPagerUi(
+  stable state: CoverArtsPagerUiState
+  stable isCompact: Boolean
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsPager(
+  stable mbid: String
+  imageUrls: ImmutableList<ImageUrls>
+  stable selectedImageIndex: Int
+  stable isCompact: Boolean
+  stable modifier: Modifier? = @static Companion
+  stable onImageChange: Function1<@[ParameterName(name = 'index')] Int, Unit>
+)

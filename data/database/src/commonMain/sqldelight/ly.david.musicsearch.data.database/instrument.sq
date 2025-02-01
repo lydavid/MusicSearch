@@ -19,3 +19,7 @@ SELECT
   description,
   type
 FROM instrument WHERE id = ?;
+
+delete:
+DELETE FROM instrument
+WHERE id = :id;

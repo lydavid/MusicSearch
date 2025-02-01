@@ -1,5 +1,1 @@
-CREATE TABLE IF NOT EXISTS genre (
-  id TEXT PRIMARY KEY NOT NULL,
-  name TEXT NOT NULL,
-  disambiguation TEXT
-);
+ALTER TABLE artist ADD COLUMN area_id TEXT;

@@ -2,11 +2,10 @@ package ly.david.musicsearch.shared.feature.search
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import ly.david.musicsearch.shared.feature.search.internal.RecentSearchesHeader
-import ly.david.musicsearch.ui.core.preview.DefaultPreviews
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewRecentSearchesHeader() {
     PreviewTheme {

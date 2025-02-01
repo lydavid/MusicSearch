@@ -27,8 +27,6 @@ kotlin {
             dependencies {
                 implementation(projects.ui.common)
                 implementation(projects.shared.domain)
-                implementation(projects.core.preferences)
-                implementation(projects.data.musicbrainz) // TODO: remove after extracting MusicBrainzAuthStore
 
                 implementation(compose.foundation)
                 implementation(compose.materialIconsExtended)

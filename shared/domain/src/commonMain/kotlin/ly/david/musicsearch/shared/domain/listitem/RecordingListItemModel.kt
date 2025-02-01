@@ -10,5 +10,5 @@ data class RecordingListItemModel(
     override val length: Int? = null,
     override val video: Boolean = false,
     val formattedArtistCredits: String? = null,
-    // Not displaying isrcs for list items
-) : ListItemModel(), Recording
+    override val visited: Boolean = false,
+) : ListItemModel(), Recording, Visitable

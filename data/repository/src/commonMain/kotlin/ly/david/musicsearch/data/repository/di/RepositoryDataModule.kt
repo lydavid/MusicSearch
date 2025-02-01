@@ -1,12 +1,12 @@
 package ly.david.musicsearch.data.repository.di
 
 import ly.david.musicsearch.data.repository.BrowseEntityCountRepositoryImpl
-import ly.david.musicsearch.data.repository.CollectionRepositoryImpl
+import ly.david.musicsearch.data.repository.collection.CollectionRepositoryImpl
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.NowPlayingHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
-import ly.david.musicsearch.data.repository.SearchHistoryRepositoryImpl
-import ly.david.musicsearch.data.repository.SearchResultsRepositoryImpl
+import ly.david.musicsearch.data.repository.search.SearchHistoryRepositoryImpl
+import ly.david.musicsearch.data.repository.search.SearchResultsRepositoryImpl
 import ly.david.musicsearch.data.repository.SpotifyHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreasByEntityRepositoryImpl
@@ -16,6 +16,7 @@ import ly.david.musicsearch.data.repository.artist.ArtistsByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.event.EventRepositoryImpl
 import ly.david.musicsearch.data.repository.event.EventsByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.genre.GenresByEntityRepositoryImpl
+import ly.david.musicsearch.data.repository.genre.GenreRepositoryImpl
 import ly.david.musicsearch.data.repository.instrument.InstrumentRepositoryImpl
 import ly.david.musicsearch.data.repository.instrument.InstrumentsByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.label.LabelRepositoryImpl
@@ -42,6 +43,7 @@ import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.event.EventsByEntityRepository
 import ly.david.musicsearch.shared.domain.genre.GenresByEntityRepository
+import ly.david.musicsearch.shared.domain.genre.GenreRepository
 import ly.david.musicsearch.shared.domain.history.LookupHistoryRepository
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.instrument.InstrumentsByEntityRepository
@@ -81,6 +83,7 @@ val repositoryDataModule = module {
     singleOf(::GenresByEntityRepositoryImpl) bind GenresByEntityRepository::class
     singleOf(::InstrumentRepositoryImpl) bind InstrumentRepository::class
     singleOf(::InstrumentsByEntityRepositoryImpl) bind InstrumentsByEntityRepository::class
+    singleOf(::GenreRepositoryImpl) bind GenreRepository::class
     singleOf(::LabelRepositoryImpl) bind LabelRepository::class
     singleOf(::LabelsByEntityRepositoryImpl) bind LabelsByEntityRepository::class
     singleOf(::LookupHistoryRepositoryImpl) bind LookupHistoryRepository::class

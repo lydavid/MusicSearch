@@ -71,4 +71,8 @@ class LabelDao(
             ended = ended,
         ),
     )
+
+    fun delete(id: String) {
+        transacter.delete(id)
+    }
 }

@@ -44,6 +44,7 @@
 		631D2DD12BBF8AE700C6F58F /* musicsearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = musicsearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		631D2DD52BBF8AE700C6F58F /* musicsearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = musicsearchUITests.swift; sourceTree = "<group>"; };
 		631D2DD72BBF8AE700C6F58F /* musicsearchUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = musicsearchUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		634CC75C2CDA45D400F71BD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +95,7 @@
 		631D2DB92BBF8AE600C6F58F /* musicsearch */ = {
 			isa = PBXGroup;
 			children = (
+				634CC75C2CDA45D400F71BD3 /* Info.plist */,
 				631D2DBA2BBF8AE600C6F58F /* musicsearchApp.swift */,
 				631D2DBC2BBF8AE600C6F58F /* ContentView.swift */,
 				631D2DBE2BBF8AE700C6F58F /* Assets.xcassets */,
@@ -447,6 +449,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = musicsearch/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -483,6 +486,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = musicsearch/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -16,11 +16,7 @@ kotlin {
             dependencies {
                 implementation(projects.ui.common)
                 implementation(projects.shared.domain)
-                implementation(projects.core.preferences)
                 implementation(projects.core.logging.api)
-                implementation(projects.data.spotify)
-                implementation(projects.data.musicbrainz)
-                implementation(projects.data.database)
                 implementation(projects.ui.image)
 
                 implementation(compose.foundation)
@@ -52,6 +48,7 @@ kotlin {
                 implementation(libs.bundles.kotlinx.coroutines)
                 implementation(libs.junit)
                 implementation(libs.koin.test)
+                implementation(libs.circuit.test)
             }
         }
         val androidInstrumentedTest by getting {
@@ -65,7 +62,6 @@ kotlin {
                 implementation(libs.koin.test)
                 implementation(libs.sqldelight.android.driver)
                 implementation(libs.test.parameter.injector)
-                implementation(libs.circuit.test)
             }
         }
     }

@@ -10,6 +10,6 @@ interface PlacesByEntityRepository {
     fun observePlacesByEntity(
         entityId: String,
         entity: MusicBrainzEntity,
-        listFilters: ListFilters,
+        listFilters: ListFilters = ListFilters(),
     ): Flow<PagingData<PlaceListItemModel>>
 }

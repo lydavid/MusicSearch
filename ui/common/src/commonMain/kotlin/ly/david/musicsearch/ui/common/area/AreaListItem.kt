@@ -16,6 +16,7 @@ import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 /**
@@ -39,11 +40,15 @@ fun AreaListItem(
             Text(
                 text = areaName,
                 style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = area.fontWeight,
             )
         },
         supportingContent = {
             Column {
-                DisambiguationText(disambiguation = area.disambiguation)
+                DisambiguationText(
+                    disambiguation = area.disambiguation,
+                    fontWeight = area.fontWeight,
+                )
 
                 val type = area.type
                 if (showType && !type.isNullOrEmpty()) {
@@ -51,6 +56,7 @@ fun AreaListItem(
                         modifier = Modifier.padding(top = 4.dp),
                         text = type,
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = area.fontWeight,
                     )
                 }
 
@@ -59,6 +65,7 @@ fun AreaListItem(
                         modifier = Modifier.padding(top = 4.dp),
                         text = it.getLifeSpanForDisplay(),
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = area.fontWeight,
                     )
                 }
             }
@@ -72,6 +79,7 @@ fun AreaListItem(
                     Text(
                         text = it,
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = area.fontWeight,
                     )
                 }
             }

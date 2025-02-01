@@ -7,4 +7,5 @@ data class SeriesListItemModel(
     override val name: String,
     override val disambiguation: String? = null,
     override val type: String? = null,
-) : Series, ListItemModel()
+    override val visited: Boolean = false,
+) : ListItemModel(), Series, Visitable

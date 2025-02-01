@@ -1,3 +1,4 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistCollaborationGraphUi()
 fun present(
   stable <this>: ArtistCollaborationGraphPresenter
 ): ArtistCollaborationGraphUiState
@@ -5,11 +6,12 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistCol
   stable state: ArtistCollaborationGraphUiState
   stable modifier: Modifier? = @static Companion
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun ArtistCollaborationGraphUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistCollaborationGraphUi(
   unstable edges: List<GraphEdge>
   unstable nodes: List<GraphNode>
+  stable filterText: String
   stable modifier: Modifier? = @static Companion
-  stable onClick: Function2<@[ParameterName(name = 'tapOffset')] Offset, @[ParameterName(name = 'drawOffset')] Offset, Unit>? = @static $composer.startReplaceableGroup(873395380)
+  stable onClick: Function2<@[ParameterName(name = 'tapOffset')] Offset, @[ParameterName(name = 'drawOffset')] Offset, Unit>? = @static $composer.startReplaceGroup(873399700)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   Offset  ,   <unused var>  :   Offset   ->
 
@@ -17,7 +19,6 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUi
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistCollaborationGraphUi()

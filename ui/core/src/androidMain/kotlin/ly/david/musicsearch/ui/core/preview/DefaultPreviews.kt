@@ -1,7 +1,6 @@
 package ly.david.musicsearch.ui.core.preview
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 
@@ -15,66 +14,66 @@ import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 )
 @Preview(
     name = "Phone",
-    device = Devices.PHONE,
+    device = "spec:width=411dp, height=891dp",
     showSystemUi = true,
     uiMode = UI_MODE_NIGHT_YES,
     group = "Dark",
 )
 @Preview(
     name = "Phone - Landscape",
-    device = "spec:width = 411dp, height = 891dp, orientation = landscape, dpi = 420",
+    device = "spec:width=411dp, height=891dp, orientation=landscape, dpi=420",
     showSystemUi = true,
     uiMode = UI_MODE_NIGHT_YES,
     group = "Dark",
 )
 @Preview(
     name = "Unfolded Foldable",
-    device = Devices.FOLDABLE,
+    device = "spec:width=673dp, height=841dp",
     showSystemUi = true,
     uiMode = UI_MODE_NIGHT_YES,
     group = "Dark",
 )
 @Preview(
     name = "Tablet",
-    device = Devices.TABLET,
+    device = "spec:width=1280dp, height=800dp,dpi=240",
     showSystemUi = true,
     uiMode = UI_MODE_NIGHT_YES,
     group = "Dark",
 )
 @Preview(
     name = "Desktop",
-    device = Devices.DESKTOP,
+    device = "spec:width=1920dp, height=1080dp,dpi=160",
     showSystemUi = true,
     uiMode = UI_MODE_NIGHT_YES,
     group = "Dark",
 )
 @Preview(
     name = "Phone",
-    device = Devices.PHONE,
+    device = "spec:width=411dp, height=891dp",
     showSystemUi = true,
     group = "Light",
 )
 @Preview(
     name = "Phone - Landscape",
-    device = "spec:width = 411dp, height = 891dp, orientation = landscape, dpi = 420",
+    device = "spec:width=411dp, height=891dp, orientation=landscape, dpi=420",
     showSystemUi = true,
     group = "Light",
 )
 @Preview(
     name = "Unfolded Foldable",
-    device = Devices.FOLDABLE,
+    device = "spec:width=673dp, height=841dp",
     showSystemUi = true,
     group = "Light",
 )
 @Preview(
     name = "Tablet",
-    device = Devices.TABLET,
+    device = "spec:width=1280dp, height=800dp,dpi=240",
     showSystemUi = true,
     group = "Light",
 )
 @Preview(
     name = "Desktop",
-    device = Devices.DESKTOP,
+    device = "spec:width=1920dp, height=1080dp,dpi=160",
     showSystemUi = true,
     group = "Light",
 )

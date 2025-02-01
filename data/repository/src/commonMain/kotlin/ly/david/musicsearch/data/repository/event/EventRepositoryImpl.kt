@@ -1,32 +1,52 @@
 package ly.david.musicsearch.data.repository.event
 
-import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.shared.domain.event.EventDetailsModel
 import ly.david.musicsearch.data.database.dao.EventDao
+import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.event.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class EventRepositoryImpl(
-    private val musicBrainzApi: MusicBrainzApi,
     private val eventDao: EventDao,
     private val relationRepository: RelationRepository,
+    private val lookupApi: LookupApi,
 ) : EventRepository {
 
-    override suspend fun lookupEvent(eventId: String): EventDetailsModel {
+    override suspend fun lookupEvent(
+        eventId: String,
+        forceRefresh: Boolean,
+    ): EventDetailsModel {
+        if (forceRefresh) {
+            delete(eventId)
+        }
+
         val event = eventDao.getEventForDetails(eventId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(eventId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(eventId)
-        if (event != null && hasUrlsBeenSavedForEntity) {
+        val urlRelations = relationRepository.getRelationshipsByType(eventId)
+        val visited = relationRepository.visited(eventId)
+        if (event != null &&
+            visited &&
+            !forceRefresh
+        ) {
             return event.copy(
                 urls = urlRelations,
             )
         }
 
-        val eventMusicBrainzModel = musicBrainzApi.lookupEvent(eventId)
+        val eventMusicBrainzModel = lookupApi.lookupEvent(eventId)
         cache(eventMusicBrainzModel)
-        return lookupEvent(eventId)
+        return lookupEvent(
+            eventId = eventId,
+            forceRefresh = false,
+        )
+    }
+
+    private fun delete(id: String) {
+        eventDao.withTransaction {
+            eventDao.delete(id)
+            relationRepository.deleteRelationshipsByType(entityId = id)
+        }
     }
 
     private fun cache(event: EventMusicBrainzModel) {

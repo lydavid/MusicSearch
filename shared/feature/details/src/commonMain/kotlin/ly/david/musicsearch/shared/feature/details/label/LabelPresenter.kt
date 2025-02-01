@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -23,7 +24,9 @@ import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.label.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.label.LabelRepository
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
@@ -45,6 +48,8 @@ internal class LabelPresenter(
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val wikimediaRepository: WikimediaRepository,
 ) : Presenter<LabelUiState> {
 
     @Composable
@@ -54,13 +59,14 @@ internal class LabelPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        var label: LabelDetailsModel? by remember { mutableStateOf(null) }
+        var label: LabelDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<LabelTab> by rememberSaveable {
             mutableStateOf(LabelTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(LabelTab.DETAILS) }
-        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
@@ -71,7 +77,10 @@ internal class LabelPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val labelDetailsModel = repository.lookupLabel(screen.id)
+                val labelDetailsModel = repository.lookupLabel(
+                    labelId = screen.id,
+                    forceRefresh = forceRefreshDetails,
+                )
                 title = labelDetailsModel.getNameWithDisambiguation()
                 label = labelDetailsModel
                 isError = false
@@ -88,6 +97,20 @@ internal class LabelPresenter(
                     ),
                 )
                 recordedHistory = true
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, label) {
+            wikimediaRepository.getWikipediaExtract(
+                mbid = label?.id ?: return@LaunchedEffect,
+                urls = label?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                label = label?.copy(
+                    wikipediaExtract = wikipediaExtract,
+                )
+            }.onFailure {
+                snackbarMessage = it.message
             }
         }
 
@@ -158,10 +181,12 @@ internal class LabelPresenter(
             title = title,
             isError = isError,
             label = label,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
+            snackbarMessage = snackbarMessage,
             releasesByEntityUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
@@ -175,10 +200,12 @@ internal data class LabelUiState(
     val title: String,
     val isError: Boolean,
     val label: LabelDetailsModel?,
+    val url: String = "",
     val tabs: List<LabelTab>,
     val selectedTab: LabelTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
+    val snackbarMessage: String? = null,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState = LoginUiState(),

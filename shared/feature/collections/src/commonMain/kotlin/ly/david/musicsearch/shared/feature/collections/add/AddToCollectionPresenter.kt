@@ -2,20 +2,26 @@ package ly.david.musicsearch.shared.feature.collections.add
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.paging.PagingData
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.error.ActionableResult
-import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
+import ly.david.musicsearch.shared.domain.collection.CreateNewCollectionResult
 import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
-import ly.david.musicsearch.shared.feature.collections.create.NewCollection
+import ly.david.musicsearch.shared.domain.error.ActionableResult
+import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.screen.AddToCollectionScreen
 import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 
@@ -29,20 +35,26 @@ internal class AddToCollectionPresenter(
     @Composable
     override fun present(): AddToCollectionUiState {
         val scope = rememberCoroutineScope()
-        val lazyPagingItems: LazyPagingItems<CollectionListItemModel> = getAllCollections(
-            showLocal = true,
-            showRemote = true,
-            entity = screen.entity,
-        ).collectAsLazyPagingItems()
+        val listItems: Flow<PagingData<CollectionListItemModel>> by rememberRetained {
+            mutableStateOf(
+                getAllCollections(
+                    showLocal = true,
+                    showRemote = true,
+                    entity = screen.entity,
+                ),
+            )
+        }
 
         fun eventSink(event: AddToCollectionUiEvent) {
             when (event) {
                 is AddToCollectionUiEvent.CreateNewCollection -> {
-                    val name = event.newCollection.name ?: return
-                    val entity = event.newCollection.entity ?: return
+                    val name = event.newCollection.name
+                    val entity = event.newCollection.entity
                     createCollection(
-                        name = name,
-                        entity = entity,
+                        newCollection = CreateNewCollectionResult.NewCollection(
+                            name = name,
+                            entity = entity,
+                        ),
                     )
                 }
 
@@ -60,7 +72,8 @@ internal class AddToCollectionPresenter(
         }
 
         return AddToCollectionUiState(
-            lazyPagingItems = lazyPagingItems,
+            defaultEntity = screen.entity,
+            lazyPagingItems = listItems.collectAsLazyPagingItems(),
             eventSink = ::eventSink,
         )
     }
@@ -68,12 +81,13 @@ internal class AddToCollectionPresenter(
 
 @Stable
 internal data class AddToCollectionUiState(
+    val defaultEntity: MusicBrainzEntity,
     val lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
     val eventSink: (AddToCollectionUiEvent) -> Unit,
 ) : CircuitUiState
 
 internal sealed interface AddToCollectionUiEvent : CircuitUiEvent {
-    data class CreateNewCollection(val newCollection: NewCollection) : AddToCollectionUiEvent
+    data class CreateNewCollection(val newCollection: CreateNewCollectionResult.NewCollection) : AddToCollectionUiEvent
     data class AddToCollection(
         val id: String,
     ) : AddToCollectionUiEvent

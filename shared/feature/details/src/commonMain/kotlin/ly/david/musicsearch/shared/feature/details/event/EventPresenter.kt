@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -23,7 +24,9 @@ import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
@@ -41,6 +44,8 @@ internal class EventPresenter(
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val wikimediaRepository: WikimediaRepository,
 ) : Presenter<EventUiState> {
 
     @Composable
@@ -50,13 +55,14 @@ internal class EventPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        var event: EventDetailsModel? by remember { mutableStateOf(null) }
+        var event: EventDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<EventTab> by rememberSaveable {
             mutableStateOf(EventTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(EventTab.DETAILS) }
-        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
@@ -65,7 +71,10 @@ internal class EventPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val eventListItemModel = repository.lookupEvent(screen.id)
+                val eventListItemModel = repository.lookupEvent(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = eventListItemModel.getNameWithDisambiguation()
                 event = eventListItemModel
                 isError = false
@@ -83,6 +92,20 @@ internal class EventPresenter(
                     ),
                 )
                 recordedHistory = true
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, event) {
+            wikimediaRepository.getWikipediaExtract(
+                mbid = event?.id ?: return@LaunchedEffect,
+                urls = event?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                event = event?.copy(
+                    wikipediaExtract = wikipediaExtract,
+                )
+            }.onFailure {
+                snackbarMessage = it.message
             }
         }
 
@@ -143,10 +166,12 @@ internal class EventPresenter(
             title = title,
             isError = isError,
             event = event,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
+            snackbarMessage = snackbarMessage,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
@@ -157,12 +182,14 @@ internal class EventPresenter(
 @Stable
 internal data class EventUiState(
     val title: String,
-    val isError: Boolean,
-    val event: EventDetailsModel?,
-    val tabs: List<EventTab>,
-    val selectedTab: EventTab,
+    val isError: Boolean = false,
+    val event: EventDetailsModel? = null,
+    val url: String = "",
+    val tabs: List<EventTab> = listOf(),
+    val selectedTab: EventTab = EventTab.DETAILS,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
+    val snackbarMessage: String? = null,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (EventUiEvent) -> Unit,

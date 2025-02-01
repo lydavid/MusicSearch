@@ -1,25 +1,15 @@
 package ly.david.musicsearch.data.repository.release
 
+import androidx.paging.TerminalSeparatorType
 import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import app.cash.paging.insertSeparators
+import app.cash.paging.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
-import ly.david.musicsearch.shared.domain.getFormatsForDisplay
-import ly.david.musicsearch.shared.domain.getTracksForDisplay
-import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ListSeparator
-import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
-import ly.david.musicsearch.shared.domain.listitem.toAreaListItemModel
-import ly.david.musicsearch.shared.domain.listitem.toLabelListItemModel
-import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
-import ly.david.musicsearch.data.database.dao.CountryCodeDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
@@ -27,27 +17,37 @@ import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.TrackAndMedium
 import ly.david.musicsearch.data.database.dao.TrackDao
+import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.getFormatsForDisplay
+import ly.david.musicsearch.shared.domain.getTracksForDisplay
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
+import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
+import ly.david.musicsearch.shared.domain.listitem.toAreaListItemModel
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 
 class ReleaseRepositoryImpl(
-    private val musicBrainzApi: MusicBrainzApi,
     private val releaseDao: ReleaseDao,
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
     private val releaseGroupDao: ReleaseGroupDao,
     private val artistCreditDao: ArtistCreditDao,
     private val releaseCountryDao: ReleaseCountryDao,
     private val areaDao: AreaDao,
-    private val countryCodeDao: CountryCodeDao,
     private val labelDao: LabelDao,
     private val releaseLabelDao: ReleaseLabelDao,
     private val relationRepository: RelationRepository,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
+    private val lookupApi: LookupApi,
 ) : ReleaseRepository {
 
     // TODO: split up what data to include when calling from details/tracks tabs?
@@ -67,14 +67,14 @@ class ReleaseRepositoryImpl(
         val formatTrackCounts = releaseDao.getReleaseFormatTrackCount(releaseId)
         val labels = releaseLabelDao.getLabelsByRelease(releaseId)
         val releaseEvents = releaseCountryDao.getCountriesByRelease(releaseId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(releaseId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseId)
+        val urlRelations = relationRepository.getRelationshipsByType(releaseId)
+        val visited = relationRepository.visited(releaseId)
 
         if (
             releaseDetailsModel != null &&
             releaseGroup != null &&
             artistCredits.isNotEmpty() &&
-            hasUrlsBeenSavedForEntity &&
+            visited &&
             !forceRefresh
         ) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
@@ -84,13 +84,13 @@ class ReleaseRepositoryImpl(
                 releaseGroup = releaseGroup,
                 formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
                 formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
-                labels = labels.map { it.toLabelListItemModel() },
+                labels = labels,
                 areas = releaseEvents.map { it.toAreaListItemModel() },
                 urls = urlRelations,
             )
         }
 
-        val releaseMusicBrainzModel = musicBrainzApi.lookupRelease(releaseId)
+        val releaseMusicBrainzModel = lookupApi.lookupRelease(releaseId)
         cache(releaseMusicBrainzModel)
         return lookupRelease(
             releaseId = releaseId,
@@ -104,7 +104,7 @@ class ReleaseRepositoryImpl(
             releaseReleaseGroupDao.deleteReleaseGroupByReleaseLink(releaseId = releaseId)
             releaseLabelDao.deleteLabelsByReleaseLinks(releaseId = releaseId)
             releaseCountryDao.deleteCountriesByReleaseLinks(releaseId = releaseId)
-            relationRepository.deleteUrlRelationshipsByEntity(entityId = releaseId)
+            relationRepository.deleteRelationshipsByType(entityId = releaseId)
         }
     }
 
@@ -132,12 +132,6 @@ class ReleaseRepositoryImpl(
                     it.area
                 }.orEmpty(),
             )
-            release.releaseEvents?.forEach {
-                countryCodeDao.insertCountryCodesForArea(
-                    areaId = it.area?.id ?: return@forEach,
-                    countryCodes = it.area?.countryCodes,
-                )
-            }
             releaseCountryDao.linkCountriesByRelease(
                 releaseId = release.id,
                 releaseEvents = release.releaseEvents,
@@ -161,7 +155,12 @@ class ReleaseRepositoryImpl(
             config = CommonPagingConfig.pagingConfig,
             remoteMediator = LookupEntityRemoteMediator(
                 hasEntityBeenStored = { hasReleaseTracksBeenStored(releaseId) },
-                lookupEntity = { lookupRelease(releaseId = releaseId, forceRefresh = false) },
+                lookupEntity = {
+                    lookupRelease(
+                        releaseId = releaseId,
+                        forceRefresh = false,
+                    )
+                },
                 deleteLocalEntity = { deleteMediaAndTracksByRelease(releaseId) },
             ),
             pagingSourceFactory = {
@@ -170,24 +169,25 @@ class ReleaseRepositoryImpl(
                     query = "%$query%",
                 )
             },
-        ).flow.map { pagingData ->
-            pagingData
-                .insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
-                    if (before?.mediumId != after?.mediumId && after != null) {
-                        val medium =
-                            mediumDao.getMediumForTrack(after.id) ?: return@insertSeparators null
-
-                        ListSeparator(
-                            id = "${medium.id}",
-                            text = medium.format.orEmpty() +
-                                (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
-                                medium.name.transformThisIfNotNullOrEmpty { " ($it)" },
-                        )
-                    } else {
-                        null
+        ).flow
+            .map { pagingData ->
+                pagingData
+                    .map { it.toTrackListItemModel() }
+                    .insertSeparators(
+                        terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
+                    ) { before: TrackListItemModel?, after: TrackListItemModel? ->
+                        if (before?.mediumId != after?.mediumId && after != null) {
+                            ListSeparator(
+                                id = "${after.mediumId}",
+                                text = after.format.orEmpty() +
+                                    (after.mediumPosition?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
+                                    after.mediumName.transformThisIfNotNullOrEmpty { " ($it)" },
+                            )
+                        } else {
+                            null
+                        }
                     }
-                }
-        }
+            }
     }
 
     private fun hasReleaseTracksBeenStored(releaseId: String): Boolean {
@@ -197,9 +197,26 @@ class ReleaseRepositoryImpl(
 
     private fun deleteMediaAndTracksByRelease(releaseId: String) {
         releaseDao.withTransaction {
-            releaseDao.delete(releaseId)
             mediumDao.deleteMediaByRelease(releaseId)
+            releaseDao.delete(releaseId)
         }
     }
     // endregion
 }
+
+private fun TrackAndMedium.toTrackListItemModel() =
+    TrackListItemModel(
+        id = id,
+        position = position,
+        number = number,
+        title = title,
+        length = length,
+        mediumId = mediumId,
+        recordingId = recordingId,
+        formattedArtistCredits = formattedArtistCredits,
+        visited = visited,
+        mediumPosition = mediumPosition,
+        mediumName = mediumName,
+        trackCount = trackCount,
+        format = format,
+    )

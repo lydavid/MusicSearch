@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.coverart.api
 
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.shared.domain.image.ImageUrls
@@ -24,8 +25,8 @@ data class CoverArtUrls(
 
     @SerialName("thumbnails") val thumbnailsUrls: ThumbnailsUrls? = null,
     @SerialName("front") val front: Boolean,
-//    @SerialName("back") val back: Boolean,
-    @SerialName("types") val types: List<String>? = null,
+    @SerialName("types") val types: List<String> = listOf(),
+    @SerialName("comment") val comment: String = "",
 )
 
 /**
@@ -52,6 +53,8 @@ private fun CoverArtUrls.toImageUrls(): ImageUrls {
     return ImageUrls(
         thumbnailUrl = getThumbnailUrl().orEmpty(),
         largeUrl = getUrl().orEmpty(),
+        types = types.toPersistentList(),
+        comment = comment,
     )
 }
 

@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.place
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -39,7 +38,6 @@ import ly.david.musicsearch.ui.core.LocalStrings
 
 @OptIn(
     ExperimentalMaterial3Api::class,
-    ExperimentalFoundationApi::class,
 )
 @Composable
 internal fun PlaceUi(
@@ -88,8 +86,7 @@ internal fun PlaceUi(
                 ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
-                        entity = entity,
-                        entityId = entityId,
+                        url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
                     AddToCollectionMenuItem(
@@ -156,7 +153,7 @@ internal fun PlaceUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        onEventClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 PlaceUiEvent.ClickItem(
                                     entity = entity,

@@ -7,11 +7,11 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
-import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToPlaceListItemModel
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import lydavidmusicsearchdatadatabase.Area_place
 
 class AreaPlaceDao(
@@ -34,9 +34,30 @@ class AreaPlaceDao(
 
     fun getAreaByPlace(placeId: String): AreaListItemModel? =
         transacter.getAreasByPlace(
-            placeId,
+            placeId = placeId,
             mapper = ::mapToAreaListItemModel,
-        ).executeAsOneOrNull()
+        ).executeAsList().findByTypePriority()
+
+    private fun List<AreaListItemModel>.findByTypePriority(
+        typePriorities: List<String?> = listOf(
+            null, // The area part of a place lookup has a null type
+            "District",
+            "City",
+            "Municipality",
+            "County",
+            "Subdivision",
+            "Country",
+        ),
+    ): AreaListItemModel? {
+        for (type in typePriorities) {
+            firstOrNull { it.type == type }?.let { return it }
+        }
+        return null
+    }
+
+    fun deleteAreaPlaceLink(placeId: String) {
+        transacter.deleteAreaPlaceLink(placeId = placeId)
+    }
 
     // region places by area
     fun linkAreaWithPlaces(

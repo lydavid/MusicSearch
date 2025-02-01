@@ -76,6 +76,17 @@ adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsear
 adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/collection/debe8581-e0c8-45ee-8fda-3ddcb5233f91" # My CD collection
 ```
 
+Create a collection.
+```shell
+adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/create?name=My collection&type=release-group&id=f2888482-1633-4989-a8d3-313a6c66235e"'
+```
+
+Add to collection. Make sure the type is correct.
+```shell
+adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/collection/f2888482-1633-4989-a8d3-313a6c66235e/add?id=f5b85956-16ef-41c4-a4fe-e2044e2c1a0e"'
+```
+
+
 ## Area
 
 ```shell
@@ -173,6 +184,10 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/dd216
 
 
 ## Release
+
+```shell
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0" -a android.intent.action.VIEW # release with medium with 338 tracks
+```
 
 ```sh
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5" -a android.intent.action.VIEW # release with multiple catalog number; release with multiple cover art

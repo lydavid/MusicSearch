@@ -10,8 +10,8 @@ import ly.david.musicsearch.data.database.dao.EventsByEntityDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EventDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.shared.domain.event.EventsByEntityRepository
@@ -21,7 +21,7 @@ class EventsByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val eventDao: EventDao,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val browseApi: BrowseApi,
 ) : EventsByEntityRepository,
     BrowseEntitiesByEntity<EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
         browseEntity = MusicBrainzEntity.EVENT,
@@ -89,7 +89,7 @@ class EventsByEntityRepositoryImpl(
         entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseEventsResponse {
-        return musicBrainzApi.browseEventsByEntity(
+        return browseApi.browseEventsByEntity(
             entityId = entityId,
             entity = entity,
             offset = offset,

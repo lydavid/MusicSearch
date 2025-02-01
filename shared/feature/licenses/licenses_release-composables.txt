@@ -1,10 +1,10 @@
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Licenses(
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Licenses(
   stable state: LicensesUiState
   stable modifier: Modifier? = @static Companion
 )
 fun present(
   stable <this>: LicensesPresenter
 ): LicensesUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Licenses(
-  stable modifier: Modifier? = @static Companion
-)

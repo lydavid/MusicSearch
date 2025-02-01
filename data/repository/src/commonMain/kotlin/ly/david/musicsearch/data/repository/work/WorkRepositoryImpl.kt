@@ -1,38 +1,50 @@
 package ly.david.musicsearch.data.repository.work
 
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
+import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.work.WorkRepository
 
 class WorkRepositoryImpl(
-    private val musicBrainzApi: MusicBrainzApi,
     private val workDao: WorkDao,
     private val workAttributeDao: WorkAttributeDao,
     private val relationRepository: RelationRepository,
+    private val lookupApi: LookupApi,
 ) : WorkRepository {
 
     override suspend fun lookupWork(
         workId: String,
+        forceRefresh: Boolean,
     ): WorkDetailsModel {
+        if (forceRefresh) {
+            delete(workId)
+        }
+
         val work = workDao.getWorkForDetails(workId)
         val workAttributes = workAttributeDao.getWorkAttributesForWork(workId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(workId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(workId)
-        if (work != null && hasUrlsBeenSavedForEntity) {
+        val urlRelations = relationRepository.getRelationshipsByType(workId)
+        val visited = relationRepository.visited(workId)
+        if (work != null && visited) {
             return work.copy(
                 attributes = workAttributes,
                 urls = urlRelations,
             )
         }
 
-        val workMusicBrainzModel = musicBrainzApi.lookupWork(workId = workId)
+        val workMusicBrainzModel = lookupApi.lookupWork(workId = workId)
         cache(workMusicBrainzModel)
-        return lookupWork(workId)
+        return lookupWork(workId, false)
+    }
+
+    private fun delete(id: String) {
+        workDao.withTransaction {
+            workDao.delete(id)
+            relationRepository.deleteRelationshipsByType(id)
+        }
     }
 
     private fun cache(work: WorkMusicBrainzModel) {

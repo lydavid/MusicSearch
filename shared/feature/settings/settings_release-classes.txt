@@ -3,21 +3,6 @@ stable class BuildConfig {
   stable val VERSION_NAME: String
   <runtime stability> = Stable
 }
-stable class StartLogin {
-  <runtime stability> = Stable
-}
-stable class DismissDialog {
-  <runtime stability> = Stable
-}
-stable class SubmitAuthCode {
-  stable val authCode: String
-  <runtime stability> = Stable
-}
-stable class LoginUiState {
-  stable val showDialog: Boolean
-  stable val eventSink: Function1<LoginUiEvent, Unit>
-  <runtime stability> = Stable
-}
 stable class SettingsPresenter {
   stable val navigator: Navigator
   unstable val appPreferences: AppPreferences
@@ -58,10 +43,5 @@ stable class SettingsUiState {
   stable val sortReleaseGroupListItems: Boolean
   stable val loginState: LoginUiState
   stable val eventSink: Function1<SettingsUiEvent, Unit>
-  <runtime stability> = Stable
-}
-stable class LoginPresenterAndroid {
-  unstable val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract
-  unstable val login: LoginAndroid
   <runtime stability> = Stable
 }

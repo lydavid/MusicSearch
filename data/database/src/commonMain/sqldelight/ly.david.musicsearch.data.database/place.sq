@@ -31,3 +31,7 @@ SELECT
   end,
   ended
 FROM place WHERE id = ?;
+
+delete:
+DELETE FROM place
+WHERE id = :id;

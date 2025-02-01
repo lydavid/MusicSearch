@@ -64,4 +64,8 @@ class RecordingDao(
         video = video,
         isrcs = isrcs,
     )
+
+    fun delete(id: String) {
+        transacter.delete(id)
+    }
 }

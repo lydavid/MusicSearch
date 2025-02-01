@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -21,7 +22,9 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.work.WorkRepository
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
@@ -49,6 +52,8 @@ internal class WorkPresenter(
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val wikimediaRepository: WikimediaRepository,
 ) : Presenter<WorkUiState> {
 
     @Composable
@@ -58,13 +63,14 @@ internal class WorkPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        var work: WorkDetailsModel? by remember { mutableStateOf(null) }
+        var work: WorkDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<WorkTab> by rememberSaveable {
             mutableStateOf(WorkTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(WorkTab.DETAILS) }
-        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val artistsByEntityUiState = artistsByEntityPresenter.present()
         val artistsEventSink = artistsByEntityUiState.eventSink
@@ -77,7 +83,10 @@ internal class WorkPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val workDetailsModel = repository.lookupWork(screen.id)
+                val workDetailsModel = repository.lookupWork(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = workDetailsModel.getNameWithDisambiguation()
                 work = workDetailsModel
                 isError = false
@@ -94,6 +103,20 @@ internal class WorkPresenter(
                     ),
                 )
                 recordedHistory = true
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, work) {
+            wikimediaRepository.getWikipediaExtract(
+                mbid = work?.id ?: return@LaunchedEffect,
+                urls = work?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                work = work?.copy(
+                    wikipediaExtract = wikipediaExtract,
+                )
+            }.onFailure {
+                snackbarMessage = it.message
             }
         }
 
@@ -174,10 +197,12 @@ internal class WorkPresenter(
             title = title,
             isError = isError,
             work = work,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
+            snackbarMessage = snackbarMessage,
             artistsByEntityUiState = artistsByEntityUiState,
             recordingsByEntityUiState = recordingsByEntityUiState,
             relationsUiState = relationsUiState,
@@ -192,10 +217,12 @@ internal data class WorkUiState(
     val title: String,
     val isError: Boolean,
     val work: WorkDetailsModel?,
+    val url: String = "",
     val tabs: List<WorkTab>,
     val selectedTab: WorkTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
+    val snackbarMessage: String? = null,
     val artistsByEntityUiState: ArtistsByEntityUiState,
     val recordingsByEntityUiState: RecordingsByEntityUiState,
     val relationsUiState: RelationsUiState,

@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.database
 
-import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ArtistCollaborationDao
@@ -15,7 +14,6 @@ import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.CountryCodeDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.EventsByEntityDao
 import ly.david.musicsearch.data.database.dao.GenreDao
@@ -39,19 +37,23 @@ import ly.david.musicsearch.data.database.dao.ReleaseGroupDaoImpl
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.SearchHistoryDao
+import ly.david.musicsearch.data.database.dao.SearchResultDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.SpotifyHistoryDao
 import ly.david.musicsearch.data.database.dao.TrackDao
+import ly.david.musicsearch.data.database.dao.VisitedDaoImpl
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.database.dao.WorksByEntityDao
+import ly.david.musicsearch.shared.domain.history.VisitedDao
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.wikimedia.MbidWikipediaDao
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val databaseDaoModule = module {
-    single { AreaDao(get()) }
+    single { AreaDao(get(), get()) }
     single { ArtistsByEntityDao(get(), get()) }
     single { EventsByEntityDao(get(), get()) }
     single { AreaPlaceDao(get(), get()) }
@@ -65,7 +67,7 @@ val databaseDaoModule = module {
     single { CollectionEntityDao(get(), get()) }
     single { CountryCodeDao(get()) }
     single { EntityHasRelationsDao(get()) }
-    single { EntityHasUrlsDao(get()) }
+    singleOf(::VisitedDaoImpl) bind VisitedDao::class
     single { EventDao(get()) }
     single { InstrumentDao(get()) }
     single { GenreDao(get()) }
@@ -93,4 +95,5 @@ val databaseDaoModule = module {
     single { WorksByEntityDao(get(), get()) }
     single { SpotifyHistoryDao(get(), get()) }
     singleOf(::MbidWikipediaDaoImpl) bind MbidWikipediaDao::class
+    single { SearchResultDao(get(), get()) }
 }

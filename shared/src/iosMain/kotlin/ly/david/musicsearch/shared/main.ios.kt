@@ -1,9 +1,13 @@
 package ly.david.musicsearch.shared
 
 import androidx.compose.ui.window.ComposeUIViewController
+import com.slack.circuit.backstack.SaveableBackStack
+import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.rememberCircuitNavigator
+import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.persistentListOf
-import ly.david.musicsearch.core.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.di.sharedModule
 import ly.david.musicsearch.ui.common.screen.SearchScreen
 import ly.david.musicsearch.ui.core.theme.BaseTheme
@@ -34,9 +38,17 @@ fun MainViewController(): UIViewController =
             darkTheme = appComponent.appPreferences.useDarkTheme(),
             materialYou = appComponent.appPreferences.useMaterialYou(),
         ) {
-            AppRoot(
-                circuit = appComponent.circuit,
+            val backStack: SaveableBackStack = rememberSaveableBackStack(
                 initialScreens = persistentListOf(SearchScreen()),
+            )
+            val navigator: Navigator = rememberCircuitNavigator(
+                backStack = backStack,
+                onRootPop = {}
+            )
+            AppRoot(
+                backStack = backStack,
+                navigator = navigator,
+                circuit = appComponent.circuit,
             )
         }
     }

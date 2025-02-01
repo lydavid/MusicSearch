@@ -23,4 +23,5 @@ data class ReleaseEvent(
     val name: String,
     val date: String?,
     val countryCode: String?,
+    val visited: Boolean,
 )

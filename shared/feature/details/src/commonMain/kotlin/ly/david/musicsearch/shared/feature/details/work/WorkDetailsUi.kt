@@ -7,12 +7,12 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 
 @Composable
@@ -21,7 +21,6 @@ internal fun WorkDetailsUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     val strings = LocalStrings.current
 
@@ -69,10 +68,14 @@ internal fun WorkDetailsUi(
         }
 
         item {
+            WikipediaSection(
+                extract = work.wikipediaExtract,
+                filterText = filterText,
+            )
+
             UrlsSection(
                 urls = work.urls,
                 filterText = filterText,
-                onItemClick = onItemClick,
             )
         }
     }

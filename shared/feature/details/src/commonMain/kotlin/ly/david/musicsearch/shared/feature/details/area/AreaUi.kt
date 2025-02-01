@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.area
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -68,8 +67,7 @@ internal fun AreaUi(
         modifier = modifier,
         overflowDropdownMenuItems = {
             OpenInBrowserMenuItem(
-                entity = entity,
-                entityId = entityId,
+                url = state.url,
             )
             CopyToClipboardMenuItem(entityId)
             if (state.selectedTab == AreaTab.RELEASES) {
@@ -101,7 +99,6 @@ internal fun AreaUi(
 
 @OptIn(
     ExperimentalMaterial3Api::class,
-    ExperimentalFoundationApi::class,
 )
 @Composable
 internal fun AreaUiInternal(
@@ -185,15 +182,6 @@ internal fun AreaUiInternal(
                             area = it,
                             filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
-                            onItemClick = { entity, id, title ->
-                                eventSink(
-                                    AreaUiEvent.ClickItem(
-                                        entity = entity,
-                                        id = id,
-                                        title = title,
-                                    ),
-                                )
-                            },
                         )
                     }
                 }
@@ -226,7 +214,7 @@ internal fun AreaUiInternal(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        onEventClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
                                     entity = entity,
@@ -246,7 +234,7 @@ internal fun AreaUiInternal(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.labelsByEntityUiState.lazyListState,
-                        onLabelClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
                                     entity = entity,
@@ -267,7 +255,7 @@ internal fun AreaUiInternal(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.releasesByEntityUiState.lazyListState,
                         showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
-                        onReleaseClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
                                     entity = entity,
@@ -314,7 +302,7 @@ internal fun AreaUiInternal(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        onPlaceClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
                                     entity = entity,

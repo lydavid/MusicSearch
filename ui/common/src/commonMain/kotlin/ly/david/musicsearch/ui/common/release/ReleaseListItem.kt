@@ -19,10 +19,12 @@ import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
-import ly.david.musicsearch.ui.core.theme.getSubTextColor
+import ly.david.musicsearch.ui.image.ThumbnailImage
+import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 // TODO: rethink showing release country -> could be misleading, and expensive joins
 //  with cover art loaded by default, we can prob hide the other info by default
@@ -46,18 +48,16 @@ fun ReleaseListItem(
             Text(
                 text = release.name,
                 style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = release.fontWeight,
             )
         },
         modifier = modifier.clickable { onClick(release) },
         supportingContent = {
             Column {
-                release.disambiguation.ifNotNullOrEmpty {
-                    Text(
-                        text = "($it)",
-                        color = getSubTextColor(),
-                        style = TextStyles.getCardBodySubTextStyle(),
-                    )
-                }
+                DisambiguationText(
+                    disambiguation = release.disambiguation,
+                    fontWeight = release.fontWeight,
+                )
 
                 if (showMoreInfo) {
                     Row {
@@ -68,6 +68,7 @@ fun ReleaseListItem(
                                     .padding(top = 4.dp)
                                     .weight(1f),
                                 style = TextStyles.getCardBodySubTextStyle(),
+                                fontWeight = release.fontWeight,
                             )
                         }
 
@@ -86,6 +87,7 @@ fun ReleaseListItem(
                                     .weight(1f),
                                 style = TextStyles.getCardBodySubTextStyle(),
                                 textAlign = TextAlign.End,
+                                fontWeight = release.fontWeight,
                             )
                         }
                     }
@@ -98,6 +100,7 @@ fun ReleaseListItem(
                                     .weight(1f),
                                 text = it,
                                 style = TextStyles.getCardBodySubTextStyle(),
+                                fontWeight = release.fontWeight,
                             )
                         }
 
@@ -109,6 +112,7 @@ fun ReleaseListItem(
                                 text = it,
                                 style = TextStyles.getCardBodySubTextStyle(),
                                 textAlign = TextAlign.End,
+                                fontWeight = release.fontWeight,
                             )
                         }
                     }
@@ -120,6 +124,7 @@ fun ReleaseListItem(
                                 .padding(top = 4.dp)
                                 .fillMaxWidth(),
                             style = TextStyles.getCardBodySubTextStyle(),
+                            fontWeight = release.fontWeight,
                         )
                     }
 
@@ -130,6 +135,7 @@ fun ReleaseListItem(
                                 .padding(top = 4.dp)
                                 .fillMaxWidth(),
                             style = TextStyles.getCardBodySubTextStyle(),
+                            fontWeight = release.fontWeight,
                         )
                     }
                 }
@@ -138,7 +144,7 @@ fun ReleaseListItem(
         leadingContent = {
             ThumbnailImage(
                 url = release.imageUrl.orEmpty(),
-                mbid = release.id,
+                placeholderKey = getPlaceholderKey(release.id),
                 placeholderIcon = MusicBrainzEntity.RELEASE.getIcon(),
             )
         },

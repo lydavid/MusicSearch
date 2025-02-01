@@ -16,8 +16,9 @@ fun ReleasesListScreen(
     lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
+    isEditMode: Boolean = false,
     showMoreInfo: Boolean = true,
-    onReleaseClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = {},
 ) {
@@ -37,14 +38,14 @@ fun ReleasesListScreen(
                                 requestForMissingCoverArtUrl(releaseListItemModel.id)
                             },
                         ) {
-                            onReleaseClick(
+                            onItemClick(
                                 MusicBrainzEntity.RELEASE,
                                 id,
                                 getNameWithDisambiguation(),
                             )
                         }
                     },
-                    disable = onDeleteFromCollection == null,
+                    disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection?.invoke(
                             releaseListItemModel.id,

@@ -13,3 +13,7 @@
   - Search API: https://wiki.musicbrainz.org/MusicBrainz_API/Search#Artist
 - Relationships: https://musicbrainz.org/relationships
 - Link types: https://github.com/metabrainz/musicbrainz-server/blob/master/t/sql/initial.sql#L178
+
+## Wikimedia
+
+- Action API (`api.php`): https://www.mediawiki.org/wiki/API:Main_page

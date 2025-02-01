@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.coverart
 
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
+import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
 import ly.david.musicsearch.data.coverart.api.toImageUrlsList
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
@@ -38,7 +39,7 @@ internal class ReleaseImageRepositoryImpl(
         thumbnail: Boolean,
     ): String {
         return try {
-            val coverArts = coverArtArchiveApi.getReleaseCoverArts(releaseId)
+            val coverArts: CoverArtsResponse = coverArtArchiveApi.getReleaseCoverArts(releaseId)
             val imageUrls: MutableList<ImageUrls> = coverArts.toImageUrlsList().toMutableList()
 
             // We use an empty ImageUrls to represent that we've searched but failed to find any images.

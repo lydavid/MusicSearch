@@ -26,7 +26,7 @@ internal enum class AppNavigationItem(
     ),
     Collection(
         Icons.Default.CollectionsBookmark,
-        CollectionListScreen,
+        CollectionListScreen(),
     ),
     Settings(
         Icons.Default.Settings,

@@ -11,13 +11,15 @@ internal fun mapToReleaseGroupListItemModel(
     secondaryTypes: List<String>?,
     formattedArtistCreditNames: String,
     thumbnailUrl: String?,
+    visited: Boolean?,
 ) = ReleaseGroupListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
     firstReleaseDate = firstReleaseDate,
     primaryType = primaryType,
-    secondaryTypes = secondaryTypes,
+    secondaryTypes = secondaryTypes.orEmpty(),
     formattedArtistCredits = formattedArtistCreditNames,
     imageUrl = thumbnailUrl,
+    visited = visited == true,
 )

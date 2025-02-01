@@ -86,14 +86,16 @@ jobs:
         run: echo "${{ secrets.RELEASE_KEYSTORE_JKS_BASE64 }}" | base64 -d > release-keystore.jks
 
       - name: Assemble F-Droid APK
+        id: build-fdroid
         run: |
           sed -i -e '/firebase/d' -e '/google.services/d' build.gradle.kts
-          ./gradlew assembleFDroidRelease
+          ./gradlew clean assembleFDroidRelease
 
       - name: Decrypt Google Services file
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d > android/app/google-services.json
 
       - name: Assemble Google Play APK, bundle AAB
+        id: build-google
         run: |
           git restore build.gradle.kts
           ./gradlew assembleGooglePlayRelease bundleGooglePlayRelease
@@ -108,6 +110,8 @@ jobs:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.SERVICE_ACCOUNT }}
 
+      # This step may fail if we rerun because we have already uploaded this version
+      # so subsequent steps should always run
       - name: Publish build to Google Play
         id: publish_play_store
         uses: r0adkll/upload-google-play@v1.1.3
@@ -119,15 +123,15 @@ jobs:
           mappingFile: android/app/build/outputs/mapping/googlePlayRelease/mapping.txt
 
       - name: Create jars
-        if: steps.get-next-version.outputs.new-release-published == 'true'
+        if: always() && steps.get-next-version.outputs.new-release-published == 'true'
         run: ./gradlew jar
         env:
           ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID }}
           ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET }}
 
       - name: Create desktop distributions
-        uses: hydraulic-software/conveyor/actions/build@v14.3
-        if: steps.get-next-version.outputs.new-release-published == 'true'
+        if: always() && steps.get-next-version.outputs.new-release-published == 'true'
+        uses: hydraulic-software/conveyor/actions/build@v16.0
         with:
           signing_key: ${{ secrets.SIGNING_KEY }}
           agree_to_license: 1
@@ -136,26 +140,19 @@ jobs:
       - run: |
           mv output/download.html .
           mv output/icon.svg .
-        if: steps.get-next-version.outputs.new-release-published == 'true'
+        if: always() && steps.get-next-version.outputs.new-release-published == 'true'
 
       - name: Commit version code bump
         uses: stefanzweifel/git-auto-commit-action@v5.0.1
         if: always()
         with:
           commit_message: 'chore: bump version [skip ci]'
-          file_pattern: 'gradle.properties download.html icon.svg'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          file_pattern: 'gradle.properties download.html icon.svg'
 
       # See .releaserc for the artifacts we include in each release
       - name: Publish to GitHub
-        if: steps.get-next-version.outputs.new-release-published == 'true'
+        if: always() && steps.get-next-version.outputs.new-release-published == 'true'
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
-
-      - name: Merge master back into beta
-        if: always() && ${{ inputs.track }} != 'beta'
-        run: |
-          git checkout beta
-          git merge master --ff-only --no-edit
-          git push origin beta

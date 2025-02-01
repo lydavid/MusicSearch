@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -24,10 +25,12 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
@@ -36,7 +39,7 @@ import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
-import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
+import ly.david.musicsearch.ui.common.screen.CoverArtsGridScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
@@ -55,6 +58,8 @@ internal class ReleasePresenter(
     private val artistsByEntityPresenter: ArtistsByEntityPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val wikimediaRepository: WikimediaRepository,
 ) : Presenter<ReleaseUiState> {
 
     @Composable
@@ -65,13 +70,14 @@ internal class ReleasePresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        var release: ReleaseDetailsModel? by remember { mutableStateOf(null) }
+        var release: ReleaseDetailsModel? by rememberRetained { mutableStateOf(null) }
         var imageUrl by rememberSaveable { mutableStateOf("") }
         var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
         val tabs: ImmutableList<ReleaseTab> = ReleaseTab.entries.toPersistentList()
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
-        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val tracksByReleaseUiState = tracksByReleasePresenter.present()
         val tracksEventSink = tracksByReleaseUiState.eventSink
@@ -118,6 +124,20 @@ internal class ReleasePresenter(
                     forceRefresh = forceRefreshDetails,
                 )
                 numberOfImages = releaseImageRepository.getNumberOfImages(release.id)
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, release) {
+            wikimediaRepository.getWikipediaExtract(
+                mbid = release?.id ?: return@LaunchedEffect,
+                urls = release?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                release = release?.copy(
+                    wikipediaExtract = wikipediaExtract,
+                )
+            }.onFailure {
+                snackbarMessage = it.message
             }
         }
 
@@ -194,7 +214,7 @@ internal class ReleasePresenter(
                 is ReleaseUiEvent.ClickImage -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
-                            CoverArtsScreen(
+                            CoverArtsGridScreen(
                                 id = screen.id,
                             ),
                         ),
@@ -210,6 +230,7 @@ internal class ReleasePresenter(
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             release = release,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             releaseDetailsUiState = ReleaseDetailsUiState(
                 isError = isError,
                 imageUrl = imageUrl,
@@ -233,6 +254,7 @@ internal data class ReleaseUiState(
     val selectedTab: ReleaseTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val release: ReleaseDetailsModel?,
+    val url: String = "",
     val releaseDetailsUiState: ReleaseDetailsUiState,
     val relationsUiState: RelationsUiState,
     val tracksByReleaseUiState: TracksByReleaseUiState,
@@ -250,8 +272,11 @@ internal data class ReleaseDetailsUiState(
 
 internal sealed interface ReleaseUiEvent : CircuitUiEvent {
     data object NavigateUp : ReleaseUiEvent
+
     data object ForceRefresh : ReleaseUiEvent
+
     data class UpdateTab(val tab: ReleaseTab) : ReleaseUiEvent
+
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

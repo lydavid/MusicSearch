@@ -1,39 +1,60 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 
 class ReleaseGroupRepositoryImpl(
-    private val musicBrainzApi: MusicBrainzApi,
     private val releaseGroupDao: ReleaseGroupDao,
     private val artistCreditDao: ArtistCreditDao,
     private val relationRepository: RelationRepository,
+    private val lookupApi: LookupApi,
 ) : ReleaseGroupRepository {
 
-    override suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupDetailsModel {
+    override suspend fun lookupReleaseGroup(
+        releaseGroupId: String,
+        forceRefresh: Boolean,
+    ): ReleaseGroupDetailsModel {
+        if (forceRefresh) {
+            delete(releaseGroupId)
+        }
+
+        val cachedData = getCachedData(releaseGroupId)
+        return if (cachedData != null && !forceRefresh) {
+            cachedData
+        } else {
+            val releaseGroupMusicBrainzModel = lookupApi.lookupReleaseGroup(releaseGroupId)
+            cache(releaseGroupMusicBrainzModel)
+            getCachedData(releaseGroupId) ?: error("Failed to get cached data")
+        }
+    }
+
+    private fun getCachedData(releaseGroupId: String): ReleaseGroupDetailsModel? {
         val releaseGroup = releaseGroupDao.getReleaseGroupForDetails(releaseGroupId)
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseGroupId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(releaseGroupId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseGroupId)
-        if (releaseGroup != null &&
-            artistCredits.isNotEmpty() &&
-            hasUrlsBeenSavedForEntity
-        ) {
-            return releaseGroup.copy(
+        val urlRelations = relationRepository.getRelationshipsByType(releaseGroupId)
+        val visited = relationRepository.visited(releaseGroupId)
+
+        return if (releaseGroup != null && artistCredits.isNotEmpty() && visited) {
+            releaseGroup.copy(
                 artistCredits = artistCredits,
                 urls = urlRelations,
             )
+        } else {
+            null
         }
+    }
 
-        val releaseGroupMusicBrainzModel = musicBrainzApi.lookupReleaseGroup(releaseGroupId)
-        cache(releaseGroupMusicBrainzModel)
-        return lookupReleaseGroup(releaseGroupId)
+    private fun delete(id: String) {
+        releaseGroupDao.withTransaction {
+            releaseGroupDao.delete(id)
+            relationRepository.deleteRelationshipsByType(id)
+        }
     }
 
     private fun cache(releaseGroup: ReleaseGroupMusicBrainzModel) {

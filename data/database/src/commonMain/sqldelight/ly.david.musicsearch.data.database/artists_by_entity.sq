@@ -48,10 +48,12 @@ SELECT
   a.begin,
   a.end,
   a.ended,
-  mi.thumbnail_url
+  mi.thumbnail_url,
+  visited.entity_id IS NOT NULL AS visited
 FROM artists_by_entity ae
 INNER JOIN artist a ON a.id = ae.artist_id
 LEFT JOIN mbid_image mi ON mi.mbid = a.id
+LEFT JOIN visited ON visited.entity_id = a.id
 WHERE ae.entity_id = :entityId
 AND (
   a.name LIKE :query OR

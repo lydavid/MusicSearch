@@ -44,7 +44,7 @@ abstract class ScreenshotTest(
                 copy(
                     compileSdkVersion = 33,
                     platformDir = platformDir.replace(
-                        "34",
+                        "35",
                         "33",
                     ),
                 )

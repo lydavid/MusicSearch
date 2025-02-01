@@ -1,0 +1,37 @@
+appId: io.github.lydavid.musicsearch.debug
+---
+- launchApp
+- startRecording: collapse-medium-navigate-then-back
+- tapOn: "Resource"
+- tapOn: "Release"
+- tapOn:
+      text: "Search"
+      index: 0
+- inputText: "reid:18572d3b-b8d6-4ac1-8cda-6951a8f625d5"
+- tapOn: "Mozart Complete Edition"
+
+# Make sure we're on the right release
+- assertVisible: "Barcode: 5028421942513"
+- tapOn: "Tracks"
+
+# After clicking on a track then coming back, collapsed state persists
+- assertVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
+- tapOn: "CD 1"
+- assertNotVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
+- tapOn: "CD 2"
+- tapOn: "Symphony No. 14 in A Major, K. 114: I. Allegro moderato"
+- tapOn: "Back"
+- assertNotVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
+
+# When filtering, collapsed medium with a matching track will remain displayed
+- tapOn: "CD 1"
+- assertVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
+- tapOn: "CD 1"
+- tapOn: "Filter"
+- inputText: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
+- tapOn: "CD 1"
+- assertVisible:
+      text: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
+      index: 1
+
+- stopRecording

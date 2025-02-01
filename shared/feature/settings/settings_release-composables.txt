@@ -1,175 +1,3 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DevSettingsSection()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
-  stable state: SettingsUiState
-  stable showAndroidSettings: Boolean
-  stable modifier: Modifier? = @static Companion
-  stable isAndroid12: Boolean = @static false
-  stable isNotificationListenerEnabled: Boolean = @static false
-  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceableGroup(1381719920)
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
-  stable modifier: Modifier? = @static Companion
-  stable username: String? = @static ""
-  stable showLogin: Boolean = @static true
-  stable onLoginClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1381790544)
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
-  stable onLogoutClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1381791696)
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp1_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
-  stable onDestinationClick: Function1<Screen, Unit>? = @static $composer.startReplaceableGroup(1381793200)
-val tmp2_group = $composer.cache(false) {
-  {     it  :   Screen   ->
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp2_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
-  stable showAndroidSettings: Boolean = @static true
-  stable isAndroid12: Boolean = @static false
-  stable theme: Theme? = @static Theme.SYSTEM
-  stable onThemeChange: Function1<Theme, Unit>? = @static $composer.startReplaceableGroup(1381799408)
-val tmp3_group = $composer.cache(false) {
-  {     it  :   Theme   ->
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp3_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
-  stable useMaterialYou: Boolean = @static true
-  stable onUseMaterialYouChange: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1381802224)
-val tmp4_group = $composer.cache(false) {
-  {     it  :   Boolean   ->
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp4_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
-  stable showMoreInfoInReleaseListItem: Boolean = @static true
-  stable onShowMoreInfoInReleaseListItemChange: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1381806000)
-val tmp5_group = $composer.cache(false) {
-  {     it  :   Boolean   ->
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp5_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
-  stable sortReleaseGroupListItems: Boolean = @static false
-  stable onSortReleaseGroupListItemsChange: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1381809552)
-val tmp6_group = $composer.cache(false) {
-  {     it  :   Boolean   ->
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp6_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
-  stable isNotificationListenerEnabled: Boolean = @static false
-  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceableGroup(1381813040)
-val tmp7_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp7_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
-  stable versionName: String? = @static ""
-  stable versionCode: Int = @static 0
-)
-scheme("[presenter]") fun present(
-  stable <this>: SettingsPresenter
-): SettingsUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ProfileCard(
-  stable username: String
-  stable showLogin: Boolean
-  stable onLoginClick: Function0<Unit>? = @static $composer.startReplaceableGroup(-1204260882)
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
-  stable onLogoutClick: Function0<Unit>? = @static $composer.startReplaceableGroup(-1204259730)
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp1_group@ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingSwitch(
-  stable header: String
-  stable checked: Boolean
-  stable modifier: Modifier? = @static Companion
-  stable onCheckedChange: Function1<Boolean, Unit>? = @static $composer.startReplaceableGroup(1077972921)
-val tmp0_group = $composer.cache(false) {
-  {     it  :   Boolean   ->
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingWithDialogChoices(
-  stable title: String
-  stable choices: ImmutableList<String>
-  stable selectedChoiceIndex: Int
-  stable onSelectChoiceIndex: Function1<Int, Unit>? = @static $composer.startReplaceableGroup(-1237017533)
-val tmp0_group = $composer.cache(false) {
-  {     it  :   Int   ->
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
-)
-fun present(
-  stable <this>: LoginPresenterAndroid
-): LoginUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
   stable state: SettingsUiState
   stable modifier: Modifier? = @static Companion
@@ -182,3 +10,172 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewPr
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingSwitchChecked()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingSwitchUnchecked()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingWithDialogChoices()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DevSettingsSection()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
+  stable state: SettingsUiState
+  stable showAndroidSettings: Boolean
+  stable modifier: Modifier? = @static Companion
+  stable isAndroid12: Boolean = @static false
+  stable isNotificationListenerEnabled: Boolean = @static false
+  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceGroup(1381722224)
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Settings(
+  stable modifier: Modifier? = @static Companion
+  stable username: String? = @static ""
+  stable showLogin: Boolean = @static true
+  stable onLoginClick: Function0<Unit>? = @static $composer.startReplaceGroup(1381792560)
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
+  stable onLogoutClick: Function0<Unit>? = @static $composer.startReplaceGroup(1381793712)
+val tmp1_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp1_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
+  stable onDestinationClick: Function1<Screen, Unit>? = @static $composer.startReplaceGroup(1381795216)
+val tmp2_group = $composer.cache(false) {
+  {     it  :   Screen   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp2_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
+  stable showAndroidSettings: Boolean = @static true
+  stable isAndroid12: Boolean = @static false
+  stable theme: Theme? = @static Theme.SYSTEM
+  stable onThemeChange: Function1<Theme, Unit>? = @static $composer.startReplaceGroup(1381801424)
+val tmp3_group = $composer.cache(false) {
+  {     it  :   Theme   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp3_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
+  stable useMaterialYou: Boolean = @static true
+  stable onUseMaterialYouChange: Function1<Boolean, Unit>? = @static $composer.startReplaceGroup(1381804240)
+val tmp4_group = $composer.cache(false) {
+  {     it  :   Boolean   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp4_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
+  stable showMoreInfoInReleaseListItem: Boolean = @static true
+  stable onShowMoreInfoInReleaseListItemChange: Function1<Boolean, Unit>? = @static $composer.startReplaceGroup(1381808016)
+val tmp5_group = $composer.cache(false) {
+  {     it  :   Boolean   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp5_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
+  stable sortReleaseGroupListItems: Boolean = @static false
+  stable onSortReleaseGroupListItemsChange: Function1<Boolean, Unit>? = @static $composer.startReplaceGroup(1381811568)
+val tmp6_group = $composer.cache(false) {
+  {     it  :   Boolean   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp6_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
+  stable isNotificationListenerEnabled: Boolean = @static false
+  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceGroup(1381815056)
+val tmp7_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp7_group@ly.david.musicsearch.shared.feature.settings.internal.Settings
+  stable versionName: String? = @static ""
+  stable versionCode: Int = @static 0
+)
+scheme("[presenter]") fun present(
+  stable <this>: SettingsPresenter
+): SettingsUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ProfileCard(
+  stable username: String
+  stable showLogin: Boolean
+  stable onLoginClick: Function0<Unit>? = @static $composer.startReplaceGroup(-1204260882)
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
+  stable onLogoutClick: Function0<Unit>? = @static $composer.startReplaceGroup(-1204259730)
+val tmp1_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp1_group@ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingSwitch(
+  stable header: String
+  stable checked: Boolean
+  stable modifier: Modifier? = @static Companion
+  stable onCheckedChange: Function1<Boolean, Unit>? = @static $composer.startReplaceGroup(1077972921)
+val tmp0_group = $composer.cache(false) {
+  {     it  :   Boolean   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingWithDialogChoices(
+  stable title: String
+  stable choices: ImmutableList<String>
+  stable selectedChoiceIndex: Int
+  stable onSelectChoiceIndex: Function1<Int, Unit>? = @static $composer.startReplaceGroup(-1237017533)
+val tmp0_group = $composer.cache(false) {
+  {     it  :   Int   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
+)

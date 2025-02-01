@@ -21,7 +21,7 @@ data class ReleaseListItemModel(
     val catalogNumbers: String? = null,
 
     val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
-    val textRepresentation: TextRepresentationUiModel? = null,
+    val textRepresentation: TextRepresentationUiModel? = TextRepresentationUiModel(),
     val imageUrl: String? = null,
 
     val formattedFormats: String? = null,
@@ -29,4 +29,5 @@ data class ReleaseListItemModel(
     val formattedArtistCredits: String? = null,
 
     val releaseCountryCount: Int = 0,
-) : ListItemModel(), Release
+    override val visited: Boolean = false,
+) : ListItemModel(), Release, Visitable

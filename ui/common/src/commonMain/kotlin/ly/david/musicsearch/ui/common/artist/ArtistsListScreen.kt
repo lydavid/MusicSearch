@@ -15,8 +15,9 @@ fun ArtistsListScreen(
     lazyListState: LazyListState,
     lazyPagingItems: LazyPagingItems<ArtistListItemModel>,
     modifier: Modifier = Modifier,
+    isEditMode: Boolean = false,
     onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
-    onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
+    onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
 ) {
     ScreenWithPagingLoadingAndError(
         lazyPagingItems = lazyPagingItems,
@@ -37,9 +38,9 @@ fun ArtistsListScreen(
                             )
                         }
                     },
-                    disable = onDeleteFromCollection == null,
+                    disable = !isEditMode,
                     onDelete = {
-                        onDeleteFromCollection?.invoke(
+                        onDeleteFromCollection(
                             listItemModel.id,
                             listItemModel.name,
                         )

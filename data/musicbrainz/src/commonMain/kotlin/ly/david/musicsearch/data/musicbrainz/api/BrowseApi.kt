@@ -28,23 +28,13 @@ import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 const val ARTIST_CREDITS = "artist-credits"
 const val LABELS = "labels"
 
-interface BrowseReleaseApi {
-    suspend fun browseReleasesByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-        include: String = ARTIST_CREDITS,
-    ): BrowseReleasesResponse
-}
-
 /**
  * See [browse API](https://wiki.musicbrainz.org/MusicBrainz_API#Browse).
  *
  * Get entities directly linked to another entity. Such as all release groups by an artist.
  * This is the only type of request with pagination.
  */
-interface BrowseApi : BrowseReleaseApi {
+interface BrowseApi {
 
     suspend fun browseAreasByCollection(
         collectionId: String,
@@ -58,13 +48,6 @@ interface BrowseApi : BrowseReleaseApi {
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
     ): BrowseArtistsResponse
-
-    suspend fun browseCollectionsByUser(
-        username: String,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-        include: String? = null,
-    ): BrowseCollectionsResponse
 
     suspend fun browseEventsByEntity(
         entityId: String,
@@ -112,6 +95,14 @@ interface BrowseApi : BrowseReleaseApi {
         offset: Int = 0,
         include: String = ARTIST_CREDITS,
     ): BrowseRecordingsResponse
+
+    suspend fun browseReleasesByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
+        include: String = ARTIST_CREDITS,
+    ): BrowseReleasesResponse
 
     suspend fun browseReleaseGroupsByArtist(
         artistId: String,
@@ -188,35 +179,6 @@ interface BrowseApiImpl : BrowseApi {
                 parameter(
                     "offset",
                     offset,
-                )
-            }
-        }.body()
-    }
-
-    override suspend fun browseCollectionsByUser(
-        username: String,
-        limit: Int,
-        offset: Int,
-        include: String?,
-    ): BrowseCollectionsResponse {
-        return httpClient.get {
-            url {
-                appendPathSegments("collection")
-                parameter(
-                    "editor",
-                    username,
-                )
-                parameter(
-                    "limit",
-                    limit,
-                )
-                parameter(
-                    "offset",
-                    offset,
-                )
-                parameter(
-                    "inc",
-                    include,
                 )
             }
         }.body()
@@ -562,9 +524,9 @@ data class BrowseArtistsResponse(
 
 @Serializable
 data class BrowseCollectionsResponse(
-    @SerialName("collection-count") override val count: Int,
-    @SerialName("collection-offset") override val offset: Int,
-    @SerialName("collections") override val musicBrainzModels: List<CollectionMusicBrainzModel>,
+    @SerialName("collection-count") override val count: Int = 0,
+    @SerialName("collection-offset") override val offset: Int = 0,
+    @SerialName("collections") override val musicBrainzModels: List<CollectionMusicBrainzModel> = listOf(),
 ) : Browsable<CollectionMusicBrainzModel>
 
 @Serializable

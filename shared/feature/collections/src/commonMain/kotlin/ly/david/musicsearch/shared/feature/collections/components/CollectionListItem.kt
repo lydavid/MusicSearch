@@ -8,12 +8,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Cloud
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemColors
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.ui.common.EntityIcon
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.SMALL_IMAGE_SIZE
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
@@ -21,6 +24,7 @@ import ly.david.musicsearch.ui.core.theme.TextStyles
 internal fun CollectionListItem(
     collection: CollectionListItemModel,
     modifier: Modifier = Modifier,
+    colors: ListItemColors = ListItemDefaults.colors(),
     onClick: CollectionListItemModel.() -> Unit = {},
 ) {
     ListItem(
@@ -28,15 +32,17 @@ internal fun CollectionListItem(
             Text(
                 text = collection.name,
                 style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = collection.fontWeight,
             )
         },
         modifier = modifier.clickable { onClick(collection) },
+        colors = colors,
         supportingContent = {
-            // TODO: if we add more content to this column, it messes up any BottomModalSheet
-            //  problem seems to appear when list is of certain length (eg. 4 items) regardless of this
+            // We currently don't support adding descriptions. Descriptions are not returned from MB's API either.
             Text(
                 text = collection.description,
                 style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = collection.fontWeight,
             )
         },
         leadingContent = {
@@ -49,9 +55,10 @@ internal fun CollectionListItem(
             Row {
                 // TODO: not accurate for remote collections we have not clicked into yet
                 Text(
-                    text = collection.entityCount.toString(),
+                    text = "${collection.cachedEntityCount}",
                     modifier = Modifier.padding(end = 8.dp),
                     style = TextStyles.getCardBodyTextStyle(),
+                    fontWeight = collection.fontWeight,
                 )
                 if (collection.isRemote) {
                     Icon(

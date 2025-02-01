@@ -4,6 +4,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import lydavidmusicsearchdatadatabase.Artist
 
 class ArtistDao(
@@ -11,9 +12,9 @@ class ArtistDao(
 ) : EntityDao {
     override val transacter = database.artistQueries
 
-    fun insert(artist: ArtistMusicBrainzModel) {
+    fun insertReplace(artist: ArtistMusicBrainzModel) {
         artist.run {
-            transacter.insert(
+            transacter.insertReplace(
                 Artist(
                     id = id,
                     name = name,
@@ -28,6 +29,7 @@ class ArtistDao(
                     begin = lifeSpan?.begin,
                     end = lifeSpan?.end,
                     ended = lifeSpan?.ended,
+                    area_id = area?.id,
                 ),
             )
         }
@@ -36,7 +38,7 @@ class ArtistDao(
     fun insertAll(artists: List<ArtistMusicBrainzModel>) {
         transacter.transaction {
             artists.forEach { artist ->
-                insert(artist)
+                insertReplace(artist)
             }
         }
     }
@@ -48,10 +50,6 @@ class ArtistDao(
         ).executeAsOneOrNull()
     }
 
-    fun delete(artistId: String) {
-        transacter.delete(artistId)
-    }
-
     private fun toDetailsModel(
         id: String,
         name: String,
@@ -61,24 +59,43 @@ class ArtistDao(
         gender: String?,
         ipis: List<String>?,
         isnis: List<String>?,
-        countryCode: String?,
         begin: String?,
         end: String?,
         ended: Boolean?,
-    ) = ArtistDetailsModel(
-        id = id,
-        name = name,
-        sortName = sortName,
-        disambiguation = disambiguation,
-        type = type,
-        gender = gender,
-        ipis = ipis,
-        isnis = isnis,
-        countryCode = countryCode,
-        lifeSpan = LifeSpanUiModel(
-            begin = begin,
-            end = end,
-            ended = ended,
-        ),
-    )
+        areaId: String?,
+        areaName: String?,
+        countryCode: String?,
+        visited: Boolean?,
+    ): ArtistDetailsModel {
+        val area = if (areaId != null && areaName != null) {
+            AreaListItemModel(
+                id = areaId,
+                name = areaName,
+                countryCodes = listOfNotNull(countryCode),
+                visited = visited == true,
+            )
+        } else {
+            null
+        }
+        return ArtistDetailsModel(
+            id = id,
+            name = name,
+            sortName = sortName,
+            disambiguation = disambiguation,
+            type = type,
+            gender = gender,
+            ipis = ipis,
+            isnis = isnis,
+            lifeSpan = LifeSpanUiModel(
+                begin = begin,
+                end = end,
+                ended = ended,
+            ),
+            areaListItemModel = area,
+        )
+    }
+
+    fun delete(artistId: String) {
+        transacter.delete(artistId)
+    }
 }

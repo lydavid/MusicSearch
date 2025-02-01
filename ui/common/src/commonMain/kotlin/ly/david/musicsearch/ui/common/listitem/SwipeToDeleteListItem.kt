@@ -35,9 +35,9 @@ fun SwipeToDeleteListItem(
         }
     } else {
         SwipeToDeleteListItem(
-            dismissContent = content,
             onDelete = onDelete,
             modifier = modifier,
+            dismissContent = content,
         )
     }
 }
@@ -45,11 +45,10 @@ fun SwipeToDeleteListItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SwipeToDeleteListItem(
-    dismissContent: @Composable RowScope.() -> Unit,
-    modifier: Modifier = Modifier,
     onDelete: () -> Unit,
+    modifier: Modifier = Modifier,
+    dismissContent: @Composable RowScope.() -> Unit = {},
 ) {
-    // TODO: java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/compose/material3/SwipeToDismissKt;
     val dismissState = rememberSwipeToDismissBoxState()
 
     if (dismissState.currentValue == SwipeToDismissBoxValue.StartToEnd ||

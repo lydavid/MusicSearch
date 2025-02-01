@@ -18,4 +18,11 @@ class ReleaseGroupListItemTest : ScreenshotTest() {
             PreviewReleaseGroupListItemWithType()
         }
     }
+
+    @Test
+    fun visited() {
+        snapshot {
+            PreviewReleaseGroupListItemVisited()
+        }
+    }
 }

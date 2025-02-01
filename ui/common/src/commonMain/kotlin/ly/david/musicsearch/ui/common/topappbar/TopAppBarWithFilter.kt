@@ -62,6 +62,7 @@ expect fun TopAppBarWithFilter(
 
     showFilterIcon: Boolean = true,
     topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
+    topAppBarEditState: TopAppBarEditState = TopAppBarEditState(),
 
     additionalActions: @Composable () -> Unit = {},
     additionalBar: @Composable () -> Unit = {},
@@ -83,6 +84,7 @@ internal fun TopAppBarWithFilterInternal(
 
     showFilterIcon: Boolean = true,
     topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
+    topAppBarEditState: TopAppBarEditState = TopAppBarEditState(),
 
     additionalActions: @Composable () -> Unit = {},
     additionalBar: @Composable () -> Unit = {},
@@ -121,7 +123,7 @@ internal fun TopAppBarWithFilterInternal(
                             .fillMaxWidth(),
                         maxLines = 1,
                         singleLine = true,
-                        colors = TextFieldDefaults.textFieldColors(
+                        colors = TextFieldDefaults.colors(
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
                             disabledIndicatorColor = Color.Transparent,
@@ -171,12 +173,23 @@ internal fun TopAppBarWithFilterInternal(
         }
 
         ScrollableTopAppBar(
-            onBack = onBack,
+            onBack = {
+                if (topAppBarEditState.isEditMode) {
+                    topAppBarEditState.dismiss()
+                } else {
+                    onBack()
+                }
+            },
             showBackButton = showBackButton,
             entity = entity,
-            title = title,
+            title = if (topAppBarEditState.isEditMode) {
+                "Editing..."
+            } else {
+                title
+            },
             subtitle = subtitle,
             scrollBehavior = scrollBehavior,
+            isEditMode = topAppBarEditState.isEditMode,
             actions = {
                 if (showFilterIcon) {
                     IconButton(onClick = {

@@ -1,17 +1,20 @@
 package ly.david.musicsearch.data.repository.artist
 
+import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class ArtistRepositoryImpl(
-    private val musicBrainzApi: MusicBrainzApi,
     private val artistDao: ArtistDao,
     private val relationRepository: RelationRepository,
+    private val areaDao: AreaDao,
+    private val lookupApi: LookupApi,
 ) : ArtistRepository {
 
     override suspend fun lookupArtistDetails(
@@ -23,12 +26,15 @@ class ArtistRepositoryImpl(
         }
 
         val artistDetailsModel = artistDao.getArtistForDetails(artistId)
-        val urlRelations = relationRepository.getEntityUrlRelationships(artistId)
-        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(artistId)
+        val urlRelations = relationRepository.getRelationshipsByType(
+            entityId = artistId,
+            entity = MusicBrainzEntity.URL,
+        )
+        val visited = relationRepository.visited(artistId)
 
         if (
             artistDetailsModel != null &&
-            hasUrlsBeenSavedForEntity &&
+            visited &&
             !forceRefresh
         ) {
             val artistWithUrls = artistDetailsModel.copy(
@@ -37,7 +43,7 @@ class ArtistRepositoryImpl(
             return artistWithUrls
         }
 
-        val artistMusicBrainzModel = musicBrainzApi.lookupArtist(artistId)
+        val artistMusicBrainzModel = lookupApi.lookupArtist(artistId)
         cache(artistMusicBrainzModel)
         return lookupArtistDetails(
             artistId = artistId,
@@ -48,13 +54,19 @@ class ArtistRepositoryImpl(
     private fun delete(artistId: String) {
         artistDao.withTransaction {
             artistDao.delete(artistId = artistId)
-            relationRepository.deleteUrlRelationshipsByEntity(entityId = artistId)
+            relationRepository.deleteRelationshipsByType(
+                entityId = artistId,
+                entity = MusicBrainzEntity.URL,
+            )
         }
     }
 
     private fun cache(artist: ArtistMusicBrainzModel) {
         artistDao.withTransaction {
-            artistDao.insert(artist)
+            artistDao.insertReplace(artist)
+            artist.area?.let { area ->
+                areaDao.insert(area)
+            }
 
             val relationWithOrderList = artist.relations.toRelationWithOrderList(artist.id)
             relationRepository.insertAllUrlRelations(

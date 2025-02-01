@@ -18,3 +18,7 @@ SELECT country_code.code
 FROM country_code
 INNER JOIN area ON country_code.area_id = area.id
 WHERE area.id = :areaId;
+
+delete:
+DELETE FROM country_code
+WHERE area_id = :areaId;

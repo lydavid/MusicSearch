@@ -2,9 +2,12 @@ package ly.david.musicsearch.data.repository
 
 import app.cash.paging.Pager
 import app.cash.paging.PagingData
+import app.cash.paging.cachedIn
 import app.cash.paging.insertSeparators
 import app.cash.paging.map
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.common.getDateFormatted
@@ -19,6 +22,7 @@ import ly.david.musicsearch.shared.domain.spotify.SpotifyHistoryRepository
 
 class SpotifyHistoryRepositoryImpl(
     private val spotifyHistoryDao: SpotifyHistoryDao,
+    private val coroutineScope: CoroutineScope,
 ) : SpotifyHistoryRepository {
     override fun insert(spotifyHistory: SpotifyHistory) {
         spotifyHistoryDao.insert(spotifyHistory)
@@ -37,6 +41,8 @@ class SpotifyHistoryRepositoryImpl(
                 .map(SpotifyHistory::toSpotifyHistoryListItemModel)
                 .insertSeparators(generator = ::generator)
         }
+            .distinctUntilChanged()
+            .cachedIn(scope = coroutineScope)
 
     private fun generator(
         before: SpotifyHistoryListItemModel?,

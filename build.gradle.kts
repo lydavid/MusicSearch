@@ -4,6 +4,8 @@ import java.io.BufferedReader
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.android.test) apply false
+    alias(libs.plugins.baselineprofile) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.compose.multiplatform) apply false
     alias(libs.plugins.detekt) apply false
@@ -28,7 +30,7 @@ plugins {
 buildscript {
     dependencies {
         // Workaround for CMP and buildconfig mismatch: https://github.com/gmazzo/gradle-buildconfig-plugin/issues/131
-        classpath("com.squareup:kotlinpoet:1.18.1")
+        classpath("com.squareup:kotlinpoet:2.0.0")
     }
 }
 
@@ -187,6 +189,7 @@ allprojects {
                         .map { it.dependencyProject }
                         .filter { currentProject != rootProject }
                         .filter { currentProject != it }
+                        .filter { dependency -> dependency.path != ":android:baselineprofile" }
                         .forEach inner@{ dependency ->
 
                             projects.add(currentProject)
@@ -207,6 +210,7 @@ allprojects {
 
             // Don't create an svg for projects with no dependencies
             if (dependencies.isEmpty()) {
+                file(dependenciesGraphAbsolutePath).delete()
                 return@doLast
             }
 
@@ -287,6 +291,7 @@ allprojects {
                         .map { it.dependencyProject }
                         .filter { currentProject != rootProject }
                         .filter { currentProject != it }
+                        .filter { dependency -> dependency.path != ":android:baselineprofile" }
                         .forEach inner@{ dependency ->
                             if (dependency == project) {
                                 val traits = mutableListOf<String>()
@@ -303,6 +308,7 @@ allprojects {
             }
 
             if (dependents.isEmpty()) {
+                file(dependentsGraphAbsolutePath).delete()
                 return@doLast
             }
 

@@ -24,6 +24,7 @@ actual fun TopAppBarWithFilter(
 
     showFilterIcon: Boolean,
     topAppBarFilterState: TopAppBarFilterState,
+    topAppBarEditState: TopAppBarEditState,
 
     additionalActions: @Composable () -> Unit,
     additionalBar: @Composable () -> Unit,
@@ -40,6 +41,7 @@ actual fun TopAppBarWithFilter(
         subtitleDropdownMenuItems = subtitleDropdownMenuItems,
         showFilterIcon = showFilterIcon,
         topAppBarFilterState = topAppBarFilterState,
+        topAppBarEditState = topAppBarEditState,
         additionalActions = additionalActions,
         additionalBar = additionalBar,
     )

@@ -21,9 +21,16 @@ class ArtistListItemTest : ScreenshotTest() {
     }
 
     @Test
-    fun allInfo() {
+    fun allInfoUnvisited() {
         snapshot {
-            PreviewArtistListItemAllInfo()
+            PreviewArtistListItemAllInfoUnvisited()
+        }
+    }
+
+    @Test
+    fun allInfoVisited() {
+        snapshot {
+            PreviewArtistListItemAllInfoVisited()
         }
     }
 

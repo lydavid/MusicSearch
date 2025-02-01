@@ -2,47 +2,56 @@ package ly.david.musicsearch.ui.common.series
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
-import ly.david.musicsearch.ui.core.preview.DefaultPreviews
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
-// region Previews
-internal class SeriesPreviewParameterProvider : PreviewParameterProvider<SeriesListItemModel> {
-    override val values = sequenceOf(
-        SeriesListItemModel(
-            id = "1",
-            name = "series name",
-        ),
-        SeriesListItemModel(
-            id = "1",
-            name = "series name",
-            disambiguation = "that one",
-        ),
-        SeriesListItemModel(
-            id = "1",
-            name = "series name",
-            type = "Tour",
-        ),
-        SeriesListItemModel(
-            id = "1",
-            name = "series name",
-            disambiguation = "that one",
-            type = "Tour",
-        ),
-    )
-}
-
-@DefaultPreviews
+@PreviewLightDark
 @Composable
-private fun Preview(
-    @PreviewParameter(SeriesPreviewParameterProvider::class) series: SeriesListItemModel,
-) {
+internal fun PreviewSeriesListItem() {
     PreviewTheme {
         Surface {
-            SeriesListItem(series = series)
+            SeriesListItem(
+                series = SeriesListItemModel(
+                    id = "1",
+                    name = "series name",
+                ),
+            )
         }
     }
 }
-// endregion
+
+@PreviewLightDark
+@Composable
+internal fun PreviewSeriesListItemAllInfo() {
+    PreviewTheme {
+        Surface {
+            SeriesListItem(
+                series = SeriesListItemModel(
+                    id = "1",
+                    name = "series name",
+                    disambiguation = "that one",
+                    type = "Tour",
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewSeriesListItemVisited() {
+    PreviewTheme {
+        Surface {
+            SeriesListItem(
+                series = SeriesListItemModel(
+                    id = "1",
+                    name = "series name",
+                    disambiguation = "that one",
+                    type = "Tour",
+                    visited = true,
+                ),
+            )
+        }
+    }
+}

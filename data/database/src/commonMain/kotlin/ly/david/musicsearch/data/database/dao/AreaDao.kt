@@ -9,11 +9,12 @@ import lydavidmusicsearchdatadatabase.AreaQueries
 
 class AreaDao(
     database: Database,
+    private val countryCodeDao: CountryCodeDao,
 ) : EntityDao {
     override val transacter: AreaQueries = database.areaQueries
 
-    fun insert(area: AreaMusicBrainzModel) {
-        area.run {
+    fun insert(area: AreaMusicBrainzModel?) {
+        area?.run {
             transacter.insert(
                 Area(
                     id = id,
@@ -26,6 +27,32 @@ class AreaDao(
                     end = lifeSpan?.end,
                     ended = lifeSpan?.ended,
                 ),
+            )
+            countryCodeDao.insertCountryCodesForArea(
+                areaId = area.id,
+                countryCodes = area.countryCodes.orEmpty(),
+            )
+        }
+    }
+
+    fun insertReplace(area: AreaMusicBrainzModel?) {
+        area?.run {
+            transacter.insertReplace(
+                Area(
+                    id = id,
+                    name = name,
+                    sort_name = sortName,
+                    disambiguation = disambiguation,
+                    type = type,
+                    type_id = typeId,
+                    begin = lifeSpan?.begin,
+                    end = lifeSpan?.end,
+                    ended = lifeSpan?.ended,
+                ),
+            )
+            countryCodeDao.insertCountryCodesForArea(
+                areaId = area.id,
+                countryCodes = area.countryCodes.orEmpty(),
             )
         }
     }
@@ -53,6 +80,7 @@ class AreaDao(
         begin: String?,
         end: String?,
         ended: Boolean?,
+        countryCode: String?,
     ) = AreaDetailsModel(
         id = id,
         name = name,
@@ -63,5 +91,13 @@ class AreaDao(
             end = end,
             ended = ended,
         ),
+        countryCodes = listOfNotNull(countryCode),
     )
+
+    fun delete(areaId: String) {
+        withTransaction {
+            countryCodeDao.delete(areaId)
+            transacter.delete(areaId)
+        }
+    }
 }

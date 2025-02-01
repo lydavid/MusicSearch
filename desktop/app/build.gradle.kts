@@ -3,7 +3,7 @@ plugins {
     id("ly.david.musicsearch.compose.multiplatform")
     application
     alias(libs.plugins.aboutlibraries)
-    id("dev.hydraulic.conveyor") version "1.11"
+    id("dev.hydraulic.conveyor") version "1.12"
 }
 
 application {
@@ -23,13 +23,13 @@ dependencies {
     // TODO: eventually, the only dependent project should be shared
     //  where shared exposes the root entry point
     implementation(projects.ui.common)
-    implementation(projects.core.preferences)
 
     linuxAmd64(compose.desktop.linux_x64)
     macAmd64(compose.desktop.macos_x64)
     macAarch64(compose.desktop.macos_arm64)
     windowsAmd64(compose.desktop.windows_x64)
 
+    implementation(libs.kotlinx.coroutines.swing)
     implementation(libs.circuit.foundation)
     implementation(libs.koin.core)
 }

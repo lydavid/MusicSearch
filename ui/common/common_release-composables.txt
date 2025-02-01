@@ -1,18 +1,147 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewExposedDropdownMenuBox()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaListItemDisambiguation()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaListItemCountry()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaListItemWorldwide()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseEvent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseEventNoDate()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseEventVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistListItemSimple()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistListItemCountryCode()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistListItemAllInfoUnvisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistListItemAllInfoVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithSubtitle()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithEndIcon()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithStartIcon()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithStartEndIcon()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSimpleAlertDialog()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewEventListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewEventListItemLong()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewEventListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewFullScreenText()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewInstrumentListItemModel()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewInstrumentListItemModelAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewInstrumentListItemModelVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLabelListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLabelListItemAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLabelListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollapsibleListSeparatorHeaderCollapsed()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollapsibleListSeparatorHeaderExpanded()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  lifeSpan: LifeSpanUiModel
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ListSeparatorHeaderPreview()
+fun present(
+  stable <this>: LoginPresenterAndroid
+): LoginUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun FooterLoadingIndicatorPreview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewPlaceListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewPlaceListItemAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewPlaceListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoordinateListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecordingListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecordingListItemAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecordingListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistRelationListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecordingRelationListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewUrlRelationListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecordingRelationListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemDisambiguation()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemDisambiguationCountry()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemCountry()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemDateCountryFormatsTracks()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemCountryDate()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemDateArtistCredits()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemMultipleCountries()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemShowLessInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemCatalog()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTrackListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTrackListItemAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTrackListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseGroupListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseGroupListItemWithType()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseGroupListItemVisited()
+fun screenContainerSize()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSeriesListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSeriesListItemAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSeriesListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTextWithHeading()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewDotsFlashing()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewScrollableTopAppBar()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewScrollableTopAppBarWithIcon()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewScrollableTopAppBarWithTabs()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewScrollableTopAppBarLoading()
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun TopAppBarWithFilter(
+  stable modifier: Modifier? = @static Companion
+  stable onBack: Function0<Unit>? = @static $composer.startReplaceGroup(-1181755301)
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+  stable showBackButton: Boolean = @static true
+  stable entity: MusicBrainzEntity? = @static null
+  stable title: String? = @static ""
+  stable subtitle: String? = @static ""
+  stable scrollBehavior: TopAppBarScrollBehavior? = @static null
+  stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable showFilterIcon: Boolean = @static true
+  stable topAppBarFilterState: TopAppBarFilterState? = @dynamic TopAppBarFilterState()
+  stable topAppBarEditState: TopAppBarEditState? = @dynamic TopAppBarEditState()
+  stable additionalActions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilter_androidKt.lambda-1
+  stable additionalBar: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilter_androidKt.lambda-2
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilter()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterFilterMode()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterFilterModeWithText()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterNoFilter()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterWithTabs()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterWithTabsFilterMode()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterWithEditMode()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterWithEditModeActive()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewUrlsSection()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWikipediaSection()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWorkListItemModel()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWorkListItemModelAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWorkListItemModelVisited()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EntityIcon(
   stable entity: MusicBrainzEntity
   stable modifier: Modifier? = @static Companion
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun ExposedDropdownMenuBox(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ResourceDropdownPicker(
   unstable options: List<MusicBrainzEntity>
   stable selectedOption: MusicBrainzEntity
   stable modifier: Modifier? = @static Companion
-  stable onSelectOption: Function1<MusicBrainzEntity, Unit>
+  stable onSelectOption: Function1<MusicBrainzEntity, Unit>? = @static $composer.startReplaceGroup(-141552620)
+val tmp0_group = $composer.cache(false) {
+  {     it  :   MusicBrainzEntity   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.ui.common.ResourceDropdownPicker
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaListItem(
   area: AreaListItemModel
   stable modifier: Modifier? = @static Companion
   stable showType: Boolean = @static true
-  stable onAreaClick: @[ExtensionFunctionType] Function1<AreaListItemModel, Unit>? = @static $composer.startReplaceableGroup(-843590532)
+  stable onAreaClick: @[ExtensionFunctionType] Function1<AreaListItemModel, Unit>? = @static $composer.startReplaceGroup(-843588420)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -20,32 +149,18 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.area.AreaListItem
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistListItem(
-  artist: ArtistListItemModel
-  stable modifier: Modifier? = @static Companion
-  stable onArtistClick: @[ExtensionFunctionType] Function1<ArtistListItemModel, Unit>? = @static $composer.startReplaceableGroup(1938651772)
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp0_group@ly.david.musicsearch.ui.common.artist.ArtistListItem
-)
 fun present(
-  stable <this>: ArtistsByEntityPresenter
-): ArtistsByEntityUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistsListScreen(
-  stable snackbarHostState: SnackbarHostState
-  stable lazyListState: LazyListState
-  lazyPagingItems: LazyPagingItems<ArtistListItemModel>
+  stable <this>: AreasByEntityPresenter
+): AreasByEntityUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreasListScreen(
+  lazyPagingItems: LazyPagingItems<AreaListItemModel>
   stable modifier: Modifier? = @static Companion
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceableGroup(-1619886910)
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable isEditMode: Boolean = @static false
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceGroup(967562274)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String   ->
 
@@ -53,13 +168,14 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
-tmp0_group@ly.david.musicsearch.ui.common.artist.ArtistsListScreen
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.ui.common.area.AreasListScreen
   stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RetryButton(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistListItem(
+  artist: ArtistListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1527852165)
+  stable onArtistClick: @[ExtensionFunctionType] Function1<ArtistListItemModel, Unit>? = @static $composer.startReplaceGroup(1938671740)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -67,7 +183,49 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.ui.common.artist.ArtistListItem
+)
+fun present(
+  stable <this>: ArtistsByEntityPresenter
+): ArtistsByEntityUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistsListScreen(
+  stable lazyListState: LazyListState
+  lazyPagingItems: LazyPagingItems<ArtistListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable isEditMode: Boolean = @static false
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceGroup(-1619891934)
+val tmp0_group = $composer.cache(false) {
+  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.ui.common.artist.ArtistsListScreen
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static $composer.startReplaceGroup(-1619889153)
+val tmp1_group = $composer.cache(false) {
+  {     <unused var>  :   String  ,   <unused var>  :   String   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp1_group@ly.david.musicsearch.ui.common.artist.ArtistsListScreen
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RetryButton(
+  stable modifier: Modifier? = @static Companion
+  stable onClick: Function0<Unit>? = @static $composer.startReplaceGroup(1527852165)
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.button.RetryButton
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ClickableItem(
@@ -76,7 +234,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Clickable
   stable subtitle: String? = @static null
   stable startIcon: ImageVector? = @static null
   stable endIcon: ImageVector? = @static null
-  stable onClick: Function0<Unit>? = @static $composer.startReplaceableGroup(-132850271)
+  stable onClick: Function0<Unit>? = @static $composer.startReplaceGroup(-132850271)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -84,15 +242,15 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.component.ClickableItem
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun MultipleChoiceDialog(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun MultipleChoiceDialog(
   stable title: String
   unstable choices: List<String>
   stable selectedChoiceIndex: Int
   stable modifier: Modifier? = @static Companion
-  stable onSelectChoiceIndex: Function1<Int, Unit>? = @static $composer.startReplaceableGroup(776367708)
+  stable onSelectChoiceIndex: Function1<Int, Unit>? = @static $composer.startReplaceGroup(776367708)
 val tmp0_group = $composer.cache(false) {
   {     it  :   Int   ->
 
@@ -100,9 +258,9 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.dialog.MultipleChoiceDialog
-  stable onDismiss: Function0<Unit>? = @static $composer.startReplaceableGroup(776368732)
+  stable onDismiss: Function0<Unit>? = @static $composer.startReplaceGroup(776368732)
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -110,14 +268,14 @@ val tmp1_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.ui.common.dialog.MultipleChoiceDialog
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SimpleAlertDialog(
   stable title: String
   stable confirmText: String
   stable dismissText: String
-  stable onDismiss: Function0<Unit>? = @static $composer.startReplaceableGroup(1634998579)
+  stable onDismiss: Function0<Unit>? = @static $composer.startReplaceGroup(1634998579)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -125,9 +283,9 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
-  stable onConfirmClick: Function0<Unit>? = @static $composer.startReplaceableGroup(1634999763)
+  stable onConfirmClick: Function0<Unit>? = @static $composer.startReplaceGroup(1634999763)
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -135,13 +293,13 @@ val tmp1_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventListItem(
   event: EventListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onEventClick: @[ExtensionFunctionType] Function1<EventListItemModel, Unit>? = @static $composer.startReplaceableGroup(-115951308)
+  stable onEventClick: @[ExtensionFunctionType] Function1<EventListItemModel, Unit>? = @static $composer.startReplaceGroup(-115949324)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -149,18 +307,18 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.event.EventListItem
 )
 fun present(
   stable <this>: EventsByEntityPresenter
 ): EventsByEntityUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventsListScreen(
-  stable snackbarHostState: SnackbarHostState
   stable lazyListState: LazyListState
   lazyPagingItems: LazyPagingItems<EventListItemModel>
   stable modifier: Modifier? = @static Companion
-  stable onEventClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceableGroup(1636577898)
+  stable isEditMode: Boolean = @static false
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceGroup(1636572842)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String   ->
 
@@ -168,7 +326,7 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.event.EventsListScreen
   stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
 )
@@ -186,7 +344,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun FullScreenErrorWithRetry(
   stable modifier: Modifier? = @static Companion
-  stable onClick: Function0<Unit>? = @static $composer.startReplaceableGroup(738789573)
+  unstable throwable: Throwable? = @static null
+  stable onClick: Function0<Unit>? = @static $composer.startReplaceGroup(738794789)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -194,7 +353,7 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.fullscreen.FullScreenErrorWithRetry
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun FullScreenLoadingIndicator(
@@ -207,7 +366,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun FullScree
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentListItem(
   instrument: InstrumentListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onInstrumentClick: @[ExtensionFunctionType] Function1<InstrumentListItemModel, Unit>? = @static $composer.startReplaceableGroup(-1558401732)
+  stable onInstrumentClick: @[ExtensionFunctionType] Function1<InstrumentListItemModel, Unit>? = @static $composer.startReplaceGroup(-1558399876)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -215,13 +374,33 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.instrument.InstrumentListItem
+)
+fun present(
+  stable <this>: InstrumentsByEntityPresenter
+): InstrumentsByEntityUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentsListScreen(
+  lazyPagingItems: LazyPagingItems<InstrumentListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable isEditMode: Boolean = @static false
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceGroup(823869602)
+val tmp0_group = $composer.cache(false) {
+  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.ui.common.instrument.InstrumentsListScreen
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelListItem(
   label: LabelListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onLabelClick: @[ExtensionFunctionType] Function1<LabelListItemModel, Unit>? = @static $composer.startReplaceableGroup(-1351566584)
+  stable onLabelClick: @[ExtensionFunctionType] Function1<LabelListItemModel, Unit>? = @static $composer.startReplaceGroup(-1351564600)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -229,7 +408,7 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.label.LabelListItem
 )
 fun present(
@@ -238,9 +417,9 @@ fun present(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelsListScreen(
   lazyPagingItems: LazyPagingItems<LabelListItemModel>
   stable modifier: Modifier? = @static Companion
-  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onLabelClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceableGroup(-751278218)
+  stable isEditMode: Boolean = @static false
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceGroup(-751283978)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String   ->
 
@@ -248,13 +427,29 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.label.LabelsListScreen
   stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollapsibleListSeparatorHeader(
+  stable text: String
+  stable collapsed: Boolean
+  stable modifier: Modifier? = @static Companion
+  stable onClick: Function0<Unit>? = @static $composer.startReplaceGroup(-810958556)
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DisambiguationText(
   stable disambiguation: String?
   stable modifier: Modifier? = @static Companion
+  stable fontWeight: FontWeight? = @static null
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LifeSpanText(
   lifeSpan: LifeSpanUiModel?
@@ -271,7 +466,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ListSepar
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun SwipeToDeleteListItem(
   stable modifier: Modifier? = @static Companion
   stable disable: Boolean = @static false
-  stable onDelete: Function0<Unit>? = @static $composer.startReplaceableGroup(-789450085)
+  stable onDelete: Function0<Unit>? = @static $composer.startReplaceGroup(-789450085)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -279,7 +474,7 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
   stable content: @[ExtensionFunctionType] Function3<RowScope, Composer, Int, Unit>? = @static ComposableSingletons$SwipeToDeleteListItemKt.lambda-1
 )
@@ -296,7 +491,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   lazyPagingItems: LazyPagingItems<T>
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable snackbarHostState: SnackbarHostState? = @static null
   stable customNoResultsText: String? = @static ""
   stable keyed: Boolean = @static true
   stable itemContent: @[ExtensionFunctionType] Function4<LazyItemScope, @[ParameterName(name = 'value')] T?, Composer, Int, Unit>
@@ -309,7 +503,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Coordinat
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceListItem(
   place: PlaceListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onPlaceClick: @[ExtensionFunctionType] Function1<PlaceListItemModel, Unit>? = @static $composer.startReplaceableGroup(1445177294)
+  stable onPlaceClick: @[ExtensionFunctionType] Function1<PlaceListItemModel, Unit>? = @static $composer.startReplaceGroup(1445179278)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -317,18 +511,18 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.place.PlaceListItem
 )
 fun present(
   stable <this>: PlacesByEntityPresenter
 ): PlacesByEntityUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlacesListScreen(
-  stable snackbarHostState: SnackbarHostState
   stable lazyListState: LazyListState
   lazyPagingItems: LazyPagingItems<PlaceListItemModel>
   stable modifier: Modifier? = @static Companion
-  stable onPlaceClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceableGroup(-982090512)
+  stable isEditMode: Boolean = @static false
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceGroup(-982093360)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String   ->
 
@@ -336,13 +530,14 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.place.PlacesListScreen
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingListItem(
   recording: RecordingListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onRecordingClick: @[ExtensionFunctionType] Function1<RecordingListItemModel, Unit>? = @static $composer.startReplaceableGroup(-2024562622)
+  stable onRecordingClick: @[ExtensionFunctionType] Function1<RecordingListItemModel, Unit>? = @static $composer.startReplaceGroup(-2024560702)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -350,7 +545,7 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.recording.RecordingListItem
 )
 fun present(
@@ -359,14 +554,24 @@ fun present(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingsListScreen(
   lazyPagingItems: LazyPagingItems<RecordingListItemModel>
   stable modifier: Modifier? = @static Companion
-  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onRecordingClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>
+  stable isEditMode: Boolean = @static false
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceGroup(-1175684740)
+val tmp0_group = $composer.cache(false) {
+  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.ui.common.recording.RecordingsListScreen
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RelationListItem(
   relation: RelationListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceableGroup(310180712)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(310185000)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
 
@@ -374,15 +579,14 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.relation.RelationListItem
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RelationsListScreen(
   lazyPagingItems: LazyPagingItems<RelationListItemModel>
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceableGroup(179096290)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(179092770)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
 
@@ -390,17 +594,17 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.relation.RelationsListScreen
 )
 fun present(
-  stable <this>: RelationsPresenter
+  stable <this>: RelationsPresenterImpl
 ): RelationsUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseListItem(
   release: ReleaseListItemModel
   stable modifier: Modifier? = @static Companion
   stable showMoreInfo: Boolean = @static true
-  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @dynamic $composer.startReplaceableGroup(-214181170)
+  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @dynamic $composer.startReplaceGroup(-214177106)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -408,9 +612,9 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.release.ReleaseListItem
-  stable onClick: @[ExtensionFunctionType] Function1<ReleaseListItemModel, Unit>? = @static $composer.startReplaceableGroup(-214179538)
+  stable onClick: @[ExtensionFunctionType] Function1<ReleaseListItemModel, Unit>? = @static $composer.startReplaceGroup(-214175474)
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -418,7 +622,7 @@ val tmp1_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.ui.common.release.ReleaseListItem
 )
 fun present(
@@ -427,10 +631,10 @@ fun present(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesListScreen(
   lazyPagingItems: LazyPagingItems<ReleaseListItemModel>
   stable modifier: Modifier? = @static Companion
-  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable isEditMode: Boolean = @static false
   stable showMoreInfo: Boolean = @static true
-  stable onReleaseClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceableGroup(-502852976)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceGroup(-502858800)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String   ->
 
@@ -438,10 +642,10 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.release.ReleasesListScreen
   stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
-  unstable requestForMissingCoverArtUrl: SuspendFunction1<@[ParameterName(name = 'id')] String, Unit>? = @dynamic $composer.startReplaceableGroup(-502847836)
+  unstable requestForMissingCoverArtUrl: SuspendFunction1<@[ParameterName(name = 'id')] String, Unit>? = @dynamic $composer.startReplaceGroup(-502853660)
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -449,14 +653,14 @@ val tmp1_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.ui.common.release.ReleasesListScreen
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupListItem(
   releaseGroup: ReleaseGroupListItemModel
   stable showType: Boolean
   stable modifier: Modifier? = @static Companion
-  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @dynamic $composer.startReplaceableGroup(1287277020)
+  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @dynamic $composer.startReplaceGroup(1287281084)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -464,9 +668,9 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
-  stable onClick: @[ExtensionFunctionType] Function1<ReleaseGroupListItemModel, Unit>? = @static $composer.startReplaceableGroup(1287278812)
+  stable onClick: @[ExtensionFunctionType] Function1<ReleaseGroupListItemModel, Unit>? = @static $composer.startReplaceGroup(1287282876)
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -474,7 +678,7 @@ val tmp1_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
 )
 fun present(
@@ -483,9 +687,9 @@ fun present(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupsListScreen(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
-  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onReleaseGroupClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceableGroup(1945150306)
+  stable isEditMode: Boolean = @static false
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceGroup(1945144450)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String   ->
 
@@ -493,10 +697,10 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListScreen
   stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
-  unstable requestForMissingCoverArtUrl: SuspendFunction1<@[ParameterName(name = 'id')] String, Unit>? = @dynamic $composer.startReplaceableGroup(1945155446)
+  unstable requestForMissingCoverArtUrl: SuspendFunction1<@[ParameterName(name = 'id')] String, Unit>? = @dynamic $composer.startReplaceGroup(1945149590)
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -504,13 +708,16 @@ val tmp1_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListScreen
 )
+fun present(
+  stable <this>: SeriesByEntityPresenter
+): SeriesByEntityUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesListItem(
   series: SeriesListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onSeriesClick: @[ExtensionFunctionType] Function1<SeriesListItemModel, Unit>? = @static $composer.startReplaceableGroup(1089498684)
+  stable onSeriesClick: @[ExtensionFunctionType] Function1<SeriesListItemModel, Unit>? = @static $composer.startReplaceGroup(1089500540)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -518,8 +725,25 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.series.SeriesListItem
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesListScreen(
+  lazyPagingItems: LazyPagingItems<SeriesListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable isEditMode: Boolean = @static false
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceGroup(1720333697)
+val tmp0_group = $composer.cache(false) {
+  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.ui.common.series.SeriesListScreen
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TextWithHeading(
   stable heading: String
@@ -529,8 +753,13 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TextWithH
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AddToCollectionMenuItem(
   <this>: OverflowMenuScope
+  stable entity: MusicBrainzEntity
+  stable entityId: String
+  stable overlayHost: OverlayHost
+  unstable coroutineScope: CoroutineScope
+  stable snackbarHostState: SnackbarHostState
   stable modifier: Modifier? = @static Companion
-  stable onClick: Function0<Unit>
+  stable onLoginClick: Function0<Unit>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CopyToClipboardMenuItem(
   <this>: OverflowMenuScope
@@ -546,15 +775,24 @@ fun animateAlphaWithDelay(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DotsFlashing(
   stable modifier: Modifier? = @static Companion
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EditToggle(
+  stable topAppBarEditState: TopAppBarEditState
+  stable modifier: Modifier? = @static Companion
+  stable includeTextSeparately: Boolean = @static false
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun OpenInBrowserMenuItem(
   <this>: OverflowMenuScope
-  stable entity: MusicBrainzEntity
-  stable entityId: String
+  stable url: String
   stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RefreshMenuItem(
+  <this>: OverflowMenuScope
+  stable modifier: Modifier? = @static Companion
+  stable onClick: Function0<Unit>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ScrollableTopAppBar(
   stable modifier: Modifier? = @static Companion
-  stable onBack: Function0<Unit>? = @static $composer.startReplaceableGroup(-1560654250)
+  stable onBack: Function0<Unit>? = @static $composer.startReplaceGroup(-1560649706)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -562,13 +800,14 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
   stable showBackButton: Boolean = @static true
   stable entity: MusicBrainzEntity? = @static null
   stable title: String? = @static ""
   stable subtitle: String? = @static ""
   stable scrollBehavior: TopAppBarScrollBehavior? = @static null
+  stable isEditMode: Boolean = @static false
   stable actions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$ScrollableTopAppBarKt.lambda-1
   stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
   stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
@@ -591,7 +830,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TabsBar(
   stable modifier: Modifier? = @static Companion
   unstable tabsTitle: List<String>? = @static listOf()
   stable selectedTabIndex: Int = @static 0
-  stable onSelectTabIndex: Function1<Int, Unit>? = @static $composer.startReplaceableGroup(773941771)
+  stable onSelectTabIndex: Function1<Int, Unit>? = @static $composer.startReplaceGroup(773941771)
 val tmp0_group = $composer.cache(false) {
   {     it  :   Int   ->
 
@@ -599,7 +838,7 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.topappbar.TabsBar
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ToggleMenuItem(
@@ -610,13 +849,16 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ToggleMen
   stable onToggle: Function1<Boolean, Unit>
   stable modifier: Modifier? = @static Companion
 )
+fun rememberTopAppBarEditState(
+  stable initialIsEditMode: Boolean = @static false
+): TopAppBarEditState
 fun rememberTopAppBarFilterState(
   stable initialFilterText: String? = @static ""
   stable initialIsFilterMode: Boolean = @static false
 ): TopAppBarFilterState
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun TopAppBarWithFilterInternal(
   stable modifier: Modifier? = @static Companion
-  stable onBack: Function0<Unit>? = @static $composer.startReplaceableGroup(-1763708808)
+  stable onBack: Function0<Unit>? = @static $composer.startReplaceGroup(-1763706600)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -624,7 +866,7 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilterInternal
   stable showBackButton: Boolean = @static true
   stable entity: MusicBrainzEntity? = @static null
@@ -635,13 +877,14 @@ tmp0_group@ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilterInternal
   stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
   stable showFilterIcon: Boolean = @static true
   stable topAppBarFilterState: TopAppBarFilterState? = @dynamic TopAppBarFilterState()
+  stable topAppBarEditState: TopAppBarEditState? = @dynamic TopAppBarEditState()
   stable additionalActions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda-1
   stable additionalBar: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda-2
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TrackListItem(
   track: TrackListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onRecordingClick: Function2<@[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String, Unit>? = @static $composer.startReplaceableGroup(172638975)
+  stable onRecordingClick: Function2<@[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String, Unit>? = @static $composer.startReplaceGroup(172643007)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   String  ,   <unused var>  :   String   ->
 
@@ -649,17 +892,17 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.track.TrackListItem
 )
 fun present(
   stable <this>: TracksByReleasePresenter
 ): TracksByReleaseUiState
-restartable scheme("[androidx.compose.ui.UiComposable]") fun UrlsSection(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun UrlsSection(
   unstable urls: List<RelationListItemModel>
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceableGroup(-623379029)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(-623378901)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
 
@@ -667,13 +910,18 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.url.UrlsSection
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WikipediaSection(
+  extract: WikipediaExtract
+  stable modifier: Modifier? = @static Companion
+  stable filterText: String? = @static ""
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorkListItem(
   work: WorkListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onWorkClick: @[ExtensionFunctionType] Function1<WorkListItemModel, Unit>? = @static $composer.startReplaceableGroup(-411832452)
+  stable onWorkClick: @[ExtensionFunctionType] Function1<WorkListItemModel, Unit>? = @static $composer.startReplaceGroup(-411830596)
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -681,7 +929,7 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.work.WorkListItem
 )
 fun present(
@@ -690,9 +938,9 @@ fun present(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorksListScreen(
   lazyPagingItems: LazyPagingItems<WorkListItemModel>
   stable modifier: Modifier? = @static Companion
-  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onWorkClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceableGroup(468748290)
+  stable isEditMode: Boolean = @static false
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceGroup(468742562)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String   ->
 
@@ -700,108 +948,7 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceableGroup()
+$composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.work.WorksListScreen
   stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaListItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaListItemDisambiguation()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaListItemCountry()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaListItemWorldwide()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseEvent()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseEventNoDate()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  artist: ArtistListItemModel
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithSubtitle()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithEndIcon()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithStartIcon()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewClickableItemWithStartEndIcon()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSimpleAlertDialog()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  event: EventListItemModel
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewFullScreenText()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  instrument: InstrumentListItemModel
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelListItemPreview(
-  label: LabelListItemModel
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  lifeSpan: LifeSpanUiModel
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ListSeparatorHeaderPreview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun FooterLoadingIndicatorPreview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  place: PlaceListItemModel
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoordinateListItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  recording: RecordingListItemModel
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistRelationListItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecordingRelationListItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewUrlRelationListItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemDisambiguation()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemDisambiguationCountry()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemCountry()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemDateCountryFormatsTracks()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemCountryDate()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemDateArtistCredits()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemMultipleCountries()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemShowLessInfo()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseListItemCatalog()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  track: TrackListItemModel
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseGroupListItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseGroupListItemWithType()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  series: SeriesListItemModel
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTextWithHeading()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewDotsFlashing()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewScrollableTopAppBar()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewScrollableTopAppBarWithIcon()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewScrollableTopAppBarWithTabs()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewScrollableTopAppBarLoading()
-restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun TopAppBarWithFilter(
-  stable modifier: Modifier? = @static Companion
-  stable onBack: Function0<Unit>? = @static $composer.startReplaceableGroup(-1181755365)
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-$composer.endReplaceableGroup()
-tmp0_group@ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
-  stable showBackButton: Boolean = @static true
-  stable entity: MusicBrainzEntity? = @static null
-  stable title: String? = @static ""
-  stable subtitle: String? = @static ""
-  stable scrollBehavior: TopAppBarScrollBehavior? = @static null
-  stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
-  stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
-  stable showFilterIcon: Boolean = @static true
-  stable topAppBarFilterState: TopAppBarFilterState? = @dynamic TopAppBarFilterState()
-  stable additionalActions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilter_androidKt.lambda-1
-  stable additionalBar: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilter_androidKt.lambda-2
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilter()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterFilterMode()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterFilterModeWithText()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterNoFilter()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterWithTabs()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterWithTabsFilterMode()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewUrlsSection()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()

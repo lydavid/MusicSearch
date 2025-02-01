@@ -18,6 +18,7 @@ kotlin {
                 implementation(libs.sqldelight.coroutines)
                 implementation(libs.sqldelight.paging)
                 implementation(libs.sqldelight.primitive)
+                implementation(libs.stately.common)
             }
         }
         val commonTest by getting {
@@ -44,6 +45,8 @@ kotlin {
         val iosMain by getting {
             dependencies {
                 implementation(libs.sqldelight.native.driver)
+                implementation(libs.stately.isolate)
+                implementation(libs.stately.iso.collections)
             }
         }
     }
@@ -53,6 +56,7 @@ sqldelight {
     databases {
         create("Database") {
             packageName.set("ly.david.musicsearch.data.database")
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight/databases"))
         }
     }
 }

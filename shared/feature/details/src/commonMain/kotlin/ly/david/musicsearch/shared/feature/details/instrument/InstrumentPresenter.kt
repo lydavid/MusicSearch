@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -23,7 +24,9 @@ import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
@@ -41,6 +44,8 @@ internal class InstrumentPresenter(
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val wikimediaRepository: WikimediaRepository,
 ) : Presenter<InstrumentUiState> {
 
     @Composable
@@ -50,13 +55,14 @@ internal class InstrumentPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        var instrument: InstrumentDetailsModel? by remember { mutableStateOf(null) }
+        var instrument: InstrumentDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<InstrumentTab> by rememberSaveable {
             mutableStateOf(InstrumentTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(InstrumentTab.DETAILS) }
-        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
@@ -65,7 +71,10 @@ internal class InstrumentPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val instrumentDetailsModel = repository.lookupInstrument(screen.id)
+                val instrumentDetailsModel = repository.lookupInstrument(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = instrumentDetailsModel.getNameWithDisambiguation()
                 instrument = instrumentDetailsModel
                 isError = false
@@ -82,6 +91,20 @@ internal class InstrumentPresenter(
                     ),
                 )
                 recordedHistory = true
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, instrument) {
+            wikimediaRepository.getWikipediaExtract(
+                mbid = instrument?.id ?: return@LaunchedEffect,
+                urls = instrument?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                instrument = instrument?.copy(
+                    wikipediaExtract = wikipediaExtract,
+                )
+            }.onFailure {
+                snackbarMessage = it.message
             }
         }
 
@@ -142,10 +165,12 @@ internal class InstrumentPresenter(
             title = title,
             isError = isError,
             instrument = instrument,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
+            snackbarMessage = snackbarMessage,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
@@ -158,10 +183,12 @@ internal data class InstrumentUiState(
     val title: String,
     val isError: Boolean,
     val instrument: InstrumentDetailsModel?,
+    val url: String = "",
     val tabs: List<InstrumentTab>,
     val selectedTab: InstrumentTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
+    val snackbarMessage: String? = null,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (InstrumentUiEvent) -> Unit,

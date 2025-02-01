@@ -3,9 +3,7 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.data.database.mapper.mapToTrackListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
 import lydavidmusicsearchdatadatabase.Track
 
@@ -62,7 +60,7 @@ class TrackDao(
     fun getTracksByRelease(
         releaseId: String,
         query: String,
-    ): PagingSource<Int, TrackListItemModel> = QueryPagingSource(
+    ): PagingSource<Int, TrackAndMedium> = QueryPagingSource(
         countQuery = transacter.getNumberOfTracksByRelease(
             releaseId = releaseId,
             query = query,
@@ -75,8 +73,55 @@ class TrackDao(
                 query = query,
                 limit = limit,
                 offset = offset,
-                mapper = ::mapToTrackListItemModel,
+                mapper = ::mapToTrackAndMedium,
             )
         },
     )
 }
+
+private fun mapToTrackAndMedium(
+    id: String,
+    mediumId: Long,
+    recordingId: String,
+    position: Int,
+    number: String,
+    title: String,
+    length: Int?,
+    formattedArtistCreditNames: String,
+    visited: Boolean?,
+    mediumPosition: Int?,
+    mediumName: String?,
+    trackCount: Int,
+    format: String?,
+) = TrackAndMedium(
+    id = id,
+    position = position,
+    number = number,
+    title = title,
+    length = length,
+    mediumId = mediumId,
+    recordingId = recordingId,
+    formattedArtistCredits = formattedArtistCreditNames,
+    visited = visited == true,
+    mediumPosition = mediumPosition,
+    mediumName = mediumName,
+    trackCount = trackCount,
+    format = format,
+)
+
+data class TrackAndMedium(
+    val id: String,
+    val position: Int,
+    val number: String,
+    val title: String,
+    val length: Int? = null,
+    val mediumId: Long = 0,
+    val recordingId: String = "",
+    val formattedArtistCredits: String? = null,
+    val visited: Boolean = false,
+
+    val mediumPosition: Int?,
+    val mediumName: String?,
+    val trackCount: Int,
+    val format: String?,
+)

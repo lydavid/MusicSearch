@@ -16,7 +16,6 @@ kotlin {
             dependencies {
                 implementation(projects.ui.common)
                 implementation(projects.shared.domain)
-                implementation(projects.core.preferences)
 
                 implementation(compose.foundation)
                 implementation(compose.material3)

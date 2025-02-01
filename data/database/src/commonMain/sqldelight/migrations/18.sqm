@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS visited (
+  entity_id TEXT PRIMARY KEY NOT NULL
+);
+
+INSERT INTO visited (entity_id)
+SELECT entity_id
+FROM mb_entity_has_urls;
+
+DROP TABLE mb_entity_has_urls;

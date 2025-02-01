@@ -20,7 +20,9 @@ fun TextWithHeading(
     modifier: Modifier = Modifier,
     filterText: String = "",
 ) {
-    if (heading.contains(filterText) || text.contains(filterText)) {
+    if (heading.contains(filterText, ignoreCase = true) ||
+        text.contains(filterText, ignoreCase = true)
+    ) {
         SelectionContainer {
             Text(
                 text = buildAnnotatedString {

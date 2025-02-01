@@ -15,7 +15,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.ARTIST_CREDITS
-import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseApi
+import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.api.LABELS
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
@@ -26,7 +26,7 @@ class ReleasesByEntityRepositoryImpl(
     private val artistReleaseDao: ArtistReleaseDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
-    private val browseReleaseApi: BrowseReleaseApi,
+    private val browseApi: BrowseApi,
     private val recordingReleaseDao: RecordingReleaseDao,
     private val releaseDao: ReleaseDao,
     private val releaseCountryDao: ReleaseCountryDao,
@@ -149,7 +149,7 @@ class ReleasesByEntityRepositoryImpl(
     ): BrowseReleasesResponse {
         return when (entity) {
             MusicBrainzEntity.LABEL -> {
-                browseReleaseApi.browseReleasesByEntity(
+                browseApi.browseReleasesByEntity(
                     entityId = entityId,
                     entity = entity,
                     offset = offset,
@@ -158,7 +158,7 @@ class ReleasesByEntityRepositoryImpl(
             }
 
             else -> {
-                browseReleaseApi.browseReleasesByEntity(
+                browseApi.browseReleasesByEntity(
                     entityId = entityId,
                     entity = entity,
                     offset = offset,

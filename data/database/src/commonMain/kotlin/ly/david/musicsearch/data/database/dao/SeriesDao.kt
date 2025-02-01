@@ -51,4 +51,8 @@ class SeriesDao(
         disambiguation = disambiguation,
         type = type,
     )
+
+    fun delete(id: String) {
+        transacter.delete(id)
+    }
 }

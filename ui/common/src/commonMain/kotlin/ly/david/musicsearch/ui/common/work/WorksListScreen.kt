@@ -1,6 +1,5 @@
 package ly.david.musicsearch.ui.common.work
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -12,13 +11,13 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun WorksListScreen(
     lazyPagingItems: LazyPagingItems<WorkListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
-    onWorkClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
+    isEditMode: Boolean = false,
+    onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
 ) {
     ScreenWithPagingLoadingAndError(
@@ -33,14 +32,14 @@ fun WorksListScreen(
                         WorkListItem(
                             work = listItemModel,
                         ) {
-                            onWorkClick(
+                            onItemClick(
                                 MusicBrainzEntity.WORK,
                                 id,
                                 getNameWithDisambiguation(),
                             )
                         }
                     },
-                    disable = onDeleteFromCollection == null,
+                    disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection?.invoke(
                             listItemModel.id,

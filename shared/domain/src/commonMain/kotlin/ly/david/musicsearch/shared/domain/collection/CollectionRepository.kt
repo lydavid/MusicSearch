@@ -16,7 +16,7 @@ interface CollectionRepository {
         sortOption: CollectionSortOption,
     ): Flow<PagingData<CollectionListItemModel>>
 
-    fun getCollection(entityId: String): CollectionListItemModel
+    fun getCollection(entityId: String): CollectionListItemModel?
 
     fun insertLocal(
         collection: CollectionListItemModel,
@@ -32,5 +32,10 @@ interface CollectionRepository {
         collectionId: String,
         entity: MusicBrainzEntity,
         entityId: String,
+    ): ActionableResult
+
+    suspend fun deleteCollection(
+        collectionId: String,
+        collectionName: String,
     ): ActionableResult
 }

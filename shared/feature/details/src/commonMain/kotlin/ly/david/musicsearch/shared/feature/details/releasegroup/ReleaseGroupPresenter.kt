@@ -12,20 +12,23 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
@@ -48,6 +51,8 @@ internal class ReleaseGroupPresenter(
     private val releaseGroupImageRepository: ReleaseGroupImageRepository,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val wikimediaRepository: WikimediaRepository,
 ) : Presenter<ReleaseGroupUiState> {
 
     @Composable
@@ -58,14 +63,15 @@ internal class ReleaseGroupPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        var releaseGroup: ReleaseGroupDetailsModel? by remember { mutableStateOf(null) }
+        var releaseGroup: ReleaseGroupDetailsModel? by rememberRetained { mutableStateOf(null) }
         var imageUrl by rememberSaveable { mutableStateOf("") }
         val tabs: List<ReleaseGroupTab> by rememberSaveable {
             mutableStateOf(ReleaseGroupTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.DETAILS) }
-        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val releasesByEntityUiState = releasesByEntityPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
@@ -76,7 +82,10 @@ internal class ReleaseGroupPresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val releaseGroupDetailsModel = repository.lookupReleaseGroup(screen.id)
+                val releaseGroupDetailsModel = repository.lookupReleaseGroup(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = releaseGroupDetailsModel.getNameWithDisambiguation()
                 subtitle = "Release Group by ${releaseGroupDetailsModel.artistCredits.getDisplayNames()}"
                 releaseGroup = releaseGroupDetailsModel
@@ -105,6 +114,20 @@ internal class ReleaseGroupPresenter(
                     thumbnail = false,
                     forceRefresh = forceRefreshDetails,
                 )
+            }
+        }
+
+        LaunchedEffect(forceRefreshDetails, releaseGroup) {
+            wikimediaRepository.getWikipediaExtract(
+                mbid = releaseGroup?.id ?: return@LaunchedEffect,
+                urls = releaseGroup?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                releaseGroup = releaseGroup?.copy(
+                    wikipediaExtract = wikipediaExtract,
+                )
+            }.onFailure {
+                snackbarMessage = it.message
             }
         }
 
@@ -176,11 +199,13 @@ internal class ReleaseGroupPresenter(
             subtitle = subtitle,
             isError = isError,
             releaseGroup = releaseGroup,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             imageUrl = imageUrl,
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
+            snackbarMessage = snackbarMessage,
             releasesByEntityUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
@@ -195,11 +220,13 @@ internal data class ReleaseGroupUiState(
     val subtitle: String,
     val isError: Boolean,
     val releaseGroup: ReleaseGroupDetailsModel?,
+    val url: String = "",
     val imageUrl: String,
     val tabs: List<ReleaseGroupTab>,
     val selectedTab: ReleaseGroupTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
+    val snackbarMessage: String? = null,
     val releasesByEntityUiState: ReleasesByEntityUiState,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState = LoginUiState(),

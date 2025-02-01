@@ -10,8 +10,8 @@ import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.database.dao.WorksByEntityDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseWorksResponse
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.shared.domain.work.WorksByEntityRepository
@@ -21,7 +21,7 @@ class WorksByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val workDao: WorkDao,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val browseApi: BrowseApi,
 ) : WorksByEntityRepository,
     BrowseEntitiesByEntity<WorkListItemModel, WorkMusicBrainzModel, BrowseWorksResponse>(
         browseEntity = MusicBrainzEntity.WORK,
@@ -89,7 +89,7 @@ class WorksByEntityRepositoryImpl(
         entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseWorksResponse {
-        return musicBrainzApi.browseWorksByEntity(
+        return browseApi.browseWorksByEntity(
             entityId = entityId,
             entity = entity,
             offset = offset,

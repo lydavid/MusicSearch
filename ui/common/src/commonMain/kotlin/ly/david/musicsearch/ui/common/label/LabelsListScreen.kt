@@ -1,6 +1,5 @@
 package ly.david.musicsearch.ui.common.label
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -12,13 +11,13 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LabelsListScreen(
     lazyPagingItems: LazyPagingItems<LabelListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
-    onLabelClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
+    isEditMode: Boolean = false,
+    onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
 ) {
     ScreenWithPagingLoadingAndError(
@@ -33,14 +32,14 @@ fun LabelsListScreen(
                         LabelListItem(
                             label = listItemModel,
                         ) {
-                            onLabelClick(
+                            onItemClick(
                                 MusicBrainzEntity.LABEL,
                                 id,
                                 getNameWithDisambiguation(),
                             )
                         }
                     },
-                    disable = onDeleteFromCollection == null,
+                    disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection?.invoke(
                             listItemModel.id,

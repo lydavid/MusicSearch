@@ -7,9 +7,11 @@ fun mapToSeriesListItemModel(
     name: String,
     disambiguation: String?,
     type: String?,
+    visited: Boolean?,
 ) = SeriesListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
     type = type,
+    visited = visited == true,
 )

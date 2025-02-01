@@ -1,3 +1,13 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSection()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionNoRelationships()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionNullRelationships()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarEmpty()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarHalf()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarFull()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarOverflow()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewStatsScreen()
 fun present(
   stable <this>: AreaStatsPresenter
 ): StatsUiState
@@ -45,13 +55,3 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LocalRemo
   stable totalLocal: Int
   stable cachedLocalOfRemote: Function2<Int, Int, String>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSection()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionNoRelationships()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionNullRelationships()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarEmpty()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarHalf()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarFull()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarOverflow()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewStatsScreen()

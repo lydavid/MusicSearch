@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.label
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -41,7 +40,6 @@ import ly.david.musicsearch.ui.core.LocalStrings
 
 @OptIn(
     ExperimentalMaterial3Api::class,
-    ExperimentalFoundationApi::class,
 )
 @Composable
 internal fun LabelUi(
@@ -92,8 +90,7 @@ internal fun LabelUi(
                 ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
-                        entity = entity,
-                        entityId = entityId,
+                        url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
                     if (state.selectedTab == LabelTab.RELEASES) {
@@ -151,15 +148,6 @@ internal fun LabelUi(
                             label = label,
                             filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
-                            onItemClick = { entity, id, title ->
-                                eventSink(
-                                    LabelUiEvent.ClickItem(
-                                        entity = entity,
-                                        id = id,
-                                        title = title,
-                                    ),
-                                )
-                            },
                         )
                     }
                 }
@@ -173,7 +161,7 @@ internal fun LabelUi(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.relationsUiState.lazyListState,
                         showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
-                        onReleaseClick = { entity, id, title ->
+                        onItemClick = { entity, id, title ->
                             eventSink(
                                 LabelUiEvent.ClickItem(
                                     entity = entity,

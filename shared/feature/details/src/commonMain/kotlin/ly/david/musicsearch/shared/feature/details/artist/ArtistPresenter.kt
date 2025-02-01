@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -24,9 +25,9 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
-import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
@@ -67,6 +68,7 @@ internal class ArtistPresenter(
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
 ) : Presenter<ArtistUiState> {
 
     @Composable
@@ -76,15 +78,14 @@ internal class ArtistPresenter(
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
-        var artist: ArtistDetailsModel? by remember { mutableStateOf(null) }
-        var imageUrl: String? by remember { mutableStateOf(null) }
-        var wikipediaExtract: WikipediaExtract by remember { mutableStateOf(WikipediaExtract()) }
+        var artist: ArtistDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<ArtistTab> by rememberSaveable {
             mutableStateOf(ArtistTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
-        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val eventsByEntityUiState = eventsByEntityPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
@@ -130,21 +131,25 @@ internal class ArtistPresenter(
         }
 
         LaunchedEffect(forceRefreshDetails, artist) {
-            artist?.let { artist ->
+            artist = artist?.copy(
                 imageUrl = artistImageRepository.getArtistImageUrl(
-                    artistDetailsModel = artist,
+                    artistDetailsModel = artist ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
-                )
-            }
+                ),
+            )
         }
 
         LaunchedEffect(forceRefreshDetails, artist) {
-            artist?.let { artist ->
-                wikipediaExtract = wikimediaRepository.getWikipediaExtract(
-                    mbid = artist.id,
-                    urls = artist.urls,
-                    forceRefresh = forceRefreshDetails,
+            wikimediaRepository.getWikipediaExtract(
+                mbid = artist?.id ?: return@LaunchedEffect,
+                urls = artist?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                artist = artist?.copy(
+                    wikipediaExtract = wikipediaExtract,
                 )
+            }.onFailure {
+                snackbarMessage = it.message
             }
         }
 
@@ -300,12 +305,12 @@ internal class ArtistPresenter(
             isLoading = isLoading,
             isError = isError,
             artist = artist,
-            imageUrl = imageUrl,
-            wikipediaExtract = wikipediaExtract,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
+            snackbarMessage = snackbarMessage,
             eventsByEntityUiState = eventsByEntityUiState,
             recordingsByEntityUiState = recordingsByEntityUiState,
             releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
@@ -324,12 +329,12 @@ internal data class ArtistUiState(
     val isLoading: Boolean,
     val isError: Boolean,
     val artist: ArtistDetailsModel?,
-    val imageUrl: String?,
-    val wikipediaExtract: WikipediaExtract,
+    val url: String = "",
     val tabs: List<ArtistTab>,
     val selectedTab: ArtistTab,
     val topAppBarFilterState: TopAppBarFilterState,
     val detailsLazyListState: LazyListState = LazyListState(),
+    val snackbarMessage: String? = null,
     val eventsByEntityUiState: EventsByEntityUiState,
     val recordingsByEntityUiState: RecordingsByEntityUiState,
     val releasesByEntityUiState: ReleasesByEntityUiState,

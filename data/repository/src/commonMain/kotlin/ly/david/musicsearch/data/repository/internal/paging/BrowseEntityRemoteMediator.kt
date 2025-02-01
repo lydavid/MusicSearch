@@ -67,8 +67,10 @@ internal class BrowseEntityRemoteMediator<DM : Any>(
                 }
             }
 
+            val browseEntityCount = browseEntity(nextOffset)
+
             // Assuming all Browse uses this limit.
-            MediatorResult.Success(endOfPaginationReached = browseEntity(nextOffset) < SEARCH_BROWSE_LIMIT)
+            MediatorResult.Success(endOfPaginationReached = browseEntityCount < SEARCH_BROWSE_LIMIT)
         } catch (ex: Exception) {
             MediatorResult.Error(ex)
         }

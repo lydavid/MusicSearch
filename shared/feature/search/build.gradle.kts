@@ -2,6 +2,7 @@ plugins {
     id("ly.david.android.library")
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
+    alias(libs.plugins.paparazzi)
 }
 
 android {
@@ -27,6 +28,11 @@ kotlin {
         }
         val androidMain by getting
         val jvmMain by getting
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(projects.ui.test.screenshot)
+            }
+        }
     }
 }
 

@@ -1,0 +1,102 @@
+appId: io.github.lydavid.musicsearch.debug
+---
+- launchApp
+- startRecording: search-artist-then-back
+- tapOn:
+    text: "Search"
+    index: 0
+- inputText: "zutomayo"
+- tapOn: "ずっと真夜中でいいのに。"
+
+- assertVisible: "ずっと真夜中でいいのに。 (Japanese pop band)"
+- assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
+- assertVisible: "Type: Group"
+- assertVisible: "Founded: 2018"
+- tapOn: "Filter"
+- inputText: "spotify"
+- "hideKeyboard"
+- assertVisible: "https://open.spotify.com/artist/38WbKH6oKAZskBhqDFA8Uj"
+- assertNotVisible: "Sort name: Zutto Mayonaka De Iinoni."
+- assertNotVisible: "Type: Group"
+- assertNotVisible: "Founded: 2018"
+- tapOn: Clear filter text
+- assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
+- assertVisible: "Type: Group"
+- assertVisible: "Founded: 2018"
+- inputText: "wiki"
+- assertVisible: "https://en.wikipedia.org/wiki/Zutomayo"
+- assertVisible: "https://www.wikidata.org/wiki/Q60989925"
+- tapOn: Clear filter text
+- inputText: "japan"
+- assertVisible: "Japan"
+- tapOn: Cancel
+- tapOn: "More actions"
+- tapOn: "Add to collection"
+- tapOn: "Create a collection"
+- inputText: "Artists"
+- tapOn: "OK"
+- tapOn: "Artists"
+
+- tapOn:
+    text: "Back"
+    index: 0
+- assertVisible: "Search MusicBrainz"
+- assertVisible: "ずっと真夜中でいいのに。"
+
+- tapOn: History
+- tapOn: "ずっと真夜中でいいのに。 (Japanese pop band)"
+
+
+# Repeat tests with cached data
+- assertVisible: "ずっと真夜中でいいのに。 (Japanese pop band)"
+- assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
+- assertVisible: "Type: Group"
+- assertVisible: "Founded: 2018"
+- tapOn: "Filter"
+- inputText: "spotify"
+- "hideKeyboard"
+- assertVisible: "https://open.spotify.com/artist/38WbKH6oKAZskBhqDFA8Uj"
+- assertNotVisible: "Sort name: Zutto Mayonaka De Iinoni."
+- assertNotVisible: "Type: Group"
+- assertNotVisible: "Founded: 2018"
+- tapOn: Clear filter text
+- assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
+- assertVisible: "Type: Group"
+- assertVisible: "Founded: 2018"
+- inputText: "wiki"
+- assertVisible: "https://en.wikipedia.org/wiki/Zutomayo"
+- assertVisible: "https://www.wikidata.org/wiki/Q60989925"
+- tapOn: Clear filter text
+- inputText: "japan"
+- assertVisible: "Japan"
+- tapOn: Cancel
+- tapOn: "More actions"
+- tapOn: "Add to collection"
+- tapOn: "Artists"
+- assertVisible: "Already in Artists."
+
+
+- tapOn: Collections
+- tapOn: "Filter"
+- inputText: "art"
+- tapOn: "Artists"
+
+# Attempt to swipe in view mode ends up clicking into the item
+- swipe:
+    from: "ずっと真夜中でいいのに。"
+    direction: RIGHT
+- tapOn: "Back"
+
+- tapOn: "Edit"
+- assertVisible: "Editing..."
+- tapOn: "Filter"
+- inputText: "zutto"
+- swipe:
+      from: "ずっと真夜中でいいのに。"
+      direction: RIGHT
+- tapOn: Cancel
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: "Back"
+
+- stopRecording

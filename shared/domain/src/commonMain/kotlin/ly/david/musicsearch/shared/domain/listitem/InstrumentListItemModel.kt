@@ -8,4 +8,5 @@ data class InstrumentListItemModel(
     override val disambiguation: String? = null,
     override val description: String? = null,
     override val type: String? = null,
-) : Instrument, ListItemModel()
+    override val visited: Boolean = false,
+) : ListItemModel(), Instrument, Visitable

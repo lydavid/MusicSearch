@@ -11,4 +11,5 @@ interface Relation : NameWithDisambiguation {
     val label: String
     val attributes: String?
     val additionalInfo: String?
+    val isForwardDirection: Boolean?
 }

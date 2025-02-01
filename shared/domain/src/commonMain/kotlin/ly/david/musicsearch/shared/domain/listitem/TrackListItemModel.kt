@@ -11,4 +11,9 @@ data class TrackListItemModel(
     val mediumId: Long = 0,
     val recordingId: String = "",
     val formattedArtistCredits: String? = null,
-) : ListItemModel(), Track
+    override val visited: Boolean = false,
+    val mediumPosition: Int? = null,
+    val mediumName: String? = null,
+    val trackCount: Int = 0,
+    val format: String? = null,
+) : ListItemModel(), Track, Visitable

@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.collections.components
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -24,6 +23,7 @@ internal fun PreviewCollectionBottomSheet() {
                             isRemote = true,
                             name = "My remote CD collection",
                             entity = MusicBrainzEntity.RELEASE,
+                            visited = true,
                         ),
                         CollectionListItemModel(
                             id = "2",
@@ -34,11 +34,9 @@ internal fun PreviewCollectionBottomSheet() {
                     ),
                 ),
             )
-            Column {
-                CollectionBottomSheetContent(
-                    collections = items.collectAsLazyPagingItems(),
-                )
-            }
+            CollectionBottomSheetContent(
+                collections = items.collectAsLazyPagingItems(),
+            )
         }
     }
 }

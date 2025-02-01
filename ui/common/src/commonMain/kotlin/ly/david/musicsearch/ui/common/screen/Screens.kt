@@ -21,11 +21,16 @@ data class ArtistCollaborationScreen(
 data object HistoryScreen : Screen
 
 @Parcelize
-data object CollectionListScreen : Screen
+data class CollectionListScreen(
+    val newCollectionId: String? = null,
+    val newCollectionName: String? = null,
+    val newCollectionEntity: MusicBrainzEntity? = null,
+) : Screen
 
 @Parcelize
 data class CollectionScreen(
-    val id: String,
+    val collectionId: String,
+    val collectableId: String? = null,
 ) : Screen
 
 @Parcelize
@@ -44,12 +49,18 @@ data class SnackbarPopResult(
 data class DetailsScreen(
     val entity: MusicBrainzEntity,
     val id: String,
-    val title: String?,
+    val title: String? = null,
 ) : Screen
 
 @Parcelize
-data class CoverArtsScreen(
+data class CoverArtsGridScreen(
     val id: String,
+) : Screen
+
+@Parcelize
+data class CoverArtsPagerScreen(
+    val id: String,
+    val index: Int,
 ) : Screen
 
 @Parcelize

@@ -1,9 +1,13 @@
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import com.slack.circuit.backstack.SaveableBackStack
+import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.rememberCircuitNavigator
+import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.persistentListOf
-import ly.david.musicsearch.core.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.AppRoot
 import ly.david.musicsearch.shared.di.sharedModule
 import ly.david.musicsearch.shared.useDarkTheme
@@ -33,9 +37,18 @@ fun main() = application {
             darkTheme = appPreferences.useDarkTheme(),
             materialYou = appPreferences.useMaterialYou(),
             content = {
-                AppRoot(
-                    circuit = circuit,
+                val backStack: SaveableBackStack = rememberSaveableBackStack(
                     initialScreens = persistentListOf(SearchScreen()),
+                )
+                val navigator: Navigator = rememberCircuitNavigator(
+                    backStack = backStack,
+                    onRootPop = { exitApplication() },
+                )
+
+                AppRoot(
+                    backStack = backStack,
+                    navigator = navigator,
+                    circuit = circuit,
                 )
             },
         )

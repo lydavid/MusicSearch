@@ -46,4 +46,18 @@ class TopAppBarWithFilterTest : ScreenshotTest() {
             PreviewTopAppBarWithFilterWithTabsFilterMode()
         }
     }
+
+    @Test
+    fun editMode() {
+        snapshot {
+            PreviewTopAppBarWithFilterWithEditMode()
+        }
+    }
+
+    @Test
+    fun editModeActive() {
+        snapshot {
+            PreviewTopAppBarWithFilterWithEditModeActive()
+        }
+    }
 }

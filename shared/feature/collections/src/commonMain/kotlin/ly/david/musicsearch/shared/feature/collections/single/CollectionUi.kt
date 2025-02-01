@@ -4,9 +4,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -19,17 +18,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import app.cash.paging.compose.LazyPagingItems
-import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
-import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
-import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ListSeparator
-import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
-import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
-import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.common.area.AreaListItem
+import ly.david.musicsearch.ui.common.area.AreasByEntityUiState
+import ly.david.musicsearch.ui.common.area.AreasListScreen
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
 import ly.david.musicsearch.ui.common.artist.ArtistsListScreen
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
@@ -38,21 +29,24 @@ import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
 import ly.david.musicsearch.ui.common.genre.GenresByEntityUiState
 import ly.david.musicsearch.ui.common.genre.GenresListScreen
 import ly.david.musicsearch.ui.common.instrument.InstrumentListItem
+import ly.david.musicsearch.ui.common.instrument.InstrumentsByEntityUiState
+import ly.david.musicsearch.ui.common.instrument.InstrumentsListScreen
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
 import ly.david.musicsearch.ui.common.label.LabelsListScreen
-import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.musicsearch.ui.common.place.PlaceListItem
-import ly.david.musicsearch.ui.common.recording.RecordingListItem
+import ly.david.musicsearch.ui.common.place.PlacesByEntityUiState
+import ly.david.musicsearch.ui.common.place.PlacesListScreen
+import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiState
+import ly.david.musicsearch.ui.common.recording.RecordingsListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListScreen
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiState
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListScreen
-import ly.david.musicsearch.ui.common.series.SeriesListItem
+import ly.david.musicsearch.ui.common.series.SeriesByEntityUiState
+import ly.david.musicsearch.ui.common.series.SeriesListScreen
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
+import ly.david.musicsearch.ui.common.topappbar.EditToggle
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -114,14 +108,20 @@ internal fun CollectionUi(
                 onBack = {
                     eventSink(CollectionUiEvent.NavigateUp)
                 },
-                title = collection?.name.orEmpty(),
+                title = state.title,
                 scrollBehavior = scrollBehavior,
                 showFilterIcon = true,
+                additionalActions = {
+                    IconButton(onClick = {
+                        state.topAppBarEditState.toggleEditMode()
+                    }) {
+                        EditToggle(state.topAppBarEditState)
+                    }
+                },
                 overflowDropdownMenuItems = {
                     if (collection?.isRemote == true) {
                         OpenInBrowserMenuItem(
-                            entity = MusicBrainzEntity.COLLECTION,
-                            entityId = collection.id,
+                            url = state.url,
                         )
                     }
                     CopyToClipboardMenuItem(collection?.id.orEmpty())
@@ -147,6 +147,7 @@ internal fun CollectionUi(
                     }
                 },
                 topAppBarFilterState = state.topAppBarFilterState,
+                topAppBarEditState = state.topAppBarEditState,
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -159,13 +160,18 @@ internal fun CollectionUi(
             )
         } else {
             CollectionUi(
-                lazyPagingItems = state.lazyPagingItems,
+                isEditMode = state.topAppBarEditState.isEditMode,
+                areasByEntityUiState = state.areasByEntityUiState,
                 artistsByEntityUiState = state.artistsByEntityUiState,
                 eventsByEntityUiState = state.eventsByEntityUiState,
                 genresByEntityUiState = state.genresByEntityUiState,
+                instrumentsByEntityUiState = state.instrumentsByEntityUiState,
                 labelsByEntityUiState = state.labelsByEntityUiState,
+                placesByEntityUiState = state.placesByEntityUiState,
+                recordingsByEntityUiState = state.recordingsByEntityUiState,
                 releasesByEntityUiState = state.releasesByEntityUiState,
                 releaseGroupsByEntityUiState = state.releaseGroupsByEntityUiState,
+                seriesByEntityUiState = state.seriesByEntityUiState,
                 worksByEntityUiState = state.worksByEntityUiState,
                 entity = collection.entity,
                 innerPadding = innerPadding,
@@ -212,25 +218,46 @@ internal fun CollectionUi(
 )
 @Composable
 private fun CollectionUi(
-    lazyPagingItems: LazyPagingItems<ListItemModel>,
+    isEditMode: Boolean,
+    areasByEntityUiState: AreasByEntityUiState,
     artistsByEntityUiState: ArtistsByEntityUiState,
     eventsByEntityUiState: EventsByEntityUiState,
     genresByEntityUiState: GenresByEntityUiState,
+    instrumentsByEntityUiState: InstrumentsByEntityUiState,
     labelsByEntityUiState: LabelsByEntityUiState,
+    placesByEntityUiState: PlacesByEntityUiState,
+    recordingsByEntityUiState: RecordingsByEntityUiState,
     releasesByEntityUiState: ReleasesByEntityUiState,
     releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
+    seriesByEntityUiState: SeriesByEntityUiState,
     worksByEntityUiState: WorksByEntityUiState,
     entity: MusicBrainzEntity,
     innerPadding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
-    modifier: Modifier = Modifier,
     onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     requestForMissingCoverArtUrl: (entityId: String) -> Unit = {},
 ) {
-    val lazyListState = rememberLazyListState()
-
     when (entity) {
+        MusicBrainzEntity.AREA -> {
+            AreasListScreen(
+                lazyListState = areasByEntityUiState.lazyListState,
+                lazyPagingItems = areasByEntityUiState.lazyPagingItems,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                isEditMode = isEditMode,
+                onItemClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
+            )
+        }
+
         MusicBrainzEntity.ARTIST -> {
             ArtistsListScreen(
                 lazyListState = artistsByEntityUiState.lazyListState,
@@ -239,6 +266,7 @@ private fun CollectionUi(
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
+                isEditMode = isEditMode,
                 onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
@@ -257,7 +285,27 @@ private fun CollectionUi(
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
-                onEventClick = onItemClick,
+                isEditMode = isEditMode,
+                onItemClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
+            )
+        }
+
+        MusicBrainzEntity.INSTRUMENT -> {
+            InstrumentsListScreen(
+                lazyPagingItems = instrumentsByEntityUiState.lazyPagingItems,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                lazyListState = instrumentsByEntityUiState.lazyListState,
+                isEditMode = isEditMode,
+                onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,
@@ -293,7 +341,46 @@ private fun CollectionUi(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 lazyListState = labelsByEntityUiState.lazyListState,
-                onLabelClick = onItemClick,
+                isEditMode = isEditMode,
+                onItemClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
+            )
+        }
+
+        MusicBrainzEntity.PLACE -> {
+            PlacesListScreen(
+                lazyListState = placesByEntityUiState.lazyListState,
+                lazyPagingItems = placesByEntityUiState.lazyPagingItems,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                isEditMode = isEditMode,
+                onItemClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
+            )
+        }
+
+        MusicBrainzEntity.RECORDING -> {
+            RecordingsListScreen(
+                lazyPagingItems = recordingsByEntityUiState.lazyPagingItems,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                lazyListState = recordingsByEntityUiState.lazyListState,
+                isEditMode = isEditMode,
+                onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,
@@ -311,8 +398,9 @@ private fun CollectionUi(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 lazyListState = releasesByEntityUiState.lazyListState,
+                isEditMode = isEditMode,
                 showMoreInfo = releasesByEntityUiState.showMoreInfo,
-                onReleaseClick = onItemClick,
+                onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,
@@ -335,7 +423,8 @@ private fun CollectionUi(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 lazyListState = releaseGroupsByEntityUiState.lazyListState,
-                onReleaseGroupClick = onItemClick,
+                isEditMode = isEditMode,
+                onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,
@@ -350,15 +439,16 @@ private fun CollectionUi(
             )
         }
 
-        MusicBrainzEntity.WORK -> {
-            WorksListScreen(
-                lazyPagingItems = worksByEntityUiState.lazyPagingItems,
+        MusicBrainzEntity.SERIES -> {
+            SeriesListScreen(
+                lazyPagingItems = seriesByEntityUiState.lazyPagingItems,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
-                lazyListState = worksByEntityUiState.lazyListState,
-                onWorkClick = onItemClick,
+                lazyListState = seriesByEntityUiState.lazyListState,
+                isEditMode = isEditMode,
+                onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,
@@ -368,160 +458,30 @@ private fun CollectionUi(
             )
         }
 
-        else -> {
-            CollectionUi(
-                lazyPagingItems = lazyPagingItems,
-                lazyListState = lazyListState,
-                entity = entity,
-                innerPadding = innerPadding,
-                scrollBehavior = scrollBehavior,
-                modifier = modifier,
+        MusicBrainzEntity.WORK -> {
+            WorksListScreen(
+                lazyPagingItems = worksByEntityUiState.lazyPagingItems,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                lazyListState = worksByEntityUiState.lazyListState,
+                isEditMode = isEditMode,
                 onItemClick = onItemClick,
-                onDeleteFromCollection = onDeleteFromCollection,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
             )
         }
-    }
-}
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-)
-@Composable
-internal fun CollectionUi(
-    lazyPagingItems: LazyPagingItems<ListItemModel>,
-    lazyListState: LazyListState,
-    entity: MusicBrainzEntity,
-    innerPadding: PaddingValues,
-    scrollBehavior: TopAppBarScrollBehavior,
-    modifier: Modifier = Modifier,
-    onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
-    onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
-) {
-    ScreenWithPagingLoadingAndError(
-        lazyPagingItems = lazyPagingItems,
-        modifier = modifier.padding(innerPadding)
-            .fillMaxSize()
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
-        lazyListState = lazyListState,
-    ) { listItemModel: ListItemModel? ->
-        when (listItemModel) {
-            is ListSeparator -> {
-                ListSeparatorHeader(text = listItemModel.text)
-            }
-
-            is AreaListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        AreaListItem(
-                            area = listItemModel,
-                        ) {
-                            onItemClick(
-                                entity,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    onDelete = {
-                        onDeleteFromCollection(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
-                )
-            }
-
-            is InstrumentListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        InstrumentListItem(
-                            instrument = listItemModel,
-                        ) {
-                            onItemClick(
-                                entity,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    onDelete = {
-                        onDeleteFromCollection(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
-                )
-            }
-
-            is PlaceListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        PlaceListItem(
-                            place = listItemModel,
-                        ) {
-                            onItemClick(
-                                entity,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    onDelete = {
-                        onDeleteFromCollection(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
-                )
-            }
-
-            is RecordingListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        RecordingListItem(
-                            recording = listItemModel,
-                        ) {
-                            onItemClick(
-                                entity,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    onDelete = {
-                        onDeleteFromCollection(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
-                )
-            }
-
-            is SeriesListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        SeriesListItem(
-                            series = listItemModel,
-                        ) {
-                            onItemClick(
-                                entity,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    onDelete = {
-                        onDeleteFromCollection(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
-                )
-            }
-
-            else -> {
-                // Do nothing.
-            }
+        MusicBrainzEntity.COLLECTION,
+        MusicBrainzEntity.GENRE,
+        MusicBrainzEntity.URL,
+        -> {
+            // No-op.
         }
     }
 }

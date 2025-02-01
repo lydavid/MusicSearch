@@ -12,18 +12,22 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
-import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.relatableEntities
+import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
@@ -45,6 +49,8 @@ internal class PlacePresenter(
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val wikimediaRepository: WikimediaRepository,
 ) : Presenter<PlaceUiState> {
 
     @Composable
@@ -54,13 +60,14 @@ internal class PlacePresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        var place: PlaceDetailsModel? by remember { mutableStateOf(null) }
+        var place: PlaceDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<PlaceTab> by rememberSaveable {
             mutableStateOf(PlaceTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(PlaceTab.DETAILS) }
-        var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
+        var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
+        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val eventsByEntityUiState = eventsByEntityPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
@@ -71,7 +78,10 @@ internal class PlacePresenter(
 
         LaunchedEffect(forceRefreshDetails) {
             try {
-                val placeDetailsModel = repository.lookupPlace(screen.id)
+                val placeDetailsModel = repository.lookupPlace(
+                    screen.id,
+                    forceRefreshDetails,
+                )
                 title = placeDetailsModel.getNameWithDisambiguation()
                 place = placeDetailsModel
                 isError = false
@@ -91,6 +101,20 @@ internal class PlacePresenter(
             }
         }
 
+        LaunchedEffect(forceRefreshDetails, place) {
+            wikimediaRepository.getWikipediaExtract(
+                mbid = place?.id ?: return@LaunchedEffect,
+                urls = place?.urls ?: return@LaunchedEffect,
+                forceRefresh = forceRefreshDetails,
+            ).onSuccess { wikipediaExtract ->
+                place = place?.copy(
+                    wikipediaExtract = wikipediaExtract,
+                )
+            }.onFailure {
+                snackbarMessage = it.message
+            }
+        }
+
         LaunchedEffect(
             key1 = query,
             key2 = selectedTab,
@@ -105,6 +129,10 @@ internal class PlacePresenter(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
+                            relatedEntities = relatableEntities subtract setOf(
+                                MusicBrainzEntity.EVENT,
+                                MusicBrainzEntity.URL,
+                            ),
                         ),
                     )
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
@@ -158,10 +186,12 @@ internal class PlacePresenter(
             title = title,
             isError = isError,
             place = place,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
+            snackbarMessage = snackbarMessage,
             eventsByEntityUiState = eventsByEntityUiState,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
@@ -175,10 +205,12 @@ internal data class PlaceUiState(
     val title: String,
     val isError: Boolean,
     val place: PlaceDetailsModel?,
+    val url: String = "",
     val tabs: List<PlaceTab>,
     val selectedTab: PlaceTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
+    val snackbarMessage: String? = null,
     val eventsByEntityUiState: EventsByEntityUiState,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState = LoginUiState(),
