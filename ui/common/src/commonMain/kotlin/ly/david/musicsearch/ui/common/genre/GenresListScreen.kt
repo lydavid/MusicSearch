@@ -35,7 +35,7 @@ fun GenresListScreen(
                             modifier = Modifier.animateItemPlacement(),
                         ) {
                             onGenreClick(
-                                MusicBrainzEntity.LABEL,
+                                MusicBrainzEntity.GENRE,
                                 id,
                                 getNameWithDisambiguation(),
                             )

@@ -213,7 +213,7 @@ interface BrowseApiImpl : BrowseApi {
         entityId: String,
         entity: MusicBrainzEntity,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseGenresResponse {
         return httpClient.get {
             url {

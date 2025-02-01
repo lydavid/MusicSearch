@@ -29,7 +29,6 @@ import ly.david.musicsearch.ui.common.event.EventsListScreen
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
 import ly.david.musicsearch.ui.common.genre.GenresByEntityUiState
 import ly.david.musicsearch.ui.common.genre.GenresListScreen
-import ly.david.musicsearch.ui.common.instrument.InstrumentListItem
 import ly.david.musicsearch.ui.common.instrument.InstrumentsByEntityUiState
 import ly.david.musicsearch.ui.common.instrument.InstrumentsListScreen
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
