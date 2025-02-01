@@ -1,6 +1,8 @@
 package ly.david.musicsearch.shared.domain.release
 
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import app.cash.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 
 /**
  * Logic to retrieve release cover art path.
@@ -14,13 +16,15 @@ interface ReleaseImageRepository {
      *
      * Make sure to handle non-404 errors at call site.
      */
-    suspend fun getReleaseImageUrl(
+    suspend fun getReleaseImageMetadata(
         releaseId: String,
-        thumbnail: Boolean,
         forceRefresh: Boolean,
-    ): String
+    ): ImageMetadata
 
-    fun getAllUrls(mbid: String): List<ImageUrls>
+    fun observeAllImageMetadata(
+        mbid: String?,
+        query: String,
+    ): Flow<PagingData<ImageMetadata>>
 
-    fun getNumberOfImages(mbid: String): Int
+    fun getNumberOfImagesById(mbid: String): Int
 }

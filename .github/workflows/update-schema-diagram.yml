@@ -2,7 +2,7 @@ name: Update Schema Diagram
 
 on:
   push:
-    branches: ["beta"]
+    branches: ["main"]
     paths:
       - "**.sqm"
   workflow_dispatch:
@@ -49,7 +49,7 @@ jobs:
             adb shell "run-as io.github.lydavid.musicsearch.debug cat /data/data/io.github.lydavid.musicsearch.debug/databases/musicsearch.db" > musicsearch.db
 
       - name: Generate schema SVG from sqlite file
-        uses: schemacrawler/SchemaCrawler-Action@v16.24.1
+        uses: schemacrawler/SchemaCrawler-Action@v16.25.2
         with:
           entrypoint: /schemacrawler.sh
           args: --server=sqlite --database=musicsearch.db --info-level=maximum --command=schema --output-file assets/musicsearch_db_schema.svg --log-level=CONFIG
@@ -57,7 +57,7 @@ jobs:
       - run: git pull --rebase --autostash
 
       - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@v5.0.1
+        uses: stefanzweifel/git-auto-commit-action@v5.1.0
         with:
           commit_message: 'chore: update schema diagram [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>

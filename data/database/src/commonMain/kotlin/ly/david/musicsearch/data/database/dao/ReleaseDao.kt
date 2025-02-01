@@ -81,7 +81,6 @@ class ReleaseDao(
         script: String?,
         language: String?,
         coverArtCount: Int,
-        imageUrl: String?,
         releaseLength: Double?,
         hasNullLength: Boolean,
     ) = ReleaseDetailsModel(
@@ -104,7 +103,6 @@ class ReleaseDao(
             script = script,
             language = language,
         ),
-        imageUrl = imageUrl,
         releaseLength = releaseLength?.toInt(),
         hasNullLength = hasNullLength,
     )

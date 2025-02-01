@@ -94,9 +94,6 @@ internal fun ReleaseGroupUi(
                 title = state.title,
                 subtitle = state.subtitle,
                 scrollBehavior = scrollBehavior,
-                showFilterIcon = state.selectedTab !in listOf(
-                    ReleaseGroupTab.STATS,
-                ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(
                         url = state.url,
@@ -176,7 +173,6 @@ internal fun ReleaseGroupUi(
                         ReleaseGroupDetailsUi(
                             releaseGroup = releaseGroup,
                             filterText = state.topAppBarFilterState.filterText,
-                            imageUrl = state.imageUrl,
                             lazyListState = state.detailsLazyListState,
                         )
                     }

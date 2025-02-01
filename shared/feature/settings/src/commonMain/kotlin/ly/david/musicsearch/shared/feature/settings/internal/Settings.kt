@@ -32,6 +32,7 @@ import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
+import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.LicensesScreen
 import ly.david.musicsearch.ui.common.screen.NowPlayingHistoryScreen
 import ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen
@@ -190,9 +191,8 @@ internal fun Settings(
                 onCheckedChange = onSortReleaseGroupListItemsChange,
             )
 
+            ListSeparatorHeader(text = strings.experimentalSearch)
             if (showAndroidSettings) {
-                ListSeparatorHeader(text = strings.experimentalSearch)
-
                 if (isNotificationListenerEnabled) {
                     ClickableItem(
                         title = strings.nowPlayingHistory,
@@ -219,6 +219,13 @@ internal fun Settings(
                     },
                 )
             }
+            ClickableItem(
+                title = "Browse local database images",
+                endIcon = Icons.Default.ChevronRight,
+                onClick = {
+                    onDestinationClick(CoverArtsScreen())
+                },
+            )
 
             ListSeparatorHeader(text = "Database")
 

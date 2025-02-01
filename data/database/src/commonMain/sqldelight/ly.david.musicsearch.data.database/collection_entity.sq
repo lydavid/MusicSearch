@@ -120,6 +120,7 @@ SELECT
   a.end,
   a.ended,
   mi.thumbnail_url,
+  mi.id AS placeholderKey,
   visited.entity_id IS NOT NULL AS visited
 FROM artist a
 INNER JOIN collection_entity ce ON a.id = ce.entity_id
@@ -135,6 +136,7 @@ AND (
   a.gender LIKE :query OR
   a.country_code LIKE :query
 )
+GROUP BY a.id
 ORDER BY a.begin, a.end, a.name
 LIMIT :limit OFFSET :offset;
 
@@ -428,6 +430,7 @@ SELECT
   r.*,
   ac.name AS artistCreditNames,
   mi.thumbnail_url,
+  mi.id AS placeholderKey,
   (
     SELECT COUNT(cc.area_id)
     FROM `release`
@@ -490,6 +493,7 @@ SELECT
   rg.secondary_types,
   ac.name AS artist_credits,
   mi.thumbnail_url,
+  mi.id AS placeholderKey,
   visited.entity_id IS NOT NULL AS visited
 FROM release_group rg
 INNER JOIN collection_entity ce ON rg.id = ce.entity_id

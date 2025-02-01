@@ -30,17 +30,110 @@ VALUES (
   :comment
 );
 
-getAllUrls:
-SELECT *
+getFrontImageMetadata:
+SELECT
+  `id`,
+  `thumbnail_url`,
+  `large_url`,
+  `types`,
+  `comment`
 FROM mbid_image
-WHERE mbid = :mbid;
+WHERE mbid = :mbid
+LIMIT 1;
 
-deleteAllUrlsById:
+getAllImageMetadataByIdCount:
+SELECT count(`id`)
+FROM mbid_image
+WHERE mbid = :mbid
+AND (
+  types LIKE :query OR
+  comment LIKE :query
+);
+
+-- if types or comment is null, this will not show them at all (fix in 24.sqm)
+getAllImageMetadataById:
+SELECT
+  `id`,
+  `thumbnail_url`,
+  `large_url`,
+  `types`,
+  `comment`
+FROM mbid_image
+WHERE mbid = :mbid
+AND (
+  types LIKE :query OR
+  comment LIKE :query
+)
+LIMIT :limit
+OFFSET :offset;
+
+getAllImageMetadataCount:
+SELECT count(mbid_image.`id`)
+FROM mbid_image
+LEFT JOIN artist ON artist.id = mbid_image.mbid
+LEFT JOIN `release` ON `release`.id = mbid_image.mbid
+LEFT JOIN release_group ON release_group.id = mbid_image.mbid
+WHERE thumbnail_url != ''
+AND (
+  types LIKE :query OR
+  comment LIKE :query OR
+  artist.name LIKE :query OR
+  artist.sort_name LIKE :query OR
+  artist.disambiguation LIKE :query OR
+  `release`.name LIKE :query OR
+  `release`.disambiguation LIKE :query OR
+  release_group.name LIKE :query OR
+  release_group.disambiguation LIKE :query
+);
+
+getAllImageMetadata:
+SELECT
+  mbid_image.`id`,
+  mbid_image.`thumbnail_url`,
+  mbid_image.`large_url`,
+  mbid_image.`types`,
+  mbid_image.`comment`,
+  mbid_image.mbid,
+  coalesce(
+    artist.name,
+    `release`.name,
+    release_group.name
+  ) AS name,
+  coalesce(
+    artist.disambiguation,
+    `release`.disambiguation,
+    release_group.disambiguation
+  ) AS disambiguation,
+  CASE
+    WHEN artist.name IS NOT NULL THEN 'artist'
+    WHEN `release`.name IS NOT NULL THEN 'release'
+    WHEN release_group.name IS NOT NULL THEN 'release-group'
+  END AS entity
+FROM mbid_image
+LEFT JOIN artist ON artist.id = mbid_image.mbid
+LEFT JOIN `release` ON `release`.id = mbid_image.mbid
+LEFT JOIN release_group ON release_group.id = mbid_image.mbid
+WHERE thumbnail_url != ''
+AND (
+  types LIKE :query OR
+  comment LIKE :query OR
+  artist.name LIKE :query OR
+  artist.sort_name LIKE :query OR
+  artist.disambiguation LIKE :query OR
+  `release`.name LIKE :query OR
+  `release`.disambiguation LIKE :query OR
+  release_group.name LIKE :query OR
+  release_group.disambiguation LIKE :query
+)
+LIMIT :limit
+OFFSET :offset;
+
+deleteAllImageMetadtaById:
 DELETE FROM mbid_image
 WHERE mbid = :mbid;
 
--- Do not include the filler empty url
-getNumberOfImages:
+-- Do not count the filler empty url
+getNumberOfImagesById:
 SELECT COUNT(*)
 FROM mbid_image
 WHERE mbid = :mbid

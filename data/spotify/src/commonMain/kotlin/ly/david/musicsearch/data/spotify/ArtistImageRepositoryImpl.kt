@@ -10,7 +10,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 
 class ArtistImageRepositoryImpl(
     private val spotifyApi: SpotifyApi,
@@ -18,64 +18,56 @@ class ArtistImageRepositoryImpl(
     private val logger: Logger,
 ) : ArtistImageRepository {
 
-    override suspend fun getArtistImageUrl(
+    override suspend fun getArtistImageMetadata(
         artistDetailsModel: ArtistDetailsModel,
         forceRefresh: Boolean,
-    ): String {
+    ): ImageMetadata {
         if (forceRefresh) {
-            imageUrlDao.deleteAllUrlsById(artistDetailsModel.id)
+            imageUrlDao.deleteAllImageMetadtaById(artistDetailsModel.id)
         }
 
-        val cachedImageUrls = imageUrlDao.getAllUrls(artistDetailsModel.id)
-        return if (cachedImageUrls.isNotEmpty()) {
-            return cachedImageUrls.first().largeUrl
+        val cachedImageUrl = imageUrlDao.getFrontImageMetadata(artistDetailsModel.id)
+        return if (cachedImageUrl == null) {
+            saveArtistImageMetadataFromNetwork(artistDetailsModel)
+            imageUrlDao.getFrontImageMetadata(artistDetailsModel.id) ?: ImageMetadata()
         } else {
-            getArtistImageUrlFromNetwork(artistDetailsModel)
+            cachedImageUrl
         }
     }
 
-    private suspend fun getArtistImageUrlFromNetwork(
+    private suspend fun saveArtistImageMetadataFromNetwork(
         artistDetailsModel: ArtistDetailsModel,
-    ): String {
-        return try {
+    ) {
+        try {
             val spotifyUrl =
                 artistDetailsModel.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name
-                    ?: return ""
-            val spotifyArtistId = spotifyUrl.split("/").last()
 
-            val spotifyArtist: SpotifyArtist = spotifyApi.getArtist(spotifyArtistId)
-            val largeUrl = spotifyArtist.getLargeImageUrl()
-            cache(
-                artistDetailsModel = artistDetailsModel,
-                spotifyArtist = spotifyArtist,
-            )
-            largeUrl
-        } catch (ex: HandledException) {
-            // TODO: if 400, prompt user to input their own Spotify client secret if they want to load artist images.
-            //  UI should allow dismissing if they don't want to.
-            //  Then don't reprompt. But allow inputting client secret from settings.
-            if (ex.errorResolution != ErrorResolution.None) {
-                logger.e(ex)
-            }
-            ""
-        } catch (ex: Exception) {
-            logger.e(ex)
-            ""
-        }
-    }
-
-    private fun cache(
-        artistDetailsModel: ArtistDetailsModel,
-        spotifyArtist: SpotifyArtist,
-    ) {
-        imageUrlDao.saveUrls(
-            mbid = artistDetailsModel.id,
-            imageUrls = listOf(
-                ImageUrls(
+            val imageMetadata: ImageMetadata = if (spotifyUrl == null) {
+                ImageMetadata()
+            } else {
+                val spotifyArtistId = spotifyUrl.split("/").last()
+                val spotifyArtist: SpotifyArtist = spotifyApi.getArtist(spotifyArtistId)
+                ImageMetadata(
                     thumbnailUrl = spotifyArtist.getThumbnailImageUrl(),
                     largeUrl = spotifyArtist.getLargeImageUrl(),
-                ),
-            ),
-        )
+                )
+            }
+
+            imageUrlDao.saveImageMetadata(
+                mbid = artistDetailsModel.id,
+                imageMetadataList = listOf(imageMetadata),
+            )
+        } catch (ex: HandledException) {
+            if (ex.errorResolution == ErrorResolution.None) {
+                imageUrlDao.saveImageMetadata(
+                    mbid = artistDetailsModel.id,
+                    imageMetadataList = listOf(ImageMetadata()),
+                )
+            } else {
+                logger.e(ex)
+            }
+        } catch (ex: Exception) {
+            logger.e(ex)
+        }
     }
 }

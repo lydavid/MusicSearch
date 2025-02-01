@@ -61,14 +61,13 @@ internal class ReleaseGroupPresenter(
         var subtitle by rememberSaveable { mutableStateOf("") }
         var isError by rememberSaveable { mutableStateOf(false) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
-        val topAppBarFilterState = rememberTopAppBarFilterState()
-        val query = topAppBarFilterState.filterText
         var releaseGroup: ReleaseGroupDetailsModel? by rememberRetained { mutableStateOf(null) }
-        var imageUrl by rememberSaveable { mutableStateOf("") }
         val tabs: List<ReleaseGroupTab> by rememberSaveable {
             mutableStateOf(ReleaseGroupTab.entries)
         }
         var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.DETAILS) }
+        val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -105,16 +104,16 @@ internal class ReleaseGroupPresenter(
                 )
                 recordedHistory = true
             }
+            forceRefreshDetails = false
         }
 
         LaunchedEffect(forceRefreshDetails, releaseGroup) {
-            releaseGroup?.let { releaseGroup ->
-                imageUrl = releaseGroupImageRepository.getReleaseGroupImageUrl(
-                    releaseGroupId = releaseGroup.id,
-                    thumbnail = false,
+            releaseGroup = releaseGroup?.copy(
+                imageMetadata = releaseGroupImageRepository.getReleaseGroupImageMetadata(
+                    releaseGroupId = releaseGroup?.id ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
-                )
-            }
+                ),
+            )
         }
 
         LaunchedEffect(forceRefreshDetails, releaseGroup) {
@@ -135,6 +134,11 @@ internal class ReleaseGroupPresenter(
             key1 = query,
             key2 = selectedTab,
         ) {
+            topAppBarFilterState.show(
+                selectedTab !in listOf(
+                    ReleaseGroupTab.STATS,
+                ),
+            )
             when (selectedTab) {
                 ReleaseGroupTab.DETAILS -> {
                     // Loaded above
@@ -200,7 +204,6 @@ internal class ReleaseGroupPresenter(
             isError = isError,
             releaseGroup = releaseGroup,
             url = getMusicBrainzUrl(screen.entity, screen.id),
-            imageUrl = imageUrl,
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
@@ -221,7 +224,6 @@ internal data class ReleaseGroupUiState(
     val isError: Boolean,
     val releaseGroup: ReleaseGroupDetailsModel?,
     val url: String = "",
-    val imageUrl: String,
     val tabs: List<ReleaseGroupTab>,
     val selectedTab: ReleaseGroupTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),

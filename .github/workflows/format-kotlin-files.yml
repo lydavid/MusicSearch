@@ -2,7 +2,7 @@ name: Format Kotlin files
 
 on:
   push:
-    branches: [ "beta" ]
+    branches: [ "main" ]
     paths:
       - "**.kt"
       - "**.kts"
@@ -34,7 +34,7 @@ jobs:
 
       - name: Commit
         if: always()
-        uses: stefanzweifel/git-auto-commit-action@v5.0.1
+        uses: stefanzweifel/git-auto-commit-action@v5.1.0
         with:
           commit_message: 'chore: format Kotlin files [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>

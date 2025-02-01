@@ -6,6 +6,10 @@ on:
       - "**.md"
   workflow_call:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # When we change the name of this job, make sure to update GitHub's branch protection to the new name
   checks:
@@ -65,7 +69,7 @@ jobs:
           private_key: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_PRIVATE_KEY }}
 
       - name: Push new screenshots if available
-        uses: stefanzweifel/git-auto-commit-action@v5.0.1
+        uses: stefanzweifel/git-auto-commit-action@v5.1.0
         if: always() && steps.screenshotsrecord.outcome == 'success'
         with:
           commit_message: "chore: rerecord snapshot tests"

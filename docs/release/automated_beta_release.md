@@ -1,6 +1,6 @@
 # Automated Beta Release
 
-Every night, we have a [workflow](../.github/workflows/publish-beta.yml) that tries to publish the app to Google Play's beta track and to GitHub as a pre-release.
+Every night, we have a [workflow](../../.github/workflows/publish-beta.yml) that tries to publish the app to Google Play's beta track and to GitHub.
 This workflow has two jobs. The first runs a check to determine whether to exit early, and the second actually does the publishing.
 
 ## `check`

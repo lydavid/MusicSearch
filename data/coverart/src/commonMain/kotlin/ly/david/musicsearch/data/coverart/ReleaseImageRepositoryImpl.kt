@@ -1,79 +1,102 @@
 package ly.david.musicsearch.data.coverart
 
+import androidx.paging.cachedIn
+import app.cash.paging.Pager
+import app.cash.paging.PagingConfig
+import app.cash.paging.PagingData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
-import ly.david.musicsearch.data.coverart.api.toImageUrlsList
+import ly.david.musicsearch.data.coverart.api.toImageMetadataList
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 
 internal class ReleaseImageRepositoryImpl(
     private val coverArtArchiveApi: CoverArtArchiveApi,
     private val imageUrlDao: ImageUrlDao,
     private val logger: Logger,
+    private val coroutineScope: CoroutineScope,
 ) : ReleaseImageRepository {
 
-    override suspend fun getReleaseImageUrl(
+    override suspend fun getReleaseImageMetadata(
         releaseId: String,
-        thumbnail: Boolean,
         forceRefresh: Boolean,
-    ): String {
+    ): ImageMetadata {
         if (forceRefresh) {
-            imageUrlDao.deleteAllUrlsById(releaseId)
+            imageUrlDao.deleteAllImageMetadtaById(releaseId)
         }
 
-        val cachedImageUrls = imageUrlDao.getAllUrls(releaseId)
-        return if (cachedImageUrls.isNotEmpty()) {
-            val frontCoverArt = cachedImageUrls.first()
-            return if (thumbnail) frontCoverArt.thumbnailUrl else frontCoverArt.largeUrl
+        val cachedImageUrl = imageUrlDao.getFrontImageMetadata(releaseId)
+        return if (cachedImageUrl == null) {
+            saveReleaseImageMetadataFromNetwork(releaseId)
+            imageUrlDao.getFrontImageMetadata(releaseId) ?: ImageMetadata()
         } else {
-            getReleaseImageUrlFromNetwork(releaseId, thumbnail)
+            cachedImageUrl
         }
     }
 
-    private suspend fun getReleaseImageUrlFromNetwork(
+    private suspend fun saveReleaseImageMetadataFromNetwork(
         releaseId: String,
-        thumbnail: Boolean,
-    ): String {
-        return try {
+    ) {
+        try {
             val coverArts: CoverArtsResponse = coverArtArchiveApi.getReleaseCoverArts(releaseId)
-            val imageUrls: MutableList<ImageUrls> = coverArts.toImageUrlsList().toMutableList()
+            val imageMetadataList: MutableList<ImageMetadata> = coverArts.toImageMetadataList().toMutableList()
 
             // We use an empty ImageUrls to represent that we've searched but failed to find any images.
-            if (imageUrls.isEmpty()) {
-                imageUrls.add(ImageUrls())
+            if (imageMetadataList.isEmpty()) {
+                imageMetadataList.add(ImageMetadata())
             }
 
-            imageUrlDao.saveUrls(
+            imageUrlDao.saveImageMetadata(
                 mbid = releaseId,
-                imageUrls = imageUrls,
+                imageMetadataList = imageMetadataList,
             )
-            val frontCoverArt = imageUrls.first()
-            return if (thumbnail) frontCoverArt.thumbnailUrl else frontCoverArt.largeUrl
         } catch (ex: HandledException) {
             if (ex.errorResolution == ErrorResolution.None) {
-                imageUrlDao.saveUrls(
+                imageUrlDao.saveImageMetadata(
                     mbid = releaseId,
-                    imageUrls = listOf(ImageUrls()),
+                    imageMetadataList = listOf(ImageMetadata()),
                 )
             } else {
                 logger.e(ex)
             }
-            ""
         } catch (ex: Exception) {
             logger.e(ex)
-            ""
         }
     }
 
-    override fun getAllUrls(mbid: String): List<ImageUrls> {
-        return imageUrlDao.getAllUrls(mbid = mbid)
-    }
+    override fun observeAllImageMetadata(
+        mbid: String?,
+        query: String,
+    ): Flow<PagingData<ImageMetadata>> = Pager(
+        config = PagingConfig(
+            pageSize = 100,
+            initialLoadSize = 100,
+            prefetchDistance = 50,
+        ),
+        pagingSourceFactory = {
+            if (mbid == null) {
+                imageUrlDao.getAllImageMetadata(
+                    query = query,
+                )
+            } else {
+                imageUrlDao.getAllImageMetadataById(
+                    mbid = mbid,
+                    query = query,
+                )
+            }
+        },
+    ).flow
+        .distinctUntilChanged()
+        .cachedIn(scope = coroutineScope)
 
-    override fun getNumberOfImages(mbid: String): Int {
-        return imageUrlDao.getNumberOfImages(mbid).toInt()
+    override fun getNumberOfImagesById(mbid: String): Int {
+        return imageUrlDao.getNumberOfImagesById(mbid).toInt()
     }
 }

@@ -1,21 +1,27 @@
 package ly.david.musicsearch.data.database.dao
 
+import app.cash.paging.PagingSource
+import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import ly.david.musicsearch.shared.domain.image.ImageUrlDao
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
 
 class MbidImageDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao, ImageUrlDao {
     override val transacter = database.mbid_imageQueries
 
-    override fun saveUrls(
+    override fun saveImageMetadata(
         mbid: String,
-        imageUrls: List<ImageUrls>,
+        imageMetadataList: List<ImageMetadata>,
     ) {
         transacter.transaction {
-            imageUrls.forEach { urls ->
+            imageMetadataList.forEach { urls ->
                 transacter.insert(
                     mbid = mbid,
                     thumbnailUrl = urls.thumbnailUrl,
@@ -27,25 +33,97 @@ class MbidImageDao(
         }
     }
 
-    override fun getAllUrls(mbid: String): List<ImageUrls> {
-        return transacter.getAllUrls(
+    override fun getFrontImageMetadata(mbid: String): ImageMetadata? {
+        return transacter.getFrontImageMetadata(
             mbid = mbid,
-            mapper = { _, _, thumbnailUrl, largeUrl, types, comment ->
-                ImageUrls(
-                    thumbnailUrl = thumbnailUrl,
-                    largeUrl = largeUrl,
-                    types = types ?: persistentListOf(),
-                    comment = comment.orEmpty(),
+            mapper = ::mapToImageMetadata,
+        ).executeAsOneOrNull()
+    }
+
+    override fun getAllImageMetadataById(
+        mbid: String,
+        query: String,
+    ): PagingSource<Int, ImageMetadata> {
+        return QueryPagingSource(
+            countQuery = transacter.getAllImageMetadataByIdCount(
+                mbid = mbid,
+                query = "%$query%",
+            ),
+            transacter = transacter,
+            context = coroutineDispatchers.io,
+            queryProvider = { limit, offset ->
+                transacter.getAllImageMetadataById(
+                    mbid = mbid,
+                    query = "%$query%",
+                    limit = limit,
+                    offset = offset,
+                    mapper = ::mapToImageMetadata,
                 )
             },
-        ).executeAsList()
+        )
     }
 
-    override fun deleteAllUrlsById(mbid: String) {
-        transacter.deleteAllUrlsById(mbid)
+    override fun getAllImageMetadata(
+        query: String,
+    ): PagingSource<Int, ImageMetadata> {
+        return QueryPagingSource(
+            countQuery = transacter.getAllImageMetadataCount(
+                query = "%$query%",
+            ),
+            transacter = transacter,
+            context = coroutineDispatchers.io,
+            queryProvider = { limit, offset ->
+                transacter.getAllImageMetadata(
+                    query = "%$query%",
+                    limit = limit,
+                    offset = offset,
+                    mapper = ::mapToImageMetadata,
+                )
+            },
+        )
     }
 
-    override fun getNumberOfImages(mbid: String): Long {
-        return transacter.getNumberOfImages(mbid).executeAsOne()
+    override fun deleteAllImageMetadtaById(mbid: String) {
+        transacter.deleteAllImageMetadtaById(mbid)
+    }
+
+    override fun getNumberOfImagesById(mbid: String): Long {
+        return transacter.getNumberOfImagesById(mbid).executeAsOne()
     }
 }
+
+private fun mapToImageMetadata(
+    id: Long,
+    thumbnailUrl: String,
+    largeUrl: String,
+    types: ImmutableList<String>?,
+    comment: String?,
+) = ImageMetadata(
+    databaseId = id,
+    thumbnailUrl = thumbnailUrl,
+    largeUrl = largeUrl,
+    types = types ?: persistentListOf(),
+    comment = comment.orEmpty(),
+)
+
+private fun mapToImageMetadata(
+    id: Long,
+    thumbnailUrl: String,
+    largeUrl: String,
+    types: ImmutableList<String>?,
+    comment: String?,
+    mbid: String? = null,
+    name: String? = null,
+    disambiguation: String? = null,
+    entity: String? = null,
+) = ImageMetadata(
+    databaseId = id,
+    thumbnailUrl = thumbnailUrl,
+    largeUrl = largeUrl,
+    types = types ?: persistentListOf(),
+    comment = comment.orEmpty(),
+    mbid = mbid,
+    name = name,
+    disambiguation = disambiguation,
+    entity = entity?.toMusicBrainzEntity(),
+)

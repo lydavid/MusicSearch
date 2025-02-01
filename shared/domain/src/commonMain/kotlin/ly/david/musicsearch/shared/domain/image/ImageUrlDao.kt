@@ -1,14 +1,25 @@
 package ly.david.musicsearch.shared.domain.image
 
+import app.cash.paging.PagingSource
+
 interface ImageUrlDao {
-    fun saveUrls(
+    fun saveImageMetadata(
         mbid: String,
-        imageUrls: List<ImageUrls>,
+        imageMetadataList: List<ImageMetadata>,
     )
 
-    fun getAllUrls(mbid: String): List<ImageUrls>
+    fun getFrontImageMetadata(mbid: String): ImageMetadata?
 
-    fun deleteAllUrlsById(mbid: String)
+    fun getAllImageMetadataById(
+        mbid: String,
+        query: String = "",
+    ): PagingSource<Int, ImageMetadata>
 
-    fun getNumberOfImages(mbid: String): Long
+    fun getAllImageMetadata(
+        query: String = "",
+    ): PagingSource<Int, ImageMetadata>
+
+    fun deleteAllImageMetadtaById(mbid: String)
+
+    fun getNumberOfImagesById(mbid: String): Long
 }

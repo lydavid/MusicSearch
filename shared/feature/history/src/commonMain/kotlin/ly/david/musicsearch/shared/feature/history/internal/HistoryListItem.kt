@@ -12,19 +12,19 @@ import androidx.compose.ui.draw.clip
 import ly.david.musicsearch.shared.domain.common.getTimeFormatted
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.getDisplayText
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.core.theme.TextStyles
-import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 @Composable
 internal fun HistoryListItem(
     lookupHistory: LookupHistoryListItemModel,
     modifier: Modifier = Modifier,
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
     onDeleteItem: (LookupHistoryListItemModel) -> Unit = {},
 ) {
     val strings = LocalStrings.current
@@ -60,7 +60,7 @@ internal fun HistoryListItem(
                     }
                     ThumbnailImage(
                         url = lookupHistory.imageUrl.orEmpty(),
-                        placeholderKey = getPlaceholderKey(lookupHistory.id),
+                        placeholderKey = lookupHistory.imageId.toString(),
                         placeholderIcon = lookupHistory.entity.getIcon(),
                         modifier = clipModifier,
                     )

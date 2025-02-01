@@ -15,6 +15,7 @@ fun mapToArtistListItemModel(
     end: String?,
     ended: Boolean?,
     thumbnailUrl: String?,
+    placeholderKey: Long?,
     visited: Boolean?,
 ) = ArtistListItemModel(
     id = id,
@@ -30,5 +31,6 @@ fun mapToArtistListItemModel(
         ended = ended,
     ),
     imageUrl = thumbnailUrl,
+    imageId = placeholderKey ?: 0L,
     visited = visited == true,
 )

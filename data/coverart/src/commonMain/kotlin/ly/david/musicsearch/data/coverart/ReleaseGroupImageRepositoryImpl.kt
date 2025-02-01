@@ -7,7 +7,7 @@ import ly.david.musicsearch.data.coverart.api.getFrontThumbnailCoverArtUrl
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
-import ly.david.musicsearch.shared.domain.image.ImageUrls
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
 
 internal class ReleaseGroupImageRepositoryImpl(
@@ -16,55 +16,51 @@ internal class ReleaseGroupImageRepositoryImpl(
     private val logger: Logger,
 ) : ReleaseGroupImageRepository {
 
-    override suspend fun getReleaseGroupImageUrl(
+    override suspend fun getReleaseGroupImageMetadata(
         releaseGroupId: String,
-        thumbnail: Boolean,
         forceRefresh: Boolean,
-    ): String {
+    ): ImageMetadata {
         if (forceRefresh) {
-            imageUrlDao.deleteAllUrlsById(releaseGroupId)
+            imageUrlDao.deleteAllImageMetadtaById(releaseGroupId)
         }
 
-        val cachedImageUrls = imageUrlDao.getAllUrls(releaseGroupId)
-        return if (cachedImageUrls.isNotEmpty()) {
-            val frontCoverArt = cachedImageUrls.first()
-            return if (thumbnail) frontCoverArt.thumbnailUrl else frontCoverArt.largeUrl
+        val cachedImageUrls = imageUrlDao.getFrontImageMetadata(releaseGroupId)
+        return if (cachedImageUrls == null) {
+            saveReleaseGroupImageMetadataFromNetwork(releaseGroupId)
+            imageUrlDao.getFrontImageMetadata(releaseGroupId) ?: ImageMetadata()
         } else {
-            getReleaseGroupCoverArtUrlFromNetwork(releaseGroupId, thumbnail)
+            cachedImageUrls
         }
     }
 
-    private suspend fun getReleaseGroupCoverArtUrlFromNetwork(
+    private suspend fun saveReleaseGroupImageMetadataFromNetwork(
         releaseGroupId: String,
-        thumbnail: Boolean,
-    ): String {
-        return try {
+    ) {
+        try {
             val coverArts = coverArtArchiveApi.getReleaseGroupCoverArts(releaseGroupId)
             val thumbnailUrl = coverArts.getFrontThumbnailCoverArtUrl().orEmpty()
             val largeUrl = coverArts.getFrontCoverArtUrl().orEmpty()
-            imageUrlDao.saveUrls(
+
+            imageUrlDao.saveImageMetadata(
                 mbid = releaseGroupId,
-                imageUrls = listOf(
-                    ImageUrls(
+                imageMetadataList = listOf(
+                    ImageMetadata(
                         thumbnailUrl = thumbnailUrl.removeFileExtension(),
                         largeUrl = largeUrl.removeFileExtension(),
                     ),
                 ),
             )
-            return if (thumbnail) thumbnailUrl else largeUrl
         } catch (ex: HandledException) {
             if (ex.errorResolution == ErrorResolution.None) {
-                imageUrlDao.saveUrls(
+                imageUrlDao.saveImageMetadata(
                     mbid = releaseGroupId,
-                    imageUrls = listOf(ImageUrls()),
+                    imageMetadataList = listOf(ImageMetadata()),
                 )
             } else {
                 logger.e(ex)
             }
-            ""
         } catch (ex: Exception) {
             logger.e(ex)
-            ""
         }
     }
 }

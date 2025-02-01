@@ -74,7 +74,7 @@ val databaseDaoModule = module {
     single { LabelDao(get()) }
     single { LabelsByEntityDao(get(), get()) }
     single { LookupHistoryDao(get(), get()) }
-    single<ImageUrlDao> { MbidImageDao(get()) }
+    singleOf(::MbidImageDao) bind ImageUrlDao::class
     single { MediumDao(get(), get()) }
     single { NowPlayingHistoryDao(get(), get()) }
     single { PlaceDao(get()) }

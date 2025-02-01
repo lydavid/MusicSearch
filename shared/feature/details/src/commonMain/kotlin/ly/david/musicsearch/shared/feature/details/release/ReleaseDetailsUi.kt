@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.release
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,6 +10,7 @@ import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.area.AreaListItem
@@ -23,7 +23,6 @@ import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.work.getDisplayScript
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.LargeImage
-import ly.david.musicsearch.ui.image.getPlaceholderKey
 
 @Composable
 internal fun ReleaseDetailsUi(
@@ -32,7 +31,7 @@ internal fun ReleaseDetailsUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     onImageClick: () -> Unit = {},
-    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
 ) {
     val strings = LocalStrings.current
 
@@ -43,9 +42,9 @@ internal fun ReleaseDetailsUi(
         item {
             if (filterText.isBlank()) {
                 LargeImage(
-                    url = releaseDetailsUiState.imageUrl,
-                    placeholderKey = getPlaceholderKey(release.id),
-                    modifier = Modifier.clickable { onImageClick() },
+                    url = release.imageMetadata.largeUrl,
+                    placeholderKey = release.imageMetadata.databaseId.toString(),
+                    onClick = onImageClick,
                 )
             }
 
@@ -65,14 +64,14 @@ internal fun ReleaseDetailsUi(
                         filterText = filterText,
                     )
                 }
-                formattedFormats?.ifNotNullOrEmpty {
+                formattedFormats.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.format,
                         text = it,
                         filterText = filterText,
                     )
                 }
-                formattedTracks?.ifNotNullOrEmpty {
+                formattedTracks.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.tracks,
                         text = it,
@@ -122,7 +121,7 @@ internal fun ReleaseDetailsUi(
                         filterText = filterText,
                     )
                 }
-                textRepresentation?.language?.getDisplayLanguage(strings).ifNotNullOrEmpty {
+                textRepresentation.language?.getDisplayLanguage(strings).ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.language,
                         text = it,

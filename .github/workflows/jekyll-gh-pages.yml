@@ -3,10 +3,11 @@ name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 
 on:
   push:
-    branches: ["beta"]
+    branches: ["main"]
     paths:
       - "*.md"
       - "*.html"
+  workflow_call:
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages

@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.domain.releasegroup
 
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 
@@ -11,7 +12,7 @@ data class ReleaseGroupDetailsModel(
     override val disambiguation: String = "",
     override val primaryType: String? = null,
     override val secondaryTypes: List<String>? = null,
-    val imageUrl: String? = null,
+    val imageMetadata: ImageMetadata = ImageMetadata(),
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
     val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     val urls: List<RelationListItemModel> = listOf(),

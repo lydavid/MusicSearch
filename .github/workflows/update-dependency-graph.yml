@@ -2,7 +2,7 @@ name: Update dependency graph
 
 on:
   push:
-    branches: [ "beta" ]
+    branches: [ "main" ]
     paths:
       - "**.kts"
   workflow_call:
@@ -33,7 +33,7 @@ jobs:
       - run: git pull --rebase --autostash
 
       - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@v5.0.1
+        uses: stefanzweifel/git-auto-commit-action@v5.1.0
         with:
           commit_message: 'chore: update module dependency graph [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>

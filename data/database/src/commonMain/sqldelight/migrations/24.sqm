@@ -1,5 +1,4 @@
-CREATE TABLE IF NOT EXISTS genre (
-  id TEXT PRIMARY KEY NOT NULL,
-  name TEXT NOT NULL,
-  disambiguation TEXT
-);
+UPDATE mbid_image
+SET
+  types = COALESCE(types, ''),
+  comment = COALESCE(comment, '');

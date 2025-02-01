@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.domain.artist
 
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
@@ -16,7 +17,7 @@ data class ArtistDetailsModel(
     val isnis: List<String>? = null,
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val urls: List<RelationListItemModel> = listOf(),
-    val imageUrl: String? = null,
+    val imageMetadata: ImageMetadata = ImageMetadata(),
     val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     val areaListItemModel: AreaListItemModel? = null,
 ) : Artist

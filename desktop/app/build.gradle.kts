@@ -11,7 +11,7 @@ application {
 }
 
 group = "io.github.lydavid.musicsearch"
-version = getDesktopVersion()
+version = project.properties["VERSION_NAME"] as String
 
 aboutLibraries {
     excludeFields = arrayOf("generated")
@@ -52,23 +52,4 @@ java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
     }
-}
-
-/**
- * Transform a version name to the format MAJOR.MINOR.PATCH, where each part is a number.
- *
- * e.g. 1.2.1-beta.14 to 1.2.114
- */
-fun getDesktopVersion(): String {
-    var versionName = project.properties["VERSION_NAME"] as String
-    val parts = versionName.split("-")
-    val versionPart = parts.first()
-    val betaPart = parts.last()
-    if (versionPart != betaPart) {
-        val splitVersion = versionPart.split(".")
-        val betaNum = betaPart.split(".").last().toInt()
-        val modifiedPatch = splitVersion.last().toInt() * 100 + betaNum
-        versionName = "${splitVersion[0]}.${splitVersion[1]}.$modifiedPatch"
-    }
-    return versionName
 }

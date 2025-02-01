@@ -25,6 +25,8 @@ kotlin {
                 implementation(libs.circuit.foundation)
                 implementation(libs.koin.core)
                 implementation(libs.windowSizeClass)
+                implementation(libs.paging.common)
+                implementation(libs.paging.compose)
             }
         }
         val androidMain by getting {
