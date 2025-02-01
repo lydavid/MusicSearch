@@ -322,7 +322,8 @@ private fun CollectionUi(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 lazyListState = genresByEntityUiState.lazyListState,
-                onGenreClick = onItemClick,
+                isEditMode = isEditMode,
+                onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->
                     onDeleteFromCollection(
                         entityId,

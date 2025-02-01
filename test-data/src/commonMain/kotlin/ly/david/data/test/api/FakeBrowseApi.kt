@@ -58,7 +58,7 @@ open class FakeBrowseApi : BrowseApi {
         entityId: String,
         entity: MusicBrainzEntity,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseGenresResponse {
         return BrowseGenresResponse(
             count = 0,

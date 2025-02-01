@@ -18,7 +18,8 @@ fun GenresListScreen(
     lazyPagingItems: LazyPagingItems<GenreListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
-    onGenreClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
+    isEditMode: Boolean = false,
+    onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
 ) {
     ScreenWithPagingLoadingAndError(
@@ -34,14 +35,14 @@ fun GenresListScreen(
                             genre = listItemModel,
                             modifier = Modifier.animateItemPlacement(),
                         ) {
-                            onGenreClick(
+                            onItemClick(
                                 MusicBrainzEntity.GENRE,
                                 id,
                                 getNameWithDisambiguation(),
                             )
                         }
                     },
-                    disable = onDeleteFromCollection == null,
+                    disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection?.invoke(
                             listItemModel.id,
