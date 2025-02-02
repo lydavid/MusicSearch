@@ -80,6 +80,13 @@ jobs:
           disable_globbing: true
           file_pattern: '*/*.png'
 
+      - name: Save
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          path: |
+            shared/domain/build/reports/tests/jvmTest/index.html
+
   ios-checks:
     timeout-minutes: 60
     runs-on: macos-latest
