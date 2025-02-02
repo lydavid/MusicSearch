@@ -48,7 +48,7 @@ androidx-datastore-preferences-android = { module = "androidx.datastore:datastor
 androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 #androidx-datastore-preferences-jvm = { group = "androidx.datastore", name = "datastore-preferences-jvm", version.ref = "datastore" }
 androidx-lifecycle-viewmodel-compose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6"
-androidx-navigation-compose = "androidx.navigation:navigation-compose:2.8.5"
+androidx-navigation-compose = "androidx.navigation:navigation-compose:2.8.6"
 androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "pagingTesting" }
 androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstaller" }
 androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.6.1"
