@@ -3,22 +3,12 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
-import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
-import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
-import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
-import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
-import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
-import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
-import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToArtistListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToEventListItemModel
+import ly.david.musicsearch.data.database.mapper.mapToGenreListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToInstrumentListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToLabelListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToPlaceListItemModel
@@ -27,6 +17,18 @@ import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
+import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
+import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
+import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
+import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
+import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
+import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import lydavidmusicsearchdatadatabase.Collection_entity
 
 class CollectionEntityDao(
@@ -145,6 +147,27 @@ class CollectionEntityDao(
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToEventListItemModel,
+            )
+        },
+    )
+
+    fun getGenresByCollection(
+        collectionId: String,
+        query: String,
+    ): PagingSource<Int, GenreListItemModel> = QueryPagingSource(
+        countQuery = transacter.getNumberOfGenresByCollection(
+            collectionId = collectionId,
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getGenresByCollection(
+                collectionId = collectionId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToGenreListItemModel,
             )
         },
     )

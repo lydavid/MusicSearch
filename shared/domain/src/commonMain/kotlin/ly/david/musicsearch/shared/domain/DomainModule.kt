@@ -9,6 +9,7 @@ import ly.david.musicsearch.shared.domain.collection.usecase.DeleteFromCollectio
 import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.shared.domain.event.usecase.GetEventsByEntity
+import ly.david.musicsearch.shared.domain.genre.usecase.GetGenresByEntity
 import ly.david.musicsearch.shared.domain.history.usecase.DeleteLookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.DeleteLookupHistoryImpl
 import ly.david.musicsearch.shared.domain.history.usecase.GetPagedHistory
@@ -54,6 +55,7 @@ val domainModule = module {
     singleOf(::GetCollection)
     singleOf(::GetCollection)
     singleOf(::GetEventsByEntity)
+    singleOf(::GetGenresByEntity)
     singleOf(::DeleteLookupHistoryImpl) bind DeleteLookupHistory::class
     singleOf(::GetPagedHistoryImpl) bind GetPagedHistory::class
     singleOf(::IncrementLookupHistoryImpl) bind IncrementLookupHistory::class

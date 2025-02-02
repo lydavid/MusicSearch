@@ -27,6 +27,8 @@ import ly.david.musicsearch.ui.common.artist.ArtistsListScreen
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
 import ly.david.musicsearch.ui.common.event.EventsListScreen
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
+import ly.david.musicsearch.ui.common.genre.GenresByEntityUiState
+import ly.david.musicsearch.ui.common.genre.GenresListScreen
 import ly.david.musicsearch.ui.common.instrument.InstrumentsByEntityUiState
 import ly.david.musicsearch.ui.common.instrument.InstrumentsListScreen
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
@@ -161,6 +163,7 @@ internal fun CollectionUi(
                 areasByEntityUiState = state.areasByEntityUiState,
                 artistsByEntityUiState = state.artistsByEntityUiState,
                 eventsByEntityUiState = state.eventsByEntityUiState,
+                genresByEntityUiState = state.genresByEntityUiState,
                 instrumentsByEntityUiState = state.instrumentsByEntityUiState,
                 labelsByEntityUiState = state.labelsByEntityUiState,
                 placesByEntityUiState = state.placesByEntityUiState,
@@ -218,6 +221,7 @@ private fun CollectionUi(
     areasByEntityUiState: AreasByEntityUiState,
     artistsByEntityUiState: ArtistsByEntityUiState,
     eventsByEntityUiState: EventsByEntityUiState,
+    genresByEntityUiState: GenresByEntityUiState,
     instrumentsByEntityUiState: InstrumentsByEntityUiState,
     labelsByEntityUiState: LabelsByEntityUiState,
     placesByEntityUiState: PlacesByEntityUiState,
@@ -299,6 +303,25 @@ private fun CollectionUi(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 lazyListState = instrumentsByEntityUiState.lazyListState,
+                isEditMode = isEditMode,
+                onItemClick = onItemClick,
+                onDeleteFromCollection = { entityId, name ->
+                    onDeleteFromCollection(
+                        entityId,
+                        name,
+                    )
+                },
+            )
+        }
+
+        MusicBrainzEntity.GENRE -> {
+            GenresListScreen(
+                lazyPagingItems = genresByEntityUiState.lazyPagingItems,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                lazyListState = genresByEntityUiState.lazyListState,
                 isEditMode = isEditMode,
                 onItemClick = onItemClick,
                 onDeleteFromCollection = { entityId, name ->

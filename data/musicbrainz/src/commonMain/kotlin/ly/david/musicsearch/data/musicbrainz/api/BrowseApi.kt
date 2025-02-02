@@ -14,6 +14,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzModel
@@ -54,6 +55,13 @@ interface BrowseApi {
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
     ): BrowseEventsResponse
+
+    suspend fun browseGenresByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
+    ): BrowseGenresResponse
 
     suspend fun browseInstrumentsByCollection(
         collectionId: String,
@@ -185,6 +193,31 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("event")
+                parameter(
+                    entity.resourceUri,
+                    entityId,
+                )
+                parameter(
+                    "limit",
+                    limit,
+                )
+                parameter(
+                    "offset",
+                    offset,
+                )
+            }
+        }.body()
+    }
+
+    override suspend fun browseGenresByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+        limit: Int,
+        offset: Int,
+    ): BrowseGenresResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("genre")
                 parameter(
                     entity.resourceUri,
                     entityId,
@@ -502,6 +535,13 @@ data class BrowseEventsResponse(
     @SerialName("event-offset") override val offset: Int,
     @SerialName("events") override val musicBrainzModels: List<EventMusicBrainzModel>,
 ) : Browsable<EventMusicBrainzModel>
+
+@Serializable
+data class BrowseGenresResponse(
+    @SerialName("genre-count") override val count: Int,
+    @SerialName("genre-offset") override val offset: Int,
+    @SerialName("genres") override val musicBrainzModels: List<GenreMusicBrainzModel>,
+) : Browsable<GenreMusicBrainzModel>
 
 @Serializable
 data class BrowseInstrumentsResponse(

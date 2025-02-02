@@ -4,6 +4,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
+import ly.david.musicsearch.data.musicbrainz.api.BrowseGenresResponse
 import ly.david.musicsearch.data.musicbrainz.api.BrowseInstrumentsResponse
 import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
@@ -47,6 +48,19 @@ open class FakeBrowseApi : BrowseApi {
         offset: Int,
     ): BrowseEventsResponse {
         return BrowseEventsResponse(
+            count = 0,
+            offset = 0,
+            musicBrainzModels = listOf(),
+        )
+    }
+
+    override suspend fun browseGenresByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+        limit: Int,
+        offset: Int,
+    ): BrowseGenresResponse {
+        return BrowseGenresResponse(
             count = 0,
             offset = 0,
             musicBrainzModels = listOf(),

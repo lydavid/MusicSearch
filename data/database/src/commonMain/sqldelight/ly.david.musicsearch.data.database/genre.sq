@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS genre (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT
+);
+
+insert:
+INSERT OR IGNORE INTO genre
+VALUES ?;
+
+getGenre:
+SELECT
+  id,
+  name,
+  disambiguation
+FROM genre WHERE id = ?;

@@ -43,6 +43,7 @@ val collectionsFeatureModule = module {
                     placesByEntityPresenter = get(),
                     recordingsByEntityPresenter = get(),
                     eventsByEntityPresenter = get(),
+                    genresByEntityPresenter = get(),
                     releasesByEntityPresenter = get(),
                     releaseGroupsByEntityPresenter = get(),
                     worksByEntityPresenter = get(),
