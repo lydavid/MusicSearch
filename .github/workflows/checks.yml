@@ -14,7 +14,7 @@ jobs:
   # When we change the name of this job, make sure to update GitHub's branch protection to the new name
   checks:
     timeout-minutes: 20
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
     steps:
@@ -79,13 +79,6 @@ jobs:
           commit_author: musicsearch-gha-helper[bot] <173635759+musicsearch-gha-helper[bot]@users.noreply.github.com>
           disable_globbing: true
           file_pattern: '*/*.png'
-
-      - name: Save
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          path: |
-            shared/domain/build/reports/tests/
 
   ios-checks:
     timeout-minutes: 60
