@@ -7,8 +7,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import app.cash.paging.PagingData
-import app.cash.paging.compose.LazyPagingItems
-import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
 import com.slack.circuit.retained.collectAsRetainedState
@@ -45,7 +43,7 @@ internal class HistoryPresenter(
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         val sortOption by appPreferences.historySortOption.collectAsRetainedState(HistorySortOption.RECENTLY_VISITED)
-        val listItems: Flow<PagingData<ListItemModel>> by rememberRetained(query, sortOption) {
+        val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(query, sortOption) {
             mutableStateOf(
                 getPagedHistory(
                     query = query,
@@ -108,7 +106,7 @@ internal class HistoryPresenter(
         return HistoryUiState(
             topAppBarFilterState = topAppBarFilterState,
             sortOption = sortOption,
-            lazyPagingItems = listItems.collectAsLazyPagingItems(),
+            pagingDataFlow = pagingDataFlow,
             lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
@@ -119,7 +117,7 @@ internal class HistoryPresenter(
 internal data class HistoryUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val sortOption: HistorySortOption,
-    val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val pagingDataFlow: Flow<PagingData<ListItemModel>>,
     val lazyListState: LazyListState = LazyListState(),
     val eventSink: (HistoryUiEvent) -> Unit,
 ) : CircuitUiState

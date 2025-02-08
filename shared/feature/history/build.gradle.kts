@@ -35,6 +35,11 @@ kotlin {
         val androidUnitTest by getting {
             dependencies {
                 implementation(projects.ui.test.screenshot)
+                implementation(libs.bundles.kotlinx.coroutines)
+                implementation(libs.junit)
+                implementation(libs.circuit.test)
+                implementation(libs.robolectric)
+                implementation(libs.androidx.paging.testing)
             }
         }
     }
