@@ -53,7 +53,7 @@ jobs:
         id: test
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
-          api-level: 32
+          api-level: 34
           arch: x86_64
           profile: pixel_3a
           emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
