@@ -24,6 +24,12 @@
         "androidx.compose.compiler",
         "org.jetbrains.kotlin:kotlin"
       ]
+    },
+    {
+      "matchPackagePrefixes": [
+        "com.slack.circuit"
+      ],
+      "allowedVersions": ">0.26.0"
     }
   ]
 }
