@@ -12,7 +12,7 @@ val imagesFeatureModule = module {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is CoverArtsScreen -> {
-                    CoverArtsGridPresenter(
+                    CoverArtsPresenter(
                         screen = screen,
                         navigator = navigator,
                         releaseImageRepository = get(),

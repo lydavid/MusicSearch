@@ -41,6 +41,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import app.cash.paging.compose.LazyPagingItems
+import app.cash.paging.compose.collectAsLazyPagingItems
 import app.cash.paging.compose.itemKey
 import com.slack.circuit.foundation.internal.BackHandler
 import kotlinx.coroutines.launch
@@ -85,6 +86,9 @@ internal fun CoverArtsGridUi(
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
+    val imageMetadataLazyPagingItems: LazyPagingItems<ImageMetadata> = state
+        .imageMetadataPagingDataFlow
+        .collectAsLazyPagingItems()
 
     Scaffold(
         modifier = modifier,
@@ -127,24 +131,39 @@ internal fun CoverArtsGridUi(
             )
         },
     ) { innerPadding ->
-        val imageUrls = state.imageMetadataList
+
         val capturedSelectedImageIndex = state.selectedImageIndex
+
         if (capturedSelectedImageIndex == null) {
             CoverArtsGrid(
-                imageMetadataList = imageUrls,
+                imageMetadataLazyPagingItems = imageMetadataLazyPagingItems,
                 onImageClick = { index ->
-                    eventSink(CoverArtsUiEvent.SelectImage(index))
+                    val snapshot = imageMetadataLazyPagingItems
+                        .itemSnapshotList
+                    eventSink(
+                        CoverArtsUiEvent.SelectImage(
+                            index,
+                            snapshot,
+                        ),
+                    )
                 },
                 lazyGridState = state.lazyGridState,
                 modifier = Modifier.padding(innerPadding),
             )
         } else {
             CoverArtsPager(
-                imageMetadataList = imageUrls,
+                imageMetadataList = imageMetadataLazyPagingItems,
                 selectedImageIndex = capturedSelectedImageIndex,
                 isCompact = isCompact,
                 onImageChange = { index ->
-                    eventSink(CoverArtsUiEvent.SelectImage(index))
+                    val snapshot = imageMetadataLazyPagingItems
+                        .itemSnapshotList
+                    eventSink(
+                        CoverArtsUiEvent.SelectImage(
+                            index,
+                            snapshot,
+                        ),
+                    )
                 },
                 modifier = Modifier.padding(innerPadding),
             )
@@ -156,7 +175,7 @@ private const val GRID_SIZE = 4
 
 @Composable
 private fun CoverArtsGrid(
-    imageMetadataList: LazyPagingItems<ImageMetadata>,
+    imageMetadataLazyPagingItems: LazyPagingItems<ImageMetadata>,
     onImageClick: (index: Int) -> Unit,
     lazyGridState: LazyGridState,
     modifier: Modifier = Modifier,
@@ -174,11 +193,11 @@ private fun CoverArtsGrid(
         modifier = modifier,
     ) {
         items(
-            count = imageMetadataList.itemCount,
-            key = imageMetadataList.itemKey { it.databaseId },
+            count = imageMetadataLazyPagingItems.itemCount,
+            key = imageMetadataLazyPagingItems.itemKey { it.databaseId },
             contentType = { ImageMetadata() },
         ) { index ->
-            imageMetadataList[index]?.let { imageUrl ->
+            imageMetadataLazyPagingItems[index]?.let { imageUrl ->
                 // Because the number of images displayed can change when we filter
                 // the placeholder key must not depend on the index of the initial set of images
                 ThumbnailImage(
