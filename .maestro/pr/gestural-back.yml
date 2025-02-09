@@ -1,0 +1,24 @@
+appId: io.github.lydavid.musicsearch.debug
+---
+- launchApp
+- startRecording: gestural-back
+
+- tapOn: Collections
+
+- tapOn: "Create a collection"
+- inputText: "Some collection"
+- tapOn: "OK"
+
+- tapOn: "Some collection"
+- assertNotVisible: "Local"
+- assertNotVisible: "Remote"
+
+- back
+- assertVisible: "Local"
+- assertVisible: "Remote"
+
+- back
+- assertNotVisible: "Local"
+- assertNotVisible: "Remote"
+
+- stopRecording
