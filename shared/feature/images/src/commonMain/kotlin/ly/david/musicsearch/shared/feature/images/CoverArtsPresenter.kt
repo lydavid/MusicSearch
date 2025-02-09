@@ -6,16 +6,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.paging.PagingData
-import app.cash.paging.compose.LazyPagingItems
-import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.common.appendOptionalText
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
@@ -28,7 +29,7 @@ import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
-internal class CoverArtsGridPresenter(
+internal class CoverArtsPresenter(
     private val screen: CoverArtsScreen,
     private val navigator: Navigator,
     private val releaseImageRepository: ReleaseImageRepository,
@@ -46,36 +47,29 @@ internal class CoverArtsGridPresenter(
                 ),
             )
         }
-        val imageMetadataList: LazyPagingItems<ImageMetadata> = imageMetadataFlow.collectAsLazyPagingItems()
         val lazyGridState: LazyGridState = rememberLazyGridState()
         var selectedIndex: Int? by rememberRetained {
             mutableStateOf(null)
         }
+        var imageMetadataListSnapshot: ImmutableList<ImageMetadata?> by rememberRetained {
+            mutableStateOf(persistentListOf())
+        }
 
-        @Suppress("SwallowedException")
-        val selectedImageMetadata: ImageMetadata? by rememberRetained(
+        val selectedImageMetadata: ImageMetadata? by remember(
             selectedIndex,
+            imageMetadataListSnapshot,
         ) {
             val capturedSelectedImageIndex = selectedIndex
             mutableStateOf(
-                if (capturedSelectedImageIndex == null) {
+                if (capturedSelectedImageIndex == null || imageMetadataListSnapshot.isEmpty()) {
                     null
                 } else {
-                    val imageMetadata = try {
-                        imageMetadataList[capturedSelectedImageIndex]
-                    } catch (ex: IndexOutOfBoundsException) {
-                        // TODO: Find way to redisplay the last image metadata when returning to this screen
-                        //  even if imageMetadataList has changed
-                        //  (caused by change to a table such artist/release/release_group which we join)
-                        selectedIndex = null
-                        null
-                    }
-                    imageMetadata
+                    imageMetadataListSnapshot[capturedSelectedImageIndex]
                 },
             )
         }
-        val title by rememberRetained(
-            selectedIndex,
+
+        val title by remember(
             selectedImageMetadata,
         ) {
             val index = selectedIndex
@@ -84,20 +78,21 @@ internal class CoverArtsGridPresenter(
                     "Cover arts"
                 } else {
                     val imageMetadata = selectedImageMetadata
-                    val pages = "${index + 1}/${imageMetadataList.itemCount}"
+                    val pages = "${index + 1}/${imageMetadataListSnapshot.size}"
                     val typeAndComment =
                         imageMetadata?.types?.joinToString()?.appendOptionalText(imageMetadata.comment).orEmpty()
-                    "[$pages] $typeAndComment"
+                    "[$pages]".appendOptionalText(typeAndComment)
                 },
             )
         }
-        val subtitle by rememberRetained(
+
+        val subtitle by remember(
             selectedImageMetadata,
         ) {
             mutableStateOf(selectedImageMetadata?.getNameWithDisambiguation().orEmpty())
         }
 
-        val url by rememberSaveable(
+        val url by remember(
             selectedImageMetadata,
         ) {
             mutableStateOf(
@@ -120,12 +115,13 @@ internal class CoverArtsGridPresenter(
                     }
                 }
 
-                is CoverArtsUiEvent.UpdateQuery -> {
-                    topAppBarFilterState.updateFilterText(event.query)
-                }
-
                 is CoverArtsUiEvent.SelectImage -> {
                     selectedIndex = event.index
+                    if (event.imageMetadataSnapshot.isEmpty()) {
+                        println("do something, this is a signal that we returned to this screen but data has changed")
+                    } else {
+                        imageMetadataListSnapshot = event.imageMetadataSnapshot.toImmutableList()
+                    }
                     topAppBarFilterState.toggleFilterMode(false)
                 }
 
@@ -146,7 +142,7 @@ internal class CoverArtsGridPresenter(
             url = url,
             selectedImageIndex = selectedIndex,
             selectedImageMetadata = selectedImageMetadata,
-            imageMetadataList = imageMetadataFlow.collectAsLazyPagingItems(),
+            imageMetadataPagingDataFlow = imageMetadataFlow,
             lazyGridState = lazyGridState,
             topAppBarFilterState = topAppBarFilterState,
             eventSink = ::eventSink,
@@ -159,7 +155,7 @@ internal data class CoverArtsUiState(
     val title: String = "",
     val subtitle: String = "",
     val url: String? = null,
-    val imageMetadataList: LazyPagingItems<ImageMetadata>,
+    val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadata>>,
     val lazyGridState: LazyGridState = LazyGridState(),
     val selectedImageIndex: Int? = null,
     val selectedImageMetadata: ImageMetadata? = null,
@@ -170,10 +166,9 @@ internal data class CoverArtsUiState(
 internal sealed interface CoverArtsUiEvent : CircuitUiEvent {
     data object NavigateUp : CoverArtsUiEvent
 
-    data class UpdateQuery(val query: String) : CoverArtsUiEvent
-
     data class SelectImage(
         val index: Int,
+        val imageMetadataSnapshot: List<ImageMetadata?>,
     ) : CoverArtsUiEvent
 
     data class ClickItem(

@@ -4,7 +4,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
-import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
@@ -42,7 +41,7 @@ internal fun PreviewCoverArtsGridUi() {
             CoverArtsGridUi(
                 state = CoverArtsUiState(
                     title = "Cover arts",
-                    imageMetadataList = images.collectAsLazyPagingItems(),
+                    imageMetadataPagingDataFlow = images,
                 ),
             )
         }
@@ -59,7 +58,7 @@ internal fun PreviewCoverArtsPagerUiCompact() {
                 state = CoverArtsUiState(
                     title = "Front",
                     subtitle = "1/2",
-                    imageMetadataList = images.collectAsLazyPagingItems(),
+                    imageMetadataPagingDataFlow = images,
                     selectedImageIndex = 0,
                 ),
                 isCompact = true,
@@ -78,7 +77,7 @@ internal fun PreviewCoverArtsPagerUiNonCompact() {
                 state = CoverArtsUiState(
                     title = "Front",
                     subtitle = "1/2",
-                    imageMetadataList = images.collectAsLazyPagingItems(),
+                    imageMetadataPagingDataFlow = images,
                     selectedImageIndex = 0,
                 ),
                 isCompact = false,
