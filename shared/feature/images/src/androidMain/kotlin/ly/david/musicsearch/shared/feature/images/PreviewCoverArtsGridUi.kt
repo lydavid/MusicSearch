@@ -43,6 +43,7 @@ internal fun PreviewCoverArtsGridUi() {
                     title = "Cover arts",
                     imageMetadataPagingDataFlow = images,
                 ),
+                isCompact = false,
             )
         }
     }
