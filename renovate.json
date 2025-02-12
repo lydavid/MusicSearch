@@ -30,6 +30,12 @@
         "com.slack.circuit"
       ],
       "allowedVersions": ">0.26.0"
+    },
+    {
+      "matchPackageNames": [
+        "ubuntu"
+      ],
+      "allowedVersions": ">24.04"
     }
   ]
 }
