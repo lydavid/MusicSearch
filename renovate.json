@@ -32,10 +32,8 @@
       "allowedVersions": ">0.26.0"
     },
     {
-      "matchPackageNames": [
-        "ubuntu"
-      ],
-      "allowedVersions": ">24.04"
+      "matchPackageNames": ["ubuntu-24.04"],
+      "enabled": false
     }
   ]
 }
