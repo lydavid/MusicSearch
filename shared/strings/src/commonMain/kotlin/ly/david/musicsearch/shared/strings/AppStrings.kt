@@ -138,6 +138,8 @@ data class AppStrings(
     val leastRecentlyVisited: String,
     val mostVisited: String,
     val leastVisited: String,
+    val recentlyAdded: String,
+    val leastRecentlyAdded: String,
     val loginToMusicBrainz: String,
     val artificialLanguage: String,
     val mostEntities: String,

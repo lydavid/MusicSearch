@@ -98,7 +98,7 @@ SELECT
     artist.name,
     `release`.name,
     release_group.name
-  ) AS name,
+  ) AS coalesced_name,
   coalesce(
     artist.disambiguation,
     `release`.disambiguation,
@@ -125,6 +125,11 @@ AND (
   release_group.name LIKE :query OR
   release_group.disambiguation LIKE :query
 )
+ORDER BY
+  CASE WHEN :alphabetically THEN `coalesced_name` END ASC,
+  CASE WHEN :alphabeticallyReverse THEN `coalesced_name` END DESC,
+  CASE WHEN :recentlyAdded THEN mbid_image.id END DESC,
+  CASE WHEN :leastRecentlyAdded THEN mbid_image.id END ASC
 LIMIT :limit
 OFFSET :offset;
 

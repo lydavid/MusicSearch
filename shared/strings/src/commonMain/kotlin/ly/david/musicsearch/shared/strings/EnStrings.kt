@@ -311,6 +311,11 @@ val EnStrings = AppStrings(
     mostVisited = "Most visited",
 
     leastVisited = "Least visited",
+
+    recentlyAdded = "Recently added",
+
+    leastRecentlyAdded = "Least recently added",
+
     loginToMusicBrainz = "Login to MusicBrainz",
     artificialLanguage = "[Artificial (Other)]",
     mostEntities = "Most entities",

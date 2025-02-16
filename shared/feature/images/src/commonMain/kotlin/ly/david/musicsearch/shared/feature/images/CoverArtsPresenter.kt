@@ -4,6 +4,7 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,10 +20,12 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.common.appendOptionalText
+import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
@@ -32,6 +35,7 @@ import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 internal class CoverArtsPresenter(
     private val screen: CoverArtsScreen,
     private val navigator: Navigator,
+    private val appPreferences: AppPreferences,
     private val releaseImageRepository: ReleaseImageRepository,
     private val getMusicBrainzCoverArtUrl: GetMusicBrainzCoverArtUrl,
 ) : Presenter<CoverArtsUiState> {
@@ -39,11 +43,16 @@ internal class CoverArtsPresenter(
     @Composable
     override fun present(): CoverArtsUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
-        val imageMetadataFlow: Flow<PagingData<ImageMetadata>> by rememberRetained(topAppBarFilterState.filterText) {
+        val sortOption by appPreferences.coverArtsSortOption.collectAsState(CoverArtsSortOption.RECENTLY_ADDED)
+        val imageMetadataFlow: Flow<PagingData<ImageMetadata>> by rememberRetained(
+            topAppBarFilterState.filterText,
+            sortOption,
+        ) {
             mutableStateOf(
                 releaseImageRepository.observeAllImageMetadata(
                     mbid = screen.id,
                     query = topAppBarFilterState.filterText,
+                    sortOption = sortOption,
                 ),
             )
         }
@@ -133,6 +142,10 @@ internal class CoverArtsPresenter(
                         ),
                     )
                 }
+
+                is CoverArtsUiEvent.UpdateSortOption -> {
+                    appPreferences.setCoverArtsSortOption(CoverArtsSortOption.entries[event.sortOptionIndex])
+                }
             }
         }
 
@@ -144,6 +157,7 @@ internal class CoverArtsPresenter(
             selectedImageMetadata = selectedImageMetadata,
             imageMetadataPagingDataFlow = imageMetadataFlow,
             lazyGridState = lazyGridState,
+            sortOption = sortOption,
             topAppBarFilterState = topAppBarFilterState,
             eventSink = ::eventSink,
         )
@@ -157,6 +171,7 @@ internal data class CoverArtsUiState(
     val url: String? = null,
     val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadata>>,
     val lazyGridState: LazyGridState = LazyGridState(),
+    val sortOption: CoverArtsSortOption = CoverArtsSortOption.RECENTLY_ADDED,
     val selectedImageIndex: Int? = null,
     val selectedImageMetadata: ImageMetadata? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
@@ -174,5 +189,9 @@ internal sealed interface CoverArtsUiEvent : CircuitUiEvent {
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,
+    ) : CoverArtsUiEvent
+
+    data class UpdateSortOption(
+        val sortOptionIndex: Int,
     ) : CoverArtsUiEvent
 }

@@ -11,6 +11,7 @@ kotlin {
                 implementation(projects.data.coverart)
                 implementation(projects.data.spotify)
                 implementation(libs.koin.core)
+                implementation(libs.kotlinx.coroutines.core)
             }
         }
     }

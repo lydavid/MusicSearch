@@ -5,12 +5,10 @@ import app.cash.paging.PagingData
 import com.slack.circuit.test.FakeNavigator
 import com.slack.circuit.test.presenterTestOf
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
-import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
-import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
+import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.history.usecase.DeleteLookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.GetPagedHistory
@@ -19,7 +17,6 @@ import ly.david.musicsearch.shared.domain.history.usecase.UnMarkLookupHistoryFor
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.feature.history.internal.HistoryPresenter
 import ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
@@ -45,69 +42,9 @@ class HistoryPresenterTest {
         listItems: List<ListItemModel>,
     ) = HistoryPresenter(
         navigator = navigator,
-        appPreferences = object : AppPreferences {
-            override val theme: Flow<AppPreferences.Theme>
-                get() = flowOf(AppPreferences.Theme.SYSTEM)
-
-            override fun setTheme(theme: AppPreferences.Theme) {
-                // No-op.
-            }
-
-            override val useMaterialYou: Flow<Boolean>
-                get() = flowOf(true)
-
-            override fun setUseMaterialYou(use: Boolean) {
-                // No-op.
-            }
-
-            override val showMoreInfoInReleaseListItem: Flow<Boolean>
-                get() = flowOf(true)
-
-            override fun setShowMoreInfoInReleaseListItem(show: Boolean) {
-                // No-op.
-            }
-
-            override val sortReleaseGroupListItems: Flow<Boolean>
-                get() = flowOf(true)
-
-            override fun setSortReleaseGroupListItems(show: Boolean) {
-                // No-op.
-            }
-
-            override val showLocalCollections: Flow<Boolean>
-                get() = flowOf(true)
-
-            override fun setShowLocalCollections(show: Boolean) {
-                // No-op.
-            }
-
-            override val showRemoteCollections: Flow<Boolean>
-                get() = flowOf(true)
-
-            override fun setShowRemoteCollections(show: Boolean) {
-                // No-op.
-            }
-
+        appPreferences = object : NoOpAppPreferences() {
             override val historySortOption: Flow<HistorySortOption>
-                get() = flow { emit(HistorySortOption.RECENTLY_VISITED) }
-
-            override fun setHistorySortOption(sort: HistorySortOption) {
-                // No-op.
-            }
-
-            override val collectionSortOption: Flow<CollectionSortOption>
-                get() = flowOf(CollectionSortOption.ALPHABETICALLY)
-
-            override fun setCollectionSortOption(sort: CollectionSortOption) {
-                // No-op.
-            }
-
-            override val coverArtsSortOption: Flow<CoverArtsSortOption>
-                get() = error("Not used")
-
-            override fun setCoverArtsSortOption(sort: CoverArtsSortOption) {
-                // No-op.
-            }
+                get() = flowOf(HistorySortOption.RECENTLY_VISITED)
         },
         getPagedHistory = object : GetPagedHistory {
             override fun invoke(

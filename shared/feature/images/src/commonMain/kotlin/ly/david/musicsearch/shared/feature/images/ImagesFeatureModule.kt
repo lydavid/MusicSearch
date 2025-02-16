@@ -15,6 +15,7 @@ val imagesFeatureModule = module {
                     CoverArtsPresenter(
                         screen = screen,
                         navigator = navigator,
+                        appPreferences = get(),
                         releaseImageRepository = get(),
                         getMusicBrainzCoverArtUrl = get(),
                     )

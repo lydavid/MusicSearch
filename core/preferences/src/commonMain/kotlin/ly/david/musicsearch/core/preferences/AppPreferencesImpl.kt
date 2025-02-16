@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
+import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 
@@ -159,6 +160,26 @@ internal class AppPreferencesImpl(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[collectionSortOptionPreference] = sort.name
+            }
+        }
+    }
+    // endregion
+
+    // region Cover Arts
+    private val coverArtsSortOptionPreference = stringPreferencesKey("coverArtsSortOption")
+
+    override val coverArtsSortOption: Flow<CoverArtsSortOption>
+        get() = preferencesDataStore.data
+            .map {
+                CoverArtsSortOption.valueOf(
+                    it[coverArtsSortOptionPreference] ?: CoverArtsSortOption.RECENTLY_ADDED.name,
+                )
+            }
+
+    override fun setCoverArtsSortOption(sort: CoverArtsSortOption) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[coverArtsSortOptionPreference] = sort.name
             }
         }
     }

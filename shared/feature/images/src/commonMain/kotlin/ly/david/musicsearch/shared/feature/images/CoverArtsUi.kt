@@ -17,6 +17,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -24,9 +25,12 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,13 +49,16 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import app.cash.paging.compose.itemKey
 import com.slack.circuit.foundation.internal.BackHandler
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.EntityIcon
+import ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheet
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.screen.screenContainerSize
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.LargeImage
 import ly.david.musicsearch.ui.image.ThumbnailImage
 import kotlin.math.roundToInt
@@ -85,10 +92,25 @@ internal fun CoverArtsGridUi(
     isCompact: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    val strings = LocalStrings.current
     val eventSink = state.eventSink
     val imageMetadataLazyPagingItems: LazyPagingItems<ImageMetadata> = state
         .imageMetadataPagingDataFlow
         .collectAsLazyPagingItems()
+    var showBottomSheet by rememberSaveable { mutableStateOf(false) }
+    val bottomSheetState = rememberModalBottomSheetState()
+
+    if (showBottomSheet) {
+        MultipleChoiceBottomSheet(
+            options = CoverArtsSortOption.entries.map { it.getLabel(strings) },
+            selectedOptionIndex = state.sortOption.ordinal,
+            onSortOptionIndexClick = {
+                eventSink(CoverArtsUiEvent.UpdateSortOption(it))
+            },
+            bottomSheetState = bottomSheetState,
+            onDismiss = { showBottomSheet = false },
+        )
+    }
 
     Scaffold(
         modifier = modifier,
@@ -108,6 +130,13 @@ internal fun CoverArtsGridUi(
                             url = url,
                         )
                     }
+                    DropdownMenuItem(
+                        text = { Text(strings.sort) },
+                        onClick = {
+                            showBottomSheet = true
+                            closeMenu()
+                        },
+                    )
                 },
                 subtitleDropdownMenuItems = {
                     val name = state.selectedImageMetadata?.name ?: return@TopAppBarWithFilter

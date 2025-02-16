@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.domain.release
 
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 
 /**
@@ -21,9 +22,13 @@ interface ReleaseImageRepository {
         forceRefresh: Boolean,
     ): ImageMetadata
 
+    /**
+     * [sortOption] is ignored when [mbid] is provided.
+     */
     fun observeAllImageMetadata(
         mbid: String?,
         query: String,
+        sortOption: CoverArtsSortOption,
     ): Flow<PagingData<ImageMetadata>>
 
     fun getNumberOfImagesById(mbid: String): Int

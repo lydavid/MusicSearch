@@ -6,6 +6,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
@@ -65,6 +66,7 @@ class MbidImageDao(
 
     override fun getAllImageMetadata(
         query: String,
+        sortOption: CoverArtsSortOption,
     ): PagingSource<Int, ImageMetadata> {
         return QueryPagingSource(
             countQuery = transacter.getAllImageMetadataCount(
@@ -75,6 +77,10 @@ class MbidImageDao(
             queryProvider = { limit, offset ->
                 transacter.getAllImageMetadata(
                     query = "%$query%",
+                    alphabetically = sortOption == CoverArtsSortOption.ALPHABETICALLY,
+                    alphabeticallyReverse = sortOption == CoverArtsSortOption.ALPHABETICALLY_REVERSE,
+                    recentlyAdded = sortOption == CoverArtsSortOption.RECENTLY_ADDED,
+                    leastRecentlyAdded = sortOption == CoverArtsSortOption.LEAST_RECENTLY_ADDED,
                     limit = limit,
                     offset = offset,
                     mapper = ::mapToImageMetadata,

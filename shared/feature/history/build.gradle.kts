@@ -34,6 +34,7 @@ kotlin {
         }
         val androidUnitTest by getting {
             dependencies {
+                implementation(projects.testData)
                 implementation(projects.ui.test.screenshot)
                 implementation(libs.bundles.kotlinx.coroutines)
                 implementation(libs.junit)
