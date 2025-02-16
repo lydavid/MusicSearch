@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
+import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.history.usecase.DeleteLookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.GetPagedHistory
@@ -98,6 +99,13 @@ class HistoryPresenterTest {
                 get() = flowOf(CollectionSortOption.ALPHABETICALLY)
 
             override fun setCollectionSortOption(sort: CollectionSortOption) {
+                // No-op.
+            }
+
+            override val coverArtsSortOption: Flow<CoverArtsSortOption>
+                get() = error("Not used")
+
+            override fun setCoverArtsSortOption(sort: CoverArtsSortOption) {
                 // No-op.
             }
         },

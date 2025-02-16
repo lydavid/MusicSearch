@@ -56,7 +56,7 @@ internal class HistoryPresenter(
         fun eventSink(event: HistoryUiEvent) {
             when (event) {
                 is HistoryUiEvent.UpdateSortOption -> {
-                    appPreferences.setHistorySortOption(event.sortOption)
+                    appPreferences.setHistorySortOption(HistorySortOption.entries[event.sortOptionIndex])
                 }
 
                 is HistoryUiEvent.MarkHistoryForDeletion -> {
@@ -123,7 +123,7 @@ internal data class HistoryUiState(
 ) : CircuitUiState
 
 internal sealed interface HistoryUiEvent : CircuitUiEvent {
-    data class UpdateSortOption(val sortOption: HistorySortOption) : HistoryUiEvent
+    data class UpdateSortOption(val sortOptionIndex: Int) : HistoryUiEvent
     data class MarkHistoryForDeletion(val history: LookupHistoryListItemModel) : HistoryUiEvent
     data class UnMarkHistoryForDeletion(val history: LookupHistoryListItemModel) : HistoryUiEvent
     data class DeleteHistory(val history: LookupHistoryListItemModel) : HistoryUiEvent

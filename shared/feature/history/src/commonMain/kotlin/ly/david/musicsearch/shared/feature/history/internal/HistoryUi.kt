@@ -28,10 +28,12 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
+import ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheet
 import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
@@ -87,9 +89,10 @@ internal fun HistoryUi(
     }
 
     if (showBottomSheet) {
-        HistorySortBottomSheet(
-            sortOption = state.sortOption,
-            onSortOptionClick = {
+        MultipleChoiceBottomSheet(
+            options = HistorySortOption.entries.map { it.getLabel(strings) },
+            selectedOptionIndex = state.sortOption.ordinal,
+            onSortOptionIndexClick = {
                 eventSink(HistoryUiEvent.UpdateSortOption(it))
             },
             bottomSheetState = bottomSheetState,
