@@ -14,6 +14,46 @@ CREATE TABLE IF NOT EXISTS mbid_image (
 
 CREATE INDEX IF NOT EXISTS idx_mbid_image_mbid ON mbid_image(`mbid`);
 
+CREATE VIEW IF NOT EXISTS coalesced_entity AS
+SELECT
+  id,
+  name,
+  sort_name,
+  disambiguation,
+  'artist' AS entity_type
+FROM artist
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'event' AS entity_type
+FROM event
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'release' AS entity_type
+FROM `release`
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'release-group' AS entity_type
+FROM release_group;
+
+
 insert:
 INSERT OR IGNORE INTO mbid_image (
   `mbid`,
@@ -70,23 +110,14 @@ OFFSET :offset;
 getAllImageMetadataCount:
 SELECT count(mbid_image.`id`)
 FROM mbid_image
-LEFT JOIN artist ON artist.id = mbid_image.mbid
-LEFT JOIN event ON event.id = mbid_image.mbid
-LEFT JOIN `release` ON `release`.id = mbid_image.mbid
-LEFT JOIN release_group ON release_group.id = mbid_image.mbid
+LEFT JOIN coalesced_entity ON coalesced_entity.id = mbid_image.mbid
 WHERE thumbnail_url != ''
 AND (
   types LIKE :query OR
   comment LIKE :query OR
-  artist.name LIKE :query OR
-  artist.sort_name LIKE :query OR
-  artist.disambiguation LIKE :query OR
-  event.name LIKE :query OR
-  event.disambiguation LIKE :query OR
-  `release`.name LIKE :query OR
-  `release`.disambiguation LIKE :query OR
-  release_group.name LIKE :query OR
-  release_group.disambiguation LIKE :query
+  coalesced_entity.name LIKE :query OR
+  coalesced_entity.sort_name LIKE :query OR
+  coalesced_entity.disambiguation LIKE :query
 );
 
 getAllImageMetadata:
@@ -97,46 +128,22 @@ SELECT
   mbid_image.`types`,
   mbid_image.`comment`,
   mbid_image.mbid,
-  coalesce(
-    artist.name,
-    event.name,
-    `release`.name,
-    release_group.name
-  ) AS coalesced_name,
-  coalesce(
-    artist.disambiguation,
-    event.disambiguation,
-    `release`.disambiguation,
-    release_group.disambiguation
-  ) AS disambiguation,
-  CASE
-    WHEN artist.name IS NOT NULL THEN 'artist'
-    WHEN event.name IS NOT NULL THEN 'event'
-    WHEN `release`.name IS NOT NULL THEN 'release'
-    WHEN release_group.name IS NOT NULL THEN 'release-group'
-  END AS entity
+  coalesced_entity.name,
+  coalesced_entity.disambiguation,
+  coalesced_entity.entity_type
 FROM mbid_image
-LEFT JOIN artist ON artist.id = mbid_image.mbid
-LEFT JOIN event ON event.id = mbid_image.mbid
-LEFT JOIN `release` ON `release`.id = mbid_image.mbid
-LEFT JOIN release_group ON release_group.id = mbid_image.mbid
+LEFT JOIN coalesced_entity ON coalesced_entity.id = mbid_image.mbid
 WHERE thumbnail_url != ''
 AND (
   types LIKE :query OR
   comment LIKE :query OR
-  artist.name LIKE :query OR
-  artist.sort_name LIKE :query OR
-  artist.disambiguation LIKE :query OR
-  event.name LIKE :query OR
-  event.disambiguation LIKE :query OR
-  `release`.name LIKE :query OR
-  `release`.disambiguation LIKE :query OR
-  release_group.name LIKE :query OR
-  release_group.disambiguation LIKE :query
+  coalesced_entity.name LIKE :query OR
+  coalesced_entity.sort_name LIKE :query OR
+  coalesced_entity.disambiguation LIKE :query
 )
 ORDER BY
-  CASE WHEN :alphabetically THEN `coalesced_name` END ASC,
-  CASE WHEN :alphabeticallyReverse THEN `coalesced_name` END DESC,
+  CASE WHEN :alphabetically THEN coalesced_entity.name END ASC,
+  CASE WHEN :alphabeticallyReverse THEN coalesced_entity.name END DESC,
   CASE WHEN :recentlyAdded THEN mbid_image.id END DESC,
   CASE WHEN :leastRecentlyAdded THEN mbid_image.id END ASC
 LIMIT :limit

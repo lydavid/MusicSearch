@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.coverart.di
 import ly.david.musicsearch.data.coverart.ImageMetadataRepositoryImpl
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApiImpl
-import ly.david.musicsearch.shared.domain.release.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module

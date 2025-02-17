@@ -17,7 +17,7 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.release.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 
 internal class ImageMetadataRepositoryImpl(
     private val coverArtArchiveApi: CoverArtArchiveApi,

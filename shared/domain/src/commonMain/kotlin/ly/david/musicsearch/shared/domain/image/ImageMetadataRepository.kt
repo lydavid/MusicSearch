@@ -1,11 +1,14 @@
-package ly.david.musicsearch.shared.domain.release
+package ly.david.musicsearch.shared.domain.image
 
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
 
+/**
+ * See [ArtistImageRepository] for artists.
+ */
 interface ImageMetadataRepository {
     /**
      * Returns a url to the cover art.

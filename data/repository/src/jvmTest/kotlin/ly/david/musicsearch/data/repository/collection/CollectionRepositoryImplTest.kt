@@ -12,8 +12,8 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseCollectionsResponse
 import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
 import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.musicsearch.data.repository.KoinTestRule
-import ly.david.musicsearch.shared.domain.browse.BrowseEntityCountRepository
+import ly.david.musicsearch.data.repository.BrowseEntityCountRepositoryImpl
+import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -33,7 +33,6 @@ class CollectionRepositoryImplTest : KoinTest {
     private val collectionDao: CollectionDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
-    private val browseEntityCountRepository: BrowseEntityCountRepository by inject()
 
     private fun createRepositoryWithFakeNetworkData(
         collectionApi: CollectionApi,
@@ -43,7 +42,9 @@ class CollectionRepositoryImplTest : KoinTest {
             collectionDao = collectionDao,
             collectionEntityDao = collectionEntityDao,
             browseEntityCountDao = browseEntityCountDao,
-            browseEntityCountRepository = browseEntityCountRepository,
+            browseEntityCountRepository = BrowseEntityCountRepositoryImpl(
+                browseEntityCountDao = browseEntityCountDao,
+            ),
         )
     }
 
