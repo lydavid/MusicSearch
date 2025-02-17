@@ -25,8 +25,8 @@ import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.release.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupImageRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
@@ -48,7 +48,7 @@ internal class ReleaseGroupPresenter(
     private val incrementLookupHistory: IncrementLookupHistory,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
     private val relationsPresenter: RelationsPresenter,
-    private val releaseGroupImageRepository: ReleaseGroupImageRepository,
+    private val imageMetadataRepository: ImageMetadataRepository,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
@@ -109,8 +109,9 @@ internal class ReleaseGroupPresenter(
 
         LaunchedEffect(forceRefreshDetails, releaseGroup) {
             releaseGroup = releaseGroup?.copy(
-                imageMetadata = releaseGroupImageRepository.getImageMetadata(
+                imageMetadata = imageMetadataRepository.getImageMetadata(
                     mbid = releaseGroup?.id ?: return@LaunchedEffect,
+                    entity = MusicBrainzEntity.RELEASE_GROUP,
                     forceRefresh = forceRefreshDetails,
                 ),
             )

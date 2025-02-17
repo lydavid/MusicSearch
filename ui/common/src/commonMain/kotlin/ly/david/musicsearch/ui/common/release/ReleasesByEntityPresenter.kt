@@ -23,13 +23,13 @@ import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
-import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
+import ly.david.musicsearch.shared.domain.release.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.release.usecase.GetReleasesByEntity
 
 class ReleasesByEntityPresenter(
     private val getReleasesByEntity: GetReleasesByEntity,
     private val appPreferences: AppPreferences,
-    private val releaseImageRepository: ReleaseImageRepository,
+    private val imageMetadataRepository: ImageMetadataRepository,
 ) : Presenter<ReleasesByEntityUiState> {
     @Composable
     override fun present(): ReleasesByEntityUiState {
@@ -57,8 +57,9 @@ class ReleasesByEntityPresenter(
             when (event) {
                 is ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl -> {
                     scope.launch {
-                        releaseImageRepository.getImageMetadata(
+                        imageMetadataRepository.getImageMetadata(
                             mbid = event.entityId,
+                            entity = MusicBrainzEntity.RELEASE,
                             forceRefresh = false,
                         )
                     }

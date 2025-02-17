@@ -26,7 +26,7 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
-import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
+import ly.david.musicsearch.shared.domain.release.ImageMetadataRepository
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
@@ -36,7 +36,7 @@ internal class CoverArtsPresenter(
     private val screen: CoverArtsScreen,
     private val navigator: Navigator,
     private val appPreferences: AppPreferences,
-    private val releaseImageRepository: ReleaseImageRepository,
+    private val imageMetadataRepository: ImageMetadataRepository,
     private val getMusicBrainzCoverArtUrl: GetMusicBrainzCoverArtUrl,
 ) : Presenter<CoverArtsUiState> {
 
@@ -49,7 +49,7 @@ internal class CoverArtsPresenter(
             sortOption,
         ) {
             mutableStateOf(
-                releaseImageRepository.observeAllImageMetadata(
+                imageMetadataRepository.observeAllImageMetadata(
                     mbid = screen.id,
                     query = topAppBarFilterState.filterText,
                     sortOption = sortOption,

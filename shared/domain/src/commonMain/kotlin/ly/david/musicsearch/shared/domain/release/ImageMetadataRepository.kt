@@ -4,11 +4,9 @@ import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
-/**
- * Logic to retrieve release cover art path.
- */
-interface ReleaseImageRepository {
+interface ImageMetadataRepository {
     /**
      * Returns a url to the cover art.
      * Empty if none found.
@@ -19,6 +17,7 @@ interface ReleaseImageRepository {
      */
     suspend fun getImageMetadata(
         mbid: String,
+        entity: MusicBrainzEntity,
         forceRefresh: Boolean,
     ): ImageMetadata
 

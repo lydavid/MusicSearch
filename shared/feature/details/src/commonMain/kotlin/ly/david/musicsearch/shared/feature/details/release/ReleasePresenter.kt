@@ -28,7 +28,7 @@ import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
-import ly.david.musicsearch.shared.domain.release.ReleaseImageRepository
+import ly.david.musicsearch.shared.domain.release.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
@@ -53,7 +53,7 @@ internal class ReleasePresenter(
     private val repository: ReleaseRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
     private val relationsPresenter: RelationsPresenter,
-    private val releaseImageRepository: ReleaseImageRepository,
+    private val imageMetadataRepository: ImageMetadataRepository,
     private val tracksByReleasePresenter: TracksByReleasePresenter,
     private val artistsByEntityPresenter: ArtistsByEntityPresenter,
     private val logger: Logger,
@@ -119,13 +119,14 @@ internal class ReleasePresenter(
         // Image fetching was split off from details model so that we can display data before images load
         LaunchedEffect(forceRefreshDetails, release) {
             release = release?.copy(
-                imageMetadata = releaseImageRepository.getImageMetadata(
+                imageMetadata = imageMetadataRepository.getImageMetadata(
                     mbid = release?.id ?: return@LaunchedEffect,
+                    entity = MusicBrainzEntity.RELEASE,
                     forceRefresh = forceRefreshDetails,
                 ),
             )
             release?.let { release ->
-                numberOfImages = releaseImageRepository.getNumberOfImageMetadataById(release.id)
+                numberOfImages = imageMetadataRepository.getNumberOfImageMetadataById(release.id)
             }
         }
 
