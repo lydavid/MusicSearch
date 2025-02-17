@@ -21,6 +21,7 @@ import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.image.LargeImage
 
 @Composable
 internal fun EventDetailsUi(
@@ -36,6 +37,13 @@ internal fun EventDetailsUi(
         state = lazyListState,
     ) {
         item {
+            if (filterText.isBlank()) {
+                LargeImage(
+                    url = event.imageMetadata.largeUrl,
+                    placeholderKey = event.imageMetadata.databaseId.toString(),
+                )
+            }
+
             event.run {
                 ListSeparatorHeader(text = strings.informationHeader(strings.event))
                 type?.ifNotNullOrEmpty {

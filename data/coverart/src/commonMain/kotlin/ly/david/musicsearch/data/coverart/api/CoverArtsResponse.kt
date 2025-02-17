@@ -6,20 +6,20 @@ import kotlinx.serialization.Serializable
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 
 /**
- * [Cover Art Archive API documentation](https://wiki.musicbrainz.org/Cover_Art_Archive/API#Cover_Art_Archive_Metadata)
+ * See docs for [Cover Art Archive](https://musicbrainz.org/doc/Cover_Art_Archive/API)
+ * and [Event Art Archive](https://musicbrainz.org/doc/Event_Art_Archive/API).
+ *
+ * Although, they differ with `release` and `event` fields, we don't use them, so we can use this one response.
  */
 @Serializable
 data class CoverArtsResponse(
     @SerialName("images") val coverArtUrls: List<CoverArtUrls>,
-    @SerialName("release") val releaseUrl: String,
 )
 
 @Serializable
 data class CoverArtUrls(
-    @SerialName("id") val id: String,
-
     /**
-     * The full-size image. Its url is all we need, as we can build the thumbnail by appending -250.jpg
+     * The full-size image. Not actually used at the moment.
      */
     @SerialName("image") val imageUrl: String? = null,
 
@@ -45,7 +45,7 @@ data class ThumbnailsUrls(
     @SerialName("large") val large: String? = null,
 )
 
-fun CoverArtsResponse.toImageMetadataList(): List<ImageMetadata> {
+internal fun CoverArtsResponse.toImageMetadataList(): List<ImageMetadata> {
     return coverArtUrls.map { it.toImageMetadata() }
 }
 

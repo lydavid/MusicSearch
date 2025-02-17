@@ -26,6 +26,7 @@ import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.release.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
@@ -41,6 +42,7 @@ internal class EventPresenter(
     private val navigator: Navigator,
     private val repository: EventRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
+    private val imageMetadataRepository: ImageMetadataRepository,
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
@@ -93,6 +95,16 @@ internal class EventPresenter(
                 )
                 recordedHistory = true
             }
+        }
+
+        LaunchedEffect(forceRefreshDetails, event) {
+            event = event?.copy(
+                imageMetadata = imageMetadataRepository.getImageMetadata(
+                    mbid = event?.id ?: return@LaunchedEffect,
+                    entity = MusicBrainzEntity.EVENT,
+                    forceRefresh = forceRefreshDetails,
+                ),
+            )
         }
 
         LaunchedEffect(forceRefreshDetails, event) {

@@ -95,6 +95,7 @@ val detailsFeatureModule = module {
                                 navigator = navigator,
                                 repository = get(),
                                 incrementLookupHistory = get(),
+                                imageMetadataRepository = get(),
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),

@@ -3,31 +3,20 @@ package ly.david.data.test.api
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.CoverArtUrls
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
-class FakeCoverArtArchiveApi : CoverArtArchiveApi {
-    override suspend fun getReleaseCoverArts(releaseId: String): CoverArtsResponse {
+open class FakeCoverArtArchiveApi : CoverArtArchiveApi {
+    override suspend fun getCoverArts(
+        mbid: String,
+        entity: MusicBrainzEntity,
+    ): CoverArtsResponse {
         return CoverArtsResponse(
             coverArtUrls = listOf(
                 CoverArtUrls(
-                    id = "b",
                     imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                     front = true,
                 ),
             ),
-            releaseUrl = "blah",
-        )
-    }
-
-    override suspend fun getReleaseGroupCoverArts(releaseGroupId: String): CoverArtsResponse {
-        return CoverArtsResponse(
-            coverArtUrls = listOf(
-                CoverArtUrls(
-                    id = "b",
-                    imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                    front = true,
-                ),
-            ),
-            releaseUrl = "blah",
         )
     }
 }

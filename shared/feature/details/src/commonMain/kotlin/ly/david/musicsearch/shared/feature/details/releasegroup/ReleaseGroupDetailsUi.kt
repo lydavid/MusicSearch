@@ -34,9 +34,7 @@ internal fun ReleaseGroupDetailsUi(
                     placeholderKey = releaseGroup.imageMetadata.databaseId.toString(),
                 )
             }
-        }
 
-        item {
             releaseGroup.run {
                 ListSeparatorHeader(text = strings.informationHeader(strings.releaseGroup))
                 TextWithHeading(

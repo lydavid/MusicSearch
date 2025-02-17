@@ -10,8 +10,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
-import ly.david.musicsearch.data.coverart.api.getFrontCoverArtUrl
-import ly.david.musicsearch.data.coverart.api.getFrontThumbnailCoverArtUrl
 import ly.david.musicsearch.data.coverart.api.toImageMetadataList
 import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
@@ -51,11 +49,18 @@ internal class ImageMetadataRepositoryImpl(
         entity: MusicBrainzEntity,
     ) {
         try {
-            when (entity) {
-                MusicBrainzEntity.RELEASE -> saveReleaseImageMetadataFromNetwork(mbid)
-                MusicBrainzEntity.RELEASE_GROUP -> saveReleaseGroupImageMetadataFromNetwork(mbid)
-                else -> error("$entity images not supported.")
+            val coverArts: CoverArtsResponse = coverArtArchiveApi.getCoverArts(mbid, entity)
+            val imageMetadataList: MutableList<ImageMetadata> = coverArts.toImageMetadataList().toMutableList()
+
+            // We use an empty ImageUrls to represent that we've searched but failed to find any images.
+            if (imageMetadataList.isEmpty()) {
+                imageMetadataList.add(ImageMetadata())
             }
+
+            imageUrlDao.saveImageMetadata(
+                mbid = mbid,
+                imageMetadataList = imageMetadataList,
+            )
         } catch (ex: HandledException) {
             if (ex.errorResolution == ErrorResolution.None) {
                 imageUrlDao.saveImageMetadata(
@@ -68,41 +73,6 @@ internal class ImageMetadataRepositoryImpl(
         } catch (ex: Exception) {
             logger.e(ex)
         }
-    }
-
-    private suspend fun saveReleaseImageMetadataFromNetwork(
-        mbid: String,
-    ) {
-        val coverArts: CoverArtsResponse = coverArtArchiveApi.getReleaseCoverArts(mbid)
-        val imageMetadataList: MutableList<ImageMetadata> = coverArts.toImageMetadataList().toMutableList()
-
-        // We use an empty ImageUrls to represent that we've searched but failed to find any images.
-        if (imageMetadataList.isEmpty()) {
-            imageMetadataList.add(ImageMetadata())
-        }
-
-        imageUrlDao.saveImageMetadata(
-            mbid = mbid,
-            imageMetadataList = imageMetadataList,
-        )
-    }
-
-    private suspend fun saveReleaseGroupImageMetadataFromNetwork(
-        mbid: String,
-    ) {
-        val coverArts = coverArtArchiveApi.getReleaseGroupCoverArts(mbid)
-        val thumbnailUrl = coverArts.getFrontThumbnailCoverArtUrl().orEmpty()
-        val largeUrl = coverArts.getFrontCoverArtUrl().orEmpty()
-
-        imageUrlDao.saveImageMetadata(
-            mbid = mbid,
-            imageMetadataList = listOf(
-                ImageMetadata(
-                    thumbnailUrl = thumbnailUrl.removeFileExtension(),
-                    largeUrl = largeUrl.removeFileExtension(),
-                ),
-            ),
-        )
     }
 
     override fun observeAllImageMetadata(

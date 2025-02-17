@@ -71,6 +71,7 @@ getAllImageMetadataCount:
 SELECT count(mbid_image.`id`)
 FROM mbid_image
 LEFT JOIN artist ON artist.id = mbid_image.mbid
+LEFT JOIN event ON event.id = mbid_image.mbid
 LEFT JOIN `release` ON `release`.id = mbid_image.mbid
 LEFT JOIN release_group ON release_group.id = mbid_image.mbid
 WHERE thumbnail_url != ''
@@ -80,6 +81,8 @@ AND (
   artist.name LIKE :query OR
   artist.sort_name LIKE :query OR
   artist.disambiguation LIKE :query OR
+  event.name LIKE :query OR
+  event.disambiguation LIKE :query OR
   `release`.name LIKE :query OR
   `release`.disambiguation LIKE :query OR
   release_group.name LIKE :query OR
@@ -96,21 +99,25 @@ SELECT
   mbid_image.mbid,
   coalesce(
     artist.name,
+    event.name,
     `release`.name,
     release_group.name
   ) AS coalesced_name,
   coalesce(
     artist.disambiguation,
+    event.disambiguation,
     `release`.disambiguation,
     release_group.disambiguation
   ) AS disambiguation,
   CASE
     WHEN artist.name IS NOT NULL THEN 'artist'
+    WHEN event.name IS NOT NULL THEN 'event'
     WHEN `release`.name IS NOT NULL THEN 'release'
     WHEN release_group.name IS NOT NULL THEN 'release-group'
   END AS entity
 FROM mbid_image
 LEFT JOIN artist ON artist.id = mbid_image.mbid
+LEFT JOIN event ON event.id = mbid_image.mbid
 LEFT JOIN `release` ON `release`.id = mbid_image.mbid
 LEFT JOIN release_group ON release_group.id = mbid_image.mbid
 WHERE thumbnail_url != ''
@@ -120,6 +127,8 @@ AND (
   artist.name LIKE :query OR
   artist.sort_name LIKE :query OR
   artist.disambiguation LIKE :query OR
+  event.name LIKE :query OR
+  event.disambiguation LIKE :query OR
   `release`.name LIKE :query OR
   `release`.disambiguation LIKE :query OR
   release_group.name LIKE :query OR
