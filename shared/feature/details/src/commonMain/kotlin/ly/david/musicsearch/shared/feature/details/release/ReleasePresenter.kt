@@ -119,13 +119,13 @@ internal class ReleasePresenter(
         // Image fetching was split off from details model so that we can display data before images load
         LaunchedEffect(forceRefreshDetails, release) {
             release = release?.copy(
-                imageMetadata = releaseImageRepository.getReleaseImageMetadata(
-                    releaseId = release?.id ?: return@LaunchedEffect,
+                imageMetadata = releaseImageRepository.getImageMetadata(
+                    mbid = release?.id ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
                 ),
             )
             release?.let { release ->
-                numberOfImages = releaseImageRepository.getNumberOfImagesById(release.id)
+                numberOfImages = releaseImageRepository.getNumberOfImageMetadataById(release.id)
             }
         }
 

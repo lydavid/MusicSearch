@@ -16,20 +16,20 @@ internal class ReleaseGroupImageRepositoryImpl(
     private val logger: Logger,
 ) : ReleaseGroupImageRepository {
 
-    override suspend fun getReleaseGroupImageMetadata(
-        releaseGroupId: String,
+    override suspend fun getImageMetadata(
+        mbid: String,
         forceRefresh: Boolean,
     ): ImageMetadata {
         if (forceRefresh) {
-            imageUrlDao.deleteAllImageMetadtaById(releaseGroupId)
+            imageUrlDao.deleteAllImageMetadtaById(mbid)
         }
 
-        val cachedImageUrls = imageUrlDao.getFrontImageMetadata(releaseGroupId)
-        return if (cachedImageUrls == null) {
-            saveReleaseGroupImageMetadataFromNetwork(releaseGroupId)
-            imageUrlDao.getFrontImageMetadata(releaseGroupId) ?: ImageMetadata()
+        val cachedImageMetadata = imageUrlDao.getFrontImageMetadata(mbid)
+        return if (cachedImageMetadata == null) {
+            saveReleaseGroupImageMetadataFromNetwork(mbid)
+            imageUrlDao.getFrontImageMetadata(mbid) ?: ImageMetadata()
         } else {
-            cachedImageUrls
+            cachedImageMetadata
         }
     }
 

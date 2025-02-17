@@ -25,20 +25,20 @@ internal class ReleaseImageRepositoryImpl(
     private val coroutineScope: CoroutineScope,
 ) : ReleaseImageRepository {
 
-    override suspend fun getReleaseImageMetadata(
-        releaseId: String,
+    override suspend fun getImageMetadata(
+        mbid: String,
         forceRefresh: Boolean,
     ): ImageMetadata {
         if (forceRefresh) {
-            imageUrlDao.deleteAllImageMetadtaById(releaseId)
+            imageUrlDao.deleteAllImageMetadtaById(mbid)
         }
 
-        val cachedImageUrl = imageUrlDao.getFrontImageMetadata(releaseId)
-        return if (cachedImageUrl == null) {
-            saveReleaseImageMetadataFromNetwork(releaseId)
-            imageUrlDao.getFrontImageMetadata(releaseId) ?: ImageMetadata()
+        val cachedImageMetadata = imageUrlDao.getFrontImageMetadata(mbid)
+        return if (cachedImageMetadata == null) {
+            saveReleaseImageMetadataFromNetwork(mbid)
+            imageUrlDao.getFrontImageMetadata(mbid) ?: ImageMetadata()
         } else {
-            cachedImageUrl
+            cachedImageMetadata
         }
     }
 
@@ -99,7 +99,7 @@ internal class ReleaseImageRepositoryImpl(
         .distinctUntilChanged()
         .cachedIn(scope = coroutineScope)
 
-    override fun getNumberOfImagesById(mbid: String): Int {
+    override fun getNumberOfImageMetadataById(mbid: String): Int {
         return imageUrlDao.getNumberOfImagesById(mbid).toInt()
     }
 }

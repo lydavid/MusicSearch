@@ -17,8 +17,8 @@ interface ReleaseImageRepository {
      *
      * Make sure to handle non-404 errors at call site.
      */
-    suspend fun getReleaseImageMetadata(
-        releaseId: String,
+    suspend fun getImageMetadata(
+        mbid: String,
         forceRefresh: Boolean,
     ): ImageMetadata
 
@@ -31,5 +31,5 @@ interface ReleaseImageRepository {
         sortOption: CoverArtsSortOption,
     ): Flow<PagingData<ImageMetadata>>
 
-    fun getNumberOfImagesById(mbid: String): Int
+    fun getNumberOfImageMetadataById(mbid: String): Int
 }

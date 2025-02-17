@@ -109,8 +109,8 @@ internal class ReleaseGroupPresenter(
 
         LaunchedEffect(forceRefreshDetails, releaseGroup) {
             releaseGroup = releaseGroup?.copy(
-                imageMetadata = releaseGroupImageRepository.getReleaseGroupImageMetadata(
-                    releaseGroupId = releaseGroup?.id ?: return@LaunchedEffect,
+                imageMetadata = releaseGroupImageRepository.getImageMetadata(
+                    mbid = releaseGroup?.id ?: return@LaunchedEffect,
                     forceRefresh = forceRefreshDetails,
                 ),
             )

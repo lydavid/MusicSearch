@@ -39,7 +39,7 @@ class CoverArtsPresenterTest {
                 get() = flowOf(CoverArtsSortOption.RECENTLY_ADDED)
         },
         releaseImageRepository = object : ReleaseImageRepository {
-            override suspend fun getReleaseImageMetadata(
+            override suspend fun getImageMetadata(
                 releaseId: String,
                 forceRefresh: Boolean,
             ): ImageMetadata {
@@ -54,7 +54,7 @@ class CoverArtsPresenterTest {
                 return flowOf(PagingData.from(imageMetadataList))
             }
 
-            override fun getNumberOfImagesById(mbid: String): Int {
+            override fun getNumberOfImageMetadataById(mbid: String): Int {
                 return imageMetadataList.size
             }
         },

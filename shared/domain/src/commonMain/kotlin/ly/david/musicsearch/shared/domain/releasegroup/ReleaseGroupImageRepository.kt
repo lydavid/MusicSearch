@@ -7,15 +7,15 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
  */
 interface ReleaseGroupImageRepository {
     /**
-     * Returns an appropriate cover art for the release group with [releaseGroupId].
+     * Returns an appropriate cover art for the release group with [mbid].
      * Empty if none found.
      *
      * Also saves it to db.
      *
      * Make sure to handle non-404 errors at call site.
      */
-    suspend fun getReleaseGroupImageMetadata(
-        releaseGroupId: String,
+    suspend fun getImageMetadata(
+        mbid: String,
         forceRefresh: Boolean,
     ): ImageMetadata
 }

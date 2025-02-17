@@ -57,8 +57,8 @@ class ReleasesByEntityPresenter(
             when (event) {
                 is ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl -> {
                     scope.launch {
-                        releaseImageRepository.getReleaseImageMetadata(
-                            releaseId = event.entityId,
+                        releaseImageRepository.getImageMetadata(
+                            mbid = event.entityId,
                             forceRefresh = false,
                         )
                     }
