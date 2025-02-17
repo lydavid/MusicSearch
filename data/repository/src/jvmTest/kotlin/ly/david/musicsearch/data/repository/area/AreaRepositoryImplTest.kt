@@ -7,7 +7,7 @@ import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.repository.KoinTestRule
+import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY

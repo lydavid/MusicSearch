@@ -67,12 +67,3 @@ private fun CoverArtUrls.getUrl(): String? {
     return thumbnailsUrls?.resolution1200Url ?: thumbnailsUrls?.resolution500Url ?: thumbnailsUrls?.large
         ?: thumbnailsUrls?.resolution250Url ?: thumbnailsUrls?.small
 }
-
-fun CoverArtsResponse.getFrontThumbnailCoverArtUrl(): String? {
-    // Note: MB doesn't fall back to any non-front covers
-    return coverArtUrls.firstOrNull { it.front }?.getThumbnailUrl()
-}
-
-fun CoverArtsResponse.getFrontCoverArtUrl(): String? {
-    return coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.resolution1200Url
-}

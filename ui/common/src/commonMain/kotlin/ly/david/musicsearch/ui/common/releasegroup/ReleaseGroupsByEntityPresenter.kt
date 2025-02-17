@@ -19,7 +19,7 @@ import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
-import ly.david.musicsearch.shared.domain.release.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.releasegroup.usecase.GetReleaseGroupsByEntity
 
 class ReleaseGroupsByEntityPresenter(

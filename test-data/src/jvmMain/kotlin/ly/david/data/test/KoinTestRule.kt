@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.repository
+package ly.david.data.test
 
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -7,7 +7,6 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.createDatabase
 import ly.david.musicsearch.data.database.databaseDaoModule
-import ly.david.musicsearch.data.repository.di.repositoryDataModule
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 import org.koin.core.context.startKoin
@@ -16,7 +15,7 @@ import org.koin.dsl.module
 import java.util.Properties
 
 @OptIn(ExperimentalCoroutinesApi::class)
-val testCoroutineDispatchersModule = module {
+private val testCoroutineDispatchersModule = module {
     factory {
         val testDispatcher = UnconfinedTestDispatcher()
         CoroutineDispatchers(
@@ -25,8 +24,7 @@ val testCoroutineDispatchersModule = module {
         )
     }
 }
-
-val testDatabaseModule = module {
+private val testDatabaseModule = module {
     single<Database> {
         val driver = JdbcSqliteDriver(
             url = JdbcSqliteDriver.IN_MEMORY,
@@ -47,7 +45,6 @@ class KoinTestRule : TestWatcher() {
         startKoin {
             modules(
                 databaseDaoModule,
-                repositoryDataModule,
                 testCoroutineDispatchersModule,
                 testDatabaseModule,
             )

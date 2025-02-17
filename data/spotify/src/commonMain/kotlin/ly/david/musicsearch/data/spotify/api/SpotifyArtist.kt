@@ -7,10 +7,10 @@ data class SpotifyArtist(
     val images: List<SpotifyImage>? = null,
 )
 
-fun SpotifyArtist.getLargeImageUrl(): String {
+internal fun SpotifyArtist.getLargeImageUrl(): String {
     return images?.maxByOrNull { it.width }?.url.orEmpty()
 }
 
-fun SpotifyArtist.getThumbnailImageUrl(): String {
+internal fun SpotifyArtist.getThumbnailImageUrl(): String {
     return images?.minByOrNull { it.width }?.url.orEmpty()
 }

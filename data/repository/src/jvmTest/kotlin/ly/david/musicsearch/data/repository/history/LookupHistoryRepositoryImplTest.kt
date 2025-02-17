@@ -4,7 +4,7 @@ import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao
-import ly.david.musicsearch.data.repository.KoinTestRule
+import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.history.LookupHistory

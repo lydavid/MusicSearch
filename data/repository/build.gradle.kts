@@ -44,15 +44,5 @@ kotlin {
                 implementation(libs.androidx.paging.testing)
             }
         }
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(libs.sqldelight.sqlite.driver)
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-                implementation(libs.sqldelight.sqlite.driver)
-            }
-        }
     }
 }
