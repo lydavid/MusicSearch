@@ -13,15 +13,24 @@ Multiplatform distributions are heavily WIP. Only the Android app is considered 
 
 ## Releases
 
+<a href="https://www.androidfreeware.net/download-musicsearch-apk.html">
+    <img alt="Get it on AndroidFreeware" height="80"
+        src="https://www.androidfreeware.net/images/androidfreeware-badge.png" />
+</a>
+
 <a href="https://f-droid.org/packages/io.github.lydavid.musicsearch">
-    <img src="https://f-droid.org/badge/get-it-on.png"
-    alt="Get it on F-Droid"
-    height="80">
+    <img alt="Get it on F-Droid" height="80"
+        src="https://f-droid.org/badge/get-it-on.png" />
 </a>
 
 <a href="https://play.google.com/store/apps/details?id=io.github.lydavid.musicsearch">
     <img alt="Get it on Google Play" height="80"
         src="https://play.google.com/intl/en_ca/badges/static/images/badges/en_badge_web_generic.png" />
+</a>
+
+<a href="https://www.openapk.net/musicsearch/io.github.lydavid.musicsearch/">
+    <img alt="Get it on OpenAPK" height="80"
+        src="https://www.openapk.net/images/openapk-badge.png" />
 </a>
 
 Or you can you can download its APK from the top of [all GitHub Releases](https://github.com/lydavid/MusicSearch/releases/).
