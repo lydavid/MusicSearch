@@ -39,8 +39,13 @@ jobs:
 
       - run: |
           sudo timedatectl
-          sudo timedatectl set-timezone "America/Toronto"
+          date
+
+      - run: sudo timedatectl set-timezone "America/Toronto"
+
+      - run: |
           sudo timedatectl
+          date
 
       - name: Konsist architecture unit tests
         run: ./gradlew konsist-test:test --rerun-tasks
