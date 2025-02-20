@@ -37,11 +37,7 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
-      - run: sudo timedatectl
-
       - run: sudo timedatectl set-timezone "America/Toronto"
-
-      - run: sudo timedatectl
 
       - name: Konsist architecture unit tests
         run: ./gradlew konsist-test:test --rerun-tasks
