@@ -179,9 +179,14 @@ allprojects {
             }
 
             val dependencies = LinkedHashMap<Pair<Project, Project>, List<String>>()
+            val visitedProjects = mutableSetOf<Project>()
             queue = mutableListOf(project)
             while (queue.isNotEmpty()) {
                 val currentProject = queue.removeFirst()
+
+                if (!visitedProjects.add(currentProject)) {
+                    continue
+                }
 
                 currentProject.configurations.forEach outer@{ config ->
                     config.dependencies
