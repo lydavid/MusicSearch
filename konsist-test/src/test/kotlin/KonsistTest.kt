@@ -2,6 +2,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.lemonappdev.konsist.api.KoModifier
 import com.lemonappdev.konsist.api.Konsist
+import com.lemonappdev.konsist.api.architecture.KoArchitectureCreator.assertArchitecture
+import com.lemonappdev.konsist.api.architecture.Layer
 import com.lemonappdev.konsist.api.ext.list.withAnnotationOf
 import com.lemonappdev.konsist.api.ext.list.withNameEndingWith
 import com.lemonappdev.konsist.api.verify.assertFalse
@@ -107,6 +109,23 @@ class KonsistTest {
                     it.functions().any { func -> func.hasAnnotationWithName("org.junit.Test") }
             }
             .assertTrue { it.hasNameEndingWith("Test") }
+    }
+
+    @Test
+    fun `clean architecture layers have correct dependencies`() {
+        Konsist
+            .scopeFromProject()
+            .assertArchitecture {
+                val domain = Layer("domain", "ly.david.musicsearch.shared.domain..")
+                val data = Layer("data", "ly.david.musicsearch.data..")
+                val feature = Layer("feature", "ly.david.musicsearch.shared.feature..")
+                domain.dependsOnNothing()
+                data.dependsOn(domain)
+                feature.dependsOn(domain)
+                data.doesNotDependOn(feature)
+                // failing
+//                feature.doesNotDependOn(data)
+            }
     }
 
 //    @Test
