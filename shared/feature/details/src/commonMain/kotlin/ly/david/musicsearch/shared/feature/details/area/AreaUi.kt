@@ -61,10 +61,17 @@ internal fun AreaUi(
     val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
     val loginEventSink = state.loginUiState.eventSink
 
+    state.snackbarMessage?.let { message ->
+        LaunchedEffect(message) {
+            snackbarHostState.showSnackbar(message = message)
+        }
+    }
+
     AreaUiInternal(
         state = state,
         entityId = entityId,
         modifier = modifier,
+        snackbarHostState = snackbarHostState,
         overflowDropdownMenuItems = {
             OpenInBrowserMenuItem(
                 url = state.url,
