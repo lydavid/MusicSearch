@@ -34,6 +34,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
+import ly.david.musicsearch.shared.domain.place.PlaceRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -56,7 +57,7 @@ class PlaceRepositoryImplTest : KoinTest {
 
     private fun createPlaceRepositoryWithFakeNetworkData(
         musicBrainzModel: PlaceMusicBrainzModel,
-    ): PlaceRepositoryImpl {
+    ): PlaceRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupPlace(

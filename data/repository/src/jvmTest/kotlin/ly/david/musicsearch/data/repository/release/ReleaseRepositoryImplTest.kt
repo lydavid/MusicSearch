@@ -45,6 +45,7 @@ import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import org.junit.Assert.assertEquals
@@ -74,7 +75,7 @@ class ReleaseRepositoryImplTest : KoinTest {
 
     private fun createRepositoryWithFakeNetworkData(
         musicBrainzModel: ReleaseMusicBrainzModel,
-    ): ReleaseRepositoryImpl {
+    ): ReleaseRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupRelease(
@@ -863,7 +864,7 @@ class ReleaseRepositoryImplTest : KoinTest {
 
     private fun createRepositoryWithMedia(
         media: List<MediumMusicBrainzModel>?,
-    ): ReleaseRepositoryImpl {
+    ): ReleaseRepository {
         return createRepositoryWithFakeNetworkData(
             musicBrainzModel = ReleaseMusicBrainzModel(
                 id = "f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0",

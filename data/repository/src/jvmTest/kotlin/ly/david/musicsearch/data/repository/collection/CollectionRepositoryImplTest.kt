@@ -14,6 +14,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzMo
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.BrowseEntityCountRepositoryImpl
 import ly.david.data.test.KoinTestRule
+import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -36,7 +37,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     private fun createRepositoryWithFakeNetworkData(
         collectionApi: CollectionApi,
-    ): CollectionRepositoryImpl {
+    ): CollectionRepository {
         return CollectionRepositoryImpl(
             collectionApi = collectionApi,
             collectionDao = collectionDao,
@@ -401,7 +402,7 @@ class CollectionRepositoryImplTest : KoinTest {
         )
     }
 
-    private fun testAddingACollection(repository: CollectionRepositoryImpl) = runTest {
+    private fun testAddingACollection(repository: CollectionRepository) = runTest {
         val flow: Flow<PagingData<CollectionListItemModel>> = repository.observeAllCollections(
             username = "",
             entity = null,
@@ -442,7 +443,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     @Test
     fun `add local collection`() = runTest {
-        val repository: CollectionRepositoryImpl = createRepositoryWithFakeNetworkData(
+        val repository = createRepositoryWithFakeNetworkData(
             collectionApi = object : FakeCollectionApi() {
                 override suspend fun browseCollectionsByUser(
                     username: String,
@@ -462,7 +463,7 @@ class CollectionRepositoryImplTest : KoinTest {
         testAddingACollection(repository)
     }
 
-    private suspend fun testDeletingACollection(repository: CollectionRepositoryImpl) {
+    private suspend fun testDeletingACollection(repository: CollectionRepository) {
         repository.deleteCollection(
             collectionId = NEW_COLLECTION_ID,
             collectionName = "New collection",
@@ -484,7 +485,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     @Test
     fun `delete local collection`() = runTest {
-        val repository: CollectionRepositoryImpl = createRepositoryWithFakeNetworkData(
+        val repository = createRepositoryWithFakeNetworkData(
             collectionApi = object : FakeCollectionApi() {
                 override suspend fun browseCollectionsByUser(
                     username: String,
@@ -507,7 +508,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     @Test
     fun `try to access a deleted collection`() = runTest {
-        val repository: CollectionRepositoryImpl = createRepositoryWithFakeNetworkData(
+        val repository = createRepositoryWithFakeNetworkData(
             collectionApi = object : FakeCollectionApi() {
                 override suspend fun browseCollectionsByUser(
                     username: String,

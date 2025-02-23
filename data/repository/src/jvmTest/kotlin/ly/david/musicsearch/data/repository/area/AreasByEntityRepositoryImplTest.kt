@@ -11,6 +11,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.area.AreasByEntityRepository
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -32,7 +33,7 @@ class AreasByEntityRepositoryImplTest : KoinTest {
 
     private fun createRepositoryWithFakeNetworkData(
         areas: List<AreaMusicBrainzModel>,
-    ): AreasByEntityRepositoryImpl {
+    ): AreasByEntityRepository {
         return AreasByEntityRepositoryImpl(
             browseEntityCountDao = browseEntityCountDao,
             collectionEntityDao = collectionEntityDao,

@@ -10,6 +10,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -27,9 +28,9 @@ class AreaRepositoryImplTest : KoinTest {
     private val relationDao: RelationDao by inject()
     private val areaDao: AreaDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         musicBrainzModel: AreaMusicBrainzModel,
-    ): AreaRepositoryImpl {
+    ): AreaRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupArea(
@@ -59,7 +60,7 @@ class AreaRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepositoryWithFakeNetworkData(
+        val sparseRepository = createRepository(
             musicBrainzModel = AreaMusicBrainzModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",
@@ -77,7 +78,7 @@ class AreaRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepositoryWithFakeNetworkData(
+        val allDataRepository = createRepository(
             musicBrainzModel = AreaMusicBrainzModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",

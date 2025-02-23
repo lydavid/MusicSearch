@@ -19,6 +19,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
+import ly.david.musicsearch.shared.domain.work.WorkRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -38,7 +39,7 @@ class WorkRepositoryImplTest : KoinTest {
 
     private fun createRepositoryWithFakeNetworkData(
         musicBrainzModel: WorkMusicBrainzModel,
-    ): WorkRepositoryImpl {
+    ): WorkRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupWork(

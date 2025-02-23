@@ -17,6 +17,7 @@ import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.label.LabelDetailsModel
+import ly.david.musicsearch.shared.domain.label.LabelRepository
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert.assertEquals
@@ -37,7 +38,7 @@ class LabelRepositoryImplTest : KoinTest {
 
     private fun createRepositoryWithFakeNetworkData(
         musicBrainzModel: LabelMusicBrainzModel,
-    ): LabelRepositoryImpl {
+    ): LabelRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupLabel(

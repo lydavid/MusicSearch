@@ -36,6 +36,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHeader
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.search.results.SearchResultsRepository
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
@@ -62,7 +63,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
 
     private fun createRepositoryWithFakeNetworkData(
         searchApi: SearchApi,
-    ): SearchResultsRepositoryImpl {
+    ): SearchResultsRepository {
         return SearchResultsRepositoryImpl(
             searchApi = searchApi,
             searchResultDao = searchResultDao,

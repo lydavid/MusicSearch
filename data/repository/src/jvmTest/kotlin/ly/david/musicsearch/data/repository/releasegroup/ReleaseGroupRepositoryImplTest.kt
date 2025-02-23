@@ -20,6 +20,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -39,7 +40,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest {
 
     private fun createRepositoryWithFakeNetworkData(
         musicBrainzModel: ReleaseGroupMusicBrainzModel,
-    ): ReleaseGroupRepositoryImpl {
+    ): ReleaseGroupRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupReleaseGroup(

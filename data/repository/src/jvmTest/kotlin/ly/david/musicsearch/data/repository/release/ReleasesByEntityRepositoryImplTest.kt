@@ -22,6 +22,7 @@ import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.release.ReleasesByEntityRepository
 import lydavidmusicsearchdatadatabase.Label
 import org.junit.Assert
 import org.junit.Rule
@@ -46,7 +47,7 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
 
     private fun createRepositoryWithFakeNetworkData(
         releases: List<ReleaseMusicBrainzModel>,
-    ): ReleasesByEntityRepositoryImpl {
+    ): ReleasesByEntityRepository {
         return ReleasesByEntityRepositoryImpl(
             artistReleaseDao = artistReleaseDao,
             browseEntityCountDao = browseEntityCountDao,

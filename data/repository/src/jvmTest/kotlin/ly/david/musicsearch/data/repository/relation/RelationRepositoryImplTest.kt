@@ -18,6 +18,7 @@ import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -35,7 +36,7 @@ class RelationRepositoryImplTest : KoinTest {
 
     private fun createFakeRelationRepository(
         lookupApi: LookupApi,
-    ): RelationRepositoryImpl {
+    ): RelationRepository {
         return RelationRepositoryImpl(
             lookupApi = lookupApi,
             entityHasRelationsDao = entityHasRelationsDao,

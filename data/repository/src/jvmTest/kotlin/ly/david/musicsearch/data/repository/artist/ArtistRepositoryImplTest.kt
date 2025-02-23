@@ -23,6 +23,7 @@ import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -46,9 +47,9 @@ class ArtistRepositoryImplTest : KoinTest {
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         artistMusicBrainzModel: ArtistMusicBrainzModel,
-    ): ArtistRepositoryImpl {
+    ): ArtistRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupArtist(
@@ -79,7 +80,7 @@ class ArtistRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup artist`() = runTest {
-        val artistRepositoryImpl = createRepositoryWithFakeNetworkData(
+        val artistRepositoryImpl = createRepository(
             artistMusicBrainzModel = ArtistMusicBrainzModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
@@ -127,7 +128,7 @@ class ArtistRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup artist - area without iso-3166-1 code`() = runTest {
-        val artistRepositoryImpl = createRepositoryWithFakeNetworkData(
+        val artistRepositoryImpl = createRepository(
             artistMusicBrainzModel = ArtistMusicBrainzModel(
                 id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
                 name = "David Bowie",
@@ -245,7 +246,7 @@ class ArtistRepositoryImplTest : KoinTest {
             artistListItem,
         )
 
-        val artistRepositoryImpl = createRepositoryWithFakeNetworkData(
+        val artistRepositoryImpl = createRepository(
             artistMusicBrainzModel = ArtistMusicBrainzModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
@@ -292,7 +293,7 @@ class ArtistRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseArtistRepository = createRepositoryWithFakeNetworkData(
+        val sparseArtistRepository = createRepository(
             artistMusicBrainzModel = ArtistMusicBrainzModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
@@ -310,7 +311,7 @@ class ArtistRepositoryImplTest : KoinTest {
             sparseArtistDetailsModel,
         )
 
-        val allDataArtistRepository = createRepositoryWithFakeNetworkData(
+        val allDataArtistRepository = createRepository(
             artistMusicBrainzModel = ArtistMusicBrainzModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",

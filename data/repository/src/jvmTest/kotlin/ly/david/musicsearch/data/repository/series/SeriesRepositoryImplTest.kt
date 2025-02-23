@@ -15,7 +15,9 @@ import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.series.SeriesDetailsModel
+import ly.david.musicsearch.shared.domain.series.SeriesRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -32,7 +34,9 @@ class SeriesRepositoryImplTest : KoinTest {
     private val relationDao: RelationDao by inject()
     private val seriesDao: SeriesDao by inject()
 
-    private fun createFakeRelationRepository(musicBrainzModel: SeriesMusicBrainzModel): RelationRepositoryImpl {
+    private fun createFakeRelationRepository(
+        musicBrainzModel: SeriesMusicBrainzModel
+    ): RelationRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupSeries(
@@ -51,7 +55,7 @@ class SeriesRepositoryImplTest : KoinTest {
 
     private fun createRepositoryWithFakeNetworkData(
         musicBrainzModel: SeriesMusicBrainzModel,
-    ): SeriesRepositoryImpl {
+    ): SeriesRepository {
         val relationRepository = createFakeRelationRepository(musicBrainzModel)
         return SeriesRepositoryImpl(
             seriesDao = seriesDao,
