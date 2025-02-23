@@ -126,19 +126,19 @@
 <polygon fill="black" stroke="black" points="248.8,-45.32 245.3,-35.32 241.8,-45.32 248.8,-45.32"/>
 </g>
 <!-- :test&#45;data&#45;&gt;:data:database -->
-<g id="edge16" class="edge">
+<g id="edge14" class="edge">
 <title>:test&#45;data&#45;&gt;:data:database</title>
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M146.63,-555.26C146.63,-555.26 146.63,-320.04 146.63,-320.04"/>
 <polygon fill="black" stroke="black" points="150.13,-320.04 146.63,-310.04 143.13,-320.04 150.13,-320.04"/>
 </g>
 <!-- :test&#45;data&#45;&gt;:data:musicbrainz -->
-<g id="edge13" class="edge">
+<g id="edge15" class="edge">
 <title>:test&#45;data&#45;&gt;:data:musicbrainz</title>
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M243.49,-560C294.37,-560 364.04,-560 364.04,-560 364.04,-560 364.04,-183.19 364.04,-183.19"/>
 <polygon fill="black" stroke="black" points="367.54,-183.19 364.04,-173.19 360.54,-183.19 367.54,-183.19"/>
 </g>
 <!-- :test&#45;data&#45;&gt;:core:coroutines -->
-<g id="edge17" class="edge">
+<g id="edge13" class="edge">
 <title>:test&#45;data&#45;&gt;:core:coroutines</title>
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M138.9,-572C95.83,-572 41.78,-572 41.78,-572 41.78,-572 41.78,-180.84 41.78,-180.84"/>
 <polygon fill="black" stroke="black" points="45.28,-180.84 41.78,-170.84 38.28,-180.84 45.28,-180.84"/>
@@ -150,7 +150,7 @@
 <text text-anchor="middle" x="244.14" y="-425.3" font-family="Times,serif" font-size="14.00">:data:coverart</text>
 </g>
 <!-- :test&#45;data&#45;&gt;:data:coverart -->
-<g id="edge14" class="edge">
+<g id="edge16" class="edge">
 <title>:test&#45;data&#45;&gt;:data:coverart</title>
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M194.2,-547.81C194.2,-547.81 194.2,-452.71 194.2,-452.71"/>
 <polygon fill="black" stroke="black" points="197.7,-452.71 194.2,-442.71 190.7,-452.71 197.7,-452.71"/>
@@ -162,7 +162,7 @@
 <text text-anchor="middle" x="538.14" y="-151.3" font-family="Times,serif" font-size="14.00">:data:spotify</text>
 </g>
 <!-- :test&#45;data&#45;&gt;:data:spotify -->
-<g id="edge15" class="edge">
+<g id="edge17" class="edge">
 <title>:test&#45;data&#45;&gt;:data:spotify</title>
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M243.47,-572C340.41,-572 538.14,-572 538.14,-572 538.14,-572 538.14,-183.19 538.14,-183.19"/>
 <polygon fill="black" stroke="black" points="541.64,-183.19 538.14,-173.19 534.64,-183.19 541.64,-183.19"/>
