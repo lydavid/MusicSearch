@@ -6,23 +6,17 @@ import com.slack.circuit.test.presenterTestOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.usecase.GetAreasByEntity
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert.assertEquals
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.test.KoinTest
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class AreasByEntityPresenterTest : KoinTest {
-
-    @get:Rule(order = 0)
-    val koinTestRule = KoinTestRule()
+class AreasByEntityPresenterTest {
 
     private fun createPresenter(
         listItems: List<AreaListItemModel>,
