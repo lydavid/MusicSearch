@@ -241,7 +241,7 @@ private fun CollectionUi(
         MusicBrainzEntity.AREA -> {
             AreasListScreen(
                 lazyListState = areasByEntityUiState.lazyListState,
-                lazyPagingItems = areasByEntityUiState.lazyPagingItems,
+                pagingDataFlow = areasByEntityUiState.pagingDataFlow,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()

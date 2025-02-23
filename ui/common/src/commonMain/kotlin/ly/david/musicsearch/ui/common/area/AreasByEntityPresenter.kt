@@ -9,8 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
-import app.cash.paging.compose.LazyPagingItems
-import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -30,7 +28,7 @@ class AreasByEntityPresenter(
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val areaListItems: Flow<PagingData<AreaListItemModel>> by rememberRetained(query, id, entity) {
+        val pagingDataFlow: Flow<PagingData<AreaListItemModel>> by rememberRetained(query, id, entity) {
             mutableStateOf(
                 getAreasByEntity(
                     entityId = id,
@@ -59,7 +57,7 @@ class AreasByEntityPresenter(
         }
 
         return AreasByEntityUiState(
-            lazyPagingItems = areaListItems.collectAsLazyPagingItems(),
+            pagingDataFlow = pagingDataFlow,
             lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
@@ -80,7 +78,7 @@ sealed interface AreasByEntityUiEvent : CircuitUiEvent {
 
 @Stable
 data class AreasByEntityUiState(
-    val lazyPagingItems: LazyPagingItems<AreaListItemModel>,
+    val pagingDataFlow: Flow<PagingData<AreaListItemModel>>,
     val lazyListState: LazyListState = LazyListState(),
     val eventSink: (AreasByEntityUiEvent) -> Unit = {},
 ) : CircuitUiState

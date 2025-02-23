@@ -12,10 +12,18 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.area.AreasByEntityRepository
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
 
-class GetAreasByEntity(
+interface GetAreasByEntity {
+    operator fun invoke(
+        entityId: String,
+        entity: MusicBrainzEntity?,
+        listFilters: ListFilters,
+    ): Flow<PagingData<AreaListItemModel>>
+}
+
+class GetAreasByEntityImpl(
     private val areasByEntityRepository: AreasByEntityRepository,
     private val coroutineScope: CoroutineScope,
-) : GetEntitiesByEntity<AreaListItemModel> {
+) : GetEntitiesByEntity<AreaListItemModel>, GetAreasByEntity {
     override operator fun invoke(
         entityId: String,
         entity: MusicBrainzEntity?,

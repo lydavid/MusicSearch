@@ -52,9 +52,18 @@ kotlin {
         }
         val androidUnitTest by getting {
             dependencies {
+                implementation(projects.testData)
                 implementation(projects.ui.test.screenshot)
+                implementation(libs.bundles.kotlinx.coroutines)
                 implementation(libs.test.parameter.injector)
+                implementation(libs.junit)
+                implementation(libs.circuit.test)
+                implementation(libs.robolectric)
+                implementation(libs.androidx.paging.testing)
                 implementation(libs.koin.test)
+                implementation(projects.core.coroutines)
+                implementation(libs.kotlin.test)
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
         val commonTest by getting {
