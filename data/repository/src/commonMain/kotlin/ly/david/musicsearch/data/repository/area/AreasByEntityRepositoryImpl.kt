@@ -65,8 +65,8 @@ class AreasByEntityRepositoryImpl(
     ): PagingSource<Int, AreaListItemModel> {
         return when (entity) {
             MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.getAreasByCollection(
-                    collectionId = entityId,
+                areaDao.getAreas(
+                    mbid = entityId,
                     query = listFilters.query,
                 )
             }

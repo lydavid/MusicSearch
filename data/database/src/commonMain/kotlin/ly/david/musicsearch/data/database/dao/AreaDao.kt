@@ -1,15 +1,21 @@
 package ly.david.musicsearch.data.database.dao
 
+import app.cash.paging.PagingSource
+import app.cash.sqldelight.paging3.QueryPagingSource
+import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
+import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
-import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.AreaQueries
 
 class AreaDao(
     database: Database,
     private val countryCodeDao: CountryCodeDao,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter: AreaQueries = database.areaQueries
 
@@ -71,6 +77,63 @@ class AreaDao(
             mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
     }
+
+    fun getAreas(
+        mbid: String?,
+        query: String,
+    ): PagingSource<Int, AreaListItemModel> = when {
+        mbid == null -> {
+            getAllAreas(
+                query = query,
+            )
+        }
+
+        else -> {
+            getAreasByCollection(
+                mbid = mbid,
+                query = query,
+            )
+        }
+    }
+
+    private fun getAllAreas(
+        query: String,
+    ) = QueryPagingSource(
+        countQuery = transacter.getNumberOfAreas(
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getAllAreas(
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToAreaListItemModel,
+            )
+        },
+    )
+
+    private fun getAreasByCollection(
+        mbid: String,
+        query: String,
+    ) = QueryPagingSource(
+        countQuery = transacter.getNumberOfAreasByCollection(
+            collectionId = mbid,
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getAreasByCollection(
+                collectionId = mbid,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToAreaListItemModel,
+            )
+        },
+    )
 
     private fun toDetailsModel(
         id: String,

@@ -39,52 +39,6 @@ DELETE FROM collection_entity
 WHERE id = :collectionId;
 }
 
--- areas by collection
-
-getNumberOfAreasByCollection:
-SELECT IFNULL(
-  (
-    SELECT COUNT(*)
-    FROM area a
-    INNER JOIN collection_entity ce ON a.id = ce.entity_id
-    INNER JOIN collection c ON c.id = ce.id
-    WHERE c.id = :collectionId
-    AND (
-      a.name LIKE :query OR
-      a.disambiguation LIKE :query OR
-      a.sort_name LIKE :query OR
-      a.type LIKE :query
-    )
-  ),
-  0
-) AS count;
-
-getAreasByCollection:
-SELECT
-  a.id,
-  a.name,
-  a.sort_name,
-  a.disambiguation,
-  a.type,
-  a.begin,
-  a.end,
-  a.ended,
-  visited.entity_id IS NOT NULL AS visited
-FROM area a
-INNER JOIN collection_entity ce ON a.id = ce.entity_id
-INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN visited ON visited.entity_id = a.id
-WHERE c.id = :collectionId
-AND (
-  a.name LIKE :query OR
-  a.disambiguation LIKE :query OR
-  a.sort_name LIKE :query OR
-  a.type LIKE :query
-)
-ORDER BY a.begin, a.end, a.name
-LIMIT :limit OFFSET :offset;
-
-
 -- aritsts by collection
 
 getNumberOfArtistsByCollection:

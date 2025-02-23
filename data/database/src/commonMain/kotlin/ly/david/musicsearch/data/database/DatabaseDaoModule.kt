@@ -53,7 +53,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val databaseDaoModule = module {
-    single { AreaDao(get(), get()) }
+    singleOf(::AreaDao)
     single { ArtistsByEntityDao(get(), get()) }
     single { EventsByEntityDao(get(), get()) }
     single { AreaPlaceDao(get(), get()) }
