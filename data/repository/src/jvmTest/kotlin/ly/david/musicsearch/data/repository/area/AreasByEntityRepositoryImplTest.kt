@@ -59,6 +59,12 @@ class AreasByEntityRepositoryImplTest : KoinTest {
         val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
         val areas = listOf(
             AreaMusicBrainzModel(
+                id = "01428650-fbe2-4aab-aca2-a1d562a93caf",
+                name = "Ireland",
+                type = "Island",
+                typeId = "06dd0ae4-8c74-30bb-b43d-95dcedf961de",
+            ),
+            AreaMusicBrainzModel(
                 id = "390b05d4-11ec-3bce-a343-703a366b34a5",
                 name = "Ireland",
                 countryCodes = listOf("IE"),
@@ -98,7 +104,7 @@ class AreasByEntityRepositoryImplTest : KoinTest {
             collection = CollectionListItemModel(
                 id = collectionId,
                 isRemote = false,
-                name = "My areas",
+                name = "Areas I've been",
                 entity = MusicBrainzEntity.AREA,
             ),
         )
@@ -113,7 +119,7 @@ class AreasByEntityRepositoryImplTest : KoinTest {
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                5,
+                6,
                 size,
             )
             assertEquals(
@@ -132,6 +138,11 @@ class AreasByEntityRepositoryImplTest : KoinTest {
                         id = "db52f295-91e6-41b0-8491-a3356cc1f815",
                         name = "Galway",
                         type = "City",
+                    ),
+                    AreaListItemModel(
+                        id = "01428650-fbe2-4aab-aca2-a1d562a93caf",
+                        name = "Ireland",
+                        type = "Island",
                     ),
                     AreaListItemModel(
                         id = "390b05d4-11ec-3bce-a343-703a366b34a5",

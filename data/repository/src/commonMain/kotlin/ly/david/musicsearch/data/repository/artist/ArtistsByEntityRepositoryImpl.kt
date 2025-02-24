@@ -27,8 +27,8 @@ class ArtistsByEntityRepositoryImpl(
     ) {
 
     override fun observeArtistsByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<ArtistListItemModel>> {
         return observeEntitiesByEntity(

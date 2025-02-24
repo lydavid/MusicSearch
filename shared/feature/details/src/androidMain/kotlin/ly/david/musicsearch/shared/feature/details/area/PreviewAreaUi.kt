@@ -84,7 +84,7 @@ private val canadianArtists = MutableStateFlow(
                 lifeSpan = LifeSpanUiModel(begin = "1965-08-28"),
             ),
             ArtistListItemModel(
-                id = "arcade_fire",
+                id = "52074ba6-e495-4ef3-9bb4-0703888a9f68",
                 name = "Arcade Fire",
                 sortName = "Arcade Fire",
                 type = "Group",
