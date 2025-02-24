@@ -5,7 +5,6 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
-import ly.david.musicsearch.data.database.mapper.mapToArtistListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToEventListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToGenreListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToInstrumentListItemModel
@@ -16,7 +15,6 @@ import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
@@ -85,27 +83,6 @@ class CollectionEntityDao(
     ) {
         transacter.deleteCollection(collectionId)
     }
-
-    fun getArtistsByCollection(
-        collectionId: String,
-        query: String,
-    ): PagingSource<Int, ArtistListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfArtistsByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-        ),
-        transacter = transacter,
-        context = coroutineDispatchers.io,
-        queryProvider = { limit, offset ->
-            transacter.getArtistsByCollection(
-                collectionId = collectionId,
-                query = "%$query%",
-                limit = limit,
-                offset = offset,
-                mapper = ::mapToArtistListItemModel,
-            )
-        },
-    )
 
     fun getEventsByCollection(
         collectionId: String,

@@ -3,21 +3,19 @@ package ly.david.musicsearch.data.repository.artist
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.ArtistDao
-import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
+import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistsByEntityRepository
+import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class ArtistsByEntityRepositoryImpl(
-    private val artistsByEntityDao: ArtistsByEntityDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val artistDao: ArtistDao,
@@ -56,32 +54,22 @@ class ArtistsByEntityRepositoryImpl(
                 }
 
                 else -> {
-                    artistsByEntityDao.deleteArtistsByEntity(entityId)
+                    artistDao.deleteArtistsByEntity(entityId)
                 }
             }
         }
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, ArtistListItemModel> {
-        return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.getArtistsByCollection(
-                    collectionId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            else -> {
-                artistsByEntityDao.getArtistsByEntity(
-                    entityId = entityId,
-                    query = listFilters.query,
-                )
-            }
-        }
+        return artistDao.getArtists(
+            entityId = entityId,
+            entity = entity,
+            query = listFilters.query,
+        )
     }
 
     override suspend fun browseEntities(
@@ -111,9 +99,10 @@ class ArtistsByEntityRepositoryImpl(
             }
 
             else -> {
-                artistsByEntityDao.insertAll(
-                    entityAndArtistIds = musicBrainzModels.map { event ->
-                        entityId to event.id
+                artistDao.linkEntityToArtists(
+                    entityId = entityId,
+                    artistIds = musicBrainzModels.map { artist ->
+                        artist.id
                     },
                 )
             }

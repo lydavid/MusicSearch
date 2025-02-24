@@ -21,7 +21,7 @@ val statsFeatureModule = module {
                                 getCountOfEachRelationshipTypeUseCase = get(),
                                 observeBrowseEntityCount = get(),
                                 releaseCountryDao = get(),
-                                artistsByEntityDao = get(),
+                                artistDao = get(),
                                 eventsByEntityDao = get(),
                                 labelsByEntityDao = get(),
                                 areaPlaceDao = get(),
@@ -87,7 +87,7 @@ val statsFeatureModule = module {
                                 screen = screen,
                                 getCountOfEachRelationshipTypeUseCase = get(),
                                 observeBrowseEntityCount = get(),
-                                artistsByEntityDao = get(),
+                                artistDao = get(),
                             )
                         }
 
@@ -112,7 +112,7 @@ val statsFeatureModule = module {
                                 screen = screen,
                                 getCountOfEachRelationshipTypeUseCase = get(),
                                 observeBrowseEntityCount = get(),
-                                artistsByEntityDao = get(),
+                                artistDao = get(),
                                 recordingsByEntityDao = get(),
                             )
                         }

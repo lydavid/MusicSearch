@@ -1,25 +1,25 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
 import app.cash.paging.PagingData
-import app.cash.paging.insertSeparators
 import app.cash.paging.PagingSource
+import app.cash.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ListSeparator
-import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
+import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
+import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsByEntityRepository
+import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 
 class ReleaseGroupsByEntityRepositoryImpl(
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
@@ -84,12 +84,16 @@ class ReleaseGroupsByEntityRepositoryImpl(
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, ReleaseGroupListItemModel> {
-        return when (entity) {
-            MusicBrainzEntity.ARTIST -> {
+        return when {
+            entityId == null || entity == null -> {
+                error("not possible")
+            }
+
+            entity == MusicBrainzEntity.ARTIST -> {
                 artistReleaseGroupDao.getReleaseGroupsByArtist(
                     artistId = entityId,
                     query = listFilters.query,
@@ -97,7 +101,7 @@ class ReleaseGroupsByEntityRepositoryImpl(
                 )
             }
 
-            MusicBrainzEntity.COLLECTION -> {
+            entity == MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.getReleaseGroupsByCollection(
                     collectionId = entityId,
                     query = listFilters.query,

@@ -61,12 +61,16 @@ class GenresByEntityRepositoryImpl(
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, GenreListItemModel> {
-        return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
+        return when {
+            entityId == null || entity == null -> {
+                error("not possible")
+            }
+
+            entity == MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.getGenresByCollection(
                     collectionId = entityId,
                     query = listFilters.query,

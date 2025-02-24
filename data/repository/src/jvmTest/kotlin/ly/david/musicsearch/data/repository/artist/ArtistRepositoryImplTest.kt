@@ -8,7 +8,6 @@ import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
-import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
@@ -43,7 +42,6 @@ class ArtistRepositoryImplTest : KoinTest {
     private val visitedDao: VisitedDao by inject()
     private val relationDao: RelationDao by inject()
     private val areaDao: AreaDao by inject()
-    private val artistsByEntityDao: ArtistsByEntityDao by inject()
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
@@ -181,10 +179,9 @@ class ArtistRepositoryImplTest : KoinTest {
     @Test
     fun `browse first, then lookup should overwrite with more data`() = runTest {
         val artistsByEntityRepositoryImpl = ArtistsByEntityRepositoryImpl(
-            artistsByEntityDao,
-            browseEntityCountDao,
-            collectionEntityDao,
-            artistDao,
+            browseEntityCountDao = browseEntityCountDao,
+            collectionEntityDao = collectionEntityDao,
+            artistDao = artistDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseArtistsByEntity(
                     entityId: String,

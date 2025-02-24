@@ -7,8 +7,8 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingsByEntityDao
 import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
@@ -19,7 +19,7 @@ internal class WorkStatsPresenter(
     private val screen: StatsScreen,
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
-    private val artistsByEntityDao: ArtistsByEntityDao,
+    private val artistDao: ArtistDao,
     private val recordingsByEntityDao: RecordingsByEntityDao,
 ) : Presenter<StatsUiState> {
 
@@ -54,7 +54,7 @@ internal class WorkStatsPresenter(
                 entityId,
                 MusicBrainzEntity.ARTIST,
             ),
-            artistsByEntityDao.getNumberOfArtistsByEntity(entityId),
+            artistDao.getNumberOfArtistsByEntity(entityId),
         ) { browseRecordingCount, localRecordings ->
             ArtistStats(
                 totalRemote = browseRecordingCount?.remoteCount,

@@ -3,17 +3,17 @@ package ly.david.musicsearch.data.repository.place
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
+import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.PlacesByEntityRepository
 
 class PlacesByEntityRepositoryImpl(
@@ -65,19 +65,23 @@ class PlacesByEntityRepositoryImpl(
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, PlaceListItemModel> {
-        return when (entity) {
-            MusicBrainzEntity.AREA -> {
+        return when {
+            entityId == null || entity == null -> {
+                error("not possible")
+            }
+
+            entity == MusicBrainzEntity.AREA -> {
                 areaPlaceDao.getPlacesByArea(
                     areaId = entityId,
                     query = listFilters.query,
                 )
             }
 
-            MusicBrainzEntity.COLLECTION -> {
+            entity == MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.getPlacesByCollection(
                     collectionId = entityId,
                     query = listFilters.query,

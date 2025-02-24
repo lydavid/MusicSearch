@@ -3,17 +3,17 @@ package ly.david.musicsearch.data.repository.area
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
+import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.AreasByEntityRepository
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class AreasByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
@@ -59,12 +59,12 @@ class AreasByEntityRepositoryImpl(
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, AreaListItemModel> {
-        return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
+        return when {
+            entity == MusicBrainzEntity.COLLECTION || entityId == null -> {
                 areaDao.getAreas(
                     mbid = entityId,
                     query = listFilters.query,

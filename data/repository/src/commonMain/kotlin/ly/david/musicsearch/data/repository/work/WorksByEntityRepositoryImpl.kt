@@ -3,9 +3,6 @@ package ly.david.musicsearch.data.repository.work
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.WorkDao
@@ -14,6 +11,9 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseWorksResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.WorksByEntityRepository
 
 class WorksByEntityRepositoryImpl(
@@ -63,12 +63,16 @@ class WorksByEntityRepositoryImpl(
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, WorkListItemModel> {
-        return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
+        return when {
+            entityId == null || entity == null -> {
+                error("not possible")
+            }
+
+            entity == MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.getWorksByCollection(
                     collectionId = entityId,
                     query = listFilters.query,

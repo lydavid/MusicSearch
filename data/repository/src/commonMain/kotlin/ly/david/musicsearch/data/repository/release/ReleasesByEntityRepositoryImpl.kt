@@ -3,9 +3,6 @@ package ly.david.musicsearch.data.repository.release
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -20,6 +17,9 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.api.LABELS
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleasesByEntityRepository
 
 class ReleasesByEntityRepositoryImpl(
@@ -91,47 +91,51 @@ class ReleasesByEntityRepositoryImpl(
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, ReleaseListItemModel> {
-        return when (entity) {
-            MusicBrainzEntity.AREA -> {
+        return when {
+            entityId == null || entity == null -> {
+                error("not possible")
+            }
+
+            entity == MusicBrainzEntity.AREA -> {
                 releaseCountryDao.getReleasesByCountry(
                     areaId = entityId,
                     query = listFilters.query,
                 )
             }
 
-            MusicBrainzEntity.ARTIST -> {
+            entity == MusicBrainzEntity.ARTIST -> {
                 artistReleaseDao.getReleasesByArtist(
                     artistId = entityId,
                     query = listFilters.query,
                 )
             }
 
-            MusicBrainzEntity.COLLECTION -> {
+            entity == MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.getReleasesByCollection(
                     collectionId = entityId,
                     query = listFilters.query,
                 )
             }
 
-            MusicBrainzEntity.LABEL -> {
+            entity == MusicBrainzEntity.LABEL -> {
                 releaseLabelDao.getReleasesByLabel(
                     labelId = entityId,
                     query = listFilters.query,
                 )
             }
 
-            MusicBrainzEntity.RECORDING -> {
+            entity == MusicBrainzEntity.RECORDING -> {
                 recordingReleaseDao.getReleasesByRecording(
                     recordingId = entityId,
                     query = listFilters.query,
                 )
             }
 
-            MusicBrainzEntity.RELEASE_GROUP -> {
+            entity == MusicBrainzEntity.RELEASE_GROUP -> {
                 releaseReleaseGroupDao.getReleasesByReleaseGroup(
                     releaseGroupId = entityId,
                     query = listFilters.query,

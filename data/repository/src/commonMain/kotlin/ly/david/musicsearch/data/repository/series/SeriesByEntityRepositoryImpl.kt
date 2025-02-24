@@ -3,16 +3,16 @@ package ly.david.musicsearch.data.repository.series
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.BrowseSeriesResponse
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
+import ly.david.musicsearch.data.musicbrainz.api.BrowseSeriesResponse
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.series.SeriesByEntityRepository
 
 class SeriesByEntityRepositoryImpl(
@@ -59,12 +59,16 @@ class SeriesByEntityRepositoryImpl(
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, SeriesListItemModel> {
-        return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
+        return when {
+            entityId == null || entity == null -> {
+                error("not possible")
+            }
+
+            entity == MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.getSeriesByCollection(
                     collectionId = entityId,
                     query = listFilters.query,

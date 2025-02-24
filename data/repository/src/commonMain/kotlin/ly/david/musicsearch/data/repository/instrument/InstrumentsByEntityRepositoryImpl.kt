@@ -3,17 +3,17 @@ package ly.david.musicsearch.data.repository.instrument
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.BrowseInstrumentsResponse
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
+import ly.david.musicsearch.data.musicbrainz.api.BrowseInstrumentsResponse
+import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.instrument.InstrumentsByEntityRepository
+import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class InstrumentsByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
@@ -59,12 +59,16 @@ class InstrumentsByEntityRepositoryImpl(
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, InstrumentListItemModel> {
-        return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
+        return when {
+            entityId == null || entity == null -> {
+                error("not possible")
+            }
+
+            entity == MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.getInstrumentsByCollection(
                     collectionId = entityId,
                     query = listFilters.query,

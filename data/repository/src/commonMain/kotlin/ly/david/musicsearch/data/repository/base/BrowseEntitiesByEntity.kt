@@ -27,16 +27,21 @@ abstract class BrowseEntitiesByEntity<
 
     @OptIn(ExperimentalPagingApi::class)
     fun observeEntitiesByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<LI>> {
-        return Pager(
-            config = CommonPagingConfig.pagingConfig,
-            remoteMediator = getRemoteMediator(
+        val remoteMediator = if (entityId != null && entity != null) {
+            getRemoteMediator(
                 entityId = entityId,
                 entity = entity,
-            ).takeIf { listFilters.isRemote },
+            )
+        } else {
+            null
+        }
+        return Pager(
+            config = CommonPagingConfig.pagingConfig,
+            remoteMediator = remoteMediator.takeIf { listFilters.isRemote },
             pagingSourceFactory = {
                 getLinkedEntitiesPagingSource(
                     entityId = entityId,
@@ -86,8 +91,8 @@ abstract class BrowseEntitiesByEntity<
     )
 
     abstract fun getLinkedEntitiesPagingSource(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, LI>
 
@@ -141,6 +146,6 @@ abstract class BrowseEntitiesByEntity<
         musicBrainzModels: List<MB>,
     )
 
-    protected fun browseEntitiesNotSupported(entity: MusicBrainzEntity) =
+    protected fun browseEntitiesNotSupported(entity: MusicBrainzEntity?) =
         "${browseEntity.resourceUriPlural} by $entity not supported."
 }

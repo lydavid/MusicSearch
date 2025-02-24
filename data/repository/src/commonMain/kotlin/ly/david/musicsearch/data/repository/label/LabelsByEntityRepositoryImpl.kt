@@ -3,9 +3,6 @@ package ly.david.musicsearch.data.repository.label
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.LabelDao
@@ -14,7 +11,10 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.label.LabelsByEntityRepository
+import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class LabelsByEntityRepositoryImpl(
     private val labelsByEntityDao: LabelsByEntityDao,
@@ -63,12 +63,16 @@ class LabelsByEntityRepositoryImpl(
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, LabelListItemModel> {
-        return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
+        return when {
+            entityId == null || entity == null -> {
+                error("not possible")
+            }
+
+            entity == MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.getLabelsByCollection(
                     collectionId = entityId,
                     query = listFilters.query,

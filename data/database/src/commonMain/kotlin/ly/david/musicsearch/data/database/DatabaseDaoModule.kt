@@ -8,7 +8,6 @@ import ly.david.musicsearch.data.database.dao.ArtistCreditDaoImpl
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
-import ly.david.musicsearch.data.database.dao.ArtistsByEntityDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -54,11 +53,10 @@ import org.koin.dsl.module
 
 val databaseDaoModule = module {
     singleOf(::AreaDao)
-    single { ArtistsByEntityDao(get(), get()) }
     single { EventsByEntityDao(get(), get()) }
     single { AreaPlaceDao(get(), get()) }
     singleOf(::ArtistCreditDaoImpl) bind ArtistCreditDao::class
-    single { ArtistDao(get()) }
+    singleOf(::ArtistDao)
     single { ArtistCollaborationDao(get()) }
     single { ArtistReleaseDao(get(), get()) }
     single { ArtistReleaseGroupDao(get(), get()) }
