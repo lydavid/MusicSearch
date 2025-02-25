@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.combine
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
-import ly.david.musicsearch.data.database.dao.EventsByEntityDao
+import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.LabelsByEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
@@ -24,7 +24,7 @@ internal class AreaStatsPresenter(
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
     private val releaseCountryDao: ReleaseCountryDao,
     private val artistDao: ArtistDao,
-    private val eventsByEntityDao: EventsByEntityDao,
+    private val eventDao: EventDao,
     private val labelsByEntityDao: LabelsByEntityDao,
     private val areaPlaceDao: AreaPlaceDao,
 ) : Presenter<StatsUiState> {
@@ -76,7 +76,7 @@ internal class AreaStatsPresenter(
                 entityId = entityId,
                 entity = MusicBrainzEntity.EVENT,
             ),
-            eventsByEntityDao.getNumberOfEventsByEntity(entityId),
+            eventDao.getNumberOfEventsByEntity(entityId),
         ) { browseEntityCount, localCount ->
             EventStats(
                 totalRemote = browseEntityCount?.remoteCount,

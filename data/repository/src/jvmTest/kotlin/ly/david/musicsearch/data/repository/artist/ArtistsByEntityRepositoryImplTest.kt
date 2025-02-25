@@ -214,16 +214,16 @@ class ArtistsByEntityRepositoryImplTest : KoinTest {
     }
 
     private fun setUpCanadianArtists() = runTest {
-        val canadaId = "71bbafaa-e825-3e15-8ca9-017dcad1748b"
-        val canadianArtists = listOf(
+        val entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b"
+        val artists = listOf(
             arcadeFireMusicBrainzModel,
             theWeekndMusicBrainzModel,
         )
         val sut = createRepositoryWithFakeNetworkData(
-            artists = canadianArtists,
+            artists = artists,
         )
         sut.observeArtistsByEntity(
-            entityId = canadaId,
+            entityId = entityId,
             entity = MusicBrainzEntity.AREA,
             listFilters = ListFilters(),
         ).asSnapshot().run {
@@ -240,7 +240,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest {
             )
         }
         sut.observeArtistsByEntity(
-            entityId = canadaId,
+            entityId = entityId,
             entity = MusicBrainzEntity.AREA,
             listFilters = ListFilters(
                 query = "a",
@@ -261,16 +261,16 @@ class ArtistsByEntityRepositoryImplTest : KoinTest {
     }
 
     private fun setUpJapaneseArtists() = runTest {
-        val japanId = "2db42837-c832-3c27-b4a3-08198f75693c"
-        val japaneseArtists = listOf(
+        val entityId = "2db42837-c832-3c27-b4a3-08198f75693c"
+        val artists = listOf(
             atarayoMusicBrainzModel,
             bumpOfChickenMusicBrainzModel,
         )
         val sut = createRepositoryWithFakeNetworkData(
-            artists = japaneseArtists,
+            artists = artists,
         )
         sut.observeArtistsByEntity(
-            entityId = japanId,
+            entityId = entityId,
             entity = MusicBrainzEntity.AREA,
             listFilters = ListFilters(),
         ).asSnapshot().run {
@@ -287,7 +287,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest {
             )
         }
         sut.observeArtistsByEntity(
-            entityId = japanId,
+            entityId = entityId,
             entity = MusicBrainzEntity.AREA,
             listFilters = ListFilters(
                 query = "a",

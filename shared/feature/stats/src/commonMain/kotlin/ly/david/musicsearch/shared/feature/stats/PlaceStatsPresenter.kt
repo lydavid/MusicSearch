@@ -7,9 +7,9 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.data.database.dao.EventsByEntityDao
+import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
 import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
 import ly.david.musicsearch.ui.common.screen.StatsScreen
@@ -18,7 +18,7 @@ internal class PlaceStatsPresenter(
     private val screen: StatsScreen,
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
-    private val eventsByEntityDao: EventsByEntityDao,
+    private val eventDao: EventDao,
 ) : Presenter<StatsUiState> {
 
     @Composable
@@ -38,7 +38,7 @@ internal class PlaceStatsPresenter(
                 entityId,
                 MusicBrainzEntity.EVENT,
             ),
-            eventsByEntityDao.getNumberOfEventsByEntity(entityId),
+            eventDao.getNumberOfEventsByEntity(entityId),
         ) { relationTypeCounts, browseEventCount, localEvents ->
             Stats(
                 totalRelations = relationTypeCounts.sumOf { it.count },

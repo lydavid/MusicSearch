@@ -7,15 +7,15 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
-import ly.david.musicsearch.data.database.dao.EventsByEntityDao
+import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.RecordingsByEntityDao
 import ly.david.musicsearch.data.database.dao.WorksByEntityDao
 import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 
@@ -23,7 +23,7 @@ internal class ArtistStatsPresenter(
     private val screen: StatsScreen,
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
-    private val eventsByEntityDao: EventsByEntityDao,
+    private val eventDao: EventDao,
     private val recordingsByEntityDao: RecordingsByEntityDao,
     private val worksByEntityDao: WorksByEntityDao,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
@@ -111,7 +111,7 @@ internal class ArtistStatsPresenter(
                 entityId,
                 MusicBrainzEntity.EVENT,
             ),
-            eventsByEntityDao.getNumberOfEventsByEntity(entityId),
+            eventDao.getNumberOfEventsByEntity(entityId),
         ) { browseReleaseCount, localReleases ->
             EventStats(
                 totalRemote = browseReleaseCount?.remoteCount,

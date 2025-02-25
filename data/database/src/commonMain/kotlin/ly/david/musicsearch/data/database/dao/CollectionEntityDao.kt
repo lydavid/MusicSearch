@@ -5,7 +5,6 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
-import ly.david.musicsearch.data.database.mapper.mapToEventListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToGenreListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToInstrumentListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToLabelListItemModel
@@ -15,7 +14,6 @@ import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
-import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -83,27 +81,6 @@ class CollectionEntityDao(
     ) {
         transacter.deleteCollection(collectionId)
     }
-
-    fun getEventsByCollection(
-        collectionId: String,
-        query: String,
-    ): PagingSource<Int, EventListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfEventsByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-        ),
-        transacter = transacter,
-        context = coroutineDispatchers.io,
-        queryProvider = { limit, offset ->
-            transacter.getEventsByCollection(
-                collectionId = collectionId,
-                query = "%$query%",
-                limit = limit,
-                offset = offset,
-                mapper = ::mapToEventListItemModel,
-            )
-        },
-    )
 
     fun getGenresByCollection(
         collectionId: String,

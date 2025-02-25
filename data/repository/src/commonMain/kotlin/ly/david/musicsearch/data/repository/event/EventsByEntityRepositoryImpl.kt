@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EventDao
-import ly.david.musicsearch.data.database.dao.EventsByEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
@@ -17,7 +16,6 @@ import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class EventsByEntityRepositoryImpl(
-    private val eventsByEntityDao: EventsByEntityDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val eventDao: EventDao,
@@ -29,8 +27,8 @@ class EventsByEntityRepositoryImpl(
     ) {
 
     override fun observeEventsByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<EventListItemModel>> {
         return observeEntitiesByEntity(
@@ -56,7 +54,7 @@ class EventsByEntityRepositoryImpl(
                 }
 
                 else -> {
-                    eventsByEntityDao.deleteEventsByEntity(entityId)
+                    eventDao.deleteEventsByEntity(entityId)
                 }
             }
         }
@@ -67,25 +65,11 @@ class EventsByEntityRepositoryImpl(
         entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, EventListItemModel> {
-        return when {
-            entityId == null || entity == null -> {
-                error("not possible")
-            }
-
-            entity == MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.getEventsByCollection(
-                    collectionId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            else -> {
-                eventsByEntityDao.getEventsByEntity(
-                    entityId = entityId,
-                    query = listFilters.query,
-                )
-            }
-        }
+        return eventDao.getEvents(
+            entityId = entityId,
+            entity = entity,
+            query = listFilters.query,
+        )
     }
 
     override suspend fun browseEntities(
@@ -115,7 +99,7 @@ class EventsByEntityRepositoryImpl(
             }
 
             else -> {
-                eventsByEntityDao.insertAll(
+                eventDao.linkEventsToEntity(
                     entityId = entityId,
                     eventIds = musicBrainzModels.map { event -> event.id },
                 )

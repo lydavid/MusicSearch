@@ -8,8 +8,8 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 interface EventsByEntityRepository {
     fun observeEventsByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<EventListItemModel>>
 }

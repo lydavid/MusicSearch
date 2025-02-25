@@ -39,49 +39,7 @@ DELETE FROM collection_entity
 WHERE id = :collectionId;
 }
 
--- events by collection
 
-getNumberOfEventsByCollection:
-SELECT IFNULL(
-  (
-    SELECT COUNT(*)
-    FROM event e
-    INNER JOIN collection_entity ce ON e.id = ce.entity_id
-    INNER JOIN collection c ON c.id = ce.id
-    WHERE c.id = :collectionId
-    AND (
-      e.name LIKE :query OR
-      e.disambiguation LIKE :query OR
-      e.type LIKE :query
-    )
-  ),
-  0
-) AS count;
-
-getEventsByCollection:
-SELECT
-  e.id,
-  e.name,
-  e.disambiguation,
-  e.type,
-  e.time,
-  e.cancelled,
-  e.begin,
-  e.end,
-  e.ended,
-  visited.entity_id IS NOT NULL AS visited
-FROM event e
-INNER JOIN collection_entity ce ON e.id = ce.entity_id
-INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN visited ON visited.entity_id = e.id
-WHERE c.id = :collectionId
-AND (
-  e.name LIKE :query OR
-  e.disambiguation LIKE :query OR
-  e.type LIKE :query
-)
-ORDER BY e.begin, e.end, e.name
-LIMIT :limit OFFSET :offset;
 
 
 -- genres by collection

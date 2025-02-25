@@ -33,3 +33,146 @@ FROM event WHERE id = ?;
 delete:
 DELETE FROM event
 WHERE id = :id;
+
+-- events by entity
+
+CREATE TABLE IF NOT EXISTS events_by_entity (
+  entity_id TEXT NOT NULL,
+  event_id TEXT NOT NULL,
+
+  PRIMARY KEY (entity_id, event_id)
+);
+
+linkEventToEntity:
+INSERT OR IGNORE INTO events_by_entity
+VALUES ?;
+
+deleteEventsByEntity:
+DELETE FROM event WHERE id IN (
+  SELECT e.id
+  FROM events_by_entity ee
+  INNER JOIN event e ON e.id = ee.event_id
+  WHERE ee.entity_id = :entityId
+);
+
+getNumberOfEventsByEntity:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM events_by_entity ee
+    INNER JOIN event e ON e.id = ee.event_id
+    WHERE ee.entity_id = :entityId
+    AND (
+      e.name LIKE :query OR
+      e.disambiguation LIKE :query OR
+      e.type LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getEventsByEntity:
+SELECT
+  e.id,
+  e.name,
+  e.disambiguation,
+  e.type,
+  e.time,
+  e.cancelled,
+  e.begin,
+  e.end,
+  e.ended,
+  visited.entity_id IS NOT NULL AS visited
+FROM events_by_entity ee
+INNER JOIN event e ON e.id = ee.event_id
+LEFT JOIN visited ON visited.entity_id = e.id
+WHERE ee.entity_id = :entityId
+AND (
+  e.name LIKE :query OR
+  e.disambiguation LIKE :query OR
+  e.type LIKE :query
+)
+ORDER BY e.begin, e.end, e.name
+LIMIT :limit OFFSET :offset;
+
+-- events by collection
+
+getNumberOfEventsByCollection:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM event e
+    INNER JOIN collection_entity ce ON e.id = ce.entity_id
+    INNER JOIN collection c ON c.id = ce.id
+    WHERE c.id = :collectionId
+    AND (
+      e.name LIKE :query OR
+      e.disambiguation LIKE :query OR
+      e.type LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getEventsByCollection:
+SELECT
+  e.id,
+  e.name,
+  e.disambiguation,
+  e.type,
+  e.time,
+  e.cancelled,
+  e.begin,
+  e.end,
+  e.ended,
+  visited.entity_id IS NOT NULL AS visited
+FROM event e
+INNER JOIN collection_entity ce ON e.id = ce.entity_id
+INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = e.id
+WHERE c.id = :collectionId
+AND (
+  e.name LIKE :query OR
+  e.disambiguation LIKE :query OR
+  e.type LIKE :query
+)
+ORDER BY e.begin, e.end, e.name
+LIMIT :limit OFFSET :offset;
+
+-- all events
+
+getCountOfAllEvents:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM event e
+    WHERE (
+      e.name LIKE :query OR
+      e.disambiguation LIKE :query OR
+      e.type LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getAllEvents:
+SELECT
+  e.id,
+  e.name,
+  e.disambiguation,
+  e.type,
+  e.time,
+  e.cancelled,
+  e.begin,
+  e.end,
+  e.ended,
+  visited.entity_id IS NOT NULL AS visited
+FROM event e
+LEFT JOIN visited ON visited.entity_id = e.id
+WHERE (
+  e.name LIKE :query OR
+  e.disambiguation LIKE :query OR
+  e.type LIKE :query
+)
+ORDER BY e.begin, e.end, e.name
+LIMIT :limit OFFSET :offset;
