@@ -16,7 +16,7 @@ val fakeSeries = SeriesMusicBrainzModel(
             typeId = "281bf307-f1e8-4a56-a7b8-fe8304bb2bf3",
             direction = Direction.BACKWARD,
             targetType = SerializableMusicBrainzEntity.AREA,
-            area = ontario,
+            area = ontarioAreaMusicBrainzModel,
         ),
     ),
 )

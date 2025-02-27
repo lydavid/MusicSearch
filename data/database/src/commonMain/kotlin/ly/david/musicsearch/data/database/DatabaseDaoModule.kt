@@ -1,7 +1,6 @@
 package ly.david.musicsearch.data.database
 
 import ly.david.musicsearch.data.database.dao.AreaDao
-import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ArtistCollaborationDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDaoImpl
@@ -52,7 +51,6 @@ import org.koin.dsl.module
 
 val databaseDaoModule = module {
     singleOf(::AreaDao)
-    single { AreaPlaceDao(get(), get()) }
     singleOf(::ArtistCreditDaoImpl) bind ArtistCreditDao::class
     singleOf(::ArtistDao)
     single { ArtistCollaborationDao(get()) }
@@ -73,7 +71,7 @@ val databaseDaoModule = module {
     singleOf(::MbidImageDao) bind ImageUrlDao::class
     single { MediumDao(get(), get()) }
     single { NowPlayingHistoryDao(get(), get()) }
-    single { PlaceDao(get()) }
+    singleOf(::PlaceDao)
     single { RecordingDao(get(), get()) }
     single { RecordingReleaseDao(get(), get()) }
     single { RecordingsByEntityDao(get(), get()) }

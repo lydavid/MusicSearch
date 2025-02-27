@@ -160,52 +160,7 @@ AND (
 LIMIT :limit OFFSET :offset;
 
 
--- places by collection
 
-getNumberOfPlacesByCollection:
-SELECT IFNULL(
-  (
-    SELECT COUNT(*)
-    FROM place p
-    INNER JOIN collection_entity ce ON p.id = ce.entity_id
-    INNER JOIN collection c ON c.id = ce.id
-    WHERE c.id = :collectionId
-    AND (
-      p.name LIKE :query OR
-      p.disambiguation LIKE :query OR
-      p.address LIKE :query OR
-      p.type LIKE :query
-    )
-  ),
-  0
-) AS count;
-
-getPlacesByCollection:
-SELECT
-  p.id,
-  p.name,
-  p.disambiguation,
-  p.address,
-  p.type,
-  p.longitude,
-  p.latitude,
-  p.begin,
-  p.end,
-  p.ended,
-  visited.entity_id IS NOT NULL AS visited
-FROM place p
-INNER JOIN collection_entity ce ON p.id = ce.entity_id
-INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN visited ON visited.entity_id = p.id
-WHERE c.id = :collectionId
-AND (
-  p.name LIKE :query OR
-  p.disambiguation LIKE :query OR
-  p.address LIKE :query OR
-  p.type LIKE :query
-)
-ORDER BY p.name, p.address
-LIMIT :limit OFFSET :offset;
 
 
 -- recordings by collection

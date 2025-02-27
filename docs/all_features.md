@@ -98,7 +98,7 @@ You will need to use a tool such as [SQLite's CLI](https://www.sqlite.org/cli.ht
 | area          | ⬜️        |
 | artist        | ✅         |
 | collection    | ⬜️        |
-| event         | ⬜️        |
+| event         | ✅️        |
 | instrument    | ❌         |
 | label         | ⬜️        |
 | place         | ❌         |

@@ -24,7 +24,7 @@ val statsFeatureModule = module {
                                 artistDao = get(),
                                 eventDao = get(),
                                 labelsByEntityDao = get(),
-                                areaPlaceDao = get(),
+                                placeDao = get(),
                             )
                         }
 

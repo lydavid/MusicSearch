@@ -163,4 +163,32 @@ class AreaDao(
             transacter.delete(areaId)
         }
     }
+
+    // TODO: may be inaccurate if an area is contained within another area but has the same type
+    private fun List<AreaListItemModel>.findByTypePriority(
+        typePriorities: List<String?> = listOf(
+            null, // The area part of a place lookup has a null type
+            "District",
+            "City",
+            "Municipality",
+            "County",
+            "Subdivision",
+            "Country",
+        ),
+    ): AreaListItemModel? {
+        for (type in typePriorities) {
+            firstOrNull { it.type == type }?.let { return it }
+        }
+        return null
+    }
+
+    fun getAreaByPlace(placeId: String): AreaListItemModel? =
+        transacter.getAreasByPlace(
+            placeId = placeId,
+            mapper = ::mapToAreaListItemModel,
+        ).executeAsList().findByTypePriority()
+
+    fun deleteAreaPlaceLink(placeId: String) {
+        transacter.deleteAreaPlaceLink(placeId = placeId)
+    }
 }

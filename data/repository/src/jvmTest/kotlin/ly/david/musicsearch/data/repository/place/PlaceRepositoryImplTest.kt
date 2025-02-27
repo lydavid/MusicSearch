@@ -7,7 +7,6 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AreaDao
-import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
@@ -23,6 +22,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.data.test.KoinTestRule
+import ly.david.data.test.budokanPlaceMusicBrainzModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
@@ -50,7 +50,6 @@ class PlaceRepositoryImplTest : KoinTest {
     private val visitedDao: VisitedDao by inject()
     private val relationDao: RelationDao by inject()
     private val placeDao: PlaceDao by inject()
-    private val areaPlaceDao: AreaPlaceDao by inject()
     private val areaDao: AreaDao by inject()
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
@@ -72,8 +71,7 @@ class PlaceRepositoryImplTest : KoinTest {
             relationDao = relationDao,
         )
         return PlaceRepositoryImpl(
-            placeDao = placeDao,
-            areaPlaceDao = areaPlaceDao,
+            placeDao = this.placeDao,
             areaDao = areaDao,
             relationRepository = relationRepository,
             lookupApi = object : FakeLookupApi() {
@@ -382,25 +380,7 @@ class PlaceRepositoryImplTest : KoinTest {
         val countryId = "2db42837-c832-3c27-b4a3-08198f75693c"
         val districtId = "e24c0f02-9b5a-4f4f-9fe0-f8b3e67874f8"
 
-        val placeId = "4d43b9d8-162d-4ac5-8068-dfb009722484"
-        val placeMusicBrainzModel = PlaceMusicBrainzModel(
-            id = placeId,
-            name = "日本武道館",
-            address = "〒102-8321 東京都千代田区北の丸公園2-3",
-            type = "Indoor arena",
-            typeId = "a77c11f6-82fa-3cc0-9041-ac60e5f6e024",
-            lifeSpan = LifeSpanMusicBrainzModel(
-                begin = "1964-10-03",
-            ),
-            coordinates = CoordinatesMusicBrainzModel(
-                longitude = 139.75,
-                latitude = 35.69333,
-            ),
-            area = AreaMusicBrainzModel(
-                id = districtId,
-                name = "Kitanomaru Kōen",
-            ),
-        )
+        val placeId = budokanPlaceMusicBrainzModel.id
 
         // Lookup a country
         val countryAreaRepository = createAreaRepositoryWithFakeNetworkData(
@@ -420,8 +400,7 @@ class PlaceRepositoryImplTest : KoinTest {
         val placesByEntityRepository = PlacesByEntityRepositoryImpl(
             browseEntityCountDao = browseEntityCountDao,
             collectionEntityDao = collectionEntityDao,
-            placeDao = placeDao,
-            areaPlaceDao = areaPlaceDao,
+            placeDao = this@PlaceRepositoryImplTest.placeDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browsePlacesByArea(
                     areaId: String,
@@ -432,7 +411,7 @@ class PlaceRepositoryImplTest : KoinTest {
                         count = 1,
                         offset = 0,
                         musicBrainzModels = listOf(
-                            placeMusicBrainzModel,
+                            budokanPlaceMusicBrainzModel,
                         ),
                     )
                 }
@@ -455,6 +434,7 @@ class PlaceRepositoryImplTest : KoinTest {
                 type = "Indoor arena",
                 lifeSpan = LifeSpanUiModel(
                     begin = "1964-10-03",
+                    ended = false,
                 ),
                 coordinates = CoordinatesUiModel(
                     longitude = 139.75,
@@ -466,7 +446,7 @@ class PlaceRepositoryImplTest : KoinTest {
 
         // Lookup a place whose area is a more specific area in the country
         val placeRepository = createPlaceRepositoryWithFakeNetworkData(
-            musicBrainzModel = placeMusicBrainzModel,
+            musicBrainzModel = budokanPlaceMusicBrainzModel,
         )
         var artistDetailsModel = placeRepository.lookupPlace(
             placeId = placeId,
@@ -480,6 +460,7 @@ class PlaceRepositoryImplTest : KoinTest {
                 type = "Indoor arena",
                 lifeSpan = LifeSpanUiModel(
                     begin = "1964-10-03",
+                    ended = false,
                 ),
                 coordinates = CoordinatesUiModel(
                     longitude = 139.75,
@@ -488,6 +469,7 @@ class PlaceRepositoryImplTest : KoinTest {
                 area = AreaListItemModel(
                     id = districtId,
                     name = "Kitanomaru Kōen",
+                    sortName = "Kitanomaru Kōen",
                 ),
             ),
             artistDetailsModel,
@@ -504,6 +486,7 @@ class PlaceRepositoryImplTest : KoinTest {
                 type = "Indoor arena",
                 lifeSpan = LifeSpanUiModel(
                     begin = "1964-10-03",
+                    ended = false,
                 ),
                 coordinates = CoordinatesUiModel(
                     longitude = 139.75,
@@ -512,6 +495,7 @@ class PlaceRepositoryImplTest : KoinTest {
                 area = AreaListItemModel(
                     id = districtId,
                     name = "Kitanomaru Kōen",
+                    sortName = "Kitanomaru Kōen",
                 ),
             ),
             artistDetailsModel,
@@ -522,6 +506,7 @@ class PlaceRepositoryImplTest : KoinTest {
             musicBrainzModel = AreaMusicBrainzModel(
                 id = districtId,
                 name = "Kitanomaru Kōen",
+                sortName = "Kitanomaru Kōen",
                 type = "District",
             ),
         )
@@ -533,6 +518,7 @@ class PlaceRepositoryImplTest : KoinTest {
             AreaDetailsModel(
                 id = districtId,
                 name = "Kitanomaru Kōen",
+                sortName = "",
                 type = "District",
             ),
             district,
@@ -551,6 +537,7 @@ class PlaceRepositoryImplTest : KoinTest {
                 type = "Indoor arena",
                 lifeSpan = LifeSpanUiModel(
                     begin = "1964-10-03",
+                    ended = false,
                 ),
                 coordinates = CoordinatesUiModel(
                     longitude = 139.75,
@@ -559,6 +546,7 @@ class PlaceRepositoryImplTest : KoinTest {
                 area = AreaListItemModel(
                     id = districtId,
                     name = "Kitanomaru Kōen",
+                    sortName = "Kitanomaru Kōen",
                     type = "District",
                     visited = true,
                 ),
@@ -577,6 +565,7 @@ class PlaceRepositoryImplTest : KoinTest {
                 type = "Indoor arena",
                 lifeSpan = LifeSpanUiModel(
                     begin = "1964-10-03",
+                    ended = false,
                 ),
                 coordinates = CoordinatesUiModel(
                     longitude = 139.75,
@@ -585,6 +574,7 @@ class PlaceRepositoryImplTest : KoinTest {
                 area = AreaListItemModel(
                     id = districtId,
                     name = "Kitanomaru Kōen",
+                    sortName = "Kitanomaru Kōen",
                     type = "District",
                     visited = true,
                 ),

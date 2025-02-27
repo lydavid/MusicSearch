@@ -3,7 +3,6 @@ package ly.david.musicsearch.data.repository.place
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
@@ -20,7 +19,6 @@ class PlacesByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val placeDao: PlaceDao,
-    private val areaPlaceDao: AreaPlaceDao,
     private val browseApi: BrowseApi,
 ) : PlacesByEntityRepository,
     BrowseEntitiesByEntity<PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
@@ -29,8 +27,8 @@ class PlacesByEntityRepositoryImpl(
     ) {
 
     override fun observePlacesByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<PlaceListItemModel>> {
         return observeEntitiesByEntity(
@@ -52,7 +50,7 @@ class PlacesByEntityRepositoryImpl(
 
             when (entity) {
                 MusicBrainzEntity.AREA -> {
-                    areaPlaceDao.deletePlacesByArea(entityId)
+                    placeDao.deletePlacesByArea(entityId)
                 }
 
                 MusicBrainzEntity.COLLECTION -> {
@@ -69,27 +67,11 @@ class PlacesByEntityRepositoryImpl(
         entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, PlaceListItemModel> {
-        return when {
-            entityId == null || entity == null -> {
-                error("not possible")
-            }
-
-            entity == MusicBrainzEntity.AREA -> {
-                areaPlaceDao.getPlacesByArea(
-                    areaId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            entity == MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.getPlacesByCollection(
-                    collectionId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            else -> error(browseEntitiesNotSupported(entity))
-        }
+        return placeDao.getPlaces(
+            entityId = entityId,
+            entity = entity,
+            query = listFilters.query,
+        )
     }
 
     override suspend fun browseEntities(
@@ -124,9 +106,9 @@ class PlacesByEntityRepositoryImpl(
         placeDao.insertAll(musicBrainzModels)
         when (entity) {
             MusicBrainzEntity.AREA -> {
-                areaPlaceDao.linkAreaWithPlaces(
-                    areaId = entityId,
-                    musicBrainzModels.map { place -> place.id },
+                placeDao.linkEntityToPlaces(
+                    entityId = entityId,
+                    placeIds = musicBrainzModels.map { place -> place.id },
                 )
             }
 

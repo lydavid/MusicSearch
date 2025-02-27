@@ -8,7 +8,6 @@ import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.mapper.mapToGenreListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToInstrumentListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToLabelListItemModel
-import ly.david.musicsearch.data.database.mapper.mapToPlaceListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToRecordingListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
@@ -17,7 +16,6 @@ import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
-import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
@@ -141,27 +139,6 @@ class CollectionEntityDao(
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToLabelListItemModel,
-            )
-        },
-    )
-
-    fun getPlacesByCollection(
-        collectionId: String,
-        query: String,
-    ): PagingSource<Int, PlaceListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfPlacesByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-        ),
-        transacter = transacter,
-        context = coroutineDispatchers.io,
-        queryProvider = { limit, offset ->
-            transacter.getPlacesByCollection(
-                collectionId = collectionId,
-                query = "%$query%",
-                limit = limit,
-                offset = offset,
-                mapper = ::mapToPlaceListItemModel,
             )
         },
     )

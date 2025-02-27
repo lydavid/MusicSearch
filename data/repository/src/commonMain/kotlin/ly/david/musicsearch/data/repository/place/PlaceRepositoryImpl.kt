@@ -1,7 +1,6 @@
 package ly.david.musicsearch.data.repository.place
 
 import ly.david.musicsearch.data.database.dao.AreaDao
-import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
@@ -12,7 +11,6 @@ import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class PlaceRepositoryImpl(
     private val placeDao: PlaceDao,
-    private val areaPlaceDao: AreaPlaceDao,
     private val areaDao: AreaDao,
     private val relationRepository: RelationRepository,
     private val lookupApi: LookupApi,
@@ -27,7 +25,7 @@ class PlaceRepositoryImpl(
         }
 
         val place = placeDao.getPlaceForDetails(placeId)
-        val area = areaPlaceDao.getAreaByPlace(placeId)
+        val area = areaDao.getAreaByPlace(placeId)
         val urlRelations = relationRepository.getRelationshipsByType(placeId)
         val visited = relationRepository.visited(placeId)
         if (place != null &&
@@ -48,7 +46,7 @@ class PlaceRepositoryImpl(
     private fun delete(id: String) {
         placeDao.withTransaction {
             placeDao.delete(id)
-            areaPlaceDao.deleteAreaPlaceLink(id)
+            areaDao.deleteAreaPlaceLink(id)
             relationRepository.deleteRelationshipsByType(id)
         }
     }
@@ -58,8 +56,8 @@ class PlaceRepositoryImpl(
             placeDao.insert(place)
             place.area?.let { areaMusicBrainzModel ->
                 areaDao.insert(areaMusicBrainzModel)
-                areaPlaceDao.insert(
-                    areaId = areaMusicBrainzModel.id,
+                placeDao.linkEntityToPlace(
+                    entityId = areaMusicBrainzModel.id,
                     placeId = place.id,
                 )
             }

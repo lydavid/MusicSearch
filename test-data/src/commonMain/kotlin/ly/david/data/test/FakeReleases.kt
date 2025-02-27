@@ -35,7 +35,7 @@ val underPressureRemasterOf = RelationMusicBrainzModel(
 )
 
 val fakeReleaseEvent = ReleaseEventMusicBrainzModel(
-    area = canada,
+    area = canadaAreaMusicBrainzModel,
     date = "2022-10-29",
 )
 

@@ -1,96 +1,102 @@
-package ly.david.musicsearch.data.repository.event
+package ly.david.musicsearch.data.repository.place
 
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
-import ly.david.data.test.aimerAtBudokanEventMusicBrainzModel
-import ly.david.data.test.aimerAtBudokanListItemModel
 import ly.david.data.test.api.FakeBrowseApi
-import ly.david.data.test.kissAtBudokanEventMusicBrainzModel
-import ly.david.data.test.kissAtBudokanListItemModel
-import ly.david.data.test.kissAtScotiabankArenaEventMusicBrainzModel
-import ly.david.data.test.kissAtScotiabankArenaListItemModel
-import ly.david.data.test.tsoAtMasseyHallEventMusicBrainzModel
-import ly.david.data.test.tsoAtMasseyHallListItemModel
+import ly.david.data.test.budokanPlaceListItemModel
+import ly.david.data.test.budokanPlaceMusicBrainzModel
+import ly.david.data.test.tokyoInternationForumHallAPlaceListItemModel
+import ly.david.data.test.tokyoInternationForumHallAPlaceMusicBrainzModel
+import ly.david.data.test.tokyoInternationForumPlaceListItemModel
+import ly.david.data.test.tokyoInternationForumPlaceMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.EventDao
-import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.PlaceDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.event.EventsByEntityRepository
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.place.PlacesByEntityRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class EventsByEntityRepositoryImplTest : KoinTest {
+class PlacesByEntityRepositoryImplTest : KoinTest {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val eventDao: EventDao by inject()
+    private val placeDao: PlaceDao by inject()
     private val collectionDao: CollectionDao by inject()
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
     private fun createRepositoryWithFakeNetworkData(
-        events: List<EventMusicBrainzModel>,
-    ): EventsByEntityRepository {
-        return EventsByEntityRepositoryImpl(
+        places: List<PlaceMusicBrainzModel>,
+    ): PlacesByEntityRepository {
+        return PlacesByEntityRepositoryImpl(
             browseEntityCountDao = browseEntityCountDao,
             collectionEntityDao = collectionEntityDao,
-            eventDao = eventDao,
+            placeDao = placeDao,
             browseApi = object : FakeBrowseApi() {
-                override suspend fun browseEventsByEntity(
-                    entityId: String,
-                    entity: MusicBrainzEntity,
+                override suspend fun browsePlacesByCollection(
+                    collectionId: String,
                     limit: Int,
                     offset: Int,
-                ): BrowseEventsResponse {
-                    return BrowseEventsResponse(
+                ): BrowsePlacesResponse {
+                    return BrowsePlacesResponse(
                         count = 1,
                         offset = 0,
-                        musicBrainzModels = events,
+                        musicBrainzModels = places,
+                    )
+                }
+
+                override suspend fun browsePlacesByArea(
+                    areaId: String,
+                    limit: Int,
+                    offset: Int,
+                ): BrowsePlacesResponse {
+                    return BrowsePlacesResponse(
+                        count = 1,
+                        offset = 0,
+                        musicBrainzModels = places,
                     )
                 }
             },
         )
     }
 
-    // region UI
-
-    // endregion
-
     @Test
-    fun `events by collection, filter by name`() = runTest {
+    fun `places by collection, filter by type`() = runTest {
         val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
-        val events = listOf(
-            kissAtScotiabankArenaEventMusicBrainzModel,
-            kissAtBudokanEventMusicBrainzModel,
+        val places = listOf(
+            budokanPlaceMusicBrainzModel,
+            tokyoInternationForumHallAPlaceMusicBrainzModel,
         )
         val sut = createRepositoryWithFakeNetworkData(
-            events = events,
+            places = places,
         )
 
         collectionDao.insertLocal(
             collection = CollectionListItemModel(
                 id = collectionId,
                 isRemote = false,
-                name = "KISS concerts",
-                entity = MusicBrainzEntity.EVENT,
+                name = "places",
+                entity = MusicBrainzEntity.PLACE,
             ),
         )
         collectionEntityDao.insertAll(
             collectionId = collectionId,
-            entityIds = events.map { it.id },
+            entityIds = places.map { it.id },
         )
 
-        sut.observeEventsByEntity(
+        sut.observePlacesByEntity(
             entityId = collectionId,
             entity = MusicBrainzEntity.COLLECTION,
             listFilters = ListFilters(),
@@ -101,14 +107,14 @@ class EventsByEntityRepositoryImplTest : KoinTest {
             )
             assertEquals(
                 listOf(
-                    kissAtBudokanListItemModel,
-                    kissAtScotiabankArenaListItemModel,
+                    budokanPlaceListItemModel,
+                    tokyoInternationForumHallAPlaceListItemModel,
                 ),
                 this,
             )
         }
 
-        sut.observeEventsByEntity(
+        sut.observePlacesByEntity(
             entityId = collectionId,
             entity = MusicBrainzEntity.COLLECTION,
             listFilters = ListFilters(
@@ -121,23 +127,65 @@ class EventsByEntityRepositoryImplTest : KoinTest {
             )
             assertEquals(
                 listOf(
-                    kissAtScotiabankArenaListItemModel,
+                    budokanPlaceListItemModel,
                 ),
                 this,
             )
         }
     }
 
-    private fun setUpCanadianEvents() = runTest {
-        val entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b"
-        val events = listOf(
-            tsoAtMasseyHallEventMusicBrainzModel,
-            kissAtScotiabankArenaEventMusicBrainzModel,
+    private fun setUpKitanomaruPlaces() = runTest {
+        val entityId = "e24c0f02-9b5a-4f4f-9fe0-f8b3e67874f8"
+        val places = listOf(
+            budokanPlaceMusicBrainzModel,
         )
         val sut = createRepositoryWithFakeNetworkData(
-            events = events,
+            places = places,
         )
-        sut.observeEventsByEntity(
+        sut.observePlacesByEntity(
+            entityId = entityId,
+            entity = MusicBrainzEntity.AREA,
+            listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                1,
+                size,
+            )
+            assertEquals(
+                listOf(
+                    budokanPlaceListItemModel,
+                ),
+                this,
+            )
+        }
+        sut.observePlacesByEntity(
+            entityId = entityId,
+            entity = MusicBrainzEntity.AREA,
+            listFilters = ListFilters(
+                query = "b",
+            ),
+        ).asSnapshot().run {
+            assertEquals(
+                0,
+                size,
+            )
+            assertEquals(
+                emptyList<PlaceListItemModel>(),
+                this,
+            )
+        }
+    }
+
+    private fun setUpMarunouchiPlaces() = runTest {
+        val entityId = "41cd0808-6e0a-4ec6-ab02-14add4db58ae"
+        val places = listOf(
+            tokyoInternationForumPlaceMusicBrainzModel,
+            tokyoInternationForumHallAPlaceMusicBrainzModel,
+        )
+        val sut = createRepositoryWithFakeNetworkData(
+            places = places,
+        )
+        sut.observePlacesByEntity(
             entityId = entityId,
             entity = MusicBrainzEntity.AREA,
             listFilters = ListFilters(),
@@ -148,17 +196,17 @@ class EventsByEntityRepositoryImplTest : KoinTest {
             )
             assertEquals(
                 listOf(
-                    tsoAtMasseyHallListItemModel,
-                    kissAtScotiabankArenaListItemModel,
+                    tokyoInternationForumPlaceListItemModel,
+                    tokyoInternationForumHallAPlaceListItemModel,
                 ),
                 this,
             )
         }
-        sut.observeEventsByEntity(
+        sut.observePlacesByEntity(
             entityId = entityId,
             entity = MusicBrainzEntity.AREA,
             listFilters = ListFilters(
-                query = "tor",
+                query = "com",
             ),
         ).asSnapshot().run {
             assertEquals(
@@ -167,26 +215,54 @@ class EventsByEntityRepositoryImplTest : KoinTest {
             )
             assertEquals(
                 listOf(
-                    tsoAtMasseyHallListItemModel,
+                    tokyoInternationForumPlaceListItemModel,
                 ),
                 this,
             )
         }
     }
 
-    private fun setUpBudokanEvents() = runTest {
-        val entityId = "4d43b9d8-162d-4ac5-8068-dfb009722484"
-        val events = listOf(
-            kissAtBudokanEventMusicBrainzModel,
-            aimerAtBudokanEventMusicBrainzModel,
-        )
+    private fun setUpPlaces() = runTest {
+        setUpKitanomaruPlaces()
+        setUpMarunouchiPlaces()
+    }
+
+    @Test
+    fun `places by entity (area)`() = runTest {
+        setUpPlaces()
+    }
+
+    @Test
+    fun `all places`() = runTest {
+        setUpPlaces()
+
         val sut = createRepositoryWithFakeNetworkData(
-            events = events,
+            places = listOf(),
         )
-        sut.observeEventsByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.PLACE,
+        sut.observePlacesByEntity(
+            entityId = null,
+            entity = null,
             listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                3,
+                size,
+            )
+            assertEquals(
+                listOf(
+                    budokanPlaceListItemModel,
+                    tokyoInternationForumPlaceListItemModel,
+                    tokyoInternationForumHallAPlaceListItemModel,
+                ),
+                this,
+            )
+        }
+        sut.observePlacesByEntity(
+            entityId = null,
+            entity = null,
+            listFilters = ListFilters(
+                query = "ve",
+            ),
         ).asSnapshot().run {
             assertEquals(
                 2,
@@ -194,82 +270,8 @@ class EventsByEntityRepositoryImplTest : KoinTest {
             )
             assertEquals(
                 listOf(
-                    kissAtBudokanListItemModel,
-                    aimerAtBudokanListItemModel,
-                ),
-                this,
-            )
-        }
-        sut.observeEventsByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.PLACE,
-            listFilters = ListFilters(
-                query = "ai",
-            ),
-        ).asSnapshot().run {
-            assertEquals(
-                1,
-                size,
-            )
-            assertEquals(
-                listOf(
-                    aimerAtBudokanListItemModel,
-                ),
-                this,
-            )
-        }
-    }
-
-    private fun setUpEvents() = runTest {
-        setUpCanadianEvents()
-        setUpBudokanEvents()
-    }
-
-    @Test
-    fun `events by entity (area, place)`() = runTest {
-        setUpEvents()
-    }
-
-    @Test
-    fun `all events`() = runTest {
-        setUpEvents()
-
-        val sut = createRepositoryWithFakeNetworkData(
-            events = listOf(),
-        )
-        sut.observeEventsByEntity(
-            entityId = null,
-            entity = null,
-            listFilters = ListFilters(),
-        ).asSnapshot().run {
-            assertEquals(
-                4,
-                size,
-            )
-            assertEquals(
-                listOf(
-                    kissAtBudokanListItemModel,
-                    tsoAtMasseyHallListItemModel,
-                    aimerAtBudokanListItemModel,
-                    kissAtScotiabankArenaListItemModel,
-                ),
-                this,
-            )
-        }
-        sut.observeEventsByEntity(
-            entityId = null,
-            entity = null,
-            listFilters = ListFilters(
-                query = "ai",
-            ),
-        ).asSnapshot().run {
-            assertEquals(
-                1,
-                size,
-            )
-            assertEquals(
-                listOf(
-                    aimerAtBudokanListItemModel,
+                    tokyoInternationForumPlaceListItemModel,
+                    tokyoInternationForumHallAPlaceListItemModel,
                 ),
                 this,
             )

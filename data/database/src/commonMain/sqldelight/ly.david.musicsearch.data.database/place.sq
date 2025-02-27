@@ -35,3 +35,149 @@ FROM place WHERE id = ?;
 delete:
 DELETE FROM place
 WHERE id = :id;
+
+-- An area can have many places
+-- A place belongs to an area, and all areas that contains that area
+-- When viewing a place, we will show the most specific area
+-- TODO: rename table
+CREATE TABLE IF NOT EXISTS area_place (
+  area_id TEXT NOT NULL,
+  place_id TEXT NOT NULL,
+
+  PRIMARY KEY (area_id, place_id)
+);
+
+linkAreaPlace:
+INSERT OR IGNORE INTO area_place
+VALUES ?;
+
+-- places by area
+
+deletePlacesByArea:
+DELETE FROM place WHERE id IN (
+  SELECT p.id
+  FROM place p
+  INNER JOIN area_place ap ON p.id = ap.place_id
+  WHERE ap.area_id = :areaId
+);
+
+getNumberOfPlacesByArea:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM place p
+    INNER JOIN area_place ap ON p.id = ap.place_id
+    WHERE ap.area_id = :areaId
+    AND (p.name LIKE :query OR p.disambiguation LIKE :query OR p.type LIKE :query)
+  ),
+  0
+) AS count;
+
+getPlacesByArea:
+SELECT
+  p.id,
+  p.name,
+  p.disambiguation,
+  p.address,
+  p.type,
+  p.longitude,
+  p.latitude,
+  p.begin,
+  p.end,
+  p.ended,
+  visited.entity_id IS NOT NULL AS visited
+FROM place p
+INNER JOIN area_place ap ON p.id = ap.place_id
+LEFT JOIN visited ON visited.entity_id = p.id
+WHERE ap.area_id = :areaId
+AND (p.name LIKE :query OR p.disambiguation LIKE :query OR p.type LIKE :query)
+ORDER BY p.name, p.address
+LIMIT :limit OFFSET :offset;
+
+-- places by collection
+
+getNumberOfPlacesByCollection:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM place p
+    INNER JOIN collection_entity ce ON p.id = ce.entity_id
+    INNER JOIN collection c ON c.id = ce.id
+    WHERE c.id = :collectionId
+    AND (
+      p.name LIKE :query OR
+      p.disambiguation LIKE :query OR
+      p.address LIKE :query OR
+      p.type LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getPlacesByCollection:
+SELECT
+  p.id,
+  p.name,
+  p.disambiguation,
+  p.address,
+  p.type,
+  p.longitude,
+  p.latitude,
+  p.begin,
+  p.end,
+  p.ended,
+  visited.entity_id IS NOT NULL AS visited
+FROM place p
+INNER JOIN collection_entity ce ON p.id = ce.entity_id
+INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = p.id
+WHERE c.id = :collectionId
+AND (
+  p.name LIKE :query OR
+  p.disambiguation LIKE :query OR
+  p.address LIKE :query OR
+  p.type LIKE :query
+)
+ORDER BY p.name, p.address
+LIMIT :limit OFFSET :offset;
+
+-- all places
+
+getCountOfAllPlaces:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM place p
+    WHERE (
+      p.name LIKE :query OR
+      p.disambiguation LIKE :query OR
+      p.address LIKE :query OR
+      p.type LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getAllPlaces:
+SELECT
+  p.id,
+  p.name,
+  p.disambiguation,
+  p.address,
+  p.type,
+  p.longitude,
+  p.latitude,
+  p.begin,
+  p.end,
+  p.ended,
+  visited.entity_id IS NOT NULL AS visited
+FROM place p
+LEFT JOIN visited ON visited.entity_id = p.id
+WHERE (
+  p.name LIKE :query OR
+  p.disambiguation LIKE :query OR
+  p.address LIKE :query OR
+  p.type LIKE :query
+)
+ORDER BY p.name, p.address
+LIMIT :limit OFFSET :offset;

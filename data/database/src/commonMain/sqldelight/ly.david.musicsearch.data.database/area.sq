@@ -122,3 +122,33 @@ AND (
 )
 ORDER BY a.begin, a.end, a.name
 LIMIT :limit OFFSET :offset;
+
+-- area by place
+
+getAreasByPlace:
+SELECT
+  a.id,
+  a.name,
+  a.sort_name,
+  a.disambiguation,
+  a.type,
+  a.begin,
+  a.end,
+  a.ended,
+  visited.entity_id IS NOT NULL AS visited
+FROM area a
+INNER JOIN area_place ap ON a.id = ap.area_id
+LEFT JOIN visited ON visited.entity_id = a.id
+WHERE ap.place_id = :placeId;
+
+-- An area that does not have a type is the area for a place that has never been visited.
+-- We only delete this one so that we don't delete the rest of its containment.
+deleteAreaPlaceLink:
+DELETE FROM area_place WHERE area_id IN (
+  SELECT a.id
+  FROM place p
+  INNER JOIN area_place ap ON p.id = ap.place_id
+  INNER JOIN area a ON a.id = ap.area_id
+  WHERE place_id = :placeId
+  AND a.type IS NULL
+);
