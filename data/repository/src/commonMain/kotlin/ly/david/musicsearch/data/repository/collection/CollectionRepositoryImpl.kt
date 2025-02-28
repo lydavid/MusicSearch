@@ -85,10 +85,11 @@ class CollectionRepositoryImpl(
                 ),
             )
         } else {
-            browseEntityCountDao.incrementLocalCountForEntity(
+            browseEntityCountDao.updateBrowseEntityCount(
                 entityId = entityId,
                 browseEntity = MusicBrainzEntity.COLLECTION,
                 additionalOffset = response.musicBrainzModels.size,
+                remoteCount = response.count,
             )
         }
 

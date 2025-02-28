@@ -123,10 +123,11 @@ abstract class BrowseEntitiesByEntity<
                     ),
                 )
             } else {
-                browseEntityCountDao.incrementLocalCountForEntity(
+                browseEntityCountDao.updateBrowseEntityCount(
                     entityId = entityId,
                     browseEntity = browseEntity,
                     additionalOffset = response.musicBrainzModels.size,
+                    remoteCount = response.count,
                 )
             }
 
