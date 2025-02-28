@@ -33,14 +33,15 @@ class ReleaseReleaseGroupDao(
     fun insertAll(
         releaseGroupId: String,
         releaseIds: List<String>,
-    ) {
-        transacter.transaction {
+    ): Int {
+        return transacter.transactionWithResult {
             releaseIds.forEach { releaseId ->
                 insert(
                     releaseId = releaseId,
                     releaseGroupId = releaseGroupId,
                 )
             }
+            releaseIds.size
         }
     }
 

@@ -96,9 +96,9 @@ class AreasByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<AreaMusicBrainzModel>,
-    ) {
+    ): Int {
         areaDao.insertAll(musicBrainzModels)
-        when (entity) {
+        return when (entity) {
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.insertAll(
                     collectionId = entityId,
@@ -110,5 +110,12 @@ class AreasByEntityRepositoryImpl(
                 error(browseEntitiesNotSupported(entity))
             }
         }
+    }
+
+    override fun getLocalLinkedEntitiesCountByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+    ): Int {
+        return collectionEntityDao.getCountOfEntitiesByCollection(entityId)
     }
 }

@@ -13,9 +13,6 @@ insertOrFail:
 INSERT OR FAIL INTO collection_entity
 VALUES ?;
 
-lastInsertRowId:
-SELECT last_insert_rowid();
-
 getEntitiesFromCollection:
 SELECT ce.*
 FROM collection_entity ce
@@ -39,7 +36,15 @@ DELETE FROM collection_entity
 WHERE id = :collectionId;
 }
 
-
+getCountOfEntitiesByCollection:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM collection_entity ce
+    WHERE ce.id = :collectionId
+  ),
+  0
+) AS count;
 
 
 -- genres by collection

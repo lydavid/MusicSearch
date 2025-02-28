@@ -76,7 +76,7 @@ internal class AreaStatsPresenter(
                 entityId = entityId,
                 entity = MusicBrainzEntity.EVENT,
             ),
-            eventDao.getNumberOfEventsByEntity(entityId),
+            eventDao.observeCountOfEventsByEntity(entityId),
         ) { browseEntityCount, localCount ->
             EventStats(
                 totalRemote = browseEntityCount?.remoteCount,

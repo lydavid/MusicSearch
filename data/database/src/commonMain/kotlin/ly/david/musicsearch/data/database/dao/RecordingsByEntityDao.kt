@@ -33,14 +33,15 @@ class RecordingsByEntityDao(
     fun insertAll(
         entityId: String,
         recordingIds: List<String>,
-    ) {
-        transacter.transaction {
+    ): Int {
+        return transacter.transactionWithResult {
             recordingIds.forEach { recordingId ->
                 insert(
                     recordingId = recordingId,
                     entityId = entityId,
                 )
             }
+            recordingIds.size
         }
     }
 

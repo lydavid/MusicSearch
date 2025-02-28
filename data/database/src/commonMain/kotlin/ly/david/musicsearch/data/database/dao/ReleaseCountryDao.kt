@@ -79,8 +79,8 @@ class ReleaseCountryDao(
     fun linkReleasesByCountry(
         areaId: String,
         releases: List<ReleaseMusicBrainzModel>,
-    ) {
-        transacter.transaction {
+    ): Int {
+        return transacter.transactionWithResult {
             releases.forEach { release ->
                 release.releaseEvents?.forEach { releaseEvent ->
                     insert(
@@ -90,6 +90,7 @@ class ReleaseCountryDao(
                     )
                 }
             }
+            releases.size
         }
     }
 

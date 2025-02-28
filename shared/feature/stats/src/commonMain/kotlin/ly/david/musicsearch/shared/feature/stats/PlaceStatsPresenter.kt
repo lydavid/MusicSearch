@@ -38,7 +38,7 @@ internal class PlaceStatsPresenter(
                 entityId,
                 MusicBrainzEntity.EVENT,
             ),
-            eventDao.getNumberOfEventsByEntity(entityId),
+            eventDao.observeCountOfEventsByEntity(entityId),
         ) { relationTypeCounts, browseEventCount, localEvents ->
             Stats(
                 totalRelations = relationTypeCounts.sumOf { it.count },

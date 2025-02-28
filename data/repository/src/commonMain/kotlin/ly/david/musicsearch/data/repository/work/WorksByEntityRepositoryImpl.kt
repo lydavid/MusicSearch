@@ -104,9 +104,9 @@ class WorksByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<WorkMusicBrainzModel>,
-    ) {
+    ): Int {
         workDao.insertAll(musicBrainzModels)
-        when (entity) {
+        return when (entity) {
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.insertAll(
                     collectionId = entityId,

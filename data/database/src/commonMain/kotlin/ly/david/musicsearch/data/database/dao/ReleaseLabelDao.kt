@@ -84,8 +84,8 @@ class ReleaseLabelDao(
     fun linkReleasesByLabel(
         labelId: String,
         releases: List<ReleaseMusicBrainzModel>,
-    ) {
-        transacter.transaction {
+    ): Int {
+        return transacter.transactionWithResult {
             releases.forEach { release ->
                 release.labelInfoList?.forEach { labelInfo ->
                     insert(
@@ -95,6 +95,7 @@ class ReleaseLabelDao(
                     )
                 }
             }
+            releases.size
         }
     }
 

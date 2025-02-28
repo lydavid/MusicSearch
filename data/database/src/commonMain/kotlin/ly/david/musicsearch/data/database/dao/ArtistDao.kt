@@ -111,25 +111,31 @@ class ArtistDao(
         transacter.delete(artistId)
     }
 
-    private fun linkEntityToArtist(
+    @Suppress("SwallowedException")
+    private fun insertArtistByEntity(
         entityId: String,
         artistId: String,
-    ) {
-        transacter.insert(
-            Artists_by_entity(
-                entity_id = entityId,
-                artist_id = artistId,
-            ),
-        )
+    ): Int {
+        return try {
+            transacter.insertArtistByEntity(
+                Artists_by_entity(
+                    entity_id = entityId,
+                    artist_id = artistId,
+                ),
+            )
+            1
+        } catch (ex: Exception) {
+            0
+        }
     }
 
-    fun linkEntityToArtists(
+    fun insertArtistsByEntity(
         entityId: String,
         artistIds: List<String>,
-    ) {
-        transacter.transaction {
-            artistIds.forEach { artistId ->
-                linkEntityToArtist(
+    ): Int {
+        return transacter.transactionWithResult {
+            artistIds.sumOf { artistId ->
+                insertArtistByEntity(
                     entityId = entityId,
                     artistId = artistId,
                 )
@@ -149,6 +155,14 @@ class ArtistDao(
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
+
+    fun getCountOfArtistsByEntity(entityId: String): Int =
+        transacter.getNumberOfArtistsByEntity(
+            entityId = entityId,
+            query = "%%",
+        )
+            .executeAsOne()
+            .toInt()
 
     fun getArtists(
         entityId: String?,

@@ -57,7 +57,7 @@ class CollectionRepositoryImpl(
         getRemoteEntityCount = { getRemoteLinkedEntitiesCountByEntity(entityId) },
         getLocalEntityCount = { getLocalLinkedEntitiesCountByEntity(entityId) },
         deleteLocalEntity = { deleteLinkedEntitiesByEntity() },
-        browseEntity = { offset ->
+        browseLinkedEntitiesAndStore = { offset ->
             browseLinkedEntitiesAndStore(
                 entityId,
                 offset,

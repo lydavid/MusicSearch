@@ -33,14 +33,15 @@ class WorksByEntityDao(
     fun insertAll(
         entityId: String,
         workIds: List<String>,
-    ) {
-        transacter.transaction {
+    ): Int {
+        return transacter.transactionWithResult {
             workIds.forEach { workId ->
                 insert(
                     entityId = entityId,
                     workId = workId,
                 )
             }
+            workIds.size
         }
     }
 

@@ -82,9 +82,9 @@ SELECT
   p.type,
   p.longitude,
   p.latitude,
-  p.begin,
-  p.end,
-  p.ended,
+  p.`begin`,
+  p.`end`,
+  p.`ended`,
   visited.entity_id IS NOT NULL AS visited
 FROM place p
 INNER JOIN area_place ap ON p.id = ap.place_id
@@ -123,9 +123,9 @@ SELECT
   p.type,
   p.longitude,
   p.latitude,
-  p.begin,
-  p.end,
-  p.ended,
+  p.`begin`,
+  p.`end`,
+  p.`ended`,
   visited.entity_id IS NOT NULL AS visited
 FROM place p
 INNER JOIN collection_entity ce ON p.id = ce.entity_id
@@ -167,9 +167,9 @@ SELECT
   p.type,
   p.longitude,
   p.latitude,
-  p.begin,
-  p.end,
-  p.ended,
+  p.`begin`,
+  p.`end`,
+  p.`ended`,
   visited.entity_id IS NOT NULL AS visited
 FROM place p
 LEFT JOIN visited ON visited.entity_id = p.id

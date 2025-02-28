@@ -85,25 +85,31 @@ class EventDao(
         transacter.delete(id)
     }
 
-    private fun linkEventToEntity(
+    @Suppress("SwallowedException")
+    private fun insertEventByEntity(
         entityId: String,
         eventId: String,
-    ) {
-        transacter.linkEventToEntity(
-            Events_by_entity(
-                entity_id = entityId,
-                event_id = eventId,
-            ),
-        )
+    ): Int {
+        return try {
+            transacter.insertEventByEntity(
+                Events_by_entity(
+                    entity_id = entityId,
+                    event_id = eventId,
+                ),
+            )
+            1
+        } catch (ex: Exception) {
+            0
+        }
     }
 
-    fun linkEventsToEntity(
+    fun insertEventsByEntity(
         entityId: String,
         eventIds: List<String>,
-    ) {
-        transacter.transaction {
-            eventIds.forEach { eventId ->
-                linkEventToEntity(
+    ): Int {
+        return transacter.transactionWithResult {
+            eventIds.sumOf { eventId ->
+                insertEventByEntity(
                     entityId = entityId,
                     eventId = eventId,
                 )
@@ -115,7 +121,7 @@ class EventDao(
         transacter.deleteEventsByEntity(entityId)
     }
 
-    fun getNumberOfEventsByEntity(entityId: String): Flow<Int> =
+    fun observeCountOfEventsByEntity(entityId: String): Flow<Int> =
         transacter.getNumberOfEventsByEntity(
             entityId = entityId,
             query = "%%",
@@ -123,6 +129,14 @@ class EventDao(
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
+
+    fun getCountOfEventsByEntity(entityId: String): Int =
+        transacter.getNumberOfEventsByEntity(
+            entityId = entityId,
+            query = "%%",
+        )
+            .executeAsOne()
+            .toInt()
 
     fun getEvents(
         entityId: String?,

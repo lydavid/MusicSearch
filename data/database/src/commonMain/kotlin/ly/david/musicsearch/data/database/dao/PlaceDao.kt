@@ -107,14 +107,15 @@ class PlaceDao(
     fun linkEntityToPlaces(
         entityId: String,
         placeIds: List<String>,
-    ) {
-        transacter.transaction {
+    ): Int {
+        return transacter.transactionWithResult {
             placeIds.forEach { placeId ->
                 linkEntityToPlace(
                     entityId = entityId,
                     placeId = placeId,
                 )
             }
+            placeIds.size
         }
     }
 

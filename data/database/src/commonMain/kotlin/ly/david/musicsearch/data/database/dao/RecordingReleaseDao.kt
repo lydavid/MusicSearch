@@ -33,14 +33,15 @@ class RecordingReleaseDao(
     fun insertAll(
         recordingId: String,
         releaseIds: List<String>,
-    ) {
-        transacter.transaction {
+    ): Int {
+        return transacter.transactionWithResult {
             releaseIds.forEach { releaseId ->
                 insert(
                     recordingId = recordingId,
                     releaseId = releaseId,
                 )
             }
+            releaseIds.size
         }
     }
 

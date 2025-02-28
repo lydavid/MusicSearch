@@ -104,9 +104,9 @@ class LabelsByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<LabelMusicBrainzModel>,
-    ) {
+    ): Int {
         labelDao.insertAll(musicBrainzModels)
-        when (entity) {
+        return when (entity) {
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.insertAll(
                     collectionId = entityId,

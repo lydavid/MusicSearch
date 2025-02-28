@@ -23,14 +23,15 @@ class ArtistReleaseGroupDao(
     fun insertAll(
         artistId: String,
         releaseGroupIds: List<String>,
-    ) {
-        transacter.transaction {
+    ): Int {
+        return transacter.transactionWithResult {
             releaseGroupIds.forEach { releaseGroupId ->
                 insert(
                     releaseGroupId = releaseGroupId,
                     artistId = artistId,
                 )
             }
+            releaseGroupIds.size
         }
     }
 

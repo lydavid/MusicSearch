@@ -111,7 +111,7 @@ internal class ArtistStatsPresenter(
                 entityId,
                 MusicBrainzEntity.EVENT,
             ),
-            eventDao.getNumberOfEventsByEntity(entityId),
+            eventDao.observeCountOfEventsByEntity(entityId),
         ) { browseReleaseCount, localReleases ->
             EventStats(
                 totalRemote = browseReleaseCount?.remoteCount,

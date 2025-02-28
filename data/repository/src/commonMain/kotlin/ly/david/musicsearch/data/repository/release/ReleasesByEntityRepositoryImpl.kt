@@ -175,9 +175,9 @@ class ReleasesByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<ReleaseMusicBrainzModel>,
-    ) {
+    ): Int {
         releaseDao.insertAll(musicBrainzModels)
-        when (entity) {
+        return when (entity) {
             MusicBrainzEntity.AREA -> {
                 releaseCountryDao.linkReleasesByCountry(
                     areaId = entityId,
