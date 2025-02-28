@@ -117,7 +117,7 @@ class ArtistDao(
         artistId: String,
     ): Int {
         return try {
-            transacter.insertArtistByEntity(
+            transacter.insertOrFailArtistByEntity(
                 Artists_by_entity(
                     entity_id = entityId,
                     artist_id = artistId,
@@ -147,7 +147,7 @@ class ArtistDao(
         transacter.deleteArtistsByEntity(entityId)
     }
 
-    fun getNumberOfArtistsByEntity(entityId: String): Flow<Int> =
+    fun observeCountOfArtistsByEntity(entityId: String): Flow<Int> =
         transacter.getNumberOfArtistsByEntity(
             entityId = entityId,
             query = "%%",

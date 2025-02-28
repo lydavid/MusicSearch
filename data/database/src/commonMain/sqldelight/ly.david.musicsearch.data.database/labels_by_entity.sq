@@ -5,17 +5,20 @@ CREATE TABLE IF NOT EXISTS labels_by_entity (
   PRIMARY KEY (entity_id, label_id)
 );
 
-insert:
-INSERT OR IGNORE INTO labels_by_entity
+insertOrFailLabelByEntity:
+INSERT OR FAIL INTO labels_by_entity
 VALUES ?;
 
-deleteLabelsByEntity:
+deleteLabelsByEntity {
 DELETE FROM label WHERE id IN (
   SELECT l.id
   FROM labels_by_entity le
   INNER JOIN label l ON l.id = le.label_id
   WHERE le.entity_id = :entityId
 );
+
+DELETE FROM labels_by_entity WHERE  entity_id = :entityId;
+}
 
 getNumberOfLabelsByEntity:
 SELECT IFNULL(

@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS artists_by_entity (
   PRIMARY KEY (entity_id, artist_id)
 );
 
-insertArtistByEntity:
-INSERT OR IGNORE INTO artists_by_entity
+insertOrFailArtistByEntity:
+INSERT OR FAIL INTO artists_by_entity
 VALUES ?;
 
 deleteArtistsByEntity {

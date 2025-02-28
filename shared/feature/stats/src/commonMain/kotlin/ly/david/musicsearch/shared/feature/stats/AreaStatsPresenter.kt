@@ -62,7 +62,7 @@ internal class AreaStatsPresenter(
                 entityId = entityId,
                 entity = MusicBrainzEntity.ARTIST,
             ),
-            artistDao.getNumberOfArtistsByEntity(entityId),
+            artistDao.observeCountOfArtistsByEntity(entityId),
         ) { browseEntityCount, localCount ->
             ArtistStats(
                 totalRemote = browseEntityCount?.remoteCount,
@@ -90,7 +90,7 @@ internal class AreaStatsPresenter(
                 entityId = entityId,
                 entity = MusicBrainzEntity.LABEL,
             ),
-            labelsByEntityDao.getNumberOfLabelsByEntity(entityId),
+            labelsByEntityDao.observeCountOfLabelsByEntity(entityId),
         ) { browseEntityCount, localCount ->
             LabelStats(
                 totalRemote = browseEntityCount?.remoteCount,
