@@ -104,9 +104,9 @@ class RecordingsByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<RecordingMusicBrainzModel>,
-    ) {
+    ): Int {
         recordingDao.insertAll(musicBrainzModels)
-        when (entity) {
+        return when (entity) {
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.insertAll(
                     collectionId = entityId,
@@ -115,10 +115,25 @@ class RecordingsByEntityRepositoryImpl(
             }
 
             else -> {
-                recordingsByEntityDao.insertAll(
+                recordingsByEntityDao.insertRecordingsByEntity(
                     entityId = entityId,
                     recordingIds = musicBrainzModels.map { recording -> recording.id },
                 )
+            }
+        }
+    }
+
+    override fun getLocalLinkedEntitiesCountByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+    ): Int {
+        return when (entity) {
+            MusicBrainzEntity.COLLECTION -> {
+                collectionEntityDao.getCountOfEntitiesByCollection(entityId)
+            }
+
+            else -> {
+                recordingsByEntityDao.getCountOfRecordingsByEntity(entityId)
             }
         }
     }

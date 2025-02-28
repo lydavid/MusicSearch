@@ -92,25 +92,31 @@ class PlaceDao(
     }
 
     // region places
-    fun linkEntityToPlace(
+    @Suppress("SwallowedException")
+    fun insertPlaceByArea(
         entityId: String,
         placeId: String,
-    ) {
-        transacter.linkAreaPlace(
-            Area_place(
-                area_id = entityId,
-                place_id = placeId,
-            ),
-        )
+    ): Int {
+        return try {
+            transacter.insertOrFailAreaPlace(
+                Area_place(
+                    area_id = entityId,
+                    place_id = placeId,
+                ),
+            )
+            1
+        } catch (ex: Exception) {
+            0
+        }
     }
 
-    fun linkEntityToPlaces(
+    fun insertPlacesByArea(
         entityId: String,
         placeIds: List<String>,
-    ) {
-        transacter.transaction {
-            placeIds.forEach { placeId ->
-                linkEntityToPlace(
+    ): Int {
+        return transacter.transactionWithResult {
+            placeIds.sumOf { placeId ->
+                insertPlaceByArea(
                     entityId = entityId,
                     placeId = placeId,
                 )
@@ -122,7 +128,7 @@ class PlaceDao(
         transacter.deletePlacesByArea(areaId)
     }
 
-    fun getNumberOfPlacesByArea(areaId: String): Flow<Int> =
+    fun observeCountOfPlacesByArea(areaId: String): Flow<Int> =
         transacter.getNumberOfPlacesByArea(
             areaId = areaId,
             query = "%%",
@@ -130,6 +136,14 @@ class PlaceDao(
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
+
+    fun getCountOfPlacesByArea(areaId: String): Int =
+        transacter.getNumberOfPlacesByArea(
+            areaId = areaId,
+            query = "%%",
+        )
+            .executeAsOne()
+            .toInt()
 
     fun getPlaces(
         entityId: String?,

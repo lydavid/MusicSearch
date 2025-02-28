@@ -88,9 +88,9 @@ class EventsByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<EventMusicBrainzModel>,
-    ) {
+    ): Int {
         eventDao.insertAll(musicBrainzModels)
-        when (entity) {
+        return when (entity) {
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.insertAll(
                     collectionId = entityId,
@@ -99,11 +99,18 @@ class EventsByEntityRepositoryImpl(
             }
 
             else -> {
-                eventDao.linkEventsToEntity(
+                eventDao.insertEventsByEntity(
                     entityId = entityId,
                     eventIds = musicBrainzModels.map { event -> event.id },
                 )
             }
         }
+    }
+
+    override fun getLocalLinkedEntitiesCountByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+    ): Int {
+        return eventDao.getCountOfEventsByEntity(entityId)
     }
 }

@@ -29,6 +29,7 @@ class CollectionEntityDao(
 ) : EntityDao {
     override val transacter = database.collection_entityQueries
 
+    @Suppress("SwallowedException")
     fun insert(
         collectionId: String,
         entityId: String,
@@ -40,7 +41,7 @@ class CollectionEntityDao(
                     entity_id = entityId,
                 ),
             )
-            transacter.lastInsertRowId().executeAsOne()
+            1
         } catch (ex: Exception) {
             INSERTION_FAILED_DUE_TO_CONFLICT
         }
@@ -49,13 +50,13 @@ class CollectionEntityDao(
     fun insertAll(
         collectionId: String,
         entityIds: List<String>,
-    ) {
-        transacter.transaction {
-            entityIds.forEach { entityId ->
+    ): Int {
+        return transacter.transactionWithResult {
+            entityIds.count { entityId ->
                 insert(
                     collectionId = collectionId,
                     entityId = entityId,
-                )
+                ) != INSERTION_FAILED_DUE_TO_CONFLICT
             }
         }
     }
@@ -249,4 +250,11 @@ class CollectionEntityDao(
             )
         },
     )
+
+    fun getCountOfEntitiesByCollection(collectionId: String): Int =
+        transacter.getCountOfEntitiesByCollection(
+            collectionId = collectionId,
+        )
+            .executeAsOne()
+            .toInt()
 }

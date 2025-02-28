@@ -18,25 +18,31 @@ class LabelsByEntityDao(
 ) : EntityDao {
     override val transacter = database.labels_by_entityQueries
 
-    fun insert(
+    @Suppress("SwallowedException")
+    private fun insertLabelByEntity(
         entityId: String,
         labelId: String,
-    ) {
-        transacter.insert(
-            Labels_by_entity(
-                entity_id = entityId,
-                label_id = labelId,
-            ),
-        )
+    ): Int {
+        return try {
+            transacter.insertOrFailLabelByEntity(
+                Labels_by_entity(
+                    entity_id = entityId,
+                    label_id = labelId,
+                ),
+            )
+            1
+        } catch (ex: Exception) {
+            0
+        }
     }
 
-    fun insertAll(
+    fun insertLabelsByEntity(
         entityId: String,
         labelIds: List<String>,
-    ) {
-        transacter.transaction {
-            labelIds.forEach { labelId ->
-                insert(
+    ): Int {
+        return transacter.transactionWithResult {
+            labelIds.sumOf { labelId ->
+                insertLabelByEntity(
                     entityId = entityId,
                     labelId = labelId,
                 )
@@ -48,7 +54,7 @@ class LabelsByEntityDao(
         transacter.deleteLabelsByEntity(entityId)
     }
 
-    fun getNumberOfLabelsByEntity(entityId: String): Flow<Int> =
+    fun observeCountOfLabelsByEntity(entityId: String): Flow<Int> =
         transacter.getNumberOfLabelsByEntity(
             entityId = entityId,
             query = "%%",
@@ -56,6 +62,14 @@ class LabelsByEntityDao(
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
+
+    fun getCountOfLabelsByEntity(entityId: String): Int =
+        transacter.getNumberOfLabelsByEntity(
+            entityId = entityId,
+            query = "%%",
+        )
+            .executeAsOne()
+            .toInt()
 
     fun getLabelsByEntity(
         entityId: String,

@@ -14,8 +14,8 @@
 --   ON DELETE CASCADE
 );
 
-insert:
-INSERT OR IGNORE INTO release_label
+insertOrFail:
+INSERT OR FAIL INTO release_label
 VALUES ?;
 
 
@@ -111,7 +111,7 @@ GROUP BY r.id
 ORDER BY r.date, r.name
 LIMIT :limit OFFSET :offset;
 
-deleteReleasesByLabel:
+deleteReleasesByLabel {
 DELETE FROM release WHERE id IN (
   SELECT r.id
   FROM release r
@@ -120,5 +120,5 @@ DELETE FROM release WHERE id IN (
   WHERE l.id = :labelId
 );
 
-deleteReleasesByLabelLinks:
 DELETE FROM release_label WHERE label_id = :labelId;
+}

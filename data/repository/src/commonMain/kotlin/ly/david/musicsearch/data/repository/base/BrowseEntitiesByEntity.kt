@@ -5,15 +5,15 @@ import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzModel
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.musicbrainz.api.Browsable
+import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzModel
+import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
+import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUriPlural
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
-import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
-import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import lydavidmusicsearchdatadatabase.Browse_entity_count
 
 abstract class BrowseEntitiesByEntity<
@@ -57,14 +57,19 @@ abstract class BrowseEntitiesByEntity<
         entity: MusicBrainzEntity,
     ) = BrowseEntityRemoteMediator<LI>(
         getRemoteEntityCount = { getRemoteLinkedEntitiesCountByEntity(entityId) },
-        getLocalEntityCount = { getLocalLinkedEntitiesCountByEntity(entityId) },
+        getLocalEntityCount = {
+            getLocalLinkedEntitiesCountByEntity(
+                entityId = entityId,
+                entity = entity,
+            )
+        },
         deleteLocalEntity = {
             deleteLinkedEntitiesByEntity(
                 entityId = entityId,
                 entity = entity,
             )
         },
-        browseEntity = { offset ->
+        browseLinkedEntitiesAndStore = { offset ->
             browseLinkedEntitiesAndStore(
                 entityId = entityId,
                 entity = entity,
@@ -79,11 +84,10 @@ abstract class BrowseEntitiesByEntity<
             browseEntity = browseEntity,
         )?.remoteCount
 
-    private fun getLocalLinkedEntitiesCountByEntity(entityId: String): Int =
-        browseEntityCountDao.getBrowseEntityCount(
-            entityId = entityId,
-            browseEntity = browseEntity,
-        )?.localCount ?: 0
+    abstract fun getLocalLinkedEntitiesCountByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+    ): Int
 
     abstract fun deleteLinkedEntitiesByEntity(
         entityId: String,
@@ -106,32 +110,40 @@ abstract class BrowseEntitiesByEntity<
             entity = entity,
             offset = nextOffset,
         )
+        val musicBrainzModels = response.musicBrainzModels
 
-        if (response.offset == 0) {
-            browseEntityCountDao.insert(
-                browseEntityCount = Browse_entity_count(
-                    entity_id = entityId,
-                    browse_entity = browseEntity,
-                    local_count = response.musicBrainzModels.size,
-                    remote_count = response.count,
-                ),
-            )
-        } else {
-            browseEntityCountDao.incrementLocalCountForEntity(
+        val insertedCount = browseEntityCountDao.withTransactionWithResult {
+            if (response.offset == 0) {
+                browseEntityCountDao.insert(
+                    browseEntityCount = Browse_entity_count(
+                        entity_id = entityId,
+                        browse_entity = browseEntity,
+                        local_count = response.musicBrainzModels.size,
+                        remote_count = response.count,
+                    ),
+                )
+            } else {
+                browseEntityCountDao.updateBrowseEntityCount(
+                    entityId = entityId,
+                    browseEntity = browseEntity,
+                    additionalOffset = response.musicBrainzModels.size,
+                    remoteCount = response.count,
+                )
+            }
+
+            insertAllLinkingModels(
                 entityId = entityId,
-                browseEntity = browseEntity,
-                additionalOffset = response.musicBrainzModels.size,
+                entity = entity,
+                musicBrainzModels = musicBrainzModels,
             )
         }
 
-        val musicBrainzModels = response.musicBrainzModels
-        insertAllLinkingModels(
-            entityId = entityId,
-            entity = entity,
-            musicBrainzModels = musicBrainzModels,
+        println(
+            """
+            offset=$nextOffset, musicBrainzModels.size=${musicBrainzModels.size}, insertedCount=$insertedCount
+            """.trimIndent(),
         )
-
-        return musicBrainzModels.size
+        return insertedCount
     }
 
     abstract suspend fun browseEntities(
@@ -140,11 +152,14 @@ abstract class BrowseEntitiesByEntity<
         offset: Int,
     ): B
 
+    /**
+     * Returns the amount of [musicBrainzModels] that have been inserted.
+     */
     abstract fun insertAllLinkingModels(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<MB>,
-    )
+    ): Int
 
     protected fun browseEntitiesNotSupported(entity: MusicBrainzEntity?) =
         "${browseEntity.resourceUriPlural} by $entity not supported."

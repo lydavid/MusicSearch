@@ -7,12 +7,12 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.area.ReleaseEvent
-import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.shared.domain.area.ReleaseEvent
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import lydavidmusicsearchdatadatabase.Release_country
 
 /**
@@ -24,18 +24,24 @@ class ReleaseCountryDao(
 ) : EntityDao {
     override val transacter = database.release_countryQueries
 
-    fun insert(
+    @Suppress("SwallowedException")
+    private fun insert(
         areaId: String,
         releaseId: String,
         date: String?,
-    ) {
-        transacter.insert(
-            Release_country(
-                country_id = areaId,
-                release_id = releaseId,
-                date = date,
-            ),
-        )
+    ): Int {
+        return try {
+            transacter.insertOrFail(
+                Release_country(
+                    country_id = areaId,
+                    release_id = releaseId,
+                    date = date,
+                ),
+            )
+            1
+        } catch (ex: Exception) {
+            0
+        }
     }
 
     // region countries by release
@@ -79,21 +85,21 @@ class ReleaseCountryDao(
     fun linkReleasesByCountry(
         areaId: String,
         releases: List<ReleaseMusicBrainzModel>,
-    ) {
-        transacter.transaction {
-            releases.forEach { release ->
-                release.releaseEvents?.forEach { releaseEvent ->
+    ): Int {
+        return transacter.transactionWithResult {
+            releases.sumOf { release ->
+                release.releaseEvents?.sumOf { releaseEvent ->
                     insert(
                         areaId = areaId,
                         releaseId = release.id,
                         date = releaseEvent.date,
                     )
-                }
+                } ?: 0
             }
         }
     }
 
-    fun getNumberOfReleasesByCountry(areaId: String): Flow<Int> =
+    fun observeCountOfReleasesByCountry(areaId: String): Flow<Int> =
         transacter.getNumberOfReleasesByCountry(
             areaId = areaId,
             query = "%%",
@@ -101,6 +107,14 @@ class ReleaseCountryDao(
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
+
+    fun getCountOfReleasesByCountry(areaId: String): Int =
+        transacter.getNumberOfReleasesByCountry(
+            areaId = areaId,
+            query = "%%",
+        )
+            .executeAsOne()
+            .toInt()
 
     fun getReleasesByCountry(
         areaId: String,
@@ -124,10 +138,7 @@ class ReleaseCountryDao(
     )
 
     fun deleteReleasesByCountry(areaId: String) {
-        withTransaction {
-            transacter.deleteReleasesByCountry(areaId = areaId)
-            transacter.deleteReleasesByCountryLinks(areaId = areaId)
-        }
+        transacter.deleteReleasesByCountry(areaId = areaId)
     }
     // endregion
 }

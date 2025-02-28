@@ -61,7 +61,7 @@ internal class ArtistStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RELEASE,
             ),
-            artistReleaseDao.getNumberOfReleasesByArtist(entityId),
+            artistReleaseDao.observeCountOfReleasesByArtist(entityId),
         ) { browseReleaseCount, localReleases ->
             ReleaseStats(
                 totalRemote = browseReleaseCount?.remoteCount,
@@ -75,7 +75,7 @@ internal class ArtistStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RELEASE_GROUP,
             ),
-            artistReleaseGroupDao.getNumberOfReleaseGroupsByArtist(entityId),
+            artistReleaseGroupDao.observeCountOfReleaseGroupsByArtist(entityId),
             artistReleaseGroupDao.getCountOfEachAlbumType(entityId),
         ) { browseReleaseGroupCount, localReleaseGroups, releaseGroupTypeCount ->
             ReleaseGroupStats(
@@ -97,7 +97,7 @@ internal class ArtistStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RECORDING,
             ),
-            recordingsByEntityDao.getNumberOfRecordingsByEntity(entityId),
+            recordingsByEntityDao.observeCountOfRecordingsByEntity(entityId),
         ) { browseRecordingCount, localRecordings ->
             RecordingStats(
                 totalRemote = browseRecordingCount?.remoteCount,
@@ -111,7 +111,7 @@ internal class ArtistStatsPresenter(
                 entityId,
                 MusicBrainzEntity.EVENT,
             ),
-            eventDao.getNumberOfEventsByEntity(entityId),
+            eventDao.observeCountOfEventsByEntity(entityId),
         ) { browseReleaseCount, localReleases ->
             EventStats(
                 totalRemote = browseReleaseCount?.remoteCount,
@@ -125,7 +125,7 @@ internal class ArtistStatsPresenter(
                 entityId,
                 MusicBrainzEntity.WORK,
             ),
-            worksByEntityDao.getNumberOfWorksByEntity(entityId),
+            worksByEntityDao.observeCountOfWorksByEntity(entityId),
         ) { browseReleaseCount, localReleases ->
             WorkStats(
                 totalRemote = browseReleaseCount?.remoteCount,

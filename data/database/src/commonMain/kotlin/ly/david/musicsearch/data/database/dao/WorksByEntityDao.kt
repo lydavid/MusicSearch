@@ -18,25 +18,31 @@ class WorksByEntityDao(
 ) : EntityDao {
     override val transacter = database.works_by_entityQueries
 
-    fun insert(
+    @Suppress("SwallowedException")
+    private fun insertWorkByEntity(
         entityId: String,
         workId: String,
-    ) {
-        transacter.insert(
-            Works_by_entity(
-                entity_id = entityId,
-                work_id = workId,
-            ),
-        )
+    ): Int {
+        return try {
+            transacter.insertOrFailWorkByEntity(
+                Works_by_entity(
+                    entity_id = entityId,
+                    work_id = workId,
+                ),
+            )
+            1
+        } catch (ex: Exception) {
+            0
+        }
     }
 
-    fun insertAll(
+    fun insertWorksByEntity(
         entityId: String,
         workIds: List<String>,
-    ) {
-        transacter.transaction {
-            workIds.forEach { workId ->
-                insert(
+    ): Int {
+        return transacter.transactionWithResult {
+            workIds.sumOf { workId ->
+                insertWorkByEntity(
                     entityId = entityId,
                     workId = workId,
                 )
@@ -48,7 +54,7 @@ class WorksByEntityDao(
         transacter.deleteWorksByEntity(entityId)
     }
 
-    fun getNumberOfWorksByEntity(entityId: String): Flow<Int> =
+    fun observeCountOfWorksByEntity(entityId: String): Flow<Int> =
         transacter.getNumberOfWorksByEntity(
             entityId = entityId,
             query = "%%",
@@ -56,6 +62,14 @@ class WorksByEntityDao(
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
+
+    fun getCountOfWorksByEntity(entityId: String): Int =
+        transacter.getNumberOfWorksByEntity(
+            entityId = entityId,
+            query = "%%",
+        )
+            .executeAsOne()
+            .toInt()
 
     fun getWorksByEntity(
         entityId: String,

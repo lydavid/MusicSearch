@@ -18,24 +18,30 @@ class ReleaseReleaseGroupDao(
 ) : EntityDao {
     override val transacter = database.release_release_groupQueries
 
+    @Suppress("SwallowedException")
     fun insert(
         releaseId: String,
         releaseGroupId: String,
-    ) {
-        transacter.insert(
-            Release_release_group(
-                release_id = releaseId,
-                release_group_id = releaseGroupId,
-            ),
-        )
+    ): Int {
+        return try {
+            transacter.insertOrFail(
+                Release_release_group(
+                    release_id = releaseId,
+                    release_group_id = releaseGroupId,
+                ),
+            )
+            1
+        } catch (ex: Exception) {
+            0
+        }
     }
 
     fun insertAll(
         releaseGroupId: String,
         releaseIds: List<String>,
-    ) {
-        transacter.transaction {
-            releaseIds.forEach { releaseId ->
+    ): Int {
+        return transacter.transactionWithResult {
+            releaseIds.sumOf { releaseId ->
                 insert(
                     releaseId = releaseId,
                     releaseGroupId = releaseGroupId,
@@ -45,10 +51,7 @@ class ReleaseReleaseGroupDao(
     }
 
     fun deleteReleasesByReleaseGroup(releaseGroupId: String) {
-        withTransaction {
-            transacter.deleteReleasesByReleaseGroup(releaseGroupId)
-            transacter.deleteReleasesByReleaseGroupLinks(releaseGroupId)
-        }
+        transacter.deleteReleasesByReleaseGroup(releaseGroupId)
     }
 
     fun deleteReleaseGroupByReleaseLink(
@@ -57,7 +60,7 @@ class ReleaseReleaseGroupDao(
         transacter.deleteReleaseReleaseGroupLink(releaseId = releaseId)
     }
 
-    fun getNumberOfReleasesByReleaseGroup(releaseGroupId: String): Flow<Int> =
+    fun observeCountOfReleasesByReleaseGroup(releaseGroupId: String): Flow<Int> =
         transacter.getNumberOfReleasesByReleaseGroup(
             releaseGroupId = releaseGroupId,
             query = "%%",
@@ -65,6 +68,14 @@ class ReleaseReleaseGroupDao(
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
+
+    fun getCountOfReleasesByReleaseGroup(releaseGroupId: String): Int =
+        transacter.getNumberOfReleasesByReleaseGroup(
+            releaseGroupId = releaseGroupId,
+            query = "%%",
+        )
+            .executeAsOne()
+            .toInt()
 
     fun getReleasesByReleaseGroup(
         releaseGroupId: String,

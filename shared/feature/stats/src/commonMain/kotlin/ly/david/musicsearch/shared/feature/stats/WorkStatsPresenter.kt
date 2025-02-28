@@ -54,7 +54,7 @@ internal class WorkStatsPresenter(
                 entityId,
                 MusicBrainzEntity.ARTIST,
             ),
-            artistDao.getNumberOfArtistsByEntity(entityId),
+            artistDao.observeCountOfArtistsByEntity(entityId),
         ) { browseRecordingCount, localRecordings ->
             ArtistStats(
                 totalRemote = browseRecordingCount?.remoteCount,
@@ -68,7 +68,7 @@ internal class WorkStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RECORDING,
             ),
-            recordingsByEntityDao.getNumberOfRecordingsByEntity(entityId),
+            recordingsByEntityDao.observeCountOfRecordingsByEntity(entityId),
         ) { browseRecordingCount, localRecordings ->
             RecordingStats(
                 totalRemote = browseRecordingCount?.remoteCount,

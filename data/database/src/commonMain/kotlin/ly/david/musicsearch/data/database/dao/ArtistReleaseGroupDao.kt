@@ -20,13 +20,31 @@ class ArtistReleaseGroupDao(
 ) : EntityDao {
     override val transacter = database.artist_release_groupQueries
 
-    fun insertAll(
+    @Suppress("SwallowedException")
+    private fun insertReleaseGroupByArtist(
+        artistId: String,
+        releaseGroupId: String,
+    ): Int {
+        return try {
+            transacter.insertOrFailArtistReleaseGroup(
+                Artist_release_group(
+                    artist_id = artistId,
+                    release_group_id = releaseGroupId,
+                ),
+            )
+            1
+        } catch (ex: Exception) {
+            0
+        }
+    }
+
+    fun insertReleaseGroupsByArtist(
         artistId: String,
         releaseGroupIds: List<String>,
-    ) {
-        transacter.transaction {
-            releaseGroupIds.forEach { releaseGroupId ->
-                insert(
+    ): Int {
+        return transacter.transactionWithResult {
+            releaseGroupIds.sumOf { releaseGroupId ->
+                insertReleaseGroupByArtist(
                     releaseGroupId = releaseGroupId,
                     artistId = artistId,
                 )
@@ -34,23 +52,11 @@ class ArtistReleaseGroupDao(
         }
     }
 
-    private fun insert(
-        artistId: String,
-        releaseGroupId: String,
-    ) {
-        transacter.insert(
-            Artist_release_group(
-                artist_id = artistId,
-                release_group_id = releaseGroupId,
-            ),
-        )
-    }
-
     fun deleteReleaseGroupsByArtist(artistId: String) {
         transacter.deleteReleaseGroupsByArtist(artistId)
     }
 
-    fun getNumberOfReleaseGroupsByArtist(artistId: String): Flow<Int> =
+    fun observeCountOfReleaseGroupsByArtist(artistId: String): Flow<Int> =
         transacter.getNumberOfReleaseGroupsByArtist(
             artistId = artistId,
             query = "%%",
@@ -58,6 +64,14 @@ class ArtistReleaseGroupDao(
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
+
+    fun getCountOfReleaseGroupsByArtist(artistId: String): Int =
+        transacter.getNumberOfReleaseGroupsByArtist(
+            artistId = artistId,
+            query = "%%",
+        )
+            .executeAsOne()
+            .toInt()
 
     fun getCountOfEachAlbumType(artistId: String): Flow<List<ReleaseGroupTypeCount>> =
         transacter.getCountOfEachAlbumType(

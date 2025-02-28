@@ -5,12 +5,11 @@ CREATE TABLE IF NOT EXISTS artist_release_group (
   PRIMARY KEY(`artist_id`, `release_group_id`)
 );
 
-insert:
-INSERT OR IGNORE INTO artist_release_group
+insertOrFailArtistReleaseGroup:
+INSERT OR FAIL INTO artist_release_group
 VALUES ?;
 
-
-deleteReleaseGroupsByArtist:
+deleteReleaseGroupsByArtist {
 DELETE FROM release_group WHERE id IN (
   SELECT rg.id
   FROM release_group rg
@@ -18,6 +17,9 @@ DELETE FROM release_group WHERE id IN (
   INNER JOIN artist a ON a.id = arg.artist_id
   WHERE a.id = :artistId
 );
+
+DELETE FROM artist_release_group WHERE artist_id = :artistId;
+}
 
 getNumberOfReleaseGroupsByArtist:
 SELECT IFNULL(

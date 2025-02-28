@@ -13,11 +13,11 @@ CREATE TABLE IF NOT EXISTS release_release_group (
 --   ON DELETE CASCADE
 );
 
-insert:
-INSERT OR IGNORE INTO release_release_group
+insertOrFail:
+INSERT OR FAIL INTO release_release_group
 VALUES ?;
 
-deleteReleasesByReleaseGroup:
+deleteReleasesByReleaseGroup {
 DELETE FROM release WHERE id IN (
   SELECT r.id
   FROM release r
@@ -26,9 +26,9 @@ DELETE FROM release WHERE id IN (
   WHERE rg.id = :releaseGroupId
 );
 
-deleteReleasesByReleaseGroupLinks:
 DELETE FROM release_release_group
 WHERE release_group_id = :releaseGroupId;
+}
 
 deleteReleaseReleaseGroupLink:
 DELETE FROM release_release_group

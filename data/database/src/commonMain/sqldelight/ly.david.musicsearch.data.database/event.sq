@@ -43,17 +43,20 @@ CREATE TABLE IF NOT EXISTS events_by_entity (
   PRIMARY KEY (entity_id, event_id)
 );
 
-linkEventToEntity:
-INSERT OR IGNORE INTO events_by_entity
+insertEventByEntity:
+INSERT OR FAIL INTO events_by_entity
 VALUES ?;
 
-deleteEventsByEntity:
+deleteEventsByEntity {
 DELETE FROM event WHERE id IN (
   SELECT e.id
   FROM events_by_entity ee
   INNER JOIN event e ON e.id = ee.event_id
   WHERE ee.entity_id = :entityId
 );
+
+DELETE FROM events_by_entity WHERE entity_id = :entityId;
+}
 
 getNumberOfEventsByEntity:
 SELECT IFNULL(

@@ -56,26 +56,20 @@ class BrowseEntityCountDao(
             .asFlow()
             .mapToOneOrNull(coroutineDispatchers.io)
 
-    private fun updateLocalCountForEntity(
-        entityId: String,
-        browseEntity: MusicBrainzEntity,
-        localCount: Int,
-    ) {
-        transacter.updateLocalCountForEntity(
-            entityId = entityId,
-            browseEntity = browseEntity,
-            localCount = localCount,
-        )
-    }
-
-    fun incrementLocalCountForEntity(
+    fun updateBrowseEntityCount(
         entityId: String,
         browseEntity: MusicBrainzEntity,
         additionalOffset: Int,
+        remoteCount: Int,
     ) {
         transacter.transaction {
             val currentOffset = getBrowseEntityCount(entityId, browseEntity)?.localCount ?: 0
-            updateLocalCountForEntity(entityId, browseEntity, currentOffset + additionalOffset)
+            transacter.updateBrowseEntityCount(
+                entityId = entityId,
+                browseEntity = browseEntity,
+                localCount = currentOffset + additionalOffset,
+                remoteCount = remoteCount,
+            )
         }
     }
 

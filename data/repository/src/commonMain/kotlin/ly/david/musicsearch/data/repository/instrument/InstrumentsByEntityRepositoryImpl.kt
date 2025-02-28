@@ -100,9 +100,9 @@ class InstrumentsByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<InstrumentMusicBrainzModel>,
-    ) {
+    ): Int {
         instrumentDao.insertAll(musicBrainzModels)
-        when (entity) {
+        return when (entity) {
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.insertAll(
                     collectionId = entityId,
@@ -114,5 +114,12 @@ class InstrumentsByEntityRepositoryImpl(
                 error(browseEntitiesNotSupported(entity))
             }
         }
+    }
+
+    override fun getLocalLinkedEntitiesCountByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+    ): Int {
+        return collectionEntityDao.getCountOfEntitiesByCollection(entityId)
     }
 }

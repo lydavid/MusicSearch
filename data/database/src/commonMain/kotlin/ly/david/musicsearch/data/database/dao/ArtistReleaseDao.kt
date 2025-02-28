@@ -7,9 +7,9 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import lydavidmusicsearchdatadatabase.Artist_release
 
 class ArtistReleaseDao(
@@ -18,24 +18,30 @@ class ArtistReleaseDao(
 ) : EntityDao {
     override val transacter = database.artist_releaseQueries
 
+    @Suppress("SwallowedException")
     fun insert(
         artistId: String,
         releaseId: String,
-    ) {
-        transacter.insert(
-            Artist_release(
-                artist_id = artistId,
-                release_id = releaseId,
-            ),
-        )
+    ): Int {
+        return try {
+            transacter.insertOrFail(
+                Artist_release(
+                    artist_id = artistId,
+                    release_id = releaseId,
+                ),
+            )
+            1
+        } catch (ex: Exception) {
+            0
+        }
     }
 
     fun insertAll(
         artistId: String,
         releaseIds: List<String>,
-    ) {
-        transacter.transaction {
-            releaseIds.forEach { releaseId ->
+    ): Int {
+        return transacter.transactionWithResult {
+            releaseIds.sumOf { releaseId ->
                 insert(
                     artistId = artistId,
                     releaseId = releaseId,
@@ -45,13 +51,10 @@ class ArtistReleaseDao(
     }
 
     fun deleteReleasesByArtist(artistId: String) {
-        withTransaction {
-            transacter.deleteReleasesByArtist(artistId)
-            transacter.deleteReleasesByArtist(artistId)
-        }
+        transacter.deleteReleasesByArtist(artistId)
     }
 
-    fun getNumberOfReleasesByArtist(artistId: String): Flow<Int> =
+    fun observeCountOfReleasesByArtist(artistId: String): Flow<Int> =
         transacter.getNumberOfReleasesByArtist(
             artistId = artistId,
             query = "%%",
@@ -59,6 +62,14 @@ class ArtistReleaseDao(
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
+
+    fun getCountOfReleasesByArtist(artistId: String): Int =
+        transacter.getNumberOfReleasesByArtist(
+            artistId = artistId,
+            query = "%%",
+        )
+            .executeAsOne()
+            .toInt()
 
     fun getReleasesByArtist(
         artistId: String,

@@ -39,9 +39,11 @@ SELECT
 FROM browse_entity_count
 WHERE entity_id = :entityId AND browse_entity = :browseEntity;
 
-updateLocalCountForEntity:
+updateBrowseEntityCount:
 UPDATE browse_entity_count
-SET local_count = :localCount
+SET
+  local_count = :localCount,
+  remote_count = :remoteCount
 WHERE entity_id = :entityId AND browse_entity = :browseEntity;
 
 deleteBrowseEntityCountByEntity:

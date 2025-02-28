@@ -99,9 +99,9 @@ class GenresByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<GenreMusicBrainzModel>,
-    ) {
+    ): Int {
         genreDao.insertAll(musicBrainzModels)
-        when (entity) {
+        return when (entity) {
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.insertAll(
                     collectionId = entityId,
@@ -113,5 +113,12 @@ class GenresByEntityRepositoryImpl(
                 error(browseEntitiesNotSupported(entity))
             }
         }
+    }
+
+    override fun getLocalLinkedEntitiesCountByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+    ): Int {
+        return collectionEntityDao.getCountOfEntitiesByCollection(entityId)
     }
 }

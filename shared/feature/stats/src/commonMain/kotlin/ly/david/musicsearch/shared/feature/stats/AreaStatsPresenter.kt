@@ -62,7 +62,7 @@ internal class AreaStatsPresenter(
                 entityId = entityId,
                 entity = MusicBrainzEntity.ARTIST,
             ),
-            artistDao.getNumberOfArtistsByEntity(entityId),
+            artistDao.observeCountOfArtistsByEntity(entityId),
         ) { browseEntityCount, localCount ->
             ArtistStats(
                 totalRemote = browseEntityCount?.remoteCount,
@@ -76,7 +76,7 @@ internal class AreaStatsPresenter(
                 entityId = entityId,
                 entity = MusicBrainzEntity.EVENT,
             ),
-            eventDao.getNumberOfEventsByEntity(entityId),
+            eventDao.observeCountOfEventsByEntity(entityId),
         ) { browseEntityCount, localCount ->
             EventStats(
                 totalRemote = browseEntityCount?.remoteCount,
@@ -90,7 +90,7 @@ internal class AreaStatsPresenter(
                 entityId = entityId,
                 entity = MusicBrainzEntity.LABEL,
             ),
-            labelsByEntityDao.getNumberOfLabelsByEntity(entityId),
+            labelsByEntityDao.observeCountOfLabelsByEntity(entityId),
         ) { browseEntityCount, localCount ->
             LabelStats(
                 totalRemote = browseEntityCount?.remoteCount,
@@ -104,7 +104,7 @@ internal class AreaStatsPresenter(
                 entityId = entityId,
                 entity = MusicBrainzEntity.PLACE,
             ),
-            placeDao.getNumberOfPlacesByArea(entityId),
+            placeDao.observeCountOfPlacesByArea(entityId),
         ) { browseEntityCount, localCount ->
             PlaceStats(
                 totalRemote = browseEntityCount?.remoteCount,
@@ -118,7 +118,7 @@ internal class AreaStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RELEASE,
             ),
-            releaseCountryDao.getNumberOfReleasesByCountry(entityId),
+            releaseCountryDao.observeCountOfReleasesByCountry(entityId),
         ) { browseEntityCount, localCount ->
             ReleaseStats(
                 totalRemote = browseEntityCount?.remoteCount,

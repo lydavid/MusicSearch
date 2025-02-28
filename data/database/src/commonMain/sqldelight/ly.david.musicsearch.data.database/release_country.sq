@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS release_country (
 --   ON DELETE CASCADE
 );
 
-insert:
-INSERT OR IGNORE INTO release_country
+insertOrFail:
+INSERT OR FAIL INTO release_country
 VALUES ?;
 
 
@@ -92,7 +92,7 @@ GROUP BY r.id
 ORDER BY r.date, r.name
 LIMIT :limit OFFSET :offset;
 
-deleteReleasesByCountry:
+deleteReleasesByCountry {
 DELETE FROM release WHERE id IN (
   SELECT r.id
   FROM release r
@@ -101,6 +101,6 @@ DELETE FROM release WHERE id IN (
   WHERE a.id = :areaId
 );
 
-deleteReleasesByCountryLinks:
 DELETE FROM release_country
 WHERE country_id = :areaId;
+}

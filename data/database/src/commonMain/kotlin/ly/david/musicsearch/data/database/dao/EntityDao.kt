@@ -8,4 +8,8 @@ interface EntityDao {
     fun withTransaction(block: () -> Unit) {
         transacter.transaction { block() }
     }
+
+    fun <R>withTransactionWithResult(block: () -> R): R {
+        return transacter.transactionWithResult { block() }
+    }
 }

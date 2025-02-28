@@ -47,19 +47,22 @@ CREATE TABLE IF NOT EXISTS area_place (
   PRIMARY KEY (area_id, place_id)
 );
 
-linkAreaPlace:
-INSERT OR IGNORE INTO area_place
+insertOrFailAreaPlace:
+INSERT OR FAIL INTO area_place
 VALUES ?;
 
 -- places by area
 
-deletePlacesByArea:
+deletePlacesByArea {
 DELETE FROM place WHERE id IN (
   SELECT p.id
   FROM place p
   INNER JOIN area_place ap ON p.id = ap.place_id
   WHERE ap.area_id = :areaId
 );
+
+DELETE FROM area_place WHERE area_id = :areaId;
+}
 
 getNumberOfPlacesByArea:
 SELECT IFNULL(
@@ -82,9 +85,9 @@ SELECT
   p.type,
   p.longitude,
   p.latitude,
-  p.begin,
-  p.end,
-  p.ended,
+  p.`begin`,
+  p.`end`,
+  p.`ended`,
   visited.entity_id IS NOT NULL AS visited
 FROM place p
 INNER JOIN area_place ap ON p.id = ap.place_id
@@ -123,9 +126,9 @@ SELECT
   p.type,
   p.longitude,
   p.latitude,
-  p.begin,
-  p.end,
-  p.ended,
+  p.`begin`,
+  p.`end`,
+  p.`ended`,
   visited.entity_id IS NOT NULL AS visited
 FROM place p
 INNER JOIN collection_entity ce ON p.id = ce.entity_id
@@ -167,9 +170,9 @@ SELECT
   p.type,
   p.longitude,
   p.latitude,
-  p.begin,
-  p.end,
-  p.ended,
+  p.`begin`,
+  p.`end`,
+  p.`ended`,
   visited.entity_id IS NOT NULL AS visited
 FROM place p
 LEFT JOIN visited ON visited.entity_id = p.id

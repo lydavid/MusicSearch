@@ -63,11 +63,12 @@ class AreaDao(
         }
     }
 
-    fun insertAll(areas: List<AreaMusicBrainzModel>) {
-        transacter.transaction {
+    fun insertAll(areas: List<AreaMusicBrainzModel>): Int {
+        return transacter.transactionWithResult {
             areas.forEach { area ->
                 insert(area)
             }
+            areas.size
         }
     }
 

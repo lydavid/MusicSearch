@@ -88,9 +88,9 @@ class ArtistsByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<ArtistMusicBrainzModel>,
-    ) {
+    ): Int {
         artistDao.insertAll(musicBrainzModels)
-        when (entity) {
+        return when (entity) {
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.insertAll(
                     collectionId = entityId,
@@ -99,12 +99,27 @@ class ArtistsByEntityRepositoryImpl(
             }
 
             else -> {
-                artistDao.linkEntityToArtists(
+                artistDao.insertArtistsByEntity(
                     entityId = entityId,
                     artistIds = musicBrainzModels.map { artist ->
                         artist.id
                     },
                 )
+            }
+        }
+    }
+
+    override fun getLocalLinkedEntitiesCountByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+    ): Int {
+        return when (entity) {
+            MusicBrainzEntity.COLLECTION -> {
+                collectionEntityDao.getCountOfEntitiesByCollection(entityId)
+            }
+
+            else -> {
+                artistDao.getCountOfArtistsByEntity(entityId)
             }
         }
     }
