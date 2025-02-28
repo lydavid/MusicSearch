@@ -47,8 +47,8 @@ CREATE TABLE IF NOT EXISTS area_place (
   PRIMARY KEY (area_id, place_id)
 );
 
-linkAreaPlace:
-INSERT OR IGNORE INTO area_place
+insertOrFailAreaPlace:
+INSERT OR FAIL INTO area_place
 VALUES ?;
 
 -- places by area

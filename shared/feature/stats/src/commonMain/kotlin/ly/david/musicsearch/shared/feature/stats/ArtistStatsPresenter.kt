@@ -75,7 +75,7 @@ internal class ArtistStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RELEASE_GROUP,
             ),
-            artistReleaseGroupDao.getNumberOfReleaseGroupsByArtist(entityId),
+            artistReleaseGroupDao.observeCountOfReleaseGroupsByArtist(entityId),
             artistReleaseGroupDao.getCountOfEachAlbumType(entityId),
         ) { browseReleaseGroupCount, localReleaseGroups, releaseGroupTypeCount ->
             ReleaseGroupStats(

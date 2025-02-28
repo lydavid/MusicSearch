@@ -145,7 +145,7 @@ class ReleaseGroupsByEntityRepositoryImpl(
         releaseGroupDao.insertAll(musicBrainzModels)
         return when (entity) {
             MusicBrainzEntity.ARTIST -> {
-                artistReleaseGroupDao.insertAll(
+                artistReleaseGroupDao.insertReleaseGroupsByArtist(
                     artistId = entityId,
                     releaseGroupIds = musicBrainzModels.map { releaseGroup -> releaseGroup.id },
                 )
@@ -159,6 +159,21 @@ class ReleaseGroupsByEntityRepositoryImpl(
             }
 
             else -> error(browseEntitiesNotSupported(entity))
+        }
+    }
+
+    override fun getLocalLinkedEntitiesCountByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity
+    ): Int {
+        return when (entity) {
+            MusicBrainzEntity.COLLECTION -> {
+                collectionEntityDao.getCountOfEntitiesByCollection(entityId)
+            }
+
+            else -> {
+                artistReleaseGroupDao.getCountOfReleaseGroupsByArtist(entityId)
+            }
         }
     }
 }

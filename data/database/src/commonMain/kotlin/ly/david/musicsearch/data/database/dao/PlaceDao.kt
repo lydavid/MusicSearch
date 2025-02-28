@@ -98,7 +98,7 @@ class PlaceDao(
         placeId: String,
     ): Int {
         return try {
-            transacter.linkAreaPlace(
+            transacter.insertOrFailAreaPlace(
                 Area_place(
                     area_id = entityId,
                     place_id = placeId,
