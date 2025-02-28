@@ -5,8 +5,6 @@ import app.cash.paging.LoadType
 import app.cash.paging.PagingState
 import app.cash.paging.RemoteMediator
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import ly.david.musicsearch.data.musicbrainz.DELAY_PAGED_API_CALLS_MS
 import ly.david.musicsearch.data.musicbrainz.SEARCH_BROWSE_LIMIT
 
@@ -31,8 +29,6 @@ internal class BrowseEntityRemoteMediator<DM : Any>(
     private val deleteLocalEntity: suspend () -> Unit,
     private val browseLinkedEntitiesAndStore: suspend (offset: Int) -> Int,
 ) : RemoteMediator<Int, DM>() {
-
-    private val mutex = Mutex()
 
     override suspend fun initialize(): InitializeAction {
         return if (getRemoteEntityCount() == null) {
@@ -70,7 +66,7 @@ internal class BrowseEntityRemoteMediator<DM : Any>(
                 }
             }
 
-            val browseEntityCount = mutex.withLock { browseLinkedEntitiesAndStore(nextOffset) }
+            val browseEntityCount = browseLinkedEntitiesAndStore(nextOffset)
 
             // Assuming all Browse uses this limit.
             MediatorResult.Success(endOfPaginationReached = browseEntityCount < SEARCH_BROWSE_LIMIT)
