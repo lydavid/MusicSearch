@@ -13,12 +13,12 @@ CREATE TABLE IF NOT EXISTS artist_release (
 --   ON DELETE CASCADE
 );
 
-insert:
-INSERT OR IGNORE INTO artist_release
+insertOrFail:
+INSERT OR FAIL INTO artist_release
 VALUES ?;
 
 
-deleteReleasesByArtist:
+deleteReleasesByArtist {
 DELETE FROM release WHERE id IN (
   SELECT r.id
   FROM release r
@@ -27,8 +27,8 @@ DELETE FROM release WHERE id IN (
   WHERE a.id = :artistId
 );
 
-deleteArtistReleaseLinks:
 DELETE FROM artist_release WHERE artist_id = :artistId;
+}
 
 getNumberOfReleasesByArtist:
 SELECT IFNULL(

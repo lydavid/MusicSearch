@@ -61,7 +61,7 @@ internal class ArtistStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RELEASE,
             ),
-            artistReleaseDao.getNumberOfReleasesByArtist(entityId),
+            artistReleaseDao.observeCountOfReleasesByArtist(entityId),
         ) { browseReleaseCount, localReleases ->
             ReleaseStats(
                 totalRemote = browseReleaseCount?.remoteCount,

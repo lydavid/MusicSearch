@@ -84,15 +84,10 @@ abstract class BrowseEntitiesByEntity<
             browseEntity = browseEntity,
         )?.remoteCount
 
-    // TODO: make abstract after making all XByEntityRepositoryImpl implement this
-    open fun getLocalLinkedEntitiesCountByEntity(
+    abstract fun getLocalLinkedEntitiesCountByEntity(
         entityId: String,
         entity: MusicBrainzEntity,
-    ): Int =
-        browseEntityCountDao.getBrowseEntityCount(
-            entityId = entityId,
-            browseEntity = browseEntity,
-        )?.localCount ?: 0
+    ): Int
 
     abstract fun deleteLinkedEntitiesByEntity(
         entityId: String,

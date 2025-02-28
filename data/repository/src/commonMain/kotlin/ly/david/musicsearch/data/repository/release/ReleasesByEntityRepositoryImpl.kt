@@ -223,4 +223,37 @@ class ReleasesByEntityRepositoryImpl(
             else -> error(browseEntitiesNotSupported(entity))
         }
     }
+
+    override fun getLocalLinkedEntitiesCountByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+    ): Int {
+        return when (entity) {
+            MusicBrainzEntity.AREA -> {
+                releaseCountryDao.getCountOfReleasesByCountry(entityId)
+            }
+
+            MusicBrainzEntity.ARTIST -> {
+                artistReleaseDao.getCountOfReleasesByArtist(entityId)
+            }
+
+            MusicBrainzEntity.COLLECTION -> {
+                collectionEntityDao.getCountOfEntitiesByCollection(entityId)
+            }
+
+            MusicBrainzEntity.LABEL -> {
+                releaseLabelDao.getCountOfReleasesByLabel(entityId)
+            }
+
+            MusicBrainzEntity.RECORDING -> {
+                recordingReleaseDao.getCountOfReleasesByRecording(entityId)
+            }
+
+            MusicBrainzEntity.RELEASE_GROUP -> {
+                releaseReleaseGroupDao.getCountOfReleasesByReleaseGroup(entityId)
+            }
+
+            else -> error(browseEntitiesNotSupported(entity))
+        }
+    }
 }

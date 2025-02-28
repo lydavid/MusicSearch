@@ -13,11 +13,11 @@ CREATE TABLE IF NOT EXISTS recording_release (
 --   ON DELETE CASCADE
 );
 
-insert:
-INSERT OR IGNORE INTO recording_release
+insertOrFail:
+INSERT OR FAIL INTO recording_release
 VALUES ?;
 
-deleteReleasesByRecording:
+deleteReleasesByRecording {
 DELETE FROM release WHERE id IN (
   SELECT r.id
   FROM release r
@@ -26,8 +26,8 @@ DELETE FROM release WHERE id IN (
   WHERE rec.id = :recordingId
 );
 
-deleteRecordingReleaseLinks:
 DELETE FROM recording_release WHERE recording_id = :recordingId;
+}
 
 getNumberOfReleasesByRecording:
 SELECT IFNULL(

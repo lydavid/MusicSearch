@@ -127,7 +127,7 @@ class PlacesByEntityRepositoryImpl(
 
     override fun getLocalLinkedEntitiesCountByEntity(
         entityId: String,
-        entity: MusicBrainzEntity
+        entity: MusicBrainzEntity,
     ): Int {
         return when (entity) {
             MusicBrainzEntity.COLLECTION -> {

@@ -38,7 +38,7 @@ internal class LabelStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RELEASE,
             ),
-            releaseLabelDao.getNumberOfReleasesByLabel(entityId),
+            releaseLabelDao.observeCountOfReleasesByLabel(entityId),
         ) { relationTypeCounts, browseReleaseCount, localReleases ->
             Stats(
                 totalRelations = relationTypeCounts.sumOf { it.count },

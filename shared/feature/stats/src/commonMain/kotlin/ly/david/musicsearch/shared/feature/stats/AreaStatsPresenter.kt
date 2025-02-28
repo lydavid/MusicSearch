@@ -118,7 +118,7 @@ internal class AreaStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RELEASE,
             ),
-            releaseCountryDao.getNumberOfReleasesByCountry(entityId),
+            releaseCountryDao.observeCountOfReleasesByCountry(entityId),
         ) { browseEntityCount, localCount ->
             ReleaseStats(
                 totalRemote = browseEntityCount?.remoteCount,

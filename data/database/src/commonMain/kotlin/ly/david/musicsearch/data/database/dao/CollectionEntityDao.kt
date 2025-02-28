@@ -29,6 +29,7 @@ class CollectionEntityDao(
 ) : EntityDao {
     override val transacter = database.collection_entityQueries
 
+    @Suppress("SwallowedException")
     fun insert(
         collectionId: String,
         entityId: String,
