@@ -106,7 +106,7 @@ class PlacesByEntityRepositoryImpl(
         placeDao.insertAll(musicBrainzModels)
         return when (entity) {
             MusicBrainzEntity.AREA -> {
-                placeDao.linkEntityToPlaces(
+                placeDao.insertPlacesByArea(
                     entityId = entityId,
                     placeIds = musicBrainzModels.map { place -> place.id },
                 )
@@ -121,6 +121,21 @@ class PlacesByEntityRepositoryImpl(
 
             else -> {
                 error(browseEntitiesNotSupported(entity))
+            }
+        }
+    }
+
+    override fun getLocalLinkedEntitiesCountByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity
+    ): Int {
+        return when (entity) {
+            MusicBrainzEntity.COLLECTION -> {
+                collectionEntityDao.getCountOfEntitiesByCollection(entityId)
+            }
+
+            else -> {
+                placeDao.getCountOfPlacesByArea(entityId)
             }
         }
     }

@@ -97,7 +97,7 @@ internal class ArtistStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RECORDING,
             ),
-            recordingsByEntityDao.getNumberOfRecordingsByEntity(entityId),
+            recordingsByEntityDao.observeCountOfRecordingsByEntity(entityId),
         ) { browseRecordingCount, localRecordings ->
             RecordingStats(
                 totalRemote = browseRecordingCount?.remoteCount,

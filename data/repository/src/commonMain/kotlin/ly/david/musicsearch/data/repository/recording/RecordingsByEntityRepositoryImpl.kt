@@ -115,10 +115,25 @@ class RecordingsByEntityRepositoryImpl(
             }
 
             else -> {
-                recordingsByEntityDao.insertAll(
+                recordingsByEntityDao.insertRecordingsByEntity(
                     entityId = entityId,
                     recordingIds = musicBrainzModels.map { recording -> recording.id },
                 )
+            }
+        }
+    }
+
+    override fun getLocalLinkedEntitiesCountByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+    ): Int {
+        return when (entity) {
+            MusicBrainzEntity.COLLECTION -> {
+                collectionEntityDao.getCountOfEntitiesByCollection(entityId)
+            }
+
+            else -> {
+                recordingsByEntityDao.getCountOfRecordingsByEntity(entityId)
             }
         }
     }

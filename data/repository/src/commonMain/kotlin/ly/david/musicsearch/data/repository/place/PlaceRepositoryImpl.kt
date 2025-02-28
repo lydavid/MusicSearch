@@ -56,7 +56,7 @@ class PlaceRepositoryImpl(
             placeDao.insert(place)
             place.area?.let { areaMusicBrainzModel ->
                 areaDao.insert(areaMusicBrainzModel)
-                placeDao.linkEntityToPlace(
+                placeDao.insertPlaceByArea(
                     entityId = areaMusicBrainzModel.id,
                     placeId = place.id,
                 )

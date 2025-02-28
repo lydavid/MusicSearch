@@ -104,7 +104,7 @@ internal class AreaStatsPresenter(
                 entityId = entityId,
                 entity = MusicBrainzEntity.PLACE,
             ),
-            placeDao.getNumberOfPlacesByArea(entityId),
+            placeDao.observeCountOfPlacesByArea(entityId),
         ) { browseEntityCount, localCount ->
             PlaceStats(
                 totalRemote = browseEntityCount?.remoteCount,

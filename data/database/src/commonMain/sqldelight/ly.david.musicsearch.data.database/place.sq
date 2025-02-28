@@ -53,13 +53,16 @@ VALUES ?;
 
 -- places by area
 
-deletePlacesByArea:
+deletePlacesByArea {
 DELETE FROM place WHERE id IN (
   SELECT p.id
   FROM place p
   INNER JOIN area_place ap ON p.id = ap.place_id
   WHERE ap.area_id = :areaId
 );
+
+DELETE FROM area_place WHERE area_id = :areaId;
+}
 
 getNumberOfPlacesByArea:
 SELECT IFNULL(

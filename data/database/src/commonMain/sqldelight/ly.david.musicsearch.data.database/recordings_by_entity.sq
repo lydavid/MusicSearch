@@ -5,17 +5,20 @@ CREATE TABLE IF NOT EXISTS recordings_by_entity (
   PRIMARY KEY (entity_id, recording_id)
 );
 
-insert:
-INSERT OR IGNORE INTO recordings_by_entity
+insertOrFailRecordingByEntity:
+INSERT OR FAIL INTO recordings_by_entity
 VALUES ?;
 
-deleteRecordingsByEntity:
+deleteRecordingsByEntity {
 DELETE FROM recording WHERE id IN (
   SELECT r.id
   FROM recordings_by_entity re
   INNER JOIN recording r ON r.id = re.recording_id
   WHERE re.entity_id = :entityId
 );
+
+DELETE FROM recordings_by_entity WHERE entity_id = :entityId;
+}
 
 getNumberOfRecordingsByEntity:
 SELECT IFNULL(

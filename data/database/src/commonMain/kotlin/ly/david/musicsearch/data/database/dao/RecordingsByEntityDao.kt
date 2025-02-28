@@ -7,9 +7,9 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToRecordingListItemModel
+import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import lydavidmusicsearchdatadatabase.Recordings_by_entity
 
 class RecordingsByEntityDao(
@@ -18,30 +18,35 @@ class RecordingsByEntityDao(
 ) : EntityDao {
     override val transacter = database.recordings_by_entityQueries
 
-    fun insert(
+    @Suppress("SwallowedException")
+    private fun insertRecordingByEntity(
         entityId: String,
         recordingId: String,
-    ) {
-        transacter.insert(
-            Recordings_by_entity(
-                entity_id = entityId,
-                recording_id = recordingId,
-            ),
-        )
+    ): Int {
+        return try {
+            transacter.insertOrFailRecordingByEntity(
+                Recordings_by_entity(
+                    entity_id = entityId,
+                    recording_id = recordingId,
+                ),
+            )
+            1
+        } catch (ex: Exception) {
+            0
+        }
     }
 
-    fun insertAll(
+    fun insertRecordingsByEntity(
         entityId: String,
         recordingIds: List<String>,
     ): Int {
         return transacter.transactionWithResult {
-            recordingIds.forEach { recordingId ->
-                insert(
+            recordingIds.sumOf { recordingId ->
+                insertRecordingByEntity(
                     recordingId = recordingId,
                     entityId = entityId,
                 )
             }
-            recordingIds.size
         }
     }
 
@@ -49,7 +54,7 @@ class RecordingsByEntityDao(
         transacter.deleteRecordingsByEntity(entityId)
     }
 
-    fun getNumberOfRecordingsByEntity(entityId: String): Flow<Int> =
+    fun observeCountOfRecordingsByEntity(entityId: String): Flow<Int> =
         transacter.getNumberOfRecordingsByEntity(
             entityId = entityId,
             query = "%%",
@@ -57,6 +62,14 @@ class RecordingsByEntityDao(
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
+
+    fun getCountOfRecordingsByEntity(entityId: String): Int =
+        transacter.getNumberOfRecordingsByEntity(
+            entityId = entityId,
+            query = "%%",
+        )
+            .executeAsOne()
+            .toInt()
 
     fun getRecordingsByEntity(
         entityId: String,
