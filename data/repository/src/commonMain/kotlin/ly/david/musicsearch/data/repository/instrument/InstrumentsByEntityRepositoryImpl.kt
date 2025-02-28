@@ -115,4 +115,11 @@ class InstrumentsByEntityRepositoryImpl(
             }
         }
     }
+
+    override fun getLocalLinkedEntitiesCountByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+    ): Int {
+        return collectionEntityDao.getCountOfEntitiesByCollection(entityId)
+    }
 }
