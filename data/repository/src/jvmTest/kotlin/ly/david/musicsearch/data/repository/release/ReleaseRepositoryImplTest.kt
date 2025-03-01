@@ -2,7 +2,6 @@ package ly.david.musicsearch.data.repository.release
 
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
-import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
@@ -34,7 +33,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.data.test.KoinTestRule
-import ly.david.musicsearch.data.repository.RelationRepositoryImpl
+import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -54,67 +53,28 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class ReleaseRepositoryImplTest : KoinTest {
+class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val releaseDao: ReleaseDao by inject()
-    private val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
-    private val releaseGroupDao: ReleaseGroupDao by inject()
-    private val artistCreditDao: ArtistCreditDao by inject()
-    private val releaseCountryDao: ReleaseCountryDao by inject()
-    private val areaDao: AreaDao by inject()
-    private val labelDao: LabelDao by inject()
-    private val releaseLabelDao: ReleaseLabelDao by inject()
-    private val mediumDao: MediumDao by inject()
-    private val trackDao: TrackDao by inject()
-    private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val visitedDao: VisitedDao by inject()
-    private val relationDao: RelationDao by inject()
-
-    private fun createRepository(
-        musicBrainzModel: ReleaseMusicBrainzModel,
-    ): ReleaseRepository {
-        val relationRepository = RelationRepositoryImpl(
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupRelease(
-                    releaseId: String,
-                    include: String,
-                ): ReleaseMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-            entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
-            relationDao = relationDao,
-        )
-        return ReleaseRepositoryImpl(
-            releaseDao = releaseDao,
-            releaseReleaseGroupDao = releaseReleaseGroupDao,
-            releaseGroupDao = releaseGroupDao,
-            artistCreditDao = artistCreditDao,
-            releaseCountryDao = releaseCountryDao,
-            areaDao = areaDao,
-            labelDao = labelDao,
-            releaseLabelDao = releaseLabelDao,
-            relationRepository = relationRepository,
-            mediumDao = mediumDao,
-            trackDao = trackDao,
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupRelease(
-                    releaseId: String,
-                    include: String,
-                ): ReleaseMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-        )
-    }
+    override val releaseDao: ReleaseDao by inject()
+    override val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
+    override val releaseGroupDao: ReleaseGroupDao by inject()
+    override val artistCreditDao: ArtistCreditDao by inject()
+    override val releaseCountryDao: ReleaseCountryDao by inject()
+    override val areaDao: AreaDao by inject()
+    override val labelDao: LabelDao by inject()
+    override val releaseLabelDao: ReleaseLabelDao by inject()
+    override val mediumDao: MediumDao by inject()
+    override val trackDao: TrackDao by inject()
+    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val visitedDao: VisitedDao by inject()
+    override val relationDao: RelationDao by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepository(
+        val sparseRepository = createReleaseRepository(
             musicBrainzModel = ReleaseMusicBrainzModel(
                 id = "8516ca87-f9c4-3854-a727-6d328cf44837",
                 name = "Today Is A Beautiful Day",
@@ -165,7 +125,7 @@ class ReleaseRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepository(
+        val allDataRepository = createReleaseRepository(
             musicBrainzModel = ReleaseMusicBrainzModel(
                 id = "8516ca87-f9c4-3854-a727-6d328cf44837",
                 name = "Today Is A Beautiful Day",
@@ -865,7 +825,7 @@ class ReleaseRepositoryImplTest : KoinTest {
     private fun createRepositoryWithMedia(
         media: List<MediumMusicBrainzModel>?,
     ): ReleaseRepository {
-        return createRepository(
+        return createReleaseRepository(
             musicBrainzModel = ReleaseMusicBrainzModel(
                 id = "f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0",
                 name = "真・女神転生30th Anniversary Special Sound Compilation",

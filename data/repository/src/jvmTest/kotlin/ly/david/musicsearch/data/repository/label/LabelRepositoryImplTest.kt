@@ -1,7 +1,6 @@
 package ly.david.musicsearch.data.repository.label
 
 import kotlinx.coroutines.test.runTest
-import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.data.database.dao.LabelDao
@@ -14,10 +13,9 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.data.test.KoinTestRule
-import ly.david.musicsearch.data.repository.RelationRepositoryImpl
+import ly.david.musicsearch.data.repository.helpers.TestLabelRepository
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.label.LabelDetailsModel
-import ly.david.musicsearch.shared.domain.label.LabelRepository
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert.assertEquals
@@ -26,49 +24,19 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class LabelRepositoryImplTest : KoinTest {
+class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val visitedDao: VisitedDao by inject()
-    private val relationDao: RelationDao by inject()
-    private val labelDao: LabelDao by inject()
-
-    private fun createRepository(
-        musicBrainzModel: LabelMusicBrainzModel,
-    ): LabelRepository {
-        val relationRepository = RelationRepositoryImpl(
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupLabel(
-                    labelId: String,
-                    include: String,
-                ): LabelMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-            entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
-            relationDao = relationDao,
-        )
-        return LabelRepositoryImpl(
-            labelDao = labelDao,
-            relationRepository = relationRepository,
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupLabel(
-                    labelId: String,
-                    include: String,
-                ): LabelMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-        )
-    }
+    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val visitedDao: VisitedDao by inject()
+    override val relationDao: RelationDao by inject()
+    override val labelDao: LabelDao by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepository(
+        val sparseRepository = createLabelRepository(
             musicBrainzModel = LabelMusicBrainzModel(
                 id = "7aaa37fe-2def-3476-b359-80245850062d",
                 name = "UNIVERSAL J",
@@ -86,7 +54,7 @@ class LabelRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepository(
+        val allDataRepository = createLabelRepository(
             musicBrainzModel = LabelMusicBrainzModel(
                 id = "7aaa37fe-2def-3476-b359-80245850062d",
                 name = "UNIVERSAL J",

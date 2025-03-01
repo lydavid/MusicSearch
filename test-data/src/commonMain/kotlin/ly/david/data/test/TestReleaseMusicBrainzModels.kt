@@ -1,10 +1,6 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
-import ly.david.musicsearch.data.musicbrainz.api.SearchReleasesResponse
-import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.CoverArtArchiveMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
@@ -62,19 +58,6 @@ val underPressure = ReleaseMusicBrainzModel(
     relations = listOf(underPressureRemasterOf),
 )
 
-val ado = ArtistCreditMusicBrainzModel(
-    artist = ArtistMusicBrainzModel(
-        id = "e134b52f-2e9e-4734-9bc3-bea9648d1fa1",
-        type = "Person",
-        sortName = "Ado",
-        typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
-        disambiguation = "Japanese vocalist",
-        name = "Ado",
-    ),
-    name = "Ado",
-    joinPhrase = "",
-)
-
 val releaseWith3CatalogNumbersWithSameLabel = ReleaseMusicBrainzModel(
     id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
     name = "ウタの歌 ONE PIECE FILM RED",
@@ -91,7 +74,7 @@ val releaseWith3CatalogNumbersWithSameLabel = ReleaseMusicBrainzModel(
         language = "jpn",
     ),
     artistCredits = listOf(
-        ado,
+        adoArtistCreditMusicBrainzModel,
     ),
     releaseGroup = ReleaseGroupMusicBrainzModel(
         id = "22760f81-37ce-47ce-98b6-65f8a285f083",
@@ -99,7 +82,7 @@ val releaseWith3CatalogNumbersWithSameLabel = ReleaseMusicBrainzModel(
         primaryType = "Album",
         secondaryTypes = listOf(),
         disambiguation = "",
-        artistCredits = listOf(ado),
+        artistCredits = listOf(adoArtistCreditMusicBrainzModel),
         firstReleaseDate = "2022-08-10",
     ),
     releaseEvents = listOf(
@@ -152,24 +135,4 @@ val releaseWith3CatalogNumbersWithSameLabel = ReleaseMusicBrainzModel(
     coverArtArchive = CoverArtArchiveMusicBrainzModel(
         count = 11,
     ),
-)
-
-val fakeReleases = listOf(
-    underPressure,
-    underPressureRemastered,
-)
-
-val browseReleasesResponse = BrowseReleasesResponse(
-    count = 1,
-    offset = 0,
-    musicBrainzModels = listOf(
-        releaseWith3CatalogNumbersWithSameLabel,
-        underPressure,
-    ),
-)
-
-val searchReleasesResponse = SearchReleasesResponse(
-    count = 1,
-    offset = 0,
-    listOf(underPressure),
 )

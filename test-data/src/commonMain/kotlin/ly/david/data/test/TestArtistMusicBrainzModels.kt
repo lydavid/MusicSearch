@@ -1,7 +1,5 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
-import ly.david.musicsearch.data.musicbrainz.api.SearchArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
@@ -98,19 +96,17 @@ val queenArtistCredit = ArtistCreditMusicBrainzModel(
     joinPhrase = " & ",
 )
 
-val fakeArtists = listOf(
-    davidBowie,
-    queen,
+val adoArtistMusicBrainzModel = ArtistMusicBrainzModel(
+    id = "e134b52f-2e9e-4734-9bc3-bea9648d1fa1",
+    type = "Person",
+    sortName = "Ado",
+    typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+    disambiguation = "Japanese vocalist",
+    name = "Ado",
 )
 
-val browseArtistsResponse = BrowseArtistsResponse(
-    count = 1,
-    offset = 0,
-    listOf(element = davidBowie),
-)
-
-val searchArtistsResponse = SearchArtistsResponse(
-    count = 1,
-    offset = 0,
-    listOf(element = davidBowie),
+val adoArtistCreditMusicBrainzModel = ArtistCreditMusicBrainzModel(
+    artist = adoArtistMusicBrainzModel,
+    name = "Ado",
+    joinPhrase = "",
 )
