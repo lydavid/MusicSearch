@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS releases_by_entity (
+  entity_id TEXT NOT NULL,
+  release_id TEXT NOT NULL,
+
+  PRIMARY KEY (entity_id, release_id)
+);
+
+INSERT OR IGNORE INTO releases_by_entity (entity_id, release_id)
+SELECT label_id, release_id
+FROM release_label;
+
+INSERT OR IGNORE INTO labels_by_entity (entity_id, label_id)
+SELECT release_id, label_id
+FROM release_label;

@@ -1,124 +1,16 @@
-﻿CREATE TABLE IF NOT EXISTS release_label (
+﻿-- This table is used together with releases_by_entity or labels_by_entity
+-- to provide catalog_number
+CREATE TABLE IF NOT EXISTS release_label (
   `release_id` TEXT NOT NULL,
   `label_id` TEXT NOT NULL,
   `catalog_number` TEXT NOT NULL,
 
   PRIMARY KEY(`release_id`, `label_id`, `catalog_number`)
-
---   FOREIGN KEY(`label_id`) REFERENCES `label`(`id`)
---   ON UPDATE CASCADE
---   ON DELETE CASCADE,
---
---   FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
---   ON UPDATE CASCADE
---   ON DELETE CASCADE
 );
 
-insertOrFail:
-INSERT OR FAIL INTO release_label
+insert:
+INSERT OR IGNORE INTO release_label
 VALUES ?;
 
-
--- labels by release
-
-getLabelsByRelease:
-SELECT
-  l.id,
-  l.name,
-  l.disambiguation,
-  l.type,
-  l.label_code,
-  rl.catalog_number,
-  visited.entity_id IS NOT NULL AS visited
-FROM label l
-INNER JOIN release_label rl ON l.id = rl.label_id
-LEFT JOIN visited ON visited.entity_id = l.id
-WHERE rl.release_id = :releaseId
-ORDER BY rl.catalog_number;
-
-deleteLabelsByReleaseLinks:
+deleteReleaseLabelLinks:
 DELETE FROM release_label WHERE release_id = :releaseId;
-
-
--- releases by label
-
-getNumberOfReleasesByLabel:
-SELECT IFNULL(
-  (
-    SELECT COUNT(*)
-    FROM (
-      SELECT DISTINCT r.*
-      FROM release r
-      INNER JOIN release_label rl ON r.id = rl.release_id
-      INNER JOIN label l ON l.id = rl.label_id
-      INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-      INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-      WHERE l.id = :labelId
-      AND (
-        r.name LIKE :query
-        OR r.disambiguation LIKE :query
-        OR r.date LIKE :query
-        OR r.country_code LIKE :query
-        OR ac.name LIKE :query
-      )
-    )
-  ),
-  0
-) AS count;
-
-getReleasesByLabel:
-SELECT
-  r.*,
-  (
-    SELECT GROUP_CONCAT(catalog_number, ', ')
-    FROM (
-      SELECT DISTINCT rl2.catalog_number
-      FROM release_label rl2
-      WHERE rl2.release_id = r.id
-      ORDER BY rl2.catalog_number
-    ) AS distinct_catalogs
-  ) AS catalogNumbers,
-  ac.name AS artistCreditNames,
-  mi.thumbnail_url,
-  mi.id AS placeholderKey,
-  (
-    SELECT COUNT(cc.area_id)
-    FROM `release`
-    INNER JOIN release_country rc ON rc.release_id = `release`.id
-    INNER JOIN country_code cc ON cc.area_id = rc.country_id
-    WHERE r.id = `release`.id
-  ) AS releaseCountryCount,
-  visited.entity_id IS NOT NULL AS visited
-FROM `release` r
-INNER JOIN release_label rl ON r.id = rl.release_id
-INNER JOIN label l ON l.id = rl.label_id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN mbid_image mi ON mi.mbid = r.id
-LEFT JOIN visited ON visited.entity_id = r.id
-WHERE l.id = :labelId
-AND (
-  r.name LIKE :query
-  OR r.disambiguation LIKE :query
-  OR r.date LIKE :query
-  OR r.country_code LIKE :query
-  OR ac.name LIKE :query
-  -- This will remove any catalog number not matching this query from the ReleaseListItem
-  -- because when we group by, they will be excluded
-  OR rl.catalog_number LIKE :query
-)
-GROUP BY r.id
-ORDER BY r.date, r.name
-LIMIT :limit OFFSET :offset;
-
-deleteReleasesByLabel {
-DELETE FROM release WHERE id IN (
-  SELECT r.id
-  FROM release r
-  INNER JOIN release_label rl ON r.id = rl.release_id
-  INNER JOIN label l ON l.id = rl.label_id
-  WHERE l.id = :labelId
-);
-
-DELETE FROM release_label WHERE label_id = :labelId;
-}

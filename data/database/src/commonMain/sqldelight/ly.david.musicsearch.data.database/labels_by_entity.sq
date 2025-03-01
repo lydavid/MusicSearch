@@ -17,7 +17,7 @@ DELETE FROM label WHERE id IN (
   WHERE le.entity_id = :entityId
 );
 
-DELETE FROM labels_by_entity WHERE  entity_id = :entityId;
+DELETE FROM labels_by_entity WHERE entity_id = :entityId;
 }
 
 getNumberOfLabelsByEntity:
@@ -56,3 +56,20 @@ AND (
   l.label_code LIKE :query
 )
 LIMIT :limit OFFSET :offset;
+
+-- labels by release
+
+getLabelsByRelease:
+SELECT
+  l.id,
+  l.name,
+  l.disambiguation,
+  l.type,
+  l.label_code,
+  rl.catalog_number,
+  visited.entity_id IS NOT NULL AS visited
+FROM label l
+INNER JOIN release_label rl ON l.id = rl.label_id
+LEFT JOIN visited ON visited.entity_id = l.id
+WHERE rl.release_id = :releaseId
+ORDER BY rl.catalog_number;

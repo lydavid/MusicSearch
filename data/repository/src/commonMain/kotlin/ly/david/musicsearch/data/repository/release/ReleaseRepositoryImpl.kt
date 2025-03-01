@@ -11,11 +11,11 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.LabelDao
+import ly.david.musicsearch.data.database.dao.LabelsByEntityDao
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
-import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.TrackAndMedium
 import ly.david.musicsearch.data.database.dao.TrackDao
@@ -43,7 +43,7 @@ class ReleaseRepositoryImpl(
     private val releaseCountryDao: ReleaseCountryDao,
     private val areaDao: AreaDao,
     private val labelDao: LabelDao,
-    private val releaseLabelDao: ReleaseLabelDao,
+    private val labelsByEntityDao: LabelsByEntityDao,
     private val relationRepository: RelationRepository,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
@@ -65,7 +65,7 @@ class ReleaseRepositoryImpl(
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseId)
         val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId)
         val formatTrackCounts = releaseDao.getReleaseFormatTrackCount(releaseId)
-        val labels = releaseLabelDao.getLabelsByRelease(releaseId)
+        val labels = labelsByEntityDao.getLabelsByRelease(releaseId)
         val releaseEvents = releaseCountryDao.getCountriesByRelease(releaseId)
         val urlRelations = relationRepository.getRelationshipsByType(releaseId)
         val visited = relationRepository.visited(releaseId)
@@ -102,7 +102,7 @@ class ReleaseRepositoryImpl(
         releaseDao.withTransaction {
             releaseDao.delete(releaseId = releaseId)
             releaseReleaseGroupDao.deleteReleaseGroupByReleaseLink(releaseId = releaseId)
-            releaseLabelDao.deleteLabelsByReleaseLinks(releaseId = releaseId)
+            labelsByEntityDao.deleteReleaseLabelLinks(releaseId = releaseId)
             releaseCountryDao.deleteCountriesByReleaseLinks(releaseId = releaseId)
             relationRepository.deleteRelationshipsByType(entityId = releaseId)
         }
@@ -122,7 +122,7 @@ class ReleaseRepositoryImpl(
             // This serves as a replacement for browsing labels by release.
             // Unless we find a release that has more than 25 labels, we don't need to browse for labels.
             labelDao.insertAll(release.labelInfoList?.mapNotNull { it.label })
-            releaseLabelDao.linkLabelsByRelease(
+            labelsByEntityDao.insertLabelsByRelease(
                 releaseId = release.id,
                 labelInfoList = release.labelInfoList,
             )

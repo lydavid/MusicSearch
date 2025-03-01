@@ -60,7 +60,7 @@ val statsFeatureModule = module {
                                 screen = screen,
                                 getCountOfEachRelationshipTypeUseCase = get(),
                                 observeBrowseEntityCount = get(),
-                                releaseLabelDao = get(),
+                                releaseDao = get(),
                             )
                         }
 

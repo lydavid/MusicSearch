@@ -59,7 +59,7 @@ interface TestReleaseRepository {
             releaseCountryDao = releaseCountryDao,
             areaDao = areaDao,
             labelDao = labelDao,
-            releaseLabelDao = releaseLabelDao,
+            labelsByEntityDao = releaseLabelDao,
             relationRepository = relationRepository,
             mediumDao = mediumDao,
             trackDao = trackDao,

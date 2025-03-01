@@ -1,17 +1,29 @@
 package ly.david.musicsearch.data.database.dao
 
+import app.cash.paging.PagingSource
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
+import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.FormatTrackCount
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import lydavidmusicsearchdatadatabase.Release
+import lydavidmusicsearchdatadatabase.Releases_by_entity
 
 class ReleaseDao(
     database: Database,
     private val artistCreditDao: ArtistCreditDao,
     private val mediumDao: MediumDao,
+    private val releaseLabelDao: ReleaseLabelDao,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.releaseQueries
 
@@ -117,4 +129,73 @@ class ReleaseDao(
                 )
             },
         ).executeAsList()
+
+    // region releases by label
+    fun insertReleasesByLabel(
+        labelId: String,
+        releases: List<ReleaseMusicBrainzModel>,
+    ): Int {
+        return transacter.transactionWithResult {
+            releases.forEach { release ->
+                insert(release)
+                transacter.insertOrIgnoreReleasesByEntity(
+                    Releases_by_entity(
+                        entity_id = labelId,
+                        release_id = release.id,
+                    ),
+                )
+                release.labelInfoList?.forEach { labelInfo ->
+                    releaseLabelDao.insert(
+                        releaseId = release.id,
+                        labelId = labelId,
+                        catalogNumber = labelInfo.catalogNumber.orEmpty(),
+                    )
+                }
+            }
+            releases.size
+        }
+    }
+
+    fun observeCountOfReleasesByLabel(labelId: String): Flow<Int> =
+        transacter.getNumberOfReleasesByLabel(
+            labelId = labelId,
+            query = "%%",
+        )
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
+
+    fun getCountOfReleasesByLabel(labelId: String): Int =
+        transacter.getNumberOfReleasesByLabel(
+            labelId = labelId,
+            query = "%%",
+        )
+            .executeAsOne()
+            .toInt()
+
+    fun getReleasesByLabel(
+        labelId: String,
+        query: String,
+    ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
+        countQuery = transacter.getNumberOfReleasesByLabel(
+            labelId = labelId,
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getReleasesByLabel(
+                labelId = labelId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToReleaseListItemModel,
+            )
+        },
+    )
+
+    fun deleteReleasesByLabel(labelId: String) {
+        transacter.deleteReleasesByLabel(labelId = labelId)
+    }
+    // endregion
 }
