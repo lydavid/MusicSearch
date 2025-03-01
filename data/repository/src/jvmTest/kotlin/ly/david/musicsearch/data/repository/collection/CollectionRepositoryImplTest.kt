@@ -35,7 +35,7 @@ class CollectionRepositoryImplTest : KoinTest {
     private val collectionEntityDao: CollectionEntityDao by inject()
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         collectionApi: CollectionApi,
     ): CollectionRepository {
         return CollectionRepositoryImpl(
@@ -51,7 +51,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     @Test
     fun `empty network, no list items`() = runTest {
-        val repository = createRepositoryWithFakeNetworkData(
+        val repository = createRepository(
             collectionApi = object : FakeCollectionApi() {
                 override suspend fun browseCollectionsByUser(
                     username: String,
@@ -86,7 +86,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     @Test
     fun `sorted alphabetically`() = runTest {
-        val repository = createRepositoryWithFakeNetworkData(
+        val repository = createRepository(
             collectionApi = object : FakeCollectionApi() {
                 override suspend fun browseCollectionsByUser(
                     username: String,
@@ -149,7 +149,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     @Test
     fun `sorted alphabetically reverse`() = runTest {
-        val repository = createRepositoryWithFakeNetworkData(
+        val repository = createRepository(
             collectionApi = object : FakeCollectionApi() {
                 override suspend fun browseCollectionsByUser(
                     username: String,
@@ -212,7 +212,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     @Test
     fun `sorted by most entities`() = runTest {
-        val repository = createRepositoryWithFakeNetworkData(
+        val repository = createRepository(
             collectionApi = object : FakeCollectionApi() {
                 override suspend fun browseCollectionsByUser(
                     username: String,
@@ -279,7 +279,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     @Test
     fun `filtered by an entity`() = runTest {
-        val repository = createRepositoryWithFakeNetworkData(
+        val repository = createRepository(
             collectionApi = object : FakeCollectionApi() {
                 override suspend fun browseCollectionsByUser(
                     username: String,
@@ -336,7 +336,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     @Test
     fun `filtered by query`() = runTest {
-        val repository = createRepositoryWithFakeNetworkData(
+        val repository = createRepository(
             collectionApi = object : FakeCollectionApi() {
                 override suspend fun browseCollectionsByUser(
                     username: String,
@@ -443,7 +443,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     @Test
     fun `add local collection`() = runTest {
-        val repository = createRepositoryWithFakeNetworkData(
+        val repository = createRepository(
             collectionApi = object : FakeCollectionApi() {
                 override suspend fun browseCollectionsByUser(
                     username: String,
@@ -485,7 +485,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     @Test
     fun `delete local collection`() = runTest {
-        val repository = createRepositoryWithFakeNetworkData(
+        val repository = createRepository(
             collectionApi = object : FakeCollectionApi() {
                 override suspend fun browseCollectionsByUser(
                     username: String,
@@ -508,7 +508,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     @Test
     fun `try to access a deleted collection`() = runTest {
-        val repository = createRepositoryWithFakeNetworkData(
+        val repository = createRepository(
             collectionApi = object : FakeCollectionApi() {
                 override suspend fun browseCollectionsByUser(
                     username: String,

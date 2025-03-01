@@ -31,7 +31,7 @@ class AreasByEntityRepositoryImplTest : KoinTest {
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         areas: List<AreaMusicBrainzModel>,
     ): AreasByEntityRepository {
         return AreasByEntityRepositoryImpl(
@@ -96,7 +96,7 @@ class AreasByEntityRepositoryImplTest : KoinTest {
                 typeId = "84039871-5e47-38ca-a66a-45e512c8290f",
             ),
         )
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             areas = areas,
         )
 

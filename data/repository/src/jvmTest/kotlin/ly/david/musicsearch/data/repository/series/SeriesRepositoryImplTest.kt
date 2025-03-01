@@ -34,7 +34,7 @@ class SeriesRepositoryImplTest : KoinTest {
     private val relationDao: RelationDao by inject()
     private val seriesDao: SeriesDao by inject()
 
-    private fun createFakeRelationRepository(
+    private fun createRelationRepository(
         musicBrainzModel: SeriesMusicBrainzModel
     ): RelationRepository {
         val relationRepository = RelationRepositoryImpl(
@@ -53,10 +53,10 @@ class SeriesRepositoryImplTest : KoinTest {
         return relationRepository
     }
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createSeriesRepository(
         musicBrainzModel: SeriesMusicBrainzModel,
     ): SeriesRepository {
-        val relationRepository = createFakeRelationRepository(musicBrainzModel)
+        val relationRepository = createRelationRepository(musicBrainzModel)
         return SeriesRepositoryImpl(
             seriesDao = seriesDao,
             relationRepository = relationRepository,
@@ -73,7 +73,7 @@ class SeriesRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepositoryWithFakeNetworkData(
+        val sparseRepository = createSeriesRepository(
             musicBrainzModel = SeriesMusicBrainzModel(
                 id = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
                 name = "Rolling Stone: 500 Greatest Albums of All Time: 2023 edition",
@@ -91,7 +91,7 @@ class SeriesRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepositoryWithFakeNetworkData(
+        val allDataRepository = createSeriesRepository(
             musicBrainzModel = SeriesMusicBrainzModel(
                 id = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
                 name = "Rolling Stone: 500 Greatest Albums of All Time: 2023 edition",

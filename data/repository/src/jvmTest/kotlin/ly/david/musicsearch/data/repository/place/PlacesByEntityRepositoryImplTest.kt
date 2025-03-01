@@ -37,7 +37,7 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         places: List<PlaceMusicBrainzModel>,
     ): PlacesByEntityRepository {
         return PlacesByEntityRepositoryImpl(
@@ -79,7 +79,7 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
             budokanPlaceMusicBrainzModel,
             tokyoInternationForumHallAPlaceMusicBrainzModel,
         )
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             places = places,
         )
 
@@ -139,7 +139,7 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
         val places = listOf(
             budokanPlaceMusicBrainzModel,
         )
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             places = places,
         )
         sut.observePlacesByEntity(
@@ -182,7 +182,7 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
             tokyoInternationForumPlaceMusicBrainzModel,
             tokyoInternationForumHallAPlaceMusicBrainzModel,
         )
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             places = places,
         )
         sut.observePlacesByEntity(
@@ -236,7 +236,7 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
     fun `all places`() = runTest {
         setUpPlaces()
 
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             places = listOf(),
         )
         sut.observePlacesByEntity(

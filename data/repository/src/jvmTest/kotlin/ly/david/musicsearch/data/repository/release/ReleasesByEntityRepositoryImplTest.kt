@@ -45,7 +45,7 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
     private val releaseLabelDao: ReleaseLabelDao by inject()
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         releases: List<ReleaseMusicBrainzModel>,
     ): ReleasesByEntityRepository {
         return ReleasesByEntityRepositoryImpl(
@@ -75,7 +75,7 @@ class ReleasesByEntityRepositoryImplTest : KoinTest {
 
     @Test
     fun `releases by label - release with multiple catalog numbers, multiple cover arts`() = runTest {
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             releases = listOf(
                 releaseWith3CatalogNumbersWithSameLabel,
             ),

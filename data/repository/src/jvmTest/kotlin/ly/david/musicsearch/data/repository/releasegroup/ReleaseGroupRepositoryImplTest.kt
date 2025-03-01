@@ -38,7 +38,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest {
     private val visitedDao: VisitedDao by inject()
     private val relationDao: RelationDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         musicBrainzModel: ReleaseGroupMusicBrainzModel,
     ): ReleaseGroupRepository {
         val relationRepository = RelationRepositoryImpl(
@@ -71,7 +71,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepositoryWithFakeNetworkData(
+        val sparseRepository = createRepository(
             musicBrainzModel = ReleaseGroupMusicBrainzModel(
                 id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                 name = "Today Is A Beautiful Day",
@@ -110,7 +110,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepositoryWithFakeNetworkData(
+        val allDataRepository = createRepository(
             musicBrainzModel = ReleaseGroupMusicBrainzModel(
                 id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                 primaryType = "Album",

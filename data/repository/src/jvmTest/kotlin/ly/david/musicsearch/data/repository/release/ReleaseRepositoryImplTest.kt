@@ -73,7 +73,7 @@ class ReleaseRepositoryImplTest : KoinTest {
     private val visitedDao: VisitedDao by inject()
     private val relationDao: RelationDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         musicBrainzModel: ReleaseMusicBrainzModel,
     ): ReleaseRepository {
         val relationRepository = RelationRepositoryImpl(
@@ -114,7 +114,7 @@ class ReleaseRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepositoryWithFakeNetworkData(
+        val sparseRepository = createRepository(
             musicBrainzModel = ReleaseMusicBrainzModel(
                 id = "8516ca87-f9c4-3854-a727-6d328cf44837",
                 name = "Today Is A Beautiful Day",
@@ -165,7 +165,7 @@ class ReleaseRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepositoryWithFakeNetworkData(
+        val allDataRepository = createRepository(
             musicBrainzModel = ReleaseMusicBrainzModel(
                 id = "8516ca87-f9c4-3854-a727-6d328cf44837",
                 name = "Today Is A Beautiful Day",
@@ -865,7 +865,7 @@ class ReleaseRepositoryImplTest : KoinTest {
     private fun createRepositoryWithMedia(
         media: List<MediumMusicBrainzModel>?,
     ): ReleaseRepository {
-        return createRepositoryWithFakeNetworkData(
+        return createRepository(
             musicBrainzModel = ReleaseMusicBrainzModel(
                 id = "f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0",
                 name = "真・女神転生30th Anniversary Special Sound Compilation",

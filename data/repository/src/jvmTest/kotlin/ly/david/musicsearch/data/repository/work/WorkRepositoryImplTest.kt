@@ -37,7 +37,7 @@ class WorkRepositoryImplTest : KoinTest {
     private val workDao: WorkDao by inject()
     private val workAttributeDao: WorkAttributeDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         musicBrainzModel: WorkMusicBrainzModel,
     ): WorkRepository {
         val relationRepository = RelationRepositoryImpl(
@@ -70,7 +70,7 @@ class WorkRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepositoryWithFakeNetworkData(
+        val sparseRepository = createRepository(
             musicBrainzModel = WorkMusicBrainzModel(
                 id = "717a6517-290e-3696-942a-aba233ffc398",
                 name = "君の知らない物語",
@@ -88,7 +88,7 @@ class WorkRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepositoryWithFakeNetworkData(
+        val allDataRepository = createRepository(
             musicBrainzModel = WorkMusicBrainzModel(
                 id = "717a6517-290e-3696-942a-aba233ffc398",
                 name = "君の知らない物語",

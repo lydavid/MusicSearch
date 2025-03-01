@@ -61,7 +61,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
     private val seriesDao: SeriesDao by inject()
     private val workDao: WorkDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         searchApi: SearchApi,
     ): SearchResultsRepository {
         return SearchResultsRepositoryImpl(
@@ -83,7 +83,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
 
     @Test
     fun `empty network, no list items`() = runTest {
-        val repository = createRepositoryWithFakeNetworkData(
+        val repository = createRepository(
             searchApi = FakeSearchApi(),
         )
 
@@ -101,7 +101,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
 
     @Test
     fun `one more list item is returned as footer`() = runTest {
-        val repository = createRepositoryWithFakeNetworkData(
+        val repository = createRepository(
             searchApi = object : FakeSearchApi() {
                 override suspend fun queryArtists(
                     query: String,
@@ -145,7 +145,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
 
     @Test
     fun `results are ordered`() = runTest {
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             searchApi = object : FakeSearchApi() {
                 override suspend fun queryArtists(
                     query: String,
@@ -219,7 +219,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
 
     @Test
     fun `changing query will not have old results show up`() = runTest {
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             searchApi = object : FakeSearchApi() {
                 override suspend fun queryAreas(
                     query: String,
@@ -293,7 +293,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
     // This shouldn't be a problem as long as our LazyColumn is not keyed
     @Test
     fun `duplicates are shown`() = runTest {
-        val repository = createRepositoryWithFakeNetworkData(
+        val repository = createRepository(
             searchApi = object : FakeSearchApi() {
                 override suspend fun queryEvents(
                     query: String,
@@ -349,7 +349,7 @@ class SearchResultsRepositoryImplTest : KoinTest {
 
     @Test
     fun `release must include artist credits`() = runTest {
-        val repository = createRepositoryWithFakeNetworkData(
+        val repository = createRepository(
             searchApi = object : FakeSearchApi() {
                 override suspend fun queryReleases(
                     query: String,

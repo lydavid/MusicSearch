@@ -33,7 +33,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest {
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         artists: List<ArtistMusicBrainzModel>,
     ): ArtistsByEntityRepository {
         return ArtistsByEntityRepositoryImpl(
@@ -158,7 +158,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest {
             atarayoMusicBrainzModel,
             bumpOfChickenMusicBrainzModel,
         )
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             artists = artists,
         )
 
@@ -219,7 +219,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest {
             arcadeFireMusicBrainzModel,
             theWeekndMusicBrainzModel,
         )
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             artists = artists,
         )
         sut.observeArtistsByEntity(
@@ -266,7 +266,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest {
             atarayoMusicBrainzModel,
             bumpOfChickenMusicBrainzModel,
         )
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             artists = artists,
         )
         sut.observeArtistsByEntity(
@@ -320,7 +320,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest {
     fun `all artists`() = runTest {
         setUpArtists()
 
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             artists = listOf(),
         )
         sut.observeArtistsByEntity(

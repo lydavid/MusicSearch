@@ -35,7 +35,7 @@ class EventRepositoryImplTest : KoinTest {
     private val relationDao: RelationDao by inject()
     private val eventDao: EventDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         musicBrainzModel: EventMusicBrainzModel,
     ): EventRepository {
         val relationRepository = RelationRepositoryImpl(
@@ -67,7 +67,7 @@ class EventRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepositoryWithFakeNetworkData(
+        val sparseRepository = createRepository(
             musicBrainzModel = EventMusicBrainzModel(
                 id = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
                 name = "The Eras Tour: Toronto (night 1)",
@@ -85,7 +85,7 @@ class EventRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepositoryWithFakeNetworkData(
+        val allDataRepository = createRepository(
             musicBrainzModel = EventMusicBrainzModel(
                 id = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
                 name = "The Eras Tour: Toronto (night 1)",

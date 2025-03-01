@@ -34,7 +34,7 @@ class RelationRepositoryImplTest : KoinTest {
     private val visitedDao: VisitedDao by inject()
     private val relationDao: RelationDao by inject()
 
-    private fun createFakeRelationRepository(
+    private fun createRepository(
         lookupApi: LookupApi,
     ): RelationRepository {
         return RelationRepositoryImpl(
@@ -47,7 +47,7 @@ class RelationRepositoryImplTest : KoinTest {
 
     @Test
     fun `is ordered by ordering-key if it exists`() = runTest {
-        val relationRepository = createFakeRelationRepository(
+        val relationRepository = createRepository(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupSeries(
                     seriesId: String,

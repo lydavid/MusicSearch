@@ -38,7 +38,7 @@ class EventsByEntityRepositoryImplTest : KoinTest {
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         events: List<EventMusicBrainzModel>,
     ): EventsByEntityRepository {
         return EventsByEntityRepositoryImpl(
@@ -73,7 +73,7 @@ class EventsByEntityRepositoryImplTest : KoinTest {
             kissAtScotiabankArenaEventMusicBrainzModel,
             kissAtBudokanEventMusicBrainzModel,
         )
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             events = events,
         )
 
@@ -134,7 +134,7 @@ class EventsByEntityRepositoryImplTest : KoinTest {
             tsoAtMasseyHallEventMusicBrainzModel,
             kissAtScotiabankArenaEventMusicBrainzModel,
         )
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             events = events,
         )
         sut.observeEventsByEntity(
@@ -180,7 +180,7 @@ class EventsByEntityRepositoryImplTest : KoinTest {
             kissAtBudokanEventMusicBrainzModel,
             aimerAtBudokanEventMusicBrainzModel,
         )
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             events = events,
         )
         sut.observeEventsByEntity(
@@ -234,7 +234,7 @@ class EventsByEntityRepositoryImplTest : KoinTest {
     fun `all events`() = runTest {
         setUpEvents()
 
-        val sut = createRepositoryWithFakeNetworkData(
+        val sut = createRepository(
             events = listOf(),
         )
         sut.observeEventsByEntity(

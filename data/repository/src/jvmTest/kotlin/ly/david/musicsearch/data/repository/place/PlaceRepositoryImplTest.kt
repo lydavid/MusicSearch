@@ -54,7 +54,7 @@ class PlaceRepositoryImplTest : KoinTest {
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
-    private fun createPlaceRepositoryWithFakeNetworkData(
+    private fun createRepository(
         musicBrainzModel: PlaceMusicBrainzModel,
     ): PlaceRepository {
         val relationRepository = RelationRepositoryImpl(
@@ -117,7 +117,7 @@ class PlaceRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createPlaceRepositoryWithFakeNetworkData(
+        val sparseRepository = createRepository(
             musicBrainzModel = PlaceMusicBrainzModel(
                 id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
                 name = "日本武道館",
@@ -137,7 +137,7 @@ class PlaceRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createPlaceRepositoryWithFakeNetworkData(
+        val allDataRepository = createRepository(
             musicBrainzModel = PlaceMusicBrainzModel(
                 id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
                 name = "日本武道館",
@@ -445,7 +445,7 @@ class PlaceRepositoryImplTest : KoinTest {
         )
 
         // Lookup a place whose area is a more specific area in the country
-        val placeRepository = createPlaceRepositoryWithFakeNetworkData(
+        val placeRepository = createRepository(
             musicBrainzModel = budokanPlaceMusicBrainzModel,
         )
         var artistDetailsModel = placeRepository.lookupPlace(

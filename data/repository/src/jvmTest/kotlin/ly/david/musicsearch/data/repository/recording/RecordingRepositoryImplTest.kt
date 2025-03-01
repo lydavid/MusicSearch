@@ -38,7 +38,7 @@ class RecordingRepositoryImplTest : KoinTest {
     private val recordingDao: RecordingDao by inject()
     private val artistCreditDao: ArtistCreditDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         musicBrainzModel: RecordingMusicBrainzModel,
     ): RecordingRepository {
         val relationRepository = RelationRepositoryImpl(
@@ -71,7 +71,7 @@ class RecordingRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepositoryWithFakeNetworkData(
+        val sparseRepository = createRepository(
             musicBrainzModel = RecordingMusicBrainzModel(
                 id = "7e52152f-c71a-49b1-b98d-f95e04c44445",
                 name = "導火",
@@ -109,7 +109,7 @@ class RecordingRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepositoryWithFakeNetworkData(
+        val allDataRepository = createRepository(
             musicBrainzModel = RecordingMusicBrainzModel(
                 id = "7e52152f-c71a-49b1-b98d-f95e04c44445",
                 name = "導火",

@@ -36,7 +36,7 @@ class LabelRepositoryImplTest : KoinTest {
     private val relationDao: RelationDao by inject()
     private val labelDao: LabelDao by inject()
 
-    private fun createRepositoryWithFakeNetworkData(
+    private fun createRepository(
         musicBrainzModel: LabelMusicBrainzModel,
     ): LabelRepository {
         val relationRepository = RelationRepositoryImpl(
@@ -68,7 +68,7 @@ class LabelRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepositoryWithFakeNetworkData(
+        val sparseRepository = createRepository(
             musicBrainzModel = LabelMusicBrainzModel(
                 id = "7aaa37fe-2def-3476-b359-80245850062d",
                 name = "UNIVERSAL J",
@@ -86,7 +86,7 @@ class LabelRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepositoryWithFakeNetworkData(
+        val allDataRepository = createRepository(
             musicBrainzModel = LabelMusicBrainzModel(
                 id = "7aaa37fe-2def-3476-b359-80245850062d",
                 name = "UNIVERSAL J",
