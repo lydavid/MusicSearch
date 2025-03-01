@@ -82,7 +82,7 @@ detekt-compose = "io.nlopez.compose.rules:detekt:0.4.22"
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detekt-gradlePlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
-firebase-bom = "com.google.firebase:firebase-bom:33.9.0"
+firebase-bom = "com.google.firebase:firebase-bom:33.10.0"
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 junit = { module = "junit:junit", version.ref = "junit" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiterEngine" }
