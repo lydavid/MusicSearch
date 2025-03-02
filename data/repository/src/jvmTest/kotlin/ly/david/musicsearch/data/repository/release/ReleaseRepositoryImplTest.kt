@@ -2,17 +2,17 @@ package ly.david.musicsearch.data.repository.release
 
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
+import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.data.database.dao.LabelDao
+import ly.david.musicsearch.data.database.dao.LabelsByEntityDao
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
-import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.musicbrainz.models.MediumMusicBrainzModel
@@ -32,9 +32,9 @@ import ly.david.musicsearch.data.musicbrainz.models.core.TextRepresentationMusic
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
@@ -65,7 +65,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
     override val releaseCountryDao: ReleaseCountryDao by inject()
     override val areaDao: AreaDao by inject()
     override val labelDao: LabelDao by inject()
-    override val releaseLabelDao: ReleaseLabelDao by inject()
+    override val labelsByEntityDao: LabelsByEntityDao by inject()
     override val mediumDao: MediumDao by inject()
     override val trackDao: TrackDao by inject()
     override val entityHasRelationsDao: EntityHasRelationsDao by inject()

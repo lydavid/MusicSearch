@@ -12,24 +12,18 @@ class ReleaseLabelDao(
 ) : EntityDao {
     override val transacter = database.release_labelQueries
 
-    @Suppress("SwallowedException")
     fun insert(
         labelId: String,
         releaseId: String,
         catalogNumber: String,
-    ): Int {
-        return try {
-            transacter.insert(
-                Release_label(
-                    release_id = releaseId,
-                    label_id = labelId,
-                    catalog_number = catalogNumber,
-                ),
-            )
-            1
-        } catch (ex: Exception) {
-            0
-        }
+    ) {
+        transacter.insert(
+            Release_label(
+                release_id = releaseId,
+                label_id = labelId,
+                catalog_number = catalogNumber,
+            ),
+        )
     }
 
     fun deleteReleaseLabelLinks(releaseId: String) {

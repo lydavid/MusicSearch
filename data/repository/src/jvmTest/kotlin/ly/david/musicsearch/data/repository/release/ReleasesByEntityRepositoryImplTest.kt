@@ -79,7 +79,6 @@ class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
             recordingReleaseDao = recordingReleaseDao,
             releaseDao = releaseDao,
             releaseCountryDao = releaseCountryDao,
-            releaseDao = releaseLabelDao,
             releaseReleaseGroupDao = releaseReleaseGroupDao,
         )
     }
