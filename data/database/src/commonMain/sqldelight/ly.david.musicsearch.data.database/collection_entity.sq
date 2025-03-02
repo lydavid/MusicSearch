@@ -123,46 +123,7 @@ AND (
 LIMIT :limit OFFSET :offset;
 
 
--- labels by collection
 
-getNumberOfLabelsByCollection:
-SELECT IFNULL(
-  (
-    SELECT COUNT(*)
-    FROM label l
-    INNER JOIN collection_entity ce ON l.id = ce.entity_id
-    INNER JOIN collection c ON c.id = ce.id
-    WHERE c.id = :collectionId
-    AND (
-      l.name LIKE :query OR
-      l.disambiguation LIKE :query OR
-      l.type LIKE :query OR
-      l.label_code LIKE :query
-    )
-  ),
-  0
-) AS count;
-
-getLabelsByCollection:
-SELECT
-  l.id,
-  l.name,
-  l.disambiguation,
-  l.type,
-  l.label_code,
-  visited.entity_id IS NOT NULL AS visited
-FROM label l
-INNER JOIN collection_entity ce ON l.id = ce.entity_id
-INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN visited ON visited.entity_id = l.id
-WHERE c.id = :collectionId
-AND (
-  l.name LIKE :query OR
-  l.disambiguation LIKE :query OR
-  l.type LIKE :query OR
-  l.label_code LIKE :query
-)
-LIMIT :limit OFFSET :offset;
 
 
 

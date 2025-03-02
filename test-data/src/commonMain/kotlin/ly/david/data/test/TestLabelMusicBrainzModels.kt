@@ -1,18 +1,19 @@
 package ly.david.data.test
 
+import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
-val elektraMusicGroup = LabelMusicBrainzModel(
+val elektraMusicGroupLabelMusicBrainzModel = LabelMusicBrainzModel(
     id = "c85c94c0-f83b-42f5-bac0-6b89720de387",
     name = "Elektra Music Group",
     type = "Holding",
 )
 
-val elektra = LabelMusicBrainzModel(
+val elektraLabelMusicBrainzModel = LabelMusicBrainzModel(
     id = "873f9f75-af68-4872-98e2-431058e4c9a9",
     name = "Elektra",
     labelCode = 192,
@@ -23,14 +24,14 @@ val elektra = LabelMusicBrainzModel(
             typeId = "23f8c592-006d-4214-9080-c4e5000c05d7",
             direction = Direction.BACKWARD,
             targetType = SerializableMusicBrainzEntity.LABEL,
-            label = elektraMusicGroup,
+            label = elektraMusicGroupLabelMusicBrainzModel,
         ),
     ),
 )
 
 val underPressureLabelInfo = LabelInfo(
     catalogNumber = "E47235",
-    label = elektra,
+    label = elektraLabelMusicBrainzModel,
 )
 
 val virginMusicLabelMusicBrainzModel = LabelMusicBrainzModel(
@@ -40,4 +41,18 @@ val virginMusicLabelMusicBrainzModel = LabelMusicBrainzModel(
     type = "Original Production",
     typeId = "7aaa37fe-2def-3476-b359-80245850062d",
     labelCode = null,
+)
+
+val flyingDogLabelMusicBrainzModel = LabelMusicBrainzModel(
+    id = "6574b05f-4825-435f-89f6-bb205da16f3a",
+    name = "flying DOG",
+    disambiguation = "Victor",
+    type = "Original Production",
+    typeId = "7aaa37fe-2def-3476-b359-80245850062d",
+    labelCode = null,
+    lifeSpan = LifeSpanMusicBrainzModel(
+        begin = "2007-10-01",
+        ended = false,
+    ),
+    area = japanAreaMusicBrainzModel,
 )

@@ -5,7 +5,6 @@ import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.LabelDao
-import ly.david.musicsearch.data.database.dao.LabelsByEntityDao
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
@@ -28,7 +27,6 @@ interface TestReleaseRepository {
     val releaseCountryDao: ReleaseCountryDao
     val areaDao: AreaDao
     val labelDao: LabelDao
-    val labelsByEntityDao: LabelsByEntityDao
     val mediumDao: MediumDao
     val trackDao: TrackDao
     val entityHasRelationsDao: EntityHasRelationsDao
@@ -59,7 +57,6 @@ interface TestReleaseRepository {
             releaseCountryDao = releaseCountryDao,
             areaDao = areaDao,
             labelDao = labelDao,
-            labelsByEntityDao = labelsByEntityDao,
             relationRepository = relationRepository,
             mediumDao = mediumDao,
             trackDao = trackDao,

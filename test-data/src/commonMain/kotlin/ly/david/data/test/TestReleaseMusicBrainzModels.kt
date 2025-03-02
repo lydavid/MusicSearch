@@ -52,7 +52,7 @@ val underPressure = ReleaseMusicBrainzModel(
     labelInfoList = listOf(
         underPressureLabelInfo,
         LabelInfo(
-            label = elektraMusicGroup,
+            label = elektraMusicGroupLabelMusicBrainzModel,
         ),
     ),
     relations = listOf(underPressureRemasterOf),

@@ -38,3 +38,158 @@ FROM label WHERE id = ?;
 delete:
 DELETE FROM label
 WHERE id = :id;
+
+-- labels by entity
+
+CREATE TABLE IF NOT EXISTS labels_by_entity (
+  entity_id TEXT NOT NULL,
+  label_id TEXT NOT NULL,
+
+  PRIMARY KEY (entity_id, label_id)
+);
+
+insertOrFailLabelByEntity:
+INSERT OR FAIL INTO labels_by_entity
+VALUES ?;
+
+deleteLabelsByEntity {
+DELETE FROM label WHERE id IN (
+  SELECT l.id
+  FROM labels_by_entity le
+  INNER JOIN label l ON l.id = le.label_id
+  WHERE le.entity_id = :entityId
+);
+
+DELETE FROM labels_by_entity WHERE entity_id = :entityId;
+}
+
+getNumberOfLabelsByEntity:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM labels_by_entity le
+    INNER JOIN label l ON l.id = le.label_id
+    WHERE le.entity_id = :entityId
+    AND (
+      l.name LIKE :query OR
+      l.disambiguation LIKE :query OR
+      l.type LIKE :query OR
+      l.label_code LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getLabelsByEntity:
+SELECT
+  l.id,
+  l.name,
+  l.disambiguation,
+  l.type,
+  l.label_code,
+  visited.entity_id IS NOT NULL AS visited
+FROM labels_by_entity le
+INNER JOIN label l ON l.id = le.label_id
+LEFT JOIN visited ON visited.entity_id = l.id
+WHERE le.entity_id = :entityId
+AND (
+  l.name LIKE :query OR
+  l.disambiguation LIKE :query OR
+  l.type LIKE :query OR
+  l.label_code LIKE :query
+)
+LIMIT :limit OFFSET :offset;
+
+-- labels by collection
+
+getNumberOfLabelsByCollection:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM label l
+    INNER JOIN collection_entity ce ON l.id = ce.entity_id
+    INNER JOIN collection c ON c.id = ce.id
+    WHERE c.id = :collectionId
+    AND (
+      l.name LIKE :query OR
+      l.disambiguation LIKE :query OR
+      l.type LIKE :query OR
+      l.label_code LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getLabelsByCollection:
+SELECT
+  l.id,
+  l.name,
+  l.disambiguation,
+  l.type,
+  l.label_code,
+  visited.entity_id IS NOT NULL AS visited
+FROM label l
+INNER JOIN collection_entity ce ON l.id = ce.entity_id
+INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = l.id
+WHERE c.id = :collectionId
+AND (
+  l.name LIKE :query OR
+  l.disambiguation LIKE :query OR
+  l.type LIKE :query OR
+  l.label_code LIKE :query
+)
+LIMIT :limit OFFSET :offset;
+
+-- labels by release
+
+getLabelsByRelease:
+SELECT
+  l.id,
+  l.name,
+  l.disambiguation,
+  l.type,
+  l.label_code,
+  rl.catalog_number,
+  visited.entity_id IS NOT NULL AS visited
+FROM label l
+INNER JOIN labels_by_entity le ON l.id = le.label_id
+LEFT JOIN release_label rl ON le.entity_id = rl.release_id
+LEFT JOIN visited ON visited.entity_id = l.id
+WHERE le.entity_id = :releaseId
+ORDER BY rl.catalog_number;
+
+-- all labels
+
+getCountOfAllLabels:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM label l
+    WHERE (
+      l.name LIKE :query OR
+      l.disambiguation LIKE :query OR
+      l.type LIKE :query OR
+      l.label_code LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getAllLabels:
+SELECT
+  l.id,
+  l.name,
+  l.disambiguation,
+  l.type,
+  l.label_code,
+  visited.entity_id IS NOT NULL AS visited
+FROM label l
+LEFT JOIN visited ON visited.entity_id = l.id
+WHERE (
+  l.name LIKE :query OR
+  l.disambiguation LIKE :query OR
+  l.type LIKE :query OR
+  l.label_code LIKE :query
+)
+LIMIT :limit OFFSET :offset;

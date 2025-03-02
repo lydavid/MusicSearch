@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.LabelDao
-import ly.david.musicsearch.data.database.dao.LabelsByEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
@@ -17,10 +16,9 @@ import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class LabelsByEntityRepositoryImpl(
-    private val labelsByEntityDao: LabelsByEntityDao,
+    private val labelDao: LabelDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
-    private val labelDao: LabelDao,
     private val browseApi: BrowseApi,
 ) : LabelsByEntityRepository,
     BrowseEntitiesByEntity<LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
@@ -29,8 +27,8 @@ class LabelsByEntityRepositoryImpl(
     ) {
 
     override fun observeLabelsByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<LabelListItemModel>> {
         return observeEntitiesByEntity(
@@ -56,7 +54,7 @@ class LabelsByEntityRepositoryImpl(
                 }
 
                 else -> {
-                    labelsByEntityDao.deleteLabelsByEntity(entityId)
+                    labelDao.deleteLabelsByEntity(entityId)
                 }
             }
         }
@@ -67,25 +65,11 @@ class LabelsByEntityRepositoryImpl(
         entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, LabelListItemModel> {
-        return when {
-            entityId == null || entity == null -> {
-                error("not possible")
-            }
-
-            entity == MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.getLabelsByCollection(
-                    collectionId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            else -> {
-                labelsByEntityDao.getLabelsByEntity(
-                    entityId = entityId,
-                    query = listFilters.query,
-                )
-            }
-        }
+        return labelDao.getLabels(
+            entityId = entityId,
+            entity = entity,
+            query = listFilters.query,
+        )
     }
 
     override suspend fun browseEntities(
@@ -115,7 +99,7 @@ class LabelsByEntityRepositoryImpl(
             }
 
             else -> {
-                labelsByEntityDao.insertLabelsByEntity(
+                labelDao.insertLabelsByEntity(
                     entityId = entityId,
                     labelIds = musicBrainzModels.map { label -> label.id },
                 )
@@ -133,7 +117,7 @@ class LabelsByEntityRepositoryImpl(
             }
 
             else -> {
-                labelsByEntityDao.getCountOfLabelsByEntity(entityId)
+                labelDao.getCountOfLabelsByEntity(entityId)
             }
         }
     }
