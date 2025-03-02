@@ -1,7 +1,5 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
-import ly.david.musicsearch.data.musicbrainz.api.SearchLabelsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
@@ -35,19 +33,11 @@ val underPressureLabelInfo = LabelInfo(
     label = elektra,
 )
 
-val fakeLabels = listOf(
-    elektra,
-    elektraMusicGroup,
-)
-
-val browseLabelsResponse = BrowseLabelsResponse(
-    count = 1,
-    offset = 0,
-    listOf(element = elektra),
-)
-
-val searchLabelsResponse = SearchLabelsResponse(
-    count = 1,
-    offset = 0,
-    listOf(element = elektra),
+val virginMusicLabelMusicBrainzModel = LabelMusicBrainzModel(
+    id = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
+    name = "Virgin Music",
+    disambiguation = "a division of Universal Music Japan created in 2014 that replaces EMI R",
+    type = "Original Production",
+    typeId = "7aaa37fe-2def-3476-b359-80245850062d",
+    labelCode = null,
 )

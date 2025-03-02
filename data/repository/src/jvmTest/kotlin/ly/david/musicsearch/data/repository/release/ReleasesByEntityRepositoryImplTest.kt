@@ -8,6 +8,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.releaseWith3CatalogNumbersWithSameLabel
+import ly.david.data.test.virginMusicLabelMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
@@ -18,10 +19,8 @@ import ly.david.musicsearch.data.database.dao.RecordingReleaseDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
-import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.repository.helpers.TestLabelRepository
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -50,7 +49,6 @@ class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
     private val releaseDao: ReleaseDao by inject()
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
     private val releaseCountryDao: ReleaseCountryDao by inject()
-    private val releaseLabelDao: ReleaseLabelDao by inject()
     override val labelDao: LabelDao by inject()
     override val entityHasRelationsDao: EntityHasRelationsDao by inject()
     override val visitedDao: VisitedDao by inject()
@@ -86,17 +84,11 @@ class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
     @Test
     fun `releases by label - release with multiple catalog numbers, multiple cover arts`() = runTest {
         val labelRepository = createLabelRepository(
-            musicBrainzModel = LabelMusicBrainzModel(
-                id = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
-                name = "Virgin Music",
-                disambiguation = "a division of Universal Music Japan created in 2014 that replaces EMI R",
-                type = "Original Production",
-                typeId = "7aaa37fe-2def-3476-b359-80245850062d",
-                labelCode = null,
-            ),
+            musicBrainzModel = virginMusicLabelMusicBrainzModel,
         )
+        val labelId = virginMusicLabelMusicBrainzModel.id
         labelRepository.lookupLabel(
-            labelId = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
+            labelId = labelId,
             forceRefresh = false,
         )
 
@@ -122,7 +114,7 @@ class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
         )
 
         val flow: Flow<PagingData<ReleaseListItemModel>> = sut.observeReleasesByEntity(
-            entityId = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
+            entityId = labelId,
             entity = MusicBrainzEntity.LABEL,
             listFilters = ListFilters(
                 query = "ウタ",
@@ -162,5 +154,46 @@ class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
             ),
             release,
         )
+    }
+
+    @Test
+    fun `load 100, then 200 releases`() = runTest {
+        val labelRepository = createLabelRepository(
+            musicBrainzModel = virginMusicLabelMusicBrainzModel,
+        )
+        val labelId = virginMusicLabelMusicBrainzModel.id
+        labelRepository.lookupLabel(
+            labelId = labelId,
+            forceRefresh = false,
+        )
+
+        val sut = createReleasesByEntityRepository(
+            releases = (1..200).map {
+                releaseWith3CatalogNumbersWithSameLabel.copy(
+                    id = it.toString(),
+                )
+            },
+        )
+
+        val flow: Flow<PagingData<ReleaseListItemModel>> = sut.observeReleasesByEntity(
+            entityId = labelId,
+            entity = MusicBrainzEntity.LABEL,
+            listFilters = ListFilters(),
+        )
+        flow.asSnapshot().let { releases ->
+            Assert.assertEquals(
+                100,
+                releases.size,
+            )
+        }
+
+        flow.asSnapshot {
+            scrollTo(99)
+        }.let { releases ->
+            Assert.assertEquals(
+                200,
+                releases.size,
+            )
+        }
     }
 }
