@@ -10,11 +10,13 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToLabelListItemModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
 import lydavidmusicsearchdatadatabase.Labels_by_entity
 
 class LabelsByEntityDao(
     database: Database,
     private val coroutineDispatchers: CoroutineDispatchers,
+    private val releaseLabelDao: ReleaseLabelDao,
 ) : EntityDao {
     override val transacter = database.labels_by_entityQueries
 
@@ -91,4 +93,37 @@ class LabelsByEntityDao(
             )
         },
     )
+
+    // region labels by release
+    fun insertLabelsByRelease(
+        releaseId: String,
+        labelInfoList: List<LabelInfo>?,
+    ) {
+        transacter.transaction {
+            labelInfoList?.forEach { labelInfo ->
+                val labelId = labelInfo.label?.id ?: return@forEach
+                insertLabelByEntity(
+                    entityId = releaseId,
+                    labelId = labelId,
+                )
+                releaseLabelDao.insert(
+                    releaseId = releaseId,
+                    labelId = labelId,
+                    catalogNumber = labelInfo.catalogNumber.orEmpty(),
+                )
+            }
+        }
+    }
+
+    fun getLabelsByRelease(
+        releaseId: String,
+    ): List<LabelListItemModel> = transacter.getLabelsByRelease(
+        releaseId = releaseId,
+        mapper = ::mapToLabelListItemModel,
+    ).executeAsList()
+
+    fun deleteReleaseLabelLinks(releaseId: String) {
+        releaseLabelDao.deleteReleaseLabelLinks(releaseId)
+    }
+    // endregion
 }

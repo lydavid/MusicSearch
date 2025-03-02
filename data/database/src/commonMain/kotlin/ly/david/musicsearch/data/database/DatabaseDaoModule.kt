@@ -66,7 +66,7 @@ val databaseDaoModule = module {
     single { InstrumentDao(get()) }
     single { GenreDao(get()) }
     single { LabelDao(get()) }
-    single { LabelsByEntityDao(get(), get()) }
+    singleOf(::LabelsByEntityDao)
     single { LookupHistoryDao(get(), get()) }
     singleOf(::MbidImageDao) bind ImageUrlDao::class
     single { MediumDao(get(), get()) }
@@ -77,9 +77,9 @@ val databaseDaoModule = module {
     single { RecordingsByEntityDao(get(), get()) }
     single { RelationDao(get(), get()) }
     single { ReleaseCountryDao(get(), get()) }
-    single { ReleaseDao(get(), get(), get()) }
+    singleOf(::ReleaseDao)
     singleOf(::ReleaseGroupDaoImpl) bind ReleaseGroupDao::class
-    single { ReleaseLabelDao(get(), get()) }
+    single { ReleaseLabelDao(get()) }
     single { ReleaseReleaseGroupDao(get(), get()) }
     single { SearchHistoryDao(get(), get()) }
     single { SeriesDao(get()) }

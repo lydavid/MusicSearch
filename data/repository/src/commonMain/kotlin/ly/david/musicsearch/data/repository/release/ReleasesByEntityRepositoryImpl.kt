@@ -9,7 +9,6 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
-import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.ARTIST_CREDITS
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
@@ -30,7 +29,6 @@ class ReleasesByEntityRepositoryImpl(
     private val recordingReleaseDao: RecordingReleaseDao,
     private val releaseDao: ReleaseDao,
     private val releaseCountryDao: ReleaseCountryDao,
-    private val releaseLabelDao: ReleaseLabelDao,
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
 ) : ReleasesByEntityRepository,
     BrowseEntitiesByEntity<ReleaseListItemModel, ReleaseMusicBrainzModel, BrowseReleasesResponse>(
@@ -74,7 +72,7 @@ class ReleasesByEntityRepositoryImpl(
                 }
 
                 MusicBrainzEntity.LABEL -> {
-                    releaseLabelDao.deleteReleasesByLabel(entityId)
+                    releaseDao.deleteReleasesByLabel(entityId)
                 }
 
                 MusicBrainzEntity.RECORDING -> {
@@ -122,7 +120,7 @@ class ReleasesByEntityRepositoryImpl(
             }
 
             entity == MusicBrainzEntity.LABEL -> {
-                releaseLabelDao.getReleasesByLabel(
+                releaseDao.getReleasesByLabel(
                     labelId = entityId,
                     query = listFilters.query,
                 )
@@ -200,7 +198,7 @@ class ReleasesByEntityRepositoryImpl(
             }
 
             MusicBrainzEntity.LABEL -> {
-                releaseLabelDao.linkReleasesByLabel(
+                releaseDao.insertReleasesByLabel(
                     labelId = entityId,
                     releases = musicBrainzModels,
                 )
@@ -242,7 +240,7 @@ class ReleasesByEntityRepositoryImpl(
             }
 
             MusicBrainzEntity.LABEL -> {
-                releaseLabelDao.getCountOfReleasesByLabel(entityId)
+                releaseDao.getCountOfReleasesByLabel(entityId)
             }
 
             MusicBrainzEntity.RECORDING -> {

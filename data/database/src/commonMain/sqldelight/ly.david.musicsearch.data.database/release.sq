@@ -54,3 +54,99 @@ INNER JOIN medium m ON t.medium_id = m.id
 INNER JOIN `release` r ON m.release_id = r.id
 WHERE r.id = :releaseId
 GROUP BY m.id;
+
+-- releases by entity
+
+CREATE TABLE IF NOT EXISTS releases_by_entity (
+  entity_id TEXT NOT NULL,
+  release_id TEXT NOT NULL,
+
+  PRIMARY KEY (entity_id, release_id)
+);
+
+insertOrIgnoreReleasesByEntity:
+INSERT OR IGNORE INTO releases_by_entity
+VALUES ?;
+
+-- releases by label
+
+getNumberOfReleasesByLabel:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM (
+      SELECT DISTINCT r.*
+      FROM `release` r
+      INNER JOIN releases_by_entity re ON re.release_id = r.id
+      INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+      INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+      LEFT JOIN release_label rl ON r.id = rl.release_id
+      WHERE re.entity_id = :labelId
+      AND (
+        r.name LIKE :query
+        OR r.disambiguation LIKE :query
+        OR r.date LIKE :query
+        OR r.country_code LIKE :query
+        OR ac.name LIKE :query
+        OR rl.catalog_number LIKE :query
+      )
+    )
+  ),
+  0
+) AS count;
+
+getReleasesByLabel:
+SELECT
+  r.*,
+  (
+    SELECT GROUP_CONCAT(catalog_number, ', ')
+    FROM (
+      SELECT DISTINCT rl2.catalog_number
+      FROM release_label rl2
+      WHERE rl2.release_id = r.id
+      ORDER BY rl2.catalog_number
+    ) AS distinct_catalogs
+  ) AS catalogNumbers,
+  ac.name AS artistCreditNames,
+  mi.thumbnail_url,
+  mi.id AS placeholderKey,
+  (
+    SELECT COUNT(cc.area_id)
+    FROM `release`
+    INNER JOIN release_country rc ON rc.release_id = `release`.id
+    INNER JOIN country_code cc ON cc.area_id = rc.country_id
+    WHERE r.id = `release`.id
+  ) AS releaseCountryCount,
+  visited.entity_id IS NOT NULL AS visited
+FROM `release` r
+INNER JOIN releases_by_entity re ON re.release_id = r.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN release_label rl ON r.id = rl.release_id
+LEFT JOIN mbid_image mi ON mi.mbid = r.id
+LEFT JOIN visited ON visited.entity_id = r.id
+WHERE re.entity_id = :labelId
+AND (
+  r.name LIKE :query
+  OR r.disambiguation LIKE :query
+  OR r.date LIKE :query
+  OR r.country_code LIKE :query
+  OR ac.name LIKE :query
+  OR rl.catalog_number LIKE :query
+)
+GROUP BY r.id
+ORDER BY r.date, r.name
+LIMIT :limit OFFSET :offset;
+
+deleteReleasesByLabel {
+DELETE FROM release WHERE id IN (
+  SELECT r.id
+  FROM release r
+  INNER JOIN releases_by_entity re ON re.release_id = r.id
+  WHERE re.entity_id = :labelId
+);
+
+DELETE FROM release_label WHERE label_id = :labelId;
+
+DELETE FROM releases_by_entity WHERE entity_id = :labelId;
+}
