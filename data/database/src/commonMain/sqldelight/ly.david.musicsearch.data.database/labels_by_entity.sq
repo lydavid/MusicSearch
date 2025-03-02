@@ -69,7 +69,8 @@ SELECT
   rl.catalog_number,
   visited.entity_id IS NOT NULL AS visited
 FROM label l
-INNER JOIN release_label rl ON l.id = rl.label_id
+INNER JOIN labels_by_entity le ON l.id = le.label_id
+LEFT JOIN release_label rl ON le.entity_id = rl.release_id
 LEFT JOIN visited ON visited.entity_id = l.id
-WHERE rl.release_id = :releaseId
+WHERE le.entity_id = :releaseId
 ORDER BY rl.catalog_number;
