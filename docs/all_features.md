@@ -33,7 +33,7 @@ e.g. On an artist's page, you can see their events, recordings, releases, and re
 | Entity        | Browsing supported                                                                                       | Browsing not yet supported | Unsupported                        |
 |---------------|----------------------------------------------------------------------------------------------------------|----------------------------|------------------------------------|
 | area          | artists, events, labels, places, releases                                                                | collections                | recordings, works                  |
-| artist        | events, recordings, release, release groups, works                                                       | collections                |
+| artist        | events, recordings, releases, release groups, works                                                      | collections                |
 | collection    | areas, artists, events, instruments, labels, places, recordings, releases, release groups, series, works |                            |
 | event         |                                                                                                          | collections                |
 | instrument    |                                                                                                          | collections                |

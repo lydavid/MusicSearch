@@ -8,10 +8,6 @@ CREATE TABLE IF NOT EXISTS medium (
   `track_count` INTEGER AS Int NOT NULL,
   `format` TEXT,
   `format_id` TEXT
-
---   FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
---   ON UPDATE CASCADE
---   ON DELETE CASCADE
 );
 
 insert:

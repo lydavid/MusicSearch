@@ -4,10 +4,6 @@ CREATE TABLE IF NOT EXISTS release_country (
   `date` TEXT,
   
   PRIMARY KEY(`release_id`, `country_id`)
-  
---   FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
---   ON UPDATE CASCADE
---   ON DELETE CASCADE
 );
 
 insertOrFail:

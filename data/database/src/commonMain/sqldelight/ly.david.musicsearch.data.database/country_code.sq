@@ -5,8 +5,6 @@ CREATE TABLE IF NOT EXISTS country_code (
   PRIMARY KEY(`area_id`, `code`),
 
   FOREIGN KEY(`area_id`) REFERENCES `area`(`id`)
---   ON UPDATE CASCADE
---   ON DELETE CASCADE
 );
 
 insert:

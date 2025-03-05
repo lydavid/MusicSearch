@@ -3,14 +3,6 @@ CREATE TABLE IF NOT EXISTS release_release_group (
   `release_group_id` TEXT NOT NULL,
   
   PRIMARY KEY(`release_id`, `release_group_id`)
-
---   FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
---   ON UPDATE CASCADE
---   ON DELETE CASCADE,
---
---   FOREIGN KEY(`release_group_id`) REFERENCES `release_group`(`id`)
---   ON UPDATE CASCADE
---   ON DELETE CASCADE
 );
 
 insertOrFail:

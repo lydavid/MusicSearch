@@ -3,14 +3,6 @@ CREATE TABLE IF NOT EXISTS artist_release (
   `release_id` TEXT NOT NULL,
 
   PRIMARY KEY(`artist_id`, `release_id`)
-
---   FOREIGN KEY(`artist_id`) REFERENCES `artist`(`id`)
---   ON UPDATE CASCADE
---   ON DELETE CASCADE,
---
---   FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
---   ON UPDATE CASCADE
---   ON DELETE CASCADE
 );
 
 insertOrFail:
