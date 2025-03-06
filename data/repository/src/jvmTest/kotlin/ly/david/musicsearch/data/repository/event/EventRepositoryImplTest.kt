@@ -1,9 +1,8 @@
 package ly.david.musicsearch.data.repository.event
 
 import kotlinx.coroutines.test.runTest
-import ly.david.data.test.api.FakeLookupApi
+import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
@@ -12,11 +11,10 @@ import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.data.test.KoinTestRule
-import ly.david.musicsearch.data.repository.RelationRepositoryImpl
+import ly.david.musicsearch.data.repository.helpers.TestEventRepository
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.event.EventDetailsModel
-import ly.david.musicsearch.shared.domain.event.EventRepository
+import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert.assertEquals
@@ -25,49 +23,21 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class EventRepositoryImplTest : KoinTest {
+interface IEventRepositoryImplTest
+
+class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val visitedDao: VisitedDao by inject()
-    private val relationDao: RelationDao by inject()
-    private val eventDao: EventDao by inject()
-
-    private fun createRepository(
-        musicBrainzModel: EventMusicBrainzModel,
-    ): EventRepository {
-        val relationRepository = RelationRepositoryImpl(
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupEvent(
-                    eventId: String,
-                    include: String?,
-                ): EventMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-            entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
-            relationDao = relationDao,
-        )
-        return EventRepositoryImpl(
-            eventDao = eventDao,
-            relationRepository = relationRepository,
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupEvent(
-                    eventId: String,
-                    include: String?,
-                ): EventMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-        )
-    }
+    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val visitedDao: VisitedDao by inject()
+    override val relationDao: RelationDao by inject()
+    override val eventDao: EventDao by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepository(
+        val sparseRepository = createEventRepository(
             musicBrainzModel = EventMusicBrainzModel(
                 id = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
                 name = "The Eras Tour: Toronto (night 1)",
@@ -85,7 +55,7 @@ class EventRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepository(
+        val allDataRepository = createEventRepository(
             musicBrainzModel = EventMusicBrainzModel(
                 id = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
                 name = "The Eras Tour: Toronto (night 1)",
