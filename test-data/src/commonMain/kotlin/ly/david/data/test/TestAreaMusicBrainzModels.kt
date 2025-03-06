@@ -51,3 +51,11 @@ val japanAreaMusicBrainzModel = AreaMusicBrainzModel(
     countryCodes = listOf("JP"),
     type = AreaType.COUNTRY,
 )
+
+val kitanomaruAreaMusicBrainzModel = AreaMusicBrainzModel(
+    id = "e24c0f02-9b5a-4f4f-9fe0-f8b3e67874f8",
+    name = "Kitanomaru Kōen",
+    sortName = "Kitanomaru Kōen",
+    type = "District",
+    typeId = "84039871-5e47-38ca-a66a-45e512c8290f",
+)

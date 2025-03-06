@@ -19,10 +19,7 @@ val budokanPlaceMusicBrainzModel = PlaceMusicBrainzModel(
         longitude = 139.75,
         latitude = 35.69333,
     ),
-    area = AreaMusicBrainzModel(
-        id = "e24c0f02-9b5a-4f4f-9fe0-f8b3e67874f8",
-        name = "Kitanomaru Kōen",
-        sortName = "Kitanomaru Kōen",
+    area = kitanomaruAreaMusicBrainzModel.copy(
         type = null,
         typeId = null,
     ),
