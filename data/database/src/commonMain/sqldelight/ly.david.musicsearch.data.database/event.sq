@@ -48,12 +48,22 @@ INSERT OR FAIL INTO events_by_entity
 VALUES ?;
 
 deleteEventsByEntity {
-DELETE FROM event WHERE id IN (
-  SELECT e.id
-  FROM events_by_entity ee
-  INNER JOIN event e ON e.id = ee.event_id
-  WHERE ee.entity_id = :entityId
-);
+WITH
+  events_linked_to_multiple_entities AS (
+    SELECT event_id
+    FROM events_by_entity
+    GROUP BY event_id
+    HAVING COUNT(DISTINCT entity_id) > 1
+  ),
+  events_to_delete AS (
+    SELECT e.id
+    FROM event e
+    INNER JOIN events_by_entity ee ON e.id = ee.event_id
+    WHERE ee.entity_id = :entityId
+    AND e.id NOT IN (SELECT event_id FROM events_linked_to_multiple_entities)
+  )
+DELETE FROM event
+WHERE id IN (SELECT id FROM events_to_delete);
 
 DELETE FROM events_by_entity WHERE entity_id = :entityId;
 }
