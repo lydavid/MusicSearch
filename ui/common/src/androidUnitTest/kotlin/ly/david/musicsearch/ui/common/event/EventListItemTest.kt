@@ -25,4 +25,11 @@ class EventListItemTest : ScreenshotTest() {
             PreviewEventListItemVisited()
         }
     }
+
+    @Test
+    fun multiDay() {
+        snapshot {
+            PreviewEventListItemMultiDay()
+        }
+    }
 }

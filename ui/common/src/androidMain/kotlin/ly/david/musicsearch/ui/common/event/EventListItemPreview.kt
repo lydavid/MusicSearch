@@ -70,3 +70,26 @@ internal fun PreviewEventListItemVisited() {
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewEventListItemMultiDay() {
+    PreviewTheme {
+        Surface {
+            EventListItem(
+                event = EventListItemModel(
+                    id = "0806a112-098e-49b5-a51c-34edf60c25d8",
+                    name = "Aimer 10th Anniversary Live in SAITAMA SUPER ARENA \"night world\"",
+                    type = "Stage performance",
+                    time = "17:00",
+                    cancelled = false,
+                    lifeSpan = LifeSpanUiModel(
+                        begin = "2021-09-11",
+                        end = "2021-09-12"
+                    ),
+                    visited = false
+                ),
+            )
+        }
+    }
+}

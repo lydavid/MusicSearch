@@ -2,10 +2,12 @@ package ly.david.musicsearch.ui.common.event
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNull
@@ -46,13 +48,25 @@ fun EventListItem(
                         )
                     }
 
-                    lifeSpan.ifNotNull {
-                        Text(
-                            modifier = Modifier.padding(top = 4.dp),
-                            text = it.getLifeSpanForDisplay(),
-                            style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = event.fontWeight,
-                        )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        lifeSpan.ifNotNull {
+                            Text(
+                                modifier = Modifier.padding(top = 4.dp),
+                                text = it.getLifeSpanForDisplay(),
+                                style = TextStyles.getCardBodySubTextStyle(),
+                                fontWeight = event.fontWeight,
+                            )
+                        }
+                        time.ifNotNullOrEmpty {
+                            Text(
+                                modifier = Modifier.padding(top = 4.dp),
+                                text = " · $it",
+                                style = TextStyles.getCardBodySubTextStyle(),
+                                fontWeight = event.fontWeight,
+                            )
+                        }
                     }
                 }
             }
