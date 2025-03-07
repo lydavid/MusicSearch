@@ -103,7 +103,10 @@ WHERE ee.entity_id = :entityId
 AND (
   e.name LIKE :query OR
   e.disambiguation LIKE :query OR
-  e.type LIKE :query
+  e.type LIKE :query OR
+  e.time LIKE :query OR
+  e.begin LIKE :query OR
+  e.end LIKE :query
 )
 ORDER BY e.begin, e.end, e.name
 LIMIT :limit OFFSET :offset;
@@ -147,7 +150,10 @@ WHERE c.id = :collectionId
 AND (
   e.name LIKE :query OR
   e.disambiguation LIKE :query OR
-  e.type LIKE :query
+  e.type LIKE :query OR
+  e.time LIKE :query OR
+  e.begin LIKE :query OR
+  e.end LIKE :query
 )
 ORDER BY e.begin, e.end, e.name
 LIMIT :limit OFFSET :offset;
@@ -185,7 +191,10 @@ LEFT JOIN visited ON visited.entity_id = e.id
 WHERE (
   e.name LIKE :query OR
   e.disambiguation LIKE :query OR
-  e.type LIKE :query
+  e.type LIKE :query OR
+  e.time LIKE :query OR
+  e.begin LIKE :query OR
+  e.end LIKE :query
 )
 ORDER BY e.begin, e.end, e.name
 LIMIT :limit OFFSET :offset;

@@ -110,3 +110,19 @@ val adoArtistCreditMusicBrainzModel = ArtistCreditMusicBrainzModel(
     name = "Ado",
     joinPhrase = "",
 )
+
+val kissArtistMusicBrainzModel = ArtistMusicBrainzModel(
+    id = "e1f1e33e-2e4c-4d43-b91b-7064068d3283",
+    type = "Group",
+    sortName = "KISS",
+    typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+    disambiguation = "US rock band",
+    name = "KISS",
+    lifeSpan = LifeSpanMusicBrainzModel(
+        begin = "1973-01",
+        end = "2023-12-02",
+        ended = true,
+    ),
+    isnis = listOf("0000000123153016"),
+    countryCode = "US",
+)
