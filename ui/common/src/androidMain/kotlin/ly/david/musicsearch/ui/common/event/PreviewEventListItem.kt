@@ -93,3 +93,23 @@ internal fun PreviewEventListItemMultiDay() {
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewEventListItemCancelled() {
+    PreviewTheme {
+        Surface {
+            EventListItem(
+                EventListItemModel(
+                    id = "b7c3f330-4fa8-4355-95de-af6e7c5d20b9",
+                    name = "1973-03-06: Vancouver Gardens, Vancouver, BC, Canada",
+                    type = "Concert",
+                    lifeSpan = LifeSpanUiModel(
+                        begin = "1973-03-06",
+                    ),
+                    cancelled = true,
+                ),
+            )
+        }
+    }
+}

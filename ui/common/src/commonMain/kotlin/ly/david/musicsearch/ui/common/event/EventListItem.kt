@@ -5,17 +5,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.text.fontWeight
+import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
@@ -24,6 +25,8 @@ fun EventListItem(
     modifier: Modifier = Modifier,
     onEventClick: EventListItemModel.() -> Unit = {},
 ) {
+    val strings = LocalStrings.current
+
     ListItem(
         headlineContent = {
             Column {
@@ -51,20 +54,36 @@ fun EventListItem(
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        lifeSpan.ifNotNull {
+                        val lifeSpanText = lifeSpan.getLifeSpanForDisplay()
+                        if (lifeSpanText.isNotEmpty()) {
                             Text(
                                 modifier = Modifier.padding(top = 4.dp),
-                                text = it.getLifeSpanForDisplay(),
+                                text = lifeSpanText,
                                 style = TextStyles.getCardBodySubTextStyle(),
                                 fontWeight = event.fontWeight,
                             )
                         }
-                        time.ifNotNullOrEmpty {
+                        time.ifNotNullOrEmpty { time ->
                             Text(
                                 modifier = Modifier.padding(top = 4.dp),
-                                text = " · $it",
+                                text = buildString {
+                                    append(" · ").takeIf { lifeSpanText.isNotEmpty() }
+                                    append(time)
+                                },
                                 style = TextStyles.getCardBodySubTextStyle(),
                                 fontWeight = event.fontWeight,
+                            )
+                        }
+                        if (cancelled == true) {
+                            Text(
+                                modifier = Modifier.padding(top = 4.dp),
+                                text = buildString {
+                                    append(" ").takeIf { lifeSpanText.isNotEmpty() || !time.isNullOrEmpty() }
+                                    append("(${strings.cancelled})")
+                                },
+                                style = TextStyles.getCardBodySubTextStyle(),
+                                fontWeight = event.fontWeight,
+                                color = MaterialTheme.colorScheme.error,
                             )
                         }
                     }

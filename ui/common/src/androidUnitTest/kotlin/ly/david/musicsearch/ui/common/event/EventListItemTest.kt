@@ -32,4 +32,11 @@ class EventListItemTest : ScreenshotTest() {
             PreviewEventListItemMultiDay()
         }
     }
+
+    @Test
+    fun cancelled() {
+        snapshot {
+            PreviewEventListItemCancelled()
+        }
+    }
 }

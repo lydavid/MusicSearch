@@ -135,7 +135,9 @@ internal val events = MutableStateFlow(
                 id = "stratford_1956",
                 name = "Stratford Shakespearean Festival 1956",
                 type = "Festival",
-                time = "1956",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1956",
+                ),
             ),
             EventListItemModel(
                 id = "expo_67",
@@ -150,7 +152,9 @@ internal val events = MutableStateFlow(
                 id = "toronto_rock_revival_1969",
                 name = "Toronto Rock and Roll Revival",
                 type = "Festival",
-                time = "1969-09-13",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1969-09-13",
+                ),
             ),
             EventListItemModel(
                 id = "transcontinental_pop_festival_1970",
@@ -165,25 +169,34 @@ internal val events = MutableStateFlow(
                 id = "alice_cooper_montreal_1972",
                 name = "Alice Cooper at Centre sportif de l'Université de Montréal",
                 type = "Concert",
-                time = "1972-01-13",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1972-01-13",
+                ),
             ),
             EventListItemModel(
                 id = "world_saxophone_congress_1972",
                 name = "3rd World Saxophone Congress",
                 type = "Festival",
-                time = "1972-08",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1972-08",
+                ),
             ),
             EventListItemModel(
                 id = "bette_midler_massey_hall_1973",
                 name = "Bette Midler at Massey Hall",
                 type = "Concert",
-                time = "1973-02-26",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1973-02-26",
+                ),
             ),
             EventListItemModel(
-                id = "vancouver_gardens_concert_1973",
+                id = "b7c3f330-4fa8-4355-95de-af6e7c5d20b9",
                 name = "1973-03-06: Vancouver Gardens, Vancouver, BC, Canada",
                 type = "Concert",
-                time = "1973-03-06",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "1973-03-06",
+                ),
+                cancelled = true,
             ),
         ),
     ),
