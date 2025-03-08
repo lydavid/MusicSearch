@@ -26,13 +26,13 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestEventRepository
+import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.event.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventsByEntityRepository
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -77,28 +77,6 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         )
     }
 
-    private fun EventsByEntityRepository.testFilter(
-        entityId: String,
-        entity: MusicBrainzEntity?,
-        testCases: List<FilterTestCase<EventListItemModel>>,
-    ) = runTest {
-        testCases.forEach { testCase ->
-            observeEventsByEntity(
-                entityId = entityId,
-                entity = entity,
-                listFilters = ListFilters(
-                    query = testCase.query,
-                ),
-            ).asSnapshot().run {
-                assertEquals(
-                    "${testCase.description} ${testCase.query} did not return the expected result.",
-                    testCase.expectedResult,
-                    this,
-                )
-            }
-        }
-    }
-
     @Test
     fun setupEventsByCollection() = runTest {
         val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
@@ -123,9 +101,16 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             entityIds = events.map { it.id },
         )
 
-        eventsByEntityRepository.testFilter(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+        testFilter(
+            pagingFlowProducer = { query ->
+                eventsByEntityRepository.observeEventsByEntity(
+                    entityId = collectionId,
+                    entity = MusicBrainzEntity.COLLECTION,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
             testCases = listOf(
                 FilterTestCase(
                     description = "No filter",
@@ -187,9 +172,16 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             events = events,
         )
 
-        eventsByEntityRepository.testFilter(
-            entityId = entityId,
-            entity = entity,
+        testFilter(
+            pagingFlowProducer = { query ->
+                eventsByEntityRepository.observeEventsByEntity(
+                    entityId = entityId,
+                    entity = entity,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
             testCases = listOf(
                 FilterTestCase(
                     description = "no filter",
@@ -222,9 +214,16 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             events = events,
         )
 
-        eventsByEntityRepository.testFilter(
-            entityId = entityId,
-            entity = entity,
+        testFilter(
+            pagingFlowProducer = { query ->
+                eventsByEntityRepository.observeEventsByEntity(
+                    entityId = entityId,
+                    entity = entity,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
             testCases = listOf(
                 FilterTestCase(
                     description = "no filter",
@@ -286,9 +285,16 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             events = events,
         )
 
-        eventsByEntityRepository.testFilter(
-            entityId = entityId,
-            entity = entity,
+        testFilter(
+            pagingFlowProducer = { query ->
+                eventsByEntityRepository.observeEventsByEntity(
+                    entityId = entityId,
+                    entity = entity,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
             testCases = listOf(
                 FilterTestCase(
                     description = "no filter",
@@ -350,9 +356,16 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             events = events,
         )
 
-        eventsByEntityRepository.testFilter(
-            entityId = entityId,
-            entity = entity,
+        testFilter(
+            pagingFlowProducer = { query ->
+                eventsByEntityRepository.observeEventsByEntity(
+                    entityId = entityId,
+                    entity = entity,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
             testCases = listOf(
                 FilterTestCase(
                     description = "no filter",

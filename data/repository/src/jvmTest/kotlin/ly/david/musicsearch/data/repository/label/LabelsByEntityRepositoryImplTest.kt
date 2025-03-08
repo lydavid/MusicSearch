@@ -19,6 +19,8 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
+import ly.david.musicsearch.data.repository.helpers.FilterTestCase
+import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.label.LabelsByEntityRepository
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
@@ -63,13 +65,15 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
         )
     }
 
-    private fun setUpLabelsCollection() = runTest {
+    @Test
+    fun setUpLabelsByCollection() = runTest {
         val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
+        val entity = MusicBrainzEntity.COLLECTION
         val labels = listOf(
             virginMusicLabelMusicBrainzModel,
             elektraLabelMusicBrainzModel,
         )
-        val sut = createRepository(
+        val labelsByEntityRepository = createRepository(
             labels = labels,
         )
 
@@ -86,51 +90,52 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
             entityIds = labels.map { it.id },
         )
 
-        sut.observeLabelsByEntity(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
-            listFilters = ListFilters(),
-        ).asSnapshot().run {
-            assertEquals(
-                listOf(
-                    virginLabelListItemModel,
-                    elektraLabelListItemModel,
+        testFilter(
+            pagingFlowProducer = { query ->
+                labelsByEntityRepository.observeLabelsByEntity(
+                    entityId = collectionId,
+                    entity = entity,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        virginLabelListItemModel,
+                        elektraLabelListItemModel,
+                    ),
                 ),
-                this,
-            )
-        }
-
-        sut.observeLabelsByEntity(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
-            listFilters = ListFilters(
-                query = "19",
+                FilterTestCase(
+                    description = "filter by label code",
+                    query = "19",
+                    expectedResult = listOf(
+                        elektraLabelListItemModel,
+                    ),
+                ),
             ),
-        ).asSnapshot().run {
-            assertEquals(
-                listOf(
-                    elektraLabelListItemModel,
-                ),
-                this,
-            )
-        }
+        )
     }
 
     @Test
     fun `labels by collection, filter by label code`() = runTest {
-        setUpLabelsCollection()
+        setUpLabelsByCollection()
     }
 
-    private fun setUpJapaneseLabels() = runTest {
+    @Test
+    fun setUpJapaneseLabels() = runTest {
         val entityId = japanAreaMusicBrainzModel.id
         val labels = listOf(
             flyingDogLabelMusicBrainzModel,
             virginMusicLabelMusicBrainzModel,
         )
-        val sut = createRepository(
+        val labelsByEntityRepository = createRepository(
             labels = labels,
         )
-        sut.observeLabelsByEntity(
+        labelsByEntityRepository.observeLabelsByEntity(
             entityId = entityId,
             entity = MusicBrainzEntity.AREA,
             listFilters = ListFilters(),
@@ -143,7 +148,7 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
                 this,
             )
         }
-        sut.observeLabelsByEntity(
+        labelsByEntityRepository.observeLabelsByEntity(
             entityId = entityId,
             entity = MusicBrainzEntity.AREA,
             listFilters = ListFilters(
@@ -157,42 +162,46 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
         }
     }
 
-    private fun setUpUKLabels() = runTest {
+    @Test
+    fun setUpUKLabels() = runTest {
         val entityId = "8a754a16-0027-3a29-b6d7-2b40ea0481ed"
+        val entity = MusicBrainzEntity.AREA
         val labels = listOf(
             elektraLabelMusicBrainzModel,
             elektraMusicGroupLabelMusicBrainzModel,
         )
-        val sut = createRepository(
+        val labelsByEntityRepository = createRepository(
             labels = labels,
         )
-        sut.observeLabelsByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
-            listFilters = ListFilters(),
-        ).asSnapshot().run {
-            assertEquals(
-                listOf(
-                    elektraLabelListItemModel,
-                    elektraMusicGroupLabelListItemModel,
+
+        testFilter(
+            pagingFlowProducer = { query ->
+                labelsByEntityRepository.observeLabelsByEntity(
+                    entityId = entityId,
+                    entity = entity,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        elektraLabelListItemModel,
+                        elektraMusicGroupLabelListItemModel,
+                    ),
                 ),
-                this,
-            )
-        }
-        sut.observeLabelsByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
-            listFilters = ListFilters(
-                query = "hold",
+                FilterTestCase(
+                    description = "filter by type",
+                    query = "Hold",
+                    expectedResult = listOf(
+                        elektraMusicGroupLabelListItemModel,
+                    ),
+                ),
             ),
-        ).asSnapshot().run {
-            assertEquals(
-                listOf(
-                    elektraMusicGroupLabelListItemModel,
-                ),
-                this,
-            )
-        }
+        )
     }
 
     private fun setUpLabels() = runTest {
@@ -208,39 +217,41 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
     @Test
     fun `all labels`() = runTest {
         setUpLabels()
-        setUpLabelsCollection()
+        setUpLabelsByCollection()
 
-        val sut = createRepository(
+        val labelsByEntityRepository = createRepository(
             labels = listOf(),
         )
-        sut.observeLabelsByEntity(
-            entityId = null,
-            entity = null,
-            listFilters = ListFilters(),
-        ).asSnapshot().run {
-            assertEquals(
-                listOf(
-                    flyingDogLabelListItemModel,
-                    virginLabelListItemModel,
-                    elektraLabelListItemModel,
-                    elektraMusicGroupLabelListItemModel,
+
+        testFilter(
+            pagingFlowProducer = { query ->
+                labelsByEntityRepository.observeLabelsByEntity(
+                    entityId = null,
+                    entity = null,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        flyingDogLabelListItemModel,
+                        virginLabelListItemModel,
+                        elektraLabelListItemModel,
+                        elektraMusicGroupLabelListItemModel,
+                    ),
                 ),
-                this,
-            )
-        }
-        sut.observeLabelsByEntity(
-            entityId = null,
-            entity = null,
-            listFilters = ListFilters(
-                query = "192",
+                FilterTestCase(
+                    description = "filter by label code",
+                    query = "19",
+                    expectedResult = listOf(
+                        elektraLabelListItemModel,
+                    ),
+                ),
             ),
-        ).asSnapshot().run {
-            assertEquals(
-                listOf(
-                    elektraLabelListItemModel,
-                ),
-                this,
-            )
-        }
+        )
     }
 }
