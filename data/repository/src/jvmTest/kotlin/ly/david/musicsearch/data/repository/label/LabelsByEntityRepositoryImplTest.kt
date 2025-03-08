@@ -92,10 +92,6 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                2,
-                size,
-            )
-            assertEquals(
                 listOf(
                     virginLabelListItemModel,
                     elektraLabelListItemModel,
@@ -111,10 +107,6 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
                 query = "19",
             ),
         ).asSnapshot().run {
-            assertEquals(
-                1,
-                size,
-            )
             assertEquals(
                 listOf(
                     elektraLabelListItemModel,
@@ -144,10 +136,6 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                2,
-                size,
-            )
-            assertEquals(
                 listOf(
                     flyingDogLabelListItemModel,
                     virginLabelListItemModel,
@@ -162,10 +150,6 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
                 query = "do",
             ),
         ).asSnapshot().run {
-            assertEquals(
-                1,
-                size,
-            )
             assertEquals(
                 listOf(flyingDogLabelListItemModel),
                 this,
@@ -188,10 +172,6 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                2,
-                size,
-            )
-            assertEquals(
                 listOf(
                     elektraLabelListItemModel,
                     elektraMusicGroupLabelListItemModel,
@@ -206,10 +186,6 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
                 query = "hold",
             ),
         ).asSnapshot().run {
-            assertEquals(
-                1,
-                size,
-            )
             assertEquals(
                 listOf(
                     elektraMusicGroupLabelListItemModel,
@@ -243,10 +219,6 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                4,
-                size,
-            )
-            assertEquals(
                 listOf(
                     flyingDogLabelListItemModel,
                     virginLabelListItemModel,
@@ -263,10 +235,6 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
                 query = "192",
             ),
         ).asSnapshot().run {
-            assertEquals(
-                1,
-                size,
-            )
             assertEquals(
                 listOf(
                     elektraLabelListItemModel,

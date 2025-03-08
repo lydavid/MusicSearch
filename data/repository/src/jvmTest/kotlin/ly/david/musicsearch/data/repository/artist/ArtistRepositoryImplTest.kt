@@ -190,9 +190,9 @@ class ArtistRepositoryImplTest : KoinTest {
                     offset: Int,
                 ): BrowseArtistsResponse {
                     return BrowseArtistsResponse(
-                        1,
-                        0,
-                        listOf(
+                        count = 1,
+                        offset = 0,
+                        musicBrainzModels = listOf(
                             ArtistMusicBrainzModel(
                                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                                 name = "The Beatles",

@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
+import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeCollectionApi
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
@@ -13,7 +14,6 @@ import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
 import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.BrowseEntityCountRepositoryImpl
-import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
@@ -125,10 +125,6 @@ class CollectionRepositoryImplTest : KoinTest {
         val collections: List<CollectionListItemModel> = flow.asSnapshot()
 
         Assert.assertEquals(
-            2,
-            collections.size,
-        )
-        Assert.assertEquals(
             listOf(
                 CollectionListItemModel(
                     id = "2",
@@ -187,10 +183,6 @@ class CollectionRepositoryImplTest : KoinTest {
         )
         val collections: List<CollectionListItemModel> = flow.asSnapshot()
 
-        Assert.assertEquals(
-            2,
-            collections.size,
-        )
         Assert.assertEquals(
             listOf(
                 CollectionListItemModel(
@@ -253,10 +245,6 @@ class CollectionRepositoryImplTest : KoinTest {
         val collections: List<CollectionListItemModel> = flow.asSnapshot()
 
         Assert.assertEquals(
-            2,
-            collections.size,
-        )
-        Assert.assertEquals(
             listOf(
                 CollectionListItemModel(
                     id = "1",
@@ -318,10 +306,6 @@ class CollectionRepositoryImplTest : KoinTest {
         val collections: List<CollectionListItemModel> = flow.asSnapshot()
 
         Assert.assertEquals(
-            1,
-            collections.size,
-        )
-        Assert.assertEquals(
             listOf(
                 CollectionListItemModel(
                     id = "1",
@@ -380,10 +364,6 @@ class CollectionRepositoryImplTest : KoinTest {
         val collections: List<CollectionListItemModel> = flow.asSnapshot()
 
         Assert.assertEquals(
-            2,
-            collections.size,
-        )
-        Assert.assertEquals(
             listOf(
                 CollectionListItemModel(
                     id = "2",
@@ -427,16 +407,14 @@ class CollectionRepositoryImplTest : KoinTest {
         )
         collections = flow.asSnapshot()
         Assert.assertEquals(
-            1,
-            collections.size,
-        )
-        Assert.assertEquals(
-            collections[0],
-            CollectionListItemModel(
-                id = NEW_COLLECTION_ID,
-                isRemote = false,
-                name = "New collection",
-                entity = MusicBrainzEntity.ARTIST,
+            collections,
+            listOf(
+                CollectionListItemModel(
+                    id = NEW_COLLECTION_ID,
+                    isRemote = false,
+                    name = "New collection",
+                    entity = MusicBrainzEntity.ARTIST,
+                ),
             ),
         )
     }

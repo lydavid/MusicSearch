@@ -4,8 +4,10 @@ import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
+import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.data.test.budokanPlaceMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -21,8 +23,6 @@ import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.data.test.KoinTestRule
-import ly.david.data.test.budokanPlaceMusicBrainzModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
@@ -423,25 +423,23 @@ class PlaceRepositoryImplTest : KoinTest {
         )
         val places = flow.asSnapshot()
         assertEquals(
-            1,
-            places.size,
-        )
-        assertEquals(
-            PlaceListItemModel(
-                id = placeId,
-                name = "日本武道館",
-                address = "〒102-8321 東京都千代田区北の丸公園2-3",
-                type = "Indoor arena",
-                lifeSpan = LifeSpanUiModel(
-                    begin = "1964-10-03",
-                    ended = false,
-                ),
-                coordinates = CoordinatesUiModel(
-                    longitude = 139.75,
-                    latitude = 35.69333,
+            listOf(
+                PlaceListItemModel(
+                    id = placeId,
+                    name = "日本武道館",
+                    address = "〒102-8321 東京都千代田区北の丸公園2-3",
+                    type = "Indoor arena",
+                    lifeSpan = LifeSpanUiModel(
+                        begin = "1964-10-03",
+                        ended = false,
+                    ),
+                    coordinates = CoordinatesUiModel(
+                        longitude = 139.75,
+                        latitude = 35.69333,
+                    ),
                 ),
             ),
-            places[0],
+            places,
         )
 
         // Lookup a place whose area is a more specific area in the country

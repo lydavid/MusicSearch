@@ -121,38 +121,34 @@ class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
             ),
         )
         val releases: List<ReleaseListItemModel> = flow.asSnapshot()
-
         Assert.assertEquals(
-            1,
-            releases.size,
-        )
-        val release: ReleaseListItemModel = releases[0]
-        Assert.assertEquals(
-            ReleaseListItemModel(
-                id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
-                name = "ウタの歌 ONE PIECE FILM RED",
-                disambiguation = "初回限定盤",
-                date = "2022-08-10",
-                barcode = "4988031519660",
-                status = "Official",
-                statusId = null,
-                countryCode = "JP",
-                packaging = "Jewel Case",
-                packagingId = null,
-                asin = "B0B392M9SC",
-                quality = "normal",
-                catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
-                coverArtArchive = CoverArtArchiveUiModel(count = 11),
-                textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
-                imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-                imageId = 1,
-                formattedFormats = null,
-                formattedTracks = null,
-                formattedArtistCredits = "Ado",
-                releaseCountryCount = 0,
-                visited = false,
+            listOf(
+                ReleaseListItemModel(
+                    id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
+                    name = "ウタの歌 ONE PIECE FILM RED",
+                    disambiguation = "初回限定盤",
+                    date = "2022-08-10",
+                    barcode = "4988031519660",
+                    status = "Official",
+                    statusId = null,
+                    countryCode = "JP",
+                    packaging = "Jewel Case",
+                    packagingId = null,
+                    asin = "B0B392M9SC",
+                    quality = "normal",
+                    catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
+                    coverArtArchive = CoverArtArchiveUiModel(count = 11),
+                    textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
+                    imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                    imageId = 1,
+                    formattedFormats = null,
+                    formattedTracks = null,
+                    formattedArtistCredits = "Ado",
+                    releaseCountryCount = 0,
+                    visited = false,
+                ),
             ),
-            release,
+            releases,
         )
     }
 

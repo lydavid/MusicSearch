@@ -101,10 +101,6 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                2,
-                size,
-            )
-            assertEquals(
                 listOf(
                     budokanPlaceListItemModel,
                     tokyoInternationForumHallAPlaceListItemModel,
@@ -120,10 +116,6 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
                 query = "are",
             ),
         ).asSnapshot().run {
-            assertEquals(
-                1,
-                size,
-            )
             assertEquals(
                 listOf(
                     budokanPlaceListItemModel,
@@ -152,10 +144,6 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                1,
-                size,
-            )
-            assertEquals(
                 listOf(
                     budokanPlaceListItemModel,
                 ),
@@ -169,10 +157,6 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
                 query = "b",
             ),
         ).asSnapshot().run {
-            assertEquals(
-                0,
-                size,
-            )
             assertEquals(
                 emptyList<PlaceListItemModel>(),
                 this,
@@ -195,10 +179,6 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                2,
-                size,
-            )
-            assertEquals(
                 listOf(
                     tokyoInternationForumPlaceListItemModel,
                     tokyoInternationForumHallAPlaceListItemModel,
@@ -213,10 +193,6 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
                 query = "com",
             ),
         ).asSnapshot().run {
-            assertEquals(
-                1,
-                size,
-            )
             assertEquals(
                 listOf(
                     tokyoInternationForumPlaceListItemModel,
@@ -250,10 +226,6 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                3,
-                size,
-            )
-            assertEquals(
                 listOf(
                     budokanPlaceListItemModel,
                     tokyoInternationForumPlaceListItemModel,
@@ -269,10 +241,6 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
                 query = "ve",
             ),
         ).asSnapshot().run {
-            assertEquals(
-                2,
-                size,
-            )
             assertEquals(
                 listOf(
                     tokyoInternationForumPlaceListItemModel,

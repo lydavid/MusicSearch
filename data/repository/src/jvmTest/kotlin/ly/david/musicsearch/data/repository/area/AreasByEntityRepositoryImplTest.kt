@@ -119,10 +119,6 @@ class AreasByEntityRepositoryImplTest : KoinTest {
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                6,
-                size,
-            )
-            assertEquals(
                 listOf(
                     AreaListItemModel(
                         id = "99c3f001-64d3-4174-a302-fb14204117af",
@@ -167,10 +163,6 @@ class AreasByEntityRepositoryImplTest : KoinTest {
                 query = "di",
             ),
         ).asSnapshot().run {
-            assertEquals(
-                3,
-                size,
-            )
             assertEquals(
                 listOf(
                     AreaListItemModel(
