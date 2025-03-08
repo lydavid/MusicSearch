@@ -24,6 +24,7 @@ import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
+import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestEventRepository
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -79,20 +80,22 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
     private fun EventsByEntityRepository.testFilter(
         entityId: String,
         entity: MusicBrainzEntity?,
-        query: String,
-        expectedResult: List<EventListItemModel>,
+        testCases: List<FilterTestCase<EventListItemModel>>,
     ) = runTest {
-        observeEventsByEntity(
-            entityId = entityId,
-            entity = entity,
-            listFilters = ListFilters(
-                query = query,
-            ),
-        ).asSnapshot().run {
-            assertEquals(
-                expectedResult,
-                this,
-            )
+        testCases.forEach { testCase ->
+            observeEventsByEntity(
+                entityId = entityId,
+                entity = entity,
+                listFilters = ListFilters(
+                    query = testCase.query,
+                ),
+            ).asSnapshot().run {
+                assertEquals(
+                    "${testCase.description} ${testCase.query} did not return the expected result.",
+                    testCase.expectedResult,
+                    this,
+                )
+            }
         }
     }
 
@@ -103,7 +106,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             kissAtScotiabankArenaEventMusicBrainzModel,
             aimerAtBudokanEventMusicBrainzModel,
         )
-        val sut = createRepository(
+        val eventsByEntityRepository = createRepository(
             events = events,
         )
 
@@ -120,68 +123,54 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             entityIds = events.map { it.id },
         )
 
-        sut.observeEventsByEntity(
+        eventsByEntityRepository.testFilter(
             entityId = collectionId,
             entity = MusicBrainzEntity.COLLECTION,
-            listFilters = ListFilters(),
-        ).asSnapshot().run {
-            assertEquals(
-                listOf(
-                    aimerAtBudokanListItemModel,
-                    kissAtScotiabankArenaListItemModel,
+            testCases = listOf(
+                FilterTestCase(
+                    description = "No filter",
+                    query = "",
+                    expectedResult = listOf(
+                        aimerAtBudokanListItemModel,
+                        kissAtScotiabankArenaListItemModel,
+                    ),
                 ),
-                this,
-            )
-        }
-
-        // filter by name
-        sut.testFilter(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
-            query = "kis",
-            expectedResult = listOf(
-                kissAtScotiabankArenaListItemModel,
-            ),
-        )
-
-        // filter by type
-        sut.testFilter(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
-            query = "con",
-            expectedResult = listOf(
-                aimerAtBudokanListItemModel,
-                kissAtScotiabankArenaListItemModel,
-            ),
-        )
-
-        // filter by begin date
-        sut.testFilter(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
-            query = "2017",
-            expectedResult = listOf(
-                aimerAtBudokanListItemModel,
-            ),
-        )
-
-        // filter by end date
-        sut.testFilter(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
-            query = "2019",
-            expectedResult = listOf(
-                kissAtScotiabankArenaListItemModel,
-            ),
-        )
-
-        // filter by time
-        sut.testFilter(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
-            query = "18:0",
-            expectedResult = listOf(
-                aimerAtBudokanListItemModel,
+                FilterTestCase(
+                    description = "filter by name",
+                    query = "kis",
+                    expectedResult = listOf(
+                        kissAtScotiabankArenaListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by type",
+                    query = "con",
+                    expectedResult = listOf(
+                        aimerAtBudokanListItemModel,
+                        kissAtScotiabankArenaListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by begin date",
+                    query = "2017",
+                    expectedResult = listOf(
+                        aimerAtBudokanListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by end date",
+                    query = "2019",
+                    expectedResult = listOf(
+                        kissAtScotiabankArenaListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by time",
+                    query = "18:0",
+                    expectedResult = listOf(
+                        aimerAtBudokanListItemModel,
+                    ),
+                ),
             ),
         )
     }
@@ -194,27 +183,29 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             tsoAtMasseyHallEventMusicBrainzModel,
             kissAtScotiabankArenaEventMusicBrainzModel,
         )
-        val sut = createRepository(
+        val eventsByEntityRepository = createRepository(
             events = events,
         )
 
-        sut.testFilter(
+        eventsByEntityRepository.testFilter(
             entityId = entityId,
             entity = entity,
-            query = "",
-            expectedResult = listOf(
-                tsoAtMasseyHallListItemModel,
-                kissAtScotiabankArenaListItemModel,
-            ),
-        )
-
-        // filter by name
-        sut.testFilter(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
-            query = "tor",
-            expectedResult = listOf(
-                tsoAtMasseyHallListItemModel,
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        tsoAtMasseyHallListItemModel,
+                        kissAtScotiabankArenaListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by name",
+                    query = "tor",
+                    expectedResult = listOf(
+                        tsoAtMasseyHallListItemModel,
+                    ),
+                ),
             ),
         )
     }
@@ -227,69 +218,58 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             kissAtBudokanEventMusicBrainzModel,
             aimerAtBudokanEventMusicBrainzModel,
         )
-        val sut = createRepository(
+        val eventsByEntityRepository = createRepository(
             events = events,
         )
 
-        sut.testFilter(
+        eventsByEntityRepository.testFilter(
             entityId = entityId,
             entity = entity,
-            query = "",
-            expectedResult = listOf(
-                kissAtBudokanListItemModel,
-                aimerAtBudokanListItemModel,
-            ),
-        )
-
-        // filter by name
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = "ai",
-            expectedResult = listOf(
-                aimerAtBudokanListItemModel,
-            ),
-        )
-
-        // filter by type
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = "cert",
-            expectedResult = listOf(
-                kissAtBudokanListItemModel,
-                aimerAtBudokanListItemModel,
-            ),
-        )
-
-        // filter by begin date
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = "29",
-            expectedResult = listOf(
-                aimerAtBudokanListItemModel,
-
-            ),
-        )
-
-        // filter by end date
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = "77",
-            expectedResult = listOf(
-                kissAtBudokanListItemModel,
-            ),
-        )
-
-        // filter by time
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = ":00",
-            expectedResult = listOf(
-                aimerAtBudokanListItemModel,
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        kissAtBudokanListItemModel,
+                        aimerAtBudokanListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by name",
+                    query = "ai",
+                    expectedResult = listOf(
+                        aimerAtBudokanListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by type",
+                    query = "cert",
+                    expectedResult = listOf(
+                        kissAtBudokanListItemModel,
+                        aimerAtBudokanListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by begin date",
+                    query = "29",
+                    expectedResult = listOf(
+                        aimerAtBudokanListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by end date",
+                    query = "77",
+                    expectedResult = listOf(
+                        kissAtBudokanListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by time",
+                    query = ":00",
+                    expectedResult = listOf(
+                        aimerAtBudokanListItemModel,
+                    ),
+                ),
             ),
         )
     }
@@ -302,69 +282,58 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             kissAtBudokanEventMusicBrainzModel,
             aimerAtBudokanEventMusicBrainzModel,
         )
-        val sut = createRepository(
+        val eventsByEntityRepository = createRepository(
             events = events,
         )
 
-        sut.testFilter(
+        eventsByEntityRepository.testFilter(
             entityId = entityId,
             entity = entity,
-            query = "",
-            expectedResult = listOf(
-                kissAtBudokanListItemModel,
-                aimerAtBudokanListItemModel,
-            ),
-        )
-
-        // filter by name
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = "ai",
-            expectedResult = listOf(
-                aimerAtBudokanListItemModel,
-            ),
-        )
-
-        // filter by type
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = "cert",
-            expectedResult = listOf(
-                kissAtBudokanListItemModel,
-                aimerAtBudokanListItemModel,
-            ),
-        )
-
-        // filter by begin date
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = "29",
-            expectedResult = listOf(
-                aimerAtBudokanListItemModel,
-
-            ),
-        )
-
-        // filter by end date
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = "77",
-            expectedResult = listOf(
-                kissAtBudokanListItemModel,
-            ),
-        )
-
-        // filter by time
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = ":00",
-            expectedResult = listOf(
-                aimerAtBudokanListItemModel,
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        kissAtBudokanListItemModel,
+                        aimerAtBudokanListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by name",
+                    query = "ai",
+                    expectedResult = listOf(
+                        aimerAtBudokanListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by type",
+                    query = "cert",
+                    expectedResult = listOf(
+                        kissAtBudokanListItemModel,
+                        aimerAtBudokanListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by begin date",
+                    query = "29",
+                    expectedResult = listOf(
+                        aimerAtBudokanListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by end date",
+                    query = "77",
+                    expectedResult = listOf(
+                        kissAtBudokanListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by time",
+                    query = ":00",
+                    expectedResult = listOf(
+                        aimerAtBudokanListItemModel,
+                    ),
+                ),
             ),
         )
     }
@@ -377,68 +346,58 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             kissAtBudokanEventMusicBrainzModel,
             kissAtScotiabankArenaEventMusicBrainzModel,
         )
-        val sut = createRepository(
+        val eventsByEntityRepository = createRepository(
             events = events,
         )
 
-        sut.testFilter(
+        eventsByEntityRepository.testFilter(
             entityId = entityId,
             entity = entity,
-            query = "",
-            expectedResult = listOf(
-                kissAtBudokanListItemModel,
-                kissAtScotiabankArenaListItemModel,
-            ),
-        )
-
-        // filter by name
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = "budo",
-            expectedResult = listOf(
-                kissAtBudokanListItemModel,
-            ),
-        )
-
-        // filter by type
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = "Con",
-            expectedResult = listOf(
-                kissAtBudokanListItemModel,
-                kissAtScotiabankArenaListItemModel,
-            ),
-        )
-
-        // filter by begin date
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = "20",
-            expectedResult = listOf(
-                kissAtScotiabankArenaListItemModel,
-            ),
-        )
-
-        // filter by end date
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = "04",
-            expectedResult = listOf(
-                kissAtBudokanListItemModel,
-            ),
-        )
-
-        // filter by time
-        sut.testFilter(
-            entityId = entityId,
-            entity = entity,
-            query = "8:3",
-            expectedResult = listOf(
-                kissAtScotiabankArenaListItemModel,
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        kissAtBudokanListItemModel,
+                        kissAtScotiabankArenaListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by name",
+                    query = "budo",
+                    expectedResult = listOf(
+                        kissAtBudokanListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by type",
+                    query = "Con",
+                    expectedResult = listOf(
+                        kissAtBudokanListItemModel,
+                        kissAtScotiabankArenaListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by begin date",
+                    query = "20",
+                    expectedResult = listOf(
+                        kissAtScotiabankArenaListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by end date",
+                    query = "04",
+                    expectedResult = listOf(
+                        kissAtBudokanListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by time",
+                    query = "8:3",
+                    expectedResult = listOf(
+                        kissAtScotiabankArenaListItemModel,
+                    ),
+                ),
             ),
         )
     }
@@ -460,10 +419,10 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         setUpEventsExceptCollection()
         setupEventsByCollection()
 
-        val sut = createRepository(
+        val eventsByEntityRepository = createRepository(
             events = listOf(),
         )
-        sut.observeEventsByEntity(
+        eventsByEntityRepository.observeEventsByEntity(
             entityId = null,
             entity = null,
             listFilters = ListFilters(),
@@ -482,7 +441,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
                 this,
             )
         }
-        sut.observeEventsByEntity(
+        eventsByEntityRepository.observeEventsByEntity(
             entityId = null,
             entity = null,
             listFilters = ListFilters(
@@ -515,12 +474,12 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
                 disambiguation = "changes will be ignored if event is linked to multiple entities",
             ),
         )
-        val sut = createRepository(
+        val eventsByEntityRepository = createRepository(
             events = modifiedEvents,
         )
 
         // refresh
-        sut.observeEventsByEntity(
+        eventsByEntityRepository.observeEventsByEntity(
             entityId = kitanomaruAreaMusicBrainzModel.id,
             entity = MusicBrainzEntity.AREA,
             listFilters = ListFilters(),
@@ -543,7 +502,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         }
 
         // other entities remain unchanged
-        sut.observeEventsByEntity(
+        eventsByEntityRepository.observeEventsByEntity(
             entityId = budokanPlaceMusicBrainzModel.id,
             entity = MusicBrainzEntity.PLACE,
             listFilters = ListFilters(),
@@ -562,7 +521,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         }
 
         // both old and new version of event exists
-        sut.observeEventsByEntity(
+        eventsByEntityRepository.observeEventsByEntity(
             entityId = null,
             entity = null,
             listFilters = ListFilters(),
@@ -583,7 +542,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             )
         }
 
-        sut.observeEventsByEntity(
+        eventsByEntityRepository.observeEventsByEntity(
             entityId = budokanPlaceMusicBrainzModel.id,
             entity = MusicBrainzEntity.PLACE,
             listFilters = ListFilters(),
@@ -607,7 +566,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
 
         // now only new version of event exists
         // however, the other event is never updated unless we go into it and refresh
-        sut.observeEventsByEntity(
+        eventsByEntityRepository.observeEventsByEntity(
             entityId = null,
             entity = null,
             listFilters = ListFilters(),
