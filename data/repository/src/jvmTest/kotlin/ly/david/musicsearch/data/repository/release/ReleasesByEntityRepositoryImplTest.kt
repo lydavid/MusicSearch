@@ -42,7 +42,6 @@ import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.ReleasesByEntityRepository
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import org.junit.Assert.assertEquals
@@ -67,7 +66,6 @@ class ReleasesByEntityRepositoryImplTest :
     private val recordingReleaseDao: RecordingReleaseDao by inject()
     private val releaseDao: ReleaseDao by inject()
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
-    private val releaseCountryDao: ReleaseCountryDao by inject()
     override val labelDao: LabelDao by inject()
     override val entityHasRelationsDao: EntityHasRelationsDao by inject()
     override val visitedDao: VisitedDao by inject()
@@ -96,7 +94,6 @@ class ReleasesByEntityRepositoryImplTest :
             },
             recordingReleaseDao = recordingReleaseDao,
             releaseDao = releaseDao,
-            releaseCountryDao = releaseCountryDao,
             releaseReleaseGroupDao = releaseReleaseGroupDao,
         )
     }

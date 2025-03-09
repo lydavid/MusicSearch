@@ -6,8 +6,10 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.area.ReleaseEvent
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.AreaQueries
@@ -15,6 +17,7 @@ import lydavidmusicsearchdatadatabase.AreaQueries
 class AreaDao(
     database: Database,
     private val countryCodeDao: CountryCodeDao,
+    private val releaseCountryDao: ReleaseCountryDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter: AreaQueries = database.areaQueries
@@ -192,4 +195,41 @@ class AreaDao(
     fun deleteAreaPlaceLink(placeId: String) {
         transacter.deleteAreaPlaceLink(placeId = placeId)
     }
+
+    // region countries by release
+    fun linkCountriesByRelease(
+        releaseId: String,
+        releaseEvents: List<ReleaseEventMusicBrainzModel>?,
+    ) {
+        transacter.transaction {
+            releaseEvents?.forEach { releaseEvent ->
+                val areaId = releaseEvent.area?.id ?: return@forEach
+                releaseCountryDao.insert(
+                    areaId = areaId,
+                    releaseId = releaseId,
+                    date = releaseEvent.date,
+                )
+            }
+        }
+    }
+
+    fun getCountriesByRelease(
+        releaseId: String,
+    ): List<ReleaseEvent> = transacter.getCountriesByRelease(
+        releaseId = releaseId,
+        mapper = { id, name, date, countryCode, visited ->
+            ReleaseEvent(
+                id = id,
+                name = name,
+                date = date,
+                countryCode = countryCode,
+                visited = visited,
+            )
+        },
+    ).executeAsList()
+
+    fun deleteCountriesByReleaseLinks(releaseId: String) {
+        transacter.deleteCountriesByReleaseLinks(releaseId = releaseId)
+    }
+    // endregion
 }

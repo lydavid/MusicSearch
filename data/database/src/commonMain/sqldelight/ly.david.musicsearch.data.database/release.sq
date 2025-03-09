@@ -150,3 +150,72 @@ DELETE FROM release_label WHERE label_id = :labelId;
 
 DELETE FROM releases_by_entity WHERE entity_id = :labelId;
 }
+
+-- releases by country
+
+getNumberOfReleasesByCountry:
+SELECT IFNULL(
+  (
+    SELECT COUNT(DISTINCT r.id)
+    FROM release r
+    INNER JOIN release_country rc ON r.id = rc.release_id
+    INNER JOIN area a ON a.id = rc.country_id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    WHERE a.id = :areaId
+    AND (
+      r.name LIKE :query
+      OR r.disambiguation LIKE :query
+      OR r.date LIKE :query
+      OR r.country_code LIKE :query
+      OR ac.name LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getReleasesByCountry:
+SELECT
+  r.*,
+  ac.name AS artistCreditNames,
+  mi.thumbnail_url,
+  mi.id AS placeholderKey,
+  (
+    SELECT COUNT(cc.area_id)
+    FROM `release`
+    INNER JOIN release_country ON release_country.release_id = `release`.id
+    INNER JOIN country_code cc ON cc.area_id = release_country.country_id
+    WHERE r.id = `release`.id
+  ) AS releaseCountryCount,
+  visited.entity_id IS NOT NULL AS visited
+FROM `release` r
+INNER JOIN release_country rc ON r.id = rc.release_id
+INNER JOIN area a ON a.id = rc.country_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN mbid_image mi ON mi.mbid = r.id
+LEFT JOIN visited ON visited.entity_id = r.id
+WHERE a.id = :areaId
+AND (
+  r.name LIKE :query
+  OR r.disambiguation LIKE :query
+  OR r.date LIKE :query
+  OR r.country_code LIKE :query
+  OR ac.name LIKE :query
+)
+GROUP BY r.id
+ORDER BY r.date, r.name
+LIMIT :limit OFFSET :offset;
+
+deleteReleasesByCountry {
+DELETE FROM release WHERE id IN (
+  SELECT r.id
+  FROM release r
+  INNER JOIN release_country rc ON r.id = rc.release_id
+  INNER JOIN area a ON a.id = rc.country_id
+  WHERE a.id = :areaId
+);
+
+DELETE FROM release_country
+WHERE country_id = :areaId;
+}

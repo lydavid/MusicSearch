@@ -12,7 +12,6 @@ import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.MediumDao
-import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
@@ -39,7 +38,6 @@ class ReleaseRepositoryImpl(
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
     private val releaseGroupDao: ReleaseGroupDao,
     private val artistCreditDao: ArtistCreditDao,
-    private val releaseCountryDao: ReleaseCountryDao,
     private val areaDao: AreaDao,
     private val labelDao: LabelDao,
     private val relationRepository: RelationRepository,
@@ -64,7 +62,7 @@ class ReleaseRepositoryImpl(
         val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId)
         val formatTrackCounts = releaseDao.getReleaseFormatTrackCount(releaseId)
         val labels = labelDao.getLabelsByRelease(releaseId)
-        val releaseEvents = releaseCountryDao.getCountriesByRelease(releaseId)
+        val releaseEvents = areaDao.getCountriesByRelease(releaseId)
         val urlRelations = relationRepository.getRelationshipsByType(releaseId)
         val visited = relationRepository.visited(releaseId)
 
@@ -101,7 +99,7 @@ class ReleaseRepositoryImpl(
             releaseDao.delete(releaseId = releaseId)
             releaseReleaseGroupDao.deleteReleaseGroupByReleaseLink(releaseId = releaseId)
             labelDao.deleteReleaseLabelLinks(releaseId = releaseId)
-            releaseCountryDao.deleteCountriesByReleaseLinks(releaseId = releaseId)
+            areaDao.deleteCountriesByReleaseLinks(releaseId = releaseId)
             relationRepository.deleteRelationshipsByType(entityId = releaseId)
         }
     }
@@ -130,7 +128,7 @@ class ReleaseRepositoryImpl(
                     it.area
                 }.orEmpty(),
             )
-            releaseCountryDao.linkCountriesByRelease(
+            areaDao.linkCountriesByRelease(
                 releaseId = release.id,
                 releaseEvents = release.releaseEvents,
             )

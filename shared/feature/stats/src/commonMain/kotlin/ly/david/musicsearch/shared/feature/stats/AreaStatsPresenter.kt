@@ -12,7 +12,7 @@ import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
-import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
+import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
 import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
@@ -22,7 +22,7 @@ internal class AreaStatsPresenter(
     private val screen: StatsScreen,
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
-    private val releaseCountryDao: ReleaseCountryDao,
+    private val releaseDao: ReleaseDao,
     private val artistDao: ArtistDao,
     private val eventDao: EventDao,
     private val labelDao: LabelDao,
@@ -118,7 +118,7 @@ internal class AreaStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RELEASE,
             ),
-            releaseCountryDao.observeCountOfReleasesByCountry(entityId),
+            releaseDao.observeCountOfReleasesByCountry(entityId),
         ) { browseEntityCount, localCount ->
             ReleaseStats(
                 totalRemote = browseEntityCount?.remoteCount,

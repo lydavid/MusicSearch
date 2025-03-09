@@ -12,7 +12,6 @@ import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.RelationDao
-import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
@@ -64,7 +63,6 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
     override val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
     override val releaseGroupDao: ReleaseGroupDao by inject()
     override val artistCreditDao: ArtistCreditDao by inject()
-    override val releaseCountryDao: ReleaseCountryDao by inject()
     override val areaDao: AreaDao by inject()
     override val labelDao: LabelDao by inject()
     override val mediumDao: MediumDao by inject()

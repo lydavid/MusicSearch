@@ -7,7 +7,6 @@ import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingReleaseDao
-import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.ARTIST_CREDITS
@@ -28,7 +27,6 @@ class ReleasesByEntityRepositoryImpl(
     private val browseApi: BrowseApi,
     private val recordingReleaseDao: RecordingReleaseDao,
     private val releaseDao: ReleaseDao,
-    private val releaseCountryDao: ReleaseCountryDao,
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
 ) : ReleasesByEntityRepository,
     BrowseEntitiesByEntity<ReleaseListItemModel, ReleaseMusicBrainzModel, BrowseReleasesResponse>(
@@ -60,7 +58,7 @@ class ReleasesByEntityRepositoryImpl(
 
             when (entity) {
                 MusicBrainzEntity.AREA -> {
-                    releaseCountryDao.deleteReleasesByCountry(entityId)
+                    releaseDao.deleteReleasesByCountry(entityId)
                 }
 
                 MusicBrainzEntity.ARTIST -> {
@@ -99,7 +97,7 @@ class ReleasesByEntityRepositoryImpl(
             }
 
             entity == MusicBrainzEntity.AREA -> {
-                releaseCountryDao.getReleasesByCountry(
+                releaseDao.getReleasesByCountry(
                     areaId = entityId,
                     query = listFilters.query,
                 )
@@ -177,7 +175,7 @@ class ReleasesByEntityRepositoryImpl(
         releaseDao.insertAll(musicBrainzModels)
         return when (entity) {
             MusicBrainzEntity.AREA -> {
-                releaseCountryDao.linkReleasesByCountry(
+                releaseDao.linkReleasesByCountry(
                     areaId = entityId,
                     releases = musicBrainzModels,
                 )
@@ -228,7 +226,7 @@ class ReleasesByEntityRepositoryImpl(
     ): Int {
         return when (entity) {
             MusicBrainzEntity.AREA -> {
-                releaseCountryDao.getCountOfReleasesByCountry(entityId)
+                releaseDao.getCountOfReleasesByCountry(entityId)
             }
 
             MusicBrainzEntity.ARTIST -> {

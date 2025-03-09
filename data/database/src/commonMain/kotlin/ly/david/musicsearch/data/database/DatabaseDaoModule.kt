@@ -74,7 +74,7 @@ val databaseDaoModule = module {
     single { RecordingReleaseDao(get(), get()) }
     single { RecordingsByEntityDao(get(), get()) }
     single { RelationDao(get(), get()) }
-    single { ReleaseCountryDao(get(), get()) }
+    singleOf(::ReleaseCountryDao)
     singleOf(::ReleaseDao)
     singleOf(::ReleaseGroupDaoImpl) bind ReleaseGroupDao::class
     single { ReleaseLabelDao(get()) }
