@@ -49,7 +49,7 @@ val weirdAlGreatestHitsReleaseListItemModel = ReleaseListItemModel(
     visited = false,
 )
 
-val redRReleaseListItemModel = ReleaseListItemModel(
+val redReleaseListItemModel = ReleaseListItemModel(
     id = "5dc1f2db-867c-4de5-92f0-9d8440b672e3",
     name = "Red",
     disambiguation = "",

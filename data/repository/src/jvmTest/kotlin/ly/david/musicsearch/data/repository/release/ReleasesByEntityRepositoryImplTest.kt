@@ -8,9 +8,11 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.japanAreaMusicBrainzModel
-import ly.david.data.test.redRReleaseListItemModel
+import ly.david.data.test.mercuryRecordsLabelMusicBrainzModel
+import ly.david.data.test.redReleaseListItemModel
 import ly.david.data.test.redReleaseMusicBrainzModel
 import ly.david.data.test.releaseWith3CatalogNumbersWithSameLabel
+import ly.david.data.test.releaseWithSameCatalogNumberWithDifferentLabels
 import ly.david.data.test.utaNoUtaReleaseListItemModel
 import ly.david.data.test.utaNoUtaReleaseMusicBrainzModel
 import ly.david.data.test.virginMusicLabelMusicBrainzModel
@@ -100,7 +102,7 @@ class ReleasesByEntityRepositoryImplTest :
     }
 
     @Test
-    fun `releases by label - release with multiple catalog numbers, multiple cover arts`() = runTest {
+    fun `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`() = runTest {
         val labelRepository = createLabelRepository(
             musicBrainzModel = virginMusicLabelMusicBrainzModel,
         )
@@ -123,6 +125,13 @@ class ReleasesByEntityRepositoryImplTest :
             types = persistentListOf(),
             comment = null,
         )
+        database.mbid_imageQueries.insert(
+            mbid = releaseWith3CatalogNumbersWithSameLabel.id,
+            thumbnailUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-250.jpg",
+            largeUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-1200.jpg",
+            types = persistentListOf(),
+            comment = null,
+        )
 
         val flow: Flow<PagingData<ReleaseListItemModel>> = releasesByEntityRepository.observeReleasesByEntity(
             entityId = labelId,
@@ -134,29 +143,44 @@ class ReleasesByEntityRepositoryImplTest :
         val releases: List<ReleaseListItemModel> = flow.asSnapshot()
         assertEquals(
             listOf(
-                ReleaseListItemModel(
-                    id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
-                    name = "ウタの歌 ONE PIECE FILM RED",
-                    disambiguation = "初回限定盤",
-                    date = "2022-08-10",
-                    barcode = "4988031519660",
-                    status = "Official",
-                    statusId = null,
-                    countryCode = "JP",
-                    packaging = "Jewel Case",
-                    packagingId = null,
-                    asin = "B0B392M9SC",
-                    quality = "normal",
+                utaNoUtaReleaseListItemModel.copy(
                     catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
-                    coverArtArchive = CoverArtArchiveUiModel(count = 11),
                     textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
                     imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                     imageId = 1,
-                    formattedFormats = null,
-                    formattedTracks = null,
-                    formattedArtistCredits = "Ado",
-                    releaseCountryCount = 0,
-                    visited = false,
+                ),
+            ),
+            releases,
+        )
+    }
+
+    @Test
+    fun `releases by label - release with multiple labels and catalog numbers`() = runTest {
+        val labelRepository = createLabelRepository(
+            musicBrainzModel = mercuryRecordsLabelMusicBrainzModel,
+        )
+        val labelId = mercuryRecordsLabelMusicBrainzModel.id
+        labelRepository.lookupLabel(
+            labelId = labelId,
+            forceRefresh = false,
+        )
+
+        val releasesByEntityRepository = createReleasesByEntityRepository(
+            releases = listOf(
+                releaseWithSameCatalogNumberWithDifferentLabels,
+            ),
+        )
+
+        val flow: Flow<PagingData<ReleaseListItemModel>> = releasesByEntityRepository.observeReleasesByEntity(
+            entityId = labelId,
+            entity = MusicBrainzEntity.LABEL,
+            listFilters = ListFilters(),
+        )
+        val releases: List<ReleaseListItemModel> = flow.asSnapshot()
+        assertEquals(
+            listOf(
+                redReleaseListItemModel.copy(
+                    catalogNumbers = "3717453",
                 ),
             ),
             releases,
@@ -243,7 +267,7 @@ class ReleasesByEntityRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        redRReleaseListItemModel,
+                        redReleaseListItemModel,
                         utaNoUtaReleaseListItemModel,
                     ),
                 ),
@@ -251,7 +275,7 @@ class ReleasesByEntityRepositoryImplTest :
                     description = "filter by name",
                     query = "red",
                     expectedResult = listOf(
-                        redRReleaseListItemModel,
+                        redReleaseListItemModel,
                         utaNoUtaReleaseListItemModel,
                     ),
                 ),
@@ -266,7 +290,7 @@ class ReleasesByEntityRepositoryImplTest :
                     description = "filter by date",
                     query = "-22",
                     expectedResult = listOf(
-                        redRReleaseListItemModel,
+                        redReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
@@ -280,7 +304,7 @@ class ReleasesByEntityRepositoryImplTest :
                     description = "filter by artist credit name",
                     query = "swift",
                     expectedResult = listOf(
-                        redRReleaseListItemModel,
+                        redReleaseListItemModel,
                     ),
                 ),
             ),
@@ -382,7 +406,7 @@ class ReleasesByEntityRepositoryImplTest :
 
     @Test
     fun `refreshing releases that belong to multiple entities does not delete the release`() = runTest {
-        `releases by label - release with multiple catalog numbers, multiple cover arts`()
+        `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`()
 
         val areaId = japanAreaMusicBrainzModel.id
         val areaRepository = createAreaRepository(

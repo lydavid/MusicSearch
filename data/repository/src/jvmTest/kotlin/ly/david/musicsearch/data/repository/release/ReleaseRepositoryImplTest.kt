@@ -3,6 +3,9 @@ package ly.david.musicsearch.data.repository.release
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
+import ly.david.data.test.releaseWith3CatalogNumbersWithSameLabel
+import ly.david.data.test.releaseWithSameCatalogNumberWithDifferentLabels
+import ly.david.data.test.utaNoUtaReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
@@ -605,17 +608,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
                 labelInfoList = listOf(
                     LabelInfo(
-                        catalogNumber = "SRCL-7486",
-                        label = LabelMusicBrainzModel(
-                            id = "dee62e1a-cfd1-466f-b578-846a0fdf435a",
-                            name = "Sony Records",
-                            type = "Imprint",
-                            typeId = "b6285b2a-3514-3d43-80df-fcf528824ded",
-                            disambiguation = "Japanese imprint",
-                        ),
-                    ),
-                    LabelInfo(
-                        catalogNumber = "SRCL-7487",
+                        catalogNumber = "SRCL-7486, SRCL-7487",
                         label = LabelMusicBrainzModel(
                             id = "dee62e1a-cfd1-466f-b578-846a0fdf435a",
                             name = "Sony Records",
@@ -752,15 +745,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         disambiguation = "Japanese imprint",
                         type = "Imprint",
                         labelCode = null,
-                        catalogNumber = "SRCL-7486",
-                    ),
-                    LabelListItemModel(
-                        id = "dee62e1a-cfd1-466f-b578-846a0fdf435a",
-                        name = "Sony Records",
-                        disambiguation = "Japanese imprint",
-                        type = "Imprint",
-                        labelCode = null,
-                        catalogNumber = "SRCL-7487",
+                        catalogNumber = "SRCL-7486, SRCL-7487",
                     ),
                 ),
                 urls = listOf(
@@ -1088,6 +1073,176 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
             ),
             listItemModelsAfterEdit,
+        )
+    }
+
+    @Test
+    fun `release with multiple catalog numbers with the same label`() = runTest {
+        val releaseRepository = createReleaseRepository(
+            musicBrainzModel = releaseWith3CatalogNumbersWithSameLabel.copy(
+                releaseGroup = utaNoUtaReleaseGroupMusicBrainzModel,
+            ),
+        )
+        val releaseDetailsModel = releaseRepository.lookupRelease(
+            releaseId = releaseWith3CatalogNumbersWithSameLabel.id,
+            forceRefresh = false,
+        )
+        assertEquals(
+            ReleaseDetailsModel(
+                id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
+                name = "ウタの歌 ONE PIECE FILM RED",
+                disambiguation = "初回限定盤",
+                date = "2022-08-10",
+                barcode = "4988031519660",
+                status = "Official",
+                statusId = null,
+                countryCode = "JP",
+                packaging = "Jewel Case",
+                packagingId = null,
+                asin = "B0B392M9SC",
+                quality = "normal",
+                coverArtArchive = CoverArtArchiveUiModel(count = 11),
+                textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
+                artistCredits = listOf(
+                    ArtistCreditUiModel(
+                        artistId = "e134b52f-2e9e-4734-9bc3-bea9648d1fa1",
+                        name = "Ado",
+                        joinPhrase = "",
+                    ),
+                ),
+                releaseGroup = ReleaseGroupForRelease(
+                    id = "22760f81-37ce-47ce-98b6-65f8a285f083",
+                    name = "ウタの歌 ONE PIECE FILM RED",
+                    primaryType = "Album",
+                    secondaryTypes = listOf(),
+                    firstReleaseDate = "2022-08-10",
+                ),
+                areas = listOf(
+                    AreaListItemModel(
+                        id = "2db42837-c832-3c27-b4a3-08198f75693c",
+                        name = "Japan",
+                        countryCodes = listOf("JP"),
+                        date = "2022-08-10",
+                        visited = false,
+                    ),
+                ),
+                labels = listOf(
+                    LabelListItemModel(
+                        id = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
+                        name = "Virgin Music",
+                        type = "Original Production",
+                        labelCode = null,
+                        disambiguation = "a division of Universal Music Japan created in 2014 that replaces EMI R",
+                        catalogNumber = "TYBX-10260, TYCT-69245, TYCX-60187",
+                    ),
+                ),
+            ),
+            releaseDetailsModel,
+        )
+    }
+
+    @Test
+    fun `release with multiple labels and catalog numbers`() = runTest {
+        val releaseRepository = createReleaseRepository(
+            musicBrainzModel = releaseWithSameCatalogNumberWithDifferentLabels.copy(
+                releaseGroup = ReleaseGroupMusicBrainzModel(
+                    id = "a73cecde-0923-40ad-aad1-e8c24ba6c3d2",
+                    name = "Red",
+                    primaryType = "Album",
+                ),
+            ),
+        )
+        val releaseDetailsModel = releaseRepository.lookupRelease(
+            releaseId = releaseWithSameCatalogNumberWithDifferentLabels.id,
+            forceRefresh = false,
+        )
+        assertEquals(
+            ReleaseDetailsModel(
+                id = "5dc1f2db-867c-4de5-92f0-9d8440b672e3",
+                name = "Red",
+                disambiguation = "",
+                quality = "normal",
+                status = "Official",
+                packaging = "Jewel Case",
+                packagingId = "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+                date = "2012-10-22",
+                countryCode = "GB",
+                barcode = "602537174539",
+                textRepresentation = TextRepresentationUiModel(
+                    script = "Latn",
+                    language = "eng",
+                ),
+                artistCredits = listOf(
+                    ArtistCreditUiModel(
+                        artistId = "20244d07-534f-4eff-b4d4-930878889970",
+                        name = "Taylor Swift",
+                        joinPhrase = "",
+                    ),
+                ),
+                coverArtArchive = CoverArtArchiveUiModel(count = 25),
+                releaseGroup = ReleaseGroupForRelease(
+                    id = "a73cecde-0923-40ad-aad1-e8c24ba6c3d2",
+                    name = "Red",
+                    primaryType = "Album",
+                    firstReleaseDate = "",
+                ),
+                areas = listOf(
+                    AreaListItemModel(
+                        id = "08310658-51eb-3801-80de-5a0739207115",
+                        name = "France",
+                        countryCodes = listOf("FR"),
+                        date = "2012-11-05",
+                        visited = false,
+                    ),
+                    AreaListItemModel(
+                        id = "c6500277-9a3d-349b-bf30-41afdbf42add",
+                        name = "Italy",
+                        countryCodes = listOf("IT"),
+                        date = "2012-10-23",
+                        visited = false,
+                    ),
+                    AreaListItemModel(
+                        id = "ef1b7cc0-cd26-36f4-8ea0-04d9623786c7",
+                        name = "Netherlands",
+                        countryCodes = listOf("NL"),
+                        date = "2012-10-26",
+                        visited = false,
+                    ),
+                    AreaListItemModel(
+                        id = "471c46a7-afc5-31c4-923c-d0444f5053a4",
+                        name = "Spain",
+                        countryCodes = listOf("ES"),
+                        date = "2012-10-23",
+                        visited = false,
+                    ),
+                    AreaListItemModel(
+                        id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+                        name = "United Kingdom",
+                        countryCodes = listOf("GB"),
+                        date = "2012-10-22",
+                        visited = false,
+                    ),
+                ),
+                labels = listOf(
+                    LabelListItemModel(
+                        id = "1a917e6f-54f5-4964-bebf-5d4e2442ceb4",
+                        name = "Big Machine Records",
+                        type = "Production",
+                        labelCode = null,
+                        disambiguation = "",
+                        catalogNumber = "3717453",
+                    ),
+                    LabelListItemModel(
+                        id = "995428e7-81b6-41dd-bd38-5a7a0ece8ad6",
+                        name = "Mercury Records",
+                        type = "Imprint",
+                        labelCode = 268,
+                        disambiguation = "or just “Mercury.” A UMG imprint, do not use it for ©/℗ credits",
+                        catalogNumber = "3717453",
+                    ),
+                ),
+            ),
+            releaseDetailsModel,
         )
     }
 }

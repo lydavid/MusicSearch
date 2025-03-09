@@ -56,3 +56,12 @@ val flyingDogLabelMusicBrainzModel = LabelMusicBrainzModel(
     ),
     area = japanAreaMusicBrainzModel,
 )
+
+val mercuryRecordsLabelMusicBrainzModel = LabelMusicBrainzModel(
+    id = "995428e7-81b6-41dd-bd38-5a7a0ece8ad6",
+    name = "Mercury Records",
+    type = "Imprint",
+    typeId = "b6285b2a-3514-3d43-80df-fcf528824ded",
+    labelCode = 268,
+    disambiguation = "or just “Mercury.” A UMG imprint, do not use it for ©/℗ credits",
+)

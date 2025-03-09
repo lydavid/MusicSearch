@@ -254,3 +254,23 @@ val redReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
         count = 25,
     ),
 )
+
+val releaseWithSameCatalogNumberWithDifferentLabels = redReleaseMusicBrainzModel.copy(
+    labelInfoList = listOf(
+        LabelInfo(
+            catalogNumber = "3717453",
+            label = LabelMusicBrainzModel(
+                id = "1a917e6f-54f5-4964-bebf-5d4e2442ceb4",
+                name = "Big Machine Records",
+                type = "Production",
+                typeId = "a2426aab-2dd4-339c-b47d-b4923a241678",
+                labelCode = null,
+                disambiguation = "",
+            ),
+        ),
+        LabelInfo(
+            catalogNumber = "3717453",
+            label = mercuryRecordsLabelMusicBrainzModel,
+        ),
+    ),
+)
