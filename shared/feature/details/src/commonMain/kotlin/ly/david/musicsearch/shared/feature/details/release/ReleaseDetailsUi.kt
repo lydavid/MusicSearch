@@ -176,7 +176,7 @@ internal fun ReleaseDetailsUi(
                             label.getNameWithDisambiguation(),
                             label.type,
                             label.labelCode.toString(),
-                            label.catalogNumber,
+                            label.catalogNumbers,
                         ).any { it?.lowercase()?.contains(searchText) == true }
                     }
                     .forEach { label ->

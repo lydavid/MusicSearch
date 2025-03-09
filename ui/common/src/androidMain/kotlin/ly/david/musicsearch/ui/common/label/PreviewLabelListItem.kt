@@ -33,7 +33,7 @@ internal fun PreviewLabelListItemAllInfo() {
                     disambiguation = "global brand, excluding JP, owned by Sony Music Entertainment",
                     type = "Original Production",
                     labelCode = 10746,
-                    catalogNumber = "CAT-123",
+                    catalogNumbers = "CAT-123",
                 ),
             )
         }
@@ -52,7 +52,7 @@ internal fun PreviewLabelListItemVisited() {
                     disambiguation = "global brand, excluding JP, owned by Sony Music Entertainment",
                     type = "Original Production",
                     labelCode = 10746,
-                    catalogNumber = "CAT-123",
+                    catalogNumbers = "CAT-123",
                     visited = true,
                 ),
             )

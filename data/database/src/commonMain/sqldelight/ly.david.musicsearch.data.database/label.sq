@@ -150,12 +150,15 @@ SELECT
   l.disambiguation,
   l.type,
   l.label_code,
-  (
-    SELECT GROUP_CONCAT(catalog_number, ', ')
-    FROM release_label rl
-    WHERE rl.release_id = :releaseId
-    AND rl.label_id = l.id
-    ORDER BY rl.catalog_number
+  COALESCE(
+    (
+      SELECT GROUP_CONCAT(catalog_number, ', ')
+      FROM release_label rl
+      WHERE rl.release_id = :releaseId
+      AND rl.label_id = l.id
+      ORDER BY rl.catalog_number
+    ),
+    ''
   ) AS catalogNumbers,
   visited.entity_id IS NOT NULL AS visited
 FROM label l

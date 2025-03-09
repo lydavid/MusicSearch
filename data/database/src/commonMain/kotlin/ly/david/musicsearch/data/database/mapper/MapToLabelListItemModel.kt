@@ -24,7 +24,7 @@ fun mapToLabelListItemModel(
     disambiguation: String?,
     type: String?,
     labelCode: Int?,
-    catalogNumber: String?,
+    catalogNumbers: String?,
     visited: Boolean?,
 ) = LabelListItemModel(
     id = id,
@@ -32,6 +32,6 @@ fun mapToLabelListItemModel(
     disambiguation = disambiguation,
     type = type,
     labelCode = labelCode,
-    catalogNumber = catalogNumber,
+    catalogNumbers = catalogNumbers,
     visited = visited == true,
 )

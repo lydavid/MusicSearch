@@ -53,7 +53,7 @@ fun LabelListItem(
                     )
                 }
 
-                label.catalogNumber.ifNotNullOrEmpty {
+                label.catalogNumbers.ifNotNullOrEmpty {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
                         text = it,

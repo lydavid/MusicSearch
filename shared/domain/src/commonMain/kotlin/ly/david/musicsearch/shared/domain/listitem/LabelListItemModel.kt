@@ -9,6 +9,6 @@ data class LabelListItemModel(
     override val type: String? = null,
     override val labelCode: Int? = null,
 
-    val catalogNumber: String? = null,
+    val catalogNumbers: String? = null,
     override val visited: Boolean = false,
 ) : ListItemModel(), Label, Visitable
