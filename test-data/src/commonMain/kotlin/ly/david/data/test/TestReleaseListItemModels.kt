@@ -22,7 +22,6 @@ val utaNoUtaReleaseListItemModel = ReleaseListItemModel(
     formattedFormats = null,
     formattedTracks = null,
     formattedArtistCredits = "Ado",
-    releaseCountryCount = 1,
     visited = false,
 )
 
@@ -47,6 +46,24 @@ val weirdAlGreatestHitsReleaseListItemModel = ReleaseListItemModel(
     formattedFormats = null,
     formattedTracks = null,
     formattedArtistCredits = "“Weird Al” Yankovic",
-    releaseCountryCount = 1,
     visited = false,
+)
+
+val redRReleaseListItemModel = ReleaseListItemModel(
+    id = "5dc1f2db-867c-4de5-92f0-9d8440b672e3",
+    name = "Red",
+    disambiguation = "",
+    quality = "normal",
+    status = "Official",
+    packaging = "Jewel Case",
+    packagingId = "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+    date = "2012-10-22",
+    countryCode = "GB", // first country it was released in
+    barcode = "602537174539",
+    textRepresentation = TextRepresentationUiModel(
+        script = "Latn",
+        language = "eng",
+    ),
+    formattedArtistCredits = "Taylor Swift",
+    coverArtArchive = CoverArtArchiveUiModel(count = 25),
 )

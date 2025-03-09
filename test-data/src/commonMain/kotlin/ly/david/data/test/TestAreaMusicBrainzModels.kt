@@ -59,3 +59,12 @@ val kitanomaruAreaMusicBrainzModel = AreaMusicBrainzModel(
     type = "District",
     typeId = "84039871-5e47-38ca-a66a-45e512c8290f",
 )
+
+val unitedKingdomAreaMusicBrainzModel = AreaMusicBrainzModel(
+    id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+    name = "United Kingdom",
+    sortName = "United Kingdom",
+    disambiguation = "",
+    countryCodes = listOf("GB"),
+    type = AreaType.COUNTRY,
+)

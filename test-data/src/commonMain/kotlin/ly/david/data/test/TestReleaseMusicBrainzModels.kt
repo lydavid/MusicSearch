@@ -85,6 +85,12 @@ val utaNoUtaReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
             date = "2022-08-10",
         ),
     ),
+    coverArtArchive = CoverArtArchiveMusicBrainzModel(
+        count = 11,
+    ),
+)
+
+val releaseWith3CatalogNumbersWithSameLabel = utaNoUtaReleaseMusicBrainzModel.copy(
     labelInfoList = listOf(
         LabelInfo(
             catalogNumber = "TYBX-10260",
@@ -120,12 +126,7 @@ val utaNoUtaReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
             ),
         ),
     ),
-    coverArtArchive = CoverArtArchiveMusicBrainzModel(
-        count = 11,
-    ),
 )
-
-val releaseWith3CatalogNumbersWithSameLabel = utaNoUtaReleaseMusicBrainzModel
 
 val weirdAlGreatestHitsReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     id = "9eef0b6f-9aa2-4573-8f3e-53d1a4826e3f",
@@ -178,5 +179,78 @@ val weirdAlGreatestHitsReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     ),
     coverArtArchive = CoverArtArchiveMusicBrainzModel(
         count = 2,
+    ),
+)
+
+val redReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
+    id = "5dc1f2db-867c-4de5-92f0-9d8440b672e3",
+    name = "Red",
+    disambiguation = "",
+    quality = "normal",
+    status = "Official",
+    packaging = "Jewel Case",
+    packagingId = "ec27701a-4a22-37f4-bfac-6616e0f9750a",
+    date = "2012-10-22",
+    countryCode = "GB", // first country it was released in
+    barcode = "602537174539",
+    textRepresentation = TextRepresentationMusicBrainzModel(
+        script = "Latn",
+        language = "eng",
+    ),
+    artistCredits = listOf(
+        ArtistCreditMusicBrainzModel(
+            artist = ArtistMusicBrainzModel(
+                id = "20244d07-534f-4eff-b4d4-930878889970",
+                name = "Taylor Swift",
+                sortName = "Swift, Taylor",
+                type = "Person",
+                typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+            ),
+            name = "Taylor Swift",
+            joinPhrase = "",
+        ),
+    ),
+    releaseEvents = listOf(
+        ReleaseEventMusicBrainzModel(
+            area = unitedKingdomAreaMusicBrainzModel.copy(
+                type = null,
+            ),
+            date = "2012-10-22",
+        ),
+        ReleaseEventMusicBrainzModel(
+            area = AreaMusicBrainzModel(
+                id = "c6500277-9a3d-349b-bf30-41afdbf42add",
+                name = "Italy",
+                countryCodes = listOf("IT"),
+            ),
+            date = "2012-10-23",
+        ),
+        ReleaseEventMusicBrainzModel(
+            area = AreaMusicBrainzModel(
+                id = "471c46a7-afc5-31c4-923c-d0444f5053a4",
+                name = "Spain",
+                countryCodes = listOf("ES"),
+            ),
+            date = "2012-10-23",
+        ),
+        ReleaseEventMusicBrainzModel(
+            area = AreaMusicBrainzModel(
+                id = "ef1b7cc0-cd26-36f4-8ea0-04d9623786c7",
+                name = "Netherlands",
+                countryCodes = listOf("NL"),
+            ),
+            date = "2012-10-26",
+        ),
+        ReleaseEventMusicBrainzModel(
+            area = AreaMusicBrainzModel(
+                id = "08310658-51eb-3801-80de-5a0739207115",
+                name = "France",
+                countryCodes = listOf("FR"),
+            ),
+            date = "2012-11-05",
+        ),
+    ),
+    coverArtArchive = CoverArtArchiveMusicBrainzModel(
+        count = 25,
     ),
 )

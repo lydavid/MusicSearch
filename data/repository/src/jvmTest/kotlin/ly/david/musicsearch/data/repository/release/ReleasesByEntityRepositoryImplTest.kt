@@ -8,6 +8,8 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.japanAreaMusicBrainzModel
+import ly.david.data.test.redRReleaseListItemModel
+import ly.david.data.test.redReleaseMusicBrainzModel
 import ly.david.data.test.releaseWith3CatalogNumbersWithSameLabel
 import ly.david.data.test.utaNoUtaReleaseListItemModel
 import ly.david.data.test.utaNoUtaReleaseMusicBrainzModel
@@ -18,6 +20,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.LabelDao
@@ -34,12 +37,12 @@ import ly.david.musicsearch.data.repository.helpers.TestLabelRepository
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.history.VisitedDao
+import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.ReleasesByEntityRepository
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -57,6 +60,7 @@ class ReleasesByEntityRepositoryImplTest :
     private val database: Database by inject()
     private val artistReleaseDao: ArtistReleaseDao by inject()
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
+    private val collectionDao: CollectionDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
     private val recordingReleaseDao: RecordingReleaseDao by inject()
     private val releaseDao: ReleaseDao by inject()
@@ -200,25 +204,88 @@ class ReleasesByEntityRepositoryImplTest :
         }
     }
 
-//    private suspend fun setupReleasesByArea(): ReleasesByEntityRepository {
-//        val entityId = japanAreaMusicBrainzModel.id
-//        val areaRepository = createAreaRepository(
-//            musicBrainzModel = japanAreaMusicBrainzModel,
-//        )
-//        areaRepository.lookupArea(
-//            areaId = entityId,
-//            forceRefresh = false,
-//        )
-//
-//        val entity = MusicBrainzEntity.AREA
-//        val releases = listOf(
-//            weirdAlGreatestHitsReleaseMusicBrainzModel,
-//            utaNoUtaReleaseMusicBrainzModel,
-//        )
-//        return createReleasesByEntityRepository(
-//            releases,
-//        )
-//    }
+    @Test
+    fun setupReleasesByCollection() = runTest {
+        val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
+        val releases = listOf(
+            redReleaseMusicBrainzModel,
+            utaNoUtaReleaseMusicBrainzModel,
+        )
+        val eventsByEntityRepository = createReleasesByEntityRepository(
+            releases = releases,
+        )
+
+        collectionDao.insertLocal(
+            collection = CollectionListItemModel(
+                id = collectionId,
+                isRemote = false,
+                name = "releases",
+                entity = MusicBrainzEntity.RELEASE,
+            ),
+        )
+        collectionEntityDao.insertAll(
+            collectionId = collectionId,
+            entityIds = releases.map { it.id },
+        )
+
+        testFilter(
+            pagingFlowProducer = { query ->
+                eventsByEntityRepository.observeReleasesByEntity(
+                    entityId = collectionId,
+                    entity = MusicBrainzEntity.COLLECTION,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "No filter",
+                    query = "",
+                    expectedResult = listOf(
+                        redRReleaseListItemModel,
+                        utaNoUtaReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by name",
+                    query = "red",
+                    expectedResult = listOf(
+                        redRReleaseListItemModel,
+                        utaNoUtaReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by disambiguation",
+                    query = "限",
+                    expectedResult = listOf(
+                        utaNoUtaReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by date",
+                    query = "-22",
+                    expectedResult = listOf(
+                        redRReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by country code",
+                    query = "J",
+                    expectedResult = listOf(
+                        utaNoUtaReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by artist credit name",
+                    query = "swift",
+                    expectedResult = listOf(
+                        redRReleaseListItemModel,
+                    ),
+                ),
+            ),
+        )
+    }
 
     @Test
     fun `releases by area`() = runTest {
@@ -234,9 +301,7 @@ class ReleasesByEntityRepositoryImplTest :
         val entity = MusicBrainzEntity.AREA
         val releases = listOf(
             weirdAlGreatestHitsReleaseMusicBrainzModel,
-            utaNoUtaReleaseMusicBrainzModel.copy(
-                labelInfoList = null,
-            ),
+            utaNoUtaReleaseMusicBrainzModel,
         )
         val releasesByEntityRepository = createReleasesByEntityRepository(
             releases,
@@ -257,43 +322,58 @@ class ReleasesByEntityRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel,
-                        utaNoUtaReleaseListItemModel,
+                        weirdAlGreatestHitsReleaseListItemModel.copy(
+                            // this only goes up when we have visited the country
+                            releaseCountryCount = 1,
+                        ),
+                        utaNoUtaReleaseListItemModel.copy(
+                            releaseCountryCount = 1,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "hits",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel,
+                        weirdAlGreatestHitsReleaseListItemModel.copy(
+                            releaseCountryCount = 1,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by disambiguation",
                     query = "回",
                     expectedResult = listOf(
-                        utaNoUtaReleaseListItemModel,
+                        utaNoUtaReleaseListItemModel.copy(
+                            releaseCountryCount = 1,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "2022",
                     expectedResult = listOf(
-                        utaNoUtaReleaseListItemModel,
+                        utaNoUtaReleaseListItemModel.copy(
+                            releaseCountryCount = 1,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by country code",
                     query = "AF",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel,
+                        weirdAlGreatestHitsReleaseListItemModel.copy(
+                            releaseCountryCount = 1,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit name",
                     query = "ado",
                     expectedResult = listOf(
-                        utaNoUtaReleaseListItemModel,
+                        utaNoUtaReleaseListItemModel.copy(
+                            releaseCountryCount = 1,
+                        ),
                     ),
                 ),
             ),
@@ -337,20 +417,23 @@ class ReleasesByEntityRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel,
+                        weirdAlGreatestHitsReleaseListItemModel.copy(
+                            releaseCountryCount = 1,
+                        ),
                         utaNoUtaReleaseListItemModel.copy(
+                            releaseCountryCount = 1,
                             imageId = 1,
                             imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                         ),
                     ),
                 ),
-            )
+            ),
         )
 
         // refresh
         val modifiedReleases = listOf(
             utaNoUtaReleaseMusicBrainzModel.copy(
-                labelInfoList = null,
+                name = "some change",
             ),
         )
         val modifiedReleasesByEntityRepository = createReleasesByEntityRepository(
@@ -366,6 +449,8 @@ class ReleasesByEntityRepositoryImplTest :
             assertEquals(
                 listOf(
                     utaNoUtaReleaseListItemModel.copy(
+                        name = "some change",
+                        releaseCountryCount = 1,
                         imageId = 1,
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                     ),
