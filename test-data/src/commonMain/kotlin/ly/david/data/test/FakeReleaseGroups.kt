@@ -1,7 +1,5 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
-import ly.david.musicsearch.data.musicbrainz.api.SearchReleaseGroupsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
@@ -32,27 +30,12 @@ val underPressureReleaseGroup = ReleaseGroupMusicBrainzModel(
     ),
 )
 
-val fakeReleaseGroupWithArtistCredits = ReleaseGroupMusicBrainzModel(
-    id = "fakeReleaseGroup2",
-    name = "Release Group With Artist Credits",
-    artistCredits = listOf(
-        davidBowieArtistCredit,
-        queenArtistCredit,
-    ),
-)
-
-val browseReleaseGroupsResponse = BrowseReleaseGroupsResponse(
-    count = 1,
-    offset = 0,
-    musicBrainzModels = listOf(underPressureReleaseGroup),
-)
-
-val fakeReleaseGroups = listOf(
-    underPressureReleaseGroup,
-)
-
-val searchReleaseGroupsResponse = SearchReleaseGroupsResponse(
-    count = 1,
-    offset = 0,
-    listOf(element = underPressureReleaseGroup),
+val utaNoUtaReleaseGroupMusicBrainzModel = ReleaseGroupMusicBrainzModel(
+    id = "22760f81-37ce-47ce-98b6-65f8a285f083",
+    name = "ウタの歌 ONE PIECE FILM RED",
+    primaryType = "Album",
+    secondaryTypes = listOf(),
+    disambiguation = "",
+    artistCredits = listOf(adoArtistCreditMusicBrainzModel),
+    firstReleaseDate = "2022-08-10",
 )

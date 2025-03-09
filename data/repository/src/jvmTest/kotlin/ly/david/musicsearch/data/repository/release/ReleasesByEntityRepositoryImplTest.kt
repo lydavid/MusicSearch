@@ -7,9 +7,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
+import ly.david.data.test.japanAreaMusicBrainzModel
 import ly.david.data.test.releaseWith3CatalogNumbersWithSameLabel
+import ly.david.data.test.utaNoUtaReleaseListItemModel
+import ly.david.data.test.utaNoUtaReleaseMusicBrainzModel
 import ly.david.data.test.virginMusicLabelMusicBrainzModel
+import ly.david.data.test.weirdAlGreatestHitsReleaseListItemModel
+import ly.david.data.test.weirdAlGreatestHitsReleaseMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -22,7 +28,10 @@ import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.repository.helpers.FilterTestCase
+import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
 import ly.david.musicsearch.data.repository.helpers.TestLabelRepository
+import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
@@ -31,12 +40,16 @@ import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.ReleasesByEntityRepository
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
+class ReleasesByEntityRepositoryImplTest :
+    KoinTest,
+    TestAreaRepository,
+    TestLabelRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
@@ -53,6 +66,7 @@ class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
     override val entityHasRelationsDao: EntityHasRelationsDao by inject()
     override val visitedDao: VisitedDao by inject()
     override val relationDao: RelationDao by inject()
+    override val areaDao: AreaDao by inject()
 
     private fun createReleasesByEntityRepository(
         releases: List<ReleaseMusicBrainzModel>,
@@ -92,7 +106,7 @@ class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
             forceRefresh = false,
         )
 
-        val sut = createReleasesByEntityRepository(
+        val releasesByEntityRepository = createReleasesByEntityRepository(
             releases = listOf(
                 releaseWith3CatalogNumbersWithSameLabel,
             ),
@@ -105,15 +119,8 @@ class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
             types = persistentListOf(),
             comment = null,
         )
-        database.mbid_imageQueries.insert(
-            mbid = releaseWith3CatalogNumbersWithSameLabel.id,
-            thumbnailUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-250.jpg",
-            largeUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-1200.jpg",
-            types = persistentListOf(),
-            comment = null,
-        )
 
-        val flow: Flow<PagingData<ReleaseListItemModel>> = sut.observeReleasesByEntity(
+        val flow: Flow<PagingData<ReleaseListItemModel>> = releasesByEntityRepository.observeReleasesByEntity(
             entityId = labelId,
             entity = MusicBrainzEntity.LABEL,
             listFilters = ListFilters(
@@ -121,7 +128,7 @@ class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
             ),
         )
         val releases: List<ReleaseListItemModel> = flow.asSnapshot()
-        Assert.assertEquals(
+        assertEquals(
             listOf(
                 ReleaseListItemModel(
                     id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
@@ -163,7 +170,7 @@ class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
             forceRefresh = false,
         )
 
-        val sut = createReleasesByEntityRepository(
+        val releasesByEntityRepository = createReleasesByEntityRepository(
             releases = (1..200).map {
                 releaseWith3CatalogNumbersWithSameLabel.copy(
                     id = it.toString(),
@@ -171,13 +178,13 @@ class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
             },
         )
 
-        val flow: Flow<PagingData<ReleaseListItemModel>> = sut.observeReleasesByEntity(
+        val flow: Flow<PagingData<ReleaseListItemModel>> = releasesByEntityRepository.observeReleasesByEntity(
             entityId = labelId,
             entity = MusicBrainzEntity.LABEL,
             listFilters = ListFilters(),
         )
         flow.asSnapshot().let { releases ->
-            Assert.assertEquals(
+            assertEquals(
                 100,
                 releases.size,
             )
@@ -186,10 +193,204 @@ class ReleasesByEntityRepositoryImplTest : KoinTest, TestLabelRepository {
         flow.asSnapshot {
             scrollTo(99)
         }.let { releases ->
-            Assert.assertEquals(
+            assertEquals(
                 200,
                 releases.size,
             )
         }
+    }
+
+//    private suspend fun setupReleasesByArea(): ReleasesByEntityRepository {
+//        val entityId = japanAreaMusicBrainzModel.id
+//        val areaRepository = createAreaRepository(
+//            musicBrainzModel = japanAreaMusicBrainzModel,
+//        )
+//        areaRepository.lookupArea(
+//            areaId = entityId,
+//            forceRefresh = false,
+//        )
+//
+//        val entity = MusicBrainzEntity.AREA
+//        val releases = listOf(
+//            weirdAlGreatestHitsReleaseMusicBrainzModel,
+//            utaNoUtaReleaseMusicBrainzModel,
+//        )
+//        return createReleasesByEntityRepository(
+//            releases,
+//        )
+//    }
+
+    @Test
+    fun `releases by area`() = runTest {
+        val entityId = japanAreaMusicBrainzModel.id
+        val areaRepository = createAreaRepository(
+            musicBrainzModel = japanAreaMusicBrainzModel,
+        )
+        areaRepository.lookupArea(
+            areaId = entityId,
+            forceRefresh = false,
+        )
+
+        val entity = MusicBrainzEntity.AREA
+        val releases = listOf(
+            weirdAlGreatestHitsReleaseMusicBrainzModel,
+            utaNoUtaReleaseMusicBrainzModel.copy(
+                labelInfoList = null,
+            ),
+        )
+        val releasesByEntityRepository = createReleasesByEntityRepository(
+            releases,
+        )
+
+        testFilter(
+            pagingFlowProducer = { query ->
+                releasesByEntityRepository.observeReleasesByEntity(
+                    entityId = entityId,
+                    entity = entity,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "No filter",
+                    query = "",
+                    expectedResult = listOf(
+                        weirdAlGreatestHitsReleaseListItemModel,
+                        utaNoUtaReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by name",
+                    query = "hits",
+                    expectedResult = listOf(
+                        weirdAlGreatestHitsReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by disambiguation",
+                    query = "回",
+                    expectedResult = listOf(
+                        utaNoUtaReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by date",
+                    query = "2022",
+                    expectedResult = listOf(
+                        utaNoUtaReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by country code",
+                    query = "AF",
+                    expectedResult = listOf(
+                        weirdAlGreatestHitsReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by artist credit name",
+                    query = "ado",
+                    expectedResult = listOf(
+                        utaNoUtaReleaseListItemModel,
+                    ),
+                ),
+            ),
+        )
+    }
+
+    @Test
+    fun `refreshing releases that belong to multiple entities does not delete the release`() = runTest {
+        `releases by label - release with multiple catalog numbers, multiple cover arts`()
+
+        val areaId = japanAreaMusicBrainzModel.id
+        val areaRepository = createAreaRepository(
+            musicBrainzModel = japanAreaMusicBrainzModel,
+        )
+        areaRepository.lookupArea(
+            areaId = areaId,
+            forceRefresh = false,
+        )
+
+        val entity = MusicBrainzEntity.AREA
+        val releases = listOf(
+            weirdAlGreatestHitsReleaseMusicBrainzModel,
+            utaNoUtaReleaseMusicBrainzModel,
+        )
+        val releasesByEntityRepository = createReleasesByEntityRepository(
+            releases,
+        )
+
+        testFilter(
+            pagingFlowProducer = { query ->
+                releasesByEntityRepository.observeReleasesByEntity(
+                    entityId = areaId,
+                    entity = entity,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "No filter",
+                    query = "",
+                    expectedResult = listOf(
+                        weirdAlGreatestHitsReleaseListItemModel,
+                        utaNoUtaReleaseListItemModel.copy(
+                            imageId = 1,
+                            imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                        ),
+                    ),
+                ),
+            )
+        )
+
+        // refresh
+        val modifiedReleases = listOf(
+            utaNoUtaReleaseMusicBrainzModel.copy(
+                labelInfoList = null,
+            ),
+        )
+        val modifiedReleasesByEntityRepository = createReleasesByEntityRepository(
+            releases = modifiedReleases,
+        )
+        modifiedReleasesByEntityRepository.observeReleasesByEntity(
+            entityId = areaId,
+            entity = entity,
+            listFilters = ListFilters(),
+        ).asSnapshot {
+            refresh()
+        }.run {
+            assertEquals(
+                listOf(
+                    utaNoUtaReleaseListItemModel.copy(
+                        imageId = 1,
+                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                    ),
+                ),
+                this,
+            )
+        }
+
+        // other entities remain unchanged
+//        modifiedReleasesByEntityRepository.observeReleasesByEntity(
+//            entityId = virginMusicLabelMusicBrainzModel.id,
+//            entity = MusicBrainzEntity.LABEL,
+//            listFilters = ListFilters(),
+//        ).asSnapshot {
+//            refresh()
+//        }.run {
+//            assertEquals(
+//                listOf(
+//                    utaNoUtaReleaseListItemModel.copy(
+//                        imageId = 1,
+//                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+//                    ),
+//                ),
+//                this,
+//            )
+//        }
     }
 }

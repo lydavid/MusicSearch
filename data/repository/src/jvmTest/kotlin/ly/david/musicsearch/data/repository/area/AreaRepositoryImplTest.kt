@@ -1,16 +1,14 @@
 package ly.david.musicsearch.data.repository.area
 
 import kotlinx.coroutines.test.runTest
-import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.data.test.KoinTestRule
-import ly.david.musicsearch.data.repository.RelationRepositoryImpl
+import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
-import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -18,49 +16,19 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class AreaRepositoryImplTest : KoinTest {
+class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val visitedDao: VisitedDao by inject()
-    private val relationDao: RelationDao by inject()
-    private val areaDao: AreaDao by inject()
-
-    private fun createRepository(
-        musicBrainzModel: AreaMusicBrainzModel,
-    ): AreaRepository {
-        val relationRepository = RelationRepositoryImpl(
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupArea(
-                    areaId: String,
-                    include: String?,
-                ): AreaMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-            entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
-            relationDao = relationDao,
-        )
-        return AreaRepositoryImpl(
-            areaDao = areaDao,
-            relationRepository = relationRepository,
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupArea(
-                    areaId: String,
-                    include: String?,
-                ): AreaMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-        )
-    }
+    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val visitedDao: VisitedDao by inject()
+    override val relationDao: RelationDao by inject()
+    override val areaDao: AreaDao by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepository(
+        val sparseRepository = createAreaRepository(
             musicBrainzModel = AreaMusicBrainzModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",
@@ -78,7 +46,7 @@ class AreaRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepository(
+        val allDataRepository = createAreaRepository(
             musicBrainzModel = AreaMusicBrainzModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",

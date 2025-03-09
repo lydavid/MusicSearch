@@ -500,10 +500,6 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             refresh()
         }.run {
             assertEquals(
-                2,
-                size,
-            )
-            assertEquals(
                 listOf(
                     kissAtBudokanListItemModel.copy(
                         id = "new-id-is-considered-a-different-event",
@@ -521,10 +517,6 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                2,
-                size,
-            )
-            assertEquals(
                 listOf(
                     kissAtBudokanListItemModel,
                     aimerAtBudokanListItemModel,
@@ -539,10 +531,6 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             entity = null,
             listFilters = ListFilters(),
         ).asSnapshot().run {
-            assertEquals(
-                3,
-                size,
-            )
             assertEquals(
                 listOf(
                     kissAtBudokanListItemModel,
@@ -563,10 +551,6 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             refresh()
         }.run {
             assertEquals(
-                2,
-                size,
-            )
-            assertEquals(
                 listOf(
                     kissAtBudokanListItemModel.copy(
                         id = "new-id-is-considered-a-different-event",
@@ -584,10 +568,6 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             entity = null,
             listFilters = ListFilters(),
         ).asSnapshot().run {
-            assertEquals(
-                2,
-                size,
-            )
             assertEquals(
                 listOf(
                     kissAtBudokanListItemModel.copy(

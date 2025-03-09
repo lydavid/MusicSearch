@@ -1,16 +1,17 @@
 package ly.david.data.test
 
+import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.CoverArtArchiveMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.TextRepresentationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 
 val underPressureRemastered = ReleaseMusicBrainzModel(
     id = "eac6d0cd-1ed0-4e17-b5b0-d3cfc40547b2",
@@ -58,7 +59,7 @@ val underPressure = ReleaseMusicBrainzModel(
     relations = listOf(underPressureRemasterOf),
 )
 
-val releaseWith3CatalogNumbersWithSameLabel = ReleaseMusicBrainzModel(
+val utaNoUtaReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
     name = "ウタの歌 ONE PIECE FILM RED",
     disambiguation = "初回限定盤",
@@ -76,23 +77,10 @@ val releaseWith3CatalogNumbersWithSameLabel = ReleaseMusicBrainzModel(
     artistCredits = listOf(
         adoArtistCreditMusicBrainzModel,
     ),
-    releaseGroup = ReleaseGroupMusicBrainzModel(
-        id = "22760f81-37ce-47ce-98b6-65f8a285f083",
-        name = "ウタの歌 ONE PIECE FILM RED",
-        primaryType = "Album",
-        secondaryTypes = listOf(),
-        disambiguation = "",
-        artistCredits = listOf(adoArtistCreditMusicBrainzModel),
-        firstReleaseDate = "2022-08-10",
-    ),
     releaseEvents = listOf(
         ReleaseEventMusicBrainzModel(
-            area = AreaMusicBrainzModel(
-                id = "2db42837-c832-3c27-b4a3-08198f75693c",
-                name = "Japan",
-                disambiguation = "",
-                countryCodes = listOf("JP"),
-                sortName = "Japan",
+            area = japanAreaMusicBrainzModel.copy(
+                type = null,
             ),
             date = "2022-08-10",
         ),
@@ -134,5 +122,61 @@ val releaseWith3CatalogNumbersWithSameLabel = ReleaseMusicBrainzModel(
     ),
     coverArtArchive = CoverArtArchiveMusicBrainzModel(
         count = 11,
+    ),
+)
+
+val releaseWith3CatalogNumbersWithSameLabel = utaNoUtaReleaseMusicBrainzModel
+
+val weirdAlGreatestHitsReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
+    id = "9eef0b6f-9aa2-4573-8f3e-53d1a4826e3f",
+    name = "“Weird Al” Yankovic’s Greatest Hits",
+    disambiguation = "",
+    quality = "normal",
+    status = "Official",
+    asin = "B00138CYEI",
+    packaging = "None",
+    packagingId = "119eba76-b343-3e02-a292-f0f00644bb9b",
+    date = "",
+    countryCode = "AF", // first country listed
+    barcode = "614223200828",
+    textRepresentation = TextRepresentationMusicBrainzModel(
+        script = "Latn",
+        language = "eng",
+    ),
+    artistCredits = listOf(
+        ArtistCreditMusicBrainzModel(
+            artist = ArtistMusicBrainzModel(
+                id = "7746d775-9550-4360-b8d5-c37bd448ce01",
+                name = "“Weird Al” Yankovic",
+                sortName = "Yankovic, Weird Al",
+                type = "Person",
+                typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+            ),
+            name = "“Weird Al” Yankovic",
+            joinPhrase = "",
+        ),
+    ),
+    releaseEvents = listOf(
+        ReleaseEventMusicBrainzModel(
+            area = AreaMusicBrainzModel(
+                id = "aa95182f-df0a-3ad6-8bfb-4b63482cd276",
+                name = "Afghanistan",
+                sortName = "Afghanistan",
+                disambiguation = "",
+                countryCodes = listOf("AF"),
+                type = null,
+            ),
+            date = "",
+        ),
+        // many more that I've truncated here
+        ReleaseEventMusicBrainzModel(
+            area = japanAreaMusicBrainzModel.copy(
+                type = null,
+            ),
+            date = "",
+        ),
+    ),
+    coverArtArchive = CoverArtArchiveMusicBrainzModel(
+        count = 2,
     ),
 )
