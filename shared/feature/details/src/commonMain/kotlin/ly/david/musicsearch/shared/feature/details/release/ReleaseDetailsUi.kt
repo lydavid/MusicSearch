@@ -170,8 +170,14 @@ internal fun ReleaseDetailsUi(
                     ListSeparatorHeader(strings.labels)
                 }
                 labels
-                    .filter {
-                        it.getNameWithDisambiguation().contains(filterText, ignoreCase = true)
+                    .filter { label ->
+                        val searchText = filterText.lowercase()
+                        listOf(
+                            label.getNameWithDisambiguation(),
+                            label.type,
+                            label.labelCode.toString(),
+                            label.catalogNumber,
+                        ).any { it?.lowercase()?.contains(searchText) == true }
                     }
                     .forEach { label ->
                         LabelListItem(
@@ -190,8 +196,12 @@ internal fun ReleaseDetailsUi(
                     ListSeparatorHeader(strings.releaseEvents)
                 }
                 areas
-                    .filter {
-                        it.getNameWithDisambiguation().contains(filterText, ignoreCase = true)
+                    .filter { area ->
+                        val searchText = filterText.lowercase()
+                        listOf(
+                            area.getNameWithDisambiguation(),
+                            area.date,
+                        ).any { it?.lowercase()?.contains(searchText) == true }
                     }
                     .forEach { area: AreaListItemModel ->
                         AreaListItem(
