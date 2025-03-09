@@ -168,7 +168,7 @@ INNER JOIN `release` r ON r.id = rc.release_id
 LEFT JOIN country_code cc ON cc.area_id = a.id
 LEFT JOIN visited ON visited.entity_id = a.id
 WHERE r.id = :releaseId
-ORDER BY a.name;
+ORDER BY rc.date, a.name;
 
 deleteCountriesByReleaseLinks:
 DELETE FROM release_country
