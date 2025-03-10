@@ -209,7 +209,7 @@ class AreaDao(
                     areas_by_entity = Areas_by_entity(
                         entity_id = releaseId,
                         area_id = areaId,
-                    )
+                    ),
                 )
                 releaseCountryDao.insert(
                     areaId = areaId,

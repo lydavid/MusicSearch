@@ -54,7 +54,7 @@ VALUES ?;
 
 -- for the future when we combine areas by collection
 -- this should not be used for release events
-deleteAreasyEntity {
+deleteAreasByEntity {
 WITH
   areas_linked_to_multiple_entities AS (
     SELECT area_id
