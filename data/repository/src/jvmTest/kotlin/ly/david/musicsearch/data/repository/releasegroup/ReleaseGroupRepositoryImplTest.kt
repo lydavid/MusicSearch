@@ -1,7 +1,6 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
 import kotlinx.coroutines.test.runTest
-import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.shared.domain.history.VisitedDao
@@ -15,63 +14,31 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.data.test.KoinTestRule
-import ly.david.musicsearch.data.repository.RelationRepositoryImpl
+import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class ReleaseGroupRepositoryImplTest : KoinTest {
+class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val releaseGroupDao: ReleaseGroupDao by inject()
-    private val artistCreditDao: ArtistCreditDao by inject()
-    private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val visitedDao: VisitedDao by inject()
-    private val relationDao: RelationDao by inject()
-
-    private fun createRepository(
-        musicBrainzModel: ReleaseGroupMusicBrainzModel,
-    ): ReleaseGroupRepository {
-        val relationRepository = RelationRepositoryImpl(
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupReleaseGroup(
-                    releaseGroupId: String,
-                    include: String,
-                ): ReleaseGroupMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-            entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
-            relationDao = relationDao,
-        )
-        return ReleaseGroupRepositoryImpl(
-            releaseGroupDao = releaseGroupDao,
-            artistCreditDao = artistCreditDao,
-            relationRepository = relationRepository,
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupReleaseGroup(
-                    releaseGroupId: String,
-                    include: String,
-                ): ReleaseGroupMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-        )
-    }
+    override val releaseGroupDao: ReleaseGroupDao by inject()
+    override val artistCreditDao: ArtistCreditDao by inject()
+    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val visitedDao: VisitedDao by inject()
+    override val relationDao: RelationDao by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepository(
+        val sparseRepository = createReleaseGroupRepository(
             musicBrainzModel = ReleaseGroupMusicBrainzModel(
                 id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                 name = "Today Is A Beautiful Day",
@@ -110,7 +77,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepository(
+        val allDataRepository = createReleaseGroupRepository(
             musicBrainzModel = ReleaseGroupMusicBrainzModel(
                 id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                 primaryType = "Album",

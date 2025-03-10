@@ -38,7 +38,7 @@ class ReleaseDao(
 
     fun insert(release: ReleaseMusicBrainzModel) {
         release.run {
-            transacter.insert(
+            transacter.insertRelease(
                 Release(
                     id = id,
                     name = name,
@@ -196,7 +196,10 @@ class ReleaseDao(
     )
 
     fun deleteReleasesByLabel(labelId: String) {
-        transacter.deleteReleasesByLabel(labelId = labelId)
+        withTransaction {
+            transacter.deleteReleasesByEntity(labelId)
+            transacter.deleteReleasesByLabel(labelId = labelId)
+        }
     }
     // endregion
 

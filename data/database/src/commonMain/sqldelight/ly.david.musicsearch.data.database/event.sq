@@ -13,11 +13,15 @@ CREATE TABLE IF NOT EXISTS event (
   ended INTEGER AS Boolean
 );
 
-insert:
+insertEvent:
 INSERT OR IGNORE INTO event
 VALUES ?;
 
-getEvent:
+deleteEvent:
+DELETE FROM event
+WHERE id = :id;
+
+getEventForDetails:
 SELECT
   id,
   name,
@@ -30,9 +34,6 @@ SELECT
   ended
 FROM event WHERE id = ?;
 
-delete:
-DELETE FROM event
-WHERE id = :id;
 
 -- events by entity
 
@@ -43,8 +44,8 @@ CREATE TABLE IF NOT EXISTS events_by_entity (
   PRIMARY KEY (entity_id, event_id)
 );
 
-insertEventByEntity:
-INSERT OR FAIL INTO events_by_entity
+insertOrIgnoreEventByEntity:
+INSERT OR IGNORE INTO events_by_entity
 VALUES ?;
 
 deleteEventsByEntity {

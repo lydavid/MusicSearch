@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `release` (
   `cover_art_count` INTEGER AS Int NOT NULL
 );
 
-insert:
+insertRelease:
 INSERT OR IGNORE INTO `release`
 VALUES ?;
 
@@ -138,18 +138,29 @@ GROUP BY r.id
 ORDER BY r.date, r.name
 LIMIT :limit OFFSET :offset;
 
-deleteReleasesByLabel {
-DELETE FROM release WHERE id IN (
-  SELECT r.id
-  FROM release r
-  INNER JOIN releases_by_entity re ON re.release_id = r.id
-  WHERE re.entity_id = :labelId
-);
+deleteReleasesByEntity {
+WITH
+  releases_linked_to_multiple_entities AS (
+    SELECT release_id
+    FROM releases_by_entity
+    GROUP BY release_id
+    HAVING COUNT(DISTINCT entity_id) > 1
+  ),
+  releases_to_delete AS (
+    SELECT r.id
+    FROM `release` r
+    INNER JOIN releases_by_entity re ON re.release_id = r.id
+    WHERE re.entity_id = :entityId
+    AND r.id NOT IN (SELECT release_id FROM releases_linked_to_multiple_entities)
+  )
+DELETE FROM `release`
+WHERE id IN (SELECT id FROM releases_to_delete);
 
-DELETE FROM release_label WHERE label_id = :labelId;
-
-DELETE FROM releases_by_entity WHERE entity_id = :labelId;
+DELETE FROM releases_by_entity WHERE entity_id = :entityId;
 }
+
+deleteReleasesByLabel:
+DELETE FROM release_label WHERE label_id = :labelId;
 
 -- releases by country
 

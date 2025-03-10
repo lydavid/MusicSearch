@@ -25,7 +25,7 @@ class EventDao(
 
     fun insert(event: EventMusicBrainzModel) {
         event.run {
-            transacter.insert(
+            transacter.insertEvent(
                 Event(
                     id = id,
                     name = name,
@@ -51,7 +51,7 @@ class EventDao(
     }
 
     fun getEventForDetails(eventId: String): EventDetailsModel? {
-        return transacter.getEvent(
+        return transacter.getEventForDetails(
             eventId,
             mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
@@ -82,25 +82,7 @@ class EventDao(
     )
 
     fun delete(id: String) {
-        transacter.delete(id)
-    }
-
-    @Suppress("SwallowedException")
-    private fun insertEventByEntity(
-        entityId: String,
-        eventId: String,
-    ): Int {
-        return try {
-            transacter.insertEventByEntity(
-                Events_by_entity(
-                    entity_id = entityId,
-                    event_id = eventId,
-                ),
-            )
-            1
-        } catch (ex: Exception) {
-            0
-        }
+        transacter.deleteEvent(id)
     }
 
     fun insertEventsByEntity(
@@ -108,12 +90,15 @@ class EventDao(
         eventIds: List<String>,
     ): Int {
         return transacter.transactionWithResult {
-            eventIds.sumOf { eventId ->
-                insertEventByEntity(
-                    entityId = entityId,
-                    eventId = eventId,
+            eventIds.forEach { eventId ->
+                transacter.insertOrIgnoreEventByEntity(
+                    Events_by_entity(
+                        entity_id = entityId,
+                        event_id = eventId,
+                    ),
                 )
             }
+            eventIds.size
         }
     }
 

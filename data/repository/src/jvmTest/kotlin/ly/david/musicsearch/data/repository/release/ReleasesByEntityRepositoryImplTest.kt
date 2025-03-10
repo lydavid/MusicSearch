@@ -20,6 +20,7 @@ import ly.david.data.test.weirdAlGreatestHitsReleaseListItemModel
 import ly.david.data.test.weirdAlGreatestHitsReleaseMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.dao.AreaDao
+import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
@@ -28,14 +29,15 @@ import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.RecordingReleaseDao
 import ly.david.musicsearch.data.database.dao.RelationDao
-import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
+import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
 import ly.david.musicsearch.data.repository.helpers.TestLabelRepository
+import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.history.VisitedDao
@@ -53,7 +55,8 @@ import org.koin.test.inject
 class ReleasesByEntityRepositoryImplTest :
     KoinTest,
     TestAreaRepository,
-    TestLabelRepository {
+    TestLabelRepository,
+    TestReleaseGroupRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
@@ -67,6 +70,8 @@ class ReleasesByEntityRepositoryImplTest :
     private val releaseDao: ReleaseDao by inject()
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
     override val labelDao: LabelDao by inject()
+    override val releaseGroupDao: ReleaseGroupDao by inject()
+    override val artistCreditDao: ArtistCreditDao by inject()
     override val entityHasRelationsDao: EntityHasRelationsDao by inject()
     override val visitedDao: VisitedDao by inject()
     override val relationDao: RelationDao by inject()
@@ -99,57 +104,58 @@ class ReleasesByEntityRepositoryImplTest :
     }
 
     @Test
-    fun `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`() = runTest {
-        val labelRepository = createLabelRepository(
-            musicBrainzModel = virginMusicLabelMusicBrainzModel,
-        )
-        val labelId = virginMusicLabelMusicBrainzModel.id
-        labelRepository.lookupLabel(
-            labelId = labelId,
-            forceRefresh = false,
-        )
+    fun `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`() =
+        runTest {
+            val labelRepository = createLabelRepository(
+                musicBrainzModel = virginMusicLabelMusicBrainzModel,
+            )
+            val labelId = virginMusicLabelMusicBrainzModel.id
+            labelRepository.lookupLabel(
+                labelId = labelId,
+                forceRefresh = false,
+            )
 
-        val releasesByEntityRepository = createReleasesByEntityRepository(
-            releases = listOf(
-                releaseWith3CatalogNumbersWithSameLabel,
-            ),
-        )
-
-        database.mbid_imageQueries.insert(
-            mbid = releaseWith3CatalogNumbersWithSameLabel.id,
-            thumbnailUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-            largeUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-1200.jpg",
-            types = persistentListOf(),
-            comment = null,
-        )
-        database.mbid_imageQueries.insert(
-            mbid = releaseWith3CatalogNumbersWithSameLabel.id,
-            thumbnailUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-250.jpg",
-            largeUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-1200.jpg",
-            types = persistentListOf(),
-            comment = null,
-        )
-
-        val flow: Flow<PagingData<ReleaseListItemModel>> = releasesByEntityRepository.observeReleasesByEntity(
-            entityId = labelId,
-            entity = MusicBrainzEntity.LABEL,
-            listFilters = ListFilters(
-                query = "ウタ",
-            ),
-        )
-        val releases: List<ReleaseListItemModel> = flow.asSnapshot()
-        assertEquals(
-            listOf(
-                utaNoUtaReleaseListItemModel.copy(
-                    catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
-                    textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
-                    imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-                    imageId = 1,
+            val releasesByEntityRepository = createReleasesByEntityRepository(
+                releases = listOf(
+                    releaseWith3CatalogNumbersWithSameLabel,
                 ),
-            ),
-            releases,
-        )
-    }
+            )
+
+            database.mbid_imageQueries.insert(
+                mbid = releaseWith3CatalogNumbersWithSameLabel.id,
+                thumbnailUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                largeUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-1200.jpg",
+                types = persistentListOf(),
+                comment = null,
+            )
+            database.mbid_imageQueries.insert(
+                mbid = releaseWith3CatalogNumbersWithSameLabel.id,
+                thumbnailUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-250.jpg",
+                largeUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-1200.jpg",
+                types = persistentListOf(),
+                comment = null,
+            )
+
+            val flow: Flow<PagingData<ReleaseListItemModel>> = releasesByEntityRepository.observeReleasesByEntity(
+                entityId = labelId,
+                entity = MusicBrainzEntity.LABEL,
+                listFilters = ListFilters(
+                    query = "ウタ",
+                ),
+            )
+            val releases: List<ReleaseListItemModel> = flow.asSnapshot()
+            assertEquals(
+                listOf(
+                    utaNoUtaReleaseListItemModel.copy(
+                        catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
+                        textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
+                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                        imageId = 1,
+                    ),
+                ),
+                releases,
+            )
+        }
 
     @Test
     fun `releases by label - release with multiple labels and catalog numbers`() = runTest {
@@ -402,7 +408,7 @@ class ReleasesByEntityRepositoryImplTest :
     }
 
     @Test
-    fun `refreshing releases that belong to multiple entities does not delete the release`() = runTest {
+    fun `refreshing releases by area that belong to multiple entities does not delete the release`() = runTest {
         `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`()
 
         val areaId = japanAreaMusicBrainzModel.id
@@ -499,4 +505,179 @@ class ReleasesByEntityRepositoryImplTest :
 //            )
 //        }
     }
+
+    // TODO: doesn't work until we make country releases use the same table
+//    @Test
+//    fun `refreshing releases by label that belong to multiple entities does not delete the release`() = runTest {
+//        `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`()
+//
+//        val areaId = japanAreaMusicBrainzModel.id
+//        val areaRepository = createAreaRepository(
+//            musicBrainzModel = japanAreaMusicBrainzModel,
+//        )
+//        areaRepository.lookupArea(
+//            areaId = areaId,
+//            forceRefresh = false,
+//        )
+//
+//        val releases = listOf(
+//            weirdAlGreatestHitsReleaseMusicBrainzModel,
+//            utaNoUtaReleaseMusicBrainzModel,
+//        )
+//        val releasesByEntityRepository = createReleasesByEntityRepository(
+//            releases,
+//        )
+//
+//        testFilter(
+//            pagingFlowProducer = { query ->
+//                releasesByEntityRepository.observeReleasesByEntity(
+//                    entityId = areaId,
+//                    entity = MusicBrainzEntity.AREA,
+//                    listFilters = ListFilters(
+//                        query = query,
+//                    ),
+//                )
+//            },
+//            testCases = listOf(
+//                FilterTestCase(
+//                    description = "No filter",
+//                    query = "",
+//                    expectedResult = listOf(
+//                        weirdAlGreatestHitsReleaseListItemModel.copy(
+//                            releaseCountryCount = 1,
+//                        ),
+//                        utaNoUtaReleaseListItemModel.copy(
+//                            releaseCountryCount = 1,
+//                            imageId = 1,
+//                            imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+//                        ),
+//                    ),
+//                ),
+//            ),
+//        )
+//
+//        // refresh
+//        val modifiedReleases = listOf(
+//            releaseWith3CatalogNumbersWithSameLabel.copy(
+//                name = "some change",
+//            ),
+//        )
+//        val modifiedReleasesByEntityRepository = createReleasesByEntityRepository(
+//            releases = modifiedReleases,
+//        )
+//        modifiedReleasesByEntityRepository.observeReleasesByEntity(
+//            entityId = virginMusicLabelMusicBrainzModel.id,
+//            entity = MusicBrainzEntity.LABEL,
+//            listFilters = ListFilters(),
+//        ).asSnapshot {
+//            refresh()
+//        }.run {
+//            assertEquals(
+//                listOf(
+//                    utaNoUtaReleaseListItemModel.copy(
+//                        name = "some change",
+//                        releaseCountryCount = 1,
+//                        imageId = 1,
+//                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+//                        catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
+//                    ),
+//                ),
+//                this,
+//            )
+//        }
+//
+//        // other entities remain unchanged
+//        modifiedReleasesByEntityRepository.observeReleasesByEntity(
+//            entityId = areaId,
+//            entity = MusicBrainzEntity.AREA,
+//            listFilters = ListFilters(),
+//        ).asSnapshot {
+//            refresh()
+//        }.run {
+//            assertEquals(
+//                listOf(
+//                    utaNoUtaReleaseListItemModel.copy(
+//                        imageId = 1,
+//                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+//                    ),
+//                ),
+//                this,
+//            )
+//        }
+//    }
+
+    // TODO: doesn't work until we make release group releases use the same table
+//    @Test
+//    fun `refreshing releases by release group that belong to multiple entities does not delete the release`() = runTest {
+//        `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`()
+//
+//        val entityId = utaNoUtaReleaseGroupMusicBrainzModel.id
+//        val releaseGroupRepository = createReleaseGroupRepository(
+//            musicBrainzModel = utaNoUtaReleaseGroupMusicBrainzModel,
+//        )
+//        releaseGroupRepository.lookupReleaseGroup(
+//            releaseGroupId = entityId,
+//            forceRefresh = false,
+//        )
+//        val entity = MusicBrainzEntity.RELEASE_GROUP
+//        val releases = listOf(
+//            utaNoUtaReleaseMusicBrainzModel,
+//        )
+//        val releasesByEntityRepository = createReleasesByEntityRepository(
+//            releases,
+//        )
+//
+//        testFilter(
+//            pagingFlowProducer = { query ->
+//                releasesByEntityRepository.observeReleasesByEntity(
+//                    entityId = entityId,
+//                    entity = entity,
+//                    listFilters = ListFilters(
+//                        query = query,
+//                    ),
+//                )
+//            },
+//            testCases = listOf(
+//                FilterTestCase(
+//                    description = "No filter",
+//                    query = "",
+//                    expectedResult = listOf(
+//                        utaNoUtaReleaseListItemModel.copy(
+//                            imageId = 1,
+//                            imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+//                        ),
+//                    ),
+//                ),
+//            ),
+//        )
+//
+//        // refresh releases by label
+//        val modifiedReleases = listOf(
+//            releaseWith3CatalogNumbersWithSameLabel.copy(
+//                name = "some change",
+//            ),
+//        )
+//        val modifiedReleasesByEntityRepository = createReleasesByEntityRepository(
+//            releases = modifiedReleases,
+//        )
+//        modifiedReleasesByEntityRepository.observeReleasesByEntity(
+//            entityId = virginMusicLabelMusicBrainzModel.id,
+//            entity = MusicBrainzEntity.LABEL,
+//            listFilters = ListFilters(),
+//        ).asSnapshot {
+//            refresh()
+//        }.run {
+//            assertEquals(
+//                listOf(
+//                    utaNoUtaReleaseListItemModel.copy(
+//                        name = "some change",
+//                        imageId = 1,
+//                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+//                        catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
+//                    ),
+//                ),
+//                this,
+//            )
+//        }
+//    }
 }
