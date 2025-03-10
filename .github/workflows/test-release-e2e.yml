@@ -5,9 +5,6 @@ on:
   push:
     paths:
       - "**.sqm"
-  pull_request:
-    paths:
-      - "**.sqm"
   schedule:
     - cron: '42 6 * * 6'
   workflow_dispatch:
