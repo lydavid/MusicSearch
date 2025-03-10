@@ -14,7 +14,7 @@ jobs:
   # When we change the name of this job, make sure to update GitHub's branch protection to the new name
   checks:
     timeout-minutes: 20
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
@@ -37,9 +37,15 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
-      - uses: szenius/set-timezone@v2.0
-        with:
-          timezoneLinux: "America/Toronto"
+      - run: |
+          sudo timedatectl
+          date
+
+      - run: sudo timedatectl set-timezone "America/Toronto"
+
+      - run: |
+          sudo timedatectl
+          date
 
       - name: Konsist architecture unit tests
         run: ./gradlew konsist-test:test --rerun-tasks
@@ -97,6 +103,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - run: df -h
 
       - id: setup
         uses: ./.github/actions/setup
