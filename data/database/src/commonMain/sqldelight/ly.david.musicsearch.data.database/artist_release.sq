@@ -49,12 +49,15 @@ SELECT
   ac.name AS artistCreditNames,
   mi.thumbnail_url,
   mi.id AS placeholderKey,
-  (
-    SELECT COUNT(cc.area_id)
-    FROM `release`
-    INNER JOIN release_country rc ON rc.release_id = `release`.id
-    INNER JOIN country_code cc ON cc.area_id = rc.country_id
-    WHERE r.id = `release`.id
+  COALESCE(
+    (
+      SELECT COUNT(cc.area_id)
+      FROM `release`
+      LEFT JOIN release_country rc ON rc.release_id = `release`.id
+      LEFT JOIN country_code cc ON cc.area_id = rc.country_id
+      WHERE r.id = `release`.id
+    ),
+    0
   ) AS releaseCountryCount,
   visited.entity_id IS NOT NULL AS visited
 FROM `release` r

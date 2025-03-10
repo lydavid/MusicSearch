@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS areas_by_entity (
+  entity_id TEXT NOT NULL,
+  area_id TEXT NOT NULL,
+
+  PRIMARY KEY (entity_id, area_id)
+);
+
+INSERT OR IGNORE INTO releases_by_entity (entity_id, release_id)
+SELECT country_id, release_id
+FROM release_country;
+
+INSERT OR IGNORE INTO areas_by_entity (entity_id, area_id)
+SELECT release_id, country_id
+FROM release_country;

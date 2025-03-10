@@ -11,3 +11,7 @@ CREATE TABLE IF NOT EXISTS release_country (
 insertOrFail:
 INSERT OR FAIL INTO release_country
 VALUES ?;
+
+deleteCountriesByReleaseLinks:
+DELETE FROM release_country
+WHERE release_id = :releaseId;

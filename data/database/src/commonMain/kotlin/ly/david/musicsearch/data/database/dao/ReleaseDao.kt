@@ -7,14 +7,14 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
+import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.FormatTrackCount
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
-import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import lydavidmusicsearchdatadatabase.Release
 import lydavidmusicsearchdatadatabase.Releases_by_entity
 
@@ -198,26 +198,34 @@ class ReleaseDao(
     fun deleteReleasesByLabel(labelId: String) {
         withTransaction {
             transacter.deleteReleasesByEntity(labelId)
-            transacter.deleteReleasesByLabel(labelId = labelId)
+            transacter.deleteReleasesByLabelLinks(labelId = labelId)
         }
     }
     // endregion
 
     // region releases by country
-    fun linkReleasesByCountry(
+    fun insertReleasesByCountry(
         areaId: String,
         releases: List<ReleaseMusicBrainzModel>,
     ): Int {
         return transacter.transactionWithResult {
-            releases.sumOf { release ->
-                release.releaseEvents?.sumOf { releaseEvent ->
+            releases.forEach { release ->
+                insert(release)
+                transacter.insertOrIgnoreReleasesByEntity(
+                    Releases_by_entity(
+                        entity_id = areaId,
+                        release_id = release.id,
+                    ),
+                )
+                release.releaseEvents?.forEach { releaseEvent ->
                     releaseCountryDao.insert(
                         areaId = areaId,
                         releaseId = release.id,
                         date = releaseEvent.date,
                     )
-                } ?: 0
+                }
             }
+            releases.size
         }
     }
 
@@ -260,7 +268,9 @@ class ReleaseDao(
     )
 
     fun deleteReleasesByCountry(areaId: String) {
-        transacter.deleteReleasesByCountry(areaId = areaId)
+        transacter.deleteReleasesByEntity(entityId = areaId)
+        // Do not delete from release_country,
+        // so that refreshing an area's release will not remove a release's release events
     }
     // endregion
 }

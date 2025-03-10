@@ -13,4 +13,5 @@ INSERT OR IGNORE INTO release_label
 VALUES ?;
 
 deleteReleaseLabelLinks:
-DELETE FROM release_label WHERE release_id = :releaseId;
+DELETE FROM release_label
+WHERE release_id = :releaseId;

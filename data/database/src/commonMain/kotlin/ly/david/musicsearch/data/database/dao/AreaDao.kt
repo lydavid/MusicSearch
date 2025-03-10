@@ -13,6 +13,7 @@ import ly.david.musicsearch.shared.domain.area.ReleaseEvent
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.AreaQueries
+import lydavidmusicsearchdatadatabase.Areas_by_entity
 
 class AreaDao(
     database: Database,
@@ -204,6 +205,12 @@ class AreaDao(
         transacter.transaction {
             releaseEvents?.forEach { releaseEvent ->
                 val areaId = releaseEvent.area?.id ?: return@forEach
+                transacter.insertOrIgnoreAreasByEntity(
+                    areas_by_entity = Areas_by_entity(
+                        entity_id = releaseId,
+                        area_id = areaId,
+                    )
+                )
                 releaseCountryDao.insert(
                     areaId = areaId,
                     releaseId = releaseId,
@@ -229,7 +236,7 @@ class AreaDao(
     ).executeAsList()
 
     fun deleteCountriesByReleaseLinks(releaseId: String) {
-        transacter.deleteCountriesByReleaseLinks(releaseId = releaseId)
+        releaseCountryDao.deleteCountriesByReleaseLinks(releaseId = releaseId)
     }
     // endregion
 }
