@@ -138,11 +138,6 @@ abstract class BrowseEntitiesByEntity<
             )
         }
 
-        println(
-            """
-            offset=$nextOffset, musicBrainzModels.size=${musicBrainzModels.size}, insertedCount=$insertedCount
-            """.trimIndent(),
-        )
         return insertedCount
     }
 
@@ -152,6 +147,11 @@ abstract class BrowseEntitiesByEntity<
         offset: Int,
     ): B
 
+    // TODO: return the size of musicBrainzModels in repository layer
+    //  then each dao insert doesn't need to return how many it inserted
+    //  this makes more sense since we're going back to insert or ignore
+    //  When paginating, we don't want to sometimes get 99 inserted instead of 100
+    //  just because we've seen a model before
     /**
      * Returns the amount of [musicBrainzModels] that have been inserted.
      */

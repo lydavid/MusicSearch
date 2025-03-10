@@ -349,11 +349,11 @@ class ReleasesByEntityRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel.copy(
-                            // this only goes up when we have visited the country
+                        utaNoUtaReleaseListItemModel.copy(
                             releaseCountryCount = 1,
                         ),
-                        utaNoUtaReleaseListItemModel.copy(
+                        weirdAlGreatestHitsReleaseListItemModel.copy(
+                            // this only goes up when we have visited the country
                             releaseCountryCount = 1,
                         ),
                     ),
@@ -444,13 +444,13 @@ class ReleasesByEntityRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel.copy(
-                            releaseCountryCount = 1,
-                        ),
                         utaNoUtaReleaseListItemModel.copy(
                             releaseCountryCount = 1,
                             imageId = 1,
                             imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                        ),
+                        weirdAlGreatestHitsReleaseListItemModel.copy(
+                            releaseCountryCount = 1,
                         ),
                     ),
                 ),
@@ -459,6 +459,7 @@ class ReleasesByEntityRepositoryImplTest :
 
         // refresh
         val modifiedReleases = listOf(
+            weirdAlGreatestHitsReleaseMusicBrainzModel,
             utaNoUtaReleaseMusicBrainzModel.copy(
                 name = "some change",
             ),
@@ -476,7 +477,134 @@ class ReleasesByEntityRepositoryImplTest :
             assertEquals(
                 listOf(
                     utaNoUtaReleaseListItemModel.copy(
-                        name = "some change",
+                        releaseCountryCount = 1,
+                        imageId = 1,
+                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                    ),
+                    weirdAlGreatestHitsReleaseListItemModel.copy(
+                        releaseCountryCount = 1,
+                    ),
+                ),
+                this,
+            )
+        }
+
+        // other entities remain unchanged
+        val oldReleasesByEntityRepository = createReleasesByEntityRepository(
+            releases = listOf(
+                releaseWith3CatalogNumbersWithSameLabel,
+            )
+        )
+        oldReleasesByEntityRepository.observeReleasesByEntity(
+            entityId = virginMusicLabelMusicBrainzModel.id,
+            entity = MusicBrainzEntity.LABEL,
+            listFilters = ListFilters(),
+        ).asSnapshot {
+            refresh()
+        }.run {
+            assertEquals(
+                listOf(
+                    utaNoUtaReleaseListItemModel.copy(
+                        releaseCountryCount = 1,
+                        imageId = 1,
+                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                        catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
+                    ),
+                ),
+                this,
+            )
+        }
+    }
+
+    @Test
+    fun `refreshing releases by label that belong to multiple entities does not delete the release`() = runTest {
+        `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`()
+
+        val areaId = japanAreaMusicBrainzModel.id
+        val areaRepository = createAreaRepository(
+            musicBrainzModel = japanAreaMusicBrainzModel,
+        )
+        areaRepository.lookupArea(
+            areaId = areaId,
+            forceRefresh = false,
+        )
+
+        val releases = listOf(
+            weirdAlGreatestHitsReleaseMusicBrainzModel,
+            utaNoUtaReleaseMusicBrainzModel,
+        )
+        val releasesByEntityRepository = createReleasesByEntityRepository(
+            releases,
+        )
+
+        testFilter(
+            pagingFlowProducer = { query ->
+                releasesByEntityRepository.observeReleasesByEntity(
+                    entityId = areaId,
+                    entity = MusicBrainzEntity.AREA,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "No filter",
+                    query = "",
+                    expectedResult = listOf(
+                        utaNoUtaReleaseListItemModel.copy(
+                            releaseCountryCount = 1,
+                            imageId = 1,
+                            imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                        ),
+                        weirdAlGreatestHitsReleaseListItemModel.copy(
+                            releaseCountryCount = 1,
+                        ),
+                    ),
+                ),
+            ),
+        )
+
+        // refresh
+        val modifiedReleases = listOf(
+            releaseWith3CatalogNumbersWithSameLabel.copy(
+                name = "some change",
+            ),
+        )
+        val modifiedReleasesByEntityRepository = createReleasesByEntityRepository(
+            releases = modifiedReleases,
+        )
+        modifiedReleasesByEntityRepository.observeReleasesByEntity(
+            entityId = virginMusicLabelMusicBrainzModel.id,
+            entity = MusicBrainzEntity.LABEL,
+            listFilters = ListFilters(),
+        ).asSnapshot {
+            refresh()
+        }.run {
+            assertEquals(
+                listOf(
+                    utaNoUtaReleaseListItemModel.copy(
+                        releaseCountryCount = 1,
+                        imageId = 1,
+                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                        catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
+                    ),
+                ),
+                this,
+            )
+        }
+
+        // other entities remain unchanged
+        modifiedReleasesByEntityRepository.observeReleasesByEntity(
+            entityId = areaId,
+            entity = MusicBrainzEntity.AREA,
+            listFilters = ListFilters(),
+        ).asSnapshot {
+            refresh()
+        }.run {
+            assertEquals(
+                listOf(
+                    utaNoUtaReleaseListItemModel.copy(
                         releaseCountryCount = 1,
                         imageId = 1,
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
@@ -486,125 +614,26 @@ class ReleasesByEntityRepositoryImplTest :
             )
         }
 
-        // other entities remain unchanged
-//        modifiedReleasesByEntityRepository.observeReleasesByEntity(
-//            entityId = virginMusicLabelMusicBrainzModel.id,
-//            entity = MusicBrainzEntity.LABEL,
-//            listFilters = ListFilters(),
-//        ).asSnapshot {
-//            refresh()
-//        }.run {
-//            assertEquals(
-//                listOf(
-//                    utaNoUtaReleaseListItemModel.copy(
-//                        imageId = 1,
-//                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-//                    ),
-//                ),
-//                this,
-//            )
-//        }
+        modifiedReleasesByEntityRepository.observeReleasesByEntity(
+            entityId = virginMusicLabelMusicBrainzModel.id,
+            entity = MusicBrainzEntity.LABEL,
+            listFilters = ListFilters(),
+        ).asSnapshot {
+            refresh()
+        }.run {
+            assertEquals(
+                listOf(
+                    utaNoUtaReleaseListItemModel.copy(
+                        releaseCountryCount = 1,
+                        imageId = 1,
+                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                        catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
+                    ),
+                ),
+                this,
+            )
+        }
     }
-
-    // TODO: doesn't work until we make country releases use the same table
-//    @Test
-//    fun `refreshing releases by label that belong to multiple entities does not delete the release`() = runTest {
-//        `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`()
-//
-//        val areaId = japanAreaMusicBrainzModel.id
-//        val areaRepository = createAreaRepository(
-//            musicBrainzModel = japanAreaMusicBrainzModel,
-//        )
-//        areaRepository.lookupArea(
-//            areaId = areaId,
-//            forceRefresh = false,
-//        )
-//
-//        val releases = listOf(
-//            weirdAlGreatestHitsReleaseMusicBrainzModel,
-//            utaNoUtaReleaseMusicBrainzModel,
-//        )
-//        val releasesByEntityRepository = createReleasesByEntityRepository(
-//            releases,
-//        )
-//
-//        testFilter(
-//            pagingFlowProducer = { query ->
-//                releasesByEntityRepository.observeReleasesByEntity(
-//                    entityId = areaId,
-//                    entity = MusicBrainzEntity.AREA,
-//                    listFilters = ListFilters(
-//                        query = query,
-//                    ),
-//                )
-//            },
-//            testCases = listOf(
-//                FilterTestCase(
-//                    description = "No filter",
-//                    query = "",
-//                    expectedResult = listOf(
-//                        weirdAlGreatestHitsReleaseListItemModel.copy(
-//                            releaseCountryCount = 1,
-//                        ),
-//                        utaNoUtaReleaseListItemModel.copy(
-//                            releaseCountryCount = 1,
-//                            imageId = 1,
-//                            imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-//                        ),
-//                    ),
-//                ),
-//            ),
-//        )
-//
-//        // refresh
-//        val modifiedReleases = listOf(
-//            releaseWith3CatalogNumbersWithSameLabel.copy(
-//                name = "some change",
-//            ),
-//        )
-//        val modifiedReleasesByEntityRepository = createReleasesByEntityRepository(
-//            releases = modifiedReleases,
-//        )
-//        modifiedReleasesByEntityRepository.observeReleasesByEntity(
-//            entityId = virginMusicLabelMusicBrainzModel.id,
-//            entity = MusicBrainzEntity.LABEL,
-//            listFilters = ListFilters(),
-//        ).asSnapshot {
-//            refresh()
-//        }.run {
-//            assertEquals(
-//                listOf(
-//                    utaNoUtaReleaseListItemModel.copy(
-//                        name = "some change",
-//                        releaseCountryCount = 1,
-//                        imageId = 1,
-//                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-//                        catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
-//                    ),
-//                ),
-//                this,
-//            )
-//        }
-//
-//        // other entities remain unchanged
-//        modifiedReleasesByEntityRepository.observeReleasesByEntity(
-//            entityId = areaId,
-//            entity = MusicBrainzEntity.AREA,
-//            listFilters = ListFilters(),
-//        ).asSnapshot {
-//            refresh()
-//        }.run {
-//            assertEquals(
-//                listOf(
-//                    utaNoUtaReleaseListItemModel.copy(
-//                        imageId = 1,
-//                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-//                    ),
-//                ),
-//                this,
-//            )
-//        }
-//    }
 
     // TODO: doesn't work until we make release group releases use the same table
 //    @Test

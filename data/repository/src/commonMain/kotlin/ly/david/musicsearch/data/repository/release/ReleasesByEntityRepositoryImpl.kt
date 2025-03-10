@@ -175,7 +175,7 @@ class ReleasesByEntityRepositoryImpl(
         releaseDao.insertAll(musicBrainzModels)
         return when (entity) {
             MusicBrainzEntity.AREA -> {
-                releaseDao.linkReleasesByCountry(
+                releaseDao.insertReleasesByCountry(
                     areaId = entityId,
                     releases = musicBrainzModels,
                 )

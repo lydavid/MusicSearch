@@ -68,6 +68,27 @@ insertOrIgnoreReleasesByEntity:
 INSERT OR IGNORE INTO releases_by_entity
 VALUES ?;
 
+deleteReleasesByEntity {
+WITH
+  releases_linked_to_multiple_entities AS (
+    SELECT release_id
+    FROM releases_by_entity
+    GROUP BY release_id
+    HAVING COUNT(DISTINCT entity_id) > 1
+  ),
+  releases_to_delete AS (
+    SELECT r.id
+    FROM `release` r
+    INNER JOIN releases_by_entity re ON re.release_id = r.id
+    WHERE re.entity_id = :entityId
+    AND r.id NOT IN (SELECT release_id FROM releases_linked_to_multiple_entities)
+  )
+DELETE FROM `release`
+WHERE id IN (SELECT id FROM releases_to_delete);
+
+DELETE FROM releases_by_entity WHERE entity_id = :entityId;
+}
+
 -- releases by label
 
 getNumberOfReleasesByLabel:
@@ -110,12 +131,15 @@ SELECT
   ac.name AS artistCreditNames,
   mi.thumbnail_url,
   mi.id AS placeholderKey,
-  (
-    SELECT COUNT(cc.area_id)
-    FROM `release`
-    INNER JOIN release_country rc ON rc.release_id = `release`.id
-    INNER JOIN country_code cc ON cc.area_id = rc.country_id
-    WHERE r.id = `release`.id
+  COALESCE(
+    (
+      SELECT COUNT(cc.area_id)
+      FROM `release`
+      LEFT JOIN release_country rc ON rc.release_id = `release`.id
+      LEFT JOIN country_code cc ON cc.area_id = rc.country_id
+      WHERE r.id = `release`.id
+    ),
+    0
   ) AS releaseCountryCount,
   visited.entity_id IS NOT NULL AS visited
 FROM `release` r
@@ -138,29 +162,9 @@ GROUP BY r.id
 ORDER BY r.date, r.name
 LIMIT :limit OFFSET :offset;
 
-deleteReleasesByEntity {
-WITH
-  releases_linked_to_multiple_entities AS (
-    SELECT release_id
-    FROM releases_by_entity
-    GROUP BY release_id
-    HAVING COUNT(DISTINCT entity_id) > 1
-  ),
-  releases_to_delete AS (
-    SELECT r.id
-    FROM `release` r
-    INNER JOIN releases_by_entity re ON re.release_id = r.id
-    WHERE re.entity_id = :entityId
-    AND r.id NOT IN (SELECT release_id FROM releases_linked_to_multiple_entities)
-  )
-DELETE FROM `release`
-WHERE id IN (SELECT id FROM releases_to_delete);
-
-DELETE FROM releases_by_entity WHERE entity_id = :entityId;
-}
-
-deleteReleasesByLabel:
-DELETE FROM release_label WHERE label_id = :labelId;
+deleteReleasesByLabelLinks:
+DELETE FROM release_label
+WHERE label_id = :labelId;
 
 -- releases by country
 
@@ -168,12 +172,12 @@ getNumberOfReleasesByCountry:
 SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT r.id)
-    FROM release r
-    INNER JOIN release_country rc ON r.id = rc.release_id
-    INNER JOIN area a ON a.id = rc.country_id
+    FROM `release` r
+    INNER JOIN releases_by_entity re ON re.release_id = r.id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-    WHERE a.id = :areaId
+    LEFT JOIN release_country rc ON r.id = rc.release_id
+    WHERE re.entity_id = :areaId
     AND (
       r.name LIKE :query
       OR r.disambiguation LIKE :query
@@ -200,13 +204,13 @@ SELECT
   ) AS releaseCountryCount,
   visited.entity_id IS NOT NULL AS visited
 FROM `release` r
-INNER JOIN release_country rc ON r.id = rc.release_id
-INNER JOIN area a ON a.id = rc.country_id
+INNER JOIN releases_by_entity re ON re.release_id = r.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN release_country rc ON r.id = rc.release_id
 LEFT JOIN mbid_image mi ON mi.mbid = r.id
 LEFT JOIN visited ON visited.entity_id = r.id
-WHERE a.id = :areaId
+WHERE re.entity_id = :areaId
 AND (
   r.name LIKE :query
   OR r.disambiguation LIKE :query
@@ -215,18 +219,8 @@ AND (
   OR ac.name LIKE :query
 )
 GROUP BY r.id
-ORDER BY r.date, r.name
 LIMIT :limit OFFSET :offset;
 
-deleteReleasesByCountry {
-DELETE FROM release WHERE id IN (
-  SELECT r.id
-  FROM release r
-  INNER JOIN release_country rc ON r.id = rc.release_id
-  INNER JOIN area a ON a.id = rc.country_id
-  WHERE a.id = :areaId
-);
-
+deleteReleasesByCountryLinks:
 DELETE FROM release_country
 WHERE country_id = :areaId;
-}

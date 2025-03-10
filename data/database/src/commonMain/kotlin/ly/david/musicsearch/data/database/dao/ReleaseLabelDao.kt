@@ -27,8 +27,6 @@ class ReleaseLabelDao(
     }
 
     fun deleteReleaseLabelLinks(releaseId: String) {
-        withTransaction {
-            transacter.deleteReleaseLabelLinks(releaseId = releaseId)
-        }
+        transacter.deleteReleaseLabelLinks(releaseId = releaseId)
     }
 }

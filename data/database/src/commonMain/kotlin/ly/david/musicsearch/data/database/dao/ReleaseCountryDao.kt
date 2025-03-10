@@ -27,4 +27,8 @@ class ReleaseCountryDao(
             0
         }
     }
+
+    fun deleteCountriesByReleaseLinks(releaseId: String) {
+        transacter.deleteCountriesByReleaseLinks(releaseId = releaseId)
+    }
 }
