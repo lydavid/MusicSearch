@@ -13,6 +13,7 @@ Inspired by [Spotless' feature matrix](https://github.com/diffplug/spotless?tab=
 | [Export](#export)                                           | ✅       | ⬜       | ⬜   |
 | [Images](#images)                                           | ✅       | ✅       | ✅   |
 | [Graph](#graph)                                             | ✅       | ✅       | ✅   |
+| [Local Database](#local-database)                           | ⬜️      | ⬜️      | ⬜️  |
 | [MusicBrainz Login](#musicbrainz-login)                     | ✅       | ✅       | ⬜️  |
 | Pixel Now Playing History                                   | ✅       | ❌       | ❌   |
 | [Search MusicBrainz](#search-musicbrainz)                   | ✅       | ✅       | ✅   |
@@ -28,7 +29,7 @@ It was derived from https://wiki.musicbrainz.org/MusicBrainz_API#Browse.
 
 Given an entity, when you click on them from anywhere in the app, you will land on their details page.
 In separate tabs, you can see all related entities listed under browsing supported.
-e.g. On an artist's page, you can see their events, recordings, releases, and release groups.
+e.g. On an artist's page, you can see their events, recordings, releases, release groups, and works.
 
 | Entity        | Browsing supported                                                                                       | Browsing not yet supported | Unsupported                        |
 |---------------|----------------------------------------------------------------------------------------------------------|----------------------------|------------------------------------|
@@ -46,8 +47,7 @@ e.g. On an artist's page, you can see their events, recordings, releases, and re
 | work          | artists, recordings                                                                                      | collections                |
 
 - There are no url details screen, clicking a url will just go to that url, either opening it in the browser, or deep linking to an app that supports it
-- labels by release have been excluded, as we fetch all labels in the initial lookup with
-  `inc=labels`, displaying it in the Details tab
+- labels by release have been excluded, as we fetch all labels in the initial lookup with `inc=labels`, displaying it in the Details tab
 - releases by track (which releases a given track is found in) is not supported as we don't have a track details screen. Clicking a track goes to its associated recording
 - releases by track_artist may eventually be supported, but is not planned. This would be found in an artist's details screen
 - artists by recording have been excluded as it is already fetched with initial recording lookup and is displayed as artist credits in the top bar
@@ -93,20 +93,20 @@ You will need to use a tool such as [SQLite's CLI](https://www.sqlite.org/cli.ht
 
 ## Images
 
-| Entity        | Supported |
-|---------------|-----------|
-| area          | ⬜️        |
-| artist        | ✅         |
-| collection    | ⬜️        |
-| event         | ✅️        |
-| instrument    | ❌         |
-| label         | ⬜️        |
-| place         | ❌         |
-| recording     | ❌         |
-| release       | ✅         |
-| release group | ✅         |
-| series        | ❌         |
-| work          | ❌         |
+| Entity        | Supported | Source                                                                                 |
+|---------------|-----------|----------------------------------------------------------------------------------------|
+| area          | ⬜️        | wikidata?                                                                              |
+| artist        | ✅         | [Spotify](https://developer.spotify.com/documentation/web-api/reference/get-an-artist) |
+| collection    | ⬜️        |                                                                                        |
+| event         | ✅️        | [Event Art Archive](https://musicbrainz.org/doc/Event_Art_Archive)                     |
+| instrument    | ❌         |                                                                                        |
+| label         | ⬜️        | wikidata?                                                                              |
+| place         | ❌         |                                                                                        |
+| recording     | ❌         |                                                                                        |
+| release       | ✅         | [Cover Art Archive](https://musicbrainz.org/doc/Cover_Art_Archive)                     |
+| release group | ✅         | [Cover Art Archive](https://musicbrainz.org/doc/Cover_Art_Archive)                     |
+| series        | ❌         |                                                                                        |
+| work          | ❌         |                                                                                        |
 
 ## Graph
 
@@ -115,11 +115,21 @@ This is currently limited to artists credited on the recording, which are primar
 
 Inspired by [Obsidian](https://github.com/obsidianmd/obsidian-releases)'s graph view.
 
+## Local Database
+
+WIP. For now, only browsing images is supported. This is temporarily located under Settings.
+
+### Browse local database images
+
+All [images](#images) that you've come across are stored in the app's local database.
+This feature allows you to browse them in a grid.
+You can filter and sort based on a few metadata such as its type (e.g. Front, Spine, Back), comment, and the linked entity's name.
+
 
 ## MusicBrainz Login
 
 From the app's settings, you can login to your MusicBrianz account.
-This allows the app to fetch and display all of your collections.
+This allows the app to fetch and display all of your [collections](#collections).
 
 ## Search MusicBrainz
 
