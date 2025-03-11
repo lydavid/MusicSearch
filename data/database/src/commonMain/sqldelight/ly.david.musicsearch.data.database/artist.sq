@@ -19,9 +19,13 @@ CREATE TABLE IF NOT EXISTS artist (
   area_id TEXT
 );
 
-insertReplace:
+insertOrReplaceArtist:
 INSERT OR REPLACE INTO artist
 VALUES ?;
+
+delete:
+DELETE FROM artist
+WHERE id = :artistId;
 
 getArtistForDetails:
 SELECT
@@ -46,10 +50,6 @@ LEFT JOIN country_code cc ON area.id = cc.area_id
 LEFT JOIN visited ON visited.entity_id = area.id
 WHERE artist.id = :artistId
 GROUP BY artist.id;
-
-delete:
-DELETE FROM artist
-WHERE id = :artistId;
 
 -- artists by entity
 

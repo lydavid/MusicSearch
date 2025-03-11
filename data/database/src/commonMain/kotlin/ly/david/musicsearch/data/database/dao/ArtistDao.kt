@@ -26,7 +26,7 @@ class ArtistDao(
 
     fun insertReplace(artist: ArtistMusicBrainzModel) {
         artist.run {
-            transacter.insertReplace(
+            transacter.insertOrReplaceArtist(
                 Artist(
                     id = id,
                     name = name,

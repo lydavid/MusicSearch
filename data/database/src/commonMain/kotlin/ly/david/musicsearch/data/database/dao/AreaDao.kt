@@ -25,7 +25,7 @@ class AreaDao(
 
     fun insert(area: AreaMusicBrainzModel?) {
         area?.run {
-            transacter.insert(
+            transacter.insertArea(
                 Area(
                     id = id,
                     name = name,
@@ -47,7 +47,7 @@ class AreaDao(
 
     fun insertReplace(area: AreaMusicBrainzModel?) {
         area?.run {
-            transacter.insertReplace(
+            transacter.insertOrReplaceArea(
                 Area(
                     id = id,
                     name = name,
@@ -77,7 +77,7 @@ class AreaDao(
     }
 
     fun getAreaForDetails(areaId: String): AreaDetailsModel? {
-        return transacter.getArea(
+        return transacter.getAreaForDetails(
             id = areaId,
             mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
@@ -165,7 +165,7 @@ class AreaDao(
     fun delete(areaId: String) {
         withTransaction {
             countryCodeDao.delete(areaId)
-            transacter.delete(areaId)
+            transacter.deleteArea(areaId)
         }
     }
 

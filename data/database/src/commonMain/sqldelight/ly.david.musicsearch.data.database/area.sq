@@ -12,15 +12,19 @@ CREATE TABLE IF NOT EXISTS area (
   ended INTEGER AS Boolean
 );
 
-insert:
+insertArea:
 INSERT OR IGNORE INTO area
 VALUES ?;
 
-insertReplace:
+insertOrReplaceArea:
 INSERT OR REPLACE INTO area
 VALUES ?;
 
-getArea:
+deleteArea:
+DELETE FROM area
+WHERE id = :areaId;
+
+getAreaForDetails:
 SELECT
   id,
   name,
@@ -34,10 +38,6 @@ FROM area
 LEFT JOIN country_code cc ON id = cc.area_id
 WHERE id = ?
 GROUP BY id;
-
-delete:
-DELETE FROM area
-WHERE id = :areaId;
 
 -- areas by entity
 
