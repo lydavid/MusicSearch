@@ -24,33 +24,38 @@ class ArtistDao(
 ) : EntityDao {
     override val transacter = database.artistQueries
 
+    private fun ArtistMusicBrainzModel.toDatabaseModel() = Artist(
+        id = id,
+        name = name,
+        sort_name = sortName,
+        disambiguation = disambiguation,
+        type = type,
+        type_id = typeId,
+        gender = gender,
+        ipis = ipis,
+        isnis = isnis,
+        country_code = countryCode,
+        begin = lifeSpan?.begin,
+        end = lifeSpan?.end,
+        ended = lifeSpan?.ended,
+        area_id = area?.id,
+    )
+
+    /**
+     * Appropriate for details screen, where we expect to have more data than previously found browsing.
+     */
     fun insertReplace(artist: ArtistMusicBrainzModel) {
-        artist.run {
-            transacter.insertOrReplaceArtist(
-                Artist(
-                    id = id,
-                    name = name,
-                    sort_name = sortName,
-                    disambiguation = disambiguation,
-                    type = type,
-                    type_id = typeId,
-                    gender = gender,
-                    ipis = ipis,
-                    isnis = isnis,
-                    country_code = countryCode,
-                    begin = lifeSpan?.begin,
-                    end = lifeSpan?.end,
-                    ended = lifeSpan?.ended,
-                    area_id = area?.id,
-                ),
-            )
-        }
+        transacter.insertOrReplaceArtist(
+            artist = artist.toDatabaseModel(),
+        )
     }
 
     fun insertAll(artists: List<ArtistMusicBrainzModel>) {
         transacter.transaction {
             artists.forEach { artist ->
-                insertReplace(artist)
+                transacter.insertOrIgnoreArtist(
+                    artist = artist.toDatabaseModel(),
+                )
             }
         }
     }
@@ -108,25 +113,7 @@ class ArtistDao(
     }
 
     fun delete(artistId: String) {
-        transacter.delete(artistId)
-    }
-
-    @Suppress("SwallowedException")
-    private fun insertArtistByEntity(
-        entityId: String,
-        artistId: String,
-    ): Int {
-        return try {
-            transacter.insertOrFailArtistByEntity(
-                Artists_by_entity(
-                    entity_id = entityId,
-                    artist_id = artistId,
-                ),
-            )
-            1
-        } catch (ex: Exception) {
-            0
-        }
+        transacter.deleteArtist(artistId)
     }
 
     fun insertArtistsByEntity(
@@ -134,12 +121,15 @@ class ArtistDao(
         artistIds: List<String>,
     ): Int {
         return transacter.transactionWithResult {
-            artistIds.sumOf { artistId ->
-                insertArtistByEntity(
-                    entityId = entityId,
-                    artistId = artistId,
+            artistIds.forEach { artistId ->
+                transacter.insertOrIgnoreArtistByEntity(
+                    Artists_by_entity(
+                        entity_id = entityId,
+                        artist_id = artistId,
+                    ),
                 )
             }
+            artistIds.size
         }
     }
 

@@ -274,3 +274,8 @@ val releaseWithSameCatalogNumberWithDifferentLabels = redReleaseMusicBrainzModel
         ),
     ),
 )
+
+val bandoriCoverCollection8ReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
+    id = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
+    name = "バンドリ！ ガールズバンドパーティ！ カバーコレクション Vol.8",
+)

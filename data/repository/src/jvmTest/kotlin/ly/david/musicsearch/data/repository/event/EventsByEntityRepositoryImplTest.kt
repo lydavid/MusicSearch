@@ -53,7 +53,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
-    private fun createRepository(
+    private fun createEventsByEntityRepository(
         events: List<EventMusicBrainzModel>,
     ): EventsByEntityRepository {
         return EventsByEntityRepositoryImpl(
@@ -84,7 +84,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             kissAtScotiabankArenaEventMusicBrainzModel,
             aimerAtBudokanEventMusicBrainzModel,
         )
-        val eventsByEntityRepository = createRepository(
+        val eventsByEntityRepository = createEventsByEntityRepository(
             events = events,
         )
 
@@ -168,7 +168,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             tsoAtMasseyHallEventMusicBrainzModel,
             kissAtScotiabankArenaEventMusicBrainzModel,
         )
-        val eventsByEntityRepository = createRepository(
+        val eventsByEntityRepository = createEventsByEntityRepository(
             events = events,
         )
 
@@ -210,7 +210,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             kissAtBudokanEventMusicBrainzModel,
             aimerAtBudokanEventMusicBrainzModel,
         )
-        val eventsByEntityRepository = createRepository(
+        val eventsByEntityRepository = createEventsByEntityRepository(
             events = events,
         )
 
@@ -281,7 +281,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             kissAtBudokanEventMusicBrainzModel,
             aimerAtBudokanEventMusicBrainzModel,
         )
-        val eventsByEntityRepository = createRepository(
+        val eventsByEntityRepository = createEventsByEntityRepository(
             events = events,
         )
 
@@ -352,7 +352,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             kissAtBudokanEventMusicBrainzModel,
             kissAtScotiabankArenaEventMusicBrainzModel,
         )
-        val eventsByEntityRepository = createRepository(
+        val eventsByEntityRepository = createEventsByEntityRepository(
             events = events,
         )
 
@@ -432,7 +432,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         setUpEventsExceptCollection()
         setupEventsByCollection()
 
-        val eventsByEntityRepository = createRepository(
+        val eventsByEntityRepository = createEventsByEntityRepository(
             events = listOf(),
         )
         eventsByEntityRepository.observeEventsByEntity(
@@ -487,7 +487,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
                 disambiguation = "changes will be ignored if event is linked to multiple entities",
             ),
         )
-        val eventsByEntityRepository = createRepository(
+        val eventsByEntityRepository = createEventsByEntityRepository(
             events = modifiedEvents,
         )
 

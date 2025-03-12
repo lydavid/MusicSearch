@@ -4,16 +4,32 @@ import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
+import ly.david.data.test.bandoriCoverCollection8ReleaseMusicBrainzModel
+import ly.david.data.test.itouKanakoArtistListItemModel
+import ly.david.data.test.itouKanakoArtistMusicBrainzModel
+import ly.david.data.test.japanAreaMusicBrainzModel
+import ly.david.data.test.roseliaArtistListItemModel
+import ly.david.data.test.roseliaArtistMusicBrainzModel
+import ly.david.data.test.variousArtistsArtistListItemModel
+import ly.david.data.test.variousArtistsArtistMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
+import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
+import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.repository.helpers.FilterTestCase
+import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
+import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistsByEntityRepository
+import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -23,17 +39,21 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class ArtistsByEntityRepositoryImplTest : KoinTest {
+class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val artistDao: ArtistDao by inject()
+    override val artistDao: ArtistDao by inject()
+    override val browseEntityCountDao: BrowseEntityCountDao by inject()
+    override val areaDao: AreaDao by inject()
+    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val relationDao: RelationDao by inject()
+    override val visitedDao: VisitedDao by inject()
     private val collectionDao: CollectionDao by inject()
-    private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
-    private fun createRepository(
+    private fun createArtistsByEntityRepository(
         artists: List<ArtistMusicBrainzModel>,
     ): ArtistsByEntityRepository {
         return ArtistsByEntityRepositoryImpl(
@@ -158,7 +178,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest {
             atarayoMusicBrainzModel,
             bumpOfChickenMusicBrainzModel,
         )
-        val sut = createRepository(
+        val sut = createArtistsByEntityRepository(
             artists = artists,
         )
 
@@ -219,7 +239,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest {
             arcadeFireMusicBrainzModel,
             theWeekndMusicBrainzModel,
         )
-        val sut = createRepository(
+        val sut = createArtistsByEntityRepository(
             artists = artists,
         )
         sut.observeArtistsByEntity(
@@ -261,32 +281,32 @@ class ArtistsByEntityRepositoryImplTest : KoinTest {
     }
 
     private fun setUpJapaneseArtists() = runTest {
-        val entityId = "2db42837-c832-3c27-b4a3-08198f75693c"
+        val entityId = japanAreaMusicBrainzModel.id
         val artists = listOf(
             atarayoMusicBrainzModel,
             bumpOfChickenMusicBrainzModel,
+            roseliaArtistMusicBrainzModel,
+            itouKanakoArtistMusicBrainzModel,
         )
-        val sut = createRepository(
+        val artistsByEntityRepository = createArtistsByEntityRepository(
             artists = artists,
         )
-        sut.observeArtistsByEntity(
+        artistsByEntityRepository.observeArtistsByEntity(
             entityId = entityId,
             entity = MusicBrainzEntity.AREA,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                2,
-                size,
-            )
-            assertEquals(
                 listOf(
                     bumpOfChickenListItemModel,
                     atarayoListItemModel,
+                    roseliaArtistListItemModel,
+                    itouKanakoArtistListItemModel,
                 ),
                 this,
             )
         }
-        sut.observeArtistsByEntity(
+        artistsByEntityRepository.observeArtistsByEntity(
             entityId = entityId,
             entity = MusicBrainzEntity.AREA,
             listFilters = ListFilters(
@@ -294,70 +314,205 @@ class ArtistsByEntityRepositoryImplTest : KoinTest {
             ),
         ).asSnapshot().run {
             assertEquals(
-                1,
-                size,
-            )
-            assertEquals(
                 listOf(
                     atarayoListItemModel,
+                    roseliaArtistListItemModel,
+                    itouKanakoArtistListItemModel,
                 ),
                 this,
             )
         }
     }
 
-    private fun setUpArtists() = runTest {
+    private fun setUpArtistsByArea() = runTest {
         setUpCanadianArtists()
         setUpJapaneseArtists()
     }
 
     @Test
     fun `artists by entity (area)`() = runTest {
-        setUpArtists()
+        setUpArtistsByArea()
+    }
+
+    @Test
+    fun setUpArtistsByRelease() = runTest {
+        val entityId = bandoriCoverCollection8ReleaseMusicBrainzModel.id
+        val artists = listOf(
+            variousArtistsArtistMusicBrainzModel,
+            roseliaArtistMusicBrainzModel,
+            itouKanakoArtistMusicBrainzModel,
+        )
+        val artistsByEntityRepository = createArtistsByEntityRepository(
+            artists = artists,
+        )
+        testFilter(
+            pagingFlowProducer = { query ->
+                artistsByEntityRepository.observeArtistsByEntity(
+                    entityId = entityId,
+                    entity = MusicBrainzEntity.RELEASE,
+                    listFilters = ListFilters(query = query),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        variousArtistsArtistListItemModel,
+                        roseliaArtistListItemModel,
+                        itouKanakoArtistListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by type",
+                    query = "other",
+                    expectedResult = listOf(
+                        variousArtistsArtistListItemModel,
+                    ),
+                ),
+            ),
+        )
     }
 
     @Test
     fun `all artists`() = runTest {
-        setUpArtists()
+        setUpArtistsByArea()
+        setUpArtistsByRelease()
 
-        val sut = createRepository(
+        val artistsByEntityRepository = createArtistsByEntityRepository(
             artists = listOf(),
         )
-        sut.observeArtistsByEntity(
-            entityId = null,
-            entity = null,
+        testFilter(
+            pagingFlowProducer = { query ->
+                artistsByEntityRepository.observeArtistsByEntity(
+                    entityId = null,
+                    entity = null,
+                    listFilters = ListFilters(query = query),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        variousArtistsArtistListItemModel,
+                        itouKanakoArtistListItemModel,
+                        theWeekndListItemModel,
+                        bumpOfChickenListItemModel,
+                        arcadeFireListItemModel,
+                        roseliaArtistListItemModel,
+                        atarayoListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by name",
+                    query = "a",
+                    expectedResult = listOf(
+                        variousArtistsArtistListItemModel,
+                        itouKanakoArtistListItemModel,
+                        theWeekndListItemModel,
+                        arcadeFireListItemModel,
+                        roseliaArtistListItemModel,
+                        atarayoListItemModel,
+                    ),
+                ),
+            ),
+        )
+    }
+
+    @Test
+    fun `refreshing artists that belong to multiple entities does not delete the artist`() = runTest {
+        setUpArtistsByRelease()
+        setUpJapaneseArtists()
+
+        val modifiedArtistsByArea = listOf(
+            roseliaArtistMusicBrainzModel.copy(
+                disambiguation = "some change that won't show up",
+            ),
+            itouKanakoArtistMusicBrainzModel,
+            bumpOfChickenMusicBrainzModel.copy(
+                disambiguation = "some change that will",
+            ),
+        )
+        val artistsByEntityRepository = createArtistsByEntityRepository(
+            artists = modifiedArtistsByArea,
+        )
+
+        // refresh
+        artistsByEntityRepository.observeArtistsByEntity(
+            entityId = japanAreaMusicBrainzModel.id,
+            entity = MusicBrainzEntity.AREA,
             listFilters = ListFilters(),
-        ).asSnapshot().run {
-            assertEquals(
-                4,
-                size,
-            )
+        ).asSnapshot {
+            refresh()
+        }.run {
             assertEquals(
                 listOf(
-                    theWeekndListItemModel,
-                    bumpOfChickenListItemModel,
-                    arcadeFireListItemModel,
-                    atarayoListItemModel,
+                    bumpOfChickenListItemModel.copy(
+                        disambiguation = "some change that will",
+                    ),
+                    roseliaArtistListItemModel,
+                    itouKanakoArtistListItemModel,
                 ),
                 this,
             )
         }
-        sut.observeArtistsByEntity(
-            entityId = null,
-            entity = null,
-            listFilters = ListFilters(
-                query = "a",
-            ),
+
+        // other entities remain unchanged
+        artistsByEntityRepository.observeArtistsByEntity(
+            entityId = bandoriCoverCollection8ReleaseMusicBrainzModel.id,
+            entity = MusicBrainzEntity.RELEASE,
+            listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                3,
-                size,
-            )
-            assertEquals(
                 listOf(
-                    theWeekndListItemModel,
-                    arcadeFireListItemModel,
-                    atarayoListItemModel,
+                    variousArtistsArtistListItemModel,
+                    roseliaArtistListItemModel,
+                    itouKanakoArtistListItemModel,
+                ),
+                this,
+            )
+        }
+
+        // now visit the artist
+        val artistRepository = createArtistRepository(
+            roseliaArtistMusicBrainzModel.copy(
+                disambiguation = "some change that won't show up",
+            ),
+        )
+        // the first lookup will replace existing data
+        artistRepository.lookupArtistDetails(
+            artistId = roseliaArtistMusicBrainzModel.id,
+            forceRefresh = false,
+        ).run {
+            assertEquals(
+                ArtistDetailsModel(
+                    id = "adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
+                    name = "Roselia",
+                    sortName = "Roselia",
+                    type = "Group",
+                    disambiguation = "some change that won't show up",
+                    lifeSpan = LifeSpanUiModel(
+                        begin = "2016-09-15",
+                    ),
+                ),
+                this,
+            )
+        }
+        artistRepository.lookupArtistDetails(
+            artistId = roseliaArtistMusicBrainzModel.id,
+            forceRefresh = true,
+        ).run {
+            assertEquals(
+                ArtistDetailsModel(
+                    id = "adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
+                    name = "Roselia",
+                    sortName = "Roselia",
+                    type = "Group",
+                    disambiguation = "some change that won't show up",
+                    lifeSpan = LifeSpanUiModel(
+                        begin = "2016-09-15",
+                    ),
                 ),
                 this,
             )
