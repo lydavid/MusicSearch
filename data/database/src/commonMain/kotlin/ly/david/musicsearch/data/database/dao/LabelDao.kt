@@ -27,7 +27,7 @@ class LabelDao(
 
     fun insert(label: LabelMusicBrainzModel) {
         label.run {
-            transacter.insert(
+            transacter.insertLabel(
                 Label(
                     id = id,
                     name = name,
@@ -54,7 +54,7 @@ class LabelDao(
     }
 
     fun getLabelForDetails(labelId: String): LabelDetailsModel? {
-        return transacter.getLabel(
+        return transacter.getLabelForDetails(
             id = labelId,
             mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
@@ -87,25 +87,19 @@ class LabelDao(
     )
 
     fun delete(id: String) {
-        transacter.delete(id)
+        transacter.deleteLabel(id)
     }
 
-    @Suppress("SwallowedException")
     private fun insertLabelByEntity(
         entityId: String,
         labelId: String,
-    ): Int {
-        return try {
-            transacter.insertOrFailLabelByEntity(
-                Labels_by_entity(
-                    entity_id = entityId,
-                    label_id = labelId,
-                ),
-            )
-            1
-        } catch (ex: Exception) {
-            0
-        }
+    ) {
+        transacter.insertOrIgnoreLabelByEntity(
+            Labels_by_entity(
+                entity_id = entityId,
+                label_id = labelId,
+            ),
+        )
     }
 
     fun insertLabelsByEntity(
@@ -113,12 +107,13 @@ class LabelDao(
         labelIds: List<String>,
     ): Int {
         return transacter.transactionWithResult {
-            labelIds.sumOf { labelId ->
+            labelIds.forEach { labelId ->
                 insertLabelByEntity(
                     entityId = entityId,
                     labelId = labelId,
                 )
             }
+            labelIds.size
         }
     }
 

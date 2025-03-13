@@ -17,11 +17,11 @@ CREATE TABLE IF NOT EXISTS label (
   ended INTEGER AS Boolean
 );
 
-insert:
+insertLabel:
 INSERT OR IGNORE INTO label
 VALUES ?;
 
-getLabel:
+getLabelForDetails:
 SELECT
   id,
   name,
@@ -35,7 +35,7 @@ SELECT
   ended
 FROM label WHERE id = ?;
 
-delete:
+deleteLabel:
 DELETE FROM label
 WHERE id = :id;
 
@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS labels_by_entity (
   PRIMARY KEY (entity_id, label_id)
 );
 
-insertOrFailLabelByEntity:
-INSERT OR FAIL INTO labels_by_entity
+insertOrIgnoreLabelByEntity:
+INSERT OR IGNORE INTO labels_by_entity
 VALUES ?;
 
 deleteLabelsByEntity {
