@@ -254,4 +254,6 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
             ),
         )
     }
+
+    // TODO: test deleting labels by belong to an area and collection after merging collection entity table
 }
