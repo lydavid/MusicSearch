@@ -60,6 +60,21 @@ val kitanomaruAreaMusicBrainzModel = AreaMusicBrainzModel(
     typeId = "84039871-5e47-38ca-a66a-45e512c8290f",
 )
 
+val marunouchiAreaMusicBrainzModel = AreaMusicBrainzModel(
+    id = "41cd0808-6e0a-4ec6-ab02-14add4db58ae",
+    name = "Marunouchi",
+    sortName = "Marunouchi",
+    type = "District",
+    typeId = "84039871-5e47-38ca-a66a-45e512c8290f",
+)
+
+val chiyodaAreaMusicBrainzModel = AreaMusicBrainzModel(
+    id = "f5cd9916-2a4e-4abf-a301-9525ef598436",
+    name = "Chiyoda",
+    sortName = "Chiyoda",
+    type = "City",
+)
+
 val unitedKingdomAreaMusicBrainzModel = AreaMusicBrainzModel(
     id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
     name = "United Kingdom",

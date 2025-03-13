@@ -25,6 +25,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
+import ly.david.musicsearch.data.repository.helpers.TestPlaceRepository
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.history.VisitedDao
@@ -34,56 +35,24 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
-import ly.david.musicsearch.shared.domain.place.PlaceRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class PlaceRepositoryImplTest : KoinTest {
+class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val visitedDao: VisitedDao by inject()
-    private val relationDao: RelationDao by inject()
-    private val placeDao: PlaceDao by inject()
-    private val areaDao: AreaDao by inject()
-    private val browseEntityCountDao: BrowseEntityCountDao by inject()
-    private val collectionEntityDao: CollectionEntityDao by inject()
-
-    private fun createRepository(
-        musicBrainzModel: PlaceMusicBrainzModel,
-    ): PlaceRepository {
-        val relationRepository = RelationRepositoryImpl(
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupPlace(
-                    placeId: String,
-                    include: String?,
-                ): PlaceMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-            entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
-            relationDao = relationDao,
-        )
-        return PlaceRepositoryImpl(
-            placeDao = this.placeDao,
-            areaDao = areaDao,
-            relationRepository = relationRepository,
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupPlace(
-                    placeId: String,
-                    include: String?,
-                ): PlaceMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-        )
-    }
+    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val visitedDao: VisitedDao by inject()
+    override val relationDao: RelationDao by inject()
+    override val placeDao: PlaceDao by inject()
+    override val areaDao: AreaDao by inject()
+    override val browseEntityCountDao: BrowseEntityCountDao by inject()
+    override val collectionEntityDao: CollectionEntityDao by inject()
 
     private fun createAreaRepositoryWithFakeNetworkData(
         musicBrainzModel: AreaMusicBrainzModel,
@@ -117,7 +86,7 @@ class PlaceRepositoryImplTest : KoinTest {
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepository(
+        val sparseRepository = createPlaceRepository(
             musicBrainzModel = PlaceMusicBrainzModel(
                 id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
                 name = "日本武道館",
@@ -137,7 +106,7 @@ class PlaceRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepository(
+        val allDataRepository = createPlaceRepository(
             musicBrainzModel = PlaceMusicBrainzModel(
                 id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
                 name = "日本武道館",
@@ -443,7 +412,7 @@ class PlaceRepositoryImplTest : KoinTest {
         )
 
         // Lookup a place whose area is a more specific area in the country
-        val placeRepository = createRepository(
+        val placeRepository = createPlaceRepository(
             musicBrainzModel = budokanPlaceMusicBrainzModel,
         )
         var artistDetailsModel = placeRepository.lookupPlace(

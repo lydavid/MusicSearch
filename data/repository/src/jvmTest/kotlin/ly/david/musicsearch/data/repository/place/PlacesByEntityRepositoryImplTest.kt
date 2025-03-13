@@ -6,20 +6,34 @@ import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.budokanPlaceListItemModel
 import ly.david.data.test.budokanPlaceMusicBrainzModel
+import ly.david.data.test.chiyodaAreaMusicBrainzModel
+import ly.david.data.test.kitanomaruAreaMusicBrainzModel
+import ly.david.data.test.marunouchiAreaListItemModel
+import ly.david.data.test.marunouchiAreaMusicBrainzModel
 import ly.david.data.test.tokyoInternationForumHallAPlaceListItemModel
 import ly.david.data.test.tokyoInternationForumHallAPlaceMusicBrainzModel
 import ly.david.data.test.tokyoInternationForumPlaceListItemModel
 import ly.david.data.test.tokyoInternationForumPlaceMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
+import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
+import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
+import ly.david.musicsearch.data.repository.helpers.FilterTestCase
+import ly.david.musicsearch.data.repository.helpers.TestPlaceRepository
+import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
+import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.place.PlacesByEntityRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -27,15 +41,18 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class PlacesByEntityRepositoryImplTest : KoinTest {
+class PlacesByEntityRepositoryImplTest : KoinTest, TestPlaceRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
-
-    private val placeDao: PlaceDao by inject()
+    override val placeDao: PlaceDao by inject()
+    override val areaDao: AreaDao by inject()
+    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val visitedDao: VisitedDao by inject()
+    override val relationDao: RelationDao by inject()
     private val collectionDao: CollectionDao by inject()
-    private val browseEntityCountDao: BrowseEntityCountDao by inject()
-    private val collectionEntityDao: CollectionEntityDao by inject()
+    override val browseEntityCountDao: BrowseEntityCountDao by inject()
+    override val collectionEntityDao: CollectionEntityDao by inject()
 
     private fun createRepository(
         places: List<PlaceMusicBrainzModel>,
@@ -131,7 +148,7 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
     }
 
     private fun setUpKitanomaruPlaces() = runTest {
-        val entityId = "e24c0f02-9b5a-4f4f-9fe0-f8b3e67874f8"
+        val entityId = kitanomaruAreaMusicBrainzModel.id
         val places = listOf(
             budokanPlaceMusicBrainzModel,
         )
@@ -165,41 +182,83 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
     }
 
     private fun setUpMarunouchiPlaces() = runTest {
-        val entityId = "41cd0808-6e0a-4ec6-ab02-14add4db58ae"
         val places = listOf(
             tokyoInternationForumPlaceMusicBrainzModel,
             tokyoInternationForumHallAPlaceMusicBrainzModel,
         )
-        val sut = createRepository(
+        val placesByEntityRepository = createRepository(
             places = places,
         )
-        sut.observePlacesByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
-            listFilters = ListFilters(),
-        ).asSnapshot().run {
-            assertEquals(
-                listOf(
-                    tokyoInternationForumPlaceListItemModel,
-                    tokyoInternationForumHallAPlaceListItemModel,
+        testFilter(
+            pagingFlowProducer = { query ->
+                placesByEntityRepository.observePlacesByEntity(
+                    entityId = marunouchiAreaMusicBrainzModel.id,
+                    entity = MusicBrainzEntity.AREA,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        tokyoInternationForumPlaceListItemModel,
+                        tokyoInternationForumHallAPlaceListItemModel,
+
+                    ),
                 ),
-                this,
-            )
-        }
-        sut.observePlacesByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
-            listFilters = ListFilters(
-                query = "com",
+                FilterTestCase(
+                    description = "filter by disambiguation",
+                    query = "com",
+                    expectedResult = listOf(
+                        tokyoInternationForumPlaceListItemModel,
+                    ),
+                ),
+
             ),
-        ).asSnapshot().run {
-            assertEquals(
-                listOf(
-                    tokyoInternationForumPlaceListItemModel,
+        )
+    }
+
+    private fun setUpChiyodaPlaces() = runTest {
+        val places = listOf(
+            tokyoInternationForumPlaceMusicBrainzModel,
+            tokyoInternationForumHallAPlaceMusicBrainzModel,
+        )
+        val placesByEntityRepository = createRepository(
+            places = places,
+        )
+        testFilter(
+            pagingFlowProducer = { query ->
+                placesByEntityRepository.observePlacesByEntity(
+                    entityId = chiyodaAreaMusicBrainzModel.id,
+                    entity = MusicBrainzEntity.AREA,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        tokyoInternationForumPlaceListItemModel,
+                        tokyoInternationForumHallAPlaceListItemModel,
+
+                    ),
                 ),
-                this,
-            )
-        }
+                FilterTestCase(
+                    description = "filter by disambiguation",
+                    query = "com",
+                    expectedResult = listOf(
+                        tokyoInternationForumPlaceListItemModel,
+                    ),
+                ),
+
+            ),
+        )
     }
 
     private fun setUpPlaces() = runTest {
@@ -245,6 +304,114 @@ class PlacesByEntityRepositoryImplTest : KoinTest {
                 listOf(
                     tokyoInternationForumPlaceListItemModel,
                     tokyoInternationForumHallAPlaceListItemModel,
+                ),
+                this,
+            )
+        }
+    }
+
+    @Test
+    fun `refreshing places that belong to multiple entities does not delete the place`() = runTest {
+        setUpMarunouchiPlaces()
+        setUpChiyodaPlaces()
+
+        val modifiedPlaces = listOf(
+            tokyoInternationForumPlaceMusicBrainzModel.copy(
+                address = "some new address",
+            ),
+            tokyoInternationForumHallAPlaceMusicBrainzModel,
+        )
+        val placesByEntityRepository = createRepository(
+            places = modifiedPlaces,
+        )
+
+        // refresh
+        placesByEntityRepository.observePlacesByEntity(
+            entityId = marunouchiAreaMusicBrainzModel.id,
+            entity = MusicBrainzEntity.AREA,
+            listFilters = ListFilters(),
+        ).asSnapshot {
+            refresh()
+        }.run {
+            assertEquals(
+                listOf(
+                    tokyoInternationForumPlaceListItemModel,
+                    tokyoInternationForumHallAPlaceListItemModel,
+                ),
+                this,
+            )
+        }
+
+        // other entities remain unchanged
+        placesByEntityRepository.observePlacesByEntity(
+            entityId = chiyodaAreaMusicBrainzModel.id,
+            entity = MusicBrainzEntity.AREA,
+            listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    tokyoInternationForumPlaceListItemModel,
+                    tokyoInternationForumHallAPlaceListItemModel,
+                ),
+                this,
+            )
+        }
+
+        // now visit the place and refresh it
+        val placeRepository = createPlaceRepository(
+            tokyoInternationForumPlaceMusicBrainzModel.copy(
+                address = "some new address",
+            ),
+        )
+        // the first lookup will replace existing data
+        placeRepository.lookupPlace(
+            placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
+            forceRefresh = false,
+        ).run {
+            assertEquals(
+                PlaceDetailsModel(
+                    id = "623d61ce-d422-4d3a-b6bb-c02cd64c715d",
+                    name = "東京国際フォーラム",
+                    disambiguation = "complex; use ONLY if no more specific venue info is available!",
+                    address = "〒100-0005 東京都千代田区丸の内三丁目5番1号",
+                    type = "Other",
+                    lifeSpan = LifeSpanUiModel(
+                        begin = "1997-01-10",
+                        ended = false,
+                    ),
+                    coordinates = CoordinatesUiModel(
+                        longitude = 139.7642,
+                        latitude = 35.676925,
+                    ),
+                    area = marunouchiAreaListItemModel.copy(
+                        type = null,
+                    ),
+                ),
+                this,
+            )
+        }
+        placeRepository.lookupPlace(
+            placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
+            forceRefresh = true,
+        ).run {
+            assertEquals(
+                PlaceDetailsModel(
+                    id = "623d61ce-d422-4d3a-b6bb-c02cd64c715d",
+                    name = "東京国際フォーラム",
+                    disambiguation = "complex; use ONLY if no more specific venue info is available!",
+                    address = "some new address",
+                    type = "Other",
+                    lifeSpan = LifeSpanUiModel(
+                        begin = "1997-01-10",
+                        ended = false,
+                    ),
+                    coordinates = CoordinatesUiModel(
+                        longitude = 139.7642,
+                        latitude = 35.676925,
+                    ),
+                    area = marunouchiAreaListItemModel.copy(
+                        type = null,
+                    ),
                 ),
                 this,
             )
