@@ -15,7 +15,7 @@ on:
 jobs:
   update-app-store-screenshots:
     name: Update app store screenshots
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
     steps:

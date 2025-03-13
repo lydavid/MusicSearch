@@ -7,7 +7,7 @@ on:
 jobs:
   slash-command-dispatch:
     if: ${{ github.event.issue.pull_request }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Slash Command Dispatch
         uses: peter-evans/slash-command-dispatch@v4

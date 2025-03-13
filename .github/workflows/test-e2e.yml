@@ -10,7 +10,7 @@ on:
 jobs:
   test-e2e:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
     steps:

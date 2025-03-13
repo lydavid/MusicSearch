@@ -25,7 +25,7 @@ jobs:
       - checks
       - test-e2e
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
       id-token: write # This is required for requesting the JWT
