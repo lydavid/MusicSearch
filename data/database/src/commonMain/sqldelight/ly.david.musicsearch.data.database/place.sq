@@ -14,11 +14,11 @@ CREATE TABLE IF NOT EXISTS place (
   ended INTEGER AS Boolean
 );
 
-insert:
+insertPlace:
 INSERT OR IGNORE INTO place
 VALUES ?;
 
-getPlace:
+getPlaceForDetails:
 SELECT
   id,
   name,
@@ -32,7 +32,7 @@ SELECT
   ended
 FROM place WHERE id = ?;
 
-delete:
+deletePlace:
 DELETE FROM place
 WHERE id = :id;
 
@@ -47,8 +47,8 @@ CREATE TABLE IF NOT EXISTS area_place (
   PRIMARY KEY (area_id, place_id)
 );
 
-insertOrFailAreaPlace:
-INSERT OR FAIL INTO area_place
+insertOrIgnoreAreaPlace:
+INSERT OR IGNORE INTO area_place
 VALUES ?;
 
 -- places by area

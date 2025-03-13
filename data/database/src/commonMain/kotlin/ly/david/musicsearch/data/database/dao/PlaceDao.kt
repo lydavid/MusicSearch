@@ -26,7 +26,7 @@ class PlaceDao(
 
     fun insert(place: PlaceMusicBrainzModel) {
         place.run {
-            transacter.insert(
+            transacter.insertPlace(
                 Place(
                     id = id,
                     name = name,
@@ -53,7 +53,7 @@ class PlaceDao(
     }
 
     fun getPlaceForDetails(placeId: String): PlaceDetailsModel? {
-        return transacter.getPlace(
+        return transacter.getPlaceForDetails(
             placeId,
             mapper = ::mapToDetailsModel,
         ).executeAsOneOrNull()
@@ -88,26 +88,20 @@ class PlaceDao(
     )
 
     fun delete(id: String) {
-        transacter.delete(id)
+        transacter.deletePlace(id)
     }
 
     // region places
-    @Suppress("SwallowedException")
     fun insertPlaceByArea(
         entityId: String,
         placeId: String,
-    ): Int {
-        return try {
-            transacter.insertOrFailAreaPlace(
-                Area_place(
-                    area_id = entityId,
-                    place_id = placeId,
-                ),
-            )
-            1
-        } catch (ex: Exception) {
-            0
-        }
+    ) {
+        transacter.insertOrIgnoreAreaPlace(
+            Area_place(
+                area_id = entityId,
+                place_id = placeId,
+            ),
+        )
     }
 
     fun insertPlacesByArea(
@@ -115,12 +109,13 @@ class PlaceDao(
         placeIds: List<String>,
     ): Int {
         return transacter.transactionWithResult {
-            placeIds.sumOf { placeId ->
+            placeIds.forEach { placeId ->
                 insertPlaceByArea(
                     entityId = entityId,
                     placeId = placeId,
                 )
             }
+            placeIds.size
         }
     }
 
