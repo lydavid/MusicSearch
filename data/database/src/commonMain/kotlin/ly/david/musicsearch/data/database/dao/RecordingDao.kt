@@ -14,7 +14,7 @@ class RecordingDao(
 
     fun insert(recording: RecordingMusicBrainzModel) {
         recording.run {
-            transacter.insert(
+            transacter.insertRecording(
                 Recording(
                     id = id,
                     name = name,
@@ -41,7 +41,7 @@ class RecordingDao(
     }
 
     fun getRecordingForDetails(recordingId: String): RecordingDetailsModel? {
-        return transacter.getRecording(
+        return transacter.getRecordingForDetails(
             recordingId,
             mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
@@ -66,6 +66,6 @@ class RecordingDao(
     )
 
     fun delete(id: String) {
-        transacter.delete(id)
+        transacter.deleteRecording(id)
     }
 }

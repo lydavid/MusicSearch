@@ -13,13 +13,21 @@ CREATE TABLE IF NOT EXISTS recording (
   isrcs TEXT AS List<String>
 );
 
-insert:
+insertRecording:
 INSERT OR IGNORE INTO recording
 VALUES ?;
 
-getRecording:
-SELECT * FROM recording WHERE id = ?;
+getRecordingForDetails:
+SELECT
+  id,
+  name,
+  disambiguation,
+  first_release_date,
+  length,
+  video,
+  isrcs
+FROM recording WHERE id = ?;
 
-delete:
+deleteRecording:
 DELETE FROM recording
 WHERE id = :id;
