@@ -1,10 +1,9 @@
 package ly.david.musicsearch.data.repository.recording
 
 import kotlinx.coroutines.test.runTest
-import ly.david.data.test.api.FakeLookupApi
+import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
@@ -14,64 +13,32 @@ import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzMod
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.data.test.KoinTestRule
-import ly.david.musicsearch.data.repository.RelationRepositoryImpl
+import ly.david.musicsearch.data.repository.helpers.TestRecordingRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
-import ly.david.musicsearch.shared.domain.recording.RecordingRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class RecordingRepositoryImplTest : KoinTest {
+class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val visitedDao: VisitedDao by inject()
-    private val relationDao: RelationDao by inject()
-    private val recordingDao: RecordingDao by inject()
-    private val artistCreditDao: ArtistCreditDao by inject()
-
-    private fun createRepository(
-        musicBrainzModel: RecordingMusicBrainzModel,
-    ): RecordingRepository {
-        val relationRepository = RelationRepositoryImpl(
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupRecording(
-                    recordingId: String,
-                    include: String,
-                ): RecordingMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-            entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
-            relationDao = relationDao,
-        )
-        return RecordingRepositoryImpl(
-            recordingDao = recordingDao,
-            relationRepository = relationRepository,
-            artistCreditDao = artistCreditDao,
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupRecording(
-                    recordingId: String,
-                    include: String,
-                ): RecordingMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-        )
-    }
+    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val visitedDao: VisitedDao by inject()
+    override val relationDao: RelationDao by inject()
+    override val recordingDao: RecordingDao by inject()
+    override val artistCreditDao: ArtistCreditDao by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepository(
+        val sparseRepository = createRecordingRepository(
             musicBrainzModel = RecordingMusicBrainzModel(
                 id = "7e52152f-c71a-49b1-b98d-f95e04c44445",
                 name = "導火",
@@ -109,7 +76,7 @@ class RecordingRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepository(
+        val allDataRepository = createRecordingRepository(
             musicBrainzModel = RecordingMusicBrainzModel(
                 id = "7e52152f-c71a-49b1-b98d-f95e04c44445",
                 name = "導火",

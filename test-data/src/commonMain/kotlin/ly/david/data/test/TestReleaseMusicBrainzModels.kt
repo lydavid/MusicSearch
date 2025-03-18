@@ -17,8 +17,16 @@ val underPressureRemastered = ReleaseMusicBrainzModel(
     id = "eac6d0cd-1ed0-4e17-b5b0-d3cfc40547b2",
     name = "Under Pressure",
     artistCredits = listOf(
-        queenArtistCredit,
-        davidBowieArtistCredit,
+        ArtistCreditMusicBrainzModel(
+            artist = queenArtistMusicBrainzModel,
+            name = "Queen",
+            joinPhrase = " & ",
+        ),
+        ArtistCreditMusicBrainzModel(
+            artist = davidBowieArtistMusicBrainzModel,
+            name = "David Bowie",
+            joinPhrase = "",
+        ),
     ),
     releaseGroup = underPressureReleaseGroup,
 )
@@ -36,14 +44,22 @@ val fakeReleaseEvent = ReleaseEventMusicBrainzModel(
     date = "2022-10-29",
 )
 
-val underPressure = ReleaseMusicBrainzModel(
+val underPressureReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     id = "61735bf8-219e-3164-a94c-b74b1482fd01",
     name = "Under Pressure",
     barcode = "123",
     date = "1981-10",
     artistCredits = listOf(
-        queenArtistCredit,
-        davidBowieArtistCredit,
+        ArtistCreditMusicBrainzModel(
+            artist = queenArtistMusicBrainzModel,
+            name = "Queen",
+            joinPhrase = " & ",
+        ),
+        ArtistCreditMusicBrainzModel(
+            artist = davidBowieArtistMusicBrainzModel,
+            name = "David Bowie",
+            joinPhrase = "",
+        ),
     ),
     releaseGroup = underPressureReleaseGroup,
     releaseEvents = listOf(

@@ -1,5 +1,6 @@
 package ly.david.data.test
 
+import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
@@ -15,8 +16,16 @@ val underPressureReleaseGroup = ReleaseGroupMusicBrainzModel(
     id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
     name = "Under Pressure",
     artistCredits = listOf(
-        davidBowieArtistCredit,
-        queenArtistCredit,
+        ArtistCreditMusicBrainzModel(
+            artist = queenArtistMusicBrainzModel,
+            name = "Queen",
+            joinPhrase = " & ",
+        ),
+        ArtistCreditMusicBrainzModel(
+            artist = davidBowieArtistMusicBrainzModel,
+            name = "David Bowie",
+            joinPhrase = "",
+        ),
     ),
     primaryType = "Single",
     relations = listOf(

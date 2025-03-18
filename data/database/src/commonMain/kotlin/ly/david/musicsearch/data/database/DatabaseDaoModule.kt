@@ -69,7 +69,7 @@ val databaseDaoModule = module {
     single { MediumDao(get(), get()) }
     single { NowPlayingHistoryDao(get(), get()) }
     singleOf(::PlaceDao)
-    single { RecordingDao(get(), get()) }
+    singleOf(::RecordingDao)
     single { RecordingReleaseDao(get(), get()) }
     single { RelationDao(get(), get()) }
     singleOf(::ReleaseCountryDao)

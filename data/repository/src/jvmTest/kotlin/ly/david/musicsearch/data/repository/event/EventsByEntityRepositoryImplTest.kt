@@ -441,10 +441,6 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
-                4,
-                size,
-            )
-            assertEquals(
                 listOf(
                     kissAtBudokanListItemModel,
                     tsoAtMasseyHallListItemModel,
@@ -461,10 +457,6 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
                 query = "ai",
             ),
         ).asSnapshot().run {
-            assertEquals(
-                1,
-                size,
-            )
             assertEquals(
                 listOf(
                     aimerAtBudokanListItemModel,

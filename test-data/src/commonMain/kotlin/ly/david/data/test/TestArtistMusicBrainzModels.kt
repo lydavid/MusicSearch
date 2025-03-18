@@ -5,8 +5,8 @@ import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrai
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 
 val bandAid = ArtistMusicBrainzModel(
     id = "0ecaa896-58fa-4dca-b53d-8da7bc5f59c5",
@@ -33,7 +33,7 @@ val davidBowieDeezer = UrlMusicBrainzModel(
     resource = "https://www.deezer.com/artist/997",
 )
 
-val davidBowie = ArtistMusicBrainzModel(
+val davidBowieArtistMusicBrainzModel = ArtistMusicBrainzModel(
     id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
     name = "David Bowie",
     type = "Person",
@@ -77,23 +77,12 @@ val davidBowie = ArtistMusicBrainzModel(
     ),
 )
 
-val davidBowieArtistCredit = ArtistCreditMusicBrainzModel(
-    artist = davidBowie,
-    name = "Different Artist Name",
-)
-
-val queen = ArtistMusicBrainzModel(
+val queenArtistMusicBrainzModel = ArtistMusicBrainzModel(
     id = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
     name = "Queen",
     type = "Group",
     typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
     disambiguation = "UK rock group",
-)
-
-val queenArtistCredit = ArtistCreditMusicBrainzModel(
-    artist = queen,
-    name = "Other Artist",
-    joinPhrase = " & ",
 )
 
 val adoArtistMusicBrainzModel = ArtistMusicBrainzModel(

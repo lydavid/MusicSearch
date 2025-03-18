@@ -1,55 +1,37 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.api.BrowseWorksResponse
-import ly.david.musicsearch.data.musicbrainz.api.SearchWorksResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkAttributeMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
-import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
-val fakeWorkAttribute = WorkAttributeMusicBrainzModel(
-    type = "SUISA ID",
-    typeId = "034f35ae-d250-3749-95e7-854e606d5960",
-    value = "000321 768 01",
-)
-
-val fakeWork2 = WorkMusicBrainzModel(
-    id = "w2",
-    name = "work 2",
-)
-
-val arrangements = RelationMusicBrainzModel(
-    type = "doesn't matter",
-    typeId = "51975ed8-bbfa-486b-9f28-5947f4370299",
-    direction = Direction.FORWARD,
-    targetType = SerializableMusicBrainzEntity.WORK,
-    work = fakeWork2,
-)
-
-val fakeWorkWithAllData = WorkMusicBrainzModel(
-    id = "w1",
-    name = "Work Name",
+val skycladObserverWorkMusicBrainzModel = WorkMusicBrainzModel(
+    id = "b04a6906-237c-3611-a5c6-b8bcd2627327",
+    name = "スカイクラッドの観測者",
     type = "Song",
-    attributes = listOf(
-        fakeWorkAttribute,
+    typeId = "f061270a-2fd6-32f1-a641-f0f8676d14e6",
+    language = "jpn",
+    iswcs = listOf(
+        "T-101.979.913-2",
     ),
-    relations = listOf(arrangements),
-)
-
-val fakeWorks = listOf(
-    fakeWorkWithAllData,
-    fakeWork2,
-)
-
-val browseWorksResponse = BrowseWorksResponse(
-    count = 1,
-    offset = 0,
-    listOf(element = fakeWorkWithAllData),
-)
-
-val searchWorksResponse = SearchWorksResponse(
-    count = 1,
-    offset = 0,
-    listOf(element = fakeWorkWithAllData),
+    attributes = listOf(
+        WorkAttributeMusicBrainzModel(
+            value = "18230080-001",
+            type = "GEMA ID",
+            typeId = "01eeee67-f514-3801-bdce-279e04872f91",
+        ),
+        WorkAttributeMusicBrainzModel(
+            value = "10530267",
+            type = "COMPASS ID",
+            typeId = "5ea37343-be89-4cd0-8a37-f471738df641",
+        ),
+        WorkAttributeMusicBrainzModel(
+            value = "C-1264052606",
+            type = "CASH ID",
+            typeId = "9e0765a1-1505-3ca9-9147-8dcbb0aa9cec",
+        ),
+        WorkAttributeMusicBrainzModel(
+            value = "162-6010-4",
+            type = "JASRAC ID",
+            typeId = "31048fcc-3dbb-3979-8f85-805afb933e0c",
+        ),
+    ),
 )
