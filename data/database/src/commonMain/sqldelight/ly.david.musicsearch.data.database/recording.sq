@@ -31,3 +31,72 @@ FROM recording WHERE id = ?;
 deleteRecording:
 DELETE FROM recording
 WHERE id = :id;
+
+-- recordings by entity
+
+CREATE TABLE IF NOT EXISTS recordings_by_entity (
+  entity_id TEXT NOT NULL,
+  recording_id TEXT NOT NULL,
+
+  PRIMARY KEY (entity_id, recording_id)
+);
+
+insertOrFailRecordingByEntity:
+INSERT OR FAIL INTO recordings_by_entity
+VALUES ?;
+
+deleteRecordingsByEntity {
+DELETE FROM recording WHERE id IN (
+  SELECT r.id
+  FROM recordings_by_entity re
+  INNER JOIN recording r ON r.id = re.recording_id
+  WHERE re.entity_id = :entityId
+);
+
+DELETE FROM recordings_by_entity WHERE entity_id = :entityId;
+}
+
+getNumberOfRecordingsByEntity:
+SELECT IFNULL(
+  (
+    SELECT COUNT(DISTINCT r.id)
+    FROM recordings_by_entity re
+    INNER JOIN recording r ON r.id = re.recording_id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    WHERE re.entity_id = :entityId
+    AND (
+      r.name LIKE :query
+      OR r.disambiguation LIKE :query
+      OR r.first_release_date LIKE :query
+      OR ac.name LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getRecordingsByEntity:
+SELECT
+  r.id,
+  r.name,
+  r.disambiguation,
+  r.first_release_date,
+  r.length,
+  r.video,
+  ac.name AS artist_credits,
+  visited.entity_id IS NOT NULL AS visited
+FROM recordings_by_entity re
+INNER JOIN recording r ON r.id = re.recording_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN visited ON visited.entity_id = r.id
+WHERE re.entity_id = :entityId
+AND (
+  r.name LIKE :query
+  OR r.disambiguation LIKE :query
+  OR r.first_release_date LIKE :query
+  OR ac.name LIKE :query
+)
+GROUP BY r.id
+ORDER BY r.first_release_date, r.name
+LIMIT :limit OFFSET :offset;

@@ -36,7 +36,7 @@ val statsFeatureModule = module {
                                 eventDao = get(),
                                 artistReleaseGroupDao = get(),
                                 artistReleaseDao = get(),
-                                recordingsByEntityDao = get(),
+                                recordingDao = get(),
                                 worksByEntityDao = get(),
                             )
                         }
@@ -113,7 +113,7 @@ val statsFeatureModule = module {
                                 getCountOfEachRelationshipTypeUseCase = get(),
                                 observeBrowseEntityCount = get(),
                                 artistDao = get(),
-                                recordingsByEntityDao = get(),
+                                recording = get(),
                             )
                         }
 

@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
-import ly.david.musicsearch.data.database.dao.RecordingsByEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseRecordingsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
@@ -20,7 +19,6 @@ class RecordingsByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val recordingDao: RecordingDao,
-    private val recordingsByEntityDao: RecordingsByEntityDao,
     private val browseApi: BrowseApi,
 ) : RecordingsByEntityRepository,
     BrowseEntitiesByEntity<RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
@@ -56,7 +54,7 @@ class RecordingsByEntityRepositoryImpl(
                 }
 
                 else -> {
-                    recordingsByEntityDao.deleteRecordingsByEntity(entityId)
+                    recordingDao.deleteRecordingsByEntity(entityId)
                 }
             }
         }
@@ -80,7 +78,7 @@ class RecordingsByEntityRepositoryImpl(
             }
 
             else -> {
-                recordingsByEntityDao.getRecordingsByEntity(
+                recordingDao.getRecordingsByEntity(
                     entityId = entityId,
                     query = listFilters.query,
                 )
@@ -115,7 +113,7 @@ class RecordingsByEntityRepositoryImpl(
             }
 
             else -> {
-                recordingsByEntityDao.insertRecordingsByEntity(
+                recordingDao.insertRecordingsByEntity(
                     entityId = entityId,
                     recordingIds = musicBrainzModels.map { recording -> recording.id },
                 )
@@ -133,7 +131,7 @@ class RecordingsByEntityRepositoryImpl(
             }
 
             else -> {
-                recordingsByEntityDao.getCountOfRecordingsByEntity(entityId)
+                recordingDao.getCountOfRecordingsByEntity(entityId)
             }
         }
     }
