@@ -235,44 +235,45 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
         setupRecordingsByWork()
     }
 
-//    @Test
-//    fun `all recordings`() = runTest {
-//        setUpRecordingsExceptCollection()
-//        setupRecordingsByCollection()
-//
-//        val recordingsByEntityRepository = createRecordingsByEntityRepository(
-//            recordings = listOf(),
-//        )
-//        recordingsByEntityRepository.observeRecordingsByEntity(
-//            entityId = null,
-//            entity = null,
-//            listFilters = ListFilters(),
-//        ).asSnapshot().run {
-//            assertEquals(
-//                listOf(
-//                    kissAtBudokanListItemModel,
-//                    tsoAtMasseyHallListItemModel,
-//                    aimerAtBudokanListItemModel,
-//                    kissAtScotiabankArenaListItemModel,
-//                ),
-//                this,
-//            )
-//        }
-//        recordingsByEntityRepository.observeRecordingsByEntity(
-//            entityId = null,
-//            entity = null,
-//            listFilters = ListFilters(
-//                query = "ai",
-//            ),
-//        ).asSnapshot().run {
-//            assertEquals(
-//                listOf(
-//                    aimerAtBudokanListItemModel,
-//                ),
-//                this,
-//            )
-//        }
-//    }
+    @Test
+    fun `all recordings`() = runTest {
+        setUpRecordingsByArtist()
+        setupRecordingsByWork()
+        setupRecordingsByCollection()
+
+        val recordingsByEntityRepository = createRecordingsByEntityRepository(
+            recordings = listOf(),
+        )
+        testFilter(
+            pagingFlowProducer = { query ->
+                recordingsByEntityRepository.observeRecordingsByEntity(
+                    entityId = null,
+                    entity = null,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        underPressureRecordingListItemModel,
+                        skycladObserverRecordingListItemModel,
+                        skycladObserverCoverRecordingListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by artist name",
+                    query = "bowie",
+                    expectedResult = listOf(
+                        underPressureRecordingListItemModel,
+                    ),
+                ),
+            ),
+        )
+    }
 
     @Test
     fun `refreshing recordings that belong to multiple entities does not delete the recording`() = runTest {
@@ -326,22 +327,22 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
         }
 
         // both old and new version of recording exists
-//        recordingsByEntityRepository.observeRecordingsByEntity(
-//            entityId = null,
-//            entity = null,
-//            listFilters = ListFilters(),
-//        ).asSnapshot().run {
-//            assertEquals(
-//                listOf(
-//                    kissAtBudokanListItemModel,
-//                    kissAtBudokanListItemModel.copy(
-//                        id = "new-id-is-considered-a-different-recording",
-//                    ),
-//                    aimerAtBudokanListItemModel,
-//                ),
-//                this,
-//            )
-//        }
+        recordingsByEntityRepository.observeRecordingsByEntity(
+            entityId = null,
+            entity = null,
+            listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    skycladObserverRecordingListItemModel,
+                    skycladObserverRecordingListItemModel.copy(
+                        id = "new-id-is-considered-a-different-recording",
+                    ),
+                    skycladObserverCoverRecordingListItemModel,
+                ),
+                this,
+            )
+        }
 
         recordingsByEntityRepository.observeRecordingsByEntity(
             entityId = skycladObserverWorkMusicBrainzModel.id,
@@ -363,21 +364,21 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
 
         // now only new version of recording exists
         // however, the other recording is never updated unless we go into it and refresh
-//        recordingsByEntityRepository.observeRecordingsByEntity(
-//            entityId = null,
-//            entity = null,
-//            listFilters = ListFilters(),
-//        ).asSnapshot().run {
-//            assertEquals(
-//                listOf(
-//                    kissAtBudokanListItemModel.copy(
-//                        id = "new-id-is-considered-a-different-recording",
-//                    ),
-//                    aimerAtBudokanListItemModel,
-//                ),
-//                this,
-//            )
-//        }this
+        recordingsByEntityRepository.observeRecordingsByEntity(
+            entityId = null,
+            entity = null,
+            listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    skycladObserverRecordingListItemModel.copy(
+                        id = "new-id-is-considered-a-different-recording",
+                    ),
+                    skycladObserverCoverRecordingListItemModel,
+                ),
+                this,
+            )
+        }
 
         // now visit the recording and refresh it
         val recordingRepository = createRecordingRepository(

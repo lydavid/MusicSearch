@@ -12,6 +12,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToRecordingListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
 import lydavidmusicsearchdatadatabase.Recording
 import lydavidmusicsearchdatadatabase.Recordings_by_entity
@@ -128,6 +129,48 @@ class RecordingDao(
             .executeAsOne()
             .toInt()
 
+    fun getRecordings(
+        entityId: String?,
+        entity: MusicBrainzEntity?,
+        query: String,
+    ): PagingSource<Int, RecordingListItemModel> = when {
+        entityId == null || entity == null -> {
+            getAllRecordings(query = query)
+        }
+
+        entity == MusicBrainzEntity.COLLECTION -> {
+            getRecordingsByCollection(
+                collectionId = entityId,
+                query = query,
+            )
+        }
+
+        else -> {
+            getRecordingsByEntity(
+                entityId = entityId,
+                query = query,
+            )
+        }
+    }
+
+    private fun getAllRecordings(
+        query: String,
+    ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(
+        countQuery = transacter.getCountOfAllRecordings(
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getAllRecordings(
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToRecordingListItemModel,
+            )
+        },
+    )
+
     fun getRecordingsByEntity(
         entityId: String,
         query: String,
@@ -141,6 +184,27 @@ class RecordingDao(
         queryProvider = { limit, offset ->
             transacter.getRecordingsByEntity(
                 entityId = entityId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToRecordingListItemModel,
+            )
+        },
+    )
+
+    private fun getRecordingsByCollection(
+        collectionId: String,
+        query: String,
+    ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(
+        countQuery = transacter.getNumberOfRecordingsByCollection(
+            collectionId = collectionId,
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getRecordingsByCollection(
+                collectionId = collectionId,
                 query = "%$query%",
                 limit = limit,
                 offset = offset,

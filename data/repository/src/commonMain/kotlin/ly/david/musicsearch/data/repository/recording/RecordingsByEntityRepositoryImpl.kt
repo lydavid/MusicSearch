@@ -27,8 +27,8 @@ class RecordingsByEntityRepositoryImpl(
     ) {
 
     override fun observeRecordingsByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<RecordingListItemModel>> {
         return observeEntitiesByEntity(
@@ -65,25 +65,11 @@ class RecordingsByEntityRepositoryImpl(
         entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, RecordingListItemModel> {
-        return when {
-            entityId == null || entity == null -> {
-                error("not possible")
-            }
-
-            entity == MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.getRecordingsByCollection(
-                    collectionId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            else -> {
-                recordingDao.getRecordingsByEntity(
-                    entityId = entityId,
-                    query = listFilters.query,
-                )
-            }
-        }
+        return recordingDao.getRecordings(
+            entityId = entityId,
+            entity = entity,
+            query = listFilters.query,
+        )
     }
 
     override suspend fun browseEntities(
