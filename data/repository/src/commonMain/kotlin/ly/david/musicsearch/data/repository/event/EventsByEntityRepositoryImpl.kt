@@ -111,6 +111,14 @@ class EventsByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
     ): Int {
-        return eventDao.getCountOfEventsByEntity(entityId)
+        return when (entity) {
+            MusicBrainzEntity.COLLECTION -> {
+                collectionEntityDao.getCountOfEntitiesByCollection(entityId)
+            }
+
+            else -> {
+                eventDao.getCountOfEventsByEntity(entityId)
+            }
+        }
     }
 }
