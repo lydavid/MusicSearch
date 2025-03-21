@@ -435,35 +435,36 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         val eventsByEntityRepository = createEventsByEntityRepository(
             events = listOf(),
         )
-        eventsByEntityRepository.observeEventsByEntity(
-            entityId = null,
-            entity = null,
-            listFilters = ListFilters(),
-        ).asSnapshot().run {
-            assertEquals(
-                listOf(
-                    kissAtBudokanListItemModel,
-                    tsoAtMasseyHallListItemModel,
-                    aimerAtBudokanListItemModel,
-                    kissAtScotiabankArenaListItemModel,
+        testFilter(
+            pagingFlowProducer = { query ->
+                eventsByEntityRepository.observeEventsByEntity(
+                    entityId = null,
+                    entity = null,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "No filter",
+                    query = "",
+                    expectedResult = listOf(
+                        kissAtBudokanListItemModel,
+                        tsoAtMasseyHallListItemModel,
+                        aimerAtBudokanListItemModel,
+                        kissAtScotiabankArenaListItemModel,
+                    ),
                 ),
-                this,
-            )
-        }
-        eventsByEntityRepository.observeEventsByEntity(
-            entityId = null,
-            entity = null,
-            listFilters = ListFilters(
-                query = "ai",
+                FilterTestCase(
+                    description = "filter by name",
+                    query = "ai",
+                    expectedResult = listOf(
+                        aimerAtBudokanListItemModel,
+                    ),
+                ),
             ),
-        ).asSnapshot().run {
-            assertEquals(
-                listOf(
-                    aimerAtBudokanListItemModel,
-                ),
-                this,
-            )
-        }
+        )
     }
 
     @Test

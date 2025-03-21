@@ -1,7 +1,6 @@
 package ly.david.data.test
 
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
-import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
 
 val skycladObserverWorkListItemModel = WorkListItemModel(
     id = "b04a6906-237c-3611-a5c6-b8bcd2627327",
@@ -10,28 +9,6 @@ val skycladObserverWorkListItemModel = WorkListItemModel(
     language = "jpn",
     iswcs = listOf(
         "T-101.979.913-2",
-    ),
-    attributes = listOf(
-        WorkAttributeUiModel(
-            value = "18230080-001",
-            type = "GEMA ID",
-            typeId = "01eeee67-f514-3801-bdce-279e04872f91",
-        ),
-        WorkAttributeUiModel(
-            value = "10530267",
-            type = "COMPASS ID",
-            typeId = "5ea37343-be89-4cd0-8a37-f471738df641",
-        ),
-        WorkAttributeUiModel(
-            value = "C-1264052606",
-            type = "CASH ID",
-            typeId = "9e0765a1-1505-3ca9-9147-8dcbb0aa9cec",
-        ),
-        WorkAttributeUiModel(
-            value = "162-6010-4",
-            type = "JASRAC ID",
-            typeId = "31048fcc-3dbb-3979-8f85-805afb933e0c",
-        ),
     ),
 )
 
@@ -43,26 +20,43 @@ val hackingToTheGateWorkListItemModel = WorkListItemModel(
     iswcs = listOf(
         "T-102.018.970-0",
     ),
+)
+
+val underPressureWorkListItemModel = WorkListItemModel(
+    id = "4e6a04c3-6897-391d-8e8c-1da7a6dce1ca",
+    name = "Under Pressure",
+    type = "Song",
+    language = "eng",
+    iswcs = listOf(
+        "T-010.475.727-8",
+        "T-011.226.466-0",
+    ),
+)
+
+val starmanWorkListItemModel = WorkListItemModel(
+    id = "4491f749-d06a-348c-aa58-a288d2eafa5f",
+    name = "Starman",
+    type = "Song",
+    language = "eng",
+    iswcs = listOf(
+        "T-900.196.834-9",
+        "T-011.559.559-9",
+    ),
     attributes = listOf(
-        WorkAttributeUiModel(
-            value = "16662182-001",
-            type = "GEMA ID",
-            typeId = "01eeee67-f514-3801-bdce-279e04872f91",
-        ),
-        WorkAttributeUiModel(
-            value = "13500094",
-            type = "COMPASS ID",
-            typeId = "5ea37343-be89-4cd0-8a37-f471738df641",
-        ),
-        WorkAttributeUiModel(
-            value = "702-2048-4",
-            type = "JASRAC ID",
-            typeId = "31048fcc-3dbb-3979-8f85-805afb933e0c",
-        ),
-        WorkAttributeUiModel(
-            value = "905855922",
-            type = "ASCAP ID",
-            typeId = "d833318c-6c6a-370e-8b16-9cb15873ba76",
-        ),
+        // many omitted for now
+    ),
+)
+
+val dontStopMeNowWorkListItemModel = WorkListItemModel(
+    id = "8f217f03-fd55-366c-b80e-66424027dc29",
+    name = "Don’t Stop Me Now",
+    type = "Song",
+    language = "eng",
+    iswcs = listOf(
+        "T-010.115.271-9",
+        "T-010.180.479-8",
+    ),
+    attributes = listOf(
+        // many omitted for now
     ),
 )

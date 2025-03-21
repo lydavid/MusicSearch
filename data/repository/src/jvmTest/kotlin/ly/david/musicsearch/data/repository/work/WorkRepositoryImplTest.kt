@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.work
 
 import kotlinx.coroutines.test.runTest
-import ly.david.data.test.api.FakeLookupApi
+import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
@@ -12,65 +12,32 @@ import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.data.test.KoinTestRule
-import ly.david.musicsearch.data.repository.RelationRepositoryImpl
+import ly.david.musicsearch.data.repository.helpers.TestWorkRepository
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
-import ly.david.musicsearch.shared.domain.work.WorkRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class WorkRepositoryImplTest : KoinTest {
+class WorkRepositoryImplTest : KoinTest, TestWorkRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val visitedDao: VisitedDao by inject()
-    private val relationDao: RelationDao by inject()
-    private val workDao: WorkDao by inject()
-    private val workAttributeDao: WorkAttributeDao by inject()
-
-    private fun createRepository(
-        musicBrainzModel: WorkMusicBrainzModel,
-    ): WorkRepository {
-        val relationRepository = RelationRepositoryImpl(
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupWork(
-                    workId: String,
-                    include: String?,
-                ): WorkMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-            entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
-            relationDao = relationDao,
-        )
-        return WorkRepositoryImpl(
-            workDao = workDao,
-            workAttributeDao = workAttributeDao,
-            relationRepository = relationRepository,
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupWork(
-                    workId: String,
-                    include: String?,
-                ): WorkMusicBrainzModel {
-                    return musicBrainzModel
-                }
-            },
-        )
-    }
+    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val visitedDao: VisitedDao by inject()
+    override val relationDao: RelationDao by inject()
+    override val workDao: WorkDao by inject()
+    override val workAttributeDao: WorkAttributeDao by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepository(
+        val sparseRepository = createWorkRepository(
             musicBrainzModel = WorkMusicBrainzModel(
                 id = "717a6517-290e-3696-942a-aba233ffc398",
                 name = "君の知らない物語",
@@ -88,7 +55,7 @@ class WorkRepositoryImplTest : KoinTest {
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepository(
+        val allDataRepository = createWorkRepository(
             musicBrainzModel = WorkMusicBrainzModel(
                 id = "717a6517-290e-3696-942a-aba233ffc398",
                 name = "君の知らない物語",

@@ -93,7 +93,7 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
                 id = collectionId,
                 isRemote = false,
                 name = "recordings",
-                entity = MusicBrainzEntity.EVENT,
+                entity = MusicBrainzEntity.RECORDING,
             ),
         )
         collectionEntityDao.insertAll(

@@ -68,3 +68,48 @@ val hackingToTheGateWorkMusicBrainzModel = WorkMusicBrainzModel(
         ),
     ),
 )
+
+val underPressureWorkMusicBrainzModel = WorkMusicBrainzModel(
+    id = "4e6a04c3-6897-391d-8e8c-1da7a6dce1ca",
+    name = "Under Pressure",
+    type = "Song",
+    typeId = "f061270a-2fd6-32f1-a641-f0f8676d14e6",
+    language = "eng",
+    iswcs = listOf(
+        "T-010.475.727-8",
+        "T-011.226.466-0",
+    ),
+    attributes = listOf(
+        // many omitted for now
+    ),
+)
+
+val starmanWorkMusicBrainzModel = WorkMusicBrainzModel(
+    id = "4491f749-d06a-348c-aa58-a288d2eafa5f",
+    name = "Starman",
+    type = "Song",
+    typeId = "f061270a-2fd6-32f1-a641-f0f8676d14e6",
+    language = "eng",
+    iswcs = listOf(
+        "T-900.196.834-9",
+        "T-011.559.559-9",
+    ),
+    attributes = listOf(
+        // many omitted for now
+    ),
+)
+
+val dontStopMeNowWorkMusicBrainzModel = WorkMusicBrainzModel(
+    id = "8f217f03-fd55-366c-b80e-66424027dc29",
+    name = "Don’t Stop Me Now",
+    type = "Song",
+    typeId = "f061270a-2fd6-32f1-a641-f0f8676d14e6",
+    language = "eng",
+    iswcs = listOf(
+        "T-010.115.271-9",
+        "T-010.180.479-8",
+    ),
+    attributes = listOf(
+        // many omitted for now
+    ),
+)

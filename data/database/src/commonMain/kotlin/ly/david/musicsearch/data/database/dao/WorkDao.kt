@@ -74,35 +74,20 @@ class WorkDao(
         transacter.deleteWork(id)
     }
 
-    @Suppress("SwallowedException")
-    private fun insertWorkByEntity(
-        entityId: String,
-        workId: String,
-    ): Int {
-        return try {
-            transacter.insertOrFailWorkByEntity(
-                Works_by_entity(
-                    entity_id = entityId,
-                    work_id = workId,
-                ),
-            )
-            1
-        } catch (ex: Exception) {
-            0
-        }
-    }
-
     fun insertWorksByEntity(
         entityId: String,
         workIds: List<String>,
     ): Int {
         return transacter.transactionWithResult {
-            workIds.sumOf { workId ->
-                insertWorkByEntity(
-                    entityId = entityId,
-                    workId = workId,
+            workIds.forEach { workId ->
+                transacter.insertOrIgnoreWorkByEntity(
+                    Works_by_entity(
+                        entity_id = entityId,
+                        work_id = workId,
+                    ),
                 )
             }
+            workIds.size
         }
     }
 
