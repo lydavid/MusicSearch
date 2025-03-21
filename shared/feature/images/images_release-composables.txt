@@ -2,36 +2,27 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCo
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsPagerUiCompact()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsPagerUiNonCompact()
 fun present(
-  stable <this>: CoverArtsGridPresenter
-): CoverArtsGridUiState
+  stable <this>: CoverArtsPresenter
+): CoverArtsUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsGridUi(
-  stable state: CoverArtsGridUiState
+  stable state: CoverArtsUiState
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsGridUi(
+  stable state: CoverArtsUiState
+  stable isCompact: Boolean
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsGrid(
-  stable mbid: String
-  imageUrls: ImmutableList<ImageUrls>
-  stable modifier: Modifier? = @static Companion
-  stable lazyGridState: LazyGridState? = @dynamic rememberLazyGridState(0, 0, $composer, 0, 0b0011)
+  imageMetadataLazyPagingItems: LazyPagingItems<ImageMetadata>
   stable onImageClick: Function1<@[ParameterName(name = 'index')] Int, Unit>
-)
-fun present(
-  stable <this>: CoverArtsPagerPresenter
-): CoverArtsPagerUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsPagerUi(
-  stable state: CoverArtsPagerUiState
-  stable modifier: Modifier? = @static Companion
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsPagerUi(
-  stable state: CoverArtsPagerUiState
-  stable isCompact: Boolean
+  stable lazyGridState: LazyGridState
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsPager(
-  stable mbid: String
-  imageUrls: ImmutableList<ImageUrls>
+  imageMetadataList: LazyPagingItems<ImageMetadata>
   stable selectedImageIndex: Int
   stable isCompact: Boolean
-  stable modifier: Modifier? = @static Companion
   stable onImageChange: Function1<@[ParameterName(name = 'index')] Int, Unit>
+  stable modifier: Modifier? = @static Companion
 )

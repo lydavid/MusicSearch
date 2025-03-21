@@ -4,6 +4,8 @@ restartable skippable fun LargeImage(
   stable placeholderKey: String
   stable modifier: Modifier? = @static Companion
   stable isCompact: Boolean = @static true
+  stable zoomEnabled: Boolean = @static false
+  stable onClick: Function0<Unit>? = @static null
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ThumbnailImage(
   stable url: String

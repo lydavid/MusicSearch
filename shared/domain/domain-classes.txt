@@ -34,10 +34,11 @@ unstable class AreaDetailsModel {
   stable val type: String?
   stable val lifeSpan: LifeSpanUiModel
   unstable val countryCodes: List<String>
+  stable val wikipediaExtract: WikipediaExtract
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-unstable class GetAreasByEntity {
+unstable class GetAreasByEntityImpl {
   runtime val areasByEntityRepository: AreasByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
@@ -59,7 +60,7 @@ unstable class ArtistDetailsModel {
   unstable val isnis: List<String>?
   stable val lifeSpan: LifeSpanUiModel
   unstable val urls: List<RelationListItemModel>
-  stable val imageUrl: String?
+  stable val imageMetadata: ImageMetadata
   stable val wikipediaExtract: WikipediaExtract
   unstable val areaListItemModel: AreaListItemModel?
   <runtime stability> = Unstable
@@ -124,10 +125,10 @@ stable class ActionableResult {
   stable val actionLabel: String?
   <runtime stability> = Stable
 }
-stable class HandledException {
+unstable class HandledException {
   stable val userMessage: String
   stable val errorResolution: ErrorResolution
-  <runtime stability> = Stable
+  <runtime stability> = Unstable
 }
 unstable class EventDetailsModel {
   stable val id: String
@@ -137,11 +138,18 @@ unstable class EventDetailsModel {
   stable val time: String?
   stable val cancelled: Boolean?
   stable val lifeSpan: LifeSpanUiModel
+  stable val imageMetadata: ImageMetadata
+  stable val wikipediaExtract: WikipediaExtract
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
 unstable class GetEventsByEntity {
   runtime val eventsByEntityRepository: EventsByEntityRepository
+  unstable val coroutineScope: CoroutineScope
+  <runtime stability> = Unstable
+}
+unstable class GetGenresByEntity {
+  runtime val genresByEntityRepository: GenresByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
 }
@@ -196,11 +204,16 @@ runtime class UnMarkLookupHistoryForDeletionImpl {
   runtime val lookupHistoryRepository: LookupHistoryRepository
   <runtime stability> = Uncertain(LookupHistoryRepository)
 }
-stable class ImageUrls {
+stable class ImageMetadata {
+  stable val databaseId: Long
   stable val thumbnailUrl: String
   stable val largeUrl: String
   stable val types: ImmutableList<String>
   stable val comment: String
+  stable val mbid: String?
+  stable val name: String?
+  stable val disambiguation: String?
+  stable val entity: MusicBrainzEntity?
   <runtime stability> = 
 }
 unstable class InstrumentDetailsModel {
@@ -209,6 +222,7 @@ unstable class InstrumentDetailsModel {
   stable val disambiguation: String?
   stable val description: String?
   stable val type: String?
+  stable val wikipediaExtract: WikipediaExtract
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
@@ -226,6 +240,7 @@ unstable class LabelDetailsModel {
   unstable val ipis: List<String>?
   unstable val isnis: List<String>?
   stable val lifeSpan: LifeSpanUiModel
+  stable val wikipediaExtract: WikipediaExtract
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
@@ -256,6 +271,7 @@ stable class ArtistListItemModel {
   stable val countryCode: String?
   stable val lifeSpan: LifeSpanUiModel
   stable val imageUrl: String?
+  stable val imageId: Long
   stable val visited: Boolean
   <runtime stability> = Stable
 }
@@ -309,7 +325,7 @@ stable class LabelListItemModel {
   stable val disambiguation: String?
   stable val type: String?
   stable val labelCode: Int?
-  stable val catalogNumber: String?
+  stable val catalogNumbers: String?
   stable val visited: Boolean
   <runtime stability> = Stable
 }
@@ -328,6 +344,7 @@ unstable class LookupHistoryListItemModel {
   stable val numberOfVisits: Int
   unstable val lastAccessed: Instant
   stable val imageUrl: String?
+  stable val imageId: Long
   <runtime stability> = Unstable
 }
 unstable class NowPlayingHistoryListItemModel {
@@ -369,6 +386,10 @@ stable class RelationListItemModel {
   stable val additionalInfo: String?
   stable val linkedEntity: MusicBrainzEntity
   stable val visited: Boolean
+  stable val isForwardDirection: Boolean?
+  stable val lifeSpan: LifeSpanUiModel
+  stable val imageUrl: String?
+  stable val imageId: Long
   <runtime stability> = Stable
 }
 unstable class ReleaseGroupListItemModel {
@@ -380,6 +401,7 @@ unstable class ReleaseGroupListItemModel {
   unstable val secondaryTypes: List<String>?
   stable val formattedArtistCredits: String?
   stable val imageUrl: String?
+  stable val imageId: Long
   stable val visited: Boolean
   <runtime stability> = Unstable
 }
@@ -400,6 +422,7 @@ stable class ReleaseListItemModel {
   stable val coverArtArchive: CoverArtArchiveUiModel
   stable val textRepresentation: TextRepresentationUiModel?
   stable val imageUrl: String?
+  stable val imageId: Long
   stable val formattedFormats: String?
   stable val formattedTracks: String?
   stable val formattedArtistCredits: String?
@@ -494,6 +517,7 @@ unstable class PlaceDetailsModel {
   stable val coordinates: CoordinatesUiModel
   stable val lifeSpan: LifeSpanUiModel
   unstable val area: AreaListItemModel?
+  stable val wikipediaExtract: WikipediaExtract
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
@@ -511,6 +535,7 @@ unstable class RecordingDetailsModel {
   stable val video: Boolean
   unstable val isrcs: List<String>?
   unstable val artistCredits: List<ArtistCreditUiModel>
+  stable val wikipediaExtract: WikipediaExtract
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
@@ -533,7 +558,9 @@ stable class RelationWithOrder {
   stable val attributes: String?
   stable val additionalInfo: String?
   stable val linkedEntity: MusicBrainzEntity
+  stable val isForwardDirection: Boolean?
   stable val order: Int
+  stable val lifeSpan: LifeSpanUiModel
   <runtime stability> = Stable
 }
 runtime class GetCountOfEachRelationshipTypeUseCase {
@@ -569,13 +596,14 @@ unstable class ReleaseDetailsModel {
   stable val quality: String?
   stable val coverArtArchive: CoverArtArchiveUiModel
   stable val textRepresentation: TextRepresentationUiModel
-  stable val imageUrl: String?
+  stable val imageMetadata: ImageMetadata
   stable val formattedFormats: String
   stable val formattedTracks: String
   unstable val artistCredits: List<ArtistCreditUiModel>
   unstable val releaseGroup: ReleaseGroupForRelease?
   unstable val areas: List<AreaListItemModel>
   unstable val labels: List<LabelListItemModel>
+  stable val wikipediaExtract: WikipediaExtract
   unstable val urls: List<RelationListItemModel>
   stable val releaseLength: Int?
   stable val hasNullLength: Boolean
@@ -603,8 +631,9 @@ unstable class ReleaseGroupDetailsModel {
   stable val disambiguation: String
   stable val primaryType: String?
   unstable val secondaryTypes: List<String>?
-  stable val imageUrl: String?
+  stable val imageMetadata: ImageMetadata
   unstable val artistCredits: List<ArtistCreditUiModel>
+  stable val wikipediaExtract: WikipediaExtract
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
@@ -658,6 +687,7 @@ unstable class SeriesDetailsModel {
   stable val name: String
   stable val disambiguation: String?
   stable val type: String?
+  stable val wikipediaExtract: WikipediaExtract
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
@@ -685,6 +715,7 @@ unstable class WorkDetailsModel {
   stable val language: String?
   unstable val iswcs: List<String>?
   unstable val attributes: List<WorkAttributeUiModel>
+  stable val wikipediaExtract: WikipediaExtract
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }

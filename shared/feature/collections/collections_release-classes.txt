@@ -72,6 +72,7 @@ stable class CollectionPresenter {
   stable val areasByEntityPresenter: AreasByEntityPresenter
   stable val artistsByEntityPresenter: ArtistsByEntityPresenter
   stable val eventsByEntityPresenter: EventsByEntityPresenter
+  stable val genresByEntityPresenter: GenresByEntityPresenter
   stable val instrumentsByEntityPresenter: InstrumentsByEntityPresenter
   stable val labelsByEntityPresenter: LabelsByEntityPresenter
   stable val placesByEntityPresenter: PlacesByEntityPresenter
@@ -95,6 +96,7 @@ stable class CollectionUiState {
   stable val areasByEntityUiState: AreasByEntityUiState
   stable val artistsByEntityUiState: ArtistsByEntityUiState
   stable val eventsByEntityUiState: EventsByEntityUiState
+  stable val genresByEntityUiState: GenresByEntityUiState
   stable val instrumentsByEntityUiState: InstrumentsByEntityUiState
   stable val labelsByEntityUiState: LabelsByEntityUiState
   stable val placesByEntityUiState: PlacesByEntityUiState

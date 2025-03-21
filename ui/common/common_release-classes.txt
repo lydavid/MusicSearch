@@ -8,7 +8,7 @@ stable class LoginPresenterAndroid {
   <runtime stability> = Stable
 }
 stable class AreasByEntityPresenter {
-  runtime val getAreasByEntity: GetAreasByEntity
+  unstable val getAreasByEntity: GetAreasByEntity
   <runtime stability> = Stable
 }
 stable class Get {
@@ -22,7 +22,7 @@ stable class UpdateQuery {
   <runtime stability> = Stable
 }
 stable class AreasByEntityUiState {
-  runtime val lazyPagingItems: LazyPagingItems<AreaListItemModel>
+  unstable val pagingDataFlow: Flow<PagingData<AreaListItemModel>>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<AreasByEntityUiEvent, Unit>
 }
@@ -64,6 +64,25 @@ stable class EventsByEntityUiState {
   runtime val lazyPagingItems: LazyPagingItems<EventListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<EventsByEntityUiEvent, Unit>
+}
+stable class GenresByEntityPresenter {
+  runtime val getGenresByEntity: GetGenresByEntity
+  <runtime stability> = Stable
+}
+stable class Get {
+  stable val byEntityId: String
+  stable val byEntity: MusicBrainzEntity
+  stable val isRemote: Boolean
+  <runtime stability> = Stable
+}
+stable class UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class GenresByEntityUiState {
+  runtime val lazyPagingItems: LazyPagingItems<GenreListItemModel>
+  stable val lazyListState: LazyListState
+  stable val eventSink: Function1<GenresByEntityUiEvent, Unit>
 }
 stable class InstrumentsByEntityPresenter {
   runtime val getInstrumentsByEntity: GetInstrumentsByEntity
@@ -163,6 +182,7 @@ stable class RelationsPresenterImpl {
 stable class GetRelations {
   stable val byEntityId: String
   stable val byEntity: MusicBrainzEntity
+  unstable val relatedEntities: Set<MusicBrainzEntity>
   <runtime stability> = Stable
 }
 stable class UpdateQuery {
@@ -177,7 +197,7 @@ stable class RelationsUiState {
 stable class ReleasesByEntityPresenter {
   runtime val getReleasesByEntity: GetReleasesByEntity
   unstable val appPreferences: AppPreferences
-  unstable val releaseImageRepository: ReleaseImageRepository
+  unstable val imageMetadataRepository: ImageMetadataRepository
   <runtime stability> = Stable
 }
 stable class Get {
@@ -207,7 +227,7 @@ stable class ReleasesByEntityUiState {
 stable class ReleaseGroupsByEntityPresenter {
   runtime val getReleaseGroupsByEntity: GetReleaseGroupsByEntity
   unstable val appPreferences: AppPreferences
-  unstable val releaseGroupImageRepository: ReleaseGroupImageRepository
+  unstable val imageMetadataRepository: ImageMetadataRepository
   <runtime stability> = Stable
 }
 stable class Get {
@@ -274,13 +294,8 @@ stable class DetailsScreen {
   stable val title: String?
   <runtime stability> = Stable
 }
-stable class CoverArtsGridScreen {
-  stable val id: String
-  <runtime stability> = Stable
-}
-stable class CoverArtsPagerScreen {
-  stable val id: String
-  stable val index: Int
+stable class CoverArtsScreen {
+  stable val id: String?
   <runtime stability> = Stable
 }
 stable class StatsScreen {
@@ -327,6 +342,7 @@ stable class TopAppBarEditState {
 stable class TopAppBarFilterState {
   stable var filterText$delegate: MutableState<String>
   stable var isFilterMode$delegate: MutableState<Boolean>
+  stable var show$delegate: MutableState<Boolean>
 }
 stable class TracksByReleasePresenter {
   runtime val getTracksByRelease: GetTracksByRelease

@@ -1,6 +1,6 @@
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AppBottomNavigationBar(
   stable currentTopLevelScreen: Screen
-  stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static $composer.startReplaceGroup(612095074)
+  stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static $composer.startReplaceGroup(1849434622)
 val tmp0_group = $composer.cache(false) {
   {     it  :   Screen   ->
 
@@ -14,7 +14,7 @@ tmp0_group@ly.david.musicsearch.shared.AppBottomNavigationBar
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AppNavigationRail(
   stable currentTopLevelScreen: Screen
   stable modifier: Modifier? = @static Companion
-  stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static $composer.startReplaceGroup(-1893562948)
+  stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static $composer.startReplaceGroup(1849434622)
 val tmp0_group = $composer.cache(false) {
   {     it  :   Screen   ->
 

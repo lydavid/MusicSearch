@@ -11,7 +11,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistCol
   unstable nodes: List<GraphNode>
   stable filterText: String
   stable modifier: Modifier? = @static Companion
-  stable onClick: Function2<@[ParameterName(name = 'tapOffset')] Offset, @[ParameterName(name = 'drawOffset')] Offset, Unit>? = @static $composer.startReplaceGroup(873399700)
+  stable onClick: Function2<@[ParameterName(name = 'tapOffset')] Offset, @[ParameterName(name = 'drawOffset')] Offset, Unit>? = @static $composer.startReplaceGroup(1849434622)
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   Offset  ,   <unused var>  :   Offset   ->
 

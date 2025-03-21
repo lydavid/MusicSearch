@@ -2,19 +2,19 @@ stable class AreaStatsPresenter {
   stable val screen: StatsScreen
   runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
   runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
-  unstable val releaseCountryDao: ReleaseCountryDao
-  unstable val artistsByEntityDao: ArtistsByEntityDao
-  unstable val eventsByEntityDao: EventsByEntityDao
-  unstable val labelsByEntityDao: LabelsByEntityDao
-  unstable val areaPlaceDao: AreaPlaceDao
+  unstable val releaseDao: ReleaseDao
+  unstable val artistDao: ArtistDao
+  unstable val eventDao: EventDao
+  unstable val labelDao: LabelDao
+  unstable val placeDao: PlaceDao
   <runtime stability> = Stable
 }
 stable class ArtistStatsPresenter {
   stable val screen: StatsScreen
   runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
   runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
-  unstable val eventsByEntityDao: EventsByEntityDao
-  unstable val recordingsByEntityDao: RecordingsByEntityDao
+  unstable val eventDao: EventDao
+  unstable val recordingDao: RecordingDao
   unstable val worksByEntityDao: WorksByEntityDao
   unstable val artistReleaseGroupDao: ArtistReleaseGroupDao
   unstable val artistReleaseDao: ArtistReleaseDao
@@ -34,14 +34,14 @@ stable class LabelStatsPresenter {
   stable val screen: StatsScreen
   runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
   runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
-  unstable val releaseLabelDao: ReleaseLabelDao
+  unstable val releaseDao: ReleaseDao
   <runtime stability> = Stable
 }
 stable class PlaceStatsPresenter {
   stable val screen: StatsScreen
   runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
   runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
-  unstable val eventsByEntityDao: EventsByEntityDao
+  unstable val eventDao: EventDao
   <runtime stability> = Stable
 }
 stable class RecordingStatsPresenter {
@@ -62,7 +62,7 @@ stable class ReleaseStatsPresenter {
   stable val screen: StatsScreen
   runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
   runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
-  unstable val artistsByEntityDao: ArtistsByEntityDao
+  unstable val artistDao: ArtistDao
   <runtime stability> = Stable
 }
 stable class SeriesStatsPresenter {
@@ -127,8 +127,8 @@ stable class WorkStatsPresenter {
   stable val screen: StatsScreen
   runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
   runtime val observeBrowseEntityCount: ObserveBrowseEntityCount
-  unstable val artistsByEntityDao: ArtistsByEntityDao
-  unstable val recordingsByEntityDao: RecordingsByEntityDao
+  unstable val artistDao: ArtistDao
+  unstable val recording: RecordingDao
   <runtime stability> = Stable
 }
 stable class StatsUiState {

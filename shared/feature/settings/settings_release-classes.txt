@@ -9,6 +9,7 @@ stable class SettingsPresenter {
   unstable val musicBrainzAuthStore: MusicBrainzAuthStore
   stable val loginPresenter: LoginPresenter
   unstable val logout: Logout
+  unstable val exportDatabase: ExportDatabase
   <runtime stability> = Stable
 }
 stable class UpdateTheme {
@@ -34,6 +35,9 @@ stable class GoToScreen {
 stable class Logout {
   <runtime stability> = Stable
 }
+stable class ExportDatabase {
+  <runtime stability> = Stable
+}
 stable class SettingsUiState {
   stable val username: String
   stable val accessToken: String?
@@ -42,6 +46,7 @@ stable class SettingsUiState {
   stable val showMoreInfoInReleaseListItem: Boolean
   stable val sortReleaseGroupListItems: Boolean
   stable val loginState: LoginUiState
+  stable val snackbarMessage: String?
   stable val eventSink: Function1<SettingsUiEvent, Unit>
   <runtime stability> = Stable
 }

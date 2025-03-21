@@ -10,12 +10,12 @@ stable class HistoryPresenter {
 stable class HistoryUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val sortOption: HistorySortOption
-  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  unstable val pagingDataFlow: Flow<PagingData<ListItemModel>>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<HistoryUiEvent, Unit>
 }
 stable class UpdateSortOption {
-  stable val sortOption: HistorySortOption
+  stable val sortOptionIndex: Int
   <runtime stability> = Stable
 }
 stable class MarkHistoryForDeletion {

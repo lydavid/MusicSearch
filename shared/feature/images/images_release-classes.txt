@@ -1,42 +1,37 @@
-stable class CoverArtsGridPresenter {
-  stable val screen: CoverArtsGridScreen
+stable class CoverArtsPresenter {
+  stable val screen: CoverArtsScreen
   stable val navigator: Navigator
-  unstable val releaseImageRepository: ReleaseImageRepository
+  unstable val appPreferences: AppPreferences
+  unstable val imageMetadataRepository: ImageMetadataRepository
   runtime val getMusicBrainzCoverArtUrl: GetMusicBrainzCoverArtUrl
   <runtime stability> = Stable
 }
-stable class CoverArtsGridUiState {
-  stable val id: String
+stable class CoverArtsUiState {
   stable val title: String
-  stable val url: String
-  unstable val imageUrls: List<ImageUrls>
-  stable val eventSink: Function1<CoverArtsGridUiEvent, Unit>
+  stable val subtitle: String
+  stable val url: String?
+  unstable val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadata>>
+  stable val lazyGridState: LazyGridState
+  stable val sortOption: CoverArtsSortOption
+  stable val selectedImageIndex: Int?
+  runtime val selectedImageMetadata: ImageMetadata?
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val eventSink: Function1<CoverArtsUiEvent, Unit>
 }
 stable class NavigateUp {
   <runtime stability> = Stable
 }
 stable class SelectImage {
   stable val index: Int
+  unstable val imageMetadataSnapshot: List<ImageMetadata?>
   <runtime stability> = Stable
 }
-stable class CoverArtsPagerPresenter {
-  stable val screen: CoverArtsPagerScreen
-  stable val navigator: Navigator
-  unstable val releaseImageRepository: ReleaseImageRepository
-  <runtime stability> = Stable
-}
-stable class CoverArtsPagerUiState {
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
   stable val id: String
-  stable val title: String
-  stable val subtitle: String
-  unstable val imageUrls: List<ImageUrls>
-  stable val selectedImageIndex: Int
-  stable val eventSink: Function1<CoverArtsPagerUiEvent, Unit>
-}
-stable class NavigateUp {
   <runtime stability> = Stable
 }
-stable class ChangeImage {
-  stable val index: Int
+stable class UpdateSortOption {
+  stable val sortOptionIndex: Int
   <runtime stability> = Stable
 }

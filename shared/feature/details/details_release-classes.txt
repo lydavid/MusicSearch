@@ -12,6 +12,7 @@ stable class AreaPresenter {
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  unstable val wikimediaRepository: WikimediaRepository
   <runtime stability> = Stable
 }
 stable class AreaUiState {
@@ -23,6 +24,7 @@ stable class AreaUiState {
   stable val selectedTab: AreaTab
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
+  stable val snackbarMessage: String?
   stable val artistsByEntityUiState: ArtistsByEntityUiState
   stable val eventsByEntityUiState: EventsByEntityUiState
   stable val labelsByEntityUiState: LabelsByEntityUiState
@@ -76,6 +78,7 @@ stable class ArtistUiState {
   stable val selectedTab: ArtistTab
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
+  stable val snackbarMessage: String?
   stable val eventsByEntityUiState: EventsByEntityUiState
   stable val recordingsByEntityUiState: RecordingsByEntityUiState
   stable val releasesByEntityUiState: ReleasesByEntityUiState
@@ -109,10 +112,12 @@ stable class EventPresenter {
   stable val navigator: Navigator
   unstable val repository: EventRepository
   unstable val incrementLookupHistory: IncrementLookupHistory
+  unstable val imageMetadataRepository: ImageMetadataRepository
   stable val relationsPresenter: RelationsPresenter
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  unstable val wikimediaRepository: WikimediaRepository
   <runtime stability> = Stable
 }
 stable class EventUiState {
@@ -124,6 +129,7 @@ stable class EventUiState {
   stable val selectedTab: EventTab
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
+  stable val snackbarMessage: String?
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
   stable val eventSink: Function1<EventUiEvent, Unit>
@@ -175,6 +181,7 @@ stable class InstrumentPresenter {
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  unstable val wikimediaRepository: WikimediaRepository
   <runtime stability> = Stable
 }
 stable class InstrumentUiState {
@@ -186,6 +193,7 @@ stable class InstrumentUiState {
   stable val selectedTab: InstrumentTab
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
+  stable val snackbarMessage: String?
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
   stable val eventSink: Function1<InstrumentUiEvent, Unit>
@@ -216,6 +224,7 @@ stable class LabelPresenter {
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  unstable val wikimediaRepository: WikimediaRepository
   <runtime stability> = Stable
 }
 stable class LabelUiState {
@@ -227,6 +236,7 @@ stable class LabelUiState {
   stable val selectedTab: LabelTab
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
+  stable val snackbarMessage: String?
   stable val releasesByEntityUiState: ReleasesByEntityUiState
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
@@ -258,6 +268,7 @@ stable class PlacePresenter {
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  unstable val wikimediaRepository: WikimediaRepository
   <runtime stability> = Stable
 }
 stable class PlaceUiState {
@@ -269,6 +280,7 @@ stable class PlaceUiState {
   stable val selectedTab: PlaceTab
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
+  stable val snackbarMessage: String?
   stable val eventsByEntityUiState: EventsByEntityUiState
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
@@ -300,6 +312,7 @@ stable class RecordingPresenter {
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  unstable val wikimediaRepository: WikimediaRepository
   <runtime stability> = Stable
 }
 stable class RecordingUiState {
@@ -312,6 +325,7 @@ stable class RecordingUiState {
   stable val selectedTab: RecordingTab
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
+  stable val snackbarMessage: String?
   stable val releasesByEntityUiState: ReleasesByEntityUiState
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
@@ -339,12 +353,13 @@ stable class ReleasePresenter {
   unstable val repository: ReleaseRepository
   unstable val incrementLookupHistory: IncrementLookupHistory
   stable val relationsPresenter: RelationsPresenter
-  unstable val releaseImageRepository: ReleaseImageRepository
+  unstable val imageMetadataRepository: ImageMetadataRepository
   stable val tracksByReleasePresenter: TracksByReleasePresenter
   stable val artistsByEntityPresenter: ArtistsByEntityPresenter
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  unstable val wikimediaRepository: WikimediaRepository
   <runtime stability> = Stable
 }
 stable class ReleaseUiState {
@@ -364,7 +379,6 @@ stable class ReleaseUiState {
 }
 stable class ReleaseDetailsUiState {
   stable val isError: Boolean
-  stable val imageUrl: String
   stable val numberOfImages: Int?
   stable val lazyListState: LazyListState
   <runtime stability> = Stable
@@ -395,10 +409,11 @@ stable class ReleaseGroupPresenter {
   unstable val incrementLookupHistory: IncrementLookupHistory
   stable val releasesByEntityPresenter: ReleasesByEntityPresenter
   stable val relationsPresenter: RelationsPresenter
-  unstable val releaseGroupImageRepository: ReleaseGroupImageRepository
+  unstable val imageMetadataRepository: ImageMetadataRepository
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  unstable val wikimediaRepository: WikimediaRepository
   <runtime stability> = Stable
 }
 stable class ReleaseGroupUiState {
@@ -407,11 +422,11 @@ stable class ReleaseGroupUiState {
   stable val isError: Boolean
   runtime val releaseGroup: ReleaseGroupDetailsModel?
   stable val url: String
-  stable val imageUrl: String
   unstable val tabs: List<ReleaseGroupTab>
   stable val selectedTab: ReleaseGroupTab
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
+  stable val snackbarMessage: String?
   stable val releasesByEntityUiState: ReleasesByEntityUiState
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
@@ -442,6 +457,7 @@ stable class SeriesPresenter {
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  unstable val wikimediaRepository: WikimediaRepository
   <runtime stability> = Stable
 }
 stable class SeriesUiState {
@@ -453,6 +469,7 @@ stable class SeriesUiState {
   stable val selectedTab: SeriesTab
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
+  stable val snackbarMessage: String?
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
   stable val eventSink: Function1<SeriesUiEvent, Unit>
@@ -484,6 +501,7 @@ stable class WorkPresenter {
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  unstable val wikimediaRepository: WikimediaRepository
   <runtime stability> = Stable
 }
 stable class WorkUiState {
@@ -495,6 +513,7 @@ stable class WorkUiState {
   stable val selectedTab: WorkTab
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
+  stable val snackbarMessage: String?
   stable val artistsByEntityUiState: ArtistsByEntityUiState
   stable val recordingsByEntityUiState: RecordingsByEntityUiState
   stable val relationsUiState: RelationsUiState
