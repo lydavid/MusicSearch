@@ -37,7 +37,7 @@ val statsFeatureModule = module {
                                 artistReleaseGroupDao = get(),
                                 artistReleaseDao = get(),
                                 recordingDao = get(),
-                                worksByEntityDao = get(),
+                                workDao = get(),
                             )
                         }
 

@@ -35,3 +35,36 @@ val skycladObserverWorkMusicBrainzModel = WorkMusicBrainzModel(
         ),
     ),
 )
+
+val hackingToTheGateWorkMusicBrainzModel = WorkMusicBrainzModel(
+    id = "a2f313bc-aadf-4d77-b367-e4f0d8a8e21c",
+    name = "Hacking to the Gate",
+    type = "Song",
+    typeId = "f061270a-2fd6-32f1-a641-f0f8676d14e6",
+    language = "jpn",
+    iswcs = listOf(
+        "T-102.018.970-0",
+    ),
+    attributes = listOf(
+        WorkAttributeMusicBrainzModel(
+            value = "16662182-001",
+            type = "GEMA ID",
+            typeId = "01eeee67-f514-3801-bdce-279e04872f91",
+        ),
+        WorkAttributeMusicBrainzModel(
+            value = "13500094",
+            type = "COMPASS ID",
+            typeId = "5ea37343-be89-4cd0-8a37-f471738df641",
+        ),
+        WorkAttributeMusicBrainzModel(
+            value = "702-2048-4",
+            type = "JASRAC ID",
+            typeId = "31048fcc-3dbb-3979-8f85-805afb933e0c",
+        ),
+        WorkAttributeMusicBrainzModel(
+            value = "905855922",
+            type = "ASCAP ID",
+            typeId = "d833318c-6c6a-370e-8b16-9cb15873ba76",
+        ),
+    ),
+)

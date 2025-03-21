@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.WorkDao
-import ly.david.musicsearch.data.database.dao.WorksByEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseWorksResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
@@ -17,7 +16,6 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.WorksByEntityRepository
 
 class WorksByEntityRepositoryImpl(
-    private val worksByEntityDao: WorksByEntityDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val workDao: WorkDao,
@@ -56,7 +54,7 @@ class WorksByEntityRepositoryImpl(
                 }
 
                 else -> {
-                    worksByEntityDao.deleteWorksByEntity(entityId)
+                    workDao.deleteWorksByEntity(entityId)
                 }
             }
         }
@@ -80,7 +78,7 @@ class WorksByEntityRepositoryImpl(
             }
 
             else -> {
-                worksByEntityDao.getWorksByEntity(
+                workDao.getWorksByEntity(
                     entityId = entityId,
                     query = listFilters.query,
                 )
@@ -115,7 +113,7 @@ class WorksByEntityRepositoryImpl(
             }
 
             else -> {
-                worksByEntityDao.insertWorksByEntity(
+                workDao.insertWorksByEntity(
                     entityId,
                     workIds = musicBrainzModels.map { work -> work.id },
                 )
@@ -133,7 +131,7 @@ class WorksByEntityRepositoryImpl(
             }
 
             else -> {
-                worksByEntityDao.getCountOfWorksByEntity(entityId)
+                workDao.getCountOfWorksByEntity(entityId)
             }
         }
     }

@@ -11,7 +11,7 @@ import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
-import ly.david.musicsearch.data.database.dao.WorksByEntityDao
+import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
@@ -25,7 +25,7 @@ internal class ArtistStatsPresenter(
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
     private val eventDao: EventDao,
     private val recordingDao: RecordingDao,
-    private val worksByEntityDao: WorksByEntityDao,
+    private val workDao: WorkDao,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val artistReleaseDao: ArtistReleaseDao,
 ) : Presenter<StatsUiState> {
@@ -125,7 +125,7 @@ internal class ArtistStatsPresenter(
                 entityId,
                 MusicBrainzEntity.WORK,
             ),
-            worksByEntityDao.observeCountOfWorksByEntity(entityId),
+            workDao.observeCountOfWorksByEntity(entityId),
         ) { browseReleaseCount, localReleases ->
             WorkStats(
                 totalRemote = browseReleaseCount?.remoteCount,

@@ -39,7 +39,6 @@ import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.database.dao.VisitedDaoImpl
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
-import ly.david.musicsearch.data.database.dao.WorksByEntityDao
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.wikimedia.MbidWikipediaDao
@@ -81,8 +80,7 @@ val databaseDaoModule = module {
     single { SeriesDao(get()) }
     single { TrackDao(get(), get(), get()) }
     single { WorkAttributeDao(get()) }
-    single { WorkDao(get()) }
-    single { WorksByEntityDao(get(), get()) }
+    singleOf(::WorkDao)
     single { SpotifyHistoryDao(get(), get()) }
     singleOf(::MbidWikipediaDaoImpl) bind MbidWikipediaDao::class
     single { SearchResultDao(get(), get()) }
