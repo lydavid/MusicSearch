@@ -1,0 +1,26 @@
+-- Follow: https://www.sqlite.org/lang_altertable.html
+
+-- Step 1: Create a temporary table with the new schema
+CREATE TABLE work_attribute_temp (
+  work_id TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL,
+  value TEXT NOT NULL,
+
+  PRIMARY KEY(work_id, type, value),
+
+  FOREIGN KEY(work_id) REFERENCES work(id)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE
+);
+
+-- Step 2: Copy data from the old table to the temporary table
+INSERT INTO work_attribute_temp (work_id, type, type_id, value)
+SELECT work_id, type, type_id, value
+FROM work_attribute;
+
+-- Step 3: Drop the old table
+DROP TABLE work_attribute;
+
+-- Step 4: Rename the temporary table to the original name
+ALTER TABLE work_attribute_temp RENAME TO work_attribute;

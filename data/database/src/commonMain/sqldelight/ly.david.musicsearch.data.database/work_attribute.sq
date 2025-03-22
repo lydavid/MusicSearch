@@ -1,12 +1,12 @@
 CREATE TABLE IF NOT EXISTS work_attribute (
-  `work_id` TEXT NOT NULL,
-  `type` TEXT NOT NULL,
-  `type_id` TEXT NOT NULL,
-  `value` TEXT NOT NULL,
+  work_id TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL,
+  value TEXT NOT NULL,
 
-  PRIMARY KEY(`work_id`, `type`),
+  PRIMARY KEY(work_id, type, value),
 
-  FOREIGN KEY(`work_id`) REFERENCES `work`(`id`)
+  FOREIGN KEY(work_id) REFERENCES work(id)
   ON UPDATE CASCADE
   ON DELETE CASCADE
 );
