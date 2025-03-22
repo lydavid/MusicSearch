@@ -34,7 +34,7 @@ class WorkDao(
                     type = type,
                     type_id = typeId,
                     language = language,
-                    iswcs = iswcs?.toImmutableList(),
+                    iswcs = iswcs?.sorted()?.toImmutableList(),
                 ),
             )
         }

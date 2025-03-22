@@ -39,8 +39,8 @@ val starmanWorkListItemModel = WorkListItemModel(
     type = "Song",
     language = "eng",
     iswcs = listOf(
-        "T-900.196.834-9",
         "T-011.559.559-9",
+        "T-900.196.834-9",
     ),
     attributes = listOf(
         // many omitted for now
