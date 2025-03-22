@@ -422,9 +422,13 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
                         "T-011.226.466-0",
                     ),
                     attributes = listOf(
-                        // TODO: work attributes with the same type are not shown
                         WorkAttributeUiModel(
                             value = "2182263",
+                            type = "ACAM ID",
+                            typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
+                        ),
+                        WorkAttributeUiModel(
+                            value = "2406479",
                             type = "ACAM ID",
                             typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
                         ),
@@ -451,6 +455,11 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
                     attributes = listOf(
                         WorkAttributeUiModel(
                             value = "2182263",
+                            type = "ACAM ID",
+                            typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
+                        ),
+                        WorkAttributeUiModel(
+                            value = "2406479",
                             type = "ACAM ID",
                             typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
                         ),
