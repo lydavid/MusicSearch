@@ -12,6 +12,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
 import lydavidmusicsearchdatadatabase.Work
 import lydavidmusicsearchdatadatabase.WorkQueries
@@ -112,7 +113,49 @@ class WorkDao(
             .executeAsOne()
             .toInt()
 
-    fun getWorksByEntity(
+    fun getWorks(
+        entityId: String?,
+        entity: MusicBrainzEntity?,
+        query: String,
+    ): PagingSource<Int, WorkListItemModel> = when {
+        entityId == null || entity == null -> {
+            getAllWorks(query = query)
+        }
+
+        entity == MusicBrainzEntity.COLLECTION -> {
+            getWorksByCollection(
+                collectionId = entityId,
+                query = query,
+            )
+        }
+
+        else -> {
+            getWorksByEntity(
+                entityId = entityId,
+                query = query,
+            )
+        }
+    }
+
+    private fun getAllWorks(
+        query: String,
+    ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
+        countQuery = transacter.getCountOfAllWorks(
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getAllWorks(
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToWorkListItemModel,
+            )
+        },
+    )
+
+    private fun getWorksByEntity(
         entityId: String,
         query: String,
     ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
@@ -125,6 +168,27 @@ class WorkDao(
         queryProvider = { limit, offset ->
             transacter.getWorksByEntity(
                 entityId = entityId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToWorkListItemModel,
+            )
+        },
+    )
+
+    private fun getWorksByCollection(
+        collectionId: String,
+        query: String,
+    ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
+        countQuery = transacter.getNumberOfWorksByCollection(
+            collectionId = collectionId,
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getWorksByCollection(
+                collectionId = collectionId,
                 query = "%$query%",
                 limit = limit,
                 offset = offset,

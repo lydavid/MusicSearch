@@ -27,8 +27,8 @@ class WorksByEntityRepositoryImpl(
     ) {
 
     override fun observeWorksByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<WorkListItemModel>> {
         return observeEntitiesByEntity(
@@ -65,25 +65,11 @@ class WorksByEntityRepositoryImpl(
         entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, WorkListItemModel> {
-        return when {
-            entityId == null || entity == null -> {
-                error("not possible")
-            }
-
-            entity == MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.getWorksByCollection(
-                    collectionId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            else -> {
-                workDao.getWorksByEntity(
-                    entityId = entityId,
-                    query = listFilters.query,
-                )
-            }
-        }
+        return workDao.getWorks(
+            entityId = entityId,
+            entity = entity,
+            query = listFilters.query,
+        )
     }
 
     override suspend fun browseEntities(

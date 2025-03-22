@@ -32,6 +32,8 @@ import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
+import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.work.WorksByEntityRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -286,48 +288,51 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
             ),
         )
     }
-    //    @Test
-//    fun `all works`() = runTest {
-//        setupWorksByArtist()
-//        setupWorksByCollection()
-//
-//        val worksByEntityRepository = createWorksByEntityRepository(
-//            works = listOf(),
-//        )
-//        testFilter(
-//            pagingFlowProducer = { query ->
-//                worksByEntityRepository.observeWorksByEntity(
-//                    entityId = null,
-//                    entity = null,
-//                    listFilters = ListFilters(
-//                        query = query,
-//                    ),
-//                )
-//            },
-//            testCases = listOf(
-//                FilterTestCase(
-//                    description = "No filter",
-//                    query = "",
-//                    expectedResult = listOf(
-//                        kissAtBudokanListItemModel,
-//                        tsoAtMasseyHallListItemModel,
-//                        aimerAtBudokanListItemModel,
-//                        kissAtScotiabankArenaListItemModel,
-//                    ),
-//                ),
-//                FilterTestCase(
-//                    description = "filter by name",
-//                    query = "ai",
-//                    expectedResult = listOf(
-//                        aimerAtBudokanListItemModel,
-//                    ),
-//                ),
-//            ),
-//        )
-//    }
-//
 
-    // TODO: test works collection after we merge works by collection under works by entity
+    @Test
+    fun `all works`() = runTest {
+        setupWorksByDavidBowie()
+        setupWorksByCollection()
+        setupWorksByQueen()
+
+        val worksByEntityRepository = createWorksByEntityRepository(
+            works = listOf(),
+        )
+        testFilter(
+            pagingFlowProducer = { query ->
+                worksByEntityRepository.observeWorksByEntity(
+                    entityId = null,
+                    entity = null,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "No filter",
+                    query = "",
+                    expectedResult = listOf(
+                        starmanWorkListItemModel,
+                        underPressureWorkListItemModel,
+                        hackingToTheGateWorkListItemModel,
+                        skycladObserverWorkListItemModel,
+                        dontStopMeNowWorkListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by language",
+                    query = "jpn",
+                    expectedResult = listOf(
+                        hackingToTheGateWorkListItemModel,
+                        skycladObserverWorkListItemModel,
+                    ),
+                ),
+            ),
+        )
+    }
+
+    // TODO: assert works by collection
     @Test
     fun `refreshing works that belong to multiple entities does not delete the work`() = runTest {
         setupWorksByDavidBowie()
@@ -378,106 +383,81 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
                 this,
             )
         }
-        // both old and new version of work exists
-//        worksByEntityRepository.observeWorksByEntity(
-//            entityId = null,
-//            entity = null,
-//            listFilters = ListFilters(),
-//        ).asSnapshot().run {
-//            assertEquals(
-//                listOf(
-//                    kissAtBudokanListItemModel,
-//                    kissAtBudokanListItemModel.copy(
-//                        id = "new-id-is-considered-a-different-work",
-//                    ),
-//                    aimerAtBudokanListItemModel,
-//                ),
-//                this,
-//            )
-//        }
-//
-//        worksByEntityRepository.observeWorksByEntity(
-//            entityId = budokanPlaceMusicBrainzModel.id,
-//            entity = MusicBrainzEntity.PLACE,
-//            listFilters = ListFilters(),
-//        ).asSnapshot {
-//            refresh()
-//        }.run {
-//            assertEquals(
-//                listOf(
-//                    kissAtBudokanListItemModel.copy(
-//                        id = "new-id-is-considered-a-different-work",
-//                    ),
-//                    aimerAtBudokanListItemModel,
-//                ),
-//                this,
-//            )
-//        }
-//
-//        // now only new version of work exists
-//        // however, the other work is never updated unless we go into it and refresh
-//        worksByEntityRepository.observeWorksByEntity(
-//            entityId = null,
-//            entity = null,
-//            listFilters = ListFilters(),
-//        ).asSnapshot().run {
-//            assertEquals(
-//                listOf(
-//                    kissAtBudokanListItemModel.copy(
-//                        id = "new-id-is-considered-a-different-work",
-//                    ),
-//                    aimerAtBudokanListItemModel,
-//                ),
-//                this,
-//            )
-//        }
-//
-//        // now visit the work and refresh it
-//        val workRepository = createWorkRepository(
-//            aimerAtBudokanWorkMusicBrainzModel.copy(
-//                disambiguation = "changes will be ignored if work is linked to multiple entities",
-//            ),
-//        )
-//        workRepository.lookupWork(
-//            workId = aimerAtBudokanWorkMusicBrainzModel.id,
-//            forceRefresh = false,
-//        ).let { workDetailsModel ->
-//            assertEquals(
-//                WorkDetailsModel(
-//                    id = "34f8a930-beb2-441b-b0d7-03c84f92f1ea",
-//                    name = "Aimer Live in 武道館 ”blanc et noir\"",
-//                    type = "Concert",
-//                    lifeSpan = LifeSpanUiModel(
-//                        begin = "2017-08-29",
-//                        end = "2017-08-29",
-//                        ended = true,
-//                    ),
-//                    cancelled = false,
-//                    time = "18:00",
-//                ),
-//                workDetailsModel,
-//            )
-//        }
-//        workRepository.lookupWork(
-//            workId = aimerAtBudokanWorkMusicBrainzModel.id,
-//            forceRefresh = true,
-//        ).let { workDetailsModel ->
-//            assertEquals(
-//                WorkDetailsModel(
-//                    id = "34f8a930-beb2-441b-b0d7-03c84f92f1ea",
-//                    name = "Aimer Live in 武道館 ”blanc et noir\"",
-//                    disambiguation = "changes will be ignored if work is linked to multiple entities",
-//                    type = "Concert",
-//                    lifeSpan = LifeSpanUiModel(
-//                        begin = "2017-08-29",
-//                        end = "2017-08-29",
-//                        ended = true,
-//                    ),
-//                    cancelled = false,
-//                    time = "18:00",
-//                ),
-//                workDetailsModel,
-//            )
-//        }
+
+        worksByEntityRepository.observeWorksByEntity(
+            entityId = null,
+            entity = null,
+            listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    underPressureWorkListItemModel,
+                    dontStopMeNowWorkListItemModel,
+                    starmanWorkListItemModel.copy(
+                        id = "new-id-is-considered-a-different-work",
+                    ),
+                ),
+                this,
+            )
+        }
+
+        // now visit the work and refresh it
+        val workRepository = createWorkRepository(
+            underPressureWorkMusicBrainzModel.copy(
+                disambiguation = "changes will be ignored if work is linked to multiple entities",
+            ),
+        )
+        workRepository.lookupWork(
+            workId = underPressureWorkMusicBrainzModel.id,
+            forceRefresh = false,
+        ).let { workDetailsModel ->
+            assertEquals(
+                WorkDetailsModel(
+                    id = "4e6a04c3-6897-391d-8e8c-1da7a6dce1ca",
+                    name = "Under Pressure",
+                    type = "Song",
+                    language = "eng",
+                    iswcs = listOf(
+                        "T-010.475.727-8",
+                        "T-011.226.466-0",
+                    ),
+                    attributes = listOf(
+                        // TODO: work attributes with the same type are not shown
+                        WorkAttributeUiModel(
+                            value = "2182263",
+                            type = "ACAM ID",
+                            typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
+                        ),
+                    ),
+                ),
+                workDetailsModel,
+            )
+        }
+        workRepository.lookupWork(
+            workId = underPressureWorkMusicBrainzModel.id,
+            forceRefresh = true,
+        ).let { workDetailsModel ->
+            assertEquals(
+                WorkDetailsModel(
+                    id = "4e6a04c3-6897-391d-8e8c-1da7a6dce1ca",
+                    disambiguation = "changes will be ignored if work is linked to multiple entities",
+                    name = "Under Pressure",
+                    type = "Song",
+                    language = "eng",
+                    iswcs = listOf(
+                        "T-010.475.727-8",
+                        "T-011.226.466-0",
+                    ),
+                    attributes = listOf(
+                        WorkAttributeUiModel(
+                            value = "2182263",
+                            type = "ACAM ID",
+                            typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
+                        ),
+                    ),
+                ),
+                workDetailsModel,
+            )
+        }
     }
 }

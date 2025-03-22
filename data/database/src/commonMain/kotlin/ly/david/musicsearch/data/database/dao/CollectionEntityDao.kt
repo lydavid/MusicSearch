@@ -10,13 +10,11 @@ import ly.david.musicsearch.data.database.mapper.mapToInstrumentListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
-import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
-import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import lydavidmusicsearchdatadatabase.Collection_entity
 
 class CollectionEntityDao(
@@ -180,27 +178,6 @@ class CollectionEntityDao(
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToSeriesListItemModel,
-            )
-        },
-    )
-
-    fun getWorksByCollection(
-        collectionId: String,
-        query: String,
-    ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfWorksByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-        ),
-        transacter = transacter,
-        context = coroutineDispatchers.io,
-        queryProvider = { limit, offset ->
-            transacter.getWorksByCollection(
-                collectionId = collectionId,
-                query = "%$query%",
-                limit = limit,
-                offset = offset,
-                mapper = ::mapToWorkListItemModel,
             )
         },
     )

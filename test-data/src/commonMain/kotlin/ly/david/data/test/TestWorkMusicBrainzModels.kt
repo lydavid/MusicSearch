@@ -80,6 +80,16 @@ val underPressureWorkMusicBrainzModel = WorkMusicBrainzModel(
         "T-011.226.466-0",
     ),
     attributes = listOf(
+        WorkAttributeMusicBrainzModel(
+            value = "2182263",
+            type = "ACAM ID",
+            typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
+        ),
+        WorkAttributeMusicBrainzModel(
+            value = "2406479",
+            type = "ACAM ID",
+            typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
+        ),
         // many omitted for now
     ),
 )
