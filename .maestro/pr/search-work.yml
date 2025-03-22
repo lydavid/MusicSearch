@@ -1,0 +1,24 @@
+appId: io.github.lydavid.musicsearch.debug
+---
+- launchApp
+- startRecording: search-work
+- assertVisible: "Search MusicBrainz"
+- tapOn: "Resource"
+- tapOn: "Work"
+- tapOn:
+    text: "Search"
+    index: 0
+- inputText: "under"
+- tapOn: "Under Pressure"
+
+- assertVisible: "Work information"
+- assertVisible: "Type: Song"
+- assertVisible: "Language: English"
+- assertVisible: "ISWC: T-010.475.727-8, T-011.226.466-0"
+- assertNotVisible: "SADAIC ID: 283707"
+- tapOn: "Filter"
+- inputText: "sad"
+- "hideKeyboard"
+- assertVisible: "SADAIC ID: 283707"
+
+- stopRecording
