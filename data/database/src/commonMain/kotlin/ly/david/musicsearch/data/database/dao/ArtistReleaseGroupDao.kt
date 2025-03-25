@@ -8,11 +8,11 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
-import lydavidmusicsearchdatadatabase.Artist_release_group
+import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
+import lydavidmusicsearchdatadatabase.Release_groups_by_entity
 
 class ArtistReleaseGroupDao(
     database: Database,
@@ -27,8 +27,8 @@ class ArtistReleaseGroupDao(
     ): Int {
         return try {
             transacter.insertOrFailArtistReleaseGroup(
-                Artist_release_group(
-                    artist_id = artistId,
+                Release_groups_by_entity(
+                    entity_id = artistId,
                     release_group_id = releaseGroupId,
                 ),
             )
