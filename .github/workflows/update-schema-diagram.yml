@@ -63,4 +63,4 @@ jobs:
         with:
           commit_message: 'chore: update schema diagram [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          file_pattern: 'assets/musicsearch_db_schema.svg' 'data/database/src/commonMain/sqldelight/databases/*.db'
+          file_pattern: 'assets/musicsearch_db_schema.svg data/database/src/commonMain/sqldelight/databases/*.db'
