@@ -38,6 +38,13 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "OK"
 - tapOn: "Artists"
 
+- tapOn: "Release Groups"
+- assertVisible: "ぐされ"
+- assertNotVisible: "潜潜話"
+- tapOn: "More actions"
+- tapOn: "Sort"
+# won't be visible unless we scroll up, we assert later in the flow
+
 - tapOn:
     text: "Back"
     index: 0
@@ -76,6 +83,11 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "Artists"
 - assertVisible: "Already in Artists."
 
+- tapOn: "Release Groups"
+- assertVisible: "ぐされ"
+- assertVisible: "潜潜話"
+- tapOn: "More actions"
+- tapOn: "Un-sort"
 
 - tapOn: Collections
 - tapOn: "Filter"
@@ -98,6 +110,6 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: Cancel
 - tapOn: "Back"
 - tapOn: "Back"
-- tapOn: "Back"
+- tapOn: "Cancel"
 
 - stopRecording

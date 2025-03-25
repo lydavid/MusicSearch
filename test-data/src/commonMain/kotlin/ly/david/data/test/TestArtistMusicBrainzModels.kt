@@ -188,6 +188,6 @@ val berlinerPhilharmonikerArtistMusicBrainzModel = ArtistMusicBrainzModel(
     area = AreaMusicBrainzModel(
         id = "c9ac1239-e832-41bc-9930-e252a1fd1105",
         name = "Berlin",
-        countrySubDivisionCodes = listOf("DE-BE")
-    )
+        countrySubDivisionCodes = listOf("DE-BE"),
+    ),
 )
