@@ -8,7 +8,7 @@ data class ReleaseGroupListItemModel(
     override val firstReleaseDate: String = "",
     override val disambiguation: String = "",
     override val primaryType: String? = null,
-    override val secondaryTypes: List<String>? = null,
+    override val secondaryTypes: List<String>? = listOf(),
     val formattedArtistCredits: String? = null,
     val imageUrl: String? = null,
     val imageId: Long = 0L,

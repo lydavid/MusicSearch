@@ -3,6 +3,7 @@ package ly.david.data.test
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
@@ -145,11 +146,48 @@ val roseliaArtistMusicBrainzModel = ArtistMusicBrainzModel(
 val itouKanakoArtistMusicBrainzModel = ArtistMusicBrainzModel(
     id = "eee65fbc-ead0-4c01-b385-a6f563c418d3",
     name = "いとうかなこ",
+    disambiguation = "singer",
     sortName = "Ito, Kanako",
     type = "Person",
     typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
-    disambiguation = "singer",
     lifeSpan = LifeSpanMusicBrainzModel(
         begin = "1973-03-28",
     ),
+)
+
+val tchaikovskyArtistMusicBrainzModel = ArtistMusicBrainzModel(
+    id = "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
+    name = "Пётр Ильич Чайковский",
+    disambiguation = "Russian romantic composer",
+    sortName = "Tchaikovsky, Pyotr Ilyich",
+    type = "Person",
+    typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+    lifeSpan = LifeSpanMusicBrainzModel(
+        begin = "1840-05-07",
+        end = "1893-11-06",
+        ended = true,
+    ),
+    isnis = listOf("0000000121449518"),
+    ipis = listOf("00084070584", "00222236411"),
+    countryCode = "RU",
+)
+
+val berlinerPhilharmonikerArtistMusicBrainzModel = ArtistMusicBrainzModel(
+    id = "dea28aa9-1086-4ffa-8739-0ccc759de1ce",
+    name = "Berliner Philharmoniker",
+    disambiguation = "",
+    sortName = "Berliner Philharmoniker",
+    type = "Orchestra",
+    typeId = "a0b36c92-3eb1-3839-a4f9-4799823f54a5",
+    lifeSpan = LifeSpanMusicBrainzModel(
+        begin = "1882",
+        ended = false,
+    ),
+    isnis = listOf("0000000120191498", "0000000121144247"),
+    countryCode = null,
+    area = AreaMusicBrainzModel(
+        id = "c9ac1239-e832-41bc-9930-e252a1fd1105",
+        name = "Berlin",
+        countrySubDivisionCodes = listOf("DE-BE")
+    )
 )
