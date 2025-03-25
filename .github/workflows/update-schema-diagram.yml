@@ -54,6 +54,8 @@ jobs:
           entrypoint: /schemacrawler.sh
           args: --server=sqlite --database=musicsearch.db --info-level=maximum --command=schema --output-file assets/musicsearch_db_schema.svg --log-level=CONFIG
 
+      - run: ./gradlew :data:database:generateCommonMainDatabaseSchema
+
       - run: git pull --rebase --autostash
 
       - name: Commit
@@ -61,4 +63,4 @@ jobs:
         with:
           commit_message: 'chore: update schema diagram [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          file_pattern: 'assets/musicsearch_db_schema.svg'
+          file_pattern: 'assets/musicsearch_db_schema.svg' 'data/database/src/commonMain/sqldelight/databases/*.db'
