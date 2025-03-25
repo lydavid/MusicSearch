@@ -1,24 +1,24 @@
-CREATE TABLE IF NOT EXISTS artist_release_group (
-  `artist_id` TEXT NOT NULL,
-  `release_group_id` TEXT NOT NULL,
+CREATE TABLE IF NOT EXISTS release_groups_by_entity (
+  entity_id TEXT NOT NULL,
+  release_group_id TEXT NOT NULL,
 
-  PRIMARY KEY(`artist_id`, `release_group_id`)
+  PRIMARY KEY(entity_id, release_group_id)
 );
 
 insertOrFailArtistReleaseGroup:
-INSERT OR FAIL INTO artist_release_group
+INSERT OR FAIL INTO release_groups_by_entity
 VALUES ?;
 
 deleteReleaseGroupsByArtist {
 DELETE FROM release_group WHERE id IN (
   SELECT rg.id
   FROM release_group rg
-  INNER JOIN artist_release_group arg ON rg.id = arg.release_group_id
-  INNER JOIN artist a ON a.id = arg.artist_id
+  INNER JOIN release_groups_by_entity arg ON rg.id = arg.release_group_id
+  INNER JOIN artist a ON a.id = arg.entity_id
   WHERE a.id = :artistId
 );
 
-DELETE FROM artist_release_group WHERE artist_id = :artistId;
+DELETE FROM release_groups_by_entity WHERE entity_id = :artistId;
 }
 
 getNumberOfReleaseGroupsByArtist:
@@ -26,8 +26,8 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT rg.id)
     FROM release_group rg
-    INNER JOIN artist_release_group arg ON rg.id = arg.release_group_id
-    INNER JOIN artist a ON a.id = arg.artist_id
+    INNER JOIN release_groups_by_entity arg ON rg.id = arg.release_group_id
+    INNER JOIN artist a ON a.id = arg.entity_id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
     WHERE a.id = :artistId
@@ -45,8 +45,8 @@ SELECT IFNULL(
 getCountOfEachAlbumType:
 SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) AS count
 FROM release_group rg
-INNER JOIN artist_release_group arg ON rg.id = arg.release_group_id
-INNER JOIN artist a ON a.id = arg.artist_id
+INNER JOIN release_groups_by_entity arg ON rg.id = arg.release_group_id
+INNER JOIN artist a ON a.id = arg.entity_id
 WHERE a.id = :artistId
 GROUP BY rg.primary_type, rg.secondary_types;
 
@@ -63,8 +63,8 @@ SELECT
   mi.id AS placeholderKey,
   visited.entity_id IS NOT NULL AS visited
 FROM release_group rg
-INNER JOIN artist_release_group arg ON rg.id = arg.release_group_id
-INNER JOIN artist a ON a.id = arg.artist_id
+INNER JOIN release_groups_by_entity arg ON rg.id = arg.release_group_id
+INNER JOIN artist a ON a.id = arg.entity_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = rg.id

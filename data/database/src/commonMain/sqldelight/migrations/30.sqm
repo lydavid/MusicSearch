@@ -1,0 +1,14 @@
+-- Follow: https://www.sqlite.org/lang_altertable.html
+
+CREATE TABLE IF NOT EXISTS release_groups_by_entity (
+  entity_id TEXT NOT NULL,
+  release_group_id TEXT NOT NULL,
+
+  PRIMARY KEY(entity_id, release_group_id)
+);
+
+INSERT INTO release_groups_by_entity (entity_id, release_group_id)
+SELECT artist_id, release_group_id
+FROM artist_release_group;
+
+DROP TABLE artist_release_group;
