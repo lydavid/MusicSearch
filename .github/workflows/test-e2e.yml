@@ -65,13 +65,17 @@ jobs:
             adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat
             adb shell "run-as io.github.lydavid.musicsearch.debug cat /data/data/io.github.lydavid.musicsearch.debug/databases/musicsearch.db" > musicsearch.db
 
+      - name: Move all potential artifacts to one place
+        run: |
+          mkdir -p artifacts
+          mv /home/runner/.maestro/tests/ artifacts
+          mv *.mp4 artifacts
+          [ -f logcat ] && mv logcat artifacts
+          mv *.db artifacts
+
       - name: Save recordings
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: musicsearch_test_e2e_outputs
-          path: |
-            /home/runner/.maestro/tests/
-            *.mp4
-            logcat
-            musicsearch.db
+          path: artifacts
