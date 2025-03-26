@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
+import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.alsoSprachZarathustraReleaseGroupListItemModel
@@ -27,10 +28,13 @@ import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsByEntityRepository
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
@@ -335,58 +339,58 @@ class ReleaseGroupsByEntityRepositoryImplTest :
 //    }
 
     // TODO: assert releaseGroups by collection
-//    @Test
-//    fun `refreshing releaseGroups that belong to multiple entities does not delete the releaseGroup`() = runTest {
-//        setupReleaseGroupsByBerlinerPhilharmoniker()
-//        setupReleaseGroupsByTchaikovsky()
-//
-//        val modifiedReleaseGroups = listOf(
-//            alsoSprachZarathustraReleaseGroupMusicBrainzModel,
-//            nutcrackerReleaseGroupMusicBrainzModel.copy(
-//                id = "new-id-is-considered-a-different-release-group",
-//            ),
-//            tchaikovskyOverturesReleaseGroupMusicBrainzModel.copy(
-//                disambiguation = "changes will be ignored if release group is linked to multiple entities",
-//            ),
-//        )
-//        val releaseGroupsByEntityRepository = createReleaseGroupsByEntityRepository(
-//            releaseGroups = modifiedReleaseGroups,
-//        )
-//
-//        // refresh
-//        releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-//            entityId = berlinerPhilharmonikerArtistMusicBrainzModel.id,
-//            entity = MusicBrainzEntity.ARTIST,
-//            listFilters = ListFilters(),
-//        ).asSnapshot {
-//            refresh()
-//        }.run {
-//            assertEquals(
-//                listOf(
-//                    alsoSprachZarathustraReleaseGroupListItemModel,
-//                    nutcrackerReleaseGroupListItemModel.copy(
-//                        id = "new-id-is-considered-a-different-release-group",
-//                    ),
-//                    tchaikovskyOverturesReleaseGroupListItemModel,
-//                ),
-//                this,
-//            )
-//        }
-//
-//        // other entities remain unchanged
-//        releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-//            entityId = queenArtistMusicBrainzModel.id,
-//            entity = MusicBrainzEntity.ARTIST,
-//            listFilters = ListFilters(),
-//        ).asSnapshot().run {
-//            assertEquals(
-//                listOf(
-//                    underPressureReleaseGroupListItemModel,
-//                    dontStopMeNowReleaseGroupListItemModel,
-//                ),
-//                this,
-//            )
-//        }
+    @Test
+    fun `refreshing releaseGroups that belong to multiple entities does not delete the releaseGroup`() = runTest {
+        setupReleaseGroupsByBerlinerPhilharmoniker()
+        setupReleaseGroupsByTchaikovsky()
+
+        val modifiedReleaseGroups = listOf(
+            alsoSprachZarathustraReleaseGroupMusicBrainzModel,
+            nutcrackerReleaseGroupMusicBrainzModel.copy(
+                id = "new-id-is-considered-a-different-release-group",
+            ),
+            tchaikovskyOverturesReleaseGroupMusicBrainzModel.copy(
+                disambiguation = "changes will be ignored if release group is linked to multiple entities",
+            ),
+        )
+        val releaseGroupsByEntityRepository = createReleaseGroupsByEntityRepository(
+            releaseGroups = modifiedReleaseGroups,
+        )
+
+        // refresh
+        releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
+            entityId = berlinerPhilharmonikerArtistMusicBrainzModel.id,
+            entity = MusicBrainzEntity.ARTIST,
+            listFilters = ListFilters(),
+        ).asSnapshot {
+            refresh()
+        }.run {
+            assertEquals(
+                listOf(
+                    alsoSprachZarathustraReleaseGroupListItemModel,
+                    nutcrackerReleaseGroupListItemModel.copy(
+                        id = "new-id-is-considered-a-different-release-group",
+                    ),
+                    tchaikovskyOverturesReleaseGroupListItemModel,
+                ),
+                this,
+            )
+        }
+
+        // other entities remain unchanged
+        releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
+            entityId = tchaikovskyArtistMusicBrainzModel.id,
+            entity = MusicBrainzEntity.ARTIST,
+            listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    nutcrackerReleaseGroupListItemModel,
+                    tchaikovskyOverturesReleaseGroupListItemModel,
+                ),
+                this,
+            )
+        }
 //
 //        releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
 //            entityId = null,
@@ -405,72 +409,75 @@ class ReleaseGroupsByEntityRepositoryImplTest :
 //            )
 //        }
 //
-//        // now visit the releaseGroup and refresh it
-//        val releaseGroupRepository = createReleaseGroupRepository(
-//            underPressureReleaseGroupMusicBrainzModel.copy(
-//                disambiguation = "changes will be ignored if releaseGroup is linked to multiple entities",
-//            ),
-//        )
-//        releaseGroupRepository.lookupReleaseGroup(
-//            releaseGroupId = underPressureReleaseGroupMusicBrainzModel.id,
-//            forceRefresh = false,
-//        ).let { releaseGroupDetailsModel ->
-//            assertEquals(
-//                ReleaseGroupDetailsModel(
-//                    id = "4e6a04c3-6897-391d-8e8c-1da7a6dce1ca",
-//                    name = "Under Pressure",
-//                    type = "Song",
-//                    language = "eng",
-//                    iswcs = listOf(
-//                        "T-010.475.727-8",
-//                        "T-011.226.466-0",
-//                    ),
-//                    attributes = listOf(
-//                        ReleaseGroupAttributeUiModel(
-//                            value = "2182263",
-//                            type = "ACAM ID",
-//                            typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
-//                        ),
-//                        ReleaseGroupAttributeUiModel(
-//                            value = "2406479",
-//                            type = "ACAM ID",
-//                            typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
-//                        ),
-//                    ),
-//                ),
-//                releaseGroupDetailsModel,
-//            )
-//        }
-//        releaseGroupRepository.lookupReleaseGroup(
-//            releaseGroupId = underPressureReleaseGroupMusicBrainzModel.id,
-//            forceRefresh = true,
-//        ).let { releaseGroupDetailsModel ->
-//            assertEquals(
-//                ReleaseGroupDetailsModel(
-//                    id = "4e6a04c3-6897-391d-8e8c-1da7a6dce1ca",
-//                    disambiguation = "changes will be ignored if releaseGroup is linked to multiple entities",
-//                    name = "Under Pressure",
-//                    type = "Song",
-//                    language = "eng",
-//                    iswcs = listOf(
-//                        "T-010.475.727-8",
-//                        "T-011.226.466-0",
-//                    ),
-//                    attributes = listOf(
-//                        ReleaseGroupAttributeUiModel(
-//                            value = "2182263",
-//                            type = "ACAM ID",
-//                            typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
-//                        ),
-//                        ReleaseGroupAttributeUiModel(
-//                            value = "2406479",
-//                            type = "ACAM ID",
-//                            typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
-//                        ),
-//                    ),
-//                ),
-//                releaseGroupDetailsModel,
-//            )
-//        }
-//    }
+        // now visit the releaseGroup and refresh it
+        val releaseGroupRepository = createReleaseGroupRepository(
+            tchaikovskyOverturesReleaseGroupMusicBrainzModel.copy(
+                disambiguation = "changes will be ignored if release group is linked to multiple entities",
+            ),
+        )
+        releaseGroupRepository.lookupReleaseGroup(
+            releaseGroupId = tchaikovskyOverturesReleaseGroupMusicBrainzModel.id,
+            forceRefresh = false,
+        ).let { releaseGroupDetailsModel ->
+            assertEquals(
+                ReleaseGroupDetailsModel(
+                    id = "3e76b16f-c8ef-342a-b909-ca50d92766d2",
+                    name = "“1812” Overture / Romeo and Juliet / Marche slave / The Tempest",
+                    artistCredits = listOf(
+                        ArtistCreditUiModel(
+                            artistId = "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
+                            name = "Tchaikovsky",
+                            joinPhrase = "; ",
+                        ),
+                        ArtistCreditUiModel(
+                            artistId = "dea28aa9-1086-4ffa-8739-0ccc759de1ce",
+                            name = "Berliner Philharmoniker",
+                            joinPhrase = ", ",
+                        ),
+                        ArtistCreditUiModel(
+                            artistId = "39e84597-3e0f-4ccc-89d2-6ee1dd6fb050",
+                            name = "Claudio Abbado",
+                            joinPhrase = "",
+                        ),
+                    ),
+                    primaryType = "Album",
+                    firstReleaseDate = "2000-02-01",
+                    disambiguation = "",
+                ),
+                releaseGroupDetailsModel,
+            )
+        }
+        releaseGroupRepository.lookupReleaseGroup(
+            releaseGroupId = tchaikovskyOverturesReleaseGroupMusicBrainzModel.id,
+            forceRefresh = true,
+        ).let { releaseGroupDetailsModel ->
+            assertEquals(
+                ReleaseGroupDetailsModel(
+                    id = "3e76b16f-c8ef-342a-b909-ca50d92766d2",
+                    name = "“1812” Overture / Romeo and Juliet / Marche slave / The Tempest",
+                    artistCredits = listOf(
+                        ArtistCreditUiModel(
+                            artistId = "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
+                            name = "Tchaikovsky",
+                            joinPhrase = "; ",
+                        ),
+                        ArtistCreditUiModel(
+                            artistId = "dea28aa9-1086-4ffa-8739-0ccc759de1ce",
+                            name = "Berliner Philharmoniker",
+                            joinPhrase = ", ",
+                        ),
+                        ArtistCreditUiModel(
+                            artistId = "39e84597-3e0f-4ccc-89d2-6ee1dd6fb050",
+                            name = "Claudio Abbado",
+                            joinPhrase = "",
+                        ),
+                    ),
+                    primaryType = "Album",
+                    firstReleaseDate = "2000-02-01",
+                    disambiguation = "changes will be ignored if release group is linked to multiple entities",
+                ),
+                releaseGroupDetailsModel,
+            )
+        }
+    }
 }

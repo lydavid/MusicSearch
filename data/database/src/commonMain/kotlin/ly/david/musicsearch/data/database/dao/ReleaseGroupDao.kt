@@ -135,7 +135,7 @@ class ReleaseGroupDaoImpl(
     }
 
     override fun deleteReleaseGroupsByArtist(artistId: String) {
-        transacter.deleteReleaseGroupsByEntity(artistId)
+        transacter.deleteReleaseGroupsByEntity(entityId = artistId)
     }
 
     override fun observeCountOfReleaseGroupsByArtist(artistId: String): Flow<Int> =
