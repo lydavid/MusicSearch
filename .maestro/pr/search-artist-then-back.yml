@@ -40,10 +40,11 @@ appId: io.github.lydavid.musicsearch.debug
 
 - tapOn: "Release Groups"
 - assertVisible: "ぐされ"
-- assertNotVisible: "潜潜話"
+- assertVisible: "潜潜話"
 - tapOn: "More actions"
-- tapOn: "Sort"
-# won't be visible unless we scroll up, we assert later in the flow
+- tapOn: "Un-sort"
+- assertVisible: "ぐされ"
+- assertNotVisible: "潜潜話"
 
 - tapOn:
     text: "Back"
@@ -85,9 +86,9 @@ appId: io.github.lydavid.musicsearch.debug
 
 - tapOn: "Release Groups"
 - assertVisible: "ぐされ"
-- assertVisible: "潜潜話"
+- assertNotVisible: "潜潜話"
 - tapOn: "More actions"
-- tapOn: "Un-sort"
+- tapOn: "Sort"
 
 - tapOn: Collections
 - tapOn: "Filter"
