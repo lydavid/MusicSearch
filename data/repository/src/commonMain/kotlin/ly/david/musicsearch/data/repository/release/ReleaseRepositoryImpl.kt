@@ -107,7 +107,7 @@ class ReleaseRepositoryImpl(
     private fun cache(release: ReleaseMusicBrainzModel) {
         releaseDao.withTransaction {
             release.releaseGroup?.let { releaseGroup ->
-                releaseGroupDao.insert(releaseGroup)
+                releaseGroupDao.insertReleaseGroup(releaseGroup)
                 releaseReleaseGroupDao.insert(
                     releaseId = release.id,
                     releaseGroupId = releaseGroup.id,

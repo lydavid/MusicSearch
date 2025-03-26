@@ -171,7 +171,7 @@ class RecordingDao(
         },
     )
 
-    fun getRecordingsByEntity(
+    private fun getRecordingsByEntity(
         entityId: String,
         query: String,
     ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(

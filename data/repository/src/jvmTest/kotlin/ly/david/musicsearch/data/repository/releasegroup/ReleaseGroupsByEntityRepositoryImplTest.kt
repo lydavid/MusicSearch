@@ -14,7 +14,6 @@ import ly.david.data.test.tchaikovskyOverturesReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
-import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -53,7 +52,6 @@ class ReleaseGroupsByEntityRepositoryImplTest :
     override val browseEntityCountDao: BrowseEntityCountDao by inject()
     override val artistDao: ArtistDao by inject()
     override val areaDao: AreaDao by inject()
-    private val artistReleaseGroupDao: ArtistReleaseGroupDao by inject()
     private val collectionDao: CollectionDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
@@ -66,7 +64,6 @@ class ReleaseGroupsByEntityRepositoryImplTest :
             browseEntityCountDao = browseEntityCountDao,
             collectionEntityDao = collectionEntityDao,
             releaseGroupDao = releaseGroupDao,
-            artistReleaseGroupDao = artistReleaseGroupDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseReleaseGroupsByArtist(
                     artistId: String,
@@ -340,15 +337,16 @@ class ReleaseGroupsByEntityRepositoryImplTest :
     // TODO: assert releaseGroups by collection
 //    @Test
 //    fun `refreshing releaseGroups that belong to multiple entities does not delete the releaseGroup`() = runTest {
-//        setupReleaseGroupsByDavidBowie()
-//        setupReleaseGroupsByQueen()
+//        setupReleaseGroupsByBerlinerPhilharmoniker()
+//        setupReleaseGroupsByTchaikovsky()
 //
 //        val modifiedReleaseGroups = listOf(
-//            starmanReleaseGroupMusicBrainzModel.copy(
-//                id = "new-id-is-considered-a-different-releaseGroup",
+//            alsoSprachZarathustraReleaseGroupMusicBrainzModel,
+//            nutcrackerReleaseGroupMusicBrainzModel.copy(
+//                id = "new-id-is-considered-a-different-release-group",
 //            ),
-//            underPressureReleaseGroupMusicBrainzModel.copy(
-//                disambiguation = "changes will be ignored if releaseGroup is linked to multiple entities",
+//            tchaikovskyOverturesReleaseGroupMusicBrainzModel.copy(
+//                disambiguation = "changes will be ignored if release group is linked to multiple entities",
 //            ),
 //        )
 //        val releaseGroupsByEntityRepository = createReleaseGroupsByEntityRepository(
@@ -357,7 +355,7 @@ class ReleaseGroupsByEntityRepositoryImplTest :
 //
 //        // refresh
 //        releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-//            entityId = davidBowieArtistMusicBrainzModel.id,
+//            entityId = berlinerPhilharmonikerArtistMusicBrainzModel.id,
 //            entity = MusicBrainzEntity.ARTIST,
 //            listFilters = ListFilters(),
 //        ).asSnapshot {
@@ -365,10 +363,11 @@ class ReleaseGroupsByEntityRepositoryImplTest :
 //        }.run {
 //            assertEquals(
 //                listOf(
-//                    underPressureReleaseGroupListItemModel,
-//                    starmanReleaseGroupListItemModel.copy(
-//                        id = "new-id-is-considered-a-different-releaseGroup",
+//                    alsoSprachZarathustraReleaseGroupListItemModel,
+//                    nutcrackerReleaseGroupListItemModel.copy(
+//                        id = "new-id-is-considered-a-different-release-group",
 //                    ),
+//                    tchaikovskyOverturesReleaseGroupListItemModel,
 //                ),
 //                this,
 //            )

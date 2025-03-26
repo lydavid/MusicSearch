@@ -52,14 +52,14 @@ class ReleaseGroupRepositoryImpl(
 
     private fun delete(id: String) {
         releaseGroupDao.withTransaction {
-            releaseGroupDao.delete(id)
+            releaseGroupDao.deleteReleaseGroup(id)
             relationRepository.deleteRelationshipsByType(id)
         }
     }
 
     private fun cache(releaseGroup: ReleaseGroupMusicBrainzModel) {
         releaseGroupDao.withTransaction {
-            releaseGroupDao.insert(releaseGroup)
+            releaseGroupDao.insertReleaseGroup(releaseGroup)
 
             val relationWithOrderList = releaseGroup.relations.toRelationWithOrderList(releaseGroup.id)
             relationRepository.insertAllUrlRelations(

@@ -304,7 +304,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         val releaseGroupId = "a"
         val releaseGroupName = "aa"
         val releaseGroupDisambiguation = "d"
-        releaseGroupDao.insert(
+        releaseGroupDao.insertReleaseGroup(
             ReleaseGroupMusicBrainzModel(
                 id = releaseGroupId,
                 name = releaseGroupName,
@@ -441,7 +441,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         val releaseGroupId = "release-group-id"
         val releaseGroupName = "release group name"
         val releaseGroupDisambiguation = "d"
-        releaseGroupDao.insert(
+        releaseGroupDao.insertReleaseGroup(
             ReleaseGroupMusicBrainzModel(
                 id = releaseGroupId,
                 name = releaseGroupName,

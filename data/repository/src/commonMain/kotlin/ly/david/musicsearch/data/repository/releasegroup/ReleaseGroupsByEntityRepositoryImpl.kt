@@ -5,7 +5,6 @@ import app.cash.paging.PagingSource
 import app.cash.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
@@ -22,7 +21,6 @@ import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsByEntityRepo
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 
 class ReleaseGroupsByEntityRepositoryImpl(
-    private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val browseApi: BrowseApi,
@@ -71,7 +69,7 @@ class ReleaseGroupsByEntityRepositoryImpl(
 
             when (entity) {
                 MusicBrainzEntity.ARTIST -> {
-                    artistReleaseGroupDao.deleteReleaseGroupsByArtist(entityId)
+                    releaseGroupDao.deleteReleaseGroupsByArtist(entityId)
                 }
 
                 MusicBrainzEntity.COLLECTION -> {
@@ -94,7 +92,7 @@ class ReleaseGroupsByEntityRepositoryImpl(
             }
 
             entity == MusicBrainzEntity.ARTIST -> {
-                artistReleaseGroupDao.getReleaseGroupsByArtist(
+                releaseGroupDao.getReleaseGroupsByArtist(
                     artistId = entityId,
                     query = listFilters.query,
                     sorted = listFilters.sorted,
@@ -142,10 +140,10 @@ class ReleaseGroupsByEntityRepositoryImpl(
         entity: MusicBrainzEntity,
         musicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
     ): Int {
-        releaseGroupDao.insertAll(musicBrainzModels)
+        releaseGroupDao.insertAllReleaseGroups(musicBrainzModels)
         return when (entity) {
             MusicBrainzEntity.ARTIST -> {
-                artistReleaseGroupDao.insertReleaseGroupsByArtist(
+                releaseGroupDao.insertReleaseGroupsByArtist(
                     artistId = entityId,
                     releaseGroupIds = musicBrainzModels.map { releaseGroup -> releaseGroup.id },
                 )
@@ -172,7 +170,7 @@ class ReleaseGroupsByEntityRepositoryImpl(
             }
 
             else -> {
-                artistReleaseGroupDao.getCountOfReleaseGroupsByArtist(entityId)
+                releaseGroupDao.getCountOfReleaseGroupsByArtist(entityId)
             }
         }
     }

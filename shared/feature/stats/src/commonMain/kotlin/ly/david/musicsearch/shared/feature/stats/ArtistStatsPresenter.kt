@@ -8,9 +8,9 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
-import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
+import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -26,7 +26,7 @@ internal class ArtistStatsPresenter(
     private val eventDao: EventDao,
     private val recordingDao: RecordingDao,
     private val workDao: WorkDao,
-    private val artistReleaseGroupDao: ArtistReleaseGroupDao,
+    private val releaseGroupDao: ReleaseGroupDao,
     private val artistReleaseDao: ArtistReleaseDao,
 ) : Presenter<StatsUiState> {
 
@@ -75,8 +75,8 @@ internal class ArtistStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RELEASE_GROUP,
             ),
-            artistReleaseGroupDao.observeCountOfReleaseGroupsByArtist(entityId),
-            artistReleaseGroupDao.getCountOfEachAlbumType(entityId),
+            releaseGroupDao.observeCountOfReleaseGroupsByArtist(entityId),
+            releaseGroupDao.getCountOfEachAlbumType(entityId),
         ) { browseReleaseGroupCount, localReleaseGroups, releaseGroupTypeCount ->
             ReleaseGroupStats(
                 totalRemote = browseReleaseGroupCount?.remoteCount,

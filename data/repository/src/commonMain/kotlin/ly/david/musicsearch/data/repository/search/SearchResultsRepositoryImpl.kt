@@ -272,7 +272,7 @@ internal class SearchResultsRepositoryImpl(
                 val releaseGroups = response.releaseGroups
                 releaseGroupDao.withTransaction {
                     removeAll()
-                    releaseGroupDao.insertAll(releaseGroups)
+                    releaseGroupDao.insertAllReleaseGroups(releaseGroups)
                     searchResultDao.insertAll(releaseGroups.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
