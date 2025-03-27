@@ -31,7 +31,7 @@ jobs:
       id-token: write # This is required for requesting the JWT
     steps:
       - name: Checkout
-        uses: nschloe/action-cached-lfs-checkout@v1
+        uses: nschloe/action-cached-lfs-checkout@f46300cd8952454b9f0a21a3d133d4bd5684cfc2 # v1
         with:
           token: ${{ secrets.PAT }}
 
@@ -39,7 +39,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4
         with:
           node-version: 20
           cache: 'npm'
@@ -105,7 +105,7 @@ jobs:
 
       - name: Authenticate to Google Cloud
         id: auth
-        uses: google-github-actions/auth@v2.1.8
+        uses: google-github-actions/auth@71f986410dfbc7added4569d411d040a91dc6935 # v2.1.8
         with:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.SERVICE_ACCOUNT }}
@@ -114,7 +114,7 @@ jobs:
       # so subsequent steps should always run
       - name: Publish build to Google Play
         id: publish_play_store
-        uses: r0adkll/upload-google-play@v1.1.3
+        uses: r0adkll/upload-google-play@935ef9c68bb393a8e6116b1575626a7f5be3a7fb # v1.1.3
         with:
           serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
           packageName: io.github.lydavid.musicsearch
@@ -131,7 +131,7 @@ jobs:
 
       - name: Create desktop distributions
         if: always() && steps.get-next-version.outputs.new-release-published == 'true'
-        uses: hydraulic-software/conveyor/actions/build@v17.0
+        uses: hydraulic-software/conveyor/actions/build@7944fcb4085b3519af85a980e8987b5a4d526f20 # v17.0
         with:
           signing_key: ${{ secrets.SIGNING_KEY }}
           agree_to_license: 1
@@ -143,7 +143,7 @@ jobs:
         if: always() && steps.get-next-version.outputs.new-release-published == 'true'
 
       - name: Commit version code bump
-        uses: stefanzweifel/git-auto-commit-action@v5.1.0
+        uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # v5.1.0
         if: always()
         with:
           commit_message: 'chore: bump version [skip ci]'

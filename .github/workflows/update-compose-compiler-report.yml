@@ -17,7 +17,7 @@ jobs:
       ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET }}
     steps:
       - name: Checkout
-        uses: nschloe/action-cached-lfs-checkout@v1
+        uses: nschloe/action-cached-lfs-checkout@f46300cd8952454b9f0a21a3d133d4bd5684cfc2 # v1
         with:
           token: ${{ secrets.PAT }}
 
@@ -25,7 +25,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4
         with:
           node-version: 20
           cache: 'npm'
@@ -62,7 +62,7 @@ jobs:
       - run: git pull --rebase --autostash
 
       - name: Commit version code bump
-        uses: stefanzweifel/git-auto-commit-action@v5.1.0
+        uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # v5.1.0
         with:
           commit_message: 'chore: update compose compiler report [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
