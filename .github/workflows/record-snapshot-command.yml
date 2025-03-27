@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: nschloe/action-cached-lfs-checkout@v1
+        uses: nschloe/action-cached-lfs-checkout@f46300cd8952454b9f0a21a3d133d4bd5684cfc2 # v1
         with:
           token: ${{ secrets.PAT }}
           repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
           ref: ${{ github.event.client_payload.pull_request.head.ref }}
 
-      - uses: szenius/set-timezone@v2.0
+      - uses: szenius/set-timezone@1f9716b0f7120e344f0c62bb7b1ee98819aefd42 # v2.0
         with:
           timezoneLinux: "America/Toronto"
 

@@ -18,7 +18,7 @@ jobs:
       status: ${{ steps.early_exit.outputs.status }}
     steps:
       - name: Checkout
-        uses: nschloe/action-cached-lfs-checkout@v1
+        uses: nschloe/action-cached-lfs-checkout@f46300cd8952454b9f0a21a3d133d4bd5684cfc2 # v1
 
       # Cannot early exit jobs with GHA yet
       # Workaround: https://github.com/actions/runner/issues/662#issuecomment-1372855726

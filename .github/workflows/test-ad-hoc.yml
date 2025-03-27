@@ -15,7 +15,7 @@ jobs:
         api-level: [ 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 ]
     steps:
       - name: Checkout
-        uses: nschloe/action-cached-lfs-checkout@v1
+        uses: nschloe/action-cached-lfs-checkout@f46300cd8952454b9f0a21a3d133d4bd5684cfc2 # v1
         with:
           token: ${{ secrets.PAT }}
 
@@ -44,7 +44,7 @@ jobs:
 
       - name: Install app on emulator, run Maestro tests
         id: test
-        uses: reactivecircus/android-emulator-runner@v2.33.0
+        uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # v2.33.0
         with:
           api-level: ${{ matrix.api-level }}
           arch: x86_64
@@ -64,7 +64,7 @@ jobs:
 
       - name: Save recordings
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: test-android-apis-outputs-${{ matrix.api-level }}
           path: |

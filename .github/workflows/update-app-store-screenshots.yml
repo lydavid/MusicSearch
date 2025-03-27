@@ -20,7 +20,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: nschloe/action-cached-lfs-checkout@v1
+        uses: nschloe/action-cached-lfs-checkout@f46300cd8952454b9f0a21a3d133d4bd5684cfc2 # v1
         with:
           token: ${{ secrets.PAT }}
 
@@ -46,7 +46,7 @@ jobs:
 
       - name: Install app on phone emulator, record screenshots
         if: ${{ github.event.inputs.phone != 'false' }}
-        uses: reactivecircus/android-emulator-runner@v2.33.0
+        uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # v2.33.0
         with:
           api-level: 35
           arch: x86_64
@@ -62,7 +62,7 @@ jobs:
 
       - name: Install app on tablet emulator, record screenshots
         if: ${{ github.event.inputs.tablet != 'false' }}
-        uses: reactivecircus/android-emulator-runner@v2.33.0
+        uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # v2.33.0
         with:
           api-level: 35
           arch: x86_64
@@ -79,7 +79,7 @@ jobs:
       - run: git pull --rebase --autostash
 
       - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@v5.1.0
+        uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # v5.1.0
         with:
           commit_message: 'chore: update app store screenshots [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>

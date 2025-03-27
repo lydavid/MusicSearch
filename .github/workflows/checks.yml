@@ -19,7 +19,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: nschloe/action-cached-lfs-checkout@v1
+        uses: nschloe/action-cached-lfs-checkout@f46300cd8952454b9f0a21a3d133d4bd5684cfc2 # v1
         with:
           token: ${{ secrets.PAT }}
 
@@ -37,7 +37,7 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
-      - uses: szenius/set-timezone@v2.0
+      - uses: szenius/set-timezone@1f9716b0f7120e344f0c62bb7b1ee98819aefd42 # v2.0
         with:
           timezoneLinux: "America/Toronto"
 
@@ -73,14 +73,14 @@ jobs:
         if: always() && steps.screenshotsrecord.outcome == 'success'
 
       - name: Generate GitHub app token so that commit can trigger new workflow run
-        uses: tibdex/github-app-token@v2
+        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2
         id: generate-token
         with:
           app_id: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_ID }}
           private_key: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_PRIVATE_KEY }}
 
       - name: Push new screenshots if available
-        uses: stefanzweifel/git-auto-commit-action@v5.1.0
+        uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # v5.1.0
         if: always() && steps.screenshotsrecord.outcome == 'success'
         with:
           commit_message: "chore: rerecord snapshot tests"
@@ -96,7 +96,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - id: setup
         uses: ./.github/actions/setup
