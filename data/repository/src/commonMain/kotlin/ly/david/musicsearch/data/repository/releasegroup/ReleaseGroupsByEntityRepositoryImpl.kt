@@ -32,8 +32,8 @@ class ReleaseGroupsByEntityRepositoryImpl(
     ) {
 
     override fun observeReleaseGroupsByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<ListItemModel>> {
         return observeEntitiesByEntity(
@@ -64,7 +64,7 @@ class ReleaseGroupsByEntityRepositoryImpl(
         browseEntityCountDao.withTransaction {
             browseEntityCountDao.deleteBrowseEntityCountByEntity(
                 entityId = entityId,
-                browseEntity = MusicBrainzEntity.RELEASE_GROUP,
+                browseEntity = browseEntity,
             )
 
             when (entity) {
@@ -86,29 +86,12 @@ class ReleaseGroupsByEntityRepositoryImpl(
         entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, ReleaseGroupListItemModel> {
-        return when {
-            entityId == null || entity == null -> {
-                error("not possible")
-            }
-
-            entity == MusicBrainzEntity.ARTIST -> {
-                releaseGroupDao.getReleaseGroupsByArtist(
-                    artistId = entityId,
-                    query = listFilters.query,
-                    sorted = listFilters.sorted,
-                )
-            }
-
-            entity == MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.getReleaseGroupsByCollection(
-                    collectionId = entityId,
-                    query = listFilters.query,
-                    sorted = listFilters.sorted,
-                )
-            }
-
-            else -> error(browseEntitiesNotSupported(entity))
-        }
+        return releaseGroupDao.getReleaseGroups(
+            entityId = entityId,
+            entity = entity,
+            query = listFilters.query,
+            sorted = listFilters.sorted,
+        )
     }
 
     override suspend fun browseEntities(

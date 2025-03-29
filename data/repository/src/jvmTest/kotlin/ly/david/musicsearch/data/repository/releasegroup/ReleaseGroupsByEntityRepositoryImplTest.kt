@@ -295,48 +295,38 @@ class ReleaseGroupsByEntityRepositoryImplTest :
         )
     }
 
-//    @Test
-//    fun `all releaseGroups`() = runTest {
-//        setupReleaseGroupsByTchaikovsky()
-//        setupReleaseGroupsByCollection()
-//        setupReleaseGroupsByBerlinerPhilharmoniker()
-//
-//        val releaseGroupsByEntityRepository = createReleaseGroupsByEntityRepository(
-//            releaseGroups = listOf(),
-//        )
-//        testFilter(
-//            pagingFlowProducer = { query ->
-//                releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-//                    entityId = null,
-//                    entity = null,
-//                    listFilters = ListFilters(
-//                        query = query,
-//                    ),
-//                )
-//            },
-//            testCases = listOf(
-//                FilterTestCase(
-//                    description = "No filter",
-//                    query = "",
-//                    expectedResult = listOf(
-//                        starmanReleaseGroupListItemModel,
-//                        underPressureReleaseGroupListItemModel,
-//                        hackingToTheGateReleaseGroupListItemModel,
-//                        skycladObserverReleaseGroupListItemModel,
-//                        dontStopMeNowReleaseGroupListItemModel,
-//                    ),
-//                ),
-//                FilterTestCase(
-//                    description = "filter by language",
-//                    query = "jpn",
-//                    expectedResult = listOf(
-//                        hackingToTheGateReleaseGroupListItemModel,
-//                        skycladObserverReleaseGroupListItemModel,
-//                    ),
-//                ),
-//            ),
-//        )
-//    }
+    @Test
+    fun `all release groups`() = runTest {
+        setupReleaseGroupsByTchaikovsky()
+        setupReleaseGroupsByCollection()
+        setupReleaseGroupsByBerlinerPhilharmoniker()
+
+        val releaseGroupsByEntityRepository = createReleaseGroupsByEntityRepository(
+            releaseGroups = listOf(),
+        )
+        testFilter(
+            pagingFlowProducer = { query ->
+                releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
+                    entityId = null,
+                    entity = null,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "No filter",
+                    query = "",
+                    expectedResult = listOf(
+                        nutcrackerReleaseGroupListItemModel,
+                        tchaikovskyOverturesReleaseGroupListItemModel,
+                        alsoSprachZarathustraReleaseGroupListItemModel,
+                    ),
+                ),
+            ),
+        )
+    }
 
     // TODO: assert releaseGroups by collection
     @Test
@@ -391,24 +381,25 @@ class ReleaseGroupsByEntityRepositoryImplTest :
                 this,
             )
         }
-//
-//        releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-//            entityId = null,
-//            entity = null,
-//            listFilters = ListFilters(),
-//        ).asSnapshot().run {
-//            assertEquals(
-//                listOf(
-//                    underPressureReleaseGroupListItemModel,
-//                    dontStopMeNowReleaseGroupListItemModel,
-//                    starmanReleaseGroupListItemModel.copy(
-//                        id = "new-id-is-considered-a-different-releaseGroup",
-//                    ),
-//                ),
-//                this,
-//            )
-//        }
-//
+
+        releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
+            entityId = null,
+            entity = null,
+            listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    nutcrackerReleaseGroupListItemModel,
+                    tchaikovskyOverturesReleaseGroupListItemModel,
+                    alsoSprachZarathustraReleaseGroupListItemModel,
+                    nutcrackerReleaseGroupListItemModel.copy(
+                        id = "new-id-is-considered-a-different-release-group",
+                    ),
+                ),
+                this,
+            )
+        }
+
         // now visit the releaseGroup and refresh it
         val releaseGroupRepository = createReleaseGroupRepository(
             tchaikovskyOverturesReleaseGroupMusicBrainzModel.copy(
@@ -477,6 +468,27 @@ class ReleaseGroupsByEntityRepositoryImplTest :
                     disambiguation = "changes will be ignored if release group is linked to multiple entities",
                 ),
                 releaseGroupDetailsModel,
+            )
+        }
+
+        releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
+            entityId = null,
+            entity = null,
+            listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    nutcrackerReleaseGroupListItemModel,
+                    alsoSprachZarathustraReleaseGroupListItemModel,
+                    nutcrackerReleaseGroupListItemModel.copy(
+                        id = "new-id-is-considered-a-different-release-group",
+                    ),
+                    tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                        disambiguation = "changes will be ignored if release group is linked to multiple entities",
+                        visited = true,
+                    ),
+                ),
+                this,
             )
         }
     }

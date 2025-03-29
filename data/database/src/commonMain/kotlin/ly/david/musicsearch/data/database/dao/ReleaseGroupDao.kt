@@ -8,12 +8,13 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import lydavidmusicsearchdatadatabase.Release_group
 import lydavidmusicsearchdatadatabase.Release_groups_by_entity
@@ -29,12 +30,14 @@ interface ReleaseGroupDao : EntityDao {
         artistId: String,
         releaseGroupIds: List<String>,
     ): Int
+
     fun deleteReleaseGroupsByArtist(artistId: String)
     fun observeCountOfReleaseGroupsByArtist(artistId: String): Flow<Int>
     fun getCountOfReleaseGroupsByArtist(artistId: String): Int
     fun getCountOfEachAlbumType(artistId: String): Flow<List<ReleaseGroupTypeCount>>
-    fun getReleaseGroupsByArtist(
-        artistId: String,
+    fun getReleaseGroups(
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         query: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseGroupListItemModel>
@@ -169,20 +172,93 @@ class ReleaseGroupDaoImpl(
             .asFlow()
             .mapToList(coroutineDispatchers.io)
 
-    override fun getReleaseGroupsByArtist(
-        artistId: String,
+    override fun getReleaseGroups(
+        entityId: String?,
+        entity: MusicBrainzEntity?,
+        query: String,
+        sorted: Boolean,
+    ): PagingSource<Int, ReleaseGroupListItemModel> = when {
+        entityId == null || entity == null -> {
+            getAllReleaseGroups(
+                query = query,
+                sorted = sorted,
+            )
+        }
+
+        entity == MusicBrainzEntity.COLLECTION -> {
+            getReleaseGroupsByCollection(
+                collectionId = entityId,
+                query = query,
+                sorted = sorted,
+            )
+        }
+
+        else -> {
+            getReleaseGroupsByEntity(
+                entityId = entityId,
+                query = query,
+                sorted = sorted,
+            )
+        }
+    }
+
+    private fun getAllReleaseGroups(
+        query: String,
+        sorted: Boolean,
+    ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
+        countQuery = transacter.getCountOfAllReleaseGroups(
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getAllReleaseGroups(
+                query = "%$query%",
+                sorted = sorted,
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToReleaseGroupListItemModel,
+            )
+        },
+    )
+
+    private fun getReleaseGroupsByEntity(
+        entityId: String,
         query: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleaseGroupsByEntity(
-            artistId = artistId,
+            artistId = entityId,
             query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
             transacter.getReleaseGroupsByEntity(
-                artistId = artistId,
+                artistId = entityId,
+                query = "%$query%",
+                sorted = sorted,
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToReleaseGroupListItemModel,
+            )
+        },
+    )
+
+    private fun getReleaseGroupsByCollection(
+        collectionId: String,
+        query: String,
+        sorted: Boolean,
+    ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
+        countQuery = transacter.getNumberOfReleaseGroupsByCollection(
+            collectionId = collectionId,
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getReleaseGroupsByCollection(
+                collectionId = collectionId,
                 query = "%$query%",
                 sorted = sorted,
                 limit = limit,
