@@ -146,7 +146,7 @@ class ReleaseDao(
                     ),
                 )
                 release.labelInfoList?.forEach { labelInfo ->
-                    releaseLabelDao.insert(
+                    releaseLabelDao.insertOrIgnore(
                         releaseId = release.id,
                         labelId = labelId,
                         catalogNumber = labelInfo.catalogNumber.orEmpty(),
@@ -218,7 +218,7 @@ class ReleaseDao(
                     ),
                 )
                 release.releaseEvents?.forEach { releaseEvent ->
-                    releaseCountryDao.insert(
+                    releaseCountryDao.insertOrIgnore(
                         areaId = areaId,
                         releaseId = release.id,
                         date = releaseEvent.date,

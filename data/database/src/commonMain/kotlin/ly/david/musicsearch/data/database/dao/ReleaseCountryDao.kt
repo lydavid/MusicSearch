@@ -8,24 +8,18 @@ class ReleaseCountryDao(
 ) : EntityDao {
     override val transacter = database.release_countryQueries
 
-    @Suppress("SwallowedException")
-    fun insert(
+    fun insertOrIgnore(
         areaId: String,
         releaseId: String,
         date: String?,
-    ): Int {
-        return try {
-            transacter.insertOrFail(
-                Release_country(
-                    country_id = areaId,
-                    release_id = releaseId,
-                    date = date,
-                ),
-            )
-            1
-        } catch (ex: Exception) {
-            0
-        }
+    ) {
+        transacter.insertOrIgnore(
+            Release_country(
+                country_id = areaId,
+                release_id = releaseId,
+                date = date,
+            ),
+        )
     }
 
     fun deleteCountriesByReleaseLinks(releaseId: String) {

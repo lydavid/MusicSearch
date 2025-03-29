@@ -211,7 +211,7 @@ class AreaDao(
                         area_id = areaId,
                     ),
                 )
-                releaseCountryDao.insert(
+                releaseCountryDao.insertOrIgnore(
                     areaId = areaId,
                     releaseId = releaseId,
                     date = releaseEvent.date,

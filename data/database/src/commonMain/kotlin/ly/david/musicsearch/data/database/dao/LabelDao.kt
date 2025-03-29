@@ -236,7 +236,7 @@ class LabelDao(
                     entityId = releaseId,
                     labelId = labelId,
                 )
-                releaseLabelDao.insert(
+                releaseLabelDao.insertOrIgnore(
                     releaseId = releaseId,
                     labelId = labelId,
                     catalogNumber = labelInfo.catalogNumber.orEmpty(),

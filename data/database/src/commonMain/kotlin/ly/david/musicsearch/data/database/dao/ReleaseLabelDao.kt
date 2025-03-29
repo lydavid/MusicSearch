@@ -12,12 +12,12 @@ class ReleaseLabelDao(
 ) : EntityDao {
     override val transacter = database.release_labelQueries
 
-    fun insert(
+    fun insertOrIgnore(
         labelId: String,
         releaseId: String,
         catalogNumber: String,
     ) {
-        transacter.insert(
+        transacter.insertOrIgnore(
             Release_label(
                 release_id = releaseId,
                 label_id = labelId,

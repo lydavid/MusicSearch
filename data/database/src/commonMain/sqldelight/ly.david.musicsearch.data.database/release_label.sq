@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS release_label (
   PRIMARY KEY(`release_id`, `label_id`, `catalog_number`)
 );
 
-insert:
+insertOrIgnore:
 INSERT OR IGNORE INTO release_label
 VALUES ?;
 

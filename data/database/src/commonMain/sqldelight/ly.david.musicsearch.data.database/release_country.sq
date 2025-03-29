@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS release_country (
   PRIMARY KEY(`release_id`, `country_id`)
 );
 
-insertOrFail:
-INSERT OR FAIL INTO release_country
+insertOrIgnore:
+INSERT OR IGNORE INTO release_country
 VALUES ?;
 
 deleteCountriesByReleaseLinks:
