@@ -69,21 +69,9 @@ class ReleaseGroupsByEntityRepositoryImplTest :
             collectionEntityDao = collectionEntityDao,
             releaseGroupDao = releaseGroupDao,
             browseApi = object : FakeBrowseApi() {
-                override suspend fun browseReleaseGroupsByArtist(
-                    artistId: String,
-                    limit: Int,
-                    offset: Int,
-                    include: String,
-                ): BrowseReleaseGroupsResponse {
-                    return BrowseReleaseGroupsResponse(
-                        count = 1,
-                        offset = 0,
-                        musicBrainzModels = releaseGroups,
-                    )
-                }
-
-                override suspend fun browseReleaseGroupsByCollection(
-                    collectionId: String,
+                override suspend fun browseReleaseGroupsByEntity(
+                    entityId: String,
+                    entity: MusicBrainzEntity,
                     limit: Int,
                     offset: Int,
                     include: String,

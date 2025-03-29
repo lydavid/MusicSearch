@@ -130,21 +130,9 @@ open class FakeBrowseApi : BrowseApi {
         )
     }
 
-    override suspend fun browseReleaseGroupsByArtist(
-        artistId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseReleaseGroupsResponse {
-        return BrowseReleaseGroupsResponse(
-            count = 0,
-            offset = 0,
-            musicBrainzModels = listOf(),
-        )
-    }
-
-    override suspend fun browseReleaseGroupsByCollection(
-        collectionId: String,
+    override suspend fun browseReleaseGroupsByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
         include: String,

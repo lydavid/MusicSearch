@@ -99,23 +99,11 @@ class ReleaseGroupsByEntityRepositoryImpl(
         entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseReleaseGroupsResponse {
-        return when (entity) {
-            MusicBrainzEntity.ARTIST -> {
-                browseApi.browseReleaseGroupsByArtist(
-                    artistId = entityId,
-                    offset = offset,
-                )
-            }
-
-            MusicBrainzEntity.COLLECTION -> {
-                browseApi.browseReleaseGroupsByCollection(
-                    collectionId = entityId,
-                    offset = offset,
-                )
-            }
-
-            else -> error(browseEntitiesNotSupported(entity))
-        }
+        return browseApi.browseReleaseGroupsByEntity(
+            entityId = entityId,
+            entity = entity,
+            offset = offset,
+        )
     }
 
     override fun insertAllLinkingModels(

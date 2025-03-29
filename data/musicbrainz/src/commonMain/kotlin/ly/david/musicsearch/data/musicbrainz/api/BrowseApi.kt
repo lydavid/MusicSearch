@@ -104,15 +104,9 @@ interface BrowseApi {
         include: String = ARTIST_CREDITS,
     ): BrowseReleasesResponse
 
-    suspend fun browseReleaseGroupsByArtist(
-        artistId: String,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-        include: String = ARTIST_CREDITS,
-    ): BrowseReleaseGroupsResponse
-
-    suspend fun browseReleaseGroupsByCollection(
-        collectionId: String,
+    suspend fun browseReleaseGroupsByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
         include: String = ARTIST_CREDITS,
@@ -391,8 +385,9 @@ interface BrowseApiImpl : BrowseApi {
         }.body()
     }
 
-    override suspend fun browseReleaseGroupsByArtist(
-        artistId: String,
+    override suspend fun browseReleaseGroupsByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
         include: String,
@@ -401,37 +396,8 @@ interface BrowseApiImpl : BrowseApi {
             url {
                 appendPathSegments("release-group")
                 parameter(
-                    "artist",
-                    artistId,
-                )
-                parameter(
-                    "limit",
-                    limit,
-                )
-                parameter(
-                    "offset",
-                    offset,
-                )
-                parameter(
-                    "inc",
-                    include,
-                )
-            }
-        }.body()
-    }
-
-    override suspend fun browseReleaseGroupsByCollection(
-        collectionId: String,
-        limit: Int,
-        offset: Int,
-        include: String,
-    ): BrowseReleaseGroupsResponse {
-        return httpClient.get {
-            url {
-                appendPathSegments("release-group")
-                parameter(
-                    "collection",
-                    collectionId,
+                    entity.resourceUri,
+                    entityId,
                 )
                 parameter(
                     "limit",
