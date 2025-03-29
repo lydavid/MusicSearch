@@ -76,14 +76,9 @@ interface BrowseApi {
         offset: Int = 0,
     ): BrowseLabelsResponse
 
-    suspend fun browsePlacesByArea(
-        areaId: String,
-        limit: Int = SEARCH_BROWSE_LIMIT,
-        offset: Int = 0,
-    ): BrowsePlacesResponse
-
-    suspend fun browsePlacesByCollection(
-        collectionId: String,
+    suspend fun browsePlacesByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
     ): BrowsePlacesResponse
@@ -277,8 +272,9 @@ interface BrowseApiImpl : BrowseApi {
         }.body()
     }
 
-    override suspend fun browsePlacesByArea(
-        areaId: String,
+    override suspend fun browsePlacesByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
     ): BrowsePlacesResponse {
@@ -286,32 +282,8 @@ interface BrowseApiImpl : BrowseApi {
             url {
                 appendPathSegments("place")
                 parameter(
-                    "area",
-                    areaId,
-                )
-                parameter(
-                    "limit",
-                    limit,
-                )
-                parameter(
-                    "offset",
-                    offset,
-                )
-            }
-        }.body()
-    }
-
-    override suspend fun browsePlacesByCollection(
-        collectionId: String,
-        limit: Int,
-        offset: Int,
-    ): BrowsePlacesResponse {
-        return httpClient.get {
-            url {
-                appendPathSegments("place")
-                parameter(
-                    "collection",
-                    collectionId,
+                    entity.resourceUri,
+                    entityId,
                 )
                 parameter(
                     "limit",

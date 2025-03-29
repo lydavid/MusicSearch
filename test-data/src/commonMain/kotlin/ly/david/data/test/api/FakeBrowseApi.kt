@@ -92,20 +92,9 @@ open class FakeBrowseApi : BrowseApi {
         )
     }
 
-    override suspend fun browsePlacesByArea(
-        areaId: String,
-        limit: Int,
-        offset: Int,
-    ): BrowsePlacesResponse {
-        return BrowsePlacesResponse(
-            count = 0,
-            offset = 0,
-            musicBrainzModels = listOf(),
-        )
-    }
-
-    override suspend fun browsePlacesByCollection(
-        collectionId: String,
+    override suspend fun browsePlacesByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
     ): BrowsePlacesResponse {

@@ -62,20 +62,9 @@ class PlacesByEntityRepositoryImplTest : KoinTest, TestPlaceRepository {
             collectionEntityDao = collectionEntityDao,
             placeDao = placeDao,
             browseApi = object : FakeBrowseApi() {
-                override suspend fun browsePlacesByCollection(
-                    collectionId: String,
-                    limit: Int,
-                    offset: Int,
-                ): BrowsePlacesResponse {
-                    return BrowsePlacesResponse(
-                        count = 1,
-                        offset = 0,
-                        musicBrainzModels = places,
-                    )
-                }
-
-                override suspend fun browsePlacesByArea(
-                    areaId: String,
+                override suspend fun browsePlacesByEntity(
+                    entityId: String,
+                    entity: MusicBrainzEntity,
                     limit: Int,
                     offset: Int,
                 ): BrowsePlacesResponse {

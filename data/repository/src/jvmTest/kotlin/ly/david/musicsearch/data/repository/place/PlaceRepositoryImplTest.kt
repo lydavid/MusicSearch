@@ -371,8 +371,9 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
             collectionEntityDao = collectionEntityDao,
             placeDao = this@PlaceRepositoryImplTest.placeDao,
             browseApi = object : FakeBrowseApi() {
-                override suspend fun browsePlacesByArea(
-                    areaId: String,
+                override suspend fun browsePlacesByEntity(
+                    entityId: String,
+                    entity: MusicBrainzEntity,
                     limit: Int,
                     offset: Int,
                 ): BrowsePlacesResponse {

@@ -79,23 +79,11 @@ class PlacesByEntityRepositoryImpl(
         entity: MusicBrainzEntity,
         offset: Int,
     ): BrowsePlacesResponse {
-        return when (entity) {
-            MusicBrainzEntity.AREA -> {
-                browseApi.browsePlacesByArea(
-                    areaId = entityId,
-                    offset = offset,
-                )
-            }
-
-            MusicBrainzEntity.COLLECTION -> {
-                browseApi.browsePlacesByCollection(
-                    collectionId = entityId,
-                    offset = offset,
-                )
-            }
-
-            else -> error(browseEntitiesNotSupported(entity))
-        }
+        return browseApi.browsePlacesByEntity(
+            entityId = entityId,
+            entity = entity,
+            offset = offset,
+        )
     }
 
     override fun insertAllLinkingModels(
