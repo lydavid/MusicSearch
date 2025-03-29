@@ -5,7 +5,6 @@ import ly.david.musicsearch.data.database.dao.ArtistCollaborationDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDaoImpl
 import ly.david.musicsearch.data.database.dao.ArtistDao
-import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -50,7 +49,6 @@ val databaseDaoModule = module {
     singleOf(::ArtistCreditDaoImpl) bind ArtistCreditDao::class
     singleOf(::ArtistDao)
     single { ArtistCollaborationDao(get()) }
-    single { ArtistReleaseDao(get(), get()) }
     single { BrowseEntityCountDao(get(), get()) }
     single { CollectionDao(get(), get()) }
     single { CollectionEntityDao(get(), get()) }

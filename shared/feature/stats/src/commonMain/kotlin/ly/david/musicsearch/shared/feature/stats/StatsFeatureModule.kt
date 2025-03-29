@@ -35,7 +35,7 @@ val statsFeatureModule = module {
                                 observeBrowseEntityCount = get(),
                                 eventDao = get(),
                                 releaseGroupDao = get(),
-                                artistReleaseDao = get(),
+                                releaseDao = get(),
                                 recordingDao = get(),
                                 workDao = get(),
                             )

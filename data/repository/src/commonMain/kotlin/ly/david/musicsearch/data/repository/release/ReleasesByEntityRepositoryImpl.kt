@@ -3,7 +3,6 @@ package ly.david.musicsearch.data.repository.release
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingReleaseDao
@@ -21,7 +20,6 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleasesByEntityRepository
 
 class ReleasesByEntityRepositoryImpl(
-    private val artistReleaseDao: ArtistReleaseDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val browseApi: BrowseApi,
@@ -61,10 +59,6 @@ class ReleasesByEntityRepositoryImpl(
                     releaseDao.deleteReleasesByCountry(entityId)
                 }
 
-                MusicBrainzEntity.ARTIST -> {
-                    artistReleaseDao.deleteReleasesByArtist(entityId)
-                }
-
                 MusicBrainzEntity.COLLECTION -> {
                     collectionEntityDao.deleteAllFromCollection(entityId)
                 }
@@ -81,7 +75,7 @@ class ReleasesByEntityRepositoryImpl(
                     releaseReleaseGroupDao.deleteReleasesByReleaseGroup(entityId)
                 }
 
-                else -> error(browseEntitiesNotSupported(entity))
+                else -> releaseDao.deleteReleasesByEntity(entityId)
             }
         }
     }
@@ -96,30 +90,9 @@ class ReleasesByEntityRepositoryImpl(
                 error("not possible")
             }
 
-            entity == MusicBrainzEntity.AREA -> {
-                releaseDao.getReleasesByCountry(
-                    areaId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            entity == MusicBrainzEntity.ARTIST -> {
-                artistReleaseDao.getReleasesByArtist(
-                    artistId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
             entity == MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.getReleasesByCollection(
                     collectionId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            entity == MusicBrainzEntity.LABEL -> {
-                releaseDao.getReleasesByLabel(
-                    labelId = entityId,
                     query = listFilters.query,
                 )
             }
@@ -138,7 +111,11 @@ class ReleasesByEntityRepositoryImpl(
                 )
             }
 
-            else -> error(browseEntitiesNotSupported(entity))
+            else -> releaseDao.getReleases(
+                entityId = entityId,
+                entity = entity,
+                query = listFilters.query,
+            )
         }
     }
 
@@ -181,13 +158,6 @@ class ReleasesByEntityRepositoryImpl(
                 )
             }
 
-            MusicBrainzEntity.ARTIST -> {
-                artistReleaseDao.insertAll(
-                    artistId = entityId,
-                    releaseIds = musicBrainzModels.map { release -> release.id },
-                )
-            }
-
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.insertAll(
                     collectionId = entityId,
@@ -216,7 +186,10 @@ class ReleasesByEntityRepositoryImpl(
                 )
             }
 
-            else -> error(browseEntitiesNotSupported(entity))
+            else -> releaseDao.insertReleasesByEntity(
+                entityId = entityId,
+                releases = musicBrainzModels,
+            )
         }
     }
 
@@ -227,10 +200,6 @@ class ReleasesByEntityRepositoryImpl(
         return when (entity) {
             MusicBrainzEntity.AREA -> {
                 releaseDao.getCountOfReleasesByCountry(entityId)
-            }
-
-            MusicBrainzEntity.ARTIST -> {
-                artistReleaseDao.getCountOfReleasesByArtist(entityId)
             }
 
             MusicBrainzEntity.COLLECTION -> {
@@ -249,7 +218,7 @@ class ReleasesByEntityRepositoryImpl(
                 releaseReleaseGroupDao.getCountOfReleasesByReleaseGroup(entityId)
             }
 
-            else -> error(browseEntitiesNotSupported(entity))
+            else -> releaseDao.getCountOfReleasesByEntity(entityId)
         }
     }
 }

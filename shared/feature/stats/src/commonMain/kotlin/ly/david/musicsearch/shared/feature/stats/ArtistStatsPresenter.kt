@@ -7,9 +7,9 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
+import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
@@ -27,7 +27,7 @@ internal class ArtistStatsPresenter(
     private val recordingDao: RecordingDao,
     private val workDao: WorkDao,
     private val releaseGroupDao: ReleaseGroupDao,
-    private val artistReleaseDao: ArtistReleaseDao,
+    private val releaseDao: ReleaseDao,
 ) : Presenter<StatsUiState> {
 
     @Composable
@@ -61,7 +61,7 @@ internal class ArtistStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RELEASE,
             ),
-            artistReleaseDao.observeCountOfReleasesByArtist(entityId),
+            releaseDao.observeCountOfReleasesByEntity(entityId),
         ) { browseReleaseCount, localReleases ->
             ReleaseStats(
                 totalRemote = browseReleaseCount?.remoteCount,

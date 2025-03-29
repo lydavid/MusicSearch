@@ -11,6 +11,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.FormatTrackCount
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
@@ -131,6 +132,37 @@ class ReleaseDao(
             },
         ).executeAsList()
 
+    fun getReleases(
+        entityId: String?,
+        entity: MusicBrainzEntity?,
+        query: String,
+    ): PagingSource<Int, ReleaseListItemModel> = when {
+        entityId == null || entity == null -> {
+            error("not yet supported")
+        }
+
+        entity == MusicBrainzEntity.AREA -> {
+            getReleasesByCountry(
+                areaId = entityId,
+                query = query,
+            )
+        }
+
+        entity == MusicBrainzEntity.LABEL -> {
+            getReleasesByLabel(
+                labelId = entityId,
+                query = query,
+            )
+        }
+
+        else -> {
+            getReleasesByEntity(
+                entityId = entityId,
+                query = query,
+            )
+        }
+    }
+
     // region releases by label
     fun insertReleasesByLabel(
         labelId: String,
@@ -174,7 +206,7 @@ class ReleaseDao(
             .executeAsOne()
             .toInt()
 
-    fun getReleasesByLabel(
+    private fun getReleasesByLabel(
         labelId: String,
         query: String,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
@@ -197,7 +229,7 @@ class ReleaseDao(
 
     fun deleteReleasesByLabel(labelId: String) {
         withTransaction {
-            transacter.deleteReleasesByEntity(labelId)
+            deleteReleasesByEntity(labelId)
             transacter.deleteReleasesByLabelLinks(labelId = labelId)
         }
     }
@@ -246,7 +278,7 @@ class ReleaseDao(
             .executeAsOne()
             .toInt()
 
-    fun getReleasesByCountry(
+    private fun getReleasesByCountry(
         areaId: String,
         query: String,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
@@ -268,9 +300,68 @@ class ReleaseDao(
     )
 
     fun deleteReleasesByCountry(areaId: String) {
-        transacter.deleteReleasesByEntity(entityId = areaId)
+        deleteReleasesByEntity(entityId = areaId)
         // Do not delete from release_country,
         // so that refreshing an area's release will not remove a release's release events
     }
     // endregion
+
+    fun insertReleasesByEntity(
+        entityId: String,
+        releases: List<ReleaseMusicBrainzModel>,
+    ): Int {
+        return transacter.transactionWithResult {
+            releases.forEach { release ->
+                transacter.insertOrIgnoreReleasesByEntity(
+                    Releases_by_entity(
+                        entity_id = entityId,
+                        release_id = release.id,
+                    ),
+                )
+            }
+            releases.size
+        }
+    }
+
+    private fun getReleasesByEntity(
+        entityId: String,
+        query: String,
+    ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
+        countQuery = transacter.getNumberOfReleasesByEntity(
+            entityId = entityId,
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getReleasesByEntity(
+                entityId = entityId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToReleaseListItemModel,
+            )
+        },
+    )
+
+    fun deleteReleasesByEntity(entityId: String) {
+        transacter.deleteReleasesByEntity(entityId)
+    }
+
+    fun observeCountOfReleasesByEntity(entityId: String): Flow<Int> =
+        transacter.getNumberOfReleasesByEntity(
+            entityId = entityId,
+            query = "%%",
+        )
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
+
+    fun getCountOfReleasesByEntity(entityId: String): Int =
+        transacter.getNumberOfReleasesByEntity(
+            entityId = entityId,
+            query = "%%",
+        )
+            .executeAsOne()
+            .toInt()
 }
