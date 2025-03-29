@@ -13,22 +13,63 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 
-val underPressureRemastered = ReleaseMusicBrainzModel(
+val underPressureRemasteredReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     id = "eac6d0cd-1ed0-4e17-b5b0-d3cfc40547b2",
     name = "Under Pressure",
+    date = "1988-11",
     artistCredits = listOf(
         ArtistCreditMusicBrainzModel(
-            artist = queenArtistMusicBrainzModel,
+            artist = ArtistMusicBrainzModel(
+                id = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
+                name = "Queen",
+                sortName = "Queen",
+                type = "Group",
+                typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+                disambiguation = "UK rock group",
+            ),
             name = "Queen",
             joinPhrase = " & ",
         ),
         ArtistCreditMusicBrainzModel(
-            artist = davidBowieArtistMusicBrainzModel,
+            artist = ArtistMusicBrainzModel(
+                id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
+                name = "David Bowie",
+                sortName = "Bowie, David",
+                type = "Person",
+                typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+                disambiguation = "English singer‐songwriter",
+            ),
             name = "David Bowie",
             joinPhrase = "",
         ),
     ),
-    releaseGroup = underPressureReleaseGroup,
+    releaseEvents = listOf(
+        ReleaseEventMusicBrainzModel(
+            area = AreaMusicBrainzModel(
+                id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+                name = "United Kingdom",
+                sortName = "United Kingdom",
+                countryCodes = listOf("GB"),
+            ),
+            date = "1988-11",
+        ),
+    ),
+    countryCode = "GB",
+    coverArtArchive = CoverArtArchiveMusicBrainzModel(
+        count = 4,
+    ),
+    quality = "normal",
+    status = "Official",
+    statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+    textRepresentation = TextRepresentationMusicBrainzModel(
+        script = "Latn",
+        language = "eng",
+    ),
+    barcode = "5099920305833",
+    asin = "B000LX0GZA",
+    packaging = null,
+    packagingId = null,
+    disambiguation = "",
 )
 
 val underPressureRemasterOf = RelationMusicBrainzModel(
@@ -36,43 +77,127 @@ val underPressureRemasterOf = RelationMusicBrainzModel(
     typeId = "48e327b5-2d04-4518-93f1-fed5f0f0fa3c",
     direction = Direction.BACKWARD,
     targetType = SerializableMusicBrainzEntity.RELEASE,
-    release = underPressureRemastered,
-)
-
-val fakeReleaseEvent = ReleaseEventMusicBrainzModel(
-    area = canadaAreaMusicBrainzModel,
-    date = "2022-10-29",
+    release = underPressureRemasteredReleaseMusicBrainzModel,
 )
 
 val underPressureReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     id = "61735bf8-219e-3164-a94c-b74b1482fd01",
     name = "Under Pressure",
-    barcode = "123",
     date = "1981-10",
     artistCredits = listOf(
         ArtistCreditMusicBrainzModel(
-            artist = queenArtistMusicBrainzModel,
+            artist = ArtistMusicBrainzModel(
+                id = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
+                name = "Queen",
+                sortName = "Queen",
+                type = "Group",
+                typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+                disambiguation = "UK rock group",
+            ),
             name = "Queen",
             joinPhrase = " & ",
         ),
         ArtistCreditMusicBrainzModel(
-            artist = davidBowieArtistMusicBrainzModel,
+            artist = ArtistMusicBrainzModel(
+                id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
+                name = "David Bowie",
+                sortName = "Bowie, David",
+                type = "Person",
+                typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+                disambiguation = "English singer‐songwriter",
+            ),
             name = "David Bowie",
             joinPhrase = "",
         ),
     ),
-    releaseGroup = underPressureReleaseGroup,
     releaseEvents = listOf(
-        fakeReleaseEvent,
+        ReleaseEventMusicBrainzModel(
+            area = AreaMusicBrainzModel(
+                id = "489ce91b-6658-3307-9877-795b68554c98",
+                name = "United States",
+                sortName = "United States",
+                countryCodes = listOf("US"),
+            ),
+            date = "1981-10",
+        ),
     ),
-    media = listOf(underPressureMedia),
+    countryCode = "US",
+    coverArtArchive = CoverArtArchiveMusicBrainzModel(
+        count = 1,
+    ),
+    quality = "normal",
+    status = "Official",
+    statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+    textRepresentation = TextRepresentationMusicBrainzModel(
+        script = "Latn",
+        language = "eng",
+    ),
+    disambiguation = "",
+)
+
+val underPressureReleaseMusicBrainzModelWithLabel = underPressureReleaseMusicBrainzModel.copy(
     labelInfoList = listOf(
         underPressureLabelInfo,
         LabelInfo(
             label = elektraMusicGroupLabelMusicBrainzModel,
         ),
     ),
-    relations = listOf(underPressureRemasterOf),
+)
+
+val underPressureJapanReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
+    id = "3e8fe20d-8d8b-454d-9350-2078007d4788",
+    name = "Under Pressure",
+    date = "1991",
+    artistCredits = listOf(
+        ArtistCreditMusicBrainzModel(
+            artist = ArtistMusicBrainzModel(
+                id = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
+                name = "Queen",
+                sortName = "Queen",
+                type = "Group",
+                typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+                disambiguation = "UK rock group",
+            ),
+            name = "Queen",
+            joinPhrase = " & ",
+        ),
+        ArtistCreditMusicBrainzModel(
+            artist = ArtistMusicBrainzModel(
+                id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
+                name = "David Bowie",
+                sortName = "Bowie, David",
+                type = "Person",
+                typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+                disambiguation = "English singer‐songwriter",
+            ),
+            name = "David Bowie",
+            joinPhrase = "",
+        ),
+    ),
+    releaseEvents = listOf(
+        ReleaseEventMusicBrainzModel(
+            area = AreaMusicBrainzModel(
+                id = "2db42837-c832-3c27-b4a3-08198f75693c",
+                name = "Japan",
+                sortName = "Japan",
+                countryCodes = listOf("JP"),
+                disambiguation = "",
+            ),
+            date = "1991",
+        ),
+    ),
+    countryCode = "JP",
+    coverArtArchive = CoverArtArchiveMusicBrainzModel(
+        count = 0,
+    ),
+    quality = "normal",
+    status = "Official",
+    statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+    textRepresentation = TextRepresentationMusicBrainzModel(
+        script = "Latn",
+        language = "eng",
+    ),
+    disambiguation = "",
 )
 
 val utaNoUtaReleaseMusicBrainzModel = ReleaseMusicBrainzModel(

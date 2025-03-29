@@ -67,3 +67,64 @@ val redReleaseListItemModel = ReleaseListItemModel(
     formattedArtistCredits = "Taylor Swift",
     coverArtArchive = CoverArtArchiveUiModel(count = 25),
 )
+
+val underPressureRemasteredReleaseListItemModel = ReleaseListItemModel(
+    id = "eac6d0cd-1ed0-4e17-b5b0-d3cfc40547b2",
+    name = "Under Pressure",
+    date = "1988-11",
+    formattedArtistCredits = "Queen & David Bowie",
+    countryCode = "GB",
+    coverArtArchive = CoverArtArchiveUiModel(
+        count = 4,
+    ),
+    quality = "normal",
+    status = "Official",
+    statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+    textRepresentation = TextRepresentationUiModel(
+        script = "Latn",
+        language = "eng",
+    ),
+    barcode = "5099920305833",
+    asin = "B000LX0GZA",
+    packaging = null,
+    packagingId = null,
+    disambiguation = "",
+)
+
+val underPressureReleaseListItemModel = ReleaseListItemModel(
+    id = "61735bf8-219e-3164-a94c-b74b1482fd01",
+    name = "Under Pressure",
+    date = "1981-10",
+    formattedArtistCredits = "Queen & David Bowie",
+    countryCode = "US",
+    coverArtArchive = CoverArtArchiveUiModel(
+        count = 1,
+    ),
+    quality = "normal",
+    status = "Official",
+    statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+    textRepresentation = TextRepresentationUiModel(
+        script = "Latn",
+        language = "eng",
+    ),
+    disambiguation = "",
+)
+
+val underPressureJapanReleaseListItemModel = ReleaseListItemModel(
+    id = "3e8fe20d-8d8b-454d-9350-2078007d4788",
+    name = "Under Pressure",
+    date = "1991",
+    formattedArtistCredits = "Queen & David Bowie",
+    countryCode = "JP",
+    coverArtArchive = CoverArtArchiveUiModel(
+        count = 0,
+    ),
+    quality = "normal",
+    status = "Official",
+    statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+    textRepresentation = TextRepresentationUiModel(
+        script = "Latn",
+        language = "eng",
+    ),
+    disambiguation = "",
+)

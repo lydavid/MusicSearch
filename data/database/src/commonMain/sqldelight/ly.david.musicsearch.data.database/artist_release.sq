@@ -1,3 +1,4 @@
+-- TODO: drop table
 CREATE TABLE IF NOT EXISTS artist_release (
   `artist_id` TEXT NOT NULL,
   `release_id` TEXT NOT NULL,
