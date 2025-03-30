@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -42,7 +43,14 @@ internal fun ReleaseGroupDetailsUi(
                     text = getDisplayTypes(),
                     filterText = filterText,
                 )
-                // TODO: first release date
+
+                firstReleaseDate.ifNotNullOrEmpty {
+                    TextWithHeading(
+                        heading = strings.firstReleaseDate,
+                        text = it,
+                        filterText = filterText,
+                    )
+                }
 
                 WikipediaSection(
                     extract = wikipediaExtract,
