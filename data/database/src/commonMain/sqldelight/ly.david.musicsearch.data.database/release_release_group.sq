@@ -1,3 +1,4 @@
+-- This is still used to track the release group a release belongs to when visiting the release's details
 CREATE TABLE IF NOT EXISTS release_release_group (
   `release_id` TEXT NOT NULL,
   `release_group_id` TEXT NOT NULL,
@@ -9,76 +10,6 @@ insertOrFail:
 INSERT OR FAIL INTO release_release_group
 VALUES ?;
 
-deleteReleasesByReleaseGroup {
-DELETE FROM release WHERE id IN (
-  SELECT r.id
-  FROM release r
-  INNER JOIN release_release_group rrg ON r.id = rrg.release_id
-  INNER JOIN release_group rg ON rg.id = rrg.release_group_id
-  WHERE rg.id = :releaseGroupId
-);
-
-DELETE FROM release_release_group
-WHERE release_group_id = :releaseGroupId;
-}
-
 deleteReleaseReleaseGroupLink:
 DELETE FROM release_release_group
 WHERE release_id = :releaseId;
-
-getNumberOfReleasesByReleaseGroup:
-SELECT IFNULL(
-  (
-    SELECT COUNT(DISTINCT r.id)
-    FROM release r
-    INNER JOIN release_release_group rrg ON r.id = rrg.release_id
-    INNER JOIN release_group rg ON rg.id = rrg.release_group_id
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-    WHERE rg.id = :releaseGroupId
-    AND (
-      r.name LIKE :query
-      OR r.disambiguation LIKE :query
-      OR r.date LIKE :query
-      OR r.country_code LIKE :query
-      OR ac.name LIKE :query
-    )
-  ),
-  0
-) AS count;
-
-getReleasesByReleaseGroup:
-SELECT
-  r.*,
-  ac.name AS artistCreditNames,
-  mi.thumbnail_url,
-  mi.id AS placeholderKey,
-  COALESCE(
-    (
-      SELECT COUNT(cc.area_id)
-      FROM `release`
-      LEFT JOIN release_country rc ON rc.release_id = `release`.id
-      LEFT JOIN country_code cc ON cc.area_id = rc.country_id
-      WHERE r.id = `release`.id
-    ),
-    0
-  ) AS releaseCountryCount,
-  visited.entity_id IS NOT NULL AS visited
-FROM `release` r
-INNER JOIN release_release_group rrg ON r.id = rrg.release_id
-INNER JOIN release_group rg ON rg.id = rrg.release_group_id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN mbid_image mi ON mi.mbid = r.id
-LEFT JOIN visited ON visited.entity_id = r.id
-WHERE rg.id = :releaseGroupId
-AND (
-  r.name LIKE :query
-  OR r.disambiguation LIKE :query
-  OR r.date LIKE :query
-  OR r.country_code LIKE :query
-  OR ac.name LIKE :query
-)
-GROUP BY r.id
-ORDER BY r.date, r.name
-LIMIT :limit OFFSET :offset;

@@ -17,6 +17,7 @@ import ly.david.data.test.releaseWithSameCatalogNumberWithDifferentLabels
 import ly.david.data.test.underPressureJapanReleaseListItemModel
 import ly.david.data.test.underPressureJapanReleaseMusicBrainzModel
 import ly.david.data.test.underPressureRecordingMusicBrainzModel
+import ly.david.data.test.underPressureReleaseGroupMusicBrainzModel
 import ly.david.data.test.underPressureReleaseListItemModel
 import ly.david.data.test.underPressureReleaseMusicBrainzModel
 import ly.david.data.test.underPressureRemasteredReleaseListItemModel
@@ -121,7 +122,6 @@ class ReleasesByEntityRepositoryImplTest :
                 )
             },
             releaseDao = releaseDao,
-            releaseReleaseGroupDao = releaseReleaseGroupDao,
         )
     }
 
@@ -812,6 +812,81 @@ class ReleasesByEntityRepositoryImplTest :
     }
 
     @Test
+    fun setupReleasesByUnderPressureReleaseGroup() = runTest {
+        val entityId = underPressureReleaseGroupMusicBrainzModel.id
+        val entity = MusicBrainzEntity.RELEASE_GROUP
+        createReleaseGroupRepository(
+            underPressureReleaseGroupMusicBrainzModel,
+        ).lookupReleaseGroup(
+            releaseGroupId = entityId,
+            forceRefresh = false,
+        )
+        val releases = listOf(
+            underPressureReleaseMusicBrainzModel,
+            underPressureRemasteredReleaseMusicBrainzModel,
+            underPressureJapanReleaseMusicBrainzModel,
+        )
+        val releasesByEntityRepository = createReleasesByEntityRepository(
+            releases = releases,
+        )
+
+        testFilter(
+            pagingFlowProducer = { query ->
+                releasesByEntityRepository.observeReleasesByEntity(
+                    entityId = entityId,
+                    entity = entity,
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        underPressureReleaseListItemModel,
+                        underPressureRemasteredReleaseListItemModel,
+                        underPressureJapanReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by name",
+                    query = "under",
+                    expectedResult = listOf(
+                        underPressureReleaseListItemModel,
+                        underPressureRemasteredReleaseListItemModel,
+                        underPressureJapanReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by date",
+                    query = "1981",
+                    expectedResult = listOf(
+                        underPressureReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by date",
+                    query = "GB",
+                    expectedResult = listOf(
+                        underPressureRemasteredReleaseListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by artist credit name",
+                    query = "Queen",
+                    expectedResult = listOf(
+                        underPressureReleaseListItemModel,
+                        underPressureRemasteredReleaseListItemModel,
+                        underPressureJapanReleaseListItemModel,
+                    ),
+                ),
+            ),
+        )
+    }
+
+    @Test
     fun `refreshing releases by artist that belong to multiple entities does not delete the release`() = runTest {
         setupReleasesByDavidBowie()
         setupReleasesByJapan()
@@ -895,10 +970,7 @@ class ReleasesByEntityRepositoryImplTest :
         val releaseRepository = createReleaseRepository(
             underPressureJapanReleaseMusicBrainzModel.copy(
                 disambiguation = "changes will be ignored if release is linked to multiple entities",
-                releaseGroup = ReleaseGroupMusicBrainzModel(
-                    id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
-                    name = "Under Pressure",
-                ),
+                releaseGroup = underPressureReleaseGroupMusicBrainzModel,
             ),
         )
         val expectedReleaseDetails = ReleaseDetailsModel(
@@ -931,7 +1003,8 @@ class ReleasesByEntityRepositoryImplTest :
             releaseGroup = ReleaseGroupForRelease(
                 id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
                 name = "Under Pressure",
-                firstReleaseDate = "",
+                firstReleaseDate = "1981-10",
+                primaryType = "Single",
             ),
             areas = listOf(
                 AreaListItemModel(
@@ -1062,10 +1135,7 @@ class ReleasesByEntityRepositoryImplTest :
         val releaseRepository = createReleaseRepository(
             underPressureJapanReleaseMusicBrainzModel.copy(
                 disambiguation = "changes will be ignored if release is linked to multiple entities",
-                releaseGroup = ReleaseGroupMusicBrainzModel(
-                    id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
-                    name = "Under Pressure",
-                ),
+                releaseGroup = underPressureReleaseGroupMusicBrainzModel,
             ),
         )
         val expectedReleaseDetails = ReleaseDetailsModel(
@@ -1098,7 +1168,8 @@ class ReleasesByEntityRepositoryImplTest :
             releaseGroup = ReleaseGroupForRelease(
                 id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
                 name = "Under Pressure",
-                firstReleaseDate = "",
+                firstReleaseDate = "1981-10",
+                primaryType = "Single",
             ),
             areas = listOf(
                 AreaListItemModel(
@@ -1153,78 +1224,168 @@ class ReleasesByEntityRepositoryImplTest :
 //        }
     }
 
-    // TODO: doesn't work until we make release group releases use the same table
-//    @Test
-//    fun `refreshing releases by release group that belong to multiple entities does not delete the release`() = runTest {
-//        `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`()
-//
-//        val entityId = utaNoUtaReleaseMusicBrainzModel.id
-//        val releaseRepository = createReleaseRepository(
-//            musicBrainzModel = utaNoUtaReleaseGroupMusicBrainzModel,
-//        )
-//        releaseGroupRepository.lookupReleaseGroup(
-//            releaseGroupId = entityId,
-//            forceRefresh = false,
-//        )
-//        val entity = MusicBrainzEntity.RELEASE_GROUP
-//        val releases = listOf(
-//            utaNoUtaReleaseMusicBrainzModel,
-//        )
-//        val releasesByEntityRepository = createReleasesByEntityRepository(
-//            releases,
-//        )
-//
-//        testFilter(
-//            pagingFlowProducer = { query ->
-//                releasesByEntityRepository.observeReleasesByEntity(
-//                    entityId = entityId,
-//                    entity = entity,
-//                    listFilters = ListFilters(
-//                        query = query,
-//                    ),
-//                )
-//            },
-//            testCases = listOf(
-//                FilterTestCase(
-//                    description = "No filter",
-//                    query = "",
-//                    expectedResult = listOf(
-//                        utaNoUtaReleaseListItemModel.copy(
-//                            imageId = 1,
-//                            imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-//                        ),
-//                    ),
-//                ),
-//            ),
-//        )
-//
-//        // refresh releases by label
-//        val modifiedReleases = listOf(
-//            releaseWith3CatalogNumbersWithSameLabel.copy(
-//                name = "some change",
-//            ),
-//        )
-//        val modifiedReleasesByEntityRepository = createReleasesByEntityRepository(
-//            releases = modifiedReleases,
-//        )
-//        modifiedReleasesByEntityRepository.observeReleasesByEntity(
-//            entityId = virginMusicLabelMusicBrainzModel.id,
-//            entity = MusicBrainzEntity.LABEL,
+    @Test
+    fun `refreshing releases by release group that belong to multiple entities does not delete the release`() = runTest {
+        setupReleasesByUnderPressureRecording()
+        setupReleasesByUnderPressureReleaseGroup()
+
+        val modifiedReleases = listOf(
+            underPressureReleaseMusicBrainzModel,
+            underPressureRemasteredReleaseMusicBrainzModel.copy(
+                id = "new-id-is-considered-a-different-release-group",
+            ),
+            underPressureJapanReleaseMusicBrainzModel.copy(
+                disambiguation = "changes will be ignored if release group is linked to multiple entities",
+            ),
+        )
+        val releasesByEntityRepository = createReleasesByEntityRepository(
+            releases = modifiedReleases,
+        )
+
+        // refresh
+        releasesByEntityRepository.observeReleasesByEntity(
+            entityId = underPressureReleaseGroupMusicBrainzModel.id,
+            entity = MusicBrainzEntity.RELEASE_GROUP,
+            listFilters = ListFilters(),
+        ).asSnapshot {
+            refresh()
+        }.run {
+            assertEquals(
+                listOf(
+                    underPressureReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel.copy(
+                        id = "new-id-is-considered-a-different-release-group",
+                    ),
+                    underPressureJapanReleaseListItemModel,
+                ),
+                this,
+            )
+        }
+
+        // other entities remain unchanged
+        releasesByEntityRepository.observeReleasesByEntity(
+            entityId = underPressureRecordingMusicBrainzModel.id,
+            entity = MusicBrainzEntity.RECORDING,
+            listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    underPressureReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel,
+                    underPressureJapanReleaseListItemModel,
+                ),
+                this,
+            )
+        }
+
+//        releasesByEntityRepository.observeReleasesByEntity(
+//            entityId = null,
+//            entity = null,
 //            listFilters = ListFilters(),
-//        ).asSnapshot {
-//            refresh()
-//        }.run {
+//        ).asSnapshot().run {
 //            assertEquals(
 //                listOf(
-//                    utaNoUtaReleaseListItemModel.copy(
-//                        name = "some change",
-//                        imageId = 1,
-//                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-//                        catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
+//                    nutcrackerReleaseListItemModel,
+//                    tchaikovskyOverturesReleaseListItemModel,
+//                    alsoSprachZarathustraReleaseListItemModel,
+//                    nutcrackerReleaseListItemModel.copy(
+//                        id = "new-id-is-considered-a-different-release-group",
 //                    ),
 //                ),
 //                this,
 //            )
 //        }
-//    }
+
+        // now visit the release and refresh it
+        val releaseRepository = createReleaseRepository(
+            underPressureJapanReleaseMusicBrainzModel.copy(
+                disambiguation = "changes will be ignored if release is linked to multiple entities",
+                releaseGroup = underPressureReleaseGroupMusicBrainzModel,
+            ),
+        )
+        val expectedReleaseDetails = ReleaseDetailsModel(
+            id = "3e8fe20d-8d8b-454d-9350-2078007d4788",
+            name = "Under Pressure",
+            date = "1991",
+            artistCredits = listOf(
+                ArtistCreditUiModel(
+                    artistId = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
+                    name = "Queen",
+                    joinPhrase = " & ",
+                ),
+                ArtistCreditUiModel(
+                    artistId = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
+                    name = "David Bowie",
+                    joinPhrase = "",
+                ),
+            ),
+            countryCode = "JP",
+            coverArtArchive = CoverArtArchiveUiModel(
+                count = 0,
+            ),
+            quality = "normal",
+            status = "Official",
+            statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+            textRepresentation = TextRepresentationUiModel(
+                script = "Latn",
+                language = "eng",
+            ),
+            releaseGroup = ReleaseGroupForRelease(
+                id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
+                name = "Under Pressure",
+                firstReleaseDate = "1981-10",
+                primaryType = "Single",
+            ),
+            areas = listOf(
+                AreaListItemModel(
+                    id = "2db42837-c832-3c27-b4a3-08198f75693c",
+                    name = "Japan",
+                    visited = false,
+                    countryCodes = listOf("JP"),
+                    date = "1991",
+                ),
+            ),
+        )
+        releaseRepository.lookupRelease(
+            releaseId = underPressureJapanReleaseMusicBrainzModel.id,
+            forceRefresh = false,
+        ).let { releaseDetailsModel ->
+            assertEquals(
+                expectedReleaseDetails,
+                releaseDetailsModel,
+            )
+        }
+        releaseRepository.lookupRelease(
+            releaseId = underPressureJapanReleaseMusicBrainzModel.id,
+            forceRefresh = true,
+        ).let { releaseDetailsModel ->
+            assertEquals(
+                expectedReleaseDetails.copy(
+                    disambiguation = "changes will be ignored if release is linked to multiple entities",
+                ),
+                releaseDetailsModel,
+            )
+        }
+
+//        releasesByEntityRepository.observeReleasesByEntity(
+//            entityId = null,
+//            entity = null,
+//            listFilters = ListFilters(),
+//        ).asSnapshot().run {
+//            assertEquals(
+//                listOf(
+//                    nutcrackerReleaseListItemModel,
+//                    alsoSprachZarathustraReleaseListItemModel,
+//                    nutcrackerReleaseListItemModel.copy(
+//                        id = "new-id-is-considered-a-different-release-group",
+//                    ),
+//                    tchaikovskyOverturesReleaseListItemModel.copy(
+//                        disambiguation = "changes will be ignored if release group is linked to multiple entities",
+//                        visited = true,
+//                    ),
+//                ),
+//                this,
+//            )
+//        }
+    }
 }

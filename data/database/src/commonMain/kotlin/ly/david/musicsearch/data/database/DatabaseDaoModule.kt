@@ -69,7 +69,7 @@ val databaseDaoModule = module {
     singleOf(::ReleaseDao)
     singleOf(::ReleaseGroupDaoImpl) bind ReleaseGroupDao::class
     single { ReleaseLabelDao(get()) }
-    single { ReleaseReleaseGroupDao(get(), get()) }
+    single { ReleaseReleaseGroupDao(get()) }
     single { SearchHistoryDao(get(), get()) }
     single { SeriesDao(get()) }
     single { TrackDao(get(), get(), get()) }

@@ -1,0 +1,3 @@
+INSERT OR IGNORE INTO releases_by_entity (entity_id, release_id)
+SELECT release_group_id, release_id
+FROM release_release_group;
