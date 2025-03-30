@@ -5,7 +5,6 @@ import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.RecordingReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.ARTIST_CREDITS
@@ -23,7 +22,6 @@ class ReleasesByEntityRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val browseApi: BrowseApi,
-    private val recordingReleaseDao: RecordingReleaseDao,
     private val releaseDao: ReleaseDao,
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
 ) : ReleasesByEntityRepository,
@@ -67,10 +65,6 @@ class ReleasesByEntityRepositoryImpl(
                     releaseDao.deleteReleasesByLabel(entityId)
                 }
 
-                MusicBrainzEntity.RECORDING -> {
-                    recordingReleaseDao.deleteReleasesByRecording(entityId)
-                }
-
                 MusicBrainzEntity.RELEASE_GROUP -> {
                     releaseReleaseGroupDao.deleteReleasesByReleaseGroup(entityId)
                 }
@@ -93,13 +87,6 @@ class ReleasesByEntityRepositoryImpl(
             entity == MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.getReleasesByCollection(
                     collectionId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            entity == MusicBrainzEntity.RECORDING -> {
-                recordingReleaseDao.getReleasesByRecording(
-                    recordingId = entityId,
                     query = listFilters.query,
                 )
             }
@@ -172,13 +159,6 @@ class ReleasesByEntityRepositoryImpl(
                 )
             }
 
-            MusicBrainzEntity.RECORDING -> {
-                recordingReleaseDao.insertAll(
-                    recordingId = entityId,
-                    releaseIds = musicBrainzModels.map { release -> release.id },
-                )
-            }
-
             MusicBrainzEntity.RELEASE_GROUP -> {
                 releaseReleaseGroupDao.insertAll(
                     releaseGroupId = entityId,
@@ -208,10 +188,6 @@ class ReleasesByEntityRepositoryImpl(
 
             MusicBrainzEntity.LABEL -> {
                 releaseDao.getCountOfReleasesByLabel(entityId)
-            }
-
-            MusicBrainzEntity.RECORDING -> {
-                recordingReleaseDao.getCountOfReleasesByRecording(entityId)
             }
 
             MusicBrainzEntity.RELEASE_GROUP -> {

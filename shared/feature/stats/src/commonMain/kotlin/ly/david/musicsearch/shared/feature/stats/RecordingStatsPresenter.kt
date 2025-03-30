@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.data.database.dao.RecordingReleaseDao
+import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
 import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
@@ -18,7 +18,7 @@ internal class RecordingStatsPresenter(
     private val screen: StatsScreen,
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val observeBrowseEntityCount: ObserveBrowseEntityCount,
-    private val recordingReleaseDao: RecordingReleaseDao,
+    private val releaseDao: ReleaseDao,
 ) : Presenter<StatsUiState> {
 
     @Composable
@@ -38,7 +38,7 @@ internal class RecordingStatsPresenter(
                 entityId,
                 MusicBrainzEntity.RELEASE,
             ),
-            recordingReleaseDao.observeCountOfReleasesByRecording(entityId),
+            releaseDao.observeCountOfReleasesByEntity(entityId),
         ) { relationTypeCounts, browseReleaseCount, localReleases ->
             Stats(
                 totalRelations = relationTypeCounts.sumOf { it.count },

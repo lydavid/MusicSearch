@@ -1,3 +1,4 @@
+-- TODO: drop table
 CREATE TABLE IF NOT EXISTS recording_release (
   `recording_id` TEXT NOT NULL,
   `release_id` TEXT NOT NULL,
