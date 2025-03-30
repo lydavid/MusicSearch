@@ -84,6 +84,7 @@ jobs:
             adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
             adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
             $HOME/.maestro/bin/maestro test .maestro/pr
+            $HOME/.maestro/bin/maestro test .maestro/full
             adb shell cmd overlay enable com.android.internal.systemui.navbar.threebutton
             adb shell cmd overlay disable com.android.internal.systemui.navbar.gestural
             $HOME/.maestro/bin/maestro test .maestro/threebutton
@@ -130,6 +131,7 @@ jobs:
             adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
             adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
             $HOME/.maestro/bin/maestro test .maestro/pr
+            $HOME/.maestro/bin/maestro test .maestro/full
             adb shell cmd overlay enable com.android.internal.systemui.navbar.threebutton
             adb shell cmd overlay disable com.android.internal.systemui.navbar.gestural
             $HOME/.maestro/bin/maestro test .maestro/threebutton

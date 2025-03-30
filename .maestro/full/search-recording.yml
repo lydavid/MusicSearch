@@ -1,0 +1,21 @@
+appId: io.github.lydavid.musicsearch.debug
+---
+- launchApp
+- startRecording: search-recording
+- assertVisible: "Search MusicBrainz"
+- tapOn: "Resource"
+- tapOn: "Recording"
+- tapOn:
+    text: "Search"
+    index: 0
+- inputText: "rid:\"32c7e292-14f1-4080-bddf-ef852e0a4c59\""
+- tapOn: "Under Pressure"
+
+- assertVisible: "Recording information"
+- assertVisible: "First release date: 1981-10"
+- assertVisible: "https://open.spotify.com/track/2fuCquhmrzHpu5xcA1ci9x"
+- tapOn: "Releases"
+- tapOn: "Stats"
+- assertVisible: "Cached 200 of 260 releases"
+
+- stopRecording
