@@ -29,8 +29,8 @@ class ReleasesByEntityRepositoryImpl(
     ) {
 
     override fun observeReleasesByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
+        entityId: String?,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<ReleaseListItemModel>> {
         return observeEntitiesByEntity(
@@ -73,24 +73,11 @@ class ReleasesByEntityRepositoryImpl(
         entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, ReleaseListItemModel> {
-        return when {
-            entityId == null || entity == null -> {
-                error("not possible")
-            }
-
-            entity == MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.getReleasesByCollection(
-                    collectionId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            else -> releaseDao.getReleases(
-                entityId = entityId,
-                entity = entity,
-                query = listFilters.query,
-            )
-        }
+        return releaseDao.getReleases(
+            entityId = entityId,
+            entity = entity,
+            query = listFilters.query,
+        )
     }
 
     override suspend fun browseEntities(

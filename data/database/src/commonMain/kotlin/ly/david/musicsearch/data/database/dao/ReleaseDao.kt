@@ -138,7 +138,9 @@ class ReleaseDao(
         query: String,
     ): PagingSource<Int, ReleaseListItemModel> = when {
         entityId == null || entity == null -> {
-            error("not yet supported")
+            getAllReleases(
+                query = query,
+            )
         }
 
         entity == MusicBrainzEntity.AREA -> {
@@ -151,6 +153,13 @@ class ReleaseDao(
         entity == MusicBrainzEntity.LABEL -> {
             getReleasesByLabel(
                 labelId = entityId,
+                query = query,
+            )
+        }
+
+        entity == MusicBrainzEntity.COLLECTION -> {
+            getReleasesByCollection(
+                collectionId = entityId,
                 query = query,
             )
         }
@@ -364,4 +373,43 @@ class ReleaseDao(
         )
             .executeAsOne()
             .toInt()
+
+    private fun getReleasesByCollection(
+        collectionId: String,
+        query: String,
+    ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
+        countQuery = transacter.getNumberOfReleasesByCollection(
+            collectionId = collectionId,
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getReleasesByCollection(
+                collectionId = collectionId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToReleaseListItemModel,
+            )
+        },
+    )
+
+    private fun getAllReleases(
+        query: String,
+    ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
+        countQuery = transacter.getCountOfAllReleases(
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getAllReleases(
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToReleaseListItemModel,
+            )
+        },
+    )
 }
