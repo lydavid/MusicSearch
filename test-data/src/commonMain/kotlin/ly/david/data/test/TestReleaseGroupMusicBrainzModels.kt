@@ -4,7 +4,7 @@ import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrai
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 
-val underPressureReleaseGroup = ReleaseGroupMusicBrainzModel(
+val underPressureReleaseGroupMusicBrainzModel = ReleaseGroupMusicBrainzModel(
     id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
     name = "Under Pressure",
     artistCredits = listOf(

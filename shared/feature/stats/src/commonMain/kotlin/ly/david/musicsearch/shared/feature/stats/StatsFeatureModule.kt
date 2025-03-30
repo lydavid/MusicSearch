@@ -96,7 +96,7 @@ val statsFeatureModule = module {
                                 screen = screen,
                                 getCountOfEachRelationshipTypeUseCase = get(),
                                 observeBrowseEntityCount = get(),
-                                releaseReleaseGroupDao = get(),
+                                releaseDao = get(),
                             )
                         }
 
