@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS release_release_group (
   PRIMARY KEY(`release_id`, `release_group_id`)
 );
 
-insertOrFail:
-INSERT OR FAIL INTO release_release_group
+insertOrIgnore:
+INSERT OR IGNORE INTO release_release_group
 VALUES ?;
 
 deleteReleaseReleaseGroupLink:

@@ -8,22 +8,16 @@ class ReleaseReleaseGroupDao(
 ) : EntityDao {
     override val transacter = database.release_release_groupQueries
 
-    @Suppress("SwallowedException")
     fun insert(
         releaseId: String,
         releaseGroupId: String,
-    ): Int {
-        return try {
-            transacter.insertOrFail(
-                Release_release_group(
-                    release_id = releaseId,
-                    release_group_id = releaseGroupId,
-                ),
-            )
-            1
-        } catch (ex: Exception) {
-            0
-        }
+    ) {
+        transacter.insertOrIgnore(
+            Release_release_group(
+                release_id = releaseId,
+                release_group_id = releaseGroupId,
+            ),
+        )
     }
 
     fun deleteReleaseGroupByReleaseLink(
