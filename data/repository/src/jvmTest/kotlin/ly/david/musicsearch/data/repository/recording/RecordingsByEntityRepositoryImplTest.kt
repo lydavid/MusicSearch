@@ -51,6 +51,7 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
     private val collectionDao: CollectionDao by inject()
     private val browseEntityCountDao: BrowseEntityCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
+    private val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
 
     private fun createRecordingsByEntityRepository(
         recordings: List<RecordingMusicBrainzModel>,
@@ -79,7 +80,6 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
 
     @Test
     fun setupRecordingsByCollection() = runTest {
-        val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
         val recordings = listOf(
             underPressureRecordingMusicBrainzModel,
             skycladObserverRecordingMusicBrainzModel,
@@ -438,6 +438,55 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
                     disambiguation = "changes will be ignored if recording is linked to multiple entities",
                 ),
                 recordingDetailsModel,
+            )
+        }
+    }
+
+    @Test
+    fun `refreshing recordings that also belong to collection not delete the recording`() = runTest {
+        setUpRecordingsByArtist()
+        setupRecordingsByCollection()
+
+        val modifiedRecordings = listOf(
+            skycladObserverCoverRecordingMusicBrainzModel.copy(
+                id = "new-id-is-considered-a-different-recording",
+            ),
+        )
+        val recordingsByEntityRepository = createRecordingsByEntityRepository(
+            recordings = modifiedRecordings,
+        )
+
+        // refresh
+        recordingsByEntityRepository.observeRecordingsByEntity(
+            entityId = itouKanakoArtistMusicBrainzModel.id,
+            entity = MusicBrainzEntity.ARTIST,
+            listFilters = ListFilters(),
+        ).asSnapshot {
+            refresh()
+        }.run {
+            assertEquals(
+                listOf(
+                    skycladObserverCoverRecordingListItemModel.copy(
+                        id = "new-id-is-considered-a-different-recording",
+                    ),
+                ),
+                this,
+            )
+        }
+
+        // other entities remain unchanged
+        recordingsByEntityRepository.observeRecordingsByEntity(
+            entityId = collectionId,
+            entity = MusicBrainzEntity.COLLECTION,
+            listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    underPressureRecordingListItemModel,
+                    // TODO: recording was deleted because we deleted it in another screen
+//                    skycladObserverRecordingListItemModel,
+                ),
+                this,
             )
         }
     }

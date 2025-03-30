@@ -316,11 +316,11 @@ class ReleaseGroupsByEntityRepositoryImplTest :
         )
     }
 
-    // TODO: assert releaseGroups by collection
     @Test
     fun `refreshing releaseGroups that belong to multiple entities does not delete the releaseGroup`() = runTest {
         setupReleaseGroupsByBerlinerPhilharmoniker()
         setupReleaseGroupsByTchaikovsky()
+        setupReleaseGroupsByCollection()
 
         val modifiedReleaseGroups = listOf(
             alsoSprachZarathustraReleaseGroupMusicBrainzModel,
@@ -369,7 +369,19 @@ class ReleaseGroupsByEntityRepositoryImplTest :
                 this,
             )
         }
-
+        releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
+            entityId = collectionId,
+            entity = MusicBrainzEntity.COLLECTION,
+            listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    alsoSprachZarathustraReleaseGroupListItemModel,
+                    tchaikovskyOverturesReleaseGroupListItemModel,
+                ),
+                this,
+            )
+        }
         releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
             entityId = null,
             entity = null,

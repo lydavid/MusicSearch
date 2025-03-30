@@ -332,11 +332,11 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
         )
     }
 
-    // TODO: assert works by collection
     @Test
     fun `refreshing works that belong to multiple entities does not delete the work`() = runTest {
         setupWorksByDavidBowie()
         setupWorksByQueen()
+        setupWorksByCollection()
 
         val modifiedWorks = listOf(
             starmanWorkMusicBrainzModel.copy(
@@ -383,7 +383,20 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
                 this,
             )
         }
-
+        worksByEntityRepository.observeWorksByEntity(
+            entityId = collectionId,
+            entity = MusicBrainzEntity.COLLECTION,
+            listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    underPressureWorkListItemModel,
+                    hackingToTheGateWorkListItemModel,
+                    skycladObserverWorkListItemModel,
+                ),
+                this,
+            )
+        }
         worksByEntityRepository.observeWorksByEntity(
             entityId = null,
             entity = null,
@@ -393,6 +406,8 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
                 listOf(
                     underPressureWorkListItemModel,
                     dontStopMeNowWorkListItemModel,
+                    hackingToTheGateWorkListItemModel,
+                    skycladObserverWorkListItemModel,
                     starmanWorkListItemModel.copy(
                         id = "new-id-is-considered-a-different-work",
                     ),
