@@ -43,6 +43,7 @@ internal fun ReleaseGroupDetailsUi(
                     text = getDisplayTypes(),
                     filterText = filterText,
                 )
+                // TODO: first release date
 
                 firstReleaseDate.ifNotNullOrEmpty {
                     TextWithHeading(
