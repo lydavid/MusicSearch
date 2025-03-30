@@ -1,0 +1,24 @@
+appId: io.github.lydavid.musicsearch.debug
+---
+- launchApp
+- startRecording: search-release-group
+- assertVisible: "Search MusicBrainz"
+- tapOn: "Resource"
+- tapOn: "Release Group"
+- tapOn:
+    text: "Search"
+    index: 0
+- inputText: "\"under pressure\" firstreleasedate:1981"
+- tapOn:
+      text: "Under Pressure"
+      index: 0
+
+- assertVisible: "Release Group by Queen & David Bowie"
+- assertVisible: "Release Group information"
+- assertVisible: "Type: Single"
+- assertVisible: "https://en.wikipedia.org/wiki/Under_Pressure"
+- tapOn: "Releases"
+- tapOn: "Stats"
+- assertVisible: "Cached 13 of 13 releases"
+
+- stopRecording

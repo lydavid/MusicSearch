@@ -11,6 +11,7 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "rid:\"32c7e292-14f1-4080-bddf-ef852e0a4c59\""
 - tapOn: "Under Pressure"
 
+- assertVisible: "Recording by Queen & David Bowie"
 - assertVisible: "Recording information"
 - assertVisible: "First release date: 1981-10"
 - assertVisible: "https://open.spotify.com/track/2fuCquhmrzHpu5xcA1ci9x"
