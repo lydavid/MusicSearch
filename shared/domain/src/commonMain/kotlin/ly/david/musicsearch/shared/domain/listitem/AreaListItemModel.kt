@@ -11,8 +11,8 @@ data class AreaListItemModel(
     override val disambiguation: String? = null,
     override val type: String? = null,
     override val lifeSpan: LifeSpanUiModel? = LifeSpanUiModel(),
-    val countryCodes: List<String>? = null,
-    val date: String? = null,
+    val countryCodes: List<String> = listOf(),
+    val date: String? = "",
     override val visited: Boolean = false,
 ) : ListItemModel(), Area, Visitable
 
@@ -20,6 +20,6 @@ fun ReleaseEvent.toAreaListItemModel() = AreaListItemModel(
     id = id,
     name = name,
     date = date,
-    countryCodes = countryCode?.let { listOf(it) },
+    countryCodes = listOfNotNull(countryCode),
     visited = visited,
 )
