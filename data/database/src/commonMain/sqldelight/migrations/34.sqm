@@ -1,0 +1,3 @@
+DROP TABLE artist_release;
+
+DROP TABLE recording_release;
