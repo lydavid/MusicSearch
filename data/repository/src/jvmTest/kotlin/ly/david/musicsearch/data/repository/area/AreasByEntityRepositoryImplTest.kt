@@ -10,6 +10,7 @@ import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.AreasByEntityRepository
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
@@ -113,8 +114,13 @@ class AreasByEntityRepositoryImplTest : KoinTest {
             entityIds = areas.map { it.id },
         )
 
+        val browseMethod = BrowseMethod.ByEntity(
+            entityId = collectionId,
+            entity = MusicBrainzEntity.COLLECTION,
+        )
+
         sut.observeAreasByEntity(
-            browseMethod = collectionId,
+            browseMethod = browseMethod,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -156,7 +162,7 @@ class AreasByEntityRepositoryImplTest : KoinTest {
         }
 
         sut.observeAreasByEntity(
-            browseMethod = collectionId,
+            browseMethod = browseMethod,
             listFilters = ListFilters(
                 query = "di",
             ),
