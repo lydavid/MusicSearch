@@ -43,20 +43,11 @@ class SeriesByEntityRepositoryImpl(
         entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): PagingSource<Int, SeriesListItemModel> {
-        return when {
-            entityId == null || entity == null -> {
-                error("not possible")
-            }
-
-            entity == MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.getSeriesByCollection(
-                    collectionId = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            else -> error(browseEntitiesNotSupported(entity))
-        }
+        return seriesDao.getSeries(
+            entityId = entityId,
+            entity = entity,
+            query = listFilters.query,
+        )
     }
 
     override fun deleteLinkedEntitiesByEntity(

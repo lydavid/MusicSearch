@@ -71,7 +71,7 @@ val databaseDaoModule = module {
     single { ReleaseLabelDao(get()) }
     single { ReleaseReleaseGroupDao(get()) }
     single { SearchHistoryDao(get(), get()) }
-    single { SeriesDao(get()) }
+    singleOf(::SeriesDao)
     single { TrackDao(get(), get(), get()) }
     single { WorkAttributeDao(get()) }
     singleOf(::WorkDao)

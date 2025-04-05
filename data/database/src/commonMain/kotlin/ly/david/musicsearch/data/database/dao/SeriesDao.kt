@@ -1,13 +1,20 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
-import ly.david.musicsearch.shared.domain.series.SeriesDetailsModel
+import app.cash.paging.PagingSource
+import app.cash.sqldelight.paging3.QueryPagingSource
+import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
+import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.series.SeriesDetailsModel
 import lydavidmusicsearchdatadatabase.Series
 import lydavidmusicsearchdatadatabase.SeriesQueries
 
 class SeriesDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter: SeriesQueries = database.seriesQueries
 
@@ -55,4 +62,62 @@ class SeriesDao(
     fun delete(id: String) {
         transacter.delete(id)
     }
+
+    fun getSeries(
+        entityId: String?,
+        entity: MusicBrainzEntity?,
+        query: String,
+    ): PagingSource<Int, SeriesListItemModel> = when {
+        entityId == null || entity == null -> {
+            getAllSeries(
+                query = query,
+            )
+        }
+
+        else -> {
+            getSeriesByCollection(
+                entityId = entityId,
+                query = query,
+            )
+        }
+    }
+
+    private fun getSeriesByCollection(
+        entityId: String,
+        query: String,
+    ): PagingSource<Int, SeriesListItemModel> = QueryPagingSource(
+        countQuery = transacter.getNumberOfSeriesByCollection(
+            collectionId = entityId,
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getSeriesByCollection(
+                collectionId = entityId,
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToSeriesListItemModel,
+            )
+        },
+    )
+
+    private fun getAllSeries(
+        query: String,
+    ): PagingSource<Int, SeriesListItemModel> = QueryPagingSource(
+        countQuery = transacter.getCountOfAllSeries(
+            query = "%$query%",
+        ),
+        transacter = transacter,
+        context = coroutineDispatchers.io,
+        queryProvider = { limit, offset ->
+            transacter.getAllSeries(
+                query = "%$query%",
+                limit = limit,
+                offset = offset,
+                mapper = ::mapToSeriesListItemModel,
+            )
+        },
+    )
 }

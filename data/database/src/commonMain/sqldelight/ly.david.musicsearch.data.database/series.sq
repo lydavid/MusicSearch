@@ -21,3 +21,73 @@ FROM series WHERE id = ?;
 delete:
 DELETE FROM series
 WHERE id = :id;
+
+-- series by collection
+
+getNumberOfSeriesByCollection:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM series s
+    INNER JOIN collection_entity ce ON s.id = ce.entity_id
+    INNER JOIN collection c ON c.id = ce.id
+    WHERE c.id = :collectionId
+    AND (
+      s.name LIKE :query
+      OR s.disambiguation LIKE :query
+      OR s.type LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getSeriesByCollection:
+SELECT
+  s.id,
+  s.name,
+  s.disambiguation,
+  s.type,
+  visited.entity_id IS NOT NULL AS visited
+FROM series s
+INNER JOIN collection_entity ce ON s.id = ce.entity_id
+INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN visited ON visited.entity_id = s.id
+WHERE c.id = :collectionId
+AND (
+  s.name LIKE :query
+  OR s.disambiguation LIKE :query
+  OR s.type LIKE :query
+)
+LIMIT :limit OFFSET :offset;
+
+-- all series
+
+getCountOfAllSeries:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM series s
+    WHERE (
+      s.name LIKE :query
+      OR s.disambiguation LIKE :query
+      OR s.type LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getAllSeries:
+SELECT
+  s.id,
+  s.name,
+  s.disambiguation,
+  s.type,
+  visited.entity_id IS NOT NULL AS visited
+FROM series s
+LEFT JOIN visited ON visited.entity_id = s.id
+WHERE (
+  s.name LIKE :query
+  OR s.disambiguation LIKE :query
+  OR s.type LIKE :query
+)
+LIMIT :limit OFFSET :offset;

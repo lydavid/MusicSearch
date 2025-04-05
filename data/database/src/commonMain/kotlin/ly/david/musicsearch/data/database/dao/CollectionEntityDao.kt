@@ -90,27 +90,6 @@ class CollectionEntityDao(
         },
     )
 
-    fun getSeriesByCollection(
-        collectionId: String,
-        query: String,
-    ): PagingSource<Int, SeriesListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfSeriesByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-        ),
-        transacter = transacter,
-        context = coroutineDispatchers.io,
-        queryProvider = { limit, offset ->
-            transacter.getSeriesByCollection(
-                collectionId = collectionId,
-                query = "%$query%",
-                limit = limit,
-                offset = offset,
-                mapper = ::mapToSeriesListItemModel,
-            )
-        },
-    )
-
     fun getCountOfEntitiesByCollection(collectionId: String): Int =
         transacter.getCountOfEntitiesByCollection(
             collectionId = collectionId,
