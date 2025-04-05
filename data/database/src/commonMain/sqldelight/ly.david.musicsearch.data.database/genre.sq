@@ -14,3 +14,63 @@ SELECT
   name,
   disambiguation
 FROM genre WHERE id = ?;
+
+-- genres by collection
+
+getNumberOfGenresByCollection:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM genre e
+    INNER JOIN collection_entity ce ON e.id = ce.entity_id
+    INNER JOIN collection c ON c.id = ce.id
+    WHERE c.id = :collectionId
+    AND (
+      e.name LIKE :query OR
+      e.disambiguation LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getGenresByCollection:
+SELECT
+  e.id,
+  e.name,
+  e.disambiguation
+FROM genre e
+INNER JOIN collection_entity ce ON e.id = ce.entity_id
+INNER JOIN collection c ON c.id = ce.id
+WHERE c.id = :collectionId
+AND (
+  e.name LIKE :query OR
+  e.disambiguation LIKE :query
+)
+LIMIT :limit OFFSET :offset;
+
+-- all genres
+
+getCountOfAllGenres:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM genre e
+    WHERE (
+      e.name LIKE :query OR
+      e.disambiguation LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getAllGenres:
+SELECT
+  e.id,
+  e.name,
+  e.disambiguation
+FROM genre e
+WHERE (
+  e.name LIKE :query OR
+  e.disambiguation LIKE :query
+)
+LIMIT :limit OFFSET :offset;

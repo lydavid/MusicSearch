@@ -1,19 +1,11 @@
 package ly.david.musicsearch.data.database.dao
 
-import app.cash.paging.PagingSource
-import app.cash.sqldelight.paging3.QueryPagingSource
-import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
-import ly.david.musicsearch.data.database.mapper.mapToGenreListItemModel
-import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
-import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
-import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import lydavidmusicsearchdatadatabase.Collection_entity
 
 class CollectionEntityDao(
     database: Database,
-    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.collection_entityQueries
 
@@ -68,27 +60,6 @@ class CollectionEntityDao(
     ) {
         transacter.deleteCollection(collectionId)
     }
-
-    fun getGenresByCollection(
-        collectionId: String,
-        query: String,
-    ): PagingSource<Int, GenreListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfGenresByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-        ),
-        transacter = transacter,
-        context = coroutineDispatchers.io,
-        queryProvider = { limit, offset ->
-            transacter.getGenresByCollection(
-                collectionId = collectionId,
-                query = "%$query%",
-                limit = limit,
-                offset = offset,
-                mapper = ::mapToGenreListItemModel,
-            )
-        },
-    )
 
     fun getCountOfEntitiesByCollection(collectionId: String): Int =
         transacter.getCountOfEntitiesByCollection(

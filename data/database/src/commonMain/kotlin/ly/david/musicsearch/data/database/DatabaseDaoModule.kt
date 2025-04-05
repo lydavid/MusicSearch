@@ -50,13 +50,13 @@ val databaseDaoModule = module {
     single { ArtistCollaborationDao(get()) }
     single { BrowseEntityCountDao(get(), get()) }
     single { CollectionDao(get(), get()) }
-    single { CollectionEntityDao(get(), get()) }
+    singleOf(::CollectionEntityDao)
     single { CountryCodeDao(get()) }
     single { EntityHasRelationsDao(get()) }
     singleOf(::VisitedDaoImpl) bind VisitedDao::class
     singleOf(::EventDao)
     singleOf(::InstrumentDao)
-    single { GenreDao(get()) }
+    singleOf(::GenreDao)
     singleOf(::LabelDao)
     single { LookupHistoryDao(get(), get()) }
     singleOf(::MbidImageDao) bind ImageUrlDao::class

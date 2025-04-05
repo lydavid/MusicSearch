@@ -5,7 +5,6 @@ import app.cash.paging.cachedIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
 import ly.david.musicsearch.shared.domain.genre.GenresByEntityRepository
@@ -21,15 +20,12 @@ class GetGenres(
         entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<GenreListItemModel>> {
-        return when {
-            entityId.isEmpty() || entity == null -> emptyFlow()
-            else -> genresByEntityRepository.observeGenresByEntity(
-                entityId = entityId,
-                entity = entity,
-                listFilters = listFilters,
-            )
-                .distinctUntilChanged()
-                .cachedIn(coroutineScope)
-        }
+        return genresByEntityRepository.observeGenresByEntity(
+            entityId = entityId,
+            entity = entity,
+            listFilters = listFilters,
+        )
+            .distinctUntilChanged()
+            .cachedIn(coroutineScope)
     }
 }
