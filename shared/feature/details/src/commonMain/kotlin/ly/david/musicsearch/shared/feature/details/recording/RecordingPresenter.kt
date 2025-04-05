@@ -33,9 +33,9 @@ import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
-import ly.david.musicsearch.ui.common.release.ReleasesByEntityPresenter
-import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
-import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
+import ly.david.musicsearch.ui.common.release.ReleasesListPresenter
+import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
+import ly.david.musicsearch.ui.common.release.ReleasesListUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
@@ -45,7 +45,7 @@ internal class RecordingPresenter(
     private val navigator: Navigator,
     private val repository: RecordingRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
-    private val releasesByEntityPresenter: ReleasesByEntityPresenter,
+    private val releasesListPresenter: ReleasesListPresenter,
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
@@ -70,7 +70,7 @@ internal class RecordingPresenter(
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
-        val releasesByEntityUiState = releasesByEntityPresenter.present()
+        val releasesByEntityUiState = releasesListPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
@@ -143,12 +143,12 @@ internal class RecordingPresenter(
 
                 RecordingTab.RELEASES -> {
                     releasesEventSink(
-                        ReleasesByEntityUiEvent.Get(
+                        ReleasesListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    releasesEventSink(ReleasesByEntityUiEvent.UpdateQuery(query))
+                    releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))
                 }
 
                 RecordingTab.STATS -> {
@@ -196,7 +196,7 @@ internal class RecordingPresenter(
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
             snackbarMessage = snackbarMessage,
-            releasesByEntityUiState = releasesByEntityUiState,
+            releasesListUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
@@ -216,7 +216,7 @@ internal data class RecordingUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
-    val releasesByEntityUiState: ReleasesByEntityUiState,
+    val releasesListUiState: ReleasesListUiState,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (RecordingUiEvent) -> Unit,

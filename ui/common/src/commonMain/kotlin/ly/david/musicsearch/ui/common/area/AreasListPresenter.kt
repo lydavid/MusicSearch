@@ -1,4 +1,4 @@
-package ly.david.musicsearch.ui.common.place
+package ly.david.musicsearch.ui.common.area
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -9,30 +9,28 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
-import app.cash.paging.compose.LazyPagingItems
-import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
+import ly.david.musicsearch.shared.domain.area.usecase.GetAreasByEntity
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.place.usecase.GetPlacesByEntity
 
-class PlacesByEntityPresenter(
-    private val getPlacesByEntity: GetPlacesByEntity,
-) : Presenter<PlacesByEntityUiState> {
+class AreasListPresenter(
+    private val getAreasByEntity: GetAreasByEntity,
+) : Presenter<AreasListUiState> {
     @Composable
-    override fun present(): PlacesByEntityUiState {
+    override fun present(): AreasListUiState {
         var query by rememberSaveable { mutableStateOf("") }
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val placeListItems: Flow<PagingData<PlaceListItemModel>> by rememberRetained(query, id, entity) {
+        val pagingDataFlow: Flow<PagingData<AreaListItemModel>> by rememberRetained(query, id, entity) {
             mutableStateOf(
-                getPlacesByEntity(
+                getAreasByEntity(
                     entityId = id,
                     entity = entity,
                     listFilters = ListFilters(
@@ -42,45 +40,45 @@ class PlacesByEntityPresenter(
                 ),
             )
         }
-        val lazyListState: LazyListState = rememberLazyListState()
+        val lazyListState = rememberLazyListState()
 
-        fun eventSink(event: PlacesByEntityUiEvent) {
+        fun eventSink(event: AreasListUiEvent) {
             when (event) {
-                is PlacesByEntityUiEvent.Get -> {
+                is AreasListUiEvent.Get -> {
                     id = event.byEntityId
                     entity = event.byEntity
                     isRemote = event.isRemote
                 }
 
-                is PlacesByEntityUiEvent.UpdateQuery -> {
+                is AreasListUiEvent.UpdateQuery -> {
                     query = event.query
                 }
             }
         }
 
-        return PlacesByEntityUiState(
-            lazyPagingItems = placeListItems.collectAsLazyPagingItems(),
+        return AreasListUiState(
+            pagingDataFlow = pagingDataFlow,
             lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
     }
 }
 
-sealed interface PlacesByEntityUiEvent : CircuitUiEvent {
+sealed interface AreasListUiEvent : CircuitUiEvent {
     data class Get(
         val byEntityId: String,
         val byEntity: MusicBrainzEntity,
         val isRemote: Boolean = true,
-    ) : PlacesByEntityUiEvent
+    ) : AreasListUiEvent
 
     data class UpdateQuery(
         val query: String,
-    ) : PlacesByEntityUiEvent
+    ) : AreasListUiEvent
 }
 
 @Stable
-data class PlacesByEntityUiState(
-    val lazyPagingItems: LazyPagingItems<PlaceListItemModel>,
+data class AreasListUiState(
+    val pagingDataFlow: Flow<PagingData<AreaListItemModel>>,
     val lazyListState: LazyListState = LazyListState(),
-    val eventSink: (PlacesByEntityUiEvent) -> Unit = {},
+    val eventSink: (AreasListUiEvent) -> Unit = {},
 ) : CircuitUiState

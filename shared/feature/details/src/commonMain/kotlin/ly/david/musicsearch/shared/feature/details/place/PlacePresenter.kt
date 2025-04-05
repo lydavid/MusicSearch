@@ -28,9 +28,9 @@ import ly.david.musicsearch.shared.domain.network.relatableEntities
 import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
-import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
-import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
-import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
+import ly.david.musicsearch.ui.common.event.EventsListPresenter
+import ly.david.musicsearch.ui.common.event.EventsListUiEvent
+import ly.david.musicsearch.ui.common.event.EventsListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
@@ -45,7 +45,7 @@ internal class PlacePresenter(
     private val navigator: Navigator,
     private val repository: PlaceRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
-    private val eventsByEntityPresenter: EventsByEntityPresenter,
+    private val eventsListPresenter: EventsListPresenter,
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
@@ -69,7 +69,7 @@ internal class PlacePresenter(
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
-        val eventsByEntityUiState = eventsByEntityPresenter.present()
+        val eventsByEntityUiState = eventsListPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
@@ -145,12 +145,12 @@ internal class PlacePresenter(
 
                 PlaceTab.EVENTS -> {
                     eventsEventSink(
-                        EventsByEntityUiEvent.Get(
+                        EventsListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    eventsEventSink(EventsByEntityUiEvent.UpdateQuery(query))
+                    eventsEventSink(EventsListUiEvent.UpdateQuery(query))
                 }
 
                 PlaceTab.STATS -> {
@@ -197,7 +197,7 @@ internal class PlacePresenter(
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
             snackbarMessage = snackbarMessage,
-            eventsByEntityUiState = eventsByEntityUiState,
+            eventsListUiState = eventsByEntityUiState,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
@@ -216,7 +216,7 @@ internal data class PlaceUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
-    val eventsByEntityUiState: EventsByEntityUiState,
+    val eventsListUiState: EventsListUiState,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (PlaceUiEvent) -> Unit,

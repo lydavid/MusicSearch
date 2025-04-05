@@ -21,11 +21,11 @@ import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.series.usecase.GetSeriesByEntity
 
-class SeriesByEntityPresenter(
+class SeriesListPresenter(
     private val getSeriesByEntity: GetSeriesByEntity,
-) : Presenter<SeriesByEntityUiState> {
+) : Presenter<SeriesListUiState> {
     @Composable
-    override fun present(): SeriesByEntityUiState {
+    override fun present(): SeriesListUiState {
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
@@ -44,21 +44,21 @@ class SeriesByEntityPresenter(
         }
         val lazyListState: LazyListState = rememberLazyListState()
 
-        fun eventSink(event: SeriesByEntityUiEvent) {
+        fun eventSink(event: SeriesListUiEvent) {
             when (event) {
-                is SeriesByEntityUiEvent.Get -> {
+                is SeriesListUiEvent.Get -> {
                     id = event.byEntityId
                     entity = event.byEntity
                     isRemote = event.isRemote
                 }
 
-                is SeriesByEntityUiEvent.UpdateQuery -> {
+                is SeriesListUiEvent.UpdateQuery -> {
                     query = event.query
                 }
             }
         }
 
-        return SeriesByEntityUiState(
+        return SeriesListUiState(
             lazyPagingItems = seriesListItems.collectAsLazyPagingItems(),
             lazyListState = lazyListState,
             eventSink = ::eventSink,
@@ -66,21 +66,21 @@ class SeriesByEntityPresenter(
     }
 }
 
-sealed interface SeriesByEntityUiEvent : CircuitUiEvent {
+sealed interface SeriesListUiEvent : CircuitUiEvent {
     data class Get(
         val byEntityId: String,
         val byEntity: MusicBrainzEntity,
         val isRemote: Boolean = true,
-    ) : SeriesByEntityUiEvent
+    ) : SeriesListUiEvent
 
     data class UpdateQuery(
         val query: String,
-    ) : SeriesByEntityUiEvent
+    ) : SeriesListUiEvent
 }
 
 @Stable
-data class SeriesByEntityUiState(
+data class SeriesListUiState(
     val lazyPagingItems: LazyPagingItems<SeriesListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
-    val eventSink: (SeriesByEntityUiEvent) -> Unit = {},
+    val eventSink: (SeriesListUiEvent) -> Unit = {},
 ) : CircuitUiState

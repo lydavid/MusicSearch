@@ -1,4 +1,4 @@
-package ly.david.musicsearch.ui.common.instrument
+package ly.david.musicsearch.ui.common.place
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -17,22 +17,22 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.instrument.usecase.GetInstrumentsByEntity
-import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
+import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.place.usecase.GetPlacesByEntity
 
-class InstrumentsByEntityPresenter(
-    private val getInstrumentsByEntity: GetInstrumentsByEntity,
-) : Presenter<InstrumentsByEntityUiState> {
+class PlacesListPresenter(
+    private val getPlacesByEntity: GetPlacesByEntity,
+) : Presenter<PlacesListUiState> {
     @Composable
-    override fun present(): InstrumentsByEntityUiState {
+    override fun present(): PlacesListUiState {
+        var query by rememberSaveable { mutableStateOf("") }
         var id: String by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
-        var query by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val instrumentListItems: Flow<PagingData<InstrumentListItemModel>> by rememberRetained(id, entity, query) {
+        val placeListItems: Flow<PagingData<PlaceListItemModel>> by rememberRetained(query, id, entity) {
             mutableStateOf(
-                getInstrumentsByEntity(
+                getPlacesByEntity(
                     entityId = id,
                     entity = entity,
                     listFilters = ListFilters(
@@ -44,43 +44,43 @@ class InstrumentsByEntityPresenter(
         }
         val lazyListState: LazyListState = rememberLazyListState()
 
-        fun eventSink(event: InstrumentsByEntityUiEvent) {
+        fun eventSink(event: PlacesListUiEvent) {
             when (event) {
-                is InstrumentsByEntityUiEvent.Get -> {
+                is PlacesListUiEvent.Get -> {
                     id = event.byEntityId
                     entity = event.byEntity
                     isRemote = event.isRemote
                 }
 
-                is InstrumentsByEntityUiEvent.UpdateQuery -> {
+                is PlacesListUiEvent.UpdateQuery -> {
                     query = event.query
                 }
             }
         }
 
-        return InstrumentsByEntityUiState(
-            lazyPagingItems = instrumentListItems.collectAsLazyPagingItems(),
+        return PlacesListUiState(
+            lazyPagingItems = placeListItems.collectAsLazyPagingItems(),
             lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
     }
 }
 
-sealed interface InstrumentsByEntityUiEvent : CircuitUiEvent {
+sealed interface PlacesListUiEvent : CircuitUiEvent {
     data class Get(
         val byEntityId: String,
         val byEntity: MusicBrainzEntity,
         val isRemote: Boolean = true,
-    ) : InstrumentsByEntityUiEvent
+    ) : PlacesListUiEvent
 
     data class UpdateQuery(
         val query: String,
-    ) : InstrumentsByEntityUiEvent
+    ) : PlacesListUiEvent
 }
 
 @Stable
-data class InstrumentsByEntityUiState(
-    val lazyPagingItems: LazyPagingItems<InstrumentListItemModel>,
+data class PlacesListUiState(
+    val lazyPagingItems: LazyPagingItems<PlaceListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
-    val eventSink: (InstrumentsByEntityUiEvent) -> Unit = {},
+    val eventSink: (PlacesListUiEvent) -> Unit = {},
 ) : CircuitUiState

@@ -16,11 +16,11 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
-import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
-import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
-import ly.david.musicsearch.ui.common.place.PlacesByEntityUiState
+import ly.david.musicsearch.ui.common.event.EventsListUiState
+import ly.david.musicsearch.ui.common.label.LabelsListUiState
+import ly.david.musicsearch.ui.common.place.PlacesListUiState
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
-import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
+import ly.david.musicsearch.ui.common.release.ReleasesListUiState
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 private val canadianArtists = MutableStateFlow(
@@ -509,16 +509,16 @@ internal fun PreviewAreaDetails() {
                     artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
-                    eventsByEntityUiState = EventsByEntityUiState(
+                    eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
                     ),
-                    labelsByEntityUiState = LabelsByEntityUiState(
+                    labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
                     ),
-                    placesByEntityUiState = PlacesByEntityUiState(
+                    placesListUiState = PlacesListUiState(
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
-                    releasesByEntityUiState = ReleasesByEntityUiState(
+                    releasesListUiState = ReleasesListUiState(
                         lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
@@ -546,16 +546,16 @@ internal fun PreviewAreaDetailsError() {
                     artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
-                    eventsByEntityUiState = EventsByEntityUiState(
+                    eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
                     ),
-                    labelsByEntityUiState = LabelsByEntityUiState(
+                    labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
                     ),
-                    placesByEntityUiState = PlacesByEntityUiState(
+                    placesListUiState = PlacesListUiState(
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
-                    releasesByEntityUiState = ReleasesByEntityUiState(
+                    releasesListUiState = ReleasesListUiState(
                         lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
@@ -583,16 +583,16 @@ internal fun PreviewAreaRelationships() {
                     artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
-                    eventsByEntityUiState = EventsByEntityUiState(
+                    eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
                     ),
-                    labelsByEntityUiState = LabelsByEntityUiState(
+                    labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
                     ),
-                    placesByEntityUiState = PlacesByEntityUiState(
+                    placesListUiState = PlacesListUiState(
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
-                    releasesByEntityUiState = ReleasesByEntityUiState(
+                    releasesListUiState = ReleasesListUiState(
                         lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
@@ -620,16 +620,16 @@ internal fun PreviewAreaArtists() {
                     artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
-                    eventsByEntityUiState = EventsByEntityUiState(
+                    eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
                     ),
-                    labelsByEntityUiState = LabelsByEntityUiState(
+                    labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
                     ),
-                    placesByEntityUiState = PlacesByEntityUiState(
+                    placesListUiState = PlacesListUiState(
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
-                    releasesByEntityUiState = ReleasesByEntityUiState(
+                    releasesListUiState = ReleasesListUiState(
                         lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
@@ -657,16 +657,16 @@ internal fun PreviewAreaEvents() {
                     artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
-                    eventsByEntityUiState = EventsByEntityUiState(
+                    eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
                     ),
-                    labelsByEntityUiState = LabelsByEntityUiState(
+                    labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
                     ),
-                    placesByEntityUiState = PlacesByEntityUiState(
+                    placesListUiState = PlacesListUiState(
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
-                    releasesByEntityUiState = ReleasesByEntityUiState(
+                    releasesListUiState = ReleasesListUiState(
                         lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
@@ -694,16 +694,16 @@ internal fun PreviewAreaLabels() {
                     artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
-                    eventsByEntityUiState = EventsByEntityUiState(
+                    eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
                     ),
-                    labelsByEntityUiState = LabelsByEntityUiState(
+                    labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
                     ),
-                    placesByEntityUiState = PlacesByEntityUiState(
+                    placesListUiState = PlacesListUiState(
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
-                    releasesByEntityUiState = ReleasesByEntityUiState(
+                    releasesListUiState = ReleasesListUiState(
                         lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
@@ -731,16 +731,16 @@ internal fun PreviewAreaReleases() {
                     artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
-                    eventsByEntityUiState = EventsByEntityUiState(
+                    eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
                     ),
-                    labelsByEntityUiState = LabelsByEntityUiState(
+                    labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
                     ),
-                    placesByEntityUiState = PlacesByEntityUiState(
+                    placesListUiState = PlacesListUiState(
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
-                    releasesByEntityUiState = ReleasesByEntityUiState(
+                    releasesListUiState = ReleasesListUiState(
                         lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
@@ -768,16 +768,16 @@ internal fun PreviewAreaPlaces() {
                     artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
-                    eventsByEntityUiState = EventsByEntityUiState(
+                    eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
                     ),
-                    labelsByEntityUiState = LabelsByEntityUiState(
+                    labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
                     ),
-                    placesByEntityUiState = PlacesByEntityUiState(
+                    placesListUiState = PlacesListUiState(
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
-                    releasesByEntityUiState = ReleasesByEntityUiState(
+                    releasesListUiState = ReleasesListUiState(
                         lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(
@@ -805,16 +805,16 @@ internal fun PreviewAreaStats() {
                     artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
-                    eventsByEntityUiState = EventsByEntityUiState(
+                    eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
                     ),
-                    labelsByEntityUiState = LabelsByEntityUiState(
+                    labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
                     ),
-                    placesByEntityUiState = PlacesByEntityUiState(
+                    placesListUiState = PlacesListUiState(
                         lazyPagingItems = places.collectAsLazyPagingItems(),
                     ),
-                    releasesByEntityUiState = ReleasesByEntityUiState(
+                    releasesListUiState = ReleasesListUiState(
                         lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
                     ),
                     relationsUiState = RelationsUiState(

@@ -32,7 +32,7 @@ import ly.david.musicsearch.ui.common.label.LabelsListScreen
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.place.PlacesListScreen
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
-import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
+import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
@@ -58,7 +58,7 @@ internal fun AreaUi(
     val snackbarHostState = remember { SnackbarHostState() }
     val overlayHost = LocalOverlayHost.current
 
-    val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
+    val releasesByEntityEventSink = state.releasesListUiState.eventSink
     val loginEventSink = state.loginUiState.eventSink
 
     state.snackbarMessage?.let { message ->
@@ -81,10 +81,10 @@ internal fun AreaUi(
                 ToggleMenuItem(
                     toggleOnText = strings.showMoreInfo,
                     toggleOffText = strings.showLessInfo,
-                    toggled = state.releasesByEntityUiState.showMoreInfo,
+                    toggled = state.releasesListUiState.showMoreInfo,
                     onToggle = {
                         releasesByEntityEventSink(
-                            ReleasesByEntityUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
+                            ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
                         )
                     },
                 )
@@ -121,7 +121,7 @@ internal fun AreaUiInternal(
 
     val entity = MusicBrainzEntity.AREA
     val eventSink = state.eventSink
-    val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
+    val releasesByEntityEventSink = state.releasesListUiState.eventSink
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
         pageCount = state.tabs::size,
@@ -211,8 +211,8 @@ internal fun AreaUiInternal(
 
                 AreaTab.EVENTS -> {
                     EventsListScreen(
-                        lazyListState = state.eventsByEntityUiState.lazyListState,
-                        lazyPagingItems = state.eventsByEntityUiState.lazyPagingItems,
+                        lazyListState = state.eventsListUiState.lazyListState,
+                        lazyPagingItems = state.eventsListUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -231,12 +231,12 @@ internal fun AreaUiInternal(
 
                 AreaTab.LABELS -> {
                     LabelsListScreen(
-                        lazyPagingItems = state.labelsByEntityUiState.lazyPagingItems,
+                        lazyPagingItems = state.labelsListUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.labelsByEntityUiState.lazyListState,
+                        lazyListState = state.labelsListUiState.lazyListState,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
@@ -251,13 +251,13 @@ internal fun AreaUiInternal(
 
                 AreaTab.RELEASES -> {
                     ReleasesListScreen(
-                        lazyPagingItems = state.releasesByEntityUiState.lazyPagingItems,
+                        lazyPagingItems = state.releasesListUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.releasesByEntityUiState.lazyListState,
-                        showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
+                        lazyListState = state.releasesListUiState.lazyListState,
+                        showMoreInfo = state.releasesListUiState.showMoreInfo,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
@@ -269,7 +269,7 @@ internal fun AreaUiInternal(
                         },
                         requestForMissingCoverArtUrl = { id ->
                             releasesByEntityEventSink(
-                                ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl(
+                                ReleasesListUiEvent.RequestForMissingCoverArtUrl(
                                     entityId = id,
                                 ),
                             )
@@ -299,8 +299,8 @@ internal fun AreaUiInternal(
 
                 AreaTab.PLACES -> {
                     PlacesListScreen(
-                        lazyListState = state.placesByEntityUiState.lazyListState,
-                        lazyPagingItems = state.placesByEntityUiState.lazyPagingItems,
+                        lazyListState = state.placesListUiState.lazyListState,
+                        lazyPagingItems = state.placesListUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

@@ -28,30 +28,30 @@ import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
-import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
-import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
-import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
+import ly.david.musicsearch.ui.common.event.EventsListPresenter
+import ly.david.musicsearch.ui.common.event.EventsListUiEvent
+import ly.david.musicsearch.ui.common.event.EventsListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
-import ly.david.musicsearch.ui.common.recording.RecordingsByEntityPresenter
-import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiEvent
-import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiState
+import ly.david.musicsearch.ui.common.recording.RecordingsListPresenter
+import ly.david.musicsearch.ui.common.recording.RecordingsListUiEvent
+import ly.david.musicsearch.ui.common.recording.RecordingsListUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
-import ly.david.musicsearch.ui.common.release.ReleasesByEntityPresenter
-import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
-import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
-import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityPresenter
-import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiEvent
-import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsByEntityUiState
+import ly.david.musicsearch.ui.common.release.ReleasesListPresenter
+import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
+import ly.david.musicsearch.ui.common.release.ReleasesListUiState
+import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListPresenter
+import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
+import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiState
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
-import ly.david.musicsearch.ui.common.work.WorksByEntityPresenter
-import ly.david.musicsearch.ui.common.work.WorksByEntityUiEvent
-import ly.david.musicsearch.ui.common.work.WorksByEntityUiState
+import ly.david.musicsearch.ui.common.work.WorksListPresenter
+import ly.david.musicsearch.ui.common.work.WorksListUiEvent
+import ly.david.musicsearch.ui.common.work.WorksListUiState
 
 internal class ArtistPresenter(
     private val screen: DetailsScreen,
@@ -60,11 +60,11 @@ internal class ArtistPresenter(
     private val artistImageRepository: ArtistImageRepository,
     private val wikimediaRepository: WikimediaRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
-    private val eventsByEntityPresenter: EventsByEntityPresenter,
-    private val recordingsByEntityPresenter: RecordingsByEntityPresenter,
-    private val releasesByEntityPresenter: ReleasesByEntityPresenter,
-    private val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter,
-    private val worksByEntityPresenter: WorksByEntityPresenter,
+    private val eventsListPresenter: EventsListPresenter,
+    private val recordingsListPresenter: RecordingsListPresenter,
+    private val releasesListPresenter: ReleasesListPresenter,
+    private val releaseGroupsListPresenter: ReleaseGroupsListPresenter,
+    private val worksListPresenter: WorksListPresenter,
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
@@ -87,17 +87,17 @@ internal class ArtistPresenter(
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
-        val eventsByEntityUiState = eventsByEntityPresenter.present()
+        val eventsByEntityUiState = eventsListPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
-        val recordingsByEntityUiState = recordingsByEntityPresenter.present()
+        val recordingsByEntityUiState = recordingsListPresenter.present()
         val recordingsEventSink = recordingsByEntityUiState.eventSink
-        val releasesByEntityUiState = releasesByEntityPresenter.present()
+        val releasesByEntityUiState = releasesListPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
-        val releaseGroupsByEntityUiState = releaseGroupsByEntityPresenter.present()
+        val releaseGroupsByEntityUiState = releaseGroupsListPresenter.present()
         val releaseGroupsEventSink = releaseGroupsByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
-        val worksByEntityUiState = worksByEntityPresenter.present()
+        val worksByEntityUiState = worksListPresenter.present()
         val worksEventSink = worksByEntityUiState.eventSink
         val loginUiState = loginPresenter.present()
 
@@ -179,53 +179,53 @@ internal class ArtistPresenter(
 
                 ArtistTab.RECORDINGS -> {
                     recordingsEventSink(
-                        RecordingsByEntityUiEvent.Get(
+                        RecordingsListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    recordingsEventSink(RecordingsByEntityUiEvent.UpdateQuery(topAppBarFilterState.filterText))
+                    recordingsEventSink(RecordingsListUiEvent.UpdateQuery(topAppBarFilterState.filterText))
                 }
 
                 ArtistTab.RELEASES -> {
                     releasesEventSink(
-                        ReleasesByEntityUiEvent.Get(
+                        ReleasesListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    releasesEventSink(ReleasesByEntityUiEvent.UpdateQuery(topAppBarFilterState.filterText))
+                    releasesEventSink(ReleasesListUiEvent.UpdateQuery(topAppBarFilterState.filterText))
                 }
 
                 ArtistTab.RELEASE_GROUPS -> {
                     releaseGroupsEventSink(
-                        ReleaseGroupsByEntityUiEvent.Get(
+                        ReleaseGroupsListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                             isRemote = true,
                         ),
                     )
-                    releaseGroupsEventSink(ReleaseGroupsByEntityUiEvent.UpdateQuery(topAppBarFilterState.filterText))
+                    releaseGroupsEventSink(ReleaseGroupsListUiEvent.UpdateQuery(topAppBarFilterState.filterText))
                 }
 
                 ArtistTab.EVENTS -> {
                     eventsEventSink(
-                        EventsByEntityUiEvent.Get(
+                        EventsListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    eventsEventSink(EventsByEntityUiEvent.UpdateQuery(topAppBarFilterState.filterText))
+                    eventsEventSink(EventsListUiEvent.UpdateQuery(topAppBarFilterState.filterText))
                 }
 
                 ArtistTab.WORKS -> {
                     worksEventSink(
-                        WorksByEntityUiEvent.Get(
+                        WorksListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    worksEventSink(WorksByEntityUiEvent.UpdateQuery(topAppBarFilterState.filterText))
+                    worksEventSink(WorksListUiEvent.UpdateQuery(topAppBarFilterState.filterText))
                 }
 
                 ArtistTab.STATS -> {
@@ -316,11 +316,11 @@ internal class ArtistPresenter(
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
             snackbarMessage = snackbarMessage,
-            eventsByEntityUiState = eventsByEntityUiState,
-            recordingsByEntityUiState = recordingsByEntityUiState,
-            releaseGroupsByEntityUiState = releaseGroupsByEntityUiState,
-            releasesByEntityUiState = releasesByEntityUiState,
-            worksByEntityUiState = worksByEntityUiState,
+            eventsListUiState = eventsByEntityUiState,
+            recordingsListUiState = recordingsByEntityUiState,
+            releaseGroupsListUiState = releaseGroupsByEntityUiState,
+            releasesListUiState = releasesByEntityUiState,
+            worksListUiState = worksByEntityUiState,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
@@ -340,11 +340,11 @@ internal data class ArtistUiState(
     val topAppBarFilterState: TopAppBarFilterState,
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
-    val eventsByEntityUiState: EventsByEntityUiState,
-    val recordingsByEntityUiState: RecordingsByEntityUiState,
-    val releasesByEntityUiState: ReleasesByEntityUiState,
-    val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState,
-    val worksByEntityUiState: WorksByEntityUiState,
+    val eventsListUiState: EventsListUiState,
+    val recordingsListUiState: RecordingsListUiState,
+    val releasesListUiState: ReleasesListUiState,
+    val releaseGroupsListUiState: ReleaseGroupsListUiState,
+    val worksListUiState: WorksListUiState,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState,
     val eventSink: (ArtistUiEvent) -> Unit,

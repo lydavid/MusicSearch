@@ -1,4 +1,4 @@
-package ly.david.musicsearch.ui.common.release
+package ly.david.musicsearch.ui.common.releasegroup
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -20,100 +20,101 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
-import ly.david.musicsearch.shared.domain.release.usecase.GetReleasesByEntity
+import ly.david.musicsearch.shared.domain.releasegroup.usecase.GetReleaseGroupsByEntity
 
-class ReleasesByEntityPresenter(
-    private val getReleasesByEntity: GetReleasesByEntity,
+class ReleaseGroupsListPresenter(
+    private val getReleaseGroupsByEntity: GetReleaseGroupsByEntity,
     private val appPreferences: AppPreferences,
     private val imageMetadataRepository: ImageMetadataRepository,
-) : Presenter<ReleasesByEntityUiState> {
+) : Presenter<ReleaseGroupsListUiState> {
     @Composable
-    override fun present(): ReleasesByEntityUiState {
-        var id: String by rememberSaveable { mutableStateOf("") }
-        var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
+    override fun present(): ReleaseGroupsListUiState {
+        val scope = rememberCoroutineScope()
+        val sorted by appPreferences.sortReleaseGroupListItems.collectAsRetainedState(true)
         var query by rememberSaveable { mutableStateOf("") }
+        var id: String by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val releaseListItems: Flow<PagingData<ReleaseListItemModel>> by rememberRetained(id, entity, query) {
+        var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
+        val releaseGroupListItems: Flow<PagingData<ListItemModel>> by rememberRetained(id, entity, query, sorted) {
             mutableStateOf(
-                getReleasesByEntity(
+                getReleaseGroupsByEntity(
                     entityId = id,
                     entity = entity,
                     listFilters = ListFilters(
                         query = query,
+                        sorted = sorted,
                         isRemote = isRemote,
                     ),
                 ),
             )
         }
         val lazyListState: LazyListState = rememberLazyListState()
-        val scope = rememberCoroutineScope()
-        val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
 
-        fun eventSink(event: ReleasesByEntityUiEvent) {
+        fun eventSink(event: ReleaseGroupsListUiEvent) {
             when (event) {
-                is ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl -> {
+                is ReleaseGroupsListUiEvent.RequestForMissingCoverArtUrl -> {
                     scope.launch {
                         imageMetadataRepository.getImageMetadata(
                             mbid = event.entityId,
-                            entity = MusicBrainzEntity.RELEASE,
+                            entity = MusicBrainzEntity.RELEASE_GROUP,
                             forceRefresh = false,
                         )
                     }
                 }
 
-                is ReleasesByEntityUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
-                    appPreferences.setShowMoreInfoInReleaseListItem(event.showMore)
+                is ReleaseGroupsListUiEvent.UpdateSortReleaseGroupListItem -> {
+                    appPreferences.setSortReleaseGroupListItems(event.sort)
                 }
 
-                is ReleasesByEntityUiEvent.Get -> {
+                is ReleaseGroupsListUiEvent.Get -> {
                     id = event.byEntityId
                     entity = event.byEntity
                     isRemote = event.isRemote
                 }
 
-                is ReleasesByEntityUiEvent.UpdateQuery -> {
+                is ReleaseGroupsListUiEvent.UpdateQuery -> {
                     query = event.query
                 }
             }
         }
 
-        return ReleasesByEntityUiState(
-            lazyPagingItems = releaseListItems.collectAsLazyPagingItems(),
+        return ReleaseGroupsListUiState(
+            lazyPagingItems = releaseGroupListItems.collectAsLazyPagingItems(),
             lazyListState = lazyListState,
-            showMoreInfo = showMoreInfoInReleaseListItem,
+            sort = sorted,
             eventSink = ::eventSink,
         )
     }
 }
 
-sealed interface ReleasesByEntityUiEvent : CircuitUiEvent {
+sealed interface ReleaseGroupsListUiEvent : CircuitUiEvent {
     data class Get(
         val byEntityId: String,
         val byEntity: MusicBrainzEntity,
-        val isRemote: Boolean = true,
-    ) : ReleasesByEntityUiEvent
+        val isRemote: Boolean,
+    ) : ReleaseGroupsListUiEvent
 
     data class UpdateQuery(
         val query: String,
-    ) : ReleasesByEntityUiEvent
+    ) : ReleaseGroupsListUiEvent
 
-    data class UpdateShowMoreInfoInReleaseListItem(
-        val showMore: Boolean,
-    ) : ReleasesByEntityUiEvent
+    data class UpdateSortReleaseGroupListItem(
+        val sort: Boolean,
+    ) : ReleaseGroupsListUiEvent
 
     data class RequestForMissingCoverArtUrl(
         val entityId: String,
-    ) : ReleasesByEntityUiEvent
+    ) : ReleaseGroupsListUiEvent
 }
 
 @Stable
-data class ReleasesByEntityUiState(
-    val lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
+data class ReleaseGroupsListUiState(
+    val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
-    val showMoreInfo: Boolean = true,
-    val eventSink: (ReleasesByEntityUiEvent) -> Unit = {},
+    val sort: Boolean,
+    val eventSink: (ReleaseGroupsListUiEvent) -> Unit,
 ) : CircuitUiState

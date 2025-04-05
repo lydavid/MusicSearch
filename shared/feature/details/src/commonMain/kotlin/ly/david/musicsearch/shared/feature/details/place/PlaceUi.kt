@@ -144,8 +144,8 @@ internal fun PlaceUi(
 
                 PlaceTab.EVENTS -> {
                     EventsListScreen(
-                        lazyListState = state.eventsByEntityUiState.lazyListState,
-                        lazyPagingItems = state.eventsByEntityUiState.lazyPagingItems,
+                        lazyListState = state.eventsListUiState.lazyListState,
+                        lazyPagingItems = state.eventsListUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

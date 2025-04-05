@@ -26,7 +26,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
-import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
+import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
@@ -57,7 +57,7 @@ internal fun LabelUi(
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
-    val releasesByEntityEventSink = state.releasesByEntityUiState.eventSink
+    val releasesByEntityEventSink = state.releasesListUiState.eventSink
 
     val loginEventSink = state.loginUiState.eventSink
 
@@ -94,10 +94,10 @@ internal fun LabelUi(
                         ToggleMenuItem(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
-                            toggled = state.releasesByEntityUiState.showMoreInfo,
+                            toggled = state.releasesListUiState.showMoreInfo,
                             onToggle = {
                                 releasesByEntityEventSink(
-                                    ReleasesByEntityUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
+                                    ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
                                 )
                             },
                         )
@@ -151,13 +151,13 @@ internal fun LabelUi(
 
                 LabelTab.RELEASES -> {
                     ReleasesListScreen(
-                        lazyPagingItems = state.releasesByEntityUiState.lazyPagingItems,
+                        lazyPagingItems = state.releasesListUiState.lazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         lazyListState = state.relationsUiState.lazyListState,
-                        showMoreInfo = state.releasesByEntityUiState.showMoreInfo,
+                        showMoreInfo = state.releasesListUiState.showMoreInfo,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 LabelUiEvent.ClickItem(
@@ -169,7 +169,7 @@ internal fun LabelUi(
                         },
                         requestForMissingCoverArtUrl = { id ->
                             releasesByEntityEventSink(
-                                ReleasesByEntityUiEvent.RequestForMissingCoverArtUrl(
+                                ReleasesListUiEvent.RequestForMissingCoverArtUrl(
                                     entityId = id,
                                 ),
                             )

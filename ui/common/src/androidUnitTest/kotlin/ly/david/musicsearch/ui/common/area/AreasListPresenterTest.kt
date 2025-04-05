@@ -16,11 +16,11 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class AreasByEntityPresenterTest {
+class AreasListPresenterTest {
 
     private fun createPresenter(
         listItems: List<AreaListItemModel>,
-    ) = AreasByEntityPresenter(
+    ) = AreasListPresenter(
         getAreasByEntity = object : GetAreasByEntity {
             override fun invoke(
                 entityId: String,

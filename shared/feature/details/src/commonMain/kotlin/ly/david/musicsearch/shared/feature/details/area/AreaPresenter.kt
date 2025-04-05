@@ -30,23 +30,23 @@ import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiEvent
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
-import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
-import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
-import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
-import ly.david.musicsearch.ui.common.label.LabelsByEntityPresenter
-import ly.david.musicsearch.ui.common.label.LabelsByEntityUiEvent
-import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
+import ly.david.musicsearch.ui.common.event.EventsListPresenter
+import ly.david.musicsearch.ui.common.event.EventsListUiEvent
+import ly.david.musicsearch.ui.common.event.EventsListUiState
+import ly.david.musicsearch.ui.common.label.LabelsListPresenter
+import ly.david.musicsearch.ui.common.label.LabelsListUiEvent
+import ly.david.musicsearch.ui.common.label.LabelsListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
-import ly.david.musicsearch.ui.common.place.PlacesByEntityPresenter
-import ly.david.musicsearch.ui.common.place.PlacesByEntityUiEvent
-import ly.david.musicsearch.ui.common.place.PlacesByEntityUiState
+import ly.david.musicsearch.ui.common.place.PlacesListPresenter
+import ly.david.musicsearch.ui.common.place.PlacesListUiEvent
+import ly.david.musicsearch.ui.common.place.PlacesListUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
-import ly.david.musicsearch.ui.common.release.ReleasesByEntityPresenter
-import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiEvent
-import ly.david.musicsearch.ui.common.release.ReleasesByEntityUiState
+import ly.david.musicsearch.ui.common.release.ReleasesListPresenter
+import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
+import ly.david.musicsearch.ui.common.release.ReleasesListUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
@@ -57,10 +57,10 @@ internal class AreaPresenter(
     private val repository: AreaRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
     private val artistsListPresenter: ArtistsListPresenter,
-    private val eventsByEntityPresenter: EventsByEntityPresenter,
-    private val labelsByEntityPresenter: LabelsByEntityPresenter,
-    private val releasesByEntityPresenter: ReleasesByEntityPresenter,
-    private val placesByEntityPresenter: PlacesByEntityPresenter,
+    private val eventsListPresenter: EventsListPresenter,
+    private val labelsListPresenter: LabelsListPresenter,
+    private val releasesListPresenter: ReleasesListPresenter,
+    private val placesListPresenter: PlacesListPresenter,
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
@@ -86,13 +86,13 @@ internal class AreaPresenter(
 
         val artistsByEntityUiState = artistsListPresenter.present()
         val artistsEventSink = artistsByEntityUiState.eventSink
-        val eventsByEntityUiState = eventsByEntityPresenter.present()
+        val eventsByEntityUiState = eventsListPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
-        val labelsByEntityUiState = labelsByEntityPresenter.present()
+        val labelsByEntityUiState = labelsListPresenter.present()
         val labelsEventSink = labelsByEntityUiState.eventSink
-        val releasesByEntityUiState = releasesByEntityPresenter.present()
+        val releasesByEntityUiState = releasesListPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
-        val placesByEntityUiState = placesByEntityPresenter.present()
+        val placesByEntityUiState = placesListPresenter.present()
         val placesEventSink = placesByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
@@ -175,42 +175,42 @@ internal class AreaPresenter(
 
                 AreaTab.EVENTS -> {
                     eventsEventSink(
-                        EventsByEntityUiEvent.Get(
+                        EventsListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    eventsEventSink(EventsByEntityUiEvent.UpdateQuery(query))
+                    eventsEventSink(EventsListUiEvent.UpdateQuery(query))
                 }
 
                 AreaTab.LABELS -> {
                     labelsEventSink(
-                        LabelsByEntityUiEvent.Get(
+                        LabelsListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    labelsEventSink(LabelsByEntityUiEvent.UpdateQuery(query))
+                    labelsEventSink(LabelsListUiEvent.UpdateQuery(query))
                 }
 
                 AreaTab.RELEASES -> {
                     releasesEventSink(
-                        ReleasesByEntityUiEvent.Get(
+                        ReleasesListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    releasesEventSink(ReleasesByEntityUiEvent.UpdateQuery(query))
+                    releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))
                 }
 
                 AreaTab.PLACES -> {
                     placesEventSink(
-                        PlacesByEntityUiEvent.Get(
+                        PlacesListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    placesEventSink(PlacesByEntityUiEvent.UpdateQuery(query))
+                    placesEventSink(PlacesListUiEvent.UpdateQuery(query))
                 }
 
                 AreaTab.STATS -> {
@@ -258,10 +258,10 @@ internal class AreaPresenter(
             detailsLazyListState = detailsLazyListState,
             snackbarMessage = snackbarMessage,
             artistsListUiState = artistsByEntityUiState,
-            eventsByEntityUiState = eventsByEntityUiState,
-            labelsByEntityUiState = labelsByEntityUiState,
-            placesByEntityUiState = placesByEntityUiState,
-            releasesByEntityUiState = releasesByEntityUiState,
+            eventsListUiState = eventsByEntityUiState,
+            labelsListUiState = labelsByEntityUiState,
+            placesListUiState = placesByEntityUiState,
+            releasesListUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
@@ -281,10 +281,10 @@ internal data class AreaUiState(
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
     val artistsListUiState: ArtistsListUiState,
-    val eventsByEntityUiState: EventsByEntityUiState,
-    val labelsByEntityUiState: LabelsByEntityUiState,
-    val placesByEntityUiState: PlacesByEntityUiState,
-    val releasesByEntityUiState: ReleasesByEntityUiState,
+    val eventsListUiState: EventsListUiState,
+    val labelsListUiState: LabelsListUiState,
+    val placesListUiState: PlacesListUiState,
+    val releasesListUiState: ReleasesListUiState,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (AreaUiEvent) -> Unit = {},

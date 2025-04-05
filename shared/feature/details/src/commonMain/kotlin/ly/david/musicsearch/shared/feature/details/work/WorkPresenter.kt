@@ -32,9 +32,9 @@ import ly.david.musicsearch.ui.common.artist.ArtistsListUiEvent
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
-import ly.david.musicsearch.ui.common.recording.RecordingsByEntityPresenter
-import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiEvent
-import ly.david.musicsearch.ui.common.recording.RecordingsByEntityUiState
+import ly.david.musicsearch.ui.common.recording.RecordingsListPresenter
+import ly.david.musicsearch.ui.common.recording.RecordingsListUiEvent
+import ly.david.musicsearch.ui.common.recording.RecordingsListUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
@@ -48,7 +48,7 @@ internal class WorkPresenter(
     private val repository: WorkRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
     private val artistsListPresenter: ArtistsListPresenter,
-    private val recordingsByEntityPresenter: RecordingsByEntityPresenter,
+    private val recordingsListPresenter: RecordingsListPresenter,
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
@@ -74,7 +74,7 @@ internal class WorkPresenter(
 
         val artistsByEntityUiState = artistsListPresenter.present()
         val artistsEventSink = artistsByEntityUiState.eventSink
-        val recordingsByEntityUiState = recordingsByEntityPresenter.present()
+        val recordingsByEntityUiState = recordingsListPresenter.present()
         val recordingsEventSink = recordingsByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
         val relationsEventSink = relationsUiState.eventSink
@@ -156,12 +156,12 @@ internal class WorkPresenter(
 
                 WorkTab.RECORDINGS -> {
                     recordingsEventSink(
-                        RecordingsByEntityUiEvent.Get(
+                        RecordingsListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    recordingsEventSink(RecordingsByEntityUiEvent.UpdateQuery(query))
+                    recordingsEventSink(RecordingsListUiEvent.UpdateQuery(query))
                 }
 
                 WorkTab.STATS -> {
@@ -209,7 +209,7 @@ internal class WorkPresenter(
             detailsLazyListState = detailsLazyListState,
             snackbarMessage = snackbarMessage,
             artistsListUiState = artistsByEntityUiState,
-            recordingsByEntityUiState = recordingsByEntityUiState,
+            recordingsListUiState = recordingsByEntityUiState,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
@@ -229,7 +229,7 @@ internal data class WorkUiState(
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
     val artistsListUiState: ArtistsListUiState,
-    val recordingsByEntityUiState: RecordingsByEntityUiState,
+    val recordingsListUiState: RecordingsListUiState,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (WorkUiEvent) -> Unit,

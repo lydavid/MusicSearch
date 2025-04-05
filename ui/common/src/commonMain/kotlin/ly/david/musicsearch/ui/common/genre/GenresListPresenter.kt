@@ -23,11 +23,11 @@ import ly.david.musicsearch.shared.domain.genre.usecase.GetGenresByEntity
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
-class GenresByEntityPresenter(
+class GenresListPresenter(
     private val getGenresByEntity: GetGenresByEntity,
-) : Presenter<GenresByEntityUiState> {
+) : Presenter<GenresListUiState> {
     @Composable
-    override fun present(): GenresByEntityUiState {
+    override fun present(): GenresListUiState {
         var query by rememberSaveable { mutableStateOf("") }
         var id: String by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
@@ -53,21 +53,21 @@ class GenresByEntityPresenter(
             )
         }
 
-        fun eventSink(event: GenresByEntityUiEvent) {
+        fun eventSink(event: GenresListUiEvent) {
             when (event) {
-                is GenresByEntityUiEvent.Get -> {
+                is GenresListUiEvent.Get -> {
                     id = event.byEntityId
                     entity = event.byEntity
                     isRemote = event.isRemote
                 }
 
-                is GenresByEntityUiEvent.UpdateQuery -> {
+                is GenresListUiEvent.UpdateQuery -> {
                     query = event.query
                 }
             }
         }
 
-        return GenresByEntityUiState(
+        return GenresListUiState(
             lazyPagingItems = genreListItems.collectAsLazyPagingItems(),
             lazyListState = lazyListState,
             eventSink = ::eventSink,
@@ -75,21 +75,21 @@ class GenresByEntityPresenter(
     }
 }
 
-sealed interface GenresByEntityUiEvent : CircuitUiEvent {
+sealed interface GenresListUiEvent : CircuitUiEvent {
     data class Get(
         val byEntityId: String,
         val byEntity: MusicBrainzEntity,
         val isRemote: Boolean = true,
-    ) : GenresByEntityUiEvent
+    ) : GenresListUiEvent
 
     data class UpdateQuery(
         val query: String,
-    ) : GenresByEntityUiEvent
+    ) : GenresListUiEvent
 }
 
 @Stable
-data class GenresByEntityUiState(
+data class GenresListUiState(
     val lazyPagingItems: LazyPagingItems<GenreListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
-    val eventSink: (GenresByEntityUiEvent) -> Unit = {},
+    val eventSink: (GenresListUiEvent) -> Unit = {},
 ) : CircuitUiState

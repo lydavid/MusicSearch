@@ -21,11 +21,11 @@ import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.usecase.GetWorksByEntity
 
-class WorksByEntityPresenter(
+class WorksListPresenter(
     private val getWorksByEntity: GetWorksByEntity,
-) : Presenter<WorksByEntityUiState> {
+) : Presenter<WorksListUiState> {
     @Composable
-    override fun present(): WorksByEntityUiState {
+    override fun present(): WorksListUiState {
         var id: String by rememberSaveable { mutableStateOf("") }
         var query by rememberSaveable { mutableStateOf("") }
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
@@ -44,21 +44,21 @@ class WorksByEntityPresenter(
         }
         val lazyListState: LazyListState = rememberLazyListState()
 
-        fun eventSink(event: WorksByEntityUiEvent) {
+        fun eventSink(event: WorksListUiEvent) {
             when (event) {
-                is WorksByEntityUiEvent.Get -> {
+                is WorksListUiEvent.Get -> {
                     id = event.byEntityId
                     entity = event.byEntity
                     isRemote = event.isRemote
                 }
 
-                is WorksByEntityUiEvent.UpdateQuery -> {
+                is WorksListUiEvent.UpdateQuery -> {
                     query = event.query
                 }
             }
         }
 
-        return WorksByEntityUiState(
+        return WorksListUiState(
             lazyPagingItems = workListItems.collectAsLazyPagingItems(),
             lazyListState = lazyListState,
             eventSink = ::eventSink,
@@ -66,21 +66,21 @@ class WorksByEntityPresenter(
     }
 }
 
-sealed interface WorksByEntityUiEvent : CircuitUiEvent {
+sealed interface WorksListUiEvent : CircuitUiEvent {
     data class Get(
         val byEntityId: String,
         val byEntity: MusicBrainzEntity,
         val isRemote: Boolean = true,
-    ) : WorksByEntityUiEvent
+    ) : WorksListUiEvent
 
     data class UpdateQuery(
         val query: String,
-    ) : WorksByEntityUiEvent
+    ) : WorksListUiEvent
 }
 
 @Stable
-data class WorksByEntityUiState(
+data class WorksListUiState(
     val lazyPagingItems: LazyPagingItems<WorkListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
-    val eventSink: (WorksByEntityUiEvent) -> Unit,
+    val eventSink: (WorksListUiEvent) -> Unit,
 ) : CircuitUiState
