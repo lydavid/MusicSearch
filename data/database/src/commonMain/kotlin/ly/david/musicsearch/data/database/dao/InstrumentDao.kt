@@ -6,9 +6,9 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToInstrumentListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.Instrument
 
 class InstrumentDao(
@@ -66,37 +66,36 @@ class InstrumentDao(
     }
 
     fun getInstruments(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         query: String,
-    ): PagingSource<Int, InstrumentListItemModel> = when {
-        entityId == null || entity == null -> {
+    ): PagingSource<Int, InstrumentListItemModel> = when (browseMethod) {
+        is BrowseMethod.All -> {
             getAllInstruments(
                 query = query,
             )
         }
 
-        else -> {
+        is BrowseMethod.ByEntity -> {
             getInstrumentsByCollection(
-                entityId = entityId,
+                collectionId = browseMethod.entityId,
                 query = query,
             )
         }
     }
 
     private fun getInstrumentsByCollection(
-        entityId: String,
+        collectionId: String,
         query: String,
     ): PagingSource<Int, InstrumentListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfInstrumentsByCollection(
-            collectionId = entityId,
+            collectionId = collectionId,
             query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
             transacter.getInstrumentsByCollection(
-                collectionId = entityId,
+                collectionId = collectionId,
                 query = "%$query%",
                 limit = limit,
                 offset = offset,

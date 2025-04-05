@@ -14,10 +14,11 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.usecase.GetAreas
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class AreasListPresenter(
     private val getAreas: GetAreas,
@@ -25,14 +26,12 @@ class AreasListPresenter(
     @Composable
     override fun present(): AreasListUiState {
         var query by rememberSaveable { mutableStateOf("") }
-        var id: String by rememberSaveable { mutableStateOf("") }
-        var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
+        var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val pagingDataFlow: Flow<PagingData<AreaListItemModel>> by rememberRetained(query, id, entity) {
+        val pagingDataFlow: Flow<PagingData<AreaListItemModel>> by rememberRetained(query, browseMethod) {
             mutableStateOf(
                 getAreas(
-                    entityId = id,
-                    entity = entity,
+                    browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
                         isRemote = isRemote,
@@ -45,8 +44,7 @@ class AreasListPresenter(
         fun eventSink(event: AreasListUiEvent) {
             when (event) {
                 is AreasListUiEvent.Get -> {
-                    id = event.byEntityId
-                    entity = event.byEntity
+                    browseMethod = event.browseMethod
                     isRemote = event.isRemote
                 }
 
@@ -66,8 +64,7 @@ class AreasListPresenter(
 
 sealed interface AreasListUiEvent : CircuitUiEvent {
     data class Get(
-        val byEntityId: String,
-        val byEntity: MusicBrainzEntity?,
+        val browseMethod: BrowseMethod,
         val isRemote: Boolean = true,
     ) : AreasListUiEvent
 

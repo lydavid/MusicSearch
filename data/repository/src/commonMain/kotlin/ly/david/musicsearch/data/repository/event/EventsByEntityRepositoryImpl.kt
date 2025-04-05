@@ -10,6 +10,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.event.EventsByEntityRepository
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
@@ -27,25 +28,21 @@ class EventsByEntityRepositoryImpl(
     ) {
 
     override fun observeEventsByEntity(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<EventListItemModel>> {
         return observeEntitiesByEntity(
-            entityId = entityId,
-            entity = entity,
+            browseMethod = browseMethod,
             listFilters = listFilters,
         )
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): PagingSource<Int, EventListItemModel> {
         return eventDao.getEvents(
-            entityId = entityId,
-            entity = entity,
+            browseMethod = browseMethod,
             query = listFilters.query,
         )
     }

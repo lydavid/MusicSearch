@@ -104,8 +104,7 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 recordingsByEntityRepository.observeRecordingsByEntity(
-                    entityId = collectionId,
-                    entity = MusicBrainzEntity.COLLECTION,
+                    browseMethod = collectionId,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -160,8 +159,7 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 recordingsByEntityRepository.observeRecordingsByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = entityId,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -202,8 +200,7 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 recordingsByEntityRepository.observeRecordingsByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = entityId,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -247,8 +244,7 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 recordingsByEntityRepository.observeRecordingsByEntity(
-                    entityId = null,
-                    entity = null,
+                    browseMethod = null,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -294,8 +290,7 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
 
         // refresh
         recordingsByEntityRepository.observeRecordingsByEntity(
-            entityId = itouKanakoArtistMusicBrainzModel.id,
-            entity = MusicBrainzEntity.ARTIST,
+            browseMethod = itouKanakoArtistMusicBrainzModel.id,
             listFilters = ListFilters(),
         ).asSnapshot {
             refresh()
@@ -313,8 +308,7 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
 
         // other entities remain unchanged
         recordingsByEntityRepository.observeRecordingsByEntity(
-            entityId = skycladObserverWorkMusicBrainzModel.id,
-            entity = MusicBrainzEntity.WORK,
+            browseMethod = skycladObserverWorkMusicBrainzModel.id,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -328,8 +322,7 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
 
         // both old and new version of recording exists
         recordingsByEntityRepository.observeRecordingsByEntity(
-            entityId = null,
-            entity = null,
+            browseMethod = null,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -345,8 +338,7 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
         }
 
         recordingsByEntityRepository.observeRecordingsByEntity(
-            entityId = skycladObserverWorkMusicBrainzModel.id,
-            entity = MusicBrainzEntity.WORK,
+            browseMethod = skycladObserverWorkMusicBrainzModel.id,
             listFilters = ListFilters(),
         ).asSnapshot {
             refresh()
@@ -365,8 +357,7 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
         // now only new version of recording exists
         // however, the other recording is never updated unless we go into it and refresh
         recordingsByEntityRepository.observeRecordingsByEntity(
-            entityId = null,
-            entity = null,
+            browseMethod = null,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -458,8 +449,7 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
 
         // refresh
         recordingsByEntityRepository.observeRecordingsByEntity(
-            entityId = itouKanakoArtistMusicBrainzModel.id,
-            entity = MusicBrainzEntity.ARTIST,
+            browseMethod = itouKanakoArtistMusicBrainzModel.id,
             listFilters = ListFilters(),
         ).asSnapshot {
             refresh()
@@ -476,8 +466,7 @@ class RecordingsByEntityRepositoryImplTest : KoinTest, TestRecordingRepository {
 
         // other entities remain unchanged
         recordingsByEntityRepository.observeRecordingsByEntity(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+            browseMethod = collectionId,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(

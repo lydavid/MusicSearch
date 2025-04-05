@@ -10,6 +10,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseInstrumentsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.instrument.InstrumentsByEntityRepository
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
@@ -27,25 +28,21 @@ class InstrumentsByEntityRepositoryImpl(
     ) {
 
     override fun observeInstrumentsByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<InstrumentListItemModel>> {
         return observeEntitiesByEntity(
-            entityId = entityId,
-            entity = entity,
+            browseMethod = browseMethod,
             listFilters = listFilters,
         )
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): PagingSource<Int, InstrumentListItemModel> {
         return instrumentDao.getInstruments(
-            entityId = entityId,
-            entity = entity,
+            browseMethod = browseMethod,
             query = listFilters.query,
         )
     }

@@ -114,8 +114,7 @@ class AreasByEntityRepositoryImplTest : KoinTest {
         )
 
         sut.observeAreasByEntity(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+            browseMethod = collectionId,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -157,8 +156,7 @@ class AreasByEntityRepositoryImplTest : KoinTest {
         }
 
         sut.observeAreasByEntity(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+            browseMethod = collectionId,
             listFilters = ListFilters(
                 query = "di",
             ),

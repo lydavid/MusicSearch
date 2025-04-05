@@ -5,27 +5,30 @@ import app.cash.paging.cachedIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emptyFlow
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
 import ly.david.musicsearch.shared.domain.genre.GenresByEntityRepository
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class GetGenres(
     private val genresByEntityRepository: GenresByEntityRepository,
     private val coroutineScope: CoroutineScope,
 ) : GetEntitiesByEntity<GenreListItemModel> {
     override operator fun invoke(
-        entityId: String,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod?,
         listFilters: ListFilters,
     ): Flow<PagingData<GenreListItemModel>> {
-        return genresByEntityRepository.observeGenresByEntity(
-            entityId = entityId,
-            entity = entity,
-            listFilters = listFilters,
-        )
-            .distinctUntilChanged()
-            .cachedIn(coroutineScope)
+        return if (browseMethod == null) {
+            emptyFlow()
+        } else {
+            genresByEntityRepository.observeGenresByEntity(
+                browseMethod = browseMethod,
+                listFilters = listFilters,
+            )
+                .distinctUntilChanged()
+                .cachedIn(coroutineScope)
+        }
     }
 }

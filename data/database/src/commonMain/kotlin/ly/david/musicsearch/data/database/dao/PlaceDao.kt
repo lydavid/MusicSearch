@@ -10,6 +10,7 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToPlaceListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -141,28 +142,27 @@ class PlaceDao(
             .toInt()
 
     fun getPlaces(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         query: String,
-    ): PagingSource<Int, PlaceListItemModel> = when {
-        entityId == null || entity == null -> {
+    ): PagingSource<Int, PlaceListItemModel> = when (browseMethod) {
+        is BrowseMethod.All -> {
             getAllPlaces(
                 query = query,
             )
         }
 
-        entity == MusicBrainzEntity.COLLECTION -> {
-            getPlacesByCollection(
-                collectionId = entityId,
-                query = query,
-            )
-        }
-
-        else -> {
-            getPlacesByArea(
-                areaId = entityId,
-                query = query,
-            )
+        is BrowseMethod.ByEntity -> {
+            if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                getPlacesByCollection(
+                    collectionId = browseMethod.entityId,
+                    query = query,
+                )
+            } else {
+                getPlacesByArea(
+                    areaId = browseMethod.entityId,
+                    query = query,
+                )
+            }
         }
     }
 

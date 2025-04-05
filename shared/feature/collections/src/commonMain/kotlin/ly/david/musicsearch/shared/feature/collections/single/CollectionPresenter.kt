@@ -17,6 +17,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.usecase.DeleteFromCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
@@ -161,12 +162,16 @@ internal class CollectionPresenter(
         LaunchedEffect(
             key1 = query,
         ) {
-            when (collection?.entity) {
+            val entity = collection?.entity ?: return@LaunchedEffect
+            val browseMethod = BrowseMethod.ByEntity(
+                entityId = collectionId,
+                entity = MusicBrainzEntity.COLLECTION,
+            )
+            when (entity) {
                 MusicBrainzEntity.AREA -> {
                     areasEventSink(
                         AreasListUiEvent.Get(
-                            byEntityId = collectionId,
-                            byEntity = MusicBrainzEntity.COLLECTION,
+                            browseMethod = browseMethod,
                             isRemote = isRemote,
                         ),
                     )
@@ -176,8 +181,7 @@ internal class CollectionPresenter(
                 MusicBrainzEntity.ARTIST -> {
                     artistsEventSink(
                         ArtistsListUiEvent.Get(
-                            byEntityId = collectionId,
-                            byEntity = MusicBrainzEntity.COLLECTION,
+                            browseMethod = browseMethod,
                             isRemote = isRemote,
                         ),
                     )
@@ -187,8 +191,7 @@ internal class CollectionPresenter(
                 MusicBrainzEntity.EVENT -> {
                     eventsEventSink(
                         EventsListUiEvent.Get(
-                            byEntityId = collectionId,
-                            byEntity = MusicBrainzEntity.COLLECTION,
+                            browseMethod = browseMethod,
                             isRemote = isRemote,
                         ),
                     )
@@ -198,8 +201,7 @@ internal class CollectionPresenter(
                 MusicBrainzEntity.GENRE -> {
                     genresEventSink(
                         GenresListUiEvent.Get(
-                            byEntityId = collectionId,
-                            byEntity = MusicBrainzEntity.COLLECTION,
+                            browseMethod = browseMethod,
                             isRemote = isRemote,
                         ),
                     )
@@ -209,8 +211,7 @@ internal class CollectionPresenter(
                 MusicBrainzEntity.INSTRUMENT -> {
                     instrumentsEventSink(
                         InstrumentsListUiEvent.Get(
-                            byEntityId = collectionId,
-                            byEntity = MusicBrainzEntity.COLLECTION,
+                            browseMethod = browseMethod,
                             isRemote = isRemote,
                         ),
                     )
@@ -220,8 +221,7 @@ internal class CollectionPresenter(
                 MusicBrainzEntity.LABEL -> {
                     labelsEventSink(
                         LabelsListUiEvent.Get(
-                            byEntityId = collectionId,
-                            byEntity = MusicBrainzEntity.COLLECTION,
+                            browseMethod = browseMethod,
                             isRemote = isRemote,
                         ),
                     )
@@ -231,8 +231,7 @@ internal class CollectionPresenter(
                 MusicBrainzEntity.PLACE -> {
                     placesEventSink(
                         PlacesListUiEvent.Get(
-                            byEntityId = collectionId,
-                            byEntity = MusicBrainzEntity.COLLECTION,
+                            browseMethod = browseMethod,
                             isRemote = isRemote,
                         ),
                     )
@@ -242,8 +241,7 @@ internal class CollectionPresenter(
                 MusicBrainzEntity.RECORDING -> {
                     recordingsEventSink(
                         RecordingsListUiEvent.Get(
-                            byEntityId = collectionId,
-                            byEntity = MusicBrainzEntity.COLLECTION,
+                            browseMethod = browseMethod,
                             isRemote = isRemote,
                         ),
                     )
@@ -253,8 +251,7 @@ internal class CollectionPresenter(
                 MusicBrainzEntity.RELEASE -> {
                     releasesEventSink(
                         ReleasesListUiEvent.Get(
-                            byEntityId = collectionId,
-                            byEntity = MusicBrainzEntity.COLLECTION,
+                            browseMethod = browseMethod,
                             isRemote = isRemote,
                         ),
                     )
@@ -264,8 +261,7 @@ internal class CollectionPresenter(
                 MusicBrainzEntity.RELEASE_GROUP -> {
                     releaseGroupsEventSink(
                         ReleaseGroupsListUiEvent.Get(
-                            byEntityId = collectionId,
-                            byEntity = MusicBrainzEntity.COLLECTION,
+                            browseMethod = browseMethod,
                             isRemote = isRemote,
                         ),
                     )
@@ -275,8 +271,7 @@ internal class CollectionPresenter(
                 MusicBrainzEntity.SERIES -> {
                     seriesEventSink(
                         SeriesListUiEvent.Get(
-                            byEntityId = collectionId,
-                            byEntity = MusicBrainzEntity.COLLECTION,
+                            browseMethod = browseMethod,
                             isRemote = isRemote,
                         ),
                     )
@@ -286,8 +281,7 @@ internal class CollectionPresenter(
                 MusicBrainzEntity.WORK -> {
                     worksEventSink(
                         WorksListUiEvent.Get(
-                            byEntityId = collectionId,
-                            byEntity = MusicBrainzEntity.COLLECTION,
+                            browseMethod = browseMethod,
                             isRemote = isRemote,
                         ),
                     )

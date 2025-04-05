@@ -104,8 +104,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 eventsByEntityRepository.observeEventsByEntity(
-                    entityId = collectionId,
-                    entity = MusicBrainzEntity.COLLECTION,
+                    browseMethod = collectionId,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -175,8 +174,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 eventsByEntityRepository.observeEventsByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = entityId,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -217,8 +215,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 eventsByEntityRepository.observeEventsByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = entityId,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -288,8 +285,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 eventsByEntityRepository.observeEventsByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = entityId,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -359,8 +355,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 eventsByEntityRepository.observeEventsByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = entityId,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -438,8 +433,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 eventsByEntityRepository.observeEventsByEntity(
-                    entityId = null,
-                    entity = null,
+                    browseMethod = null,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -486,8 +480,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
 
         // refresh
         eventsByEntityRepository.observeEventsByEntity(
-            entityId = kitanomaruAreaMusicBrainzModel.id,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = kitanomaruAreaMusicBrainzModel.id,
             listFilters = ListFilters(),
         ).asSnapshot {
             refresh()
@@ -505,8 +498,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
 
         // other entities remain unchanged
         eventsByEntityRepository.observeEventsByEntity(
-            entityId = budokanPlaceMusicBrainzModel.id,
-            entity = MusicBrainzEntity.PLACE,
+            browseMethod = budokanPlaceMusicBrainzModel.id,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -520,8 +512,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
 
         // both old and new version of event exists
         eventsByEntityRepository.observeEventsByEntity(
-            entityId = null,
-            entity = null,
+            browseMethod = null,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -537,8 +528,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         }
 
         eventsByEntityRepository.observeEventsByEntity(
-            entityId = budokanPlaceMusicBrainzModel.id,
-            entity = MusicBrainzEntity.PLACE,
+            browseMethod = budokanPlaceMusicBrainzModel.id,
             listFilters = ListFilters(),
         ).asSnapshot {
             refresh()
@@ -557,8 +547,7 @@ class EventsByEntityRepositoryImplTest : KoinTest, TestEventRepository {
         // now only new version of event exists
         // however, the other event is never updated unless we go into it and refresh
         eventsByEntityRepository.observeEventsByEntity(
-            entityId = null,
-            entity = null,
+            browseMethod = null,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(

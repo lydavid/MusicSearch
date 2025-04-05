@@ -10,6 +10,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.label.LabelsByEntityRepository
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -27,25 +28,21 @@ class LabelsByEntityRepositoryImpl(
     ) {
 
     override fun observeLabelsByEntity(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<LabelListItemModel>> {
         return observeEntitiesByEntity(
-            entityId = entityId,
-            entity = entity,
+            browseMethod = browseMethod,
             listFilters = listFilters,
         )
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): PagingSource<Int, LabelListItemModel> {
         return labelDao.getLabels(
-            entityId = entityId,
-            entity = entity,
+            browseMethod = browseMethod,
             query = listFilters.query,
         )
     }

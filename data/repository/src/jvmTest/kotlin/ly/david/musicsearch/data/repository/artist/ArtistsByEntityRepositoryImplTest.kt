@@ -196,8 +196,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
         )
 
         sut.observeArtistsByEntity(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+            browseMethod = MusicBrainzEntity.COLLECTION,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -214,8 +213,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
         }
 
         sut.observeArtistsByEntity(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+            browseMethod = MusicBrainzEntity.COLLECTION,
             listFilters = ListFilters(
                 query = "a",
             ),
@@ -243,8 +241,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
             artists = artists,
         )
         sut.observeArtistsByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = MusicBrainzEntity.AREA,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -260,8 +257,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
             )
         }
         sut.observeArtistsByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = MusicBrainzEntity.AREA,
             listFilters = ListFilters(
                 query = "a",
             ),
@@ -292,8 +288,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
             artists = artists,
         )
         artistsByEntityRepository.observeArtistsByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = MusicBrainzEntity.AREA,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -307,8 +302,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
             )
         }
         artistsByEntityRepository.observeArtistsByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = MusicBrainzEntity.AREA,
             listFilters = ListFilters(
                 query = "a",
             ),
@@ -348,8 +342,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 artistsByEntityRepository.observeArtistsByEntity(
-                    entityId = entityId,
-                    entity = MusicBrainzEntity.RELEASE,
+                    browseMethod = MusicBrainzEntity.RELEASE,
                     listFilters = ListFilters(query = query),
                 )
             },
@@ -385,8 +378,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 artistsByEntityRepository.observeArtistsByEntity(
-                    entityId = null,
-                    entity = null,
+                    browseMethod = null,
                     listFilters = ListFilters(query = query),
                 )
             },
@@ -440,8 +432,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
 
         // refresh
         artistsByEntityRepository.observeArtistsByEntity(
-            entityId = japanAreaMusicBrainzModel.id,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = MusicBrainzEntity.AREA,
             listFilters = ListFilters(),
         ).asSnapshot {
             refresh()
@@ -460,8 +451,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
 
         // other entities remain unchanged
         artistsByEntityRepository.observeArtistsByEntity(
-            entityId = bandoriCoverCollection8ReleaseMusicBrainzModel.id,
-            entity = MusicBrainzEntity.RELEASE,
+            browseMethod = MusicBrainzEntity.RELEASE,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(

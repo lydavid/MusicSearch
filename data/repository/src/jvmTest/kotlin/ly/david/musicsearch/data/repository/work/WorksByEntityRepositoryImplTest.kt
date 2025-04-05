@@ -108,8 +108,7 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 worksByEntityRepository.observeWorksByEntity(
-                    entityId = collectionId,
-                    entity = MusicBrainzEntity.COLLECTION,
+                    browseMethod = MusicBrainzEntity.COLLECTION,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -174,8 +173,7 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 worksByEntityRepository.observeWorksByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = entity,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -239,8 +237,7 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 worksByEntityRepository.observeWorksByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = entity,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -301,8 +298,7 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 worksByEntityRepository.observeWorksByEntity(
-                    entityId = null,
-                    entity = null,
+                    browseMethod = null,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -352,8 +348,7 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
 
         // refresh
         worksByEntityRepository.observeWorksByEntity(
-            entityId = davidBowieArtistMusicBrainzModel.id,
-            entity = MusicBrainzEntity.ARTIST,
+            browseMethod = MusicBrainzEntity.ARTIST,
             listFilters = ListFilters(),
         ).asSnapshot {
             refresh()
@@ -371,8 +366,7 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
 
         // other entities remain unchanged
         worksByEntityRepository.observeWorksByEntity(
-            entityId = queenArtistMusicBrainzModel.id,
-            entity = MusicBrainzEntity.ARTIST,
+            browseMethod = MusicBrainzEntity.ARTIST,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -384,8 +378,7 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
             )
         }
         worksByEntityRepository.observeWorksByEntity(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+            browseMethod = MusicBrainzEntity.COLLECTION,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -398,8 +391,7 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
             )
         }
         worksByEntityRepository.observeWorksByEntity(
-            entityId = null,
-            entity = null,
+            browseMethod = null,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(

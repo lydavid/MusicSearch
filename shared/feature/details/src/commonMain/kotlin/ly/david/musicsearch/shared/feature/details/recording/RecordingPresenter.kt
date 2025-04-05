@@ -18,6 +18,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
@@ -126,6 +127,10 @@ internal class RecordingPresenter(
                     RecordingTab.STATS,
                 ),
             )
+            val browseMethod = BrowseMethod.ByEntity(
+                entityId = screen.id,
+                entity = screen.entity,
+            )
             when (selectedTab) {
                 RecordingTab.DETAILS -> {
                     // Loaded above
@@ -144,8 +149,7 @@ internal class RecordingPresenter(
                 RecordingTab.RELEASES -> {
                     releasesEventSink(
                         ReleasesListUiEvent.Get(
-                            byEntityId = screen.id,
-                            byEntity = screen.entity,
+                            browseMethod = browseMethod,
                         ),
                     )
                     releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))

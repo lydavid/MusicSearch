@@ -6,8 +6,8 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToGenreListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.Genre
 
 class GenreDao(
@@ -37,19 +37,18 @@ class GenreDao(
     }
 
     fun getGenres(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         query: String,
-    ): PagingSource<Int, GenreListItemModel> = when {
-        entityId == null || entity == null -> {
+    ): PagingSource<Int, GenreListItemModel> = when (browseMethod) {
+        is BrowseMethod.All -> {
             getAllGenres(
                 query = query,
             )
         }
 
-        else -> {
+        is BrowseMethod.ByEntity -> {
             getGenresByCollection(
-                collectionId = entityId,
+                collectionId = browseMethod.entityId,
                 query = query,
             )
         }

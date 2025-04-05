@@ -10,6 +10,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseGenresResponse
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.genre.GenresByEntityRepository
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
@@ -27,25 +28,21 @@ class GenresByEntityRepositoryImpl(
     ) {
 
     override fun observeGenresByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<GenreListItemModel>> {
         return observeEntitiesByEntity(
-            entityId = entityId,
-            entity = entity,
+            browseMethod = browseMethod,
             listFilters = listFilters,
         )
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): PagingSource<Int, GenreListItemModel> {
         return genreDao.getGenres(
-            entityId = entityId,
-            entity = entity,
+            browseMethod = browseMethod,
             query = listFilters.query,
         )
     }

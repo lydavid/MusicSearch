@@ -11,6 +11,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToLabelListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.label.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -139,28 +140,27 @@ class LabelDao(
             .toInt()
 
     fun getLabels(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         query: String,
-    ): PagingSource<Int, LabelListItemModel> = when {
-        entityId == null || entity == null -> {
+    ): PagingSource<Int, LabelListItemModel> = when (browseMethod) {
+        is BrowseMethod.All -> {
             getAllLabels(
                 query = query,
             )
         }
 
-        entity == MusicBrainzEntity.COLLECTION -> {
-            getLabelsByCollection(
-                collectionId = entityId,
-                query = query,
-            )
-        }
-
-        else -> {
-            getLabelsByEntity(
-                entityId = entityId,
-                query = query,
-            )
+        is BrowseMethod.ByEntity -> {
+            if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                getLabelsByCollection(
+                    collectionId = browseMethod.entityId,
+                    query = query,
+                )
+            } else {
+                getLabelsByEntity(
+                    entityId = browseMethod.entityId,
+                    query = query,
+                )
+            }
         }
     }
 

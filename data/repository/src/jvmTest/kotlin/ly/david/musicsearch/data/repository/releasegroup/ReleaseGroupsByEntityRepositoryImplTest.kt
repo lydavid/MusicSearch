@@ -112,8 +112,7 @@ class ReleaseGroupsByEntityRepositoryImplTest :
         testFilter(
             pagingFlowProducer = { query ->
                 releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-                    entityId = collectionId,
-                    entity = MusicBrainzEntity.COLLECTION,
+                    browseMethod = collectionId,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -175,8 +174,7 @@ class ReleaseGroupsByEntityRepositoryImplTest :
         testFilter(
             pagingFlowProducer = { query ->
                 releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = entityId,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -239,8 +237,7 @@ class ReleaseGroupsByEntityRepositoryImplTest :
         testFilter(
             pagingFlowProducer = { query ->
                 releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = entityId,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -295,8 +292,7 @@ class ReleaseGroupsByEntityRepositoryImplTest :
         testFilter(
             pagingFlowProducer = { query ->
                 releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-                    entityId = null,
-                    entity = null,
+                    browseMethod = null,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -337,8 +333,7 @@ class ReleaseGroupsByEntityRepositoryImplTest :
 
         // refresh
         releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-            entityId = berlinerPhilharmonikerArtistMusicBrainzModel.id,
-            entity = MusicBrainzEntity.ARTIST,
+            browseMethod = berlinerPhilharmonikerArtistMusicBrainzModel.id,
             listFilters = ListFilters(),
         ).asSnapshot {
             refresh()
@@ -357,8 +352,7 @@ class ReleaseGroupsByEntityRepositoryImplTest :
 
         // other entities remain unchanged
         releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-            entityId = tchaikovskyArtistMusicBrainzModel.id,
-            entity = MusicBrainzEntity.ARTIST,
+            browseMethod = tchaikovskyArtistMusicBrainzModel.id,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -370,8 +364,7 @@ class ReleaseGroupsByEntityRepositoryImplTest :
             )
         }
         releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+            browseMethod = collectionId,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -383,8 +376,7 @@ class ReleaseGroupsByEntityRepositoryImplTest :
             )
         }
         releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-            entityId = null,
-            entity = null,
+            browseMethod = null,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -472,8 +464,7 @@ class ReleaseGroupsByEntityRepositoryImplTest :
         }
 
         releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-            entityId = null,
-            entity = null,
+            browseMethod = null,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(

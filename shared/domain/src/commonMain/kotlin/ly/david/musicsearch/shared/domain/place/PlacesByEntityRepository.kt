@@ -2,14 +2,13 @@ package ly.david.musicsearch.shared.domain.place
 
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 interface PlacesByEntityRepository {
     fun observePlacesByEntity(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         listFilters: ListFilters = ListFilters(),
     ): Flow<PagingData<PlaceListItemModel>>
 }

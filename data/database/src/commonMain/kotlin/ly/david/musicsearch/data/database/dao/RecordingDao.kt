@@ -11,6 +11,7 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToRecordingListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
@@ -130,26 +131,27 @@ class RecordingDao(
             .toInt()
 
     fun getRecordings(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         query: String,
-    ): PagingSource<Int, RecordingListItemModel> = when {
-        entityId == null || entity == null -> {
-            getAllRecordings(query = query)
-        }
-
-        entity == MusicBrainzEntity.COLLECTION -> {
-            getRecordingsByCollection(
-                collectionId = entityId,
+    ): PagingSource<Int, RecordingListItemModel> = when (browseMethod) {
+        is BrowseMethod.All -> {
+            getAllRecordings(
                 query = query,
             )
         }
 
-        else -> {
-            getRecordingsByEntity(
-                entityId = entityId,
-                query = query,
-            )
+        is BrowseMethod.ByEntity -> {
+            if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                getRecordingsByCollection(
+                    collectionId = browseMethod.entityId,
+                    query = query,
+                )
+            } else {
+                getRecordingsByEntity(
+                    entityId = browseMethod.entityId,
+                    query = query,
+                )
+            }
         }
     }
 

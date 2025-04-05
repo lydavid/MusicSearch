@@ -6,10 +6,10 @@ import com.slack.circuit.test.presenterTestOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.usecase.GetAreas
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,8 +23,7 @@ class AreasListPresenterTest {
     ) = AreasListPresenter(
         getAreas = object : GetAreas {
             override fun invoke(
-                entityId: String,
-                entity: MusicBrainzEntity?,
+                browseMethod: BrowseMethod?,
                 listFilters: ListFilters,
             ): Flow<PagingData<AreaListItemModel>> {
                 return flowOf(PagingData.from(listItems))

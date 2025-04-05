@@ -12,6 +12,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.api.LABELS
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -29,25 +30,21 @@ class ReleasesByEntityRepositoryImpl(
     ) {
 
     override fun observeReleasesByEntity(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<ReleaseListItemModel>> {
         return observeEntitiesByEntity(
-            entityId = entityId,
-            entity = entity,
+            browseMethod = browseMethod,
             listFilters = listFilters,
         )
     }
 
     override fun getLinkedEntitiesPagingSource(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): PagingSource<Int, ReleaseListItemModel> {
         return releaseDao.getReleases(
-            entityId = entityId,
-            entity = entity,
+            browseMethod = browseMethod,
             query = listFilters.query,
         )
     }

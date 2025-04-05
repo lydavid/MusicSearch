@@ -19,12 +19,14 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.releasegroup.usecase.GetReleaseGroups
+import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class ReleaseGroupsListPresenter(
     private val getReleaseGroups: GetReleaseGroups,
@@ -36,14 +38,12 @@ class ReleaseGroupsListPresenter(
         val scope = rememberCoroutineScope()
         val sorted by appPreferences.sortReleaseGroupListItems.collectAsRetainedState(true)
         var query by rememberSaveable { mutableStateOf("") }
-        var id: String by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
-        val releaseGroupListItems: Flow<PagingData<ListItemModel>> by rememberRetained(id, entity, query, sorted) {
+        var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
+        val releaseGroupListItems: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query, sorted) {
             mutableStateOf(
                 getReleaseGroups(
-                    entityId = id,
-                    entity = entity,
+                    browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
                         sorted = sorted,
@@ -71,8 +71,7 @@ class ReleaseGroupsListPresenter(
                 }
 
                 is ReleaseGroupsListUiEvent.Get -> {
-                    id = event.byEntityId
-                    entity = event.byEntity
+                    browseMethod = event.browseMethod
                     isRemote = event.isRemote
                 }
 
@@ -93,8 +92,7 @@ class ReleaseGroupsListPresenter(
 
 sealed interface ReleaseGroupsListUiEvent : CircuitUiEvent {
     data class Get(
-        val byEntityId: String,
-        val byEntity: MusicBrainzEntity?,
+        val browseMethod: BrowseMethod,
         val isRemote: Boolean = true,
     ) : ReleaseGroupsListUiEvent
 

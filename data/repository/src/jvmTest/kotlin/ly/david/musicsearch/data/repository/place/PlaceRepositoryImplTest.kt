@@ -388,8 +388,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
             },
         )
         val flow: Flow<PagingData<PlaceListItemModel>> = placesByEntityRepository.observePlacesByEntity(
-            entityId = countryId,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = countryId,
         )
         val places = flow.asSnapshot()
         assertEquals(

@@ -10,6 +10,7 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToEventListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.event.EventDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
@@ -124,26 +125,27 @@ class EventDao(
             .toInt()
 
     fun getEvents(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         query: String,
-    ): PagingSource<Int, EventListItemModel> = when {
-        entityId == null || entity == null -> {
-            getAllEvents(query = query)
-        }
-
-        entity == MusicBrainzEntity.COLLECTION -> {
-            getEventsByCollection(
-                collectionId = entityId,
+    ): PagingSource<Int, EventListItemModel> = when (browseMethod) {
+        is BrowseMethod.All -> {
+            getAllEvents(
                 query = query,
             )
         }
 
-        else -> {
-            getEventsByEntity(
-                entityId = entityId,
-                query = query,
-            )
+        is BrowseMethod.ByEntity -> {
+            if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                getEventsByCollection(
+                    collectionId = browseMethod.entityId,
+                    query = query,
+                )
+            } else {
+                getEventsByEntity(
+                    entityId = browseMethod.entityId,
+                    query = query,
+                )
+            }
         }
     }
 

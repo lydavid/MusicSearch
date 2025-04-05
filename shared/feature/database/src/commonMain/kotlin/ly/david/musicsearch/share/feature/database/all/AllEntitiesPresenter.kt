@@ -13,6 +13,7 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.area.AreasListPresenter
 import ly.david.musicsearch.ui.common.area.AreasListUiEvent
@@ -108,12 +109,12 @@ internal class AllEntitiesPresenter(
         LaunchedEffect(
             key1 = query,
         ) {
+            val browseMethod = BrowseMethod.All
             when (screen.entity) {
                 MusicBrainzEntity.AREA -> {
                     areasEventSink(
                         AreasListUiEvent.Get(
-                            byEntityId = "",
-                            byEntity = null,
+                            browseMethod = browseMethod,
                         ),
                     )
                     areasEventSink(AreasListUiEvent.UpdateQuery(query))
@@ -122,8 +123,7 @@ internal class AllEntitiesPresenter(
                 MusicBrainzEntity.ARTIST -> {
                     artistsEventSink(
                         ArtistsListUiEvent.Get(
-                            byEntityId = "",
-                            byEntity = null,
+                            browseMethod = browseMethod,
                         ),
                     )
                     artistsEventSink(ArtistsListUiEvent.UpdateQuery(query))
@@ -132,8 +132,7 @@ internal class AllEntitiesPresenter(
                 MusicBrainzEntity.EVENT -> {
                     eventsEventSink(
                         EventsListUiEvent.Get(
-                            byEntityId = "",
-                            byEntity = null,
+                            browseMethod = browseMethod,
                         ),
                     )
                     eventsEventSink(EventsListUiEvent.UpdateQuery(query))
@@ -142,8 +141,7 @@ internal class AllEntitiesPresenter(
                 MusicBrainzEntity.GENRE -> {
                     genresEventSink(
                         GenresListUiEvent.Get(
-                            byEntityId = "",
-                            byEntity = null,
+                            browseMethod = browseMethod,
                         ),
                     )
                     genresEventSink(GenresListUiEvent.UpdateQuery(query))
@@ -152,8 +150,7 @@ internal class AllEntitiesPresenter(
                 MusicBrainzEntity.INSTRUMENT -> {
                     instrumentsEventSink(
                         InstrumentsListUiEvent.Get(
-                            byEntityId = "",
-                            byEntity = null,
+                            browseMethod = browseMethod,
                         ),
                     )
                     instrumentsEventSink(InstrumentsListUiEvent.UpdateQuery(query))
@@ -162,8 +159,7 @@ internal class AllEntitiesPresenter(
                 MusicBrainzEntity.LABEL -> {
                     labelsEventSink(
                         LabelsListUiEvent.Get(
-                            byEntityId = "",
-                            byEntity = null,
+                            browseMethod = browseMethod,
                         ),
                     )
                     labelsEventSink(LabelsListUiEvent.UpdateQuery(query))
@@ -172,8 +168,7 @@ internal class AllEntitiesPresenter(
                 MusicBrainzEntity.PLACE -> {
                     placesEventSink(
                         PlacesListUiEvent.Get(
-                            byEntityId = "",
-                            byEntity = null,
+                            browseMethod = browseMethod,
                         ),
                     )
                     placesEventSink(PlacesListUiEvent.UpdateQuery(query))
@@ -182,8 +177,7 @@ internal class AllEntitiesPresenter(
                 MusicBrainzEntity.RECORDING -> {
                     recordingsEventSink(
                         RecordingsListUiEvent.Get(
-                            byEntityId = "",
-                            byEntity = null,
+                            browseMethod = browseMethod,
                         ),
                     )
                     recordingsEventSink(RecordingsListUiEvent.UpdateQuery(query))
@@ -192,8 +186,7 @@ internal class AllEntitiesPresenter(
                 MusicBrainzEntity.RELEASE -> {
                     releasesEventSink(
                         ReleasesListUiEvent.Get(
-                            byEntityId = "",
-                            byEntity = null,
+                            browseMethod = browseMethod,
                         ),
                     )
                     releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))
@@ -202,8 +195,7 @@ internal class AllEntitiesPresenter(
                 MusicBrainzEntity.RELEASE_GROUP -> {
                     releaseGroupsEventSink(
                         ReleaseGroupsListUiEvent.Get(
-                            byEntityId = "",
-                            byEntity = null,
+                            browseMethod = browseMethod,
                         ),
                     )
                     releaseGroupsEventSink(ReleaseGroupsListUiEvent.UpdateQuery(query))
@@ -212,8 +204,7 @@ internal class AllEntitiesPresenter(
                 MusicBrainzEntity.SERIES -> {
                     seriesEventSink(
                         SeriesListUiEvent.Get(
-                            byEntityId = "",
-                            byEntity = null,
+                            browseMethod = browseMethod,
                         ),
                     )
                     seriesEventSink(SeriesListUiEvent.UpdateQuery(query))
@@ -222,8 +213,7 @@ internal class AllEntitiesPresenter(
                 MusicBrainzEntity.WORK -> {
                     worksEventSink(
                         WorksListUiEvent.Get(
-                            byEntityId = "",
-                            byEntity = null,
+                            browseMethod = browseMethod,
                         ),
                     )
                     worksEventSink(WorksListUiEvent.UpdateQuery(query))

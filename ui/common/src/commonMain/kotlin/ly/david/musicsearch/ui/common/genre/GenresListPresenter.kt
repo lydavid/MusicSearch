@@ -16,10 +16,11 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.genre.usecase.GetGenres
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class GenresListPresenter(
     private val getGenres: GetGenres,
@@ -27,14 +28,12 @@ class GenresListPresenter(
     @Composable
     override fun present(): GenresListUiState {
         var query by rememberSaveable { mutableStateOf("") }
-        var id: String by rememberSaveable { mutableStateOf("") }
+        var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
-        val genreListItems: Flow<PagingData<GenreListItemModel>> by rememberRetained(query, id, entity) {
+        val genreListItems: Flow<PagingData<GenreListItemModel>> by rememberRetained(query, browseMethod) {
             mutableStateOf(
                 getGenres(
-                    entityId = id,
-                    entity = entity,
+                    browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
                         isRemote = isRemote,
@@ -47,8 +46,7 @@ class GenresListPresenter(
         fun eventSink(event: GenresListUiEvent) {
             when (event) {
                 is GenresListUiEvent.Get -> {
-                    id = event.byEntityId
-                    entity = event.byEntity
+                    browseMethod = event.browseMethod
                     isRemote = event.isRemote
                 }
 
@@ -68,8 +66,7 @@ class GenresListPresenter(
 
 sealed interface GenresListUiEvent : CircuitUiEvent {
     data class Get(
-        val byEntityId: String,
-        val byEntity: MusicBrainzEntity?,
+        val browseMethod: BrowseMethod,
         val isRemote: Boolean = true,
     ) : GenresListUiEvent
 

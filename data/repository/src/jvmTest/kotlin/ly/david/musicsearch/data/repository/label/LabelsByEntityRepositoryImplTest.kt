@@ -93,8 +93,7 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
         testFilter(
             pagingFlowProducer = { query ->
                 labelsByEntityRepository.observeLabelsByEntity(
-                    entityId = collectionId,
-                    entity = entity,
+                    browseMethod = collectionId,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -136,8 +135,7 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
             labels = labels,
         )
         labelsByEntityRepository.observeLabelsByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = entityId,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -149,8 +147,7 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
             )
         }
         labelsByEntityRepository.observeLabelsByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = entityId,
             listFilters = ListFilters(
                 query = "do",
             ),
@@ -177,8 +174,7 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
         testFilter(
             pagingFlowProducer = { query ->
                 labelsByEntityRepository.observeLabelsByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = entityId,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -226,8 +222,7 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
         testFilter(
             pagingFlowProducer = { query ->
                 labelsByEntityRepository.observeLabelsByEntity(
-                    entityId = null,
-                    entity = null,
+                    browseMethod = null,
                     listFilters = ListFilters(
                         query = query,
                     ),
