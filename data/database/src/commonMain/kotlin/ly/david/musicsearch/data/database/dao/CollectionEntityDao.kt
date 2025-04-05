@@ -6,10 +6,8 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.mapper.mapToGenreListItemModel
-import ly.david.musicsearch.data.database.mapper.mapToInstrumentListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
-import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import lydavidmusicsearchdatadatabase.Collection_entity
 
@@ -88,27 +86,6 @@ class CollectionEntityDao(
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToGenreListItemModel,
-            )
-        },
-    )
-
-    fun getInstrumentsByCollection(
-        collectionId: String,
-        query: String,
-    ): PagingSource<Int, InstrumentListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfInstrumentsByCollection(
-            collectionId = collectionId,
-            query = "%$query%",
-        ),
-        transacter = transacter,
-        context = coroutineDispatchers.io,
-        queryProvider = { limit, offset ->
-            transacter.getInstrumentsByCollection(
-                collectionId = collectionId,
-                query = "%$query%",
-                limit = limit,
-                offset = offset,
-                mapper = ::mapToInstrumentListItemModel,
             )
         },
     )

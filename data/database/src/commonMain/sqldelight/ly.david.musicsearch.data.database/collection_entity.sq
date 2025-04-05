@@ -81,46 +81,7 @@ AND (
 LIMIT :limit OFFSET :offset;
 
 
--- instruments by collection
 
-getNumberOfInstrumentsByCollection:
-SELECT IFNULL(
-  (
-    SELECT COUNT(*)
-    FROM instrument i
-    INNER JOIN collection_entity ce ON i.id = ce.entity_id
-    INNER JOIN collection c ON c.id = ce.id
-    WHERE c.id = :collectionId
-    AND (
-      i.name LIKE :query OR
-      i.disambiguation LIKE :query OR
-      i.type LIKE :query OR
-      i.description LIKE :query
-    )
-  ),
-  0
-) AS count;
-
-getInstrumentsByCollection:
-SELECT
-  i.id,
-  i.name,
-  i.disambiguation,
-  i.description,
-  i.type,
-  visited.entity_id IS NOT NULL AS visited
-FROM instrument i
-INNER JOIN collection_entity ce ON i.id = ce.entity_id
-INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN visited ON visited.entity_id = i.id
-WHERE c.id = :collectionId
-AND (
-  i.name LIKE :query OR
-  i.disambiguation LIKE :query OR
-  i.type LIKE :query OR
-  i.description LIKE :query
-)
-LIMIT :limit OFFSET :offset;
 
 -- series by collection
 

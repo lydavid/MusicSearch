@@ -55,7 +55,7 @@ val databaseDaoModule = module {
     single { EntityHasRelationsDao(get()) }
     singleOf(::VisitedDaoImpl) bind VisitedDao::class
     singleOf(::EventDao)
-    single { InstrumentDao(get()) }
+    singleOf(::InstrumentDao)
     single { GenreDao(get()) }
     singleOf(::LabelDao)
     single { LookupHistoryDao(get(), get()) }
