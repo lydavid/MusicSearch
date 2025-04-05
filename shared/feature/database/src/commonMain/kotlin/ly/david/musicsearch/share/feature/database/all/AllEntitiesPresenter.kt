@@ -115,6 +115,7 @@ internal class AllEntitiesPresenter(
                     areasEventSink(
                         AreasListUiEvent.Get(
                             browseMethod = browseMethod,
+                            isRemote = false,
                         ),
                     )
                     areasEventSink(AreasListUiEvent.UpdateQuery(query))
@@ -124,6 +125,7 @@ internal class AllEntitiesPresenter(
                     artistsEventSink(
                         ArtistsListUiEvent.Get(
                             browseMethod = browseMethod,
+                            isRemote = false,
                         ),
                     )
                     artistsEventSink(ArtistsListUiEvent.UpdateQuery(query))
@@ -133,6 +135,7 @@ internal class AllEntitiesPresenter(
                     eventsEventSink(
                         EventsListUiEvent.Get(
                             browseMethod = browseMethod,
+                            isRemote = false,
                         ),
                     )
                     eventsEventSink(EventsListUiEvent.UpdateQuery(query))
@@ -142,6 +145,7 @@ internal class AllEntitiesPresenter(
                     genresEventSink(
                         GenresListUiEvent.Get(
                             browseMethod = browseMethod,
+                            isRemote = false,
                         ),
                     )
                     genresEventSink(GenresListUiEvent.UpdateQuery(query))
@@ -151,6 +155,7 @@ internal class AllEntitiesPresenter(
                     instrumentsEventSink(
                         InstrumentsListUiEvent.Get(
                             browseMethod = browseMethod,
+                            isRemote = false,
                         ),
                     )
                     instrumentsEventSink(InstrumentsListUiEvent.UpdateQuery(query))
@@ -160,6 +165,7 @@ internal class AllEntitiesPresenter(
                     labelsEventSink(
                         LabelsListUiEvent.Get(
                             browseMethod = browseMethod,
+                            isRemote = false,
                         ),
                     )
                     labelsEventSink(LabelsListUiEvent.UpdateQuery(query))
@@ -169,6 +175,7 @@ internal class AllEntitiesPresenter(
                     placesEventSink(
                         PlacesListUiEvent.Get(
                             browseMethod = browseMethod,
+                            isRemote = false,
                         ),
                     )
                     placesEventSink(PlacesListUiEvent.UpdateQuery(query))
@@ -178,6 +185,7 @@ internal class AllEntitiesPresenter(
                     recordingsEventSink(
                         RecordingsListUiEvent.Get(
                             browseMethod = browseMethod,
+                            isRemote = false,
                         ),
                     )
                     recordingsEventSink(RecordingsListUiEvent.UpdateQuery(query))
@@ -187,6 +195,7 @@ internal class AllEntitiesPresenter(
                     releasesEventSink(
                         ReleasesListUiEvent.Get(
                             browseMethod = browseMethod,
+                            isRemote = false,
                         ),
                     )
                     releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))
@@ -196,6 +205,7 @@ internal class AllEntitiesPresenter(
                     releaseGroupsEventSink(
                         ReleaseGroupsListUiEvent.Get(
                             browseMethod = browseMethod,
+                            isRemote = false,
                         ),
                     )
                     releaseGroupsEventSink(ReleaseGroupsListUiEvent.UpdateQuery(query))
@@ -205,6 +215,7 @@ internal class AllEntitiesPresenter(
                     seriesEventSink(
                         SeriesListUiEvent.Get(
                             browseMethod = browseMethod,
+                            isRemote = false,
                         ),
                     )
                     seriesEventSink(SeriesListUiEvent.UpdateQuery(query))
@@ -214,6 +225,7 @@ internal class AllEntitiesPresenter(
                     worksEventSink(
                         WorksListUiEvent.Get(
                             browseMethod = browseMethod,
+                            isRemote = false,
                         ),
                     )
                     worksEventSink(WorksListUiEvent.UpdateQuery(query))
