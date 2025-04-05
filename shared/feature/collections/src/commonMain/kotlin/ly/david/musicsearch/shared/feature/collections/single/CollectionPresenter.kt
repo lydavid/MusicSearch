@@ -29,9 +29,9 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.area.AreasByEntityPresenter
 import ly.david.musicsearch.ui.common.area.AreasByEntityUiEvent
 import ly.david.musicsearch.ui.common.area.AreasByEntityUiState
-import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
-import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
-import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
+import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
+import ly.david.musicsearch.ui.common.artist.ArtistsListUiEvent
+import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
@@ -75,7 +75,7 @@ internal class CollectionPresenter(
     private val getCollection: GetCollection,
     private val incrementLookupHistory: IncrementLookupHistory,
     private val areasByEntityPresenter: AreasByEntityPresenter,
-    private val artistsByEntityPresenter: ArtistsByEntityPresenter,
+    private val artistsListPresenter: ArtistsListPresenter,
     private val eventsByEntityPresenter: EventsByEntityPresenter,
     private val genresByEntityPresenter: GenresByEntityPresenter,
     private val instrumentsByEntityPresenter: InstrumentsByEntityPresenter,
@@ -106,7 +106,7 @@ internal class CollectionPresenter(
 
         val areasByEntityUiState = areasByEntityPresenter.present()
         val areasEventSink = areasByEntityUiState.eventSink
-        val artistsByEntityUiState = artistsByEntityPresenter.present()
+        val artistsByEntityUiState = artistsListPresenter.present()
         val artistsEventSink = artistsByEntityUiState.eventSink
         val eventsByEntityUiState = eventsByEntityPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
@@ -175,13 +175,13 @@ internal class CollectionPresenter(
 
                 MusicBrainzEntity.ARTIST -> {
                     artistsEventSink(
-                        ArtistsByEntityUiEvent.Get(
+                        ArtistsListUiEvent.Get(
                             byEntityId = collectionId,
                             byEntity = MusicBrainzEntity.COLLECTION,
                             isRemote = isRemote,
                         ),
                     )
-                    artistsEventSink(ArtistsByEntityUiEvent.UpdateQuery(query))
+                    artistsEventSink(ArtistsListUiEvent.UpdateQuery(query))
                 }
 
                 MusicBrainzEntity.EVENT -> {
@@ -350,7 +350,7 @@ internal class CollectionPresenter(
             topAppBarFilterState = topAppBarFilterState,
             topAppBarEditState = topAppBarEditState,
             areasByEntityUiState = areasByEntityUiState,
-            artistsByEntityUiState = artistsByEntityUiState,
+            artistsListUiState = artistsByEntityUiState,
             eventsByEntityUiState = eventsByEntityUiState,
             genresByEntityUiState = genresByEntityUiState,
             instrumentsByEntityUiState = instrumentsByEntityUiState,
@@ -375,7 +375,7 @@ internal data class CollectionUiState(
     val url: String,
     val topAppBarEditState: TopAppBarEditState,
     val areasByEntityUiState: AreasByEntityUiState,
-    val artistsByEntityUiState: ArtistsByEntityUiState,
+    val artistsListUiState: ArtistsListUiState,
     val eventsByEntityUiState: EventsByEntityUiState,
     val genresByEntityUiState: GenresByEntityUiState,
     val instrumentsByEntityUiState: InstrumentsByEntityUiState,

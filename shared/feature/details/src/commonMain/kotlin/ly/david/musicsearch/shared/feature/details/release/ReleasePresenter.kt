@@ -31,9 +31,9 @@ import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
-import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
-import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
-import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
+import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
+import ly.david.musicsearch.ui.common.artist.ArtistsListUiEvent
+import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
@@ -55,7 +55,7 @@ internal class ReleasePresenter(
     private val relationsPresenter: RelationsPresenter,
     private val imageMetadataRepository: ImageMetadataRepository,
     private val tracksByReleasePresenter: TracksByReleasePresenter,
-    private val artistsByEntityPresenter: ArtistsByEntityPresenter,
+    private val artistsListPresenter: ArtistsListPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
@@ -81,7 +81,7 @@ internal class ReleasePresenter(
         val tracksByReleaseUiState = tracksByReleasePresenter.present()
         val tracksEventSink = tracksByReleaseUiState.eventSink
 
-        val artistsByEntityUiState = artistsByEntityPresenter.present()
+        val artistsByEntityUiState = artistsListPresenter.present()
         val artistsEventSink = artistsByEntityUiState.eventSink
 
         val relationsUiState = relationsPresenter.present()
@@ -169,12 +169,12 @@ internal class ReleasePresenter(
 
                 ReleaseTab.ARTISTS -> {
                     artistsEventSink(
-                        ArtistsByEntityUiEvent.Get(
+                        ArtistsListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    artistsEventSink(ArtistsByEntityUiEvent.UpdateQuery(query))
+                    artistsEventSink(ArtistsListUiEvent.UpdateQuery(query))
                 }
 
                 ReleaseTab.RELATIONSHIPS -> {
@@ -246,7 +246,7 @@ internal class ReleasePresenter(
             ),
             relationsUiState = relationsUiState,
             tracksByReleaseUiState = tracksByReleaseUiState,
-            artistsByEntityUiState = artistsByEntityUiState,
+            artistsListUiState = artistsByEntityUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
         )
@@ -265,7 +265,7 @@ internal data class ReleaseUiState(
     val releaseDetailsUiState: ReleaseDetailsUiState,
     val relationsUiState: RelationsUiState,
     val tracksByReleaseUiState: TracksByReleaseUiState,
-    val artistsByEntityUiState: ArtistsByEntityUiState,
+    val artistsListUiState: ArtistsListUiState,
     val loginUiState: LoginUiState,
     val eventSink: (ReleaseUiEvent) -> Unit,
 ) : CircuitUiState

@@ -22,7 +22,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.area.AreasByEntityUiState
 import ly.david.musicsearch.ui.common.area.AreasListScreen
-import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
+import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
 import ly.david.musicsearch.ui.common.artist.ArtistsListScreen
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
 import ly.david.musicsearch.ui.common.event.EventsListScreen
@@ -161,7 +161,7 @@ internal fun CollectionUi(
             CollectionUi(
                 isEditMode = state.topAppBarEditState.isEditMode,
                 areasByEntityUiState = state.areasByEntityUiState,
-                artistsByEntityUiState = state.artistsByEntityUiState,
+                artistsListUiState = state.artistsListUiState,
                 eventsByEntityUiState = state.eventsByEntityUiState,
                 genresByEntityUiState = state.genresByEntityUiState,
                 instrumentsByEntityUiState = state.instrumentsByEntityUiState,
@@ -219,7 +219,7 @@ internal fun CollectionUi(
 private fun CollectionUi(
     isEditMode: Boolean,
     areasByEntityUiState: AreasByEntityUiState,
-    artistsByEntityUiState: ArtistsByEntityUiState,
+    artistsListUiState: ArtistsListUiState,
     eventsByEntityUiState: EventsByEntityUiState,
     genresByEntityUiState: GenresByEntityUiState,
     instrumentsByEntityUiState: InstrumentsByEntityUiState,
@@ -259,8 +259,7 @@ private fun CollectionUi(
 
         MusicBrainzEntity.ARTIST -> {
             ArtistsListScreen(
-                lazyListState = artistsByEntityUiState.lazyListState,
-                lazyPagingItems = artistsByEntityUiState.lazyPagingItems,
+                state = artistsListUiState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()

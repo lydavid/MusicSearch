@@ -192,8 +192,7 @@ internal fun AreaUiInternal(
 
                 AreaTab.ARTISTS -> {
                     ArtistsListScreen(
-                        lazyListState = state.artistsByEntityUiState.lazyListState,
-                        lazyPagingItems = state.artistsByEntityUiState.lazyPagingItems,
+                        state = state.artistsListUiState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

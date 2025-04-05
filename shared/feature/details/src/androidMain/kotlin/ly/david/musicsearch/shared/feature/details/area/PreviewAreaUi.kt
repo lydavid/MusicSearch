@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
+import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
 import ly.david.musicsearch.ui.common.label.LabelsByEntityUiState
 import ly.david.musicsearch.ui.common.place.PlacesByEntityUiState
@@ -506,7 +506,7 @@ internal fun PreviewAreaDetails() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.DETAILS,
-                    artistsByEntityUiState = ArtistsByEntityUiState(
+                    artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
@@ -543,7 +543,7 @@ internal fun PreviewAreaDetailsError() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.DETAILS,
-                    artistsByEntityUiState = ArtistsByEntityUiState(
+                    artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
@@ -580,7 +580,7 @@ internal fun PreviewAreaRelationships() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.RELATIONSHIPS,
-                    artistsByEntityUiState = ArtistsByEntityUiState(
+                    artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
@@ -617,7 +617,7 @@ internal fun PreviewAreaArtists() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.ARTISTS,
-                    artistsByEntityUiState = ArtistsByEntityUiState(
+                    artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
@@ -654,7 +654,7 @@ internal fun PreviewAreaEvents() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.EVENTS,
-                    artistsByEntityUiState = ArtistsByEntityUiState(
+                    artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
@@ -691,7 +691,7 @@ internal fun PreviewAreaLabels() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.LABELS,
-                    artistsByEntityUiState = ArtistsByEntityUiState(
+                    artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
@@ -728,7 +728,7 @@ internal fun PreviewAreaReleases() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.RELEASES,
-                    artistsByEntityUiState = ArtistsByEntityUiState(
+                    artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
@@ -765,7 +765,7 @@ internal fun PreviewAreaPlaces() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.PLACES,
-                    artistsByEntityUiState = ArtistsByEntityUiState(
+                    artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(
@@ -802,7 +802,7 @@ internal fun PreviewAreaStats() {
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.STATS,
-                    artistsByEntityUiState = ArtistsByEntityUiState(
+                    artistsListUiState = ArtistsListUiState(
                         lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
                     ),
                     eventsByEntityUiState = EventsByEntityUiState(

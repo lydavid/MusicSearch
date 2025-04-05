@@ -2,7 +2,7 @@ package ly.david.musicsearch.shared.domain
 
 import ly.david.musicsearch.shared.domain.area.usecase.GetAreasByEntity
 import ly.david.musicsearch.shared.domain.area.usecase.GetAreasByEntityImpl
-import ly.david.musicsearch.shared.domain.artist.usecase.GetArtistsByEntity
+import ly.david.musicsearch.shared.domain.artist.usecase.GetArtists
 import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.DeleteCollection
@@ -47,7 +47,7 @@ import org.koin.dsl.module
 
 val domainModule = module {
     singleOf(::GetAreasByEntityImpl) bind GetAreasByEntity::class
-    singleOf(::GetArtistsByEntity)
+    singleOf(::GetArtists)
     singleOf(::ObserveBrowseEntityCount)
     singleOf(::CreateCollection)
     singleOf(::DeleteFromCollection)

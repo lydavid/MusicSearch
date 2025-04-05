@@ -27,9 +27,9 @@ import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
-import ly.david.musicsearch.ui.common.artist.ArtistsByEntityPresenter
-import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiEvent
-import ly.david.musicsearch.ui.common.artist.ArtistsByEntityUiState
+import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
+import ly.david.musicsearch.ui.common.artist.ArtistsListUiEvent
+import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
 import ly.david.musicsearch.ui.common.event.EventsByEntityPresenter
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiEvent
 import ly.david.musicsearch.ui.common.event.EventsByEntityUiState
@@ -56,7 +56,7 @@ internal class AreaPresenter(
     private val navigator: Navigator,
     private val repository: AreaRepository,
     private val incrementLookupHistory: IncrementLookupHistory,
-    private val artistsByEntityPresenter: ArtistsByEntityPresenter,
+    private val artistsListPresenter: ArtistsListPresenter,
     private val eventsByEntityPresenter: EventsByEntityPresenter,
     private val labelsByEntityPresenter: LabelsByEntityPresenter,
     private val releasesByEntityPresenter: ReleasesByEntityPresenter,
@@ -84,7 +84,7 @@ internal class AreaPresenter(
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
-        val artistsByEntityUiState = artistsByEntityPresenter.present()
+        val artistsByEntityUiState = artistsListPresenter.present()
         val artistsEventSink = artistsByEntityUiState.eventSink
         val eventsByEntityUiState = eventsByEntityPresenter.present()
         val eventsEventSink = eventsByEntityUiState.eventSink
@@ -165,12 +165,12 @@ internal class AreaPresenter(
 
                 AreaTab.ARTISTS -> {
                     artistsEventSink(
-                        ArtistsByEntityUiEvent.Get(
+                        ArtistsListUiEvent.Get(
                             byEntityId = screen.id,
                             byEntity = screen.entity,
                         ),
                     )
-                    artistsEventSink(ArtistsByEntityUiEvent.UpdateQuery(query))
+                    artistsEventSink(ArtistsListUiEvent.UpdateQuery(query))
                 }
 
                 AreaTab.EVENTS -> {
@@ -257,7 +257,7 @@ internal class AreaPresenter(
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
             snackbarMessage = snackbarMessage,
-            artistsByEntityUiState = artistsByEntityUiState,
+            artistsListUiState = artistsByEntityUiState,
             eventsByEntityUiState = eventsByEntityUiState,
             labelsByEntityUiState = labelsByEntityUiState,
             placesByEntityUiState = placesByEntityUiState,
@@ -280,7 +280,7 @@ internal data class AreaUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
-    val artistsByEntityUiState: ArtistsByEntityUiState,
+    val artistsListUiState: ArtistsListUiState,
     val eventsByEntityUiState: EventsByEntityUiState,
     val labelsByEntityUiState: LabelsByEntityUiState,
     val placesByEntityUiState: PlacesByEntityUiState,
