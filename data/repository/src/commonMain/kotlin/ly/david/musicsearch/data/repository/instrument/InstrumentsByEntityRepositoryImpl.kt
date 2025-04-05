@@ -28,7 +28,7 @@ class InstrumentsByEntityRepositoryImpl(
 
     override fun observeInstrumentsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<InstrumentListItemModel>> {
         return observeEntitiesByEntity(
@@ -36,26 +36,6 @@ class InstrumentsByEntityRepositoryImpl(
             entity = entity,
             listFilters = listFilters,
         )
-    }
-
-    override fun deleteLinkedEntitiesByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
-    ) {
-        browseEntityCountDao.withTransaction {
-            browseEntityCountDao.deleteBrowseEntityCountByEntity(
-                entityId = entityId,
-                browseEntity = browseEntity,
-            )
-
-            when (entity) {
-                MusicBrainzEntity.COLLECTION -> {
-                    collectionEntityDao.deleteAllFromCollection(entityId)
-                }
-
-                else -> error(browseEntitiesNotSupported(entity))
-            }
-        }
     }
 
     override fun getLinkedEntitiesPagingSource(
@@ -76,6 +56,26 @@ class InstrumentsByEntityRepositoryImpl(
             }
 
             else -> error(browseEntitiesNotSupported(entity))
+        }
+    }
+
+    override fun deleteLinkedEntitiesByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+    ) {
+        browseEntityCountDao.withTransaction {
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(
+                entityId = entityId,
+                browseEntity = browseEntity,
+            )
+
+            when (entity) {
+                MusicBrainzEntity.COLLECTION -> {
+                    collectionEntityDao.deleteAllFromCollection(entityId)
+                }
+
+                else -> error(browseEntitiesNotSupported(entity))
+            }
         }
     }
 

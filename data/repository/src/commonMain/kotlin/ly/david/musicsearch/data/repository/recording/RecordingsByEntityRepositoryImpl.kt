@@ -38,6 +38,18 @@ class RecordingsByEntityRepositoryImpl(
         )
     }
 
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String?,
+        entity: MusicBrainzEntity?,
+        listFilters: ListFilters,
+    ): PagingSource<Int, RecordingListItemModel> {
+        return recordingDao.getRecordings(
+            entityId = entityId,
+            entity = entity,
+            query = listFilters.query,
+        )
+    }
+
     override fun deleteLinkedEntitiesByEntity(
         entityId: String,
         entity: MusicBrainzEntity,
@@ -58,18 +70,6 @@ class RecordingsByEntityRepositoryImpl(
                 }
             }
         }
-    }
-
-    override fun getLinkedEntitiesPagingSource(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
-        listFilters: ListFilters,
-    ): PagingSource<Int, RecordingListItemModel> {
-        return recordingDao.getRecordings(
-            entityId = entityId,
-            entity = entity,
-            query = listFilters.query,
-        )
     }
 
     override suspend fun browseEntities(

@@ -57,6 +57,19 @@ class ReleaseGroupsByEntityRepositoryImpl(
         }
     }
 
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String?,
+        entity: MusicBrainzEntity?,
+        listFilters: ListFilters,
+    ): PagingSource<Int, ReleaseGroupListItemModel> {
+        return releaseGroupDao.getReleaseGroups(
+            entityId = entityId,
+            entity = entity,
+            query = listFilters.query,
+            sorted = listFilters.sorted,
+        )
+    }
+
     override fun deleteLinkedEntitiesByEntity(
         entityId: String,
         entity: MusicBrainzEntity,
@@ -79,19 +92,6 @@ class ReleaseGroupsByEntityRepositoryImpl(
                 else -> error(browseEntitiesNotSupported(entity))
             }
         }
-    }
-
-    override fun getLinkedEntitiesPagingSource(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
-        listFilters: ListFilters,
-    ): PagingSource<Int, ReleaseGroupListItemModel> {
-        return releaseGroupDao.getReleaseGroups(
-            entityId = entityId,
-            entity = entity,
-            query = listFilters.query,
-            sorted = listFilters.sorted,
-        )
     }
 
     override suspend fun browseEntities(

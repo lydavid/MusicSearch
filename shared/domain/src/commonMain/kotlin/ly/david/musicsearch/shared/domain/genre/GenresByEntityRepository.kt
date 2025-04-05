@@ -9,7 +9,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 interface GenresByEntityRepository {
     fun observeGenresByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<GenreListItemModel>>
 }
