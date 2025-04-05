@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -21,10 +22,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.release.usecase.GetReleases
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
@@ -52,16 +53,20 @@ class ReleasesListPresenter(
         val lazyListState: LazyListState = rememberLazyListState()
         val scope = rememberCoroutineScope()
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
+        var requestedImageMetadataForIds: Set<String> by remember { mutableStateOf(setOf()) }
 
         fun eventSink(event: ReleasesListUiEvent) {
             when (event) {
                 is ReleasesListUiEvent.RequestForMissingCoverArtUrl -> {
-                    scope.launch {
-                        imageMetadataRepository.getImageMetadata(
-                            mbid = event.entityId,
-                            entity = MusicBrainzEntity.RELEASE,
-                            forceRefresh = false,
-                        )
+                    if (!requestedImageMetadataForIds.contains(event.entityId)) {
+                        requestedImageMetadataForIds = requestedImageMetadataForIds + setOf(event.entityId)
+                        scope.launch {
+                            imageMetadataRepository.getImageMetadata(
+                                mbid = event.entityId,
+                                entity = MusicBrainzEntity.RELEASE,
+                                forceRefresh = false,
+                            )
+                        }
                     }
                 }
 

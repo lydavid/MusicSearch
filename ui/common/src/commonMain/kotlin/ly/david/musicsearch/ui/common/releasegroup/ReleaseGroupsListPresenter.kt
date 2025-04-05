@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -53,16 +54,20 @@ class ReleaseGroupsListPresenter(
             )
         }
         val lazyListState: LazyListState = rememberLazyListState()
+        var requestedImageMetadataForIds: Set<String> by remember { mutableStateOf(setOf()) }
 
         fun eventSink(event: ReleaseGroupsListUiEvent) {
             when (event) {
                 is ReleaseGroupsListUiEvent.RequestForMissingCoverArtUrl -> {
-                    scope.launch {
-                        imageMetadataRepository.getImageMetadata(
-                            mbid = event.entityId,
-                            entity = MusicBrainzEntity.RELEASE_GROUP,
-                            forceRefresh = false,
-                        )
+                    if (!requestedImageMetadataForIds.contains(event.entityId)) {
+                        requestedImageMetadataForIds = requestedImageMetadataForIds + setOf(event.entityId)
+                        scope.launch {
+                            imageMetadataRepository.getImageMetadata(
+                                mbid = event.entityId,
+                                entity = MusicBrainzEntity.RELEASE_GROUP,
+                                forceRefresh = false,
+                            )
+                        }
                     }
                 }
 
