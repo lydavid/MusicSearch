@@ -20,9 +20,9 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.strings.AppStrings
 
 /**
- * Returns an appropriate string for this [MusicBrainzEntity].
+ * Returns an appropriate name for this [MusicBrainzEntity].
  */
-fun MusicBrainzEntity.getDisplayText(strings: AppStrings): String {
+fun MusicBrainzEntity.getName(strings: AppStrings): String {
     return when (this) {
         MusicBrainzEntity.AREA -> strings.area
         MusicBrainzEntity.ARTIST -> strings.artist
@@ -38,6 +38,25 @@ fun MusicBrainzEntity.getDisplayText(strings: AppStrings): String {
         MusicBrainzEntity.WORK -> strings.work
         MusicBrainzEntity.URL -> strings.url
         MusicBrainzEntity.COLLECTION -> strings.collection
+    }
+}
+
+fun MusicBrainzEntity.getNamePlural(strings: AppStrings): String {
+    return when (this) {
+        MusicBrainzEntity.AREA -> strings.areas
+        MusicBrainzEntity.ARTIST -> strings.artists
+        MusicBrainzEntity.EVENT -> strings.events
+        MusicBrainzEntity.GENRE -> strings.genres
+        MusicBrainzEntity.INSTRUMENT -> strings.instruments
+        MusicBrainzEntity.LABEL -> strings.labels
+        MusicBrainzEntity.PLACE -> strings.places
+        MusicBrainzEntity.RECORDING -> strings.recordings
+        MusicBrainzEntity.RELEASE -> strings.releases
+        MusicBrainzEntity.RELEASE_GROUP -> strings.releaseGroups
+        MusicBrainzEntity.SERIES -> strings.series
+        MusicBrainzEntity.WORK -> strings.works
+        MusicBrainzEntity.URL -> strings.urls
+        MusicBrainzEntity.COLLECTION -> strings.collections
     }
 }
 

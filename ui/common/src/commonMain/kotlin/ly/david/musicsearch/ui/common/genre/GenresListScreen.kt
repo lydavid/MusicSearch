@@ -1,11 +1,8 @@
 package ly.david.musicsearch.ui.common.genre
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -15,17 +12,16 @@ import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GenresListScreen(
-    lazyPagingItems: LazyPagingItems<GenreListItemModel>,
+    state: GenresListUiState,
     modifier: Modifier = Modifier,
-    lazyListState: LazyListState = rememberLazyListState(),
     isEditMode: Boolean = false,
     onItemClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
 ) {
     ScreenWithPagingLoadingAndError(
+        lazyPagingItems = state.lazyPagingItems,
         modifier = modifier,
-        lazyListState = lazyListState,
-        lazyPagingItems = lazyPagingItems,
+        lazyListState = state.lazyListState,
     ) { listItemModel: GenreListItemModel? ->
         when (listItemModel) {
             is GenreListItemModel -> {

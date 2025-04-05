@@ -1,12 +1,8 @@
 package ly.david.musicsearch.ui.common.area
 
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import app.cash.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
-import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -16,18 +12,17 @@ import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
 @Composable
 fun AreasListScreen(
-    pagingDataFlow: Flow<PagingData<AreaListItemModel>>,
+    state: AreasListUiState,
     modifier: Modifier = Modifier,
-    lazyListState: LazyListState = rememberLazyListState(),
     isEditMode: Boolean = false,
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
 ) {
-    val lazyPagingItems = pagingDataFlow.collectAsLazyPagingItems()
+    val lazyPagingItems = state.pagingDataFlow.collectAsLazyPagingItems()
     ScreenWithPagingLoadingAndError(
         lazyPagingItems = lazyPagingItems,
         modifier = modifier,
-        lazyListState = lazyListState,
+        lazyListState = state.lazyListState,
     ) { listItemModel: AreaListItemModel? ->
         when (listItemModel) {
             is AreaListItemModel -> {

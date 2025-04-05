@@ -211,8 +211,7 @@ internal fun AreaUiInternal(
 
                 AreaTab.EVENTS -> {
                     EventsListScreen(
-                        lazyListState = state.eventsListUiState.lazyListState,
-                        lazyPagingItems = state.eventsListUiState.lazyPagingItems,
+                        state = state.eventsListUiState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -231,12 +230,11 @@ internal fun AreaUiInternal(
 
                 AreaTab.LABELS -> {
                     LabelsListScreen(
-                        lazyPagingItems = state.labelsListUiState.lazyPagingItems,
+                        state = state.labelsListUiState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.labelsListUiState.lazyListState,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
@@ -251,12 +249,11 @@ internal fun AreaUiInternal(
 
                 AreaTab.RELEASES -> {
                     ReleasesListScreen(
-                        lazyPagingItems = state.releasesListUiState.lazyPagingItems,
+                        state = state.releasesListUiState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.releasesListUiState.lazyListState,
                         showMoreInfo = state.releasesListUiState.showMoreInfo,
                         onItemClick = { entity, id, title ->
                             eventSink(
@@ -299,8 +296,7 @@ internal fun AreaUiInternal(
 
                 AreaTab.PLACES -> {
                     PlacesListScreen(
-                        lazyListState = state.placesListUiState.lazyListState,
-                        lazyPagingItems = state.placesListUiState.lazyPagingItems,
+                        state = state.placesListUiState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

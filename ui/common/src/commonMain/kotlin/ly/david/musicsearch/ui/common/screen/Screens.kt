@@ -18,6 +18,14 @@ data class ArtistCollaborationScreen(
 ) : Screen
 
 @Parcelize
+data object DatabaseScreen : Screen
+
+@Parcelize
+data class AllEntitiesScreen(
+    val entity: MusicBrainzEntity,
+) : Screen
+
+@Parcelize
 data object HistoryScreen : Screen
 
 @Parcelize

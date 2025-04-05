@@ -67,7 +67,7 @@ class AreasListPresenter(
 sealed interface AreasListUiEvent : CircuitUiEvent {
     data class Get(
         val byEntityId: String,
-        val byEntity: MusicBrainzEntity,
+        val byEntity: MusicBrainzEntity?,
         val isRemote: Boolean = true,
     ) : AreasListUiEvent
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
+    <ID>ModifierMissing:EntitiesListUi.kt$EntitiesListUi</ID>
   </CurrentIssues>
 </SmellBaseline>

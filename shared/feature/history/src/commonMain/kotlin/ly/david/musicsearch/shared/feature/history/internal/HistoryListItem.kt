@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.image.ThumbnailImage
-import ly.david.musicsearch.ui.common.getDisplayText
+import ly.david.musicsearch.ui.common.getName
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.core.theme.TextStyles
@@ -46,7 +46,7 @@ internal fun HistoryListItem(
                     )
                 },
                 supportingContent = {
-                    val resource = lookupHistory.entity.getDisplayText(strings)
+                    val resource = lookupHistory.entity.getName(strings)
                     Text(
                         text = resource,
                         style = TextStyles.getCardBodySubTextStyle(),
