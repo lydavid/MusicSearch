@@ -173,12 +173,11 @@ internal fun RecordingUi(
 
                 RecordingTab.RELEASES -> {
                     ReleasesListScreen(
-                        lazyPagingItems = state.releasesListUiState.lazyPagingItems,
+                        state = state.releasesListUiState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.releasesListUiState.lazyListState,
                         showMoreInfo = state.releasesListUiState.showMoreInfo,
                         onItemClick = { entity, id, title ->
                             eventSink(

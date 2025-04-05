@@ -18,6 +18,7 @@ import ly.david.musicsearch.data.repository.di.repositoryDataModule
 import ly.david.musicsearch.data.spotify.di.spotifyApiModule
 import ly.david.musicsearch.data.spotify.di.spotifyDataModule
 import ly.david.musicsearch.data.wikimedia.di.wikimediaModule
+import ly.david.musicsearch.share.feature.database.databaseFeatureModule
 import ly.david.musicsearch.shared.domain.domainModule
 import ly.david.musicsearch.shared.feature.collections.collectionsFeatureModule
 import ly.david.musicsearch.shared.feature.details.detailsFeatureModule
@@ -37,6 +38,7 @@ val circuitModule = module {
     includes(
         searchFeatureModule,
         graphFeatureModule,
+        databaseFeatureModule,
         historyFeatureModule,
         collectionsFeatureModule,
         settingsFeatureModule,

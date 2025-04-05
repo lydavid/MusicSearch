@@ -37,6 +37,8 @@ val EnStrings = AppStrings(
 
     url = "URL",
 
+    urls = "URLs",
+
     collection = "Collection",
 
     back = "Back",
@@ -54,6 +56,8 @@ val EnStrings = AppStrings(
     searchMusicbrainz = "Search MusicBrainz",
 
     search = "Search",
+
+    database = "Database",
 
     history = "History",
 
@@ -98,9 +102,11 @@ val EnStrings = AppStrings(
 
     details = "Details",
 
+    areas = "Areas",
     artists = "Artists",
-
     events = "Events",
+    genres = "Genres",
+    instruments = "Instruments",
 
     places = "Places",
 

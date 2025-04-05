@@ -55,6 +55,9 @@ internal class HistoryPresenter(
 
         fun eventSink(event: HistoryUiEvent) {
             when (event) {
+                is HistoryUiEvent.NavigateUp -> {
+                    navigator.pop()
+                }
                 is HistoryUiEvent.UpdateSortOption -> {
                     appPreferences.setHistorySortOption(HistorySortOption.entries[event.sortOptionIndex])
                 }
@@ -123,6 +126,7 @@ internal data class HistoryUiState(
 ) : CircuitUiState
 
 internal sealed interface HistoryUiEvent : CircuitUiEvent {
+    data object NavigateUp : HistoryUiEvent
     data class UpdateSortOption(val sortOptionIndex: Int) : HistoryUiEvent
     data class MarkHistoryForDeletion(val history: LookupHistoryListItemModel) : HistoryUiEvent
     data class UnMarkHistoryForDeletion(val history: LookupHistoryListItemModel) : HistoryUiEvent

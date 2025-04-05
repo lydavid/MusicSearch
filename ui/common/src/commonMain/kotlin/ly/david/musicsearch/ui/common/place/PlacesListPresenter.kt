@@ -69,7 +69,7 @@ class PlacesListPresenter(
 sealed interface PlacesListUiEvent : CircuitUiEvent {
     data class Get(
         val byEntityId: String,
-        val byEntity: MusicBrainzEntity,
+        val byEntity: MusicBrainzEntity?,
         val isRemote: Boolean = true,
     ) : PlacesListUiEvent
 

@@ -155,12 +155,11 @@ internal fun WorkUi(
 
                 WorkTab.RECORDINGS -> {
                     RecordingsListScreen(
-                        lazyPagingItems = state.recordingsListUiState.lazyPagingItems,
+                        state = state.recordingsListUiState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.recordingsListUiState.lazyListState,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 WorkUiEvent.ClickItem(

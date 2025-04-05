@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.EntityIcon
-import ly.david.musicsearch.ui.common.getDisplayText
+import ly.david.musicsearch.ui.common.getName
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
@@ -58,7 +58,7 @@ internal fun LazyListScope.addRelationshipsSection(
                 )
                 Text(
                     style = TextStyles.getCardBodySubTextStyle(),
-                    text = "${linkedEntity.getDisplayText(strings)}: ${relationTypeCount.count}",
+                    text = "${linkedEntity.getName(strings)}: ${relationTypeCount.count}",
                 )
             }
 

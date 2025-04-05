@@ -59,6 +59,7 @@ include(
     ":shared",
     ":shared:domain",
     ":shared:feature:collections",
+    ":shared:feature:database",
     ":shared:feature:details",
     ":shared:feature:graph",
     ":shared:feature:history",

@@ -44,7 +44,7 @@ class AreasByEntityRepositoryImpl(
         listFilters: ListFilters,
     ): PagingSource<Int, AreaListItemModel> {
         return areaDao.getAreas(
-            mbid = entityId,
+            entityId = entityId.orEmpty(),
             query = listFilters.query,
         )
     }

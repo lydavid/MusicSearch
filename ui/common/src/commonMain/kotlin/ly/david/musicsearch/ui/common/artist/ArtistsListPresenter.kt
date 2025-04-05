@@ -46,6 +46,7 @@ class ArtistsListPresenter(
 
         fun eventSink(event: ArtistsListUiEvent) {
             when (event) {
+                // TODO: rather than passing null entity and empty/null id to represent all entities, use sealed class
                 is ArtistsListUiEvent.Get -> {
                     id = event.byEntityId
                     entity = event.byEntity
@@ -70,7 +71,7 @@ sealed interface ArtistsListUiEvent : CircuitUiEvent {
 
     data class Get(
         val byEntityId: String,
-        val byEntity: MusicBrainzEntity,
+        val byEntity: MusicBrainzEntity?,
         val isRemote: Boolean = true,
     ) : ArtistsListUiEvent
 

@@ -94,8 +94,8 @@ class ReleaseGroupsListPresenter(
 sealed interface ReleaseGroupsListUiEvent : CircuitUiEvent {
     data class Get(
         val byEntityId: String,
-        val byEntity: MusicBrainzEntity,
-        val isRemote: Boolean,
+        val byEntity: MusicBrainzEntity?,
+        val isRemote: Boolean = true,
     ) : ReleaseGroupsListUiEvent
 
     data class UpdateQuery(

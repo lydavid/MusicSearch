@@ -93,7 +93,7 @@ class ReleasesListPresenter(
 sealed interface ReleasesListUiEvent : CircuitUiEvent {
     data class Get(
         val byEntityId: String,
-        val byEntity: MusicBrainzEntity,
+        val byEntity: MusicBrainzEntity?,
         val isRemote: Boolean = true,
     ) : ReleasesListUiEvent
 

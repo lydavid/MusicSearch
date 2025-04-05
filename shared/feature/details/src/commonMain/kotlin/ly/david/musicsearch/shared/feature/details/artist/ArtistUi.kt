@@ -198,12 +198,11 @@ internal fun ArtistUi(
 
                 ArtistTab.RELEASE_GROUPS -> {
                     ReleaseGroupsListScreen(
-                        lazyPagingItems = state.releaseGroupsListUiState.lazyPagingItems,
+                        state = state.releaseGroupsListUiState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.releaseGroupsListUiState.lazyListState,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
@@ -225,12 +224,11 @@ internal fun ArtistUi(
 
                 ArtistTab.RELEASES -> {
                     ReleasesListScreen(
-                        lazyPagingItems = state.releasesListUiState.lazyPagingItems,
+                        state = state.releasesListUiState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.releasesListUiState.lazyListState,
                         showMoreInfo = state.releasesListUiState.showMoreInfo,
                         onItemClick = { entity, id, title ->
                             eventSink(
@@ -253,12 +251,11 @@ internal fun ArtistUi(
 
                 ArtistTab.RECORDINGS -> {
                     RecordingsListScreen(
-                        lazyPagingItems = state.recordingsListUiState.lazyPagingItems,
+                        state = state.recordingsListUiState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.recordingsListUiState.lazyListState,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
@@ -273,12 +270,11 @@ internal fun ArtistUi(
 
                 ArtistTab.WORKS -> {
                     WorksListScreen(
-                        lazyPagingItems = state.worksListUiState.lazyPagingItems,
+                        state = state.worksListUiState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.worksListUiState.lazyListState,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
@@ -293,8 +289,7 @@ internal fun ArtistUi(
 
                 ArtistTab.EVENTS -> {
                     EventsListScreen(
-                        lazyListState = state.eventsListUiState.lazyListState,
-                        lazyPagingItems = state.eventsListUiState.lazyPagingItems,
+                        state = state.eventsListUiState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

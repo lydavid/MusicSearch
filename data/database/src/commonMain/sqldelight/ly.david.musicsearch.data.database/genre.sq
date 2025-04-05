@@ -21,13 +21,13 @@ getNumberOfGenresByCollection:
 SELECT IFNULL(
   (
     SELECT COUNT(*)
-    FROM genre e
-    INNER JOIN collection_entity ce ON e.id = ce.entity_id
+    FROM genre g
+    INNER JOIN collection_entity ce ON g.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
     WHERE c.id = :collectionId
     AND (
-      e.name LIKE :query OR
-      e.disambiguation LIKE :query
+      g.name LIKE :query OR
+      g.disambiguation LIKE :query
     )
   ),
   0
@@ -35,16 +35,16 @@ SELECT IFNULL(
 
 getGenresByCollection:
 SELECT
-  e.id,
-  e.name,
-  e.disambiguation
-FROM genre e
-INNER JOIN collection_entity ce ON e.id = ce.entity_id
+  g.id,
+  g.name,
+  g.disambiguation
+FROM genre g
+INNER JOIN collection_entity ce ON g.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 WHERE c.id = :collectionId
 AND (
-  e.name LIKE :query OR
-  e.disambiguation LIKE :query
+  g.name LIKE :query OR
+  g.disambiguation LIKE :query
 )
 LIMIT :limit OFFSET :offset;
 
@@ -54,10 +54,10 @@ getCountOfAllGenres:
 SELECT IFNULL(
   (
     SELECT COUNT(*)
-    FROM genre e
+    FROM genre g
     WHERE (
-      e.name LIKE :query OR
-      e.disambiguation LIKE :query
+      g.name LIKE :query OR
+      g.disambiguation LIKE :query
     )
   ),
   0
@@ -65,12 +65,12 @@ SELECT IFNULL(
 
 getAllGenres:
 SELECT
-  e.id,
-  e.name,
-  e.disambiguation
-FROM genre e
+  g.id,
+  g.name,
+  g.disambiguation
+FROM genre g
 WHERE (
-  e.name LIKE :query OR
-  e.disambiguation LIKE :query
+  g.name LIKE :query OR
+  g.disambiguation LIKE :query
 )
 LIMIT :limit OFFSET :offset;

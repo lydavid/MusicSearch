@@ -48,7 +48,7 @@ fun ResourceDropdownPicker(
             modifier = Modifier.menuAnchor(),
             readOnly = true,
             shape = RectangleShape,
-            value = selectedOption.getDisplayText(strings),
+            value = selectedOption.getName(strings),
             onValueChange = { },
             label = { Text(strings.resource) },
             trailingIcon = {
@@ -86,7 +86,7 @@ fun ResourceDropdownPicker(
                                     modifier = Modifier.padding(end = 8.dp),
                                     entity = option,
                                 )
-                                Text(option.getDisplayText(strings))
+                                Text(option.getName(strings))
                             }
                         },
                         onClick = {

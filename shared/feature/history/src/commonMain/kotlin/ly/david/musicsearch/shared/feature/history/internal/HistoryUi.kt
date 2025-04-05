@@ -105,7 +105,10 @@ internal fun HistoryUi(
         contentWindowInsets = WindowInsets(0),
         topBar = {
             TopAppBarWithFilter(
-                showBackButton = false,
+                showBackButton = true,
+                onBack = {
+                    eventSink(HistoryUiEvent.NavigateUp)
+                },
                 title = strings.recentHistory,
                 scrollBehavior = scrollBehavior,
                 topAppBarFilterState = state.topAppBarFilterState,

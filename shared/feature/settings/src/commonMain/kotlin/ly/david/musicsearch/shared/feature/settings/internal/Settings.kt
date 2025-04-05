@@ -219,6 +219,7 @@ internal fun Settings(
                     },
                 )
             }
+            // TODO: move to database
             ClickableItem(
                 title = "Browse local database images",
                 endIcon = Icons.Default.ChevronRight,

@@ -1,10 +1,7 @@
 package ly.david.musicsearch.ui.common.instrument
 
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -14,17 +11,16 @@ import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
 @Composable
 fun InstrumentsListScreen(
-    lazyPagingItems: LazyPagingItems<InstrumentListItemModel>,
+    state: InstrumentsListUiState,
     modifier: Modifier = Modifier,
-    lazyListState: LazyListState = rememberLazyListState(),
     isEditMode: Boolean = false,
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
 ) {
     ScreenWithPagingLoadingAndError(
-        lazyPagingItems = lazyPagingItems,
+        lazyPagingItems = state.lazyPagingItems,
         modifier = modifier,
-        lazyListState = lazyListState,
+        lazyListState = state.lazyListState,
     ) { listItemModel: InstrumentListItemModel? ->
         when (listItemModel) {
             is InstrumentListItemModel -> {

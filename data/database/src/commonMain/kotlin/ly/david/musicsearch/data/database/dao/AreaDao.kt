@@ -84,10 +84,10 @@ class AreaDao(
     }
 
     fun getAreas(
-        mbid: String?,
+        entityId: String,
         query: String,
     ): PagingSource<Int, AreaListItemModel> = when {
-        mbid == null -> {
+        entityId.isEmpty() -> {
             getAllAreas(
                 query = query,
             )
@@ -95,7 +95,7 @@ class AreaDao(
 
         else -> {
             getAreasByCollection(
-                mbid = mbid,
+                mbid = entityId,
                 query = query,
             )
         }
