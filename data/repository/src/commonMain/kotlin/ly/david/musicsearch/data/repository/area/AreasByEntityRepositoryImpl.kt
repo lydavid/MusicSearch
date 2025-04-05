@@ -28,13 +28,24 @@ class AreasByEntityRepositoryImpl(
 
     override fun observeAreasByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntity?,
         listFilters: ListFilters,
     ): Flow<PagingData<AreaListItemModel>> {
         return observeEntitiesByEntity(
             entityId = entityId,
             entity = entity,
             listFilters = listFilters,
+        )
+    }
+
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String?,
+        entity: MusicBrainzEntity?,
+        listFilters: ListFilters,
+    ): PagingSource<Int, AreaListItemModel> {
+        return areaDao.getAreas(
+            mbid = entityId,
+            query = listFilters.query,
         )
     }
 
@@ -55,23 +66,6 @@ class AreasByEntityRepositoryImpl(
 
                 else -> error(browseEntitiesNotSupported(entity))
             }
-        }
-    }
-
-    override fun getLinkedEntitiesPagingSource(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
-        listFilters: ListFilters,
-    ): PagingSource<Int, AreaListItemModel> {
-        return when {
-            entity == MusicBrainzEntity.COLLECTION || entityId == null -> {
-                areaDao.getAreas(
-                    mbid = entityId,
-                    query = listFilters.query,
-                )
-            }
-
-            else -> error(browseEntitiesNotSupported(entity))
         }
     }
 
