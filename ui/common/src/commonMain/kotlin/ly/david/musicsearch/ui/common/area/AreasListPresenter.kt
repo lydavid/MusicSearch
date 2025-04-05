@@ -15,12 +15,12 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.area.usecase.GetAreasByEntity
+import ly.david.musicsearch.shared.domain.area.usecase.GetAreas
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class AreasListPresenter(
-    private val getAreasByEntity: GetAreasByEntity,
+    private val getAreas: GetAreas,
 ) : Presenter<AreasListUiState> {
     @Composable
     override fun present(): AreasListUiState {
@@ -30,7 +30,7 @@ class AreasListPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val pagingDataFlow: Flow<PagingData<AreaListItemModel>> by rememberRetained(query, id, entity) {
             mutableStateOf(
-                getAreasByEntity(
+                getAreas(
                     entityId = id,
                     entity = entity,
                     listFilters = ListFilters(

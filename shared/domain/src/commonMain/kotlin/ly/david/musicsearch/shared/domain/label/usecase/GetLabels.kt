@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.domain.releasegroup.usecase
+package ly.david.musicsearch.shared.domain.label.usecase
 
 import androidx.paging.PagingData
 import app.cash.paging.cachedIn
@@ -8,22 +8,22 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
-import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.label.LabelsByEntityRepository
+import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsByEntityRepository
 
-class GetReleaseGroupsByEntity(
-    private val releaseGroupsByEntityRepository: ReleaseGroupsByEntityRepository,
+class GetLabels(
+    private val labelsByEntityRepository: LabelsByEntityRepository,
     private val coroutineScope: CoroutineScope,
-) : GetEntitiesByEntity<ListItemModel> {
+) : GetEntitiesByEntity<LabelListItemModel> {
     override operator fun invoke(
         entityId: String,
         entity: MusicBrainzEntity?,
         listFilters: ListFilters,
-    ): Flow<PagingData<ListItemModel>> {
+    ): Flow<PagingData<LabelListItemModel>> {
         return when {
             entityId.isEmpty() || entity == null -> emptyFlow()
-            else -> releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
+            else -> labelsByEntityRepository.observeLabelsByEntity(
                 entityId = entityId,
                 entity = entity,
                 listFilters = listFilters,

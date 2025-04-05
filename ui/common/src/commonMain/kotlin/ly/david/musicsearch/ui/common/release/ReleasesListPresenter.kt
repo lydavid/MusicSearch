@@ -24,10 +24,10 @@ import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
-import ly.david.musicsearch.shared.domain.release.usecase.GetReleasesByEntity
+import ly.david.musicsearch.shared.domain.release.usecase.GetReleases
 
 class ReleasesListPresenter(
-    private val getReleasesByEntity: GetReleasesByEntity,
+    private val getReleases: GetReleases,
     private val appPreferences: AppPreferences,
     private val imageMetadataRepository: ImageMetadataRepository,
 ) : Presenter<ReleasesListUiState> {
@@ -39,7 +39,7 @@ class ReleasesListPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val releaseListItems: Flow<PagingData<ReleaseListItemModel>> by rememberRetained(id, entity, query) {
             mutableStateOf(
-                getReleasesByEntity(
+                getReleases(
                     entityId = id,
                     entity = entity,
                     listFilters = ListFilters(

@@ -17,12 +17,12 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.event.usecase.GetEventsByEntity
+import ly.david.musicsearch.shared.domain.event.usecase.GetEvents
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class EventsListPresenter(
-    private val getEventsByEntity: GetEventsByEntity,
+    private val getEvents: GetEvents,
 ) : Presenter<EventsListUiState> {
     @Composable
     override fun present(): EventsListUiState {
@@ -32,7 +32,7 @@ class EventsListPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val eventListItems: Flow<PagingData<EventListItemModel>> by rememberRetained(query, id, entity) {
             mutableStateOf(
-                getEventsByEntity(
+                getEvents(
                     entityId = id,
                     entity = entity,
                     listFilters = ListFilters(

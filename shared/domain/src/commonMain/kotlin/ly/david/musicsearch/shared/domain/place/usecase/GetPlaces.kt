@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.domain.release.usecase
+package ly.david.musicsearch.shared.domain.place.usecase
 
 import androidx.paging.PagingData
 import app.cash.paging.cachedIn
@@ -8,22 +8,22 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
-import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.release.ReleasesByEntityRepository
+import ly.david.musicsearch.shared.domain.place.PlacesByEntityRepository
 
-class GetReleasesByEntity(
-    private val releasesByEntityRepository: ReleasesByEntityRepository,
+class GetPlaces(
+    private val placesByEntityRepository: PlacesByEntityRepository,
     private val coroutineScope: CoroutineScope,
-) : GetEntitiesByEntity<ReleaseListItemModel> {
+) : GetEntitiesByEntity<PlaceListItemModel> {
     override operator fun invoke(
         entityId: String,
         entity: MusicBrainzEntity?,
         listFilters: ListFilters,
-    ): Flow<PagingData<ReleaseListItemModel>> {
+    ): Flow<PagingData<PlaceListItemModel>> {
         return when {
             entityId.isEmpty() || entity == null -> emptyFlow()
-            else -> releasesByEntityRepository.observeReleasesByEntity(
+            else -> placesByEntityRepository.observePlacesByEntity(
                 entityId = entityId,
                 entity = entity,
                 listFilters = listFilters,

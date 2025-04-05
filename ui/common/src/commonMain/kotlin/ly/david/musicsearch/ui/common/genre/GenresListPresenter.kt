@@ -19,12 +19,12 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.genre.usecase.GetGenresByEntity
+import ly.david.musicsearch.shared.domain.genre.usecase.GetGenres
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class GenresListPresenter(
-    private val getGenresByEntity: GetGenresByEntity,
+    private val getGenres: GetGenres,
 ) : Presenter<GenresListUiState> {
     @Composable
     override fun present(): GenresListUiState {
@@ -43,7 +43,7 @@ class GenresListPresenter(
             if (id.isEmpty()) return@LaunchedEffect
             val capturedEntity = entity ?: return@LaunchedEffect
 
-            genreListItems = getGenresByEntity(
+            genreListItems = getGenres(
                 entityId = id,
                 entity = capturedEntity,
                 listFilters = ListFilters(

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.area.usecase.GetAreasByEntity
+import ly.david.musicsearch.shared.domain.area.usecase.GetAreas
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert.assertEquals
@@ -21,7 +21,7 @@ class AreasListPresenterTest {
     private fun createPresenter(
         listItems: List<AreaListItemModel>,
     ) = AreasListPresenter(
-        getAreasByEntity = object : GetAreasByEntity {
+        getAreas = object : GetAreas {
             override fun invoke(
                 entityId: String,
                 entity: MusicBrainzEntity?,

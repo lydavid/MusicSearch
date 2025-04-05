@@ -19,10 +19,10 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.place.usecase.GetPlacesByEntity
+import ly.david.musicsearch.shared.domain.place.usecase.GetPlaces
 
 class PlacesListPresenter(
-    private val getPlacesByEntity: GetPlacesByEntity,
+    private val getPlaces: GetPlaces,
 ) : Presenter<PlacesListUiState> {
     @Composable
     override fun present(): PlacesListUiState {
@@ -32,7 +32,7 @@ class PlacesListPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val placeListItems: Flow<PagingData<PlaceListItemModel>> by rememberRetained(query, id, entity) {
             mutableStateOf(
-                getPlacesByEntity(
+                getPlaces(
                     entityId = id,
                     entity = entity,
                     listFilters = ListFilters(

@@ -17,12 +17,12 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.instrument.usecase.GetInstrumentsByEntity
+import ly.david.musicsearch.shared.domain.instrument.usecase.GetInstruments
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class InstrumentsListPresenter(
-    private val getInstrumentsByEntity: GetInstrumentsByEntity,
+    private val getInstruments: GetInstruments,
 ) : Presenter<InstrumentsListUiState> {
     @Composable
     override fun present(): InstrumentsListUiState {
@@ -32,7 +32,7 @@ class InstrumentsListPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val instrumentListItems: Flow<PagingData<InstrumentListItemModel>> by rememberRetained(id, entity, query) {
             mutableStateOf(
-                getInstrumentsByEntity(
+                getInstruments(
                     entityId = id,
                     entity = entity,
                     listFilters = ListFilters(
