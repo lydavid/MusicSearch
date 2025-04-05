@@ -26,6 +26,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBr
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.data.repository.helpers.TestPlaceRepository
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.history.VisitedDao
@@ -388,7 +389,10 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
             },
         )
         val flow: Flow<PagingData<PlaceListItemModel>> = placesByEntityRepository.observePlacesByEntity(
-            browseMethod = countryId,
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = countryId,
+                entity = MusicBrainzEntity.AREA,
+            ),
         )
         val places = flow.asSnapshot()
         assertEquals(

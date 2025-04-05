@@ -28,6 +28,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestWorkRepository
 import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
@@ -108,7 +109,10 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 worksByEntityRepository.observeWorksByEntity(
-                    browseMethod = MusicBrainzEntity.COLLECTION,
+                    browseMethod = BrowseMethod.ByEntity(
+                        entityId = collectionId,
+                        entity = MusicBrainzEntity.COLLECTION,
+                    ),
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -173,7 +177,10 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 worksByEntityRepository.observeWorksByEntity(
-                    browseMethod = entity,
+                    browseMethod = BrowseMethod.ByEntity(
+                        entityId = entityId,
+                        entity = entity,
+                    ),
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -237,7 +244,10 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 worksByEntityRepository.observeWorksByEntity(
-                    browseMethod = entity,
+                    browseMethod = BrowseMethod.ByEntity(
+                        entityId = entityId,
+                        entity = entity,
+                    ),
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -298,7 +308,7 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 worksByEntityRepository.observeWorksByEntity(
-                    browseMethod = null,
+                    browseMethod = BrowseMethod.All,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -348,7 +358,10 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
 
         // refresh
         worksByEntityRepository.observeWorksByEntity(
-            browseMethod = MusicBrainzEntity.ARTIST,
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = davidBowieArtistMusicBrainzModel.id,
+                entity = MusicBrainzEntity.ARTIST,
+            ),
             listFilters = ListFilters(),
         ).asSnapshot {
             refresh()
@@ -366,7 +379,10 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
 
         // other entities remain unchanged
         worksByEntityRepository.observeWorksByEntity(
-            browseMethod = MusicBrainzEntity.ARTIST,
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = queenArtistMusicBrainzModel.id,
+                entity = MusicBrainzEntity.ARTIST,
+            ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -378,7 +394,10 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
             )
         }
         worksByEntityRepository.observeWorksByEntity(
-            browseMethod = MusicBrainzEntity.COLLECTION,
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = collectionId,
+                entity = MusicBrainzEntity.COLLECTION,
+            ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -391,7 +410,7 @@ class WorksByEntityRepositoryImplTest : KoinTest, TestWorkRepository {
             )
         }
         worksByEntityRepository.observeWorksByEntity(
-            browseMethod = null,
+            browseMethod = BrowseMethod.All,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
