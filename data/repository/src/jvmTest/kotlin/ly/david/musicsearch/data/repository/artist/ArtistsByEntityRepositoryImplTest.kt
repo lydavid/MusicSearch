@@ -25,6 +25,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
@@ -195,9 +196,13 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
             entityIds = artists.map { it.id },
         )
 
-        sut.observeArtistsByEntity(
+        val browseMethod = BrowseMethod.ByEntity(
             entityId = collectionId,
             entity = MusicBrainzEntity.COLLECTION,
+        )
+
+        sut.observeArtistsByEntity(
+            browseMethod = browseMethod,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -214,8 +219,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
         }
 
         sut.observeArtistsByEntity(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+            browseMethod = browseMethod,
             listFilters = ListFilters(
                 query = "a",
             ),
@@ -242,9 +246,12 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
         val sut = createArtistsByEntityRepository(
             artists = artists,
         )
-        sut.observeArtistsByEntity(
+        val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
             entity = MusicBrainzEntity.AREA,
+        )
+        sut.observeArtistsByEntity(
+            browseMethod = browseMethod,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -260,8 +267,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
             )
         }
         sut.observeArtistsByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = browseMethod,
             listFilters = ListFilters(
                 query = "a",
             ),
@@ -291,9 +297,12 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
         val artistsByEntityRepository = createArtistsByEntityRepository(
             artists = artists,
         )
-        artistsByEntityRepository.observeArtistsByEntity(
+        val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
             entity = MusicBrainzEntity.AREA,
+        )
+        artistsByEntityRepository.observeArtistsByEntity(
+            browseMethod = browseMethod,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -307,8 +316,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
             )
         }
         artistsByEntityRepository.observeArtistsByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = browseMethod,
             listFilters = ListFilters(
                 query = "a",
             ),
@@ -345,11 +353,14 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
         val artistsByEntityRepository = createArtistsByEntityRepository(
             artists = artists,
         )
+        val browseMethod = BrowseMethod.ByEntity(
+            entityId = entityId,
+            entity = MusicBrainzEntity.RELEASE,
+        )
         testFilter(
             pagingFlowProducer = { query ->
                 artistsByEntityRepository.observeArtistsByEntity(
-                    entityId = entityId,
-                    entity = MusicBrainzEntity.RELEASE,
+                    browseMethod = browseMethod,
                     listFilters = ListFilters(query = query),
                 )
             },
@@ -385,8 +396,7 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 artistsByEntityRepository.observeArtistsByEntity(
-                    entityId = null,
-                    entity = null,
+                    browseMethod = BrowseMethod.All,
                     listFilters = ListFilters(query = query),
                 )
             },
@@ -440,8 +450,10 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
 
         // refresh
         artistsByEntityRepository.observeArtistsByEntity(
-            entityId = japanAreaMusicBrainzModel.id,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = japanAreaMusicBrainzModel.id,
+                entity = MusicBrainzEntity.AREA,
+            ),
             listFilters = ListFilters(),
         ).asSnapshot {
             refresh()
@@ -460,8 +472,10 @@ class ArtistsByEntityRepositoryImplTest : KoinTest, TestArtistRepository {
 
         // other entities remain unchanged
         artistsByEntityRepository.observeArtistsByEntity(
-            entityId = bandoriCoverCollection8ReleaseMusicBrainzModel.id,
-            entity = MusicBrainzEntity.RELEASE,
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = bandoriCoverCollection8ReleaseMusicBrainzModel.id,
+                entity = MusicBrainzEntity.RELEASE,
+            ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(

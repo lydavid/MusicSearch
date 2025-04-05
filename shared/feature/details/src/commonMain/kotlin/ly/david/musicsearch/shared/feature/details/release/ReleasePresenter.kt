@@ -20,6 +20,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
@@ -153,6 +154,10 @@ internal class ReleasePresenter(
                     ReleaseTab.STATS,
                 ),
             )
+            val browseMethod = BrowseMethod.ByEntity(
+                entityId = screen.id,
+                entity = screen.entity,
+            )
             when (selectedTab) {
                 ReleaseTab.DETAILS -> {
                     // Loaded above
@@ -170,8 +175,7 @@ internal class ReleasePresenter(
                 ReleaseTab.ARTISTS -> {
                     artistsEventSink(
                         ArtistsListUiEvent.Get(
-                            byEntityId = screen.id,
-                            byEntity = screen.entity,
+                            browseMethod = browseMethod,
                         ),
                     )
                     artistsEventSink(ArtistsListUiEvent.UpdateQuery(query))

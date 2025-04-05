@@ -10,6 +10,7 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToArtistListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
@@ -155,28 +156,27 @@ class ArtistDao(
             .toInt()
 
     fun getArtists(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         query: String,
-    ): PagingSource<Int, ArtistListItemModel> = when {
-        entityId == null || entity == null -> {
+    ): PagingSource<Int, ArtistListItemModel> = when (browseMethod) {
+        is BrowseMethod.All -> {
             getAllArtists(
                 query = query,
             )
         }
 
-        entity == MusicBrainzEntity.COLLECTION -> {
-            getArtistsByCollection(
-                collectionId = entityId,
-                query = query,
-            )
-        }
-
-        else -> {
-            getArtistsByEntity(
-                entityId = entityId,
-                query = query,
-            )
+        is BrowseMethod.ByEntity -> {
+            if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                getArtistsByCollection(
+                    collectionId = browseMethod.entityId,
+                    query = query,
+                )
+            } else {
+                getArtistsByEntity(
+                    entityId = browseMethod.entityId,
+                    query = query,
+                )
+            }
         }
     }
 

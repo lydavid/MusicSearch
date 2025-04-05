@@ -26,6 +26,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestPlaceRepository
 import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.history.VisitedDao
@@ -84,7 +85,7 @@ class PlacesByEntityRepositoryImplTest : KoinTest, TestPlaceRepository {
             budokanPlaceMusicBrainzModel,
             tokyoInternationForumHallAPlaceMusicBrainzModel,
         )
-        val sut = createRepository(
+        val placesByEntityRepository = createRepository(
             places = places,
         )
 
@@ -101,9 +102,13 @@ class PlacesByEntityRepositoryImplTest : KoinTest, TestPlaceRepository {
             entityIds = places.map { it.id },
         )
 
-        sut.observePlacesByEntity(
+        val browseMethod = BrowseMethod.ByEntity(
             entityId = collectionId,
             entity = MusicBrainzEntity.COLLECTION,
+        )
+
+        placesByEntityRepository.observePlacesByEntity(
+            browseMethod = browseMethod,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -115,9 +120,8 @@ class PlacesByEntityRepositoryImplTest : KoinTest, TestPlaceRepository {
             )
         }
 
-        sut.observePlacesByEntity(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+        placesByEntityRepository.observePlacesByEntity(
+            browseMethod = browseMethod,
             listFilters = ListFilters(
                 query = "are",
             ),
@@ -138,15 +142,19 @@ class PlacesByEntityRepositoryImplTest : KoinTest, TestPlaceRepository {
 
     private fun setUpKitanomaruPlaces() = runTest {
         val entityId = kitanomaruAreaMusicBrainzModel.id
+        val entity = MusicBrainzEntity.AREA
         val places = listOf(
             budokanPlaceMusicBrainzModel,
         )
         val sut = createRepository(
             places = places,
         )
-        sut.observePlacesByEntity(
+        val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            entity = entity,
+        )
+        sut.observePlacesByEntity(
+            browseMethod = browseMethod,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -157,8 +165,7 @@ class PlacesByEntityRepositoryImplTest : KoinTest, TestPlaceRepository {
             )
         }
         sut.observePlacesByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = browseMethod,
             listFilters = ListFilters(
                 query = "b",
             ),
@@ -181,8 +188,10 @@ class PlacesByEntityRepositoryImplTest : KoinTest, TestPlaceRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 placesByEntityRepository.observePlacesByEntity(
-                    entityId = marunouchiAreaMusicBrainzModel.id,
-                    entity = MusicBrainzEntity.AREA,
+                    browseMethod = BrowseMethod.ByEntity(
+                        entityId = marunouchiAreaMusicBrainzModel.id,
+                        entity = MusicBrainzEntity.AREA,
+                    ),
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -221,8 +230,10 @@ class PlacesByEntityRepositoryImplTest : KoinTest, TestPlaceRepository {
         testFilter(
             pagingFlowProducer = { query ->
                 placesByEntityRepository.observePlacesByEntity(
-                    entityId = chiyodaAreaMusicBrainzModel.id,
-                    entity = MusicBrainzEntity.AREA,
+                    browseMethod = BrowseMethod.ByEntity(
+                        entityId = chiyodaAreaMusicBrainzModel.id,
+                        entity = MusicBrainzEntity.AREA,
+                    ),
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -269,8 +280,7 @@ class PlacesByEntityRepositoryImplTest : KoinTest, TestPlaceRepository {
             places = listOf(),
         )
         sut.observePlacesByEntity(
-            entityId = null,
-            entity = null,
+            browseMethod = BrowseMethod.All,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -283,8 +293,7 @@ class PlacesByEntityRepositoryImplTest : KoinTest, TestPlaceRepository {
             )
         }
         sut.observePlacesByEntity(
-            entityId = null,
-            entity = null,
+            browseMethod = BrowseMethod.All,
             listFilters = ListFilters(
                 query = "ve",
             ),
@@ -316,8 +325,10 @@ class PlacesByEntityRepositoryImplTest : KoinTest, TestPlaceRepository {
 
         // refresh
         placesByEntityRepository.observePlacesByEntity(
-            entityId = marunouchiAreaMusicBrainzModel.id,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = marunouchiAreaMusicBrainzModel.id,
+                entity = MusicBrainzEntity.AREA,
+            ),
             listFilters = ListFilters(),
         ).asSnapshot {
             refresh()
@@ -333,8 +344,10 @@ class PlacesByEntityRepositoryImplTest : KoinTest, TestPlaceRepository {
 
         // other entities remain unchanged
         placesByEntityRepository.observePlacesByEntity(
-            entityId = chiyodaAreaMusicBrainzModel.id,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = chiyodaAreaMusicBrainzModel.id,
+                entity = MusicBrainzEntity.AREA,
+            ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(

@@ -11,6 +11,7 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
@@ -36,8 +37,7 @@ interface ReleaseGroupDao : EntityDao {
     fun getCountOfReleaseGroupsByArtist(artistId: String): Int
     fun getCountOfEachAlbumType(artistId: String): Flow<List<ReleaseGroupTypeCount>>
     fun getReleaseGroups(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         query: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseGroupListItemModel>
@@ -173,32 +173,31 @@ class ReleaseGroupDaoImpl(
             .mapToList(coroutineDispatchers.io)
 
     override fun getReleaseGroups(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         query: String,
         sorted: Boolean,
-    ): PagingSource<Int, ReleaseGroupListItemModel> = when {
-        entityId == null || entity == null -> {
+    ): PagingSource<Int, ReleaseGroupListItemModel> = when (browseMethod) {
+        is BrowseMethod.All -> {
             getAllReleaseGroups(
                 query = query,
                 sorted = sorted,
             )
         }
 
-        entity == MusicBrainzEntity.COLLECTION -> {
-            getReleaseGroupsByCollection(
-                collectionId = entityId,
-                query = query,
-                sorted = sorted,
-            )
-        }
-
-        else -> {
-            getReleaseGroupsByEntity(
-                entityId = entityId,
-                query = query,
-                sorted = sorted,
-            )
+        is BrowseMethod.ByEntity -> {
+            if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                getReleaseGroupsByCollection(
+                    collectionId = browseMethod.entityId,
+                    query = query,
+                    sorted = sorted,
+                )
+            } else {
+                getReleaseGroupsByEntity(
+                    entityId = browseMethod.entityId,
+                    query = query,
+                    sorted = sorted,
+                )
+            }
         }
     }
 

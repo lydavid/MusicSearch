@@ -18,6 +18,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
@@ -162,6 +163,10 @@ internal class ArtistPresenter(
                     ArtistTab.STATS,
                 ),
             )
+            val browseMethod = BrowseMethod.ByEntity(
+                entityId = screen.id,
+                entity = screen.entity,
+            )
             when (selectedTab) {
                 ArtistTab.DETAILS -> {
                     // Loaded above
@@ -180,8 +185,7 @@ internal class ArtistPresenter(
                 ArtistTab.RECORDINGS -> {
                     recordingsEventSink(
                         RecordingsListUiEvent.Get(
-                            byEntityId = screen.id,
-                            byEntity = screen.entity,
+                            browseMethod = browseMethod,
                         ),
                     )
                     recordingsEventSink(RecordingsListUiEvent.UpdateQuery(topAppBarFilterState.filterText))
@@ -190,8 +194,7 @@ internal class ArtistPresenter(
                 ArtistTab.RELEASES -> {
                     releasesEventSink(
                         ReleasesListUiEvent.Get(
-                            byEntityId = screen.id,
-                            byEntity = screen.entity,
+                            browseMethod = browseMethod,
                         ),
                     )
                     releasesEventSink(ReleasesListUiEvent.UpdateQuery(topAppBarFilterState.filterText))
@@ -200,8 +203,7 @@ internal class ArtistPresenter(
                 ArtistTab.RELEASE_GROUPS -> {
                     releaseGroupsEventSink(
                         ReleaseGroupsListUiEvent.Get(
-                            byEntityId = screen.id,
-                            byEntity = screen.entity,
+                            browseMethod = browseMethod,
                             isRemote = true,
                         ),
                     )
@@ -211,8 +213,7 @@ internal class ArtistPresenter(
                 ArtistTab.EVENTS -> {
                     eventsEventSink(
                         EventsListUiEvent.Get(
-                            byEntityId = screen.id,
-                            byEntity = screen.entity,
+                            browseMethod = browseMethod,
                         ),
                     )
                     eventsEventSink(EventsListUiEvent.UpdateQuery(topAppBarFilterState.filterText))
@@ -221,8 +222,7 @@ internal class ArtistPresenter(
                 ArtistTab.WORKS -> {
                     worksEventSink(
                         WorksListUiEvent.Get(
-                            byEntityId = screen.id,
-                            byEntity = screen.entity,
+                            browseMethod = browseMethod,
                         ),
                     )
                     worksEventSink(WorksListUiEvent.UpdateQuery(topAppBarFilterState.filterText))

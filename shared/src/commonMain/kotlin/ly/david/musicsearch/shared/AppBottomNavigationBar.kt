@@ -12,7 +12,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 internal fun AppNavigationItem.getText(strings: AppStrings): String =
     when (this) {
         AppNavigationItem.Search -> strings.search
-        AppNavigationItem.History -> strings.history
+        AppNavigationItem.Database -> strings.database
         AppNavigationItem.Collection -> strings.collections
         AppNavigationItem.Settings -> strings.settings
     }

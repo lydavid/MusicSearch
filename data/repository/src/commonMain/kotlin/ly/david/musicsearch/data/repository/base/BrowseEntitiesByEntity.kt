@@ -10,6 +10,7 @@ import ly.david.musicsearch.data.musicbrainz.api.Browsable
 import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -27,14 +28,13 @@ abstract class BrowseEntitiesByEntity<
 
     @OptIn(ExperimentalPagingApi::class)
     fun observeEntitiesByEntity(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<LI>> {
-        val remoteMediator = if (entityId != null && entity != null) {
+        val remoteMediator = if (browseMethod is BrowseMethod.ByEntity) {
             getRemoteMediator(
-                entityId = entityId,
-                entity = entity,
+                entityId = browseMethod.entityId,
+                entity = browseMethod.entity,
             )
         } else {
             null
@@ -44,8 +44,7 @@ abstract class BrowseEntitiesByEntity<
             remoteMediator = remoteMediator.takeIf { listFilters.isRemote },
             pagingSourceFactory = {
                 getLinkedEntitiesPagingSource(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = browseMethod,
                     listFilters = listFilters,
                 )
             },
@@ -95,8 +94,7 @@ abstract class BrowseEntitiesByEntity<
     )
 
     abstract fun getLinkedEntitiesPagingSource(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): PagingSource<Int, LI>
 

@@ -11,6 +11,7 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
@@ -114,26 +115,25 @@ class WorkDao(
             .toInt()
 
     fun getWorks(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         query: String,
-    ): PagingSource<Int, WorkListItemModel> = when {
-        entityId == null || entity == null -> {
+    ): PagingSource<Int, WorkListItemModel> = when (browseMethod) {
+        is BrowseMethod.All -> {
             getAllWorks(query = query)
         }
 
-        entity == MusicBrainzEntity.COLLECTION -> {
-            getWorksByCollection(
-                collectionId = entityId,
-                query = query,
-            )
-        }
-
-        else -> {
-            getWorksByEntity(
-                entityId = entityId,
-                query = query,
-            )
+        is BrowseMethod.ByEntity -> {
+            if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                getWorksByCollection(
+                    collectionId = browseMethod.entityId,
+                    query = query,
+                )
+            } else {
+                getWorksByEntity(
+                    entityId = browseMethod.entityId,
+                    query = query,
+                )
+            }
         }
     }
 

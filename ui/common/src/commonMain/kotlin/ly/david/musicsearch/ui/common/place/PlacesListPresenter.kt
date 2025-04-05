@@ -16,10 +16,11 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.usecase.GetPlaces
+import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class PlacesListPresenter(
     private val getPlaces: GetPlaces,
@@ -27,14 +28,12 @@ class PlacesListPresenter(
     @Composable
     override fun present(): PlacesListUiState {
         var query by rememberSaveable { mutableStateOf("") }
-        var id: String by rememberSaveable { mutableStateOf("") }
-        var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
+        var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val placeListItems: Flow<PagingData<PlaceListItemModel>> by rememberRetained(query, id, entity) {
+        val placeListItems: Flow<PagingData<PlaceListItemModel>> by rememberRetained(query, browseMethod) {
             mutableStateOf(
                 getPlaces(
-                    entityId = id,
-                    entity = entity,
+                    browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
                         isRemote = isRemote,
@@ -47,8 +46,7 @@ class PlacesListPresenter(
         fun eventSink(event: PlacesListUiEvent) {
             when (event) {
                 is PlacesListUiEvent.Get -> {
-                    id = event.byEntityId
-                    entity = event.byEntity
+                    browseMethod = event.browseMethod
                     isRemote = event.isRemote
                 }
 
@@ -68,8 +66,7 @@ class PlacesListPresenter(
 
 sealed interface PlacesListUiEvent : CircuitUiEvent {
     data class Get(
-        val byEntityId: String,
-        val byEntity: MusicBrainzEntity,
+        val browseMethod: BrowseMethod,
         val isRemote: Boolean = true,
     ) : PlacesListUiEvent
 

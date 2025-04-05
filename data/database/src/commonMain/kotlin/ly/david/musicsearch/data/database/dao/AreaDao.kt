@@ -7,6 +7,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.area.ReleaseEvent
@@ -84,18 +85,18 @@ class AreaDao(
     }
 
     fun getAreas(
-        mbid: String?,
+        browseMethod: BrowseMethod,
         query: String,
-    ): PagingSource<Int, AreaListItemModel> = when {
-        mbid == null -> {
+    ): PagingSource<Int, AreaListItemModel> = when (browseMethod) {
+        is BrowseMethod.All -> {
             getAllAreas(
                 query = query,
             )
         }
 
-        else -> {
+        is BrowseMethod.ByEntity -> {
             getAreasByCollection(
-                mbid = mbid,
+                mbid = browseMethod.entityId,
                 query = query,
             )
         }

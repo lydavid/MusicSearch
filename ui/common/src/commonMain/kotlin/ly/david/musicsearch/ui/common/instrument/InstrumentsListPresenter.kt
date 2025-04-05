@@ -16,25 +16,24 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.instrument.usecase.GetInstruments
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class InstrumentsListPresenter(
     private val getInstruments: GetInstruments,
 ) : Presenter<InstrumentsListUiState> {
     @Composable
     override fun present(): InstrumentsListUiState {
-        var id: String by rememberSaveable { mutableStateOf("") }
-        var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
+        var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val instrumentListItems: Flow<PagingData<InstrumentListItemModel>> by rememberRetained(id, entity, query) {
+        val instrumentListItems: Flow<PagingData<InstrumentListItemModel>> by rememberRetained(browseMethod, query) {
             mutableStateOf(
                 getInstruments(
-                    entityId = id,
-                    entity = entity,
+                    browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
                         isRemote = isRemote,
@@ -47,8 +46,7 @@ class InstrumentsListPresenter(
         fun eventSink(event: InstrumentsListUiEvent) {
             when (event) {
                 is InstrumentsListUiEvent.Get -> {
-                    id = event.byEntityId
-                    entity = event.byEntity
+                    browseMethod = event.browseMethod
                     isRemote = event.isRemote
                 }
 
@@ -68,8 +66,7 @@ class InstrumentsListPresenter(
 
 sealed interface InstrumentsListUiEvent : CircuitUiEvent {
     data class Get(
-        val byEntityId: String,
-        val byEntity: MusicBrainzEntity,
+        val browseMethod: BrowseMethod,
         val isRemote: Boolean = true,
     ) : InstrumentsListUiEvent
 

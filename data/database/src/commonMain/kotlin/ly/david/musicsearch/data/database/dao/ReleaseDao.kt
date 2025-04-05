@@ -10,6 +10,7 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
@@ -133,42 +134,45 @@ class ReleaseDao(
         ).executeAsList()
 
     fun getReleases(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         query: String,
-    ): PagingSource<Int, ReleaseListItemModel> = when {
-        entityId == null || entity == null -> {
+    ): PagingSource<Int, ReleaseListItemModel> = when (browseMethod) {
+        is BrowseMethod.All -> {
             getAllReleases(
                 query = query,
             )
         }
 
-        entity == MusicBrainzEntity.AREA -> {
-            getReleasesByCountry(
-                areaId = entityId,
-                query = query,
-            )
-        }
+        is BrowseMethod.ByEntity -> {
+            when (browseMethod.entity) {
+                MusicBrainzEntity.AREA -> {
+                    getReleasesByCountry(
+                        areaId = browseMethod.entityId,
+                        query = query,
+                    )
+                }
 
-        entity == MusicBrainzEntity.LABEL -> {
-            getReleasesByLabel(
-                labelId = entityId,
-                query = query,
-            )
-        }
+                MusicBrainzEntity.LABEL -> {
+                    getReleasesByLabel(
+                        labelId = browseMethod.entityId,
+                        query = query,
+                    )
+                }
 
-        entity == MusicBrainzEntity.COLLECTION -> {
-            getReleasesByCollection(
-                collectionId = entityId,
-                query = query,
-            )
-        }
+                MusicBrainzEntity.COLLECTION -> {
+                    getReleasesByCollection(
+                        collectionId = browseMethod.entityId,
+                        query = query,
+                    )
+                }
 
-        else -> {
-            getReleasesByEntity(
-                entityId = entityId,
-                query = query,
-            )
+                else -> {
+                    getReleasesByEntity(
+                        entityId = browseMethod.entityId,
+                        query = query,
+                    )
+                }
+            }
         }
     }
 

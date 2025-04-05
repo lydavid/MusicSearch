@@ -18,6 +18,7 @@ import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzMo
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
@@ -177,8 +178,10 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             },
         )
         val flow: Flow<PagingData<ArtistListItemModel>> = artistsByEntityRepositoryImpl.observeArtistsByEntity(
-            entityId = "area-id",
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = "area-id",
+                entity = MusicBrainzEntity.AREA
+            ),
             listFilters = ListFilters(),
         )
         val artists: List<ArtistListItemModel> = flow.asSnapshot()

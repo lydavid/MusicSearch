@@ -21,6 +21,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.label.LabelsByEntityRepository
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
@@ -90,11 +91,15 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
             entityIds = labels.map { it.id },
         )
 
+        val browseMethod = BrowseMethod.ByEntity(
+            entityId = collectionId,
+            entity = entity,
+        )
+
         testFilter(
             pagingFlowProducer = { query ->
                 labelsByEntityRepository.observeLabelsByEntity(
-                    entityId = collectionId,
-                    entity = entity,
+                    browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -128,6 +133,7 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
     @Test
     fun setUpJapaneseLabels() = runTest {
         val entityId = japanAreaMusicBrainzModel.id
+        val entity = MusicBrainzEntity.AREA
         val labels = listOf(
             flyingDogLabelMusicBrainzModel,
             virginMusicLabelMusicBrainzModel,
@@ -135,9 +141,12 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
         val labelsByEntityRepository = createRepository(
             labels = labels,
         )
-        labelsByEntityRepository.observeLabelsByEntity(
+        val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            entity = entity,
+        )
+        labelsByEntityRepository.observeLabelsByEntity(
+            browseMethod = browseMethod,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -149,8 +158,7 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
             )
         }
         labelsByEntityRepository.observeLabelsByEntity(
-            entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            browseMethod = browseMethod,
             listFilters = ListFilters(
                 query = "do",
             ),
@@ -173,12 +181,14 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
         val labelsByEntityRepository = createRepository(
             labels = labels,
         )
-
+        val browseMethod = BrowseMethod.ByEntity(
+            entityId = entityId,
+            entity = entity,
+        )
         testFilter(
             pagingFlowProducer = { query ->
                 labelsByEntityRepository.observeLabelsByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -226,8 +236,7 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
         testFilter(
             pagingFlowProducer = { query ->
                 labelsByEntityRepository.observeLabelsByEntity(
-                    entityId = null,
-                    entity = null,
+                    browseMethod = BrowseMethod.All,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -255,5 +264,5 @@ class LabelsByEntityRepositoryImplTest : KoinTest {
         )
     }
 
-    // TODO: test deleting labels by belong to an area and collection after merging collection entity table
+    // TODO: test deleting labels that belong to an area and collection after merging collection entity table
 }

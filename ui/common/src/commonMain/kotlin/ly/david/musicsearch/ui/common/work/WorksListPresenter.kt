@@ -16,25 +16,24 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.usecase.GetWorks
+import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class WorksListPresenter(
     private val getWorks: GetWorks,
 ) : Presenter<WorksListUiState> {
     @Composable
     override fun present(): WorksListUiState {
-        var id: String by rememberSaveable { mutableStateOf("") }
         var query by rememberSaveable { mutableStateOf("") }
-        var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
+        var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val workListItems: Flow<PagingData<WorkListItemModel>> by rememberRetained(id, query, entity) {
+        val workListItems: Flow<PagingData<WorkListItemModel>> by rememberRetained(query, browseMethod) {
             mutableStateOf(
                 getWorks(
-                    entityId = id,
-                    entity = entity,
+                    browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
                         isRemote = isRemote,
@@ -47,8 +46,7 @@ class WorksListPresenter(
         fun eventSink(event: WorksListUiEvent) {
             when (event) {
                 is WorksListUiEvent.Get -> {
-                    id = event.byEntityId
-                    entity = event.byEntity
+                    browseMethod = event.browseMethod
                     isRemote = event.isRemote
                 }
 
@@ -68,8 +66,7 @@ class WorksListPresenter(
 
 sealed interface WorksListUiEvent : CircuitUiEvent {
     data class Get(
-        val byEntityId: String,
-        val byEntity: MusicBrainzEntity,
+        val browseMethod: BrowseMethod,
         val isRemote: Boolean = true,
     ) : WorksListUiEvent
 

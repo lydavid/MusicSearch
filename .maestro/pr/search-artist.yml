@@ -54,7 +54,8 @@ appId: io.github.lydavid.musicsearch.debug
 - assertVisible: "Search MusicBrainz"
 - assertVisible: "ずっと真夜中でいいのに。"
 
-- tapOn: History
+- tapOn: "Database"
+- tapOn: "History"
 - tapOn: "ずっと真夜中でいいのに。 (Japanese pop band)"
 
 

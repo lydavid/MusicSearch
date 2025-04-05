@@ -27,6 +27,7 @@ import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.history.VisitedDao
@@ -112,8 +113,10 @@ class ReleaseGroupsByEntityRepositoryImplTest :
         testFilter(
             pagingFlowProducer = { query ->
                 releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-                    entityId = collectionId,
-                    entity = MusicBrainzEntity.COLLECTION,
+                    browseMethod = BrowseMethod.ByEntity(
+                        entityId = collectionId,
+                        entity = MusicBrainzEntity.COLLECTION,
+                    ),
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -175,8 +178,10 @@ class ReleaseGroupsByEntityRepositoryImplTest :
         testFilter(
             pagingFlowProducer = { query ->
                 releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = BrowseMethod.ByEntity(
+                        entityId = entityId,
+                        entity = entity,
+                    ),
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -239,8 +244,10 @@ class ReleaseGroupsByEntityRepositoryImplTest :
         testFilter(
             pagingFlowProducer = { query ->
                 releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-                    entityId = entityId,
-                    entity = entity,
+                    browseMethod = BrowseMethod.ByEntity(
+                        entityId = entityId,
+                        entity = entity,
+                    ),
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -295,8 +302,7 @@ class ReleaseGroupsByEntityRepositoryImplTest :
         testFilter(
             pagingFlowProducer = { query ->
                 releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-                    entityId = null,
-                    entity = null,
+                    browseMethod = BrowseMethod.All,
                     listFilters = ListFilters(
                         query = query,
                     ),
@@ -337,8 +343,10 @@ class ReleaseGroupsByEntityRepositoryImplTest :
 
         // refresh
         releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-            entityId = berlinerPhilharmonikerArtistMusicBrainzModel.id,
-            entity = MusicBrainzEntity.ARTIST,
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = berlinerPhilharmonikerArtistMusicBrainzModel.id,
+                entity = MusicBrainzEntity.ARTIST,
+            ),
             listFilters = ListFilters(),
         ).asSnapshot {
             refresh()
@@ -357,8 +365,10 @@ class ReleaseGroupsByEntityRepositoryImplTest :
 
         // other entities remain unchanged
         releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-            entityId = tchaikovskyArtistMusicBrainzModel.id,
-            entity = MusicBrainzEntity.ARTIST,
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = tchaikovskyArtistMusicBrainzModel.id,
+                entity = MusicBrainzEntity.ARTIST,
+            ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -370,8 +380,10 @@ class ReleaseGroupsByEntityRepositoryImplTest :
             )
         }
         releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-            entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = collectionId,
+                entity = MusicBrainzEntity.COLLECTION,
+            ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -383,8 +395,7 @@ class ReleaseGroupsByEntityRepositoryImplTest :
             )
         }
         releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-            entityId = null,
-            entity = null,
+            browseMethod = BrowseMethod.All,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
@@ -472,8 +483,7 @@ class ReleaseGroupsByEntityRepositoryImplTest :
         }
 
         releaseGroupsByEntityRepository.observeReleaseGroupsByEntity(
-            entityId = null,
-            entity = null,
+            browseMethod = BrowseMethod.All,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(

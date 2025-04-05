@@ -6,8 +6,8 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.series.SeriesDetailsModel
 import lydavidmusicsearchdatadatabase.Series
 import lydavidmusicsearchdatadatabase.SeriesQueries
@@ -64,19 +64,18 @@ class SeriesDao(
     }
 
     fun getSeries(
-        entityId: String?,
-        entity: MusicBrainzEntity?,
+        browseMethod: BrowseMethod,
         query: String,
-    ): PagingSource<Int, SeriesListItemModel> = when {
-        entityId == null || entity == null -> {
+    ): PagingSource<Int, SeriesListItemModel> = when (browseMethod) {
+        is BrowseMethod.All -> {
             getAllSeries(
                 query = query,
             )
         }
 
-        else -> {
+        is BrowseMethod.ByEntity -> {
             getSeriesByCollection(
-                entityId = entityId,
+                entityId = browseMethod.entityId,
                 query = query,
             )
         }
