@@ -7,8 +7,8 @@ import ly.david.musicsearch.shared.domain.PACKAGE_NAME
 import me.sujanpoudel.utils.paths.appCacheDirectory
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
-import java.util.Properties
 import org.koin.dsl.module
+import java.util.Properties
 
 actual val databasePlatformModule = module {
     single {
@@ -23,9 +23,9 @@ private class DriverFactory {
         val directory = appCacheDirectory(PACKAGE_NAME)
         val driver = JdbcSqliteDriver(
             url = "jdbc:sqlite:$directory/$DATABASE_FILE_FULL_NAME",
-            properties = Properties().apply { put("foreign_keys", "true") }
+            schema = Database.Schema,
+            properties = Properties().apply { put("foreign_keys", "true") },
         )
-        Database.Schema.create(driver)
         return driver
     }
 }
