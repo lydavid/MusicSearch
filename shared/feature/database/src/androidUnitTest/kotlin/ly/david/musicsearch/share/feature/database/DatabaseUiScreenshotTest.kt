@@ -11,4 +11,11 @@ class DatabaseUiScreenshotTest : ScreenshotTest() {
             PreviewDatabaseUi()
         }
     }
+
+    @Test
+    fun withCounts() {
+        snapshot {
+            PreviewDatabaseUiWithCounts()
+        }
+    }
 }

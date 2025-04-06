@@ -110,7 +110,7 @@ internal fun DatabaseUi(
                 if (title.contains(filterText, ignoreCase = true)) {
                     ClickableItem(
                         title = title,
-                        subtitle = state.entitiesCount[entity]?.toString(),
+                        subtitle = (state.entitiesCount[entity] ?: 0).toString(),
                         endIcon = Icons.Default.ChevronRight,
                         onClick = { onDestinationClick(AllEntitiesScreen(entity = entity)) },
                     )
