@@ -17,8 +17,7 @@ actual val databasePlatformModule = module {
 
 private class DriverFactory {
     fun createDriver(): SqlDriver {
-        val driver = NativeSqliteDriver(Database.Schema, "music_search.db")
-//        Database.Schema.create(driver)
+        val driver = NativeSqliteDriver(Database.Schema, DATABASE_FILE_FULL_NAME)
         return driver
     }
 }

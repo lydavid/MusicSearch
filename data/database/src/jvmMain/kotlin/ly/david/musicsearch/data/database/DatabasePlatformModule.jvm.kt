@@ -22,7 +22,7 @@ private class DriverFactory {
     fun createDriver(): SqlDriver {
         val directory = appCacheDirectory(PACKAGE_NAME)
         val driver = JdbcSqliteDriver(
-            url = "jdbc:sqlite:$directory/music_search.db",
+            url = "jdbc:sqlite:$directory/$DATABASE_FILE_FULL_NAME",
             properties = Properties().apply { put("foreign_keys", "true") }
         )
         Database.Schema.create(driver)

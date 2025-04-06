@@ -36,10 +36,7 @@ secrets.properties
 # DataStore preferences
 *.preferences_pb
 
-# Desktop/iOS app database
-music_search.db
-
-# Android app database
+# App database
 musicsearch.db
 
 # Xcode
