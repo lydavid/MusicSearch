@@ -40,7 +40,7 @@ internal fun PreviewImagesGridUi() {
         Surface {
             ImagesGridUi(
                 state = ImagesUiState(
-                    title = "Cover arts",
+                    title = ImagesTitle.All,
                     imageMetadataPagingDataFlow = images,
                 ),
                 isCompact = false,
@@ -57,8 +57,12 @@ internal fun PreviewImagesPagerUiCompact() {
         Surface {
             ImagesGridUi(
                 state = ImagesUiState(
-                    title = "Front",
-                    subtitle = "1/2",
+                    title = ImagesTitle.Selected(
+                        typeAndComment = "Front",
+                        page = 1,
+                        totalPages = 2,
+                    ),
+                    subtitle = "Title (with disambiguation)",
                     imageMetadataPagingDataFlow = images,
                     selectedImageIndex = 0,
                 ),
@@ -76,8 +80,12 @@ internal fun PreviewImagesPagerUiNonCompact() {
         Surface {
             ImagesGridUi(
                 state = ImagesUiState(
-                    title = "Front",
-                    subtitle = "1/2",
+                    title = ImagesTitle.Selected(
+                        typeAndComment = "Front",
+                        page = 1,
+                        totalPages = 2,
+                    ),
+                    subtitle = "Title (with disambiguation)",
                     imageMetadataPagingDataFlow = images,
                     selectedImageIndex = 0,
                 ),

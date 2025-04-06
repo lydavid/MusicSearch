@@ -84,13 +84,17 @@ internal class ImagesPresenter(
             val index = selectedIndex
             mutableStateOf(
                 if (selectedImageMetadata == null || index == null) {
-                    "Cover arts"
+                    ImagesTitle.All
                 } else {
                     val imageMetadata = selectedImageMetadata
-                    val pages = "${index + 1}/${imageMetadataListSnapshot.size}"
+
                     val typeAndComment =
                         imageMetadata?.types?.joinToString()?.appendOptionalText(imageMetadata.comment).orEmpty()
-                    "[$pages]".appendOptionalText(typeAndComment)
+                    ImagesTitle.Selected(
+                        page = index + 1,
+                        totalPages = imageMetadataListSnapshot.size,
+                        typeAndComment = typeAndComment,
+                    )
                 },
             )
         }
@@ -164,9 +168,18 @@ internal class ImagesPresenter(
     }
 }
 
+internal sealed class ImagesTitle {
+    data object All : ImagesTitle()
+    data class Selected(
+        val page: Int,
+        val totalPages: Int,
+        val typeAndComment: String,
+    ) : ImagesTitle()
+}
+
 @Stable
 internal data class ImagesUiState(
-    val title: String = "",
+    val title: ImagesTitle = ImagesTitle.All,
     val subtitle: String = "",
     val url: String? = null,
     val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadata>>,

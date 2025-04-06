@@ -49,8 +49,9 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import app.cash.paging.compose.itemKey
 import com.slack.circuit.foundation.internal.BackHandler
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.shared.domain.common.appendOptionalText
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheet
@@ -112,6 +113,14 @@ internal fun ImagesGridUi(
         )
     }
 
+    val title = when (val title = state.title) {
+        is ImagesTitle.All -> strings.images
+        is ImagesTitle.Selected -> {
+            val pages = "${title.page}/${title.totalPages}"
+            "[$pages]".appendOptionalText(title.typeAndComment)
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
@@ -121,7 +130,7 @@ internal fun ImagesGridUi(
                 onBack = {
                     eventSink(ImagesUiEvent.NavigateUp)
                 },
-                title = state.title,
+                title = title,
                 subtitle = state.subtitle,
                 topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = {
