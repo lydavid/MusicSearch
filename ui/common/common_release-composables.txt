@@ -121,6 +121,54 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWi
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWorkListItemModel()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWorkListItemModelAllInfo()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWorkListItemModelVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EntitiesListUi(
+  stable isEditMode: Boolean
+  stable areasListUiState: AreasListUiState
+  stable artistsListUiState: ArtistsListUiState
+  stable eventsListUiState: EventsListUiState
+  stable genresListUiState: GenresListUiState
+  stable instrumentsListUiState: InstrumentsListUiState
+  stable labelsListUiState: LabelsListUiState
+  stable placesListUiState: PlacesListUiState
+  stable recordingsListUiState: RecordingsListUiState
+  stable releasesListUiState: ReleasesListUiState
+  stable releaseGroupsListUiState: ReleaseGroupsListUiState
+  stable seriesListUiState: SeriesListUiState
+  stable worksListUiState: WorksListUiState
+  stable entity: MusicBrainzEntity
+  stable innerPadding: PaddingValues
+  stable scrollBehavior: TopAppBarScrollBehavior
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
+val tmp0_group = $composer.cache(false) {
+  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.ui.common.EntitiesListUi
+  stable requestForMissingCoverArtUrl: Function1<@[ParameterName(name = 'entityId')] String, Unit>? = @static $composer.startReplaceGroup(1849434622)
+val tmp1_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp1_group@ly.david.musicsearch.ui.common.EntitiesListUi
+  stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static $composer.startReplaceGroup(1849434622)
+val tmp2_group = $composer.cache(false) {
+  {     <unused var>  :   String  ,   <unused var>  :   String   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp2_group@ly.david.musicsearch.ui.common.EntitiesListUi
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EntityIcon(
   stable entity: MusicBrainzEntity
   stable modifier: Modifier? = @static Companion
@@ -156,12 +204,11 @@ $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.area.AreaListItem
 )
 fun present(
-  stable <this>: AreasByEntityPresenter
-): AreasByEntityUiState
+  stable <this>: AreasListPresenter
+): AreasListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreasListScreen(
-  unstable pagingDataFlow: Flow<PagingData<AreaListItemModel>>
+  stable state: AreasListUiState
   stable modifier: Modifier? = @static Companion
-  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable isEditMode: Boolean = @static false
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
 val tmp0_group = $composer.cache(false) {
@@ -190,11 +237,10 @@ $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.artist.ArtistListItem
 )
 fun present(
-  stable <this>: ArtistsByEntityPresenter
-): ArtistsByEntityUiState
+  stable <this>: ArtistsListPresenter
+): ArtistsListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistsListScreen(
-  stable lazyListState: LazyListState
-  lazyPagingItems: LazyPagingItems<ArtistListItemModel>
+  stable state: ArtistsListUiState
   stable modifier: Modifier? = @static Companion
   stable isEditMode: Boolean = @static false
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
@@ -353,11 +399,10 @@ $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.event.EventListItem
 )
 fun present(
-  stable <this>: EventsByEntityPresenter
-): EventsByEntityUiState
+  stable <this>: EventsListPresenter
+): EventsListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventsListScreen(
-  stable lazyListState: LazyListState
-  lazyPagingItems: LazyPagingItems<EventListItemModel>
+  stable state: EventsListUiState
   stable modifier: Modifier? = @static Companion
   stable isEditMode: Boolean = @static false
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
@@ -420,12 +465,11 @@ $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.genre.GenreListItem
 )
 fun present(
-  stable <this>: GenresByEntityPresenter
-): GenresByEntityUiState
+  stable <this>: GenresListPresenter
+): GenresListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun GenresListScreen(
-  lazyPagingItems: LazyPagingItems<GenreListItemModel>
+  stable state: GenresListUiState
   stable modifier: Modifier? = @static Companion
-  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable isEditMode: Boolean = @static false
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static $composer.startReplaceGroup(1849434622)
 val tmp0_group = $composer.cache(false) {
@@ -454,12 +498,11 @@ $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.instrument.InstrumentListItem
 )
 fun present(
-  stable <this>: InstrumentsByEntityPresenter
-): InstrumentsByEntityUiState
+  stable <this>: InstrumentsListPresenter
+): InstrumentsListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentsListScreen(
-  lazyPagingItems: LazyPagingItems<InstrumentListItemModel>
+  stable state: InstrumentsListUiState
   stable modifier: Modifier? = @static Companion
-  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable isEditMode: Boolean = @static false
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
 val tmp0_group = $composer.cache(false) {
@@ -488,12 +531,11 @@ $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.label.LabelListItem
 )
 fun present(
-  stable <this>: LabelsByEntityPresenter
-): LabelsByEntityUiState
+  stable <this>: LabelsListPresenter
+): LabelsListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelsListScreen(
-  lazyPagingItems: LazyPagingItems<LabelListItemModel>
+  stable state: LabelsListUiState
   stable modifier: Modifier? = @static Companion
-  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable isEditMode: Boolean = @static false
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
 val tmp0_group = $composer.cache(false) {
@@ -591,11 +633,10 @@ $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.place.PlaceListItem
 )
 fun present(
-  stable <this>: PlacesByEntityPresenter
-): PlacesByEntityUiState
+  stable <this>: PlacesListPresenter
+): PlacesListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlacesListScreen(
-  stable lazyListState: LazyListState
-  lazyPagingItems: LazyPagingItems<PlaceListItemModel>
+  stable state: PlacesListUiState
   stable modifier: Modifier? = @static Companion
   stable isEditMode: Boolean = @static false
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
@@ -625,12 +666,11 @@ $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.recording.RecordingListItem
 )
 fun present(
-  stable <this>: RecordingsByEntityPresenter
-): RecordingsByEntityUiState
+  stable <this>: RecordingsListPresenter
+): RecordingsListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingsListScreen(
-  lazyPagingItems: LazyPagingItems<RecordingListItemModel>
+  stable state: RecordingsListUiState
   stable modifier: Modifier? = @static Companion
-  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable isEditMode: Boolean = @static false
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
 val tmp0_group = $composer.cache(false) {
@@ -706,12 +746,11 @@ $composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.ui.common.release.ReleaseListItem
 )
 fun present(
-  stable <this>: ReleasesByEntityPresenter
-): ReleasesByEntityUiState
+  stable <this>: ReleasesListPresenter
+): ReleasesListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesListScreen(
-  lazyPagingItems: LazyPagingItems<ReleaseListItemModel>
+  stable state: ReleasesListUiState
   stable modifier: Modifier? = @static Companion
-  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable isEditMode: Boolean = @static false
   stable showMoreInfo: Boolean = @static true
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
@@ -762,12 +801,11 @@ $composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
 )
 fun present(
-  stable <this>: ReleaseGroupsByEntityPresenter
-): ReleaseGroupsByEntityUiState
+  stable <this>: ReleaseGroupsListPresenter
+): ReleaseGroupsListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupsListScreen(
-  lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable state: ReleaseGroupsListUiState
   stable modifier: Modifier? = @static Companion
-  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable isEditMode: Boolean = @static false
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
 val tmp0_group = $composer.cache(false) {
@@ -791,9 +829,6 @@ val tmp1_group = $composer.cache(false) {
 $composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListScreen
 )
-fun present(
-  stable <this>: SeriesByEntityPresenter
-): SeriesByEntityUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesListItem(
   series: SeriesListItemModel
   stable modifier: Modifier? = @static Companion
@@ -808,10 +843,12 @@ val tmp0_group = $composer.cache(false) {
 $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.series.SeriesListItem
 )
+fun present(
+  stable <this>: SeriesListPresenter
+): SeriesListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesListScreen(
-  lazyPagingItems: LazyPagingItems<SeriesListItemModel>
+  stable state: SeriesListUiState
   stable modifier: Modifier? = @static Companion
-  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable isEditMode: Boolean = @static false
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
 val tmp0_group = $composer.cache(false) {
@@ -1002,12 +1039,11 @@ $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.ui.common.work.WorkListItem
 )
 fun present(
-  stable <this>: WorksByEntityPresenter
-): WorksByEntityUiState
+  stable <this>: WorksListPresenter
+): WorksListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorksListScreen(
-  lazyPagingItems: LazyPagingItems<WorkListItemModel>
+  stable state: WorksListUiState
   stable modifier: Modifier? = @static Companion
-  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable isEditMode: Boolean = @static false
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
 val tmp0_group = $composer.cache(false) {

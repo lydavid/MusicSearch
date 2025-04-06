@@ -1,0 +1,58 @@
+stable class DatabasePresenter {
+  stable val navigator: Navigator
+  <runtime stability> = Stable
+}
+stable class DatabaseUiState {
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val lazyListState: LazyListState
+  stable val eventSink: Function1<DatabaseUiEvent, Unit>
+}
+stable class GoToScreen {
+  stable val screen: Screen
+  <runtime stability> = Stable
+}
+stable class AllEntitiesPresenter {
+  stable val screen: AllEntitiesScreen
+  stable val navigator: Navigator
+  stable val areasListPresenter: AreasListPresenter
+  stable val artistsListPresenter: ArtistsListPresenter
+  stable val eventsListPresenter: EventsListPresenter
+  stable val genresListPresenter: GenresListPresenter
+  stable val instrumentsListPresenter: InstrumentsListPresenter
+  stable val labelsListPresenter: LabelsListPresenter
+  stable val placesListPresenter: PlacesListPresenter
+  stable val recordingsListPresenter: RecordingsListPresenter
+  stable val releasesListPresenter: ReleasesListPresenter
+  stable val releaseGroupsListPresenter: ReleaseGroupsListPresenter
+  stable val seriesListPresenter: SeriesListPresenter
+  stable val worksListPresenter: WorksListPresenter
+  <runtime stability> = Stable
+}
+stable class AllEntitiesUiState {
+  stable val subtitle: String
+  stable val entity: MusicBrainzEntity
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val topAppBarEditState: TopAppBarEditState
+  stable val areasListUiState: AreasListUiState
+  stable val artistsListUiState: ArtistsListUiState
+  stable val eventsListUiState: EventsListUiState
+  stable val genresListUiState: GenresListUiState
+  stable val instrumentsListUiState: InstrumentsListUiState
+  stable val labelsListUiState: LabelsListUiState
+  stable val placesListUiState: PlacesListUiState
+  stable val recordingsListUiState: RecordingsListUiState
+  stable val releasesListUiState: ReleasesListUiState
+  stable val releaseGroupsListUiState: ReleaseGroupsListUiState
+  stable val seriesListUiState: SeriesListUiState
+  stable val worksListUiState: WorksListUiState
+  stable val eventSink: Function1<AllEntitiesUiEvent, Unit>
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}

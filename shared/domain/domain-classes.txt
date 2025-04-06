@@ -2,6 +2,17 @@ stable class AppInfo {
   stable val applicationId: String
   <runtime stability> = Stable
 }
+stable class All {
+  <runtime stability> = Stable
+}
+stable class ByEntity {
+  stable val entityId: String
+  stable val entity: MusicBrainzEntity
+  <runtime stability> = Stable
+}
+stable class BrowseMethod {
+  <runtime stability> = Stable
+}
 stable class LifeSpanUiModel {
   stable val begin: String?
   stable val end: String?
@@ -38,7 +49,7 @@ unstable class AreaDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-unstable class GetAreasByEntityImpl {
+unstable class GetAreasImpl {
   runtime val areasByEntityRepository: AreasByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
@@ -72,7 +83,7 @@ stable class CollaboratingArtistAndRecording {
   stable val recordingName: String
   <runtime stability> = Stable
 }
-unstable class GetArtistsByEntity {
+unstable class GetArtists {
   runtime val artistsByEntityRepository: ArtistsByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
@@ -143,12 +154,12 @@ unstable class EventDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-unstable class GetEventsByEntity {
+unstable class GetEvents {
   runtime val eventsByEntityRepository: EventsByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
 }
-unstable class GetGenresByEntity {
+unstable class GetGenres {
   runtime val genresByEntityRepository: GenresByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
@@ -226,7 +237,7 @@ unstable class InstrumentDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-unstable class GetInstrumentsByEntity {
+unstable class GetInstruments {
   runtime val instrumentsByEntityRepository: InstrumentsByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
@@ -244,7 +255,7 @@ unstable class LabelDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-unstable class GetLabelsByEntity {
+unstable class GetLabels {
   runtime val labelsByEntityRepository: LabelsByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
@@ -256,7 +267,7 @@ unstable class AreaListItemModel {
   stable val disambiguation: String?
   stable val type: String?
   stable val lifeSpan: LifeSpanUiModel?
-  unstable val countryCodes: List<String>?
+  unstable val countryCodes: List<String>
   stable val date: String?
   stable val visited: Boolean
   <runtime stability> = Unstable
@@ -521,7 +532,7 @@ unstable class PlaceDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-unstable class GetPlacesByEntity {
+unstable class GetPlaces {
   runtime val placesByEntityRepository: PlacesByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
@@ -539,7 +550,7 @@ unstable class RecordingDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-unstable class GetRecordingsByEntity {
+unstable class GetRecordings {
   runtime val recordingsByEntityRepository: RecordingsByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
@@ -614,7 +625,7 @@ stable class TextRepresentationUiModel {
   stable val language: String?
   <runtime stability> = Stable
 }
-unstable class GetReleasesByEntity {
+unstable class GetReleases {
   runtime val releasesByEntityRepository: ReleasesByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
@@ -652,7 +663,7 @@ unstable class ReleaseGroupTypeCount {
   stable val count: Int
   <runtime stability> = Unstable
 }
-unstable class GetReleaseGroupsByEntity {
+unstable class GetReleaseGroups {
   runtime val releaseGroupsByEntityRepository: ReleaseGroupsByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
@@ -691,7 +702,7 @@ unstable class SeriesDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-unstable class GetSeriesByEntity {
+unstable class GetSeries {
   runtime val seriesByEntityRepository: SeriesByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
@@ -719,7 +730,7 @@ unstable class WorkDetailsModel {
   unstable val urls: List<RelationListItemModel>
   <runtime stability> = Unstable
 }
-unstable class GetWorksByEntity {
+unstable class GetWorks {
   runtime val worksByEntityRepository: WorksByEntityRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable

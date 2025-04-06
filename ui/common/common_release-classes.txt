@@ -7,13 +7,12 @@ stable class LoginPresenterAndroid {
   unstable val login: LoginAndroid
   <runtime stability> = Stable
 }
-stable class AreasByEntityPresenter {
-  unstable val getAreasByEntity: GetAreasByEntity
+stable class AreasListPresenter {
+  unstable val getAreas: GetAreas
   <runtime stability> = Stable
 }
 stable class Get {
-  stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntity
+  runtime val browseMethod: BrowseMethod
   stable val isRemote: Boolean
   <runtime stability> = Stable
 }
@@ -21,18 +20,17 @@ stable class UpdateQuery {
   stable val query: String
   <runtime stability> = Stable
 }
-stable class AreasByEntityUiState {
+stable class AreasListUiState {
   unstable val pagingDataFlow: Flow<PagingData<AreaListItemModel>>
   stable val lazyListState: LazyListState
-  stable val eventSink: Function1<AreasByEntityUiEvent, Unit>
+  stable val eventSink: Function1<AreasListUiEvent, Unit>
 }
-stable class ArtistsByEntityPresenter {
-  runtime val getArtistsByEntity: GetArtistsByEntity
+stable class ArtistsListPresenter {
+  runtime val getArtists: GetArtists
   <runtime stability> = Stable
 }
 stable class Get {
-  stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntity
+  runtime val browseMethod: BrowseMethod
   stable val isRemote: Boolean
   <runtime stability> = Stable
 }
@@ -40,19 +38,18 @@ stable class UpdateQuery {
   stable val query: String
   <runtime stability> = Stable
 }
-stable class ArtistsByEntityUiState {
+stable class ArtistsListUiState {
   runtime val lazyPagingItems: LazyPagingItems<ArtistListItemModel>
   stable val lazyListState: LazyListState
   stable val showMoreInfo: Boolean
-  stable val eventSink: Function1<ArtistsByEntityUiEvent, Unit>
+  stable val eventSink: Function1<ArtistsListUiEvent, Unit>
 }
-stable class EventsByEntityPresenter {
-  runtime val getEventsByEntity: GetEventsByEntity
+stable class EventsListPresenter {
+  runtime val getEvents: GetEvents
   <runtime stability> = Stable
 }
 stable class Get {
-  stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntity
+  runtime val browseMethod: BrowseMethod
   stable val isRemote: Boolean
   <runtime stability> = Stable
 }
@@ -60,18 +57,17 @@ stable class UpdateQuery {
   stable val query: String
   <runtime stability> = Stable
 }
-stable class EventsByEntityUiState {
+stable class EventsListUiState {
   runtime val lazyPagingItems: LazyPagingItems<EventListItemModel>
   stable val lazyListState: LazyListState
-  stable val eventSink: Function1<EventsByEntityUiEvent, Unit>
+  stable val eventSink: Function1<EventsListUiEvent, Unit>
 }
-stable class GenresByEntityPresenter {
-  runtime val getGenresByEntity: GetGenresByEntity
+stable class GenresListPresenter {
+  runtime val getGenres: GetGenres
   <runtime stability> = Stable
 }
 stable class Get {
-  stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntity
+  runtime val browseMethod: BrowseMethod
   stable val isRemote: Boolean
   <runtime stability> = Stable
 }
@@ -79,18 +75,17 @@ stable class UpdateQuery {
   stable val query: String
   <runtime stability> = Stable
 }
-stable class GenresByEntityUiState {
+stable class GenresListUiState {
   runtime val lazyPagingItems: LazyPagingItems<GenreListItemModel>
   stable val lazyListState: LazyListState
-  stable val eventSink: Function1<GenresByEntityUiEvent, Unit>
+  stable val eventSink: Function1<GenresListUiEvent, Unit>
 }
-stable class InstrumentsByEntityPresenter {
-  runtime val getInstrumentsByEntity: GetInstrumentsByEntity
+stable class InstrumentsListPresenter {
+  runtime val getInstruments: GetInstruments
   <runtime stability> = Stable
 }
 stable class Get {
-  stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntity
+  runtime val browseMethod: BrowseMethod
   stable val isRemote: Boolean
   <runtime stability> = Stable
 }
@@ -98,18 +93,17 @@ stable class UpdateQuery {
   stable val query: String
   <runtime stability> = Stable
 }
-stable class InstrumentsByEntityUiState {
+stable class InstrumentsListUiState {
   runtime val lazyPagingItems: LazyPagingItems<InstrumentListItemModel>
   stable val lazyListState: LazyListState
-  stable val eventSink: Function1<InstrumentsByEntityUiEvent, Unit>
+  stable val eventSink: Function1<InstrumentsListUiEvent, Unit>
 }
-stable class LabelsByEntityPresenter {
-  runtime val getLabelsByEntity: GetLabelsByEntity
+stable class LabelsListPresenter {
+  runtime val getLabels: GetLabels
   <runtime stability> = Stable
 }
 stable class Get {
-  stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntity
+  runtime val browseMethod: BrowseMethod
   stable val isRemote: Boolean
   <runtime stability> = Stable
 }
@@ -117,10 +111,10 @@ stable class UpdateQuery {
   stable val query: String
   <runtime stability> = Stable
 }
-stable class LabelsByEntityUiState {
+stable class LabelsListUiState {
   runtime val lazyPagingItems: LazyPagingItems<LabelListItemModel>
   stable val lazyListState: LazyListState
-  stable val eventSink: Function1<LabelsByEntityUiEvent, Unit>
+  stable val eventSink: Function1<LabelsListUiEvent, Unit>
 }
 stable class StartLogin {
   <runtime stability> = Stable
@@ -137,13 +131,12 @@ stable class LoginUiState {
   stable val eventSink: Function1<LoginUiEvent, Unit>
   <runtime stability> = Stable
 }
-stable class PlacesByEntityPresenter {
-  runtime val getPlacesByEntity: GetPlacesByEntity
+stable class PlacesListPresenter {
+  runtime val getPlaces: GetPlaces
   <runtime stability> = Stable
 }
 stable class Get {
-  stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntity
+  runtime val browseMethod: BrowseMethod
   stable val isRemote: Boolean
   <runtime stability> = Stable
 }
@@ -151,18 +144,17 @@ stable class UpdateQuery {
   stable val query: String
   <runtime stability> = Stable
 }
-stable class PlacesByEntityUiState {
+stable class PlacesListUiState {
   runtime val lazyPagingItems: LazyPagingItems<PlaceListItemModel>
   stable val lazyListState: LazyListState
-  stable val eventSink: Function1<PlacesByEntityUiEvent, Unit>
+  stable val eventSink: Function1<PlacesListUiEvent, Unit>
 }
-stable class RecordingsByEntityPresenter {
-  runtime val getRecordingsByEntity: GetRecordingsByEntity
+stable class RecordingsListPresenter {
+  runtime val getRecordings: GetRecordings
   <runtime stability> = Stable
 }
 stable class Get {
-  stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntity
+  runtime val browseMethod: BrowseMethod
   stable val isRemote: Boolean
   <runtime stability> = Stable
 }
@@ -170,10 +162,10 @@ stable class UpdateQuery {
   stable val query: String
   <runtime stability> = Stable
 }
-stable class RecordingsByEntityUiState {
+stable class RecordingsListUiState {
   runtime val lazyPagingItems: LazyPagingItems<RecordingListItemModel>
   stable val lazyListState: LazyListState
-  stable val eventSink: Function1<RecordingsByEntityUiEvent, Unit>
+  stable val eventSink: Function1<RecordingsListUiEvent, Unit>
 }
 stable class RelationsPresenterImpl {
   runtime val getEntityRelationships: GetEntityRelationships
@@ -194,15 +186,14 @@ stable class RelationsUiState {
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<RelationsUiEvent, Unit>
 }
-stable class ReleasesByEntityPresenter {
-  runtime val getReleasesByEntity: GetReleasesByEntity
+stable class ReleasesListPresenter {
+  runtime val getReleases: GetReleases
   unstable val appPreferences: AppPreferences
   unstable val imageMetadataRepository: ImageMetadataRepository
   <runtime stability> = Stable
 }
 stable class Get {
-  stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntity
+  runtime val browseMethod: BrowseMethod
   stable val isRemote: Boolean
   <runtime stability> = Stable
 }
@@ -218,21 +209,20 @@ stable class RequestForMissingCoverArtUrl {
   stable val entityId: String
   <runtime stability> = Stable
 }
-stable class ReleasesByEntityUiState {
+stable class ReleasesListUiState {
   runtime val lazyPagingItems: LazyPagingItems<ReleaseListItemModel>
   stable val lazyListState: LazyListState
   stable val showMoreInfo: Boolean
-  stable val eventSink: Function1<ReleasesByEntityUiEvent, Unit>
+  stable val eventSink: Function1<ReleasesListUiEvent, Unit>
 }
-stable class ReleaseGroupsByEntityPresenter {
-  runtime val getReleaseGroupsByEntity: GetReleaseGroupsByEntity
+stable class ReleaseGroupsListPresenter {
+  runtime val getReleaseGroups: GetReleaseGroups
   unstable val appPreferences: AppPreferences
   unstable val imageMetadataRepository: ImageMetadataRepository
   <runtime stability> = Stable
 }
 stable class Get {
-  stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntity
+  runtime val browseMethod: BrowseMethod
   stable val isRemote: Boolean
   <runtime stability> = Stable
 }
@@ -248,11 +238,11 @@ stable class RequestForMissingCoverArtUrl {
   stable val entityId: String
   <runtime stability> = Stable
 }
-stable class ReleaseGroupsByEntityUiState {
+stable class ReleaseGroupsListUiState {
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val sort: Boolean
-  stable val eventSink: Function1<ReleaseGroupsByEntityUiEvent, Unit>
+  stable val eventSink: Function1<ReleaseGroupsListUiEvent, Unit>
 }
 stable class SearchScreen {
   stable val query: String?
@@ -262,6 +252,13 @@ stable class SearchScreen {
 stable class ArtistCollaborationScreen {
   stable val id: String
   stable val name: String
+  <runtime stability> = Stable
+}
+stable class DatabaseScreen {
+  <runtime stability> = Stable
+}
+stable class AllEntitiesScreen {
+  stable val entity: MusicBrainzEntity
   <runtime stability> = Stable
 }
 stable class HistoryScreen {
@@ -316,13 +313,12 @@ stable class NowPlayingHistoryScreen {
 stable class SpotifyHistoryScreen {
   <runtime stability> = Stable
 }
-stable class SeriesByEntityPresenter {
-  runtime val getSeriesByEntity: GetSeriesByEntity
+stable class SeriesListPresenter {
+  runtime val getSeries: GetSeries
   <runtime stability> = Stable
 }
 stable class Get {
-  stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntity
+  runtime val browseMethod: BrowseMethod
   stable val isRemote: Boolean
   <runtime stability> = Stable
 }
@@ -330,10 +326,10 @@ stable class UpdateQuery {
   stable val query: String
   <runtime stability> = Stable
 }
-stable class SeriesByEntityUiState {
+stable class SeriesListUiState {
   runtime val lazyPagingItems: LazyPagingItems<SeriesListItemModel>
   stable val lazyListState: LazyListState
-  stable val eventSink: Function1<SeriesByEntityUiEvent, Unit>
+  stable val eventSink: Function1<SeriesListUiEvent, Unit>
 }
 stable class TopAppBarEditState {
   stable val showEditIcon: Boolean
@@ -366,13 +362,12 @@ stable class ToggleMedium {
   stable val id: String
   <runtime stability> = Stable
 }
-stable class WorksByEntityPresenter {
-  runtime val getWorksByEntity: GetWorksByEntity
+stable class WorksListPresenter {
+  runtime val getWorks: GetWorks
   <runtime stability> = Stable
 }
 stable class Get {
-  stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntity
+  runtime val browseMethod: BrowseMethod
   stable val isRemote: Boolean
   <runtime stability> = Stable
 }
@@ -380,8 +375,8 @@ stable class UpdateQuery {
   stable val query: String
   <runtime stability> = Stable
 }
-stable class WorksByEntityUiState {
+stable class WorksListUiState {
   runtime val lazyPagingItems: LazyPagingItems<WorkListItemModel>
   stable val lazyListState: LazyListState
-  stable val eventSink: Function1<WorksByEntityUiEvent, Unit>
+  stable val eventSink: Function1<WorksListUiEvent, Unit>
 }

@@ -18,4 +18,3 @@ ly.david.musicsearch.shared.feature.collections.list.CollectionSortBottomSheetCo
 ly.david.musicsearch.shared.feature.collections.list.CollectionsFilterChipsBar,CollectionsFilterChipsBar,1,1,1,0,0,0,0,0,1,3,
 ly.david.musicsearch.shared.feature.collections.single.CollectionPresenter.present,present,1,0,0,0,0,0,0,0,1,21,
 ly.david.musicsearch.shared.feature.collections.single.CollectionUi,CollectionUi,1,1,1,0,0,0,0,0,2,6,
-ly.david.musicsearch.shared.feature.collections.single.CollectionUi,CollectionUi,1,1,1,0,0,0,0,0,15,12,

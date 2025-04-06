@@ -69,18 +69,18 @@ stable class CollectionPresenter {
   stable val navigator: Navigator
   runtime val getCollection: GetCollection
   unstable val incrementLookupHistory: IncrementLookupHistory
-  stable val areasByEntityPresenter: AreasByEntityPresenter
-  stable val artistsByEntityPresenter: ArtistsByEntityPresenter
-  stable val eventsByEntityPresenter: EventsByEntityPresenter
-  stable val genresByEntityPresenter: GenresByEntityPresenter
-  stable val instrumentsByEntityPresenter: InstrumentsByEntityPresenter
-  stable val labelsByEntityPresenter: LabelsByEntityPresenter
-  stable val placesByEntityPresenter: PlacesByEntityPresenter
-  stable val recordingsByEntityPresenter: RecordingsByEntityPresenter
-  stable val releasesByEntityPresenter: ReleasesByEntityPresenter
-  stable val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter
-  stable val seriesByEntityPresenter: SeriesByEntityPresenter
-  stable val worksByEntityPresenter: WorksByEntityPresenter
+  stable val areasListPresenter: AreasListPresenter
+  stable val artistsListPresenter: ArtistsListPresenter
+  stable val eventsListPresenter: EventsListPresenter
+  stable val genresListPresenter: GenresListPresenter
+  stable val instrumentsListPresenter: InstrumentsListPresenter
+  stable val labelsListPresenter: LabelsListPresenter
+  stable val placesListPresenter: PlacesListPresenter
+  stable val recordingsListPresenter: RecordingsListPresenter
+  stable val releasesListPresenter: ReleasesListPresenter
+  stable val releaseGroupsListPresenter: ReleaseGroupsListPresenter
+  stable val seriesListPresenter: SeriesListPresenter
+  stable val worksListPresenter: WorksListPresenter
   runtime val deleteFromCollection: DeleteFromCollection
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
   unstable val collectionRepository: CollectionRepository
@@ -93,18 +93,18 @@ stable class CollectionUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val url: String
   stable val topAppBarEditState: TopAppBarEditState
-  stable val areasByEntityUiState: AreasByEntityUiState
-  stable val artistsByEntityUiState: ArtistsByEntityUiState
-  stable val eventsByEntityUiState: EventsByEntityUiState
-  stable val genresByEntityUiState: GenresByEntityUiState
-  stable val instrumentsByEntityUiState: InstrumentsByEntityUiState
-  stable val labelsByEntityUiState: LabelsByEntityUiState
-  stable val placesByEntityUiState: PlacesByEntityUiState
-  stable val recordingsByEntityUiState: RecordingsByEntityUiState
-  stable val releasesByEntityUiState: ReleasesByEntityUiState
-  stable val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState
-  stable val seriesByEntityUiState: SeriesByEntityUiState
-  stable val worksByEntityUiState: WorksByEntityUiState
+  stable val areasListUiState: AreasListUiState
+  stable val artistsListUiState: ArtistsListUiState
+  stable val eventsListUiState: EventsListUiState
+  stable val genresListUiState: GenresListUiState
+  stable val instrumentsListUiState: InstrumentsListUiState
+  stable val labelsListUiState: LabelsListUiState
+  stable val placesListUiState: PlacesListUiState
+  stable val recordingsListUiState: RecordingsListUiState
+  stable val releasesListUiState: ReleasesListUiState
+  stable val releaseGroupsListUiState: ReleaseGroupsListUiState
+  stable val seriesListUiState: SeriesListUiState
+  stable val worksListUiState: WorksListUiState
   stable val eventSink: Function1<CollectionUiEvent, Unit>
 }
 stable class NavigateUp {

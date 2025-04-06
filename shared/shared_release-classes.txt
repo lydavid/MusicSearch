@@ -1,0 +1,4 @@
+unstable class CustomIcons {
+  stable var _Database: ImageVector?
+  <runtime stability> = Unstable
+}

@@ -3,11 +3,11 @@ stable class AreaPresenter {
   stable val navigator: Navigator
   unstable val repository: AreaRepository
   unstable val incrementLookupHistory: IncrementLookupHistory
-  stable val artistsByEntityPresenter: ArtistsByEntityPresenter
-  stable val eventsByEntityPresenter: EventsByEntityPresenter
-  stable val labelsByEntityPresenter: LabelsByEntityPresenter
-  stable val releasesByEntityPresenter: ReleasesByEntityPresenter
-  stable val placesByEntityPresenter: PlacesByEntityPresenter
+  stable val artistsListPresenter: ArtistsListPresenter
+  stable val eventsListPresenter: EventsListPresenter
+  stable val labelsListPresenter: LabelsListPresenter
+  stable val releasesListPresenter: ReleasesListPresenter
+  stable val placesListPresenter: PlacesListPresenter
   stable val relationsPresenter: RelationsPresenter
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
@@ -25,11 +25,11 @@ stable class AreaUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val snackbarMessage: String?
-  stable val artistsByEntityUiState: ArtistsByEntityUiState
-  stable val eventsByEntityUiState: EventsByEntityUiState
-  stable val labelsByEntityUiState: LabelsByEntityUiState
-  stable val placesByEntityUiState: PlacesByEntityUiState
-  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val artistsListUiState: ArtistsListUiState
+  stable val eventsListUiState: EventsListUiState
+  stable val labelsListUiState: LabelsListUiState
+  stable val placesListUiState: PlacesListUiState
+  stable val releasesListUiState: ReleasesListUiState
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
   stable val eventSink: Function1<AreaUiEvent, Unit>
@@ -57,11 +57,11 @@ stable class ArtistPresenter {
   unstable val artistImageRepository: ArtistImageRepository
   unstable val wikimediaRepository: WikimediaRepository
   unstable val incrementLookupHistory: IncrementLookupHistory
-  stable val eventsByEntityPresenter: EventsByEntityPresenter
-  stable val recordingsByEntityPresenter: RecordingsByEntityPresenter
-  stable val releasesByEntityPresenter: ReleasesByEntityPresenter
-  stable val releaseGroupsByEntityPresenter: ReleaseGroupsByEntityPresenter
-  stable val worksByEntityPresenter: WorksByEntityPresenter
+  stable val eventsListPresenter: EventsListPresenter
+  stable val recordingsListPresenter: RecordingsListPresenter
+  stable val releasesListPresenter: ReleasesListPresenter
+  stable val releaseGroupsListPresenter: ReleaseGroupsListPresenter
+  stable val worksListPresenter: WorksListPresenter
   stable val relationsPresenter: RelationsPresenter
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
@@ -79,11 +79,11 @@ stable class ArtistUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val snackbarMessage: String?
-  stable val eventsByEntityUiState: EventsByEntityUiState
-  stable val recordingsByEntityUiState: RecordingsByEntityUiState
-  stable val releasesByEntityUiState: ReleasesByEntityUiState
-  stable val releaseGroupsByEntityUiState: ReleaseGroupsByEntityUiState
-  stable val worksByEntityUiState: WorksByEntityUiState
+  stable val eventsListUiState: EventsListUiState
+  stable val recordingsListUiState: RecordingsListUiState
+  stable val releasesListUiState: ReleasesListUiState
+  stable val releaseGroupsListUiState: ReleaseGroupsListUiState
+  stable val worksListUiState: WorksListUiState
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
   stable val eventSink: Function1<ArtistUiEvent, Unit>
@@ -219,7 +219,7 @@ stable class LabelPresenter {
   stable val navigator: Navigator
   unstable val repository: LabelRepository
   unstable val incrementLookupHistory: IncrementLookupHistory
-  stable val releasesByEntityPresenter: ReleasesByEntityPresenter
+  stable val releasesListPresenter: ReleasesListPresenter
   stable val relationsPresenter: RelationsPresenter
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
@@ -237,7 +237,7 @@ stable class LabelUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val snackbarMessage: String?
-  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val releasesListUiState: ReleasesListUiState
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
   stable val eventSink: Function1<LabelUiEvent, Unit>
@@ -263,7 +263,7 @@ stable class PlacePresenter {
   stable val navigator: Navigator
   unstable val repository: PlaceRepository
   unstable val incrementLookupHistory: IncrementLookupHistory
-  stable val eventsByEntityPresenter: EventsByEntityPresenter
+  stable val eventsListPresenter: EventsListPresenter
   stable val relationsPresenter: RelationsPresenter
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
@@ -281,7 +281,7 @@ stable class PlaceUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val snackbarMessage: String?
-  stable val eventsByEntityUiState: EventsByEntityUiState
+  stable val eventsListUiState: EventsListUiState
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
   stable val eventSink: Function1<PlaceUiEvent, Unit>
@@ -307,7 +307,7 @@ stable class RecordingPresenter {
   stable val navigator: Navigator
   unstable val repository: RecordingRepository
   unstable val incrementLookupHistory: IncrementLookupHistory
-  stable val releasesByEntityPresenter: ReleasesByEntityPresenter
+  stable val releasesListPresenter: ReleasesListPresenter
   stable val relationsPresenter: RelationsPresenter
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
@@ -326,7 +326,7 @@ stable class RecordingUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val snackbarMessage: String?
-  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val releasesListUiState: ReleasesListUiState
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
   stable val eventSink: Function1<RecordingUiEvent, Unit>
@@ -355,7 +355,7 @@ stable class ReleasePresenter {
   stable val relationsPresenter: RelationsPresenter
   unstable val imageMetadataRepository: ImageMetadataRepository
   stable val tracksByReleasePresenter: TracksByReleasePresenter
-  stable val artistsByEntityPresenter: ArtistsByEntityPresenter
+  stable val artistsListPresenter: ArtistsListPresenter
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
@@ -373,7 +373,7 @@ stable class ReleaseUiState {
   stable val releaseDetailsUiState: ReleaseDetailsUiState
   stable val relationsUiState: RelationsUiState
   stable val tracksByReleaseUiState: TracksByReleaseUiState
-  stable val artistsByEntityUiState: ArtistsByEntityUiState
+  stable val artistsListUiState: ArtistsListUiState
   stable val loginUiState: LoginUiState
   stable val eventSink: Function1<ReleaseUiEvent, Unit>
 }
@@ -407,7 +407,7 @@ stable class ReleaseGroupPresenter {
   stable val navigator: Navigator
   unstable val repository: ReleaseGroupRepository
   unstable val incrementLookupHistory: IncrementLookupHistory
-  stable val releasesByEntityPresenter: ReleasesByEntityPresenter
+  stable val releasesListPresenter: ReleasesListPresenter
   stable val relationsPresenter: RelationsPresenter
   unstable val imageMetadataRepository: ImageMetadataRepository
   unstable val logger: Logger
@@ -427,7 +427,7 @@ stable class ReleaseGroupUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val snackbarMessage: String?
-  stable val releasesByEntityUiState: ReleasesByEntityUiState
+  stable val releasesListUiState: ReleasesListUiState
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
   stable val eventSink: Function1<ReleaseGroupUiEvent, Unit>
@@ -495,8 +495,8 @@ stable class WorkPresenter {
   stable val navigator: Navigator
   unstable val repository: WorkRepository
   unstable val incrementLookupHistory: IncrementLookupHistory
-  stable val artistsByEntityPresenter: ArtistsByEntityPresenter
-  stable val recordingsByEntityPresenter: RecordingsByEntityPresenter
+  stable val artistsListPresenter: ArtistsListPresenter
+  stable val recordingsListPresenter: RecordingsListPresenter
   stable val relationsPresenter: RelationsPresenter
   unstable val logger: Logger
   stable val loginPresenter: LoginPresenter
@@ -514,8 +514,8 @@ stable class WorkUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val detailsLazyListState: LazyListState
   stable val snackbarMessage: String?
-  stable val artistsByEntityUiState: ArtistsByEntityUiState
-  stable val recordingsByEntityUiState: RecordingsByEntityUiState
+  stable val artistsListUiState: ArtistsListUiState
+  stable val recordingsListUiState: RecordingsListUiState
   stable val relationsUiState: RelationsUiState
   stable val loginUiState: LoginUiState
   stable val eventSink: Function1<WorkUiEvent, Unit>

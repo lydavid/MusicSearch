@@ -1,0 +1,29 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewDatabaseUi()
+fun present(
+  stable <this>: DatabasePresenter
+): DatabaseUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DatabaseUi(
+  stable state: DatabaseUiState
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DatabaseUi(
+  stable modifier: Modifier? = @static Companion
+  stable filterText: String? = @static ""
+  stable onDestinationClick: Function1<Screen, Unit>? = @static $composer.startReplaceGroup(1849434622)
+val tmp0_group = $composer.cache(false) {
+  {     it  :   Screen   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.share.feature.database.DatabaseUi
+)
+fun present(
+  stable <this>: AllEntitiesPresenter
+): AllEntitiesUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AllEntitiesUi(
+  stable state: AllEntitiesUiState
+  stable modifier: Modifier? = @static Companion
+)

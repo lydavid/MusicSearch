@@ -14,6 +14,9 @@ stable class HistoryUiState {
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<HistoryUiEvent, Unit>
 }
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
 stable class UpdateSortOption {
   stable val sortOptionIndex: Int
   <runtime stability> = Stable
