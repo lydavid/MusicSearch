@@ -2,7 +2,7 @@ package ly.david.musicsearch.shared.domain.preferences
 
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
-import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
+import ly.david.musicsearch.shared.domain.coverarts.ImagesSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 
 interface AppPreferences {
@@ -37,6 +37,6 @@ interface AppPreferences {
     val collectionSortOption: Flow<CollectionSortOption>
     fun setCollectionSortOption(sort: CollectionSortOption)
 
-    val coverArtsSortOption: Flow<CoverArtsSortOption>
-    fun setCoverArtsSortOption(sort: CoverArtsSortOption)
+    val imagesSortOption: Flow<ImagesSortOption>
+    fun setImagesSortOption(sort: ImagesSortOption)
 }

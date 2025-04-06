@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.preferences.NoOpAppPreferences
-import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
+import ly.david.musicsearch.shared.domain.coverarts.ImagesSortOption
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
@@ -23,7 +23,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class CoverArtsPresenterTest {
+class ImagesPresenterTest {
 
     private val navigator = FakeNavigator(
         root = SettingsScreen,
@@ -31,12 +31,12 @@ class CoverArtsPresenterTest {
 
     private fun createPresenter(
         imageMetadataList: List<ImageMetadata>,
-    ) = CoverArtsPresenter(
+    ) = ImagesPresenter(
         screen = CoverArtsScreen(),
         navigator = navigator,
         appPreferences = object : NoOpAppPreferences() {
-            override val coverArtsSortOption: Flow<CoverArtsSortOption>
-                get() = flowOf(CoverArtsSortOption.RECENTLY_ADDED)
+            override val imagesSortOption: Flow<ImagesSortOption>
+                get() = flowOf(ImagesSortOption.RECENTLY_ADDED)
         },
         imageMetadataRepository = object : ImageMetadataRepository {
             override suspend fun getImageMetadata(
@@ -50,7 +50,7 @@ class CoverArtsPresenterTest {
             override fun observeAllImageMetadata(
                 mbid: String?,
                 query: String,
-                sortOption: CoverArtsSortOption,
+                sortOption: ImagesSortOption,
             ): Flow<PagingData<ImageMetadata>> {
                 return flowOf(PagingData.from(imageMetadataList))
             }
@@ -112,7 +112,7 @@ class CoverArtsPresenterTest {
             assertEquals("Cover arts", state.title)
 
             state.eventSink(
-                CoverArtsUiEvent.SelectImage(
+                ImagesUiEvent.SelectImage(
                     index = 0,
                     imageMetadataSnapshot = snapshot,
                 ),
@@ -167,7 +167,7 @@ class CoverArtsPresenterTest {
             assertEquals("", state.subtitle)
 
             state.eventSink(
-                CoverArtsUiEvent.SelectImage(
+                ImagesUiEvent.SelectImage(
                     index = 0,
                     imageMetadataSnapshot = snapshot,
                 ),
@@ -231,7 +231,7 @@ class CoverArtsPresenterTest {
             assertEquals("", state.subtitle)
 
             state.eventSink(
-                CoverArtsUiEvent.SelectImage(
+                ImagesUiEvent.SelectImage(
                     index = 0,
                     imageMetadataSnapshot = snapshot,
                 ),
@@ -330,7 +330,7 @@ class CoverArtsPresenterTest {
             assertEquals("", state.subtitle)
 
             state.eventSink(
-                CoverArtsUiEvent.SelectImage(
+                ImagesUiEvent.SelectImage(
                     index = 0,
                     imageMetadataSnapshot = snapshot,
                 ),
@@ -356,7 +356,7 @@ class CoverArtsPresenterTest {
             assertEquals("Release name", state.subtitle)
 
             state.eventSink(
-                CoverArtsUiEvent.SelectImage(
+                ImagesUiEvent.SelectImage(
                     index = 1,
                     imageMetadataSnapshot = snapshot,
                 ),
@@ -378,7 +378,7 @@ class CoverArtsPresenterTest {
             assertEquals("Release group name", state.subtitle)
 
             state.eventSink(
-                CoverArtsUiEvent.SelectImage(
+                ImagesUiEvent.SelectImage(
                     index = 2,
                     imageMetadataSnapshot = snapshot,
                 ),
@@ -400,7 +400,7 @@ class CoverArtsPresenterTest {
             assertEquals("Artist name", state.subtitle)
 
             state.eventSink(
-                CoverArtsUiEvent.NavigateUp,
+                ImagesUiEvent.NavigateUp,
             )
             state = awaitItem()
             assertEquals(null, state.selectedImageIndex)
@@ -409,7 +409,7 @@ class CoverArtsPresenterTest {
             assertEquals("", state.subtitle)
 
             state.eventSink(
-                CoverArtsUiEvent.NavigateUp,
+                ImagesUiEvent.NavigateUp,
             )
             assertEquals(FakeNavigator.PopEvent(poppedScreen = null), navigator.awaitPop())
         }

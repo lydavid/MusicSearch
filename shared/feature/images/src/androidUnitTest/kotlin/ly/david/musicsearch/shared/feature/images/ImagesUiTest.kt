@@ -3,26 +3,26 @@ package ly.david.musicsearch.shared.feature.images
 import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 
-class CoverArtsUiTest : ScreenshotTest() {
+class ImagesUiTest : ScreenshotTest() {
 
     @Test
-    fun coverArtsGrid() {
+    fun imagesGrid() {
         snapshot {
-            PreviewCoverArtsGridUi()
+            PreviewImagesGridUi()
         }
     }
 
     @Test
-    fun coverArtsPagerCompact() {
+    fun imagesPagerCompact() {
         snapshot {
-            PreviewCoverArtsPagerUiCompact()
+            PreviewImagesPagerUiCompact()
         }
     }
 
     @Test
-    fun coverArtsPagerNonCompact() {
+    fun imagesPagerNonCompact() {
         snapshot {
-            PreviewCoverArtsPagerUiNonCompact()
+            PreviewImagesPagerUiNonCompact()
         }
     }
 }

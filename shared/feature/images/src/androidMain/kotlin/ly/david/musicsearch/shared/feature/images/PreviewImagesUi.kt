@@ -34,12 +34,12 @@ val images = MutableStateFlow(
 
 @PreviewLightDark
 @Composable
-internal fun PreviewCoverArtsGridUi() {
+internal fun PreviewImagesGridUi() {
     InitializeFakeImageLoader()
     PreviewTheme {
         Surface {
-            CoverArtsGridUi(
-                state = CoverArtsUiState(
+            ImagesGridUi(
+                state = ImagesUiState(
                     title = "Cover arts",
                     imageMetadataPagingDataFlow = images,
                 ),
@@ -51,12 +51,12 @@ internal fun PreviewCoverArtsGridUi() {
 
 @PreviewLightDark
 @Composable
-internal fun PreviewCoverArtsPagerUiCompact() {
+internal fun PreviewImagesPagerUiCompact() {
     InitializeFakeImageLoader()
     PreviewTheme {
         Surface {
-            CoverArtsGridUi(
-                state = CoverArtsUiState(
+            ImagesGridUi(
+                state = ImagesUiState(
                     title = "Front",
                     subtitle = "1/2",
                     imageMetadataPagingDataFlow = images,
@@ -70,12 +70,12 @@ internal fun PreviewCoverArtsPagerUiCompact() {
 
 @DefaultPreviews
 @Composable
-internal fun PreviewCoverArtsPagerUiNonCompact() {
+internal fun PreviewImagesPagerUiNonCompact() {
     InitializeFakeImageLoader()
     PreviewTheme {
         Surface {
-            CoverArtsGridUi(
-                state = CoverArtsUiState(
+            ImagesGridUi(
+                state = ImagesUiState(
                     title = "Front",
                     subtitle = "1/2",
                     imageMetadataPagingDataFlow = images,

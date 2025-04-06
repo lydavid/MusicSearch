@@ -2,7 +2,7 @@ package ly.david.musicsearch.shared.domain.image
 
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
+import ly.david.musicsearch.shared.domain.coverarts.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
 
@@ -30,7 +30,7 @@ interface ImageMetadataRepository {
     fun observeAllImageMetadata(
         mbid: String?,
         query: String,
-        sortOption: CoverArtsSortOption,
+        sortOption: ImagesSortOption,
     ): Flow<PagingData<ImageMetadata>>
 
     fun getNumberOfImageMetadataById(mbid: String): Int

@@ -16,7 +16,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
-import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
+import ly.david.musicsearch.shared.domain.coverarts.ImagesSortOption
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -88,7 +88,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         val flow = repository.observeAllImageMetadata(
             mbid = null,
             query = "",
-            sortOption = CoverArtsSortOption.RECENTLY_ADDED,
+            sortOption = ImagesSortOption.RECENTLY_ADDED,
         )
         val imageMetadataList = flow.asSnapshot()
         assertEquals(
@@ -143,7 +143,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         val flow = repository.observeAllImageMetadata(
             mbid = null,
             query = "",
-            sortOption = CoverArtsSortOption.RECENTLY_ADDED,
+            sortOption = ImagesSortOption.RECENTLY_ADDED,
         )
         val imageMetadataList = flow.asSnapshot()
         assertEquals(
@@ -210,7 +210,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         val flow = repository.observeAllImageMetadata(
             mbid = null,
             query = "",
-            sortOption = CoverArtsSortOption.RECENTLY_ADDED,
+            sortOption = ImagesSortOption.RECENTLY_ADDED,
         )
         val imageMetadataList = flow.asSnapshot()
         assertEquals(
@@ -278,7 +278,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         val flow = repository.observeAllImageMetadata(
             mbid = null,
             query = "",
-            sortOption = CoverArtsSortOption.RECENTLY_ADDED,
+            sortOption = ImagesSortOption.RECENTLY_ADDED,
         )
         val imageMetadataList = flow.asSnapshot()
         assertEquals(
@@ -345,7 +345,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         val flow = repository.observeAllImageMetadata(
             mbid = null,
             query = "",
-            sortOption = CoverArtsSortOption.RECENTLY_ADDED,
+            sortOption = ImagesSortOption.RECENTLY_ADDED,
         )
         val imageMetadataList = flow.asSnapshot()
         assertEquals(
@@ -469,7 +469,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         repository.observeAllImageMetadata(
             mbid = null,
             query = "",
-            sortOption = CoverArtsSortOption.RECENTLY_ADDED,
+            sortOption = ImagesSortOption.RECENTLY_ADDED,
         ).asSnapshot().let { imageMetadataList ->
             assertEquals(
                 3,
@@ -512,7 +512,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         repository.observeAllImageMetadata(
             mbid = null,
             query = "",
-            sortOption = CoverArtsSortOption.LEAST_RECENTLY_ADDED,
+            sortOption = ImagesSortOption.LEAST_RECENTLY_ADDED,
         ).asSnapshot().let { imageMetadataList ->
             assertEquals(
                 3,
@@ -555,7 +555,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         repository.observeAllImageMetadata(
             mbid = null,
             query = "",
-            sortOption = CoverArtsSortOption.ALPHABETICALLY,
+            sortOption = ImagesSortOption.ALPHABETICALLY,
         ).asSnapshot().let { imageMetadataList ->
             assertEquals(
                 3,
@@ -598,7 +598,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         repository.observeAllImageMetadata(
             mbid = null,
             query = "",
-            sortOption = CoverArtsSortOption.ALPHABETICALLY_REVERSE,
+            sortOption = ImagesSortOption.ALPHABETICALLY_REVERSE,
         ).asSnapshot().let { imageMetadataList ->
             assertEquals(
                 3,

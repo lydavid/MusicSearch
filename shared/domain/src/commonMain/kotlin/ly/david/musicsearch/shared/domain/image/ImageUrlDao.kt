@@ -1,7 +1,7 @@
 package ly.david.musicsearch.shared.domain.image
 
 import app.cash.paging.PagingSource
-import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
+import ly.david.musicsearch.shared.domain.coverarts.ImagesSortOption
 
 interface ImageUrlDao {
     fun saveImageMetadata(
@@ -18,7 +18,7 @@ interface ImageUrlDao {
 
     fun getAllImageMetadata(
         query: String = "",
-        sortOption: CoverArtsSortOption,
+        sortOption: ImagesSortOption,
     ): PagingSource<Int, ImageMetadata>
 
     fun deleteAllImageMetadtaById(mbid: String)

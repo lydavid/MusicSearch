@@ -12,7 +12,7 @@ val imagesFeatureModule = module {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is CoverArtsScreen -> {
-                    CoverArtsPresenter(
+                    ImagesPresenter(
                         screen = screen,
                         navigator = navigator,
                         appPreferences = get(),
@@ -29,8 +29,8 @@ val imagesFeatureModule = module {
         Ui.Factory { screen, _ ->
             when (screen) {
                 is CoverArtsScreen -> {
-                    ui<CoverArtsUiState> { state, modifier ->
-                        CoverArtsGridUi(
+                    ui<ImagesUiState> { state, modifier ->
+                        ImagesGridUi(
                             state = state,
                             modifier = modifier,
                         )

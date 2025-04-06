@@ -2,7 +2,7 @@ package ly.david.data.test.preferences
 
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
-import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
+import ly.david.musicsearch.shared.domain.coverarts.ImagesSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 
@@ -63,10 +63,10 @@ open class NoOpAppPreferences : AppPreferences {
         // No-op.
     }
 
-    override val coverArtsSortOption: Flow<CoverArtsSortOption>
+    override val imagesSortOption: Flow<ImagesSortOption>
         get() = error("Not implemented")
 
-    override fun setCoverArtsSortOption(sort: CoverArtsSortOption) {
+    override fun setImagesSortOption(sort: ImagesSortOption) {
         // No-op.
     }
 }

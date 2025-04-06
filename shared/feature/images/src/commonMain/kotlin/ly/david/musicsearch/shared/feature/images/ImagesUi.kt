@@ -49,7 +49,7 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import app.cash.paging.compose.itemKey
 import com.slack.circuit.foundation.internal.BackHandler
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
+import ly.david.musicsearch.shared.domain.coverarts.ImagesSortOption
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.EntityIcon
@@ -65,18 +65,18 @@ import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-internal fun CoverArtsGridUi(
-    state: CoverArtsUiState,
+internal fun ImagesGridUi(
+    state: ImagesUiState,
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
 
     BackHandler {
-        eventSink(CoverArtsUiEvent.NavigateUp)
+        eventSink(ImagesUiEvent.NavigateUp)
     }
 
     val windowSizeClass: WindowSizeClass = calculateWindowSizeClass()
-    CoverArtsGridUi(
+    ImagesGridUi(
         state = state,
         isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
         modifier = modifier,
@@ -87,8 +87,8 @@ internal fun CoverArtsGridUi(
     ExperimentalMaterial3Api::class,
 )
 @Composable
-internal fun CoverArtsGridUi(
-    state: CoverArtsUiState,
+internal fun ImagesGridUi(
+    state: ImagesUiState,
     isCompact: Boolean,
     modifier: Modifier = Modifier,
 ) {
@@ -102,10 +102,10 @@ internal fun CoverArtsGridUi(
 
     if (showBottomSheet) {
         MultipleChoiceBottomSheet(
-            options = CoverArtsSortOption.entries.map { it.getLabel(strings) },
+            options = ImagesSortOption.entries.map { it.getLabel(strings) },
             selectedOptionIndex = state.sortOption.ordinal,
             onSortOptionIndexClick = {
-                eventSink(CoverArtsUiEvent.UpdateSortOption(it))
+                eventSink(ImagesUiEvent.UpdateSortOption(it))
             },
             bottomSheetState = bottomSheetState,
             onDismiss = { showBottomSheet = false },
@@ -119,7 +119,7 @@ internal fun CoverArtsGridUi(
             TopAppBarWithFilter(
                 showBackButton = true,
                 onBack = {
-                    eventSink(CoverArtsUiEvent.NavigateUp)
+                    eventSink(ImagesUiEvent.NavigateUp)
                 },
                 title = state.title,
                 subtitle = state.subtitle,
@@ -149,7 +149,7 @@ internal fun CoverArtsGridUi(
                         onClick = {
                             closeMenu()
                             eventSink(
-                                CoverArtsUiEvent.ClickItem(
+                                ImagesUiEvent.ClickItem(
                                     entity = entity,
                                     id = id,
                                 ),
@@ -170,7 +170,7 @@ internal fun CoverArtsGridUi(
                     val snapshot = imageMetadataLazyPagingItems
                         .itemSnapshotList
                     eventSink(
-                        CoverArtsUiEvent.SelectImage(
+                        ImagesUiEvent.SelectImage(
                             index,
                             snapshot,
                         ),
@@ -188,7 +188,7 @@ internal fun CoverArtsGridUi(
                     val snapshot = imageMetadataLazyPagingItems
                         .itemSnapshotList
                     eventSink(
-                        CoverArtsUiEvent.SelectImage(
+                        ImagesUiEvent.SelectImage(
                             index,
                             snapshot,
                         ),

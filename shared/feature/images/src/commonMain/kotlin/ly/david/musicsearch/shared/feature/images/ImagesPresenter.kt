@@ -20,7 +20,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.common.appendOptionalText
-import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
+import ly.david.musicsearch.shared.domain.coverarts.ImagesSortOption
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
@@ -32,18 +32,18 @@ import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
-internal class CoverArtsPresenter(
+internal class ImagesPresenter(
     private val screen: CoverArtsScreen,
     private val navigator: Navigator,
     private val appPreferences: AppPreferences,
     private val imageMetadataRepository: ImageMetadataRepository,
     private val getMusicBrainzCoverArtUrl: GetMusicBrainzCoverArtUrl,
-) : Presenter<CoverArtsUiState> {
+) : Presenter<ImagesUiState> {
 
     @Composable
-    override fun present(): CoverArtsUiState {
+    override fun present(): ImagesUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
-        val sortOption by appPreferences.coverArtsSortOption.collectAsState(CoverArtsSortOption.RECENTLY_ADDED)
+        val sortOption by appPreferences.imagesSortOption.collectAsState(ImagesSortOption.RECENTLY_ADDED)
         val imageMetadataFlow: Flow<PagingData<ImageMetadata>> by rememberRetained(
             topAppBarFilterState.filterText,
             sortOption,
@@ -111,9 +111,9 @@ internal class CoverArtsPresenter(
 
         topAppBarFilterState.show(selectedIndex == null)
 
-        fun eventSink(event: CoverArtsUiEvent) {
+        fun eventSink(event: ImagesUiEvent) {
             when (event) {
-                CoverArtsUiEvent.NavigateUp -> {
+                ImagesUiEvent.NavigateUp -> {
                     if (selectedIndex == null) {
                         navigator.pop()
                     } else {
@@ -124,7 +124,7 @@ internal class CoverArtsPresenter(
                     }
                 }
 
-                is CoverArtsUiEvent.SelectImage -> {
+                is ImagesUiEvent.SelectImage -> {
                     selectedIndex = event.index
                     if (event.imageMetadataSnapshot.isEmpty()) {
                         println("do something, this is a signal that we returned to this screen but data has changed")
@@ -134,7 +134,7 @@ internal class CoverArtsPresenter(
                     topAppBarFilterState.toggleFilterMode(false)
                 }
 
-                is CoverArtsUiEvent.ClickItem -> {
+                is ImagesUiEvent.ClickItem -> {
                     navigator.goTo(
                         DetailsScreen(
                             entity = event.entity,
@@ -143,13 +143,13 @@ internal class CoverArtsPresenter(
                     )
                 }
 
-                is CoverArtsUiEvent.UpdateSortOption -> {
-                    appPreferences.setCoverArtsSortOption(CoverArtsSortOption.entries[event.sortOptionIndex])
+                is ImagesUiEvent.UpdateSortOption -> {
+                    appPreferences.setImagesSortOption(ImagesSortOption.entries[event.sortOptionIndex])
                 }
             }
         }
 
-        return CoverArtsUiState(
+        return ImagesUiState(
             title = title,
             subtitle = subtitle,
             url = url,
@@ -165,33 +165,33 @@ internal class CoverArtsPresenter(
 }
 
 @Stable
-internal data class CoverArtsUiState(
+internal data class ImagesUiState(
     val title: String = "",
     val subtitle: String = "",
     val url: String? = null,
     val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadata>>,
     val lazyGridState: LazyGridState = LazyGridState(),
-    val sortOption: CoverArtsSortOption = CoverArtsSortOption.RECENTLY_ADDED,
+    val sortOption: ImagesSortOption = ImagesSortOption.RECENTLY_ADDED,
     val selectedImageIndex: Int? = null,
     val selectedImageMetadata: ImageMetadata? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
-    val eventSink: (CoverArtsUiEvent) -> Unit = {},
+    val eventSink: (ImagesUiEvent) -> Unit = {},
 ) : CircuitUiState
 
-internal sealed interface CoverArtsUiEvent : CircuitUiEvent {
-    data object NavigateUp : CoverArtsUiEvent
+internal sealed interface ImagesUiEvent : CircuitUiEvent {
+    data object NavigateUp : ImagesUiEvent
 
     data class SelectImage(
         val index: Int,
         val imageMetadataSnapshot: List<ImageMetadata?>,
-    ) : CoverArtsUiEvent
+    ) : ImagesUiEvent
 
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,
-    ) : CoverArtsUiEvent
+    ) : ImagesUiEvent
 
     data class UpdateSortOption(
         val sortOptionIndex: Int,
-    ) : CoverArtsUiEvent
+    ) : ImagesUiEvent
 }

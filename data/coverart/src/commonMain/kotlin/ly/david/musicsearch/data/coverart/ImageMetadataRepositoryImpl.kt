@@ -11,7 +11,7 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
 import ly.david.musicsearch.data.coverart.api.toImageMetadataList
-import ly.david.musicsearch.shared.domain.coverarts.CoverArtsSortOption
+import ly.david.musicsearch.shared.domain.coverarts.ImagesSortOption
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
@@ -78,7 +78,7 @@ internal class ImageMetadataRepositoryImpl(
     override fun observeAllImageMetadata(
         mbid: String?,
         query: String,
-        sortOption: CoverArtsSortOption,
+        sortOption: ImagesSortOption,
     ): Flow<PagingData<ImageMetadata>> = Pager(
         config = PagingConfig(
             pageSize = 100,
