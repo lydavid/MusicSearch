@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.domain.coverarts
+package ly.david.musicsearch.shared.domain.image
 
 enum class ImagesSortOption {
     ALPHABETICALLY,

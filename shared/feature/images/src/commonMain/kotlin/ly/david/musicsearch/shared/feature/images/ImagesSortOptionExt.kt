@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.feature.images
 
-import ly.david.musicsearch.shared.domain.coverarts.ImagesSortOption
+import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.strings.AppStrings
 
 internal fun ImagesSortOption.getLabel(strings: AppStrings): String {

@@ -1,7 +1,6 @@
 package ly.david.musicsearch.shared.domain.image
 
 import app.cash.paging.PagingSource
-import ly.david.musicsearch.shared.domain.coverarts.ImagesSortOption
 
 interface ImageUrlDao {
     fun saveImageMetadata(
