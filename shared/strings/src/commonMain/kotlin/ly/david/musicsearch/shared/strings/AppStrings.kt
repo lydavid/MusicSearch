@@ -33,6 +33,7 @@ data class AppStrings(
     val search: String,
     val database: String,
     val history: String,
+    val images: String,
     val collections: String,
     val settings: String,
     val resource: String,

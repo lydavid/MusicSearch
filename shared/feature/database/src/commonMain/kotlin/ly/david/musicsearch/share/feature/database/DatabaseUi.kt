@@ -22,6 +22,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.getNamePlural
 import ly.david.musicsearch.ui.common.screen.AllEntitiesScreen
+import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.HistoryScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.core.LocalStrings
@@ -80,13 +81,26 @@ internal fun DatabaseUi(
         modifier = modifier
             .verticalScroll(state = scrollState),
     ) {
-        val historyTitle = strings.history
-        if (historyTitle.contains(filterText, ignoreCase = true)) {
-            ClickableItem(
-                title = historyTitle,
-                endIcon = Icons.Default.ChevronRight,
-                onClick = { onDestinationClick(HistoryScreen) },
-            )
+        strings.history.run {
+            if (this.contains(filterText, ignoreCase = true)) {
+                ClickableItem(
+                    title = this,
+                    endIcon = Icons.Default.ChevronRight,
+                    onClick = { onDestinationClick(HistoryScreen) },
+                )
+            }
+        }
+
+        strings.images.run {
+            if (this.contains(filterText, ignoreCase = true)) {
+                ClickableItem(
+                    title = this,
+                    endIcon = Icons.Default.ChevronRight,
+                    onClick = {
+                        onDestinationClick(CoverArtsScreen())
+                    },
+                )
+            }
         }
 
         MusicBrainzEntity.entries

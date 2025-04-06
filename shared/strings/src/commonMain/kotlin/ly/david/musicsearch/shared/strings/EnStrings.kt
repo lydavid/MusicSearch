@@ -61,6 +61,8 @@ val EnStrings = AppStrings(
 
     history = "History",
 
+    images = "Images",
+
     collections = "Collections",
 
     settings = "Settings",
