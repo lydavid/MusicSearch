@@ -5,10 +5,7 @@ import ly.david.musicsearch.data.musicbrainz.SEARCH_BROWSE_LIMIT
 
 internal object CommonPagingConfig {
 
-    /**
-     * Specifically chosen so that we don't fetch multiple pages before loading footer disappears.
-     */
-    private const val PREFETCH_DISTANCE = 1
+    private const val PREFETCH_DISTANCE = 100
 
     /**
      * Common [PagingConfig] for consistency.
