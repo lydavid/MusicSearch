@@ -37,6 +37,10 @@ class ArtistsByEntityRepositoryImpl(
         )
     }
 
+    override fun observeCountOfAllArtists(): Flow<Long> {
+        return artistDao.observeCountOfAllArtists()
+    }
+
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

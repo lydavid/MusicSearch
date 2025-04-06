@@ -37,6 +37,10 @@ class RecordingsByEntityRepositoryImpl(
         )
     }
 
+    override fun observeCountOfAllRecordings(): Flow<Long> {
+        return recordingDao.observeCountOfAllRecordings()
+    }
+
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

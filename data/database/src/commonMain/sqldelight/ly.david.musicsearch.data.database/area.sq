@@ -77,7 +77,7 @@ DELETE FROM areas_by_entity WHERE entity_id = :entityId;
 
 -- all areas
 
-getNumberOfAreas:
+getCountOfAllAreas:
 SELECT IFNULL(
   (
     SELECT COUNT(*)

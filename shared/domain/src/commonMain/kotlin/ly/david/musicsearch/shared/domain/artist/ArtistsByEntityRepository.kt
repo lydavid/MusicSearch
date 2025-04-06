@@ -11,4 +11,6 @@ interface ArtistsByEntityRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<ArtistListItemModel>>
+
+    fun observeCountOfAllArtists(): Flow<Long>
 }

@@ -37,6 +37,10 @@ class PlacesByEntityRepositoryImpl(
         )
     }
 
+    override fun observeCountOfAllPlaces(): Flow<Long> {
+        return placeDao.observeCountOfAllPlaces()
+    }
+
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

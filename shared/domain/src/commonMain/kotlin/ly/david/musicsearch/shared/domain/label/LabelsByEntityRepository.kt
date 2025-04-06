@@ -11,4 +11,6 @@ interface LabelsByEntityRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<LabelListItemModel>>
+
+    fun observeCountOfAllLabels(): Flow<Long>
 }

@@ -37,6 +37,10 @@ class InstrumentsByEntityRepositoryImpl(
         )
     }
 
+    override fun observeCountOfAllInstruments(): Flow<Long> {
+        return instrumentDao.observeCountOfAllInstruments()
+    }
+
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

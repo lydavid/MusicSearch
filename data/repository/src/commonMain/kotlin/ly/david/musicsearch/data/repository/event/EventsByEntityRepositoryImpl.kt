@@ -47,6 +47,10 @@ class EventsByEntityRepositoryImpl(
         )
     }
 
+    override fun observeCountOfAllEvents(): Flow<Long> {
+        return eventDao.observeCountOfAllEvents()
+    }
+
     override fun deleteLinkedEntitiesByEntity(
         entityId: String,
         entity: MusicBrainzEntity,

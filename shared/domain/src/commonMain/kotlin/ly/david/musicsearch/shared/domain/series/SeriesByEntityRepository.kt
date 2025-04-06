@@ -11,4 +11,6 @@ interface SeriesByEntityRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<SeriesListItemModel>>
+
+    fun observeCountOfAllSeries(): Flow<Long>
 }

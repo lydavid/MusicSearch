@@ -11,4 +11,6 @@ interface WorksByEntityRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<WorkListItemModel>>
+
+    fun observeCountOfAllWorks(): Flow<Long>
 }

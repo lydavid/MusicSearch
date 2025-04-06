@@ -11,4 +11,6 @@ interface ReleasesByEntityRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<ReleaseListItemModel>>
+
+    fun observeCountOfAllReleases(): Flow<Long>
 }

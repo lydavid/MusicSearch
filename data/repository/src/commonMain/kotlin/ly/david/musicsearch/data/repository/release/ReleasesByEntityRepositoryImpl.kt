@@ -39,6 +39,10 @@ class ReleasesByEntityRepositoryImpl(
         )
     }
 
+    override fun observeCountOfAllReleases(): Flow<Long> {
+        return releaseDao.observeCountOfAllReleases()
+    }
+
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

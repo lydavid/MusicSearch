@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
@@ -137,11 +138,22 @@ class WorkDao(
         }
     }
 
+    fun observeCountOfAllWorks(): Flow<Long> =
+        getCountOfAllWorks(query = "")
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+
+    private fun getCountOfAllWorks(
+        query: String,
+    ): Query<Long> = transacter.getCountOfAllWorks(
+        query = "%$query%",
+    )
+
     private fun getAllWorks(
         query: String,
     ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
-        countQuery = transacter.getCountOfAllWorks(
-            query = "%$query%",
+        countQuery = getCountOfAllWorks(
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,

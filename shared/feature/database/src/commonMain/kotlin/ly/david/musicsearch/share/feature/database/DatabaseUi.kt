@@ -57,27 +57,28 @@ internal fun DatabaseUi(
         },
     ) { innerPadding ->
         DatabaseUi(
-            modifier = Modifier
-                .padding(innerPadding),
-            filterText = state.topAppBarFilterState.filterText,
+            state = state,
             onDestinationClick = {
                 eventSink(DatabaseUiEvent.GoToScreen(it))
             },
+            modifier = Modifier
+                .padding(innerPadding),
         )
     }
 }
 
 @Composable
 internal fun DatabaseUi(
+    state: DatabaseUiState,
+    onDestinationClick: (Screen) -> Unit,
     modifier: Modifier = Modifier,
-    filterText: String = "",
-    onDestinationClick: (Screen) -> Unit = {},
 ) {
     val strings = LocalStrings.current
-    val state = rememberScrollState()
+    val filterText = state.topAppBarFilterState.filterText
+    val scrollState = rememberScrollState()
     Column(
         modifier = modifier
-            .verticalScroll(state = state),
+            .verticalScroll(state = scrollState),
     ) {
         val historyTitle = strings.history
         if (historyTitle.contains(filterText, ignoreCase = true)) {
@@ -95,6 +96,7 @@ internal fun DatabaseUi(
                 if (title.contains(filterText, ignoreCase = true)) {
                     ClickableItem(
                         title = title,
+                        subtitle = state.entitiesCount[entity]?.toString(),
                         endIcon = Icons.Default.ChevronRight,
                         onClick = { onDestinationClick(AllEntitiesScreen(entity = entity)) },
                     )

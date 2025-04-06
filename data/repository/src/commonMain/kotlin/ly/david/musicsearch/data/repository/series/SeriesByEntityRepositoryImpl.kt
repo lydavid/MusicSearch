@@ -37,6 +37,10 @@ class SeriesByEntityRepositoryImpl(
         )
     }
 
+    override fun observeCountOfAllSeries(): Flow<Long> {
+        return seriesDao.observeCountOfAllSeries()
+    }
+
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

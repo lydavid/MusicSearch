@@ -37,6 +37,10 @@ class LabelsByEntityRepositoryImpl(
         )
     }
 
+    override fun observeCountOfAllLabels(): Flow<Long> {
+        return labelDao.observeCountOfAllLabels()
+    }
+
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

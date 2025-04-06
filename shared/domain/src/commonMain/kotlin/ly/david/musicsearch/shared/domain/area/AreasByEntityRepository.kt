@@ -11,4 +11,6 @@ interface AreasByEntityRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<AreaListItemModel>>
+
+    fun observeCountOfAllAreas(): Flow<Long>
 }

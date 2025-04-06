@@ -37,6 +37,10 @@ class GenresByEntityRepositoryImpl(
         )
     }
 
+    override fun observeCountOfAllGenres(): Flow<Long> {
+        return genreDao.observeCountOfAllGenres()
+    }
+
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

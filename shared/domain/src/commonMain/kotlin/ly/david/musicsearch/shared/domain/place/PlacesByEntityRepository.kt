@@ -11,4 +11,6 @@ interface PlacesByEntityRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters = ListFilters(),
     ): Flow<PagingData<PlaceListItemModel>>
+
+    fun observeCountOfAllPlaces(): Flow<Long>
 }

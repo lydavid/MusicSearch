@@ -1,7 +1,11 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.Query
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToGenreListItemModel
@@ -54,6 +58,17 @@ class GenreDao(
         }
     }
 
+    fun observeCountOfAllGenres(): Flow<Long> =
+        getCountOfAllGenres(query = "")
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+
+    private fun getCountOfAllGenres(
+        query: String,
+    ): Query<Long> = transacter.getCountOfAllGenres(
+        query = "%$query%",
+    )
+
     private fun getGenresByCollection(
         collectionId: String,
         query: String,
@@ -78,8 +93,8 @@ class GenreDao(
     private fun getAllGenres(
         query: String,
     ): PagingSource<Int, GenreListItemModel> = QueryPagingSource(
-        countQuery = transacter.getCountOfAllGenres(
-            query = "%$query%",
+        countQuery = getCountOfAllGenres(
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,

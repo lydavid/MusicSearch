@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
@@ -149,11 +150,22 @@ class EventDao(
         }
     }
 
+    fun observeCountOfAllEvents(): Flow<Long> =
+        getCountOfAllEvents(query = "")
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+
+    private fun getCountOfAllEvents(
+        query: String,
+    ): Query<Long> = transacter.getCountOfAllEvents(
+        query = "%$query%",
+    )
+
     private fun getAllEvents(
         query: String,
     ): PagingSource<Int, EventListItemModel> = QueryPagingSource(
-        countQuery = transacter.getCountOfAllEvents(
-            query = "%$query%",
+        countQuery = getCountOfAllEvents(
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,

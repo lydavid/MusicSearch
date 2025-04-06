@@ -11,4 +11,6 @@ interface GenresByEntityRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<GenreListItemModel>>
+
+    fun observeCountOfAllGenres(): Flow<Long>
 }

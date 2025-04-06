@@ -11,4 +11,6 @@ interface EventsByEntityRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<EventListItemModel>>
+
+    fun observeCountOfAllEvents(): Flow<Long>
 }

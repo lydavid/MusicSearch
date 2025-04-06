@@ -11,4 +11,6 @@ interface RecordingsByEntityRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<RecordingListItemModel>>
+
+    fun observeCountOfAllRecordings(): Flow<Long>
 }

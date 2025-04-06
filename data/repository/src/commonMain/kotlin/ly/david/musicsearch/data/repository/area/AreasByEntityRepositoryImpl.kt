@@ -37,6 +37,10 @@ class AreasByEntityRepositoryImpl(
         )
     }
 
+    override fun observeCountOfAllAreas(): Flow<Long> {
+        return areaDao.observeCountOfAllAreas()
+    }
+
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

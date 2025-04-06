@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
@@ -180,11 +181,22 @@ class ArtistDao(
         }
     }
 
+    fun observeCountOfAllArtists(): Flow<Long> =
+        getCountOfAllArtists(query = "")
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+
+    private fun getCountOfAllArtists(
+        query: String,
+    ): Query<Long> = transacter.getCountOfAllArtists(
+        query = "%$query%",
+    )
+
     private fun getAllArtists(
         query: String,
     ) = QueryPagingSource(
-        countQuery = transacter.getCountOfAllArtists(
-            query = "%$query%",
+        countQuery = getCountOfAllArtists(
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,

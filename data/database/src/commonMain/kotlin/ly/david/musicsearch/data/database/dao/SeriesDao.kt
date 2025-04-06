@@ -1,7 +1,11 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.Query
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
@@ -102,11 +106,22 @@ class SeriesDao(
         },
     )
 
+    fun observeCountOfAllSeries(): Flow<Long> =
+        getCountOfAllSeries(query = "")
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+
+    private fun getCountOfAllSeries(
+        query: String,
+    ): Query<Long> = transacter.getCountOfAllSeries(
+        query = "%$query%",
+    )
+
     private fun getAllSeries(
         query: String,
     ): PagingSource<Int, SeriesListItemModel> = QueryPagingSource(
-        countQuery = transacter.getCountOfAllSeries(
-            query = "%$query%",
+        countQuery = getCountOfAllSeries(
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,

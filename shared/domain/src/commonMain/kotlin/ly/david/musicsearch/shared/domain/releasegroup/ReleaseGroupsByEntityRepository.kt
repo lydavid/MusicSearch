@@ -11,4 +11,6 @@ interface ReleaseGroupsByEntityRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<ListItemModel>>
+
+    fun observeCountOfAllReleaseGroups(): Flow<Long>
 }

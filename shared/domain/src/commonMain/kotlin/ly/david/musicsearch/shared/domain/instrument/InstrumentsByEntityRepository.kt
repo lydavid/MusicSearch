@@ -11,4 +11,6 @@ interface InstrumentsByEntityRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<InstrumentListItemModel>>
+
+    fun observeCountOfAllInstruments(): Flow<Long>
 }

@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOne
@@ -41,6 +42,7 @@ interface ReleaseGroupDao : EntityDao {
         query: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseGroupListItemModel>
+    fun observeCountOfAllReleaseGroups(): Flow<Long>
 }
 
 class ReleaseGroupDaoImpl(
@@ -201,12 +203,23 @@ class ReleaseGroupDaoImpl(
         }
     }
 
+    override fun observeCountOfAllReleaseGroups(): Flow<Long> =
+        getCountOfAllReleaseGroups(query = "")
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+
+    private fun getCountOfAllReleaseGroups(
+        query: String,
+    ): Query<Long> = transacter.getCountOfAllReleaseGroups(
+        query = "%$query%",
+    )
+
     private fun getAllReleaseGroups(
         query: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
-        countQuery = transacter.getCountOfAllReleaseGroups(
-            query = "%$query%",
+        countQuery = getCountOfAllReleaseGroups(
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,

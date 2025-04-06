@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
@@ -166,11 +167,22 @@ class PlaceDao(
         }
     }
 
+    fun observeCountOfAllPlaces(): Flow<Long> =
+        getCountOfAllPlaces(query = "")
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+
+    private fun getCountOfAllPlaces(
+        query: String,
+    ): Query<Long> = transacter.getCountOfAllPlaces(
+        query = "%$query%",
+    )
+
     private fun getAllPlaces(
         query: String,
     ): PagingSource<Int, PlaceListItemModel> = QueryPagingSource(
-        countQuery = transacter.getCountOfAllPlaces(
-            query = "%$query%",
+        countQuery = getCountOfAllPlaces(
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,

@@ -37,6 +37,10 @@ class WorksByEntityRepositoryImpl(
         )
     }
 
+    override fun observeCountOfAllWorks(): Flow<Long> {
+        return workDao.observeCountOfAllWorks()
+    }
+
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
