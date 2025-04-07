@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.preferences.NoOpAppPreferences
-import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.SettingsScreen
 import org.junit.Assert.assertEquals
@@ -57,6 +57,10 @@ class ImagesPresenterTest {
 
             override fun getNumberOfImageMetadataById(mbid: String): Int {
                 return imageMetadataList.size
+            }
+
+            override fun observeCountOfAllImageMetadata(): Flow<Long> {
+                error("Not used")
             }
         },
         getMusicBrainzCoverArtUrl = GetMusicBrainzCoverArtUrl(
@@ -109,7 +113,7 @@ class ImagesPresenterTest {
                 snapshot,
             )
             assertEquals(null, state.selectedImageIndex)
-            assertEquals("Cover arts", state.title)
+            assertEquals(ImagesTitle.All, state.title)
 
             state.eventSink(
                 ImagesUiEvent.SelectImage(
@@ -129,7 +133,7 @@ class ImagesPresenterTest {
                 ),
                 state.selectedImageMetadata,
             )
-            assertEquals("[1/1]", state.title)
+            assertEquals(ImagesTitle.Selected(page = 1, totalPages = 1, typeAndComment = ""), state.title)
         }
     }
 
@@ -163,7 +167,7 @@ class ImagesPresenterTest {
                 snapshot,
             )
             assertEquals(null, state.selectedImageIndex)
-            assertEquals("Cover arts", state.title)
+            assertEquals(ImagesTitle.All, state.title)
             assertEquals("", state.subtitle)
 
             state.eventSink(
@@ -186,7 +190,10 @@ class ImagesPresenterTest {
                 ),
                 state.selectedImageMetadata,
             )
-            assertEquals("[1/1] (Booklet (p. 14-15))", state.title)
+            assertEquals(
+                ImagesTitle.Selected(page = 1, totalPages = 1, typeAndComment = "Booklet (p. 14-15)"),
+                state.title,
+            )
             assertEquals("", state.subtitle)
         }
     }
@@ -227,7 +234,7 @@ class ImagesPresenterTest {
                 snapshot,
             )
             assertEquals(null, state.selectedImageIndex)
-            assertEquals("Cover arts", state.title)
+            assertEquals(ImagesTitle.All, state.title)
             assertEquals("", state.subtitle)
 
             state.eventSink(
@@ -253,7 +260,10 @@ class ImagesPresenterTest {
                 ),
                 state.selectedImageMetadata,
             )
-            assertEquals("[1/1] (Booklet (p. 14-15))", state.title)
+            assertEquals(
+                ImagesTitle.Selected(page = 1, totalPages = 1, typeAndComment = "Booklet (p. 14-15)"),
+                state.title,
+            )
             assertEquals("Release name", state.subtitle)
         }
     }
@@ -326,7 +336,7 @@ class ImagesPresenterTest {
                 snapshot,
             )
             assertEquals(null, state.selectedImageIndex)
-            assertEquals("Cover arts", state.title)
+            assertEquals(ImagesTitle.All, state.title)
             assertEquals("", state.subtitle)
 
             state.eventSink(
@@ -352,7 +362,10 @@ class ImagesPresenterTest {
                 ),
                 state.selectedImageMetadata,
             )
-            assertEquals("[1/3] (Booklet (p. 14-15))", state.title)
+            assertEquals(
+                ImagesTitle.Selected(page = 1, totalPages = 3, typeAndComment = "Booklet (p. 14-15)"),
+                state.title,
+            )
             assertEquals("Release name", state.subtitle)
 
             state.eventSink(
@@ -374,7 +387,10 @@ class ImagesPresenterTest {
                 ),
                 state.selectedImageMetadata,
             )
-            assertEquals("[2/3]", state.title)
+            assertEquals(
+                ImagesTitle.Selected(page = 2, totalPages = 3, typeAndComment = ""),
+                state.title,
+            )
             assertEquals("Release group name", state.subtitle)
 
             state.eventSink(
@@ -396,7 +412,10 @@ class ImagesPresenterTest {
                 ),
                 state.selectedImageMetadata,
             )
-            assertEquals("[3/3]", state.title)
+            assertEquals(
+                ImagesTitle.Selected(page = 3, totalPages = 3, typeAndComment = ""),
+                state.title,
+            )
             assertEquals("Artist name", state.subtitle)
 
             state.eventSink(
@@ -405,7 +424,7 @@ class ImagesPresenterTest {
             state = awaitItem()
             assertEquals(null, state.selectedImageIndex)
             assertEquals(null, state.selectedImageMetadata)
-            assertEquals("Cover arts", state.title)
+            assertEquals(ImagesTitle.All, state.title)
             assertEquals("", state.subtitle)
 
             state.eventSink(
