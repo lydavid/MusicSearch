@@ -218,7 +218,7 @@ class ReleasesByEntityRepositoryImplTest :
     }
 
     @Test
-    fun `load 100, then 200 releases`() = runTest {
+    fun `load 100, then 200 (prefetch), then 300 after scrolling`() = runTest {
         val labelRepository = createLabelRepository(
             musicBrainzModel = virginMusicLabelMusicBrainzModel,
         )
@@ -229,7 +229,7 @@ class ReleasesByEntityRepositoryImplTest :
         )
 
         val releasesByEntityRepository = createReleasesByEntityRepository(
-            releases = (1..200).map {
+            releases = (1..300).map {
                 releaseWith3CatalogNumbersWithSameLabel.copy(
                     id = it.toString(),
                 )
@@ -245,7 +245,7 @@ class ReleasesByEntityRepositoryImplTest :
         )
         flow.asSnapshot().let { releases ->
             assertEquals(
-                100,
+                200,
                 releases.size,
             )
         }
@@ -255,6 +255,24 @@ class ReleasesByEntityRepositoryImplTest :
         }.let { releases ->
             assertEquals(
                 200,
+                releases.size,
+            )
+        }
+
+        flow.asSnapshot {
+            scrollTo(199)
+        }.let { releases ->
+            assertEquals(
+                300,
+                releases.size,
+            )
+        }
+
+        flow.asSnapshot {
+            scrollTo(300)
+        }.let { releases ->
+            assertEquals(
+                300,
                 releases.size,
             )
         }
