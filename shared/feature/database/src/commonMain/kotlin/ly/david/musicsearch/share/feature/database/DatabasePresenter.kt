@@ -18,6 +18,7 @@ import ly.david.musicsearch.shared.domain.area.AreasByEntityRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistsByEntityRepository
 import ly.david.musicsearch.shared.domain.event.EventsByEntityRepository
 import ly.david.musicsearch.shared.domain.genre.GenresByEntityRepository
+import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.instrument.InstrumentsByEntityRepository
 import ly.david.musicsearch.shared.domain.label.LabelsByEntityRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -32,6 +33,7 @@ import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 internal class DatabasePresenter(
     private val navigator: Navigator,
+    private val imageMetadataRepository: ImageMetadataRepository,
     private val areasByEntityRepository: AreasByEntityRepository,
     private val artistsByEntityRepository: ArtistsByEntityRepository,
     private val eventsByEntityRepository: EventsByEntityRepository,
@@ -49,6 +51,7 @@ internal class DatabasePresenter(
     override fun present(): DatabaseUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val lazyListState = rememberLazyListState()
+        val countOfAllImages by imageMetadataRepository.observeCountOfAllImageMetadata().collectAsRetainedState(0)
         val countOfAllAreas by areasByEntityRepository.observeCountOfAllAreas().collectAsRetainedState(0)
         val countOfAllArtists by artistsByEntityRepository.observeCountOfAllArtists().collectAsRetainedState(0)
         val countOfAllEvents by eventsByEntityRepository.observeCountOfAllEvents().collectAsRetainedState(0)
@@ -76,6 +79,7 @@ internal class DatabasePresenter(
         return DatabaseUiState(
             topAppBarFilterState = topAppBarFilterState,
             lazyListState = lazyListState,
+            countOfAllImages = countOfAllImages,
             entitiesCount = MusicBrainzEntity.entries.associateWith { entity ->
                 when (entity) {
                     MusicBrainzEntity.AREA -> countOfAllAreas
@@ -102,6 +106,7 @@ internal class DatabasePresenter(
 internal data class DatabaseUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val lazyListState: LazyListState = LazyListState(),
+    val countOfAllImages: Long = 0,
     val entitiesCount: ImmutableMap<MusicBrainzEntity, Long> = persistentMapOf(),
     val eventSink: (DatabaseUiEvent) -> Unit = {},
 ) : CircuitUiState

@@ -81,7 +81,7 @@ FROM mbid_image
 WHERE mbid = :mbid
 LIMIT 1;
 
-getAllImageMetadataByIdCount:
+getCountOfAllImageMetadataById:
 SELECT count(`id`)
 FROM mbid_image
 WHERE mbid = :mbid
@@ -107,7 +107,7 @@ AND (
 LIMIT :limit
 OFFSET :offset;
 
-getAllImageMetadataCount:
+getCountOfAllImageMetadata:
 SELECT count(mbid_image.`id`)
 FROM mbid_image
 LEFT JOIN coalesced_entity ON coalesced_entity.id = mbid_image.mbid

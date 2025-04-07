@@ -95,6 +95,7 @@ internal fun DatabaseUi(
             if (this.contains(filterText, ignoreCase = true)) {
                 ClickableItem(
                     title = this,
+                    subtitle = state.countOfAllImages.toString(),
                     endIcon = Icons.Default.ChevronRight,
                     onClick = {
                         onDestinationClick(CoverArtsScreen())

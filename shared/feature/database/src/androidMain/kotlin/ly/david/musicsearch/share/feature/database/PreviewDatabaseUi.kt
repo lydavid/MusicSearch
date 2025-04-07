@@ -26,6 +26,7 @@ internal fun PreviewDatabaseUiWithCounts() {
         Surface {
             DatabaseUi(
                 state = DatabaseUiState(
+                    countOfAllImages = 1_000_000,
                     entitiesCount = MusicBrainzEntity.entries.associateWith { entity ->
                         // From https://musicbrainz.org/statistics on 2025-04-06
                         when (entity) {

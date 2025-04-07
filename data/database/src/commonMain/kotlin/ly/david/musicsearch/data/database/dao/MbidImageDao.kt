@@ -1,14 +1,18 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.Query
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
 
 class MbidImageDao(
@@ -46,7 +50,7 @@ class MbidImageDao(
         query: String,
     ): PagingSource<Int, ImageMetadata> {
         return QueryPagingSource(
-            countQuery = transacter.getAllImageMetadataByIdCount(
+            countQuery = transacter.getCountOfAllImageMetadataById(
                 mbid = mbid,
                 query = "%$query%",
             ),
@@ -64,13 +68,24 @@ class MbidImageDao(
         )
     }
 
+    override fun observeCountOfAllImageMetadata(): Flow<Long> =
+        getCountOfAllImageMetadata(query = "")
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+
+    private fun getCountOfAllImageMetadata(
+        query: String,
+    ): Query<Long> = transacter.getCountOfAllImageMetadata(
+        query = "%$query%",
+    )
+
     override fun getAllImageMetadata(
         query: String,
         sortOption: ImagesSortOption,
     ): PagingSource<Int, ImageMetadata> {
         return QueryPagingSource(
-            countQuery = transacter.getAllImageMetadataCount(
-                query = "%$query%",
+            countQuery = getCountOfAllImageMetadata(
+                query = query,
             ),
             transacter = transacter,
             context = coroutineDispatchers.io,

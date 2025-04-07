@@ -11,13 +11,13 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
 import ly.david.musicsearch.data.coverart.api.toImageMetadataList
-import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
-import ly.david.musicsearch.shared.domain.image.ImageUrlDao
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 internal class ImageMetadataRepositoryImpl(
     private val coverArtArchiveApi: CoverArtArchiveApi,
@@ -75,6 +75,10 @@ internal class ImageMetadataRepositoryImpl(
         }
     }
 
+    override fun getNumberOfImageMetadataById(mbid: String): Int {
+        return imageUrlDao.getNumberOfImagesById(mbid).toInt()
+    }
+
     override fun observeAllImageMetadata(
         mbid: String?,
         query: String,
@@ -102,7 +106,7 @@ internal class ImageMetadataRepositoryImpl(
         .distinctUntilChanged()
         .cachedIn(scope = coroutineScope)
 
-    override fun getNumberOfImageMetadataById(mbid: String): Int {
-        return imageUrlDao.getNumberOfImagesById(mbid).toInt()
+    override fun observeCountOfAllImageMetadata(): Flow<Long> {
+        return imageUrlDao.observeCountOfAllImageMetadata()
     }
 }

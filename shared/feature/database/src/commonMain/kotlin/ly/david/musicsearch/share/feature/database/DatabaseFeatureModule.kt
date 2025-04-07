@@ -17,6 +17,7 @@ val databaseFeatureModule = module {
             when (screen) {
                 is DatabaseScreen -> DatabasePresenter(
                     navigator = navigator,
+                    imageMetadataRepository = get(),
                     areasByEntityRepository = get(),
                     artistsByEntityRepository = get(),
                     eventsByEntityRepository = get(),

@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.domain.image
 
 import app.cash.paging.PagingSource
+import kotlinx.coroutines.flow.Flow
 
 interface ImageUrlDao {
     fun saveImageMetadata(
@@ -19,6 +20,8 @@ interface ImageUrlDao {
         query: String = "",
         sortOption: ImagesSortOption,
     ): PagingSource<Int, ImageMetadata>
+
+    fun observeCountOfAllImageMetadata(): Flow<Long>
 
     fun deleteAllImageMetadtaById(mbid: String)
 
