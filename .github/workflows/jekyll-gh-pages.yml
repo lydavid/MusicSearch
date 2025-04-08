@@ -28,6 +28,8 @@ jobs:
       - name: Checkout
         uses: nschloe/action-cached-lfs-checkout@f46300cd8952454b9f0a21a3d133d4bd5684cfc2 # v1
 
+      - run: git pull --rebase --autostash
+
       - name: Setup Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
 
