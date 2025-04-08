@@ -8,4 +8,9 @@ internal actual fun Settings(
     state: SettingsUiState,
     modifier: Modifier,
 ) {
+    Settings(
+        state = state,
+        showAndroidSettings = false,
+        modifier = modifier,
+    )
 }
