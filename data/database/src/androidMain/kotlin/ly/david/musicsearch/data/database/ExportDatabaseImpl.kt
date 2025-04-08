@@ -21,7 +21,7 @@ internal class ExportDatabaseImpl(
                     inputStream.copyTo(outputStream)
                 }
             }
-            "Successfully exported $exportFileName!"
+            "Successfully exported database to ${destinationFile.absolutePath}!"
         } catch (ex: IOException) {
             "Error: $ex"
         }
