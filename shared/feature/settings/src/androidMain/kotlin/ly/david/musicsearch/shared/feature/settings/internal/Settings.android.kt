@@ -8,8 +8,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.core.app.NotificationManagerCompat
-import ly.david.musicsearch.ui.core.preview.DefaultPreviews
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @Composable
@@ -35,7 +35,7 @@ private fun Context.isNotificationListenerEnabled(): Boolean {
     return NotificationManagerCompat.getEnabledListenerPackages(this).any { it == this.packageName }
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewSettingsScreen() {
     PreviewTheme {
@@ -48,7 +48,7 @@ internal fun PreviewSettingsScreen() {
     }
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewSettingsScreenNotificationListenerEnable() {
     PreviewTheme {

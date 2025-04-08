@@ -40,6 +40,7 @@ kotlin {
             dependencies {
                 implementation(libs.sqldelight.sqlite.driver)
                 implementation(libs.multiplatform.paths)
+                implementation(libs.okio)
             }
         }
         val iosMain by getting {
