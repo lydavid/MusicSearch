@@ -2,8 +2,8 @@ package ly.david.musicsearch.data.musicbrainz.auth
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.core.net.toUri
 import ly.david.musicsearch.shared.domain.AppInfo
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest
@@ -32,23 +32,23 @@ class MusicBrainzLoginActivityResultContract(
                 /* configuration = */
                 AuthorizationServiceConfiguration(
                     /* authorizationEndpoint = */
-                    Uri.parse(musicBrainzOAuthInfo.authorizationEndpoint),
+                    musicBrainzOAuthInfo.authorizationEndpoint.toUri(),
                     /* tokenEndpoint = */
-                    Uri.parse(musicBrainzOAuthInfo.tokenEndpoint),
+                    musicBrainzOAuthInfo.tokenEndpoint.toUri(),
                     /* registrationEndpoint = */
                     null,
                     /* endSessionEndpoint = */
-                    Uri.parse(musicBrainzOAuthInfo.endSessionEndpoint), // Doesn't work cause GET revoke not implemented
+                    musicBrainzOAuthInfo.endSessionEndpoint.toUri(), // Doesn't work cause GET revoke not implemented
                 ),
                 /* clientId = */
                 musicBrainzOAuthInfo.clientId,
                 /* responseType = */
                 ResponseTypeValues.CODE,
                 /* redirectUri = */
-                Uri.parse("${appInfo.applicationId}://oauth2/redirect"),
+                "${appInfo.applicationId}://oauth2/redirect".toUri(),
             )
                 .setScope(musicBrainzOAuthInfo.scope)
-                .build()
+                .build(),
         )
     }
 
