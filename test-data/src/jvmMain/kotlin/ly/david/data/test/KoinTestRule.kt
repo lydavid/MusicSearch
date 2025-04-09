@@ -28,6 +28,7 @@ private val testDatabaseModule = module {
     single<Database> {
         val driver = JdbcSqliteDriver(
             url = JdbcSqliteDriver.IN_MEMORY,
+            schema = Database.Schema,
             properties = Properties().apply {
                 put(
                     "foreign_keys",
@@ -35,7 +36,6 @@ private val testDatabaseModule = module {
                 )
             },
         )
-        Database.Schema.create(driver)
         createDatabase(driver)
     }
 }
