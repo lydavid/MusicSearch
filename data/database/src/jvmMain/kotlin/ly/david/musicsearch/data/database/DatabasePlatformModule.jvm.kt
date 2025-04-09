@@ -18,11 +18,12 @@ actual val databasePlatformModule = module {
     singleOf(::ExportDatabaseImpl) bind ExportDatabase::class
 }
 
+internal val databasePath = "${appCacheDirectory(PACKAGE_NAME)}/$DATABASE_FILE_FULL_NAME"
+
 private class DriverFactory {
     fun createDriver(): SqlDriver {
-        val directory = appCacheDirectory(PACKAGE_NAME)
         val driver = JdbcSqliteDriver(
-            url = "jdbc:sqlite:$directory/$DATABASE_FILE_FULL_NAME",
+            url = "jdbc:sqlite:$databasePath",
             schema = Database.Schema,
             properties = Properties().apply { put("foreign_keys", "true") },
         )
