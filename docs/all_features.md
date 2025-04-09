@@ -10,10 +10,10 @@ Inspired by [Spotless' feature matrix](https://github.com/diffplug/spotless?tab=
 |-------------------------------------------------------------|---------|---------|-----|
 | [Browse](#browse)                                           | ✅       | ✅       | ✅   |
 | [Collections](#collections)                                 | ✅       | ✅       | ⬜   |
-| [Export](#export)                                           | ✅       | ⬜       | ⬜   |
+| [Export](#export)                                           | ✅       | ✅       | ⬜   |
 | [Images](#images)                                           | ✅       | ✅       | ✅   |
 | [Graph](#graph)                                             | ✅       | ✅       | ✅   |
-| [Local Database](#local-database)                           | ⬜️      | ⬜️      | ⬜️  |
+| [Local Database](#local-database)                           | ✅       | ✅       | ✅   |
 | [MusicBrainz Login](#musicbrainz-login)                     | ✅       | ✅       | ⬜️  |
 | Pixel Now Playing History                                   | ✅       | ❌       | ❌   |
 | [Search MusicBrainz](#search-musicbrainz)                   | ✅       | ✅       | ✅   |
@@ -117,7 +117,7 @@ Inspired by [Obsidian](https://github.com/obsidianmd/obsidian-releases)'s graph 
 
 ## Local Database
 
-WIP. For now, only browsing images is supported. This is temporarily located under Settings.
+Browse all entities that have been cached locally in the app's database while you were searching.
 
 ### Browse local database images
 
