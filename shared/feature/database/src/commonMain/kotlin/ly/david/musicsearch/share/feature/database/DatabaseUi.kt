@@ -7,6 +7,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
@@ -20,6 +22,7 @@ import androidx.compose.ui.Modifier
 import com.slack.circuit.runtime.screen.Screen
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.component.ClickableItem
+import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.getNamePlural
 import ly.david.musicsearch.ui.common.screen.AllEntitiesScreen
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
@@ -85,6 +88,7 @@ internal fun DatabaseUi(
             if (this.contains(filterText, ignoreCase = true)) {
                 ClickableItem(
                     title = this,
+                    startIcon = Icons.Default.History,
                     endIcon = Icons.Default.ChevronRight,
                     onClick = { onDestinationClick(HistoryScreen) },
                 )
@@ -96,6 +100,7 @@ internal fun DatabaseUi(
                 ClickableItem(
                     title = this,
                     subtitle = state.countOfAllImages.toString(),
+                    startIcon = Icons.Default.Image,
                     endIcon = Icons.Default.ChevronRight,
                     onClick = {
                         onDestinationClick(CoverArtsScreen())
@@ -112,6 +117,7 @@ internal fun DatabaseUi(
                     ClickableItem(
                         title = title,
                         subtitle = (state.entitiesCount[entity] ?: 0).toString(),
+                        startIcon = entity.getIcon(),
                         endIcon = Icons.Default.ChevronRight,
                         onClick = { onDestinationClick(AllEntitiesScreen(entity = entity)) },
                     )
