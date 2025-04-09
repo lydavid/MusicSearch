@@ -10,8 +10,8 @@ import okio.Path.Companion.toPath
 internal class ExportDatabaseImpl : ExportDatabase {
     override operator fun invoke(): String {
         return try {
-            val databasePath = "${appCacheDirectory(PACKAGE_NAME)}/$exportFileName".toPath()
-            val destinationPath = "./$DATABASE_FILE_FULL_NAME".toPath()
+            val databasePath = "${appCacheDirectory(PACKAGE_NAME)}/$DATABASE_FILE_FULL_NAME".toPath()
+            val destinationPath = "./$exportFileName".toPath()
             FileSystem.SYSTEM.copy(
                 source = databasePath,
                 target = destinationPath,
