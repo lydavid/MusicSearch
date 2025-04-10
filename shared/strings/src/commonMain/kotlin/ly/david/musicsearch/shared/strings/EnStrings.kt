@@ -219,6 +219,8 @@ val EnStrings = AppStrings(
 
     appVersion = "App version",
 
+    databaseVersion = "Database version",
+
     ok = "OK",
 
     retry = "Retry",

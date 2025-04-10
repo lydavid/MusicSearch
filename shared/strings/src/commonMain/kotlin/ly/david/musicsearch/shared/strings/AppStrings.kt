@@ -109,6 +109,7 @@ data class AppStrings(
     val cancelled: String,
     val description: String,
     val appVersion: String,
+    val databaseVersion: String,
     val ok: String,
     val retry: String,
     val cachedArtists: (Int, Int) -> String,

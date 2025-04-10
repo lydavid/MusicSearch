@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.ExportDatabase
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.auth.usecase.Logout
+import ly.david.musicsearch.shared.domain.metadata.MetadataRepository
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 
@@ -23,6 +24,7 @@ internal class SettingsPresenter(
     private val loginPresenter: LoginPresenter,
     private val logout: Logout,
     private val exportDatabase: ExportDatabase,
+    private val metadataRepository: MetadataRepository,
 ) : Presenter<SettingsUiState> {
     @Composable
     override fun present(): SettingsUiState {
@@ -80,6 +82,7 @@ internal class SettingsPresenter(
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
             loginState = loginUiState,
             snackbarMessage = snackbarMessage,
+            databaseVersion = metadataRepository.getDatabaseVersion(),
             eventSink = ::eventSink,
         )
     }

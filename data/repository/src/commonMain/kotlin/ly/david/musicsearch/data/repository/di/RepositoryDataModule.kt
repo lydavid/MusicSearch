@@ -21,6 +21,7 @@ import ly.david.musicsearch.data.repository.instrument.InstrumentRepositoryImpl
 import ly.david.musicsearch.data.repository.instrument.InstrumentsByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.label.LabelRepositoryImpl
 import ly.david.musicsearch.data.repository.label.LabelsByEntityRepositoryImpl
+import ly.david.musicsearch.data.repository.metadata.MetadataRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlaceRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlacesByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.recording.RecordingRepositoryImpl
@@ -49,6 +50,7 @@ import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.instrument.InstrumentsByEntityRepository
 import ly.david.musicsearch.shared.domain.label.LabelRepository
 import ly.david.musicsearch.shared.domain.label.LabelsByEntityRepository
+import ly.david.musicsearch.shared.domain.metadata.MetadataRepository
 import ly.david.musicsearch.shared.domain.nowplaying.NowPlayingHistoryRepository
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
 import ly.david.musicsearch.shared.domain.place.PlacesByEntityRepository
@@ -104,4 +106,5 @@ val repositoryDataModule = module {
     singleOf(::SeriesByEntityRepositoryImpl) bind SeriesByEntityRepository::class
     singleOf(::WorkRepositoryImpl) bind WorkRepository::class
     singleOf(::WorksByEntityRepositoryImpl) bind WorksByEntityRepository::class
+    singleOf(::MetadataRepositoryImpl) bind MetadataRepository::class
 }

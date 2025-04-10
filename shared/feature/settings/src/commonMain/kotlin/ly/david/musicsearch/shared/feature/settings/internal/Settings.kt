@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.feature.settings.internal
 
 import MusicSearch.shared.feature.settings.BuildConfig
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,6 +22,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.toImmutableList
@@ -35,7 +38,6 @@ import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.screen.LicensesScreen
 import ly.david.musicsearch.ui.common.screen.NowPlayingHistoryScreen
 import ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen
-import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
@@ -121,6 +123,7 @@ internal fun Settings(
             onGoToNotificationListenerSettings = onGoToNotificationListenerSettings,
             versionName = BuildConfig.VERSION_NAME,
             versionCode = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
+            databaseVersion = state.databaseVersion,
             export = {
                 eventSink(SettingsUiEvent.ExportDatabase)
             },
@@ -151,8 +154,10 @@ internal fun Settings(
     export: () -> Unit = {},
     versionName: String = "",
     versionCode: Int = 0,
+    databaseVersion: String = "",
 ) {
     val strings = LocalStrings.current
+    val clipboardManager = LocalClipboardManager.current
 
     LazyColumn(modifier = modifier) {
         item {
@@ -240,15 +245,25 @@ internal fun Settings(
                 },
             )
 
-            val versionKey = strings.appVersion
-            TextWithHeading(
-                heading = versionKey,
-                text = "$versionName ($versionCode)",
+            val appVersionText = "${strings.appVersion}: $versionName ($versionCode)"
+            val databaseVersionText = "${strings.databaseVersion}: $databaseVersion"
+            ClickableItem(
+                title = appVersionText,
+                subtitle = databaseVersionText,
+                onClick = {
+                    clipboardManager.setText(
+                        AnnotatedString(
+                            "$appVersionText, $databaseVersionText",
+                        ),
+                    )
+                },
             )
 
             if (false) { // TODO: handle BuildConfig.DEBUG
                 DevSettingsSection()
             }
+
+            Spacer(modifier = Modifier.padding(top = 16.dp))
         }
     }
 }

@@ -21,6 +21,7 @@ val settingsFeatureModule = module {
                     loginPresenter = get(),
                     logout = get(),
                     exportDatabase = get(),
+                    metadataRepository = get(),
                 )
 
                 else -> null

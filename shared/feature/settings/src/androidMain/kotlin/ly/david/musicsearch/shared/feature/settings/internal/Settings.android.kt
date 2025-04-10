@@ -43,6 +43,7 @@ internal fun PreviewSettingsScreen() {
             Settings(
                 versionName = "1.0.0",
                 versionCode = 1,
+                databaseVersion = "1",
             )
         }
     }
@@ -57,6 +58,7 @@ internal fun PreviewSettingsScreenNotificationListenerEnable() {
                 isNotificationListenerEnabled = true,
                 versionName = "1.0.0",
                 versionCode = 1,
+                databaseVersion = "1",
             )
         }
     }

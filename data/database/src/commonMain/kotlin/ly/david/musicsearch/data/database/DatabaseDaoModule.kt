@@ -9,6 +9,7 @@ import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.CountryCodeDao
+import ly.david.musicsearch.data.database.dao.DatabaseMetadataDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.GenreDao
@@ -78,4 +79,5 @@ val databaseDaoModule = module {
     single { SpotifyHistoryDao(get(), get()) }
     singleOf(::MbidWikipediaDaoImpl) bind MbidWikipediaDao::class
     single { SearchResultDao(get(), get()) }
+    singleOf(::DatabaseMetadataDao)
 }
