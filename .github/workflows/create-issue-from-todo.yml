@@ -13,4 +13,4 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: "Create issue from TODO comments"
-        uses: alstr/todo-to-issue-action@092fdad950584acbfb826d6653cba7f24a5d5e94 # v5
+        uses: alstr/todo-to-issue-action@3bd536e14a2cbceeab1fadef96bea5f725ed4270 # v5
