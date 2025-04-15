@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.coverart
+package ly.david.musicsearch.data.repository.image
 
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.TestScope
@@ -10,33 +10,60 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtUrls
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
 import ly.david.musicsearch.data.coverart.api.ThumbnailsUrls
+import ly.david.musicsearch.data.database.dao.AreaDao
+import ly.david.musicsearch.data.database.dao.ArtistCreditDao
+import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EventDao
+import ly.david.musicsearch.data.database.dao.LabelDao
+import ly.david.musicsearch.data.database.dao.MediumDao
+import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.TrackDao
+import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
-import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.data.repository.helpers.TestEventRepository
+import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
+import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
+import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUri
-import org.junit.Assert.assertEquals
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class ImageMetadataRepositoryImplTest : KoinTest {
+class ImageMetadataRepositoryImplTest :
+    KoinTest,
+    TestEventRepository,
+    TestReleaseRepository,
+    TestReleaseGroupRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
     private val imageUrlDao: ImageUrlDao by inject()
     private val coroutineDispatchers: CoroutineDispatchers by inject()
-    private val eventDao: EventDao by inject()
-    private val releaseDao: ReleaseDao by inject()
-    private val releaseGroupDao: ReleaseGroupDao by inject()
+    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val visitedDao: VisitedDao by inject()
+    override val relationDao: RelationDao by inject()
+    override val eventDao: EventDao by inject()
+    override val releaseDao: ReleaseDao by inject()
+    override val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
+    override val releaseGroupDao: ReleaseGroupDao by inject()
+    override val artistCreditDao: ArtistCreditDao by inject()
+    override val areaDao: AreaDao by inject()
+    override val labelDao: LabelDao by inject()
+    override val mediumDao: MediumDao by inject()
+    override val trackDao: TrackDao by inject()
 
     private fun createRepository(
         coverArtUrlsProducer: (id: String, entity: MusicBrainzEntity) -> List<CoverArtUrls>,
@@ -74,13 +101,13 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             entity = MusicBrainzEntity.RELEASE,
             forceRefresh = false,
         )
-        assertEquals(
+        Assert.assertEquals(
             ImageMetadata(
                 databaseId = 1L,
             ),
             imageMetadata,
         )
-        assertEquals(
+        Assert.assertEquals(
             0,
             repository.getNumberOfImageMetadataById(""),
         )
@@ -91,7 +118,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             sortOption = ImagesSortOption.RECENTLY_ADDED,
         )
         val imageMetadataList = flow.asSnapshot()
-        assertEquals(
+        Assert.assertEquals(
             true,
             imageMetadataList.isEmpty(),
         )
@@ -102,12 +129,15 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         val eventId = "a"
         val eventName = "aa"
         val eventDisambiguation = "d"
-        eventDao.insert(
+        createEventRepository(
             EventMusicBrainzModel(
                 id = eventId,
                 name = eventName,
                 disambiguation = eventDisambiguation,
             ),
+        ).lookupEvent(
+            eventId = eventId,
+            forceRefresh = false,
         )
         val repository = createRepository(
             coverArtUrlsProducer = { _, _ ->
@@ -127,7 +157,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             entity = MusicBrainzEntity.EVENT,
             forceRefresh = false,
         )
-        assertEquals(
+        Assert.assertEquals(
             ImageMetadata(
                 databaseId = 1L,
                 thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
@@ -135,7 +165,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             ),
             imageMetadata,
         )
-        assertEquals(
+        Assert.assertEquals(
             1,
             repository.getNumberOfImageMetadataById(eventId),
         )
@@ -146,11 +176,11 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             sortOption = ImagesSortOption.RECENTLY_ADDED,
         )
         val imageMetadataList = flow.asSnapshot()
-        assertEquals(
+        Assert.assertEquals(
             1,
             imageMetadataList.size,
         )
-        assertEquals(
+        Assert.assertEquals(
             ImageMetadata(
                 databaseId = 1L,
                 thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
@@ -166,16 +196,34 @@ class ImageMetadataRepositoryImplTest : KoinTest {
 
     @Test
     fun `get release cover art`() = runTest {
-        val releaseId = "a"
-        val releaseName = "aa"
-        val releaseDisambiguation = "d"
-        releaseDao.insert(
+        val releaseId = "release_id"
+        val releaseName = "release name"
+        val releaseDisambiguation = "release disambiguation"
+        createReleaseRepository(
             ReleaseMusicBrainzModel(
                 id = releaseId,
                 name = releaseName,
                 disambiguation = releaseDisambiguation,
+                releaseGroup = ReleaseGroupMusicBrainzModel(
+                    id = "release_group_id",
+                    name = "release group name",
+                    disambiguation = "release group disambiguation",
+                ),
+                artistCredits = listOf(
+                    ArtistCreditMusicBrainzModel(
+                        name = "artist name",
+                        artist = ArtistMusicBrainzModel(
+                            id = "artist_id",
+                            name = "artist_name",
+                        ),
+                    ),
+                ),
             ),
+        ).lookupRelease(
+            releaseId = releaseId,
+            forceRefresh = false,
         )
+
         val repository = createRepository(
             coverArtUrlsProducer = { _, _ ->
                 listOf(
@@ -194,7 +242,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             entity = MusicBrainzEntity.RELEASE,
             forceRefresh = false,
         )
-        assertEquals(
+        Assert.assertEquals(
             ImageMetadata(
                 databaseId = 1L,
                 thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
@@ -202,7 +250,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             ),
             imageMetadata,
         )
-        assertEquals(
+        Assert.assertEquals(
             1,
             repository.getNumberOfImageMetadataById(releaseId),
         )
@@ -213,11 +261,11 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             sortOption = ImagesSortOption.RECENTLY_ADDED,
         )
         val imageMetadataList = flow.asSnapshot()
-        assertEquals(
+        Assert.assertEquals(
             1,
             imageMetadataList.size,
         )
-        assertEquals(
+        Assert.assertEquals(
             ImageMetadata(
                 databaseId = 1L,
                 thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
@@ -261,7 +309,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             entity = MusicBrainzEntity.RELEASE,
             forceRefresh = false,
         )
-        assertEquals(
+        Assert.assertEquals(
             ImageMetadata(
                 databaseId = 1L,
                 thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
@@ -271,7 +319,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         )
 
         releaseDao.delete(releaseId)
-        assertEquals(
+        Assert.assertEquals(
             1,
             repository.getNumberOfImageMetadataById(releaseId),
         )
@@ -281,11 +329,11 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             sortOption = ImagesSortOption.RECENTLY_ADDED,
         )
         val imageMetadataList = flow.asSnapshot()
-        assertEquals(
+        Assert.assertEquals(
             1,
             imageMetadataList.size,
         )
-        assertEquals(
+        Assert.assertEquals(
             ImageMetadata(
                 databaseId = 1L,
                 thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
@@ -304,13 +352,26 @@ class ImageMetadataRepositoryImplTest : KoinTest {
         val releaseGroupId = "a"
         val releaseGroupName = "aa"
         val releaseGroupDisambiguation = "d"
-        releaseGroupDao.insertReleaseGroup(
+        createReleaseGroupRepository(
             ReleaseGroupMusicBrainzModel(
                 id = releaseGroupId,
                 name = releaseGroupName,
                 disambiguation = releaseGroupDisambiguation,
+                artistCredits = listOf(
+                    ArtistCreditMusicBrainzModel(
+                        name = "artist name",
+                        artist = ArtistMusicBrainzModel(
+                            id = "artist_id",
+                            name = "artist_name",
+                        ),
+                    ),
+                ),
             ),
+        ).lookupReleaseGroup(
+            releaseGroupId = releaseGroupId,
+            forceRefresh = false,
         )
+
         val repository = createRepository(
             coverArtUrlsProducer = { _, _ ->
                 listOf(
@@ -329,7 +390,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             entity = MusicBrainzEntity.RELEASE_GROUP,
             forceRefresh = false,
         )
-        assertEquals(
+        Assert.assertEquals(
             ImageMetadata(
                 databaseId = 1L,
                 thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
@@ -337,7 +398,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             ),
             imageMetadata,
         )
-        assertEquals(
+        Assert.assertEquals(
             1,
             repository.getNumberOfImageMetadataById(releaseGroupId),
         )
@@ -348,11 +409,11 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             sortOption = ImagesSortOption.RECENTLY_ADDED,
         )
         val imageMetadataList = flow.asSnapshot()
-        assertEquals(
+        Assert.assertEquals(
             1,
             imageMetadataList.size,
         )
-        assertEquals(
+        Assert.assertEquals(
             ImageMetadata(
                 databaseId = 1L,
                 thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
@@ -397,7 +458,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             entity = MusicBrainzEntity.EVENT,
             forceRefresh = false,
         )
-        assertEquals(
+        Assert.assertEquals(
             ImageMetadata(
                 databaseId = 1L,
                 thumbnailUrl = "http://someartarchive.org/event/$eventId/1.png",
@@ -405,7 +466,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             ),
             eventImageMetadata,
         )
-        assertEquals(
+        Assert.assertEquals(
             1,
             repository.getNumberOfImageMetadataById(eventId),
         )
@@ -425,7 +486,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             entity = MusicBrainzEntity.RELEASE,
             forceRefresh = false,
         )
-        assertEquals(
+        Assert.assertEquals(
             ImageMetadata(
                 databaseId = 2L,
                 thumbnailUrl = "http://someartarchive.org/release/$releaseId/1.png",
@@ -433,7 +494,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             ),
             releaseImageMetadata,
         )
-        assertEquals(
+        Assert.assertEquals(
             1,
             repository.getNumberOfImageMetadataById(releaseId),
         )
@@ -453,7 +514,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             entity = MusicBrainzEntity.RELEASE_GROUP,
             forceRefresh = false,
         )
-        assertEquals(
+        Assert.assertEquals(
             ImageMetadata(
                 databaseId = 3L,
                 thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
@@ -461,7 +522,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             ),
             releaseGroupImageMetadata,
         )
-        assertEquals(
+        Assert.assertEquals(
             1,
             repository.getNumberOfImageMetadataById(releaseGroupId),
         )
@@ -471,11 +532,11 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             query = "",
             sortOption = ImagesSortOption.RECENTLY_ADDED,
         ).asSnapshot().let { imageMetadataList ->
-            assertEquals(
+            Assert.assertEquals(
                 3,
                 imageMetadataList.size,
             )
-            assertEquals(
+            Assert.assertEquals(
                 listOf(
                     ImageMetadata(
                         databaseId = 3L,
@@ -514,11 +575,11 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             query = "",
             sortOption = ImagesSortOption.LEAST_RECENTLY_ADDED,
         ).asSnapshot().let { imageMetadataList ->
-            assertEquals(
+            Assert.assertEquals(
                 3,
                 imageMetadataList.size,
             )
-            assertEquals(
+            Assert.assertEquals(
                 listOf(
                     ImageMetadata(
                         databaseId = 1L,
@@ -557,11 +618,11 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             query = "",
             sortOption = ImagesSortOption.ALPHABETICALLY,
         ).asSnapshot().let { imageMetadataList ->
-            assertEquals(
+            Assert.assertEquals(
                 3,
                 imageMetadataList.size,
             )
-            assertEquals(
+            Assert.assertEquals(
                 listOf(
                     ImageMetadata(
                         databaseId = 1L,
@@ -600,11 +661,11 @@ class ImageMetadataRepositoryImplTest : KoinTest {
             query = "",
             sortOption = ImagesSortOption.ALPHABETICALLY_REVERSE,
         ).asSnapshot().let { imageMetadataList ->
-            assertEquals(
+            Assert.assertEquals(
                 3,
                 imageMetadataList.size,
             )
-            assertEquals(
+            Assert.assertEquals(
                 listOf(
                     ImageMetadata(
                         databaseId = 2L,

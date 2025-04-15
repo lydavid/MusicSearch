@@ -26,6 +26,7 @@ kotlin {
                 implementation(projects.shared.domain)
                 implementation(projects.data.database)
                 implementation(projects.data.musicbrainz)
+                implementation(projects.data.coverart)
                 implementation(projects.core.logging.api)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.collections.immutable)

@@ -8,6 +8,7 @@ import ly.david.musicsearch.data.musicbrainz.auth.LoginAndroid
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzLoginActivityResultContract
 
 internal class LoginPresenterAndroid(
+    // TODO: create interface in domain
     private val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract,
     private val login: LoginAndroid,
 ) : LoginPresenter {

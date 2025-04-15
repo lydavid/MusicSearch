@@ -49,7 +49,7 @@ class ImagesPresenterTest {
 
             override suspend fun saveImageMetadata(
                 mbid: String,
-                entity: MusicBrainzEntity
+                entity: MusicBrainzEntity,
             ) {
                 // No-op
             }

@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.coverart
+package ly.david.musicsearch.data.repository.image
 
 import androidx.paging.cachedIn
 import app.cash.paging.Pager
@@ -16,7 +16,6 @@ import kotlinx.datetime.Clock
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
-import ly.david.musicsearch.data.coverart.api.toImageMetadataList
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageMetadata

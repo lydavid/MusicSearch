@@ -1,9 +1,7 @@
 package ly.david.musicsearch.data.coverart.api
 
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
 
 /**
  * See docs for [Cover Art Archive](https://musicbrainz.org/doc/Cover_Art_Archive/API)
@@ -44,26 +42,3 @@ data class ThumbnailsUrls(
     @SerialName("small") val small: String? = null,
     @SerialName("large") val large: String? = null,
 )
-
-internal fun CoverArtsResponse.toImageMetadataList(): List<ImageMetadata> {
-    return coverArtUrls.map { it.toImageMetadata() }
-}
-
-private fun CoverArtUrls.toImageMetadata(): ImageMetadata {
-    return ImageMetadata(
-        thumbnailUrl = getThumbnailUrl().orEmpty(),
-        largeUrl = getUrl().orEmpty(),
-        types = types.toPersistentList(),
-        comment = comment,
-    )
-}
-
-private fun CoverArtUrls.getThumbnailUrl(): String? {
-    return thumbnailsUrls?.resolution250Url ?: thumbnailsUrls?.small ?: thumbnailsUrls?.resolution500Url
-        ?: thumbnailsUrls?.large ?: thumbnailsUrls?.resolution1200Url
-}
-
-private fun CoverArtUrls.getUrl(): String? {
-    return thumbnailsUrls?.resolution1200Url ?: thumbnailsUrls?.resolution500Url ?: thumbnailsUrls?.large
-        ?: thumbnailsUrls?.resolution250Url ?: thumbnailsUrls?.small
-}

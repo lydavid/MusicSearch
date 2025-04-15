@@ -6,6 +6,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 
+// TODO: rename
 interface ReleasesByEntityRepository {
     fun observeReleasesByEntity(
         browseMethod: BrowseMethod,

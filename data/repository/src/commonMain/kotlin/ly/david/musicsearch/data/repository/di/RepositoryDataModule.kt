@@ -17,6 +17,7 @@ import ly.david.musicsearch.data.repository.event.EventRepositoryImpl
 import ly.david.musicsearch.data.repository.event.EventsByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.genre.GenresByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.genre.GenreRepositoryImpl
+import ly.david.musicsearch.data.repository.image.ImageMetadataRepositoryImpl
 import ly.david.musicsearch.data.repository.instrument.InstrumentRepositoryImpl
 import ly.david.musicsearch.data.repository.instrument.InstrumentsByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.label.LabelRepositoryImpl
@@ -46,6 +47,7 @@ import ly.david.musicsearch.shared.domain.event.EventsByEntityRepository
 import ly.david.musicsearch.shared.domain.genre.GenresByEntityRepository
 import ly.david.musicsearch.shared.domain.genre.GenreRepository
 import ly.david.musicsearch.shared.domain.history.LookupHistoryRepository
+import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.instrument.InstrumentsByEntityRepository
 import ly.david.musicsearch.shared.domain.label.LabelRepository
@@ -107,4 +109,5 @@ val repositoryDataModule = module {
     singleOf(::WorkRepositoryImpl) bind WorkRepository::class
     singleOf(::WorksByEntityRepositoryImpl) bind WorksByEntityRepository::class
     singleOf(::MetadataRepositoryImpl) bind MetadataRepository::class
+    singleOf(::ImageMetadataRepositoryImpl) bind ImageMetadataRepository::class
 }
