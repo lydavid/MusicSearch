@@ -37,7 +37,7 @@ secrets.properties
 *.preferences_pb
 
 # App database
-musicsearch.db
+*.db
 
 # Xcode
 xcuserdata/
