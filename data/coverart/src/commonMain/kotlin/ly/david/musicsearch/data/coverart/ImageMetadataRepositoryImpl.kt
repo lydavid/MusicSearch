@@ -55,6 +55,22 @@ internal class ImageMetadataRepositoryImpl(
         mbid: String,
         entity: MusicBrainzEntity,
     ) {
+        fetchImageMetadataFromNetwork(
+            mbid = mbid,
+            entity = entity,
+        ) { imageMetadataList ->
+            imageUrlDao.saveImageMetadata(
+                mbid = mbid,
+                imageMetadataList = imageMetadataList,
+            )
+        }
+    }
+
+    private suspend fun fetchImageMetadataFromNetwork(
+        mbid: String,
+        entity: MusicBrainzEntity,
+        completion: (List<ImageMetadata>) -> Unit,
+    ) {
         try {
             val coverArts: CoverArtsResponse = coverArtArchiveApi.getCoverArts(mbid, entity)
             val imageMetadataList: MutableList<ImageMetadata> = coverArts.toImageMetadataList().toMutableList()
@@ -64,16 +80,10 @@ internal class ImageMetadataRepositoryImpl(
                 imageMetadataList.add(ImageMetadata())
             }
 
-            imageUrlDao.saveImageMetadata(
-                mbid = mbid,
-                imageMetadataList = imageMetadataList,
-            )
+            completion(imageMetadataList)
         } catch (ex: HandledException) {
             if (ex.errorResolution == ErrorResolution.None) {
-                imageUrlDao.saveImageMetadata(
-                    mbid = mbid,
-                    imageMetadataList = listOf(ImageMetadata()),
-                )
+                completion(listOf(ImageMetadata()))
             } else {
                 logger.e(ex)
             }
@@ -93,47 +103,17 @@ internal class ImageMetadataRepositoryImpl(
         mbid: String,
         entity: MusicBrainzEntity,
     ) {
-        saveImageMetadata(
-            mbid = mbid,
-            entity = entity,
-            skipNetworkCall = false,
-        )
-    }
-
-    private suspend fun saveImageMetadata(
-        mbid: String,
-        entity: MusicBrainzEntity,
-        skipNetworkCall: Boolean = false,
-    ) {
         if (mbidToImageMetadataMap.isEmpty()) {
             lastSaved = Clock.System.now()
         }
-        if (!skipNetworkCall) {
-            try {
-                val coverArts: CoverArtsResponse = coverArtArchiveApi.getCoverArts(mbid, entity)
-                val imageMetadataList: MutableList<ImageMetadata> = coverArts.toImageMetadataList().toMutableList()
-
-                // We use an empty ImageUrls to represent that we've searched but failed to find any images.
-                if (imageMetadataList.isEmpty()) {
-                    imageMetadataList.add(ImageMetadata())
-                }
-
-                mbidToImageMetadataMap[mbid] = imageMetadataList
-                logger.d("Fetched images for $mbid")
-            } catch (ex: HandledException) {
-                if (ex.errorResolution == ErrorResolution.None) {
-                    mbidToImageMetadataMap[mbid] = listOf(ImageMetadata())
-                    logger.d("Saved empty image metadata for $mbid")
-                } else {
-                    logger.e(ex)
-                }
-            } catch (ex: Exception) {
-                logger.e(ex)
-            }
+        fetchImageMetadataFromNetwork(
+            mbid = mbid,
+            entity = entity,
+        ) { imageMetadataList ->
+            mbidToImageMetadataMap[mbid] = imageMetadataList
         }
 
         saveImageMetadataJob?.cancel()
-        logger.d("cancelling existing job and restarting")
         saveImageMetadataJob = coroutineScope.launch {
             val isReadyToSave = mbidToImageMetadataMap.size >= maxBatchSize ||
                 Clock.System.now() - lastSaved >= maxWaitTime
@@ -142,7 +122,6 @@ internal class ImageMetadataRepositoryImpl(
                 batchSaveImageMetadata()
             } else {
                 val timeToWait = maxWaitTime - (Clock.System.now() - lastSaved)
-                logger.d("Waiting for $timeToWait")
                 delay(timeToWait)
                 batchSaveImageMetadata()
             }
@@ -154,7 +133,6 @@ internal class ImageMetadataRepositoryImpl(
             imageUrlDao.saveImageMetadata(
                 mbidToImageMetadataMap = mbidToImageMetadataMap,
             )
-            logger.d("Saved ${mbidToImageMetadataMap.size} image metadata")
             mbidToImageMetadataMap.clear()
             lastSaved = Clock.System.now()
         }
