@@ -68,7 +68,7 @@ internal class ImageMetadataRepositoryImpl(
     private suspend fun fetchImageMetadataFromNetwork(
         mbid: String,
         entity: MusicBrainzEntity,
-        completion: (List<ImageMetadata>) -> Unit,
+        completion: suspend (List<ImageMetadata>) -> Unit,
     ) {
         try {
             val coverArts: CoverArtsResponse = coverArtArchiveApi.getCoverArts(mbid, entity)
@@ -93,27 +93,28 @@ internal class ImageMetadataRepositoryImpl(
 
     private val mutex = Mutex()
     private var saveImageMetadataJob: Job? = null
-    private var mbidToImageMetadataMap: MutableMap<String, List<ImageMetadata>> = mutableMapOf()
+    private var mbidToImageMetadataMap: HashMap<String, List<ImageMetadata>> = hashMapOf()
     private var lastSaved = Clock.System.now()
-    private var maxWaitTime = 5.seconds
+    private var maxWaitTime = 3.seconds
     private var maxBatchSize: Int = 100
 
     override suspend fun saveImageMetadata(
         mbid: String,
         entity: MusicBrainzEntity,
     ) {
-        if (mbidToImageMetadataMap.isEmpty()) {
-            lastSaved = Clock.System.now()
-        }
+        // Reset the clock each time we make a network call.
+        lastSaved = Clock.System.now()
         fetchImageMetadataFromNetwork(
             mbid = mbid,
             entity = entity,
         ) { imageMetadataList ->
-            mbidToImageMetadataMap[mbid] = imageMetadataList
+            mutex.withLock {
+                mbidToImageMetadataMap[mbid] = imageMetadataList
+            }
         }
 
         saveImageMetadataJob?.cancel()
-        saveImageMetadataJob = coroutineScope.launch {
+        val newJob = coroutineScope.launch {
             val isReadyToSave = mbidToImageMetadataMap.size >= maxBatchSize ||
                 Clock.System.now() - lastSaved >= maxWaitTime
 
@@ -125,14 +126,20 @@ internal class ImageMetadataRepositoryImpl(
                 batchSaveImageMetadata()
             }
         }
+        mutex.withLock {
+            saveImageMetadataJob = newJob
+        }
     }
 
     private suspend fun batchSaveImageMetadata() {
         mutex.withLock {
-            imageUrlDao.saveImageMetadata(
-                mbidToImageMetadataMap = mbidToImageMetadataMap,
-            )
-            mbidToImageMetadataMap.clear()
+            if (mbidToImageMetadataMap.isNotEmpty()) {
+                val copy = HashMap(mbidToImageMetadataMap)
+                imageUrlDao.saveImageMetadata(
+                    mbidToImageMetadataMap = copy,
+                )
+                mbidToImageMetadataMap.clear()
+            }
             lastSaved = Clock.System.now()
         }
     }

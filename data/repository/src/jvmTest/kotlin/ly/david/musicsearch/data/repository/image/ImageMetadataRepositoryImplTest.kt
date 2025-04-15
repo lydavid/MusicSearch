@@ -1,8 +1,13 @@
 package ly.david.musicsearch.data.repository.image
 
 import androidx.paging.testing.asSnapshot
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.NoOpCoverArtArchiveApi
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
@@ -31,16 +36,21 @@ import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUri
+import org.junit.After
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import kotlin.time.Duration.Companion.seconds
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class ImageMetadataRepositoryImplTest :
     KoinTest,
     TestEventRepository,
@@ -67,7 +77,7 @@ class ImageMetadataRepositoryImplTest :
 
     private fun createRepository(
         coverArtUrlsProducer: (id: String, entity: MusicBrainzEntity) -> List<CoverArtUrls>,
-    ): ImageMetadataRepositoryImpl {
+    ): ImageMetadataRepository {
         return ImageMetadataRepositoryImpl(
             coverArtArchiveApi = object : NoOpCoverArtArchiveApi() {
                 override suspend fun getCoverArts(
@@ -82,7 +92,7 @@ class ImageMetadataRepositoryImplTest :
             imageUrlDao = imageUrlDao,
             logger = object : Logger {
                 override fun d(text: String) {
-                    error(text)
+                    println(text)
                 }
 
                 override fun e(exception: Exception) {
@@ -403,28 +413,28 @@ class ImageMetadataRepositoryImplTest :
             repository.getNumberOfImageMetadataById(releaseGroupId),
         )
 
-        val flow = repository.observeAllImageMetadata(
+        repository.observeAllImageMetadata(
             mbid = null,
             query = "",
             sortOption = ImagesSortOption.RECENTLY_ADDED,
-        )
-        val imageMetadataList = flow.asSnapshot()
-        Assert.assertEquals(
-            1,
-            imageMetadataList.size,
-        )
-        Assert.assertEquals(
-            ImageMetadata(
-                databaseId = 1L,
-                thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                mbid = releaseGroupId,
-                name = releaseGroupName,
-                disambiguation = releaseGroupDisambiguation,
-                entity = MusicBrainzEntity.RELEASE_GROUP,
-            ),
-            imageMetadataList[0],
-        )
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                1,
+                size,
+            )
+            Assert.assertEquals(
+                ImageMetadata(
+                    databaseId = 1L,
+                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    mbid = releaseGroupId,
+                    name = releaseGroupName,
+                    disambiguation = releaseGroupDisambiguation,
+                    entity = MusicBrainzEntity.RELEASE_GROUP,
+                ),
+                this[0],
+            )
+        }
     }
 
     @Test
@@ -698,5 +708,229 @@ class ImageMetadataRepositoryImplTest :
                 imageMetadataList,
             )
         }
+    }
+
+    @Test
+    fun `queue 99, then 1 more lookup for image metadata`() = runTest {
+        val repository = createRepository(
+            coverArtUrlsProducer = { _, _ ->
+                listOf(
+                    CoverArtUrls(
+                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        front = true,
+                        thumbnailsUrls = ThumbnailsUrls(
+                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        ),
+                    ),
+                )
+            },
+        )
+
+        (1..99).forEach {
+            repository.saveImageMetadata(
+                mbid = "$it",
+                entity = MusicBrainzEntity.RELEASE,
+            )
+        }
+        repository.observeAllImageMetadata(
+            mbid = null,
+            query = "",
+            sortOption = ImagesSortOption.RECENTLY_ADDED,
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                0,
+                size,
+            )
+        }
+        repository.saveImageMetadata(
+            mbid = "100",
+            entity = MusicBrainzEntity.RELEASE,
+        )
+        repository.observeAllImageMetadata(
+            mbid = null,
+            query = "",
+            sortOption = ImagesSortOption.RECENTLY_ADDED,
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                100,
+                size,
+            )
+        }
+    }
+
+    @Test
+    fun `queue 100 lookups for image metadata`() = runTest {
+        val repository = createRepository(
+            coverArtUrlsProducer = { _, _ ->
+                listOf(
+                    CoverArtUrls(
+                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        front = true,
+                        thumbnailsUrls = ThumbnailsUrls(
+                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        ),
+                    ),
+                )
+            },
+        )
+
+        (1..100).forEach {
+            repository.saveImageMetadata(
+                mbid = "$it",
+                entity = MusicBrainzEntity.RELEASE,
+            )
+        }
+        repository.observeAllImageMetadata(
+            mbid = null,
+            query = "",
+            sortOption = ImagesSortOption.RECENTLY_ADDED,
+        ).asSnapshot {
+            scrollTo(100)
+        }.run {
+            Assert.assertEquals(
+                100,
+                size,
+            )
+        }
+    }
+
+    @Test
+    fun `queue 100 lookups that returns more than 1 image metadata each`() = runTest {
+        val repository = createRepository(
+            coverArtUrlsProducer = { _, _ ->
+                listOf(
+                    CoverArtUrls(
+                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        front = true,
+                        thumbnailsUrls = ThumbnailsUrls(
+                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        ),
+                    ),
+                    CoverArtUrls(
+                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.png",
+                        front = false,
+                        thumbnailsUrls = ThumbnailsUrls(
+                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.png",
+                        ),
+                    ),
+                )
+            },
+        )
+
+        (1..100).forEach {
+            repository.saveImageMetadata(
+                mbid = "$it",
+                entity = MusicBrainzEntity.RELEASE,
+            )
+        }
+        repository.observeAllImageMetadata(
+            mbid = null,
+            query = "",
+            sortOption = ImagesSortOption.RECENTLY_ADDED,
+        ).asSnapshot {
+            scrollTo(100)
+        }.run {
+            Assert.assertEquals(
+                200,
+                size,
+            )
+        }
+    }
+
+    @Test
+    fun `queue 99 lookups for image metadata, waiting for timeout to write`() = runTest {
+        val repository = createRepository(
+            coverArtUrlsProducer = { _, _ ->
+                listOf(
+                    CoverArtUrls(
+                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        front = true,
+                        thumbnailsUrls = ThumbnailsUrls(
+                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        ),
+                    ),
+                )
+            },
+        )
+
+        (1..99).forEach {
+            repository.saveImageMetadata(
+                mbid = "$it",
+                entity = MusicBrainzEntity.RELEASE,
+            )
+        }
+        testScheduler.advanceTimeBy(3.seconds)
+        repository.observeAllImageMetadata(
+            mbid = null,
+            query = "",
+            sortOption = ImagesSortOption.RECENTLY_ADDED,
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                99,
+                size,
+            )
+        }
+    }
+
+    @Test
+    fun `queue more than 100 lookups for image metadata`() = runTest {
+        val repository = createRepository(
+            coverArtUrlsProducer = { _, _ ->
+                listOf(
+                    CoverArtUrls(
+                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        front = true,
+                        thumbnailsUrls = ThumbnailsUrls(
+                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        ),
+                    ),
+                )
+            },
+        )
+
+        (1..299).forEach {
+            repository.saveImageMetadata(
+                mbid = "$it",
+                entity = MusicBrainzEntity.RELEASE,
+            )
+        }
+        repository.observeAllImageMetadata(
+            mbid = null,
+            query = "",
+            sortOption = ImagesSortOption.RECENTLY_ADDED,
+        ).asSnapshot {
+            scrollTo(100)
+        }.run {
+            Assert.assertEquals(
+                200,
+                size,
+            )
+        }
+        repository.saveImageMetadata(
+            mbid = "300",
+            entity = MusicBrainzEntity.RELEASE,
+        )
+        repository.observeAllImageMetadata(
+            mbid = null,
+            query = "",
+            sortOption = ImagesSortOption.RECENTLY_ADDED,
+        ).asSnapshot {
+            scrollTo(200)
+        }.run {
+            Assert.assertEquals(
+                300,
+                size,
+            )
+        }
+    }
+
+    @Before
+    fun before() {
+        Dispatchers.setMain(UnconfinedTestDispatcher())
+    }
+
+    @After
+    fun teardown() {
+        Dispatchers.resetMain()
     }
 }
