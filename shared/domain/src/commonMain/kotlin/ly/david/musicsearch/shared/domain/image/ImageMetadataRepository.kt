@@ -10,18 +10,27 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
  */
 interface ImageMetadataRepository {
     /**
-     * Returns a url to the cover art.
-     * Empty if none found.
+     * Returns metadata for an image, including its url. An image that does not exist will have an empty url.
      *
      * Also saves it to db.
      *
-     * Make sure to handle non-404 errors at call site.
+     * Appropriate for getting a single image in a details view.
      */
-    suspend fun getImageMetadata(
+    suspend fun getAndSaveImageMetadata(
         mbid: String,
         entity: MusicBrainzEntity,
         forceRefresh: Boolean,
     ): ImageMetadata
+
+    /**
+     * Saves metadata for an image, eventually. For performance reasons, we will batch the write to the database.
+     *
+     * Appropriate for getting images in a list view, where each item will contain its own image metadata.
+     */
+    suspend fun saveImageMetadata(
+        mbid: String,
+        entity: MusicBrainzEntity,
+    )
 
     fun getNumberOfImageMetadataById(mbid: String): Int
 

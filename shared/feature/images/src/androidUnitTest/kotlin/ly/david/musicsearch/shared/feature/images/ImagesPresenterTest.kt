@@ -39,12 +39,19 @@ class ImagesPresenterTest {
                 get() = flowOf(ImagesSortOption.RECENTLY_ADDED)
         },
         imageMetadataRepository = object : ImageMetadataRepository {
-            override suspend fun getImageMetadata(
+            override suspend fun getAndSaveImageMetadata(
                 mbid: String,
                 entity: MusicBrainzEntity,
                 forceRefresh: Boolean,
             ): ImageMetadata {
                 return ImageMetadata()
+            }
+
+            override suspend fun saveImageMetadata(
+                mbid: String,
+                entity: MusicBrainzEntity
+            ) {
+                // No-op
             }
 
             override fun observeAllImageMetadata(
