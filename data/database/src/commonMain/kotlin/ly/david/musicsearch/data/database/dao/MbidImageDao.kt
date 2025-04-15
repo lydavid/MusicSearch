@@ -38,6 +38,14 @@ class MbidImageDao(
         }
     }
 
+    override fun saveImageMetadata(mbidToImageMetadataMap: Map<String, List<ImageMetadata>>) {
+        transacter.transaction {
+            mbidToImageMetadataMap.forEach { (mbid, imageMetadataList) ->
+                saveImageMetadata(mbid, imageMetadataList)
+            }
+        }
+    }
+
     override fun getFrontImageMetadata(mbid: String): ImageMetadata? {
         return transacter.getFrontImageMetadata(
             mbid = mbid,

@@ -69,7 +69,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
     @Test
     fun empty() = runTest {
         val repository = createRepository(coverArtUrlsProducer = { _, _ -> listOf() })
-        val imageMetadata = repository.getImageMetadata(
+        val imageMetadata = repository.getAndSaveImageMetadata(
             mbid = "",
             entity = MusicBrainzEntity.RELEASE,
             forceRefresh = false,
@@ -122,7 +122,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
                 )
             },
         )
-        val imageMetadata = repository.getImageMetadata(
+        val imageMetadata = repository.getAndSaveImageMetadata(
             mbid = eventId,
             entity = MusicBrainzEntity.EVENT,
             forceRefresh = false,
@@ -189,7 +189,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
                 )
             },
         )
-        val imageMetadata = repository.getImageMetadata(
+        val imageMetadata = repository.getAndSaveImageMetadata(
             mbid = releaseId,
             entity = MusicBrainzEntity.RELEASE,
             forceRefresh = false,
@@ -256,7 +256,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
                 )
             },
         )
-        val imageMetadata = repository.getImageMetadata(
+        val imageMetadata = repository.getAndSaveImageMetadata(
             mbid = releaseId,
             entity = MusicBrainzEntity.RELEASE,
             forceRefresh = false,
@@ -324,7 +324,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
                 )
             },
         )
-        val imageMetadata = repository.getImageMetadata(
+        val imageMetadata = repository.getAndSaveImageMetadata(
             mbid = releaseGroupId,
             entity = MusicBrainzEntity.RELEASE_GROUP,
             forceRefresh = false,
@@ -392,7 +392,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
                 disambiguation = eventDisambiguation,
             ),
         )
-        val eventImageMetadata = repository.getImageMetadata(
+        val eventImageMetadata = repository.getAndSaveImageMetadata(
             mbid = eventId,
             entity = MusicBrainzEntity.EVENT,
             forceRefresh = false,
@@ -420,7 +420,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
                 disambiguation = releaseDisambiguation,
             ),
         )
-        val releaseImageMetadata = repository.getImageMetadata(
+        val releaseImageMetadata = repository.getAndSaveImageMetadata(
             mbid = releaseId,
             entity = MusicBrainzEntity.RELEASE,
             forceRefresh = false,
@@ -448,7 +448,7 @@ class ImageMetadataRepositoryImplTest : KoinTest {
                 disambiguation = releaseGroupDisambiguation,
             ),
         )
-        val releaseGroupImageMetadata = repository.getImageMetadata(
+        val releaseGroupImageMetadata = repository.getAndSaveImageMetadata(
             mbid = releaseGroupId,
             entity = MusicBrainzEntity.RELEASE_GROUP,
             forceRefresh = false,

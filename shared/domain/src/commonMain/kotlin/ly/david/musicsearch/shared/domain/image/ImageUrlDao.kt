@@ -9,6 +9,10 @@ interface ImageUrlDao {
         imageMetadataList: List<ImageMetadata>,
     )
 
+    fun saveImageMetadata(
+        mbidToImageMetadataMap: Map<String, List<ImageMetadata>>,
+    )
+
     fun getFrontImageMetadata(mbid: String): ImageMetadata?
 
     fun getAllImageMetadataById(

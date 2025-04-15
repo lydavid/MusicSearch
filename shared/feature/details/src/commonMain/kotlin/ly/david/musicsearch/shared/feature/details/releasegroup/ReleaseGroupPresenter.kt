@@ -110,7 +110,7 @@ internal class ReleaseGroupPresenter(
 
         LaunchedEffect(forceRefreshDetails, releaseGroup) {
             releaseGroup = releaseGroup?.copy(
-                imageMetadata = imageMetadataRepository.getImageMetadata(
+                imageMetadata = imageMetadataRepository.getAndSaveImageMetadata(
                     mbid = releaseGroup?.id ?: return@LaunchedEffect,
                     entity = MusicBrainzEntity.RELEASE_GROUP,
                     forceRefresh = forceRefreshDetails,

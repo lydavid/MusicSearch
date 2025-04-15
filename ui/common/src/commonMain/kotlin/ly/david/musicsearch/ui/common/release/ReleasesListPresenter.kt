@@ -61,10 +61,9 @@ class ReleasesListPresenter(
                     if (!requestedImageMetadataForIds.contains(event.entityId)) {
                         requestedImageMetadataForIds = requestedImageMetadataForIds + setOf(event.entityId)
                         scope.launch {
-                            imageMetadataRepository.getImageMetadata(
+                            imageMetadataRepository.saveImageMetadata(
                                 mbid = event.entityId,
                                 entity = MusicBrainzEntity.RELEASE,
-                                forceRefresh = false,
                             )
                         }
                     }

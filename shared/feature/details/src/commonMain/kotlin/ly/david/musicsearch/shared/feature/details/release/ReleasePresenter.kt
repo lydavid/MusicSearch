@@ -120,7 +120,7 @@ internal class ReleasePresenter(
         // Image fetching was split off from details model so that we can display data before images load
         LaunchedEffect(forceRefreshDetails, release) {
             release = release?.copy(
-                imageMetadata = imageMetadataRepository.getImageMetadata(
+                imageMetadata = imageMetadataRepository.getAndSaveImageMetadata(
                     mbid = release?.id ?: return@LaunchedEffect,
                     entity = MusicBrainzEntity.RELEASE,
                     forceRefresh = forceRefreshDetails,

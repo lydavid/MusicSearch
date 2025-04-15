@@ -99,7 +99,7 @@ internal class EventPresenter(
 
         LaunchedEffect(forceRefreshDetails, event) {
             event = event?.copy(
-                imageMetadata = imageMetadataRepository.getImageMetadata(
+                imageMetadata = imageMetadataRepository.getAndSaveImageMetadata(
                     mbid = event?.id ?: return@LaunchedEffect,
                     entity = MusicBrainzEntity.EVENT,
                     forceRefresh = forceRefreshDetails,
