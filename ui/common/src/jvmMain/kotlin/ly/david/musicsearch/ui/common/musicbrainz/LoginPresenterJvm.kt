@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import ly.david.musicsearch.data.musicbrainz.auth.LoginJvm
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthorizationUrl
 
+// TODO: remove dependence on data layer
 internal class LoginPresenterJvm(
     private val login: LoginJvm,
     private val musicBrainzAuthorizationUrl: MusicBrainzAuthorizationUrl,
