@@ -2,9 +2,9 @@ package ly.david.musicsearch.data.musicbrainz.auth
 
 import android.content.Context
 import android.content.Intent
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.core.net.toUri
 import ly.david.musicsearch.shared.domain.AppInfo
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzLoginActivityResultContract
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
@@ -12,16 +12,11 @@ import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
 import net.openid.appauth.ResponseTypeValues
 
-class MusicBrainzLoginActivityResultContract(
+class MusicBrainzLoginActivityResultContractImpl(
     private val authService: AuthorizationService,
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
     private val appInfo: AppInfo,
-) : ActivityResultContract<Unit, MusicBrainzLoginActivityResultContract.Result>() {
-
-    data class Result(
-        val response: AuthorizationResponse?,
-        val exception: AuthorizationException?,
-    )
+) : MusicBrainzLoginActivityResultContract() {
 
     override fun createIntent(
         context: Context,
@@ -58,9 +53,15 @@ class MusicBrainzLoginActivityResultContract(
     ): Result {
         val response = intent?.run { AuthorizationResponse.fromIntent(intent) }
         val exception = intent?.run { AuthorizationException.fromIntent(intent) }
-        return Result(
-            response = response,
-            exception = exception,
-        )
+        return if (exception != null) {
+            Result.Error(exceptionString = "Failed to get authorization response: ${exception.toJsonString()}")
+        } else {
+            val tokenExchangeRequestJsonString = response?.createTokenExchangeRequest()?.jsonSerializeString()
+            if (tokenExchangeRequestJsonString != null) {
+                Result.Success(tokenExchangeRequestJsonString)
+            } else {
+                Result.Error(exceptionString = "Failed to get token exchange request")
+            }
+        }
     }
 }

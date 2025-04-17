@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.domain.collection.usecase
+package ly.david.musicsearch.shared.domain.common
 
 import platform.Foundation.NSUUID
 

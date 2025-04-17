@@ -68,6 +68,12 @@ internal fun Settings(
             snackbarHostState.showSnackbar(message = message)
         }
     }
+    state.loginState.errorMessage?.let { message ->
+        LaunchedEffect(message) {
+            snackbarHostState.showSnackbar(message = message)
+            loginEventSink(LoginUiEvent.DismissError)
+        }
+    }
 
     Scaffold(
         modifier = modifier,

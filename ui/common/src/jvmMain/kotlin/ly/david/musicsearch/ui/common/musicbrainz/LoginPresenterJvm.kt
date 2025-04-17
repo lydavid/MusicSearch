@@ -25,6 +25,10 @@ internal class LoginPresenterJvm(
                     showDialog = true
                 }
 
+                LoginUiEvent.DismissError -> {
+                    // no-op
+                }
+
                 LoginUiEvent.DismissDialog -> {
                     showDialog = false
                 }
