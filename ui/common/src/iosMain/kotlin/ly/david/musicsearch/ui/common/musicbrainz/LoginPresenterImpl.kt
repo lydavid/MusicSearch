@@ -16,6 +16,8 @@ internal class LoginPresenterImpl : LoginPresenter {
             when (event) {
                 LoginUiEvent.StartLogin -> {
                 }
+                LoginUiEvent.DismissError -> {
+                }
 
                 LoginUiEvent.DismissDialog -> {
                 }

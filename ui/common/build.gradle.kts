@@ -18,8 +18,6 @@ kotlin {
             dependencies {
                 api(projects.shared.domain)
                 api(projects.ui.core)
-                implementation(projects.data.repository)
-                implementation(projects.data.musicbrainz)
                 implementation(projects.core.logging.api)
                 implementation(projects.ui.image)
 

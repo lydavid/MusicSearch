@@ -1,6 +1,6 @@
 package ly.david.musicsearch.ui.common.work
 
-import ly.david.musicsearch.data.musicbrainz.models.core.MULTIPLE_SCRIPT_CODE
+import ly.david.musicsearch.shared.domain.musicbrainz.MULTIPLE_SCRIPT_CODE
 import ly.david.musicsearch.shared.strings.AppStrings
 import java.util.Locale
 

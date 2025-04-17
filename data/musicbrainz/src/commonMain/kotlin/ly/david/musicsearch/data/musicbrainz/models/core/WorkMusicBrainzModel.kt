@@ -34,6 +34,3 @@ data class WorkAttributeMusicBrainzModel(
     @SerialName("type-id") override val typeId: String,
     @SerialName("value") override val value: String,
 ) : WorkAttribute
-
-const val ARTIFICIAL_LANGUAGE_CODE = "qaa"
-const val MULTIPLE_SCRIPT_CODE = "Qaaa"
