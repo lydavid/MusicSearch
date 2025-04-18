@@ -1,0 +1,36 @@
+package ly.david.musicsearch.data.musicbrainz.auth
+
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzUserApi
+import ly.david.musicsearch.shared.domain.auth.LoginJvm
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
+
+class LoginJvmImpl(
+    private val musicBrainzAuthStore: MusicBrainzAuthStore,
+    private val musicBrainzUserApi: MusicBrainzUserApi,
+    private val logger: Logger,
+    private val coroutineScope: CoroutineScope,
+    private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
+) : LoginJvm {
+    override operator fun invoke(authCode: String) {
+        coroutineScope.launch {
+            val response = musicBrainzUserApi.getTokens(
+                authCode = authCode,
+                musicBrainzOAuthInfo = musicBrainzOAuthInfo,
+            )
+            musicBrainzAuthStore.saveTokens(
+                response.accessToken,
+                response.refreshToken,
+            )
+
+            try {
+                val username = musicBrainzUserApi.getUserInfo().username ?: return@launch
+                musicBrainzAuthStore.setUsername(username)
+            } catch (ex: Exception) {
+                logger.e(ex)
+            }
+        }
+    }
+}

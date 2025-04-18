@@ -66,11 +66,7 @@ kotlin {
                 implementation(libs.appauth)
             }
         }
-        val jvmMain by getting {
-            dependencies {
-                implementation(libs.scribejava)
-            }
-        }
+        val jvmMain by getting
         val jvmTest by getting {
             dependencies {
                 implementation(libs.mockk)

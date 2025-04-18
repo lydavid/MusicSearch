@@ -5,37 +5,36 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalUriHandler
-import ly.david.musicsearch.data.musicbrainz.auth.LoginJvm
-import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthorizationUrl
+import platform.Foundation.NSURL
+import platform.UIKit.UIApplication
 
-// TODO: remove dependence on data layer
-internal class LoginPresenterJvm(
-    private val login: LoginJvm,
-    private val musicBrainzAuthorizationUrl: MusicBrainzAuthorizationUrl,
-) : LoginPresenter {
+internal class LoginPresenterImpl : LoginPresenter {
     @Composable
     override fun present(): LoginUiState {
-        val uriHandler = LocalUriHandler.current
         var showDialog by rememberSaveable { mutableStateOf(false) }
 
         fun eventSink(event: LoginUiEvent) {
             when (event) {
                 LoginUiEvent.StartLogin -> {
-                    uriHandler.openUri(musicBrainzAuthorizationUrl.url)
-                    showDialog = true
+                    // TODO: handle iOS OAuth redirect
+                    NSURL.URLWithString(
+                        "https://musicbrainz.org/oauth2/authorize" +
+                            "?response_type=code" +
+                            "&client_id={todo}" +
+                            "&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob" +
+                            "&scope=collection%20profile",
+                    )?.let { url ->
+                        UIApplication.sharedApplication().openURL(url)
+                    }
                 }
 
                 LoginUiEvent.DismissError -> {
-                    // no-op
                 }
 
                 LoginUiEvent.DismissDialog -> {
-                    showDialog = false
                 }
 
                 is LoginUiEvent.SubmitAuthCode -> {
-                    login(event.authCode)
                 }
             }
         }

@@ -43,6 +43,7 @@ jobs:
         run: |
           echo "TVVTSUNCUkFJTlpfQ0xJRU5UX0lEPWtpbVpiWXlaYUVia2Ewb0Npb1ExNUdINWhlNFp4dGtXCg==" | base64 -d > not_so_secret.properties
           echo "TVVTSUNCUkFJTlpfQ0xJRU5UX1NFQ1JFVD00ZVlINmpqRzBVVm1GRGN1Yk1CSThrVVlxT18xVkxHRAo=" | base64 -d >> not_so_secret.properties
+          sed -i -e 's/\.debug//' shared/domain/src/commonMain/kotlin/ly/david/musicsearch/shared/domain/Constants.kt
 
       - name: Convert base64 to files
         run: |

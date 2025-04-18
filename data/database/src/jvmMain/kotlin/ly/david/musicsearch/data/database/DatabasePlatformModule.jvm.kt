@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.database
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import ly.david.musicsearch.shared.domain.ExportDatabase
-import ly.david.musicsearch.shared.domain.PACKAGE_NAME
+import ly.david.musicsearch.shared.domain.APPLICATION_ID
 import me.sujanpoudel.utils.paths.appCacheDirectory
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -18,7 +18,7 @@ actual val databasePlatformModule = module {
     singleOf(::ExportDatabaseImpl) bind ExportDatabase::class
 }
 
-internal val databasePath = "${appCacheDirectory(PACKAGE_NAME)}/$DATABASE_FILE_FULL_NAME"
+internal val databasePath = "${appCacheDirectory(APPLICATION_ID)}/$DATABASE_FILE_FULL_NAME"
 
 private class DriverFactory {
     fun createDriver(): SqlDriver {

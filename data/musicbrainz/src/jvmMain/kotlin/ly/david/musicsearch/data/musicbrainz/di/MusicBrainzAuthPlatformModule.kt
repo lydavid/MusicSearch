@@ -1,31 +1,25 @@
 package ly.david.musicsearch.data.musicbrainz.di
 
-import com.github.scribejava.core.builder.ServiceBuilder
-import com.github.scribejava.core.builder.api.DefaultApi20
-import com.github.scribejava.core.model.OAuthConstants
-import com.github.scribejava.core.oauth.OAuth20Service
-import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthorizationUrl
-import ly.david.musicsearch.data.musicbrainz.auth.LoginJvm
+import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_AUTHORIZATION_URL
+import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_SCOPE
+import ly.david.musicsearch.data.musicbrainz.auth.LoginJvmImpl
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthorizationUrl
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
+import ly.david.musicsearch.shared.domain.auth.LoginJvm
 import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 actual val musicBrainzAuthPlatformModule = module {
-    single<OAuth20Service> {
-        val musicBrainzOAuthInfo = get<MusicBrainzOAuthInfo>()
-        val musicBrainzApi20 = object : DefaultApi20() {
-            override fun getAccessTokenEndpoint(): String = musicBrainzOAuthInfo.tokenEndpoint
-            override fun getAuthorizationBaseUrl(): String = musicBrainzOAuthInfo.authorizationEndpoint
-        }
-        ServiceBuilder(musicBrainzOAuthInfo.clientId)
-            .callback("urn:ietf:wg:oauth:2.0:oob")
-            .defaultScope(musicBrainzOAuthInfo.scope)
-            .responseType(OAuthConstants.CODE)
-            .apiSecret(musicBrainzOAuthInfo.clientSecret)
-            .build(musicBrainzApi20)
-    }
     single<MusicBrainzAuthorizationUrl> {
-        MusicBrainzAuthorizationUrl(get<OAuth20Service>().authorizationUrl)
+        val musicBrainzOAuthInfo = get<MusicBrainzOAuthInfo>()
+        MusicBrainzAuthorizationUrl(
+            url = MUSIC_BRAINZ_OAUTH_AUTHORIZATION_URL +
+                "?response_type=code" +
+                "&client_id=${musicBrainzOAuthInfo.clientId}" +
+                "&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob" +
+                "&scope=$MUSIC_BRAINZ_OAUTH_SCOPE",
+        )
     }
-    singleOf(::LoginJvm)
+    singleOf(::LoginJvmImpl) bind LoginJvm::class
 }

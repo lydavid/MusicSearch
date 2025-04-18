@@ -23,7 +23,6 @@ internal class MusicSearchApplication : Application() {
             androidContext(this@MusicSearchApplication)
             modules(
                 sharedModule,
-                androidAppModule,
             )
         }
     }

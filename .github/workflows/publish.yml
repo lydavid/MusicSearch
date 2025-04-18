@@ -82,6 +82,9 @@ jobs:
           echo "TVVTSUNCUkFJTlpfQ0xJRU5UX0lEPWtpbVpiWXlaYUVia2Ewb0Npb1ExNUdINWhlNFp4dGtXCg==" | base64 -d > not_so_secret.properties
           echo "TVVTSUNCUkFJTlpfQ0xJRU5UX1NFQ1JFVD00ZVlINmpqRzBVVm1GRGN1Yk1CSThrVVlxT18xVkxHRAo=" | base64 -d >> not_so_secret.properties
 
+      - name: Replace application id
+        run: sed -i -e 's/\.debug//' shared/domain/src/commonMain/kotlin/ly/david/musicsearch/shared/domain/Constants.kt
+
       - name: Decrypt release keystore
         run: echo "${{ secrets.RELEASE_KEYSTORE_JKS_BASE64 }}" | base64 -d > release-keystore.jks
 

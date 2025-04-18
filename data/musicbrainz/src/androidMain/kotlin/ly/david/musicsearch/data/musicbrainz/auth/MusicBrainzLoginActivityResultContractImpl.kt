@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.musicbrainz.auth
 import android.content.Context
 import android.content.Intent
 import androidx.core.net.toUri
-import ly.david.musicsearch.shared.domain.AppInfo
+import ly.david.musicsearch.shared.domain.APPLICATION_ID
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzLoginActivityResultContract
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest
@@ -15,7 +15,6 @@ import net.openid.appauth.ResponseTypeValues
 class MusicBrainzLoginActivityResultContractImpl(
     private val authService: AuthorizationService,
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
-    private val appInfo: AppInfo,
 ) : MusicBrainzLoginActivityResultContract() {
 
     override fun createIntent(
@@ -40,7 +39,7 @@ class MusicBrainzLoginActivityResultContractImpl(
                 /* responseType = */
                 ResponseTypeValues.CODE,
                 /* redirectUri = */
-                "${appInfo.applicationId}://oauth2/redirect".toUri(),
+                "$APPLICATION_ID://oauth2/redirect".toUri(),
             )
                 .setScope(musicBrainzOAuthInfo.scope)
                 .build(),

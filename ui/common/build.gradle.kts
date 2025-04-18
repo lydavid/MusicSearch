@@ -47,9 +47,6 @@ kotlin {
         }
         val jvmMain by getting {
             dependsOn(jvmCommon)
-            dependencies {
-                implementation(projects.data.musicbrainz)
-            }
         }
         val androidUnitTest by getting {
             dependencies {

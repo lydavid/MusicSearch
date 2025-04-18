@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.auth.LoginAndroid
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzLoginActivityResultContract
 
-internal class LoginPresenterAndroid(
+internal class LoginPresenterImpl(
     private val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract,
     private val login: LoginAndroid,
 ) : LoginPresenter {
