@@ -4,16 +4,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzUserApi
-import ly.david.musicsearch.shared.domain.auth.LoginJvm
+import ly.david.musicsearch.shared.domain.auth.Login
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 
-class LoginJvmImpl(
+class LoginImpl(
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val musicBrainzUserApi: MusicBrainzUserApi,
     private val logger: Logger,
     private val coroutineScope: CoroutineScope,
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
-) : LoginJvm {
+) : Login {
     override operator fun invoke(authCode: String) {
         coroutineScope.launch {
             val response = musicBrainzUserApi.getTokens(

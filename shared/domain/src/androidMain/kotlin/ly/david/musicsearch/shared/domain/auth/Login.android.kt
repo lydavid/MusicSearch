@@ -1,5 +1,5 @@
 package ly.david.musicsearch.shared.domain.auth
 
-interface LoginAndroid {
+interface Login {
     suspend operator fun invoke(tokenRequestJsonString: String)
 }

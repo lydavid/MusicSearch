@@ -2,10 +2,10 @@ package ly.david.musicsearch.data.musicbrainz.di
 
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_AUTHORIZATION_URL
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_SCOPE
-import ly.david.musicsearch.data.musicbrainz.auth.LoginJvmImpl
-import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthorizationUrl
+import ly.david.musicsearch.data.musicbrainz.auth.LoginImpl
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
-import ly.david.musicsearch.shared.domain.auth.LoginJvm
+import ly.david.musicsearch.shared.domain.auth.Login
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthorizationUrl
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -21,5 +21,5 @@ actual val musicBrainzAuthPlatformModule = module {
                 "&scope=$MUSIC_BRAINZ_OAUTH_SCOPE",
         )
     }
-    singleOf(::LoginJvmImpl) bind LoginJvm::class
+    singleOf(::LoginImpl) bind Login::class
 }

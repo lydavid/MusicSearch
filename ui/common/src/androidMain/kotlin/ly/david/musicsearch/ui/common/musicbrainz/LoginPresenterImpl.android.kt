@@ -8,12 +8,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.auth.LoginAndroid
+import ly.david.musicsearch.shared.domain.auth.Login
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzLoginActivityResultContract
 
 internal class LoginPresenterImpl(
     private val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract,
-    private val login: LoginAndroid,
+    private val login: Login,
 ) : LoginPresenter {
     @Composable
     override fun present(): LoginUiState {

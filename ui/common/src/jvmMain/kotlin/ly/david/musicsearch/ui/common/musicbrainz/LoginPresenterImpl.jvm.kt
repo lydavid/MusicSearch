@@ -6,11 +6,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalUriHandler
+import ly.david.musicsearch.shared.domain.auth.Login
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthorizationUrl
-import ly.david.musicsearch.shared.domain.auth.LoginJvm
 
 internal class LoginPresenterImpl(
-    private val login: LoginJvm,
+    private val login: Login,
     private val musicBrainzAuthorizationUrl: MusicBrainzAuthorizationUrl,
 ) : LoginPresenter {
     @Composable

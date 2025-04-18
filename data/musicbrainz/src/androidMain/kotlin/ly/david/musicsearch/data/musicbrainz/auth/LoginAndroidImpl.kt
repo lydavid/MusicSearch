@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.musicbrainz.auth
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzUserApi
-import ly.david.musicsearch.shared.domain.auth.LoginAndroid
+import ly.david.musicsearch.shared.domain.auth.Login
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.ClientSecretBasic
@@ -17,7 +17,7 @@ class LoginAndroidImpl(
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val musicBrainzUserApi: MusicBrainzUserApi,
     private val logger: Logger,
-) : LoginAndroid {
+) : Login {
     override suspend operator fun invoke(tokenRequestJsonString: String) {
         val authState: AuthState? = exchangeToken(tokenRequestJsonString)
         musicBrainzAuthStore.saveTokens(
@@ -34,7 +34,7 @@ class LoginAndroidImpl(
     }
 
     private suspend fun exchangeToken(jsonRequestString: String): AuthState? {
-        return suspendCoroutine { cont ->
+        return suspendCoroutine { continuation ->
             authService.performTokenRequest(
                 TokenRequest.jsonDeserialize(jsonRequestString),
                 ClientSecretBasic(musicBrainzOAuthInfo.clientSecret),
@@ -44,7 +44,7 @@ class LoginAndroidImpl(
                     response,
                     exception,
                 )
-                cont.resume(authState)
+                continuation.resume(authState)
             }
         }
     }
