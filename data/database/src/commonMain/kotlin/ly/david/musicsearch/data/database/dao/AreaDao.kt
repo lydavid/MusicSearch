@@ -184,7 +184,7 @@ class AreaDao(
             end = end,
             ended = ended,
         ),
-        countryCodes = listOfNotNull(countryCode),
+        countryCode = countryCode.orEmpty(),
     )
 
     fun delete(areaId: String) {

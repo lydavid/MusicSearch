@@ -475,7 +475,7 @@ private val country = AreaDetailsModel(
     id = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
     name = "Canada",
     type = "Country",
-    countryCodes = listOf("CA"),
+    countryCode = "CA",
     urls = listOf(
         RelationListItemModel(
             id = "1",

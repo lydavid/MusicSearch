@@ -195,6 +195,8 @@ val EnStrings = AppStrings(
 
     iso31661 = "ISO 3166–1",
 
+    regionalIndicatorSymbol = "Regional indicator symbol",
+
     releaseEvents = "Release events",
 
     informationHeader = { p0 ->

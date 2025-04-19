@@ -11,7 +11,7 @@ data class AreaDetailsModel(
     override val disambiguation: String? = null,
     override val type: String? = "",
     override val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
-    val countryCodes: List<String> = listOf(),
+    val countryCode: String = "",
     val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     val urls: List<RelationListItemModel> = listOf(),
 ) : Area

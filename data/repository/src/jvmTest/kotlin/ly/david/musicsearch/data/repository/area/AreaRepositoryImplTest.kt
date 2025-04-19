@@ -74,7 +74,7 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",
                 type = COUNTRY,
-                countryCodes = listOf("GS"),
+                countryCode = "GS",
             ),
             allDataArtistDetailsModel,
         )

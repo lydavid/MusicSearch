@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -45,10 +46,15 @@ internal fun AreaDetailsUi(
                     endHeading = strings.endDate,
                     filterText = filterText,
                 )
-                countryCodes.ifNotNullOrEmpty {
+                countryCode.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.iso31661,
-                        text = it.joinToString(", "),
+                        text = it,
+                        filterText = filterText,
+                    )
+                    TextWithHeading(
+                        heading = strings.regionalIndicatorSymbol,
+                        text = it.toFlagEmoji(),
                         filterText = filterText,
                     )
                 }

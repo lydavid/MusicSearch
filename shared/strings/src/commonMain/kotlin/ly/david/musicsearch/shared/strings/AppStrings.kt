@@ -100,6 +100,7 @@ data class AppStrings(
     val ipi: String,
     val isni: String,
     val iso31661: String,
+    val regionalIndicatorSymbol: String,
     val releaseEvents: String,
     val informationHeader: (String) -> String,
     val attributesHeader: (String) -> String,
