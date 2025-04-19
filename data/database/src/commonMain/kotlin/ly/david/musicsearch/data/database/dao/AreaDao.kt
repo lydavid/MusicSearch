@@ -81,6 +81,15 @@ class AreaDao(
         }
     }
 
+    fun insertReplaceAll(areas: List<AreaMusicBrainzModel>): Int {
+        return transacter.transactionWithResult {
+            areas.forEach { area ->
+                insertReplace(area)
+            }
+            areas.size
+        }
+    }
+
     fun getAreaForDetails(areaId: String): AreaDetailsModel? {
         return transacter.getAreaForDetails(
             id = areaId,

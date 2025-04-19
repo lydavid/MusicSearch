@@ -362,7 +362,10 @@ val redReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
             area = AreaMusicBrainzModel(
                 id = "c6500277-9a3d-349b-bf30-41afdbf42add",
                 name = "Italy",
+                sortName = "Italy",
                 countryCodes = listOf("IT"),
+                type = null,
+                typeId = null,
             ),
             date = "2012-10-23",
         ),
@@ -370,7 +373,10 @@ val redReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
             area = AreaMusicBrainzModel(
                 id = "471c46a7-afc5-31c4-923c-d0444f5053a4",
                 name = "Spain",
+                sortName = "Spain",
                 countryCodes = listOf("ES"),
+                type = null,
+                typeId = null,
             ),
             date = "2012-10-23",
         ),
@@ -378,7 +384,10 @@ val redReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
             area = AreaMusicBrainzModel(
                 id = "ef1b7cc0-cd26-36f4-8ea0-04d9623786c7",
                 name = "Netherlands",
+                sortName = "Netherlands",
                 countryCodes = listOf("NL"),
+                type = null,
+                typeId = null,
             ),
             date = "2012-10-26",
         ),
@@ -386,7 +395,10 @@ val redReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
             area = AreaMusicBrainzModel(
                 id = "08310658-51eb-3801-80de-5a0739207115",
                 name = "France",
+                sortName = "France",
                 countryCodes = listOf("FR"),
+                type = null,
+                typeId = null,
             ),
             date = "2012-11-05",
         ),

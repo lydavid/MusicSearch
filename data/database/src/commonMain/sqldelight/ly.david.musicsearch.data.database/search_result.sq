@@ -68,9 +68,11 @@ SELECT
   a.begin,
   a.end,
   a.ended,
+  cc.code,
   visited.entity_id IS NOT NULL AS visited
 FROM area a
 INNER JOIN search_result sr ON a.id = sr.entity_id
+LEFT JOIN country_code cc ON a.id = cc.area_id
 LEFT JOIN visited ON visited.entity_id = a.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;

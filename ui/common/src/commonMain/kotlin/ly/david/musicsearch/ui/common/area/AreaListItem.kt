@@ -31,8 +31,8 @@ fun AreaListItem(
 ) {
     ListItem(
         headlineContent = {
-            val flags = area.countryCodes?.joinToString { it.toFlagEmoji() }
-            val areaName = if (flags.isNullOrEmpty()) {
+            val flags = area.countryCodes.joinToString { it.toFlagEmoji() }
+            val areaName = if (flags.isEmpty()) {
                 area.name
             } else {
                 flags.transformThisIfNotNullOrEmpty { "$it " } + area.name

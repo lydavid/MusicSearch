@@ -133,7 +133,10 @@ private fun ListItemUi(
         }
 
         is AreaListItemModel -> {
-            AreaListItem(area = listItemModel) {
+            AreaListItem(
+                area = listItemModel,
+                showType = true,
+            ) {
                 onItemClick(
                     MusicBrainzEntity.AREA,
                     id,

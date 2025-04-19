@@ -102,8 +102,10 @@ SELECT
   a.begin,
   a.end,
   a.ended,
+  cc.code,
   visited.entity_id IS NOT NULL AS visited
 FROM area a
+LEFT JOIN country_code cc ON a.id = cc.area_id
 LEFT JOIN visited ON visited.entity_id = a.id
 WHERE (
   a.name LIKE :query OR
@@ -144,10 +146,12 @@ SELECT
   a.begin,
   a.end,
   a.ended,
+  cc.code,
   visited.entity_id IS NOT NULL AS visited
 FROM area a
 INNER JOIN collection_entity ce ON a.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN country_code cc ON a.id = cc.area_id
 LEFT JOIN visited ON visited.entity_id = a.id
 WHERE c.id = :collectionId
 AND (
@@ -171,6 +175,7 @@ SELECT
   a.begin,
   a.end,
   a.ended,
+  '' AS countryCode,
   visited.entity_id IS NOT NULL AS visited
 FROM area a
 INNER JOIN area_place ap ON a.id = ap.area_id

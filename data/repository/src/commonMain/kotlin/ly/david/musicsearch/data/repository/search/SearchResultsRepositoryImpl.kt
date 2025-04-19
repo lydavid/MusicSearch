@@ -104,7 +104,7 @@ internal class SearchResultsRepositoryImpl(
                 val areas = response.areas
                 areaDao.withTransaction {
                     removeAll()
-                    areaDao.insertAll(areas)
+                    areaDao.insertReplaceAll(areas)
                     searchResultDao.insertAll(areas.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,

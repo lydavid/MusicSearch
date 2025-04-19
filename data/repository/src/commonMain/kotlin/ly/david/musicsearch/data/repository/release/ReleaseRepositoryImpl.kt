@@ -22,6 +22,8 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.area.AreaType
+import ly.david.musicsearch.shared.domain.area.NonCountryAreaWithCode
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getFormatsForDisplay
 import ly.david.musicsearch.shared.domain.getTracksForDisplay
@@ -124,8 +126,16 @@ class ReleaseRepositoryImpl(
             )
 
             areaDao.insertAll(
-                release.releaseEvents?.mapNotNull {
-                    it.area
+                release.releaseEvents?.mapNotNull { event ->
+                    event.area?.let { area ->
+                        val isCountry = !NonCountryAreaWithCode.entries.any {
+                            it.code == area.countryCodes?.firstOrNull().orEmpty()
+                        }
+
+                        area.copy(
+                            type = if (isCountry) AreaType.COUNTRY else null,
+                        )
+                    }
                 }.orEmpty(),
             )
             areaDao.linkCountriesByRelease(

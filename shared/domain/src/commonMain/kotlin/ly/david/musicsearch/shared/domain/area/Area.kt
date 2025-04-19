@@ -18,6 +18,11 @@ object AreaType {
     const val COUNTRY = "Country"
 }
 
+enum class NonCountryAreaWithCode(val code: String) {
+    Worldwide("XW"),
+    Europe("XE"),
+}
+
 data class ReleaseEvent(
     val id: String,
     val name: String,

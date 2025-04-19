@@ -148,7 +148,7 @@ class AreasByEntityRepositoryImplTest : KoinTest {
                     AreaListItemModel(
                         id = "390b05d4-11ec-3bce-a343-703a366b34a5",
                         name = "Ireland",
-                        countryCodes = listOf(), // Country code not stored when loading list of areas
+                        countryCodes = listOf("IE"),
                         type = "Country",
                     ),
                     AreaListItemModel(
