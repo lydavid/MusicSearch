@@ -44,6 +44,7 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import app.cash.paging.compose.itemKey
@@ -226,8 +227,10 @@ private fun CoverArtsGrid(
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(GRID_SIZE),
-        state = lazyGridState,
         modifier = modifier,
+        state = lazyGridState,
+        horizontalArrangement = Arrangement.spacedBy(2.dp),
+        verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         items(
             count = imageMetadataLazyPagingItems.itemCount,
