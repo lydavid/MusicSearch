@@ -16,7 +16,7 @@ import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.overlay.ContentWithOverlays
 import com.slack.circuit.runtime.Navigator
-import com.slack.circuitx.gesturenavigation.GestureNavigationDecoration
+import com.slack.circuitx.gesturenavigation.GestureNavigationDecorationFactory
 import ly.david.musicsearch.ui.image.InitializeImageLoader
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -71,7 +71,7 @@ fun AppRoot(
                         navigator = navigator,
                         backStack = backStack,
                         modifier = contentModifier,
-                        decoration = GestureNavigationDecoration(
+                        decoratorFactory = GestureNavigationDecorationFactory(
                             onBackInvoked = navigator::pop,
                         ),
                     )
