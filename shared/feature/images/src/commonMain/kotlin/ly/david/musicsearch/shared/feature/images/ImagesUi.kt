@@ -235,13 +235,13 @@ private fun CoverArtsGrid(
             key = imageMetadataLazyPagingItems.itemKey { it.databaseId },
             contentType = { ImageMetadata() },
         ) { index ->
-            imageMetadataLazyPagingItems[index]?.let { imageUrl ->
+            imageMetadataLazyPagingItems[index]?.let { imageMetadata ->
                 // Because the number of images displayed can change when we filter
                 // the placeholder key must not depend on the index of the initial set of images
                 ThumbnailImage(
-                    url = imageUrl.thumbnailUrl,
-                    placeholderKey = imageUrl.databaseId.toString(),
-                    placeholderIcon = MusicBrainzEntity.RELEASE.getIcon(),
+                    url = imageMetadata.thumbnailUrl,
+                    placeholderKey = imageMetadata.databaseId.toString(),
+                    placeholderIcon = imageMetadata.entity?.getIcon(),
                     size = size,
                     modifier = Modifier.clickable {
                         onImageClick(index)
