@@ -16,16 +16,16 @@ actual fun String.toFlagEmoji(): String {
     if (!this[0].isLetter() || !this[1].isLetter()) {
         return this
     }
-    val countryCodeCaps = this.uppercase() // upper case is important because we are calculating offset
+    val uppercaseCountryCode = this.uppercase() // upper case is important because we are calculating offset
 
-    if (this == "XW") {
+    if (uppercaseCountryCode == "XW") {
         return "\uD83C\uDF10"
-    } else if (this == "XE") {
+    } else if (uppercaseCountryCode == "XE") {
         return "\uD83C\uDDEA\uD83C\uDDFA"
     }
 
-    val firstLetter: Int = Character.codePointAt(countryCodeCaps, 0) - 0x41 + 0x1F1E6
-    val secondLetter: Int = Character.codePointAt(countryCodeCaps, 1) - 0x41 + 0x1F1E6
+    val firstLetter: Int = Character.codePointAt(uppercaseCountryCode, 0) - 0x41 + 0x1F1E6
+    val secondLetter: Int = Character.codePointAt(uppercaseCountryCode, 1) - 0x41 + 0x1F1E6
 
     return String(Character.toChars(firstLetter)) + String(Character.toChars(secondLetter))
 }
