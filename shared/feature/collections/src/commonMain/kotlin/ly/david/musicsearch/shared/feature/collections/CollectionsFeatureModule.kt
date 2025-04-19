@@ -8,7 +8,7 @@ import ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUi
 import ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUiState
 import ly.david.musicsearch.shared.feature.collections.list.CollectionListUi
 import ly.david.musicsearch.shared.feature.collections.list.CollectionListPresenter
-import ly.david.musicsearch.shared.feature.collections.list.CollectionListUiState
+import ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiState
 import ly.david.musicsearch.shared.feature.collections.single.CollectionPresenter
 import ly.david.musicsearch.shared.feature.collections.single.CollectionUi
 import ly.david.musicsearch.shared.feature.collections.single.CollectionUiState
@@ -19,7 +19,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val collectionsFeatureModule = module {
-    single(named("CollectionListScreen")) {
+    single(named("Collections")) {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is CollectionListScreen -> CollectionListPresenter(
@@ -65,11 +65,11 @@ val collectionsFeatureModule = module {
             }
         }
     }
-    single(named("CollectionListScreen")) {
+    single(named("Collections")) {
         Ui.Factory { screen, _ ->
             when (screen) {
                 is CollectionListScreen -> {
-                    ui<CollectionListUiState> { state, modifier ->
+                    ui<CollectionsListUiState> { state, modifier ->
                         CollectionListUi(
                             state = state,
                             modifier = modifier,

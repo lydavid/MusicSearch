@@ -55,7 +55,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CollectionListUi(
-    state: CollectionListUiState,
+    state: CollectionsListUiState,
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
@@ -69,7 +69,7 @@ internal fun CollectionListUi(
         CollectionSortBottomSheet(
             sortOption = state.sortOption,
             onSortOptionClick = {
-                eventSink(CollectionListUiEvent.UpdateSortOption(it))
+                eventSink(CollectionsListUiEvent.UpdateSortOption(it))
             },
             bottomSheetState = bottomSheetState,
             onDismiss = { showBottomSheet = false },
@@ -106,20 +106,20 @@ internal fun CollectionListUi(
                 }
                 val result: CreateNewCollectionResult = overlayHost.show(basicDialogOverlay)
                 if (result is CreateNewCollectionResult.NewCollection) {
-                    eventSink(CollectionListUiEvent.CreateNewCollection(result))
+                    eventSink(CollectionsListUiEvent.CreateNewCollection(result))
                 }
             }
         },
         showLocal = state.showLocal,
         onShowLocalToggle = {
-            eventSink(CollectionListUiEvent.UpdateShowLocal(it))
+            eventSink(CollectionsListUiEvent.UpdateShowLocal(it))
         },
         showRemote = state.showRemote,
         onShowRemoteToggle = {
-            eventSink(CollectionListUiEvent.UpdateShowRemote(it))
+            eventSink(CollectionsListUiEvent.UpdateShowRemote(it))
         },
         onCollectionClick = {
-            eventSink(CollectionListUiEvent.GoToCollection(it))
+            eventSink(CollectionsListUiEvent.GoToCollection(it))
         },
         onSortClick = {
             showBottomSheet = true
@@ -127,7 +127,7 @@ internal fun CollectionListUi(
         actionableResult = state.actionableResult,
         onDeleteCollection = {
             eventSink(
-                CollectionListUiEvent.DeleteCollection(
+                CollectionsListUiEvent.DeleteCollection(
                     id,
                     name,
                 ),

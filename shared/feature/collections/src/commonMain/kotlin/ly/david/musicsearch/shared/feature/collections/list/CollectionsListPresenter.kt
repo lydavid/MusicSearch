@@ -42,9 +42,9 @@ internal class CollectionListPresenter(
     private val getAllCollections: GetAllCollections,
     private val createCollection: CreateCollection,
     private val deleteCollection: DeleteCollection,
-) : Presenter<CollectionListUiState> {
+) : Presenter<CollectionsListUiState> {
     @Composable
-    override fun present(): CollectionListUiState {
+    override fun present(): CollectionsListUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val topAppBarEditState = rememberTopAppBarEditState()
         val scope = rememberCoroutineScope()
@@ -92,21 +92,21 @@ internal class CollectionListPresenter(
             oneShotNewCollectionType = null
         }
 
-        fun eventSink(event: CollectionListUiEvent) {
+        fun eventSink(event: CollectionsListUiEvent) {
             when (event) {
-                is CollectionListUiEvent.UpdateShowLocal -> {
+                is CollectionsListUiEvent.UpdateShowLocal -> {
                     appPreferences.setShowLocalCollections(event.show)
                 }
 
-                is CollectionListUiEvent.UpdateShowRemote -> {
+                is CollectionsListUiEvent.UpdateShowRemote -> {
                     appPreferences.setShowRemoteCollections(event.show)
                 }
 
-                is CollectionListUiEvent.UpdateSortOption -> {
+                is CollectionsListUiEvent.UpdateSortOption -> {
                     appPreferences.setCollectionSortOption(event.sortOption)
                 }
 
-                is CollectionListUiEvent.CreateNewCollection -> {
+                is CollectionsListUiEvent.CreateNewCollection -> {
                     val name = event.newCollection.name
                     val entity = event.newCollection.entity
                     createCollection(
@@ -117,11 +117,11 @@ internal class CollectionListPresenter(
                     )
                 }
 
-                is CollectionListUiEvent.GoToCollection -> {
+                is CollectionsListUiEvent.GoToCollection -> {
                     navigator.goTo(CollectionScreen(event.id))
                 }
 
-                is CollectionListUiEvent.DeleteCollection -> {
+                is CollectionsListUiEvent.DeleteCollection -> {
                     scope.launch {
                         actionableResult = deleteCollection(
                             event.id,
@@ -132,7 +132,7 @@ internal class CollectionListPresenter(
             }
         }
 
-        return CollectionListUiState(
+        return CollectionsListUiState(
             topAppBarFilterState = topAppBarFilterState,
             topAppBarEditState = topAppBarEditState,
             showLocal = showLocal,
@@ -147,7 +147,7 @@ internal class CollectionListPresenter(
 }
 
 @Stable
-internal data class CollectionListUiState(
+internal data class CollectionsListUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val topAppBarEditState: TopAppBarEditState = TopAppBarEditState(),
     val showLocal: Boolean,
@@ -156,20 +156,20 @@ internal data class CollectionListUiState(
     val lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
     val lazyListState: LazyListState,
     val actionableResult: ActionableResult?,
-    val eventSink: (CollectionListUiEvent) -> Unit,
+    val eventSink: (CollectionsListUiEvent) -> Unit,
 ) : CircuitUiState
 
-internal sealed interface CollectionListUiEvent : CircuitUiEvent {
-    data class UpdateShowLocal(val show: Boolean) : CollectionListUiEvent
-    data class UpdateShowRemote(val show: Boolean) : CollectionListUiEvent
-    data class UpdateSortOption(val sortOption: CollectionSortOption) : CollectionListUiEvent
-    data class CreateNewCollection(val newCollection: CreateNewCollectionResult.NewCollection) : CollectionListUiEvent
+internal sealed interface CollectionsListUiEvent : CircuitUiEvent {
+    data class UpdateShowLocal(val show: Boolean) : CollectionsListUiEvent
+    data class UpdateShowRemote(val show: Boolean) : CollectionsListUiEvent
+    data class UpdateSortOption(val sortOption: CollectionSortOption) : CollectionsListUiEvent
+    data class CreateNewCollection(val newCollection: CreateNewCollectionResult.NewCollection) : CollectionsListUiEvent
     data class GoToCollection(
         val id: String,
-    ) : CollectionListUiEvent
+    ) : CollectionsListUiEvent
 
     data class DeleteCollection(
         val id: String,
         val name: String,
-    ) : CollectionListUiEvent
+    ) : CollectionsListUiEvent
 }
