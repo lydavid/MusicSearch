@@ -9,12 +9,12 @@ Inspired by [Spotless' feature matrix](https://github.com/diffplug/spotless?tab=
 | Feature                                                     | Android | Desktop | iOS |
 |-------------------------------------------------------------|---------|---------|-----|
 | [Browse](#browse)                                           | ✅       | ✅       | ✅   |
-| [Collections](#collections)                                 | ✅       | ✅       | ⬜   |
+| [Collections](#collections)                                 | ✅       | ✅       | ✅   |
 | [Export](#export)                                           | ✅       | ✅       | ⬜   |
 | [Images](#images)                                           | ✅       | ✅       | ✅   |
 | [Graph](#graph)                                             | ✅       | ✅       | ✅   |
 | [Local Database](#local-database)                           | ✅       | ✅       | ✅   |
-| [MusicBrainz Login](#musicbrainz-login)                     | ✅       | ✅       | ⬜️  |
+| [MusicBrainz Login](#musicbrainz-login)                     | ✅       | ✅       | ✅   |
 | Pixel Now Playing History                                   | ✅       | ❌       | ❌   |
 | [Search MusicBrainz](#search-musicbrainz)                   | ✅       | ✅       | ✅   |
 | [Spotify Playing History](#spotify-playing-history)         | ✅       | ⬜️      | ⬜️  |
