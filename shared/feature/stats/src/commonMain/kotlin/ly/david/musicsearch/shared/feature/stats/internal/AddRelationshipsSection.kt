@@ -66,10 +66,10 @@ internal fun LazyListScope.addRelationshipsSection(
                 // Let's not round the corners because we don't expect this to fill to 100%
                 // which makes it look strange
                 LinearProgressIndicator(
+                    progress = { relationTypeCount.count / totalRelations.toFloat() },
                     modifier = Modifier
                         .height(4.dp)
                         .fillMaxWidth(),
-                    progress = relationTypeCount.count / totalRelations.toFloat(),
                     color = MaterialTheme.colorScheme.primary,
                     trackColor = Color.Transparent,
                 )
