@@ -121,8 +121,8 @@ class ArtistDao(
     fun insertArtistsByEntity(
         entityId: String,
         artistIds: List<String>,
-    ): Int {
-        return transacter.transactionWithResult {
+    ) {
+        transacter.transaction {
             artistIds.forEach { artistId ->
                 transacter.insertOrIgnoreArtistByEntity(
                     Artists_by_entity(
@@ -131,7 +131,6 @@ class ArtistDao(
                     ),
                 )
             }
-            artistIds.size
         }
     }
 

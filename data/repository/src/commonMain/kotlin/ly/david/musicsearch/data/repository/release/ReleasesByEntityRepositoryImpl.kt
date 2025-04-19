@@ -110,9 +110,9 @@ class ReleasesByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<ReleaseMusicBrainzModel>,
-    ): Int {
+    ) {
         releaseDao.insertAll(musicBrainzModels)
-        return when (entity) {
+        when (entity) {
             MusicBrainzEntity.AREA -> {
                 releaseDao.insertReleasesByCountry(
                     areaId = entityId,

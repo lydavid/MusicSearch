@@ -72,21 +72,19 @@ class AreaDao(
         }
     }
 
-    fun insertAll(areas: List<AreaMusicBrainzModel>): Int {
-        return transacter.transactionWithResult {
+    fun insertAll(areas: List<AreaMusicBrainzModel>) {
+        return transacter.transaction {
             areas.forEach { area ->
                 insert(area)
             }
-            areas.size
         }
     }
 
-    fun insertReplaceAll(areas: List<AreaMusicBrainzModel>): Int {
-        return transacter.transactionWithResult {
+    fun insertReplaceAll(areas: List<AreaMusicBrainzModel>) {
+        return transacter.transaction {
             areas.forEach { area ->
                 insertReplace(area)
             }
-            areas.size
         }
     }
 

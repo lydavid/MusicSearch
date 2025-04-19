@@ -89,9 +89,9 @@ class EventsByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<EventMusicBrainzModel>,
-    ): Int {
+    ) {
         eventDao.insertAll(musicBrainzModels)
-        return when (entity) {
+        when (entity) {
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.insertAll(
                     collectionId = entityId,

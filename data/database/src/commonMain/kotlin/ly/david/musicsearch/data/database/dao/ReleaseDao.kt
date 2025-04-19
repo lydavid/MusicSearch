@@ -181,8 +181,8 @@ class ReleaseDao(
     fun insertReleasesByLabel(
         labelId: String,
         releases: List<ReleaseMusicBrainzModel>,
-    ): Int {
-        return transacter.transactionWithResult {
+    ) {
+        transacter.transaction {
             releases.forEach { release ->
                 insert(release)
                 transacter.insertOrIgnoreReleasesByEntity(
@@ -199,7 +199,6 @@ class ReleaseDao(
                     )
                 }
             }
-            releases.size
         }
     }
 
@@ -253,8 +252,8 @@ class ReleaseDao(
     fun insertReleasesByCountry(
         areaId: String,
         releases: List<ReleaseMusicBrainzModel>,
-    ): Int {
-        return transacter.transactionWithResult {
+    ) {
+        transacter.transaction {
             releases.forEach { release ->
                 insert(release)
                 transacter.insertOrIgnoreReleasesByEntity(
@@ -271,7 +270,6 @@ class ReleaseDao(
                     )
                 }
             }
-            releases.size
         }
     }
 
@@ -323,8 +321,8 @@ class ReleaseDao(
     fun insertReleasesByEntity(
         entityId: String,
         releases: List<ReleaseMusicBrainzModel>,
-    ): Int {
-        return transacter.transactionWithResult {
+    ) {
+        transacter.transaction {
             releases.forEach { release ->
                 transacter.insertOrIgnoreReleasesByEntity(
                     Releases_by_entity(
@@ -333,7 +331,6 @@ class ReleaseDao(
                     ),
                 )
             }
-            releases.size
         }
     }
 

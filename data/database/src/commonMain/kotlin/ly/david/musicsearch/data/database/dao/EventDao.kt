@@ -90,8 +90,8 @@ class EventDao(
     fun insertEventsByEntity(
         entityId: String,
         eventIds: List<String>,
-    ): Int {
-        return transacter.transactionWithResult {
+    ) {
+        transacter.transaction {
             eventIds.forEach { eventId ->
                 transacter.insertOrIgnoreEventByEntity(
                     Events_by_entity(
@@ -100,7 +100,6 @@ class EventDao(
                     ),
                 )
             }
-            eventIds.size
         }
     }
 

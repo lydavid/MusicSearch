@@ -110,7 +110,7 @@ abstract class BrowseEntitiesByEntity<
         )
         val musicBrainzModels = response.musicBrainzModels
 
-        val insertedCount = browseEntityCountDao.withTransactionWithResult {
+        browseEntityCountDao.withTransaction {
             if (response.offset == 0) {
                 browseEntityCountDao.insert(
                     browseEntityCount = Browse_entity_count(
@@ -136,7 +136,7 @@ abstract class BrowseEntitiesByEntity<
             )
         }
 
-        return insertedCount
+        return musicBrainzModels.size
     }
 
     abstract suspend fun browseEntities(
@@ -145,19 +145,11 @@ abstract class BrowseEntitiesByEntity<
         offset: Int,
     ): B
 
-    // TODO: return the size of musicBrainzModels in repository layer
-    //  then each dao insert doesn't need to return how many it inserted
-    //  this makes more sense since we're going back to insert or ignore
-    //  When paginating, we don't want to sometimes get 99 inserted instead of 100
-    //  just because we've seen a model before
-    /**
-     * Returns the amount of [musicBrainzModels] that have been inserted.
-     */
     abstract fun insertAllLinkingModels(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<MB>,
-    ): Int
+    )
 
     protected fun browseEntitiesNotSupported(entity: MusicBrainzEntity?) =
         "${browseEntity.resourceUriPlural} by $entity not supported."

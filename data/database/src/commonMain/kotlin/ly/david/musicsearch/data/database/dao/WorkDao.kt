@@ -80,8 +80,8 @@ class WorkDao(
     fun insertWorksByEntity(
         entityId: String,
         workIds: List<String>,
-    ): Int {
-        return transacter.transactionWithResult {
+    ) {
+        transacter.transaction {
             workIds.forEach { workId ->
                 transacter.insertOrIgnoreWorkByEntity(
                     Works_by_entity(
@@ -90,7 +90,6 @@ class WorkDao(
                     ),
                 )
             }
-            workIds.size
         }
     }
 

@@ -111,7 +111,7 @@ class ReleaseGroupsByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
-    ): Int {
+    ) {
         releaseGroupDao.insertAllReleaseGroups(musicBrainzModels)
         return when (entity) {
             MusicBrainzEntity.ARTIST -> {

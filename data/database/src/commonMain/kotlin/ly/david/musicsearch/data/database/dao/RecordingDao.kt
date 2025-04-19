@@ -98,15 +98,14 @@ class RecordingDao(
     fun insertRecordingsByEntity(
         entityId: String,
         recordingIds: List<String>,
-    ): Int {
-        return transacter.transactionWithResult {
+    ) {
+        return transacter.transaction {
             recordingIds.forEach { recordingId ->
                 insertRecordingByEntity(
                     recordingId = recordingId,
                     entityId = entityId,
                 )
             }
-            recordingIds.size
         }
     }
 

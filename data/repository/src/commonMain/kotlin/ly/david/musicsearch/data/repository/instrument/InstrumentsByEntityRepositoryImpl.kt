@@ -92,9 +92,9 @@ class InstrumentsByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<InstrumentMusicBrainzModel>,
-    ): Int {
+    ) {
         instrumentDao.insertAll(musicBrainzModels)
-        return when (entity) {
+        when (entity) {
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.insertAll(
                     collectionId = entityId,

@@ -107,15 +107,14 @@ class LabelDao(
     fun insertLabelsByEntity(
         entityId: String,
         labelIds: List<String>,
-    ): Int {
-        return transacter.transactionWithResult {
+    ) {
+        transacter.transaction {
             labelIds.forEach { labelId ->
                 insertLabelByEntity(
                     entityId = entityId,
                     labelId = labelId,
                 )
             }
-            labelIds.size
         }
     }
 

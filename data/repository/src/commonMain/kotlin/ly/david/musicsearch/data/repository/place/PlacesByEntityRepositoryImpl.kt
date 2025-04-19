@@ -91,9 +91,9 @@ class PlacesByEntityRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<PlaceMusicBrainzModel>,
-    ): Int {
+    ) {
         placeDao.insertAll(musicBrainzModels)
-        return when (entity) {
+        when (entity) {
             MusicBrainzEntity.AREA -> {
                 placeDao.insertPlacesByArea(
                     entityId = entityId,

@@ -109,15 +109,14 @@ class PlaceDao(
     fun insertPlacesByArea(
         entityId: String,
         placeIds: List<String>,
-    ): Int {
-        return transacter.transactionWithResult {
+    ) {
+        transacter.transaction {
             placeIds.forEach { placeId ->
                 insertPlaceByArea(
                     entityId = entityId,
                     placeId = placeId,
                 )
             }
-            placeIds.size
         }
     }
 

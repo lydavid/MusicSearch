@@ -30,13 +30,13 @@ class CollectionEntityDao(
     fun insertAll(
         collectionId: String,
         entityIds: List<String>,
-    ): Int {
-        return transacter.transactionWithResult {
-            entityIds.count { entityId ->
+    ) {
+        return transacter.transaction {
+            entityIds.forEach { entityId ->
                 insert(
                     collectionId = collectionId,
                     entityId = entityId,
-                ) != INSERTION_FAILED_DUE_TO_CONFLICT
+                )
             }
         }
     }

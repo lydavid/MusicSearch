@@ -31,7 +31,7 @@ interface ReleaseGroupDao : EntityDao {
     fun insertReleaseGroupsByArtist(
         artistId: String,
         releaseGroupIds: List<String>,
-    ): Int
+    )
 
     fun deleteReleaseGroupsByArtist(artistId: String)
     fun observeCountOfReleaseGroupsByArtist(artistId: String): Flow<Int>
@@ -125,8 +125,8 @@ class ReleaseGroupDaoImpl(
     override fun insertReleaseGroupsByArtist(
         artistId: String,
         releaseGroupIds: List<String>,
-    ): Int {
-        return transacter.transactionWithResult {
+    ) {
+        transacter.transaction {
             releaseGroupIds.forEach { releaseGroupId ->
                 transacter.insertOrIgnoreReleaseGroupByEntity(
                     Release_groups_by_entity(
@@ -135,7 +135,6 @@ class ReleaseGroupDaoImpl(
                     ),
                 )
             }
-            releaseGroupIds.size
         }
     }
 
