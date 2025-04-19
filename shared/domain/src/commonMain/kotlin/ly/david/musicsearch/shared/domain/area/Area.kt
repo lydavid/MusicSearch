@@ -19,8 +19,8 @@ object AreaType {
 }
 
 enum class NonCountryAreaWithCode(val code: String) {
-    Worldwide("XW"),
     Europe("XE"),
+    Worldwide("XW"),
 }
 
 data class ReleaseEvent(
