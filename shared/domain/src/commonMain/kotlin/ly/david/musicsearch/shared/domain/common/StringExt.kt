@@ -53,6 +53,7 @@ fun String?.emptyToNull(): String? {
  * @return The [regional indicator symbol](https://en.wikipedia.org/wiki/Regional_Indicator_Symbol) flag emoji,
  * or globe emoji for global.
  */
+@Suppress("MagicNumber")
 fun String.toFlagEmoji(): String {
     if (this.length != 2) {
         return this
@@ -62,7 +63,7 @@ fun String.toFlagEmoji(): String {
         return this
     }
 
-    return when (val uppercaseCountryCode = this.uppercase()) {
+    return when (this.uppercase()) {
         NonCountryAreaWithCode.Europe.code -> {
             "\uD83C\uDDEA\uD83C\uDDFA"
         }
@@ -72,8 +73,9 @@ fun String.toFlagEmoji(): String {
         }
 
         else -> {
-            val firstRegionalIndicator = (this[0] - 'A') + 0x1F1E6
-            val secondRegionalIndicator = (this[1] - 'A') + 0x1F1E6
+            val unicodeRegionalIndicatorBase = 0x1F1E6
+            val firstRegionalIndicator = (this[0] - 'A') + unicodeRegionalIndicatorBase
+            val secondRegionalIndicator = (this[1] - 'A') + unicodeRegionalIndicatorBase
 
             buildString {
                 appendCodePoint(firstRegionalIndicator)
@@ -84,13 +86,18 @@ fun String.toFlagEmoji(): String {
 }
 
 // Written by Claude
+@Suppress("MagicNumber")
 private fun StringBuilder.appendCodePoint(codePoint: Int): StringBuilder {
-    if (codePoint <= 0xFFFF) {
+    val basicMultilingualPlaneLimit = 0xFFFF
+    if (codePoint <= basicMultilingualPlaneLimit) {
         append(codePoint.toChar())
     } else {
         // Split into surrogate pair
-        val highSurrogate = (0xD800 + ((codePoint - 0x10000) shr 10)).toChar()
-        val lowSurrogate = (0xDC00 + ((codePoint - 0x10000) and 0x3FF)).toChar()
+        val surrogateOffset = 0x10000
+        val highSurrogateBase = 0xD800
+        val lowSurrogateBase = 0xDC00
+        val highSurrogate = (highSurrogateBase + ((codePoint - surrogateOffset) shr 10)).toChar()
+        val lowSurrogate = (lowSurrogateBase + ((codePoint - surrogateOffset) and 0x3FF)).toChar()
         append(highSurrogate)
         append(lowSurrogate)
     }
