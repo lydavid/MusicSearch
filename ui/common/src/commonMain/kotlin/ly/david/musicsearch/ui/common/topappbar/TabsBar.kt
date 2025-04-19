@@ -1,5 +1,6 @@
 package ly.david.musicsearch.ui.common.topappbar
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -22,6 +23,8 @@ fun TabsBar(
                 Tab(
                     text = { Text(title) },
                     selected = selectedTabIndex == index,
+                    selectedContentColor = MaterialTheme.colorScheme.primary,
+                    unselectedContentColor = MaterialTheme.colorScheme.onSurface,
                     onClick = {
                         onSelectTabIndex(index)
                     },
