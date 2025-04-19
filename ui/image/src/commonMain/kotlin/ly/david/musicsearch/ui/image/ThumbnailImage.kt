@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -40,11 +41,12 @@ fun ThumbnailImage(
             ),
             model = ImageRequest.Builder(LocalPlatformContext.current)
                 .data(url.useHttps())
-                .scale(Scale.FIT)
+                .scale(Scale.FILL)
                 .crossfade(true)
                 .memoryCacheKey(placeholderKey)
                 .build(),
             contentDescription = null,
+            contentScale = ContentScale.Crop,
         )
     } else {
         PlaceholderIcon(
