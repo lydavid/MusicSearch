@@ -1,7 +1,10 @@
-package ly.david.musicsearch.shared.domain.common
+package ly.david.musicsearch.shared.domain
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import ly.david.musicsearch.shared.domain.common.getYear
+import ly.david.musicsearch.shared.domain.common.toFlagEmoji
+import ly.david.musicsearch.shared.domain.common.useHttps
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class StringExtTest {
 
@@ -44,22 +47,22 @@ internal class StringExtTest {
     }
 
     @Test
-    fun `invalid country code, 3 letters`() {
+    fun `invalid country code with 3 letters`() {
         assertEquals("CAN", "CAN".toFlagEmoji())
     }
 
     @Test
-    fun `invalid country code, 1 letter`() {
+    fun `invalid country code with 1 letter`() {
         assertEquals("C", "C".toFlagEmoji())
     }
 
     @Test
-    fun `invalid country code, first character is not letter`() {
+    fun `invalid country code with first character is not letter`() {
         assertEquals("#C", "#C".toFlagEmoji())
     }
 
     @Test
-    fun `invalid country code, second character is not letter`() {
+    fun `invalid country code with second character is not letter`() {
         assertEquals("C3", "C3".toFlagEmoji())
     }
     // endregion
