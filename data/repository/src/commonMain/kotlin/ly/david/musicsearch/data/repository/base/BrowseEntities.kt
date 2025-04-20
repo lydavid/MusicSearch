@@ -121,7 +121,7 @@ abstract class BrowseEntities<
                     ),
                 )
             } else {
-                browseEntityCountDao.updateBrowseEntityCount(
+                browseEntityCountDao.updateBrowseRemoteCount(
                     entityId = entityId,
                     browseEntity = browseEntity,
                     additionalOffset = response.musicBrainzModels.size,

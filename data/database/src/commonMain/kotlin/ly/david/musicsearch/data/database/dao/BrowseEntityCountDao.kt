@@ -56,7 +56,7 @@ class BrowseEntityCountDao(
             .asFlow()
             .mapToOneOrNull(coroutineDispatchers.io)
 
-    fun updateBrowseEntityCount(
+    fun updateBrowseRemoteCount(
         entityId: String,
         browseEntity: MusicBrainzEntity,
         additionalOffset: Int,

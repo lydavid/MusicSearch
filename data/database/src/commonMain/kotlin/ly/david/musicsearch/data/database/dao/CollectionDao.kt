@@ -33,7 +33,7 @@ class CollectionDao(
         }
     }
 
-    fun insertRemote(collection: CollectionMusicBrainzModel) {
+    private fun insertRemote(collection: CollectionMusicBrainzModel) {
         collection.run {
             transacter.insert(
                 Collection(
@@ -63,13 +63,23 @@ class CollectionDao(
             mapper = ::mapToCollectionListItem,
         ).executeAsOneOrNull()
 
+    fun getCountOfRemoteCollections() =
+        transacter.getNumberOfCollections(
+            showLocal = false,
+            showRemote = true,
+            query = "%%",
+            entity = null,
+        )
+            .executeAsOne()
+            .toInt()
+
     fun getAllCollections(
         entity: MusicBrainzEntity?,
         query: String,
         showLocal: Boolean,
         showRemote: Boolean,
         sortOption: CollectionSortOption,
-        entityId: String?,
+        entityIdToCheckExists: String?,
     ): PagingSource<Int, CollectionListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfCollections(
             showLocal = showLocal,
@@ -81,7 +91,7 @@ class CollectionDao(
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
             transacter.getAllCollections(
-                entityId = entityId.orEmpty(),
+                entityIdToCheckExists = entityIdToCheckExists.orEmpty(),
                 entity = entity,
                 query = query,
                 showLocal = showLocal,

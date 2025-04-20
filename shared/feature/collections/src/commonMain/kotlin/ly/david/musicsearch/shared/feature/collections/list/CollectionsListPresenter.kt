@@ -61,7 +61,7 @@ internal class CollectionListPresenter(
                     showLocal = showLocal,
                     showRemote = showRemote,
                     sortOption = sortOption,
-                    entityId = null,
+                    entityIdToCheckExists = null,
                 ),
             )
         }

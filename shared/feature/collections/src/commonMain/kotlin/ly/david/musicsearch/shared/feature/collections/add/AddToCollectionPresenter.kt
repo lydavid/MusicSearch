@@ -41,7 +41,7 @@ internal class AddToCollectionPresenter(
                     entity = screen.entity,
                     showLocal = true,
                     showRemote = true,
-                    entityId = screen.id,
+                    entityIdToCheckExists = screen.id,
                 ),
             )
         }

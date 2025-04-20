@@ -47,7 +47,7 @@ SELECT
   (
     SELECT COUNT(*) > 0
     FROM collection_entity
-    WHERE id = c.id AND entity_id = :entityId
+    WHERE id = c.id AND entity_id = :entityIdToCheckExists
   ) AS contains_entity
 FROM collection c
 LEFT JOIN (

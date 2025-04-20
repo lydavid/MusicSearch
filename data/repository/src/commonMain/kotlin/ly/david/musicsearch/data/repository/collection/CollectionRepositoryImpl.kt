@@ -38,7 +38,7 @@ class CollectionRepositoryImpl(
         showLocal: Boolean,
         showRemote: Boolean,
         sortOption: CollectionSortOption,
-        entityId: String?,
+        entityIdToCheckExists: String?,
     ): Flow<PagingData<CollectionListItemModel>> =
         Pager(
             config = CommonPagingConfig.pagingConfig,
@@ -50,14 +50,14 @@ class CollectionRepositoryImpl(
                     showLocal = showLocal,
                     showRemote = showRemote,
                     sortOption = sortOption,
-                    entityId = entityId,
+                    entityIdToCheckExists = entityIdToCheckExists,
                 )
             },
         ).flow
 
     private fun getRemoteMediator(username: String) = BrowseEntityRemoteMediator<CollectionListItemModel>(
         getRemoteEntityCount = { getRemoteLinkedEntitiesCountByEntity(username) },
-        getLocalEntityCount = { getLocalLinkedEntitiesCountByEntity(username) },
+        getLocalEntityCount = { getLocalLinkedEntitiesCountByEntity() },
         deleteLocalEntity = { deleteLinkedEntitiesByEntity() },
         browseLinkedEntitiesAndStore = { offset ->
             browseLinkedEntitiesAndStore(
@@ -87,7 +87,7 @@ class CollectionRepositoryImpl(
                 ),
             )
         } else {
-            browseEntityCountDao.updateBrowseEntityCount(
+            browseEntityCountDao.updateBrowseRemoteCount(
                 entityId = username,
                 browseEntity = MusicBrainzEntity.COLLECTION,
                 additionalOffset = response.musicBrainzModels.size,
@@ -108,11 +108,8 @@ class CollectionRepositoryImpl(
         )?.remoteCount
     }
 
-    private fun getLocalLinkedEntitiesCountByEntity(username: String): Int {
-        return browseEntityCountRepository.getBrowseEntityCount(
-            entityId = username,
-            entity = MusicBrainzEntity.COLLECTION,
-        )?.localCount ?: 0
+    private fun getLocalLinkedEntitiesCountByEntity(): Int {
+        return collectionDao.getCountOfRemoteCollections()
     }
 
     private fun deleteLinkedEntitiesByEntity() {
