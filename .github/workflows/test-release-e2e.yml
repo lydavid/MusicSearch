@@ -17,14 +17,18 @@ jobs:
       contents: write
     steps:
       - name: Checkout main
+        if: github.ref != 'refs/heads/main'
         uses: nschloe/action-cached-lfs-checkout@f46300cd8952454b9f0a21a3d133d4bd5684cfc2 # v1
         with:
           token: ${{ secrets.PAT }}
           ref: main
 
-      - name: Checkout previous state if on main
+      - name: Checkout main
         if: github.ref == 'refs/heads/main'
-        run: git checkout ${{ github.event.before }}
+        uses: nschloe/action-cached-lfs-checkout@f46300cd8952454b9f0a21a3d133d4bd5684cfc2 # v1
+        with:
+          token: ${{ secrets.PAT }}
+          ref: ${{ github.event.before }}
 
       - name: Free disk space
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
