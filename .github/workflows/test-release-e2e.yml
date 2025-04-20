@@ -1,6 +1,6 @@
 name: Test Release E2E
 
-# When making database changes, prefer to create a PR so that this runs
+# When making database changes, prefer to create a PR
 on:
   push:
     paths:
@@ -21,6 +21,10 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           ref: main
+
+      - name: Checkout previous state if on main
+        if: github.ref == 'refs/heads/main'
+        run: git checkout ${{ github.event.before }}
 
       - name: Free disk space
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
@@ -68,7 +72,7 @@ jobs:
           script: echo "Generated AVD snapshot for caching."
 
       # We exclude -no-snapshot-save so that in the next emulator step, we install on top of this
-      - name: Install main app on emulator, run Maestro tests
+      - name: Install app before changes on emulator, run Maestro tests
         uses: reactivecircus/android-emulator-runner@1dcd0090116d15e7c562f8db72807de5e036a4ed # v2.34.0
         with:
           api-level: 32
@@ -90,21 +94,21 @@ jobs:
             $HOME/.maestro/bin/maestro test .maestro/threebutton
             adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat
 
-      - name: Move all potential artifacts to one place
+      - name: Move all before artifacts to one place
         if: always()
         run: |
-          mkdir -p main_artifacts
-          mv /home/runner/.maestro/tests/ main_artifacts
-          mv *.mp4 main_artifacts
-          [ -f logcat ] && mv logcat main_artifacts
-          mv android/app/build/outputs/apk/fDroid/debug/*.apk main_artifacts
+          mkdir -p before_artifacts
+          mv /home/runner/.maestro/tests/ before_artifacts
+          mv *.mp4 before_artifacts
+          [ -f logcat ] && mv logcat before_artifacts
+          mv android/app/build/outputs/apk/fDroid/debug/*.apk before_artifacts
 
-      - name: Save recordings
+      - name: Save before recordings
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: musicsearch_test_release_e2e_main_outputs
-          path: main_artifacts
+          path: before_artifacts
 
       - name: Checkout PR
         uses: nschloe/action-cached-lfs-checkout@f46300cd8952454b9f0a21a3d133d4bd5684cfc2 # v1
@@ -115,7 +119,7 @@ jobs:
 
       # After this installation, we want to cache the AVD for future runs, so we need to uninstall
       # so that we don't run into INSTALL_FAILED_VERSION_DOWNGRADE in the next main installation.
-      - name: Install PR app on emulator, run Maestro tests
+      - name: Install app after changes on emulator, run Maestro tests
         uses: reactivecircus/android-emulator-runner@1dcd0090116d15e7c562f8db72807de5e036a4ed # v2.34.0
         with:
           api-level: 32
@@ -138,18 +142,18 @@ jobs:
             adb logcat -d --pid=$(adb shell pidof -s io.github.lydavid.musicsearch.debug) "*:E" > logcat
             adb uninstall io.github.lydavid.musicsearch.debug
 
-      - name: Move all potential artifacts to one place
+      - name: Move all after artifacts to one place
         if: always()
         run: |
-          mkdir -p pr_artifacts
-          mv /home/runner/.maestro/tests/ pr_artifacts
-          mv *.mp4 pr_artifacts
-          [ -f logcat ] && mv logcat pr_artifacts
-          mv android/app/build/outputs/apk/fDroid/debug/*.apk pr_artifacts
+          mkdir -p after_artifacts
+          mv /home/runner/.maestro/tests/ after_artifacts
+          mv *.mp4 after_artifacts
+          [ -f logcat ] && mv logcat after_artifacts
+          mv android/app/build/outputs/apk/fDroid/debug/*.apk after_artifacts
 
-      - name: Save recordings
+      - name: Save after recordings
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: musicsearch_test_release_e2e_pr_outputs
-          path: pr_artifacts
+          path: after_artifacts
