@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUriPlural
-import lydavidmusicsearchdatadatabase.Browse_entity_count
+import lydavidmusicsearchdatadatabase.Browse_remote_count
 
 abstract class BrowseEntities<
     LI : ListItemModel,
@@ -78,7 +78,7 @@ abstract class BrowseEntities<
     )
 
     private fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? =
-        browseEntityCountDao.getBrowseEntityCount(
+        browseEntityCountDao.getBrowseRemoteCount(
             entityId = entityId,
             browseEntity = browseEntity,
         )?.remoteCount
@@ -113,10 +113,9 @@ abstract class BrowseEntities<
         browseEntityCountDao.withTransaction {
             if (response.offset == 0) {
                 browseEntityCountDao.insert(
-                    browseEntityCount = Browse_entity_count(
+                    browseRemoteCount = Browse_remote_count(
                         entity_id = entityId,
                         browse_entity = browseEntity,
-                        local_count = 0,
                         remote_count = response.count,
                     ),
                 )

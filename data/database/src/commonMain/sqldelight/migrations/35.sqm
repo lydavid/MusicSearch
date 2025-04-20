@@ -1,0 +1,16 @@
+import kotlin.Int;
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
+
+CREATE TABLE IF NOT EXISTS browse_remote_count (
+  entity_id TEXT NOT NULL,
+  browse_entity TEXT AS MusicBrainzEntity NOT NULL,
+  remote_count INTEGER AS Int NOT NULL,
+
+  PRIMARY KEY (entity_id, browse_entity)
+);
+
+INSERT INTO browse_remote_count (entity_id, browse_entity, remote_count)
+SELECT entity_id, browse_entity, COALESCE(remote_count, 0)
+FROM browse_entity_count;
+
+DROP TABLE browse_entity_count;

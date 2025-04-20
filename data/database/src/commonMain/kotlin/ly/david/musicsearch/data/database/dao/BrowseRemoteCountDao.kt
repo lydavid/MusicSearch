@@ -8,23 +8,23 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
-import lydavidmusicsearchdatadatabase.Browse_entity_count
+import lydavidmusicsearchdatadatabase.Browse_remote_count
 
 class BrowseRemoteCountDao(
     database: Database,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
-    override val transacter = database.browse_entity_countQueries
+    override val transacter = database.browse_remote_countQueries
 
-    fun insert(browseEntityCount: Browse_entity_count) {
-        transacter.insert(browseEntityCount)
+    fun insert(browseRemoteCount: Browse_remote_count) {
+        transacter.insert(browseRemoteCount)
     }
 
-    private fun getBrowseEntityCountQuery(
+    private fun getBrowseRemoteCountQuery(
         entityId: String,
         browseEntity: MusicBrainzEntity,
     ): Query<BrowseRemoteCount> =
-        transacter.getBrowseEntityCount(
+        transacter.getBrowseRemoteCount(
             entityId = entityId,
             browseEntity = browseEntity,
             mapper = { browseEntity, remoteCount ->
@@ -35,20 +35,20 @@ class BrowseRemoteCountDao(
             },
         )
 
-    fun getBrowseEntityCount(
+    fun getBrowseRemoteCount(
         entityId: String,
         browseEntity: MusicBrainzEntity,
     ): BrowseRemoteCount? =
-        getBrowseEntityCountQuery(
+        getBrowseRemoteCountQuery(
             entityId = entityId,
             browseEntity = browseEntity,
         ).executeAsOneOrNull()
 
-    fun getBrowseEntityCountFlow(
+    fun getBrowseRemoteCountFlow(
         entityId: String,
         browseEntity: MusicBrainzEntity,
     ): Flow<BrowseRemoteCount?> =
-        getBrowseEntityCountQuery(
+        getBrowseRemoteCountQuery(
             entityId = entityId,
             browseEntity = browseEntity,
         )
@@ -61,7 +61,7 @@ class BrowseRemoteCountDao(
         remoteCount: Int,
     ) {
         transacter.transaction {
-            transacter.updateBrowseEntityCount(
+            transacter.updateBrowseRemoteCount(
                 entityId = entityId,
                 browseEntity = browseEntity,
                 remoteCount = remoteCount,
@@ -69,17 +69,17 @@ class BrowseRemoteCountDao(
         }
     }
 
-    fun deleteBrowseEntityCountByEntity(
+    fun deleteBrowseRemoteCountByEntity(
         entityId: String,
         browseEntity: MusicBrainzEntity,
     ) {
-        transacter.deleteBrowseEntityCountByEntity(
+        transacter.deleteBrowseRemoteCountByEntity(
             entityId = entityId,
             browseEntity = browseEntity,
         )
     }
 
-    fun deleteAllBrowseEntityCountByRemoteCollections() {
-        transacter.deleteAllBrowseEntityCountByRemoteCollections()
+    fun deleteAllBrowseRemoteCountByRemoteCollections() {
+        transacter.deleteAllBrowseRemoteCountByRemoteCollections()
     }
 }

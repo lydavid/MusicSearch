@@ -1,0 +1,45 @@
+import kotlin.Int;
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
+
+-- Tracks how many [browse_entity] there are in MusicBrainz with [remote_count]
+-- that are linked to the entity with [entity_id].
+--
+-- entity_id: The entity's id we're tracking the progress of browsing a paginated browse_entity.
+--  eg. An Area we want to browse all of its Releases.
+-- browse_entity: The entity we're browsing.
+--  eg. Releases in an Area.
+-- remote_count: How many browse_entity exists in MusicBrainz's database.
+--  NULL means we have not yet started browsing. 0 means there were none.
+CREATE TABLE IF NOT EXISTS browse_remote_count (
+  entity_id TEXT NOT NULL,
+  browse_entity TEXT AS MusicBrainzEntity NOT NULL,
+  remote_count INTEGER AS Int NOT NULL,
+
+  PRIMARY KEY (entity_id, browse_entity)
+);
+
+insert:
+INSERT OR IGNORE INTO browse_remote_count
+VALUES ?;
+
+getBrowseRemoteCount:
+SELECT
+  browse_entity,
+  remote_count
+FROM browse_remote_count
+WHERE entity_id = :entityId AND browse_entity = :browseEntity;
+
+updateBrowseRemoteCount:
+UPDATE browse_remote_count
+SET remote_count = :remoteCount
+WHERE entity_id = :entityId AND browse_entity = :browseEntity;
+
+deleteBrowseRemoteCountByEntity:
+DELETE FROM browse_remote_count
+WHERE entity_id = :entityId AND browse_entity = :browseEntity;
+
+deleteAllBrowseRemoteCountByRemoteCollections:
+DELETE FROM browse_remote_count
+WHERE entity_id IN (
+  SELECT id FROM collection WHERE is_remote
+);

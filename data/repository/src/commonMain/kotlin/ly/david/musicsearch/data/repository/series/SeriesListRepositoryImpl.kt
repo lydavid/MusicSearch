@@ -56,7 +56,7 @@ class SeriesListRepositoryImpl(
         entity: MusicBrainzEntity,
     ) {
         browseEntityCountDao.withTransaction {
-            browseEntityCountDao.deleteBrowseEntityCountByEntity(
+            browseEntityCountDao.deleteBrowseRemoteCountByEntity(
                 entityId = entityId,
                 browseEntity = browseEntity,
             )

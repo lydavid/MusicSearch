@@ -8,7 +8,7 @@ import ly.david.musicsearch.data.database.adapter.ListStringColumnAdapter
 import ly.david.musicsearch.data.database.adapter.MusicBrainzEntityStringColumnAdapter
 import lydavidmusicsearchdatadatabase.Artist
 import lydavidmusicsearchdatadatabase.Artist_credit_name
-import lydavidmusicsearchdatadatabase.Browse_entity_count
+import lydavidmusicsearchdatadatabase.Browse_remote_count
 import lydavidmusicsearchdatadatabase.Collection
 import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Lookup_history
@@ -33,9 +33,8 @@ fun createDatabase(driver: SqlDriver): Database {
             linked_entityAdapter = MusicBrainzEntityStringColumnAdapter,
             orderAdapter = IntColumnAdapter,
         ),
-        browse_entity_countAdapter = Browse_entity_count.Adapter(
+        browse_remote_countAdapter = Browse_remote_count.Adapter(
             browse_entityAdapter = MusicBrainzEntityStringColumnAdapter,
-            local_countAdapter = IntColumnAdapter,
             remote_countAdapter = IntColumnAdapter,
         ),
         collectionAdapter = Collection.Adapter(
