@@ -5,7 +5,7 @@ import app.cash.paging.PagingSource
 import app.cash.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
@@ -23,7 +23,7 @@ import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 
 class ReleaseGroupsListRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
-    private val browseEntityCountDao: BrowseEntityCountDao,
+    private val browseEntityCountDao: BrowseRemoteCountDao,
     private val browseApi: BrowseApi,
     private val releaseGroupDao: ReleaseGroupDao,
 ) : ReleaseGroupsListRepository,

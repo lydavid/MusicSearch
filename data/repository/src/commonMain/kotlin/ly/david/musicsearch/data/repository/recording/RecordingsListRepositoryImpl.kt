@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.recording
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
@@ -17,7 +17,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
 
 class RecordingsListRepositoryImpl(
-    private val browseEntityCountDao: BrowseEntityCountDao,
+    private val browseEntityCountDao: BrowseRemoteCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val recordingDao: RecordingDao,
     private val browseApi: BrowseApi,

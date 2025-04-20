@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.event
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
@@ -17,7 +17,7 @@ import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class EventsListRepositoryImpl(
-    private val browseEntityCountDao: BrowseEntityCountDao,
+    private val browseEntityCountDao: BrowseRemoteCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val eventDao: EventDao,
     private val browseApi: BrowseApi,

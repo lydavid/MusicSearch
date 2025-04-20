@@ -1,17 +1,17 @@
 package ly.david.musicsearch.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.browse.BrowseEntityCount
+import ly.david.musicsearch.shared.domain.browse.BrowseRemoteCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.shared.domain.browse.BrowseEntityCountRepository
 
 class BrowseEntityCountRepositoryImpl(
-    private val browseEntityCountDao: BrowseEntityCountDao,
+    private val browseEntityCountDao: BrowseRemoteCountDao,
 ) : BrowseEntityCountRepository {
-    override fun observeBrowseEntityCount(entityId: String, entity: MusicBrainzEntity): Flow<BrowseEntityCount?> =
+    override fun observeBrowseEntityCount(entityId: String, entity: MusicBrainzEntity): Flow<BrowseRemoteCount?> =
         browseEntityCountDao.getBrowseEntityCountFlow(entityId, entity)
 
-    override fun getBrowseEntityCount(entityId: String, entity: MusicBrainzEntity): BrowseEntityCount? =
+    override fun getBrowseEntityCount(entityId: String, entity: MusicBrainzEntity): BrowseRemoteCount? =
         browseEntityCountDao.getBrowseEntityCount(entityId, entity)
 }

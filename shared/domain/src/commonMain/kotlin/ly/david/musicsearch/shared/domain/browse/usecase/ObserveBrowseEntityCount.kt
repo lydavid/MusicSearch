@@ -1,7 +1,7 @@
 package ly.david.musicsearch.shared.domain.browse.usecase
 
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.browse.BrowseEntityCount
+import ly.david.musicsearch.shared.domain.browse.BrowseRemoteCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.browse.BrowseEntityCountRepository
 
@@ -11,7 +11,7 @@ class ObserveBrowseEntityCount(
     operator fun invoke(
         entityId: String,
         entity: MusicBrainzEntity,
-    ): Flow<BrowseEntityCount?> = browseEntityCountRepository.observeBrowseEntityCount(
+    ): Flow<BrowseRemoteCount?> = browseEntityCountRepository.observeBrowseEntityCount(
         entityId,
         entity,
     )

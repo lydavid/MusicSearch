@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.helpers
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
@@ -18,7 +18,7 @@ interface TestArtistRepository {
     val visitedDao: VisitedDao
     val relationDao: RelationDao
     val areaDao: AreaDao
-    val browseEntityCountDao: BrowseEntityCountDao
+    val browseEntityCountDao: BrowseRemoteCountDao
 
     fun createArtistRepository(
         artistMusicBrainzModel: ArtistMusicBrainzModel,

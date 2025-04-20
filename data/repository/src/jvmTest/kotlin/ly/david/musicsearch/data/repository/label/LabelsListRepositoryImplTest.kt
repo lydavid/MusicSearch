@@ -13,7 +13,7 @@ import ly.david.data.test.flyingDogLabelMusicBrainzModel
 import ly.david.data.test.japanAreaMusicBrainzModel
 import ly.david.data.test.virginLabelListItemModel
 import ly.david.data.test.virginMusicLabelMusicBrainzModel
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.LabelDao
@@ -39,7 +39,7 @@ class LabelsListRepositoryImplTest : KoinTest {
 
     private val labelDao: LabelDao by inject()
     private val collectionDao: CollectionDao by inject()
-    private val browseEntityCountDao: BrowseEntityCountDao by inject()
+    private val browseEntityCountDao: BrowseRemoteCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
     private fun createRepository(

@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.helpers
 
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AreaDao
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
@@ -19,7 +19,7 @@ interface TestPlaceRepository {
     val relationDao: RelationDao
     val placeDao: PlaceDao
     val areaDao: AreaDao
-    val browseEntityCountDao: BrowseEntityCountDao
+    val browseEntityCountDao: BrowseRemoteCountDao
     val collectionEntityDao: CollectionEntityDao
 
     fun createPlaceRepository(

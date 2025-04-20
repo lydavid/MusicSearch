@@ -16,7 +16,7 @@ import ly.david.data.test.starmanWorkListItemModel
 import ly.david.data.test.starmanWorkMusicBrainzModel
 import ly.david.data.test.underPressureWorkListItemModel
 import ly.david.data.test.underPressureWorkMusicBrainzModel
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
@@ -53,7 +53,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
     override val visitedDao: VisitedDao by inject()
     override val relationDao: RelationDao by inject()
     private val collectionDao: CollectionDao by inject()
-    private val browseEntityCountDao: BrowseEntityCountDao by inject()
+    private val browseEntityCountDao: BrowseRemoteCountDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
     private val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"

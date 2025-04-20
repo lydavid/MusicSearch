@@ -5,7 +5,7 @@ import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
@@ -26,7 +26,7 @@ class CollectionRepositoryImpl(
     private val collectionApi: CollectionApi,
     private val collectionDao: CollectionDao,
     private val collectionEntityDao: CollectionEntityDao,
-    private val browseEntityCountDao: BrowseEntityCountDao,
+    private val browseEntityCountDao: BrowseRemoteCountDao,
     private val browseEntityCountRepository: BrowseEntityCountRepository,
 ) : CollectionRepository {
 
@@ -82,7 +82,7 @@ class CollectionRepositoryImpl(
                 browseEntityCount = Browse_entity_count(
                     entity_id = username,
                     browse_entity = MusicBrainzEntity.COLLECTION,
-                    local_count = response.musicBrainzModels.size,
+                    local_count = 0,
                     remote_count = response.count,
                 ),
             )
@@ -90,7 +90,6 @@ class CollectionRepositoryImpl(
             browseEntityCountDao.updateBrowseRemoteCount(
                 entityId = username,
                 browseEntity = MusicBrainzEntity.COLLECTION,
-                additionalOffset = response.musicBrainzModels.size,
                 remoteCount = response.count,
             )
         }

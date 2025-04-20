@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.release
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.musicbrainz.api.ARTIST_CREDITS
@@ -19,7 +19,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 
 class ReleasesListRepositoryImpl(
-    private val browseEntityCountDao: BrowseEntityCountDao,
+    private val browseEntityCountDao: BrowseRemoteCountDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val browseApi: BrowseApi,
     private val releaseDao: ReleaseDao,

@@ -31,7 +31,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
@@ -85,7 +85,7 @@ class ReleasesListRepositoryImplTest :
     val koinTestRule = KoinTestRule()
 
     private val database: Database by inject()
-    override val browseEntityCountDao: BrowseEntityCountDao by inject()
+    override val browseEntityCountDao: BrowseRemoteCountDao by inject()
     private val collectionDao: CollectionDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
     override val releaseDao: ReleaseDao by inject()

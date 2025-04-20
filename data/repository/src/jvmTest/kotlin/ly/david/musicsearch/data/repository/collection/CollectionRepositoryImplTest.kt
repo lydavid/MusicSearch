@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeCollectionApi
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseCollectionsResponse
@@ -33,7 +33,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     private val collectionDao: CollectionDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
-    private val browseEntityCountDao: BrowseEntityCountDao by inject()
+    private val browseEntityCountDao: BrowseRemoteCountDao by inject()
 
     private fun createRepository(
         collectionApi: CollectionApi,
