@@ -55,24 +55,24 @@ class CollectionRepositoryImpl(
             },
         ).flow
 
-    private fun getRemoteMediator(entityId: String) = BrowseEntityRemoteMediator<CollectionListItemModel>(
-        getRemoteEntityCount = { getRemoteLinkedEntitiesCountByEntity(entityId) },
-        getLocalEntityCount = { getLocalLinkedEntitiesCountByEntity(entityId) },
+    private fun getRemoteMediator(username: String) = BrowseEntityRemoteMediator<CollectionListItemModel>(
+        getRemoteEntityCount = { getRemoteLinkedEntitiesCountByEntity(username) },
+        getLocalEntityCount = { getLocalLinkedEntitiesCountByEntity(username) },
         deleteLocalEntity = { deleteLinkedEntitiesByEntity() },
         browseLinkedEntitiesAndStore = { offset ->
             browseLinkedEntitiesAndStore(
-                entityId,
-                offset,
+                username = username,
+                nextOffset = offset,
             )
         },
     )
 
     private suspend fun browseLinkedEntitiesAndStore(
-        entityId: String,
+        username: String,
         nextOffset: Int,
     ): Int {
         val response = collectionApi.browseCollectionsByUser(
-            username = entityId,
+            username = username,
             offset = nextOffset,
             include = CollectionApi.USER_COLLECTIONS,
         )
@@ -80,7 +80,7 @@ class CollectionRepositoryImpl(
         if (response.offset == 0) {
             browseEntityCountDao.insert(
                 browseEntityCount = Browse_entity_count(
-                    entity_id = entityId,
+                    entity_id = username,
                     browse_entity = MusicBrainzEntity.COLLECTION,
                     local_count = response.musicBrainzModels.size,
                     remote_count = response.count,
@@ -88,7 +88,7 @@ class CollectionRepositoryImpl(
             )
         } else {
             browseEntityCountDao.updateBrowseEntityCount(
-                entityId = entityId,
+                entityId = username,
                 browseEntity = MusicBrainzEntity.COLLECTION,
                 additionalOffset = response.musicBrainzModels.size,
                 remoteCount = response.count,
@@ -101,17 +101,17 @@ class CollectionRepositoryImpl(
         return collectionMusicBrainzModels.size
     }
 
-    private fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? {
+    private fun getRemoteLinkedEntitiesCountByEntity(username: String): Int? {
         return browseEntityCountRepository.getBrowseEntityCount(
-            entityId,
-            MusicBrainzEntity.COLLECTION,
+            entityId = username,
+            entity = MusicBrainzEntity.COLLECTION,
         )?.remoteCount
     }
 
-    private fun getLocalLinkedEntitiesCountByEntity(entityId: String): Int {
+    private fun getLocalLinkedEntitiesCountByEntity(username: String): Int {
         return browseEntityCountRepository.getBrowseEntityCount(
-            entityId,
-            MusicBrainzEntity.COLLECTION,
+            entityId = username,
+            entity = MusicBrainzEntity.COLLECTION,
         )?.localCount ?: 0
     }
 
@@ -155,8 +155,8 @@ class CollectionRepositoryImpl(
 
         collectionEntityDao.withTransaction {
             collectionEntityDao.deleteFromCollection(
-                collectionId,
-                entityId,
+                collectionId = collectionId,
+                collectableId = entityId,
             )
         }
         return ActionableResult("Deleted $entityName from ${collection.name}.")
