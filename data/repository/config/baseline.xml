@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ComplexCondition:ReleaseGroupsByEntityRepositoryImpl.kt$ReleaseGroupsByEntityRepositoryImpl$listFilters.sorted &amp;&amp; rg2 != null &amp;&amp; (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)</ID>
+    <ID>ComplexCondition:ReleaseGroupsListRepositoryImpl.kt$ReleaseGroupsListRepositoryImpl$listFilters.sorted &amp;&amp; rg2 != null &amp;&amp; (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)</ID>
     <ID>ComplexCondition:ReleaseRepositoryImpl.kt$ReleaseRepositoryImpl$releaseDetailsModel != null &amp;&amp; releaseGroup != null &amp;&amp; artistCredits.isNotEmpty() &amp;&amp; visited &amp;&amp; !forceRefresh</ID>
     <ID>LongMethod:RelationRepositoryImpl.kt$RelationRepositoryImpl$private suspend fun lookupEntityWithRelations( entity: MusicBrainzEntity, entityId: String, relatedEntities: Set&lt;MusicBrainzEntity&gt;, ): List&lt;RelationMusicBrainzModel&gt;?</ID>
     <ID>LongMethod:SearchResultsRepositoryImpl.kt$SearchResultsRepositoryImpl$private suspend fun fetchAndStore( entity: MusicBrainzEntity, query: String, offset: Int, limit: Int, removeAll: () -&gt; Unit, ): Int</ID>

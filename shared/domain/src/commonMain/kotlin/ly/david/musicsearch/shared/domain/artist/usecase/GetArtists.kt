@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.artist.ArtistsByEntityRepository
+import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 
 class GetArtists(
-    private val artistsByEntityRepository: ArtistsByEntityRepository,
+    private val artistsListRepository: ArtistsListRepository,
     private val coroutineScope: CoroutineScope,
 ) : GetEntitiesByEntity<ArtistListItemModel> {
     override operator fun invoke(
@@ -23,7 +23,7 @@ class GetArtists(
         return if (browseMethod == null) {
             emptyFlow()
         } else {
-            artistsByEntityRepository.observeArtistsByEntity(
+            artistsListRepository.observeArtists(
                 browseMethod = browseMethod,
                 listFilters = listFilters,
             )

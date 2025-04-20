@@ -143,7 +143,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
 
     @Test
     fun `browse first, then lookup should overwrite with more data`() = runTest {
-        val artistsByEntityRepositoryImpl = ArtistsByEntityRepositoryImpl(
+        val artistsListRepositoryImpl = ArtistsListRepositoryImpl(
             browseEntityCountDao = browseEntityCountDao,
             collectionEntityDao = collectionEntityDao,
             artistDao = artistDao,
@@ -177,7 +177,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 }
             },
         )
-        val flow: Flow<PagingData<ArtistListItemModel>> = artistsByEntityRepositoryImpl.observeArtistsByEntity(
+        val flow: Flow<PagingData<ArtistListItemModel>> = artistsListRepositoryImpl.observeArtists(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = "area-id",
                 entity = MusicBrainzEntity.AREA

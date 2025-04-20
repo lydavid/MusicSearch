@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
-import ly.david.musicsearch.shared.domain.event.EventsByEntityRepository
+import ly.david.musicsearch.shared.domain.event.EventsListRepository
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 
 class GetEvents(
-    private val eventsByEntityRepository: EventsByEntityRepository,
+    private val eventsListRepository: EventsListRepository,
     private val coroutineScope: CoroutineScope,
 ) : GetEntitiesByEntity<EventListItemModel> {
     override operator fun invoke(
@@ -23,7 +23,7 @@ class GetEvents(
         return if (browseMethod == null) {
             emptyFlow()
         } else {
-            eventsByEntityRepository.observeEventsByEntity(
+            eventsListRepository.observeEvents(
                 browseMethod = browseMethod,
                 listFilters = listFilters,
             )

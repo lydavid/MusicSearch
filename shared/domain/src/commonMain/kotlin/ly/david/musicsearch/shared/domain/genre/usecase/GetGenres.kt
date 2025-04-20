@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
-import ly.david.musicsearch.shared.domain.genre.GenresByEntityRepository
+import ly.david.musicsearch.shared.domain.genre.GenresListRepository
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 
 class GetGenres(
-    private val genresByEntityRepository: GenresByEntityRepository,
+    private val genresListRepository: GenresListRepository,
     private val coroutineScope: CoroutineScope,
 ) : GetEntitiesByEntity<GenreListItemModel> {
     override operator fun invoke(
@@ -23,7 +23,7 @@ class GetGenres(
         return if (browseMethod == null) {
             emptyFlow()
         } else {
-            genresByEntityRepository.observeGenresByEntity(
+            genresListRepository.observeGenres(
                 browseMethod = browseMethod,
                 listFilters = listFilters,
             )

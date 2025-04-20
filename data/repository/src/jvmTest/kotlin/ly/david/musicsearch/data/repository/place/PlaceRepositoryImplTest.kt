@@ -367,7 +367,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         )
 
         // Browse places in the country
-        val placesByEntityRepository = PlacesByEntityRepositoryImpl(
+        val placesListRepositoryImpl = PlacesListRepositoryImpl(
             browseEntityCountDao = browseEntityCountDao,
             collectionEntityDao = collectionEntityDao,
             placeDao = this@PlaceRepositoryImplTest.placeDao,
@@ -388,7 +388,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                 }
             },
         )
-        val flow: Flow<PagingData<PlaceListItemModel>> = placesByEntityRepository.observePlacesByEntity(
+        val flow: Flow<PagingData<PlaceListItemModel>> = placesListRepositoryImpl.observePlaces(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = countryId,
                 entity = MusicBrainzEntity.AREA,

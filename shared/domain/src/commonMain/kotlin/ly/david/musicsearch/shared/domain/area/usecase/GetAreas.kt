@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.area.AreasByEntityRepository
+import ly.david.musicsearch.shared.domain.area.AreasListRepository
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 
@@ -20,7 +20,7 @@ interface GetAreas {
 }
 
 class GetAreasImpl(
-    private val areasByEntityRepository: AreasByEntityRepository,
+    private val areasListRepository: AreasListRepository,
     private val coroutineScope: CoroutineScope,
 ) : GetEntitiesByEntity<AreaListItemModel>, GetAreas {
     override operator fun invoke(
@@ -30,7 +30,7 @@ class GetAreasImpl(
         return if (browseMethod == null) {
             emptyFlow()
         } else {
-            areasByEntityRepository.observeAreasByEntity(
+            areasListRepository.observeAreas(
                 browseMethod = browseMethod,
                 listFilters = listFilters,
             )

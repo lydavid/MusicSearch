@@ -10,10 +10,10 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
-import ly.david.musicsearch.shared.domain.recording.RecordingsByEntityRepository
+import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
 
 class GetRecordings(
-    private val recordingsByEntityRepository: RecordingsByEntityRepository,
+    private val recordingsListRepository: RecordingsListRepository,
     private val coroutineScope: CoroutineScope,
 ) : GetEntitiesByEntity<RecordingListItemModel> {
     override operator fun invoke(
@@ -23,7 +23,7 @@ class GetRecordings(
         return if (browseMethod == null) {
             emptyFlow()
         } else {
-            recordingsByEntityRepository.observeRecordingsByEntity(
+            recordingsListRepository.observeRecordings(
                 browseMethod = browseMethod,
                 listFilters = listFilters,
             )

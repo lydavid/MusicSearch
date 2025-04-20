@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
-import ly.david.musicsearch.shared.domain.label.LabelsByEntityRepository
+import ly.david.musicsearch.shared.domain.label.LabelsListRepository
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 
 class GetLabels(
-    private val labelsByEntityRepository: LabelsByEntityRepository,
+    private val labelsListRepository: LabelsListRepository,
     private val coroutineScope: CoroutineScope,
 ) : GetEntitiesByEntity<LabelListItemModel> {
     override operator fun invoke(
@@ -23,7 +23,7 @@ class GetLabels(
         return if (browseMethod == null) {
             emptyFlow()
         } else {
-            labelsByEntityRepository.observeLabelsByEntity(
+            labelsListRepository.observeLabelsByEntity(
                 browseMethod = browseMethod,
                 listFilters = listFilters,
             )
