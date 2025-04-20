@@ -20,7 +20,7 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUriPlural
-import lydavidmusicsearchdatadatabase.Browse_entity_count
+import lydavidmusicsearchdatadatabase.Browse_remote_count
 
 class CollectionRepositoryImpl(
     private val collectionApi: CollectionApi,
@@ -79,10 +79,9 @@ class CollectionRepositoryImpl(
 
         if (response.offset == 0) {
             browseEntityCountDao.insert(
-                browseEntityCount = Browse_entity_count(
+                browseRemoteCount = Browse_remote_count(
                     entity_id = username,
                     browse_entity = MusicBrainzEntity.COLLECTION,
-                    local_count = 0,
                     remote_count = response.count,
                 ),
             )
@@ -113,7 +112,7 @@ class CollectionRepositoryImpl(
 
     private fun deleteLinkedEntitiesByEntity() {
         browseEntityCountDao.withTransaction {
-            browseEntityCountDao.deleteAllBrowseEntityCountByRemoteCollections()
+            browseEntityCountDao.deleteAllBrowseRemoteCountByRemoteCollections()
             collectionDao.deleteMusicBrainzCollections()
         }
     }

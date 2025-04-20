@@ -10,8 +10,8 @@ class BrowseEntityCountRepositoryImpl(
     private val browseEntityCountDao: BrowseRemoteCountDao,
 ) : BrowseEntityCountRepository {
     override fun observeBrowseEntityCount(entityId: String, entity: MusicBrainzEntity): Flow<BrowseRemoteCount?> =
-        browseEntityCountDao.getBrowseEntityCountFlow(entityId, entity)
+        browseEntityCountDao.getBrowseRemoteCountFlow(entityId, entity)
 
     override fun getBrowseEntityCount(entityId: String, entity: MusicBrainzEntity): BrowseRemoteCount? =
-        browseEntityCountDao.getBrowseEntityCount(entityId, entity)
+        browseEntityCountDao.getBrowseRemoteCount(entityId, entity)
 }

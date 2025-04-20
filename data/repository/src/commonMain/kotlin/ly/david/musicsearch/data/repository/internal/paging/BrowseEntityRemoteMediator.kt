@@ -15,7 +15,8 @@ import ly.david.musicsearch.data.musicbrainz.SEARCH_BROWSE_LIMIT
  * A refresh load will always call [browseLinkedEntitiesAndStore].
  *
  * @param getRemoteEntityCount Computes total number of this entity in MusicBrainz's server.
- *  If null, then we don't know yet.
+ *  If null, then we don't know yet. Note we don't ever store a null remote count.
+ *  This being null means we haven't inserted an entry yet.
  * @param getLocalEntityCount Computes total number of this entity in our local database.
  * @param deleteLocalEntity Drops the relevant local entities.
  * @param browseLinkedEntitiesAndStore Send browse request for entity with given offset and insert them.
