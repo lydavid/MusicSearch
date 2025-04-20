@@ -43,7 +43,12 @@ SELECT
   c.name,
   c.entity,
   COALESCE(ce.entity_count, 0) AS entity_count,
-  visited.entity_id IS NOT NULL AS visited
+  visited.entity_id IS NOT NULL AS visited,
+  (
+    SELECT COUNT(*) > 0
+    FROM collection_entity
+    WHERE id = c.id AND entity_id = :entityId
+  ) AS contains_entity
 FROM collection c
 LEFT JOIN (
   SELECT id, COUNT(entity_id) AS entity_count

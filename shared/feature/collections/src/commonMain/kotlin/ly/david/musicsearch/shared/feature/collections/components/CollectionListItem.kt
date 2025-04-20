@@ -5,11 +5,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Cloud
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -64,6 +67,14 @@ internal fun CollectionListItem(
                     Icon(
                         modifier = Modifier.padding(end = 4.dp),
                         imageVector = Icons.Outlined.Cloud,
+                        contentDescription = null,
+                    )
+                }
+                if (collection.containsEntity) {
+                    Icon(
+                        modifier = Modifier.padding(end = 4.dp),
+                        imageVector = Icons.Filled.CheckCircle,
+                        tint = MaterialTheme.colorScheme.primary,
                         contentDescription = null,
                     )
                 }

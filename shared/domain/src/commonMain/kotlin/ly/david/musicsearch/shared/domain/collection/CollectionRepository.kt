@@ -14,6 +14,7 @@ interface CollectionRepository {
         showLocal: Boolean,
         showRemote: Boolean,
         sortOption: CollectionSortOption,
+        entityId: String? = null,
     ): Flow<PagingData<CollectionListItemModel>>
 
     fun getCollection(entityId: String): CollectionListItemModel?

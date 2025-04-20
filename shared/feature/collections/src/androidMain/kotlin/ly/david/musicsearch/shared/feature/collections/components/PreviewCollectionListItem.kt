@@ -12,6 +12,7 @@ import ly.david.musicsearch.ui.core.theme.PreviewTheme
 internal fun PreviewCollectionListItem(
     isRemote: Boolean = true,
     visited: Boolean = true,
+    collected: Boolean = true,
 ) {
     PreviewTheme {
         Surface {
@@ -24,6 +25,7 @@ internal fun PreviewCollectionListItem(
                     entity = MusicBrainzEntity.RECORDING,
                     cachedEntityCount = 9999,
                     visited = visited,
+                    containsEntity = collected,
                 ),
             )
         }

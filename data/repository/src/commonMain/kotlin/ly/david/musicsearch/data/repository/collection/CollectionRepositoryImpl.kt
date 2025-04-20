@@ -38,6 +38,7 @@ class CollectionRepositoryImpl(
         showLocal: Boolean,
         showRemote: Boolean,
         sortOption: CollectionSortOption,
+        entityId: String?,
     ): Flow<PagingData<CollectionListItemModel>> =
         Pager(
             config = CommonPagingConfig.pagingConfig,
@@ -49,6 +50,7 @@ class CollectionRepositoryImpl(
                     showLocal = showLocal,
                     showRemote = showRemote,
                     sortOption = sortOption,
+                    entityId = entityId,
                 )
             },
         ).flow

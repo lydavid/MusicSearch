@@ -7,12 +7,17 @@ import org.junit.Test
 class CollectionListItemTest : ScreenshotTest() {
 
     @Test
-    fun isRemoteVisited(
+    fun isRemoteVisitedCollected(
         @TestParameter isRemote: Boolean,
         @TestParameter visited: Boolean,
+        @TestParameter collected: Boolean,
     ) {
         snapshot {
-            PreviewCollectionListItem(isRemote, visited)
+            PreviewCollectionListItem(
+                isRemote = isRemote,
+                visited = visited,
+                collected = collected,
+            )
         }
     }
 }

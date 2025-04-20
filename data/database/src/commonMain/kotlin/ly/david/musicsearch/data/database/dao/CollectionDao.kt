@@ -59,7 +59,7 @@ class CollectionDao(
 
     fun getCollection(id: String): CollectionListItemModel? =
         transacter.getCollection(
-            id,
+            id = id,
             mapper = ::mapToCollectionListItem,
         ).executeAsOneOrNull()
 
@@ -69,6 +69,7 @@ class CollectionDao(
         showLocal: Boolean,
         showRemote: Boolean,
         sortOption: CollectionSortOption,
+        entityId: String?,
     ): PagingSource<Int, CollectionListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfCollections(
             showLocal = showLocal,
@@ -80,6 +81,7 @@ class CollectionDao(
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
             transacter.getAllCollections(
+                entityId = entityId.orEmpty(),
                 entity = entity,
                 query = query,
                 showLocal = showLocal,
@@ -102,6 +104,24 @@ class CollectionDao(
         entity: MusicBrainzEntity,
         entityCount: Long,
         visited: Boolean?,
+    ) = mapToCollectionListItem(
+        id = id,
+        isRemote = isRemote,
+        name = name,
+        entity = entity,
+        entityCount = entityCount,
+        visited = visited,
+        containsEntity = null,
+    )
+
+    private fun mapToCollectionListItem(
+        id: String,
+        isRemote: Boolean,
+        name: String,
+        entity: MusicBrainzEntity,
+        entityCount: Long,
+        visited: Boolean?,
+        containsEntity: Boolean?,
     ) = CollectionListItemModel(
         id = id,
         isRemote = isRemote,
@@ -109,6 +129,7 @@ class CollectionDao(
         entity = entity,
         cachedEntityCount = entityCount.toInt(),
         visited = visited == true,
+        containsEntity = containsEntity == true,
     )
 
     fun deleteMusicBrainzCollections() {

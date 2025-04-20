@@ -57,10 +57,11 @@ internal class CollectionListPresenter(
         val listItems by rememberRetained(showLocal, showRemote, query, sortOption) {
             mutableStateOf(
                 getAllCollections(
+                    query = query,
                     showLocal = showLocal,
                     showRemote = showRemote,
-                    query = query,
                     sortOption = sortOption,
+                    entityId = null,
                 ),
             )
         }
