@@ -3,7 +3,6 @@ package ly.david.musicsearch.data.database.dao
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import lydavidmusicsearchdatadatabase.Artist_credit_entity
 import lydavidmusicsearchdatadatabase.Artist_credit_name
