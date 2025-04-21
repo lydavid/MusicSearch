@@ -34,12 +34,9 @@ class ArtistCreditDaoImpl(
 
         withTransaction {
             val artistCreditName = artistCredits.getDisplayNames()
-            var artistCreditId = insertArtistCredit(artistCreditName)
-            if (artistCreditId == INSERTION_FAILED_DUE_TO_CONFLICT) {
-                artistCreditId = transacter.getArtistCreditByName(artistCreditName).executeAsOne().id
-            } else {
-                insertAllArtistCreditNames(artistCredits.toArtistCreditNames(artistCreditId))
-            }
+            insertArtistCredit(artistCreditName)
+            val artistCreditId = transacter.getArtistCreditByName(artistCreditName).executeAsOne().id
+            insertAllArtistCreditNames(artistCredits.toArtistCreditNames(artistCreditId))
 
             linkArtistCreditWithEntity(
                 artistCreditId = artistCreditId,
@@ -48,16 +45,11 @@ class ArtistCreditDaoImpl(
         }
     }
 
-    private fun insertArtistCredit(name: String): Long {
-        return try {
-            transacter.insertOrFail(
-                id = 0,
-                name = name,
-            )
-            transacter.lastInsertRowId().executeAsOne()
-        } catch (ex: Exception) {
-            INSERTION_FAILED_DUE_TO_CONFLICT
-        }
+    private fun insertArtistCredit(name: String) {
+        transacter.insertOrIgnore(
+            id = 0,
+            name = name,
+        )
     }
 
     private fun insertAllArtistCreditNames(artistCreditNames: List<Artist_credit_name>) {

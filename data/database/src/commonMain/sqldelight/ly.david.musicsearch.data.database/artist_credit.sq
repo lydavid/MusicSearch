@@ -5,8 +5,8 @@ CREATE TABLE IF NOT EXISTS artist_credit (
 
 CREATE UNIQUE INDEX IF NOT EXISTS `index_artist_credit_name` ON `artist_credit` (`name`);
 
-insertOrFail:
-INSERT OR FAIL INTO artist_credit (
+insertOrIgnore:
+INSERT OR IGNORE INTO artist_credit (
   `id`,
   `name`
 )
