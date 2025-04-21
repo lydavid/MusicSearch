@@ -58,6 +58,9 @@
             </intent-filter>
         </activity>
 
+        <meta-data android:name="firebase_analytics_collection_deactivated" android:value="true" />
+        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
+
         <service
             android:name="ly.david.musicsearch.android.feature.nowplaying.NowPlayingNotificationListener"
             android:exported="false"

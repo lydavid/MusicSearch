@@ -1,9 +1,10 @@
 package ly.david.data.test.preferences
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
-import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
+import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 
 open class NoOpAppPreferences : AppPreferences {
@@ -67,6 +68,14 @@ open class NoOpAppPreferences : AppPreferences {
         get() = error("Not implemented")
 
     override fun setImagesSortOption(sort: ImagesSortOption) {
+        // No-op.
+    }
+
+    override val showCrashReporterSettings: Boolean = false
+    override val isCrashReportingEnabled: Flow<Boolean>
+        get() = flowOf(false)
+
+    override fun setEnableCrashReporting(enable: Boolean) {
         // No-op.
     }
 }

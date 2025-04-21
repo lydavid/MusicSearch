@@ -39,4 +39,8 @@ interface AppPreferences {
 
     val imagesSortOption: Flow<ImagesSortOption>
     fun setImagesSortOption(sort: ImagesSortOption)
+
+    val showCrashReporterSettings: Boolean
+    val isCrashReportingEnabled: Flow<Boolean>
+    fun setEnableCrashReporting(enable: Boolean)
 }

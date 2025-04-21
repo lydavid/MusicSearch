@@ -34,6 +34,8 @@ internal class SettingsPresenter(
         val useMaterialYou by appPreferences.useMaterialYou.collectAsState(initial = true)
         val sortReleaseGroupListItems by appPreferences.sortReleaseGroupListItems.collectAsState(initial = true)
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
+        val showCrashReporterSettings = appPreferences.showCrashReporterSettings
+        val isCrashReportingEnabled by appPreferences.isCrashReportingEnabled.collectAsState(initial = false)
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val scope = rememberCoroutineScope()
@@ -57,6 +59,10 @@ internal class SettingsPresenter(
                     appPreferences.setSortReleaseGroupListItems(event.sort)
                 }
 
+                is SettingsUiEvent.EnableCrashReporting -> {
+                    appPreferences.setEnableCrashReporting(event.enable)
+                }
+
                 is SettingsUiEvent.GoToScreen -> {
                     navigator.goTo(event.screen)
                 }
@@ -78,8 +84,10 @@ internal class SettingsPresenter(
             accessToken = accessToken,
             theme = theme,
             useMaterialYou = useMaterialYou,
-            sortReleaseGroupListItems = sortReleaseGroupListItems,
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+            sortReleaseGroupListItems = sortReleaseGroupListItems,
+            showCrashReporterSettings = showCrashReporterSettings,
+            isCrashReportingEnabled = isCrashReportingEnabled,
             loginState = loginUiState,
             snackbarMessage = snackbarMessage,
             databaseVersion = metadataRepository.getDatabaseVersion(),

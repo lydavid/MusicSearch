@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.feature.settings
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
-import ly.david.musicsearch.shared.feature.settings.internal.Settings
+import ly.david.musicsearch.shared.feature.settings.internal.SettingsUi
 import ly.david.musicsearch.shared.feature.settings.internal.SettingsPresenter
 import ly.david.musicsearch.shared.feature.settings.internal.SettingsUiState
 import ly.david.musicsearch.ui.common.screen.SettingsScreen
@@ -33,7 +33,7 @@ val settingsFeatureModule = module {
             when (screen) {
                 is SettingsScreen -> {
                     ui<SettingsUiState> { state, modifier ->
-                        Settings(
+                        SettingsUi(
                             state = state,
                             modifier = modifier,
                         )

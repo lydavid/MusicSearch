@@ -43,14 +43,14 @@ import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
-internal expect fun Settings(
+internal expect fun SettingsUi(
     state: SettingsUiState,
     modifier: Modifier = Modifier,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun Settings(
+internal fun SettingsUi(
     state: SettingsUiState,
     showAndroidSettings: Boolean,
     modifier: Modifier = Modifier,
@@ -94,7 +94,7 @@ internal fun Settings(
             }
         },
     ) { innerPadding ->
-        Settings(
+        SettingsUi(
             modifier = Modifier.padding(innerPadding),
             username = state.username,
             showLogin = state.accessToken.isNullOrEmpty(),
@@ -125,6 +125,11 @@ internal fun Settings(
             onSortReleaseGroupListItemsChange = {
                 eventSink(SettingsUiEvent.UpdateSortReleaseGroupListItems(it))
             },
+            showCrashReporterSettings = state.showCrashReporterSettings,
+            isCrashReportingEnabled = state.isCrashReportingEnabled,
+            onCrashReportingEnabledChange = {
+                eventSink(SettingsUiEvent.EnableCrashReporting(it))
+            },
             isNotificationListenerEnabled = isNotificationListenerEnabled,
             onGoToNotificationListenerSettings = onGoToNotificationListenerSettings,
             versionName = BuildConfig.VERSION_NAME,
@@ -138,7 +143,7 @@ internal fun Settings(
 }
 
 @Composable
-internal fun Settings(
+internal fun SettingsUi(
     modifier: Modifier = Modifier,
     username: String = "",
     showLogin: Boolean = true,
@@ -157,6 +162,9 @@ internal fun Settings(
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
     isNotificationListenerEnabled: Boolean = false,
     onGoToNotificationListenerSettings: () -> Unit = {},
+    showCrashReporterSettings: Boolean = false,
+    isCrashReportingEnabled: Boolean = false,
+    onCrashReportingEnabledChange: (Boolean) -> Unit = {},
     export: () -> Unit = {},
     versionName: String = "",
     versionCode: Int = 0,
@@ -200,6 +208,15 @@ internal fun Settings(
                 checked = sortReleaseGroupListItems,
                 onCheckedChange = onSortReleaseGroupListItemsChange,
             )
+
+            if (showCrashReporterSettings) {
+                SettingSwitch(
+                    header = "Enable crash reporting",
+                    subtitle = "App restart is required when switching off",
+                    checked = isCrashReportingEnabled,
+                    onCheckedChange = onCrashReportingEnabledChange,
+                )
+            }
 
             ListSeparatorHeader(text = strings.experimentalSearch)
             if (showAndroidSettings) {

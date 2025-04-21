@@ -10,9 +10,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.core.logging.crash.CrashReporterSettings
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
-import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
+import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 
 private const val THEME_KEY = "theme"
@@ -35,6 +36,7 @@ private val SHOW_REMOTE_COLLECTIONS_PREFERENCE =
 internal class AppPreferencesImpl(
     private val preferencesDataStore: DataStore<Preferences>,
     private val coroutineScope: CoroutineScope,
+    private val crashReporterSettings: CrashReporterSettings,
 ) : AppPreferences {
 
     override val theme: Flow<AppPreferences.Theme>
@@ -184,4 +186,13 @@ internal class AppPreferencesImpl(
         }
     }
     // endregion
+
+    override val showCrashReporterSettings: Boolean = crashReporterSettings.showCrashReporterSettings
+
+    override val isCrashReportingEnabled: Flow<Boolean>
+        get() = crashReporterSettings.isCrashReportingEnabled
+
+    override fun setEnableCrashReporting(enable: Boolean) {
+        crashReporterSettings.enableCrashReporting(enable)
+    }
 }

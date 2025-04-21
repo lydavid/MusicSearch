@@ -22,6 +22,12 @@ fun String.getYear(): String =
  */
 fun String.useHttps(): String = replace("http://", "https://")
 
+inline fun String.ifNotEmpty(block: (String) -> Unit) {
+    if (this.isNotEmpty()) {
+        block(this)
+    }
+}
+
 inline fun String?.ifNotNullOrEmpty(block: (String) -> Unit) {
     if (!this.isNullOrEmpty()) {
         block(this)

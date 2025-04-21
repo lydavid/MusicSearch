@@ -9,6 +9,7 @@ internal sealed interface SettingsUiEvent : CircuitUiEvent {
     data class UpdateUseMaterialYou(val use: Boolean) : SettingsUiEvent
     data class UpdateShowMoreInfoInReleaseListItem(val show: Boolean) : SettingsUiEvent
     data class UpdateSortReleaseGroupListItems(val sort: Boolean) : SettingsUiEvent
+    data class EnableCrashReporting(val enable: Boolean) : SettingsUiEvent
     data class GoToScreen(val screen: Screen) : SettingsUiEvent
     data object Logout : SettingsUiEvent
     data object ExportDatabase : SettingsUiEvent

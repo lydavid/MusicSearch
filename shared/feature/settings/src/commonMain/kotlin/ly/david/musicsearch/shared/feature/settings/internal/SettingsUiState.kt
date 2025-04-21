@@ -11,6 +11,8 @@ internal data class SettingsUiState(
     val useMaterialYou: Boolean,
     val showMoreInfoInReleaseListItem: Boolean = true,
     val sortReleaseGroupListItems: Boolean = false,
+    val showCrashReporterSettings: Boolean = false,
+    val isCrashReportingEnabled: Boolean = false,
     val loginState: LoginUiState,
     val snackbarMessage: String? = null,
     val databaseVersion: String,

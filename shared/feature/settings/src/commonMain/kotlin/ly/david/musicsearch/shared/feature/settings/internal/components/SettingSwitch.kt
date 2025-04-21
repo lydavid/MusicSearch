@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.feature.settings.internal.components
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
@@ -20,6 +22,7 @@ internal fun SettingSwitch(
     header: String,
     checked: Boolean,
     modifier: Modifier = Modifier,
+    subtitle: String = "",
     onCheckedChange: (Boolean) -> Unit = {},
 ) {
     Row(
@@ -36,10 +39,18 @@ internal fun SettingSwitch(
             ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
-            text = header,
-            style = TextStyles.getCardBodyTextStyle(),
-        )
+        Column {
+            Text(
+                text = header,
+                style = TextStyles.getCardBodyTextStyle(),
+            )
+            subtitle.ifNotEmpty {
+                Text(
+                    text = it,
+                    style = TextStyles.getCardBodySubTextStyle(),
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.weight(1f))
 

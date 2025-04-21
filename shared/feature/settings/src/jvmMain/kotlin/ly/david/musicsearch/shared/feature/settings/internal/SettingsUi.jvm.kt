@@ -30,7 +30,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
-internal actual fun Settings(
+internal actual fun SettingsUi(
     state: SettingsUiState,
     modifier: Modifier,
 ) {
@@ -47,7 +47,7 @@ internal actual fun Settings(
         )
     }
 
-    Settings(
+    SettingsUi(
         state = state,
         showAndroidSettings = false,
         modifier = modifier,

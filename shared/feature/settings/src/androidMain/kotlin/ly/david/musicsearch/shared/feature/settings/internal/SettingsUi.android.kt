@@ -13,13 +13,13 @@ import androidx.core.app.NotificationManagerCompat
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @Composable
-internal actual fun Settings(
+internal actual fun SettingsUi(
     state: SettingsUiState,
     modifier: Modifier,
 ) {
     val context = LocalContext.current
 
-    Settings(
+    SettingsUi(
         state = state,
         showAndroidSettings = true,
         modifier = modifier,
@@ -40,7 +40,7 @@ private fun Context.isNotificationListenerEnabled(): Boolean {
 internal fun PreviewSettingsScreen() {
     PreviewTheme {
         Surface {
-            Settings(
+            SettingsUi(
                 versionName = "1.0.0",
                 versionCode = 1,
                 databaseVersion = "1",
@@ -54,7 +54,7 @@ internal fun PreviewSettingsScreen() {
 internal fun PreviewSettingsScreenNotificationListenerEnable() {
     PreviewTheme {
         Surface {
-            Settings(
+            SettingsUi(
                 isNotificationListenerEnabled = true,
                 versionName = "1.0.0",
                 versionCode = 1,
