@@ -1,20 +1,18 @@
-name: Nightly chores
+name: Update licenses
 
 on:
-  schedule:
-    - cron: '42 4 * * *'
+  push:
+    paths:
+      - "**/libs.versions.toml"
+  workflow_call:
+    secrets:
+      PAT:
+        required: true
   workflow_dispatch:
 
 jobs:
-  update-schema-diagram:
-    permissions:
-      contents: write
-    uses: ./.github/workflows/update-dependency-graph.yml
-    secrets:
-      PAT: ${{ secrets.PAT }}
-
-  format-version-catalog:
-    name: Format version catalog
+  update-licenses:
+    name: Update aboutlibraries.json for F-Droid release variant
     runs-on: ubuntu-22.04
     permissions:
       contents: write
@@ -27,12 +25,13 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
-      - run: ./gradlew versionCatalogFormat
+      - run: ./gradlew android:app:exportLibraryDefinitions -PaboutLibraries.exportVariant=fDroidRelease
 
       - run: git pull --rebase --autostash
 
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5.2.0
         with:
-          commit_message: 'chore: format version catalog [skip ci]'
+          commit_message: 'chore: update licenses [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          file_pattern: 'aboutlibraries.json'

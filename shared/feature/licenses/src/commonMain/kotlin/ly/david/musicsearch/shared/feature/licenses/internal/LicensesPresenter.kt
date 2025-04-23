@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.feature.licenses.internal
 
 import androidx.compose.runtime.Composable
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 
@@ -20,3 +21,11 @@ internal class LicensesPresenter(
         )
     }
 }
+
+internal sealed interface LicensesUiEvent {
+    data object NavigateUp : LicensesUiEvent
+}
+
+internal data class LicensesUiState(
+    val eventSink: (LicensesUiEvent) -> Unit,
+) : CircuitUiState

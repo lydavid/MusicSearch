@@ -101,6 +101,7 @@ jobs:
         id: build-google
         run: |
           git restore build.gradle.kts
+          ./gradlew android:app:exportLibraryDefinitions -PaboutLibraries.exportVariant=googlePlayRelease
           ./gradlew assembleGooglePlayRelease bundleGooglePlayRelease
         env:
           ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID }}
@@ -125,9 +126,11 @@ jobs:
           releaseFiles: android/app/build/outputs/bundle/googlePlayRelease/app-googlePlay-release.aab
           mappingFile: android/app/build/outputs/mapping/googlePlayRelease/mapping.txt
 
-      - name: Create jars
+      - name: Setup desktop
         if: always() && steps.get-next-version.outputs.new-release-published == 'true'
-        run: ./gradlew jar
+        run: |
+          ./gradlew desktop:app:exportLibraryDefinitions
+          ./gradlew jar
         env:
           ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID }}
           ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET }}

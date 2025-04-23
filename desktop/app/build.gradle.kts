@@ -15,6 +15,9 @@ version = project.properties["VERSION_NAME"] as String
 
 aboutLibraries {
     excludeFields = arrayOf("generated")
+    outputPath = "../../shared/feature/licenses/src/commonMain/composeResources/files/"
+
+    prettyPrint = true
 }
 
 dependencies {

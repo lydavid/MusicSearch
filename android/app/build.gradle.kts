@@ -5,6 +5,7 @@ plugins {
     id("ly.david.android.application")
     id("ly.david.musicsearch.compose.multiplatform")
     alias(libs.plugins.baselineprofile)
+    alias(libs.plugins.aboutlibraries)
 }
 
 // For F-Droid, remove google-services.json and we will not apply these plugins.
@@ -133,3 +134,13 @@ dependencies {
 
 fun DependencyHandler.googlePlayImplementation(dependencyNotation: Any) =
     add("googlePlayImplementation", dependencyNotation)
+
+aboutLibraries {
+    excludeFields = arrayOf("generated")
+    outputPath = "../../shared/feature/licenses/src/commonMain/composeResources/files/"
+
+    prettyPrint = true
+    android {
+        registerAndroidTasks = false
+    }
+}
