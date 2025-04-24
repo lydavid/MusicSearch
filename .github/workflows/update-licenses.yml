@@ -2,6 +2,8 @@ name: Update licenses
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "**/libs.versions.toml"
   workflow_call:
