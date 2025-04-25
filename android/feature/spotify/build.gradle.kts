@@ -15,10 +15,13 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.circuit.foundation)
     implementation(libs.koin.core)
+
+    implementation(platform(libs.compose.bom))
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.preview)
+
     implementation(libs.paging.compose)
     implementation(libs.paging.common)
 

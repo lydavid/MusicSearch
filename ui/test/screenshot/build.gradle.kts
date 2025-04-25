@@ -15,8 +15,11 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.test)
     implementation(libs.bundles.kotlinx.coroutines)
+
+    implementation(platform(libs.compose.bom))
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
+
     implementation(libs.paparazzi)
     implementation(libs.test.parameter.injector)
 }
