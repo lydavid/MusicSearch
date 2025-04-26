@@ -69,7 +69,7 @@ class ReleasesListRepositoryImpl(
                 }
 
                 MusicBrainzEntity.COLLECTION -> {
-                    collectionEntityDao.deleteAllFromCollection(entityId)
+                    collectionEntityDao.deleteEntityLinksFromCollection(entityId)
                 }
 
                 MusicBrainzEntity.LABEL -> {

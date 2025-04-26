@@ -19,7 +19,7 @@ FROM collection_entity ce
 INNER JOIN collection c ON c.id = ce.id
 WHERE c.id = :collectionId;
 
-deleteAllFromCollection:
+deleteEntitiyLinksFromCollection:
 DELETE FROM collection_entity
 WHERE id = :collectionId;
 

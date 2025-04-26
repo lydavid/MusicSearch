@@ -41,8 +41,8 @@ class CollectionEntityDao(
         }
     }
 
-    fun deleteAllFromCollection(collectionId: String) {
-        transacter.deleteAllFromCollection(collectionId)
+    fun deleteEntityLinksFromCollection(collectionId: String) {
+        transacter.deleteEntitiyLinksFromCollection(collectionId)
     }
 
     fun deleteFromCollection(

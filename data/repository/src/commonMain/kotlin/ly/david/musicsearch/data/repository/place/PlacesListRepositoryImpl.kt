@@ -67,7 +67,7 @@ class PlacesListRepositoryImpl(
                 }
 
                 MusicBrainzEntity.COLLECTION -> {
-                    collectionEntityDao.deleteAllFromCollection(entityId)
+                    collectionEntityDao.deleteEntityLinksFromCollection(entityId)
                 }
 
                 else -> error(browseEntitiesNotSupported(entity))

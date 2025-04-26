@@ -63,7 +63,7 @@ class RecordingsListRepositoryImpl(
 
             when (entity) {
                 MusicBrainzEntity.COLLECTION -> {
-                    collectionEntityDao.deleteAllFromCollection(entityId)
+                    collectionEntityDao.deleteEntityLinksFromCollection(entityId)
                 }
 
                 else -> {
