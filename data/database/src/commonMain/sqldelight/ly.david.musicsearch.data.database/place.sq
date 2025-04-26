@@ -36,10 +36,9 @@ deletePlace:
 DELETE FROM place
 WHERE id = :id;
 
--- An area can have many places
--- A place belongs to an area, and all areas that contains that area
--- When viewing a place, we will show the most specific area
--- TODO: rename table
+-- places by area
+
+-- Reuse this if we need a places_by_entity
 CREATE TABLE IF NOT EXISTS area_place (
   area_id TEXT NOT NULL,
   place_id TEXT NOT NULL,
@@ -50,8 +49,6 @@ CREATE TABLE IF NOT EXISTS area_place (
 insertOrIgnoreAreaPlace:
 INSERT OR IGNORE INTO area_place
 VALUES ?;
-
--- places by area
 
 deletePlacesByArea {
 DELETE FROM area_place WHERE area_id = :areaId;
