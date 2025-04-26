@@ -45,24 +45,7 @@ insertOrIgnoreRecordingByEntity:
 INSERT OR IGNORE INTO recordings_by_entity
 VALUES ?;
 
-deleteRecordingsByEntity {
-WITH
-  recordings_linked_to_multiple_entities AS (
-    SELECT recording_id
-    FROM recordings_by_entity
-    GROUP BY recording_id
-    HAVING COUNT(DISTINCT entity_id) > 1
-  ),
-  recordings_to_delete AS (
-    SELECT r.id
-    FROM recording r
-    INNER JOIN recordings_by_entity re ON r.id = re.recording_id
-    WHERE re.entity_id = :entityId
-    AND r.id NOT IN (SELECT recording_id FROM recordings_linked_to_multiple_entities)
-  )
-DELETE FROM recording
-WHERE id IN (SELECT id FROM recordings_to_delete);
-
+deleteRecordingLinksByEntity {
 DELETE FROM recordings_by_entity WHERE entity_id = :entityId;
 }
 

@@ -483,7 +483,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
     }
 
     @Test
-    fun `refreshing events that belong to multiple entities does not delete the event`() = runTest {
+    fun `refreshing events does not delete the event`() = runTest {
         setupEventsByPlace()
         setupEventsByArea()
 
@@ -574,14 +574,13 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             )
         }
 
-        // now only new version of event exists
-        // however, the other event is never updated unless we go into it and refresh
         eventsListRepository.observeEvents(
             browseMethod = BrowseMethod.All,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
+                    kissAtBudokanListItemModel,
                     kissAtBudokanListItemModel.copy(
                         id = "new-id-is-considered-a-different-event",
                     ),

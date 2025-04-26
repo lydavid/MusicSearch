@@ -103,8 +103,8 @@ class EventDao(
         }
     }
 
-    fun deleteEventsByEntity(entityId: String) {
-        transacter.deleteEventsByEntity(entityId)
+    fun deleteEventLinksByEntity(entityId: String) {
+        transacter.deleteEventLinksByEntity(entityId)
     }
 
     fun observeCountOfEventsByEntity(entityId: String): Flow<Int> =

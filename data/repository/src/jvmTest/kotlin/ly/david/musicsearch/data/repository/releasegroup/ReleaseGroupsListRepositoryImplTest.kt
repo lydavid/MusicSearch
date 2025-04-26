@@ -323,7 +323,7 @@ class ReleaseGroupsListRepositoryImplTest :
     }
 
     @Test
-    fun `refreshing releaseGroups that belong to multiple entities does not delete the releaseGroup`() = runTest {
+    fun `refreshing release groups does not delete the release group`() = runTest {
         setupReleaseGroupsByBerlinerPhilharmoniker()
         setupReleaseGroupsByTchaikovsky()
         setupReleaseGroupsByCollection()
@@ -400,9 +400,9 @@ class ReleaseGroupsListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
+                    alsoSprachZarathustraReleaseGroupListItemModel,
                     nutcrackerReleaseGroupListItemModel,
                     tchaikovskyOverturesReleaseGroupListItemModel,
-                    alsoSprachZarathustraReleaseGroupListItemModel,
                     nutcrackerReleaseGroupListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),
@@ -488,8 +488,8 @@ class ReleaseGroupsListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    nutcrackerReleaseGroupListItemModel,
                     alsoSprachZarathustraReleaseGroupListItemModel,
+                    nutcrackerReleaseGroupListItemModel,
                     nutcrackerReleaseGroupListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),

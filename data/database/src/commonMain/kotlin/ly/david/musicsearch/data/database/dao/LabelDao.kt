@@ -118,8 +118,8 @@ class LabelDao(
         }
     }
 
-    fun deleteLabelsByEntity(entityId: String) {
-        transacter.deleteLabelsByEntity(entityId)
+    fun deleteLabelLinksByEntity(entityId: String) {
+        transacter.deleteLabelLinksByEntity(entityId)
     }
 
     fun observeCountOfLabelsByEntity(entityId: String): Flow<Int> =

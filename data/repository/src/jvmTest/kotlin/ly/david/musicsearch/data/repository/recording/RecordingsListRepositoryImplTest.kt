@@ -284,7 +284,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository {
     }
 
     @Test
-    fun `refreshing recordings that belong to multiple entities does not delete the recording`() = runTest {
+    fun `refreshing recordings does not delete the recording`() = runTest {
         setUpRecordingsByArtist()
         setupRecordingsByWork()
 
@@ -375,14 +375,14 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository {
             )
         }
 
-        // now only new version of recording exists
-        // however, the other recording is never updated unless we go into it and refresh
+        // both versions will continue to exist
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.All,
             listFilters = ListFilters(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
+                    skycladObserverRecordingListItemModel,
                     skycladObserverRecordingListItemModel.copy(
                         id = "new-id-is-considered-a-different-recording",
                     ),
@@ -452,6 +452,8 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository {
                 recordingDetailsModel,
             )
         }
+
+
     }
 
     @Test
@@ -499,8 +501,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository {
             assertEquals(
                 listOf(
                     underPressureRecordingListItemModel,
-                    // TODO: recording was deleted because we deleted it in another screen
-//                    skycladObserverRecordingListItemModel,
+                    skycladObserverRecordingListItemModel,
                 ),
                 this,
             )

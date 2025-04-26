@@ -51,7 +51,7 @@ class AreasListRepositoryImpl(
         )
     }
 
-    override fun deleteLinkedEntitiesByEntity(
+    override fun deleteEntityLinksByEntity(
         entityId: String,
         entity: MusicBrainzEntity,
     ) {

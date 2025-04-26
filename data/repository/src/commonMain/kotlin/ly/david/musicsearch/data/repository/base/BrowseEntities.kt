@@ -63,7 +63,7 @@ abstract class BrowseEntities<
             )
         },
         deleteLocalEntity = {
-            deleteLinkedEntitiesByEntity(
+            deleteEntityLinksByEntity(
                 entityId = entityId,
                 entity = entity,
             )
@@ -88,7 +88,7 @@ abstract class BrowseEntities<
         entity: MusicBrainzEntity,
     ): Int
 
-    abstract fun deleteLinkedEntitiesByEntity(
+    abstract fun deleteEntityLinksByEntity(
         entityId: String,
         entity: MusicBrainzEntity,
     )

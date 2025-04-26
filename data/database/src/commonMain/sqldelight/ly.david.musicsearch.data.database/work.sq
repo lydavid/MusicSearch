@@ -42,24 +42,7 @@ insertOrIgnoreWorkByEntity:
 INSERT OR IGNORE INTO works_by_entity
 VALUES ?;
 
-deleteWorksByEntity {
-WITH
-  works_linked_to_multiple_entities AS (
-    SELECT work_id
-    FROM works_by_entity
-    GROUP BY work_id
-    HAVING COUNT(DISTINCT entity_id) > 1
-  ),
-  works_to_delete AS (
-    SELECT w.id
-    FROM work w
-    INNER JOIN works_by_entity we ON w.id = we.work_id
-    WHERE we.entity_id = :entityId
-    AND w.id NOT IN (SELECT work_id FROM works_linked_to_multiple_entities)
-  )
-DELETE FROM work
-WHERE id IN (SELECT id FROM works_to_delete);
-
+deleteWorkLinksByEntity {
 DELETE FROM works_by_entity WHERE entity_id = :entityId;
 }
 

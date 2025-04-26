@@ -109,8 +109,8 @@ class RecordingDao(
         }
     }
 
-    fun deleteRecordingsByEntity(entityId: String) {
-        transacter.deleteRecordingsByEntity(entityId)
+    fun deleteRecordingLinksByEntity(entityId: String) {
+        transacter.deleteRecordingLinksByEntity(entityId)
     }
 
     fun observeCountOfRecordingsByEntity(entityId: String): Flow<Int> =

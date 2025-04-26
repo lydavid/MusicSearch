@@ -51,7 +51,7 @@ class EventsListRepositoryImpl(
         return eventDao.observeCountOfAllEvents()
     }
 
-    override fun deleteLinkedEntitiesByEntity(
+    override fun deleteEntityLinksByEntity(
         entityId: String,
         entity: MusicBrainzEntity,
     ) {
@@ -67,7 +67,7 @@ class EventsListRepositoryImpl(
                 }
 
                 else -> {
-                    eventDao.deleteEventsByEntity(entityId)
+                    eventDao.deleteEventLinksByEntity(entityId)
                 }
             }
         }

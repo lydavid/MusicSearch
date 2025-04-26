@@ -431,7 +431,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
     }
 
     @Test
-    fun `refreshing artists that belong to multiple entities does not delete the artist`() = runTest {
+    fun `refreshing artists does not delete the artist`() = runTest {
         setUpArtistsByRelease()
         setUpJapaneseArtists()
 
@@ -441,7 +441,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             ),
             itouKanakoArtistMusicBrainzModel,
             bumpOfChickenMusicBrainzModel.copy(
-                disambiguation = "some change that will",
+                disambiguation = "this won't either",
             ),
         )
         val artistsListRepository = createArtistsListRepository(
@@ -460,9 +460,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         }.run {
             assertEquals(
                 listOf(
-                    bumpOfChickenListItemModel.copy(
-                        disambiguation = "some change that will",
-                    ),
+                    bumpOfChickenListItemModel,
                     roseliaArtistListItemModel,
                     itouKanakoArtistListItemModel,
                 ),

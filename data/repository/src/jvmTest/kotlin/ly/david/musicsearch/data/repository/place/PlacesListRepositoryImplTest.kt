@@ -309,7 +309,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
     }
 
     @Test
-    fun `refreshing places that belong to multiple entities does not delete the place`() = runTest {
+    fun `refreshing places does not delete the place`() = runTest {
         setUpMarunouchiPlaces()
         setUpChiyodaPlaces()
 

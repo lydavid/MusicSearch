@@ -71,7 +71,7 @@ class ReleaseGroupsListRepositoryImpl(
         )
     }
 
-    override fun deleteLinkedEntitiesByEntity(
+    override fun deleteEntityLinksByEntity(
         entityId: String,
         entity: MusicBrainzEntity,
     ) {
@@ -83,7 +83,7 @@ class ReleaseGroupsListRepositoryImpl(
 
             when (entity) {
                 MusicBrainzEntity.ARTIST -> {
-                    releaseGroupDao.deleteReleaseGroupsByArtist(entityId)
+                    releaseGroupDao.deleteReleaseGroupLinksByArtist(entityId)
                 }
 
                 MusicBrainzEntity.COLLECTION -> {

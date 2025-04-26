@@ -52,24 +52,7 @@ insertOrIgnoreLabelByEntity:
 INSERT OR IGNORE INTO labels_by_entity
 VALUES ?;
 
-deleteLabelsByEntity {
-WITH
-  labels_linked_to_multiple_entities AS (
-    SELECT label_id
-    FROM labels_by_entity
-    GROUP BY label_id
-    HAVING COUNT(DISTINCT entity_id) > 1
-  ),
-  labels_to_delete AS (
-    SELECT l.id
-    FROM label l
-    INNER JOIN labels_by_entity le ON l.id = le.label_id
-    WHERE le.entity_id = :entityId
-    AND l.id NOT IN (SELECT label_id FROM labels_linked_to_multiple_entities)
-  )
-DELETE FROM event
-WHERE id IN (SELECT id FROM labels_to_delete);
-
+deleteLabelLinksByEntity {
 DELETE FROM labels_by_entity WHERE entity_id = :entityId;
 }
 

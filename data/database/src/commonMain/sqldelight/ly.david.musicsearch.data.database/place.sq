@@ -54,23 +54,6 @@ VALUES ?;
 -- places by area
 
 deletePlacesByArea {
-WITH
-  places_linked_to_multiple_entities AS (
-    SELECT place_id
-    FROM area_place
-    GROUP BY place_id
-    HAVING COUNT(DISTINCT area_id) > 1
-  ),
-  places_to_delete AS (
-    SELECT p.id
-    FROM place p
-    INNER JOIN area_place ap ON p.id = ap.place_id
-    WHERE ap.area_id = :areaId
-    AND p.id NOT IN (SELECT place_id FROM places_linked_to_multiple_entities)
-  )
-DELETE FROM place
-WHERE id IN (SELECT id FROM places_to_delete);
-
 DELETE FROM area_place WHERE area_id = :areaId;
 }
 

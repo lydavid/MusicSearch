@@ -52,29 +52,6 @@ insertOrIgnoreAreasByEntity:
 INSERT OR IGNORE INTO areas_by_entity
 VALUES ?;
 
--- for the future when we combine areas by collection
--- this should not be used for release events
-deleteAreasByEntity {
-WITH
-  areas_linked_to_multiple_entities AS (
-    SELECT area_id
-    FROM areas_by_entity
-    GROUP BY area_id
-    HAVING COUNT(DISTINCT entity_id) > 1
-  ),
-  areas_to_delete AS (
-    SELECT a.id
-    FROM area a
-    INNER JOIN areas_by_entity ae ON ae.area_id = a.id
-    WHERE ae.entity_id = :entityId
-    AND a.id NOT IN (SELECT area_id FROM areas_linked_to_multiple_entities)
-  )
-DELETE FROM area
-WHERE id IN (SELECT id FROM areas_to_delete);
-
-DELETE FROM areas_by_entity WHERE entity_id = :entityId;
-}
-
 -- all areas
 
 getCountOfAllAreas:

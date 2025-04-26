@@ -463,7 +463,7 @@ class ReleasesListRepositoryImplTest :
     }
 
     @Test
-    fun `refreshing releases by area that belong to multiple entities does not delete the release`() = runTest {
+    fun `refreshing releases does not delete the release`() = runTest {
         `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`()
 
         val areaId = japanAreaMusicBrainzModel.id
@@ -577,7 +577,7 @@ class ReleasesListRepositoryImplTest :
     }
 
     @Test
-    fun `refreshing releases by label that belong to multiple entities does not delete the release`() = runTest {
+    fun `refreshing releases by label does not delete the release`() = runTest {
         `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`()
 
         val areaId = japanAreaMusicBrainzModel.id
@@ -935,7 +935,7 @@ class ReleasesListRepositoryImplTest :
     }
 
     @Test
-    fun `refreshing releases by artist that belong to multiple entities does not delete the release`() = runTest {
+    fun `refreshing releases by artist does not delete the release`() = runTest {
         setupReleasesByDavidBowie()
         setupReleasesByJapan()
 
@@ -1009,6 +1009,7 @@ class ReleasesListRepositoryImplTest :
                         releaseCountryCount = 1,
                     ),
                     underPressureReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),
@@ -1103,6 +1104,7 @@ class ReleasesListRepositoryImplTest :
                         releaseCountryCount = 1,
                     ),
                     underPressureReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),
@@ -1121,7 +1123,7 @@ class ReleasesListRepositoryImplTest :
     }
 
     @Test
-    fun `refreshing releases by recording that belong to multiple entities does not delete the release`() = runTest {
+    fun `refreshing releases by recording does not delete the release`() = runTest {
         setupReleasesByDavidBowie()
         setupReleasesByUnderPressureRecording()
 
@@ -1287,7 +1289,7 @@ class ReleasesListRepositoryImplTest :
     }
 
     @Test
-    fun `refreshing releases by release group that belong to multiple entities does not delete the release`() =
+    fun `refreshing releases by release group does not delete the release`() =
         runTest {
             setupReleasesByUnderPressureRecording()
             setupReleasesByUnderPressureReleaseGroup()

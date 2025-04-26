@@ -52,24 +52,7 @@ insertOrIgnoreReleaseGroupByEntity:
 INSERT OR IGNORE INTO release_groups_by_entity
 VALUES ?;
 
-deleteReleaseGroupsByEntity {
-WITH
-  release_groups_linked_to_multiple_entities AS (
-    SELECT release_group_id
-    FROM release_groups_by_entity
-    GROUP BY release_group_id
-    HAVING COUNT(DISTINCT entity_id) > 1
-  ),
-  release_groups_to_delete AS (
-    SELECT rg.id
-    FROM release_group rg
-    INNER JOIN release_groups_by_entity rge ON rg.id = rge.release_group_id
-    WHERE rge.entity_id = :entityId
-    AND rg.id NOT IN (SELECT release_group_id FROM release_groups_linked_to_multiple_entities)
-  )
-DELETE FROM release_group
-WHERE id IN (SELECT id FROM release_groups_to_delete);
-
+deleteReleaseGroupLinksByEntity {
 DELETE FROM release_groups_by_entity WHERE entity_id = :entityId;
 }
 

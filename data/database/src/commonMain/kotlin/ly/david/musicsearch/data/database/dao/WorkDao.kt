@@ -93,8 +93,8 @@ class WorkDao(
         }
     }
 
-    fun deleteWorksByEntity(entityId: String) {
-        transacter.deleteWorksByEntity(entityId)
+    fun deleteWorkLinksByEntity(entityId: String) {
+        transacter.deleteWorkLinksByEntity(entityId)
     }
 
     fun observeCountOfWorksByEntity(entityId: String): Flow<Int> =

@@ -68,24 +68,7 @@ insertOrIgnoreReleasesByEntity:
 INSERT OR IGNORE INTO releases_by_entity
 VALUES ?;
 
-deleteReleasesByEntity {
-WITH
-  releases_linked_to_multiple_entities AS (
-    SELECT release_id
-    FROM releases_by_entity
-    GROUP BY release_id
-    HAVING COUNT(DISTINCT entity_id) > 1
-  ),
-  releases_to_delete AS (
-    SELECT r.id
-    FROM `release` r
-    INNER JOIN releases_by_entity re ON re.release_id = r.id
-    WHERE re.entity_id = :entityId
-    AND r.id NOT IN (SELECT release_id FROM releases_linked_to_multiple_entities)
-  )
-DELETE FROM `release`
-WHERE id IN (SELECT id FROM releases_to_delete);
-
+deleteReleaseLinksByEntity {
 DELETE FROM releases_by_entity WHERE entity_id = :entityId;
 }
 

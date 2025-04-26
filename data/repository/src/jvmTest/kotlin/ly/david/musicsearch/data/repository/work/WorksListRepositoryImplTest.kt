@@ -339,7 +339,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
     }
 
     @Test
-    fun `refreshing works that belong to multiple entities does not delete the work`() = runTest {
+    fun `refreshing works does not delete the work`() = runTest {
         setupWorksByDavidBowie()
         setupWorksByQueen()
         setupWorksByCollection()
@@ -415,6 +415,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         ).asSnapshot().run {
             assertEquals(
                 listOf(
+                    starmanWorkListItemModel,
                     underPressureWorkListItemModel,
                     dontStopMeNowWorkListItemModel,
                     hackingToTheGateWorkListItemModel,

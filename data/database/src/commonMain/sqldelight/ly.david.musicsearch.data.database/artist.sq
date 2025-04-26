@@ -68,24 +68,7 @@ insertOrIgnoreArtistByEntity:
 INSERT OR IGNORE INTO artists_by_entity
 VALUES ?;
 
-deleteArtistsByEntity {
-WITH
-  artists_linked_to_multiple_entities AS (
-    SELECT artist_id
-    FROM artists_by_entity
-    GROUP BY artist_id
-    HAVING COUNT(DISTINCT entity_id) > 1
-  ),
-  artists_to_delete AS (
-    SELECT a.id
-    FROM artist a
-    INNER JOIN artists_by_entity ae ON a.id = ae.artist_id
-    WHERE ae.entity_id = :entityId
-    AND a.id NOT IN (SELECT artist_id FROM artists_linked_to_multiple_entities)
-  )
-DELETE FROM artist
-WHERE id IN (SELECT id FROM artists_to_delete);
-
+deleteArtistLinksByEntity {
 DELETE FROM artists_by_entity WHERE entity_id = :entityId;
 }
 

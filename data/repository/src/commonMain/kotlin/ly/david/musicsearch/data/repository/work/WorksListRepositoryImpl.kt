@@ -51,7 +51,7 @@ class WorksListRepositoryImpl(
         )
     }
 
-    override fun deleteLinkedEntitiesByEntity(
+    override fun deleteEntityLinksByEntity(
         entityId: String,
         entity: MusicBrainzEntity,
     ) {
@@ -67,7 +67,7 @@ class WorksListRepositoryImpl(
                 }
 
                 else -> {
-                    workDao.deleteWorksByEntity(entityId)
+                    workDao.deleteWorkLinksByEntity(entityId)
                 }
             }
         }

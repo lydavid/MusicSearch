@@ -33,7 +33,7 @@ interface ReleaseGroupDao : EntityDao {
         releaseGroupIds: List<String>,
     )
 
-    fun deleteReleaseGroupsByArtist(artistId: String)
+    fun deleteReleaseGroupLinksByArtist(artistId: String)
     fun observeCountOfReleaseGroupsByArtist(artistId: String): Flow<Int>
     fun getCountOfReleaseGroupsByArtist(artistId: String): Int
     fun getCountOfEachAlbumType(artistId: String): Flow<List<ReleaseGroupTypeCount>>
@@ -138,8 +138,8 @@ class ReleaseGroupDaoImpl(
         }
     }
 
-    override fun deleteReleaseGroupsByArtist(artistId: String) {
-        transacter.deleteReleaseGroupsByEntity(entityId = artistId)
+    override fun deleteReleaseGroupLinksByArtist(artistId: String) {
+        transacter.deleteReleaseGroupLinksByEntity(entityId = artistId)
     }
 
     override fun observeCountOfReleaseGroupsByArtist(artistId: String): Flow<Int> =

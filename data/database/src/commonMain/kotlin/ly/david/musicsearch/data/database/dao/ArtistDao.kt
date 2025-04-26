@@ -134,8 +134,8 @@ class ArtistDao(
         }
     }
 
-    fun deleteArtistsByEntity(entityId: String) {
-        transacter.deleteArtistsByEntity(entityId)
+    fun deleteArtistLinksByEntity(entityId: String) {
+        transacter.deleteArtistLinksByEntity(entityId)
     }
 
     fun observeCountOfArtistsByEntity(entityId: String): Flow<Int> =

@@ -51,7 +51,7 @@ class RecordingsListRepositoryImpl(
         )
     }
 
-    override fun deleteLinkedEntitiesByEntity(
+    override fun deleteEntityLinksByEntity(
         entityId: String,
         entity: MusicBrainzEntity,
     ) {
@@ -67,7 +67,7 @@ class RecordingsListRepositoryImpl(
                 }
 
                 else -> {
-                    recordingDao.deleteRecordingsByEntity(entityId)
+                    recordingDao.deleteRecordingLinksByEntity(entityId)
                 }
             }
         }

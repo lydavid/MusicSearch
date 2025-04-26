@@ -242,7 +242,7 @@ class ReleaseDao(
 
     fun deleteReleasesByLabel(labelId: String) {
         withTransaction {
-            deleteReleasesByEntity(labelId)
+            deleteReleaseLinksByEntity(labelId)
             transacter.deleteReleasesByLabelLinks(labelId = labelId)
         }
     }
@@ -312,7 +312,7 @@ class ReleaseDao(
     )
 
     fun deleteReleasesByCountry(areaId: String) {
-        deleteReleasesByEntity(entityId = areaId)
+        deleteReleaseLinksByEntity(entityId = areaId)
         // Do not delete from release_country,
         // so that refreshing an area's release will not remove a release's release events
     }
@@ -355,8 +355,8 @@ class ReleaseDao(
         },
     )
 
-    fun deleteReleasesByEntity(entityId: String) {
-        transacter.deleteReleasesByEntity(entityId)
+    fun deleteReleaseLinksByEntity(entityId: String) {
+        transacter.deleteReleaseLinksByEntity(entityId)
     }
 
     fun observeCountOfReleasesByEntity(entityId: String): Flow<Int> =

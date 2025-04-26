@@ -53,7 +53,7 @@ class ReleasesListRepositoryImpl(
         )
     }
 
-    override fun deleteLinkedEntitiesByEntity(
+    override fun deleteEntityLinksByEntity(
         entityId: String,
         entity: MusicBrainzEntity,
     ) {
@@ -76,7 +76,7 @@ class ReleasesListRepositoryImpl(
                     releaseDao.deleteReleasesByLabel(entityId)
                 }
 
-                else -> releaseDao.deleteReleasesByEntity(entityId)
+                else -> releaseDao.deleteReleaseLinksByEntity(entityId)
             }
         }
     }
