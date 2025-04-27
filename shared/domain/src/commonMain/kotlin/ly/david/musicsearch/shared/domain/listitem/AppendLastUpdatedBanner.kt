@@ -6,9 +6,7 @@ import androidx.paging.insertFooterItem
 import androidx.paging.map
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transformLatest
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -18,26 +16,29 @@ fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
     browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
     browseMethod: BrowseMethod,
     browseEntity: MusicBrainzEntity,
-): Flow<PagingData<ListItemModel>> = flatMapMerge { releaseGroups ->
-    val browseByEntity = browseMethod as? BrowseMethod.ByEntity
-    if (browseByEntity != null) {
-        browseRemoteMetadataRepository.observe(
-            entityId = browseByEntity.entityId,
-            entity = browseEntity,
-        ).map { browseRemoteMetadata ->
-            Pair(releaseGroups, browseRemoteMetadata)
+): Flow<PagingData<ListItemModel>> {
+    return transformLatest { releaseGroups ->
+        val browseByEntity = browseMethod as? BrowseMethod.ByEntity
+        if (browseByEntity != null) {
+            browseRemoteMetadataRepository.observe(
+                entityId = browseByEntity.entityId,
+                entity = browseEntity,
+            ).collect { browseRemoteMetadata ->
+                if (browseRemoteMetadata == null) {
+                    emit(releaseGroups.map { it as ListItemModel })
+                } else {
+                    emit(
+                        releaseGroups
+                            .map { it as ListItemModel }
+                            .insertFooterItem(
+                                terminalSeparatorType = TerminalSeparatorType.FULLY_COMPLETE,
+                                item = LastUpdatedFooter(lastUpdated = browseRemoteMetadata.lastUpdated),
+                            ),
+                    )
+                }
+            }
+        } else {
+            emit(releaseGroups.map { it as ListItemModel })
         }
-    } else {
-        flowOf(Pair(releaseGroups, null))
     }
 }
-    .map { (pagingData, browseRemoteMetadata) ->
-        if (browseRemoteMetadata == null) return@map pagingData.map { it as T }
-
-        pagingData
-            .map { it as ListItemModel }
-            .insertFooterItem(
-                terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
-                item = LastUpdatedFooter(lastUpdated = browseRemoteMetadata.lastUpdated),
-            )
-    }
