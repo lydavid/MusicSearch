@@ -50,7 +50,7 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     customNoResultsText: String = "",
-    keyed: Boolean = true,
+    keyed: Boolean = false,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit,
 ) {
     val strings = LocalStrings.current
@@ -92,7 +92,8 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
                 ) {
                     items(
                         count = lazyPagingItems.itemCount,
-                        // TODO: sometimes the footer loads first, so its position is kept
+                        // TODO: do not set keyed to true without resolving the issue with footer
+                        //  sometimes showing up before the rest and causing it to stay as the first visible item.
                         key = lazyPagingItems.itemKey { it.id }.takeIf { keyed },
                         contentType = { lazyPagingItems[it] },
                     ) { index ->
