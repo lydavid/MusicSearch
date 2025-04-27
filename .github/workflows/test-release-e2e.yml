@@ -130,7 +130,7 @@ jobs:
           arch: x86_64
           profile: pixel_3a
           force-avd-creation: false
-          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -memory 4096 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot-save
           disable-animations: true
           sdcard-path-or-size: 100M
           script: |
