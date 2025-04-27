@@ -29,7 +29,6 @@ fun GenresListScreen(
                     content = {
                         GenreListItem(
                             genre = listItemModel,
-                            modifier = Modifier.animateItemPlacement(),
                         ) {
                             onItemClick(
                                 MusicBrainzEntity.GENRE,
