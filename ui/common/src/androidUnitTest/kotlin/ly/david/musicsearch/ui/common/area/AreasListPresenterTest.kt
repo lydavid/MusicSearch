@@ -10,6 +10,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.usecase.GetAreas
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,13 +20,13 @@ import org.robolectric.RobolectricTestRunner
 class AreasListPresenterTest {
 
     private fun createPresenter(
-        listItems: List<AreaListItemModel>,
+        listItems: List<ListItemModel>,
     ) = AreasListPresenter(
         getAreas = object : GetAreas {
             override fun invoke(
                 browseMethod: BrowseMethod?,
                 listFilters: ListFilters,
-            ): Flow<PagingData<AreaListItemModel>> {
+            ): Flow<PagingData<ListItemModel>> {
                 return flowOf(PagingData.from(listItems))
             }
         },

@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common.releasegroup
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import app.cash.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
@@ -23,8 +24,9 @@ fun ReleaseGroupsListScreen(
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = {},
 ) {
+    val lazyPagingItems = state.pagingDataFlow.collectAsLazyPagingItems()
     ScreenWithPagingLoadingAndError(
-        lazyPagingItems = state.lazyPagingItems,
+        lazyPagingItems = lazyPagingItems,
         modifier = modifier,
         lazyListState = state.lazyListState,
     ) { listItemModel: ListItemModel? ->
