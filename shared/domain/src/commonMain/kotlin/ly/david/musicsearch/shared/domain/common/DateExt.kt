@@ -8,7 +8,7 @@ import kotlinx.datetime.periodUntil
 
 internal const val DATE_FORMAT = "EEEE, MMMM d"
 internal const val TIME_FORMAT = "hh:mm a"
-internal const val DATE_TIME_FORMAT = "$DATE_FORMAT, $TIME_FORMAT"
+internal const val DATE_TIME_FORMAT = "YYYY-MM-dd hh:mm:ss"
 
 // See https://github.com/Kotlin/kotlinx-datetime/issues/211 for implementation details for jvm and ios.
 

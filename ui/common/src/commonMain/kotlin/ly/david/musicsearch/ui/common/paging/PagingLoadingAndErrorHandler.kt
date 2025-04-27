@@ -92,6 +92,7 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
                 ) {
                     items(
                         count = lazyPagingItems.itemCount,
+                        // TODO: sometimes the footer loads first, so its position is kept
                         key = lazyPagingItems.itemKey { it.id }.takeIf { keyed },
                         contentType = { lazyPagingItems[it] },
                     ) { index ->

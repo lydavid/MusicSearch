@@ -1,6 +1,7 @@
 package ly.david.musicsearch.ui.common.listitem
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -26,7 +27,9 @@ fun LastUpdatedFooterItem(
     now: Instant = Clock.System.now(),
 ) {
     Column(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
     ) {
         HorizontalDivider(
             modifier = Modifier

@@ -18,6 +18,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.work.usecase.GetWorks
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
@@ -30,7 +31,7 @@ class WorksListPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val workListItems: Flow<PagingData<WorkListItemModel>> by rememberRetained(query, browseMethod) {
+        val workListItems: Flow<PagingData<ListItemModel>> by rememberRetained(query, browseMethod) {
             mutableStateOf(
                 getWorks(
                     browseMethod = browseMethod,
@@ -77,7 +78,7 @@ sealed interface WorksListUiEvent : CircuitUiEvent {
 
 @Stable
 data class WorksListUiState(
-    val lazyPagingItems: LazyPagingItems<WorkListItemModel>,
+    val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
     val eventSink: (WorksListUiEvent) -> Unit,
 ) : CircuitUiState

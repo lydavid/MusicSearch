@@ -18,6 +18,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.usecase.GetAreas
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class AreasListPresenter(
@@ -28,7 +29,7 @@ class AreasListPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val pagingDataFlow: Flow<PagingData<AreaListItemModel>> by rememberRetained(query, browseMethod) {
+        val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(query, browseMethod) {
             mutableStateOf(
                 getAreas(
                     browseMethod = browseMethod,
@@ -75,7 +76,7 @@ sealed interface AreasListUiEvent : CircuitUiEvent {
 
 @Stable
 data class AreasListUiState(
-    val pagingDataFlow: Flow<PagingData<AreaListItemModel>>,
+    val pagingDataFlow: Flow<PagingData<ListItemModel>>,
     val lazyListState: LazyListState = LazyListState(),
     val eventSink: (AreasListUiEvent) -> Unit = {},
 ) : CircuitUiState
