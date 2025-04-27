@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.stats.internal
+package ly.david.musicsearch.shared.feature.stats
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,8 +32,6 @@ internal fun LocalRemoteProgressBar(
                 text = "No stats available. Tap this resource's tab to begin browsing.",
             )
         } else {
-            // TODO: "cached" is misleading here
-            //  since the moment they click a release, it will require downloading details
             Text(
                 style = TextStyles.getCardBodyTextStyle(),
                 text = cachedLocalOfRemote(
@@ -47,10 +45,10 @@ internal fun LocalRemoteProgressBar(
                     shape = RoundedCornerShape(8.dp),
                 ) {
                     LinearProgressIndicator(
+                        progress = { totalLocal / totalRemote.toFloat() },
                         modifier = Modifier
                             .height(8.dp)
                             .fillMaxWidth(),
-                        progress = totalLocal / totalRemote.toFloat(),
                         color = MaterialTheme.colorScheme.primary,
                         trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     )

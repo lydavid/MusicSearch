@@ -3,8 +3,23 @@ package ly.david.musicsearch.shared.feature.stats
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import ly.david.musicsearch.shared.feature.stats.internal.LocalRemoteProgressBar
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
+
+@PreviewLightDark
+@Composable
+internal fun PreviewLocalRemoteProgressBarNoRemote() {
+    PreviewTheme {
+        Surface {
+            LocalRemoteProgressBar(
+                totalRemote = 0,
+                totalLocal = 0,
+                cachedLocalOfRemote = { local, remote ->
+                    "Cached $local of $remote releases"
+                },
+            )
+        }
+    }
+}
 
 @PreviewLightDark
 @Composable

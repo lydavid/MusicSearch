@@ -6,9 +6,6 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
-import ly.david.musicsearch.shared.feature.stats.internal.addEntityStatsSection
-import ly.david.musicsearch.shared.feature.stats.internal.addRelationshipsSection
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.getCachedLocalOfRemoteStringFunction
 import ly.david.musicsearch.ui.common.topappbar.getTitle

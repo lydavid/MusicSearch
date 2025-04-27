@@ -14,7 +14,7 @@ import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
 @Composable
-internal fun PreviewStatsScreen() {
+internal fun PreviewStatsUi() {
     PreviewTheme {
         Surface {
             StatsUi(
@@ -54,10 +54,12 @@ internal fun PreviewStatsScreen() {
                                     count = 1,
                                 ),
                             ),
+                            lastUpdated = Instant.parse("2025-03-26T06:42:20Z"),
                         ),
                         Tab.RELEASES to EntityStats(
                             totalRemote = 20,
                             totalLocal = 15,
+                            lastUpdated = Instant.parse("2024-04-26T06:42:20Z"),
                         ),
                     ),
                 ),

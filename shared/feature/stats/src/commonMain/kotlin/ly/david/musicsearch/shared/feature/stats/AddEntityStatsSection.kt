@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.stats.internal
+package ly.david.musicsearch.shared.feature.stats
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
-import ly.david.musicsearch.shared.feature.stats.EntityStats
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.core.theme.TextStyles
@@ -52,10 +51,10 @@ internal fun LazyListScope.addEntityStatsSection(
 
             if (releaseGroupTypeCounts.isNotEmpty()) {
                 LinearProgressIndicator(
+                    progress = { it.count / releaseGroupTypeCounts.sumOf { it.count }.toFloat() },
                     modifier = Modifier
                         .height(4.dp)
                         .fillMaxWidth(),
-                    progress = it.count / releaseGroupTypeCounts.sumOf { it.count }.toFloat(),
                     color = MaterialTheme.colorScheme.primary,
                     trackColor = Color.Transparent,
                 )

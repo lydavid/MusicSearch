@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.stats.internal
+package ly.david.musicsearch.shared.feature.stats
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,7 +33,7 @@ internal fun LazyListScope.addRelationshipsSection(
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             style = TextStyles.getCardBodyTextStyle(),
-            text = if (totalRelations == null || relationTypeCounts.isEmpty()) {
+            text = if (totalRelations == null) {
                 "No relationship stats available. Tap Relationships tab to fetch this entity's relationships."
             } else {
                 "Total relationships: $totalRelations"

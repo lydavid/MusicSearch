@@ -1,8 +1,7 @@
-package ly.david.musicsearch.shared.feature.stats.internal
+package ly.david.musicsearch.shared.feature.stats
 
 import com.slack.circuit.runtime.CircuitUiState
 import kotlinx.collections.immutable.ImmutableList
-import ly.david.musicsearch.shared.feature.stats.Stats
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
 internal data class StatsUiState(
