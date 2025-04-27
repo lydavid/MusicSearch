@@ -111,7 +111,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: musicsearch_test_release_e2e_main_outputs
+          name: musicsearch_test_release_e2e_before_outputs
           path: before_artifacts
 
       - name: Checkout PR
@@ -159,5 +159,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: musicsearch_test_release_e2e_pr_outputs
+          name: musicsearch_test_release_e2e_after_outputs
           path: after_artifacts
