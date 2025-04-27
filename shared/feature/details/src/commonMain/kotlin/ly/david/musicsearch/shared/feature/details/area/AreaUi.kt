@@ -23,6 +23,8 @@ import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.artist.ArtistsListScreen
@@ -116,6 +118,7 @@ internal fun AreaUiInternal(
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     scope: CoroutineScope = rememberCoroutineScope(),
     strings: AppStrings = LocalStrings.current,
+    now: Instant = Clock.System.now(),
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -206,6 +209,7 @@ internal fun AreaUiInternal(
                                 ),
                             )
                         },
+                        now = now,
                     )
                 }
 
@@ -225,6 +229,7 @@ internal fun AreaUiInternal(
                                 ),
                             )
                         },
+                        now = now,
                     )
                 }
 
@@ -244,6 +249,7 @@ internal fun AreaUiInternal(
                                 ),
                             )
                         },
+                        now = now,
                     )
                 }
 
@@ -271,6 +277,7 @@ internal fun AreaUiInternal(
                                 ),
                             )
                         },
+                        now = now,
                     )
                 }
 

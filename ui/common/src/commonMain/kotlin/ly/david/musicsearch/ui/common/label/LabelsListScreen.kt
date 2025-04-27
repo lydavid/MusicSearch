@@ -2,6 +2,8 @@ package ly.david.musicsearch.ui.common.label
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
@@ -19,6 +21,7 @@ fun LabelsListScreen(
     isEditMode: Boolean = false,
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
+    now: Instant = Clock.System.now(),
 ) {
     ScreenWithPagingLoadingAndError(
         lazyPagingItems = state.lazyPagingItems,
@@ -51,6 +54,7 @@ fun LabelsListScreen(
             is LastUpdatedFooter -> {
                 LastUpdatedFooterItem(
                     lastUpdated = listItemModel.lastUpdated,
+                    now = now,
                 )
             }
             else -> {

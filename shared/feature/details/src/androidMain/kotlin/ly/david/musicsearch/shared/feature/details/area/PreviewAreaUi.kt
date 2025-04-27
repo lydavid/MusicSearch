@@ -529,6 +529,7 @@ internal fun PreviewAreaDetails() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -566,6 +567,7 @@ internal fun PreviewAreaDetailsError() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -603,6 +605,7 @@ internal fun PreviewAreaRelationships() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -640,6 +643,7 @@ internal fun PreviewAreaArtists() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -677,6 +681,7 @@ internal fun PreviewAreaEvents() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -714,6 +719,7 @@ internal fun PreviewAreaLabels() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -751,6 +757,7 @@ internal fun PreviewAreaReleases() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -788,11 +795,13 @@ internal fun PreviewAreaPlaces() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
 }
 
+// not previewable yet
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaStats() {
@@ -825,6 +834,7 @@ internal fun PreviewAreaStats() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
