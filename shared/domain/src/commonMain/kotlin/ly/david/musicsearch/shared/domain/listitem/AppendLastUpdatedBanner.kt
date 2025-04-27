@@ -5,7 +5,7 @@ import androidx.paging.insertFooterItem
 import androidx.paging.map
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.shared.domain.BrowseMethod
@@ -17,7 +17,7 @@ fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
     browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
     browseMethod: BrowseMethod,
     browseEntity: MusicBrainzEntity,
-): Flow<PagingData<ListItemModel>> = flatMapLatest { releaseGroups ->
+): Flow<PagingData<ListItemModel>> = flatMapMerge { releaseGroups ->
     val browseByEntity = browseMethod as? BrowseMethod.ByEntity
     if (browseByEntity != null) {
         browseRemoteMetadataRepository.observe(
