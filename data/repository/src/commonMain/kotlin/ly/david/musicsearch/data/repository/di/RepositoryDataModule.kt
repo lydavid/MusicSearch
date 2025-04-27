@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository.di
 
-import ly.david.musicsearch.data.repository.BrowseEntityCountRepositoryImpl
+import ly.david.musicsearch.data.repository.BrowseRemoteMetadataRepositoryImpl
 import ly.david.musicsearch.data.repository.collection.CollectionRepositoryImpl
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.NowPlayingHistoryRepositoryImpl
@@ -40,7 +40,7 @@ import ly.david.musicsearch.shared.domain.area.AreasListRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistCollaborationRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
-import ly.david.musicsearch.shared.domain.browse.BrowseEntityCountRepository
+import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.event.EventsListRepository
@@ -80,7 +80,7 @@ val repositoryDataModule = module {
     singleOf(::ArtistRepositoryImpl) bind ArtistRepository::class
     singleOf(::ArtistsListRepositoryImpl) bind ArtistsListRepository::class
     singleOf(::ArtistCollaborationRepositoryImpl) bind ArtistCollaborationRepository::class
-    singleOf(::BrowseEntityCountRepositoryImpl) bind BrowseEntityCountRepository::class
+    singleOf(::BrowseRemoteMetadataRepositoryImpl) bind BrowseRemoteMetadataRepository::class
     singleOf(::CollectionRepositoryImpl) bind CollectionRepository::class
     singleOf(::EventRepositoryImpl) bind EventRepository::class
     singleOf(::EventsListRepositoryImpl) bind EventsListRepository::class

@@ -2,15 +2,17 @@ package ly.david.musicsearch.shared.feature.stats
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlinx.collections.immutable.persistentHashMapOf
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.ui.common.topappbar.Tab
-import ly.david.musicsearch.ui.core.preview.DefaultPreviews
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewStatsScreen() {
     PreviewTheme {
@@ -34,29 +36,32 @@ internal fun PreviewStatsScreen() {
                             count = 397,
                         ),
                     ),
-                    releaseGroupStats = ReleaseGroupStats(
-                        totalRemote = 280,
-                        totalLocal = 279,
-                        releaseGroupTypeCounts = persistentListOf(
-                            ReleaseGroupTypeCount(
-                                primaryType = "Album",
-                                count = 13,
-                            ),
-                            ReleaseGroupTypeCount(
-                                primaryType = "Album",
-                                secondaryTypes = listOf(
-                                    "Compilation",
-                                    "Demo",
+                    persistentHashMapOf(
+                        Tab.RELEASE_GROUPS to EntityStats(
+                            totalRemote = 280,
+                            totalLocal = 279,
+                            releaseGroupTypeCounts = persistentListOf(
+                                ReleaseGroupTypeCount(
+                                    primaryType = "Album",
+                                    count = 13,
                                 ),
-                                count = 1,
+                                ReleaseGroupTypeCount(
+                                    primaryType = "Album",
+                                    secondaryTypes = listOf(
+                                        "Compilation",
+                                        "Demo",
+                                    ),
+                                    count = 1,
+                                ),
                             ),
                         ),
-                    ),
-                    releaseStats = ReleaseStats(
-                        totalRemote = 20,
-                        totalLocal = 15,
+                        Tab.RELEASES to EntityStats(
+                            totalRemote = 20,
+                            totalLocal = 15,
+                        ),
                     ),
                 ),
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }

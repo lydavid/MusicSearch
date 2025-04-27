@@ -4,6 +4,7 @@ import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Clock
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
@@ -11,7 +12,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
-import ly.david.musicsearch.shared.domain.browse.BrowseEntityCountRepository
+import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.error.ActionableResult
@@ -27,7 +28,7 @@ class CollectionRepositoryImpl(
     private val collectionDao: CollectionDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val browseEntityCountDao: BrowseRemoteCountDao,
-    private val browseEntityCountRepository: BrowseEntityCountRepository,
+    private val browseEntityCountRepository: BrowseRemoteMetadataRepository,
 ) : CollectionRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -83,13 +84,15 @@ class CollectionRepositoryImpl(
                     entity_id = username,
                     browse_entity = MusicBrainzEntity.COLLECTION,
                     remote_count = response.count,
+                    last_updated = Clock.System.now(),
                 ),
             )
         } else {
-            browseEntityCountDao.updateBrowseRemoteCount(
+            browseEntityCountDao.update(
                 entityId = username,
                 browseEntity = MusicBrainzEntity.COLLECTION,
                 remoteCount = response.count,
+                lastUpdated = Clock.System.now(),
             )
         }
 
@@ -100,7 +103,7 @@ class CollectionRepositoryImpl(
     }
 
     private fun getRemoteLinkedEntitiesCountByEntity(username: String): Int? {
-        return browseEntityCountRepository.getBrowseEntityCount(
+        return browseEntityCountRepository.get(
             entityId = username,
             entity = MusicBrainzEntity.COLLECTION,
         )?.remoteCount

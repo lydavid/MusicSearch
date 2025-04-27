@@ -6,11 +6,13 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
@@ -386,19 +388,8 @@ private val canadianReleases = MutableStateFlow(
                 countryCode = "CA",
                 formattedArtistCredits = "Neil Young",
             ),
-            ReleaseListItemModel(
-                id = "sarah_mclachlan_surfacing",
-                name = "Surfacing",
-                date = "1997",
-                countryCode = "CA",
-                formattedArtistCredits = "Sarah McLachlan",
-            ),
-            ReleaseListItemModel(
-                id = "leonard_cohen_songs_of_leonard_cohen",
-                name = "Songs of Leonard Cohen",
-                date = "1967-12-27",
-                countryCode = "CA",
-                formattedArtistCredits = "Leonard Cohen",
+            LastUpdatedFooter(
+                lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
             ),
         ),
     ),

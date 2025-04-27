@@ -4,12 +4,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.feature.stats.internal.StatsUiState
-import ly.david.musicsearch.shared.feature.stats.internal.addEntitiesStatsSection
+import ly.david.musicsearch.shared.feature.stats.internal.addEntityStatsSection
 import ly.david.musicsearch.shared.feature.stats.internal.addRelationshipsSection
-import ly.david.musicsearch.shared.feature.stats.internal.addReleaseGroupsSection
-import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.Tab
+import ly.david.musicsearch.ui.common.topappbar.getCachedLocalOfRemoteStringFunction
+import ly.david.musicsearch.ui.common.topappbar.getTitle
+import ly.david.musicsearch.ui.core.LocalStrings
 
 @Composable
 internal fun StatsUi(
@@ -31,57 +34,13 @@ internal fun StatsUi(
     tabs: ImmutableList<Tab>,
     stats: Stats,
     modifier: Modifier = Modifier,
+    now: Instant = Clock.System.now(),
 ) {
     val strings = LocalStrings.current
 
     LazyColumn(modifier = modifier) {
         tabs.forEach { tab ->
             when (tab) {
-                Tab.ARTISTS -> {
-                    addEntitiesStatsSection(
-                        totalRemote = stats.artistStats.totalRemote,
-                        totalLocal = stats.artistStats.totalLocal,
-                        header = strings.artists,
-                        cachedLocalOfRemote = strings.cachedArtists,
-                    )
-                }
-
-                Tab.EVENTS -> {
-                    addEntitiesStatsSection(
-                        totalRemote = stats.eventStats.totalRemote,
-                        totalLocal = stats.eventStats.totalLocal,
-                        header = strings.events,
-                        cachedLocalOfRemote = strings.cachedEvents,
-                    )
-                }
-
-                Tab.LABELS -> {
-                    addEntitiesStatsSection(
-                        totalRemote = stats.labelStats.totalRemote,
-                        totalLocal = stats.labelStats.totalLocal,
-                        header = strings.labels,
-                        cachedLocalOfRemote = strings.cachedLabels,
-                    )
-                }
-
-                Tab.PLACES -> {
-                    addEntitiesStatsSection(
-                        totalRemote = stats.placeStats.totalRemote,
-                        totalLocal = stats.placeStats.totalLocal,
-                        header = strings.places,
-                        cachedLocalOfRemote = strings.cachedPlaces,
-                    )
-                }
-
-                Tab.RECORDINGS -> {
-                    addEntitiesStatsSection(
-                        totalRemote = stats.recordingStats.totalRemote,
-                        totalLocal = stats.recordingStats.totalLocal,
-                        header = strings.recordings,
-                        cachedLocalOfRemote = strings.cachedRecordings,
-                    )
-                }
-
                 Tab.RELATIONSHIPS -> {
                     addRelationshipsSection(
                         totalRelations = stats.totalRelations,
@@ -89,34 +48,15 @@ internal fun StatsUi(
                     )
                 }
 
-                Tab.RELEASES -> {
-                    addEntitiesStatsSection(
-                        totalRemote = stats.releaseStats.totalRemote,
-                        totalLocal = stats.releaseStats.totalLocal,
-                        header = strings.releases,
-                        cachedLocalOfRemote = strings.cachedReleases,
-                    )
-                }
-
-                Tab.RELEASE_GROUPS -> {
-                    addReleaseGroupsSection(
-                        totalRemote = stats.releaseGroupStats.totalRemote,
-                        totalLocal = stats.releaseGroupStats.totalLocal,
-                        releaseGroupTypeCounts = stats.releaseGroupStats.releaseGroupTypeCounts,
-                    )
-                }
-
-                Tab.WORKS -> {
-                    addEntitiesStatsSection(
-                        totalRemote = stats.workStats.totalRemote,
-                        totalLocal = stats.workStats.totalLocal,
-                        header = strings.works,
-                        cachedLocalOfRemote = strings.cachedReleases,
-                    )
-                }
-
                 else -> {
-                    // No stats for these tabs yet.
+                    stats.tabToStats[tab]?.let { entityStats ->
+                        addEntityStatsSection(
+                            entityStats = entityStats,
+                            header = tab.getTitle(strings),
+                            cachedLocalOfRemote = tab.getCachedLocalOfRemoteStringFunction(strings),
+                            now = now,
+                        )
+                    }
                 }
             }
         }

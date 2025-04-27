@@ -5,6 +5,7 @@ import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Clock
 import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.musicbrainz.api.Browsable
 import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzModel
@@ -78,7 +79,7 @@ abstract class BrowseEntities<
     )
 
     private fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? =
-        browseEntityCountDao.getBrowseRemoteCount(
+        browseEntityCountDao.get(
             entityId = entityId,
             browseEntity = browseEntity,
         )?.remoteCount
@@ -111,19 +112,22 @@ abstract class BrowseEntities<
         val musicBrainzModels = response.musicBrainzModels
 
         browseEntityCountDao.withTransaction {
+            // TODO: upsert
             if (response.offset == 0) {
                 browseEntityCountDao.insert(
                     browseRemoteCount = Browse_remote_count(
                         entity_id = entityId,
                         browse_entity = browseEntity,
                         remote_count = response.count,
+                        last_updated = Clock.System.now(),
                     ),
                 )
             } else {
-                browseEntityCountDao.updateBrowseRemoteCount(
+                browseEntityCountDao.update(
                     entityId = entityId,
                     browseEntity = browseEntity,
                     remoteCount = response.count,
+                    lastUpdated = Clock.System.now(),
                 )
             }
 

@@ -13,27 +13,32 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.shared.feature.stats.EntityStats
+import ly.david.musicsearch.ui.common.listitem.LastUpdatedText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
-internal fun LazyListScope.addReleaseGroupsSection(
-    totalRemote: Int?,
-    totalLocal: Int,
-    releaseGroupTypeCounts: List<ReleaseGroupTypeCount>,
+internal fun LazyListScope.addEntityStatsSection(
+    entityStats: EntityStats,
+    header: String,
+    cachedLocalOfRemote: (Int, Int) -> String,
+    now: Instant = Clock.System.now(),
 ) {
     item {
-        val strings = LocalStrings.current
-        ListSeparatorHeader(strings.releaseGroups)
+        Column {
+            ListSeparatorHeader(header)
 
-        LocalRemoteProgressBar(
-            totalRemote = totalRemote,
-            totalLocal = totalLocal,
-            cachedLocalOfRemote = strings.cachedReleaseGroups,
-        )
+            LocalRemoteProgressBar(
+                totalRemote = entityStats.totalRemote,
+                totalLocal = entityStats.totalLocal,
+                cachedLocalOfRemote = cachedLocalOfRemote,
+            )
+        }
     }
+    val releaseGroupTypeCounts = entityStats.releaseGroupTypeCounts
     items(releaseGroupTypeCounts) {
         Column(
             modifier = Modifier
@@ -58,6 +63,13 @@ internal fun LazyListScope.addReleaseGroupsSection(
         }
     }
     item {
+        entityStats.lastUpdated?.let { lastUpdated ->
+            LastUpdatedText(
+                lastUpdated = lastUpdated,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                now = now,
+            )
+        }
         Spacer(modifier = Modifier.padding(top = 16.dp))
     }
 }

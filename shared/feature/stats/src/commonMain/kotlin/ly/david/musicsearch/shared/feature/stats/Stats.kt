@@ -2,61 +2,24 @@ package ly.david.musicsearch.shared.feature.stats
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.persistentHashMapOf
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
+import ly.david.musicsearch.ui.common.topappbar.Tab
 
 @Stable
 internal data class Stats(
     val totalRelations: Int? = null,
     val relationTypeCounts: ImmutableList<RelationTypeCount> = persistentListOf(),
-    val artistStats: ArtistStats = ArtistStats(),
-    val eventStats: EventStats = EventStats(),
-    val labelStats: LabelStats = LabelStats(),
-    val placeStats: PlaceStats = PlaceStats(),
-    val recordingStats: RecordingStats = RecordingStats(),
-    val releaseStats: ReleaseStats = ReleaseStats(),
-    val releaseGroupStats: ReleaseGroupStats = ReleaseGroupStats(),
-    val workStats: WorkStats = WorkStats(),
+    val tabToStats: ImmutableMap<Tab, EntityStats> = persistentHashMapOf(),
 )
 
-internal data class ArtistStats(
-    val totalRemote: Int? = null,
-    val totalLocal: Int = 0,
-)
-
-internal data class EventStats(
-    val totalRemote: Int? = null,
-    val totalLocal: Int = 0,
-)
-
-internal data class LabelStats(
-    val totalRemote: Int? = null,
-    val totalLocal: Int = 0,
-)
-
-internal data class PlaceStats(
-    val totalRemote: Int? = null,
-    val totalLocal: Int = 0,
-)
-
-internal data class RecordingStats(
-    val totalRemote: Int? = null,
-    val totalLocal: Int = 0,
-)
-
-internal data class ReleaseStats(
-    val totalRemote: Int? = null,
-    val totalLocal: Int = 0,
-)
-
-internal data class ReleaseGroupStats(
+internal data class EntityStats(
     val totalRemote: Int? = null,
     val totalLocal: Int = 0,
     val releaseGroupTypeCounts: ImmutableList<ReleaseGroupTypeCount> = persistentListOf(),
-)
-
-internal data class WorkStats(
-    val totalRemote: Int? = null,
-    val totalLocal: Int = 0,
+    val lastUpdated: Instant? = null,
 )

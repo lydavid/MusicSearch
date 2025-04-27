@@ -15,3 +15,8 @@ actual fun Instant.getTimeFormatted(): String {
     val javaLocalDataTime = this.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime()
     return DateTimeFormatter.ofPattern(TIME_FORMAT).format(javaLocalDataTime)
 }
+
+actual fun Instant.getDateTimeFormatted(): String {
+    val javaLocalDataTime = this.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime()
+    return DateTimeFormatter.ofPattern(DATE_TIME_FORMAT).format(javaLocalDataTime)
+}

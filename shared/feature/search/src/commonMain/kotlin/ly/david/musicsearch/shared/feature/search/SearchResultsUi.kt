@@ -14,7 +14,7 @@ import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
-import ly.david.musicsearch.shared.domain.listitem.EndOfList
+import ly.david.musicsearch.shared.domain.listitem.Footer
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -195,7 +195,7 @@ private fun ListItemUi(
             }
         }
 
-        is EndOfList -> {
+        is Footer -> {
             Text(
                 modifier = Modifier
                     .padding(16.dp)
