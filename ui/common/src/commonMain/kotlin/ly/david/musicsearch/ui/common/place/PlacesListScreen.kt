@@ -3,9 +3,12 @@ package ly.david.musicsearch.ui.common.place
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
+import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
+import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
@@ -21,13 +24,13 @@ fun PlacesListScreen(
         lazyPagingItems = state.lazyPagingItems,
         modifier = modifier,
         lazyListState = state.lazyListState,
-    ) { placeListItemModel: PlaceListItemModel? ->
-        when (placeListItemModel) {
+    ) { listItemModel: ListItemModel? ->
+        when (listItemModel) {
             is PlaceListItemModel -> {
                 SwipeToDeleteListItem(
                     content = {
                         PlaceListItem(
-                            place = placeListItemModel,
+                            place = listItemModel,
                         ) {
                             onItemClick(
                                 MusicBrainzEntity.PLACE,
@@ -39,13 +42,17 @@ fun PlacesListScreen(
                     disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection?.invoke(
-                            placeListItemModel.id,
-                            placeListItemModel.name,
+                            listItemModel.id,
+                            listItemModel.name,
                         )
                     },
                 )
             }
-
+            is LastUpdatedFooter -> {
+                LastUpdatedFooterItem(
+                    lastUpdated = listItemModel.lastUpdated,
+                )
+            }
             else -> {
                 // Do nothing.
             }

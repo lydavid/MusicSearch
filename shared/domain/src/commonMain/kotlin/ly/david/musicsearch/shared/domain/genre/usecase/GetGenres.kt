@@ -9,17 +9,21 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
+import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.genre.GenresListRepository
-import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.appendLastUpdatedBanner
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class GetGenres(
     private val genresListRepository: GenresListRepository,
+    private val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
     private val coroutineScope: CoroutineScope,
-) : GetEntitiesByEntity<GenreListItemModel> {
+) : GetEntitiesByEntity<ListItemModel> {
     override operator fun invoke(
         browseMethod: BrowseMethod?,
         listFilters: ListFilters,
-    ): Flow<PagingData<GenreListItemModel>> {
+    ): Flow<PagingData<ListItemModel>> {
         return if (browseMethod == null) {
             emptyFlow()
         } else {
@@ -27,8 +31,13 @@ class GetGenres(
                 browseMethod = browseMethod,
                 listFilters = listFilters,
             )
+                .cachedIn(scope = coroutineScope)
+                .appendLastUpdatedBanner(
+                    browseRemoteMetadataRepository = browseRemoteMetadataRepository,
+                    browseMethod = browseMethod,
+                    browseEntity = MusicBrainzEntity.GENRE,
+                )
                 .distinctUntilChanged()
-                .cachedIn(coroutineScope)
         }
     }
 }

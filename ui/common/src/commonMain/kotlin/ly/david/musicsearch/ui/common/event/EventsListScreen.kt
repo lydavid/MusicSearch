@@ -4,8 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
+import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
+import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
@@ -21,13 +24,13 @@ fun EventsListScreen(
         lazyPagingItems = state.lazyPagingItems,
         modifier = modifier,
         lazyListState = state.lazyListState,
-    ) { eventListItemModel: EventListItemModel? ->
-        when (eventListItemModel) {
+    ) { listItemModel: ListItemModel? ->
+        when (listItemModel) {
             is EventListItemModel -> {
                 SwipeToDeleteListItem(
                     content = {
                         EventListItem(
-                            event = eventListItemModel,
+                            event = listItemModel,
                         ) {
                             onItemClick(
                                 MusicBrainzEntity.EVENT,
@@ -39,13 +42,17 @@ fun EventsListScreen(
                     disable = !isEditMode,
                     onDelete = {
                         onDeleteFromCollection?.invoke(
-                            eventListItemModel.id,
-                            eventListItemModel.name,
+                            listItemModel.id,
+                            listItemModel.name,
                         )
                     },
                 )
             }
-
+            is LastUpdatedFooter -> {
+                LastUpdatedFooterItem(
+                    lastUpdated = listItemModel.lastUpdated,
+                )
+            }
             else -> {
                 // Do nothing.
             }

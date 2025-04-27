@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.genre.usecase.GetGenres
-import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class GenresListPresenter(
@@ -30,7 +30,7 @@ class GenresListPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val genreListItems: Flow<PagingData<GenreListItemModel>> by rememberRetained(query, browseMethod) {
+        val genreListItems: Flow<PagingData<ListItemModel>> by rememberRetained(query, browseMethod) {
             mutableStateOf(
                 getGenres(
                     browseMethod = browseMethod,
@@ -77,7 +77,7 @@ sealed interface GenresListUiEvent : CircuitUiEvent {
 
 @Stable
 data class GenresListUiState(
-    val lazyPagingItems: LazyPagingItems<GenreListItemModel>,
+    val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
     val eventSink: (GenresListUiEvent) -> Unit = {},
 ) : CircuitUiState

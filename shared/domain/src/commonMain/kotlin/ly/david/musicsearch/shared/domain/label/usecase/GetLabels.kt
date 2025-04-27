@@ -9,17 +9,21 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
+import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.label.LabelsListRepository
-import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.appendLastUpdatedBanner
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class GetLabels(
     private val labelsListRepository: LabelsListRepository,
+    private val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
     private val coroutineScope: CoroutineScope,
-) : GetEntitiesByEntity<LabelListItemModel> {
+) : GetEntitiesByEntity<ListItemModel> {
     override operator fun invoke(
         browseMethod: BrowseMethod?,
         listFilters: ListFilters,
-    ): Flow<PagingData<LabelListItemModel>> {
+    ): Flow<PagingData<ListItemModel>> {
         return if (browseMethod == null) {
             emptyFlow()
         } else {
@@ -27,8 +31,13 @@ class GetLabels(
                 browseMethod = browseMethod,
                 listFilters = listFilters,
             )
-                .distinctUntilChanged()
                 .cachedIn(scope = coroutineScope)
+                .appendLastUpdatedBanner(
+                    browseRemoteMetadataRepository = browseRemoteMetadataRepository,
+                    browseMethod = browseMethod,
+                    browseEntity = MusicBrainzEntity.LABEL,
+                )
+                .distinctUntilChanged()
         }
     }
 }

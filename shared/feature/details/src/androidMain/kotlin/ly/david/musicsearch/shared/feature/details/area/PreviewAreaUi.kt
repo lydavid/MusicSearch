@@ -126,6 +126,9 @@ private val canadianArtists = MutableStateFlow(
                     end = "2016-08-20",
                 ),
             ),
+            LastUpdatedFooter(
+                lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
+            ),
         ),
     ),
 )
@@ -200,6 +203,9 @@ internal val events = MutableStateFlow(
                 ),
                 cancelled = true,
             ),
+            LastUpdatedFooter(
+                lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
+            ),
         ),
     ),
 )
@@ -270,6 +276,9 @@ internal val labels = MutableStateFlow(
                 name = "Audira Music",
                 type = "Publisher",
             ),
+            LastUpdatedFooter(
+                lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
+            ),
         ),
     ),
 )
@@ -330,6 +339,9 @@ internal val places = MutableStateFlow(
                 type = "Venue",
                 address = "750 Pacific Blvd.",
                 lifeSpan = LifeSpanUiModel(begin = "1986"),
+            ),
+            LastUpdatedFooter(
+                lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
             ),
         ),
     ),

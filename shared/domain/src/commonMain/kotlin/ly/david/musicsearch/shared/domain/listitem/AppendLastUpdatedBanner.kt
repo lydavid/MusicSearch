@@ -20,14 +20,11 @@ fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
     browseEntity: MusicBrainzEntity,
 ): Flow<PagingData<ListItemModel>> = flatMapMerge { releaseGroups ->
     val browseByEntity = browseMethod as? BrowseMethod.ByEntity
-    println("browseByEntity: $browseByEntity")
-    println("releaseGroups: ${releaseGroups}")
     if (browseByEntity != null) {
         browseRemoteMetadataRepository.observe(
             entityId = browseByEntity.entityId,
             entity = browseEntity,
         ).map { browseRemoteMetadata ->
-            println("browseRemoteMetadata: $browseRemoteMetadata")
             Pair(releaseGroups, browseRemoteMetadata)
         }
     } else {

@@ -5,7 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
+import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
@@ -22,7 +25,7 @@ fun GenresListScreen(
         lazyPagingItems = state.lazyPagingItems,
         modifier = modifier,
         lazyListState = state.lazyListState,
-    ) { listItemModel: GenreListItemModel? ->
+    ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is GenreListItemModel -> {
                 SwipeToDeleteListItem(
@@ -46,7 +49,11 @@ fun GenresListScreen(
                     },
                 )
             }
-
+            is LastUpdatedFooter -> {
+                LastUpdatedFooterItem(
+                    lastUpdated = listItemModel.lastUpdated,
+                )
+            }
             else -> {
                 // Do nothing.
             }

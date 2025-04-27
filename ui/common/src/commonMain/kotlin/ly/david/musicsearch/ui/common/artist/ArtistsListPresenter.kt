@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.usecase.GetArtists
-import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class ArtistsListPresenter(
@@ -30,7 +30,7 @@ class ArtistsListPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val artistListItems: Flow<PagingData<ArtistListItemModel>> by rememberRetained(query, browseMethod) {
+        val artistListItems: Flow<PagingData<ListItemModel>> by rememberRetained(query, browseMethod) {
             mutableStateOf(
                 getArtists(
                     browseMethod = browseMethod,
@@ -78,7 +78,7 @@ sealed interface ArtistsListUiEvent : CircuitUiEvent {
 
 @Stable
 data class ArtistsListUiState(
-    val lazyPagingItems: LazyPagingItems<ArtistListItemModel>,
+    val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
     val showMoreInfo: Boolean = true,
     val eventSink: (ArtistsListUiEvent) -> Unit = {},
