@@ -4,6 +4,7 @@ import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Clock
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
@@ -83,6 +84,7 @@ class CollectionRepositoryImpl(
                     entity_id = username,
                     browse_entity = MusicBrainzEntity.COLLECTION,
                     remote_count = response.count,
+                    last_updated = Clock.System.now(),
                 ),
             )
         } else {

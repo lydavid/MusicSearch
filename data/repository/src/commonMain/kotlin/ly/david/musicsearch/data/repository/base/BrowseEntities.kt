@@ -5,6 +5,7 @@ import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Clock
 import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
 import ly.david.musicsearch.data.musicbrainz.api.Browsable
 import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzModel
@@ -117,6 +118,7 @@ abstract class BrowseEntities<
                         entity_id = entityId,
                         browse_entity = browseEntity,
                         remote_count = response.count,
+                        last_updated = Clock.System.now(),
                     ),
                 )
             } else {

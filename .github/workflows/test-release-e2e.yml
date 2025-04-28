@@ -87,7 +87,8 @@ jobs:
           disable-animations: true
           sdcard-path-or-size: 100M
           script: |
-            ./gradlew assembleFDroidDebug installFDroidDebug
+            echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d > android/app/google-services.json
+            ./gradlew assembleGooglePlayDebug installGooglePlayDebug
             adb shell settings put system show_touches 1
             adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
             adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton
@@ -134,7 +135,8 @@ jobs:
           disable-animations: true
           sdcard-path-or-size: 100M
           script: |
-            ./gradlew assembleFDroidDebug installFDroidDebug
+            echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d > android/app/google-services.json
+            ./gradlew assembleGooglePlayDebug installGooglePlayDebug
             adb shell settings put system show_touches 1
             adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
             adb shell cmd overlay disable com.android.internal.systemui.navbar.threebutton

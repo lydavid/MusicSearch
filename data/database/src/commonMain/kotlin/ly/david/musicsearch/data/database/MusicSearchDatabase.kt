@@ -36,6 +36,7 @@ fun createDatabase(driver: SqlDriver): Database {
         browse_remote_countAdapter = Browse_remote_count.Adapter(
             browse_entityAdapter = MusicBrainzEntityStringColumnAdapter,
             remote_countAdapter = IntColumnAdapter,
+            last_updatedAdapter = InstantLongColumnAdapter,
         ),
         collectionAdapter = Collection.Adapter(
             entity_countAdapter = IntColumnAdapter,
