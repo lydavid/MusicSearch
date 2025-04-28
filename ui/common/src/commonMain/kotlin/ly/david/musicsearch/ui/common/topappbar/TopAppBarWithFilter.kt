@@ -160,8 +160,10 @@ internal fun TopAppBarWithFilterInternal(
                         ),
                         value = textFieldValue,
                         onValueChange = {
-                            textFieldValue = it
-                            topAppBarFilterState.updateFilterText(it.text)
+                            // Recomposition after toggling filter mode may reset the previous value otherwise
+                            val newValue = if (topAppBarFilterState.isFilterMode) it else TextFieldValue("")
+                            textFieldValue = newValue
+                            topAppBarFilterState.updateFilterText(newValue.text)
                         },
                     )
 

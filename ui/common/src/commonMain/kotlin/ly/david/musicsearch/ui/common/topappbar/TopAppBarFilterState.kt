@@ -49,8 +49,8 @@ class TopAppBarFilterState(
     }
 
     fun dismiss() {
-        clear()
         toggleFilterMode(false)
+        clear()
     }
 
     fun show(show: Boolean) {
