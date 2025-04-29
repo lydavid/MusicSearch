@@ -15,13 +15,13 @@ koin = "4.0.4"
 koinCompose = "4.0.4"
 konsist = "0.17.3"
 kotlin = "2.1.20"
+kotlinpoet = "2.1.0"
 kotlinx-coroutines = "1.10.2"
 ksp = "2.1.20-2.0.0"
 leakcanaryAndroid = "2.14"
 lyricist = "1.7.0"
 mockk = "1.14.2"
 multiplatformPaths = "0.2.2"
-okhttp = "4.12.0"
 okio = "3.11.0"
 pagingMultiplatform = "3.3.0-alpha02-0.5.1"
 pagingTesting = "3.3.0-alpha02"
@@ -43,9 +43,6 @@ androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro
 androidx-core = "androidx.core:core-ktx:1.16.0"
 androidx-datastore-preferences-android = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
-#androidx-datastore-preferences-jvm = { group = "androidx.datastore", name = "datastore-preferences-jvm", version.ref = "datastore" }
-androidx-lifecycle-viewmodel-compose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6"
-androidx-navigation-compose = "androidx.navigation:navigation-compose:2.8.9"
 androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "pagingTesting" }
 androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstaller" }
 androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.6.1"
@@ -90,6 +87,7 @@ koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }
 kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8"
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
@@ -110,7 +108,6 @@ lyricist-core = { module = "cafe.adriel.lyricist:lyricist-core", version.ref = "
 lyricist-library = { module = "cafe.adriel.lyricist:lyricist", version.ref = "lyricist" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 multiplatform-paths = { module = "me.sujanpoudel.multiplatform.utils:multiplatform-paths", version.ref = "multiplatformPaths" }
-okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 paging-common = { module = "app.cash.paging:paging-common", version.ref = "pagingMultiplatform" }
 paging-compose = { module = "app.cash.paging:paging-compose-common", version.ref = "pagingMultiplatform" }
