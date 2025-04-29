@@ -21,7 +21,6 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUriPlural
-import lydavidmusicsearchdatadatabase.Browse_remote_count
 
 class CollectionRepositoryImpl(
     private val collectionApi: CollectionApi,
@@ -78,23 +77,12 @@ class CollectionRepositoryImpl(
             include = CollectionApi.USER_COLLECTIONS,
         )
 
-        if (response.offset == 0) {
-            browseEntityCountDao.insert(
-                browseRemoteCount = Browse_remote_count(
-                    entity_id = username,
-                    browse_entity = MusicBrainzEntity.COLLECTION,
-                    remote_count = response.count,
-                    last_updated = Clock.System.now(),
-                ),
-            )
-        } else {
-            browseEntityCountDao.update(
-                entityId = username,
-                browseEntity = MusicBrainzEntity.COLLECTION,
-                remoteCount = response.count,
-                lastUpdated = Clock.System.now(),
-            )
-        }
+        browseEntityCountDao.upsert(
+            entityId = username,
+            browseEntity = MusicBrainzEntity.COLLECTION,
+            remoteCount = response.count,
+            lastUpdated = Clock.System.now(),
+        )
 
         val collectionMusicBrainzModels = response.musicBrainzModels
         collectionDao.insertAllRemote(collectionMusicBrainzModels)

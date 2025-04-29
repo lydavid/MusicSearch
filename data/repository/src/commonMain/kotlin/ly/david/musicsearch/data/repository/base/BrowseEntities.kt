@@ -16,7 +16,6 @@ import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUriPlural
-import lydavidmusicsearchdatadatabase.Browse_remote_count
 
 abstract class BrowseEntities<
     LI : ListItemModel,
@@ -112,24 +111,12 @@ abstract class BrowseEntities<
         val musicBrainzModels = response.musicBrainzModels
 
         browseEntityCountDao.withTransaction {
-            // TODO: upsert
-            if (response.offset == 0) {
-                browseEntityCountDao.insert(
-                    browseRemoteCount = Browse_remote_count(
-                        entity_id = entityId,
-                        browse_entity = browseEntity,
-                        remote_count = response.count,
-                        last_updated = Clock.System.now(),
-                    ),
-                )
-            } else {
-                browseEntityCountDao.update(
-                    entityId = entityId,
-                    browseEntity = browseEntity,
-                    remoteCount = response.count,
-                    lastUpdated = Clock.System.now(),
-                )
-            }
+            browseEntityCountDao.upsert(
+                entityId = entityId,
+                browseEntity = browseEntity,
+                remoteCount = response.count,
+                lastUpdated = Clock.System.now(),
+            )
 
             insertAllLinkingModels(
                 entityId = entityId,

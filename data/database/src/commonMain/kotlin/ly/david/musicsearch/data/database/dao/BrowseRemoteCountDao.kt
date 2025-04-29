@@ -10,7 +10,6 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadata
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
-import lydavidmusicsearchdatadatabase.Browse_remote_count
 
 // TODO: rename to BrowseRemoteMetadata
 class BrowseRemoteCountDao(
@@ -19,8 +18,18 @@ class BrowseRemoteCountDao(
 ) : EntityDao {
     override val transacter = database.browse_remote_countQueries
 
-    fun insert(browseRemoteCount: Browse_remote_count) {
-        transacter.insert(browseRemoteCount)
+    fun upsert(
+        entityId: String,
+        browseEntity: MusicBrainzEntity,
+        remoteCount: Int,
+        lastUpdated: Instant = Clock.System.now(),
+    ) {
+        transacter.upsert(
+            entityId = entityId,
+            browseEntity = browseEntity,
+            remoteCount = remoteCount,
+            lastUpdated = lastUpdated,
+        )
     }
 
     private fun getQuery(
@@ -57,36 +66,6 @@ class BrowseRemoteCountDao(
         )
             .asFlow()
             .mapToOneOrNull(coroutineDispatchers.io)
-
-//    fun observeLastUpdated(
-//        entityId: String,
-//        browseEntity: MusicBrainzEntity,
-//    ): Flow<Instant?> {
-//        val query = transacter.getLastUpdated(
-//            entityId = entityId,
-//            browseEntity = browseEntity,
-//        )
-//
-//        return query
-//            .asFlow()
-//            .mapToOneOrNull(coroutineDispatchers.io)
-//    }
-
-    fun update(
-        entityId: String,
-        browseEntity: MusicBrainzEntity,
-        remoteCount: Int,
-        lastUpdated: Instant = Clock.System.now(),
-    ) {
-        transacter.transaction {
-            transacter.update(
-                entityId = entityId,
-                browseEntity = browseEntity,
-                remoteCount = remoteCount,
-                lastUpdated = lastUpdated,
-            )
-        }
-    }
 
     fun deleteBrowseRemoteCountByEntity(
         entityId: String,

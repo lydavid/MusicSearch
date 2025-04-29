@@ -19,16 +19,21 @@ CREATE TABLE IF NOT EXISTS browse_remote_count (
   PRIMARY KEY (entity_id, browse_entity)
 );
 
-insert:
-INSERT OR IGNORE INTO browse_remote_count
-VALUES ?;
+upsert {
+  UPDATE browse_remote_count
+  SET
+    remote_count = :remoteCount,
+    last_updated = :lastUpdated
+  WHERE entity_id = :entityId AND browse_entity = :browseEntity;
 
-update:
-UPDATE browse_remote_count
-SET
-  remote_count = :remoteCount,
-  last_updated = :lastUpdated
-WHERE entity_id = :entityId AND browse_entity = :browseEntity;
+  INSERT OR IGNORE INTO browse_remote_count
+  VALUES (
+    :entityId,
+    :browseEntity,
+    :remoteCount,
+    :lastUpdated
+  );
+}
 
 getBrowseRemoteMetadata:
 SELECT
