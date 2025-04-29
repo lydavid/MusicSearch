@@ -14,6 +14,7 @@
 		631D2DCC2BBF8AE700C6F58F /* musicsearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D2DCB2BBF8AE700C6F58F /* musicsearchTests.swift */; };
 		631D2DD62BBF8AE700C6F58F /* musicsearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D2DD52BBF8AE700C6F58F /* musicsearchUITests.swift */; };
 		631D2DD82BBF8AE700C6F58F /* musicsearchUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D2DD72BBF8AE700C6F58F /* musicsearchUITestsLaunchTests.swift */; };
+		63CD86352DC0FB94003F4B6D /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CD86342DC0FB94003F4B6D /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		631D2DD52BBF8AE700C6F58F /* musicsearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = musicsearchUITests.swift; sourceTree = "<group>"; };
 		631D2DD72BBF8AE700C6F58F /* musicsearchUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = musicsearchUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		634CC75C2CDA45D400F71BD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		63CD86342DC0FB94003F4B6D /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63CD86352DC0FB94003F4B6D /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +81,7 @@
 				631D2DB92BBF8AE600C6F58F /* musicsearch */,
 				631D2DCA2BBF8AE700C6F58F /* musicsearchTests */,
 				631D2DD42BBF8AE700C6F58F /* musicsearchUITests */,
+				63CD86332DC0FB94003F4B6D /* Frameworks */,
 				631D2DB82BBF8AE600C6F58F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -127,6 +131,14 @@
 				631D2DD72BBF8AE700C6F58F /* musicsearchUITestsLaunchTests.swift */,
 			);
 			path = musicsearchUITests;
+			sourceTree = "<group>";
+		};
+		63CD86332DC0FB94003F4B6D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				63CD86342DC0FB94003F4B6D /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -460,12 +472,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					shared,
-					"-lsqlite3",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.lydavid.musicsearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -497,12 +503,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					shared,
-					"-lsqlite3",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.lydavid.musicsearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
