@@ -76,6 +76,14 @@ jobs:
           echo "keyPassword=${{ secrets.RELEASE_KEY_PASSWORD }}" >> keystore.properties
         shell: bash
 
+      - name: Read version from gradle.properties
+        run: |
+          VERSION_NAME=$(grep -E "^VERSION_NAME=" gradle.properties | cut -d'=' -f2)
+          VERSION_CODE=$(grep -E "^VERSION_CODE=" gradle.properties | cut -d'=' -f2)
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          echo "Version name: $VERSION_NAME, version code: $VERSION_CODE"
+
       # Necessary because the debug and release version of the app has a different redirect
       - name: Replace debug MusicBrainz client id/secret with release versions
         run: |
@@ -152,7 +160,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5.2.0
         if: always()
         with:
-          commit_message: 'chore: bump version [skip ci]'
+          commit_message: 'chore: bump version to ${{ env.VERSION_NAME }} (${{ env.VERSION_CODE }}) [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           file_pattern: 'gradle.properties download.html icon.svg'
 
