@@ -40,7 +40,7 @@ import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
-import ly.david.musicsearch.shared.domain.listitem.EndOfList
+import ly.david.musicsearch.shared.domain.listitem.Footer
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
@@ -153,7 +153,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                     id = "1",
                     name = "Various Artists",
                 ),
-                EndOfList,
+                Footer(),
             ),
             searchResults,
         )
@@ -218,7 +218,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                     id = "7364dea6-ca9a-48e3-be01-b44ad0d19897",
                     name = "a-ha",
                 ),
-                EndOfList,
+                Footer(),
             ),
             searchResults,
         )
@@ -274,7 +274,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                     id = "89ad4ac3-39f7-470e-963a-56509c546377",
                     name = "Various Artists",
                 ),
-                EndOfList,
+                Footer(),
             ),
             searchResults,
         )
@@ -291,7 +291,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                     id = "f42c1e2a-b7db-4acf-9742-1889b9c6d530",
                     name = "A Coruña",
                 ),
-                EndOfList,
+                Footer(),
             ),
             searchResults,
         )
@@ -340,7 +340,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                     id = "1bc74971-d5c8-4a21-b761-c24e74efb9b4",
                     name = "Lollapalooza 2024",
                 ),
-                EndOfList,
+                Footer(),
             ),
             searchResults,
         )
@@ -390,7 +390,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                     name = "Keep The Beats!",
                     formattedArtistCredits = "Girls Dead Monster",
                 ),
-                EndOfList,
+                Footer(),
             ),
             searchResults,
         )
@@ -451,7 +451,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                         type = "Country",
                         visited = false,
                     ),
-                    EndOfList,
+                    Footer(),
                 ),
                 this,
             )

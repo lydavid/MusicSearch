@@ -340,4 +340,23 @@ val EnStrings = AppStrings(
     wikipedia = "Wikipedia",
 
     numberOfImages = "Number of Images",
+
+    lastUpdatedFromMusicBrainz = { p0, p1 ->
+        "Last updated from MusicBrainz %1s (%2s)"
+            .fmt(p0, p1)
+    },
+    justNow = "just now",
+    secondsAgo = "seconds ago",
+    minuteAgo = "minute ago",
+    minutesAgo = "minutes ago",
+    hourAgo = "hour ago",
+    hoursAgo = "hours ago",
+    yesterday = "yesterday",
+    daysAgo = "days ago",
+    weekAgo = "week ago",
+    weeksAgo = "weeks ago",
+    monthAgo = "month ago",
+    monthsAgo = "months ago",
+    yearAgo = "year ago",
+    yearsAgo = "years ago",
 )

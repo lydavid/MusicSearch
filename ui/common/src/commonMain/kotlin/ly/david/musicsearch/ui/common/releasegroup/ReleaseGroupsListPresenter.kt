@@ -11,8 +11,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
-import app.cash.paging.compose.LazyPagingItems
-import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
@@ -41,7 +39,7 @@ class ReleaseGroupsListPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
-        val releaseGroupListItems: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query, sorted) {
+        val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query, sorted) {
             mutableStateOf(
                 getReleaseGroups(
                     browseMethod = browseMethod,
@@ -86,7 +84,7 @@ class ReleaseGroupsListPresenter(
         }
 
         return ReleaseGroupsListUiState(
-            lazyPagingItems = releaseGroupListItems.collectAsLazyPagingItems(),
+            pagingDataFlow = pagingDataFlow,
             lazyListState = lazyListState,
             sort = sorted,
             eventSink = ::eventSink,
@@ -115,7 +113,7 @@ sealed interface ReleaseGroupsListUiEvent : CircuitUiEvent {
 
 @Stable
 data class ReleaseGroupsListUiState(
-    val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val pagingDataFlow: Flow<PagingData<ListItemModel>>,
     val lazyListState: LazyListState = LazyListState(),
     val sort: Boolean,
     val eventSink: (ReleaseGroupsListUiEvent) -> Unit,

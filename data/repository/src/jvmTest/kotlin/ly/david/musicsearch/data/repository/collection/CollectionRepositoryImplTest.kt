@@ -13,7 +13,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseCollectionsResponse
 import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
 import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.musicsearch.data.repository.BrowseEntityCountRepositoryImpl
+import ly.david.musicsearch.data.repository.BrowseRemoteMetadataRepositoryImpl
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
@@ -43,7 +43,7 @@ class CollectionRepositoryImplTest : KoinTest {
             collectionDao = collectionDao,
             collectionEntityDao = collectionEntityDao,
             browseEntityCountDao = browseEntityCountDao,
-            browseEntityCountRepository = BrowseEntityCountRepositoryImpl(
+            browseEntityCountRepository = BrowseRemoteMetadataRepositoryImpl(
                 browseEntityCountDao = browseEntityCountDao,
             ),
         )

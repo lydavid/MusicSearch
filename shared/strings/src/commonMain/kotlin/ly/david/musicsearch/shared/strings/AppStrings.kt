@@ -156,6 +156,21 @@ data class AppStrings(
     val collaborationsWith: (String) -> String,
     val wikipedia: String,
     val numberOfImages: String,
+    val lastUpdatedFromMusicBrainz: (period: String, dateTime: String) -> String,
+    val justNow: String,
+    val secondsAgo: String,
+    val minuteAgo: String,
+    val minutesAgo: String,
+    val hourAgo: String,
+    val hoursAgo: String,
+    val yesterday: String,
+    val daysAgo: String,
+    val weekAgo: String,
+    val weeksAgo: String,
+    val monthAgo: String,
+    val monthsAgo: String,
+    val yearAgo: String,
+    val yearsAgo: String,
 )
 
 object Locales {

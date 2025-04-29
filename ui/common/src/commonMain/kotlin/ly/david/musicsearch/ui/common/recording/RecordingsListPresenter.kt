@@ -18,7 +18,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.recording.usecase.GetRecordings
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
@@ -30,7 +30,7 @@ class RecordingsListPresenter(
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val recordingListItems: Flow<PagingData<RecordingListItemModel>> by rememberRetained(browseMethod, query) {
+        val recordingListItems: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query) {
             mutableStateOf(
                 getRecordings(
                     browseMethod = browseMethod,
@@ -77,7 +77,7 @@ sealed interface RecordingsListUiEvent : CircuitUiEvent {
 
 @Stable
 data class RecordingsListUiState(
-    val lazyPagingItems: LazyPagingItems<RecordingListItemModel>,
+    val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
     val eventSink: (RecordingsListUiEvent) -> Unit,
 ) : CircuitUiState

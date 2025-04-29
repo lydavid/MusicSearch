@@ -9,11 +9,15 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
+import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.appendLastUpdatedBanner
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 
 class GetReleaseGroups(
     private val releaseGroupsListRepository: ReleaseGroupsListRepository,
+    private val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
     private val coroutineScope: CoroutineScope,
 ) : GetEntitiesByEntity<ListItemModel> {
     override operator fun invoke(
@@ -27,8 +31,13 @@ class GetReleaseGroups(
                 browseMethod = browseMethod,
                 listFilters = listFilters,
             )
-                .distinctUntilChanged()
                 .cachedIn(scope = coroutineScope)
+                .appendLastUpdatedBanner(
+                    browseRemoteMetadataRepository = browseRemoteMetadataRepository,
+                    browseMethod = browseMethod,
+                    browseEntity = MusicBrainzEntity.RELEASE_GROUP,
+                )
+                .distinctUntilChanged()
         }
     }
 }

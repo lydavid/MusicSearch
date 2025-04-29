@@ -2,10 +2,15 @@ package ly.david.musicsearch.ui.common.label
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
+import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
@@ -16,12 +21,13 @@ fun LabelsListScreen(
     isEditMode: Boolean = false,
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
+    now: Instant = Clock.System.now(),
 ) {
     ScreenWithPagingLoadingAndError(
         lazyPagingItems = state.lazyPagingItems,
         modifier = modifier,
         lazyListState = state.lazyListState,
-    ) { listItemModel: LabelListItemModel? ->
+    ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is LabelListItemModel -> {
                 SwipeToDeleteListItem(
@@ -45,7 +51,12 @@ fun LabelsListScreen(
                     },
                 )
             }
-
+            is LastUpdatedFooter -> {
+                LastUpdatedFooterItem(
+                    lastUpdated = listItemModel.lastUpdated,
+                    now = now,
+                )
+            }
             else -> {
                 // Do nothing.
             }

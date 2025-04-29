@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
-import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.release.usecase.GetReleases
@@ -39,7 +39,7 @@ class ReleasesListPresenter(
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val releaseListItems: Flow<PagingData<ReleaseListItemModel>> by rememberRetained(browseMethod, query) {
+        val releaseListItems: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query) {
             mutableStateOf(
                 getReleases(
                     browseMethod = browseMethod,
@@ -114,7 +114,7 @@ sealed interface ReleasesListUiEvent : CircuitUiEvent {
 
 @Stable
 data class ReleasesListUiState(
-    val lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
+    val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
     val showMoreInfo: Boolean = true,
     val eventSink: (ReleasesListUiEvent) -> Unit = {},

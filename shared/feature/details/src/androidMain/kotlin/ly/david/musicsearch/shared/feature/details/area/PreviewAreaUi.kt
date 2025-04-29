@@ -6,11 +6,13 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
@@ -124,6 +126,9 @@ private val canadianArtists = MutableStateFlow(
                     end = "2016-08-20",
                 ),
             ),
+            LastUpdatedFooter(
+                lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
+            ),
         ),
     ),
 )
@@ -198,6 +203,9 @@ internal val events = MutableStateFlow(
                 ),
                 cancelled = true,
             ),
+            LastUpdatedFooter(
+                lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
+            ),
         ),
     ),
 )
@@ -268,6 +276,9 @@ internal val labels = MutableStateFlow(
                 name = "Audira Music",
                 type = "Publisher",
             ),
+            LastUpdatedFooter(
+                lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
+            ),
         ),
     ),
 )
@@ -329,6 +340,9 @@ internal val places = MutableStateFlow(
                 address = "750 Pacific Blvd.",
                 lifeSpan = LifeSpanUiModel(begin = "1986"),
             ),
+            LastUpdatedFooter(
+                lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
+            ),
         ),
     ),
 )
@@ -386,19 +400,8 @@ private val canadianReleases = MutableStateFlow(
                 countryCode = "CA",
                 formattedArtistCredits = "Neil Young",
             ),
-            ReleaseListItemModel(
-                id = "sarah_mclachlan_surfacing",
-                name = "Surfacing",
-                date = "1997",
-                countryCode = "CA",
-                formattedArtistCredits = "Sarah McLachlan",
-            ),
-            ReleaseListItemModel(
-                id = "leonard_cohen_songs_of_leonard_cohen",
-                name = "Songs of Leonard Cohen",
-                date = "1967-12-27",
-                countryCode = "CA",
-                formattedArtistCredits = "Leonard Cohen",
+            LastUpdatedFooter(
+                lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
             ),
         ),
     ),
@@ -526,6 +529,7 @@ internal fun PreviewAreaDetails() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -563,6 +567,7 @@ internal fun PreviewAreaDetailsError() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -600,6 +605,7 @@ internal fun PreviewAreaRelationships() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -637,6 +643,7 @@ internal fun PreviewAreaArtists() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -674,6 +681,7 @@ internal fun PreviewAreaEvents() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -711,6 +719,7 @@ internal fun PreviewAreaLabels() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -748,6 +757,7 @@ internal fun PreviewAreaReleases() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
@@ -785,11 +795,13 @@ internal fun PreviewAreaPlaces() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }
 }
 
+// not previewable yet
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaStats() {
@@ -822,6 +834,7 @@ internal fun PreviewAreaStats() {
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
             )
         }
     }

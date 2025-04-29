@@ -5,8 +5,11 @@ import androidx.compose.ui.Modifier
 import app.cash.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
+import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 
@@ -23,7 +26,7 @@ fun AreasListScreen(
         lazyPagingItems = lazyPagingItems,
         modifier = modifier,
         lazyListState = state.lazyListState,
-    ) { listItemModel: AreaListItemModel? ->
+    ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is AreaListItemModel -> {
                 SwipeToDeleteListItem(
@@ -45,6 +48,12 @@ fun AreasListScreen(
                             listItemModel.name,
                         )
                     },
+                )
+            }
+
+            is LastUpdatedFooter -> {
+                LastUpdatedFooterItem(
+                    lastUpdated = listItemModel.lastUpdated,
                 )
             }
 
