@@ -76,6 +76,31 @@
             }
         },
         {
+            "uniqueId": "androidx.annotation:annotation",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.9.1",
+            "description": "Provides source annotations for tooling and readability.",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Annotation",
+            "website": "https://developer.android.com/jetpack/androidx/releases/annotation#1.9.1",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.annotation:annotation-experimental",
             "funding": [
                 
@@ -264,6 +289,31 @@
             ]
         },
         {
+            "uniqueId": "androidx.collection:collection",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.5.0",
+            "description": "Standalone efficient collections.",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "collections",
+            "website": "https://developer.android.com/jetpack/androidx/releases/collection#1.5.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.collection:collection-jvm",
             "funding": [
                 
@@ -314,6 +364,31 @@
             }
         },
         {
+            "uniqueId": "androidx.compose.animation:animation",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Compose animation library",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Animation",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-animation#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.compose.animation:animation-android",
             "funding": [
                 
@@ -330,6 +405,31 @@
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Compose Animation",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-animation#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.compose.animation:animation-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Animation engine and animation primitives that are the building blocks of the Compose animation library",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Animation Core",
             "website": "https://developer.android.com/jetpack/androidx/releases/compose-animation#1.8.0",
             "licenses": [
                 "Apache-2.0"
@@ -364,6 +464,31 @@
             }
         },
         {
+            "uniqueId": "androidx.compose.foundation:foundation",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Higher level abstractions of the Compose UI primitives. This library is design system agnostic, providing the high-level building blocks for both application and design-system developers",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Foundation",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.compose.foundation:foundation-android",
             "funding": [
                 
@@ -380,6 +505,31 @@
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Compose Foundation",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.compose.foundation:foundation-layout",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Compose layout implementations",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Layouts",
             "website": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.8.0",
             "licenses": [
                 "Apache-2.0"
@@ -414,6 +564,31 @@
             }
         },
         {
+            "uniqueId": "androidx.compose.material3:material3",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.3.2",
+            "description": "Compose Material You Design Components library",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Material3 Components",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-material3#1.3.2",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.compose.material3:material3-android",
             "funding": [
                 
@@ -431,6 +606,31 @@
             },
             "name": "Compose Material3 Components",
             "website": "https://developer.android.com/jetpack/androidx/releases/compose-material3#1.3.2",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.compose.material:material",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Compose Material Design Components library",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Material Components",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.8.0",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -464,6 +664,31 @@
             }
         },
         {
+            "uniqueId": "androidx.compose.material:material-icons-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.7.8",
+            "description": "Compose Material Design core icons. This module contains the most commonly used set of Material icons.",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Material Icons Core",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.7.8",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.compose.material:material-icons-core-android",
             "funding": [
                 
@@ -480,6 +705,31 @@
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Compose Material Icons Core",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.7.8",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.compose.material:material-icons-extended",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.7.8",
+            "description": "Compose Material Design extended icons. This module contains all Material icons. It is a very large dependency and should not be included directly.",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Material Icons Extended",
             "website": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.7.8",
             "licenses": [
                 "Apache-2.0"
@@ -514,6 +764,31 @@
             }
         },
         {
+            "uniqueId": "androidx.compose.material:material-ripple",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Material ripple used to build interactive components",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Material Ripple",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.compose.material:material-ripple-android",
             "funding": [
                 
@@ -539,6 +814,31 @@
             }
         },
         {
+            "uniqueId": "androidx.compose.runtime:runtime",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Tree composition support for code generated by the Compose compiler plugin and corresponding public API",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Runtime",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.compose.runtime:runtime-android",
             "funding": [
                 
@@ -555,6 +855,31 @@
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Compose Runtime",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.compose.runtime:runtime-saveable",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Compose components that allow saving and restoring the local ui state",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Saveable",
             "website": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.8.0",
             "licenses": [
                 "Apache-2.0"
@@ -589,6 +914,31 @@
             }
         },
         {
+            "uniqueId": "androidx.compose.ui:ui",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Compose UI primitives. This library contains the primitives that form the Compose UI Toolkit, such as drawing, measurement and layout.",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose UI",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.compose.ui:ui-android",
             "funding": [
                 
@@ -605,6 +955,31 @@
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Compose UI",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.compose.ui:ui-geometry",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Compose classes related to dimensions without units",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Geometry",
             "website": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.8.0",
             "licenses": [
                 "Apache-2.0"
@@ -639,6 +1014,31 @@
             }
         },
         {
+            "uniqueId": "androidx.compose.ui:ui-graphics",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Compose graphics",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Graphics",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.compose.ui:ui-graphics-android",
             "funding": [
                 
@@ -655,6 +1055,31 @@
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Compose Graphics",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.compose.ui:ui-text",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Compose Text primitives and utilities",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose UI Text",
             "website": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.8.0",
             "licenses": [
                 "Apache-2.0"
@@ -689,6 +1114,31 @@
             }
         },
         {
+            "uniqueId": "androidx.compose.ui:ui-tooling-preview",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Compose tooling library API. This library provides the API required to declare @Preview composables in user apps.",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose UI Preview Tooling",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.compose.ui:ui-tooling-preview-android",
             "funding": [
                 
@@ -705,6 +1155,31 @@
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Compose UI Preview Tooling",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.compose.ui:ui-unit",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Compose classes for simple units",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Unit",
             "website": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.8.0",
             "licenses": [
                 "Apache-2.0"
@@ -739,6 +1214,31 @@
             }
         },
         {
+            "uniqueId": "androidx.compose.ui:ui-util",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.8.0",
+            "description": "Internal Compose utilities used by other modules",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Compose Util",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.8.0",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.compose.ui:ui-util-android",
             "funding": [
                 
@@ -762,6 +1262,22 @@
             "organization": {
                 "name": "The Android Open Source Project"
             }
+        },
+        {
+            "uniqueId": "androidx.compose:compose-bom",
+            "funding": [
+                
+            ],
+            "developers": [
+                
+            ],
+            "artifactVersion": "2025.04.01",
+            "description": "A compatible set of Jetpack Compose libraries.",
+            "name": "Jetpack Compose Libraries BOM",
+            "website": "https://developer.android.com/jetpack",
+            "licenses": [
+                "Apache-2.0"
+            ]
         },
         {
             "uniqueId": "androidx.concurrent:concurrent-futures",
@@ -927,6 +1443,31 @@
             ]
         },
         {
+            "uniqueId": "androidx.datastore:datastore",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.1.4",
+            "description": "Android DataStore - contains the underlying store used by each serialization method along with components that require an Android dependency",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "DataStore",
+            "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.4",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.datastore:datastore-android",
             "funding": [
                 
@@ -943,6 +1484,31 @@
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "DataStore",
+            "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.4",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.datastore:datastore-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.1.4",
+            "description": "Android DataStore Core - contains the underlying store used by each serialization method",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "DataStore Core",
             "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.4",
             "licenses": [
                 "Apache-2.0"
@@ -977,6 +1543,31 @@
             }
         },
         {
+            "uniqueId": "androidx.datastore:datastore-core-okio",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.1.4",
+            "description": "Android DataStore Core Okio- contains APIs to use datastore-core in multiplatform via okio",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "DataStore Core Okio",
+            "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.4",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.datastore:datastore-core-okio-jvm",
             "funding": [
                 
@@ -1002,6 +1593,31 @@
             }
         },
         {
+            "uniqueId": "androidx.datastore:datastore-preferences",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.1.4",
+            "description": "Android Preferences DataStore",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Preferences DataStore",
+            "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.4",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.datastore:datastore-preferences-android",
             "funding": [
                 
@@ -1018,6 +1634,31 @@
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Preferences DataStore",
+            "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.4",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.datastore:datastore-preferences-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "1.1.4",
+            "description": "Android Preferences DataStore without the Android Dependencies",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Preferences DataStore Core",
             "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.4",
             "licenses": [
                 "Apache-2.0"
@@ -1287,6 +1928,31 @@
             ]
         },
         {
+            "uniqueId": "androidx.lifecycle:lifecycle-common",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "2.8.7",
+            "description": "Android Lifecycle-Common",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Lifecycle-Common",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.7",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.lifecycle:lifecycle-common-java8",
             "funding": [
                 
@@ -1437,6 +2103,31 @@
             }
         },
         {
+            "uniqueId": "androidx.lifecycle:lifecycle-runtime",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "2.8.7",
+            "description": "Android Lifecycle Runtime",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Lifecycle Runtime",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.7",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.lifecycle:lifecycle-runtime-android",
             "funding": [
                 
@@ -1462,6 +2153,31 @@
             }
         },
         {
+            "uniqueId": "androidx.lifecycle:lifecycle-runtime-compose",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "2.8.7",
+            "description": "Compose integration with Lifecycle",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Lifecycle Runtime Compose",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.7",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.lifecycle:lifecycle-runtime-compose-android",
             "funding": [
                 
@@ -1478,6 +2194,31 @@
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle Runtime Compose",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.7",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.lifecycle:lifecycle-runtime-ktx",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "2.8.7",
+            "description": "Kotlin extensions for 'lifecycle' artifact",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Lifecycle Kotlin Extensions",
             "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.7",
             "licenses": [
                 "Apache-2.0"
@@ -1553,6 +2294,31 @@
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle ViewModel",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.7",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.lifecycle:lifecycle-viewmodel-compose",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "2.8.7",
+            "description": "Compose integration with Lifecycle ViewModel",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Lifecycle ViewModel Compose",
             "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.7",
             "licenses": [
                 "Apache-2.0"
@@ -1659,6 +2425,31 @@
             ]
         },
         {
+            "uniqueId": "androidx.paging:paging-common",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "3.3.0-alpha02",
+            "description": "Android Paging-Common",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Paging-Common",
+            "website": "https://developer.android.com/jetpack/androidx/releases/paging#3.3.0-alpha02",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
             "uniqueId": "androidx.paging:paging-common-android",
             "funding": [
                 
@@ -1675,6 +2466,31 @@
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Paging-Common",
+            "website": "https://developer.android.com/jetpack/androidx/releases/paging#3.3.0-alpha02",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.paging:paging-compose",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "3.3.0-alpha02",
+            "description": "Compose integration with Paging",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "Paging-Compose",
             "website": "https://developer.android.com/jetpack/androidx/releases/paging#3.3.0-alpha02",
             "licenses": [
                 "Apache-2.0"
@@ -2023,6 +2839,29 @@
             }
         },
         {
+            "uniqueId": "app.cash.paging:paging-common",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Cash App"
+                }
+            ],
+            "artifactVersion": "3.3.0-alpha02-0.5.1",
+            "description": "Packages AndroidX's Paging library for Kotlin/Multiplatform.",
+            "scm": {
+                "connection": "scm:git:https://github.com/cashapp/multiplatform-paging.git",
+                "url": "https://github.com/cashapp/multiplatform-paging/",
+                "developerConnection": "scm:git:ssh://git@github.com/cashapp/multiplatform-paging.git"
+            },
+            "name": "paging-common",
+            "website": "https://github.com/cashapp/multiplatform-paging/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "app.cash.paging:paging-common-jvm",
             "funding": [
                 
@@ -2040,6 +2879,29 @@
                 "developerConnection": "scm:git:ssh://git@github.com/cashapp/multiplatform-paging.git"
             },
             "name": "paging-common",
+            "website": "https://github.com/cashapp/multiplatform-paging/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "app.cash.paging:paging-compose-common",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Cash App"
+                }
+            ],
+            "artifactVersion": "3.3.0-alpha02-0.5.1",
+            "description": "Packages AndroidX's Paging library for Kotlin/Multiplatform.",
+            "scm": {
+                "connection": "scm:git:https://github.com/cashapp/multiplatform-paging.git",
+                "url": "https://github.com/cashapp/multiplatform-paging/",
+                "developerConnection": "scm:git:ssh://git@github.com/cashapp/multiplatform-paging.git"
+            },
+            "name": "paging-compose-common",
             "website": "https://github.com/cashapp/multiplatform-paging/",
             "licenses": [
                 "Apache-2.0"
@@ -2092,6 +2954,29 @@
             ]
         },
         {
+            "uniqueId": "app.cash.sqldelight:androidx-paging3-extensions",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Square, Inc."
+                }
+            ],
+            "artifactVersion": "2.0.2",
+            "description": "An implementation of AndroidX Paging3 Multiplatform backed by SQLDelight Query",
+            "scm": {
+                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
+                "url": "https://github.com/cashapp/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+            },
+            "name": "SQLDelight AndroidX Paging3 Multiplatform Extension",
+            "website": "https://github.com/cashapp/sqldelight/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "app.cash.sqldelight:androidx-paging3-extensions-jvm",
             "funding": [
                 
@@ -2109,6 +2994,29 @@
                 "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
             },
             "name": "SQLDelight AndroidX Paging3 Multiplatform Extension",
+            "website": "https://github.com/cashapp/sqldelight/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "app.cash.sqldelight:async-extensions",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Square, Inc."
+                }
+            ],
+            "artifactVersion": "2.0.2",
+            "description": "Kotlin extensions for working with Async drivers",
+            "scm": {
+                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
+                "url": "https://github.com/cashapp/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+            },
+            "name": "SQLDelight Async Driver Extensions",
             "website": "https://github.com/cashapp/sqldelight/",
             "licenses": [
                 "Apache-2.0"
@@ -2138,6 +3046,29 @@
             ]
         },
         {
+            "uniqueId": "app.cash.sqldelight:coroutines-extensions",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Square, Inc."
+                }
+            ],
+            "artifactVersion": "2.0.2",
+            "description": "Kotlin extension functions to expose SQLDelight's Query as a Flow",
+            "scm": {
+                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
+                "url": "https://github.com/cashapp/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+            },
+            "name": "SQLDelight Coroutines Extensions",
+            "website": "https://github.com/cashapp/sqldelight/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "app.cash.sqldelight:coroutines-extensions-jvm",
             "funding": [
                 
@@ -2155,6 +3086,29 @@
                 "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
             },
             "name": "SQLDelight Coroutines Extensions",
+            "website": "https://github.com/cashapp/sqldelight/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "app.cash.sqldelight:primitive-adapters",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Square, Inc."
+                }
+            ],
+            "artifactVersion": "2.0.2",
+            "description": "Primitive column adapters for SQLDelight",
+            "scm": {
+                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
+                "url": "https://github.com/cashapp/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+            },
+            "name": "SQLDelight Primitive Column Adapters",
             "website": "https://github.com/cashapp/sqldelight/",
             "licenses": [
                 "Apache-2.0"
@@ -2184,6 +3138,29 @@
             ]
         },
         {
+            "uniqueId": "app.cash.sqldelight:runtime",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Square, Inc."
+                }
+            ],
+            "artifactVersion": "2.0.2",
+            "description": "Multiplatform runtime library to support generated code",
+            "scm": {
+                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
+                "url": "https://github.com/cashapp/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+            },
+            "name": "SQLDelight Multiplatform Runtime (Experimental)",
+            "website": "https://github.com/cashapp/sqldelight/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "app.cash.sqldelight:runtime-jvm",
             "funding": [
                 
@@ -2207,6 +3184,29 @@
             ]
         },
         {
+            "uniqueId": "cafe.adriel.lyricist:lyricist",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Adriel Cafe"
+                }
+            ],
+            "artifactVersion": "1.7.0",
+            "description": "The missing I18N/L10N library for Jetpack Compose!",
+            "scm": {
+                "connection": "scm:git:ssh://git@github.com/adrielcafe/lyricist.git",
+                "url": "https://github.com/adrielcafe/lyricist",
+                "developerConnection": "scm:git:ssh://git@github.com/adrielcafe/lyricist.git"
+            },
+            "name": "Lyricist",
+            "website": "https://github.com/adrielcafe/lyricist",
+            "licenses": [
+                "MIT"
+            ]
+        },
+        {
             "uniqueId": "cafe.adriel.lyricist:lyricist-android",
             "funding": [
                 
@@ -2224,6 +3224,29 @@
                 "developerConnection": "scm:git:ssh://git@github.com/adrielcafe/lyricist.git"
             },
             "name": "Lyricist",
+            "website": "https://github.com/adrielcafe/lyricist",
+            "licenses": [
+                "MIT"
+            ]
+        },
+        {
+            "uniqueId": "cafe.adriel.lyricist:lyricist-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Adriel Cafe"
+                }
+            ],
+            "artifactVersion": "1.7.0",
+            "description": "The missing I18N/L10N library for Jetpack Compose!",
+            "scm": {
+                "connection": "scm:git:ssh://git@github.com/adrielcafe/lyricist.git",
+                "url": "https://github.com/adrielcafe/lyricist",
+                "developerConnection": "scm:git:ssh://git@github.com/adrielcafe/lyricist.git"
+            },
+            "name": "Lyricist Core",
             "website": "https://github.com/adrielcafe/lyricist",
             "licenses": [
                 "MIT"
@@ -2253,7 +3276,53 @@
             ]
         },
         {
+            "uniqueId": "co.touchlab:stately-common",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Kevin Galligan"
+                }
+            ],
+            "artifactVersion": "2.1.0",
+            "description": "Multithreaded Kotlin Multiplatform Utilities",
+            "scm": {
+                "connection": "scm:git:git://github.com/touchlab/Stately.git",
+                "url": "https://github.com/touchlab/Stately",
+                "developerConnection": "scm:git:git://github.com/touchlab/Stately.git"
+            },
+            "name": "Stately",
+            "website": "https://github.com/touchlab/Stately",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "co.touchlab:stately-common-jvm",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Kevin Galligan"
+                }
+            ],
+            "artifactVersion": "2.1.0",
+            "description": "Multithreaded Kotlin Multiplatform Utilities",
+            "scm": {
+                "connection": "scm:git:git://github.com/touchlab/Stately.git",
+                "url": "https://github.com/touchlab/Stately",
+                "developerConnection": "scm:git:git://github.com/touchlab/Stately.git"
+            },
+            "name": "Stately",
+            "website": "https://github.com/touchlab/Stately",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "co.touchlab:stately-concurrency",
             "funding": [
                 
             ],
@@ -2299,7 +3368,53 @@
             ]
         },
         {
+            "uniqueId": "co.touchlab:stately-concurrent-collections",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Kevin Galligan"
+                }
+            ],
+            "artifactVersion": "2.1.0",
+            "description": "Multithreaded Kotlin Multiplatform Utilities",
+            "scm": {
+                "connection": "scm:git:git://github.com/touchlab/Stately.git",
+                "url": "https://github.com/touchlab/Stately",
+                "developerConnection": "scm:git:git://github.com/touchlab/Stately.git"
+            },
+            "name": "Stately",
+            "website": "https://github.com/touchlab/Stately",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "co.touchlab:stately-concurrent-collections-jvm",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Kevin Galligan"
+                }
+            ],
+            "artifactVersion": "2.1.0",
+            "description": "Multithreaded Kotlin Multiplatform Utilities",
+            "scm": {
+                "connection": "scm:git:git://github.com/touchlab/Stately.git",
+                "url": "https://github.com/touchlab/Stately",
+                "developerConnection": "scm:git:git://github.com/touchlab/Stately.git"
+            },
+            "name": "Stately",
+            "website": "https://github.com/touchlab/Stately",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "co.touchlab:stately-strict",
             "funding": [
                 
             ],
@@ -2402,17 +3517,20 @@
                 
             ],
             "developers": [
-                
+                {
+                    "organisationUrl": "http://www.google.com",
+                    "name": "Kevin Bourrillion"
+                }
             ],
             "artifactVersion": "1.0",
             "description": "Contains Guava's com.google.common.util.concurrent.ListenableFuture class,\n    without any of its other classes -- but is also available in a second\n    \"version\" that omits the class to avoid conflicts with the copy in Guava\n    itself. The idea is:\n\n    - If users want only ListenableFuture, they depend on listenablefuture-1.0.\n\n    - If users want all of Guava, they depend on guava, which, as of Guava\n    27.0, depends on\n    listenablefuture-9999.0-empty-to-avoid-conflict-with-guava. The 9999.0-...\n    version number is enough for some build systems (notably, Gradle) to select\n    that empty artifact over the \"real\" listenablefuture-1.0 -- avoiding a\n    conflict with the copy of ListenableFuture in guava itself. If users are\n    using an older version of Guava or a build system other than Gradle, they\n    may see class conflicts. If so, they can solve them by manually excluding\n    the listenablefuture artifact or manually forcing their build systems to\n    use 9999.0-....",
             "scm": {
-                "connection": "scm:git:https://github.com/google/guava.git",
-                "url": "https://github.com/google/guava",
-                "developerConnection": "scm:git:git@github.com:google/guava.git"
+                "connection": "scm:git:https://github.com/google/guava.git/listenablefuture",
+                "url": "https://github.com/google/guava/listenablefuture",
+                "developerConnection": "scm:git:git@github.com:google/guava.git/listenablefuture"
             },
             "name": "Guava ListenableFuture only",
-            "website": "https://github.com/google/guava",
+            "website": "https://github.com/google/guava/listenablefuture",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -2441,6 +3559,29 @@
             ]
         },
         {
+            "uniqueId": "com.mikepenz:aboutlibraries-compose-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Mike Penz"
+                }
+            ],
+            "artifactVersion": "12.1.0-rc02",
+            "description": "AboutLibraries automatically detects all dependencies of a project and collects their information including the license. Optionally visualising it via the provided ui components.",
+            "scm": {
+                "connection": "scm:git@github.com:mikepenz/AboutLibraries.git",
+                "url": "https://github.com/mikepenz/AboutLibraries",
+                "developerConnection": "scm:git@github.com:mikepenz/AboutLibraries.git"
+            },
+            "name": "AboutLibraries Compose UI Library",
+            "website": "https://github.com/mikepenz/AboutLibraries",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "com.mikepenz:aboutlibraries-compose-core-android",
             "funding": [
                 
@@ -2450,7 +3591,7 @@
                     "name": "Mike Penz"
                 }
             ],
-            "artifactVersion": "12.0.1",
+            "artifactVersion": "12.1.0-rc02",
             "description": "AboutLibraries automatically detects all dependencies of a project and collects their information including the license. Optionally visualising it via the provided ui components.",
             "scm": {
                 "connection": "scm:git@github.com:mikepenz/AboutLibraries.git",
@@ -2458,6 +3599,29 @@
                 "developerConnection": "scm:git@github.com:mikepenz/AboutLibraries.git"
             },
             "name": "AboutLibraries Compose UI Library",
+            "website": "https://github.com/mikepenz/AboutLibraries",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "com.mikepenz:aboutlibraries-compose-m3",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Mike Penz"
+                }
+            ],
+            "artifactVersion": "12.1.0-rc02",
+            "description": "AboutLibraries automatically detects all dependencies of a project and collects their information including the license. Optionally visualising it via the provided ui components.",
+            "scm": {
+                "connection": "scm:git@github.com:mikepenz/AboutLibraries.git",
+                "url": "https://github.com/mikepenz/AboutLibraries",
+                "developerConnection": "scm:git@github.com:mikepenz/AboutLibraries.git"
+            },
+            "name": "AboutLibraries Compose Material 3 Library",
             "website": "https://github.com/mikepenz/AboutLibraries",
             "licenses": [
                 "Apache-2.0"
@@ -2473,7 +3637,7 @@
                     "name": "Mike Penz"
                 }
             ],
-            "artifactVersion": "12.0.1",
+            "artifactVersion": "12.1.0-rc02",
             "description": "AboutLibraries automatically detects all dependencies of a project and collects their information including the license. Optionally visualising it via the provided ui components.",
             "scm": {
                 "connection": "scm:git@github.com:mikepenz/AboutLibraries.git",
@@ -2481,6 +3645,29 @@
                 "developerConnection": "scm:git@github.com:mikepenz/AboutLibraries.git"
             },
             "name": "AboutLibraries Compose Material 3 Library",
+            "website": "https://github.com/mikepenz/AboutLibraries",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "com.mikepenz:aboutlibraries-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Mike Penz"
+                }
+            ],
+            "artifactVersion": "12.1.0-rc02",
+            "description": "AboutLibraries automatically detects all dependencies of a project and collects their information including the license. Optionally visualising it via the provided ui components.",
+            "scm": {
+                "connection": "scm:git@github.com:mikepenz/AboutLibraries.git",
+                "url": "https://github.com/mikepenz/AboutLibraries",
+                "developerConnection": "scm:git@github.com:mikepenz/AboutLibraries.git"
+            },
+            "name": "AboutLibraries Core Library",
             "website": "https://github.com/mikepenz/AboutLibraries",
             "licenses": [
                 "Apache-2.0"
@@ -2496,7 +3683,7 @@
                     "name": "Mike Penz"
                 }
             ],
-            "artifactVersion": "12.0.1",
+            "artifactVersion": "12.1.0-rc02",
             "description": "AboutLibraries automatically detects all dependencies of a project and collects their information including the license. Optionally visualising it via the provided ui components.",
             "scm": {
                 "connection": "scm:git@github.com:mikepenz/AboutLibraries.git",
@@ -2505,6 +3692,29 @@
             },
             "name": "AboutLibraries Core Library",
             "website": "https://github.com/mikepenz/AboutLibraries",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "com.slack.circuit:circuit-backstack",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Slack Technologies, Inc."
+                }
+            ],
+            "artifactVersion": "0.27.1",
+            "description": "Circuit (Backstack)",
+            "scm": {
+                "connection": "scm:git:git://github.com/slackhq/circuit.git",
+                "url": "https://github.com/slackhq/circuit/",
+                "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
+            },
+            "name": "Circuit (Backstack)",
+            "website": "https://github.com/slackhq/circuit/",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -2527,6 +3737,29 @@
                 "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
             },
             "name": "Circuit (Backstack)",
+            "website": "https://github.com/slackhq/circuit/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "com.slack.circuit:circuit-foundation",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Slack Technologies, Inc."
+                }
+            ],
+            "artifactVersion": "0.27.1",
+            "description": "Circuit Foundation",
+            "scm": {
+                "connection": "scm:git:git://github.com/slackhq/circuit.git",
+                "url": "https://github.com/slackhq/circuit/",
+                "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
+            },
+            "name": "Circuit (Foundation)",
             "website": "https://github.com/slackhq/circuit/",
             "licenses": [
                 "Apache-2.0"
@@ -2556,6 +3789,29 @@
             ]
         },
         {
+            "uniqueId": "com.slack.circuit:circuit-overlay",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Slack Technologies, Inc."
+                }
+            ],
+            "artifactVersion": "0.27.1",
+            "description": "Circuit (Overlay)",
+            "scm": {
+                "connection": "scm:git:git://github.com/slackhq/circuit.git",
+                "url": "https://github.com/slackhq/circuit/",
+                "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
+            },
+            "name": "Circuit (Overlay)",
+            "website": "https://github.com/slackhq/circuit/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "com.slack.circuit:circuit-overlay-android",
             "funding": [
                 
@@ -2573,6 +3829,29 @@
                 "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
             },
             "name": "Circuit (Overlay)",
+            "website": "https://github.com/slackhq/circuit/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "com.slack.circuit:circuit-retained",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Slack Technologies, Inc."
+                }
+            ],
+            "artifactVersion": "0.27.1",
+            "description": "Circuit (Retained)",
+            "scm": {
+                "connection": "scm:git:git://github.com/slackhq/circuit.git",
+                "url": "https://github.com/slackhq/circuit/",
+                "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
+            },
+            "name": "Circuit (retained)",
             "website": "https://github.com/slackhq/circuit/",
             "licenses": [
                 "Apache-2.0"
@@ -2602,6 +3881,29 @@
             ]
         },
         {
+            "uniqueId": "com.slack.circuit:circuit-runtime",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Slack Technologies, Inc."
+                }
+            ],
+            "artifactVersion": "0.27.1",
+            "description": "Circuit Runtime",
+            "scm": {
+                "connection": "scm:git:git://github.com/slackhq/circuit.git",
+                "url": "https://github.com/slackhq/circuit/",
+                "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
+            },
+            "name": "Circuit (runtime)",
+            "website": "https://github.com/slackhq/circuit/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "com.slack.circuit:circuit-runtime-android",
             "funding": [
                 
@@ -2619,6 +3921,29 @@
                 "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
             },
             "name": "Circuit (runtime)",
+            "website": "https://github.com/slackhq/circuit/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "com.slack.circuit:circuit-runtime-presenter",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Slack Technologies, Inc."
+                }
+            ],
+            "artifactVersion": "0.27.1",
+            "description": "Circuit Presenter",
+            "scm": {
+                "connection": "scm:git:git://github.com/slackhq/circuit.git",
+                "url": "https://github.com/slackhq/circuit/",
+                "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
+            },
+            "name": "Circuit (Presenter)",
             "website": "https://github.com/slackhq/circuit/",
             "licenses": [
                 "Apache-2.0"
@@ -2648,6 +3973,29 @@
             ]
         },
         {
+            "uniqueId": "com.slack.circuit:circuit-runtime-screen",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Slack Technologies, Inc."
+                }
+            ],
+            "artifactVersion": "0.27.1",
+            "description": "Circuit (Screen)",
+            "scm": {
+                "connection": "scm:git:git://github.com/slackhq/circuit.git",
+                "url": "https://github.com/slackhq/circuit/",
+                "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
+            },
+            "name": "Circuit (Screen)",
+            "website": "https://github.com/slackhq/circuit/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "com.slack.circuit:circuit-runtime-screen-android",
             "funding": [
                 
@@ -2665,6 +4013,29 @@
                 "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
             },
             "name": "Circuit (Screen)",
+            "website": "https://github.com/slackhq/circuit/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "com.slack.circuit:circuit-runtime-ui",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Slack Technologies, Inc."
+                }
+            ],
+            "artifactVersion": "0.27.1",
+            "description": "Circuit UI",
+            "scm": {
+                "connection": "scm:git:git://github.com/slackhq/circuit.git",
+                "url": "https://github.com/slackhq/circuit/",
+                "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
+            },
+            "name": "Circuit (UI)",
             "website": "https://github.com/slackhq/circuit/",
             "licenses": [
                 "Apache-2.0"
@@ -2694,6 +4065,29 @@
             ]
         },
         {
+            "uniqueId": "com.slack.circuit:circuit-sharedelements",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Slack Technologies, Inc."
+                }
+            ],
+            "artifactVersion": "0.27.1",
+            "description": "Circuit Shared Elements",
+            "scm": {
+                "connection": "scm:git:git://github.com/slackhq/circuit.git",
+                "url": "https://github.com/slackhq/circuit/",
+                "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
+            },
+            "name": "Circuit (Shared Elements)",
+            "website": "https://github.com/slackhq/circuit/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "com.slack.circuit:circuit-sharedelements-android",
             "funding": [
                 
@@ -2717,6 +4111,29 @@
             ]
         },
         {
+            "uniqueId": "com.slack.circuit:circuitx-gesture-navigation",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Slack Technologies, Inc."
+                }
+            ],
+            "artifactVersion": "0.27.1",
+            "description": "CircuitX (Gesture Navigation)",
+            "scm": {
+                "connection": "scm:git:git://github.com/slackhq/circuit.git",
+                "url": "https://github.com/slackhq/circuit/",
+                "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
+            },
+            "name": "CircuitX (Gesture Navigation)",
+            "website": "https://github.com/slackhq/circuit/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "com.slack.circuit:circuitx-gesture-navigation-android",
             "funding": [
                 
@@ -2734,6 +4151,29 @@
                 "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
             },
             "name": "CircuitX (Gesture Navigation)",
+            "website": "https://github.com/slackhq/circuit/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "com.slack.circuit:circuitx-overlays",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Slack Technologies, Inc."
+                }
+            ],
+            "artifactVersion": "0.27.1",
+            "description": "CircuitX (Overlays)",
+            "scm": {
+                "connection": "scm:git:git://github.com/slackhq/circuit.git",
+                "url": "https://github.com/slackhq/circuit/",
+                "developerConnection": "scm:git:ssh://git@github.com/slackhq/circuit.git"
+            },
+            "name": "CircuitX (Overlays)",
             "website": "https://github.com/slackhq/circuit/",
             "licenses": [
                 "Apache-2.0"
@@ -2809,6 +4249,29 @@
             ]
         },
         {
+            "uniqueId": "com.squareup.okio:okio",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Square, Inc."
+                }
+            ],
+            "artifactVersion": "3.10.2",
+            "description": "A modern I/O library for Android, Java, and Kotlin Multiplatform.",
+            "scm": {
+                "connection": "scm:git:git://github.com/square/okio.git",
+                "url": "https://github.com/square/okio/",
+                "developerConnection": "scm:git:ssh://git@github.com/square/okio.git"
+            },
+            "name": "okio",
+            "website": "https://github.com/square/okio/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "com.squareup.okio:okio-jvm",
             "funding": [
                 
@@ -2827,6 +4290,29 @@
             },
             "name": "okio",
             "website": "https://github.com/square/okio/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "dev.chrisbanes.material3:material3-window-size-class-multiplatform",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Chris Banes"
+                }
+            ],
+            "artifactVersion": "0.5.0",
+            "description": "Provides window size classes for building responsive UIs",
+            "scm": {
+                "connection": "scm:git:git://github.com/chrisbanes/material3-windowsizeclass-multiplatform.git",
+                "url": "https://github.com/chrisbanes/material3-windowsizeclass-multiplatform/",
+                "developerConnection": "scm:git:git://github.com/chrisbanes/material3-windowsizeclass-multiplatform.git"
+            },
+            "name": "Compose Material 3 Window Size Class",
+            "website": "https://github.com/chrisbanes/material3-windowsizeclass-multiplatform/",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -2855,6 +4341,29 @@
             ]
         },
         {
+            "uniqueId": "io.coil-kt.coil3:coil",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Coil Contributors"
+                }
+            ],
+            "artifactVersion": "3.1.0",
+            "description": "An image loading library for Android and Compose Multiplatform.",
+            "scm": {
+                "connection": "scm:git:git://github.com/coil-kt/coil.git",
+                "url": "https://github.com/coil-kt/coil",
+                "developerConnection": "scm:git:ssh://git@github.com/coil-kt/coil.git"
+            },
+            "name": "coil",
+            "website": "https://github.com/coil-kt/coil",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.coil-kt.coil3:coil-android",
             "funding": [
                 
@@ -2872,6 +4381,29 @@
                 "developerConnection": "scm:git:ssh://git@github.com/coil-kt/coil.git"
             },
             "name": "coil",
+            "website": "https://github.com/coil-kt/coil",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.coil-kt.coil3:coil-compose",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Coil Contributors"
+                }
+            ],
+            "artifactVersion": "3.1.0",
+            "description": "An image loading library for Android and Compose Multiplatform.",
+            "scm": {
+                "connection": "scm:git:git://github.com/coil-kt/coil.git",
+                "url": "https://github.com/coil-kt/coil",
+                "developerConnection": "scm:git:ssh://git@github.com/coil-kt/coil.git"
+            },
+            "name": "coil-compose",
             "website": "https://github.com/coil-kt/coil",
             "licenses": [
                 "Apache-2.0"
@@ -2901,6 +4433,29 @@
             ]
         },
         {
+            "uniqueId": "io.coil-kt.coil3:coil-compose-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Coil Contributors"
+                }
+            ],
+            "artifactVersion": "3.1.0",
+            "description": "An image loading library for Android and Compose Multiplatform.",
+            "scm": {
+                "connection": "scm:git:git://github.com/coil-kt/coil.git",
+                "url": "https://github.com/coil-kt/coil",
+                "developerConnection": "scm:git:ssh://git@github.com/coil-kt/coil.git"
+            },
+            "name": "coil-compose-core",
+            "website": "https://github.com/coil-kt/coil",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.coil-kt.coil3:coil-compose-core-android",
             "funding": [
                 
@@ -2918,6 +4473,29 @@
                 "developerConnection": "scm:git:ssh://git@github.com/coil-kt/coil.git"
             },
             "name": "coil-compose-core",
+            "website": "https://github.com/coil-kt/coil",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.coil-kt.coil3:coil-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Coil Contributors"
+                }
+            ],
+            "artifactVersion": "3.1.0",
+            "description": "An image loading library for Android and Compose Multiplatform.",
+            "scm": {
+                "connection": "scm:git:git://github.com/coil-kt/coil.git",
+                "url": "https://github.com/coil-kt/coil",
+                "developerConnection": "scm:git:ssh://git@github.com/coil-kt/coil.git"
+            },
+            "name": "coil-core",
             "website": "https://github.com/coil-kt/coil",
             "licenses": [
                 "Apache-2.0"
@@ -2947,6 +4525,29 @@
             ]
         },
         {
+            "uniqueId": "io.coil-kt.coil3:coil-network-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Coil Contributors"
+                }
+            ],
+            "artifactVersion": "3.1.0",
+            "description": "An image loading library for Android and Compose Multiplatform.",
+            "scm": {
+                "connection": "scm:git:git://github.com/coil-kt/coil.git",
+                "url": "https://github.com/coil-kt/coil",
+                "developerConnection": "scm:git:ssh://git@github.com/coil-kt/coil.git"
+            },
+            "name": "coil-network-core",
+            "website": "https://github.com/coil-kt/coil",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.coil-kt.coil3:coil-network-core-android",
             "funding": [
                 
@@ -2970,6 +4571,29 @@
             ]
         },
         {
+            "uniqueId": "io.coil-kt.coil3:coil-network-okhttp",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Coil Contributors"
+                }
+            ],
+            "artifactVersion": "3.1.0",
+            "description": "An image loading library for Android and Compose Multiplatform.",
+            "scm": {
+                "connection": "scm:git:git://github.com/coil-kt/coil.git",
+                "url": "https://github.com/coil-kt/coil",
+                "developerConnection": "scm:git:ssh://git@github.com/coil-kt/coil.git"
+            },
+            "name": "coil-network-okhttp",
+            "website": "https://github.com/coil-kt/coil",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.coil-kt.coil3:coil-network-okhttp-jvm",
             "funding": [
                 
@@ -2987,6 +4611,29 @@
                 "developerConnection": "scm:git:ssh://git@github.com/coil-kt/coil.git"
             },
             "name": "coil-network-okhttp",
+            "website": "https://github.com/coil-kt/coil",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.coil-kt.coil3:coil-test",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Coil Contributors"
+                }
+            ],
+            "artifactVersion": "3.1.0",
+            "description": "An image loading library for Android and Compose Multiplatform.",
+            "scm": {
+                "connection": "scm:git:git://github.com/coil-kt/coil.git",
+                "url": "https://github.com/coil-kt/coil",
+                "developerConnection": "scm:git:ssh://git@github.com/coil-kt/coil.git"
+            },
+            "name": "coil-test",
             "website": "https://github.com/coil-kt/coil",
             "licenses": [
                 "Apache-2.0"
@@ -3060,7 +4707,51 @@
             ]
         },
         {
+            "uniqueId": "io.insert-koin:koin-compose",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Arnaud Giuliani"
+                }
+            ],
+            "artifactVersion": "4.0.4",
+            "description": "KOIN - Kotlin simple Dependency Injection Framework",
+            "scm": {
+                "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
+                "url": "https://github.com/InsertKoinIO/koin"
+            },
+            "name": "Koin",
+            "website": "https://insert-koin.io/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.insert-koin:koin-compose-jvm",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Arnaud Giuliani"
+                }
+            ],
+            "artifactVersion": "4.0.4",
+            "description": "KOIN - Kotlin simple Dependency Injection Framework",
+            "scm": {
+                "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
+                "url": "https://github.com/InsertKoinIO/koin"
+            },
+            "name": "Koin",
+            "website": "https://insert-koin.io/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.insert-koin:koin-compose-viewmodel",
             "funding": [
                 
             ],
@@ -3104,7 +4795,51 @@
             ]
         },
         {
+            "uniqueId": "io.insert-koin:koin-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Arnaud Giuliani"
+                }
+            ],
+            "artifactVersion": "4.0.4",
+            "description": "KOIN - Kotlin simple Dependency Injection Framework",
+            "scm": {
+                "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
+                "url": "https://github.com/InsertKoinIO/koin"
+            },
+            "name": "Koin",
+            "website": "https://insert-koin.io/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.insert-koin:koin-core-jvm",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Arnaud Giuliani"
+                }
+            ],
+            "artifactVersion": "4.0.4",
+            "description": "KOIN - Kotlin simple Dependency Injection Framework",
+            "scm": {
+                "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
+                "url": "https://github.com/InsertKoinIO/koin"
+            },
+            "name": "Koin",
+            "website": "https://insert-koin.io/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.insert-koin:koin-core-viewmodel",
             "funding": [
                 
             ],
@@ -3148,6 +4883,50 @@
             ]
         },
         {
+            "uniqueId": "io.ktor:ktor-bom",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-bom",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.ktor:ktor-client-auth",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-client-auth",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.ktor:ktor-client-auth-jvm",
             "funding": [
                 
@@ -3164,6 +4943,28 @@
                 "url": "https://github.com/ktorio/ktor.git"
             },
             "name": "ktor-client-auth",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.ktor:ktor-client-content-negotiation",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-client-content-negotiation",
             "website": "https://github.com/ktorio/ktor",
             "licenses": [
                 "Apache-2.0"
@@ -3192,6 +4993,28 @@
             ]
         },
         {
+            "uniqueId": "io.ktor:ktor-client-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-client-core",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.ktor:ktor-client-core-jvm",
             "funding": [
                 
@@ -3208,6 +5031,28 @@
                 "url": "https://github.com/ktorio/ktor.git"
             },
             "name": "ktor-client-core",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.ktor:ktor-client-logging",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-client-logging",
             "website": "https://github.com/ktorio/ktor",
             "licenses": [
                 "Apache-2.0"
@@ -3236,6 +5081,28 @@
             ]
         },
         {
+            "uniqueId": "io.ktor:ktor-client-okhttp",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-client-okhttp",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.ktor:ktor-client-okhttp-jvm",
             "funding": [
                 
@@ -3258,6 +5125,28 @@
             ]
         },
         {
+            "uniqueId": "io.ktor:ktor-events",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-events",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.ktor:ktor-events-jvm",
             "funding": [
                 
@@ -3274,6 +5163,50 @@
                 "url": "https://github.com/ktorio/ktor.git"
             },
             "name": "ktor-events",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.ktor:ktor-http",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-http",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.ktor:ktor-http-cio",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-http-cio",
             "website": "https://github.com/ktorio/ktor",
             "licenses": [
                 "Apache-2.0"
@@ -3324,6 +5257,28 @@
             ]
         },
         {
+            "uniqueId": "io.ktor:ktor-io",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-io",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.ktor:ktor-io-jvm",
             "funding": [
                 
@@ -3340,6 +5295,28 @@
                 "url": "https://github.com/ktorio/ktor.git"
             },
             "name": "ktor-io",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.ktor:ktor-network",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-network",
             "website": "https://github.com/ktorio/ktor",
             "licenses": [
                 "Apache-2.0"
@@ -3368,6 +5345,28 @@
             ]
         },
         {
+            "uniqueId": "io.ktor:ktor-serialization",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-serialization",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.ktor:ktor-serialization-jvm",
             "funding": [
                 
@@ -3384,6 +5383,50 @@
                 "url": "https://github.com/ktorio/ktor.git"
             },
             "name": "ktor-serialization",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.ktor:ktor-serialization-kotlinx",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-serialization-kotlinx",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.ktor:ktor-serialization-kotlinx-json",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-serialization-kotlinx-json",
             "website": "https://github.com/ktorio/ktor",
             "licenses": [
                 "Apache-2.0"
@@ -3434,6 +5477,28 @@
             ]
         },
         {
+            "uniqueId": "io.ktor:ktor-sse",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-sse",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.ktor:ktor-sse-jvm",
             "funding": [
                 
@@ -3450,6 +5515,28 @@
                 "url": "https://github.com/ktorio/ktor.git"
             },
             "name": "ktor-sse",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.ktor:ktor-utils",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-utils",
             "website": "https://github.com/ktorio/ktor",
             "licenses": [
                 "Apache-2.0"
@@ -3478,6 +5565,28 @@
             ]
         },
         {
+            "uniqueId": "io.ktor:ktor-websocket-serialization",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-websocket-serialization",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "io.ktor:ktor-websocket-serialization-jvm",
             "funding": [
                 
@@ -3494,6 +5603,28 @@
                 "url": "https://github.com/ktorio/ktor.git"
             },
             "name": "ktor-websocket-serialization",
+            "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "io.ktor:ktor-websockets",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Jetbrains Team"
+                }
+            ],
+            "artifactVersion": "3.1.2",
+            "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
+            "scm": {
+                "url": "https://github.com/ktorio/ktor.git"
+            },
+            "name": "ktor-websockets",
             "website": "https://github.com/ktorio/ktor",
             "licenses": [
                 "Apache-2.0"
@@ -3517,6 +5648,29 @@
             },
             "name": "ktor-websockets",
             "website": "https://github.com/ktorio/ktor",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "net.engawapg.lib:zoomable",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "usuiat"
+                }
+            ],
+            "artifactVersion": "2.6.0",
+            "description": "An android library for Jetpack Compose that enables contents zoomable.",
+            "scm": {
+                "connection": "scm:git:git://github.com/usuiat/Zoomable.git",
+                "url": "https://github.com/usuiat/Zoomable",
+                "developerConnection": "scm:git:ssh://git@github.com/usuiat/Zoomable.git"
+            },
+            "name": "Engawapg Zoomable",
+            "website": "https://github.com/usuiat/Zoomable",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -3568,6 +5722,30 @@
             ]
         },
         {
+            "uniqueId": "org.jetbrains.androidx.core:core-bundle",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.0.1",
+            "description": "Provides Bundle in Kotlin Multiplatform projects",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "androidx.core:core-bundle",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "org.jetbrains.androidx.core:core-bundle-android",
             "funding": [
                 
@@ -3586,6 +5764,294 @@
                 "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
             },
             "name": "androidx.core:core-bundle",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.androidx.lifecycle:lifecycle-common",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "2.8.4",
+            "description": "Android Lifecycle-Common",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Lifecycle-Common",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.androidx.lifecycle:lifecycle-runtime",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "2.8.4",
+            "description": "Android Lifecycle Runtime",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Lifecycle Runtime",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "2.8.4",
+            "description": "Compose integration with Lifecycle",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Lifecycle Runtime Compose",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "2.8.4",
+            "description": "Android Lifecycle ViewModel",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Lifecycle ViewModel",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "2.8.3",
+            "description": "Compose integration with Lifecycle ViewModel",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Lifecycle ViewModel Compose",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-savedstate",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "2.8.3",
+            "description": "Android Lifecycle ViewModel",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Lifecycle ViewModel with SavedState",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.androidx.savedstate:savedstate",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.2.2",
+            "description": "Android Lifecycle Saved State",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Saved State",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.animation:animation",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Compose animation library",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Animation",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.animation:animation-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Animation engine and animation primitives that are the building blocks of the Compose animation library",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Animation Core",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.annotation-internal:annotation",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Provides source annotations for tooling and readability.",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Annotation",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.collection-internal:collection",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Standalone efficient collections.",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "collections",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.components:components-resources",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.7.3",
+            "description": "Resources for Compose JB",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Resources for Compose JB",
             "website": "https://github.com/JetBrains/compose-jb",
             "licenses": [
                 "Apache-2.0"
@@ -3616,6 +6082,438 @@
             ]
         },
         {
+            "uniqueId": "org.jetbrains.compose.foundation:foundation",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Higher level abstractions of the Compose UI primitives. This library is design system agnostic, providing the high-level building blocks for both application and design-system developers",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Foundation",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.foundation:foundation-layout",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Compose layout implementations",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Layouts",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.material3:material3",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Compose Material You Design Components library",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Material3 Components",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.material:material",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.7.3",
+            "description": "Compose Material Design Components library",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Material Components",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.material:material-icons-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.7.3",
+            "description": "Compose Material Design core icons. This module contains the most commonly used set of Material icons.",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Material Icons Core",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.material:material-icons-extended",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.7.3",
+            "description": "Compose Material Design extended icons. This module contains all Material icons. It is a very large dependency and should not be included directly.",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Material Icons Extended",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.material:material-ripple",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Material ripple used to build interactive components",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Material Ripple",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.runtime:runtime",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Tree composition support for code generated by the Compose compiler plugin and corresponding public API",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Runtime",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.runtime:runtime-saveable",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Compose components that allow saving and restoring the local ui state",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Saveable",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.ui:ui",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Compose UI primitives. This library contains the primitives that form the Compose UI Toolkit, such as drawing, measurement and layout.",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose UI primitives",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.ui:ui-backhandler",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Provides BackHandler in Compose Multiplatform projects",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Multiplatform BackHandler",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.ui:ui-backhandler-android",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Provides BackHandler in Compose Multiplatform projects",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Multiplatform BackHandler",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.ui:ui-geometry",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Compose classes related to dimensions without units",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Geometry",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.ui:ui-graphics",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Compose graphics",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Graphics",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.ui:ui-text",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Compose Text primitives and utilities",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose UI Text",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.ui:ui-tooling-preview",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Compose tooling library API. This library provides the API required to declare @Preview composables in user apps.",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose UI Preview Tooling",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.ui:ui-unit",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Compose classes for simple units",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Unit",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.compose.ui:ui-util",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Compose Multiplatform Team"
+                }
+            ],
+            "artifactVersion": "1.8.0-rc01",
+            "description": "Internal Compose utilities used by other modules",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
+                "url": "https://github.com/JetBrains/compose-jb",
+                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
+            },
+            "name": "Compose Util",
+            "website": "https://github.com/JetBrains/compose-jb",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "org.jetbrains.kotlin:kotlin-android-extensions-runtime",
             "funding": [
                 
@@ -3634,6 +6532,30 @@
                 "developerConnection": "scm:git:https://github.com/JetBrains/kotlin.git"
             },
             "name": "Kotlin Android Extensions Runtime",
+            "website": "https://kotlinlang.org/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.kotlin:kotlin-bom",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "JetBrains Team"
+                }
+            ],
+            "artifactVersion": "2.1.10",
+            "description": "Kotlin is a statically typed programming language that compiles to JVM byte codes and JavaScript",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
+                "url": "https://github.com/JetBrains/kotlin",
+                "developerConnection": "scm:git:https://github.com/JetBrains/kotlin.git"
+            },
+            "name": "Kotlin Libraries bill-of-materials",
             "website": "https://kotlinlang.org/",
             "licenses": [
                 "Apache-2.0"
@@ -3688,6 +6610,30 @@
             ]
         },
         {
+            "uniqueId": "org.jetbrains.kotlin:kotlin-stdlib-common",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "Kotlin Team"
+                }
+            ],
+            "artifactVersion": "2.1.20",
+            "description": "Kotlin Common Standard Library (legacy, use kotlin-stdlib instead)",
+            "scm": {
+                "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
+                "url": "https://github.com/JetBrains/kotlin",
+                "developerConnection": "scm:git:https://github.com/JetBrains/kotlin.git"
+            },
+            "name": "Kotlin Stdlib Common",
+            "website": "https://kotlinlang.org/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "org.jetbrains.kotlin:kotlin-stdlib-jdk7",
             "funding": [
                 
@@ -3736,6 +6682,28 @@
             ]
         },
         {
+            "uniqueId": "org.jetbrains.kotlinx:atomicfu",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "JetBrains Team"
+                }
+            ],
+            "artifactVersion": "0.27.0",
+            "description": "AtomicFU utilities",
+            "scm": {
+                "url": "https://github.com/Kotlin/kotlinx.atomicfu"
+            },
+            "name": "atomicfu",
+            "website": "https://github.com/Kotlin/kotlinx.atomicfu",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "org.jetbrains.kotlinx:atomicfu-jvm",
             "funding": [
                 
@@ -3753,6 +6721,28 @@
             },
             "name": "atomicfu",
             "website": "https://github.com/Kotlin/kotlinx.atomicfu",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.kotlinx:kotlinx-collections-immutable",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "JetBrains Team"
+                }
+            ],
+            "artifactVersion": "0.3.8",
+            "description": "Kotlin Immutable Collections multiplatform library",
+            "scm": {
+                "url": "https://github.com/Kotlin/kotlinx.collections.immutable"
+            },
+            "name": "kotlinx-collections-immutable",
+            "website": "https://github.com/Kotlin/kotlinx.collections.immutable",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -3796,6 +6786,50 @@
                 "url": "https://github.com/Kotlin/kotlinx.coroutines"
             },
             "name": "kotlinx-coroutines-android",
+            "website": "https://github.com/Kotlin/kotlinx.coroutines",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.kotlinx:kotlinx-coroutines-bom",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "JetBrains Team"
+                }
+            ],
+            "artifactVersion": "1.10.2",
+            "description": "Coroutines support libraries for Kotlin",
+            "scm": {
+                "url": "https://github.com/Kotlin/kotlinx.coroutines"
+            },
+            "name": "kotlinx-coroutines-bom",
+            "website": "https://github.com/Kotlin/kotlinx.coroutines",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "JetBrains Team"
+                }
+            ],
+            "artifactVersion": "1.10.2",
+            "description": "Coroutines support libraries for Kotlin",
+            "scm": {
+                "url": "https://github.com/Kotlin/kotlinx.coroutines"
+            },
+            "name": "kotlinx-coroutines-core",
             "website": "https://github.com/Kotlin/kotlinx.coroutines",
             "licenses": [
                 "Apache-2.0"
@@ -3846,6 +6880,28 @@
             ]
         },
         {
+            "uniqueId": "org.jetbrains.kotlinx:kotlinx-datetime",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "JetBrains Team"
+                }
+            ],
+            "artifactVersion": "0.6.2",
+            "description": "Kotlin Datetime Library",
+            "scm": {
+                "url": "https://github.com/Kotlin/kotlinx-datetime"
+            },
+            "name": "kotlinx-datetime",
+            "website": "https://github.com/Kotlin/kotlinx-datetime",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "org.jetbrains.kotlinx:kotlinx-datetime-jvm",
             "funding": [
                 
@@ -3868,6 +6924,28 @@
             ]
         },
         {
+            "uniqueId": "org.jetbrains.kotlinx:kotlinx-io-bytestring",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "JetBrains Team"
+                }
+            ],
+            "artifactVersion": "0.6.0",
+            "description": "IO support for Kotlin",
+            "scm": {
+                "url": "https://github.com/Kotlin/kotlinx-io"
+            },
+            "name": "kotlinx-io-bytestring",
+            "website": "https://github.com/Kotlin/kotlinx-io",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "org.jetbrains.kotlinx:kotlinx-io-bytestring-jvm",
             "funding": [
                 
@@ -3884,6 +6962,28 @@
                 "url": "https://github.com/Kotlin/kotlinx-io"
             },
             "name": "kotlinx-io-bytestring",
+            "website": "https://github.com/Kotlin/kotlinx-io",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.kotlinx:kotlinx-io-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "JetBrains Team"
+                }
+            ],
+            "artifactVersion": "0.6.0",
+            "description": "IO support for Kotlin",
+            "scm": {
+                "url": "https://github.com/Kotlin/kotlinx-io"
+            },
+            "name": "kotlinx-io-core",
             "website": "https://github.com/Kotlin/kotlinx-io",
             "licenses": [
                 "Apache-2.0"
@@ -3912,6 +7012,50 @@
             ]
         },
         {
+            "uniqueId": "org.jetbrains.kotlinx:kotlinx-serialization-bom",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "JetBrains Team"
+                }
+            ],
+            "artifactVersion": "1.8.1",
+            "description": "Kotlin multiplatform serialization runtime library",
+            "scm": {
+                "url": "https://github.com/Kotlin/kotlinx.serialization"
+            },
+            "name": "kotlinx-serialization-bom",
+            "website": "https://github.com/Kotlin/kotlinx.serialization",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.kotlinx:kotlinx-serialization-core",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "JetBrains Team"
+                }
+            ],
+            "artifactVersion": "1.8.1",
+            "description": "Kotlin multiplatform serialization runtime library",
+            "scm": {
+                "url": "https://github.com/Kotlin/kotlinx.serialization"
+            },
+            "name": "kotlinx-serialization-core",
+            "website": "https://github.com/Kotlin/kotlinx.serialization",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm",
             "funding": [
                 
@@ -3928,6 +7072,50 @@
                 "url": "https://github.com/Kotlin/kotlinx.serialization"
             },
             "name": "kotlinx-serialization-core",
+            "website": "https://github.com/Kotlin/kotlinx.serialization",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.kotlinx:kotlinx-serialization-json",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "JetBrains Team"
+                }
+            ],
+            "artifactVersion": "1.8.1",
+            "description": "Kotlin multiplatform serialization runtime library",
+            "scm": {
+                "url": "https://github.com/Kotlin/kotlinx.serialization"
+            },
+            "name": "kotlinx-serialization-json",
+            "website": "https://github.com/Kotlin/kotlinx.serialization",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "org.jetbrains.kotlinx:kotlinx-serialization-json-io",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "organisationUrl": "https://www.jetbrains.com",
+                    "name": "JetBrains Team"
+                }
+            ],
+            "artifactVersion": "1.8.1",
+            "description": "Kotlin multiplatform serialization runtime library",
+            "scm": {
+                "url": "https://github.com/Kotlin/kotlinx.serialization"
+            },
+            "name": "kotlinx-serialization-json-io",
             "website": "https://github.com/Kotlin/kotlinx.serialization",
             "licenses": [
                 "Apache-2.0"
@@ -4030,13 +7218,15 @@
                 
             ],
             "developers": [
-                
+                {
+                    "name": "Ceki Gulcu"
+                }
             ],
             "artifactVersion": "2.0.16",
             "description": "The slf4j API",
             "scm": {
-                "connection": "scm:git:https://github.com/qos-ch/slf4j.git",
-                "url": "https://github.com/qos-ch/slf4j"
+                "connection": "scm:git:https://github.com/qos-ch/slf4j.git/slf4j-parent/slf4j-api",
+                "url": "https://github.com/qos-ch/slf4j/slf4j-parent/slf4j-api"
             },
             "name": "SLF4J API Module",
             "website": "http://www.slf4j.org",
