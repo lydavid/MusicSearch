@@ -54,6 +54,7 @@ fun EventsListScreen(
             is LastUpdatedFooter -> {
                 LastUpdatedFooterItem(
                     lastUpdated = listItemModel.lastUpdated,
+                    now = now,
                 )
             }
             else -> {

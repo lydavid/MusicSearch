@@ -317,6 +317,7 @@ internal fun AreaUiInternal(
                                 ),
                             )
                         },
+                        now = now,
                     )
                 }
 
