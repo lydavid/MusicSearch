@@ -3,8 +3,6 @@ package ly.david.musicsearch.ui.common.place
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
@@ -15,6 +13,8 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import ly.david.musicsearch.shared.domain.place.formatForDisplay
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.PinDrop
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
@@ -37,7 +37,7 @@ fun CoordinateListItem(
             ) {
                 Icon(
                     modifier = Modifier.padding(end = 8.dp),
-                    imageVector = Icons.Default.PinDrop,
+                    imageVector = CustomIcons.PinDrop,
                     contentDescription = strings.openGoogleMaps,
                 )
                 Text(

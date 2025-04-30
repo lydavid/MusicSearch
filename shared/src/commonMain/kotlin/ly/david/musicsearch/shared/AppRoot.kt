@@ -17,7 +17,7 @@ import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.overlay.ContentWithOverlays
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuitx.gesturenavigation.GestureNavigationDecorationFactory
-import ly.david.musicsearch.ui.image.InitializeImageLoader
+import ly.david.musicsearch.ui.common.image.InitializeImageLoader
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable

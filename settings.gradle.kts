@@ -72,7 +72,6 @@ include(
     ":test-data",
     ":ui:common",
     ":ui:core",
-    ":ui:image",
     ":ui:test:screenshot",
     ":konsist-test",
     ":test:image",

@@ -17,7 +17,6 @@ kotlin {
                 implementation(projects.ui.common)
                 implementation(projects.shared.domain)
                 implementation(projects.core.logging.api)
-                implementation(projects.ui.image)
 
                 implementation(compose.foundation)
                 implementation(compose.material3)

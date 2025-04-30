@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,6 +25,8 @@ import androidx.compose.ui.platform.testTag
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.network.searchableEntities
 import ly.david.musicsearch.ui.common.ResourceDropdownPicker
+import ly.david.musicsearch.ui.common.icons.Clear
+import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.core.LocalStrings
 
@@ -90,7 +90,7 @@ internal fun SearchUiContent(
                         focusRequester.requestFocus()
                     }) {
                         Icon(
-                            Icons.Default.Clear,
+                            CustomIcons.Clear,
                             contentDescription = strings.clearSearch,
                         )
                     }

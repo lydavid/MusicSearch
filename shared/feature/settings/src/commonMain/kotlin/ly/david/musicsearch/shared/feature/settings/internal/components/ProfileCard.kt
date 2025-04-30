@@ -5,9 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Login
-import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -16,6 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.Login
+import ly.david.musicsearch.ui.common.icons.Logout
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
@@ -44,7 +44,7 @@ internal fun ProfileCard(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = if (showLogin) Icons.Default.Login else Icons.Default.Logout,
+                imageVector = if (showLogin) CustomIcons.Login else CustomIcons.Logout,
                 contentDescription = null,
                 modifier = Modifier.padding(end = 8.dp),
             )

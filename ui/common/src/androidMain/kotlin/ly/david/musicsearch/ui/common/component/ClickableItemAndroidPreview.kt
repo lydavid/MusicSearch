@@ -1,12 +1,12 @@
 package ly.david.musicsearch.ui.common.component
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import ly.david.musicsearch.ui.common.icons.ChevronRight
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.Person
+import ly.david.musicsearch.ui.common.icons.Search
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
@@ -41,7 +41,7 @@ internal fun PreviewClickableItemWithEndIcon() {
         Surface {
             ClickableItem(
                 title = "Click me, my text is so long it will possibly push the end icon off the screen",
-                endIcon = Icons.Default.ChevronRight,
+                endIcon = CustomIcons.ChevronRight,
             )
         }
     }
@@ -54,7 +54,7 @@ internal fun PreviewClickableItemWithStartIcon() {
         Surface {
             ClickableItem(
                 title = "Click me, my text is so long it will possibly push the start icon off the screen",
-                startIcon = Icons.Default.Person,
+                startIcon = CustomIcons.Person,
             )
         }
     }
@@ -67,8 +67,8 @@ internal fun PreviewClickableItemWithStartEndIcon() {
         Surface {
             ClickableItem(
                 title = "Click me, my text is so long it will possibly push the start icon off the screen",
-                startIcon = Icons.Default.Person,
-                endIcon = Icons.Default.Search,
+                startIcon = CustomIcons.Person,
+                endIcon = CustomIcons.Search,
             )
         }
     }

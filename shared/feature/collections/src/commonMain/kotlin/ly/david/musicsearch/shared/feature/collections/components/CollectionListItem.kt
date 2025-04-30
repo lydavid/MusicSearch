@@ -4,10 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.outlined.CheckCircle
-import androidx.compose.material.icons.outlined.Cloud
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemColors
@@ -19,6 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.ui.common.EntityIcon
+import ly.david.musicsearch.ui.common.icons.CheckCircle
+import ly.david.musicsearch.ui.common.icons.Cloud
+import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.SMALL_IMAGE_SIZE
 import ly.david.musicsearch.ui.core.theme.TextStyles
@@ -66,14 +65,14 @@ internal fun CollectionListItem(
                 if (collection.isRemote) {
                     Icon(
                         modifier = Modifier.padding(end = 4.dp),
-                        imageVector = Icons.Outlined.Cloud,
+                        imageVector = CustomIcons.Cloud,
                         contentDescription = null,
                     )
                 }
                 if (collection.containsEntity) {
                     Icon(
                         modifier = Modifier.padding(end = 4.dp),
-                        imageVector = Icons.Filled.CheckCircle,
+                        imageVector = CustomIcons.CheckCircle,
                         tint = MaterialTheme.colorScheme.primary,
                         contentDescription = null,
                     )

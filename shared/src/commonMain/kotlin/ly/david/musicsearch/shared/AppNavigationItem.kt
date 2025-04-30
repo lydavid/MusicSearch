@@ -1,11 +1,12 @@
 package ly.david.musicsearch.shared
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CollectionsBookmark
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.slack.circuit.runtime.screen.Screen
+import ly.david.musicsearch.ui.common.icons.CollectionsBookmark
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.Database
+import ly.david.musicsearch.ui.common.icons.Search
+import ly.david.musicsearch.ui.common.icons.Settings
 import ly.david.musicsearch.ui.common.screen.CollectionListScreen
 import ly.david.musicsearch.ui.common.screen.DatabaseScreen
 import ly.david.musicsearch.ui.common.screen.SearchScreen
@@ -16,7 +17,7 @@ internal enum class AppNavigationItem(
     val screen: Screen,
 ) {
     Search(
-        Icons.Default.Search,
+        CustomIcons.Search,
         SearchScreen(),
     ),
     Database(
@@ -24,11 +25,11 @@ internal enum class AppNavigationItem(
         DatabaseScreen,
     ),
     Collection(
-        Icons.Default.CollectionsBookmark,
+        CustomIcons.CollectionsBookmark,
         CollectionListScreen(),
     ),
     Settings(
-        Icons.Default.Settings,
+        CustomIcons.Settings,
         SettingsScreen,
     ),
 }

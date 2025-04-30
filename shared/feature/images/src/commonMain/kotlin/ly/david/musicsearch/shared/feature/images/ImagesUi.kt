@@ -60,8 +60,8 @@ import ly.david.musicsearch.ui.common.screen.screenContainerSize
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.image.LargeImage
-import ly.david.musicsearch.ui.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.image.LargeImage
+import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

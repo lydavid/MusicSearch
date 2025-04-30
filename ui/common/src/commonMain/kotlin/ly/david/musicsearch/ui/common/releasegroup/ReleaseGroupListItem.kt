@@ -20,7 +20,7 @@ import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
-import ly.david.musicsearch.ui.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.image.ThumbnailImage
 
 @Composable
 fun ReleaseGroupListItem(

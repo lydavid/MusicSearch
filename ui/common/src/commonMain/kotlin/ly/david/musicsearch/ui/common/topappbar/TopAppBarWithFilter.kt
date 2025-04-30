@@ -11,10 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.outlined.FindInPage
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -41,6 +37,10 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.zIndex
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.icons.ArrowBack
+import ly.david.musicsearch.ui.common.icons.Clear
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.FindInPage
 import ly.david.musicsearch.ui.core.LocalStrings
 
 /**
@@ -134,7 +134,7 @@ internal fun TopAppBarWithFilterInternal(
                                 modifier = Modifier.testTag(TopAppBarWithFilterTestTag.FILTER_BACK.name),
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.ArrowBack,
+                                    imageVector = CustomIcons.ArrowBack,
                                     contentDescription = strings.cancel,
                                 )
                             }
@@ -148,7 +148,7 @@ internal fun TopAppBarWithFilterInternal(
                                 focusRequester.requestFocus()
                             }) {
                                 Icon(
-                                    Icons.Default.Clear,
+                                    CustomIcons.Clear,
                                     contentDescription = strings.clearFilter,
                                 )
                             }
@@ -196,7 +196,7 @@ internal fun TopAppBarWithFilterInternal(
                         topAppBarFilterState.toggleFilterMode(true)
                     }) {
                         Icon(
-                            imageVector = Icons.Outlined.FindInPage,
+                            imageVector = CustomIcons.FindInPage,
                             contentDescription = strings.filter,
                         )
                     }

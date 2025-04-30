@@ -4,9 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -18,6 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.ui.common.icons.ArrowDropDown
+import ly.david.musicsearch.ui.common.icons.ArrowDropUp
+import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
@@ -47,7 +47,7 @@ fun CollapsibleListSeparatorHeader(
                 },
         ) {
             Icon(
-                imageVector = if (collapsed) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
+                imageVector = if (collapsed) CustomIcons.ArrowDropUp else CustomIcons.ArrowDropDown,
                 contentDescription = null,
             )
 

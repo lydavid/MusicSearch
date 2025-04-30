@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -37,6 +34,9 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.EntityIcon
+import ly.david.musicsearch.ui.common.icons.ArrowBack
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.MoreVert
 import ly.david.musicsearch.ui.core.LocalStrings
 
 /**
@@ -95,7 +95,7 @@ fun ScrollableTopAppBar(
                 if (showBackButton) {
                     IconButton(onClick = { onBack() }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = CustomIcons.ArrowBack,
                             contentDescription = strings.back,
                         )
                     }
@@ -227,7 +227,7 @@ private fun OverflowMenu(
         Box {
             IconButton(onClick = { showMenu = !showMenu }) {
                 Icon(
-                    imageVector = Icons.Default.MoreVert,
+                    imageVector = CustomIcons.MoreVert,
                     contentDescription = strings.moreActions,
                 )
             }

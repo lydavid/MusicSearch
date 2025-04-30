@@ -1,8 +1,6 @@
 package ly.david.musicsearch.shared.feature.collections.list
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -12,6 +10,8 @@ import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.component.ClickableItem
+import ly.david.musicsearch.ui.common.icons.Check
+import ly.david.musicsearch.ui.common.icons.CustomIcons
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +43,7 @@ internal fun CollectionSortBottomSheetContent(
         CollectionSortOption.entries.forEach {
             ClickableItem(
                 title = it.getLabel(strings),
-                endIcon = if (sortOption == it) Icons.Default.Check else null,
+                endIcon = if (sortOption == it) CustomIcons.Check else null,
                 onClick = {
                     onSortOptionClick(it)
                 },

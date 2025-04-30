@@ -3,8 +3,6 @@ package ly.david.musicsearch.shared.feature.search
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -13,6 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.DeleteOutline
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
@@ -36,7 +36,7 @@ internal fun RecentSearchesHeader(
 
         IconButton(onClick = onDeleteAllHistory) {
             Icon(
-                imageVector = Icons.Default.Delete,
+                imageVector = CustomIcons.DeleteOutline,
                 contentDescription = strings.clearSearchHistory,
             )
         }

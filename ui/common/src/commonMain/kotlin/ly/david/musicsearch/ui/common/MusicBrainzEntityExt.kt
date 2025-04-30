@@ -1,23 +1,23 @@
 package ly.david.musicsearch.ui.common
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Album
-import androidx.compose.material.icons.filled.CollectionsBookmark
-import androidx.compose.material.icons.filled.CorporateFare
-import androidx.compose.material.icons.filled.Event
-import androidx.compose.material.icons.filled.Folder
-import androidx.compose.material.icons.filled.Link
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Mic
-import androidx.compose.material.icons.filled.MusicNote
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Piano
-import androidx.compose.material.icons.filled.Place
-import androidx.compose.material.icons.filled.Public
-import androidx.compose.material.icons.filled.TheaterComedy
 import androidx.compose.ui.graphics.vector.ImageVector
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.strings.AppStrings
+import ly.david.musicsearch.ui.common.icons.Album
+import ly.david.musicsearch.ui.common.icons.CollectionsBookmark
+import ly.david.musicsearch.ui.common.icons.CorporateFare
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.Event
+import ly.david.musicsearch.ui.common.icons.Folder
+import ly.david.musicsearch.ui.common.icons.Link
+import ly.david.musicsearch.ui.common.icons.List
+import ly.david.musicsearch.ui.common.icons.Mic
+import ly.david.musicsearch.ui.common.icons.MusicNote
+import ly.david.musicsearch.ui.common.icons.Person
+import ly.david.musicsearch.ui.common.icons.Piano
+import ly.david.musicsearch.ui.common.icons.Place
+import ly.david.musicsearch.ui.common.icons.Public
+import ly.david.musicsearch.ui.common.icons.TheaterComedy
 
 /**
  * Returns an appropriate name for this [MusicBrainzEntity].
@@ -62,20 +62,20 @@ fun MusicBrainzEntity.getNamePlural(strings: AppStrings): String {
 
 fun MusicBrainzEntity.getIcon(): ImageVector? {
     return when (this) {
-        MusicBrainzEntity.AREA -> Icons.Default.Public
-        MusicBrainzEntity.ARTIST -> Icons.Default.Person
-        MusicBrainzEntity.COLLECTION -> Icons.Default.CollectionsBookmark
-        MusicBrainzEntity.EVENT -> Icons.Default.Event
-        MusicBrainzEntity.GENRE -> Icons.Default.TheaterComedy
-        MusicBrainzEntity.INSTRUMENT -> Icons.Default.Piano
-        MusicBrainzEntity.LABEL -> Icons.Default.CorporateFare
-        MusicBrainzEntity.PLACE -> Icons.Default.Place
-        MusicBrainzEntity.RECORDING -> Icons.Default.Mic
-        MusicBrainzEntity.RELEASE -> Icons.Default.Album
-        MusicBrainzEntity.RELEASE_GROUP -> Icons.Default.Folder
-        MusicBrainzEntity.SERIES -> Icons.Default.List
-        MusicBrainzEntity.WORK -> Icons.Default.MusicNote
-        MusicBrainzEntity.URL -> Icons.Default.Link
+        MusicBrainzEntity.AREA -> CustomIcons.Public
+        MusicBrainzEntity.ARTIST -> CustomIcons.Person
+        MusicBrainzEntity.COLLECTION -> CustomIcons.CollectionsBookmark
+        MusicBrainzEntity.EVENT -> CustomIcons.Event
+        MusicBrainzEntity.GENRE -> CustomIcons.TheaterComedy
+        MusicBrainzEntity.INSTRUMENT -> CustomIcons.Piano
+        MusicBrainzEntity.LABEL -> CustomIcons.CorporateFare
+        MusicBrainzEntity.PLACE -> CustomIcons.Place
+        MusicBrainzEntity.RECORDING -> CustomIcons.Mic
+        MusicBrainzEntity.RELEASE -> CustomIcons.Album
+        MusicBrainzEntity.RELEASE_GROUP -> CustomIcons.Folder
+        MusicBrainzEntity.SERIES -> CustomIcons.List
+        MusicBrainzEntity.WORK -> CustomIcons.MusicNote
+        MusicBrainzEntity.URL -> CustomIcons.Link
         else -> {
             // No icons.
             null

@@ -22,7 +22,7 @@ import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.work.getDisplayScript
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.image.LargeImage
+import ly.david.musicsearch.ui.common.image.LargeImage
 
 @Composable
 internal fun ReleaseDetailsUi(

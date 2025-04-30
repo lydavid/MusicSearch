@@ -3,8 +3,6 @@ package ly.david.musicsearch.android.feature.spotify.history
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,6 +14,8 @@ import ly.david.musicsearch.shared.domain.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.Search
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
@@ -30,7 +30,7 @@ internal fun SearchSpotifyBottomSheetContent(
         ClickableItem(
             title = strings.searchX(artistName),
             startIcon = MusicBrainzEntity.ARTIST.getIcon(),
-            endIcon = Icons.Default.Search,
+            endIcon = CustomIcons.Search,
             onClick = {
                 searchMusicBrainz(
                     "\"$artistName\"",
@@ -46,7 +46,7 @@ internal fun SearchSpotifyBottomSheetContent(
                     artistName,
                 ),
                 startIcon = MusicBrainzEntity.RELEASE_GROUP.getIcon(),
-                endIcon = Icons.Default.Search,
+                endIcon = CustomIcons.Search,
                 onClick = {
                     searchMusicBrainz(
                         "\"$albumName\" artist:\"$artistName\"",
@@ -63,7 +63,7 @@ internal fun SearchSpotifyBottomSheetContent(
                     artistName,
                 ),
                 startIcon = MusicBrainzEntity.RECORDING.getIcon(),
-                endIcon = Icons.Default.Search,
+                endIcon = CustomIcons.Search,
                 onClick = {
                     searchMusicBrainz(
                         "\"$trackName\" artist:\"$artistName\"",

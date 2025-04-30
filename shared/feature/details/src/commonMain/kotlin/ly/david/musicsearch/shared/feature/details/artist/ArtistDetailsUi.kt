@@ -20,7 +20,7 @@ import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.image.LargeImage
+import ly.david.musicsearch.ui.common.image.LargeImage
 
 @Composable
 internal fun ArtistDetailsUi(

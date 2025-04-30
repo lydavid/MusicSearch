@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
@@ -19,6 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
+import ly.david.musicsearch.ui.common.icons.Check
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.KeyboardArrowDown
 import ly.david.musicsearch.ui.core.LocalStrings
 
 @Composable
@@ -46,7 +46,7 @@ internal fun CollectionsFilterChipsBar(
             leadingIcon = {
                 if (showLocal) {
                     Icon(
-                        imageVector = Icons.Default.Done,
+                        imageVector = CustomIcons.Check,
                         contentDescription = null,
                     )
                 }
@@ -60,7 +60,7 @@ internal fun CollectionsFilterChipsBar(
             leadingIcon = {
                 if (showRemote) {
                     Icon(
-                        imageVector = Icons.Default.Done,
+                        imageVector = CustomIcons.Check,
                         contentDescription = null,
                     )
                 }
@@ -79,7 +79,7 @@ internal fun CollectionsFilterChipsBar(
             label = { Text(text = "Sort: ${sortOption.getLabel(strings)}") },
             trailingIcon = {
                 Icon(
-                    imageVector = Icons.Default.KeyboardArrowDown,
+                    imageVector = CustomIcons.KeyboardArrowDown,
                     contentDescription = null,
                 )
             },

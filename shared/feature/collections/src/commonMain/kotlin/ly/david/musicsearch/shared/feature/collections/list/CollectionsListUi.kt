@@ -3,8 +3,6 @@ package ly.david.musicsearch.shared.feature.collections.list
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -40,6 +38,8 @@ import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.feature.collections.components.CollectionListItem
 import ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
+import ly.david.musicsearch.ui.common.icons.Add
+import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.topappbar.EditToggle
@@ -185,7 +185,7 @@ internal fun CollectionListUi(
                 additionalActions = {
                     IconButton(onClick = onCreateCollectionClick) {
                         Icon(
-                            imageVector = Icons.Default.Add,
+                            imageVector = CustomIcons.Add,
                             contentDescription = strings.createCollection,
                         )
                     }

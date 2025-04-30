@@ -14,7 +14,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.shared.domain)
-                implementation(projects.ui.image)
                 implementation(projects.ui.common)
 
                 implementation(compose.foundation)

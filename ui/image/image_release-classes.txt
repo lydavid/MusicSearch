@@ -1,6 +1,0 @@
-unstable class ForwardingDrawInfo {
-  unstable val painter: Painter
-  stable val alpha: Float
-  stable val colorFilter: ColorFilter?
-  <runtime stability> = Unstable
-}

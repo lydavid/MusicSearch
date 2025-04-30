@@ -19,7 +19,6 @@ kotlin {
                 api(projects.shared.domain)
                 api(projects.ui.core)
                 implementation(projects.core.logging.api)
-                implementation(projects.ui.image)
 
                 implementation(compose.foundation)
                 implementation(compose.materialIconsExtended)
@@ -34,6 +33,10 @@ kotlin {
                 implementation(libs.lyricist.library)
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
+
+                implementation(libs.coil)
+                implementation(libs.coil.compose)
+                implementation(libs.zoomable)
             }
         }
         val jvmCommon by creating {
@@ -43,10 +46,19 @@ kotlin {
             dependsOn(jvmCommon)
             dependencies {
                 implementation(libs.androidx.activity.compose)
+                implementation(libs.coil.network.okhttp)
             }
         }
         val jvmMain by getting {
             dependsOn(jvmCommon)
+            dependencies {
+                implementation(libs.coil.network.okhttp)
+            }
+        }
+        val iosMain by getting {
+            dependencies {
+                implementation(libs.coil.network.ktor3)
+            }
         }
         val androidUnitTest by getting {
             dependencies {

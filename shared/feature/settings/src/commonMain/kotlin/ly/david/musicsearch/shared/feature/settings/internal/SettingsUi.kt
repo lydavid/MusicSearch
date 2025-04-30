@@ -5,9 +5,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -33,6 +30,9 @@ import ly.david.musicsearch.shared.feature.settings.internal.components.SettingS
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.component.ClickableItem
+import ly.david.musicsearch.ui.common.icons.ChevronRight
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.Download
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.screen.LicensesScreen
@@ -224,7 +224,7 @@ internal fun SettingsUi(
                     ClickableItem(
                         title = strings.nowPlayingHistory,
                         subtitle = strings.nowPlayingHistorySubtitle,
-                        endIcon = Icons.Default.ChevronRight,
+                        endIcon = CustomIcons.ChevronRight,
                         onClick = {
                             onDestinationClick(NowPlayingHistoryScreen)
                         },
@@ -240,7 +240,7 @@ internal fun SettingsUi(
                 ClickableItem(
                     title = strings.spotify,
                     subtitle = strings.spotifySubtitle,
-                    endIcon = Icons.Default.ChevronRight,
+                    endIcon = CustomIcons.ChevronRight,
                     onClick = {
                         onDestinationClick(SpotifyHistoryScreen)
                     },
@@ -250,7 +250,7 @@ internal fun SettingsUi(
             ListSeparatorHeader(text = "Database")
 
             TextButton(onClick = export) {
-                Icon(imageVector = Icons.Default.Download, contentDescription = null)
+                Icon(imageVector = CustomIcons.Download, contentDescription = null)
                 Text(
                     text = "Save database to Downloads",
                     modifier = Modifier.padding(start = 8.dp),
@@ -262,7 +262,7 @@ internal fun SettingsUi(
 
             ClickableItem(
                 title = strings.openSourceLicenses,
-                endIcon = Icons.Default.ChevronRight,
+                endIcon = CustomIcons.ChevronRight,
                 onClick = {
                     onDestinationClick(LicensesScreen)
                 },
