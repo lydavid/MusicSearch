@@ -6044,7 +6044,7 @@
                     "name": "Compose Multiplatform Team"
                 }
             ],
-            "artifactVersion": "1.7.3",
+            "artifactVersion": "1.8.0-rc01",
             "description": "Resources for Compose JB",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
@@ -6068,7 +6068,7 @@
                     "name": "Compose Multiplatform Team"
                 }
             ],
-            "artifactVersion": "1.7.3",
+            "artifactVersion": "1.8.0-rc01",
             "description": "Resources for Compose JB",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
@@ -6164,7 +6164,7 @@
                     "name": "Compose Multiplatform Team"
                 }
             ],
-            "artifactVersion": "1.7.3",
+            "artifactVersion": "1.8.0-rc01",
             "description": "Compose Material Design Components library",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
