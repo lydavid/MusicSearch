@@ -1,15 +1,18 @@
 package ly.david.musicsearch.ui.common.relation
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -17,16 +20,20 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.ui.common.EntityIcon
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.Link
+import ly.david.musicsearch.ui.common.icons.Wikidata
+import ly.david.musicsearch.ui.common.icons.Wikipedia
 import ly.david.musicsearch.ui.common.text.fontWeight
+import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun UrlListItem(
     relation: RelationListItemModel,
     modifier: Modifier = Modifier,
 ) {
+    val strings = LocalStrings.current
     val haptics = LocalHapticFeedback.current
     val clipboardManager = LocalClipboardManager.current
     val uriHandler = LocalUriHandler.current
@@ -44,9 +51,24 @@ fun UrlListItem(
                     modifier = Modifier.padding(top = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    EntityIcon(
-                        entity = relation.linkedEntity,
-                        modifier = Modifier.padding(end = 8.dp),
+                    val imageVectorAndTint = when (relation.label) {
+                        strings.wikipedia -> {
+                            CustomIcons.Wikipedia to LocalContentColor.current
+                        }
+                        "Wikidata" -> {
+                            CustomIcons.Wikidata to Color.Unspecified
+                        }
+                        else -> {
+                            CustomIcons.Link to LocalContentColor.current
+                        }
+                    }
+                    Icon(
+                        imageVector = imageVectorAndTint.first,
+                        contentDescription = null,
+                        tint = imageVectorAndTint.second,
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .size(24.dp),
                     )
 
                     Text(

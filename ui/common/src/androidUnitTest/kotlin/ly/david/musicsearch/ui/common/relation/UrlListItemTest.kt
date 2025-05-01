@@ -11,4 +11,18 @@ class UrlListItemTest : ScreenshotTest() {
             PreviewUrlListItem()
         }
     }
+
+    @Test
+    fun wikipedia() {
+        snapshot {
+            PreviewUrlListItemWikipedia()
+        }
+    }
+
+    @Test
+    fun wikidata() {
+        snapshot {
+            PreviewUrlListItemWikidata()
+        }
+    }
 }

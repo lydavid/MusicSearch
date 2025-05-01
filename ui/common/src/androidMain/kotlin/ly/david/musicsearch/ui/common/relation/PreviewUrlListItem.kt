@@ -25,3 +25,41 @@ internal fun PreviewUrlListItem() {
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewUrlListItemWikipedia() {
+    PreviewTheme {
+        Surface {
+            UrlListItem(
+                relation = RelationListItemModel(
+                    id = "wikipedia_section",
+                    linkedEntityId = "wikipedia_section",
+                    linkedEntity = MusicBrainzEntity.URL,
+                    label = "Wikipedia",
+                    name = "https://en.wikipedia.org/wiki/Creepy_Nuts",
+                    visited = true,
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewUrlListItemWikidata() {
+    PreviewTheme {
+        Surface {
+            UrlListItem(
+                relation = RelationListItemModel(
+                    id = "5a8390ae-65bf-49cf-8677-ff18df336c81_50",
+                    linkedEntityId = "5a8390ae-65bf-49cf-8677-ff18df336c81",
+                    linkedEntity = MusicBrainzEntity.URL,
+                    label = "Wikidata",
+                    name = "https://www.wikidata.org/wiki/Q20039817",
+                    visited = true,
+                ),
+            )
+        }
+    }
+}
