@@ -9,7 +9,6 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.emptyToNull
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
-import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
 
 fun RelationMusicBrainzModel.toRelationDatabaseModel(
@@ -40,9 +39,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
-                // This is the lifespan of the relationship, not the artist
-                additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
-            }
+            } ?: return null
         }
 
         SerializableMusicBrainzEntity.EVENT -> {
@@ -50,7 +47,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
-                additionalInfo = lifeSpan.getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             } ?: return null
         }
 
@@ -91,8 +87,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
-                additionalInfo = artistCredits.getDisplayNames().transformThisIfNotNullOrEmpty { "by $it" } +
-                    getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
+                additionalInfo = artistCredits.getDisplayNames().transformThisIfNotNullOrEmpty { "by $it" }
             } ?: return null
         }
 
@@ -101,7 +96,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
-                additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             } ?: return null
         }
 
@@ -110,7 +104,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
-                additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             } ?: return null
         }
 

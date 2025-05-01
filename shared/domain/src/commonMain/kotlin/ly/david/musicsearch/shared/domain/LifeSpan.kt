@@ -1,7 +1,5 @@
 package ly.david.musicsearch.shared.domain
 
-import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
-
 interface LifeSpan {
     val begin: String?
     val end: String?
@@ -9,12 +7,29 @@ interface LifeSpan {
 }
 
 fun LifeSpan?.getLifeSpanForDisplay(): String {
-    if (this == null) return ""
-    val begin = begin.orEmpty()
-    val end = if (begin == end) {
-        ""
-    } else {
-        end.transformThisIfNotNullOrEmpty { " to $it" }
+    return when {
+        this == null -> {
+            ""
+        }
+
+        begin.isNullOrEmpty() && end.isNullOrEmpty() -> {
+            ""
+        }
+
+        begin.isNullOrEmpty() && !end.isNullOrEmpty() -> {
+            "?? - $end"
+        }
+
+        !begin.isNullOrEmpty() && end.isNullOrEmpty() -> {
+            "$begin -"
+        }
+
+        begin == end -> {
+            "$begin"
+        }
+
+        else -> {
+            "$begin - $end"
+        }
     }
-    return begin + end
 }

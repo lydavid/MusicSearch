@@ -65,22 +65,11 @@ enum class Direction {
     FORWARD,
 }
 
-// TODO: instead of this, just use Map<String, String>
-// TODO: add the rest of relationship attributes
+// TODO: use Map<String, String> or add the rest of relationship attributes
 //  there isn't actually that many of them
 //  https://musicbrainz.org/relationship-attributes
 @Serializable
 data class AttributeValue(
-
-    /**
-     * https://musicbrainz.org/relationship-attribute/39867b3b-0f1e-40d5-b602-4f3936b7f486
-     */
-    @SerialName("task")
-    val task: String? = null,
-
-    /**
-     * https://musicbrainz.org/relationship-attribute/a59c5830-5ec7-38fe-9a21-c7ea54f6650a
-     */
-    @SerialName("number")
-    val number: String? = null,
+    @SerialName("task") val task: String? = null,
+    @SerialName("number") val number: String? = null,
 )

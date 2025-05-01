@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -86,6 +87,14 @@ fun RelationListItem(
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
                         text = it,
+                        style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = relation.fontWeight,
+                    )
+                }
+                relation.lifeSpan.getLifeSpanForDisplay().ifNotNullOrEmpty {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = "($it)",
                         style = TextStyles.getCardBodySubTextStyle(),
                         fontWeight = relation.fontWeight,
                     )
