@@ -18,6 +18,9 @@ fun RelationMusicBrainzModel.getFormattedAttributesForDisplay(): String =
             "number" -> {
                 attribute + attributeValues?.number.transformThisIfNotNullOrEmpty { ": $it" }
             }
+            "time" -> {
+                attribute + attributeValues?.time.transformThisIfNotNullOrEmpty { ": $it" }
+            }
             else -> {
                 attribute
             }

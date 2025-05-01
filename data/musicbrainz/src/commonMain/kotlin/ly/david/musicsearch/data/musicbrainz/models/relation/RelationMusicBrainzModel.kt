@@ -72,4 +72,5 @@ enum class Direction {
 data class AttributeValue(
     @SerialName("task") val task: String? = null,
     @SerialName("number") val number: String? = null,
+    @SerialName("time") val time: String? = null,
 )
