@@ -13,6 +13,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
+import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.label.LabelListItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -23,6 +24,7 @@ import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.work.getDisplayScript
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.image.LargeImage
+import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 
 @Composable
 internal fun ReleaseDetailsUi(
@@ -31,6 +33,7 @@ internal fun ReleaseDetailsUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     onImageClick: () -> Unit = {},
+    onCollapseExpand: () -> Unit = {},
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
 ) {
     val strings = LocalStrings.current
@@ -192,30 +195,13 @@ internal fun ReleaseDetailsUi(
                         )
                     }
 
-                areas.ifNotNullOrEmpty {
-                    ListSeparatorHeader(strings.releaseEvents)
-                }
-                areas
-                    .filter { area ->
-                        val searchText = filterText.lowercase()
-                        listOf(
-                            area.getNameWithDisambiguation(),
-                            area.date,
-                        ).any { it?.lowercase()?.contains(searchText) == true }
-                    }
-                    .forEach { area: AreaListItemModel ->
-                        AreaListItem(
-                            area = area,
-                            showType = false,
-                            onAreaClick = {
-                                onItemClick(
-                                    MusicBrainzEntity.AREA,
-                                    id,
-                                    name,
-                                )
-                            },
-                        )
-                    }
+                ReleaseEventsSection(
+                    strings = strings,
+                    filterText = filterText,
+                    isCollapsed = releaseDetailsUiState.isReleaseEventsCollapsed,
+                    onCollapseExpand = onCollapseExpand,
+                    onItemClick = onItemClick,
+                )
 
                 UrlsSection(
                     urls = urls,
@@ -224,4 +210,43 @@ internal fun ReleaseDetailsUi(
             }
         }
     }
+}
+
+@Composable
+private fun ReleaseDetailsModel.ReleaseEventsSection(
+    strings: AppStrings,
+    filterText: String,
+    isCollapsed: Boolean,
+    onCollapseExpand: () -> Unit,
+    onItemClick: MusicBrainzItemClickHandler,
+) {
+    areas.ifNotNullOrEmpty {
+        CollapsibleListSeparatorHeader(
+            text = strings.releaseEvents,
+            collapsed = isCollapsed,
+            onClick = onCollapseExpand,
+        )
+    }
+    areas
+        .filterNot { isCollapsed }
+        .filter { area ->
+            val searchText = filterText.lowercase()
+            listOf(
+                area.getNameWithDisambiguation(),
+                area.date,
+            ).any { it?.lowercase()?.contains(searchText) == true }
+        }
+        .forEach { area: AreaListItemModel ->
+            AreaListItem(
+                area = area,
+                showType = false,
+                onAreaClick = {
+                    onItemClick(
+                        MusicBrainzEntity.AREA,
+                        id,
+                        name,
+                    )
+                },
+            )
+        }
 }

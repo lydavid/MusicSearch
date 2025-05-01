@@ -26,10 +26,10 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
@@ -78,6 +78,7 @@ internal class ReleasePresenter(
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
+        var isReleaseEventsCollapsed by rememberSaveable { mutableStateOf(false) }
 
         val tracksByReleaseUiState = tracksByReleasePresenter.present()
         val tracksEventSink = tracksByReleaseUiState.eventSink
@@ -232,6 +233,10 @@ internal class ReleasePresenter(
                         ),
                     )
                 }
+
+                is ReleaseUiEvent.ToggleCollapseExpandReleaseEvents -> {
+                    isReleaseEventsCollapsed = !isReleaseEventsCollapsed
+                }
             }
         }
 
@@ -247,6 +252,7 @@ internal class ReleasePresenter(
                 isError = isError,
                 numberOfImages = numberOfImages,
                 lazyListState = detailsLazyListState,
+                isReleaseEventsCollapsed = isReleaseEventsCollapsed,
             ),
             relationsUiState = relationsUiState,
             tracksByReleaseUiState = tracksByReleaseUiState,
@@ -278,6 +284,7 @@ internal data class ReleaseDetailsUiState(
     val isError: Boolean = false,
     val numberOfImages: Int? = null,
     val lazyListState: LazyListState = LazyListState(),
+    val isReleaseEventsCollapsed: Boolean = false,
 )
 
 internal sealed interface ReleaseUiEvent : CircuitUiEvent {
@@ -294,4 +301,6 @@ internal sealed interface ReleaseUiEvent : CircuitUiEvent {
     ) : ReleaseUiEvent
 
     data object ClickImage : ReleaseUiEvent
+
+    data object ToggleCollapseExpandReleaseEvents : ReleaseUiEvent
 }

@@ -170,6 +170,9 @@ internal fun ReleaseUi(
                             onImageClick = {
                                 eventSink(ReleaseUiEvent.ClickImage)
                             },
+                            onCollapseExpand = {
+                                eventSink(ReleaseUiEvent.ToggleCollapseExpandReleaseEvents)
+                            },
                             onItemClick = { entity, id, title ->
                                 eventSink(
                                     ReleaseUiEvent.ClickItem(
