@@ -10,16 +10,18 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Link
 import ly.david.musicsearch.ui.common.icons.Wikidata
@@ -33,9 +35,10 @@ fun UrlListItem(
     relation: RelationListItemModel,
     modifier: Modifier = Modifier,
 ) {
-    val strings = LocalStrings.current
+    val clipboard = LocalClipboard.current
+    val coroutineScope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
-    val clipboardManager = LocalClipboardManager.current
+    val strings = LocalStrings.current
     val uriHandler = LocalUriHandler.current
 
     ListItem(
@@ -55,9 +58,11 @@ fun UrlListItem(
                         strings.wikipedia -> {
                             CustomIcons.Wikipedia to LocalContentColor.current
                         }
+
                         "Wikidata" -> {
                             CustomIcons.Wikidata to Color.Unspecified
                         }
+
                         else -> {
                             CustomIcons.Link to LocalContentColor.current
                         }
@@ -85,8 +90,10 @@ fun UrlListItem(
                     uriHandler.openUri(relation.name)
                 },
                 onLongClick = {
-                    haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-                    clipboardManager.setText(AnnotatedString(relation.name))
+                    coroutineScope.launch {
+                        haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                        clipboard.setClipEntry(clipEntryWith(relation.name))
+                    }
                 },
             ),
     )

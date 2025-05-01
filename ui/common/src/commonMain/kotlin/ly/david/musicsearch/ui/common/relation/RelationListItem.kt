@@ -1,6 +1,5 @@
 package ly.david.musicsearch.ui.common.relation
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -8,33 +7,35 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
+import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
-import ly.david.musicsearch.ui.common.image.ThumbnailImage
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RelationListItem(
     relation: RelationListItemModel,
     modifier: Modifier = Modifier,
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
 ) {
+    val clipboard = LocalClipboard.current
+    val coroutineScope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
-    val clipboardManager = LocalClipboardManager.current
 
     ListItem(
         leadingContent = {
@@ -102,8 +103,10 @@ fun RelationListItem(
                     )
                 },
                 onLongClick = {
-                    haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-                    clipboardManager.setText(AnnotatedString(relation.name))
+                    coroutineScope.launch {
+                        haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                        clipboard.setClipEntry(clipEntryWith(relation.name))
+                    }
                 },
             ),
     )

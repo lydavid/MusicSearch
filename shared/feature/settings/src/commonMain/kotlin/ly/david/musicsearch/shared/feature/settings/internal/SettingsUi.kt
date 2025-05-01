@@ -18,17 +18,21 @@ import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
 import ly.david.musicsearch.shared.strings.AppStrings
+import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -171,7 +175,9 @@ internal fun SettingsUi(
     databaseVersion: String = "",
 ) {
     val strings = LocalStrings.current
-    val clipboardManager = LocalClipboardManager.current
+    val clipboard = LocalClipboard.current
+    val coroutineScope = rememberCoroutineScope()
+    val haptics = LocalHapticFeedback.current
 
     LazyColumn(modifier = modifier) {
         item {
@@ -274,11 +280,14 @@ internal fun SettingsUi(
                 title = appVersionText,
                 subtitle = databaseVersionText,
                 onClick = {
-                    clipboardManager.setText(
-                        AnnotatedString(
-                            "$appVersionText, $databaseVersionText",
-                        ),
-                    )
+                    coroutineScope.launch {
+                        haptics.performHapticFeedback(HapticFeedbackType.ContextClick)
+                        clipboard.setClipEntry(
+                            clipEntryWith(
+                                "$appVersionText, $databaseVersionText",
+                            ),
+                        )
+                    }
                 },
             )
 

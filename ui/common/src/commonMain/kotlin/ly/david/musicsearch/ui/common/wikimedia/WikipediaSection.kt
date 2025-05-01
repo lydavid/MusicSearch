@@ -1,7 +1,6 @@
 package ly.david.musicsearch.ui.common.wikimedia
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -11,30 +10,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
+import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun WikipediaSection(
     extract: WikipediaExtract,
     modifier: Modifier = Modifier,
     filterText: String = "",
 ) {
+    val clipboard = LocalClipboard.current
+    val coroutineScope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
-    val clipboardManager = LocalClipboardManager.current
 
     Column(
         modifier = modifier,
@@ -52,8 +53,10 @@ fun WikipediaSection(
                             expanded = !expanded
                         },
                         onLongClick = {
-                            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-                            clipboardManager.setText(AnnotatedString(extract.extract))
+                            coroutineScope.launch {
+                                haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                                clipboard.setClipEntry(clipEntryWith(extract.extract))
+                            }
                         },
                     )
                     .padding(horizontal = 16.dp, vertical = 8.dp)
