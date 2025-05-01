@@ -1,0 +1,54 @@
+import kotlin.Boolean;
+import kotlin.Int;
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
+
+CREATE TABLE IF NOT EXISTS relation_new (
+  `entity_id` TEXT NOT NULL,
+  `linked_entity_id` TEXT NOT NULL,
+  `linked_entity` TEXT AS MusicBrainzEntity NOT NULL,
+  `order` INTEGER AS Int NOT NULL,
+  `label` TEXT NOT NULL,
+  `name` TEXT NOT NULL,
+  `disambiguation` TEXT,
+  `attributes` TEXT,
+  `is_forward_direction` INTEGER AS Boolean,
+  `begin` TEXT,
+  `end` TEXT,
+  `ended` INTEGER AS Boolean,
+
+  -- an entity can be linked to another entity multiple times, possibly with the same label
+  PRIMARY KEY (entity_id, linked_entity_id, `order`)
+);
+
+INSERT INTO relation_new (
+  `entity_id`,
+  `linked_entity_id`,
+  `linked_entity`,
+  `order`,
+  `label`,
+  `name`,
+  `disambiguation`,
+  `attributes`,
+  `is_forward_direction`,
+  `begin`,
+  `end`,
+  `ended`
+)
+SELECT
+  `entity_id`,
+  `linked_entity_id`,
+  `linked_entity`,
+  `order`,
+  `label`,
+  `name`,
+  `disambiguation`,
+  `attributes`,
+  `is_forward_direction`,
+  `begin`,
+  `end`,
+  `ended`
+FROM relation;
+
+DROP TABLE relation;
+
+ALTER TABLE relation_new RENAME TO relation;

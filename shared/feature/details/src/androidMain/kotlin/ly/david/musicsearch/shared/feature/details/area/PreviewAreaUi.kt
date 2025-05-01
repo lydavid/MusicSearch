@@ -445,7 +445,6 @@ private val canadianRelations = MutableStateFlow(
                 label = "engineered in",
                 name = "Prélude de Sarah / Sarah",
                 disambiguation = "live, 1976-04-18: Radio Canada",
-                additionalInfo = "(1976-04-18)",
             ),
             RelationListItemModel(
                 id = "6",
@@ -453,7 +452,6 @@ private val canadianRelations = MutableStateFlow(
                 linkedEntity = MusicBrainzEntity.RELEASE,
                 label = "manufacturing location for",
                 name = "National Melodies",
-                additionalInfo = "(1975-03)",
             ),
             RelationListItemModel(
                 id = "7",

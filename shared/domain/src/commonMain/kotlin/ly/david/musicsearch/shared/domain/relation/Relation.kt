@@ -10,6 +10,5 @@ interface Relation : NameWithDisambiguation {
     val linkedEntity: MusicBrainzEntity
     val label: String
     val attributes: String?
-    val additionalInfo: String?
     val isForwardDirection: Boolean?
 }

@@ -83,14 +83,6 @@ fun RelationListItem(
                     )
                 }
 
-                relation.additionalInfo.ifNotNullOrEmpty {
-                    Text(
-                        modifier = Modifier.padding(top = 4.dp),
-                        text = it,
-                        style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = relation.fontWeight,
-                    )
-                }
                 relation.lifeSpan.getLifeSpanForDisplay().ifNotNullOrEmpty {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),

@@ -153,7 +153,6 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                         name = "https://music.youtube.com/watch?v=2vkgqu3-_Pk",
                         disambiguation = null,
                         attributes = "video",
-                        additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
                         isForwardDirection = true,

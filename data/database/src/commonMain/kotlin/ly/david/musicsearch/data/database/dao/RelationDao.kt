@@ -30,7 +30,6 @@ class RelationDao(
                 name = name,
                 disambiguation = disambiguation,
                 attributes = attributes,
-                additional_info = additionalInfo,
                 is_forward_direction = isForwardDirection,
                 begin = lifeSpan.begin,
                 end = lifeSpan.end,
@@ -112,7 +111,6 @@ class RelationDao(
         name: String,
         disambiguation: String?,
         attributes: String?,
-        additionalInfo: String?,
         visited: Boolean?,
         isForwardDirection: Boolean?,
         begin: String?,
@@ -128,7 +126,6 @@ class RelationDao(
         name = name,
         disambiguation = disambiguation,
         attributes = attributes,
-        additionalInfo = additionalInfo,
         visited = visited == true || linkedEntity == MusicBrainzEntity.URL,
         isForwardDirection = isForwardDirection,
         lifeSpan = LifeSpanUiModel(

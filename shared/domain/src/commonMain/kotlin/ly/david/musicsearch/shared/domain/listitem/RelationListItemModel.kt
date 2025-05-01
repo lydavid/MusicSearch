@@ -18,7 +18,6 @@ data class RelationListItemModel(
     override val name: String,
     override val disambiguation: String? = null,
     override val attributes: String? = null,
-    override val additionalInfo: String? = null,
     override val linkedEntity: MusicBrainzEntity,
     override val visited: Boolean = true,
     override val isForwardDirection: Boolean? = null,
