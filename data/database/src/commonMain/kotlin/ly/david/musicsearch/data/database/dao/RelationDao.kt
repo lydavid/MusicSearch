@@ -13,6 +13,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 
+// TODO: drop unused additional_info column
 class RelationDao(
     database: Database,
     private val coroutineDispatchers: CoroutineDispatchers,
