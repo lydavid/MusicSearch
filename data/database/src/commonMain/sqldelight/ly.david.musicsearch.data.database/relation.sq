@@ -33,7 +33,6 @@ INSERT OR IGNORE INTO relation (
   `name`,
   `disambiguation`,
   `attributes`,
-  `additional_info`,
   `is_forward_direction`,
   `begin`,
   `end`,
@@ -48,7 +47,6 @@ VALUES (
   :`name`,
   :`disambiguation`,
   :`attributes`,
-  :`additional_info`,
   :`is_forward_direction`,
   :`begin`,
   :`end`,
@@ -69,7 +67,6 @@ AND (
   OR disambiguation LIKE :query
   OR label LIKE :query
   OR attributes LIKE :query
-  OR additional_info LIKE :query
 );
 
 getEntityRelationships:
@@ -81,7 +78,6 @@ SELECT
   `name`,
   `disambiguation`,
   `attributes`,
-  `additional_info`,
   visited.entity_id IS NOT NULL AS visited,
   `is_forward_direction`,
   `begin`,
@@ -99,7 +95,6 @@ AND (
   OR disambiguation LIKE :query
   OR label LIKE :query
   OR attributes LIKE :query
-  OR additional_info LIKE :query
 )
 GROUP BY linked_entity_id, `order`
 ORDER BY linked_entity, label, `order`
@@ -119,7 +114,6 @@ SELECT
   `name`,
   `disambiguation`,
   `attributes`,
-  `additional_info`,
   visited.entity_id IS NOT NULL AS visited,
   `is_forward_direction`,
   `begin`,
@@ -137,7 +131,6 @@ AND (
   OR disambiguation LIKE :query
   OR label LIKE :query
   OR attributes LIKE :query
-  OR additional_info LIKE :query
 )
 ORDER BY linked_entity, label, `order`;
 

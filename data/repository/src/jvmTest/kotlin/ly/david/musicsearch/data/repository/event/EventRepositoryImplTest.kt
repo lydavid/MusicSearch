@@ -108,7 +108,6 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
                         name = "https://www.ticketmaster.ca/event/10005F01FAA14AE2",
                         disambiguation = null,
                         attributes = "",
-                        additionalInfo = null,
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
                         isForwardDirection = true,

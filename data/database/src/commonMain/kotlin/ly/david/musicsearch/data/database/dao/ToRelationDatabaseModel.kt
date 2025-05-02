@@ -6,9 +6,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBr
 import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
 import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.emptyToNull
-import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
 
 fun RelationMusicBrainzModel.toRelationDatabaseModel(
@@ -22,7 +20,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
     var linkedEntityId = ""
     var linkedEntityName = ""
     var linkedEntityDisambiguation: String? = null
-    var additionalInfo: String? = null
 
     val entity = targetType.entity
     when (targetType) {
@@ -87,7 +84,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
                 linkedEntityId = id
                 linkedEntityName = targetCredit.emptyToNull() ?: name
                 linkedEntityDisambiguation = disambiguation
-                additionalInfo = artistCredits.getDisplayNames().transformThisIfNotNullOrEmpty { "by $it" }
             } ?: return null
         }
 
@@ -143,7 +139,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         name = linkedEntityName,
         disambiguation = linkedEntityDisambiguation,
         attributes = getFormattedAttributesForDisplay(),
-        additionalInfo = additionalInfo,
         isForwardDirection = direction == Direction.FORWARD,
         lifeSpan = LifeSpanUiModel(
             begin = begin,

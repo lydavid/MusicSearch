@@ -10,7 +10,6 @@ data class RelationWithOrder(
     override val name: String,
     override val disambiguation: String? = null,
     override val attributes: String? = null,
-    override val additionalInfo: String? = null,
     override val linkedEntity: MusicBrainzEntity,
     override val isForwardDirection: Boolean? = null,
     val order: Int,

@@ -39,7 +39,7 @@ internal fun PreviewRecordingRelationListItem() {
                     linkedEntity = MusicBrainzEntity.RECORDING,
                     label = "DJ-mixes",
                     name = "Recording Name",
-                    additionalInfo = "by Artist Names (order: 10)",
+                    attributes = "number: 10",
                 ),
             )
         }
@@ -58,7 +58,7 @@ internal fun PreviewRecordingRelationListItemVisited() {
                     linkedEntity = MusicBrainzEntity.RECORDING,
                     label = "DJ-mixes",
                     name = "Recording Name",
-                    additionalInfo = "by Artist Names (order: 10)",
+                    attributes = "number: 10",
                     visited = true,
                 ),
             )
