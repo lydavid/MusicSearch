@@ -10,9 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
-import ly.david.musicsearch.ui.common.area.AreasListScreen
 import ly.david.musicsearch.ui.common.area.AreasListUiState
-import ly.david.musicsearch.ui.common.artist.ArtistsListScreen
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
 import ly.david.musicsearch.ui.common.event.EventsListScreen
 import ly.david.musicsearch.ui.common.event.EventsListUiState
@@ -22,6 +20,7 @@ import ly.david.musicsearch.ui.common.instrument.InstrumentsListScreen
 import ly.david.musicsearch.ui.common.instrument.InstrumentsListUiState
 import ly.david.musicsearch.ui.common.label.LabelsListScreen
 import ly.david.musicsearch.ui.common.label.LabelsListUiState
+import ly.david.musicsearch.ui.common.list.EntitiesListScreen
 import ly.david.musicsearch.ui.common.place.PlacesListScreen
 import ly.david.musicsearch.ui.common.place.PlacesListUiState
 import ly.david.musicsearch.ui.common.recording.RecordingsListScreen
@@ -62,8 +61,9 @@ fun EntitiesListUi(
 ) {
     when (entity) {
         MusicBrainzEntity.AREA -> {
-            AreasListScreen(
-                state = areasListUiState,
+            EntitiesListScreen(
+                pagingDataFlow = areasListUiState.pagingDataFlow,
+                lazyListState = areasListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
@@ -75,8 +75,9 @@ fun EntitiesListUi(
         }
 
         MusicBrainzEntity.ARTIST -> {
-            ArtistsListScreen(
-                state = artistsListUiState,
+            EntitiesListScreen(
+                pagingDataFlow = artistsListUiState.pagingDataFlow,
+                lazyListState = artistsListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()

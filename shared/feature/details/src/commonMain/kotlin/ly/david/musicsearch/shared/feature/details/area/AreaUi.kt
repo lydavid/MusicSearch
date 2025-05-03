@@ -27,10 +27,10 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.strings.AppStrings
-import ly.david.musicsearch.ui.common.artist.ArtistsListScreen
 import ly.david.musicsearch.ui.common.event.EventsListScreen
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.label.LabelsListScreen
+import ly.david.musicsearch.ui.common.list.EntitiesListScreen
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.place.PlacesListScreen
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
@@ -194,8 +194,9 @@ internal fun AreaUiInternal(
                 }
 
                 AreaTab.ARTISTS -> {
-                    ArtistsListScreen(
-                        state = state.artistsListUiState,
+                    EntitiesListScreen(
+                        pagingDataFlow = state.artistsListUiState.pagingDataFlow,
+                        lazyListState = state.artistsListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

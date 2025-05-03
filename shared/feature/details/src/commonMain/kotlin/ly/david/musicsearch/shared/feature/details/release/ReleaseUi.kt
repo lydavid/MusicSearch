@@ -26,8 +26,8 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.EntityIcon
-import ly.david.musicsearch.ui.common.artist.ArtistsListScreen
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.musicsearch.ui.common.list.EntitiesListScreen
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
@@ -206,8 +206,9 @@ internal fun ReleaseUi(
                 }
 
                 ReleaseTab.ARTISTS -> {
-                    ArtistsListScreen(
-                        state = state.artistsListUiState,
+                    EntitiesListScreen(
+                        pagingDataFlow = state.artistsListUiState.pagingDataFlow,
+                        lazyListState = state.artistsListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

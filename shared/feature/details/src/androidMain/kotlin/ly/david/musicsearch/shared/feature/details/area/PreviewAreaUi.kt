@@ -508,7 +508,7 @@ internal fun PreviewAreaDetails() {
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.DETAILS,
                     artistsListUiState = ArtistsListUiState(
-                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -546,7 +546,7 @@ internal fun PreviewAreaDetailsError() {
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.DETAILS,
                     artistsListUiState = ArtistsListUiState(
-                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -584,7 +584,7 @@ internal fun PreviewAreaRelationships() {
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.RELATIONSHIPS,
                     artistsListUiState = ArtistsListUiState(
-                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -622,7 +622,7 @@ internal fun PreviewAreaArtists() {
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.ARTISTS,
                     artistsListUiState = ArtistsListUiState(
-                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -660,7 +660,7 @@ internal fun PreviewAreaEvents() {
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.EVENTS,
                     artistsListUiState = ArtistsListUiState(
-                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -698,7 +698,7 @@ internal fun PreviewAreaLabels() {
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.LABELS,
                     artistsListUiState = ArtistsListUiState(
-                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -736,7 +736,7 @@ internal fun PreviewAreaReleases() {
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.RELEASES,
                     artistsListUiState = ArtistsListUiState(
-                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -774,7 +774,7 @@ internal fun PreviewAreaPlaces() {
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.PLACES,
                     artistsListUiState = ArtistsListUiState(
-                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
@@ -813,7 +813,7 @@ internal fun PreviewAreaStats() {
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.STATS,
                     artistsListUiState = ArtistsListUiState(
-                        lazyPagingItems = canadianArtists.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
                         lazyPagingItems = events.collectAsLazyPagingItems(),
