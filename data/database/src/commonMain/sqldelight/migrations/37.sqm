@@ -1,0 +1,23 @@
+import kotlin.Boolean;
+
+CREATE TABLE IF NOT EXISTS collection_entity_temp (
+  `id` TEXT NOT NULL,
+  `entity_id` TEXT NOT NULL,
+  `deleted` INTEGER AS Boolean NOT NULL DEFAULT 0,
+
+  PRIMARY KEY(`id`, `entity_id`),
+
+  FOREIGN KEY(`id`) REFERENCES `collection`(`id`)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE
+);
+
+-- Copy data from the old table to the new one
+INSERT INTO collection_entity_temp (`id`, `entity_id`, `deleted`)
+SELECT `id`, `entity_id`, 0 FROM collection_entity;
+
+-- Drop the old table
+DROP TABLE collection_entity;
+
+-- Rename the new table to the original name
+ALTER TABLE collection_entity_temp RENAME TO collection_entity;

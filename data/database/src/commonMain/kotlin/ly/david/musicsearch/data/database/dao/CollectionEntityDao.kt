@@ -19,6 +19,7 @@ class CollectionEntityDao(
                 Collection_entity(
                     id = collectionId,
                     entity_id = entityId,
+                    deleted = false,
                 ),
             )
             1
