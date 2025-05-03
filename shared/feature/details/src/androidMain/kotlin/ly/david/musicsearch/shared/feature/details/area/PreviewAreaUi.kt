@@ -511,7 +511,7 @@ internal fun PreviewAreaDetails() {
                         pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
-                        lazyPagingItems = events.collectAsLazyPagingItems(),
+                        pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
@@ -549,7 +549,7 @@ internal fun PreviewAreaDetailsError() {
                         pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
-                        lazyPagingItems = events.collectAsLazyPagingItems(),
+                        pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
@@ -587,7 +587,7 @@ internal fun PreviewAreaRelationships() {
                         pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
-                        lazyPagingItems = events.collectAsLazyPagingItems(),
+                        pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
@@ -625,7 +625,7 @@ internal fun PreviewAreaArtists() {
                         pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
-                        lazyPagingItems = events.collectAsLazyPagingItems(),
+                        pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
@@ -663,7 +663,7 @@ internal fun PreviewAreaEvents() {
                         pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
-                        lazyPagingItems = events.collectAsLazyPagingItems(),
+                        pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
@@ -701,7 +701,7 @@ internal fun PreviewAreaLabels() {
                         pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
-                        lazyPagingItems = events.collectAsLazyPagingItems(),
+                        pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
@@ -739,7 +739,7 @@ internal fun PreviewAreaReleases() {
                         pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
-                        lazyPagingItems = events.collectAsLazyPagingItems(),
+                        pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
@@ -777,7 +777,7 @@ internal fun PreviewAreaPlaces() {
                         pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
-                        lazyPagingItems = events.collectAsLazyPagingItems(),
+                        pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),
@@ -816,7 +816,7 @@ internal fun PreviewAreaStats() {
                         pagingDataFlow = canadianArtists,
                     ),
                     eventsListUiState = EventsListUiState(
-                        lazyPagingItems = events.collectAsLazyPagingItems(),
+                        pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
                         lazyPagingItems = labels.collectAsLazyPagingItems(),

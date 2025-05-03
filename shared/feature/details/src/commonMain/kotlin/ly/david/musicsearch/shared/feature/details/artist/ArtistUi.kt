@@ -25,8 +25,8 @@ import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.common.event.EventsListScreen
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.musicsearch.ui.common.list.EntitiesListScreen
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.recording.RecordingsListScreen
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
@@ -288,8 +288,9 @@ internal fun ArtistUi(
                 }
 
                 ArtistTab.EVENTS -> {
-                    EventsListScreen(
-                        state = state.eventsListUiState,
+                    EntitiesListScreen(
+                        pagingDataFlow = state.eventsListUiState.pagingDataFlow,
+                        lazyListState = state.eventsListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

@@ -12,7 +12,6 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.area.AreasListUiState
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
-import ly.david.musicsearch.ui.common.event.EventsListScreen
 import ly.david.musicsearch.ui.common.event.EventsListUiState
 import ly.david.musicsearch.ui.common.genre.GenresListScreen
 import ly.david.musicsearch.ui.common.genre.GenresListUiState
@@ -89,8 +88,9 @@ fun EntitiesListUi(
         }
 
         MusicBrainzEntity.EVENT -> {
-            EventsListScreen(
-                state = eventsListUiState,
+            EntitiesListScreen(
+                pagingDataFlow = eventsListUiState.pagingDataFlow,
+                lazyListState = eventsListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
