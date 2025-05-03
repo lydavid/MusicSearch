@@ -262,12 +262,6 @@ internal class ArtistPresenter(
                             forceRefreshDetails = true
                         }
 
-                        ArtistTab.RELEASE_GROUPS -> {
-                            // TODO: fix menu item refresh
-                            //  need a new approach if we don't have access to lazyPagingItems
-//                            releaseGroupsByEntityUiState.pagingDataFlow.refresh()
-                        }
-
                         ArtistTab.RELEASES -> {
                             releasesByEntityUiState.lazyPagingItems.refresh()
                         }

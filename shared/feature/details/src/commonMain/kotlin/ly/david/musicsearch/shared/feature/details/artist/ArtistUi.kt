@@ -33,7 +33,6 @@ import ly.david.musicsearch.ui.common.recording.RecordingsListScreen
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
-import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListScreen
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
@@ -68,6 +67,7 @@ internal fun ArtistUi(
 
     val eventsLazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val releasesByEntityEventSink = state.releasesListUiState.eventSink
+    val releaseGroupLazyPagingItems = state.releaseGroupsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val releaseGroupsByEntityEventSink = state.releaseGroupsListUiState.eventSink
 
     val loginEventSink = state.loginUiState.eventSink
@@ -108,6 +108,10 @@ internal fun ArtistUi(
                             when (state.selectedTab) {
                                 ArtistTab.EVENTS -> {
                                     eventsLazyPagingItems.refresh()
+                                }
+
+                                ArtistTab.RELEASE_GROUPS -> {
+                                    releaseGroupLazyPagingItems.refresh()
                                 }
 
                                 else -> {
@@ -209,8 +213,9 @@ internal fun ArtistUi(
                 }
 
                 ArtistTab.RELEASE_GROUPS -> {
-                    ReleaseGroupsListScreen(
-                        state = state.releaseGroupsListUiState,
+                    EntitiesListScreen(
+                        lazyPagingItems = releaseGroupLazyPagingItems,
+                        lazyListState = state.releaseGroupsListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

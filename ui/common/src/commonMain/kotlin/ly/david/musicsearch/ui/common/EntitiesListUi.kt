@@ -27,7 +27,6 @@ import ly.david.musicsearch.ui.common.recording.RecordingsListScreen
 import ly.david.musicsearch.ui.common.recording.RecordingsListUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesListUiState
-import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListScreen
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiState
 import ly.david.musicsearch.ui.common.series.SeriesListScreen
 import ly.david.musicsearch.ui.common.series.SeriesListUiState
@@ -187,8 +186,9 @@ fun EntitiesListUi(
         }
 
         MusicBrainzEntity.RELEASE_GROUP -> {
-            ReleaseGroupsListScreen(
-                state = releaseGroupsListUiState,
+            EntitiesListScreen(
+                lazyPagingItems = releaseGroupsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
+                lazyListState = releaseGroupsListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
