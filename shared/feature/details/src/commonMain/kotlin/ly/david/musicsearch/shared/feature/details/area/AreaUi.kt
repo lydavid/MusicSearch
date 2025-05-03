@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.CoroutineScope
@@ -194,7 +195,7 @@ internal fun AreaUiInternal(
 
                 AreaTab.ARTISTS -> {
                     EntitiesListScreen(
-                        pagingDataFlow = state.artistsListUiState.pagingDataFlow,
+                        lazyPagingItems = state.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                         lazyListState = state.artistsListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
@@ -215,7 +216,7 @@ internal fun AreaUiInternal(
 
                 AreaTab.EVENTS -> {
                     EntitiesListScreen(
-                        pagingDataFlow = state.eventsListUiState.pagingDataFlow,
+                        lazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                         lazyListState = state.eventsListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)

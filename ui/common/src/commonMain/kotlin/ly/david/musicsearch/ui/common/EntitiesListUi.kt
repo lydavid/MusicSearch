@@ -8,6 +8,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import app.cash.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.area.AreasListUiState
@@ -61,7 +62,7 @@ fun EntitiesListUi(
     when (entity) {
         MusicBrainzEntity.AREA -> {
             EntitiesListScreen(
-                pagingDataFlow = areasListUiState.pagingDataFlow,
+                lazyPagingItems = areasListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                 lazyListState = areasListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
@@ -75,7 +76,7 @@ fun EntitiesListUi(
 
         MusicBrainzEntity.ARTIST -> {
             EntitiesListScreen(
-                pagingDataFlow = artistsListUiState.pagingDataFlow,
+                lazyPagingItems = artistsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                 lazyListState = artistsListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
@@ -89,7 +90,7 @@ fun EntitiesListUi(
 
         MusicBrainzEntity.EVENT -> {
             EntitiesListScreen(
-                pagingDataFlow = eventsListUiState.pagingDataFlow,
+                lazyPagingItems = eventsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                 lazyListState = eventsListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)

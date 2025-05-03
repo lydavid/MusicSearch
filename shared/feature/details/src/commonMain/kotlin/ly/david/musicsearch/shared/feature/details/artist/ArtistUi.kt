@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
@@ -30,10 +31,10 @@ import ly.david.musicsearch.ui.common.list.EntitiesListScreen
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.recording.RecordingsListScreen
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
-import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListScreen
-import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
+import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListScreen
+import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
@@ -65,6 +66,7 @@ internal fun ArtistUi(
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
+    val eventsLazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val releasesByEntityEventSink = state.releasesListUiState.eventSink
     val releaseGroupsByEntityEventSink = state.releaseGroupsListUiState.eventSink
 
@@ -102,7 +104,17 @@ internal fun ArtistUi(
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = {
                     RefreshMenuItem(
-                        onClick = { eventSink(ArtistUiEvent.ForceRefresh) },
+                        onClick = {
+                            when (state.selectedTab) {
+                                ArtistTab.EVENTS -> {
+                                    eventsLazyPagingItems.refresh()
+                                }
+
+                                else -> {
+                                    eventSink(ArtistUiEvent.ForceRefresh)
+                                }
+                            }
+                        },
                     )
                     OpenInBrowserMenuItem(
                         url = state.url,
@@ -289,7 +301,7 @@ internal fun ArtistUi(
 
                 ArtistTab.EVENTS -> {
                     EntitiesListScreen(
-                        pagingDataFlow = state.eventsListUiState.pagingDataFlow,
+                        lazyPagingItems = eventsLazyPagingItems,
                         lazyListState = state.eventsListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)

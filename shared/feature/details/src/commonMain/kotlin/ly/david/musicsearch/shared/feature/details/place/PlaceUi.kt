@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
@@ -144,7 +145,7 @@ internal fun PlaceUi(
 
                 PlaceTab.EVENTS -> {
                     EntitiesListScreen(
-                        pagingDataFlow = state.eventsListUiState.pagingDataFlow,
+                        lazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                         lazyListState = state.eventsListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)

@@ -280,15 +280,11 @@ internal class ArtistPresenter(
                             worksByEntityUiState.lazyPagingItems.refresh()
                         }
 
-                        ArtistTab.EVENTS -> {
-//                            eventsByEntityUiState.pagingDataFlow.refresh()
-                        }
-
                         ArtistTab.RELATIONSHIPS -> {
                             relationsUiState.lazyPagingItems.refresh()
                         }
 
-                        ArtistTab.STATS -> {
+                        else -> {
                             // No-op.
                         }
                     }
