@@ -29,13 +29,10 @@ import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.musicsearch.ui.common.label.LabelsListScreen
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
-import ly.david.musicsearch.ui.common.place.PlacesListScreen
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
-import ly.david.musicsearch.ui.common.release.ReleasesListScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
@@ -236,8 +233,9 @@ internal fun AreaUiInternal(
                 }
 
                 AreaTab.LABELS -> {
-                    LabelsListScreen(
-                        state = state.labelsListUiState,
+                    EntitiesListScreen(
+                        lazyPagingItems = state.labelsListUiState.lazyPagingItems,
+                        lazyListState = state.labelsListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -256,8 +254,9 @@ internal fun AreaUiInternal(
                 }
 
                 AreaTab.RELEASES -> {
-                    ReleasesListScreen(
-                        state = state.releasesListUiState,
+                    EntitiesListScreen(
+                        lazyPagingItems = state.releasesListUiState.lazyPagingItems,
+                        lazyListState = state.releasesListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -304,8 +303,9 @@ internal fun AreaUiInternal(
                 }
 
                 AreaTab.PLACES -> {
-                    PlacesListScreen(
-                        state = state.placesListUiState,
+                    EntitiesListScreen(
+                        lazyPagingItems = state.placesListUiState.lazyPagingItems,
+                        lazyListState = state.placesListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

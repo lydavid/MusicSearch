@@ -29,9 +29,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
-import ly.david.musicsearch.ui.common.recording.RecordingsListScreen
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
-import ly.david.musicsearch.ui.common.release.ReleasesListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.screen.StatsScreen
@@ -43,7 +41,6 @@ import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
-import ly.david.musicsearch.ui.common.work.WorksListScreen
 import ly.david.musicsearch.ui.core.LocalStrings
 
 @OptIn(
@@ -240,8 +237,9 @@ internal fun ArtistUi(
                 }
 
                 ArtistTab.RELEASES -> {
-                    ReleasesListScreen(
-                        state = state.releasesListUiState,
+                    EntitiesListScreen(
+                        lazyPagingItems = state.releasesListUiState.lazyPagingItems,
+                        lazyListState = state.releasesListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -267,8 +265,9 @@ internal fun ArtistUi(
                 }
 
                 ArtistTab.RECORDINGS -> {
-                    RecordingsListScreen(
-                        state = state.recordingsListUiState,
+                    EntitiesListScreen(
+                        lazyPagingItems = state.recordingsListUiState.lazyPagingItems,
+                        lazyListState = state.recordingsListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -286,8 +285,9 @@ internal fun ArtistUi(
                 }
 
                 ArtistTab.WORKS -> {
-                    WorksListScreen(
-                        state = state.worksListUiState,
+                    EntitiesListScreen(
+                        lazyPagingItems = state.worksListUiState.lazyPagingItems,
+                        lazyListState = state.worksListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

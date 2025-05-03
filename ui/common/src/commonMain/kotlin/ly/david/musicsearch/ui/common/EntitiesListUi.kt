@@ -14,23 +14,15 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.area.AreasListUiState
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
 import ly.david.musicsearch.ui.common.event.EventsListUiState
-import ly.david.musicsearch.ui.common.genre.GenresListScreen
 import ly.david.musicsearch.ui.common.genre.GenresListUiState
-import ly.david.musicsearch.ui.common.instrument.InstrumentsListScreen
 import ly.david.musicsearch.ui.common.instrument.InstrumentsListUiState
-import ly.david.musicsearch.ui.common.label.LabelsListScreen
 import ly.david.musicsearch.ui.common.label.LabelsListUiState
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
-import ly.david.musicsearch.ui.common.place.PlacesListScreen
 import ly.david.musicsearch.ui.common.place.PlacesListUiState
-import ly.david.musicsearch.ui.common.recording.RecordingsListScreen
 import ly.david.musicsearch.ui.common.recording.RecordingsListUiState
-import ly.david.musicsearch.ui.common.release.ReleasesListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesListUiState
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiState
-import ly.david.musicsearch.ui.common.series.SeriesListScreen
 import ly.david.musicsearch.ui.common.series.SeriesListUiState
-import ly.david.musicsearch.ui.common.work.WorksListScreen
 import ly.david.musicsearch.ui.common.work.WorksListUiState
 
 @OptIn(
@@ -102,8 +94,9 @@ fun EntitiesListUi(
         }
 
         MusicBrainzEntity.INSTRUMENT -> {
-            InstrumentsListScreen(
-                state = instrumentsListUiState,
+            EntitiesListScreen(
+                lazyPagingItems = instrumentsListUiState.lazyPagingItems,
+                lazyListState = instrumentsListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
@@ -115,8 +108,9 @@ fun EntitiesListUi(
         }
 
         MusicBrainzEntity.GENRE -> {
-            GenresListScreen(
-                state = genresListUiState,
+            EntitiesListScreen(
+                lazyPagingItems = genresListUiState.lazyPagingItems,
+                lazyListState = genresListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
@@ -128,8 +122,9 @@ fun EntitiesListUi(
         }
 
         MusicBrainzEntity.LABEL -> {
-            LabelsListScreen(
-                state = labelsListUiState,
+            EntitiesListScreen(
+                lazyPagingItems = labelsListUiState.lazyPagingItems,
+                lazyListState = labelsListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
@@ -141,8 +136,9 @@ fun EntitiesListUi(
         }
 
         MusicBrainzEntity.PLACE -> {
-            PlacesListScreen(
-                state = placesListUiState,
+            EntitiesListScreen(
+                lazyPagingItems = placesListUiState.lazyPagingItems,
+                lazyListState = placesListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
@@ -154,8 +150,9 @@ fun EntitiesListUi(
         }
 
         MusicBrainzEntity.RECORDING -> {
-            RecordingsListScreen(
-                state = recordingsListUiState,
+            EntitiesListScreen(
+                lazyPagingItems = recordingsListUiState.lazyPagingItems,
+                lazyListState = recordingsListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
@@ -167,8 +164,9 @@ fun EntitiesListUi(
         }
 
         MusicBrainzEntity.RELEASE -> {
-            ReleasesListScreen(
-                state = releasesListUiState,
+            EntitiesListScreen(
+                lazyPagingItems = releasesListUiState.lazyPagingItems,
+                lazyListState = releasesListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
@@ -205,8 +203,9 @@ fun EntitiesListUi(
         }
 
         MusicBrainzEntity.SERIES -> {
-            SeriesListScreen(
-                state = seriesListUiState,
+            EntitiesListScreen(
+                lazyPagingItems = seriesListUiState.lazyPagingItems,
+                lazyListState = seriesListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
@@ -218,8 +217,9 @@ fun EntitiesListUi(
         }
 
         MusicBrainzEntity.WORK -> {
-            WorksListScreen(
-                state = worksListUiState,
+            EntitiesListScreen(
+                lazyPagingItems = worksListUiState.lazyPagingItems,
+                lazyListState = worksListUiState.lazyListState,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()

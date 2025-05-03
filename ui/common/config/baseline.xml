@@ -2,6 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
+    <ID>CyclomaticComplexMethod:EntitiesListScreen.kt$@Composable fun EntitiesListScreen( lazyPagingItems: LazyPagingItems&lt;ListItemModel&gt;, lazyListState: LazyListState, modifier: Modifier = Modifier, isEditMode: Boolean = false, showMoreInfo: Boolean = true, now: Instant = Clock.System.now(), onItemClick: MusicBrainzItemClickHandler = { _, _, _ -&gt; }, onDeleteFromCollection: ((entityId: String, name: String) -&gt; Unit)? = null, requestForMissingCoverArtUrl: suspend (id: String) -&gt; Unit = {}, )</ID>
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
     <ID>ModifierMissing:EntitiesListUi.kt$EntitiesListUi</ID>
   </CurrentIssues>

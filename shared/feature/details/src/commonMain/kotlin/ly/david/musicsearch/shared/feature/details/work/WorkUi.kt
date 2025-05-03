@@ -27,7 +27,6 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
-import ly.david.musicsearch.ui.common.recording.RecordingsListScreen
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
@@ -156,8 +155,9 @@ internal fun WorkUi(
                 }
 
                 WorkTab.RECORDINGS -> {
-                    RecordingsListScreen(
-                        state = state.recordingsListUiState,
+                    EntitiesListScreen(
+                        lazyPagingItems = state.recordingsListUiState.lazyPagingItems,
+                        lazyListState = state.recordingsListUiState.lazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
