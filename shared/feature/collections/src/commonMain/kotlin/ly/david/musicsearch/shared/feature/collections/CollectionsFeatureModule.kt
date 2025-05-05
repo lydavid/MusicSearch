@@ -36,6 +36,7 @@ val collectionsFeatureModule = module {
                     navigator = navigator,
                     getCollection = get(),
                     incrementLookupHistory = get(),
+                    loginPresenter = get(),
                     areasListPresenter = get(),
                     artistsListPresenter = get(),
                     instrumentsListPresenter = get(),

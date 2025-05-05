@@ -25,6 +25,7 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.DeleteOutline
 import ly.david.musicsearch.ui.common.list.EntitiesListUi
 import ly.david.musicsearch.ui.common.list.EntitiesListUiState
+import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
@@ -51,6 +52,7 @@ internal fun CollectionUi(
     val collection = state.collection
     val eventSink = state.eventSink
     val suspendEventSink = state.suspendEventSink
+    val loginEventSink = state.loginUiState.eventSink
     val releasesEventSink = state.releasesListUiState.eventSink
     val releaseGroupsEventSink = state.releaseGroupsListUiState.eventSink
     val strings = LocalStrings.current
@@ -58,7 +60,8 @@ internal fun CollectionUi(
     val snackbarHostState = remember { SnackbarHostState() }
 
     // TODO: handle second actionableResult or else we will keep looping
-    state.actionableResult?.let { result ->
+
+    state.firstActionableResult?.let { result ->
         LaunchedEffect(result) {
             try {
                 val snackbarResult = snackbarHostState.showSnackbar(
@@ -79,6 +82,26 @@ internal fun CollectionUi(
                 }
             } catch (ex: CancellationException) {
                 suspendEventSink(SuspendCollectionUiEvent.DeleteItemsMarkedAsDeleted)
+            }
+        }
+    }
+    state.secondActionableResult?.let { result ->
+        LaunchedEffect(result) {
+            val snackbarResult = snackbarHostState.showSnackbar(
+                message = result.message,
+                actionLabel = result.action?.name,
+                duration = SnackbarDuration.Short,
+                withDismissAction = true,
+            )
+
+            when (snackbarResult) {
+                SnackbarResult.ActionPerformed -> {
+                    loginEventSink(LoginUiEvent.StartLogin)
+                }
+
+                SnackbarResult.Dismissed -> {
+                    // no-op
+                }
             }
         }
     }
