@@ -72,10 +72,6 @@ kotlin {
                 implementation(libs.mockk)
             }
         }
-        val iosMain by getting {
-            dependencies {
-                // TODO: OAuth
-            }
-        }
+        val iosMain by getting
     }
 }

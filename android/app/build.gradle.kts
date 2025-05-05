@@ -45,7 +45,6 @@ android {
         versionCode = (project.properties["VERSION_CODE"] as String).toInt()
         versionName = project.properties["VERSION_NAME"] as String
 
-        testInstrumentationRunner = "ly.david.musicsearch.android.app.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -115,21 +114,6 @@ dependencies {
 
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.leakcanary.android)
-
-    testImplementation(projects.testData)
-    testImplementation(libs.junit)
-    testImplementation(libs.koin.test)
-    testImplementation(libs.bundles.kotlinx.coroutines)
-
-    androidTestImplementation(projects.testData)
-    androidTestImplementation(libs.androidx.test.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
-    androidTestImplementation(libs.androidx.arch.core.testing)
-    androidTestImplementation(libs.bundles.kotlinx.coroutines)
-    androidTestImplementation(libs.compose.ui.test)
-    androidTestImplementation(libs.koin.test)
-    androidTestImplementation(libs.sqldelight.android.driver)
-    androidTestImplementation(libs.test.parameter.injector)
 }
 
 fun DependencyHandler.googlePlayImplementation(dependencyNotation: Any) =
