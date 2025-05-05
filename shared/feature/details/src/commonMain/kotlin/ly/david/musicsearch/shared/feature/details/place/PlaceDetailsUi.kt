@@ -81,6 +81,7 @@ internal fun PlaceDetailsUi(
                                     areaName,
                                 )
                             },
+                            showIcon = false,
                         )
                     }
                 }

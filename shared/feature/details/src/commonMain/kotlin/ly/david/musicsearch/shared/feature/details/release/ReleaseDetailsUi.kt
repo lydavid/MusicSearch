@@ -192,6 +192,7 @@ internal fun ReleaseDetailsUi(
                                     name,
                                 )
                             },
+                            showIcon = false,
                         )
                     }
 
@@ -240,6 +241,7 @@ private fun ReleaseDetailsModel.ReleaseEventsSection(
             AreaListItem(
                 area = area,
                 showType = false,
+                showIcon = false,
                 onAreaClick = {
                     onItemClick(
                         MusicBrainzEntity.AREA,

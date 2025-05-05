@@ -32,10 +32,29 @@ fun AreaListItem(
     area: AreaListItemModel,
     modifier: Modifier = Modifier,
     showType: Boolean = true,
+    showIcon: Boolean = true,
     onAreaClick: AreaListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
 ) {
+    val leadingContent: @Composable (() -> Unit)? =
+        if (showIcon) {
+            {
+                ThumbnailImage(
+                    url = "",
+                    placeholderKey = "",
+                    placeholderIcon = MusicBrainzEntity.AREA.getIcon(),
+                    modifier = Modifier
+                        .clickable {
+                            onSelect(area.id)
+                        },
+                    isSelected = isSelected,
+                )
+            }
+        } else {
+            null
+        }
+
     ListItem(
         headlineContent = {
             val flags = area.countryCodes.joinToString { it.toFlagEmoji() }
@@ -86,18 +105,7 @@ fun AreaListItem(
                 }
             }
         },
-        leadingContent = {
-            ThumbnailImage(
-                url = "",
-                placeholderKey = "",
-                placeholderIcon = MusicBrainzEntity.AREA.getIcon(),
-                modifier = Modifier
-                    .clickable {
-                        onSelect(area.id)
-                    },
-                isSelected = isSelected,
-            )
-        },
+        leadingContent = leadingContent,
         trailingContent = {
             area.date.ifNotNullOrEmpty {
                 Column(horizontalAlignment = Alignment.End) {

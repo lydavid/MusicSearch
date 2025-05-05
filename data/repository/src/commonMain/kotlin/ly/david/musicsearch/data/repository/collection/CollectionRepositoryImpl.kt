@@ -145,6 +145,8 @@ class CollectionRepositoryImpl(
                 // But it is still possible to have leftover collectibles marked as deleted if the user kills the app
                 // before this is run. Refreshing will fix this faulty experience.
                 withContext(NonCancellable) {
+                    // TODO: handle deleting more than 400 items at a time
+                    //  https://musicbrainz.org/doc/MusicBrainz_API#collections
                     collectionApi.deleteFromCollection(
                         collectionId = collection.id,
                         resourceUriPlural = collection.entity.resourceUriPlural,

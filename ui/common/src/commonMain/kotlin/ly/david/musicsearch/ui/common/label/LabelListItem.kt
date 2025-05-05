@@ -26,11 +26,30 @@ import ly.david.musicsearch.ui.core.theme.getSubTextColor
 fun LabelListItem(
     label: LabelListItemModel,
     modifier: Modifier = Modifier,
+    showIcon: Boolean = true,
     onLabelClick: LabelListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
 ) {
     val strings = LocalStrings.current
+
+    val leadingContent: @Composable (() -> Unit)? =
+        if (showIcon) {
+            {
+                ThumbnailImage(
+                    url = "",
+                    placeholderKey = "",
+                    placeholderIcon = MusicBrainzEntity.LABEL.getIcon(),
+                    modifier = Modifier
+                        .clickable {
+                            onSelect(label.id)
+                        },
+                    isSelected = isSelected,
+                )
+            }
+        } else {
+            null
+        }
 
     ListItem(
         headlineContent = {
@@ -75,17 +94,6 @@ fun LabelListItem(
             onLongClick = { onSelect(label.id) },
         ),
         colors = listItemColors(isSelected = isSelected),
-        leadingContent = {
-            ThumbnailImage(
-                url = "",
-                placeholderKey = "",
-                placeholderIcon = MusicBrainzEntity.LABEL.getIcon(),
-                modifier = Modifier
-                    .clickable {
-                        onSelect(label.id)
-                    },
-                isSelected = isSelected,
-            )
-        },
+        leadingContent = leadingContent,
     )
 }
