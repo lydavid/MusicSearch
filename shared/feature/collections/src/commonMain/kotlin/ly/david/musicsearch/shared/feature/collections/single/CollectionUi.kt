@@ -59,8 +59,6 @@ internal fun CollectionUi(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    // TODO: handle second actionableResult or else we will keep looping
-
     state.firstActionableResult?.let { result ->
         LaunchedEffect(result) {
             try {
