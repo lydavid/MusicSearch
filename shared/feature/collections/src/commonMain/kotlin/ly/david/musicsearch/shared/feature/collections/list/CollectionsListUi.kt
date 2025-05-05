@@ -165,7 +165,7 @@ internal fun CollectionListUi(
         LaunchedEffect(result) {
             snackbarHostState.showSnackbar(
                 message = result.message,
-                actionLabel = result.actionLabel,
+                actionLabel = result.action?.name,
                 duration = SnackbarDuration.Short,
                 withDismissAction = true,
             )

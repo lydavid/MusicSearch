@@ -25,6 +25,7 @@ SELECT IFNULL(
     INNER JOIN collection_entity ce ON g.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
     WHERE c.id = :collectionId
+    AND ce.deleted = 0
     AND (
       g.name LIKE :query OR
       g.disambiguation LIKE :query
@@ -42,6 +43,7 @@ FROM genre g
 INNER JOIN collection_entity ce ON g.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 WHERE c.id = :collectionId
+AND ce.deleted = 0
 AND (
   g.name LIKE :query OR
   g.disambiguation LIKE :query

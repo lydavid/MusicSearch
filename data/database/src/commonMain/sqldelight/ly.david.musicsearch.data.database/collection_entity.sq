@@ -26,10 +26,27 @@ deleteEntitiyLinksFromCollection:
 DELETE FROM collection_entity
 WHERE id = :collectionId;
 
+markDeletedFromCollection:
+UPDATE collection_entity
+SET deleted = 1
+WHERE id = :collectionId
+AND entity_id = :collectableId;
+
+unMarkDeletedFromCollection:
+UPDATE collection_entity
+SET deleted = 0
+WHERE id = :collectionId;
+
+getIdsMarkedForDeletionFromCollection:
+SELECT entity_id
+FROM collection_entity
+WHERE id = :collectionId
+AND deleted = 1;
+
 deleteFromCollection:
 DELETE FROM collection_entity
 WHERE id = :collectionId
-AND entity_id = :collectableId;
+AND deleted = 1;
 
 deleteCollection {
 DELETE FROM collection

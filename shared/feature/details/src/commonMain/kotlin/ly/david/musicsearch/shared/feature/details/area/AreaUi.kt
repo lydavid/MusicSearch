@@ -30,6 +30,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
+import ly.david.musicsearch.ui.common.list.EntitiesListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
@@ -192,12 +193,15 @@ internal fun AreaUiInternal(
 
                 AreaTab.ARTISTS -> {
                     EntitiesListScreen(
-                        lazyPagingItems = state.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
-                        lazyListState = state.artistsListUiState.lazyListState,
+                        uiState = EntitiesListUiState(
+                            lazyPagingItems = state.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
+                            lazyListState = state.artistsListUiState.lazyListState,
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        now = now,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
@@ -207,18 +211,20 @@ internal fun AreaUiInternal(
                                 ),
                             )
                         },
-                        now = now,
                     )
                 }
 
                 AreaTab.EVENTS -> {
                     EntitiesListScreen(
-                        lazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
-                        lazyListState = state.eventsListUiState.lazyListState,
+                        uiState = EntitiesListUiState(
+                            lazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
+                            lazyListState = state.eventsListUiState.lazyListState,
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        now = now,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
@@ -228,18 +234,20 @@ internal fun AreaUiInternal(
                                 ),
                             )
                         },
-                        now = now,
                     )
                 }
 
                 AreaTab.LABELS -> {
                     EntitiesListScreen(
-                        lazyPagingItems = state.labelsListUiState.lazyPagingItems,
-                        lazyListState = state.labelsListUiState.lazyListState,
+                        uiState = EntitiesListUiState(
+                            lazyPagingItems = state.labelsListUiState.lazyPagingItems,
+                            lazyListState = state.labelsListUiState.lazyListState,
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        now = now,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
@@ -249,19 +257,22 @@ internal fun AreaUiInternal(
                                 ),
                             )
                         },
-                        now = now,
                     )
                 }
 
                 AreaTab.RELEASES -> {
                     EntitiesListScreen(
-                        lazyPagingItems = state.releasesListUiState.lazyPagingItems,
-                        lazyListState = state.releasesListUiState.lazyListState,
+                        uiState = EntitiesListUiState(
+                            lazyPagingItems = state.releasesListUiState.lazyPagingItems,
+                            lazyListState = state.releasesListUiState.lazyListState,
+                            showMoreInfo = state.releasesListUiState.showMoreInfo,
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        showMoreInfo = state.releasesListUiState.showMoreInfo,
+
+                        now = now,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
@@ -278,7 +289,6 @@ internal fun AreaUiInternal(
                                 ),
                             )
                         },
-                        now = now,
                     )
                 }
 
@@ -304,12 +314,15 @@ internal fun AreaUiInternal(
 
                 AreaTab.PLACES -> {
                     EntitiesListScreen(
-                        lazyPagingItems = state.placesListUiState.lazyPagingItems,
-                        lazyListState = state.placesListUiState.lazyListState,
+                        uiState = EntitiesListUiState(
+                            lazyPagingItems = state.placesListUiState.lazyPagingItems,
+                            lazyListState = state.placesListUiState.lazyListState,
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        now = now,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 AreaUiEvent.ClickItem(
@@ -319,7 +332,6 @@ internal fun AreaUiInternal(
                                 ),
                             )
                         },
-                        now = now,
                     )
                 }
 

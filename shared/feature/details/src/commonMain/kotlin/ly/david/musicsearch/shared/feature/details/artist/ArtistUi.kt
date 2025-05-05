@@ -28,6 +28,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
+import ly.david.musicsearch.ui.common.list.EntitiesListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
@@ -211,8 +212,10 @@ internal fun ArtistUi(
 
                 ArtistTab.RELEASE_GROUPS -> {
                     EntitiesListScreen(
-                        lazyPagingItems = releaseGroupLazyPagingItems,
-                        lazyListState = state.releaseGroupsListUiState.lazyListState,
+                        uiState = EntitiesListUiState(
+                            lazyPagingItems = releaseGroupLazyPagingItems,
+                            lazyListState = state.releaseGroupsListUiState.lazyListState,
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -238,13 +241,15 @@ internal fun ArtistUi(
 
                 ArtistTab.RELEASES -> {
                     EntitiesListScreen(
-                        lazyPagingItems = state.releasesListUiState.lazyPagingItems,
-                        lazyListState = state.releasesListUiState.lazyListState,
+                        uiState = EntitiesListUiState(
+                            lazyPagingItems = state.releasesListUiState.lazyPagingItems,
+                            lazyListState = state.releasesListUiState.lazyListState,
+                            showMoreInfo = state.releasesListUiState.showMoreInfo,
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        showMoreInfo = state.releasesListUiState.showMoreInfo,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 ArtistUiEvent.ClickItem(
@@ -266,8 +271,10 @@ internal fun ArtistUi(
 
                 ArtistTab.RECORDINGS -> {
                     EntitiesListScreen(
-                        lazyPagingItems = state.recordingsListUiState.lazyPagingItems,
-                        lazyListState = state.recordingsListUiState.lazyListState,
+                        uiState = EntitiesListUiState(
+                            lazyPagingItems = state.recordingsListUiState.lazyPagingItems,
+                            lazyListState = state.recordingsListUiState.lazyListState,
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -286,8 +293,10 @@ internal fun ArtistUi(
 
                 ArtistTab.WORKS -> {
                     EntitiesListScreen(
-                        lazyPagingItems = state.worksListUiState.lazyPagingItems,
-                        lazyListState = state.worksListUiState.lazyListState,
+                        uiState = EntitiesListUiState(
+                            lazyPagingItems = state.worksListUiState.lazyPagingItems,
+                            lazyListState = state.worksListUiState.lazyListState,
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -306,8 +315,10 @@ internal fun ArtistUi(
 
                 ArtistTab.EVENTS -> {
                     EntitiesListScreen(
-                        lazyPagingItems = eventsLazyPagingItems,
-                        lazyListState = state.eventsListUiState.lazyListState,
+                        uiState = EntitiesListUiState(
+                            lazyPagingItems = eventsLazyPagingItems,
+                            lazyListState = state.eventsListUiState.lazyListState,
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

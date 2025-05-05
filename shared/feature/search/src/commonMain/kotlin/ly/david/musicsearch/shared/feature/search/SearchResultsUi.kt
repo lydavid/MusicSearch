@@ -14,8 +14,8 @@ import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
-import ly.david.musicsearch.shared.domain.listitem.Footer
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
+import ly.david.musicsearch.shared.domain.listitem.Footer
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
@@ -79,120 +79,149 @@ private fun ListItemUi(
             )
         }
 
+        is AreaListItemModel -> {
+            AreaListItem(
+                area = listItemModel,
+                showType = true,
+                onAreaClick = {
+                    onItemClick(
+                        MusicBrainzEntity.AREA,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
+                },
+            )
+        }
+
         is ArtistListItemModel -> {
-            ArtistListItem(artist = listItemModel) {
-                onItemClick(
-                    MusicBrainzEntity.ARTIST,
-                    id,
-                    null,
-                )
-            }
+            ArtistListItem(
+                artist = listItemModel,
+                onClick = {
+                    onItemClick(
+                        MusicBrainzEntity.ARTIST,
+                        id,
+                        null,
+                    )
+                },
+            )
+        }
+
+        is EventListItemModel -> {
+            EventListItem(
+                event = listItemModel,
+                onEventClick = {
+                    onItemClick(
+                        MusicBrainzEntity.EVENT,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
+                },
+            )
+        }
+
+        is InstrumentListItemModel -> {
+            InstrumentListItem(
+                instrument = listItemModel,
+                onInstrumentClick = {
+                    onItemClick(
+                        MusicBrainzEntity.INSTRUMENT,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
+                },
+            )
+        }
+
+        is LabelListItemModel -> {
+            LabelListItem(
+                label = listItemModel,
+                onLabelClick = {
+                    onItemClick(
+                        MusicBrainzEntity.LABEL,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
+                },
+            )
+        }
+
+        is PlaceListItemModel -> {
+            PlaceListItem(
+                place = listItemModel,
+                onPlaceClick = {
+                    onItemClick(
+                        MusicBrainzEntity.PLACE,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
+                },
+            )
+        }
+
+        is RecordingListItemModel -> {
+            RecordingListItem(
+                recording = listItemModel,
+                onRecordingClick = {
+                    onItemClick(
+                        MusicBrainzEntity.RECORDING,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
+                },
+            )
+        }
+
+        is ReleaseListItemModel -> {
+            ReleaseListItem(
+                release = listItemModel,
+                onClick = {
+                    onItemClick(
+                        MusicBrainzEntity.RELEASE,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
+                },
+            )
         }
 
         is ReleaseGroupListItemModel -> {
             ReleaseGroupListItem(
                 releaseGroup = listItemModel,
                 showType = true,
-            ) {
-                onItemClick(
-                    MusicBrainzEntity.RELEASE_GROUP,
-                    id,
-                    getNameWithDisambiguation(),
-                )
-            }
-        }
-
-        is ReleaseListItemModel -> {
-            ReleaseListItem(release = listItemModel) {
-                onItemClick(
-                    MusicBrainzEntity.RELEASE,
-                    id,
-                    getNameWithDisambiguation(),
-                )
-            }
-        }
-
-        is RecordingListItemModel -> {
-            RecordingListItem(recording = listItemModel) {
-                onItemClick(
-                    MusicBrainzEntity.RECORDING,
-                    id,
-                    getNameWithDisambiguation(),
-                )
-            }
-        }
-
-        is WorkListItemModel -> {
-            WorkListItem(work = listItemModel) {
-                onItemClick(
-                    MusicBrainzEntity.WORK,
-                    id,
-                    getNameWithDisambiguation(),
-                )
-            }
-        }
-
-        is AreaListItemModel -> {
-            AreaListItem(
-                area = listItemModel,
-                showType = true,
-            ) {
-                onItemClick(
-                    MusicBrainzEntity.AREA,
-                    id,
-                    getNameWithDisambiguation(),
-                )
-            }
-        }
-
-        is PlaceListItemModel -> {
-            PlaceListItem(place = listItemModel) {
-                onItemClick(
-                    MusicBrainzEntity.PLACE,
-                    id,
-                    getNameWithDisambiguation(),
-                )
-            }
-        }
-
-        is InstrumentListItemModel -> {
-            InstrumentListItem(instrument = listItemModel) {
-                onItemClick(
-                    MusicBrainzEntity.INSTRUMENT,
-                    id,
-                    getNameWithDisambiguation(),
-                )
-            }
-        }
-
-        is LabelListItemModel -> {
-            LabelListItem(label = listItemModel) {
-                onItemClick(
-                    MusicBrainzEntity.LABEL,
-                    id,
-                    getNameWithDisambiguation(),
-                )
-            }
-        }
-
-        is EventListItemModel -> {
-            EventListItem(event = listItemModel) {
-                onItemClick(
-                    MusicBrainzEntity.EVENT,
-                    id,
-                    getNameWithDisambiguation(),
-                )
-            }
+                onClick = {
+                    onItemClick(
+                        MusicBrainzEntity.RELEASE_GROUP,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
+                },
+            )
         }
 
         is SeriesListItemModel -> {
-            SeriesListItem(series = listItemModel) {
-                onItemClick(
-                    MusicBrainzEntity.SERIES,
-                    id,
-                    getNameWithDisambiguation(),
-                )
-            }
+            SeriesListItem(
+                series = listItemModel,
+                onSeriesClick = {
+                    onItemClick(
+                        MusicBrainzEntity.SERIES,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
+                },
+            )
+        }
+
+        is WorkListItemModel -> {
+            WorkListItem(
+                work = listItemModel,
+                onWorkClick = {
+                    onItemClick(
+                        MusicBrainzEntity.WORK,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
+                },
+            )
         }
 
         is Footer -> {

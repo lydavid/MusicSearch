@@ -131,6 +131,7 @@ SELECT IFNULL(
     INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
     WHERE c.id = :collectionId
+    AND ce.deleted = 0
     AND (
       rg.name LIKE :query
       OR rg.disambiguation LIKE :query
@@ -163,6 +164,7 @@ INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = rg.id
 LEFT JOIN visited ON visited.entity_id = rg.id
 WHERE c.id = :collectionId
+AND ce.deleted = 0
 AND (
   rg.name LIKE :query
   OR rg.disambiguation LIKE :query

@@ -48,7 +48,6 @@ val collectionsFeatureModule = module {
                     releaseGroupsListPresenter = get(),
                     worksListPresenter = get(),
                     seriesListPresenter = get(),
-                    deleteFromCollection = get(),
                     getMusicBrainzUrl = get(),
                     collectionRepository = get(),
                 )

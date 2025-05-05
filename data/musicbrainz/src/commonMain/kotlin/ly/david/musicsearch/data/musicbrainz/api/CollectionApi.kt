@@ -15,7 +15,7 @@ interface CollectionApi {
         const val USER_COLLECTIONS = "user-collections"
     }
 
-    suspend fun uploadToCollection(
+    suspend fun addToCollection(
         collectionId: String,
         resourceUriPlural: String,
         mbids: String,
@@ -25,7 +25,7 @@ interface CollectionApi {
     suspend fun deleteFromCollection(
         collectionId: String,
         resourceUriPlural: String,
-        mbids: String,
+        mbids: Set<String>,
         client: String = "MusicSearch",
     )
 
@@ -40,7 +40,7 @@ interface CollectionApi {
 interface CollectionApiImpl : CollectionApi {
     val httpClient: HttpClient
 
-    override suspend fun uploadToCollection(
+    override suspend fun addToCollection(
         collectionId: String,
         resourceUriPlural: String,
         mbids: String,
@@ -57,12 +57,17 @@ interface CollectionApiImpl : CollectionApi {
     override suspend fun deleteFromCollection(
         collectionId: String,
         resourceUriPlural: String,
-        mbids: String,
+        mbids: Set<String>,
         client: String,
     ) {
         httpClient.delete {
             url {
-                appendPathSegments("collection", collectionId, resourceUriPlural, mbids)
+                appendPathSegments(
+                    "collection",
+                    collectionId,
+                    resourceUriPlural,
+                    mbids.joinToString(";"),
+                )
                 parameter("client", client)
             }
         }

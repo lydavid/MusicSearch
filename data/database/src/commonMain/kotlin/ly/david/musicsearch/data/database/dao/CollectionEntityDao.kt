@@ -46,13 +46,39 @@ class CollectionEntityDao(
         transacter.deleteEntitiyLinksFromCollection(collectionId)
     }
 
+    fun markDeletedFromCollection(
+        collectionId: String,
+        collectableIds: Set<String>,
+    ) {
+        transacter.transaction {
+            collectableIds.forEach { collectableId ->
+                transacter.markDeletedFromCollection(
+                    collectionId = collectionId,
+                    collectableId = collectableId,
+                )
+            }
+        }
+    }
+
+    fun unMarkDeletedFromCollection(
+        collectionId: String,
+    ) {
+        transacter.unMarkDeletedFromCollection(collectionId = collectionId)
+    }
+
+    fun getIdsMarkedForDeletionFromCollection(
+        collectionId: String,
+    ): Set<String> {
+        return transacter.getIdsMarkedForDeletionFromCollection(collectionId)
+            .executeAsList()
+            .toSet()
+    }
+
     fun deleteFromCollection(
         collectionId: String,
-        collectableId: String,
     ) {
         transacter.deleteFromCollection(
             collectionId = collectionId,
-            collectableId = collectableId,
         )
     }
 

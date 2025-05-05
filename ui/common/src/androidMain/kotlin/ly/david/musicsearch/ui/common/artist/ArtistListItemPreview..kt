@@ -86,3 +86,20 @@ internal fun PreviewArtistListItemAllInfoVisited() {
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewArtistListItemSelected() {
+    PreviewTheme {
+        Surface {
+            ArtistListItem(
+                artist = ArtistListItemModel(
+                    id = "1",
+                    name = "artist name",
+                    sortName = "sort name should not be seen",
+                ),
+                isSelected = true,
+            )
+        }
+    }
+}

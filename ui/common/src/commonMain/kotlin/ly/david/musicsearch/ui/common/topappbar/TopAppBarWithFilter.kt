@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
@@ -167,7 +167,7 @@ internal fun TopAppBarWithFilterInternal(
                         },
                     )
 
-                    Divider()
+                    HorizontalDivider()
                 }
             }
         }
@@ -183,7 +183,7 @@ internal fun TopAppBarWithFilterInternal(
             showBackButton = showBackButton,
             entity = entity,
             title = if (topAppBarEditState.isEditMode) {
-                "Editing..."
+                topAppBarEditState.customTitle.ifEmpty { "Editing..." }
             } else {
                 title
             },

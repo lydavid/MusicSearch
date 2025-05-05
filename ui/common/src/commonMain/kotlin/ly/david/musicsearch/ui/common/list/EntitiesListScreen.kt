@@ -1,9 +1,9 @@
 package ly.david.musicsearch.ui.common.list
 
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import app.cash.paging.compose.LazyPagingItems
+import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
@@ -32,7 +32,6 @@ import ly.david.musicsearch.ui.common.instrument.InstrumentListItem
 import ly.david.musicsearch.ui.common.label.LabelListItem
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.place.PlaceListItem
 import ly.david.musicsearch.ui.common.recording.RecordingListItem
@@ -43,303 +42,205 @@ import ly.david.musicsearch.ui.common.work.WorkListItem
 
 @Composable
 fun EntitiesListScreen(
-    lazyPagingItems: LazyPagingItems<ListItemModel>,
-    lazyListState: LazyListState,
+    uiState: EntitiesListUiState,
     modifier: Modifier = Modifier,
-    isEditMode: Boolean = false,
-    showMoreInfo: Boolean = true,
+    selectedIds: ImmutableSet<String> = persistentSetOf(),
     now: Instant = Clock.System.now(),
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
-    onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
+    onSelect: (String) -> Unit = {},
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = {},
 ) {
     ScreenWithPagingLoadingAndError(
-        lazyPagingItems = lazyPagingItems,
+        lazyPagingItems = uiState.lazyPagingItems,
         modifier = modifier,
-        lazyListState = lazyListState,
+        lazyListState = uiState.lazyListState,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is AreaListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        AreaListItem(
-                            area = listItemModel,
-                        ) {
-                            onItemClick(
-                                MusicBrainzEntity.AREA,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection?.invoke(
-                            listItemModel.id,
-                            listItemModel.name,
+                AreaListItem(
+                    area = listItemModel,
+                    onAreaClick = {
+                        onItemClick(
+                            MusicBrainzEntity.AREA,
+                            id,
+                            getNameWithDisambiguation(),
                         )
                     },
+                    isSelected = selectedIds.contains(listItemModel.id),
+                    onSelect = onSelect,
                 )
             }
 
             is ArtistListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        ArtistListItem(
-                            artist = listItemModel,
-                        ) {
-                            onItemClick(
-                                MusicBrainzEntity.ARTIST,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection?.invoke(
-                            listItemModel.id,
-                            listItemModel.name,
+                ArtistListItem(
+                    artist = listItemModel,
+                    onClick = {
+                        onItemClick(
+                            MusicBrainzEntity.ARTIST,
+                            id,
+                            getNameWithDisambiguation(),
                         )
                     },
+                    isSelected = selectedIds.contains(listItemModel.id),
+                    onSelect = onSelect,
                 )
             }
 
             is EventListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        EventListItem(
-                            event = listItemModel,
-                        ) {
-                            onItemClick(
-                                MusicBrainzEntity.EVENT,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection?.invoke(
-                            listItemModel.id,
-                            listItemModel.name,
+                EventListItem(
+                    event = listItemModel,
+                    onEventClick = {
+                        onItemClick(
+                            MusicBrainzEntity.EVENT,
+                            id,
+                            getNameWithDisambiguation(),
                         )
                     },
-                )
-            }
-
-            is InstrumentListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        InstrumentListItem(
-                            instrument = listItemModel,
-                        ) {
-                            onItemClick(
-                                MusicBrainzEntity.INSTRUMENT,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection?.invoke(
-                            listItemModel.id,
-                            listItemModel.name,
-                        )
-                    },
+                    isSelected = selectedIds.contains(listItemModel.id),
+                    onSelect = onSelect,
                 )
             }
 
             is GenreListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        GenreListItem(
-                            genre = listItemModel,
-                        ) {
-                            onItemClick(
-                                MusicBrainzEntity.GENRE,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection?.invoke(
-                            listItemModel.id,
-                            listItemModel.name,
+                GenreListItem(
+                    genre = listItemModel,
+                    onGenreClick = {
+                        onItemClick(
+                            MusicBrainzEntity.GENRE,
+                            id,
+                            getNameWithDisambiguation(),
                         )
                     },
+                    isSelected = selectedIds.contains(listItemModel.id),
+                    onSelect = onSelect,
+                )
+            }
+
+            is InstrumentListItemModel -> {
+                InstrumentListItem(
+                    instrument = listItemModel,
+                    onInstrumentClick = {
+                        onItemClick(
+                            MusicBrainzEntity.INSTRUMENT,
+                            id,
+                            getNameWithDisambiguation(),
+                        )
+                    },
+                    isSelected = selectedIds.contains(listItemModel.id),
+                    onSelect = onSelect,
                 )
             }
 
             is LabelListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        LabelListItem(
-                            label = listItemModel,
-                        ) {
-                            onItemClick(
-                                MusicBrainzEntity.LABEL,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection?.invoke(
-                            listItemModel.id,
-                            listItemModel.name,
+                LabelListItem(
+                    label = listItemModel,
+                    onLabelClick = {
+                        onItemClick(
+                            MusicBrainzEntity.LABEL,
+                            id,
+                            getNameWithDisambiguation(),
                         )
                     },
+                    isSelected = selectedIds.contains(listItemModel.id),
+                    onSelect = onSelect,
                 )
             }
 
             is PlaceListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        PlaceListItem(
-                            place = listItemModel,
-                        ) {
-                            onItemClick(
-                                MusicBrainzEntity.PLACE,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection?.invoke(
-                            listItemModel.id,
-                            listItemModel.name,
+                PlaceListItem(
+                    place = listItemModel,
+                    onPlaceClick = {
+                        onItemClick(
+                            MusicBrainzEntity.PLACE,
+                            id,
+                            getNameWithDisambiguation(),
                         )
                     },
+                    isSelected = selectedIds.contains(listItemModel.id),
+                    onSelect = onSelect,
                 )
             }
 
             is RecordingListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        RecordingListItem(
-                            recording = listItemModel,
-                        ) {
-                            onItemClick(
-                                MusicBrainzEntity.RECORDING,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection?.invoke(
-                            listItemModel.id,
-                            listItemModel.name,
+                RecordingListItem(
+                    recording = listItemModel,
+                    onRecordingClick = {
+                        onItemClick(
+                            MusicBrainzEntity.RECORDING,
+                            id,
+                            getNameWithDisambiguation(),
                         )
                     },
+                    isSelected = selectedIds.contains(listItemModel.id),
+                    onSelect = onSelect,
                 )
             }
 
             is ReleaseListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        ReleaseListItem(
-                            release = listItemModel,
-                            showMoreInfo = showMoreInfo,
-                            requestForMissingCoverArtUrl = {
-                                requestForMissingCoverArtUrl(listItemModel.id)
-                            },
-                        ) {
-                            onItemClick(
-                                MusicBrainzEntity.RELEASE,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
+                ReleaseListItem(
+                    release = listItemModel,
+                    showMoreInfo = uiState.showMoreInfo,
+                    requestForMissingCoverArtUrl = {
+                        requestForMissingCoverArtUrl(listItemModel.id)
                     },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection?.invoke(
-                            listItemModel.id,
-                            listItemModel.name,
+                    onClick = {
+                        onItemClick(
+                            MusicBrainzEntity.RELEASE,
+                            id,
+                            getNameWithDisambiguation(),
                         )
                     },
+                    isSelected = selectedIds.contains(listItemModel.id),
+                    onSelect = onSelect,
                 )
             }
 
             is ReleaseGroupListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        ReleaseGroupListItem(
-                            releaseGroup = listItemModel,
-                            showType = false,
-                            requestForMissingCoverArtUrl = {
-                                requestForMissingCoverArtUrl(listItemModel.id)
-                            },
-                        ) {
-                            onItemClick(
-                                MusicBrainzEntity.RELEASE_GROUP,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
+                ReleaseGroupListItem(
+                    releaseGroup = listItemModel,
+                    showType = false,
+                    requestForMissingCoverArtUrl = {
+                        requestForMissingCoverArtUrl(listItemModel.id)
                     },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection?.invoke(
-                            listItemModel.id,
-                            listItemModel.name,
+                    onClick = {
+                        onItemClick(
+                            MusicBrainzEntity.RELEASE_GROUP,
+                            id,
+                            getNameWithDisambiguation(),
                         )
                     },
+                    isSelected = selectedIds.contains(listItemModel.id),
+                    onSelect = onSelect,
                 )
             }
 
             is SeriesListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        SeriesListItem(
-                            series = listItemModel,
-                        ) {
-                            onItemClick(
-                                MusicBrainzEntity.SERIES,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection?.invoke(
-                            listItemModel.id,
-                            listItemModel.name,
+                SeriesListItem(
+                    series = listItemModel,
+                    onSeriesClick = {
+                        onItemClick(
+                            MusicBrainzEntity.SERIES,
+                            id,
+                            getNameWithDisambiguation(),
                         )
                     },
+                    isSelected = selectedIds.contains(listItemModel.id),
+                    onSelect = onSelect,
                 )
             }
 
             is WorkListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        WorkListItem(
-                            work = listItemModel,
-                        ) {
-                            onItemClick(
-                                MusicBrainzEntity.WORK,
-                                id,
-                                getNameWithDisambiguation(),
-                            )
-                        }
-                    },
-                    disable = !isEditMode,
-                    onDelete = {
-                        onDeleteFromCollection?.invoke(
-                            listItemModel.id,
-                            listItemModel.name,
+                WorkListItem(
+                    work = listItemModel,
+                    onWorkClick = {
+                        onItemClick(
+                            MusicBrainzEntity.WORK,
+                            id,
+                            getNameWithDisambiguation(),
                         )
                     },
+                    isSelected = selectedIds.contains(listItemModel.id),
+                    onSelect = onSelect,
                 )
             }
 

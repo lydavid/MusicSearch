@@ -6,7 +6,6 @@ import ly.david.musicsearch.shared.domain.artist.usecase.GetArtists
 import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.DeleteCollection
-import ly.david.musicsearch.shared.domain.collection.usecase.DeleteFromCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.shared.domain.event.usecase.GetEvents
@@ -50,7 +49,6 @@ val domainModule = module {
     singleOf(::GetArtists)
     singleOf(::ObserveBrowseEntityCount)
     singleOf(::CreateCollection)
-    singleOf(::DeleteFromCollection)
     singleOf(::DeleteCollection)
     singleOf(::GetAllCollections)
     singleOf(::GetCollection)

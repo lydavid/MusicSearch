@@ -3,7 +3,9 @@ package ly.david.musicsearch.data.repository.collection
 import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.Pager
 import app.cash.paging.PagingData
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
@@ -15,6 +17,7 @@ import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
+import ly.david.musicsearch.shared.domain.error.Action
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
@@ -116,36 +119,52 @@ class CollectionRepositoryImpl(
         collectionDao.insertLocal(collection)
     }
 
-    override suspend fun deleteFromCollection(
-        collectionId: String,
-        entityId: String,
-        entityName: String,
+    override fun markDeletedFromCollection(
+        collection: CollectionListItemModel,
+        collectableIds: Set<String>,
     ): ActionableResult {
-        val collection = collectionDao.getCollection(collectionId) ?: return ActionableResult("Does not exist")
+        collectionEntityDao.markDeletedFromCollection(
+            collectionId = collection.id,
+            collectableIds = collectableIds,
+        )
+        return ActionableResult(
+            message = "Deleting ${collectableIds.size} from ${collection.name}.",
+            action = Action.Undo,
+        )
+    }
+
+    override fun unMarkDeletedFromCollection(collectionId: String) {
+        collectionEntityDao.unMarkDeletedFromCollection(collectionId = collectionId)
+    }
+
+    override suspend fun deleteFromCollection(collection: CollectionListItemModel): ActionableResult? {
+        val idsMarkedForDeletion = collectionEntityDao.getIdsMarkedForDeletionFromCollection(collection.id)
         if (collection.isRemote) {
             try {
-                collectionApi.deleteFromCollection(
-                    collectionId = collectionId,
-                    resourceUriPlural = collection.entity.resourceUriPlural,
-                    mbids = entityId,
-                )
+                // This is to ensure clean up of any collectibles marked as deleted when the user navigates away.
+                // But it is still possible to have leftover collectibles marked as deleted if the user kills the app
+                // before this is run. Refreshing will fix this faulty experience.
+                withContext(NonCancellable) {
+                    collectionApi.deleteFromCollection(
+                        collectionId = collection.id,
+                        resourceUriPlural = collection.entity.resourceUriPlural,
+                        mbids = idsMarkedForDeletion,
+                    )
+                }
             } catch (ex: HandledException) {
                 val userFacingError = "Failed to delete from collection ${collection.name}. ${ex.userMessage}"
                 return ActionableResult(
                     message = userFacingError,
-                    actionLabel = "Login".takeIf { ex.errorResolution == ErrorResolution.Login },
+                    action = Action.Login.takeIf { ex.errorResolution == ErrorResolution.Login },
                     errorResolution = ex.errorResolution,
                 )
             }
         }
-
-        collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteFromCollection(
-                collectionId = collectionId,
-                collectableId = entityId,
-            )
-        }
-        return ActionableResult("Deleted $entityName from ${collection.name}.")
+        collectionEntityDao.deleteFromCollection(collectionId = collection.id)
+        return ActionableResult(
+            message = "Deleted ${idsMarkedForDeletion.size} from ${collection.name}.",
+            action = null,
+        )
     }
 
     override suspend fun addToCollection(
@@ -158,7 +177,7 @@ class CollectionRepositoryImpl(
         var result = ActionableResult()
         if (collection.isRemote) {
             try {
-                collectionApi.uploadToCollection(
+                collectionApi.addToCollection(
                     collectionId = collectionId,
                     resourceUriPlural = entity.resourceUriPlural,
                     mbids = entityId,
@@ -167,7 +186,7 @@ class CollectionRepositoryImpl(
                 val userFacingError = "Failed to add to ${collection.name}. ${ex.userMessage}"
                 return ActionableResult(
                     message = userFacingError,
-                    actionLabel = "Login".takeIf { ex.errorResolution == ErrorResolution.Login },
+                    action = Action.Login.takeIf { ex.errorResolution == ErrorResolution.Login },
                     errorResolution = ex.errorResolution,
                 )
             }

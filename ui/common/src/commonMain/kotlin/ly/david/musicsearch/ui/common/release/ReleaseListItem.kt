@@ -1,6 +1,7 @@
 package ly.david.musicsearch.ui.common.release
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,10 +21,11 @@ import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
-import ly.david.musicsearch.ui.common.image.ThumbnailImage
 
 // TODO: rethink showing release country -> could be misleading, and expensive joins
 //  with cover art loaded by default, we can prob hide the other info by default
@@ -34,6 +36,8 @@ fun ReleaseListItem(
     showMoreInfo: Boolean = true,
     requestForMissingCoverArtUrl: suspend () -> Unit = {},
     onClick: ReleaseListItemModel.() -> Unit = {},
+    isSelected: Boolean = false,
+    onSelect: (String) -> Unit = {},
 ) {
     val latestRequestForMissingCoverArtUrl by rememberUpdatedState(requestForMissingCoverArtUrl)
     LaunchedEffect(key1 = release.id) {
@@ -50,7 +54,16 @@ fun ReleaseListItem(
                 fontWeight = release.fontWeight,
             )
         },
-        modifier = modifier.clickable { onClick(release) },
+        modifier = modifier
+            .combinedClickable(
+                onClick = {
+                    onClick(release)
+                },
+                onLongClick = {
+                    onSelect(release.id)
+                },
+            ),
+        colors = listItemColors(isSelected = isSelected),
         supportingContent = {
             Column {
                 DisambiguationText(
@@ -145,6 +158,11 @@ fun ReleaseListItem(
                 url = release.imageUrl.orEmpty(),
                 placeholderKey = release.imageId.toString(),
                 placeholderIcon = MusicBrainzEntity.RELEASE.getIcon(),
+                modifier = Modifier
+                    .clickable {
+                        onSelect(release.id)
+                    },
+                isSelected = isSelected,
             )
         },
     )

@@ -1,6 +1,7 @@
 package ly.david.musicsearch.ui.common.artist
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -17,11 +18,12 @@ import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.release.ReleaseListItem
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
-import ly.david.musicsearch.ui.common.image.ThumbnailImage
 
 /**
  * Displays the artist's image if it exists.
@@ -32,7 +34,9 @@ import ly.david.musicsearch.ui.common.image.ThumbnailImage
 fun ArtistListItem(
     artist: ArtistListItemModel,
     modifier: Modifier = Modifier,
-    onArtistClick: ArtistListItemModel.() -> Unit = {},
+    onClick: ArtistListItemModel.() -> Unit = {},
+    isSelected: Boolean = false,
+    onSelect: (String) -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -42,9 +46,16 @@ fun ArtistListItem(
                 fontWeight = artist.fontWeight,
             )
         },
-        modifier = modifier.clickable {
-            onArtistClick(artist)
-        },
+        modifier = modifier
+            .combinedClickable(
+                onClick = {
+                    onClick(artist)
+                },
+                onLongClick = {
+                    onSelect(artist.id)
+                },
+            ),
+        colors = listItemColors(isSelected = isSelected),
         supportingContent = {
             Column {
                 DisambiguationText(
@@ -71,6 +82,19 @@ fun ArtistListItem(
                 }
             }
         },
+        leadingContent = {
+            ThumbnailImage(
+                url = artist.imageUrl.orEmpty(),
+                placeholderKey = artist.id,
+                placeholderIcon = MusicBrainzEntity.ARTIST.getIcon(),
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .clickable {
+                        onSelect(artist.id)
+                    },
+                isSelected = isSelected,
+            )
+        },
         trailingContent = {
             artist.countryCode?.ifNotNullOrEmpty { countryCode ->
                 Text(
@@ -78,14 +102,6 @@ fun ArtistListItem(
                     style = TextStyles.getCardBodyTextStyle(),
                 )
             }
-        },
-        leadingContent = {
-            ThumbnailImage(
-                url = artist.imageUrl.orEmpty(),
-                placeholderKey = artist.id,
-                placeholderIcon = MusicBrainzEntity.ARTIST.getIcon(),
-                modifier = Modifier.clip(CircleShape),
-            )
         },
     )
 }

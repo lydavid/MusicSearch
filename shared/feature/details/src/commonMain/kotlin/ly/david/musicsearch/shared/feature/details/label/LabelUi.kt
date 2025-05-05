@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
+import ly.david.musicsearch.ui.common.list.EntitiesListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
@@ -151,13 +152,15 @@ internal fun LabelUi(
 
                 LabelTab.RELEASES -> {
                     EntitiesListScreen(
-                        lazyPagingItems = state.releasesListUiState.lazyPagingItems,
-                        lazyListState = state.releasesListUiState.lazyListState,
+                        uiState = EntitiesListUiState(
+                            lazyPagingItems = state.releasesListUiState.lazyPagingItems,
+                            lazyListState = state.releasesListUiState.lazyListState,
+                            showMoreInfo = state.releasesListUiState.showMoreInfo,
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        showMoreInfo = state.releasesListUiState.showMoreInfo,
                         onItemClick = { entity, id, title ->
                             eventSink(
                                 LabelUiEvent.ClickItem(

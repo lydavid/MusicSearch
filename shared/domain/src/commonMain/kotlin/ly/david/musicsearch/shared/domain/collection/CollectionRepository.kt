@@ -23,11 +23,18 @@ interface CollectionRepository {
         collection: CollectionListItemModel,
     )
 
-    suspend fun deleteFromCollection(
-        collectionId: String,
-        entityId: String,
-        entityName: String,
+    fun markDeletedFromCollection(
+        collection: CollectionListItemModel,
+        collectableIds: Set<String>,
     ): ActionableResult
+
+    fun unMarkDeletedFromCollection(
+        collectionId: String,
+    )
+
+    suspend fun deleteFromCollection(
+        collection: CollectionListItemModel,
+    ): ActionableResult?
 
     suspend fun addToCollection(
         collectionId: String,

@@ -6,7 +6,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
@@ -16,10 +15,10 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import kotlinx.coroutines.launch
+import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.toPersistentSet
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
-import ly.david.musicsearch.shared.domain.collection.usecase.DeleteFromCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.history.LookupHistory
@@ -87,7 +86,6 @@ internal class CollectionPresenter(
     private val releaseGroupsListPresenter: ReleaseGroupsListPresenter,
     private val seriesListPresenter: SeriesListPresenter,
     private val worksListPresenter: WorksListPresenter,
-    private val deleteFromCollection: DeleteFromCollection,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
     private val collectionRepository: CollectionRepository,
 ) : Presenter<CollectionUiState> {
@@ -95,7 +93,6 @@ internal class CollectionPresenter(
     override fun present(): CollectionUiState {
         val collectionId = screen.collectionId
 
-        val scope = rememberCoroutineScope()
         var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
         var title: String by rememberSaveable { mutableStateOf("") }
         var actionableResult: ActionableResult? by remember { mutableStateOf(null) }
@@ -104,6 +101,7 @@ internal class CollectionPresenter(
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val topAppBarEditState: TopAppBarEditState = rememberTopAppBarEditState()
+        var selectedIds: Set<String> by rememberSaveable { mutableStateOf(setOf()) }
 
         val areasByEntityUiState = areasListPresenter.present()
         val areasEventSink = areasByEntityUiState.eventSink
@@ -157,6 +155,15 @@ internal class CollectionPresenter(
                 entityId = oneShotNewCollectableId ?: return@LaunchedEffect,
             )
             oneShotNewCollectableId = null
+        }
+
+        LaunchedEffect(topAppBarEditState.isEditMode) {
+            if (!topAppBarEditState.isEditMode) {
+                selectedIds = setOf()
+            }
+            if (selectedIds.isEmpty()) {
+                topAppBarEditState.customTitle = ""
+            }
         }
 
         LaunchedEffect(
@@ -293,10 +300,6 @@ internal class CollectionPresenter(
                 -> {
                     error("${collection?.entity} by collection not supported")
                 }
-
-                null -> {
-                    // no-op
-                }
             }
         }
 
@@ -304,6 +307,16 @@ internal class CollectionPresenter(
             when (event) {
                 is CollectionUiEvent.NavigateUp -> {
                     navigator.pop()
+                }
+
+                is CollectionUiEvent.ToggleSelectItem -> {
+                    selectedIds = if (selectedIds.contains(event.collectableId)) {
+                        selectedIds.minus(event.collectableId)
+                    } else {
+                        selectedIds.plus(event.collectableId)
+                    }
+                    topAppBarEditState.toggleEditMode(selectedIds.isNotEmpty())
+                    topAppBarEditState.customTitle = "Selected ${selectedIds.size}"
                 }
 
                 is CollectionUiEvent.ClickItem -> {
@@ -318,20 +331,30 @@ internal class CollectionPresenter(
                     )
                 }
 
-                is CollectionUiEvent.MarkItemForDeletion -> {
-                    scope.launch {
-                        actionableResult = deleteFromCollection(
-                            collectionId = collection?.id ?: return@launch,
-                            entityId = event.collectableId,
-                            entityName = event.name,
-                        )
-                    }
+                is CollectionUiEvent.MarkSelectedItemsAsDeleted -> {
+                    actionableResult = collectionRepository.markDeletedFromCollection(
+                        collection = collection ?: return,
+                        collectableIds = selectedIds,
+                    )
+                    selectedIds = setOf()
+                    topAppBarEditState.toggleEditMode(false)
                 }
 
-                is CollectionUiEvent.UnMarkItemForDeletion -> {
+                is CollectionUiEvent.UnMarkItemsAsDeleted -> {
+                    collectionRepository.unMarkDeletedFromCollection(
+                        collectionId = collection?.id ?: return,
+                    )
                 }
+            }
+        }
 
-                is CollectionUiEvent.DeleteItem -> {
+        suspend fun suspendEventSink(event: SuspendCollectionUiEvent) {
+            when (event) {
+                is SuspendCollectionUiEvent.DeleteItemsMarkedAsDeleted -> {
+                    // We cannot launch a new scope if we want to run this as part of the cancellation of the parent scope.
+                    actionableResult = collectionRepository.deleteFromCollection(
+                        collection = collection ?: return,
+                    )
                 }
             }
         }
@@ -343,6 +366,7 @@ internal class CollectionPresenter(
             actionableResult = actionableResult,
             topAppBarFilterState = topAppBarFilterState,
             topAppBarEditState = topAppBarEditState,
+            selectedIds = selectedIds.toPersistentSet(),
             areasListUiState = areasByEntityUiState,
             artistsListUiState = artistsByEntityUiState,
             eventsListUiState = eventsByEntityUiState,
@@ -356,6 +380,7 @@ internal class CollectionPresenter(
             seriesListUiState = seriesByEntityUiState,
             worksListUiState = worksByEntityUiState,
             eventSink = ::eventSink,
+            suspendEventSink = ::suspendEventSink,
         )
     }
 }
@@ -368,6 +393,7 @@ internal data class CollectionUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val url: String,
     val topAppBarEditState: TopAppBarEditState,
+    val selectedIds: ImmutableSet<String>,
     val areasListUiState: AreasListUiState,
     val artistsListUiState: ArtistsListUiState,
     val eventsListUiState: EventsListUiState,
@@ -381,26 +407,27 @@ internal data class CollectionUiState(
     val seriesListUiState: SeriesListUiState,
     val worksListUiState: WorksListUiState,
     val eventSink: (CollectionUiEvent) -> Unit,
+    val suspendEventSink: suspend (SuspendCollectionUiEvent) -> Unit,
 ) : CircuitUiState
 
 internal sealed interface CollectionUiEvent : CircuitUiEvent {
     data object NavigateUp : CollectionUiEvent
 
-    data class MarkItemForDeletion(
+    data class ToggleSelectItem(
         val collectableId: String,
-        val name: String,
     ) : CollectionUiEvent
 
-    data class UnMarkItemForDeletion(val collectableId: String) : CollectionUiEvent
+    data object MarkSelectedItemsAsDeleted : CollectionUiEvent
 
-    data class DeleteItem(
-        val collectableId: String,
-        val name: String,
-    ) : CollectionUiEvent
+    data object UnMarkItemsAsDeleted : CollectionUiEvent
 
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,
         val title: String?,
     ) : CollectionUiEvent
+}
+
+internal sealed interface SuspendCollectionUiEvent : CircuitUiEvent {
+    data object DeleteItemsMarkedAsDeleted : SuspendCollectionUiEvent
 }

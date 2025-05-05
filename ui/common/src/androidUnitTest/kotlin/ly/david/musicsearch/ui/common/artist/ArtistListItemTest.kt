@@ -47,4 +47,11 @@ class ArtistListItemTest : ScreenshotTest() {
             )
         }
     }
+
+    @Test
+    fun selected() {
+        snapshot {
+            PreviewArtistListItemSelected()
+        }
+    }
 }
