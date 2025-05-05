@@ -39,8 +39,10 @@ import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.core.LocalStrings
+import kotlin.coroutines.cancellation.CancellationException
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Suppress("SwallowedException")
 @Composable
 internal fun HistoryUi(
     state: HistoryUiState,
@@ -50,7 +52,7 @@ internal fun HistoryUi(
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+    val coroutineScope = rememberCoroutineScope()
 
     var showDeleteConfirmationDialog by rememberSaveable { mutableStateOf(false) }
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -63,25 +65,28 @@ internal fun HistoryUi(
             dismissText = strings.no,
             onDismiss = { showDeleteConfirmationDialog = false },
             onConfirmClick = {
-                scope.launch {
+                coroutineScope.launch {
                     eventSink(HistoryUiEvent.MarkAllHistoryForDeletion)
-                    val snackbarResult = snackbarHostState.showSnackbar(
-                        message = "Cleared history",
-                        actionLabel = "Undo",
-                        duration = SnackbarDuration.Short,
-                        withDismissAction = true,
-                    )
 
-                    when (snackbarResult) {
-                        SnackbarResult.ActionPerformed -> {
-                            eventSink(HistoryUiEvent.UnMarkAllHistoryForDeletion)
-                        }
+                    try {
+                        val snackbarResult = snackbarHostState.showSnackbar(
+                            message = "Cleared history",
+                            actionLabel = "Undo",
+                            duration = SnackbarDuration.Short,
+                            withDismissAction = true,
+                        )
 
-                        // TODO: leaving the screen before this is executed will not actually delete the records
-                        //  So when the user next undo delete all, they will recover supposedly deleted records
-                        SnackbarResult.Dismissed -> {
-                            eventSink(HistoryUiEvent.DeleteAllHistory)
+                        when (snackbarResult) {
+                            SnackbarResult.ActionPerformed -> {
+                                eventSink(HistoryUiEvent.UnMarkAllHistoryForDeletion)
+                            }
+
+                            SnackbarResult.Dismissed -> {
+                                eventSink(HistoryUiEvent.DeleteAllHistory)
+                            }
                         }
+                    } catch (ex: CancellationException) {
+                        eventSink(HistoryUiEvent.DeleteAllHistory)
                     }
                 }
             },
@@ -157,24 +162,28 @@ internal fun HistoryUi(
                 )
             },
             onDeleteItem = { history ->
-                scope.launch {
+                coroutineScope.launch {
                     eventSink(HistoryUiEvent.MarkHistoryForDeletion(history))
 
-                    val snackbarResult = snackbarHostState.showSnackbar(
-                        message = "Removed ${history.title}",
-                        actionLabel = "Undo",
-                        duration = SnackbarDuration.Short,
-                        withDismissAction = true,
-                    )
+                    try {
+                        val snackbarResult = snackbarHostState.showSnackbar(
+                            message = "Removed ${history.title}",
+                            actionLabel = "Undo",
+                            duration = SnackbarDuration.Short,
+                            withDismissAction = true,
+                        )
 
-                    when (snackbarResult) {
-                        SnackbarResult.ActionPerformed -> {
-                            eventSink(HistoryUiEvent.UnMarkHistoryForDeletion(history))
-                        }
+                        when (snackbarResult) {
+                            SnackbarResult.ActionPerformed -> {
+                                eventSink(HistoryUiEvent.UnMarkHistoryForDeletion(history))
+                            }
 
-                        SnackbarResult.Dismissed -> {
-                            eventSink(HistoryUiEvent.DeleteHistory(history))
+                            SnackbarResult.Dismissed -> {
+                                eventSink(HistoryUiEvent.DeleteHistory(history))
+                            }
                         }
+                    } catch (ex: CancellationException) {
+                        eventSink(HistoryUiEvent.DeleteHistory(history))
                     }
                 }
             },

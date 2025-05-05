@@ -58,12 +58,22 @@ e.g. On an artist's page, you can see their events, recordings, releases, releas
 ## Collections
 
 Your personal list of entities.
-You can add to and delete items from them.
 
-New collections can be created but will only exist locally due to technical limitations.
+From an entity's details screen, tap More (vertical ellipsis) show a bottom sheet of collections that you can add it to.
+You also have the option to create a new collection from this bottom sheet.
+If it is already in a collection, a checkmark will appear next to that collection.
 
-[Login](#musicbrainz-login) to see your MusicBrainz collections.
-Additions and deletions will be synced to MusicBrainz's server.
+The Collections screen shows all of your collections.
+Local collections only exists on your device and will not be synced to MusicBrainz's server.
+Remote collections are synced to MusicBrainz's server as long as you are [logged in](#musicbrainz-login).
+
+New local collections can be created but will only exist locally because there isn't an API to create new collections yet.
+
+Tapping a list item's icon or long-pressing the item will select it.
+From the More menu item, you can delete all selected items.
+Be careful with remote collections, as it will delete the item from your collection in MusicBrainz.
+You are given a brief period of time to undo your deletion. Once up, or if you leave the screen,
+the items will be deleted from your collection for good.
 
 A collection can only store one type of entity.
 See below for the supported types of collections.

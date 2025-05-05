@@ -1,6 +1,7 @@
 package ly.david.musicsearch.ui.common.place
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItem
@@ -12,7 +13,11 @@ import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
@@ -21,6 +26,8 @@ fun PlaceListItem(
     place: PlaceListItemModel,
     modifier: Modifier = Modifier,
     onPlaceClick: PlaceListItemModel.() -> Unit = {},
+    onSelect: (String) -> Unit = {},
+    isSelected: Boolean = false,
 ) {
     ListItem(
         headlineContent = {
@@ -66,6 +73,22 @@ fun PlaceListItem(
                 }
             }
         },
-        modifier = modifier.clickable { onPlaceClick(place) },
+        modifier = modifier.combinedClickable(
+            onClick = { onPlaceClick(place) },
+            onLongClick = { onSelect(place.id) },
+        ),
+        colors = listItemColors(isSelected = isSelected),
+        leadingContent = {
+            ThumbnailImage(
+                url = "",
+                placeholderKey = "",
+                placeholderIcon = MusicBrainzEntity.PLACE.getIcon(),
+                modifier = Modifier
+                    .clickable {
+                        onSelect(place.id)
+                    },
+                isSelected = isSelected,
+            )
+        },
     )
 }

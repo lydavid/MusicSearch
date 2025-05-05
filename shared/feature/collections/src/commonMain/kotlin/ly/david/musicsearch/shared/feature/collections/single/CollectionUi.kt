@@ -2,21 +2,30 @@ package ly.david.musicsearch.shared.feature.collections.single
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import app.cash.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.common.EntitiesListUi
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.DeleteOutline
+import ly.david.musicsearch.ui.common.list.EntitiesListUi
+import ly.david.musicsearch.ui.common.list.EntitiesListUiState
+import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
@@ -25,6 +34,7 @@ import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.core.LocalStrings
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * A single MusicBrainz collection.
@@ -33,6 +43,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
  * User must be authenticated to view non-cached private collections.
  */
 @OptIn(ExperimentalMaterial3Api::class)
+@Suppress("SwallowedException")
 @Composable
 internal fun CollectionUi(
     state: CollectionUiState,
@@ -40,33 +51,54 @@ internal fun CollectionUi(
 ) {
     val collection = state.collection
     val eventSink = state.eventSink
+    val suspendEventSink = state.suspendEventSink
+    val loginEventSink = state.loginUiState.eventSink
     val releasesEventSink = state.releasesListUiState.eventSink
     val releaseGroupsEventSink = state.releaseGroupsListUiState.eventSink
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    state.actionableResult?.let { result ->
+    state.firstActionableResult?.let { result ->
+        LaunchedEffect(result) {
+            try {
+                val snackbarResult = snackbarHostState.showSnackbar(
+                    message = result.message,
+                    actionLabel = result.action?.name,
+                    duration = SnackbarDuration.Short,
+                    withDismissAction = true,
+                )
+
+                when (snackbarResult) {
+                    SnackbarResult.ActionPerformed -> {
+                        eventSink(CollectionUiEvent.UnMarkItemsAsDeleted)
+                    }
+
+                    SnackbarResult.Dismissed -> {
+                        suspendEventSink(SuspendCollectionUiEvent.DeleteItemsMarkedAsDeleted)
+                    }
+                }
+            } catch (ex: CancellationException) {
+                suspendEventSink(SuspendCollectionUiEvent.DeleteItemsMarkedAsDeleted)
+            }
+        }
+    }
+    state.secondActionableResult?.let { result ->
         LaunchedEffect(result) {
             val snackbarResult = snackbarHostState.showSnackbar(
                 message = result.message,
-                actionLabel = result.actionLabel,
+                actionLabel = result.action?.name,
                 duration = SnackbarDuration.Short,
                 withDismissAction = true,
             )
 
-            // TODO: support undoing deletion from collection
             when (snackbarResult) {
                 SnackbarResult.ActionPerformed -> {
-                    // TODO: support login if not logged in
-//                    eventSink(CollectionUiEvent.UnMarkItemForDeletion(collectableId))
+                    loginEventSink(LoginUiEvent.StartLogin)
                 }
 
                 SnackbarResult.Dismissed -> {
-//                    eventSink(CollectionUiEvent.DeleteItem(
-//                        collectableId = collectableId,
-//                        name = name
-//                    ))
+                    // no-op
                 }
             }
         }
@@ -116,6 +148,27 @@ internal fun CollectionUi(
                             },
                         )
                     }
+                    if (state.selectedIds.isNotEmpty()) {
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    text = "Delete ${state.selectedIds.size}",
+                                    color = MaterialTheme.colorScheme.error,
+                                )
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = CustomIcons.DeleteOutline,
+                                    tint = MaterialTheme.colorScheme.error,
+                                    contentDescription = null,
+                                )
+                            },
+                            onClick = {
+                                closeMenu()
+                                eventSink(CollectionUiEvent.MarkSelectedItemsAsDeleted)
+                            },
+                        )
+                    }
                 },
                 topAppBarFilterState = state.topAppBarFilterState,
                 topAppBarEditState = state.topAppBarEditState,
@@ -130,29 +183,114 @@ internal fun CollectionUi(
                     .padding(innerPadding),
             )
         } else {
+            val uiState = when (val entity = collection.entity) {
+                MusicBrainzEntity.AREA -> {
+                    EntitiesListUiState(
+                        lazyListState = state.areasListUiState.lazyListState,
+                        lazyPagingItems = state.areasListUiState.pagingDataFlow.collectAsLazyPagingItems(),
+                    )
+                }
+
+                MusicBrainzEntity.ARTIST -> {
+                    EntitiesListUiState(
+                        lazyListState = state.artistsListUiState.lazyListState,
+                        lazyPagingItems = state.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
+                    )
+                }
+
+                MusicBrainzEntity.EVENT -> {
+                    EntitiesListUiState(
+                        lazyListState = state.eventsListUiState.lazyListState,
+                        lazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
+                    )
+                }
+
+                MusicBrainzEntity.GENRE -> {
+                    EntitiesListUiState(
+                        lazyListState = state.genresListUiState.lazyListState,
+                        lazyPagingItems = state.genresListUiState.lazyPagingItems,
+                    )
+                }
+
+                MusicBrainzEntity.INSTRUMENT -> {
+                    EntitiesListUiState(
+                        lazyListState = state.instrumentsListUiState.lazyListState,
+                        lazyPagingItems = state.instrumentsListUiState.lazyPagingItems,
+                    )
+                }
+
+                MusicBrainzEntity.LABEL -> {
+                    EntitiesListUiState(
+                        lazyListState = state.labelsListUiState.lazyListState,
+                        lazyPagingItems = state.labelsListUiState.lazyPagingItems,
+                    )
+                }
+
+                MusicBrainzEntity.PLACE -> {
+                    EntitiesListUiState(
+                        lazyListState = state.placesListUiState.lazyListState,
+                        lazyPagingItems = state.placesListUiState.lazyPagingItems,
+                    )
+                }
+
+                MusicBrainzEntity.RECORDING -> {
+                    EntitiesListUiState(
+                        lazyListState = state.recordingsListUiState.lazyListState,
+                        lazyPagingItems = state.recordingsListUiState.lazyPagingItems,
+                    )
+                }
+
+                MusicBrainzEntity.RELEASE -> {
+                    EntitiesListUiState(
+                        lazyListState = state.releasesListUiState.lazyListState,
+                        lazyPagingItems = state.releasesListUiState.lazyPagingItems,
+                        showMoreInfo = state.releasesListUiState.showMoreInfo,
+                    )
+                }
+
+                MusicBrainzEntity.RELEASE_GROUP -> {
+                    EntitiesListUiState(
+                        lazyListState = state.releaseGroupsListUiState.lazyListState,
+                        lazyPagingItems = state.releaseGroupsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
+                    )
+                }
+
+                MusicBrainzEntity.SERIES -> {
+                    EntitiesListUiState(
+                        lazyListState = state.seriesListUiState.lazyListState,
+                        lazyPagingItems = state.seriesListUiState.lazyPagingItems,
+                    )
+                }
+
+                MusicBrainzEntity.WORK -> {
+                    EntitiesListUiState(
+                        lazyListState = state.worksListUiState.lazyListState,
+                        lazyPagingItems = state.worksListUiState.lazyPagingItems,
+                    )
+                }
+
+                else -> {
+                    error("$entity is not supported for collections.")
+                }
+            }
             EntitiesListUi(
-                isEditMode = state.topAppBarEditState.isEditMode,
-                areasListUiState = state.areasListUiState,
-                artistsListUiState = state.artistsListUiState,
-                eventsListUiState = state.eventsListUiState,
-                genresListUiState = state.genresListUiState,
-                instrumentsListUiState = state.instrumentsListUiState,
-                labelsListUiState = state.labelsListUiState,
-                placesListUiState = state.placesListUiState,
-                recordingsListUiState = state.recordingsListUiState,
-                releasesListUiState = state.releasesListUiState,
-                releaseGroupsListUiState = state.releaseGroupsListUiState,
-                seriesListUiState = state.seriesListUiState,
-                worksListUiState = state.worksListUiState,
-                entity = collection.entity,
+                uiState = uiState,
                 innerPadding = innerPadding,
                 scrollBehavior = scrollBehavior,
+                selectedIds = state.selectedIds,
                 onItemClick = { entity, id, title ->
                     eventSink(
                         CollectionUiEvent.ClickItem(
                             entity = entity,
                             id = id,
                             title = title,
+                        ),
+                    )
+                },
+                onSelect = {
+                    eventSink(
+                        CollectionUiEvent.ToggleSelectItem(
+                            collectableId = it,
                         ),
                     )
                 },
@@ -170,14 +308,6 @@ internal fun CollectionUi(
                             // no-op
                         }
                     }
-                },
-                onDeleteFromCollection = { collectableId, name ->
-                    eventSink(
-                        CollectionUiEvent.MarkItemForDeletion(
-                            collectableId = collectableId,
-                            name = name,
-                        ),
-                    )
                 },
             )
         }

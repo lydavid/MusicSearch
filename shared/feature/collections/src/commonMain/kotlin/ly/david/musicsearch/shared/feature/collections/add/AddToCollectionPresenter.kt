@@ -66,7 +66,12 @@ internal class AddToCollectionPresenter(
                             entity = screen.entity,
                             entityId = screen.id,
                         )
-                        navigator.pop(SnackbarPopResult(message = result.message, actionLabel = result.actionLabel))
+                        navigator.pop(
+                            SnackbarPopResult(
+                                message = result.message,
+                                actionLabel = result.action?.name,
+                            ),
+                        )
                     }
                 }
             }

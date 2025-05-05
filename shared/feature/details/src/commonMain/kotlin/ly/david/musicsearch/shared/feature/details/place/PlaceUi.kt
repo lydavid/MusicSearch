@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
+import ly.david.musicsearch.ui.common.list.EntitiesListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
@@ -145,8 +146,10 @@ internal fun PlaceUi(
 
                 PlaceTab.EVENTS -> {
                     EntitiesListScreen(
-                        lazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
-                        lazyListState = state.eventsListUiState.lazyListState,
+                        uiState = EntitiesListUiState(
+                            lazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
+                            lazyListState = state.eventsListUiState.lazyListState,
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

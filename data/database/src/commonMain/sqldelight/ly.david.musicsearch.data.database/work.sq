@@ -96,6 +96,7 @@ SELECT IFNULL(
     INNER JOIN collection_entity ce ON w.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
     WHERE c.id = :collectionId
+    AND ce.deleted = 0
     AND (
       w.name LIKE :query
       OR w.disambiguation LIKE :query
@@ -121,6 +122,7 @@ INNER JOIN collection_entity ce ON w.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 LEFT JOIN visited ON visited.entity_id = w.id
 WHERE c.id = :collectionId
+AND ce.deleted = 0
 AND (
   w.name LIKE :query
   OR w.disambiguation LIKE :query

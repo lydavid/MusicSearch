@@ -44,6 +44,7 @@ import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
+import kotlin.coroutines.cancellation.CancellationException
 
 @Composable
 internal fun SpotifyHistoryUi(
@@ -81,6 +82,7 @@ internal fun SpotifyHistoryUi(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Suppress("SwallowedException")
 @Composable
 private fun SpotifyHistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
@@ -131,20 +133,24 @@ private fun SpotifyHistoryUi(
                 scope.launch {
                     onMarkForDeletion(history)
 
-                    val snackbarResult = snackbarHostState.showSnackbar(
-                        message = "Removed ${history.trackName}",
-                        actionLabel = "Undo",
-                        duration = SnackbarDuration.Short,
-                    )
+                    try {
+                        val snackbarResult = snackbarHostState.showSnackbar(
+                            message = "Removed ${history.trackName}",
+                            actionLabel = "Undo",
+                            duration = SnackbarDuration.Short,
+                        )
 
-                    when (snackbarResult) {
-                        SnackbarResult.ActionPerformed -> {
-                            onUndoMarkForDeletion(history)
-                        }
+                        when (snackbarResult) {
+                            SnackbarResult.ActionPerformed -> {
+                                onUndoMarkForDeletion(history)
+                            }
 
-                        SnackbarResult.Dismissed -> {
-                            onDelete(history)
+                            SnackbarResult.Dismissed -> {
+                                onDelete(history)
+                            }
                         }
+                    } catch (ex: CancellationException) {
+                        onDelete(history)
                     }
                 }
             },

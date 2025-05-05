@@ -4,7 +4,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseCollectionsResponse
 import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
 
 open class FakeCollectionApi : CollectionApi {
-    override suspend fun uploadToCollection(
+    override suspend fun addToCollection(
         collectionId: String,
         resourceUriPlural: String,
         mbids: String,
@@ -16,7 +16,7 @@ open class FakeCollectionApi : CollectionApi {
     override suspend fun deleteFromCollection(
         collectionId: String,
         resourceUriPlural: String,
-        mbids: String,
+        mbids: Set<String>,
         client: String,
     ) {
         // No-op.

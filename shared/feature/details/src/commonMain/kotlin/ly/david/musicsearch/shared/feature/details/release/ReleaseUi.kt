@@ -29,6 +29,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
+import ly.david.musicsearch.ui.common.list.EntitiesListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
@@ -208,8 +209,10 @@ internal fun ReleaseUi(
 
                 ReleaseTab.ARTISTS -> {
                     EntitiesListScreen(
-                        lazyPagingItems = state.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
-                        lazyListState = state.artistsListUiState.lazyListState,
+                        uiState = EntitiesListUiState(
+                            lazyPagingItems = state.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
+                            lazyListState = state.artistsListUiState.lazyListState,
+                        ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

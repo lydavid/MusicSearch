@@ -1,6 +1,7 @@
 package ly.david.musicsearch.ui.common.event
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -14,7 +15,11 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
@@ -24,6 +29,8 @@ fun EventListItem(
     event: EventListItemModel,
     modifier: Modifier = Modifier,
     onEventClick: EventListItemModel.() -> Unit = {},
+    isSelected: Boolean = false,
+    onSelect: (String) -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -90,8 +97,22 @@ fun EventListItem(
                 }
             }
         },
-        modifier = modifier.clickable {
-            onEventClick(event)
+        modifier = modifier.combinedClickable(
+            onClick = { onEventClick(event) },
+            onLongClick = { onSelect(event.id) },
+        ),
+        colors = listItemColors(isSelected = isSelected),
+        leadingContent = {
+            ThumbnailImage(
+                url = "",
+                placeholderKey = "",
+                placeholderIcon = MusicBrainzEntity.EVENT.getIcon(),
+                modifier = Modifier
+                    .clickable {
+                        onSelect(event.id)
+                    },
+                isSelected = isSelected,
+            )
         },
     )
 }

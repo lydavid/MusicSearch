@@ -1,6 +1,7 @@
 package ly.david.musicsearch.ui.common.work
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
@@ -8,7 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
@@ -18,6 +23,8 @@ fun WorkListItem(
     work: WorkListItemModel,
     modifier: Modifier = Modifier,
     onWorkClick: WorkListItemModel.() -> Unit = {},
+    isSelected: Boolean = false,
+    onSelect: (String) -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -63,6 +70,22 @@ fun WorkListItem(
                 }
             }
         },
-        modifier = modifier.clickable { onWorkClick(work) },
+        modifier = modifier.combinedClickable(
+            onClick = { onWorkClick(work) },
+            onLongClick = { onSelect(work.id) },
+        ),
+        colors = listItemColors(isSelected = isSelected),
+        leadingContent = {
+            ThumbnailImage(
+                url = "",
+                placeholderKey = "",
+                placeholderIcon = MusicBrainzEntity.WORK.getIcon(),
+                modifier = Modifier
+                    .clickable {
+                        onSelect(work.id)
+                    },
+                isSelected = isSelected,
+            )
+        },
     )
 }

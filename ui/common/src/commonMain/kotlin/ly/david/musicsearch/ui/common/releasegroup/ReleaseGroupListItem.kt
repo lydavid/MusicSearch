@@ -1,6 +1,7 @@
 package ly.david.musicsearch.ui.common.releasegroup
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItem
@@ -21,6 +22,7 @@ import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.listItemColors
 
 @Composable
 fun ReleaseGroupListItem(
@@ -29,6 +31,8 @@ fun ReleaseGroupListItem(
     modifier: Modifier = Modifier,
     requestForMissingCoverArtUrl: suspend () -> Unit = {},
     onClick: ReleaseGroupListItemModel.() -> Unit = {},
+    isSelected: Boolean = false,
+    onSelect: (String) -> Unit = {},
 ) {
     val latestRequestForMissingCoverArtUrl by rememberUpdatedState(requestForMissingCoverArtUrl)
     LaunchedEffect(key1 = releaseGroup.id) {
@@ -45,7 +49,11 @@ fun ReleaseGroupListItem(
                 fontWeight = releaseGroup.fontWeight,
             )
         },
-        modifier = modifier.clickable { onClick(releaseGroup) },
+        modifier = modifier.combinedClickable(
+            onClick = { onClick(releaseGroup) },
+            onLongClick = { onSelect(releaseGroup.id) },
+        ),
+        colors = listItemColors(isSelected = isSelected),
         supportingContent = {
             Column {
                 DisambiguationText(
@@ -88,6 +96,11 @@ fun ReleaseGroupListItem(
                 url = releaseGroup.imageUrl.orEmpty(),
                 placeholderKey = releaseGroup.imageId.toString(),
                 placeholderIcon = MusicBrainzEntity.RELEASE_GROUP.getIcon(),
+                modifier = Modifier
+                    .clickable {
+                        onSelect(releaseGroup.id)
+                    },
+                isSelected = isSelected,
             )
         },
     )

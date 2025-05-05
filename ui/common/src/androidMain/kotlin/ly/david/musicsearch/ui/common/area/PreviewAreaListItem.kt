@@ -17,6 +17,7 @@ internal fun PreviewAreaListItem() {
                     id = "1",
                     name = "Area Name",
                 ),
+                showIcon = false,
             )
         }
     }
@@ -33,6 +34,7 @@ internal fun PreviewAreaListItemDisambiguation() {
                     name = "Area Name",
                     disambiguation = "That one",
                 ),
+                showIcon = false,
             )
         }
     }
@@ -85,6 +87,7 @@ internal fun PreviewReleaseEvent() {
                     date = "2006-03-21",
                 ),
                 showType = false,
+                showIcon = false,
             )
         }
     }

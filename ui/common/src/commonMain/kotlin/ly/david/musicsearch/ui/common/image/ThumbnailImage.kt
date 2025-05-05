@@ -1,7 +1,9 @@
 package ly.david.musicsearch.ui.common.image
 
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -16,6 +18,8 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import coil3.size.Scale
 import ly.david.musicsearch.shared.domain.common.useHttps
+import ly.david.musicsearch.ui.common.icons.CheckCircle
+import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.core.SMALL_IMAGE_SIZE
 
 @Composable
@@ -24,31 +28,43 @@ fun ThumbnailImage(
     placeholderKey: String,
     placeholderIcon: ImageVector?,
     modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
     size: Dp = SMALL_IMAGE_SIZE.dp,
 ) {
     val sizeModifier = modifier.size(size)
     val placeholder = rememberVectorPainter(placeholderIcon ?: DefaultPlaceholderImageVector)
 
-    if (url.isNotEmpty()) {
-        AsyncImage(
-            modifier = sizeModifier,
-            placeholder = forwardingPainter(
-                painter = placeholder,
-                colorFilter = ColorFilter.tint(LocalContentColor.current),
-            ),
-            model = ImageRequest.Builder(LocalPlatformContext.current)
-                .data(url.useHttps())
-                .scale(Scale.FILL)
-                .crossfade(true)
-                .memoryCacheKey(placeholderKey)
-                .build(),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-        )
-    } else {
-        PlaceholderIcon(
-            modifier = sizeModifier,
-            placeholderIcon = placeholderIcon,
-        )
+    when {
+        isSelected -> {
+            Icon(
+                modifier = sizeModifier,
+                imageVector = CustomIcons.CheckCircle,
+                tint = MaterialTheme.colorScheme.primary,
+                contentDescription = "selected",
+            )
+        }
+        url.isNotEmpty() -> {
+            AsyncImage(
+                modifier = sizeModifier,
+                placeholder = forwardingPainter(
+                    painter = placeholder,
+                    colorFilter = ColorFilter.tint(LocalContentColor.current),
+                ),
+                model = ImageRequest.Builder(LocalPlatformContext.current)
+                    .data(url.useHttps())
+                    .scale(Scale.FILL)
+                    .crossfade(true)
+                    .memoryCacheKey(placeholderKey)
+                    .build(),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+            )
+        }
+        else -> {
+            PlaceholderIcon(
+                modifier = sizeModifier,
+                placeholderIcon = placeholderIcon,
+            )
+        }
     }
 }

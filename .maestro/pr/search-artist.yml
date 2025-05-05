@@ -100,22 +100,27 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "art"
 - tapOn: "Artists"
 
-# Attempt to swipe in view mode ends up clicking into the item
-- swipe:
-    from: "ずっと真夜中でいいのに。"
-    direction: RIGHT
+- longPressOn: "ずっと真夜中でいいのに。"
+- assertVisible: "Selected 1"
 - tapOn: "Back"
-
+- assertVisible: "Artists"
 - tapOn: "Edit"
-- assertVisible: "Editing..."
+- longPressOn: "ずっと真夜中でいいのに。"
+- assertVisible: "Selected 1"
 - tapOn: "Filter"
 - inputText: "zutto"
-- swipe:
-      from: "ずっと真夜中でいいのに。"
-      direction: RIGHT
-- tapOn: Cancel
-- tapOn: "Back"
+- tapOn: "Cancel"
+- tapOn: "More actions"
+- tapOn: "Delete 1"
+- assertVisible: "Deleting 1 from Artists."
+- tapOn: "Undo"
+- longPressOn: "ずっと真夜中でいいのに。"
+- tapOn: "More actions"
+- tapOn: "Delete 1"
+- assertVisible: "Deleting 1 from Artists."
+- assertVisible: "Deleted 1 from Artists."
 - tapOn: "Back"
 - tapOn: "Cancel"
+- assertVisible: "Collections"
 
 - stopRecording

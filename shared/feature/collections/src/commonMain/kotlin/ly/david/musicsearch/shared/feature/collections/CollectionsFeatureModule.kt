@@ -36,6 +36,7 @@ val collectionsFeatureModule = module {
                     navigator = navigator,
                     getCollection = get(),
                     incrementLookupHistory = get(),
+                    loginPresenter = get(),
                     areasListPresenter = get(),
                     artistsListPresenter = get(),
                     instrumentsListPresenter = get(),
@@ -48,7 +49,6 @@ val collectionsFeatureModule = module {
                     releaseGroupsListPresenter = get(),
                     worksListPresenter = get(),
                     seriesListPresenter = get(),
-                    deleteFromCollection = get(),
                     getMusicBrainzUrl = get(),
                     collectionRepository = get(),
                 )

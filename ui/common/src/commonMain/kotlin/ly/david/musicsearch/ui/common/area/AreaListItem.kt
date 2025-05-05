@@ -1,6 +1,7 @@
 package ly.david.musicsearch.ui.common.area
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItem
@@ -15,7 +16,11 @@ import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
@@ -27,8 +32,29 @@ fun AreaListItem(
     area: AreaListItemModel,
     modifier: Modifier = Modifier,
     showType: Boolean = true,
+    showIcon: Boolean = true,
     onAreaClick: AreaListItemModel.() -> Unit = {},
+    isSelected: Boolean = false,
+    onSelect: (String) -> Unit = {},
 ) {
+    val leadingContent: @Composable (() -> Unit)? =
+        if (showIcon) {
+            {
+                ThumbnailImage(
+                    url = "",
+                    placeholderKey = "",
+                    placeholderIcon = MusicBrainzEntity.AREA.getIcon(),
+                    modifier = Modifier
+                        .clickable {
+                            onSelect(area.id)
+                        },
+                    isSelected = isSelected,
+                )
+            }
+        } else {
+            null
+        }
+
     ListItem(
         headlineContent = {
             val flags = area.countryCodes.joinToString { it.toFlagEmoji() }
@@ -43,6 +69,15 @@ fun AreaListItem(
                 fontWeight = area.fontWeight,
             )
         },
+        colors = listItemColors(isSelected = isSelected),
+        modifier = modifier.combinedClickable(
+            onClick = {
+                onAreaClick(area)
+            },
+            onLongClick = {
+                onSelect(area.id)
+            },
+        ),
         supportingContent = {
             Column {
                 DisambiguationText(
@@ -70,9 +105,7 @@ fun AreaListItem(
                 }
             }
         },
-        modifier = modifier.clickable {
-            onAreaClick(area)
-        },
+        leadingContent = leadingContent,
         trailingContent = {
             area.date.ifNotNullOrEmpty {
                 Column(horizontalAlignment = Alignment.End) {
