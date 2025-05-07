@@ -4,7 +4,7 @@ import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.dao.AreaDao
-import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
@@ -17,14 +17,14 @@ import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 class AreasListRepositoryImpl(
-    private val browseEntityCountDao: BrowseRemoteCountDao,
+    private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val areaDao: AreaDao,
     private val browseApi: BrowseApi,
 ) : AreasListRepository,
     BrowseEntities<AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
         browseEntity = MusicBrainzEntity.AREA,
-        browseEntityCountDao = browseEntityCountDao,
+        browseRemoteMetadataDao = browseRemoteMetadataDao,
     ) {
 
     override fun observeAreas(
@@ -55,8 +55,8 @@ class AreasListRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
     ) {
-        browseEntityCountDao.withTransaction {
-            browseEntityCountDao.deleteBrowseRemoteCountByEntity(
+        browseRemoteMetadataDao.withTransaction {
+            browseRemoteMetadataDao.deleteBrowseRemoteCountByEntity(
                 entityId = entityId,
                 browseEntity = browseEntity,
             )

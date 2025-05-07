@@ -5,7 +5,7 @@ import app.cash.paging.PagingSource
 import app.cash.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
@@ -23,13 +23,13 @@ import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 
 class ReleaseGroupsListRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
-    private val browseEntityCountDao: BrowseRemoteCountDao,
+    private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
     private val browseApi: BrowseApi,
     private val releaseGroupDao: ReleaseGroupDao,
 ) : ReleaseGroupsListRepository,
     BrowseEntities<ReleaseGroupListItemModel, ReleaseGroupMusicBrainzModel, BrowseReleaseGroupsResponse>(
         browseEntity = MusicBrainzEntity.RELEASE_GROUP,
-        browseEntityCountDao = browseEntityCountDao,
+        browseRemoteMetadataDao = browseRemoteMetadataDao,
     ) {
 
     override fun observeReleaseGroups(
@@ -75,8 +75,8 @@ class ReleaseGroupsListRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
     ) {
-        browseEntityCountDao.withTransaction {
-            browseEntityCountDao.deleteBrowseRemoteCountByEntity(
+        browseRemoteMetadataDao.withTransaction {
+            browseRemoteMetadataDao.deleteBrowseRemoteCountByEntity(
                 entityId = entityId,
                 browseEntity = browseEntity,
             )
