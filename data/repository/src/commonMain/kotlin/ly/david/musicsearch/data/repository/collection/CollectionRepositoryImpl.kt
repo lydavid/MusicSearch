@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
-import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
@@ -29,7 +29,7 @@ class CollectionRepositoryImpl(
     private val collectionApi: CollectionApi,
     private val collectionDao: CollectionDao,
     private val collectionEntityDao: CollectionEntityDao,
-    private val browseEntityCountDao: BrowseRemoteCountDao,
+    private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
     private val browseEntityCountRepository: BrowseRemoteMetadataRepository,
 ) : CollectionRepository {
 
@@ -80,7 +80,7 @@ class CollectionRepositoryImpl(
             include = CollectionApi.USER_COLLECTIONS,
         )
 
-        browseEntityCountDao.upsert(
+        browseRemoteMetadataDao.upsert(
             entityId = username,
             browseEntity = MusicBrainzEntity.COLLECTION,
             remoteCount = response.count,
@@ -105,8 +105,8 @@ class CollectionRepositoryImpl(
     }
 
     private fun deleteLinkedEntitiesByEntity() {
-        browseEntityCountDao.withTransaction {
-            browseEntityCountDao.deleteAllBrowseRemoteCountByRemoteCollections()
+        browseRemoteMetadataDao.withTransaction {
+            browseRemoteMetadataDao.deleteAllBrowseRemoteCountByRemoteCollections()
             collectionDao.deleteMusicBrainzCollections()
         }
     }

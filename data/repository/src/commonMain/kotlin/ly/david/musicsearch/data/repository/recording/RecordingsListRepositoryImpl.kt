@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.recording
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
@@ -17,14 +17,14 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
 
 class RecordingsListRepositoryImpl(
-    private val browseEntityCountDao: BrowseRemoteCountDao,
+    private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val recordingDao: RecordingDao,
     private val browseApi: BrowseApi,
 ) : RecordingsListRepository,
     BrowseEntities<RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
         browseEntity = MusicBrainzEntity.RECORDING,
-        browseEntityCountDao = browseEntityCountDao,
+        browseRemoteMetadataDao = browseRemoteMetadataDao,
     ) {
 
     override fun observeRecordings(
@@ -55,8 +55,8 @@ class RecordingsListRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
     ) {
-        browseEntityCountDao.withTransaction {
-            browseEntityCountDao.deleteBrowseRemoteCountByEntity(
+        browseRemoteMetadataDao.withTransaction {
+            browseRemoteMetadataDao.deleteBrowseRemoteCountByEntity(
                 entityId = entityId,
                 browseEntity = browseEntity,
             )

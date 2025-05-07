@@ -15,7 +15,7 @@ import ly.david.data.test.tokyoInternationForumHallAPlaceMusicBrainzModel
 import ly.david.data.test.tokyoInternationForumPlaceListItemModel
 import ly.david.data.test.tokyoInternationForumPlaceMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AreaDao
-import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
@@ -52,14 +52,14 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
     override val visitedDao: VisitedDao by inject()
     override val relationDao: RelationDao by inject()
     private val collectionDao: CollectionDao by inject()
-    override val browseEntityCountDao: BrowseRemoteCountDao by inject()
+    override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     override val collectionEntityDao: CollectionEntityDao by inject()
 
     private fun createPlacesListRepository(
         places: List<PlaceMusicBrainzModel>,
     ): PlacesListRepository {
         return PlacesListRepositoryImpl(
-            browseEntityCountDao = browseEntityCountDao,
+            browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
             placeDao = placeDao,
             browseApi = object : FakeBrowseApi() {

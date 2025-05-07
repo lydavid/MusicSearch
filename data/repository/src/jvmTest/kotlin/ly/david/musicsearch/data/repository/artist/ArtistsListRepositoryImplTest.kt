@@ -14,7 +14,7 @@ import ly.david.data.test.variousArtistsArtistListItemModel
 import ly.david.data.test.variousArtistsArtistMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
-import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
@@ -46,7 +46,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
     val koinTestRule = KoinTestRule()
 
     override val artistDao: ArtistDao by inject()
-    override val browseEntityCountDao: BrowseRemoteCountDao by inject()
+    override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     override val areaDao: AreaDao by inject()
     override val entityHasRelationsDao: EntityHasRelationsDao by inject()
     override val relationDao: RelationDao by inject()
@@ -58,7 +58,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         artists: List<ArtistMusicBrainzModel>,
     ): ArtistsListRepository {
         return ArtistsListRepositoryImpl(
-            browseEntityCountDao = browseEntityCountDao,
+            browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
             artistDao = artistDao,
             browseApi = object : FakeBrowseApi() {

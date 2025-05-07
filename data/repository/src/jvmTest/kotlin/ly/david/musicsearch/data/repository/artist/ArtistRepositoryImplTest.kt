@@ -9,7 +9,7 @@ import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.unitedKingdomAreaMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
-import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
@@ -42,7 +42,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
     override val visitedDao: VisitedDao by inject()
     override val relationDao: RelationDao by inject()
     override val areaDao: AreaDao by inject()
-    override val browseEntityCountDao: BrowseRemoteCountDao by inject()
+    override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
     @Test
@@ -144,7 +144,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
     @Test
     fun `browse first, then lookup should overwrite with more data`() = runTest {
         val artistsListRepositoryImpl = ArtistsListRepositoryImpl(
-            browseEntityCountDao = browseEntityCountDao,
+            browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
             artistDao = artistDao,
             browseApi = object : FakeBrowseApi() {

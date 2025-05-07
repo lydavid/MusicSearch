@@ -11,12 +11,11 @@ import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadata
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
 
-// TODO: rename to BrowseRemoteMetadata
-class BrowseRemoteCountDao(
+class BrowseRemoteMetadataDao(
     database: Database,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
-    override val transacter = database.browse_remote_countQueries
+    override val transacter = database.browse_remote_metadataQueries
 
     fun upsert(
         entityId: String,

@@ -6,7 +6,7 @@ import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
-import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.Browsable
 import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
@@ -23,7 +23,7 @@ abstract class BrowseEntities<
     B : Browsable<MB>,
     >(
     val browseEntity: MusicBrainzEntity,
-    private val browseEntityCountDao: BrowseRemoteCountDao,
+    private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
 ) {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -78,7 +78,7 @@ abstract class BrowseEntities<
     )
 
     private fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? =
-        browseEntityCountDao.get(
+        browseRemoteMetadataDao.get(
             entityId = entityId,
             browseEntity = browseEntity,
         )?.remoteCount
@@ -110,8 +110,8 @@ abstract class BrowseEntities<
         )
         val musicBrainzModels = response.musicBrainzModels
 
-        browseEntityCountDao.withTransaction {
-            browseEntityCountDao.upsert(
+        browseRemoteMetadataDao.withTransaction {
+            browseRemoteMetadataDao.upsert(
                 entityId = entityId,
                 browseEntity = browseEntity,
                 remoteCount = response.count,

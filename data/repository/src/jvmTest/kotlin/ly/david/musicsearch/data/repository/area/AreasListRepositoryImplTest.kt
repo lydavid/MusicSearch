@@ -5,7 +5,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
 import ly.david.musicsearch.data.database.dao.AreaDao
-import ly.david.musicsearch.data.database.dao.BrowseRemoteCountDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
@@ -29,14 +29,14 @@ class AreasListRepositoryImplTest : KoinTest {
 
     private val areaDao: AreaDao by inject()
     private val collectionDao: CollectionDao by inject()
-    private val browseEntityCountDao: BrowseRemoteCountDao by inject()
+    private val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
     private fun createRepository(
         areas: List<AreaMusicBrainzModel>,
     ): AreasListRepository {
         return AreasListRepositoryImpl(
-            browseEntityCountDao = browseEntityCountDao,
+            browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
             areaDao = areaDao,
             browseApi = object : FakeBrowseApi() {
