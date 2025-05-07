@@ -11,6 +11,7 @@ import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import kotlin.coroutines.cancellation.CancellationException
 
 class ArtistImageRepositoryImpl(
     private val spotifyApi: SpotifyApi,
@@ -57,6 +58,8 @@ class ArtistImageRepositoryImpl(
                 mbid = artistDetailsModel.id,
                 imageMetadataList = listOf(imageMetadata),
             )
+        } catch (ex: CancellationException) {
+            throw ex
         } catch (ex: HandledException) {
             if (ex.errorResolution == ErrorResolution.None) {
                 imageUrlDao.saveImageMetadata(
