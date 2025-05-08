@@ -8,7 +8,7 @@ data class ReleaseListItemModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String = "",
-    override val date: String? = null,
+    override val date: String = "",
     override val barcode: String? = null,
     override val status: String? = null,
     override val statusId: String? = null,

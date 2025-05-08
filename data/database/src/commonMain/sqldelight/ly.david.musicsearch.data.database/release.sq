@@ -1,21 +1,21 @@
 import kotlin.Int;
 
-CREATE TABLE IF NOT EXISTS `release` (
-  `id` TEXT PRIMARY KEY NOT NULL,
-  `name` TEXT NOT NULL,
-  `disambiguation` TEXT NOT NULL,
-  `date` TEXT,
-  `barcode` TEXT,
-  `asin` TEXT,
-  `quality` TEXT,
-  `country_code` TEXT,
-  `status` TEXT,
-  `status_id` TEXT,
-  `packaging` TEXT,
-  `packaging_id` TEXT,
-  `script` TEXT,
-  `language` TEXT,
-  `cover_art_count` INTEGER AS Int NOT NULL
+CREATE TABLE IF NOT EXISTS "release" (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  date TEXT NOT NULL,
+  barcode TEXT,
+  asin TEXT,
+  quality TEXT,
+  country_code TEXT,
+  status TEXT,
+  status_id TEXT,
+  packaging TEXT,
+  packaging_id TEXT,
+  script TEXT,
+  language TEXT,
+  cover_art_count INTEGER AS Int NOT NULL
 );
 
 insertRelease:
