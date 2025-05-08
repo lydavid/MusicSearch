@@ -85,7 +85,7 @@ class ReleaseDao(
         id: String,
         name: String,
         disambiguation: String,
-        date: String?,
+        date: String,
         barcode: String?,
         asin: String?,
         quality: String?,
