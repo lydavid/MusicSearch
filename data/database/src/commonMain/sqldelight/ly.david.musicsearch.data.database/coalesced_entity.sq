@@ -1,0 +1,38 @@
+CREATE VIEW coalesced_entity AS
+SELECT
+  id,
+  name,
+  sort_name,
+  disambiguation,
+  'artist' AS entity_type
+FROM artist
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'event' AS entity_type
+FROM event
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'release' AS entity_type
+FROM `release`
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'release-group' AS entity_type
+FROM release_group;

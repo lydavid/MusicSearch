@@ -1,0 +1,100 @@
+import kotlin.Int;
+
+DROP VIEW coalesced_entity;
+
+CREATE TABLE IF NOT EXISTS release_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  date TEXT NOT NULL,
+  barcode TEXT,
+  asin TEXT,
+  quality TEXT,
+  country_code TEXT,
+  status TEXT,
+  status_id TEXT,
+  packaging TEXT,
+  packaging_id TEXT,
+  script TEXT,
+  language TEXT,
+  cover_art_count INTEGER AS Int NOT NULL
+);
+
+INSERT OR IGNORE INTO release_temp(
+  id,
+  name,
+  disambiguation,
+  date,
+  barcode,
+  asin,
+  quality,
+  country_code,
+  status,
+  status_id,
+  packaging,
+  packaging_id,
+  script,
+  language,
+  cover_art_count
+)
+SELECT
+  id,
+  name,
+  disambiguation,
+  COALESCE(date, ''),
+  barcode,
+  asin,
+  quality,
+  country_code,
+  status,
+  status_id,
+  packaging,
+  packaging_id,
+  script,
+  language,
+  cover_art_count
+FROM `release`;
+
+DROP TABLE `release`;
+
+ALTER TABLE release_temp RENAME TO `release`;
+
+-- recreate view that references release
+CREATE VIEW coalesced_entity AS
+SELECT
+  id,
+  name,
+  sort_name,
+  disambiguation,
+  'artist' AS entity_type
+FROM artist
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'event' AS entity_type
+FROM event
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'release' AS entity_type
+FROM `release`
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'release-group' AS entity_type
+FROM release_group;

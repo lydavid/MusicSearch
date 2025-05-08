@@ -46,7 +46,7 @@ class ReleaseDao(
                     id = id,
                     name = name,
                     disambiguation = disambiguation,
-                    date = date,
+                    date = date.orEmpty(),
                     status = status,
                     barcode = barcode,
                     status_id = statusId,
