@@ -1,6 +1,6 @@
 import kotlin.Int;
 
-CREATE TABLE IF NOT EXISTS `release` (
+CREATE TABLE IF NOT EXISTS "release" (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
   disambiguation TEXT NOT NULL,
