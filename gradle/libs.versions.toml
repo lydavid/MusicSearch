@@ -32,6 +32,8 @@ stately = "2.1.0"
 turbine = "1.2.0"
 uiautomator = "2.3.0"
 zoomable = "2.7.0"
+colorpicker = "1.1.2"
+materialKolor = "3.0.0-beta01"
 
 [libraries]
 aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutlibraries" }
@@ -127,6 +129,8 @@ timber = "com.jakewharton.timber:timber:5.0.1"
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 windowSizeClass = "dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0"
 zoomable = { module = "net.engawapg.lib:zoomable", version.ref = "zoomable" }
+compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
+materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 
 [bundles]
 kotlinx-coroutines = [

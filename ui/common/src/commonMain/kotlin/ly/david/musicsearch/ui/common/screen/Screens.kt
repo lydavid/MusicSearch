@@ -76,6 +76,9 @@ data class StatsScreen(
 data object SettingsScreen : Screen
 
 @Parcelize
+data object AppearanceSettingsScreen : Screen
+
+@Parcelize
 data object LicensesScreen : Screen
 
 @Parcelize

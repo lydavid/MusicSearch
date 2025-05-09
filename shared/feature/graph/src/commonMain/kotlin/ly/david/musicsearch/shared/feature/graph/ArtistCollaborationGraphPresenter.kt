@@ -46,7 +46,10 @@ internal class ArtistCollaborationGraphPresenter(
             mutableStateOf(emptyList())
         }
 
-        LaunchedEffect(key1 = screen.id, key2 = topAppBarFilterState.filterText) {
+        LaunchedEffect(
+            key1 = screen.id,
+            key2 = topAppBarFilterState.filterText,
+        ) {
             collaboratingArtistsAndRecordings = artistCollaborationRepository.getAllCollaboratingArtistsAndRecordings(
                 artistId = screen.id,
                 query = topAppBarFilterState.filterText,

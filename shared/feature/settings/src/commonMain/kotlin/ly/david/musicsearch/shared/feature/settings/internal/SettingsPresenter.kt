@@ -30,8 +30,6 @@ internal class SettingsPresenter(
     override fun present(): SettingsUiState {
         val username by musicBrainzAuthStore.username.collectAsState(initial = "")
         val accessToken by musicBrainzAuthStore.accessToken.collectAsState(initial = null)
-        val theme by appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
-        val useMaterialYou by appPreferences.useMaterialYou.collectAsState(initial = true)
         val sortReleaseGroupListItems by appPreferences.sortReleaseGroupListItems.collectAsState(initial = true)
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
         val showCrashReporterSettings = appPreferences.showCrashReporterSettings
@@ -43,14 +41,6 @@ internal class SettingsPresenter(
 
         fun eventSink(event: SettingsUiEvent) {
             when (event) {
-                is SettingsUiEvent.UpdateTheme -> {
-                    appPreferences.setTheme(event.theme)
-                }
-
-                is SettingsUiEvent.UpdateUseMaterialYou -> {
-                    appPreferences.setUseMaterialYou(event.use)
-                }
-
                 is SettingsUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
                     appPreferences.setShowMoreInfoInReleaseListItem(event.show)
                 }
@@ -82,8 +72,6 @@ internal class SettingsPresenter(
         return SettingsUiState(
             username = username,
             accessToken = accessToken,
-            theme = theme,
-            useMaterialYou = useMaterialYou,
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
             sortReleaseGroupListItems = sortReleaseGroupListItems,
             showCrashReporterSettings = showCrashReporterSettings,

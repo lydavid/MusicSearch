@@ -19,6 +19,7 @@ Inspired by [Spotless' feature matrix](https://github.com/diffplug/spotless?tab=
 | [Search MusicBrainz](#search-musicbrainz)                   | ✅       | ✅       | ✅   |
 | [Spotify Playing History](#spotify-playing-history)         | ✅       | ⬜️      | ⬜️  |
 | [Swipe to Refresh](#swipe-to-refresh)                       | ✅       | ✅       | ✅   |
+| [Themes](#themes)                                           | ✅       | ✅       | ✅   |
 | [Up navigation from subtitle](#up-navigation-from-subtitle) | ✅       | ✅       | ✅   |
 | [Wikipedia Extract](#wikipedia-extract)                     | ✅       | ✅       | ✅   |
 
@@ -188,6 +189,15 @@ TODO: screenshot of list screen
 
 - A collection does not have a details screen. It only has one tab which lists all of its contents. e.g. An artist collection lists all of its artists
 - List screens are analogous to those listed under "Browsing supported" in the [browse](#browse) feature section.
+
+## Themes
+
+All platforms have support for light, dark, and system theme.
+
+Android 12+ has support for dynamic color based off of your wallpaper ([Material You](https://source.android.com/docs/core/display/material)).
+
+When not using Material You, you can pick a color with a [picker](https://github.com/skydoves/colorpicker-compose)
+that creates a [theme](https://github.com/jordond/MaterialKolor) based off of it.
 
 ## Up navigation from subtitle
 

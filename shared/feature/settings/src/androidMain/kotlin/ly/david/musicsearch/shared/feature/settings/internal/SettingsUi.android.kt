@@ -2,7 +2,6 @@ package ly.david.musicsearch.shared.feature.settings.internal
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.provider.Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -23,7 +22,6 @@ internal actual fun SettingsUi(
         state = state,
         showAndroidSettings = true,
         modifier = modifier,
-        isAndroid12 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
         isNotificationListenerEnabled = context.isNotificationListenerEnabled(),
         onGoToNotificationListenerSettings = {
             context.startActivity(Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS))

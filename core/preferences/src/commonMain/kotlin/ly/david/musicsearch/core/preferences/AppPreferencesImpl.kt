@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.logging.crash.CrashReporterSettings
+import ly.david.musicsearch.shared.domain.DEFAULT_SEED_COLOR_INT
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
@@ -20,6 +22,8 @@ private const val THEME_KEY = "theme"
 private val THEME_PREFERENCE = stringPreferencesKey(THEME_KEY)
 private const val USE_MATERIAL_YOU_KEY = "useMaterialYou"
 private val USE_MATERIAL_YOU_PREFERENCE = booleanPreferencesKey(USE_MATERIAL_YOU_KEY)
+private const val SEED_COLOR_KEY = "seedColor"
+private val SEED_COLOR_PREFERENCE = intPreferencesKey(SEED_COLOR_KEY)
 private const val SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_KEY = "showMoreInfoInReleaseListItem"
 private val SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_PREFERENCE =
     booleanPreferencesKey(SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_KEY)
@@ -57,7 +61,7 @@ internal class AppPreferencesImpl(
     override val useMaterialYou: Flow<Boolean>
         get() = preferencesDataStore.data
             .map {
-                it[USE_MATERIAL_YOU_PREFERENCE] ?: true
+                it[USE_MATERIAL_YOU_PREFERENCE] ?: false
             }
             .distinctUntilChanged()
 
@@ -65,6 +69,21 @@ internal class AppPreferencesImpl(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[USE_MATERIAL_YOU_PREFERENCE] = use
+            }
+        }
+    }
+
+    override val observeSeedColor: Flow<Int>
+        get() = preferencesDataStore.data
+            .map {
+                it[SEED_COLOR_PREFERENCE] ?: DEFAULT_SEED_COLOR_INT
+            }
+            .distinctUntilChanged()
+
+    override fun setSeedColor(seedColor: Int) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[SEED_COLOR_PREFERENCE] = seedColor
             }
         }
     }

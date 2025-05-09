@@ -25,7 +25,6 @@ import ly.david.musicsearch.shared.AppRoot
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.useDarkTheme
-import ly.david.musicsearch.shared.useMaterialYou
 import ly.david.musicsearch.ui.common.screen.CollectionListScreen
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
@@ -77,8 +76,8 @@ internal class MainActivity : ComponentActivity() {
             }
 
             BaseTheme(
+                appPreferences = appPreferences,
                 darkTheme = darkTheme,
-                materialYou = appPreferences.useMaterialYou(),
                 content = {
                     val backStack: SaveableBackStack = rememberSaveableBackStack(
                         initialScreens = getInitialScreens(intent.data).toImmutableList(),

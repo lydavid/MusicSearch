@@ -14,8 +14,10 @@ internal val LightColorScheme = lightColorScheme(
     primary = PrimaryLight,
 )
 
+/**
+ * Non-Android code won't ever be called.
+ */
 @Composable
-internal expect fun appColorScheme(
+internal expect fun materialYouColorScheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    materialYou: Boolean = true,
 ): ColorScheme

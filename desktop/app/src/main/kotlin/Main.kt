@@ -11,7 +11,6 @@ import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.AppRoot
 import ly.david.musicsearch.shared.di.sharedModule
 import ly.david.musicsearch.shared.useDarkTheme
-import ly.david.musicsearch.shared.useMaterialYou
 import ly.david.musicsearch.ui.common.screen.SearchScreen
 import ly.david.musicsearch.ui.core.theme.BaseTheme
 import org.koin.core.context.startKoin
@@ -34,8 +33,8 @@ fun main() = application {
         title = "MusicSearch",
     ) {
         BaseTheme(
+            appPreferences = appPreferences,
             darkTheme = appPreferences.useDarkTheme(),
-            materialYou = appPreferences.useMaterialYou(),
             content = {
                 val backStack: SaveableBackStack = rememberSaveableBackStack(
                     initialScreens = persistentListOf(SearchScreen()),

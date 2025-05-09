@@ -35,8 +35,8 @@ fun MainViewController(): UIViewController =
     ComposeUIViewController {
         val appComponent = AppComponent()
         BaseTheme(
+            appPreferences = appComponent.appPreferences,
             darkTheme = appComponent.appPreferences.useDarkTheme(),
-            materialYou = appComponent.appPreferences.useMaterialYou(),
         ) {
             val backStack: SaveableBackStack = rememberSaveableBackStack(
                 initialScreens = persistentListOf(SearchScreen()),

@@ -25,13 +25,9 @@ import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import com.slack.circuit.runtime.screen.Screen
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
-import ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
-import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.ChevronRight
@@ -39,6 +35,7 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Download
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
+import ly.david.musicsearch.ui.common.screen.AppearanceSettingsScreen
 import ly.david.musicsearch.ui.common.screen.LicensesScreen
 import ly.david.musicsearch.ui.common.screen.NowPlayingHistoryScreen
 import ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen
@@ -58,7 +55,6 @@ internal fun SettingsUi(
     state: SettingsUiState,
     showAndroidSettings: Boolean,
     modifier: Modifier = Modifier,
-    isAndroid12: Boolean = false,
     isNotificationListenerEnabled: Boolean = false,
     onGoToNotificationListenerSettings: () -> Unit = {},
 ) {
@@ -112,15 +108,6 @@ internal fun SettingsUi(
                 eventSink(SettingsUiEvent.GoToScreen(it))
             },
             showAndroidSettings = showAndroidSettings,
-            isAndroid12 = isAndroid12,
-            theme = state.theme,
-            onThemeChange = {
-                eventSink(SettingsUiEvent.UpdateTheme(it))
-            },
-            useMaterialYou = state.useMaterialYou,
-            onUseMaterialYouChange = {
-                eventSink(SettingsUiEvent.UpdateUseMaterialYou(it))
-            },
             showMoreInfoInReleaseListItem = state.showMoreInfoInReleaseListItem,
             onShowMoreInfoInReleaseListItemChange = {
                 eventSink(SettingsUiEvent.UpdateShowMoreInfoInReleaseListItem(it))
@@ -129,19 +116,19 @@ internal fun SettingsUi(
             onSortReleaseGroupListItemsChange = {
                 eventSink(SettingsUiEvent.UpdateSortReleaseGroupListItems(it))
             },
+            isNotificationListenerEnabled = isNotificationListenerEnabled,
+            onGoToNotificationListenerSettings = onGoToNotificationListenerSettings,
             showCrashReporterSettings = state.showCrashReporterSettings,
             isCrashReportingEnabled = state.isCrashReportingEnabled,
             onCrashReportingEnabledChange = {
                 eventSink(SettingsUiEvent.EnableCrashReporting(it))
             },
-            isNotificationListenerEnabled = isNotificationListenerEnabled,
-            onGoToNotificationListenerSettings = onGoToNotificationListenerSettings,
-            versionName = BuildConfig.VERSION_NAME,
-            versionCode = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
-            databaseVersion = state.databaseVersion,
             export = {
                 eventSink(SettingsUiEvent.ExportDatabase)
             },
+            versionName = BuildConfig.VERSION_NAME,
+            versionCode = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
+            databaseVersion = state.databaseVersion,
         )
     }
 }
@@ -155,11 +142,6 @@ internal fun SettingsUi(
     onLogoutClick: () -> Unit = {},
     onDestinationClick: (Screen) -> Unit = {},
     showAndroidSettings: Boolean = true,
-    isAndroid12: Boolean = false,
-    theme: AppPreferences.Theme = AppPreferences.Theme.SYSTEM,
-    onThemeChange: (AppPreferences.Theme) -> Unit = {},
-    useMaterialYou: Boolean = true,
-    onUseMaterialYouChange: (Boolean) -> Unit = {},
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     sortReleaseGroupListItems: Boolean = false,
@@ -188,20 +170,13 @@ internal fun SettingsUi(
                 onLogoutClick = onLogoutClick,
             )
 
-            SettingWithDialogChoices(
-                title = strings.theme,
-                choices = AppPreferences.Theme.entries.map { it.getText(strings) }.toImmutableList(),
-                selectedChoiceIndex = theme.ordinal,
-                onSelectChoiceIndex = { onThemeChange(AppPreferences.Theme.entries[it]) },
+            ClickableItem(
+                title = strings.appearance,
+                endIcon = CustomIcons.ChevronRight,
+                onClick = {
+                    onDestinationClick(AppearanceSettingsScreen)
+                },
             )
-
-            if (showAndroidSettings && isAndroid12) {
-                SettingSwitch(
-                    header = "Use Material You",
-                    checked = useMaterialYou,
-                    onCheckedChange = onUseMaterialYouChange,
-                )
-            }
 
             SettingSwitch(
                 header = "Show more info in release list items",
@@ -299,10 +274,3 @@ internal fun SettingsUi(
         }
     }
 }
-
-private fun AppPreferences.Theme.getText(strings: AppStrings): String =
-    when (this) {
-        AppPreferences.Theme.LIGHT -> strings.light
-        AppPreferences.Theme.DARK -> strings.dark
-        AppPreferences.Theme.SYSTEM -> strings.system
-    }
