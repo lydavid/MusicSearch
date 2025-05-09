@@ -22,6 +22,13 @@ open class NoOpAppPreferences : AppPreferences {
         // No-op.
     }
 
+    override val observeSeedColor: Flow<Int>
+        get() = error("Not implemented")
+
+    override fun setSeedColor(seedColor: Int) {
+        // No-op.
+    }
+
     override val showMoreInfoInReleaseListItem: Flow<Boolean>
         get() = error("Not implemented")
 
