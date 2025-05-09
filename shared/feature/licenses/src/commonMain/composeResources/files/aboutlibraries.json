@@ -3460,6 +3460,52 @@
             ]
         },
         {
+            "uniqueId": "com.github.ajalt.colormath:colormath",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "AJ Alt"
+                }
+            ],
+            "artifactVersion": "3.6.1",
+            "description": "Multiplatform color space conversions for Kotlin",
+            "scm": {
+                "connection": "scm:git:git://github.com/ajalt/colormath.git",
+                "url": "https://github.com/ajalt/colormath/",
+                "developerConnection": "scm:git:ssh://git@github.com/ajalt/colormath.git"
+            },
+            "name": "Colormath",
+            "website": "https://github.com/ajalt/colormath/",
+            "licenses": [
+                "MIT"
+            ]
+        },
+        {
+            "uniqueId": "com.github.ajalt.colormath:colormath-jvm",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "AJ Alt"
+                }
+            ],
+            "artifactVersion": "3.6.1",
+            "description": "Multiplatform color space conversions for Kotlin",
+            "scm": {
+                "connection": "scm:git:git://github.com/ajalt/colormath.git",
+                "url": "https://github.com/ajalt/colormath/",
+                "developerConnection": "scm:git:ssh://git@github.com/ajalt/colormath.git"
+            },
+            "name": "Colormath",
+            "website": "https://github.com/ajalt/colormath/",
+            "licenses": [
+                "MIT"
+            ]
+        },
+        {
             "uniqueId": "com.github.chuckerteam.chucker:library-no-op",
             "funding": [
                 
@@ -3484,6 +3530,52 @@
             },
             "name": "Chucker",
             "website": "https://github.com/ChuckerTeam/chucker",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "com.github.skydoves:colorpicker-compose",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Jaewoong Eum"
+                }
+            ],
+            "artifactVersion": "1.1.2",
+            "description": "Jetpack Compose color picker for getting colors from any images by tapping on the desired color.",
+            "scm": {
+                "connection": "scm:git:git://github.com/skydoves/colorpicker-compose.git",
+                "url": "https://github.com/skydoves/colorpicker-compose/",
+                "developerConnection": "scm:git:git://github.com/skydoves/colorpicker-compose.git"
+            },
+            "name": "colorpicker-compose",
+            "website": "https://github.com/skydoves/colorpicker-compose/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "com.github.skydoves:colorpicker-compose-android",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Jaewoong Eum"
+                }
+            ],
+            "artifactVersion": "1.1.2",
+            "description": "Jetpack Compose color picker for getting colors from any images by tapping on the desired color.",
+            "scm": {
+                "connection": "scm:git:git://github.com/skydoves/colorpicker-compose.git",
+                "url": "https://github.com/skydoves/colorpicker-compose/",
+                "developerConnection": "scm:git:git://github.com/skydoves/colorpicker-compose.git"
+            },
+            "name": "colorpicker-compose",
+            "website": "https://github.com/skydoves/colorpicker-compose/",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -3556,6 +3648,98 @@
             "website": "https://github.com/JakeWharton/timber",
             "licenses": [
                 "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "com.materialkolor:material-color-utilities",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Jordon de Hoog"
+                }
+            ],
+            "artifactVersion": "3.0.0-beta01",
+            "description": "A Compose multiplatform library for generating dynamic Material3 color schemes from a seed color.",
+            "scm": {
+                "connection": "scm:git:https://github.com/jordond/materialkolor.git",
+                "url": "https://github.com/jordond/materialkolor",
+                "developerConnection": "scm:git:git@github.com:jordond/materialkolor.git"
+            },
+            "name": "MaterialKolor",
+            "website": "https://github.com/jordond/materialkolor",
+            "licenses": [
+                "MIT"
+            ]
+        },
+        {
+            "uniqueId": "com.materialkolor:material-color-utilities-android",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Jordon de Hoog"
+                }
+            ],
+            "artifactVersion": "3.0.0-beta01",
+            "description": "A Compose multiplatform library for generating dynamic Material3 color schemes from a seed color.",
+            "scm": {
+                "connection": "scm:git:https://github.com/jordond/materialkolor.git",
+                "url": "https://github.com/jordond/materialkolor",
+                "developerConnection": "scm:git:git@github.com:jordond/materialkolor.git"
+            },
+            "name": "MaterialKolor",
+            "website": "https://github.com/jordond/materialkolor",
+            "licenses": [
+                "MIT"
+            ]
+        },
+        {
+            "uniqueId": "com.materialkolor:material-kolor",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Jordon de Hoog"
+                }
+            ],
+            "artifactVersion": "3.0.0-beta01",
+            "description": "A Compose multiplatform library for generating dynamic Material3 color schemes from a seed color.",
+            "scm": {
+                "connection": "scm:git:https://github.com/jordond/materialkolor.git",
+                "url": "https://github.com/jordond/materialkolor",
+                "developerConnection": "scm:git:git@github.com:jordond/materialkolor.git"
+            },
+            "name": "MaterialKolor",
+            "website": "https://github.com/jordond/materialkolor",
+            "licenses": [
+                "MIT"
+            ]
+        },
+        {
+            "uniqueId": "com.materialkolor:material-kolor-android",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Jordon de Hoog"
+                }
+            ],
+            "artifactVersion": "3.0.0-beta01",
+            "description": "A Compose multiplatform library for generating dynamic Material3 color schemes from a seed color.",
+            "scm": {
+                "connection": "scm:git:https://github.com/jordond/materialkolor.git",
+                "url": "https://github.com/jordond/materialkolor",
+                "developerConnection": "scm:git:git@github.com:jordond/materialkolor.git"
+            },
+            "name": "MaterialKolor",
+            "website": "https://github.com/jordond/materialkolor",
+            "licenses": [
+                "MIT"
             ]
         },
         {
@@ -4336,6 +4520,52 @@
             },
             "name": "Compose Material 3 Window Size Class",
             "website": "https://github.com/chrisbanes/material3-windowsizeclass-multiplatform/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "dev.drewhamilton.poko:poko-annotations",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Drew Hamilton"
+                }
+            ],
+            "artifactVersion": "0.18.6",
+            "description": "A Kotlin compiler plugin for generating equals, hashCode, and toString for plain old Kotlin objects.",
+            "scm": {
+                "connection": "scm:git:github.com/drewhamilton/Poko.git",
+                "url": "https://github.com/drewhamilton/Poko/tree/main",
+                "developerConnection": "scm:git:ssh://github.com/drewhamilton/Poko.git"
+            },
+            "name": "Poko Annotations",
+            "website": "https://github.com/drewhamilton/Poko",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "uniqueId": "dev.drewhamilton.poko:poko-annotations-jvm",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "Drew Hamilton"
+                }
+            ],
+            "artifactVersion": "0.18.6",
+            "description": "A Kotlin compiler plugin for generating equals, hashCode, and toString for plain old Kotlin objects.",
+            "scm": {
+                "connection": "scm:git:github.com/drewhamilton/Poko.git",
+                "url": "https://github.com/drewhamilton/Poko/tree/main",
+                "developerConnection": "scm:git:ssh://github.com/drewhamilton/Poko.git"
+            },
+            "name": "Poko Annotations",
+            "website": "https://github.com/drewhamilton/Poko",
             "licenses": [
                 "Apache-2.0"
             ]
