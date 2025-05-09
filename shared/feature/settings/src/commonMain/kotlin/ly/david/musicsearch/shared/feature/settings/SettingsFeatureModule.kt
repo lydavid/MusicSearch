@@ -3,9 +3,13 @@ package ly.david.musicsearch.shared.feature.settings
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
-import ly.david.musicsearch.shared.feature.settings.internal.SettingsUi
 import ly.david.musicsearch.shared.feature.settings.internal.SettingsPresenter
+import ly.david.musicsearch.shared.feature.settings.internal.SettingsUi
 import ly.david.musicsearch.shared.feature.settings.internal.SettingsUiState
+import ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsPresenter
+import ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUi
+import ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiState
+import ly.david.musicsearch.ui.common.screen.AppearanceSettingsScreen
 import ly.david.musicsearch.ui.common.screen.SettingsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -24,6 +28,11 @@ val settingsFeatureModule = module {
                     metadataRepository = get(),
                 )
 
+                is AppearanceSettingsScreen -> AppearanceSettingsPresenter(
+                    navigator = navigator,
+                    appPreferences = get(),
+                )
+
                 else -> null
             }
         }
@@ -34,6 +43,15 @@ val settingsFeatureModule = module {
                 is SettingsScreen -> {
                     ui<SettingsUiState> { state, modifier ->
                         SettingsUi(
+                            state = state,
+                            modifier = modifier,
+                        )
+                    }
+                }
+
+                is AppearanceSettingsScreen -> {
+                    ui<AppearanceSettingsUiState> { state, modifier ->
+                        AppearanceSettingsUi(
                             state = state,
                             modifier = modifier,
                         )

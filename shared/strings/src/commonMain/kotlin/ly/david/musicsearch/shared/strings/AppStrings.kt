@@ -171,6 +171,7 @@ data class AppStrings(
     val monthsAgo: String,
     val yearAgo: String,
     val yearsAgo: String,
+    val appearance: String,
 )
 
 object Locales {

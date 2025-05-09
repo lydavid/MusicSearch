@@ -359,4 +359,5 @@ val EnStrings = AppStrings(
     monthsAgo = "months ago",
     yearAgo = "year ago",
     yearsAgo = "years ago",
+    appearance = "Appearance",
 )

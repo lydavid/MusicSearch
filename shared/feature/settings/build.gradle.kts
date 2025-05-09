@@ -35,6 +35,7 @@ kotlin {
 
                 implementation(libs.circuit.foundation)
                 implementation(libs.koin.core)
+                implementation(libs.compose.colorpicker)
             }
         }
         val androidMain by getting {

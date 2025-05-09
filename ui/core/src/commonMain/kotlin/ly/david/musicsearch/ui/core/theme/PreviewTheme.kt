@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 
 /**
- * Theme for previews/tests and devices below Android 12.
+ * Theme for previews/tests.
  */
 @Composable
 fun PreviewTheme(

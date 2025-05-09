@@ -19,6 +19,9 @@ interface AppPreferences {
     val useMaterialYou: Flow<Boolean>
     fun setUseMaterialYou(use: Boolean)
 
+    val observeSeedColor: Flow<Int>
+    fun setSeedColor(seedColor: Int)
+
     val showMoreInfoInReleaseListItem: Flow<Boolean>
     fun setShowMoreInfoInReleaseListItem(show: Boolean)
 

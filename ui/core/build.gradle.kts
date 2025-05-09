@@ -14,10 +14,12 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.shared.strings)
-                implementation(libs.lyricist.library)
+                implementation(projects.shared.domain)
 
                 implementation(compose.foundation)
                 implementation(compose.material3)
+                implementation(libs.lyricist.library)
+                implementation(libs.materialKolor)
             }
         }
         val androidMain by getting {
