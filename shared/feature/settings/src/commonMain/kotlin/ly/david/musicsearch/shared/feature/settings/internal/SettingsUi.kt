@@ -17,8 +17,11 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
@@ -129,9 +132,15 @@ internal fun SettingsUi(
             versionName = BuildConfig.VERSION_NAME,
             versionCode = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
             databaseVersion = state.databaseVersion,
+            isDeveloperMode = state.isDeveloperMode,
+            onDeveloperModeChange = {
+                eventSink(SettingsUiEvent.EnableDeveloperMode(it))
+            },
         )
     }
 }
+
+private const val DEVELOPER_MODE_CLICK_COUNT_TO_ENABLE = 7
 
 @Composable
 internal fun SettingsUi(
@@ -155,11 +164,15 @@ internal fun SettingsUi(
     versionName: String = "",
     versionCode: Int = 0,
     databaseVersion: String = "",
+    isDeveloperMode: Boolean = false,
+    onDeveloperModeChange: (Boolean) -> Unit = {},
 ) {
     val strings = LocalStrings.current
     val clipboard = LocalClipboard.current
     val coroutineScope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
+
+    var developerModeClickCount by remember { mutableIntStateOf(0) }
 
     LazyColumn(modifier = modifier) {
         item {
@@ -262,12 +275,19 @@ internal fun SettingsUi(
                                 "$appVersionText, $databaseVersionText",
                             ),
                         )
+                        developerModeClickCount++
+                        if (developerModeClickCount >= DEVELOPER_MODE_CLICK_COUNT_TO_ENABLE) {
+                            onDeveloperModeChange(true)
+                        }
                     }
                 },
             )
 
-            if (false) { // TODO: handle BuildConfig.DEBUG
-                DevSettingsSection()
+            if (isDeveloperMode) {
+                DevSettingsSection(
+                    isDeveloperMode = isDeveloperMode,
+                    onDeveloperModeChange = onDeveloperModeChange,
+                )
             }
 
             Spacer(modifier = Modifier.padding(top = 16.dp))

@@ -46,4 +46,7 @@ interface AppPreferences {
     val showCrashReporterSettings: Boolean
     val isCrashReportingEnabled: Flow<Boolean>
     fun setEnableCrashReporting(enable: Boolean)
+
+    val isDeveloperMode: Flow<Boolean>
+    fun setDeveloperMode(enable: Boolean)
 }

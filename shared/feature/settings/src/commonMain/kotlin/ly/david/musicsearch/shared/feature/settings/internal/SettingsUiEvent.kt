@@ -10,4 +10,5 @@ internal sealed interface SettingsUiEvent : CircuitUiEvent {
     data class GoToScreen(val screen: Screen) : SettingsUiEvent
     data object Logout : SettingsUiEvent
     data object ExportDatabase : SettingsUiEvent
+    data class EnableDeveloperMode(val enable: Boolean) : SettingsUiEvent
 }

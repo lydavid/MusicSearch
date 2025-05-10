@@ -13,5 +13,6 @@ internal data class SettingsUiState(
     val loginState: LoginUiState,
     val snackbarMessage: String? = null,
     val databaseVersion: String,
+    val isDeveloperMode: Boolean,
     val eventSink: (SettingsUiEvent) -> Unit,
 ) : CircuitUiState

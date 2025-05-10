@@ -214,4 +214,20 @@ internal class AppPreferencesImpl(
     override fun setEnableCrashReporting(enable: Boolean) {
         crashReporterSettings.enableCrashReporting(enable)
     }
+
+    private val isDeveloperModePreference = booleanPreferencesKey("isDeveloperMode")
+    override val isDeveloperMode: Flow<Boolean>
+        get() = preferencesDataStore.data
+            .map {
+                it[isDeveloperModePreference] ?: false
+            }
+            .distinctUntilChanged()
+
+    override fun setDeveloperMode(enable: Boolean) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[isDeveloperModePreference] = enable
+            }
+        }
+    }
 }
