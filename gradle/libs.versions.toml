@@ -6,6 +6,7 @@ benchmarkMacroJunit4 = "1.3.4"
 chucker = "4.1.0"
 circuit = "0.27.1"
 coil = "3.1.0"
+colorpicker = "1.1.2"
 compose-multiplatform = "1.8.0"
 datastore = "1.1.4"
 detekt = "1.23.8"
@@ -20,6 +21,7 @@ kotlinx-coroutines = "1.10.2"
 ksp = "2.1.20-2.0.1"
 leakcanaryAndroid = "2.14"
 lyricist = "1.7.0"
+materialKolor = "3.0.0-beta01"
 mockk = "1.14.2"
 multiplatformPaths = "0.2.2"
 okio = "3.11.0"
@@ -32,8 +34,6 @@ stately = "2.1.0"
 turbine = "1.2.0"
 uiautomator = "2.3.0"
 zoomable = "2.7.0"
-colorpicker = "1.1.2"
-materialKolor = "3.0.0-beta01"
 
 [libraries]
 aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutlibraries" }
@@ -65,6 +65,7 @@ coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.r
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 coil-test = { module = "io.coil-kt.coil3:coil-test", version.ref = "coil" }
 compose-bom = "androidx.compose:compose-bom:2025.05.00"
+compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
 compose-foundation = { module = "androidx.compose.foundation:foundation" }
 compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
@@ -108,6 +109,7 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
 lyricist-core = { module = "cafe.adriel.lyricist:lyricist-core", version.ref = "lyricist" }
 lyricist-library = { module = "cafe.adriel.lyricist:lyricist", version.ref = "lyricist" }
+materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 multiplatform-paths = { module = "me.sujanpoudel.multiplatform.utils:multiplatform-paths", version.ref = "multiplatformPaths" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
@@ -129,8 +131,6 @@ timber = "com.jakewharton.timber:timber:5.0.1"
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 windowSizeClass = "dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0"
 zoomable = { module = "net.engawapg.lib:zoomable", version.ref = "zoomable" }
-compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
-materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 
 [bundles]
 kotlinx-coroutines = [
