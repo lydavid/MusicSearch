@@ -1,5 +1,8 @@
 package ly.david.musicsearch.shared.feature.graph
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -34,8 +37,8 @@ data class GraphEdge(
 )
 
 data class GraphSimulationUiState(
-    val edges: List<GraphEdge> = listOf(),
-    val nodes: List<GraphNode> = listOf(),
+    val edges: ImmutableList<GraphEdge> = persistentListOf(),
+    val nodes: ImmutableList<GraphNode> = persistentListOf(),
 )
 
 private data class ArtistRecording(
@@ -64,7 +67,7 @@ class ArtistCollaborationGraphSimulation {
     fun initialize(
         collaboratingArtistAndRecordings: List<CollaboratingArtistAndRecording>,
     ) {
-        val artistRecordingLinks = collaboratingArtistAndRecordings
+        val artistRecordingLinks: List<ArtistRecording> = collaboratingArtistAndRecordings
             .map { ArtistRecording(artistId = it.artistId, recordingId = it.recordingId) }
             .distinct()
 
@@ -181,8 +184,8 @@ class ArtistCollaborationGraphSimulation {
             }
 
             uiState.copy(
-                edges = edges,
-                nodes = nodes,
+                edges = edges.toPersistentList(),
+                nodes = nodes.toPersistentList(),
             )
         }
         return true

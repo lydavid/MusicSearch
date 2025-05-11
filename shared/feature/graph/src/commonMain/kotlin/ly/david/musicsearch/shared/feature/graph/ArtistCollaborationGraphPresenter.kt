@@ -6,18 +6,16 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.collectAsRetainedState
+import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.artist.ArtistCollaborationRepository
 import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndRecording
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -39,34 +37,31 @@ internal class ArtistCollaborationGraphPresenter(
 
     @Composable
     override fun present(): ArtistCollaborationGraphUiState {
-        val graphState by graphSimulation.uiState.collectAsState()
-        val scope = rememberCoroutineScope()
-        var animationJob: Job? by remember { mutableStateOf(null) }
+        val graphState by graphSimulation.uiState.collectAsRetainedState()
         val isDeveloperMode by appPreferences.isDeveloperMode.collectAsState(initial = false)
 
         val topAppBarFilterState = rememberTopAppBarFilterState()
-        var collaboratingArtistsAndRecordings: List<CollaboratingArtistAndRecording> by remember {
-            mutableStateOf(emptyList())
+        val collaboratingArtistsAndRecordings: List<CollaboratingArtistAndRecording> by rememberRetained(
+            topAppBarFilterState.filterText,
+        ) {
+            mutableStateOf(
+                artistCollaborationRepository.getAllCollaboratingArtistsAndRecordings(
+                    artistId = screen.id,
+                    query = topAppBarFilterState.filterText,
+                ),
+            )
         }
 
         LaunchedEffect(
-            key1 = screen.id,
-            key2 = topAppBarFilterState.filterText,
+            key1 = collaboratingArtistsAndRecordings,
         ) {
-            collaboratingArtistsAndRecordings = artistCollaborationRepository.getAllCollaboratingArtistsAndRecordings(
-                artistId = screen.id,
-                query = topAppBarFilterState.filterText,
-            )
             graphSimulation.initialize(
                 collaboratingArtistAndRecordings = collaboratingArtistsAndRecordings,
             )
-            animationJob?.cancel()
-            animationJob = scope.launch {
-                while (graphSimulation.step()) {
-                    delay(DELAY_FOR_60_FPS_IN_MS)
-                }
-                animationJob = null
+            while (graphSimulation.step()) {
+                delay(DELAY_FOR_60_FPS_IN_MS)
             }
+            cancel()
         }
 
         fun eventSink(event: ArtistCollaborationGraphUiEvent) {
