@@ -183,7 +183,7 @@ internal fun ArtistCollaborationGraphUi(
                     panOffset += Offset(
                         x = focusPoint.x - scaledFocusX,
                         y = focusPoint.y - scaledFocusY,
-                    ) + pan
+                    ) + pan * (1f / zoomScale)
                 }
             }
             .pointerInput(Unit) {
