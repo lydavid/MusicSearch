@@ -12,9 +12,8 @@ class ArtistCollaborationGraphUiScreenshotTest : ScreenshotTest() {
     fun default() {
         snapshot {
             composeTestRule.mainClock.autoAdvance = false
-            composeTestRule.mainClock.advanceTimeByFrame()
-            composeTestRule.mainClock.advanceTimeBy(1000L)
             PreviewArtistCollaborationGraphUi()
+            composeTestRule.mainClock.advanceTimeBy(1000L)
         }
     }
 }
