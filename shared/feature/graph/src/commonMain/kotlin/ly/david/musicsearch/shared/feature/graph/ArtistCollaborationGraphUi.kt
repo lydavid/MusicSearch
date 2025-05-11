@@ -225,7 +225,6 @@ internal fun ArtistCollaborationGraphUi(
         edges.forEach { edge ->
             renderEdge(
                 edge = edge,
-                offset = Offset.Zero,
                 color = edgeColor,
             )
         }
@@ -239,12 +238,10 @@ internal fun ArtistCollaborationGraphUi(
         nodes.forEach { node ->
             renderNode(
                 node = node,
-                offset = Offset.Zero,
                 extendedColors = extendedColors,
             )
             renderText(
                 node = node,
-                offset = Offset.Zero,
                 color = textColor,
                 textMeasurer = textMeasurer,
             )

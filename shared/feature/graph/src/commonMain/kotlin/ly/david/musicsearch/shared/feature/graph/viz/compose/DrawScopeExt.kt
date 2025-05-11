@@ -18,17 +18,16 @@ import ly.david.musicsearch.ui.core.theme.ExtendedColors
 
 fun DrawScope.renderEdge(
     edge: GraphEdge,
-    offset: Offset,
     color: Color,
 ) {
     val start = Offset(
         edge.x0.dp.toPx(),
         edge.y0.dp.toPx(),
-    ) + offset
+    )
     val end = Offset(
         edge.x1.dp.toPx(),
         edge.y1.dp.toPx(),
-    ) + offset
+    )
     drawLine(
         color = color,
         start = start,
@@ -39,7 +38,6 @@ fun DrawScope.renderEdge(
 
 fun DrawScope.renderNode(
     node: GraphNode,
-    offset: Offset,
     extendedColors: ExtendedColors,
 ) {
     with(node) {
@@ -47,7 +45,7 @@ fun DrawScope.renderNode(
         val c = Offset(
             x.dp.toPx(),
             y.dp.toPx(),
-        ) + offset
+        )
         drawCircle(
             color = entity.getNodeColor(extendedColors),
             radius = r,
@@ -58,7 +56,6 @@ fun DrawScope.renderNode(
 
 fun DrawScope.renderText(
     node: GraphNode,
-    offset: Offset,
     color: Color,
     textMeasurer: TextMeasurer,
 ) {
@@ -83,7 +80,7 @@ fun DrawScope.renderText(
         topLeft = Offset(
             node.x.dp.toPx() - textWidth / 2f,
             node.y.dp.toPx() + node.radius.dp.toPx() + 4.dp.toPx(),
-        ) + offset,
+        ),
     )
 }
 
