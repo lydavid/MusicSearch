@@ -92,7 +92,7 @@ internal fun ArtistCollaborationGraphUi(
             filterText = state.topAppBarFilterState.filterText,
             modifier = Modifier.padding(innerPadding),
             showDebugInfo = showDebugInfo,
-            onClick = { transformedTapPosition, _, _ ->
+            onClick = { transformedTapPosition ->
                 with(density) {
                     // The tap position is already properly transformed to match node coordinate space
                     val clickedNode = state.nodes.firstOrNull { node ->
@@ -130,15 +130,15 @@ internal fun ArtistCollaborationGraphUi(
     filterText: String,
     modifier: Modifier = Modifier,
     showDebugInfo: Boolean = false,
-    onClick: (tapOffset: Offset, drawOffset: Offset, zoomScale: Float) -> Unit = { _, _, _ -> },
+    onClick: (transformedTapPosition: Offset) -> Unit = { _ -> },
 ) {
     var panOffset by remember { mutableStateOf(Offset.Zero) }
     var center by remember { mutableStateOf(Offset.Zero) }
     var zoomScale by remember { mutableFloatStateOf(1f) }
     val textMeasurer = rememberTextMeasurer()
 
-    var lastTapPosition by remember { mutableStateOf<Offset?>(null) }
-    var transformedTapPosition by remember { mutableStateOf<Offset?>(null) }
+    var debugLastTapPosition by remember { mutableStateOf<Offset?>(null) }
+    var debugTransformedTapPosition by remember { mutableStateOf<Offset?>(null) }
 
     val extendedColors: ExtendedColors = LocalExtendedColors.current
     val textColor = MaterialTheme.colorScheme.onBackground
@@ -146,12 +146,16 @@ internal fun ArtistCollaborationGraphUi(
 
     val currentOnClick by rememberUpdatedState(onClick)
 
+    LaunchedEffect(center) {
+        panOffset += center
+    }
+
     LaunchedEffect(filterText) {
         panOffset = Offset.Zero
         center = Offset.Zero
         zoomScale = 1f
-        lastTapPosition = null
-        transformedTapPosition = null
+        debugLastTapPosition = null
+        debugTransformedTapPosition = null
     }
 
     Canvas(
@@ -180,9 +184,9 @@ internal fun ArtistCollaborationGraphUi(
             }
             .pointerInput(Unit) {
                 detectTapGestures { tapOffset ->
-                    lastTapPosition = tapOffset
+                    debugLastTapPosition = tapOffset
 
-                    // Calculate inverse transformation manually in the correct order
+                    // Calculate inverse transformations
                     // Step 1: Adjust for center (the origin for scaling)
                     var transformedTap = tapOffset - center
 
@@ -197,13 +201,9 @@ internal fun ArtistCollaborationGraphUi(
 
                     // Step 4: Remove panning effect (subtract pan offset)
                     transformedTap -= panOffset
-                    transformedTapPosition = transformedTap
+                    debugTransformedTapPosition = transformedTap
 
-                    currentOnClick(
-                        transformedTap,
-                        Offset.Zero,
-                        zoomScale,
-                    )
+                    currentOnClick(transformedTap)
                 }
             },
     ) {
@@ -226,7 +226,7 @@ internal fun ArtistCollaborationGraphUi(
         // Draw debug info in transformed space
         if (showDebugInfo) {
             // Draw transformed tap position in graph space
-            transformedTapPosition?.let { transformedTap ->
+            debugTransformedTapPosition?.let { transformedTap ->
                 drawCircle(
                     color = Color.Green,
                     center = transformedTap,
@@ -234,6 +234,14 @@ internal fun ArtistCollaborationGraphUi(
                     alpha = 0.5f,
                 )
             }
+
+            // Draw the origin (0,0) which should be translated to start at the center of the screen
+            drawCircle(
+                color = Color.Blue,
+                center = Offset.Zero,
+                radius = 12.dp.toPx() / zoomScale,
+                alpha = 0.8f,
+            )
         }
 
         nodes.forEach { node ->
@@ -256,7 +264,7 @@ internal fun ArtistCollaborationGraphUi(
         // Draw debug elements in screen space
         if (showDebugInfo) {
             // Draw original tap position in screen space
-            lastTapPosition?.let { lastTap ->
+            debugLastTapPosition?.let { lastTap ->
                 drawCircle(
                     color = Color.Red,
                     center = lastTap,
@@ -279,8 +287,7 @@ internal fun ArtistCollaborationGraphUi(
                 topLeft = Offset(10.dp.toPx(), 10.dp.toPx()),
             )
 
-            // Draw coordinate info if we have a transformed tap
-            transformedTapPosition?.let { transformedTap ->
+            debugTransformedTapPosition?.let { transformedTap ->
                 val coordInfo = "Tap: (${transformedTap.x}, ${transformedTap.y})"
                 val coordInfoLayout = textMeasurer.measure(
                     text = AnnotatedString(coordInfo),
