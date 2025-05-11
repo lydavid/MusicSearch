@@ -1,21 +1,22 @@
 package ly.david.musicsearch.shared.feature.details.release
 
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.UNKNOWN_TIME
 import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
-import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
-import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.area.AreaListItem
+import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.label.LabelListItem
+import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.UrlsSection
@@ -23,8 +24,6 @@ import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.work.getDisplayScript
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.common.image.LargeImage
-import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 
 @Composable
 internal fun ReleaseDetailsUi(
@@ -42,16 +41,17 @@ internal fun ReleaseDetailsUi(
         modifier = modifier,
         state = releaseDetailsUiState.lazyListState,
     ) {
-        item {
+        release.run {
             if (filterText.isBlank()) {
-                LargeImage(
-                    url = release.imageMetadata.largeUrl,
-                    placeholderKey = release.imageMetadata.databaseId.toString(),
-                    onClick = onImageClick,
-                )
+                item {
+                    LargeImage(
+                        url = release.imageMetadata.largeUrl,
+                        placeholderKey = release.imageMetadata.databaseId.toString(),
+                        onClick = onImageClick,
+                    )
+                }
             }
-
-            release.run {
+            item {
                 ListSeparatorHeader(text = strings.informationHeader(strings.release))
                 releaseDetailsUiState.numberOfImages?.ifNotNull {
                     TextWithHeading(
@@ -94,7 +94,7 @@ internal fun ReleaseDetailsUi(
                     filterText = filterText,
                 )
 
-                date?.ifNotNullOrEmpty {
+                date.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.date,
                         text = it,
@@ -131,18 +131,7 @@ internal fun ReleaseDetailsUi(
                         filterText = filterText,
                     )
                 }
-                // TODO: handle script
                 textRepresentation.script?.getDisplayScript(strings).ifNotNullOrEmpty {
-//                    val scriptOrCode = if (script == "Qaaa") {
-//                        strings.multipleScripts
-//                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                        // TODO: Works for Latn but not Jpan or Kore
-//                        //  let's just map the most common codes to their name stored in strings.xml
-//                        //  then fallback to this for everything else
-//                        UScript.getName(UScript.getCodeFromName(script))
-//                    } else {
-//                        script
-//                    }
                     TextWithHeading(
                         heading = strings.script,
                         text = it,
@@ -163,47 +152,62 @@ internal fun ReleaseDetailsUi(
                         filterText = filterText,
                     )
                 }
+            }
 
+            item {
                 WikipediaSection(
                     extract = wikipediaExtract,
                     filterText = filterText,
                 )
+            }
 
+            item {
                 labels.ifNotNullOrEmpty {
                     ListSeparatorHeader(strings.labels)
                 }
-                labels
-                    .filter { label ->
-                        val searchText = filterText.lowercase()
-                        listOf(
-                            label.getNameWithDisambiguation(),
-                            label.type,
-                            label.labelCode.toString(),
-                            label.catalogNumbers,
-                        ).any { it?.lowercase()?.contains(searchText) == true }
-                    }
-                    .forEach { label ->
-                        LabelListItem(
-                            label = label,
-                            onLabelClick = {
-                                onItemClick(
-                                    MusicBrainzEntity.LABEL,
-                                    id,
-                                    name,
-                                )
-                            },
-                            showIcon = false,
+            }
+            items(labels) { label ->
+                LabelListItem(
+                    label = label,
+                    onLabelClick = {
+                        onItemClick(
+                            MusicBrainzEntity.LABEL,
+                            id,
+                            name,
                         )
-                    }
-
-                ReleaseEventsSection(
-                    strings = strings,
-                    filterText = filterText,
-                    isCollapsed = releaseDetailsUiState.isReleaseEventsCollapsed,
-                    onCollapseExpand = onCollapseExpand,
-                    onItemClick = onItemClick,
+                    },
+                    showIcon = false,
                 )
+            }
 
+            val collapsed = releaseDetailsUiState.isReleaseEventsCollapsed
+            item {
+                areas.ifNotNullOrEmpty {
+                    CollapsibleListSeparatorHeader(
+                        text = strings.releaseEvents,
+                        collapsed = collapsed,
+                        onClick = onCollapseExpand,
+                    )
+                }
+            }
+            if (!collapsed) {
+                items(areas) { area: AreaListItemModel ->
+                    AreaListItem(
+                        area = area,
+                        showType = false,
+                        showIcon = false,
+                        onAreaClick = {
+                            onItemClick(
+                                MusicBrainzEntity.AREA,
+                                id,
+                                name,
+                            )
+                        },
+                    )
+                }
+            }
+
+            item {
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
@@ -211,44 +215,4 @@ internal fun ReleaseDetailsUi(
             }
         }
     }
-}
-
-@Composable
-private fun ReleaseDetailsModel.ReleaseEventsSection(
-    strings: AppStrings,
-    filterText: String,
-    isCollapsed: Boolean,
-    onCollapseExpand: () -> Unit,
-    onItemClick: MusicBrainzItemClickHandler,
-) {
-    areas.ifNotNullOrEmpty {
-        CollapsibleListSeparatorHeader(
-            text = strings.releaseEvents,
-            collapsed = isCollapsed,
-            onClick = onCollapseExpand,
-        )
-    }
-    areas
-        .filterNot { isCollapsed }
-        .filter { area ->
-            val searchText = filterText.lowercase()
-            listOf(
-                area.getNameWithDisambiguation(),
-                area.date,
-            ).any { it?.lowercase()?.contains(searchText) == true }
-        }
-        .forEach { area: AreaListItemModel ->
-            AreaListItem(
-                area = area,
-                showType = false,
-                showIcon = false,
-                onAreaClick = {
-                    onItemClick(
-                        MusicBrainzEntity.AREA,
-                        id,
-                        name,
-                    )
-                },
-            )
-        }
 }

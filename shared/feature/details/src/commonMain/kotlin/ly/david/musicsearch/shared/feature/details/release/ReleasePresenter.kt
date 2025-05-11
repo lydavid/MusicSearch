@@ -246,7 +246,26 @@ internal class ReleasePresenter(
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
-            release = release,
+            release = release?.copy(
+                labels = release?.labels
+                    ?.filter { label ->
+                        val searchText = query.lowercase()
+                        listOf(
+                            label.getNameWithDisambiguation(),
+                            label.type,
+                            label.labelCode.toString(),
+                            label.catalogNumbers,
+                        ).any { it?.lowercase()?.contains(searchText) == true }
+                    }.orEmpty(),
+                areas = release?.areas
+                    ?.filter { area ->
+                        val searchText = query.lowercase()
+                        listOf(
+                            area.getNameWithDisambiguation(),
+                            area.date,
+                        ).any { it?.lowercase()?.contains(searchText) == true }
+                    }.orEmpty(),
+            ),
             url = getMusicBrainzUrl(screen.entity, screen.id),
             releaseDetailsUiState = ReleaseDetailsUiState(
                 isError = isError,
