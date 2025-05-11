@@ -17,6 +17,7 @@ val graphFeatureModule = module {
                     navigator = navigator,
                     graphSimulation = get(),
                     artistCollaborationRepository = get(),
+                    appPreferences = get(),
                 )
 
                 else -> null

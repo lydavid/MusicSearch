@@ -85,4 +85,11 @@ open class NoOpAppPreferences : AppPreferences {
     override fun setEnableCrashReporting(enable: Boolean) {
         // No-op.
     }
+
+    override val isDeveloperMode: Flow<Boolean>
+        get() = flowOf(false)
+
+    override fun setDeveloperMode(enable: Boolean) {
+        // No-op.
+    }
 }

@@ -18,9 +18,10 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.artist.ArtistCollaborationRepository
 import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndRecording
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.artist.ArtistCollaborationRepository
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
@@ -33,6 +34,7 @@ internal class ArtistCollaborationGraphPresenter(
     private val navigator: Navigator,
     private val graphSimulation: ArtistCollaborationGraphSimulation,
     private val artistCollaborationRepository: ArtistCollaborationRepository,
+    private val appPreferences: AppPreferences,
 ) : Presenter<ArtistCollaborationGraphUiState> {
 
     @Composable
@@ -40,6 +42,7 @@ internal class ArtistCollaborationGraphPresenter(
         val graphState by graphSimulation.uiState.collectAsState()
         val scope = rememberCoroutineScope()
         var animationJob: Job? by remember { mutableStateOf(null) }
+        val isDeveloperMode by appPreferences.isDeveloperMode.collectAsState(initial = false)
 
         val topAppBarFilterState = rememberTopAppBarFilterState()
         var collaboratingArtistsAndRecordings: List<CollaboratingArtistAndRecording> by remember {
@@ -59,10 +62,10 @@ internal class ArtistCollaborationGraphPresenter(
             )
             animationJob?.cancel()
             animationJob = scope.launch {
-                while (true) {
+                while (graphSimulation.step()) {
                     delay(DELAY_FOR_60_FPS_IN_MS)
-                    graphSimulation.step()
                 }
+                animationJob = null
             }
         }
 
@@ -91,6 +94,7 @@ internal class ArtistCollaborationGraphPresenter(
             topAppBarFilterState = topAppBarFilterState,
             edges = graphState.edges,
             nodes = graphState.nodes,
+            isDeveloperMode = isDeveloperMode,
             eventSink = ::eventSink,
         )
     }
@@ -102,6 +106,7 @@ internal data class ArtistCollaborationGraphUiState(
     val topAppBarFilterState: TopAppBarFilterState,
     val edges: List<GraphEdge> = listOf(),
     val nodes: List<GraphNode> = listOf(),
+    val isDeveloperMode: Boolean = false,
     val eventSink: (ArtistCollaborationGraphUiEvent) -> Unit,
 ) : CircuitUiState
 

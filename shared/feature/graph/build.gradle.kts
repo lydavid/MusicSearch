@@ -39,6 +39,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.turbine)
                 implementation(projects.ui.test.screenshot)
+                implementation(libs.compose.ui.test)
                 // TODO: cannot use junit5 until screenshot base class stops using junit4
                 implementation(libs.junit)
             }

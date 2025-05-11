@@ -34,6 +34,7 @@ internal class SettingsPresenter(
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
         val showCrashReporterSettings = appPreferences.showCrashReporterSettings
         val isCrashReportingEnabled by appPreferences.isCrashReportingEnabled.collectAsState(initial = false)
+        val isDeveloperMode by appPreferences.isDeveloperMode.collectAsState(initial = false)
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val scope = rememberCoroutineScope()
@@ -66,6 +67,10 @@ internal class SettingsPresenter(
                 is SettingsUiEvent.ExportDatabase -> {
                     snackbarMessage = exportDatabase()
                 }
+
+                is SettingsUiEvent.EnableDeveloperMode -> {
+                    appPreferences.setDeveloperMode(event.enable)
+                }
             }
         }
 
@@ -79,6 +84,7 @@ internal class SettingsPresenter(
             loginState = loginUiState,
             snackbarMessage = snackbarMessage,
             databaseVersion = metadataRepository.getDatabaseVersion(),
+            isDeveloperMode = isDeveloperMode,
             eventSink = ::eventSink,
         )
     }
