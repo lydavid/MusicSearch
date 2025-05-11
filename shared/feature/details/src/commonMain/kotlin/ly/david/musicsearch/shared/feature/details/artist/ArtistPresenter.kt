@@ -29,6 +29,7 @@ import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
+import ly.david.musicsearch.shared.feature.details.utils.filterUrlRelations
 import ly.david.musicsearch.ui.common.event.EventsListPresenter
 import ly.david.musicsearch.ui.common.event.EventsListUiEvent
 import ly.david.musicsearch.ui.common.event.EventsListUiState
@@ -84,6 +85,7 @@ internal class ArtistPresenter(
         }
         var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
+        val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -155,7 +157,7 @@ internal class ArtistPresenter(
         }
 
         LaunchedEffect(
-            key1 = topAppBarFilterState.filterText,
+            key1 = query,
             key2 = selectedTab,
         ) {
             topAppBarFilterState.show(
@@ -179,7 +181,7 @@ internal class ArtistPresenter(
                             byEntity = screen.entity,
                         ),
                     )
-                    relationsEventSink(RelationsUiEvent.UpdateQuery(topAppBarFilterState.filterText))
+                    relationsEventSink(RelationsUiEvent.UpdateQuery(query))
                 }
 
                 ArtistTab.RECORDINGS -> {
@@ -188,7 +190,7 @@ internal class ArtistPresenter(
                             browseMethod = browseMethod,
                         ),
                     )
-                    recordingsEventSink(RecordingsListUiEvent.UpdateQuery(topAppBarFilterState.filterText))
+                    recordingsEventSink(RecordingsListUiEvent.UpdateQuery(query))
                 }
 
                 ArtistTab.RELEASES -> {
@@ -197,7 +199,7 @@ internal class ArtistPresenter(
                             browseMethod = browseMethod,
                         ),
                     )
-                    releasesEventSink(ReleasesListUiEvent.UpdateQuery(topAppBarFilterState.filterText))
+                    releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))
                 }
 
                 ArtistTab.RELEASE_GROUPS -> {
@@ -207,7 +209,7 @@ internal class ArtistPresenter(
                             isRemote = true,
                         ),
                     )
-                    releaseGroupsEventSink(ReleaseGroupsListUiEvent.UpdateQuery(topAppBarFilterState.filterText))
+                    releaseGroupsEventSink(ReleaseGroupsListUiEvent.UpdateQuery(query))
                 }
 
                 ArtistTab.EVENTS -> {
@@ -216,7 +218,7 @@ internal class ArtistPresenter(
                             browseMethod = browseMethod,
                         ),
                     )
-                    eventsEventSink(EventsListUiEvent.UpdateQuery(topAppBarFilterState.filterText))
+                    eventsEventSink(EventsListUiEvent.UpdateQuery(query))
                 }
 
                 ArtistTab.WORKS -> {
@@ -225,7 +227,7 @@ internal class ArtistPresenter(
                             browseMethod = browseMethod,
                         ),
                     )
-                    worksEventSink(WorksListUiEvent.UpdateQuery(topAppBarFilterState.filterText))
+                    worksEventSink(WorksListUiEvent.UpdateQuery(query))
                 }
 
                 ArtistTab.STATS -> {
@@ -301,7 +303,9 @@ internal class ArtistPresenter(
             title = title,
             isLoading = isLoading,
             isError = isError,
-            artist = artist,
+            artist = artist?.copy(
+                urls = artist?.urls.filterUrlRelations(query = query),
+            ),
             url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,

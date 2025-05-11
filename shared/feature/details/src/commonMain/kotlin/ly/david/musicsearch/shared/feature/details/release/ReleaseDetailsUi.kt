@@ -19,7 +19,7 @@ import ly.david.musicsearch.ui.common.label.LabelListItem
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.work.getDisplayScript
@@ -207,12 +207,9 @@ internal fun ReleaseDetailsUi(
                 }
             }
 
-            item {
-                UrlsSection(
-                    urls = urls,
-                    filterText = filterText,
-                )
-            }
+            urlsSection(
+                urls = urls,
+            )
         }
     }
 }

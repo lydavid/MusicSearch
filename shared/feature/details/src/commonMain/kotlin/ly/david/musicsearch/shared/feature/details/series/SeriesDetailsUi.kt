@@ -10,7 +10,7 @@ import ly.david.musicsearch.shared.domain.series.SeriesDetailsModel
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 
 @Composable
@@ -41,12 +41,10 @@ internal fun SeriesDetailsUi(
                     extract = wikipediaExtract,
                     filterText = filterText,
                 )
-
-                UrlsSection(
-                    urls = urls,
-                    filterText = filterText,
-                )
             }
         }
+        urlsSection(
+            urls = series.urls,
+        )
     }
 }

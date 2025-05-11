@@ -29,6 +29,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.recording.RecordingRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
+import ly.david.musicsearch.shared.feature.details.utils.filterUrlRelations
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
@@ -193,7 +194,9 @@ internal class RecordingPresenter(
             title = title,
             subtitle = subtitle,
             isError = isError,
-            recording = recording,
+            recording = recording?.copy(
+                urls = recording?.urls.filterUrlRelations(query = query),
+            ),
             url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,

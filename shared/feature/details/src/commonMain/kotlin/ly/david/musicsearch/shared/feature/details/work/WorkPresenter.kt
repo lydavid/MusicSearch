@@ -28,6 +28,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.work.WorkRepository
+import ly.david.musicsearch.shared.feature.details.utils.filterUrlRelations
 import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiEvent
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
@@ -204,7 +205,9 @@ internal class WorkPresenter(
         return WorkUiState(
             title = title,
             isError = isError,
-            work = work,
+            work = work?.copy(
+                urls = work?.urls.filterUrlRelations(query = query),
+            ),
             url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,

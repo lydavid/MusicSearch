@@ -14,13 +14,13 @@ import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.area.AreaListItem
+import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.common.image.LargeImage
 
 @Composable
 internal fun ArtistDetailsUi(
@@ -34,32 +34,34 @@ internal fun ArtistDetailsUi(
         modifier = modifier,
         state = lazyListState,
     ) {
-        item {
+        artist.run {
             if (filterText.isBlank()) {
-                LargeImage(
-                    url = artist.imageMetadata.largeUrl,
-                    placeholderKey = artist.imageMetadata.databaseId.toString(),
-                )
+                item {
+                    LargeImage(
+                        url = imageMetadata.largeUrl,
+                        placeholderKey = imageMetadata.databaseId.toString(),
+                    )
+                }
             }
 
-            artist.run {
+            item {
                 ArtistInformationSection(
                     filterText = filterText,
                 )
-
+            }
+            item {
                 AreaSection(
                     areaListItemModel = areaListItemModel,
                     filterText = filterText,
                     onItemClick = onItemClick,
                 )
-
-                // TODO: begin area, end area
-
-                UrlsSection(
-                    urls = urls,
-                    filterText = filterText,
-                )
             }
+
+            // TODO: begin area, end area
+
+            urlsSection(
+                urls = urls,
+            )
         }
     }
 }

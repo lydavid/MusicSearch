@@ -27,6 +27,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.series.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.series.SeriesRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
+import ly.david.musicsearch.shared.feature.details.utils.filterUrlRelations
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
@@ -169,7 +170,9 @@ internal class SeriesPresenter(
         return SeriesUiState(
             title = title,
             isError = isError,
-            series = series,
+            series = series?.copy(
+                urls = series?.urls.filterUrlRelations(query = query),
+            ),
             url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,

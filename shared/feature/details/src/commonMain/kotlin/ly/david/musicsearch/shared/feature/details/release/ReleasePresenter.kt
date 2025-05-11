@@ -32,6 +32,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
+import ly.david.musicsearch.shared.feature.details.utils.filterUrlRelations
 import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiEvent
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
@@ -265,6 +266,7 @@ internal class ReleasePresenter(
                             area.date,
                         ).any { it?.lowercase()?.contains(searchText) == true }
                     }.orEmpty(),
+                urls = release?.urls.filterUrlRelations(query = query),
             ),
             url = getMusicBrainzUrl(screen.entity, screen.id),
             releaseDetailsUiState = ReleaseDetailsUiState(

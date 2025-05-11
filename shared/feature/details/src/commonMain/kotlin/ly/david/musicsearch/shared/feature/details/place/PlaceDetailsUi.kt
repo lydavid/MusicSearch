@@ -16,7 +16,7 @@ import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.place.CoordinateListItem
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 
 @Composable
@@ -100,12 +100,10 @@ internal fun PlaceDetailsUi(
                     extract = wikipediaExtract,
                     filterText = filterText,
                 )
-
-                UrlsSection(
-                    urls = urls,
-                    filterText = filterText,
-                )
             }
         }
+        urlsSection(
+            urls = place.urls,
+        )
     }
 }

@@ -12,7 +12,7 @@ import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 
 @Composable
@@ -57,12 +57,10 @@ internal fun RecordingDetailsUi(
                     extract = wikipediaExtract,
                     filterText = filterText,
                 )
-
-                UrlsSection(
-                    urls = urls,
-                    filterText = filterText,
-                )
             }
         }
+        urlsSection(
+            urls = recording.urls,
+        )
     }
 }

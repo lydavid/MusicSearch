@@ -29,6 +29,7 @@ import ly.david.musicsearch.shared.domain.network.relatableEntities
 import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
+import ly.david.musicsearch.shared.feature.details.utils.filterUrlRelations
 import ly.david.musicsearch.ui.common.event.EventsListPresenter
 import ly.david.musicsearch.ui.common.event.EventsListUiEvent
 import ly.david.musicsearch.ui.common.event.EventsListUiState
@@ -194,7 +195,9 @@ internal class PlacePresenter(
         return PlaceUiState(
             title = title,
             isError = isError,
-            place = place,
+            place = place?.copy(
+                urls = place?.urls.filterUrlRelations(query = query),
+            ),
             url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,

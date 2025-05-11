@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
@@ -63,12 +63,10 @@ internal fun InstrumentDetailsUi(
                     extract = wikipediaExtract,
                     filterText = filterText,
                 )
-
-                UrlsSection(
-                    urls = urls,
-                    filterText = filterText,
-                )
             }
         }
+        urlsSection(
+            urls = instrument.urls,
+        )
     }
 }

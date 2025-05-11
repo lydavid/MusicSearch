@@ -14,14 +14,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.event.EventDetailsModel
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.url.UrlsSection
+import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
+import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
-import ly.david.musicsearch.ui.common.image.LargeImage
 
 @Composable
 internal fun EventDetailsUi(
@@ -36,15 +36,17 @@ internal fun EventDetailsUi(
         modifier = modifier,
         state = lazyListState,
     ) {
-        item {
+        event.run {
             if (filterText.isBlank()) {
-                LargeImage(
-                    url = event.imageMetadata.largeUrl,
-                    placeholderKey = event.imageMetadata.databaseId.toString(),
-                )
+                item {
+                    LargeImage(
+                        url = imageMetadata.largeUrl,
+                        placeholderKey = imageMetadata.databaseId.toString(),
+                    )
+                }
             }
 
-            event.run {
+            item {
                 ListSeparatorHeader(text = strings.informationHeader(strings.event))
                 type?.ifNotNullOrEmpty {
                     TextWithHeading(
@@ -88,12 +90,11 @@ internal fun EventDetailsUi(
 
                 // TODO: set list
                 //  api for this seems like some kind markdown?
-
-                UrlsSection(
-                    urls = urls,
-                    filterText = filterText,
-                )
             }
+
+            urlsSection(
+                urls = urls,
+            )
         }
     }
 }
