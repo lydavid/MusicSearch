@@ -159,8 +159,8 @@ class ArtistCollaborationGraphSimulation {
         return MIN_RADIUS + frequency
     }
 
-    fun step() {
-        if (!simulation.isRunning()) return
+    fun step(): Boolean {
+        if (!simulation.isRunning()) return false
         simulation.step(1)
 
         _uiState.update { uiState ->
@@ -185,6 +185,7 @@ class ArtistCollaborationGraphSimulation {
                 nodes = nodes,
             )
         }
+        return true
     }
 }
 

@@ -62,10 +62,10 @@ internal class ArtistCollaborationGraphPresenter(
             )
             animationJob?.cancel()
             animationJob = scope.launch {
-                while (true) {
+                while (graphSimulation.step()) {
                     delay(DELAY_FOR_60_FPS_IN_MS)
-                    graphSimulation.step()
                 }
+                animationJob = null
             }
         }
 
