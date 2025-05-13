@@ -8,12 +8,12 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
+import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.common.image.LargeImage
 
 @Composable
 internal fun ReleaseGroupDetailsUi(
@@ -28,15 +28,15 @@ internal fun ReleaseGroupDetailsUi(
         modifier = modifier,
         state = lazyListState,
     ) {
-        item {
-            if (filterText.isBlank()) {
-                LargeImage(
-                    url = releaseGroup.imageMetadata.largeUrl,
-                    placeholderKey = releaseGroup.imageMetadata.databaseId.toString(),
-                )
-            }
+        releaseGroup.run {
+            item {
+                if (filterText.isBlank()) {
+                    LargeImage(
+                        url = imageMetadata.largeUrl,
+                        placeholderKey = imageMetadata.databaseId.toString(),
+                    )
+                }
 
-            releaseGroup.run {
                 ListSeparatorHeader(text = strings.informationHeader(strings.releaseGroup))
                 TextWithHeading(
                     heading = strings.type,
@@ -50,15 +50,18 @@ internal fun ReleaseGroupDetailsUi(
                         filterText = filterText,
                     )
                 }
+            }
 
+            item {
                 WikipediaSection(
                     extract = wikipediaExtract,
                     filterText = filterText,
                 )
             }
+
+            urlsSection(
+                urls = urls,
+            )
         }
-        urlsSection(
-            urls = releaseGroup.urls,
-        )
     }
 }

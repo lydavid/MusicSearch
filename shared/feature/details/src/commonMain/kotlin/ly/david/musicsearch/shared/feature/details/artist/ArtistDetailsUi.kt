@@ -35,16 +35,13 @@ internal fun ArtistDetailsUi(
         state = lazyListState,
     ) {
         artist.run {
-            if (filterText.isBlank()) {
-                item {
+            item {
+                if (filterText.isBlank()) {
                     LargeImage(
                         url = imageMetadata.largeUrl,
                         placeholderKey = imageMetadata.databaseId.toString(),
                     )
                 }
-            }
-
-            item {
                 ArtistInformationSection(
                     filterText = filterText,
                 )

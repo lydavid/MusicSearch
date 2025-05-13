@@ -42,16 +42,14 @@ internal fun ReleaseDetailsUi(
         state = releaseDetailsUiState.lazyListState,
     ) {
         release.run {
-            if (filterText.isBlank()) {
-                item {
+            item {
+                if (filterText.isBlank()) {
                     LargeImage(
                         url = release.imageMetadata.largeUrl,
                         placeholderKey = release.imageMetadata.databaseId.toString(),
                         onClick = onImageClick,
                     )
                 }
-            }
-            item {
                 ListSeparatorHeader(text = strings.informationHeader(strings.release))
                 releaseDetailsUiState.numberOfImages?.ifNotNull {
                     TextWithHeading(

@@ -37,16 +37,14 @@ internal fun EventDetailsUi(
         state = lazyListState,
     ) {
         event.run {
-            if (filterText.isBlank()) {
-                item {
+            item {
+                if (filterText.isBlank()) {
                     LargeImage(
                         url = imageMetadata.largeUrl,
                         placeholderKey = imageMetadata.databaseId.toString(),
                     )
                 }
-            }
 
-            item {
                 ListSeparatorHeader(text = strings.informationHeader(strings.event))
                 type?.ifNotNullOrEmpty {
                     TextWithHeading(
@@ -82,15 +80,17 @@ internal fun EventDetailsUi(
                         )
                     }
                 }
+            }
 
+            item {
                 WikipediaSection(
                     extract = wikipediaExtract,
                     filterText = filterText,
                 )
-
-                // TODO: set list
-                //  api for this seems like some kind markdown?
             }
+
+            // TODO: set list
+            //  api for this seems like some kind markdown?
 
             urlsSection(
                 urls = urls,
