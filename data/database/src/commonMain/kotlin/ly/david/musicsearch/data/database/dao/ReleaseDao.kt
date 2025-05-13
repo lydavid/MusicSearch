@@ -316,13 +316,42 @@ class ReleaseDao(
         }
     }
 
+    fun deleteReleaseLinksByEntity(entityId: String) {
+        transacter.deleteReleaseLinksByEntity(entityId)
+    }
+
+    private fun getCountOfReleasesByEntityQuery(
+        entityId: String,
+        query: String,
+    ) = transacter.getNumberOfReleasesByEntity(
+        entityId = entityId,
+        query = "%$query%",
+    )
+
+    fun observeCountOfReleasesByEntity(entityId: String): Flow<Int> =
+        getCountOfReleasesByEntityQuery(
+            entityId = entityId,
+            query = "",
+        )
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
+
+    fun getCountOfReleasesByEntity(entityId: String): Int =
+        getCountOfReleasesByEntityQuery(
+            entityId = entityId,
+            query = "",
+        )
+            .executeAsOne()
+            .toInt()
+
     private fun getReleasesByEntity(
         entityId: String,
         query: String,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfReleasesByEntity(
+        countQuery = getCountOfReleasesByEntityQuery(
             entityId = entityId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -337,26 +366,7 @@ class ReleaseDao(
         },
     )
 
-    fun deleteReleaseLinksByEntity(entityId: String) {
-        transacter.deleteReleaseLinksByEntity(entityId)
-    }
-
-    fun observeCountOfReleasesByEntity(entityId: String): Flow<Int> =
-        transacter.getNumberOfReleasesByEntity(
-            entityId = entityId,
-            query = "%%",
-        )
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
-
-    fun getCountOfReleasesByEntity(entityId: String): Int =
-        transacter.getNumberOfReleasesByEntity(
-            entityId = entityId,
-            query = "%%",
-        )
-            .executeAsOne()
-            .toInt()
+    // releases by collection
 
     private fun getReleasesByCollection(
         collectionId: String,
