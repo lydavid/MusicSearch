@@ -14,7 +14,6 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import ly.david.musicsearch.shared.domain.artist.ArtistCollaborationRepository
 import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndRecording
@@ -61,7 +60,6 @@ internal class ArtistCollaborationGraphPresenter(
             while (graphSimulation.step()) {
                 delay(DELAY_FOR_60_FPS_IN_MS)
             }
-            cancel()
         }
 
         fun eventSink(event: ArtistCollaborationGraphUiEvent) {
