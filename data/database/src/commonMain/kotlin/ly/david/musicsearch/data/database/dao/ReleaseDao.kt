@@ -202,15 +202,6 @@ class ReleaseDao(
         }
     }
 
-    fun observeCountOfReleasesByLabel(labelId: String): Flow<Int> =
-        transacter.getNumberOfReleasesByLabel(
-            labelId = labelId,
-            query = "%%",
-        )
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
-
     fun getCountOfReleasesByLabel(labelId: String): Int =
         transacter.getNumberOfReleasesByLabel(
             labelId = labelId,
@@ -272,15 +263,6 @@ class ReleaseDao(
             }
         }
     }
-
-    fun observeCountOfReleasesByCountry(areaId: String): Flow<Int> =
-        transacter.getNumberOfReleasesByCountry(
-            areaId = areaId,
-            query = "%%",
-        )
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
 
     fun getCountOfReleasesByCountry(areaId: String): Int =
         transacter.getNumberOfReleasesByCountry(

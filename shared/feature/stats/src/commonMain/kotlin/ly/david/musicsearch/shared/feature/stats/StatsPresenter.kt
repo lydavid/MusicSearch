@@ -53,7 +53,7 @@ internal class StatsPresenter(
                 MusicBrainzEntity.LABEL -> labelDao.observeCountOfLabelsByEntity(entityId)
                 MusicBrainzEntity.PLACE -> placeDao.observeCountOfPlacesByArea(entityId)
                 MusicBrainzEntity.RECORDING -> recordingDao.observeCountOfRecordingsByEntity(entityId)
-                MusicBrainzEntity.RELEASE -> releaseDao.observeCountOfReleasesByCountry(entityId)
+                MusicBrainzEntity.RELEASE -> releaseDao.observeCountOfReleasesByEntity(entityId)
                 MusicBrainzEntity.RELEASE_GROUP -> releaseGroupDao.observeCountOfReleaseGroupsByArtist(entityId)
                 MusicBrainzEntity.WORK -> workDao.observeCountOfWorksByEntity(entityId)
                 else -> flowOf(0)
