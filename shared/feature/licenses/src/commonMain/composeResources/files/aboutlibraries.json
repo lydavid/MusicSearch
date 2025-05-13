@@ -1818,17 +1818,20 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.3.7",
+            "artifactVersion": "1.4.1",
             "description": "Android Support ExifInterface",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
-            "name": "Support ExifInterface",
-            "website": "https://developer.android.com/jetpack/androidx/releases/exifinterface#1.3.7",
+            "name": "ExifInterface",
+            "website": "https://developer.android.com/jetpack/androidx/releases/exifinterface#1.4.1",
             "licenses": [
                 "Apache-2.0"
-            ]
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
         },
         {
             "uniqueId": "androidx.fragment:fragment",
@@ -3590,7 +3593,7 @@
                     "name": "Google"
                 }
             ],
-            "artifactVersion": "0.36.0",
+            "artifactVersion": "0.37.3",
             "description": "Utilities for Jetpack Compose",
             "scm": {
                 "connection": "scm:git:git://github.com/google/accompanist.git",
@@ -4442,7 +4445,7 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "3.10.2",
+            "artifactVersion": "3.11.0",
             "description": "A modern I/O library for Android, Java, and Kotlin Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/square/okio.git",
@@ -4465,7 +4468,7 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "3.10.2",
+            "artifactVersion": "3.11.0",
             "description": "A modern I/O library for Android, Java, and Kotlin Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/square/okio.git",
@@ -4580,7 +4583,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
@@ -4603,7 +4606,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
@@ -4626,7 +4629,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
@@ -4649,7 +4652,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
@@ -4672,7 +4675,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
@@ -4695,7 +4698,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
@@ -4718,7 +4721,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
@@ -4741,7 +4744,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
@@ -4764,7 +4767,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
@@ -4787,7 +4790,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
@@ -4810,7 +4813,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
@@ -4833,7 +4836,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
@@ -4856,7 +4859,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
@@ -4879,7 +4882,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.1.0",
+            "artifactVersion": "3.2.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
