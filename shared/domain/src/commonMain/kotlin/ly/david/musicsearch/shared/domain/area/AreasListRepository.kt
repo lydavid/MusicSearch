@@ -12,5 +12,5 @@ interface AreasListRepository {
         listFilters: ListFilters,
     ): Flow<PagingData<AreaListItemModel>>
 
-    fun observeCountOfAllAreas(): Flow<Long>
+    fun observeCountOfAllAreas(): Flow<Int>
 }

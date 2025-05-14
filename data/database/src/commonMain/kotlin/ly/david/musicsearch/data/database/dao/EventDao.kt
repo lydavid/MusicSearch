@@ -107,19 +107,10 @@ class EventDao(
         transacter.deleteEventLinksByEntity(entityId)
     }
 
-    fun observeCountOfEventsByEntity(entityId: String): Flow<Int> =
-        transacter.getNumberOfEventsByEntity(
-            entityId = entityId,
-            query = "%%",
-        )
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
-
     fun getCountOfEventsByEntity(entityId: String): Int =
-        transacter.getNumberOfEventsByEntity(
+        getCountOfEventsByEntityQuery(
             entityId = entityId,
-            query = "%%",
+            query = "",
         )
             .executeAsOne()
             .toInt()
@@ -149,10 +140,18 @@ class EventDao(
         }
     }
 
-    fun observeCountOfAllEvents(): Flow<Long> =
-        getCountOfAllEvents(query = "")
+    fun observeCountOfEvents(browseMethod: BrowseMethod): Flow<Int> =
+        if (browseMethod is BrowseMethod.ByEntity) {
+            getCountOfEventsByEntityQuery(
+                entityId = browseMethod.entityId,
+                query = "",
+            )
+        } else {
+            getCountOfAllEvents(query = "")
+        }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
 
     private fun getCountOfAllEvents(
         query: String,
@@ -182,9 +181,9 @@ class EventDao(
         entityId: String,
         query: String,
     ): PagingSource<Int, EventListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfEventsByEntity(
+        countQuery = getCountOfEventsByEntityQuery(
             entityId = entityId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -197,6 +196,14 @@ class EventDao(
                 mapper = ::mapToEventListItemModel,
             )
         },
+    )
+
+    private fun getCountOfEventsByEntityQuery(
+        entityId: String,
+        query: String,
+    ) = transacter.getNumberOfEventsByEntity(
+        entityId = entityId,
+        query = "%$query%",
     )
 
     private fun getEventsByCollection(

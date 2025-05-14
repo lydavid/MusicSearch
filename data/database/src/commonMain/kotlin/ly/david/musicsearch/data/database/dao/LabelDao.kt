@@ -122,19 +122,10 @@ class LabelDao(
         transacter.deleteLabelLinksByEntity(entityId)
     }
 
-    fun observeCountOfLabelsByEntity(entityId: String): Flow<Int> =
-        transacter.getNumberOfLabelsByEntity(
-            entityId = entityId,
-            query = "%%",
-        )
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
-
     fun getCountOfLabelsByEntity(entityId: String): Int =
-        transacter.getNumberOfLabelsByEntity(
+        getCountOfLabelsByEntityQuery(
             entityId = entityId,
-            query = "%%",
+            query = "",
         )
             .executeAsOne()
             .toInt()
@@ -164,10 +155,18 @@ class LabelDao(
         }
     }
 
-    fun observeCountOfAllLabels(): Flow<Long> =
-        getCountOfAllLabels(query = "")
+    fun observeCountOfLabels(browseMethod: BrowseMethod): Flow<Int> =
+        if (browseMethod is BrowseMethod.ByEntity) {
+            getCountOfLabelsByEntityQuery(
+                entityId = browseMethod.entityId,
+                query = "",
+            )
+        } else {
+            getCountOfAllLabels(query = "")
+        }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
 
     private fun getCountOfAllLabels(
         query: String,
@@ -218,10 +217,7 @@ class LabelDao(
         entityId: String,
         query: String,
     ): PagingSource<Int, LabelListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfLabelsByEntity(
-            entityId = entityId,
-            query = "%$query%",
-        ),
+        countQuery = getCountOfLabelsByEntityQuery(entityId, query),
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
@@ -233,6 +229,14 @@ class LabelDao(
                 mapper = ::mapToLabelListItemModel,
             )
         },
+    )
+
+    private fun getCountOfLabelsByEntityQuery(
+        entityId: String,
+        query: String,
+    ) = transacter.getNumberOfLabelsByEntity(
+        entityId = entityId,
+        query = "%$query%",
     )
 
     // region labels by release

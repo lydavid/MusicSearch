@@ -138,22 +138,21 @@ class ArtistDao(
         transacter.deleteArtistLinksByEntity(entityId)
     }
 
-    fun observeCountOfArtistsByEntity(entityId: String): Flow<Int> =
-        transacter.getNumberOfArtistsByEntity(
-            entityId = entityId,
-            query = "%%",
-        )
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
-
     fun getCountOfArtistsByEntity(entityId: String): Int =
-        transacter.getNumberOfArtistsByEntity(
+        getCountOfArtistsByEntityQuery(
             entityId = entityId,
-            query = "%%",
+            query = "",
         )
             .executeAsOne()
             .toInt()
+
+    private fun getCountOfArtistsByEntityQuery(
+        entityId: String,
+        query: String,
+    ) = transacter.getNumberOfArtistsByEntity(
+        entityId = entityId,
+        query = "%$query%",
+    )
 
     fun getArtists(
         browseMethod: BrowseMethod,
@@ -180,10 +179,18 @@ class ArtistDao(
         }
     }
 
-    fun observeCountOfAllArtists(): Flow<Long> =
-        getCountOfAllArtists(query = "")
+    fun observeCountOfArtists(browseMethod: BrowseMethod): Flow<Int> =
+        if (browseMethod is BrowseMethod.ByEntity) {
+            getCountOfArtistsByEntityQuery(
+                entityId = browseMethod.entityId,
+                query = "",
+            )
+        } else {
+            getCountOfAllArtists(query = "")
+        }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
 
     private fun getCountOfAllArtists(
         query: String,
@@ -213,9 +220,9 @@ class ArtistDao(
         entityId: String,
         query: String,
     ) = QueryPagingSource(
-        countQuery = transacter.getNumberOfArtistsByEntity(
+        countQuery = getCountOfArtistsByEntityQuery(
             entityId = entityId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,

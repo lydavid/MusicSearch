@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.label
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.LabelDao
@@ -37,8 +38,9 @@ class LabelsListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfAllLabels(): Flow<Long> {
-        return labelDao.observeCountOfAllLabels()
+    override fun observeCountOfLabels(browseMethod: BrowseMethod?): Flow<Int> {
+        if (browseMethod == null) return flowOf()
+        return labelDao.observeCountOfLabels(browseMethod = browseMethod)
     }
 
     override fun getLinkedEntitiesPagingSource(

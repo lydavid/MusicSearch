@@ -37,7 +37,7 @@ class InstrumentsListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfAllInstruments(): Flow<Long> {
+    override fun observeCountOfAllInstruments(): Flow<Int> {
         return instrumentDao.observeCountOfAllInstruments()
     }
 

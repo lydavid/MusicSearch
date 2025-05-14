@@ -97,19 +97,10 @@ class WorkDao(
         transacter.deleteWorkLinksByEntity(entityId)
     }
 
-    fun observeCountOfWorksByEntity(entityId: String): Flow<Int> =
-        transacter.getNumberOfWorksByEntity(
-            entityId = entityId,
-            query = "%%",
-        )
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
-
     fun getCountOfWorksByEntity(entityId: String): Int =
-        transacter.getNumberOfWorksByEntity(
+        getCountOfWorksByEntityQuery(
             entityId = entityId,
-            query = "%%",
+            query = "",
         )
             .executeAsOne()
             .toInt()
@@ -137,10 +128,18 @@ class WorkDao(
         }
     }
 
-    fun observeCountOfAllWorks(): Flow<Long> =
-        getCountOfAllWorks(query = "")
+    fun observeCountOfWorks(browseMethod: BrowseMethod): Flow<Int> =
+        if (browseMethod is BrowseMethod.ByEntity) {
+            getCountOfWorksByEntityQuery(
+                entityId = browseMethod.entityId,
+                query = "",
+            )
+        } else {
+            getCountOfAllWorks(query = "")
+        }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
 
     private fun getCountOfAllWorks(
         query: String,
@@ -170,10 +169,7 @@ class WorkDao(
         entityId: String,
         query: String,
     ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfWorksByEntity(
-            entityId = entityId,
-            query = "%$query%",
-        ),
+        countQuery = getCountOfWorksByEntityQuery(entityId, query),
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
@@ -185,6 +181,14 @@ class WorkDao(
                 mapper = ::mapToWorkListItemModel,
             )
         },
+    )
+
+    private fun getCountOfWorksByEntityQuery(
+        entityId: String,
+        query: String,
+    ) = transacter.getNumberOfWorksByEntity(
+        entityId = entityId,
+        query = "%$query%",
     )
 
     private fun getWorksByCollection(

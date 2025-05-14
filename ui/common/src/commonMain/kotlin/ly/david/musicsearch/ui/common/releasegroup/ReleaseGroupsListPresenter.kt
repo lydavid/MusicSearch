@@ -53,7 +53,7 @@ class ReleaseGroupsListPresenter(
                 ),
             )
         }
-        val releaseGroupCount: Long by releaseGroupsListRepository.observeCountOfReleaseGroups(
+        val releaseGroupCount by releaseGroupsListRepository.observeCountOfReleaseGroups(
             browseMethod = browseMethod,
         ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()

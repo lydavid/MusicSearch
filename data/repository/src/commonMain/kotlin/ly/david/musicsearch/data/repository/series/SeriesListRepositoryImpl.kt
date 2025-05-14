@@ -37,7 +37,7 @@ class SeriesListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfAllSeries(): Flow<Long> {
+    override fun observeCountOfAllSeries(): Flow<Int> {
         return seriesDao.observeCountOfAllSeries()
     }
 

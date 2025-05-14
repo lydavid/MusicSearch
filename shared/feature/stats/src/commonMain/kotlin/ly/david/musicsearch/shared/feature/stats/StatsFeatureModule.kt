@@ -16,15 +16,14 @@ val statsFeatureModule = module {
                         screen = screen,
                         getCountOfEachRelationshipTypeUseCase = get(),
                         browseRemoteMetadataRepository = get(),
-                        artistDao = get(),
-                        eventDao = get(),
-                        labelDao = get(),
-                        placeDao = get(),
-                        recordingDao = get(),
+                        artistsListRepository = get(),
+                        eventsListRepository = get(),
+                        labelsListRepository = get(),
+                        placesListRepository = get(),
                         releasesListRepository = get(),
                         releaseGroupsListRepository = get(),
-                        releaseGroupDao = get(),
-                        workDao = get(),
+                        recordingsListRepository = get(),
+                        worksListRepository = get(),
                     )
                 }
 

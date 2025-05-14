@@ -52,7 +52,7 @@ class ReleasesListPresenter(
                 ),
             )
         }
-        val releaseCount: Long by releasesListRepository.observeCountOfReleases(
+        val releaseCount by releasesListRepository.observeCountOfReleases(
             browseMethod = browseMethod,
         ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()

@@ -123,8 +123,7 @@ class KonsistTest {
                 data.dependsOn(domain)
                 feature.dependsOn(domain)
                 data.doesNotDependOn(feature)
-                // failing
-//                feature.doesNotDependOn(data)
+                feature.doesNotDependOn(data)
             }
     }
 

@@ -12,5 +12,5 @@ interface EventsListRepository {
         listFilters: ListFilters,
     ): Flow<PagingData<EventListItemModel>>
 
-    fun observeCountOfAllEvents(): Flow<Long>
+    fun observeCountOfEvents(browseMethod: BrowseMethod?): Flow<Int>
 }

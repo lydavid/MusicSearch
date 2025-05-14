@@ -30,7 +30,7 @@ internal fun PreviewDatabaseUiWithCounts() {
                     entitiesCount = MusicBrainzEntity.entries.associateWith { entity ->
                         // From https://musicbrainz.org/statistics on 2025-04-06
                         when (entity) {
-                            MusicBrainzEntity.AREA -> 119_549L
+                            MusicBrainzEntity.AREA -> 119_549
                             MusicBrainzEntity.ARTIST -> 2_582_422
                             MusicBrainzEntity.EVENT -> 96_452
                             MusicBrainzEntity.GENRE -> 2_026

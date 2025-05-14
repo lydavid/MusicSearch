@@ -113,19 +113,10 @@ class RecordingDao(
         transacter.deleteRecordingLinksByEntity(entityId)
     }
 
-    fun observeCountOfRecordingsByEntity(entityId: String): Flow<Int> =
-        transacter.getNumberOfRecordingsByEntity(
-            entityId = entityId,
-            query = "%%",
-        )
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
-
     fun getCountOfRecordingsByEntity(entityId: String): Int =
-        transacter.getNumberOfRecordingsByEntity(
+        getCountOfRecordingsByEntityQuery(
             entityId = entityId,
-            query = "%%",
+            query = "",
         )
             .executeAsOne()
             .toInt()
@@ -155,10 +146,18 @@ class RecordingDao(
         }
     }
 
-    fun observeCountOfAllRecordings(): Flow<Long> =
-        getCountOfAllRecordings(query = "")
+    fun observeCountOfRecordings(browseMethod: BrowseMethod): Flow<Int> =
+        if (browseMethod is BrowseMethod.ByEntity) {
+            getCountOfRecordingsByEntityQuery(
+                entityId = browseMethod.entityId,
+                query = "",
+            )
+        } else {
+            getCountOfAllRecordings(query = "")
+        }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
 
     private fun getCountOfAllRecordings(
         query: String,
@@ -188,10 +187,7 @@ class RecordingDao(
         entityId: String,
         query: String,
     ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfRecordingsByEntity(
-            entityId = entityId,
-            query = "%$query%",
-        ),
+        countQuery = getCountOfRecordingsByEntityQuery(entityId, query),
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
@@ -203,6 +199,14 @@ class RecordingDao(
                 mapper = ::mapToRecordingListItemModel,
             )
         },
+    )
+
+    private fun getCountOfRecordingsByEntityQuery(
+        entityId: String,
+        query: String,
+    ) = transacter.getNumberOfRecordingsByEntity(
+        entityId = entityId,
+        query = "%$query%",
     )
 
     private fun getRecordingsByCollection(

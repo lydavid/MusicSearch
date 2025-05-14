@@ -50,7 +50,7 @@ class ImagesPresenterTest {
             override suspend fun saveImageMetadata(
                 mbid: String,
                 entity: MusicBrainzEntity,
-                itemsCount: Long,
+                itemsCount: Int,
             ) {
                 // No-op
             }

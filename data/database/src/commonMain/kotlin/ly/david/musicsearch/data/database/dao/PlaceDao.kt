@@ -124,19 +124,10 @@ class PlaceDao(
         transacter.deletePlacesByArea(areaId)
     }
 
-    fun observeCountOfPlacesByArea(areaId: String): Flow<Int> =
-        transacter.getNumberOfPlacesByArea(
-            areaId = areaId,
-            query = "%%",
-        )
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
-
     fun getCountOfPlacesByArea(areaId: String): Int =
-        transacter.getNumberOfPlacesByArea(
+        getPlacesByAreaCountQuery(
             areaId = areaId,
-            query = "%%",
+            query = "",
         )
             .executeAsOne()
             .toInt()
@@ -166,10 +157,18 @@ class PlaceDao(
         }
     }
 
-    fun observeCountOfAllPlaces(): Flow<Long> =
-        getCountOfAllPlaces(query = "")
+    fun observeCountOfPlaces(browseMethod: BrowseMethod): Flow<Int> =
+        if (browseMethod is BrowseMethod.ByEntity) {
+            getPlacesByAreaCountQuery(
+                areaId = browseMethod.entityId,
+                query = "",
+            )
+        } else {
+            getCountOfAllPlaces(query = "")
+        }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
 
     private fun getCountOfAllPlaces(
         query: String,
@@ -199,10 +198,7 @@ class PlaceDao(
         areaId: String,
         query: String,
     ): PagingSource<Int, PlaceListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfPlacesByArea(
-            areaId = areaId,
-            query = "%$query%",
-        ),
+        countQuery = getPlacesByAreaCountQuery(areaId, query),
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
@@ -214,6 +210,14 @@ class PlaceDao(
                 mapper = ::mapToPlaceListItemModel,
             )
         },
+    )
+
+    private fun getPlacesByAreaCountQuery(
+        areaId: String,
+        query: String,
+    ) = transacter.getNumberOfPlacesByArea(
+        areaId = areaId,
+        query = "%$query%",
     )
 
     private fun getPlacesByCollection(

@@ -43,7 +43,7 @@ interface ReleaseGroupDao : EntityDao {
         sorted: Boolean,
     ): PagingSource<Int, ReleaseGroupListItemModel>
 
-    fun observeCountOfAllReleaseGroups(browseMethod: BrowseMethod): Flow<Long>
+    fun observeCountOfAllReleaseGroups(browseMethod: BrowseMethod): Flow<Int>
 }
 
 class ReleaseGroupDaoImpl(
@@ -205,7 +205,7 @@ class ReleaseGroupDaoImpl(
         }
     }
 
-    override fun observeCountOfAllReleaseGroups(browseMethod: BrowseMethod): Flow<Long> =
+    override fun observeCountOfAllReleaseGroups(browseMethod: BrowseMethod): Flow<Int> =
         if (browseMethod is BrowseMethod.ByEntity) {
             getCountOfReleaseGroupsByArtistQuery(
                 artistId = browseMethod.entityId,
@@ -216,6 +216,7 @@ class ReleaseGroupDaoImpl(
         }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
 
     private fun getCountOfAllReleaseGroups(
         query: String,

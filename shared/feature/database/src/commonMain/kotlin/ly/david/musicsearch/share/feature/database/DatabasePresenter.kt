@@ -54,15 +54,24 @@ internal class DatabasePresenter(
         val lazyListState = rememberLazyListState()
         val countOfAllImages by imageMetadataRepository.observeCountOfAllImageMetadata().collectAsRetainedState(0)
         val countOfAllAreas by areasListRepository.observeCountOfAllAreas().collectAsRetainedState(0)
-        val countOfAllArtists by artistsListRepository.observeCountOfAllArtists().collectAsRetainedState(0)
-        val countOfAllEvents by eventsListRepository.observeCountOfAllEvents().collectAsRetainedState(0)
+        val countOfAllArtists by artistsListRepository.observeCountOfArtists(
+            browseMethod = BrowseMethod.All,
+        ).collectAsRetainedState(0)
+        val countOfAllEvents by eventsListRepository.observeCountOfEvents(
+            browseMethod = BrowseMethod.All,
+        ).collectAsRetainedState(0)
         val countOfAllGenres by genresListRepository.observeCountOfAllGenres().collectAsRetainedState(0)
         val countOfAllInstruments by instrumentsListRepository.observeCountOfAllInstruments()
             .collectAsRetainedState(0)
-        val countOfAllLabels by labelsListRepository.observeCountOfAllLabels().collectAsRetainedState(0)
-        val countOfAllPlaces by placesListRepository.observeCountOfAllPlaces().collectAsRetainedState(0)
-        val countOfAllRecordings by recordingsListRepository.observeCountOfAllRecordings()
-            .collectAsRetainedState(0)
+        val countOfAllLabels by labelsListRepository.observeCountOfLabels(
+            browseMethod = BrowseMethod.All,
+        ).collectAsRetainedState(0)
+        val countOfAllPlaces by placesListRepository.observeCountOfPlaces(
+            browseMethod = BrowseMethod.All,
+        ).collectAsRetainedState(0)
+        val countOfAllRecordings by recordingsListRepository.observeCountOfRecordings(
+            browseMethod = BrowseMethod.All,
+        ).collectAsRetainedState(0)
         val countOfAllReleases by releasesListRepository.observeCountOfReleases(
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
@@ -70,7 +79,9 @@ internal class DatabasePresenter(
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
         val countOfAllSeries by seriesListRepository.observeCountOfAllSeries().collectAsRetainedState(0)
-        val countOfAllWorks by worksListRepository.observeCountOfAllWorks().collectAsRetainedState(0)
+        val countOfAllWorks by worksListRepository.observeCountOfWorks(
+            browseMethod = BrowseMethod.All,
+        ).collectAsRetainedState(0)
 
         fun eventSink(event: DatabaseUiEvent) {
             when (event) {
@@ -111,7 +122,7 @@ internal data class DatabaseUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val lazyListState: LazyListState = LazyListState(),
     val countOfAllImages: Long = 0,
-    val entitiesCount: ImmutableMap<MusicBrainzEntity, Long> = persistentMapOf(),
+    val entitiesCount: ImmutableMap<MusicBrainzEntity, Int> = persistentMapOf(),
     val eventSink: (DatabaseUiEvent) -> Unit = {},
 ) : CircuitUiState
 

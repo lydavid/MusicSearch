@@ -40,7 +40,7 @@ class ReleasesListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfReleases(browseMethod: BrowseMethod?): Flow<Long> {
+    override fun observeCountOfReleases(browseMethod: BrowseMethod?): Flow<Int> {
         if (browseMethod == null) return flowOf()
         return releaseDao.observeCountOfReleases(browseMethod = browseMethod)
     }

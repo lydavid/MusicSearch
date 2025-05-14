@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.artist
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -37,8 +38,9 @@ class ArtistsListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfAllArtists(): Flow<Long> {
-        return artistDao.observeCountOfAllArtists()
+    override fun observeCountOfArtists(browseMethod: BrowseMethod?): Flow<Int> {
+        if (browseMethod == null) return flowOf()
+        return artistDao.observeCountOfArtists(browseMethod = browseMethod)
     }
 
     override fun getLinkedEntitiesPagingSource(

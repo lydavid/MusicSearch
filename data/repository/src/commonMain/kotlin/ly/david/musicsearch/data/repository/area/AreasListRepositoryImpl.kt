@@ -37,7 +37,7 @@ class AreasListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfAllAreas(): Flow<Long> {
+    override fun observeCountOfAllAreas(): Flow<Int> {
         return areaDao.observeCountOfAllAreas()
     }
 

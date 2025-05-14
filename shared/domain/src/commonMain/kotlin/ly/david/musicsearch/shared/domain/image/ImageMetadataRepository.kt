@@ -32,7 +32,7 @@ interface ImageMetadataRepository {
     suspend fun saveImageMetadata(
         mbid: String,
         entity: MusicBrainzEntity,
-        itemsCount: Long,
+        itemsCount: Int,
     )
 
     fun getNumberOfImageMetadataById(mbid: String): Int

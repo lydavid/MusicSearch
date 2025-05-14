@@ -12,5 +12,5 @@ interface SeriesListRepository {
         listFilters: ListFilters,
     ): Flow<PagingData<SeriesListItemModel>>
 
-    fun observeCountOfAllSeries(): Flow<Long>
+    fun observeCountOfAllSeries(): Flow<Int>
 }

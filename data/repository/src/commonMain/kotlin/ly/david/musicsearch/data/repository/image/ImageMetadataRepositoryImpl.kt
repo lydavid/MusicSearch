@@ -103,7 +103,7 @@ internal class ImageMetadataRepositoryImpl(
     override suspend fun saveImageMetadata(
         mbid: String,
         entity: MusicBrainzEntity,
-        itemsCount: Long,
+        itemsCount: Int,
     ) {
         // Reset the clock each time we make a network call.
         lastSaved = Clock.System.now()

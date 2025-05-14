@@ -12,5 +12,5 @@ interface PlacesListRepository {
         listFilters: ListFilters = ListFilters(),
     ): Flow<PagingData<PlaceListItemModel>>
 
-    fun observeCountOfAllPlaces(): Flow<Long>
+    fun observeCountOfPlaces(browseMethod: BrowseMethod?): Flow<Int>
 }

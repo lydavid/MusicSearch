@@ -37,7 +37,7 @@ class GenresListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfAllGenres(): Flow<Long> {
+    override fun observeCountOfAllGenres(): Flow<Int> {
         return genreDao.observeCountOfAllGenres()
     }
 
