@@ -24,11 +24,13 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import ly.david.musicsearch.shared.domain.releasegroup.usecase.GetReleaseGroups
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class ReleaseGroupsListPresenter(
     private val getReleaseGroups: GetReleaseGroups,
+    private val releaseGroupsListRepository: ReleaseGroupsListRepository,
     private val appPreferences: AppPreferences,
     private val imageMetadataRepository: ImageMetadataRepository,
 ) : Presenter<ReleaseGroupsListUiState> {
@@ -51,6 +53,9 @@ class ReleaseGroupsListPresenter(
                 ),
             )
         }
+        val releaseGroupCount: Long by releaseGroupsListRepository.observeCountOfReleaseGroups(
+            browseMethod = browseMethod,
+        ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()
         var requestedImageMetadataForIds: Set<String> by remember { mutableStateOf(setOf()) }
 
@@ -63,6 +68,7 @@ class ReleaseGroupsListPresenter(
                             imageMetadataRepository.saveImageMetadata(
                                 mbid = event.entityId,
                                 entity = MusicBrainzEntity.RELEASE_GROUP,
+                                itemsCount = releaseGroupCount,
                             )
                         }
                     }

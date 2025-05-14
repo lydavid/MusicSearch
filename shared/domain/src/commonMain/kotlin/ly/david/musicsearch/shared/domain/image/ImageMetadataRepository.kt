@@ -26,10 +26,13 @@ interface ImageMetadataRepository {
      * Saves metadata for an image, eventually. For performance reasons, we will batch the write to the database.
      *
      * Appropriate for getting images in a list view, where each item will contain its own image metadata.
+     *
+     * @param itemsCount How many list item there are. We use this to determine whether we should batch the write.
      */
     suspend fun saveImageMetadata(
         mbid: String,
         entity: MusicBrainzEntity,
+        itemsCount: Long,
     )
 
     fun getNumberOfImageMetadataById(mbid: String): Int

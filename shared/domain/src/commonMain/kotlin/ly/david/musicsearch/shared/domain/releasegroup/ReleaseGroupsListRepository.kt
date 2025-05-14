@@ -12,5 +12,5 @@ interface ReleaseGroupsListRepository {
         listFilters: ListFilters,
     ): Flow<PagingData<ListItemModel>>
 
-    fun observeCountOfAllReleaseGroups(): Flow<Long>
+    fun observeCountOfReleaseGroups(browseMethod: BrowseMethod?): Flow<Long>
 }

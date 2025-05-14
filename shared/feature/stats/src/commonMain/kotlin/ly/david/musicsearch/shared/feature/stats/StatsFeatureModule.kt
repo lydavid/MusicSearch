@@ -21,7 +21,8 @@ val statsFeatureModule = module {
                         labelDao = get(),
                         placeDao = get(),
                         recordingDao = get(),
-                        releaseDao = get(),
+                        releasesListRepository = get(),
+                        releaseGroupsListRepository = get(),
                         releaseGroupDao = get(),
                         workDao = get(),
                     )

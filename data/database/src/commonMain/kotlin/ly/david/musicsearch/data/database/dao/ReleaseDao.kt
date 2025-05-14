@@ -389,8 +389,17 @@ class ReleaseDao(
         },
     )
 
-    fun observeCountOfAllReleases(): Flow<Long> =
-        getCountOfAllReleases(query = "")
+    fun observeCountOfReleases(
+        browseMethod: BrowseMethod,
+    ): Flow<Long> =
+        if (browseMethod is BrowseMethod.ByEntity) {
+            getCountOfReleasesByEntityQuery(
+                entityId = browseMethod.entityId,
+                query = "",
+            )
+        } else {
+            getCountOfAllReleases(query = "")
+        }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
 

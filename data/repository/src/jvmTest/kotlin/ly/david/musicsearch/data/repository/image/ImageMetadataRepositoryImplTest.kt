@@ -730,6 +730,7 @@ class ImageMetadataRepositoryImplTest :
             repository.saveImageMetadata(
                 mbid = "$it",
                 entity = MusicBrainzEntity.RELEASE,
+                itemsCount = 99,
             )
         }
         repository.observeAllImageMetadata(
@@ -738,55 +739,20 @@ class ImageMetadataRepositoryImplTest :
             sortOption = ImagesSortOption.RECENTLY_ADDED,
         ).asSnapshot().run {
             Assert.assertEquals(
-                0,
+                99,
                 size,
             )
         }
         repository.saveImageMetadata(
             mbid = "100",
             entity = MusicBrainzEntity.RELEASE,
+            itemsCount = 100,
         )
         repository.observeAllImageMetadata(
             mbid = null,
             query = "",
             sortOption = ImagesSortOption.RECENTLY_ADDED,
         ).asSnapshot().run {
-            Assert.assertEquals(
-                100,
-                size,
-            )
-        }
-    }
-
-    @Test
-    fun `queue 100 lookups for image metadata`() = runTest {
-        val repository = createRepository(
-            coverArtUrlsProducer = { _, _ ->
-                listOf(
-                    CoverArtUrls(
-                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                        front = true,
-                        thumbnailsUrls = ThumbnailsUrls(
-                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                        ),
-                    ),
-                )
-            },
-        )
-
-        (1..100).forEach {
-            repository.saveImageMetadata(
-                mbid = "$it",
-                entity = MusicBrainzEntity.RELEASE,
-            )
-        }
-        repository.observeAllImageMetadata(
-            mbid = null,
-            query = "",
-            sortOption = ImagesSortOption.RECENTLY_ADDED,
-        ).asSnapshot {
-            scrollTo(100)
-        }.run {
             Assert.assertEquals(
                 100,
                 size,
@@ -821,6 +787,7 @@ class ImageMetadataRepositoryImplTest :
             repository.saveImageMetadata(
                 mbid = "$it",
                 entity = MusicBrainzEntity.RELEASE,
+                itemsCount = 100,
             )
         }
         repository.observeAllImageMetadata(
@@ -857,6 +824,7 @@ class ImageMetadataRepositoryImplTest :
             repository.saveImageMetadata(
                 mbid = "$it",
                 entity = MusicBrainzEntity.RELEASE,
+                itemsCount = 99,
             )
         }
         testScheduler.advanceTimeBy(3.seconds)
@@ -873,7 +841,7 @@ class ImageMetadataRepositoryImplTest :
     }
 
     @Test
-    fun `queue more than 100 lookups for image metadata`() = runTest {
+    fun `when less than 200 items, save immediately, otherwise batch writes`() = runTest {
         val repository = createRepository(
             coverArtUrlsProducer = { _, _ ->
                 listOf(
@@ -888,27 +856,66 @@ class ImageMetadataRepositoryImplTest :
             },
         )
 
-        (1..299).forEach {
+        (1..100).forEach {
             repository.saveImageMetadata(
                 mbid = "$it",
                 entity = MusicBrainzEntity.RELEASE,
+                itemsCount = 100,
             )
+            repository.observeAllImageMetadata(
+                mbid = null,
+                query = "",
+                sortOption = ImagesSortOption.RECENTLY_ADDED,
+            ).asSnapshot().run {
+                Assert.assertEquals(
+                    it,
+                    size,
+                )
+            }
         }
-        repository.observeAllImageMetadata(
-            mbid = null,
-            query = "",
-            sortOption = ImagesSortOption.RECENTLY_ADDED,
-        ).asSnapshot {
-            scrollTo(100)
-        }.run {
-            Assert.assertEquals(
-                200,
-                size,
+        (101..200).forEach {
+            repository.saveImageMetadata(
+                mbid = "$it",
+                entity = MusicBrainzEntity.RELEASE,
+                itemsCount = 200, // This value will be updated as more data is loaded into our local database
             )
+            repository.observeAllImageMetadata(
+                mbid = null,
+                query = "",
+                sortOption = ImagesSortOption.RECENTLY_ADDED,
+            ).asSnapshot {
+                scrollTo(100)
+            }.run {
+                Assert.assertEquals(
+                    it,
+                    size,
+                )
+            }
+        }
+
+        (201..299).forEach {
+            repository.saveImageMetadata(
+                mbid = "$it",
+                entity = MusicBrainzEntity.RELEASE,
+                itemsCount = 300,
+            )
+            repository.observeAllImageMetadata(
+                mbid = null,
+                query = "",
+                sortOption = ImagesSortOption.RECENTLY_ADDED,
+            ).asSnapshot {
+                scrollTo(200)
+            }.run {
+                Assert.assertEquals(
+                    200,
+                    size,
+                )
+            }
         }
         repository.saveImageMetadata(
             mbid = "300",
             entity = MusicBrainzEntity.RELEASE,
+            itemsCount = 300,
         )
         repository.observeAllImageMetadata(
             mbid = null,

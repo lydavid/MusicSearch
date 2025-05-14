@@ -14,6 +14,7 @@ import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableMap
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.area.AreasListRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
 import ly.david.musicsearch.shared.domain.event.EventsListRepository
@@ -62,9 +63,12 @@ internal class DatabasePresenter(
         val countOfAllPlaces by placesListRepository.observeCountOfAllPlaces().collectAsRetainedState(0)
         val countOfAllRecordings by recordingsListRepository.observeCountOfAllRecordings()
             .collectAsRetainedState(0)
-        val countOfAllReleases by releasesListRepository.observeCountOfAllReleases().collectAsRetainedState(0)
-        val countOfAllReleaseGroups by releaseGroupsListRepository.observeCountOfAllReleaseGroups()
-            .collectAsRetainedState(0)
+        val countOfAllReleases by releasesListRepository.observeCountOfReleases(
+            browseMethod = BrowseMethod.All,
+        ).collectAsRetainedState(0)
+        val countOfAllReleaseGroups by releaseGroupsListRepository.observeCountOfReleaseGroups(
+            browseMethod = BrowseMethod.All,
+        ).collectAsRetainedState(0)
         val countOfAllSeries by seriesListRepository.observeCountOfAllSeries().collectAsRetainedState(0)
         val countOfAllWorks by worksListRepository.observeCountOfAllWorks().collectAsRetainedState(0)
 

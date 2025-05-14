@@ -26,11 +26,13 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 import ly.david.musicsearch.shared.domain.release.usecase.GetReleases
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class ReleasesListPresenter(
     private val getReleases: GetReleases,
+    private val releasesListRepository: ReleasesListRepository,
     private val appPreferences: AppPreferences,
     private val imageMetadataRepository: ImageMetadataRepository,
 ) : Presenter<ReleasesListUiState> {
@@ -50,6 +52,9 @@ class ReleasesListPresenter(
                 ),
             )
         }
+        val releaseCount: Long by releasesListRepository.observeCountOfReleases(
+            browseMethod = browseMethod,
+        ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()
         val scope = rememberCoroutineScope()
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
@@ -64,6 +69,7 @@ class ReleasesListPresenter(
                             imageMetadataRepository.saveImageMetadata(
                                 mbid = event.entityId,
                                 entity = MusicBrainzEntity.RELEASE,
+                                itemsCount = releaseCount,
                             )
                         }
                     }

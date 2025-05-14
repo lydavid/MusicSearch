@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.release
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
@@ -39,8 +40,9 @@ class ReleasesListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfAllReleases(): Flow<Long> {
-        return releaseDao.observeCountOfAllReleases()
+    override fun observeCountOfReleases(browseMethod: BrowseMethod?): Flow<Long> {
+        if (browseMethod == null) return flowOf()
+        return releaseDao.observeCountOfReleases(browseMethod = browseMethod)
     }
 
     override fun getLinkedEntitiesPagingSource(

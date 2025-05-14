@@ -42,7 +42,8 @@ interface ReleaseGroupDao : EntityDao {
         query: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseGroupListItemModel>
-    fun observeCountOfAllReleaseGroups(): Flow<Long>
+
+    fun observeCountOfAllReleaseGroups(browseMethod: BrowseMethod): Flow<Long>
 }
 
 class ReleaseGroupDaoImpl(
@@ -142,20 +143,22 @@ class ReleaseGroupDaoImpl(
         transacter.deleteReleaseGroupLinksByEntity(entityId = artistId)
     }
 
+    private fun getCountOfReleaseGroupsByArtistQuery(
+        artistId: String,
+        query: String,
+    ) = transacter.getNumberOfReleaseGroupsByEntity(
+        artistId = artistId,
+        query = "%$query%",
+    )
+
     override fun observeCountOfReleaseGroupsByArtist(artistId: String): Flow<Int> =
-        transacter.getNumberOfReleaseGroupsByEntity(
-            artistId = artistId,
-            query = "%%",
-        )
+        getCountOfReleaseGroupsByArtistQuery(artistId, query = "")
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
 
     override fun getCountOfReleaseGroupsByArtist(artistId: String): Int =
-        transacter.getNumberOfReleaseGroupsByEntity(
-            artistId = artistId,
-            query = "%%",
-        )
+        getCountOfReleaseGroupsByArtistQuery(artistId, query = "")
             .executeAsOne()
             .toInt()
 
@@ -202,8 +205,15 @@ class ReleaseGroupDaoImpl(
         }
     }
 
-    override fun observeCountOfAllReleaseGroups(): Flow<Long> =
-        getCountOfAllReleaseGroups(query = "")
+    override fun observeCountOfAllReleaseGroups(browseMethod: BrowseMethod): Flow<Long> =
+        if (browseMethod is BrowseMethod.ByEntity) {
+            getCountOfReleaseGroupsByArtistQuery(
+                artistId = browseMethod.entityId,
+                query = "",
+            )
+        } else {
+            getCountOfAllReleaseGroups(query = "")
+        }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
 
@@ -238,7 +248,7 @@ class ReleaseGroupDaoImpl(
         query: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfReleaseGroupsByEntity(
+        countQuery = getCountOfReleaseGroupsByArtistQuery(
             artistId = entityId,
             query = "%$query%",
         ),

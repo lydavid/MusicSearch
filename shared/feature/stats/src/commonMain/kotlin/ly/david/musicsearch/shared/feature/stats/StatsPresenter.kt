@@ -9,18 +9,21 @@ import kotlinx.collections.immutable.toPersistentHashMap
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
-import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.WorkDao
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
+import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
@@ -33,7 +36,8 @@ internal class StatsPresenter(
     private val eventDao: EventDao,
     private val labelDao: LabelDao,
     private val placeDao: PlaceDao,
-    private val releaseDao: ReleaseDao,
+    private val releasesListRepository: ReleasesListRepository,
+    private val releaseGroupsListRepository: ReleaseGroupsListRepository,
     private val releaseGroupDao: ReleaseGroupDao,
     private val recordingDao: RecordingDao,
     private val workDao: WorkDao,
@@ -53,8 +57,18 @@ internal class StatsPresenter(
                 MusicBrainzEntity.LABEL -> labelDao.observeCountOfLabelsByEntity(entityId)
                 MusicBrainzEntity.PLACE -> placeDao.observeCountOfPlacesByArea(entityId)
                 MusicBrainzEntity.RECORDING -> recordingDao.observeCountOfRecordingsByEntity(entityId)
-                MusicBrainzEntity.RELEASE -> releaseDao.observeCountOfReleasesByEntity(entityId)
-                MusicBrainzEntity.RELEASE_GROUP -> releaseGroupDao.observeCountOfReleaseGroupsByArtist(entityId)
+                MusicBrainzEntity.RELEASE -> releasesListRepository.observeCountOfReleases(
+                    browseMethod = BrowseMethod.ByEntity(
+                        entity = entity,
+                        entityId = entityId,
+                    ),
+                ).map { it.toInt() }
+                MusicBrainzEntity.RELEASE_GROUP -> releaseGroupsListRepository.observeCountOfReleaseGroups(
+                    browseMethod = BrowseMethod.ByEntity(
+                        entity = entity,
+                        entityId = entityId,
+                    ),
+                ).map { it.toInt() }
                 MusicBrainzEntity.WORK -> workDao.observeCountOfWorksByEntity(entityId)
                 else -> flowOf(0)
             }

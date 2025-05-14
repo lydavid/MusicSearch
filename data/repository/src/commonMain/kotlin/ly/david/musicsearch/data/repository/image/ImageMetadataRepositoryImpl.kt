@@ -25,6 +25,10 @@ import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import kotlin.time.Duration.Companion.seconds
 
+private const val THRESHOLD_TO_BATCH_WRITES = 200
+private const val MAX_BATCH_SIZE = 100
+private val maxWaitTime = 3.seconds
+
 internal class ImageMetadataRepositoryImpl(
     private val coverArtArchiveApi: CoverArtArchiveApi,
     private val imageUrlDao: ImageUrlDao,
@@ -95,12 +99,11 @@ internal class ImageMetadataRepositoryImpl(
     private var saveImageMetadataJob: Job? = null
     private var mbidToImageMetadataMap: HashMap<String, List<ImageMetadata>> = hashMapOf()
     private var lastSaved = Clock.System.now()
-    private var maxWaitTime = 3.seconds
-    private var maxBatchSize: Int = 100
 
     override suspend fun saveImageMetadata(
         mbid: String,
         entity: MusicBrainzEntity,
+        itemsCount: Long,
     ) {
         // Reset the clock each time we make a network call.
         lastSaved = Clock.System.now()
@@ -115,7 +118,9 @@ internal class ImageMetadataRepositoryImpl(
 
         saveImageMetadataJob?.cancel()
         val newJob = coroutineScope.launch {
-            val isReadyToSave = mbidToImageMetadataMap.size >= maxBatchSize ||
+            val shouldBatch = itemsCount > THRESHOLD_TO_BATCH_WRITES
+            val isReadyToSave = !shouldBatch ||
+                mbidToImageMetadataMap.size >= MAX_BATCH_SIZE ||
                 Clock.System.now() - lastSaved >= maxWaitTime
 
             if (isReadyToSave) {
