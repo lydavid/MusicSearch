@@ -250,7 +250,7 @@ class ReleaseGroupDaoImpl(
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
         countQuery = getCountOfReleaseGroupsByArtistQuery(
             artistId = entityId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
