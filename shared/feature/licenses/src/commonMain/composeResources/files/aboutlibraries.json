@@ -6969,7 +6969,7 @@
                     "name": "JetBrains Team"
                 }
             ],
-            "artifactVersion": "0.3.8",
+            "artifactVersion": "0.4.0",
             "description": "Kotlin Immutable Collections multiplatform library",
             "scm": {
                 "url": "https://github.com/Kotlin/kotlinx.collections.immutable"
@@ -6991,7 +6991,7 @@
                     "name": "JetBrains Team"
                 }
             ],
-            "artifactVersion": "0.3.8",
+            "artifactVersion": "0.4.0",
             "description": "Kotlin Immutable Collections multiplatform library",
             "scm": {
                 "url": "https://github.com/Kotlin/kotlinx.collections.immutable"
