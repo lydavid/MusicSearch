@@ -35,13 +35,17 @@ private fun Context.isNotificationListenerEnabled(): Boolean {
 
 @PreviewLightDark
 @Composable
-internal fun PreviewSettingsScreen() {
+internal fun PreviewSettingsScreenAndroid() {
     PreviewTheme {
         Surface {
             SettingsUi(
-                versionName = "1.0.0",
-                versionCode = 1,
-                databaseVersion = "1",
+                state = SettingsUiState(
+                    databaseVersion = "1",
+                ),
+                showAndroidSettings = true,
+                isNotificationListenerEnabled = false,
+                versionName = "1.2.3",
+                versionCode = 123,
             )
         }
     }
@@ -53,10 +57,67 @@ internal fun PreviewSettingsScreenNotificationListenerEnable() {
     PreviewTheme {
         Surface {
             SettingsUi(
+                state = SettingsUiState(
+                    databaseVersion = "1",
+                ),
+                showAndroidSettings = true,
                 isNotificationListenerEnabled = true,
-                versionName = "1.0.0",
-                versionCode = 1,
-                databaseVersion = "1",
+                versionName = "1.2.3",
+                versionCode = 123,
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewSettingsScreenAndroidWithCrashReporting() {
+    PreviewTheme {
+        Surface {
+            SettingsUi(
+                state = SettingsUiState(
+                    databaseVersion = "1",
+                    showCrashReporterSettings = true,
+                ),
+                showAndroidSettings = true,
+                versionName = "1.2.3",
+                versionCode = 123,
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewSettingsScreenNonAndroid() {
+    PreviewTheme {
+        Surface {
+            SettingsUi(
+                state = SettingsUiState(
+                    databaseVersion = "1",
+                ),
+                showAndroidSettings = false,
+                versionName = "1.2.3",
+                versionCode = 123,
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewSettingsScreenLoggedIn() {
+    PreviewTheme {
+        Surface {
+            SettingsUi(
+                state = SettingsUiState(
+                    databaseVersion = "1",
+                    username = "david",
+                    accessToken = "token",
+                ),
+                showAndroidSettings = false,
+                versionName = "1.2.3",
+                versionCode = 123,
             )
         }
     }

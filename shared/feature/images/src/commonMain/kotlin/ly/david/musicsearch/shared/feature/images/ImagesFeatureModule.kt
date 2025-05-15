@@ -30,7 +30,7 @@ val imagesFeatureModule = module {
             when (screen) {
                 is CoverArtsScreen -> {
                     ui<ImagesUiState> { state, modifier ->
-                        ImagesGridUi(
+                        ImagesUi(
                             state = state,
                             modifier = modifier,
                         )

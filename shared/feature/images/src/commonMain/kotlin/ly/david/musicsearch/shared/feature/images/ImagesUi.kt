@@ -66,7 +66,7 @@ import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-internal fun ImagesGridUi(
+internal fun ImagesUi(
     state: ImagesUiState,
     modifier: Modifier = Modifier,
 ) {
@@ -77,7 +77,7 @@ internal fun ImagesGridUi(
     }
 
     val windowSizeClass: WindowSizeClass = calculateWindowSizeClass()
-    ImagesGridUi(
+    ImagesUi(
         state = state,
         isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
         modifier = modifier,
@@ -88,7 +88,7 @@ internal fun ImagesGridUi(
     ExperimentalMaterial3Api::class,
 )
 @Composable
-internal fun ImagesGridUi(
+internal fun ImagesUi(
     state: ImagesUiState,
     isCompact: Boolean,
     modifier: Modifier = Modifier,

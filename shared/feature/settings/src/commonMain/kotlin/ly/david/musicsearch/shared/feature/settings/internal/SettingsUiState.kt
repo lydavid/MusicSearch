@@ -4,15 +4,15 @@ import com.slack.circuit.runtime.CircuitUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 
 internal data class SettingsUiState(
-    val username: String,
-    val accessToken: String?,
+    val username: String = "",
+    val accessToken: String? = null,
     val showMoreInfoInReleaseListItem: Boolean = true,
     val sortReleaseGroupListItems: Boolean = false,
     val showCrashReporterSettings: Boolean = false,
     val isCrashReportingEnabled: Boolean = false,
-    val loginState: LoginUiState,
+    val loginState: LoginUiState = LoginUiState(),
     val snackbarMessage: String? = null,
-    val databaseVersion: String,
-    val isDeveloperMode: Boolean,
-    val eventSink: (SettingsUiEvent) -> Unit,
+    val databaseVersion: String = "",
+    val isDeveloperMode: Boolean = false,
+    val eventSink: (SettingsUiEvent) -> Unit = {},
 ) : CircuitUiState

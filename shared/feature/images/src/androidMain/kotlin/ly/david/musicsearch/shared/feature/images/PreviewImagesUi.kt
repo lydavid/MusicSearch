@@ -38,7 +38,7 @@ internal fun PreviewImagesGridUi() {
     InitializeFakeImageLoader()
     PreviewTheme {
         Surface {
-            ImagesGridUi(
+            ImagesUi(
                 state = ImagesUiState(
                     title = ImagesTitle.All,
                     imageMetadataPagingDataFlow = images,
@@ -55,7 +55,7 @@ internal fun PreviewImagesPagerUiCompact() {
     InitializeFakeImageLoader()
     PreviewTheme {
         Surface {
-            ImagesGridUi(
+            ImagesUi(
                 state = ImagesUiState(
                     title = ImagesTitle.Selected(
                         typeAndComment = "Front",
@@ -78,7 +78,7 @@ internal fun PreviewImagesPagerUiNonCompact() {
     InitializeFakeImageLoader()
     PreviewTheme {
         Surface {
-            ImagesGridUi(
+            ImagesUi(
                 state = ImagesUiState(
                     title = ImagesTitle.Selected(
                         typeAndComment = "Front",

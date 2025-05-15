@@ -27,7 +27,6 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
-import com.slack.circuit.runtime.screen.Screen
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
@@ -59,6 +58,8 @@ internal fun SettingsUi(
     showAndroidSettings: Boolean,
     modifier: Modifier = Modifier,
     isNotificationListenerEnabled: Boolean = false,
+    versionName: String = BuildConfig.VERSION_NAME,
+    versionCode: Int = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
     onGoToNotificationListenerSettings: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
@@ -98,44 +99,15 @@ internal fun SettingsUi(
         },
     ) { innerPadding ->
         SettingsUi(
+            state = state,
             modifier = Modifier.padding(innerPadding),
-            username = state.username,
-            showLogin = state.accessToken.isNullOrEmpty(),
-            onLoginClick = {
-                loginEventSink(LoginUiEvent.StartLogin)
-            },
-            onLogoutClick = {
-                eventSink(SettingsUiEvent.Logout)
-            },
-            onDestinationClick = {
-                eventSink(SettingsUiEvent.GoToScreen(it))
-            },
             showAndroidSettings = showAndroidSettings,
-            showMoreInfoInReleaseListItem = state.showMoreInfoInReleaseListItem,
-            onShowMoreInfoInReleaseListItemChange = {
-                eventSink(SettingsUiEvent.UpdateShowMoreInfoInReleaseListItem(it))
-            },
-            sortReleaseGroupListItems = state.sortReleaseGroupListItems,
-            onSortReleaseGroupListItemsChange = {
-                eventSink(SettingsUiEvent.UpdateSortReleaseGroupListItems(it))
-            },
             isNotificationListenerEnabled = isNotificationListenerEnabled,
             onGoToNotificationListenerSettings = onGoToNotificationListenerSettings,
-            showCrashReporterSettings = state.showCrashReporterSettings,
-            isCrashReportingEnabled = state.isCrashReportingEnabled,
-            onCrashReportingEnabledChange = {
-                eventSink(SettingsUiEvent.EnableCrashReporting(it))
-            },
-            export = {
-                eventSink(SettingsUiEvent.ExportDatabase)
-            },
-            versionName = BuildConfig.VERSION_NAME,
-            versionCode = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
-            databaseVersion = state.databaseVersion,
-            isDeveloperMode = state.isDeveloperMode,
-            onDeveloperModeChange = {
-                eventSink(SettingsUiEvent.EnableDeveloperMode(it))
-            },
+            versionName = versionName,
+            versionCode = versionCode,
+            eventSink = eventSink,
+            loginEventSink = loginEventSink,
         )
     }
 }
@@ -144,28 +116,15 @@ private const val DEVELOPER_MODE_CLICK_COUNT_TO_ENABLE = 7
 
 @Composable
 internal fun SettingsUi(
+    state: SettingsUiState,
+    showAndroidSettings: Boolean,
     modifier: Modifier = Modifier,
-    username: String = "",
-    showLogin: Boolean = true,
-    onLoginClick: () -> Unit = {},
-    onLogoutClick: () -> Unit = {},
-    onDestinationClick: (Screen) -> Unit = {},
-    showAndroidSettings: Boolean = true,
-    showMoreInfoInReleaseListItem: Boolean = true,
-    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
-    sortReleaseGroupListItems: Boolean = false,
-    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
     isNotificationListenerEnabled: Boolean = false,
+    versionName: String = BuildConfig.VERSION_NAME,
+    versionCode: Int = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
     onGoToNotificationListenerSettings: () -> Unit = {},
-    showCrashReporterSettings: Boolean = false,
-    isCrashReportingEnabled: Boolean = false,
-    onCrashReportingEnabledChange: (Boolean) -> Unit = {},
-    export: () -> Unit = {},
-    versionName: String = "",
-    versionCode: Int = 0,
-    databaseVersion: String = "",
-    isDeveloperMode: Boolean = false,
-    onDeveloperModeChange: (Boolean) -> Unit = {},
+    eventSink: (SettingsUiEvent) -> Unit = {},
+    loginEventSink: (LoginUiEvent) -> Unit = {},
 ) {
     val strings = LocalStrings.current
     val clipboard = LocalClipboard.current
@@ -177,38 +136,38 @@ internal fun SettingsUi(
     LazyColumn(modifier = modifier) {
         item {
             ProfileCard(
-                username = username,
-                showLogin = showLogin,
-                onLoginClick = onLoginClick,
-                onLogoutClick = onLogoutClick,
+                username = state.username,
+                showLogin = state.accessToken.isNullOrEmpty(),
+                onLoginClick = { loginEventSink(LoginUiEvent.StartLogin) },
+                onLogoutClick = { eventSink(SettingsUiEvent.Logout) },
             )
 
             ClickableItem(
                 title = strings.appearance,
                 endIcon = CustomIcons.ChevronRight,
                 onClick = {
-                    onDestinationClick(AppearanceSettingsScreen)
+                    eventSink(SettingsUiEvent.GoToScreen(AppearanceSettingsScreen))
                 },
             )
 
             SettingSwitch(
                 header = "Show more info in release list items",
-                checked = showMoreInfoInReleaseListItem,
-                onCheckedChange = onShowMoreInfoInReleaseListItemChange,
+                checked = state.showMoreInfoInReleaseListItem,
+                onCheckedChange = { eventSink(SettingsUiEvent.UpdateShowMoreInfoInReleaseListItem(it)) },
             )
 
             SettingSwitch(
                 header = "Sort release groups by type",
-                checked = sortReleaseGroupListItems,
-                onCheckedChange = onSortReleaseGroupListItemsChange,
+                checked = state.sortReleaseGroupListItems,
+                onCheckedChange = { eventSink(SettingsUiEvent.UpdateSortReleaseGroupListItems(it)) },
             )
 
-            if (showCrashReporterSettings) {
+            if (state.showCrashReporterSettings) {
                 SettingSwitch(
                     header = "Enable crash reporting",
                     subtitle = "App restart is required when switching off",
-                    checked = isCrashReportingEnabled,
-                    onCheckedChange = onCrashReportingEnabledChange,
+                    checked = state.isCrashReportingEnabled,
+                    onCheckedChange = { eventSink(SettingsUiEvent.EnableCrashReporting(it)) },
                 )
             }
 
@@ -220,7 +179,7 @@ internal fun SettingsUi(
                         subtitle = strings.nowPlayingHistorySubtitle,
                         endIcon = CustomIcons.ChevronRight,
                         onClick = {
-                            onDestinationClick(NowPlayingHistoryScreen)
+                            eventSink(SettingsUiEvent.GoToScreen(NowPlayingHistoryScreen))
                         },
                     )
                 } else {
@@ -236,14 +195,14 @@ internal fun SettingsUi(
                     subtitle = strings.spotifySubtitle,
                     endIcon = CustomIcons.ChevronRight,
                     onClick = {
-                        onDestinationClick(SpotifyHistoryScreen)
+                        eventSink(SettingsUiEvent.GoToScreen(SpotifyHistoryScreen))
                     },
                 )
             }
 
             ListSeparatorHeader(text = "Database")
 
-            TextButton(onClick = export) {
+            TextButton(onClick = { eventSink(SettingsUiEvent.ExportDatabase) }) {
                 Icon(imageVector = CustomIcons.Download, contentDescription = null)
                 Text(
                     text = "Save database to Downloads",
@@ -258,12 +217,12 @@ internal fun SettingsUi(
                 title = strings.openSourceLicenses,
                 endIcon = CustomIcons.ChevronRight,
                 onClick = {
-                    onDestinationClick(LicensesScreen)
+                    eventSink(SettingsUiEvent.GoToScreen(LicensesScreen))
                 },
             )
 
             val appVersionText = "${strings.appVersion}: $versionName ($versionCode)"
-            val databaseVersionText = "${strings.databaseVersion}: $databaseVersion"
+            val databaseVersionText = "${strings.databaseVersion}: ${state.databaseVersion}"
             ClickableItem(
                 title = appVersionText,
                 subtitle = databaseVersionText,
@@ -277,16 +236,16 @@ internal fun SettingsUi(
                         )
                         developerModeClickCount++
                         if (developerModeClickCount >= DEVELOPER_MODE_CLICK_COUNT_TO_ENABLE) {
-                            onDeveloperModeChange(true)
+                            eventSink(SettingsUiEvent.EnableDeveloperMode(true))
                         }
                     }
                 },
             )
 
-            if (isDeveloperMode) {
+            if (state.isDeveloperMode) {
                 DevSettingsSection(
-                    isDeveloperMode = isDeveloperMode,
-                    onDeveloperModeChange = onDeveloperModeChange,
+                    isDeveloperMode = state.isDeveloperMode,
+                    onDeveloperModeChange = { eventSink(SettingsUiEvent.EnableDeveloperMode(it)) },
                 )
             }
 
