@@ -2,6 +2,8 @@ package ly.david.data.test.preferences
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import ly.david.musicsearch.shared.domain.DEFAULT_IMAGES_GRID_PADDING_DP
+import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
@@ -90,6 +92,20 @@ open class NoOpAppPreferences : AppPreferences {
         get() = flowOf(false)
 
     override fun setDeveloperMode(enable: Boolean) {
+        // No-op.
+    }
+
+    override val observeNumberOfImagesPerRow: Flow<Int>
+        get() = flowOf(DEFAULT_NUMBER_OF_IMAGES_PER_ROW)
+
+    override fun setNumberOfImagesPerRow(numberOfImagesPerRow: Int) {
+        // No-op.
+    }
+
+    override val observeImagesGridPaddingDp: Flow<Int>
+        get() = flowOf(DEFAULT_IMAGES_GRID_PADDING_DP)
+
+    override fun setImagesGridPaddingDp(padding: Int) {
         // No-op.
     }
 }

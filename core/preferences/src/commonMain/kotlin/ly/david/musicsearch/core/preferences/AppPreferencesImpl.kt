@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.logging.crash.CrashReporterSettings
+import ly.david.musicsearch.shared.domain.DEFAULT_IMAGES_GRID_PADDING_DP
+import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.DEFAULT_SEED_COLOR_INT
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
@@ -227,6 +229,36 @@ internal class AppPreferencesImpl(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[isDeveloperModePreference] = enable
+            }
+        }
+    }
+
+    private val numberOfImagesPerRowPreference = intPreferencesKey("numberOfImagesPerRow")
+    override val observeNumberOfImagesPerRow: Flow<Int>
+        get() = preferencesDataStore.data
+            .map {
+                it[numberOfImagesPerRowPreference] ?: DEFAULT_NUMBER_OF_IMAGES_PER_ROW
+            }
+
+    override fun setNumberOfImagesPerRow(numberOfImagesPerRow: Int) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[numberOfImagesPerRowPreference] = numberOfImagesPerRow
+            }
+        }
+    }
+
+    private val imagesGridPaddingDpPreference = intPreferencesKey("imagesGridPaddingDp")
+    override val observeImagesGridPaddingDp: Flow<Int>
+        get() = preferencesDataStore.data
+            .map {
+                it[imagesGridPaddingDpPreference] ?: DEFAULT_IMAGES_GRID_PADDING_DP
+            }
+
+    override fun setImagesGridPaddingDp(padding: Int) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[imagesGridPaddingDpPreference] = padding
             }
         }
     }

@@ -79,6 +79,9 @@ data object SettingsScreen : Screen
 data object AppearanceSettingsScreen : Screen
 
 @Parcelize
+data object ImagesSettingsScreen : Screen
+
+@Parcelize
 data object LicensesScreen : Screen
 
 @Parcelize

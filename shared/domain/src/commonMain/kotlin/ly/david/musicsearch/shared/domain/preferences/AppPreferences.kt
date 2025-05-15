@@ -2,8 +2,8 @@ package ly.david.musicsearch.shared.domain.preferences
 
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
-import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
+import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 
 interface AppPreferences {
 
@@ -49,4 +49,10 @@ interface AppPreferences {
 
     val isDeveloperMode: Flow<Boolean>
     fun setDeveloperMode(enable: Boolean)
+
+    val observeNumberOfImagesPerRow: Flow<Int>
+    fun setNumberOfImagesPerRow(numberOfImagesPerRow: Int)
+
+    val observeImagesGridPaddingDp: Flow<Int>
+    fun setImagesGridPaddingDp(padding: Int)
 }

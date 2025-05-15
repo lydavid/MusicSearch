@@ -5,8 +5,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import ly.david.musicsearch.shared.domain.DEFAULT_SEED_COLOR_INT
-import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @Composable

@@ -43,13 +43,14 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import app.cash.paging.compose.itemKey
 import com.slack.circuit.foundation.internal.BackHandler
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.DEFAULT_IMAGES_GRID_PADDING_DP
+import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.common.appendOptionalText
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
@@ -62,7 +63,6 @@ import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
-import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
@@ -187,6 +187,8 @@ internal fun ImagesUi(
                 },
                 lazyGridState = state.lazyGridState,
                 modifier = Modifier.padding(innerPadding),
+                numberOfImagesPerRow = state.numberOfImagesPerRow,
+                imagesGridPaddingDp = state.imagesGridPaddingDp,
             )
         } else {
             CoverArtsPager(
@@ -209,28 +211,28 @@ internal fun ImagesUi(
     }
 }
 
-private const val GRID_SIZE = 4
-
 @Composable
 private fun CoverArtsGrid(
     imageMetadataLazyPagingItems: LazyPagingItems<ImageMetadata>,
     onImageClick: (index: Int) -> Unit,
     lazyGridState: LazyGridState,
     modifier: Modifier = Modifier,
+    numberOfImagesPerRow: Int = DEFAULT_NUMBER_OF_IMAGES_PER_ROW,
+    imagesGridPaddingDp: Int = DEFAULT_IMAGES_GRID_PADDING_DP,
 ) {
     val density: Density = LocalDensity.current
     val screenWidth: Int = screenContainerSize().width
-    val columnWidth: Int = (screenWidth / GRID_SIZE.toDouble()).roundToInt()
-    val size: Dp = remember(density, screenWidth) {
-        with(density) { columnWidth.toDp() }
-    }
+    val paddingWidthPx = with(density) { imagesGridPaddingDp.dp.roundToPx() }
+    val totalInnerPaddingWidth = (numberOfImagesPerRow - 1) * paddingWidthPx
+    val imageSizePx = (screenWidth - totalInnerPaddingWidth) / numberOfImagesPerRow
+    val imageSize = with(density) { imageSizePx.toDp() }
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(GRID_SIZE),
+        columns = GridCells.Fixed(numberOfImagesPerRow),
         modifier = modifier,
         state = lazyGridState,
-        horizontalArrangement = Arrangement.spacedBy(2.dp),
-        verticalArrangement = Arrangement.spacedBy(2.dp),
+        horizontalArrangement = Arrangement.spacedBy(imagesGridPaddingDp.dp),
+        verticalArrangement = Arrangement.spacedBy(imagesGridPaddingDp.dp),
     ) {
         items(
             count = imageMetadataLazyPagingItems.itemCount,
@@ -244,7 +246,7 @@ private fun CoverArtsGrid(
                     url = imageMetadata.thumbnailUrl,
                     placeholderKey = imageMetadata.databaseId.toString(),
                     placeholderIcon = imageMetadata.entity?.getIcon(),
-                    size = size,
+                    size = imageSize,
                     modifier = Modifier.clickable {
                         onImageClick(index)
                     },

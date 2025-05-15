@@ -19,6 +19,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.shared.domain.DEFAULT_IMAGES_GRID_PADDING_DP
+import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.common.appendOptionalText
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
@@ -44,6 +46,12 @@ internal class ImagesPresenter(
     override fun present(): ImagesUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val sortOption by appPreferences.imagesSortOption.collectAsState(ImagesSortOption.RECENTLY_ADDED)
+        val numberOfImagesPerRow by appPreferences.observeNumberOfImagesPerRow.collectAsState(
+            initial = DEFAULT_NUMBER_OF_IMAGES_PER_ROW,
+        )
+        val imagesGridPaddingDp by appPreferences.observeImagesGridPaddingDp.collectAsState(
+            initial = DEFAULT_IMAGES_GRID_PADDING_DP,
+        )
         val imageMetadataFlow: Flow<PagingData<ImageMetadata>> by rememberRetained(
             topAppBarFilterState.filterText,
             sortOption,
@@ -157,6 +165,8 @@ internal class ImagesPresenter(
             title = title,
             subtitle = subtitle,
             url = url,
+            numberOfImagesPerRow = numberOfImagesPerRow,
+            imagesGridPaddingDp = imagesGridPaddingDp,
             selectedImageIndex = selectedIndex,
             selectedImageMetadata = selectedImageMetadata,
             imageMetadataPagingDataFlow = imageMetadataFlow,
@@ -182,6 +192,8 @@ internal data class ImagesUiState(
     val title: ImagesTitle = ImagesTitle.All,
     val subtitle: String = "",
     val url: String? = null,
+    val numberOfImagesPerRow: Int = DEFAULT_NUMBER_OF_IMAGES_PER_ROW,
+    val imagesGridPaddingDp: Int = DEFAULT_IMAGES_GRID_PADDING_DP,
     val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadata>>,
     val lazyGridState: LazyGridState = LazyGridState(),
     val sortOption: ImagesSortOption = ImagesSortOption.RECENTLY_ADDED,

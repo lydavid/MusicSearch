@@ -38,6 +38,7 @@ import ly.david.musicsearch.ui.common.icons.Download
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.screen.AppearanceSettingsScreen
+import ly.david.musicsearch.ui.common.screen.ImagesSettingsScreen
 import ly.david.musicsearch.ui.common.screen.LicensesScreen
 import ly.david.musicsearch.ui.common.screen.NowPlayingHistoryScreen
 import ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen
@@ -147,6 +148,14 @@ internal fun SettingsUi(
                 endIcon = CustomIcons.ChevronRight,
                 onClick = {
                     eventSink(SettingsUiEvent.GoToScreen(AppearanceSettingsScreen))
+                },
+            )
+
+            ClickableItem(
+                title = strings.images,
+                endIcon = CustomIcons.ChevronRight,
+                onClick = {
+                    eventSink(SettingsUiEvent.GoToScreen(ImagesSettingsScreen))
                 },
             )
 
