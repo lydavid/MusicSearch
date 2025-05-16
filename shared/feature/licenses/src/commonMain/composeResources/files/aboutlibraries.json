@@ -2628,17 +2628,45 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.4.0",
-            "description": "Android DB",
+            "artifactVersion": "2.5.1",
+            "description": "SQLite API",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "SQLite",
-            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.4.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.5.1",
             "licenses": [
                 "Apache-2.0"
-            ]
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.sqlite:sqlite-android",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "2.5.1",
+            "description": "SQLite API",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "SQLite",
+            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.5.1",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
         },
         {
             "uniqueId": "androidx.sqlite:sqlite-framework",
@@ -2650,17 +2678,45 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.4.0",
-            "description": "The implementation of Support SQLite library using the framework code.",
+            "artifactVersion": "2.5.1",
+            "description": "The implementation of SQLite library using the framework code.",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "SQLite Framework Integration",
-            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.4.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.5.1",
             "licenses": [
                 "Apache-2.0"
-            ]
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
+        },
+        {
+            "uniqueId": "androidx.sqlite:sqlite-framework-android",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "artifactVersion": "2.5.1",
+            "description": "The implementation of SQLite library using the framework code.",
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "name": "SQLite Framework Integration",
+            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.5.1",
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            }
         },
         {
             "uniqueId": "androidx.startup:startup-runtime",
@@ -2943,15 +2999,15 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "2.0.2",
+            "artifactVersion": "2.1.0",
             "description": "Driver to support SQLDelight generated code on Android",
             "scm": {
-                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
-                "url": "https://github.com/cashapp/sqldelight/",
-                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+                "connection": "scm:git:git://github.com/sqldelight/sqldelight.git",
+                "url": "https://github.com/sqldelight/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/sqldelight/sqldelight.git"
             },
             "name": "SQLDelight Android Driver",
-            "website": "https://github.com/cashapp/sqldelight/",
+            "website": "https://github.com/sqldelight/sqldelight/",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -2966,15 +3022,15 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "2.0.2",
+            "artifactVersion": "2.1.0",
             "description": "An implementation of AndroidX Paging3 Multiplatform backed by SQLDelight Query",
             "scm": {
-                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
-                "url": "https://github.com/cashapp/sqldelight/",
-                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+                "connection": "scm:git:git://github.com/sqldelight/sqldelight.git",
+                "url": "https://github.com/sqldelight/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/sqldelight/sqldelight.git"
             },
             "name": "SQLDelight AndroidX Paging3 Multiplatform Extension",
-            "website": "https://github.com/cashapp/sqldelight/",
+            "website": "https://github.com/sqldelight/sqldelight/",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -2989,15 +3045,15 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "2.0.2",
+            "artifactVersion": "2.1.0",
             "description": "An implementation of AndroidX Paging3 Multiplatform backed by SQLDelight Query",
             "scm": {
-                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
-                "url": "https://github.com/cashapp/sqldelight/",
-                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+                "connection": "scm:git:git://github.com/sqldelight/sqldelight.git",
+                "url": "https://github.com/sqldelight/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/sqldelight/sqldelight.git"
             },
             "name": "SQLDelight AndroidX Paging3 Multiplatform Extension",
-            "website": "https://github.com/cashapp/sqldelight/",
+            "website": "https://github.com/sqldelight/sqldelight/",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -3012,15 +3068,15 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "2.0.2",
+            "artifactVersion": "2.1.0",
             "description": "Kotlin extensions for working with Async drivers",
             "scm": {
-                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
-                "url": "https://github.com/cashapp/sqldelight/",
-                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+                "connection": "scm:git:git://github.com/sqldelight/sqldelight.git",
+                "url": "https://github.com/sqldelight/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/sqldelight/sqldelight.git"
             },
             "name": "SQLDelight Async Driver Extensions",
-            "website": "https://github.com/cashapp/sqldelight/",
+            "website": "https://github.com/sqldelight/sqldelight/",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -3035,15 +3091,15 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "2.0.2",
+            "artifactVersion": "2.1.0",
             "description": "Kotlin extensions for working with Async drivers",
             "scm": {
-                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
-                "url": "https://github.com/cashapp/sqldelight/",
-                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+                "connection": "scm:git:git://github.com/sqldelight/sqldelight.git",
+                "url": "https://github.com/sqldelight/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/sqldelight/sqldelight.git"
             },
             "name": "SQLDelight Async Driver Extensions",
-            "website": "https://github.com/cashapp/sqldelight/",
+            "website": "https://github.com/sqldelight/sqldelight/",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -3058,15 +3114,15 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "2.0.2",
+            "artifactVersion": "2.1.0",
             "description": "Kotlin extension functions to expose SQLDelight's Query as a Flow",
             "scm": {
-                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
-                "url": "https://github.com/cashapp/sqldelight/",
-                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+                "connection": "scm:git:git://github.com/sqldelight/sqldelight.git",
+                "url": "https://github.com/sqldelight/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/sqldelight/sqldelight.git"
             },
             "name": "SQLDelight Coroutines Extensions",
-            "website": "https://github.com/cashapp/sqldelight/",
+            "website": "https://github.com/sqldelight/sqldelight/",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -3081,15 +3137,15 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "2.0.2",
+            "artifactVersion": "2.1.0",
             "description": "Kotlin extension functions to expose SQLDelight's Query as a Flow",
             "scm": {
-                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
-                "url": "https://github.com/cashapp/sqldelight/",
-                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+                "connection": "scm:git:git://github.com/sqldelight/sqldelight.git",
+                "url": "https://github.com/sqldelight/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/sqldelight/sqldelight.git"
             },
             "name": "SQLDelight Coroutines Extensions",
-            "website": "https://github.com/cashapp/sqldelight/",
+            "website": "https://github.com/sqldelight/sqldelight/",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -3104,15 +3160,15 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "2.0.2",
+            "artifactVersion": "2.1.0",
             "description": "Primitive column adapters for SQLDelight",
             "scm": {
-                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
-                "url": "https://github.com/cashapp/sqldelight/",
-                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+                "connection": "scm:git:git://github.com/sqldelight/sqldelight.git",
+                "url": "https://github.com/sqldelight/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/sqldelight/sqldelight.git"
             },
             "name": "SQLDelight Primitive Column Adapters",
-            "website": "https://github.com/cashapp/sqldelight/",
+            "website": "https://github.com/sqldelight/sqldelight/",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -3127,15 +3183,15 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "2.0.2",
+            "artifactVersion": "2.1.0",
             "description": "Primitive column adapters for SQLDelight",
             "scm": {
-                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
-                "url": "https://github.com/cashapp/sqldelight/",
-                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+                "connection": "scm:git:git://github.com/sqldelight/sqldelight.git",
+                "url": "https://github.com/sqldelight/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/sqldelight/sqldelight.git"
             },
             "name": "SQLDelight Primitive Column Adapters",
-            "website": "https://github.com/cashapp/sqldelight/",
+            "website": "https://github.com/sqldelight/sqldelight/",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -3150,15 +3206,15 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "2.0.2",
+            "artifactVersion": "2.1.0",
             "description": "Multiplatform runtime library to support generated code",
             "scm": {
-                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
-                "url": "https://github.com/cashapp/sqldelight/",
-                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+                "connection": "scm:git:git://github.com/sqldelight/sqldelight.git",
+                "url": "https://github.com/sqldelight/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/sqldelight/sqldelight.git"
             },
             "name": "SQLDelight Multiplatform Runtime (Experimental)",
-            "website": "https://github.com/cashapp/sqldelight/",
+            "website": "https://github.com/sqldelight/sqldelight/",
             "licenses": [
                 "Apache-2.0"
             ]
@@ -3173,15 +3229,15 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "2.0.2",
+            "artifactVersion": "2.1.0",
             "description": "Multiplatform runtime library to support generated code",
             "scm": {
-                "connection": "scm:git:git://github.com/cashapp/sqldelight.git",
-                "url": "https://github.com/cashapp/sqldelight/",
-                "developerConnection": "scm:git:ssh://git@github.com/cashapp/sqldelight.git"
+                "connection": "scm:git:git://github.com/sqldelight/sqldelight.git",
+                "url": "https://github.com/sqldelight/sqldelight/",
+                "developerConnection": "scm:git:ssh://git@github.com/sqldelight/sqldelight.git"
             },
             "name": "SQLDelight Multiplatform Runtime (Experimental)",
-            "website": "https://github.com/cashapp/sqldelight/",
+            "website": "https://github.com/sqldelight/sqldelight/",
             "licenses": [
                 "Apache-2.0"
             ]
