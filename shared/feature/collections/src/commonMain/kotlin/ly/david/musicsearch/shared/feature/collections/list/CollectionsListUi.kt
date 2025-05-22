@@ -16,7 +16,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -63,7 +62,6 @@ internal fun CollectionListUi(
     val overlayHost = LocalOverlayHost.current
 
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
-    val bottomSheetState = rememberModalBottomSheetState()
 
     if (showBottomSheet) {
         CollectionSortBottomSheet(
@@ -71,7 +69,6 @@ internal fun CollectionListUi(
             onSortOptionClick = {
                 eventSink(CollectionsListUiEvent.UpdateSortOption(it))
             },
-            bottomSheetState = bottomSheetState,
             onDismiss = { showBottomSheet = false },
         )
     }

@@ -2,8 +2,8 @@ getAllCollaboratingArtistsAndRecordings:
 SELECT
   acn.artist_id AS collaborating_artist_id,
   acn.name AS collaborating_artist_name,
-  r.id AS recording_id,
-  r.name || CASE WHEN r.disambiguation != '' THEN ' (' || r.disambiguation || ')' ELSE '' END AS recording_name
+  r.id AS entity_id,
+  r.name || CASE WHEN r.disambiguation != '' THEN ' (' || r.disambiguation || ')' ELSE '' END AS entity_name
 FROM recordings_by_entity re
 INNER JOIN recording r ON r.id = re.recording_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
@@ -13,5 +13,41 @@ WHERE re.entity_id = :artistId
 AND acn.artist_id != :artistId
 AND (
   collaborating_artist_name LIKE :query
-  OR recording_name LIKE :query
+  OR entity_name LIKE :query
+);
+
+getAllCollaboratingArtistsAndReleases:
+SELECT
+  acn.artist_id AS collaborating_artist_id,
+  acn.name AS collaborating_artist_name,
+  r.id AS entity_id,
+  r.name || CASE WHEN r.disambiguation != '' THEN ' (' || r.disambiguation || ')' ELSE '' END AS entity_name
+FROM releases_by_entity re
+INNER JOIN release r ON r.id = re.release_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ac.id
+WHERE re.entity_id = :artistId
+AND acn.artist_id != :artistId
+AND (
+  collaborating_artist_name LIKE :query
+  OR entity_name LIKE :query
+);
+
+getAllCollaboratingArtistsAndReleaseGroups:
+SELECT
+  acn.artist_id AS collaborating_artist_id,
+  acn.name AS collaborating_artist_name,
+  rg.id AS entity_id,
+  rg.name || CASE WHEN rg.disambiguation != '' THEN ' (' || rg.disambiguation || ')' ELSE '' END AS entity_name
+FROM release_groups_by_entity rge
+INNER JOIN release_group rg ON rg.id = rge.release_group_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ac.id
+WHERE rge.entity_id = :artistId
+AND acn.artist_id != :artistId
+AND (
+  collaborating_artist_name LIKE :query
+  OR entity_name LIKE :query
 );

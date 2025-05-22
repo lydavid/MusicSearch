@@ -6,7 +6,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndRecording
+import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.graph.viz.core.geom.Point
 import ly.david.musicsearch.shared.feature.graph.viz.force.ForceLink
@@ -41,9 +41,9 @@ data class GraphSimulationUiState(
     val nodes: ImmutableList<GraphNode> = persistentListOf(),
 )
 
-private data class ArtistRecording(
+private data class ArtistEntity(
     val artistId: String,
-    val recordingId: String,
+    val entityId: String,
 )
 
 // https://developer.android.com/develop/ui/compose/accessibility/key-steps#minimum-target-sizes
@@ -65,14 +65,14 @@ class ArtistCollaborationGraphSimulation {
     private lateinit var simulation: ForceSimulation<GraphNode>
 
     fun initialize(
-        collaboratingArtistAndRecordings: List<CollaboratingArtistAndRecording>,
+        collaboratingArtistsAndEntities: List<CollaboratingArtistAndEntity>,
     ) {
-        val artistRecordingLinks: List<ArtistRecording> = collaboratingArtistAndRecordings
-            .map { ArtistRecording(artistId = it.artistId, recordingId = it.recordingId) }
+        val artistEntityLinks: List<ArtistEntity> = collaboratingArtistsAndEntities
+            .map { ArtistEntity(artistId = it.artistId, entityId = it.entityId) }
             .distinct()
 
         simulation = forceSimulation {
-            domainObjects = generateGraphNodes(collaboratingArtistAndRecordings)
+            domainObjects = generateGraphNodes(collaboratingArtistsAndEntities)
 
             forceCenter {
                 center = Point(
@@ -90,19 +90,18 @@ class ArtistCollaborationGraphSimulation {
             forceLinks = forceLink {
                 linkGet = {
                     when (this.domain.entity) {
-                        MusicBrainzEntity.RECORDING -> artistRecordingLinks.filter { it.recordingId == this.domain.id }
-                        MusicBrainzEntity.ARTIST -> artistRecordingLinks.filter { it.artistId == this.domain.id }
-                        else -> emptyList()
-                    }.mapNotNull { artistRecording ->
-                        val sourceId = if (this.domain.entity == MusicBrainzEntity.RECORDING) {
-                            artistRecording.artistId
-                        } else {
+                        MusicBrainzEntity.ARTIST -> artistEntityLinks.filter { it.artistId == this.domain.id }
+                        else -> artistEntityLinks.filter { it.entityId == this.domain.id }
+                    }.mapNotNull { artistEntity ->
+                        val sourceId = if (this.domain.entity == MusicBrainzEntity.ARTIST) {
                             this.domain.id
+                        } else {
+                            artistEntity.artistId
                         }
-                        val targetId = if (this.domain.entity == MusicBrainzEntity.RECORDING) {
-                            this.domain.id
+                        val targetId = if (this.domain.entity == MusicBrainzEntity.ARTIST) {
+                            artistEntity.entityId
                         } else {
-                            artistRecording.recordingId
+                            this.domain.id
                         }
 
                         val source = nodes.find { it.domain.id == sourceId }
@@ -128,9 +127,9 @@ class ArtistCollaborationGraphSimulation {
         }
     }
 
-    private fun generateGraphNodes(collaborations: List<CollaboratingArtistAndRecording>): List<GraphNode> {
+    private fun generateGraphNodes(collaborations: List<CollaboratingArtistAndEntity>): List<GraphNode> {
         val artistFrequency = collaborations.groupingBy { it.artistId }.eachCount()
-        val recordingFrequency = collaborations.groupingBy { it.recordingId }.eachCount()
+        val collaborationEntityFrequency = collaborations.groupingBy { it.entityId }.eachCount()
 
         val artistNodes = collaborations
             .map { it.artistId to it.artistName }
@@ -144,18 +143,18 @@ class ArtistCollaborationGraphSimulation {
                 )
             }
 
-        val recordingNodes = collaborations
-            .map { it.recordingId to it.recordingName }
+        val collaborationEntityNodes = collaborations
+            .map { it.entityId to it.entityName }
             .distinctBy { it.first }
             .map { (id, name) ->
                 GraphNode(
                     id = id,
                     name = name,
-                    entity = MusicBrainzEntity.RECORDING,
-                    radius = calculateRadius(recordingFrequency[id] ?: 1),
+                    entity = collaborations.firstOrNull()?.entity ?: MusicBrainzEntity.RECORDING,
+                    radius = calculateRadius(collaborationEntityFrequency[id] ?: 1),
                 )
             }
-        return artistNodes + recordingNodes
+        return artistNodes + collaborationEntityNodes
     }
 
     private fun calculateRadius(frequency: Int): Double {

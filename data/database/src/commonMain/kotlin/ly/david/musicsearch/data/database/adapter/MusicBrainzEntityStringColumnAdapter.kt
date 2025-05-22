@@ -6,7 +6,7 @@ import ly.david.musicsearch.shared.domain.network.resourceUri
 
 internal object MusicBrainzEntityStringColumnAdapter : ColumnAdapter<MusicBrainzEntity, String> {
     override fun decode(databaseValue: String): MusicBrainzEntity =
-        MusicBrainzEntity.values().first { it.resourceUri == databaseValue }
+        MusicBrainzEntity.entries.first { it.resourceUri == databaseValue }
 
     override fun encode(value: MusicBrainzEntity): String = value.resourceUri
 }

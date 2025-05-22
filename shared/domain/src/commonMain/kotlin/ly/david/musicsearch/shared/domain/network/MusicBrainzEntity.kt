@@ -116,6 +116,13 @@ val relatableEntities: List<MusicBrainzEntity>
         MusicBrainzEntity.URL,
     )
 
+val collaboratableEntities: List<MusicBrainzEntity>
+    get() = listOf(
+        MusicBrainzEntity.RECORDING,
+        MusicBrainzEntity.RELEASE,
+        MusicBrainzEntity.RELEASE_GROUP,
+    )
+
 fun String.toMusicBrainzEntity(): MusicBrainzEntity? =
     MusicBrainzEntity.entries.firstOrNull { this == it.resourceUri }
 

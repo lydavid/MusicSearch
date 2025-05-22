@@ -7,6 +7,7 @@ import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 
 open class NoOpAppPreferences : AppPreferences {
@@ -106,6 +107,13 @@ open class NoOpAppPreferences : AppPreferences {
         get() = flowOf(DEFAULT_IMAGES_GRID_PADDING_DP)
 
     override fun setImagesGridPaddingDp(padding: Int) {
+        // No-op.
+    }
+
+    override val observeCollaborationEntityType: Flow<MusicBrainzEntity>
+        get() = flowOf()
+
+    override fun setCollaborationEntityType(entity: MusicBrainzEntity) {
         // No-op.
     }
 }
