@@ -191,3 +191,14 @@ val berlinerPhilharmonikerArtistMusicBrainzModel = ArtistMusicBrainzModel(
         countrySubDivisionCodes = listOf("DE-BE"),
     ),
 )
+
+val aimerArtistMusicBrainzModel = ArtistMusicBrainzModel(
+    id = "9388cee2-7d57-4598-905f-106019b267d3",
+    name = "Aimer",
+    disambiguation = "Japanese pop singer",
+    sortName = "Aimer",
+    type = "Person",
+    typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
+    ipis = listOf("00656032457"),
+    isnis = listOf("0000000407348085"),
+)

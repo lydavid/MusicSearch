@@ -3,7 +3,6 @@ package ly.david.musicsearch.data.repository.recording
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
-import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.itouKanakoArtistMusicBrainzModel
 import ly.david.data.test.roseliaArtistMusicBrainzModel
 import ly.david.data.test.skycladObserverCoverRecordingListItemModel
@@ -20,10 +19,9 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
-import ly.david.musicsearch.data.musicbrainz.api.BrowseRecordingsResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestRecordingRepository
+import ly.david.musicsearch.data.repository.helpers.TestRecordingsListRepository
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -32,14 +30,13 @@ import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
-import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository {
+class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, TestRecordingsListRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
@@ -50,34 +47,9 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository {
     override val visitedDao: VisitedDao by inject()
     override val relationDao: RelationDao by inject()
     private val collectionDao: CollectionDao by inject()
-    private val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
-    private val collectionEntityDao: CollectionEntityDao by inject()
+    override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
+    override val collectionEntityDao: CollectionEntityDao by inject()
     private val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
-
-    private fun createRecordingsListRepository(
-        recordings: List<RecordingMusicBrainzModel>,
-    ): RecordingsListRepository {
-        return RecordingsListRepositoryImpl(
-            browseRemoteMetadataDao = browseRemoteMetadataDao,
-            collectionEntityDao = collectionEntityDao,
-            recordingDao = recordingDao,
-            browseApi = object : FakeBrowseApi() {
-                override suspend fun browseRecordingsByEntity(
-                    entityId: String,
-                    entity: MusicBrainzEntity,
-                    limit: Int,
-                    offset: Int,
-                    include: String,
-                ): BrowseRecordingsResponse {
-                    return BrowseRecordingsResponse(
-                        count = 1,
-                        offset = 0,
-                        musicBrainzModels = recordings,
-                    )
-                }
-            },
-        )
-    }
 
     @Test
     fun setupRecordingsByCollection() = runTest {

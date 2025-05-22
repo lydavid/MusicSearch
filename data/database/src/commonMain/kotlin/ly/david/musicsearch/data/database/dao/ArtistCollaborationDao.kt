@@ -38,7 +38,7 @@ class ArtistCollaborationDao(
         artistId: String,
         query: String,
     ): List<CollaboratingArtistAndEntity> {
-        return transacter.getAllCollaboratingArtistsAndReleaseGroups(
+        return transacter.getAllCollaboratingArtistsAndRecordings(
             artistId = artistId,
             query = "%$query%",
             mapper = {
