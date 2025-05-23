@@ -1,0 +1,59 @@
+import kotlin.Boolean;
+import kotlin.Int;
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
+
+-- create new table
+CREATE TABLE IF NOT EXISTS relation_temp (
+  entity_id TEXT NOT NULL,
+  linked_entity_id TEXT NOT NULL,
+  linked_entity TEXT AS MusicBrainzEntity NOT NULL,
+  `order` INTEGER AS Int NOT NULL,
+  label TEXT NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT,
+  attributes TEXT,
+  is_forward_direction INTEGER AS Boolean,
+  begin TEXT,
+  end TEXT,
+  ended INTEGER AS Boolean,
+
+  PRIMARY KEY (entity_id, linked_entity_id, `order`)
+);
+
+-- copy old table data
+INSERT INTO relation_temp (
+  entity_id,
+  linked_entity_id,
+  linked_entity,
+  `order`,
+  label,
+  name,
+  disambiguation,
+  attributes,
+  is_forward_direction,
+  begin,
+  end,
+  ended
+)
+SELECT
+  entity_id,
+  linked_entity_id,
+  linked_entity,
+  `order`,
+  label,
+  name,
+  disambiguation,
+  attributes,
+  is_forward_direction,
+  begin,
+  end,
+  ended
+FROM relation;
+
+-- drop old table
+DROP TABLE relation;
+
+-- rename new table to old table, and recreate index
+ALTER TABLE relation_temp RENAME TO relation;
+
+CREATE INDEX IF NOT EXISTS idx_relation_linked_entity_id ON relation(linked_entity_id);
