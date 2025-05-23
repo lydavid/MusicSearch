@@ -12,6 +12,7 @@ class EntityHasRelationsDao(
         )
     }
 
+    // TODO: drop has_relations column, id's existence in this table fulfills same purpose
     fun hasRelationsBeenSavedFor(entityId: String): Boolean {
         return database.mb_entity_has_relationsQueries.hasRelations(entityId = entityId)
             .executeAsOneOrNull()?.has_relations == true
