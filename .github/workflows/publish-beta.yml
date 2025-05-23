@@ -1,4 +1,5 @@
 name: Publish beta build
+run-name: "Publish beta build from ${{ github.sha }}"
 
 # This runs every night,
 # so we can expect a new beta release in Google Play if we made any commits during the day.

@@ -1,4 +1,5 @@
 name: Publish production build
+run-name: "Publish production build from ${{ github.sha }}"
 
 on:
   workflow_dispatch:
