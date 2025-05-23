@@ -129,6 +129,17 @@ class ArtistCollaborationRepositoryImplTest :
                         ),
                     ),
                 ),
+                RecordingMusicBrainzModel(
+                    id = "1b401117-42ae-4771-bb96-7aa31025f766",
+                    name = "春はゆく",
+                    disambiguation = "",
+                    artistCredits = listOf(
+                        ArtistCreditMusicBrainzModel(
+                            artist = aimerArtistMusicBrainzModel,
+                            name = "Aimer",
+                        ),
+                    ),
+                ),
             ),
         ).observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
