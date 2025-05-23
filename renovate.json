@@ -27,10 +27,8 @@
       ]
     },
     {
-      "matchPackagePrefixes": [
-        "com.slack.circuit"
-      ],
-      "allowedVersions": ">0.26.0"
+      "matchPackageNames": ["semantic-release"],
+      "allowedVersions": ">24.2.4"
     }
   ]
 }
