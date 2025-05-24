@@ -152,7 +152,7 @@ jobs:
           command: make site
 
       - run: |
-          rm -rf download
+          rm download/*
           mv output/appcast-aarch64.rss download
           mv output/appcast-amd64.rss download
           mv output/InRelease download
