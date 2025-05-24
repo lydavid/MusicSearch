@@ -1,9 +1,11 @@
 **/snapshots/**/*.png filter=lfs diff=lfs merge=lfs -text
-
 * text eol=lf
 *.bat text eol=crlf
-
 *.mockup binary
 *.png binary
 *.svg binary
 *.db binary
+*.deb filter=lfs diff=lfs merge=lfs -text
+*.tar.gz filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
+*.msix filter=lfs diff=lfs merge=lfs -text
