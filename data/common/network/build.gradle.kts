@@ -21,15 +21,17 @@ kotlin {
                 implementation(libs.ktor.serialization.kotlinx.json)
             }
         }
-        val jvmMain by getting {
+        val jvmCommon by creating {
+            dependsOn(commonMain)
             dependencies {
                 implementation(libs.bundles.ktor.jvm)
             }
         }
+        val jvmMain by getting {
+            dependsOn(jvmCommon)
+        }
         val androidMain by getting {
-            dependencies {
-                implementation(libs.bundles.ktor.jvm)
-            }
+            dependsOn(jvmCommon)
         }
         val iosMain by getting {
             dependencies {

@@ -71,4 +71,5 @@ internal suspend fun handleRecoverableException(
             throw handledException
         }
     }
+    handleRecoverablePlatformException(exception)
 }
