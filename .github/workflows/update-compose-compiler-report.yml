@@ -30,8 +30,6 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - run: npm install -g compose-report2html
-
       - name: Write to keystore.properties
         run: |
           echo "storePassword=${{ secrets.RELEASE_STORE_PASSWORD }}" >> keystore.properties
@@ -53,9 +51,6 @@ jobs:
 
       - name: Assemble apk with compose compiler reports enabled
         run: ./gradlew assembleFDroidRelease -Pmusicsearch.enableComposeCompilerReports=true --rerun-tasks
-
-      - name: Generate HTML from compose reports
-        run: find . -type d -path '*/build/compose_metrics' | xargs -I {} composeReport2Html -app MusicSearch -i {} -o {}
 
       - name: Move the compose reports and HTML file to each module's root
         run: find . -type d -path '*/build/compose_metrics' -exec bash -c 'mv {}/* "$(dirname "$(dirname {})")"' \;
