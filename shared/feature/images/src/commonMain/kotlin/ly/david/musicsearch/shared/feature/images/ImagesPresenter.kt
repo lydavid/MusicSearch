@@ -5,9 +5,9 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.paging.PagingData
 import com.slack.circuit.retained.rememberRetained
@@ -22,13 +22,13 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.DEFAULT_IMAGES_GRID_PADDING_DP
 import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.common.appendOptionalText
-import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
@@ -72,25 +72,27 @@ internal class ImagesPresenter(
             mutableStateOf(persistentListOf())
         }
 
-        val selectedImageMetadata: ImageMetadata? by remember(
+        val selectedImageMetadata: ImageMetadata? by rememberRetained(
             selectedIndex,
             imageMetadataListSnapshot,
         ) {
             val capturedSelectedImageIndex = selectedIndex
-            mutableStateOf(
+            derivedStateOf {
                 if (capturedSelectedImageIndex == null || imageMetadataListSnapshot.isEmpty()) {
                     null
                 } else {
                     imageMetadataListSnapshot[capturedSelectedImageIndex]
-                },
-            )
+                }
+            }
         }
 
-        val title by remember(
+        val title by rememberRetained(
             selectedImageMetadata,
+            selectedIndex,
+            imageMetadataListSnapshot,
         ) {
             val index = selectedIndex
-            mutableStateOf(
+            derivedStateOf {
                 if (selectedImageMetadata == null || index == null) {
                     ImagesTitle.All
                 } else {
@@ -103,22 +105,24 @@ internal class ImagesPresenter(
                         totalPages = imageMetadataListSnapshot.size,
                         typeAndComment = typeAndComment,
                     )
-                },
-            )
+                }
+            }
         }
 
-        val subtitle by remember(
+        val subtitle by rememberRetained(
             selectedImageMetadata,
         ) {
-            mutableStateOf(selectedImageMetadata?.getNameWithDisambiguation().orEmpty())
+            derivedStateOf {
+                selectedImageMetadata?.getNameWithDisambiguation().orEmpty()
+            }
         }
 
-        val url by remember(
+        val url by rememberRetained(
             selectedImageMetadata,
         ) {
-            mutableStateOf(
-                selectedImageMetadata?.largeUrl ?: screen.id?.let { getMusicBrainzCoverArtUrl(it) },
-            )
+            derivedStateOf {
+                selectedImageMetadata?.largeUrl ?: screen.id?.let { getMusicBrainzCoverArtUrl(it) }
+            }
         }
 
         topAppBarFilterState.show(selectedIndex == null)
