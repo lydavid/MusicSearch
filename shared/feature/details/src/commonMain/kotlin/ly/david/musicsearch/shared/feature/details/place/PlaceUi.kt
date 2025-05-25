@@ -121,7 +121,7 @@ internal fun PlaceUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        showError = state.isError,
+                        handledException = state.handledException,
                         onRefresh = {
                             eventSink(PlaceUiEvent.ForceRefresh)
                         },

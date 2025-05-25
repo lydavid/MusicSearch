@@ -158,7 +158,7 @@ internal fun RecordingUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        showError = state.isError,
+                        handledException = state.handledException,
                         onRefresh = {
                             eventSink(RecordingUiEvent.ForceRefresh)
                         },

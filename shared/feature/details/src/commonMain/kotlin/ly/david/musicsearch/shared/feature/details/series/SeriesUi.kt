@@ -123,7 +123,7 @@ internal fun SeriesUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        showError = state.isError,
+                        handledException = state.handledException,
                         onRefresh = {
                             eventSink(SeriesUiEvent.ForceRefresh)
                         },

@@ -77,7 +77,7 @@ internal class ArtistPresenter(
     override fun present(): ArtistUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isLoading by rememberSaveable { mutableStateOf(true) }
-        var isError by rememberSaveable { mutableStateOf(false) }
+        var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var artist: ArtistDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<ArtistTab> by rememberSaveable {
@@ -113,10 +113,10 @@ internal class ArtistPresenter(
                 )
                 title = artistDetailsModel.getNameWithDisambiguation()
                 artist = artistDetailsModel
-                isError = false
+                handledException = null
             } catch (ex: HandledException) {
                 logger.e(ex)
-                isError = true
+                handledException = ex
             }
             if (!recordedHistory) {
                 incrementLookupHistory(
@@ -302,7 +302,7 @@ internal class ArtistPresenter(
         return ArtistUiState(
             title = title,
             isLoading = isLoading,
-            isError = isError,
+            handledException = handledException,
             artist = artist?.copy(
                 urls = artist?.urls.filterUrlRelations(query = query),
             ),
@@ -328,7 +328,7 @@ internal class ArtistPresenter(
 internal data class ArtistUiState(
     val title: String,
     val isLoading: Boolean,
-    val isError: Boolean,
+    val handledException: HandledException?,
     val artist: ArtistDetailsModel?,
     val url: String = "",
     val tabs: List<ArtistTab>,

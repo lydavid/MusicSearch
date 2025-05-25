@@ -165,7 +165,7 @@ internal fun ReleaseGroupUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        showError = state.isError,
+                        handledException = state.handledException,
                         onRefresh = {
                             eventSink(ReleaseGroupUiEvent.ForceRefresh)
                         },

@@ -159,7 +159,7 @@ internal fun ReleaseUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        showError = state.releaseDetailsUiState.isError,
+                        handledException = state.releaseDetailsUiState.handledException,
                         onRefresh = {
                             eventSink(ReleaseUiEvent.ForceRefresh)
                         },

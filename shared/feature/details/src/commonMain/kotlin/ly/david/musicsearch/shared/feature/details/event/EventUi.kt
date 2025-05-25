@@ -123,7 +123,7 @@ internal fun EventUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        showError = state.isError,
+                        handledException = state.handledException,
                         onRefresh = {
                             eventSink(EventUiEvent.ForceRefresh)
                         },

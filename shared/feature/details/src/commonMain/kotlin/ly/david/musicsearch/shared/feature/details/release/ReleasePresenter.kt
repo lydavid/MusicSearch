@@ -68,7 +68,7 @@ internal class ReleasePresenter(
     override fun present(): ReleaseUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var subtitle by rememberSaveable { mutableStateOf("") }
-        var isError by rememberSaveable { mutableStateOf(false) }
+        var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var release: ReleaseDetailsModel? by rememberRetained { mutableStateOf(null) }
         var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
@@ -101,10 +101,10 @@ internal class ReleasePresenter(
                 title = releaseDetailsModel.getNameWithDisambiguation()
                 subtitle = "Release by ${releaseDetailsModel.artistCredits.getDisplayNames()}"
                 release = releaseDetailsModel
-                isError = false
+                handledException = null
             } catch (ex: HandledException) {
                 logger.e(ex)
-                isError = true
+                handledException = ex
             }
             if (!recordedHistory) {
                 incrementLookupHistory(
@@ -270,7 +270,7 @@ internal class ReleasePresenter(
             ),
             url = getMusicBrainzUrl(screen.entity, screen.id),
             releaseDetailsUiState = ReleaseDetailsUiState(
-                isError = isError,
+                handledException = handledException,
                 numberOfImages = numberOfImages,
                 lazyListState = detailsLazyListState,
                 isReleaseEventsCollapsed = isReleaseEventsCollapsed,
@@ -302,7 +302,7 @@ internal data class ReleaseUiState(
 ) : CircuitUiState
 
 internal data class ReleaseDetailsUiState(
-    val isError: Boolean = false,
+    val handledException: HandledException? = null,
     val numberOfImages: Int? = null,
     val lazyListState: LazyListState = LazyListState(),
     val isReleaseEventsCollapsed: Boolean = false,

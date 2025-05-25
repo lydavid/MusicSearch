@@ -59,7 +59,7 @@ internal class RecordingPresenter(
     override fun present(): RecordingUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var subtitle by rememberSaveable { mutableStateOf("") }
-        var isError by rememberSaveable { mutableStateOf(false) }
+        var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var recording: RecordingDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<RecordingTab> by rememberSaveable {
@@ -88,10 +88,10 @@ internal class RecordingPresenter(
                 title = recordingDetailsModel.getNameWithDisambiguation()
                 subtitle = "Recording by ${recordingDetailsModel.artistCredits.getDisplayNames()}"
                 recording = recordingDetailsModel
-                isError = false
+                handledException = null
             } catch (ex: HandledException) {
                 logger.e(ex)
-                isError = true
+                handledException = ex
             }
             if (!recordedHistory) {
                 incrementLookupHistory(
@@ -193,7 +193,7 @@ internal class RecordingPresenter(
         return RecordingUiState(
             title = title,
             subtitle = subtitle,
-            isError = isError,
+            handledException = handledException,
             recording = recording?.copy(
                 urls = recording?.urls.filterUrlRelations(query = query),
             ),
@@ -215,7 +215,7 @@ internal class RecordingPresenter(
 internal data class RecordingUiState(
     val title: String,
     val subtitle: String,
-    val isError: Boolean,
+    val handledException: HandledException?,
     val recording: RecordingDetailsModel?,
     val url: String = "",
     val tabs: List<RecordingTab>,

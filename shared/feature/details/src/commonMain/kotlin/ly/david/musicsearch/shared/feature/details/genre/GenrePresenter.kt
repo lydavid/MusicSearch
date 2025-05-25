@@ -35,7 +35,7 @@ internal class GenrePresenter(
     @Composable
     override fun present(): GenreUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
-        var isError by rememberSaveable { mutableStateOf(false) }
+        var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var genre: GenreListItemModel? by rememberRetained { mutableStateOf(null) }
         var forceRefreshDetails by remember { mutableStateOf(false) }
@@ -48,10 +48,10 @@ internal class GenrePresenter(
                 )
                 title = genreListItemModel.getNameWithDisambiguation()
                 genre = genreListItemModel
-                isError = false
+                handledException = null
             } catch (ex: HandledException) {
                 logger.e(ex)
-                isError = true
+                handledException = ex
             }
 
             if (!recordedHistory) {
@@ -80,7 +80,7 @@ internal class GenrePresenter(
 
         return GenreUiState(
             title = title,
-            isError = isError,
+            handledException = handledException,
             genre = genre,
             url = getMusicBrainzUrl(screen.entity, screen.id),
             eventSink = ::genreSink,
@@ -91,10 +91,10 @@ internal class GenrePresenter(
 @Stable
 internal data class GenreUiState(
     val title: String,
-    val isError: Boolean,
     val genre: GenreListItemModel?,
+    val handledException: HandledException? = null,
     val url: String = "",
-    val eventSink: (GenreUiEvent) -> Unit,
+    val eventSink: (GenreUiEvent) -> Unit = {},
 ) : CircuitUiState
 
 internal sealed interface GenreUiEvent : CircuitUiEvent {

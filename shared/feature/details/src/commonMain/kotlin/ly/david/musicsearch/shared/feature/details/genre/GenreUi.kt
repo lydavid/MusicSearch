@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenContent
@@ -19,6 +18,7 @@ import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun GenreUi(
     state: GenreUiState,
@@ -26,30 +26,6 @@ internal fun GenreUi(
 ) {
     val eventSink = state.eventSink
 
-    GenreUi(
-        title = state.title,
-        genre = state.genre,
-        url = state.url,
-        isError = state.isError,
-        modifier = modifier,
-        onBack = {
-            eventSink(GenreUiEvent.NavigateUp)
-        },
-        onRetryClick = { eventSink(GenreUiEvent.ForceRefresh) },
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-internal fun GenreUi(
-    title: String,
-    genre: GenreListItemModel?,
-    url: String,
-    modifier: Modifier = Modifier,
-    isError: Boolean = false,
-    onBack: () -> Unit = {},
-    onRetryClick: () -> Unit = {},
-) {
     val entity = MusicBrainzEntity.GENRE
 
     val strings = LocalStrings.current
@@ -61,16 +37,16 @@ internal fun GenreUi(
         topBar = {
             ScrollableTopAppBar(
                 entity = entity,
-                title = title,
-                onBack = onBack,
+                title = state.title,
+                onBack = { eventSink(GenreUiEvent.NavigateUp) },
             )
         },
     ) { innerPadding ->
         DetailsWithErrorHandling(
             modifier = Modifier.padding(innerPadding),
-            showError = isError,
-            onRefresh = onRetryClick,
-            detailsModel = genre,
+            handledException = state.handledException,
+            onRefresh = { eventSink(GenreUiEvent.ForceRefresh) },
+            detailsModel = state.genre,
         ) {
             FullScreenContent {
                 Text(
@@ -82,7 +58,7 @@ internal fun GenreUi(
 
                 Button(
                     onClick = {
-                        uriHandler.openUri(url)
+                        uriHandler.openUri(state.url)
                     },
                 ) {
                     Text(strings.openInBrowser)

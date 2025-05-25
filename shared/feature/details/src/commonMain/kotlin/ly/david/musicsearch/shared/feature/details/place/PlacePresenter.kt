@@ -58,7 +58,7 @@ internal class PlacePresenter(
     @Composable
     override fun present(): PlaceUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
-        var isError by rememberSaveable { mutableStateOf(false) }
+        var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var place: PlaceDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<PlaceTab> by rememberSaveable {
@@ -86,10 +86,10 @@ internal class PlacePresenter(
                 )
                 title = placeDetailsModel.getNameWithDisambiguation()
                 place = placeDetailsModel
-                isError = false
+                handledException = null
             } catch (ex: HandledException) {
                 logger.e(ex)
-                isError = true
+                handledException = ex
             }
             if (!recordedHistory) {
                 incrementLookupHistory(
@@ -194,7 +194,7 @@ internal class PlacePresenter(
 
         return PlaceUiState(
             title = title,
-            isError = isError,
+            handledException = handledException,
             place = place?.copy(
                 urls = place?.urls.filterUrlRelations(query = query),
             ),
@@ -215,7 +215,7 @@ internal class PlacePresenter(
 @Stable
 internal data class PlaceUiState(
     val title: String,
-    val isError: Boolean,
+    val handledException: HandledException?,
     val place: PlaceDetailsModel?,
     val url: String = "",
     val tabs: List<PlaceTab>,

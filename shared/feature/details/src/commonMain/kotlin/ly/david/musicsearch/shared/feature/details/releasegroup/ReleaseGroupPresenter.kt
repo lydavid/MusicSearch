@@ -61,7 +61,7 @@ internal class ReleaseGroupPresenter(
     override fun present(): ReleaseGroupUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var subtitle by rememberSaveable { mutableStateOf("") }
-        var isError by rememberSaveable { mutableStateOf(false) }
+        var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var releaseGroup: ReleaseGroupDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<ReleaseGroupTab> by rememberSaveable {
@@ -91,10 +91,10 @@ internal class ReleaseGroupPresenter(
                 subtitle = "Release Group by ${releaseGroupDetailsModel.artistCredits.getDisplayNames()}"
                 releaseGroup = releaseGroupDetailsModel
 
-                isError = false
+                handledException = null
             } catch (ex: HandledException) {
                 logger.e(ex)
-                isError = true
+                handledException = ex
             }
             if (!recordedHistory) {
                 incrementLookupHistory(
@@ -207,7 +207,7 @@ internal class ReleaseGroupPresenter(
         return ReleaseGroupUiState(
             title = title,
             subtitle = subtitle,
-            isError = isError,
+            handledException = handledException,
             releaseGroup = releaseGroup?.copy(
                 urls = releaseGroup?.urls.filterUrlRelations(query = query),
             ),
@@ -229,7 +229,7 @@ internal class ReleaseGroupPresenter(
 internal data class ReleaseGroupUiState(
     val title: String,
     val subtitle: String,
-    val isError: Boolean,
+    val handledException: HandledException?,
     val releaseGroup: ReleaseGroupDetailsModel?,
     val url: String = "",
     val tabs: List<ReleaseGroupTab>,

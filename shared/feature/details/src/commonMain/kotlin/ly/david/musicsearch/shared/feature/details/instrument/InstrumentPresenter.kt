@@ -52,7 +52,7 @@ internal class InstrumentPresenter(
     @Composable
     override fun present(): InstrumentUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
-        var isError by rememberSaveable { mutableStateOf(false) }
+        var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var instrument: InstrumentDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<InstrumentTab> by rememberSaveable {
@@ -78,10 +78,10 @@ internal class InstrumentPresenter(
                 )
                 title = instrumentDetailsModel.getNameWithDisambiguation()
                 instrument = instrumentDetailsModel
-                isError = false
+                handledException = null
             } catch (ex: HandledException) {
                 logger.e(ex)
-                isError = true
+                handledException = ex
             }
             if (!recordedHistory) {
                 incrementLookupHistory(
@@ -169,7 +169,7 @@ internal class InstrumentPresenter(
 
         return InstrumentUiState(
             title = title,
-            isError = isError,
+            handledException = handledException,
             instrument = instrument?.copy(
                 urls = instrument?.urls.filterUrlRelations(query = query),
             ),
@@ -189,7 +189,7 @@ internal class InstrumentPresenter(
 @Stable
 internal data class InstrumentUiState(
     val title: String,
-    val isError: Boolean,
+    val handledException: HandledException?,
     val instrument: InstrumentDetailsModel?,
     val url: String = "",
     val tabs: List<InstrumentTab>,

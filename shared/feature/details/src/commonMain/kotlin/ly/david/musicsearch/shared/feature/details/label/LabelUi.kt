@@ -136,7 +136,7 @@ internal fun LabelUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        showError = state.isError,
+                        handledException = state.handledException,
                         onRefresh = {
                             eventSink(LabelUiEvent.ForceRefresh)
                         },

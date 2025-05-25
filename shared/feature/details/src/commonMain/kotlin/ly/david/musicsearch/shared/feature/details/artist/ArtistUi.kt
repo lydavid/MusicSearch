@@ -187,7 +187,7 @@ internal fun ArtistUi(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         showLoading = state.isLoading,
-                        showError = state.isError,
+                        handledException = state.handledException,
                         onRefresh = {
                             eventSink(ArtistUiEvent.ForceRefresh)
                         },

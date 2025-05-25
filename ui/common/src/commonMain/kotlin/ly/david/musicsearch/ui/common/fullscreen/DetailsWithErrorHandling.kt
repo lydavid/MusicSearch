@@ -12,7 +12,7 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 
 /**
  * For displaying a [detailsScreen], showing a loading indicator when [detailsModel] is null,
- * handling errors when [showError], and delegating retry with [onRefresh].
+ * handling errors when [handledException] is not null, and delegating retry with [onRefresh].
  * Supports pull to refresh, delegating to [onRefresh].
  */
 @OptIn(ExperimentalMaterialApi::class)
@@ -22,7 +22,6 @@ fun <T> DetailsWithErrorHandling(
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
     showLoading: Boolean = false,
-    showError: Boolean = false,
     handledException: HandledException? = null,
     detailsScreen: @Composable ((T) -> Unit),
 ) {
@@ -34,7 +33,7 @@ fun <T> DetailsWithErrorHandling(
         modifier = modifier.pullRefresh(refreshState),
     ) {
         when {
-            showError -> {
+            handledException != null -> {
                 FullScreenErrorWithRetry(
                     handledException = handledException,
                     onClick = onRefresh,

@@ -544,7 +544,7 @@ internal fun PreviewAreaDetailsError() {
                 state = AreaUiState(
                     title = "Canada",
                     handledException = HandledException(
-                        userMessage = "Something went wrong",
+                        userMessage = "Network error. Check your internet connection.",
                         errorResolution = ErrorResolution.Retry,
                     ),
                     area = country,

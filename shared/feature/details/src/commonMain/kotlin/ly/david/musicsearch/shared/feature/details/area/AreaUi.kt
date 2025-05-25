@@ -177,7 +177,6 @@ internal fun AreaUiInternal(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        showError = state.handledException != null,
                         handledException = state.handledException,
                         onRefresh = {
                             eventSink(AreaUiEvent.ForceRefresh)

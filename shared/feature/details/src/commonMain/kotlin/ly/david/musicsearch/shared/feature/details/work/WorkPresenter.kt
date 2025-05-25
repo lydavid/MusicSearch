@@ -61,7 +61,7 @@ internal class WorkPresenter(
     @Composable
     override fun present(): WorkUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
-        var isError by rememberSaveable { mutableStateOf(false) }
+        var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var work: WorkDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<WorkTab> by rememberSaveable {
@@ -91,10 +91,10 @@ internal class WorkPresenter(
                 )
                 title = workDetailsModel.getNameWithDisambiguation()
                 work = workDetailsModel
-                isError = false
+                handledException = null
             } catch (ex: HandledException) {
                 logger.e(ex)
-                isError = true
+                handledException = ex
             }
             if (!recordedHistory) {
                 incrementLookupHistory(
@@ -204,7 +204,7 @@ internal class WorkPresenter(
 
         return WorkUiState(
             title = title,
-            isError = isError,
+            handledException = handledException,
             work = work?.copy(
                 urls = work?.urls.filterUrlRelations(query = query),
             ),
@@ -226,7 +226,7 @@ internal class WorkPresenter(
 @Stable
 internal data class WorkUiState(
     val title: String,
-    val isError: Boolean,
+    val handledException: HandledException?,
     val work: WorkDetailsModel?,
     val url: String = "",
     val tabs: List<WorkTab>,

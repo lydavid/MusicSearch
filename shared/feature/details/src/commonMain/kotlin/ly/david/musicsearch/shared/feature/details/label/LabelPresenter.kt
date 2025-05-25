@@ -57,7 +57,7 @@ internal class LabelPresenter(
     @Composable
     override fun present(): LabelUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
-        var isError by rememberSaveable { mutableStateOf(false) }
+        var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var label: LabelDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<LabelTab> by rememberSaveable {
@@ -85,10 +85,10 @@ internal class LabelPresenter(
                 )
                 title = labelDetailsModel.getNameWithDisambiguation()
                 label = labelDetailsModel
-                isError = false
+                handledException = null
             } catch (ex: HandledException) {
                 logger.e(ex)
-                isError = true
+                handledException = ex
             }
             if (!recordedHistory) {
                 incrementLookupHistory(
@@ -189,7 +189,7 @@ internal class LabelPresenter(
 
         return LabelUiState(
             title = title,
-            isError = isError,
+            handledException = handledException,
             label = label?.copy(
                 urls = label?.urls.filterUrlRelations(query = query),
             ),
@@ -210,7 +210,7 @@ internal class LabelPresenter(
 @Stable
 internal data class LabelUiState(
     val title: String,
-    val isError: Boolean,
+    val handledException: HandledException?,
     val label: LabelDetailsModel?,
     val url: String = "",
     val tabs: List<LabelTab>,

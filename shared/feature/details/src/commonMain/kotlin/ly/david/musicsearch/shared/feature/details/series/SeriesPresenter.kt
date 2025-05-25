@@ -52,7 +52,7 @@ internal class SeriesPresenter(
     @Composable
     override fun present(): SeriesUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
-        var isError by rememberSaveable { mutableStateOf(false) }
+        var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var series: SeriesDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<SeriesTab> by rememberSaveable {
@@ -78,10 +78,10 @@ internal class SeriesPresenter(
                 )
                 title = seriesDetailsModel.getNameWithDisambiguation()
                 series = seriesDetailsModel
-                isError = false
+                handledException = null
             } catch (ex: HandledException) {
                 logger.e(ex)
-                isError = true
+                handledException = ex
             }
             if (!recordedHistory) {
                 incrementLookupHistory(
@@ -169,7 +169,7 @@ internal class SeriesPresenter(
 
         return SeriesUiState(
             title = title,
-            isError = isError,
+            handledException = handledException,
             series = series?.copy(
                 urls = series?.urls.filterUrlRelations(query = query),
             ),
@@ -189,7 +189,7 @@ internal class SeriesPresenter(
 @Stable
 internal data class SeriesUiState(
     val title: String,
-    val isError: Boolean,
+    val handledException: HandledException?,
     val series: SeriesDetailsModel?,
     val url: String = "",
     val tabs: List<SeriesTab>,

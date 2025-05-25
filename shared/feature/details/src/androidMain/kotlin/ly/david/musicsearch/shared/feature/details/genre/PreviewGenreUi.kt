@@ -10,11 +10,13 @@ import ly.david.musicsearch.ui.core.theme.PreviewTheme
 internal fun PreviewGenreUi() {
     PreviewTheme {
         GenreUi(
-            title = "pop",
-            url = "",
-            genre = GenreListItemModel(
-                id = "911c7bbb-172d-4df8-9478-dbff4296e791",
-                name = "pop",
+            state = GenreUiState(
+                title = "pop",
+                url = "",
+                genre = GenreListItemModel(
+                    id = "911c7bbb-172d-4df8-9478-dbff4296e791",
+                    name = "pop",
+                ),
             ),
         )
     }

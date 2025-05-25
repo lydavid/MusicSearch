@@ -54,7 +54,7 @@ internal class EventPresenter(
     @Composable
     override fun present(): EventUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
-        var isError by rememberSaveable { mutableStateOf(false) }
+        var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var event: EventDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<EventTab> by rememberSaveable {
@@ -80,10 +80,10 @@ internal class EventPresenter(
                 )
                 title = eventListItemModel.getNameWithDisambiguation()
                 event = eventListItemModel
-                isError = false
+                handledException = null
             } catch (ex: HandledException) {
                 logger.e(ex)
-                isError = true
+                handledException = ex
             }
 
             if (!recordedHistory) {
@@ -182,7 +182,7 @@ internal class EventPresenter(
 
         return EventUiState(
             title = title,
-            isError = isError,
+            handledException = handledException,
             event = event?.copy(
                 urls = event?.urls.filterUrlRelations(query = query),
             ),
@@ -202,7 +202,7 @@ internal class EventPresenter(
 @Stable
 internal data class EventUiState(
     val title: String,
-    val isError: Boolean = false,
+    val handledException: HandledException? = null,
     val event: EventDetailsModel? = null,
     val url: String = "",
     val tabs: List<EventTab> = listOf(),
