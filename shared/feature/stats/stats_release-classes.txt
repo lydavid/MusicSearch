@@ -1,14 +1,14 @@
 stable class Stats {
   stable val totalRelations: Int?
   runtime val relationTypeCounts: ImmutableList<RelationTypeCount>
-  unstable val tabToStats: ImmutableMap<Tab, EntityStats>
+  runtime val tabToStats: ImmutableMap<Tab, EntityStats>
 }
-unstable class EntityStats {
+runtime class EntityStats {
   stable val totalRemote: Int?
   stable val totalLocal: Int
   runtime val releaseGroupTypeCounts: ImmutableList<ReleaseGroupTypeCount>
-  unstable val lastUpdated: Instant?
-  <runtime stability> = Unstable
+  stable val lastUpdated: Instant?
+  <runtime stability> = Runtime(ReleaseGroupTypeCount)
 }
 stable class StatsPresenter {
   stable val screen: StatsScreen

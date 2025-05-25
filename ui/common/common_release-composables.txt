@@ -519,7 +519,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EntitiesL
   uiState: EntitiesListUiState
   stable modifier: Modifier? = @static Companion
   stable selectedIds: ImmutableSet<String>? = @static persistentSetOf()
-  unstable now: Instant? = @dynamic System.now()
+  stable now: Instant? = @dynamic System.now()
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
 sourceInformation($composer, "CC(remember):EntitiesListScreen.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
@@ -615,14 +615,14 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Disambigu
   stable fontWeight: FontWeight? = @static null
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LastUpdatedFooterItem(
-  unstable lastUpdated: Instant
+  stable lastUpdated: Instant
   stable modifier: Modifier? = @static Companion
-  unstable now: Instant? = @dynamic System.now()
+  stable now: Instant? = @dynamic System.now()
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LastUpdatedText(
-  unstable lastUpdated: Instant
+  stable lastUpdated: Instant
   stable modifier: Modifier? = @static Companion
-  unstable now: Instant? = @dynamic System.now()
+  stable now: Instant? = @dynamic System.now()
 )
 fun formatLastUpdatedPeriod(
   unstable period: DateTimePeriod

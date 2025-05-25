@@ -25,5 +25,5 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun StatsUi(
   stable tabs: ImmutableList<Tab>
   stable stats: Stats
   stable modifier: Modifier? = @static Companion
-  unstable now: Instant? = @dynamic System.now()
+  stable now: Instant? = @dynamic System.now()
 )

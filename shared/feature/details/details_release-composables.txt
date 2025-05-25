@@ -49,7 +49,7 @@ tmp0_group@ly.david.musicsearch.shared.feature.details.area.AreaUiInternal
   stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
   unstable scope: CoroutineScope? = @dynamic rememberCoroutineScope(null, $composer, 0, 0b0001)
   unstable strings: AppStrings? = @dynamic LocalStrings.<get-current>($composer, 0)
-  unstable now: Instant? = @dynamic System.now()
+  stable now: Instant? = @dynamic System.now()
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistDetailsUi(
   artist: ArtistDetailsModel

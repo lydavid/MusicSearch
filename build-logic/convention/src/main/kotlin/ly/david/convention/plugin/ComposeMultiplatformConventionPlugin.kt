@@ -4,6 +4,7 @@ import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
 
 @Suppress("unused")
 class ComposeMultiplatformConventionPlugin : Plugin<Project> {
@@ -20,6 +21,9 @@ class ComposeMultiplatformConventionPlugin : Plugin<Project> {
                     }
                 }
             }
+            composeCompiler {
+                stabilityConfigurationFiles.add(rootProject.layout.projectDirectory.file("stability_config.conf"))
+            }
         }
     }
 }
@@ -29,3 +33,7 @@ private fun Project.android(configure: CommonExtension<*, *, *, *, *, *>.() -> U
         CommonExtension::class,
         configure,
     )
+
+fun Project.composeCompiler(block: ComposeCompilerGradlePluginExtension.() -> Unit) {
+    extensions.configure<ComposeCompilerGradlePluginExtension>(block)
+}

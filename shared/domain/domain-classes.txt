@@ -87,10 +87,10 @@ unstable class GetArtists {
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
 }
-unstable class BrowseRemoteMetadata {
+stable class BrowseRemoteMetadata {
   stable val remoteCount: Int
-  unstable val lastUpdated: Instant
-  <runtime stability> = Unstable
+  stable val lastUpdated: Instant
+  <runtime stability> = Stable
 }
 runtime class ObserveBrowseEntityCount {
   runtime val browseEntityCountRepository: BrowseRemoteMetadataRepository
@@ -124,12 +124,12 @@ stable class GetCollection {
   runtime val visitedDao: VisitedDao
   <runtime stability> = 
 }
-unstable class ActionableResult {
+stable class ActionableResult {
   stable val message: String
   stable val errorResolution: ErrorResolution
   stable val action: Action?
-  unstable val time: Instant
-  <runtime stability> = Unstable
+  stable val time: Instant
+  <runtime stability> = Stable
 }
 unstable class HandledException {
   stable val userMessage: String
@@ -161,35 +161,35 @@ unstable class GetGenres {
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
 }
-unstable class LookupHistory {
+stable class LookupHistory {
   stable val mbid: String
   stable val title: String
   stable val entity: MusicBrainzEntity
   stable val numberOfVisits: Int
-  unstable val lastAccessed: Instant
+  stable val lastAccessed: Instant
   stable val searchHint: String
   stable val deleted: Boolean
-  <runtime stability> = Unstable
+  <runtime stability> = Stable
 }
-unstable class NowPlayingHistory {
+stable class NowPlayingHistory {
   stable val raw: String
-  unstable val lastPlayed: Instant
-  <runtime stability> = Unstable
+  stable val lastPlayed: Instant
+  <runtime stability> = Stable
 }
-unstable class SearchHistory {
+stable class SearchHistory {
   stable val query: String
   stable val entity: MusicBrainzEntity
-  unstable val lastAccessed: Instant
-  <runtime stability> = Unstable
+  stable val lastAccessed: Instant
+  <runtime stability> = Stable
 }
-unstable class SpotifyHistory {
+stable class SpotifyHistory {
   stable val trackId: String
   stable val artistName: String?
   stable val albumName: String?
   stable val trackName: String?
   stable val trackLengthMilliseconds: Int?
-  unstable val lastListened: Instant
-  <runtime stability> = Unstable
+  stable val lastListened: Instant
+  <runtime stability> = Stable
 }
 runtime class DeleteLookupHistoryImpl {
   runtime val lookupHistoryRepository: LookupHistoryRepository
@@ -341,10 +341,10 @@ stable class LabelListItemModel {
   stable val visited: Boolean
   <runtime stability> = Stable
 }
-unstable class LastUpdatedFooter {
+stable class LastUpdatedFooter {
   stable val id: String
-  unstable val lastUpdated: Instant
-  <runtime stability> = Unstable
+  stable val lastUpdated: Instant
+  <runtime stability> = Stable
 }
 stable class ListItemModel {
   <runtime stability> = Stable
@@ -354,22 +354,22 @@ stable class ListSeparator {
   stable val text: String
   <runtime stability> = Stable
 }
-unstable class LookupHistoryListItemModel {
+stable class LookupHistoryListItemModel {
   stable val id: String
   stable val title: String
   stable val entity: MusicBrainzEntity
   stable val numberOfVisits: Int
-  unstable val lastAccessed: Instant
+  stable val lastAccessed: Instant
   stable val imageUrl: String?
   stable val imageId: Long
-  <runtime stability> = Unstable
+  <runtime stability> = Stable
 }
-unstable class NowPlayingHistoryListItemModel {
+stable class NowPlayingHistoryListItemModel {
   stable val id: String
   stable val title: String
   stable val artist: String
-  unstable val lastPlayed: Instant
-  <runtime stability> = Unstable
+  stable val lastPlayed: Instant
+  <runtime stability> = Stable
 }
 runtime class PlaceListItemModel {
   stable val id: String
@@ -465,15 +465,15 @@ stable class SeriesListItemModel {
   stable val visited: Boolean
   <runtime stability> = Stable
 }
-unstable class SpotifyHistoryListItemModel {
+stable class SpotifyHistoryListItemModel {
   stable val id: String
   stable val trackId: String
   stable val artistName: String?
   stable val albumName: String?
   stable val trackName: String?
   stable val trackLengthMilliseconds: Int?
-  unstable val lastListened: Instant
-  <runtime stability> = Unstable
+  stable val lastListened: Instant
+  <runtime stability> = Stable
 }
 stable class TrackListItemModel {
   stable val id: String
