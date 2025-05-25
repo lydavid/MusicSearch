@@ -8,6 +8,7 @@ import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import ly.david.musicsearch.shared.domain.error.HandledException
 
 /**
  * For displaying a [detailsScreen], showing a loading indicator when [detailsModel] is null,
@@ -22,6 +23,7 @@ fun <T> DetailsWithErrorHandling(
     modifier: Modifier = Modifier,
     showLoading: Boolean = false,
     showError: Boolean = false,
+    handledException: HandledException? = null,
     detailsScreen: @Composable ((T) -> Unit),
 ) {
     val refreshState = rememberPullRefreshState(
@@ -34,6 +36,7 @@ fun <T> DetailsWithErrorHandling(
         when {
             showError -> {
                 FullScreenErrorWithRetry(
+                    handledException = handledException,
                     onClick = onRefresh,
                 )
             }

@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.error.ErrorResolution
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -503,7 +505,7 @@ internal fun PreviewAreaDetails() {
             AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
-                    isError = false,
+                    handledException = null,
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.DETAILS,
@@ -541,7 +543,10 @@ internal fun PreviewAreaDetailsError() {
             AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
-                    isError = true,
+                    handledException = HandledException(
+                        userMessage = "Something went wrong",
+                        errorResolution = ErrorResolution.Retry,
+                    ),
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.DETAILS,
@@ -579,7 +584,7 @@ internal fun PreviewAreaRelationships() {
             AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
-                    isError = false,
+                    handledException = null,
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.RELATIONSHIPS,
@@ -617,7 +622,7 @@ internal fun PreviewAreaArtists() {
             AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
-                    isError = false,
+                    handledException = null,
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.ARTISTS,
@@ -655,7 +660,7 @@ internal fun PreviewAreaEvents() {
             AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
-                    isError = false,
+                    handledException = null,
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.EVENTS,
@@ -693,7 +698,7 @@ internal fun PreviewAreaLabels() {
             AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
-                    isError = false,
+                    handledException = null,
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.LABELS,
@@ -731,7 +736,7 @@ internal fun PreviewAreaReleases() {
             AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
-                    isError = false,
+                    handledException = null,
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.RELEASES,
@@ -769,7 +774,7 @@ internal fun PreviewAreaPlaces() {
             AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
-                    isError = false,
+                    handledException = null,
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.PLACES,
@@ -808,7 +813,7 @@ internal fun PreviewAreaStats() {
             AreaUiInternal(
                 state = AreaUiState(
                     title = "Canada",
-                    isError = false,
+                    handledException = null,
                     area = country,
                     tabs = AreaTab.entries.toList(),
                     selectedTab = AreaTab.STATS,

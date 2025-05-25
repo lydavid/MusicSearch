@@ -24,6 +24,8 @@ import app.cash.paging.LoadStateLoading
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.itemKey
 import ly.david.musicsearch.shared.domain.Identifiable
+import ly.david.musicsearch.shared.domain.error.ErrorResolution
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.Header
 import ly.david.musicsearch.ui.common.button.RetryButton
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenErrorWithRetry
@@ -74,7 +76,10 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
 
             lazyPagingItems.loadState.refresh is LoadStateError -> {
                 FullScreenErrorWithRetry(
-                    throwable = (lazyPagingItems.loadState.refresh as LoadStateError).error,
+                    handledException = HandledException(
+                        userMessage = (lazyPagingItems.loadState.refresh as LoadStateError).error.message.orEmpty(),
+                        errorResolution = ErrorResolution.Retry,
+                    ),
                     onClick = { lazyPagingItems.refresh() },
                 )
             }

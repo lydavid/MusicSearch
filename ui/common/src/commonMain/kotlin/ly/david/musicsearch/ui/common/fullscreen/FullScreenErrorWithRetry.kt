@@ -14,12 +14,12 @@ import ly.david.musicsearch.ui.common.button.RetryButton
 @Composable
 fun FullScreenErrorWithRetry(
     modifier: Modifier = Modifier,
-    throwable: Throwable? = null,
+    handledException: HandledException? = null,
     onClick: () -> Unit = {},
 ) {
-    val error = when (throwable) {
-        is HandledException -> {
-            throwable.userMessage
+    val error = when {
+        handledException != null -> {
+            handledException.userMessage
         }
 
         else -> {
@@ -33,9 +33,9 @@ fun FullScreenErrorWithRetry(
             style = MaterialTheme.typography.bodyMedium,
             text = error,
         )
-        when (throwable) {
-            is HandledException -> {
-                when (throwable.errorResolution) {
+        when {
+            handledException != null -> {
+                when (handledException.errorResolution) {
                     ErrorResolution.Retry -> {
                         RetryButton(onClick = onClick)
                     }
