@@ -24,9 +24,9 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
@@ -39,6 +39,7 @@ import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListPresenter
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListUiState
+import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
@@ -201,6 +202,16 @@ internal class ReleaseGroupPresenter(
                     )
                 }
 
+                ReleaseGroupUiEvent.ClickImage -> {
+                    navigator.onNavEvent(
+                        NavEvent.GoTo(
+                            CoverArtsScreen(
+                                id = screen.id,
+                            ),
+                        ),
+                    )
+                }
+
                 ReleaseGroupUiEvent.ForceRefresh -> {
                     forceRefreshDetails = true
                 }
@@ -257,4 +268,6 @@ internal sealed interface ReleaseGroupUiEvent : CircuitUiEvent {
         val id: String,
         val title: String?,
     ) : ReleaseGroupUiEvent
+
+    data object ClickImage : ReleaseGroupUiEvent
 }

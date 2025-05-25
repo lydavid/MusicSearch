@@ -226,7 +226,7 @@ internal class ReleasePresenter(
                     forceRefreshDetails = true
                 }
 
-                is ReleaseUiEvent.ClickImage -> {
+                ReleaseUiEvent.ClickImage -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             CoverArtsScreen(

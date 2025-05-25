@@ -31,6 +31,7 @@ internal fun EventDetailsUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
+    onImageClick: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -44,6 +45,7 @@ internal fun EventDetailsUi(
                     LargeImage(
                         url = imageMetadata.largeUrl,
                         placeholderKey = imageMetadata.databaseId.toString(),
+                        onClick = onImageClick,
                     )
                 }
 

@@ -24,9 +24,9 @@ import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.feature.details.utils.filterUrlRelations
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
@@ -34,6 +34,7 @@ import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
+import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
@@ -177,6 +178,16 @@ internal class EventPresenter(
                     )
                 }
 
+                EventUiEvent.ClickImage -> {
+                    navigator.onNavEvent(
+                        NavEvent.GoTo(
+                            CoverArtsScreen(
+                                id = screen.id,
+                            ),
+                        ),
+                    )
+                }
+
                 EventUiEvent.ForceRefresh -> {
                     forceRefreshDetails = true
                 }
@@ -229,4 +240,6 @@ internal sealed interface EventUiEvent : CircuitUiEvent {
         val id: String,
         val title: String?,
     ) : EventUiEvent
+
+    data object ClickImage : EventUiEvent
 }

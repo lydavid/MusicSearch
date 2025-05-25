@@ -23,6 +23,7 @@ internal fun ReleaseGroupDetailsUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
+    onImageClick: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -36,6 +37,7 @@ internal fun ReleaseGroupDetailsUi(
                     LargeImage(
                         url = imageMetadata.largeUrl,
                         placeholderKey = imageMetadata.databaseId.toString(),
+                        onClick = onImageClick,
                     )
                 }
 

@@ -134,6 +134,9 @@ internal fun EventUi(
                             numberOfImages = state.numberOfImages,
                             filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
+                            onImageClick = {
+                                eventSink(EventUiEvent.ClickImage)
+                            },
                         )
                     }
                 }

@@ -176,6 +176,9 @@ internal fun ReleaseGroupUi(
                             numberOfImages = state.numberOfImages,
                             filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
+                            onImageClick = {
+                                eventSink(ReleaseGroupUiEvent.ClickImage)
+                            },
                         )
                     }
                 }
