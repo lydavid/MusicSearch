@@ -63,6 +63,7 @@ internal class ReleaseGroupPresenter(
         var subtitle by rememberSaveable { mutableStateOf("") }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
+        var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
         var releaseGroup: ReleaseGroupDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<ReleaseGroupTab> by rememberSaveable {
             mutableStateOf(ReleaseGroupTab.entries)
@@ -110,13 +111,15 @@ internal class ReleaseGroupPresenter(
         }
 
         LaunchedEffect(forceRefreshDetails, releaseGroup) {
-            releaseGroup = releaseGroup?.copy(
-                imageMetadata = imageMetadataRepository.getAndSaveImageMetadata(
-                    mbid = releaseGroup?.id ?: return@LaunchedEffect,
-                    entity = MusicBrainzEntity.RELEASE_GROUP,
-                    forceRefresh = forceRefreshDetails,
-                ),
+            val imageMetadataWithCount = imageMetadataRepository.getAndSaveImageMetadata(
+                mbid = releaseGroup?.id ?: return@LaunchedEffect,
+                entity = MusicBrainzEntity.RELEASE_GROUP,
+                forceRefresh = forceRefreshDetails,
             )
+            releaseGroup = releaseGroup?.copy(
+                imageMetadata = imageMetadataWithCount.imageMetadata,
+            )
+            numberOfImages = imageMetadataWithCount.count
         }
 
         LaunchedEffect(forceRefreshDetails, releaseGroup) {
@@ -211,6 +214,7 @@ internal class ReleaseGroupPresenter(
             releaseGroup = releaseGroup?.copy(
                 urls = releaseGroup?.urls.filterUrlRelations(query = query),
             ),
+            numberOfImages = numberOfImages,
             url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
@@ -231,6 +235,7 @@ internal data class ReleaseGroupUiState(
     val subtitle: String,
     val handledException: HandledException?,
     val releaseGroup: ReleaseGroupDetailsModel?,
+    val numberOfImages: Int? = null,
     val url: String = "",
     val tabs: List<ReleaseGroupTab>,
     val selectedTab: ReleaseGroupTab,

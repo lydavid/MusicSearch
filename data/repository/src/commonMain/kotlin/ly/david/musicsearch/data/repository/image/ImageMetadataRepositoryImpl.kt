@@ -20,6 +20,7 @@ import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -40,7 +41,7 @@ internal class ImageMetadataRepositoryImpl(
         mbid: String,
         entity: MusicBrainzEntity,
         forceRefresh: Boolean,
-    ): ImageMetadata {
+    ): ImageMetadataWithCount {
         if (forceRefresh) {
             imageUrlDao.deleteAllImageMetadtaById(mbid)
         }
@@ -48,7 +49,7 @@ internal class ImageMetadataRepositoryImpl(
         val cachedImageMetadata = imageUrlDao.getFrontImageMetadata(mbid)
         return if (cachedImageMetadata == null) {
             saveImageMetadataFromNetwork(mbid, entity)
-            imageUrlDao.getFrontImageMetadata(mbid) ?: ImageMetadata()
+            imageUrlDao.getFrontImageMetadata(mbid) ?: ImageMetadataWithCount()
         } else {
             cachedImageMetadata
         }
@@ -147,10 +148,6 @@ internal class ImageMetadataRepositoryImpl(
             }
             lastSaved = Clock.System.now()
         }
-    }
-
-    override fun getNumberOfImageMetadataById(mbid: String): Int {
-        return imageUrlDao.getNumberOfImagesById(mbid).toInt()
     }
 
     override fun observeAllImageMetadata(

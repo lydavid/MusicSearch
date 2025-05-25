@@ -11,6 +11,7 @@ import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import kotlin.coroutines.cancellation.CancellationException
 
 class ArtistImageRepositoryImpl(
@@ -30,10 +31,10 @@ class ArtistImageRepositoryImpl(
         val cachedImageUrl = imageUrlDao.getFrontImageMetadata(artistDetailsModel.id)
         return if (cachedImageUrl == null) {
             saveArtistImageMetadataFromNetwork(artistDetailsModel)
-            imageUrlDao.getFrontImageMetadata(artistDetailsModel.id) ?: ImageMetadata()
+            imageUrlDao.getFrontImageMetadata(artistDetailsModel.id) ?: ImageMetadataWithCount()
         } else {
             cachedImageUrl
-        }
+        }.imageMetadata
     }
 
     private suspend fun saveArtistImageMetadataFromNetwork(

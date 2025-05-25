@@ -26,6 +26,7 @@ internal fun PreviewEventDetailsUi() {
                         ended = true,
                     ),
                 ),
+                numberOfImages = 0,
             )
         }
     }

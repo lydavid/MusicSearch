@@ -23,6 +23,7 @@ internal fun PreviewReleaseGroupDetailsUi() {
                         wikipediaUrl = "https://en.wikipedia.org/wiki/Under_Pressure",
                     ),
                 ),
+                numberOfImages = 1,
             )
         }
     }

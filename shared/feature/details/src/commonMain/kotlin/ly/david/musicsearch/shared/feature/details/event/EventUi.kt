@@ -131,6 +131,7 @@ internal fun EventUi(
                     ) { event ->
                         EventDetailsUi(
                             event = event,
+                            numberOfImages = state.numberOfImages,
                             filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
                         )

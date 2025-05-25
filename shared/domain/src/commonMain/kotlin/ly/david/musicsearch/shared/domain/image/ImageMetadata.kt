@@ -16,3 +16,8 @@ data class ImageMetadata(
     override val disambiguation: String? = null,
     val entity: MusicBrainzEntity? = null,
 ) : NameWithDisambiguation
+
+data class ImageMetadataWithCount(
+    val imageMetadata: ImageMetadata = ImageMetadata(),
+    val count: Int = 0,
+)

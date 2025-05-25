@@ -30,13 +30,23 @@ VALUES (
   :comment
 );
 
+-- Do not count the filler empty url
 getFrontImageMetadata:
 SELECT
   `id`,
   `thumbnail_url`,
   `large_url`,
   `types`,
-  `comment`
+  `comment`,
+  (
+    SELECT count(id)
+    FROM mbid_image
+    WHERE mbid = :mbid
+    AND (
+      thumbnail_url != ''
+      OR large_url != ''
+    )
+  ) AS total_count
 FROM mbid_image
 WHERE mbid = :mbid
 LIMIT 1;
@@ -112,13 +122,3 @@ OFFSET :offset;
 deleteAllImageMetadtaById:
 DELETE FROM mbid_image
 WHERE mbid = :mbid;
-
--- Do not count the filler empty url
-getNumberOfImagesById:
-SELECT COUNT(*)
-FROM mbid_image
-WHERE mbid = :mbid
-AND (
-  thumbnail_url != ''
-  OR large_url != ''
-);

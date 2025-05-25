@@ -13,7 +13,7 @@ interface ImageUrlDao {
         mbidToImageMetadataMap: Map<String, List<ImageMetadata>>,
     )
 
-    fun getFrontImageMetadata(mbid: String): ImageMetadata?
+    fun getFrontImageMetadata(mbid: String): ImageMetadataWithCount?
 
     fun getAllImageMetadataById(
         mbid: String,
@@ -28,6 +28,4 @@ interface ImageUrlDao {
     fun observeCountOfAllImageMetadata(): Flow<Long>
 
     fun deleteAllImageMetadtaById(mbid: String)
-
-    fun getNumberOfImagesById(mbid: String): Long
 }

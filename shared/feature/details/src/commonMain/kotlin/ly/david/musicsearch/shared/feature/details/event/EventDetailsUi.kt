@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.event.EventDetailsModel
 import ly.david.musicsearch.ui.common.image.LargeImage
@@ -26,6 +27,7 @@ import ly.david.musicsearch.ui.core.theme.TextStyles
 @Composable
 internal fun EventDetailsUi(
     event: EventDetailsModel,
+    numberOfImages: Int?,
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
@@ -46,6 +48,13 @@ internal fun EventDetailsUi(
                 }
 
                 ListSeparatorHeader(text = strings.informationHeader(strings.event))
+                numberOfImages?.ifNotNull {
+                    TextWithHeading(
+                        heading = strings.numberOfImages,
+                        text = "$it",
+                        filterText = filterText,
+                    )
+                }
                 type?.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.type,

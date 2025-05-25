@@ -121,15 +121,16 @@ internal class ReleasePresenter(
 
         // Image fetching was split off from details model so that we can display data before images load
         LaunchedEffect(forceRefreshDetails, release) {
+            val imageMetadataWithCount = imageMetadataRepository.getAndSaveImageMetadata(
+                mbid = release?.id ?: return@LaunchedEffect,
+                entity = MusicBrainzEntity.RELEASE,
+                forceRefresh = forceRefreshDetails,
+            )
             release = release?.copy(
-                imageMetadata = imageMetadataRepository.getAndSaveImageMetadata(
-                    mbid = release?.id ?: return@LaunchedEffect,
-                    entity = MusicBrainzEntity.RELEASE,
-                    forceRefresh = forceRefreshDetails,
-                ),
+                imageMetadata = imageMetadataWithCount.imageMetadata,
             )
             release?.let { release ->
-                numberOfImages = imageMetadataRepository.getNumberOfImageMetadataById(release.id)
+                numberOfImages = imageMetadataWithCount.count
             }
         }
 

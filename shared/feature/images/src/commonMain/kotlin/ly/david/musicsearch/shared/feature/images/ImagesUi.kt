@@ -174,7 +174,7 @@ internal fun ImagesUi(
 
         if (capturedSelectedImageIndex == null) {
             CoverArtsGrid(
-                imageMetadataLazyPagingItems = imageMetadataLazyPagingItems,
+                imageMetadataList = imageMetadataLazyPagingItems,
                 onImageClick = { index ->
                     val snapshot = imageMetadataLazyPagingItems
                         .itemSnapshotList
@@ -213,7 +213,7 @@ internal fun ImagesUi(
 
 @Composable
 private fun CoverArtsGrid(
-    imageMetadataLazyPagingItems: LazyPagingItems<ImageMetadata>,
+    imageMetadataList: LazyPagingItems<ImageMetadata>,
     onImageClick: (index: Int) -> Unit,
     lazyGridState: LazyGridState,
     modifier: Modifier = Modifier,
@@ -235,11 +235,11 @@ private fun CoverArtsGrid(
         verticalArrangement = Arrangement.spacedBy(imagesGridPaddingDp.dp),
     ) {
         items(
-            count = imageMetadataLazyPagingItems.itemCount,
-            key = imageMetadataLazyPagingItems.itemKey { it.databaseId },
+            count = imageMetadataList.itemCount,
+            key = imageMetadataList.itemKey { it.databaseId },
             contentType = { ImageMetadata() },
         ) { index ->
-            imageMetadataLazyPagingItems[index]?.let { imageMetadata ->
+            imageMetadataList[index]?.let { imageMetadata ->
                 // Because the number of images displayed can change when we filter
                 // the placeholder key must not depend on the index of the initial set of images
                 ThumbnailImage(

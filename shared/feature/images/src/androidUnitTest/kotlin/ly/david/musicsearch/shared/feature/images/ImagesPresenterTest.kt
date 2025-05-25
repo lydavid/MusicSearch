@@ -11,6 +11,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
@@ -43,8 +44,8 @@ class ImagesPresenterTest {
                 mbid: String,
                 entity: MusicBrainzEntity,
                 forceRefresh: Boolean,
-            ): ImageMetadata {
-                return ImageMetadata()
+            ): ImageMetadataWithCount {
+                return ImageMetadataWithCount()
             }
 
             override suspend fun saveImageMetadata(
@@ -61,10 +62,6 @@ class ImagesPresenterTest {
                 sortOption: ImagesSortOption,
             ): Flow<PagingData<ImageMetadata>> {
                 return flowOf(PagingData.from(imageMetadataList))
-            }
-
-            override fun getNumberOfImageMetadataById(mbid: String): Int {
-                return imageMetadataList.size
             }
 
             override fun observeCountOfAllImageMetadata(): Flow<Long> {

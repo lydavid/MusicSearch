@@ -173,6 +173,7 @@ internal fun ReleaseGroupUi(
                     ) { releaseGroup ->
                         ReleaseGroupDetailsUi(
                             releaseGroup = releaseGroup,
+                            numberOfImages = state.numberOfImages,
                             filterText = state.topAppBarFilterState.filterText,
                             lazyListState = state.detailsLazyListState,
                         )

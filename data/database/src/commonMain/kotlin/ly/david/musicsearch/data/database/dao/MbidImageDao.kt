@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
@@ -46,10 +47,10 @@ class MbidImageDao(
         }
     }
 
-    override fun getFrontImageMetadata(mbid: String): ImageMetadata? {
+    override fun getFrontImageMetadata(mbid: String): ImageMetadataWithCount? {
         return transacter.getFrontImageMetadata(
             mbid = mbid,
-            mapper = ::mapToImageMetadata,
+            mapper = ::mapToImageMetadataWithCount,
         ).executeAsOneOrNull()
     }
 
@@ -115,10 +116,6 @@ class MbidImageDao(
     override fun deleteAllImageMetadtaById(mbid: String) {
         transacter.deleteAllImageMetadtaById(mbid)
     }
-
-    override fun getNumberOfImagesById(mbid: String): Long {
-        return transacter.getNumberOfImagesById(mbid).executeAsOne()
-    }
 }
 
 private fun mapToImageMetadata(
@@ -133,6 +130,24 @@ private fun mapToImageMetadata(
     largeUrl = largeUrl,
     types = types ?: persistentListOf(),
     comment = comment.orEmpty(),
+)
+
+private fun mapToImageMetadataWithCount(
+    id: Long,
+    thumbnailUrl: String,
+    largeUrl: String,
+    types: ImmutableList<String>?,
+    comment: String?,
+    count: Long,
+) = ImageMetadataWithCount(
+    imageMetadata = ImageMetadata(
+        databaseId = id,
+        thumbnailUrl = thumbnailUrl,
+        largeUrl = largeUrl,
+        types = types ?: persistentListOf(),
+        comment = comment.orEmpty(),
+    ),
+    count = count.toInt(),
 )
 
 private fun mapToImageMetadata(

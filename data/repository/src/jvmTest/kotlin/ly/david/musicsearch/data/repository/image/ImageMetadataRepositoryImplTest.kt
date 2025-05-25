@@ -37,6 +37,7 @@ import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.shared.domain.history.VisitedDao
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -106,20 +107,19 @@ class ImageMetadataRepositoryImplTest :
     @Test
     fun empty() = runTest {
         val repository = createRepository(coverArtUrlsProducer = { _, _ -> listOf() })
-        val imageMetadata = repository.getAndSaveImageMetadata(
+        val imageMetadataWithCount = repository.getAndSaveImageMetadata(
             mbid = "",
             entity = MusicBrainzEntity.RELEASE,
             forceRefresh = false,
         )
         Assert.assertEquals(
-            ImageMetadata(
-                databaseId = 1L,
+            ImageMetadataWithCount(
+                ImageMetadata(
+                    databaseId = 1L,
+                ),
+                count = 0,
             ),
-            imageMetadata,
-        )
-        Assert.assertEquals(
-            0,
-            repository.getNumberOfImageMetadataById(""),
+            imageMetadataWithCount,
         )
 
         val flow = repository.observeAllImageMetadata(
@@ -162,22 +162,21 @@ class ImageMetadataRepositoryImplTest :
                 )
             },
         )
-        val imageMetadata = repository.getAndSaveImageMetadata(
+        val imageMetadataWithCount = repository.getAndSaveImageMetadata(
             mbid = eventId,
             entity = MusicBrainzEntity.EVENT,
             forceRefresh = false,
         )
         Assert.assertEquals(
-            ImageMetadata(
-                databaseId = 1L,
-                thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+            ImageMetadataWithCount(
+                imageMetadata = ImageMetadata(
+                    databaseId = 1L,
+                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                ),
+                count = 1,
             ),
-            imageMetadata,
-        )
-        Assert.assertEquals(
-            1,
-            repository.getNumberOfImageMetadataById(eventId),
+            imageMetadataWithCount,
         )
 
         val flow = repository.observeAllImageMetadata(
@@ -244,25 +243,31 @@ class ImageMetadataRepositoryImplTest :
                             resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                         ),
                     ),
+                    CoverArtUrls(
+                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.png",
+                        front = true,
+                        thumbnailsUrls = ThumbnailsUrls(
+                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.png",
+                        ),
+                    ),
                 )
             },
         )
-        val imageMetadata = repository.getAndSaveImageMetadata(
+        val imageMetadataWithCount = repository.getAndSaveImageMetadata(
             mbid = releaseId,
             entity = MusicBrainzEntity.RELEASE,
             forceRefresh = false,
         )
         Assert.assertEquals(
-            ImageMetadata(
-                databaseId = 1L,
-                thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+            ImageMetadataWithCount(
+                imageMetadata = ImageMetadata(
+                    databaseId = 1L,
+                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                ),
+                count = 2,
             ),
-            imageMetadata,
-        )
-        Assert.assertEquals(
-            1,
-            repository.getNumberOfImageMetadataById(releaseId),
+            imageMetadataWithCount,
         )
 
         val flow = repository.observeAllImageMetadata(
@@ -272,23 +277,35 @@ class ImageMetadataRepositoryImplTest :
         )
         val imageMetadataList = flow.asSnapshot()
         Assert.assertEquals(
-            1,
+            2,
             imageMetadataList.size,
         )
         Assert.assertEquals(
-            ImageMetadata(
-                databaseId = 1L,
-                thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                mbid = releaseId,
-                name = releaseName,
-                disambiguation = releaseDisambiguation,
-                entity = MusicBrainzEntity.RELEASE,
+            listOf(
+                ImageMetadata(
+                    databaseId = 2L,
+                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.png",
+                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.png",
+                    mbid = releaseId,
+                    name = releaseName,
+                    disambiguation = releaseDisambiguation,
+                    entity = MusicBrainzEntity.RELEASE,
+                ),
+                ImageMetadata(
+                    databaseId = 1L,
+                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    mbid = releaseId,
+                    name = releaseName,
+                    disambiguation = releaseDisambiguation,
+                    entity = MusicBrainzEntity.RELEASE,
+                ),
             ),
-            imageMetadataList[0],
+            imageMetadataList,
         )
     }
 
+    // When deleting with repository, it will delete the cover art, whereas this is invoking the DAO
     @Test
     fun `deleting release will still show cover art`() = runTest {
         val releaseId = "a"
@@ -314,25 +331,24 @@ class ImageMetadataRepositoryImplTest :
                 )
             },
         )
-        val imageMetadata = repository.getAndSaveImageMetadata(
+        val imageMetadataWithCount = repository.getAndSaveImageMetadata(
             mbid = releaseId,
             entity = MusicBrainzEntity.RELEASE,
             forceRefresh = false,
         )
         Assert.assertEquals(
-            ImageMetadata(
-                databaseId = 1L,
-                thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+            ImageMetadataWithCount(
+                imageMetadata = ImageMetadata(
+                    databaseId = 1L,
+                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                ),
+                count = 1,
             ),
-            imageMetadata,
+            imageMetadataWithCount,
         )
 
         releaseDao.delete(releaseId)
-        Assert.assertEquals(
-            1,
-            repository.getNumberOfImageMetadataById(releaseId),
-        )
         val flow = repository.observeAllImageMetadata(
             mbid = null,
             query = "",
@@ -395,22 +411,21 @@ class ImageMetadataRepositoryImplTest :
                 )
             },
         )
-        val imageMetadata = repository.getAndSaveImageMetadata(
+        val imageMetadataWithCount = repository.getAndSaveImageMetadata(
             mbid = releaseGroupId,
             entity = MusicBrainzEntity.RELEASE_GROUP,
             forceRefresh = false,
         )
         Assert.assertEquals(
-            ImageMetadata(
-                databaseId = 1L,
-                thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+            ImageMetadataWithCount(
+                imageMetadata = ImageMetadata(
+                    databaseId = 1L,
+                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                ),
+                count = 1,
             ),
-            imageMetadata,
-        )
-        Assert.assertEquals(
-            1,
-            repository.getNumberOfImageMetadataById(releaseGroupId),
+            imageMetadataWithCount,
         )
 
         repository.observeAllImageMetadata(
@@ -469,16 +484,15 @@ class ImageMetadataRepositoryImplTest :
             forceRefresh = false,
         )
         Assert.assertEquals(
-            ImageMetadata(
-                databaseId = 1L,
-                thumbnailUrl = "http://someartarchive.org/event/$eventId/1.png",
-                largeUrl = "http://someartarchive.org/event/$eventId/1.png",
+            ImageMetadataWithCount(
+                imageMetadata = ImageMetadata(
+                    databaseId = 1L,
+                    thumbnailUrl = "http://someartarchive.org/event/$eventId/1.png",
+                    largeUrl = "http://someartarchive.org/event/$eventId/1.png",
+                ),
+                count = 1,
             ),
             eventImageMetadata,
-        )
-        Assert.assertEquals(
-            1,
-            repository.getNumberOfImageMetadataById(eventId),
         )
 
         val releaseId = "release-id"
@@ -497,16 +511,15 @@ class ImageMetadataRepositoryImplTest :
             forceRefresh = false,
         )
         Assert.assertEquals(
-            ImageMetadata(
-                databaseId = 2L,
-                thumbnailUrl = "http://someartarchive.org/release/$releaseId/1.png",
-                largeUrl = "http://someartarchive.org/release/$releaseId/1.png",
+            ImageMetadataWithCount(
+                imageMetadata = ImageMetadata(
+                    databaseId = 2L,
+                    thumbnailUrl = "http://someartarchive.org/release/$releaseId/1.png",
+                    largeUrl = "http://someartarchive.org/release/$releaseId/1.png",
+                ),
+                count = 1,
             ),
             releaseImageMetadata,
-        )
-        Assert.assertEquals(
-            1,
-            repository.getNumberOfImageMetadataById(releaseId),
         )
 
         val releaseGroupId = "release-group-id"
@@ -525,16 +538,16 @@ class ImageMetadataRepositoryImplTest :
             forceRefresh = false,
         )
         Assert.assertEquals(
-            ImageMetadata(
-                databaseId = 3L,
-                thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
-                largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
+            ImageMetadataWithCount(
+                imageMetadata =
+                ImageMetadata(
+                    databaseId = 3L,
+                    thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
+                    largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
+                ),
+                count = 1,
             ),
             releaseGroupImageMetadata,
-        )
-        Assert.assertEquals(
-            1,
-            repository.getNumberOfImageMetadataById(releaseGroupId),
         )
 
         repository.observeAllImageMetadata(

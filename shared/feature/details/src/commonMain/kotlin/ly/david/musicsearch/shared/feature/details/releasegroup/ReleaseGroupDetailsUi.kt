@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
@@ -18,6 +19,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 @Composable
 internal fun ReleaseGroupDetailsUi(
     releaseGroup: ReleaseGroupDetailsModel,
+    numberOfImages: Int?,
     modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
@@ -38,6 +40,13 @@ internal fun ReleaseGroupDetailsUi(
                 }
 
                 ListSeparatorHeader(text = strings.informationHeader(strings.releaseGroup))
+                numberOfImages?.ifNotNull {
+                    TextWithHeading(
+                        heading = strings.numberOfImages,
+                        text = "$it",
+                        filterText = filterText,
+                    )
+                }
                 TextWithHeading(
                     heading = strings.type,
                     text = getDisplayTypes(),

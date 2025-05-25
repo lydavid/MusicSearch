@@ -20,7 +20,7 @@ interface ImageMetadataRepository {
         mbid: String,
         entity: MusicBrainzEntity,
         forceRefresh: Boolean,
-    ): ImageMetadata
+    ): ImageMetadataWithCount
 
     /**
      * Saves metadata for an image, eventually. For performance reasons, we will batch the write to the database.
@@ -34,8 +34,6 @@ interface ImageMetadataRepository {
         entity: MusicBrainzEntity,
         itemsCount: Int,
     )
-
-    fun getNumberOfImageMetadataById(mbid: String): Int
 
     /**
      * [sortOption] is ignored when [mbid] is provided.

@@ -57,6 +57,7 @@ internal class EventPresenter(
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var event: EventDetailsModel? by rememberRetained { mutableStateOf(null) }
+        var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
         val tabs: List<EventTab> by rememberSaveable {
             mutableStateOf(EventTab.entries)
         }
@@ -99,13 +100,15 @@ internal class EventPresenter(
         }
 
         LaunchedEffect(forceRefreshDetails, event) {
-            event = event?.copy(
-                imageMetadata = imageMetadataRepository.getAndSaveImageMetadata(
-                    mbid = event?.id ?: return@LaunchedEffect,
-                    entity = MusicBrainzEntity.EVENT,
-                    forceRefresh = forceRefreshDetails,
-                ),
+            val imageMetadataWithCount = imageMetadataRepository.getAndSaveImageMetadata(
+                mbid = event?.id ?: return@LaunchedEffect,
+                entity = MusicBrainzEntity.EVENT,
+                forceRefresh = forceRefreshDetails,
             )
+            event = event?.copy(
+                imageMetadata = imageMetadataWithCount.imageMetadata,
+            )
+            numberOfImages = imageMetadataWithCount.count
         }
 
         LaunchedEffect(forceRefreshDetails, event) {
@@ -186,6 +189,7 @@ internal class EventPresenter(
             event = event?.copy(
                 urls = event?.urls.filterUrlRelations(query = query),
             ),
+            numberOfImages = numberOfImages,
             url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
@@ -204,6 +208,7 @@ internal data class EventUiState(
     val title: String,
     val handledException: HandledException? = null,
     val event: EventDetailsModel? = null,
+    val numberOfImages: Int? = null,
     val url: String = "",
     val tabs: List<EventTab> = listOf(),
     val selectedTab: EventTab = EventTab.DETAILS,
