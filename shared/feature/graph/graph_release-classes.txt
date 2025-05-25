@@ -3,16 +3,23 @@ stable class ArtistCollaborationGraphPresenter {
   stable val navigator: Navigator
   unstable val graphSimulation: ArtistCollaborationGraphSimulation
   unstable val artistCollaborationRepository: ArtistCollaborationRepository
+  unstable val appPreferences: AppPreferences
   <runtime stability> = Stable
 }
 stable class ArtistCollaborationGraphUiState {
   stable val artistName: String
   stable val topAppBarFilterState: TopAppBarFilterState
+  stable val collaborationEntityType: MusicBrainzEntity
   unstable val edges: List<GraphEdge>
   unstable val nodes: List<GraphNode>
+  stable val isDeveloperMode: Boolean
   stable val eventSink: Function1<ArtistCollaborationGraphUiEvent, Unit>
 }
 stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class SelectEntity {
+  stable val entity: MusicBrainzEntity
   <runtime stability> = Stable
 }
 stable class ClickItem {
@@ -37,10 +44,10 @@ stable class GraphEdge {
   stable val y1: Double
   <runtime stability> = Stable
 }
-unstable class GraphSimulationUiState {
-  unstable val edges: List<GraphEdge>
-  unstable val nodes: List<GraphNode>
-  <runtime stability> = Unstable
+stable class GraphSimulationUiState {
+  stable val edges: ImmutableList<GraphEdge>
+  stable val nodes: ImmutableList<GraphNode>
+  <runtime stability> = 
 }
 unstable class ArtistCollaborationGraphSimulation {
   unstable val _uiState: MutableStateFlow<GraphSimulationUiState>

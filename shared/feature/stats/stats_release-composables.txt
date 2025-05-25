@@ -1,42 +1,21 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSection()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddEntityStatsSection()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddEntityStatsSectionReleaseGroup()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionAll()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionNoRelationships()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionNullRelationships()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarNoRemote()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarEmpty()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarHalf()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarFull()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarOverflow()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewStatsScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewStatsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LocalRemoteProgressBar(
+  stable totalRemote: Int?
+  stable totalLocal: Int
+  stable cachedLocalOfRemote: Function2<Int, Int, String>
+)
 fun present(
-  stable <this>: AreaStatsPresenter
-): StatsUiState
-fun present(
-  stable <this>: ArtistStatsPresenter
-): StatsUiState
-fun present(
-  stable <this>: EventStatsPresenter
-): StatsUiState
-fun present(
-  stable <this>: InstrumentStatsPresenter
-): StatsUiState
-fun present(
-  stable <this>: LabelStatsPresenter
-): StatsUiState
-fun present(
-  stable <this>: PlaceStatsPresenter
-): StatsUiState
-fun present(
-  stable <this>: RecordingStatsPresenter
-): StatsUiState
-fun present(
-  stable <this>: ReleaseGroupStatsPresenter
-): StatsUiState
-fun present(
-  stable <this>: ReleaseStatsPresenter
-): StatsUiState
-fun present(
-  stable <this>: SeriesStatsPresenter
+  stable <this>: StatsPresenter
 ): StatsUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun StatsUi(
   stable state: StatsUiState
@@ -46,12 +25,5 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun StatsUi(
   stable tabs: ImmutableList<Tab>
   stable stats: Stats
   stable modifier: Modifier? = @static Companion
-)
-fun present(
-  stable <this>: WorkStatsPresenter
-): StatsUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LocalRemoteProgressBar(
-  stable totalRemote: Int?
-  stable totalLocal: Int
-  stable cachedLocalOfRemote: Function2<Int, Int, String>
+  unstable now: Instant? = @dynamic System.now()
 )

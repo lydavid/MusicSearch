@@ -1,13 +1,15 @@
-fun appColorScheme(
+fun materialYouColorScheme(
   stable darkTheme: Boolean = @dynamic isSystemInDarkTheme($composer, 0)
-  stable materialYou: Boolean = @static true
 ): ColorScheme
 restartable skippable scheme("[0, [0]]") fun BaseTheme(
+  unstable appPreferences: AppPreferences
   stable darkTheme: Boolean = @dynamic isSystemInDarkTheme($composer, 0)
-  stable materialYou: Boolean = @static true
   stable content: Function2<Composer, Int, Unit>
 )
 fun getSubTextColor()
+fun getSeedColor(
+  unstable <this>: AppPreferences
+): Color
 restartable skippable scheme("[0, [0]]") fun PreviewTheme(
   stable darkTheme: Boolean = @dynamic isSystemInDarkTheme($composer, 0)
   stable content: Function2<Composer, Int, Unit>
@@ -21,3 +23,6 @@ fun getCardBodyTextStyle(
 fun getCardBodySubTextStyle(
   unused stable <this>: TextStyles
 ): TextStyle
+fun useMaterialYou(
+  unstable <this>: AppPreferences
+): Boolean

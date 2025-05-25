@@ -1,6 +1,8 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAppBottomNavigationBar()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AppBottomNavigationBar(
   stable currentTopLevelScreen: Screen
   stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):AppBottomNavigationBar.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {     it  :   Screen   ->
 
@@ -15,6 +17,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AppNaviga
   stable currentTopLevelScreen: Screen
   stable modifier: Modifier? = @static Companion
   stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):AppNavigationRail.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {     it  :   Screen   ->
 
@@ -32,8 +35,5 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AppRoot(
   stable modifier: Modifier? = @static Companion
 )
 fun useDarkTheme(
-  unstable <this>: AppPreferences
-): Boolean
-fun useMaterialYou(
   unstable <this>: AppPreferences
 ): Boolean

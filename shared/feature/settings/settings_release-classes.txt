@@ -10,14 +10,7 @@ stable class SettingsPresenter {
   stable val loginPresenter: LoginPresenter
   unstable val logout: Logout
   unstable val exportDatabase: ExportDatabase
-  <runtime stability> = Stable
-}
-stable class UpdateTheme {
-  stable val theme: Theme
-  <runtime stability> = Stable
-}
-stable class UpdateUseMaterialYou {
-  stable val use: Boolean
+  unstable val metadataRepository: MetadataRepository
   <runtime stability> = Stable
 }
 stable class UpdateShowMoreInfoInReleaseListItem {
@@ -26,6 +19,10 @@ stable class UpdateShowMoreInfoInReleaseListItem {
 }
 stable class UpdateSortReleaseGroupListItems {
   stable val sort: Boolean
+  <runtime stability> = Stable
+}
+stable class EnableCrashReporting {
+  stable val enable: Boolean
   <runtime stability> = Stable
 }
 stable class GoToScreen {
@@ -38,15 +35,70 @@ stable class Logout {
 stable class ExportDatabase {
   <runtime stability> = Stable
 }
+stable class EnableDeveloperMode {
+  stable val enable: Boolean
+  <runtime stability> = Stable
+}
 stable class SettingsUiState {
   stable val username: String
   stable val accessToken: String?
-  stable val theme: Theme
-  stable val useMaterialYou: Boolean
   stable val showMoreInfoInReleaseListItem: Boolean
   stable val sortReleaseGroupListItems: Boolean
+  stable val showCrashReporterSettings: Boolean
+  stable val isCrashReportingEnabled: Boolean
   stable val loginState: LoginUiState
   stable val snackbarMessage: String?
+  stable val databaseVersion: String
+  stable val isDeveloperMode: Boolean
   stable val eventSink: Function1<SettingsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+stable class AppearanceSettingsPresenter {
+  stable val navigator: Navigator
+  unstable val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class AppearanceSettingsUiState {
+  stable val theme: Theme
+  stable val useMaterialYou: Boolean
+  stable val seedColor: Int
+  stable val eventSink: Function1<AppearanceSettingsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class UpdateTheme {
+  stable val theme: Theme
+  <runtime stability> = Stable
+}
+stable class UpdateUseMaterialYou {
+  stable val use: Boolean
+  <runtime stability> = Stable
+}
+stable class SetSeedColor {
+  stable val seedColor: Int
+  <runtime stability> = Stable
+}
+stable class ImagesSettingsPresenter {
+  stable val navigator: Navigator
+  unstable val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ImagesSettingsUiState {
+  stable val numberOfImagesPerRow: Int
+  stable val imagesGridPaddingDp: Int
+  stable val eventSink: Function1<ImagesSettingsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class UpdateNumberOfImagesPerRow {
+  stable val numberOfImagesPerRow: Int
+  <runtime stability> = Stable
+}
+stable class UpdateImagesGridPaddingDp {
+  stable val imagesGridPaddingDp: Int
   <runtime stability> = Stable
 }

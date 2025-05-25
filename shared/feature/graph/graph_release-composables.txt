@@ -11,9 +11,11 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistCol
   unstable nodes: List<GraphNode>
   stable filterText: String
   stable modifier: Modifier? = @static Companion
-  stable onClick: Function2<@[ParameterName(name = 'tapOffset')] Offset, @[ParameterName(name = 'drawOffset')] Offset, Unit>? = @static $composer.startReplaceGroup(1849434622)
+  stable showDebugInfo: Boolean = @static false
+  stable onClick: Function1<@[ParameterName(name = 'transformedTapPosition')] Offset, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):ArtistCollaborationGraphUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   Offset  ,   <unused var>  :   Offset   ->
+  {     <unused var>  :   Offset   ->
 
   }
 
@@ -21,4 +23,44 @@ val tmp0_group = $composer.cache(false) {
 
 $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUi
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EntityCollaborationBottomSheet(
+  stable selectedEntity: MusicBrainzEntity
+  stable onClick: Function1<MusicBrainzEntity, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):EntityCollaborationBottomSheet.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {     it  :   MusicBrainzEntity   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheet
+  stable bottomSheetState: SheetState? = @dynamic rememberModalBottomSheetState(false, null, $composer, 0, 0b0011)
+  stable onDismiss: Function0<Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):EntityCollaborationBottomSheet.kt#9igjgp")
+val tmp1_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp1_group@ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheet
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EntityCollaborationBottomSheetContent(
+  stable selectedEntity: MusicBrainzEntity
+  stable onClick: Function1<MusicBrainzEntity, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):EntityCollaborationBottomSheet.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {     it  :   MusicBrainzEntity   ->
+
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheetContent
 )

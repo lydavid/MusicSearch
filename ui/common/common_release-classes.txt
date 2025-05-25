@@ -2,9 +2,9 @@ unstable class LifeSpanPreviewParameterProvider {
   unstable val values: Sequence<LifeSpanUiModel>
   <runtime stability> = Unstable
 }
-stable class LoginPresenterAndroid {
-  unstable val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract
-  unstable val login: LoginAndroid
+stable class LoginPresenterImpl {
+  runtime val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract
+  unstable val login: Login
   <runtime stability> = Stable
 }
 stable class AreasListPresenter {
@@ -21,7 +21,7 @@ stable class UpdateQuery {
   <runtime stability> = Stable
 }
 stable class AreasListUiState {
-  unstable val pagingDataFlow: Flow<PagingData<AreaListItemModel>>
+  unstable val pagingDataFlow: Flow<PagingData<ListItemModel>>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<AreasListUiEvent, Unit>
 }
@@ -39,7 +39,7 @@ stable class UpdateQuery {
   <runtime stability> = Stable
 }
 stable class ArtistsListUiState {
-  runtime val lazyPagingItems: LazyPagingItems<ArtistListItemModel>
+  unstable val pagingDataFlow: Flow<PagingData<ListItemModel>>
   stable val lazyListState: LazyListState
   stable val showMoreInfo: Boolean
   stable val eventSink: Function1<ArtistsListUiEvent, Unit>
@@ -58,7 +58,7 @@ stable class UpdateQuery {
   <runtime stability> = Stable
 }
 stable class EventsListUiState {
-  runtime val lazyPagingItems: LazyPagingItems<EventListItemModel>
+  unstable val pagingDataFlow: Flow<PagingData<ListItemModel>>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<EventsListUiEvent, Unit>
 }
@@ -76,9 +76,18 @@ stable class UpdateQuery {
   <runtime stability> = Stable
 }
 stable class GenresListUiState {
-  runtime val lazyPagingItems: LazyPagingItems<GenreListItemModel>
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<GenresListUiEvent, Unit>
+}
+stable class CustomIcons {
+  <runtime stability> = Stable
+}
+unstable class ForwardingDrawInfo {
+  unstable val painter: Painter
+  stable val alpha: Float
+  stable val colorFilter: ColorFilter?
+  <runtime stability> = Unstable
 }
 stable class InstrumentsListPresenter {
   runtime val getInstruments: GetInstruments
@@ -94,7 +103,7 @@ stable class UpdateQuery {
   <runtime stability> = Stable
 }
 stable class InstrumentsListUiState {
-  runtime val lazyPagingItems: LazyPagingItems<InstrumentListItemModel>
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<InstrumentsListUiEvent, Unit>
 }
@@ -112,14 +121,23 @@ stable class UpdateQuery {
   <runtime stability> = Stable
 }
 stable class LabelsListUiState {
-  runtime val lazyPagingItems: LazyPagingItems<LabelListItemModel>
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<LabelsListUiEvent, Unit>
+}
+runtime class EntitiesListUiState {
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable val lazyListState: LazyListState
+  stable val showMoreInfo: Boolean
+  <runtime stability> = Runtime(LazyPagingItems)
 }
 stable class StartLogin {
   <runtime stability> = Stable
 }
 stable class DismissDialog {
+  <runtime stability> = Stable
+}
+stable class DismissError {
   <runtime stability> = Stable
 }
 stable class SubmitAuthCode {
@@ -128,6 +146,7 @@ stable class SubmitAuthCode {
 }
 stable class LoginUiState {
   stable val showDialog: Boolean
+  stable val errorMessage: String?
   stable val eventSink: Function1<LoginUiEvent, Unit>
   <runtime stability> = Stable
 }
@@ -145,7 +164,7 @@ stable class UpdateQuery {
   <runtime stability> = Stable
 }
 stable class PlacesListUiState {
-  runtime val lazyPagingItems: LazyPagingItems<PlaceListItemModel>
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<PlacesListUiEvent, Unit>
 }
@@ -163,7 +182,7 @@ stable class UpdateQuery {
   <runtime stability> = Stable
 }
 stable class RecordingsListUiState {
-  runtime val lazyPagingItems: LazyPagingItems<RecordingListItemModel>
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<RecordingsListUiEvent, Unit>
 }
@@ -188,6 +207,7 @@ stable class RelationsUiState {
 }
 stable class ReleasesListPresenter {
   runtime val getReleases: GetReleases
+  unstable val releasesListRepository: ReleasesListRepository
   unstable val appPreferences: AppPreferences
   unstable val imageMetadataRepository: ImageMetadataRepository
   <runtime stability> = Stable
@@ -210,13 +230,14 @@ stable class RequestForMissingCoverArtUrl {
   <runtime stability> = Stable
 }
 stable class ReleasesListUiState {
-  runtime val lazyPagingItems: LazyPagingItems<ReleaseListItemModel>
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val showMoreInfo: Boolean
   stable val eventSink: Function1<ReleasesListUiEvent, Unit>
 }
 stable class ReleaseGroupsListPresenter {
   runtime val getReleaseGroups: GetReleaseGroups
+  unstable val releaseGroupsListRepository: ReleaseGroupsListRepository
   unstable val appPreferences: AppPreferences
   unstable val imageMetadataRepository: ImageMetadataRepository
   <runtime stability> = Stable
@@ -239,7 +260,7 @@ stable class RequestForMissingCoverArtUrl {
   <runtime stability> = Stable
 }
 stable class ReleaseGroupsListUiState {
-  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  unstable val pagingDataFlow: Flow<PagingData<ListItemModel>>
   stable val lazyListState: LazyListState
   stable val sort: Boolean
   stable val eventSink: Function1<ReleaseGroupsListUiEvent, Unit>
@@ -304,6 +325,12 @@ stable class StatsScreen {
 stable class SettingsScreen {
   <runtime stability> = Stable
 }
+stable class AppearanceSettingsScreen {
+  <runtime stability> = Stable
+}
+stable class ImagesSettingsScreen {
+  <runtime stability> = Stable
+}
 stable class LicensesScreen {
   <runtime stability> = Stable
 }
@@ -327,13 +354,14 @@ stable class UpdateQuery {
   <runtime stability> = Stable
 }
 stable class SeriesListUiState {
-  runtime val lazyPagingItems: LazyPagingItems<SeriesListItemModel>
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<SeriesListUiEvent, Unit>
 }
 stable class TopAppBarEditState {
   stable val showEditIcon: Boolean
   stable var isEditMode$delegate: MutableState<Boolean>
+  stable var customTitle$delegate: MutableState<String>
 }
 stable class TopAppBarFilterState {
   stable var filterText$delegate: MutableState<String>
@@ -376,7 +404,7 @@ stable class UpdateQuery {
   <runtime stability> = Stable
 }
 stable class WorksListUiState {
-  runtime val lazyPagingItems: LazyPagingItems<WorkListItemModel>
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<WorksListUiEvent, Unit>
 }

@@ -28,7 +28,7 @@ stable class CollectionListPresenter {
   runtime val deleteCollection: DeleteCollection
   <runtime stability> = Stable
 }
-stable class CollectionListUiState {
+stable class CollectionsListUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val topAppBarEditState: TopAppBarEditState
   stable val showLocal: Boolean
@@ -37,7 +37,7 @@ stable class CollectionListUiState {
   runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
   stable val lazyListState: LazyListState
   runtime val actionableResult: ActionableResult?
-  stable val eventSink: Function1<CollectionListUiEvent, Unit>
+  stable val eventSink: Function1<CollectionsListUiEvent, Unit>
 }
 stable class UpdateShowLocal {
   stable val show: Boolean
@@ -69,6 +69,7 @@ stable class CollectionPresenter {
   stable val navigator: Navigator
   runtime val getCollection: GetCollection
   unstable val incrementLookupHistory: IncrementLookupHistory
+  stable val loginPresenter: LoginPresenter
   stable val areasListPresenter: AreasListPresenter
   stable val artistsListPresenter: ArtistsListPresenter
   stable val eventsListPresenter: EventsListPresenter
@@ -81,7 +82,6 @@ stable class CollectionPresenter {
   stable val releaseGroupsListPresenter: ReleaseGroupsListPresenter
   stable val seriesListPresenter: SeriesListPresenter
   stable val worksListPresenter: WorksListPresenter
-  runtime val deleteFromCollection: DeleteFromCollection
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
   unstable val collectionRepository: CollectionRepository
   <runtime stability> = Stable
@@ -89,10 +89,13 @@ stable class CollectionPresenter {
 stable class CollectionUiState {
   stable val title: String
   runtime val collection: CollectionListItemModel?
-  runtime val actionableResult: ActionableResult?
+  runtime val firstActionableResult: ActionableResult?
+  runtime val secondActionableResult: ActionableResult?
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val url: String
   stable val topAppBarEditState: TopAppBarEditState
+  stable val selectedIds: ImmutableSet<String>
+  stable val loginUiState: LoginUiState
   stable val areasListUiState: AreasListUiState
   stable val artistsListUiState: ArtistsListUiState
   stable val eventsListUiState: EventsListUiState
@@ -106,27 +109,27 @@ stable class CollectionUiState {
   stable val seriesListUiState: SeriesListUiState
   stable val worksListUiState: WorksListUiState
   stable val eventSink: Function1<CollectionUiEvent, Unit>
+  unstable val suspendEventSink: SuspendFunction1<SuspendCollectionUiEvent, Unit>
 }
 stable class NavigateUp {
   <runtime stability> = Stable
 }
-stable class MarkItemForDeletion {
-  stable val collectableId: String
-  stable val name: String
-  <runtime stability> = Stable
-}
-stable class UnMarkItemForDeletion {
+stable class ToggleSelectItem {
   stable val collectableId: String
   <runtime stability> = Stable
 }
-stable class DeleteItem {
-  stable val collectableId: String
-  stable val name: String
+stable class MarkSelectedItemsAsDeleted {
+  <runtime stability> = Stable
+}
+stable class UnMarkItemsAsDeleted {
   <runtime stability> = Stable
 }
 stable class ClickItem {
   stable val entity: MusicBrainzEntity
   stable val id: String
   stable val title: String?
+  <runtime stability> = Stable
+}
+stable class DeleteItemsMarkedAsDeleted {
   <runtime stability> = Stable
 }

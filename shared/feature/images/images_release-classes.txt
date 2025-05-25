@@ -1,4 +1,4 @@
-stable class CoverArtsPresenter {
+stable class ImagesPresenter {
   stable val screen: CoverArtsScreen
   stable val navigator: Navigator
   unstable val appPreferences: AppPreferences
@@ -6,17 +6,31 @@ stable class CoverArtsPresenter {
   runtime val getMusicBrainzCoverArtUrl: GetMusicBrainzCoverArtUrl
   <runtime stability> = Stable
 }
-stable class CoverArtsUiState {
-  stable val title: String
+stable class All {
+  <runtime stability> = Stable
+}
+stable class Selected {
+  stable val page: Int
+  stable val totalPages: Int
+  stable val typeAndComment: String
+  <runtime stability> = Stable
+}
+stable class ImagesTitle {
+  <runtime stability> = Stable
+}
+stable class ImagesUiState {
+  stable val title: ImagesTitle
   stable val subtitle: String
   stable val url: String?
+  stable val numberOfImagesPerRow: Int
+  stable val imagesGridPaddingDp: Int
   unstable val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadata>>
   stable val lazyGridState: LazyGridState
-  stable val sortOption: CoverArtsSortOption
+  stable val sortOption: ImagesSortOption
   stable val selectedImageIndex: Int?
   runtime val selectedImageMetadata: ImageMetadata?
   stable val topAppBarFilterState: TopAppBarFilterState
-  stable val eventSink: Function1<CoverArtsUiEvent, Unit>
+  stable val eventSink: Function1<ImagesUiEvent, Unit>
 }
 stable class NavigateUp {
   <runtime stability> = Stable

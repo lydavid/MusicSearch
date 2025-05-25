@@ -17,7 +17,7 @@ stable class AreaPresenter {
 }
 stable class AreaUiState {
   stable val title: String
-  stable val isError: Boolean
+  runtime val handledException: HandledException?
   runtime val area: AreaDetailsModel?
   stable val url: String
   unstable val tabs: List<AreaTab>
@@ -381,6 +381,7 @@ stable class ReleaseDetailsUiState {
   stable val isError: Boolean
   stable val numberOfImages: Int?
   stable val lazyListState: LazyListState
+  stable val isReleaseEventsCollapsed: Boolean
   <runtime stability> = Stable
 }
 stable class NavigateUp {
@@ -400,6 +401,9 @@ stable class ClickItem {
   <runtime stability> = Stable
 }
 stable class ClickImage {
+  <runtime stability> = Stable
+}
+stable class ToggleCollapseExpandReleaseEvents {
   <runtime stability> = Stable
 }
 stable class ReleaseGroupPresenter {

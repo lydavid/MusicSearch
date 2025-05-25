@@ -11,6 +11,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistoryLi
   lookupHistory: LookupHistoryListItemModel
   stable modifier: Modifier? = @static Companion
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):HistoryListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
 
@@ -21,6 +22,7 @@ val tmp0_group = $composer.cache(false) {
 $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.history.internal.HistoryListItem
   stable onDeleteItem: Function1<LookupHistoryListItemModel, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):HistoryListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   LookupHistoryListItemModel   ->
 
@@ -43,6 +45,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistoryUi
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic LazyListState()
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):HistoryUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
 
@@ -53,6 +56,7 @@ val tmp0_group = $composer.cache(false) {
 $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.history.internal.HistoryUi
   stable onDeleteItem: Function1<LookupHistoryListItemModel, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):HistoryUi.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   LookupHistoryListItemModel   ->
 

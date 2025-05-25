@@ -1,3 +1,6 @@
+unstable class CrashlyticsCrashReporterSettings {
+  <runtime stability> = Unstable
+}
 unstable class CrashlyticsTree {
   <runtime stability> = Unstable
 }

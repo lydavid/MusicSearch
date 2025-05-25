@@ -1,10 +1,25 @@
 stable class DatabasePresenter {
   stable val navigator: Navigator
+  unstable val imageMetadataRepository: ImageMetadataRepository
+  unstable val areasListRepository: AreasListRepository
+  unstable val artistsListRepository: ArtistsListRepository
+  unstable val eventsListRepository: EventsListRepository
+  unstable val genresListRepository: GenresListRepository
+  unstable val instrumentsListRepository: InstrumentsListRepository
+  unstable val labelsListRepository: LabelsListRepository
+  unstable val placesListRepository: PlacesListRepository
+  unstable val recordingsListRepository: RecordingsListRepository
+  unstable val releasesListRepository: ReleasesListRepository
+  unstable val releaseGroupsListRepository: ReleaseGroupsListRepository
+  unstable val seriesListRepository: SeriesListRepository
+  unstable val worksListRepository: WorksListRepository
   <runtime stability> = Stable
 }
 stable class DatabaseUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val lazyListState: LazyListState
+  stable val countOfAllImages: Long
+  stable val entitiesCount: ImmutableMap<MusicBrainzEntity, Int>
   stable val eventSink: Function1<DatabaseUiEvent, Unit>
 }
 stable class GoToScreen {

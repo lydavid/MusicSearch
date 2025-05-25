@@ -1,3 +1,17 @@
+stable class Success {
+  stable val requestJsonString: String
+  <runtime stability> = Stable
+}
+stable class Error {
+  stable val exceptionString: String
+  <runtime stability> = Stable
+}
+stable class Result {
+  <runtime stability> = Stable
+}
+unstable class MusicBrainzLoginActivityResultContract {
+  <runtime stability> = Unstable
+}
 stable class All {
   <runtime stability> = Stable
 }

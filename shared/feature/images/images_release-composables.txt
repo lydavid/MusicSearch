@@ -1,15 +1,15 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsGridUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsPagerUiCompact()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCoverArtsPagerUiNonCompact()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewImagesGridUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewImagesPagerUiCompact()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewImagesPagerUiNonCompact()
 fun present(
-  stable <this>: CoverArtsPresenter
-): CoverArtsUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsGridUi(
-  stable state: CoverArtsUiState
+  stable <this>: ImagesPresenter
+): ImagesUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ImagesUi(
+  stable state: ImagesUiState
   stable modifier: Modifier? = @static Companion
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsGridUi(
-  stable state: CoverArtsUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ImagesUi(
+  stable state: ImagesUiState
   stable isCompact: Boolean
   stable modifier: Modifier? = @static Companion
 )
@@ -18,6 +18,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArts
   stable onImageClick: Function1<@[ParameterName(name = 'index')] Int, Unit>
   stable lazyGridState: LazyGridState
   stable modifier: Modifier? = @static Companion
+  stable numberOfImagesPerRow: Int = @static 4
+  stable imagesGridPaddingDp: Int = @static 2
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoverArtsPager(
   imageMetadataList: LazyPagingItems<ImageMetadata>

@@ -4,6 +4,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRe
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSearchHistoryListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecentSearchesHeader(
   stable onDeleteAllHistory: Function0<Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):RecentSearchesHeader.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -18,6 +19,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchHis
   searchHistory: SearchHistoryListItemModel
   stable modifier: Modifier? = @static Companion
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'query')] String, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):SearchHistoryListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
 
@@ -28,6 +30,7 @@ val tmp0_group = $composer.cache(false) {
 $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.search.SearchHistoryListItem
   stable onDeleteItem: Function1<SearchHistoryListItemModel, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):SearchHistoryListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   SearchHistoryListItemModel   ->
 
@@ -42,6 +45,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchHis
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'query')] String, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):SearchHistoryUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
 
@@ -52,6 +56,7 @@ val tmp0_group = $composer.cache(false) {
 $composer.endReplaceGroup()
 tmp0_group@ly.david.musicsearch.shared.feature.search.SearchHistoryUi
   stable onDeleteItem: Function1<SearchHistoryListItemModel, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):SearchHistoryUi.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   SearchHistoryListItemModel   ->
 
@@ -62,6 +67,7 @@ val tmp1_group = $composer.cache(false) {
 $composer.endReplaceGroup()
 tmp1_group@ly.david.musicsearch.shared.feature.search.SearchHistoryUi
   stable onDeleteAllHistory: Function0<Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):SearchHistoryUi.kt#9igjgp")
 val tmp2_group = $composer.cache(false) {
   {
 
@@ -79,6 +85,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchRes
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):SearchResultsUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
 
@@ -101,6 +108,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchUiC
   stable state: SearchUiState
   stable modifier: Modifier? = @static Companion
   stable eventSink: Function1<SearchUiEvent, Unit>? = @static $composer.startReplaceGroup(1849434622)
+sourceInformation($composer, "CC(remember):SearchUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {     it  :   SearchUiEvent   ->
 
