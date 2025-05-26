@@ -152,7 +152,8 @@ jobs:
           command: make site
 
       - run: |
-          rm download/*
+          rm -rf download
+          mkdir download
           mv output/appcast-aarch64.rss download
           mv output/appcast-amd64.rss download
           mv output/install.ps1 download
