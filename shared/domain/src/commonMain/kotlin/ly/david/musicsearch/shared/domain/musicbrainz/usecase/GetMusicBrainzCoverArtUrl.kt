@@ -7,7 +7,13 @@ class GetMusicBrainzCoverArtUrl(
 ) {
     operator fun invoke(
         entityId: String,
+        entity: MusicBrainzEntity,
     ): String {
-        return "${getMusicBrainzUrl(MusicBrainzEntity.RELEASE, entityId)}/cover-art"
+        val entityUrl = "${getMusicBrainzUrl(entity, entityId)}/"
+        return when (entity) {
+            MusicBrainzEntity.EVENT -> entityUrl + "event-art"
+            MusicBrainzEntity.RELEASE -> entityUrl + "cover-art"
+            else -> entityUrl
+        }
     }
 }

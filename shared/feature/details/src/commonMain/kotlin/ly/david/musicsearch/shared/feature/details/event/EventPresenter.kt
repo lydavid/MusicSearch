@@ -183,6 +183,7 @@ internal class EventPresenter(
                         NavEvent.GoTo(
                             CoverArtsScreen(
                                 id = screen.id,
+                                entity = screen.entity,
                             ),
                         ),
                     )

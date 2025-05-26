@@ -121,7 +121,12 @@ internal class ImagesPresenter(
             selectedImageMetadata,
         ) {
             derivedStateOf {
-                selectedImageMetadata?.largeUrl ?: screen.id?.let { getMusicBrainzCoverArtUrl(it) }
+                selectedImageMetadata?.largeUrl ?: screen.id?.let { entityId ->
+                    getMusicBrainzCoverArtUrl(
+                        entityId = entityId,
+                        entity = screen.entity ?: MusicBrainzEntity.RELEASE,
+                    )
+                }
             }
         }
 

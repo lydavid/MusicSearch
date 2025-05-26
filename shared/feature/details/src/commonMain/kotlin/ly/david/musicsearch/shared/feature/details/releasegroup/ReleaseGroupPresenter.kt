@@ -207,6 +207,7 @@ internal class ReleaseGroupPresenter(
                         NavEvent.GoTo(
                             CoverArtsScreen(
                                 id = screen.id,
+                                entity = screen.entity,
                             ),
                         ),
                     )
