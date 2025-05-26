@@ -44,7 +44,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                 name = "Today Is A Beautiful Day",
                 artistCredits = listOf(
                     ArtistCreditMusicBrainzModel(
-                        name = "supercell",
+                        name = "supercell (something)",
                         artist = ArtistMusicBrainzModel(
                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                             name = "supercell",
@@ -69,7 +69,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                 artistCredits = listOf(
                     ArtistCreditUiModel(
                         artistId = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
-                        name = "supercell",
+                        name = "supercell (something)",
                         joinPhrase = "",
                     ),
                 ),
@@ -85,7 +85,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                 firstReleaseDate = "2011-03-16",
                 artistCredits = listOf(
                     ArtistCreditMusicBrainzModel(
-                        name = "supercell",
+                        name = "supercell", // artist credit name changed
                         artist = ArtistMusicBrainzModel(
                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                             name = "supercell",
@@ -142,7 +142,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                 artistCredits = listOf(
                     ArtistCreditUiModel(
                         artistId = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
-                        name = "supercell",
+                        name = "supercell (something)",
                         joinPhrase = "",
                     ),
                 ),

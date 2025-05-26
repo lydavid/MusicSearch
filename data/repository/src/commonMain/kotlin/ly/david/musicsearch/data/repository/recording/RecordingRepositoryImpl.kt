@@ -56,6 +56,7 @@ class RecordingRepositoryImpl(
         recordingDao.withTransaction {
             recordingDao.delete(id)
             relationRepository.deleteRelationshipsByType(id)
+            artistCreditDao.deleteArtistCreditsForEntity(id)
         }
     }
 

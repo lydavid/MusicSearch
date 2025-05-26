@@ -51,7 +51,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                             type = "Group",
                             sortName = "Tsukuyomi",
                         ),
-                        name = "月詠み",
+                        name = "月詠み (something)",
                         joinPhrase = "",
                     ),
                 ),
@@ -68,7 +68,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                 artistCredits = listOf(
                     ArtistCreditUiModel(
                         artistId = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
-                        name = "月詠み",
+                        name = "月詠み (something)",
                         joinPhrase = "",
                     ),
                 ),
@@ -121,7 +121,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                 artistCredits = listOf(
                     ArtistCreditUiModel(
                         artistId = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
-                        name = "月詠み",
+                        name = "月詠み (something)",
                         joinPhrase = "",
                     ),
                 ),

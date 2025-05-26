@@ -103,6 +103,7 @@ class ReleaseRepositoryImpl(
             labelDao.deleteReleaseLabelLinks(releaseId = releaseId)
             areaDao.deleteCountriesByReleaseLinks(releaseId = releaseId)
             relationRepository.deleteRelationshipsByType(entityId = releaseId)
+            artistCreditDao.deleteArtistCreditsForEntity(entityId = releaseId)
         }
     }
 

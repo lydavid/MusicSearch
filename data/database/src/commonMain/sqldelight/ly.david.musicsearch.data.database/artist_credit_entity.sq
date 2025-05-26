@@ -12,3 +12,7 @@ CREATE TABLE IF NOT EXISTS artist_credit_entity (
 insert:
 INSERT OR IGNORE INTO artist_credit_entity
 VALUES ?;
+
+delete:
+DELETE FROM artist_credit_entity
+WHERE entity_id = :entityId;

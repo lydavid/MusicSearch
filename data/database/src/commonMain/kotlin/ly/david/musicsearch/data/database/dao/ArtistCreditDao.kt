@@ -1,9 +1,9 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
-import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
+import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import lydavidmusicsearchdatadatabase.Artist_credit_entity
 import lydavidmusicsearchdatadatabase.Artist_credit_name
 
@@ -16,6 +16,10 @@ interface ArtistCreditDao : EntityDao {
     fun getArtistCreditsForEntity(
         entityId: String,
     ): List<ArtistCreditUiModel>
+
+    fun deleteArtistCreditsForEntity(
+        entityId: String,
+    )
 }
 
 class ArtistCreditDaoImpl(
@@ -82,6 +86,10 @@ class ArtistCreditDaoImpl(
                 )
             },
         ).executeAsList()
+
+    override fun deleteArtistCreditsForEntity(entityId: String) {
+        artistCreditEntityQueries.delete(entityId)
+    }
 }
 
 /**

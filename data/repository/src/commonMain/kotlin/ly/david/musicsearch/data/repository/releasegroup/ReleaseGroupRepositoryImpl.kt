@@ -54,6 +54,7 @@ class ReleaseGroupRepositoryImpl(
         releaseGroupDao.withTransaction {
             releaseGroupDao.deleteReleaseGroup(id)
             relationRepository.deleteRelationshipsByType(id)
+            artistCreditDao.deleteArtistCreditsForEntity(id)
         }
     }
 
