@@ -5,19 +5,19 @@
         <description>Most recent changes with links to updates.</description>
         <language>en</language>
         <item>
-            <title>Version 1.32.1</title>
+            <title>Version 1.32.2</title>
             <link>https://lydavid.github.io/MusicSearch/download/</link>
-            <sparkle:version>1.32.1.0</sparkle:version>
-            <sparkle:shortVersionString>1.32.1</sparkle:shortVersionString>
+            <sparkle:version>1.32.2.0</sparkle:version>
+            <sparkle:shortVersionString>1.32.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>10.14.0</sparkle:minimumSystemVersion>
             <description>
-                <![CDATA[ New release: version 1.32.1 ]]>
+                <![CDATA[ New release: version 1.32.2 ]]>
             </description>
-            <pubDate>Tue, 27 May 2025 13:16:03 GMT</pubDate>
-            <enclosure url="https://lydavid.github.io/MusicSearch/download/musicsearch-1.32.1-mac-amd64.zip" 
-                       length="114987607" 
+            <pubDate>Tue, 27 May 2025 22:24:38 GMT</pubDate>
+            <enclosure url="https://lydavid.github.io/MusicSearch/download/musicsearch-1.32.2-mac-amd64.zip" 
+                       length="114987624" 
                        type="application/octet-stream" 
-                       sparkle:edSignature="JFoarzYwJJjxYONKqMCSD8Nifk/Cnxwqm9FNzeJFhiRqL1JKPsVTiWFSsymIPw1p+6I2WqJc0WwQPq4krL6VCQ=="/>
+                       sparkle:edSignature="l1pzN3idyJTGa7DJuwZErkQ1amvzwGpTz97lDQw/W5KNPx69rKTr9T9BwzUjAhbkI+obEhia/+hOW9kavRuKBw=="/>
         </item>
     </channel>
 </rss>
