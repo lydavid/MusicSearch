@@ -1,0 +1,23 @@
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+    <channel>
+        <title>MusicSearch Changelog</title>
+        <link>https://lydavid.github.io/MusicSearch/download/appcast-aarch64.rss</link>
+        <description>Most recent changes with links to updates.</description>
+        <language>en</language>
+        <item>
+            <title>Version 1.32.1</title>
+            <link>https://lydavid.github.io/MusicSearch/download/</link>
+            <sparkle:version>1.32.1.0</sparkle:version>
+            <sparkle:shortVersionString>1.32.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>11.0</sparkle:minimumSystemVersion>
+            <description>
+                <![CDATA[ New release: version 1.32.1 ]]>
+            </description>
+            <pubDate>Tue, 27 May 2025 13:15:56 GMT</pubDate>
+            <enclosure url="https://lydavid.github.io/MusicSearch/download/musicsearch-1.32.1-mac-aarch64.zip" 
+                       length="113260622" 
+                       type="application/octet-stream" 
+                       sparkle:edSignature="38d41ktjZ3+OCNEdq+e/vV24EauyVPlz6y0qpEnDrvy/82c9eEeFdOzgefuDRU9zJkWTjqrTjdyFEWaDmvtRAg=="/>
+        </item>
+    </channel>
+</rss>
