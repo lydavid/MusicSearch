@@ -163,7 +163,7 @@ jobs:
           mv output/musicsearch.crt download
           mv output/download.html .
           mv output/icon.svg .
-          cp -r output download
+          cp -r output/* download
         if: always() && steps.get-next-version.outputs.new-release-published == 'true'
 
       - name: Commit version code bump
