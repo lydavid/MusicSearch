@@ -96,14 +96,14 @@ SELECT
   ac.name AS artist_credits,
   mi.thumbnail_url,
   mi.id AS placeholderKey,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM release_group rg
 INNER JOIN release_groups_by_entity arg ON rg.id = arg.release_group_id
 INNER JOIN artist a ON a.id = arg.entity_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = rg.id
-LEFT JOIN visited ON visited.entity_id = rg.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = rg.id
 WHERE a.id = :artistId
 AND (
   rg.name LIKE :query
@@ -155,14 +155,14 @@ SELECT
   ac.name AS artist_credits,
   mi.thumbnail_url,
   mi.id AS placeholderKey,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM release_group rg
 INNER JOIN collection_entity ce ON rg.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = rg.id
-LEFT JOIN visited ON visited.entity_id = rg.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = rg.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
@@ -212,12 +212,12 @@ SELECT
   ac.name AS artist_credits,
   mi.thumbnail_url,
   mi.id AS placeholderKey,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM release_group rg
 INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = rg.id
-LEFT JOIN visited ON visited.entity_id = rg.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = rg.id
 WHERE (
   rg.name LIKE :query
   OR rg.disambiguation LIKE :query

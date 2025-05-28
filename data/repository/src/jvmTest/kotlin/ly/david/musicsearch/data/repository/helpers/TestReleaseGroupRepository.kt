@@ -8,14 +8,14 @@ import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.releasegroup.ReleaseGroupRepositoryImpl
-import ly.david.musicsearch.shared.domain.history.VisitedDao
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 
 interface TestReleaseGroupRepository {
     val releaseGroupDao: ReleaseGroupDao
     val artistCreditDao: ArtistCreditDao
     val entityHasRelationsDao: EntityHasRelationsDao
-    val visitedDao: VisitedDao
+    val visitedDao: DetailsMetadataDao
     val relationDao: RelationDao
     fun createReleaseGroupRepository(
         musicBrainzModel: ReleaseGroupMusicBrainzModel,
@@ -30,7 +30,7 @@ interface TestReleaseGroupRepository {
                 }
             },
             entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
+            detailsMetadataDao = visitedDao,
             relationDao = relationDao,
         )
         return ReleaseGroupRepositoryImpl(

@@ -1,38 +1,39 @@
 package ly.david.musicsearch.data.repository
 
+import androidx.paging.Pager
 import app.cash.paging.ExperimentalPagingApi
-import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.api.LookupApi
-import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.shared.domain.history.VisitedDao
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
+import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 
 class RelationRepositoryImpl(
     private val lookupApi: LookupApi,
     private val entityHasRelationsDao: EntityHasRelationsDao,
-    private val visitedDao: VisitedDao,
+    private val detailsMetadataDao: DetailsMetadataDao,
     private val relationDao: RelationDao,
 ) : RelationRepository {
+
     override fun insertAllUrlRelations(
         entityId: String,
         relationWithOrderList: List<RelationWithOrder>?,
     ) {
         relationDao.insertAll(relationWithOrderList)
-        visitedDao.insert(entityId)
+        detailsMetadataDao.upsert(entityId = entityId)
     }
 
     override suspend fun insertAllRelations(
@@ -145,7 +146,7 @@ class RelationRepositoryImpl(
     }
 
     override fun visited(entityId: String): Boolean =
-        visitedDao.contains(entityId)
+        detailsMetadataDao.contains(entityId)
 
     @OptIn(ExperimentalPagingApi::class)
     override fun observeEntityRelationships(

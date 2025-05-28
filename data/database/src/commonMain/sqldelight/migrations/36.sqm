@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS new_browse_remote_count (
 -- 1745666336 -- select unixepoch();
 -- 1745666355206 -- kotlinx
 INSERT INTO new_browse_remote_count (entity_id, browse_entity, remote_count, last_updated)
-SELECT entity_id, browse_entity, remote_count, unixepoch() * 1000
+SELECT entity_id, browse_entity, remote_count, CAST(strftime('%s', 'now') AS INTEGER) * 1000
 FROM browse_remote_count;
 
 DROP TABLE browse_remote_count;

@@ -43,7 +43,7 @@ SELECT
   c.name,
   c.entity,
   COALESCE(ce.entity_count, 0) AS entity_count,
-  visited.entity_id IS NOT NULL AS visited,
+  details_metadata.entity_id IS NOT NULL AS visited,
   (
     SELECT COUNT(*) > 0
     FROM collection_entity
@@ -55,7 +55,7 @@ LEFT JOIN (
   FROM collection_entity
   GROUP BY id
 ) ce ON c.id = ce.id
-LEFT JOIN visited ON visited.entity_id = c.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = c.id
 WHERE c.id IN (
   SELECT id FROM collection
   WHERE is_remote = 0 AND :showLocal
@@ -89,12 +89,12 @@ SELECT
   c.name,
   c.entity,
   COALESCE(ce.entity_count, 0) AS entity_count,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM collection c
 LEFT JOIN (
   SELECT id, COUNT(entity_id) AS entity_count
   FROM collection_entity
   GROUP BY id
 ) ce ON c.id = ce.id
-LEFT JOIN visited ON visited.entity_id = c.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = c.id
 WHERE c.id = :id;
