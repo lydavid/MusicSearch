@@ -19,11 +19,10 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.area.AreaRepository
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
-import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -50,6 +49,7 @@ import ly.david.musicsearch.ui.common.release.ReleasesListPresenter
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
@@ -57,7 +57,7 @@ internal class AreaPresenter(
     private val screen: DetailsScreen,
     private val navigator: Navigator,
     private val repository: AreaRepository,
-    private val incrementLookupHistory: IncrementLookupHistory,
+    override val incrementLookupHistory: IncrementLookupHistory,
     private val artistsListPresenter: ArtistsListPresenter,
     private val eventsListPresenter: EventsListPresenter,
     private val labelsListPresenter: LabelsListPresenter,
@@ -68,13 +68,12 @@ internal class AreaPresenter(
     private val loginPresenter: LoginPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
     private val wikimediaRepository: WikimediaRepository,
-) : Presenter<AreaUiState> {
+) : Presenter<AreaUiState>, RecordVisit {
 
     @Composable
     override fun present(): AreaUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
-        var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var area: AreaDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<AreaTab> by rememberSaveable {
             mutableStateOf(AreaTab.entries)
@@ -114,18 +113,13 @@ internal class AreaPresenter(
                 logger.e(ex)
                 handledException = ex
             }
-            if (!recordedHistory) {
-                incrementLookupHistory(
-                    LookupHistory(
-                        mbid = screen.id,
-                        title = title,
-                        entity = screen.entity,
-                        searchHint = area?.sortName.orEmpty(),
-                    ),
-                )
-                recordedHistory = true
-            }
         }
+
+        RecordVisit(
+            mbid = screen.id,
+            title = title,
+            entity = screen.entity,
+        )
 
         LaunchedEffect(forceRefreshDetails, area) {
             wikimediaRepository.getWikipediaExtract(

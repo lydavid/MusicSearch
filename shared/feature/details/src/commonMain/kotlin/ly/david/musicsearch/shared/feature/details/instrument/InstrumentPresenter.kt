@@ -20,13 +20,13 @@ import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
-import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
+import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.shared.feature.details.utils.filterUrlRelations
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
@@ -41,19 +41,18 @@ internal class InstrumentPresenter(
     private val screen: DetailsScreen,
     private val navigator: Navigator,
     private val repository: InstrumentRepository,
-    private val incrementLookupHistory: IncrementLookupHistory,
+    override val incrementLookupHistory: IncrementLookupHistory,
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
     private val wikimediaRepository: WikimediaRepository,
-) : Presenter<InstrumentUiState> {
+) : Presenter<InstrumentUiState>, RecordVisit {
 
     @Composable
     override fun present(): InstrumentUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
-        var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var instrument: InstrumentDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<InstrumentTab> by rememberSaveable {
             mutableStateOf(InstrumentTab.entries)
@@ -83,17 +82,13 @@ internal class InstrumentPresenter(
                 logger.e(ex)
                 handledException = ex
             }
-            if (!recordedHistory) {
-                incrementLookupHistory(
-                    LookupHistory(
-                        mbid = screen.id,
-                        title = title,
-                        entity = screen.entity,
-                    ),
-                )
-                recordedHistory = true
-            }
         }
+
+        RecordVisit(
+            mbid = screen.id,
+            title = title,
+            entity = screen.entity,
+        )
 
         LaunchedEffect(forceRefreshDetails, instrument) {
             wikimediaRepository.getWikipediaExtract(

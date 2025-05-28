@@ -5,9 +5,7 @@
     <ID>CyclomaticComplexMethod:AreaPresenter.kt$AreaPresenter$@Composable override fun present(): AreaUiState</ID>
     <ID>CyclomaticComplexMethod:ArtistPresenter.kt$ArtistPresenter$@Composable override fun present(): ArtistUiState</ID>
     <ID>CyclomaticComplexMethod:ArtistUi.kt$@OptIn( ExperimentalMaterial3Api::class, ) @Composable internal fun ArtistUi( state: ArtistUiState, entityId: String, modifier: Modifier = Modifier, )</ID>
-    <ID>CyclomaticComplexMethod:EventPresenter.kt$EventPresenter$@Composable override fun present(): EventUiState</ID>
     <ID>CyclomaticComplexMethod:ReleaseGroupPresenter.kt$ReleaseGroupPresenter$@Composable override fun present(): ReleaseGroupUiState</ID>
     <ID>CyclomaticComplexMethod:ReleasePresenter.kt$ReleasePresenter$@Composable override fun present(): ReleaseUiState</ID>
-    <ID>CyclomaticComplexMethod:WorkPresenter.kt$WorkPresenter$@Composable override fun present(): WorkUiState</ID>
   </CurrentIssues>
 </SmellBaseline>

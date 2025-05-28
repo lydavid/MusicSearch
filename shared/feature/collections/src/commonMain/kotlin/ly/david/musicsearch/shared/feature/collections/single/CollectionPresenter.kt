@@ -21,7 +21,6 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.shared.domain.error.ActionableResult
-import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
@@ -60,6 +59,7 @@ import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiState
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.ui.common.series.SeriesListPresenter
 import ly.david.musicsearch.ui.common.series.SeriesListUiEvent
 import ly.david.musicsearch.ui.common.series.SeriesListUiState
@@ -75,7 +75,7 @@ internal class CollectionPresenter(
     private val screen: CollectionScreen,
     private val navigator: Navigator,
     private val getCollection: GetCollection,
-    private val incrementLookupHistory: IncrementLookupHistory,
+    override val incrementLookupHistory: IncrementLookupHistory,
     private val loginPresenter: LoginPresenter,
     private val areasListPresenter: AreasListPresenter,
     private val artistsListPresenter: ArtistsListPresenter,
@@ -91,7 +91,7 @@ internal class CollectionPresenter(
     private val worksListPresenter: WorksListPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
     private val collectionRepository: CollectionRepository,
-) : Presenter<CollectionUiState> {
+) : Presenter<CollectionUiState>, RecordVisit {
     @Composable
     override fun present(): CollectionUiState {
         val collectionId = screen.collectionId
@@ -102,7 +102,6 @@ internal class CollectionPresenter(
         var secondActionableResult: ActionableResult? by remember { mutableStateOf(null) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val topAppBarEditState: TopAppBarEditState = rememberTopAppBarEditState()
         var selectedIds: Set<String> by rememberSaveable { mutableStateOf(setOf()) }
@@ -143,17 +142,6 @@ internal class CollectionPresenter(
             isRemote = nonNullCollection.isRemote
             title = nonNullCollection.name
 
-            if (!recordedHistory) {
-                incrementLookupHistory(
-                    LookupHistory(
-                        mbid = collectionId,
-                        title = nonNullCollection.name,
-                        entity = MusicBrainzEntity.COLLECTION,
-                    ),
-                )
-                recordedHistory = true
-            }
-
             collectionRepository.addToCollection(
                 collectionId = nonNullCollection.id,
                 entity = nonNullCollection.entity,
@@ -161,6 +149,12 @@ internal class CollectionPresenter(
             )
             oneShotNewCollectableId = null
         }
+
+        RecordVisit(
+            mbid = collectionId,
+            title = title,
+            entity = MusicBrainzEntity.COLLECTION,
+        )
 
         LaunchedEffect(topAppBarEditState.isEditMode) {
             if (!topAppBarEditState.isEditMode) {

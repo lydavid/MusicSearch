@@ -24,11 +24,11 @@ import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
-import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
+import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.shared.feature.details.utils.filterUrlRelations
 import ly.david.musicsearch.ui.common.event.EventsListPresenter
 import ly.david.musicsearch.ui.common.event.EventsListUiEvent
@@ -61,7 +61,7 @@ internal class ArtistPresenter(
     private val repository: ArtistRepository,
     private val artistImageRepository: ArtistImageRepository,
     private val wikimediaRepository: WikimediaRepository,
-    private val incrementLookupHistory: IncrementLookupHistory,
+    override val incrementLookupHistory: IncrementLookupHistory,
     private val eventsListPresenter: EventsListPresenter,
     private val recordingsListPresenter: RecordingsListPresenter,
     private val releasesListPresenter: ReleasesListPresenter,
@@ -71,14 +71,13 @@ internal class ArtistPresenter(
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
-) : Presenter<ArtistUiState> {
+) : Presenter<ArtistUiState>, RecordVisit {
 
     @Composable
     override fun present(): ArtistUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isLoading by rememberSaveable { mutableStateOf(true) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
-        var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var artist: ArtistDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<ArtistTab> by rememberSaveable {
             mutableStateOf(ArtistTab.entries)
@@ -118,20 +117,15 @@ internal class ArtistPresenter(
                 logger.e(ex)
                 handledException = ex
             }
-            if (!recordedHistory) {
-                incrementLookupHistory(
-                    LookupHistory(
-                        mbid = screen.id,
-                        title = title,
-                        entity = screen.entity,
-                        searchHint = artist?.sortName.orEmpty(),
-                    ),
-                )
-                recordedHistory = true
-            }
             isLoading = false
             forceRefreshDetails = false
         }
+
+        RecordVisit(
+            mbid = screen.id,
+            title = title,
+            entity = screen.entity,
+        )
 
         LaunchedEffect(forceRefreshDetails, artist) {
             artist = artist?.copy(

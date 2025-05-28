@@ -21,7 +21,6 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
-import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -41,6 +40,7 @@ import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
@@ -48,7 +48,7 @@ internal class WorkPresenter(
     private val screen: DetailsScreen,
     private val navigator: Navigator,
     private val repository: WorkRepository,
-    private val incrementLookupHistory: IncrementLookupHistory,
+    override val incrementLookupHistory: IncrementLookupHistory,
     private val artistsListPresenter: ArtistsListPresenter,
     private val recordingsListPresenter: RecordingsListPresenter,
     private val relationsPresenter: RelationsPresenter,
@@ -56,13 +56,12 @@ internal class WorkPresenter(
     private val loginPresenter: LoginPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
     private val wikimediaRepository: WikimediaRepository,
-) : Presenter<WorkUiState> {
+) : Presenter<WorkUiState>, RecordVisit {
 
     @Composable
     override fun present(): WorkUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
-        var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var work: WorkDetailsModel? by rememberRetained { mutableStateOf(null) }
         val tabs: List<WorkTab> by rememberSaveable {
             mutableStateOf(WorkTab.entries)
@@ -96,17 +95,13 @@ internal class WorkPresenter(
                 logger.e(ex)
                 handledException = ex
             }
-            if (!recordedHistory) {
-                incrementLookupHistory(
-                    LookupHistory(
-                        mbid = screen.id,
-                        title = title,
-                        entity = screen.entity,
-                    ),
-                )
-                recordedHistory = true
-            }
         }
+
+        RecordVisit(
+            mbid = screen.id,
+            title = title,
+            entity = screen.entity,
+        )
 
         LaunchedEffect(forceRefreshDetails, work) {
             wikimediaRepository.getWikipediaExtract(

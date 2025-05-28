@@ -17,26 +17,25 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.genre.GenreRepository
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
-import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
+import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 
 internal class GenrePresenter(
     private val screen: DetailsScreen,
     private val navigator: Navigator,
     private val repository: GenreRepository,
-    private val incrementLookupHistory: IncrementLookupHistory,
+    override val incrementLookupHistory: IncrementLookupHistory,
     private val logger: Logger,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
-) : Presenter<GenreUiState> {
+) : Presenter<GenreUiState>, RecordVisit {
 
     @Composable
     override fun present(): GenreUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
-        var recordedHistory by rememberSaveable { mutableStateOf(false) }
         var genre: GenreListItemModel? by rememberRetained { mutableStateOf(null) }
         var forceRefreshDetails by remember { mutableStateOf(false) }
 
@@ -53,18 +52,13 @@ internal class GenrePresenter(
                 logger.e(ex)
                 handledException = ex
             }
-
-            if (!recordedHistory) {
-                incrementLookupHistory(
-                    LookupHistory(
-                        mbid = screen.id,
-                        title = title,
-                        entity = screen.entity,
-                    ),
-                )
-                recordedHistory = true
-            }
         }
+
+        RecordVisit(
+            mbid = screen.id,
+            title = title,
+            entity = screen.entity,
+        )
 
         fun genreSink(genre: GenreUiEvent) {
             when (genre) {
