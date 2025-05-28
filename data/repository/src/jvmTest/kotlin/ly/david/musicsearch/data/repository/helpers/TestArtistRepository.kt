@@ -10,12 +10,12 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.artist.ArtistRepositoryImpl
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
-import ly.david.musicsearch.shared.domain.history.VisitedDao
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 
 interface TestArtistRepository {
     val artistDao: ArtistDao
     val entityHasRelationsDao: EntityHasRelationsDao
-    val visitedDao: VisitedDao
+    val visitedDao: DetailsMetadataDao
     val relationDao: RelationDao
     val areaDao: AreaDao
     val browseRemoteMetadataDao: BrowseRemoteMetadataDao
@@ -33,7 +33,7 @@ interface TestArtistRepository {
                 }
             },
             entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
+            detailsMetadataDao = visitedDao,
             relationDao = relationDao,
         )
         return ArtistRepositoryImpl(

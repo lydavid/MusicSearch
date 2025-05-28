@@ -48,11 +48,11 @@ SELECT
   s.name,
   s.disambiguation,
   s.type,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM series s
 INNER JOIN collection_entity ce ON s.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN visited ON visited.entity_id = s.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = s.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
@@ -84,9 +84,9 @@ SELECT
   s.name,
   s.disambiguation,
   s.type,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM series s
-LEFT JOIN visited ON visited.entity_id = s.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = s.id
 WHERE (
   s.name LIKE :query
   OR s.disambiguation LIKE :query

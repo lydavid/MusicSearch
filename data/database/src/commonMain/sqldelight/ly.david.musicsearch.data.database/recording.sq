@@ -77,12 +77,12 @@ SELECT
   r.length,
   r.video,
   ac.name AS artist_credits,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM recordings_by_entity re
 INNER JOIN recording r ON r.id = re.recording_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN visited ON visited.entity_id = r.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
 WHERE re.entity_id = :entityId
 AND (
   r.name LIKE :query
@@ -126,13 +126,13 @@ SELECT
   r.length,
   r.video,
   ac.name AS artist_credits,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM recording r
 INNER JOIN collection_entity ce ON r.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN visited ON visited.entity_id = r.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
@@ -173,11 +173,11 @@ SELECT
   r.length,
   r.video,
   ac.name AS artist_credits,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM recording r
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN visited ON visited.entity_id = r.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
 WHERE (
   r.name LIKE :query
   OR r.disambiguation LIKE :query

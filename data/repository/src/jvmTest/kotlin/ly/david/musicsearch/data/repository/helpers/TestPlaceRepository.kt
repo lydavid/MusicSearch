@@ -10,12 +10,12 @@ import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlaceRepositoryImpl
-import ly.david.musicsearch.shared.domain.history.VisitedDao
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
 
 interface TestPlaceRepository {
     val entityHasRelationsDao: EntityHasRelationsDao
-    val visitedDao: VisitedDao
+    val visitedDao: DetailsMetadataDao
     val relationDao: RelationDao
     val placeDao: PlaceDao
     val areaDao: AreaDao
@@ -35,7 +35,7 @@ interface TestPlaceRepository {
                 }
             },
             entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
+            detailsMetadataDao = visitedDao,
             relationDao = relationDao,
         )
         return PlaceRepositoryImpl(

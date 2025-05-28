@@ -78,10 +78,10 @@ SELECT
   p.`begin`,
   p.`end`,
   p.`ended`,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM place p
 INNER JOIN area_place ap ON p.id = ap.place_id
-LEFT JOIN visited ON visited.entity_id = p.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = p.id
 WHERE ap.area_id = :areaId
 AND (p.name LIKE :query OR p.disambiguation LIKE :query OR p.type LIKE :query)
 ORDER BY p.name, p.address
@@ -120,11 +120,11 @@ SELECT
   p.`begin`,
   p.`end`,
   p.`ended`,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM place p
 INNER JOIN collection_entity ce ON p.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN visited ON visited.entity_id = p.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = p.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
@@ -165,9 +165,9 @@ SELECT
   p.`begin`,
   p.`end`,
   p.`ended`,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM place p
-LEFT JOIN visited ON visited.entity_id = p.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = p.id
 WHERE (
   p.name LIKE :query OR
   p.disambiguation LIKE :query OR

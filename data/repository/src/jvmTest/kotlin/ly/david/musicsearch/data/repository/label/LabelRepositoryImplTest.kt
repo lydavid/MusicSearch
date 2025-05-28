@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.label
 
 import kotlinx.coroutines.test.runTest
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.shared.domain.history.VisitedDao
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
@@ -30,7 +30,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
     val koinTestRule = KoinTestRule()
 
     override val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    override val visitedDao: VisitedDao by inject()
+    override val visitedDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val labelDao: LabelDao by inject()
 

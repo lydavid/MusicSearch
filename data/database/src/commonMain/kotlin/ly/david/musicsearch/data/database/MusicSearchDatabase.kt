@@ -10,6 +10,7 @@ import lydavidmusicsearchdatadatabase.Artist
 import lydavidmusicsearchdatadatabase.Artist_credit_name
 import lydavidmusicsearchdatadatabase.Browse_remote_metadata
 import lydavidmusicsearchdatadatabase.Collection
+import lydavidmusicsearchdatadatabase.Details_metadata
 import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Lookup_history
 import lydavidmusicsearchdatadatabase.Mbid_image
@@ -101,6 +102,9 @@ fun createDatabase(driver: SqlDriver): Database {
         ),
         mbid_imageAdapter = Mbid_image.Adapter(
             typesAdapter = ImmutableListStringColumnAdapter,
+        ),
+        details_metadataAdapter = Details_metadata.Adapter(
+            last_updatedAdapter = InstantLongColumnAdapter,
         ),
     )
 }

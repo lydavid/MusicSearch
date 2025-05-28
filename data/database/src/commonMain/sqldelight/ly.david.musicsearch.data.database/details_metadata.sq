@@ -1,0 +1,25 @@
+import kotlinx.datetime.Instant;
+
+-- metadata related to a MusicBrainz entity's details screen
+-- having an entry in this table means we have visited it
+CREATE TABLE IF NOT EXISTS details_metadata (
+  entity_id TEXT PRIMARY KEY NOT NULL,
+  last_updated INTEGER AS Instant NOT NULL
+);
+
+upsert {
+  UPDATE details_metadata
+  SET
+    last_updated = :lastUpdated
+  WHERE entity_id = :entityId;
+
+  INSERT OR IGNORE INTO details_metadata
+  VALUES (
+    :entityId,
+    :lastUpdated
+  );
+}
+
+contains:
+SELECT entity_id FROM details_metadata
+WHERE entity_id = :entityId;
