@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.instrument
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.shared.domain.history.VisitedDao
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
@@ -29,7 +29,7 @@ class InstrumentRepositoryImplTest : KoinTest {
     val koinTestRule = KoinTestRule()
 
     private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val visitedDao: VisitedDao by inject()
+    private val visitedDao: DetailsMetadataDao by inject()
     private val relationDao: RelationDao by inject()
     private val instrumentDao: InstrumentDao by inject()
 
@@ -46,7 +46,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                 }
             },
             entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
+            detailsMetadataDao = visitedDao,
             relationDao = relationDao,
         )
         return InstrumentRepositoryImpl(

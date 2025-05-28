@@ -8,11 +8,11 @@ import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.event.EventRepositoryImpl
 import ly.david.musicsearch.shared.domain.event.EventRepository
-import ly.david.musicsearch.shared.domain.history.VisitedDao
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 
 interface TestEventRepository {
     val entityHasRelationsDao: EntityHasRelationsDao
-    val visitedDao: VisitedDao
+    val visitedDao: DetailsMetadataDao
     val relationDao: RelationDao
     val eventDao: EventDao
 
@@ -29,7 +29,7 @@ interface TestEventRepository {
                 }
             },
             entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
+            detailsMetadataDao = visitedDao,
             relationDao = relationDao,
         )
         return EventRepositoryImpl(

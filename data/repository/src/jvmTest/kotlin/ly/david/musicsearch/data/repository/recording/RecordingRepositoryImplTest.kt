@@ -15,7 +15,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.helpers.TestRecordingRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
-import ly.david.musicsearch.shared.domain.history.VisitedDao
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
@@ -31,7 +31,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
     val koinTestRule = KoinTestRule()
 
     override val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    override val visitedDao: VisitedDao by inject()
+    override val visitedDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val recordingDao: RecordingDao by inject()
     override val artistCreditDao: ArtistCreditDao by inject()

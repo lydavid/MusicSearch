@@ -79,10 +79,10 @@ SELECT
   e.begin,
   e.end,
   e.ended,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM events_by_entity ee
 INNER JOIN event e ON e.id = ee.event_id
-LEFT JOIN visited ON visited.entity_id = e.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = e.id
 WHERE ee.entity_id = :entityId
 AND (
   e.name LIKE :query OR
@@ -126,11 +126,11 @@ SELECT
   e.begin,
   e.end,
   e.ended,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM event e
 INNER JOIN collection_entity ce ON e.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN visited ON visited.entity_id = e.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = e.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
@@ -171,9 +171,9 @@ SELECT
   e.begin,
   e.end,
   e.ended,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM event e
-LEFT JOIN visited ON visited.entity_id = e.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = e.id
 WHERE (
   e.name LIKE :query OR
   e.disambiguation LIKE :query OR

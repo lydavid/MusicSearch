@@ -78,7 +78,7 @@ SELECT
   `name`,
   `disambiguation`,
   `attributes`,
-  visited.entity_id IS NOT NULL AS visited,
+  details_metadata.entity_id IS NOT NULL AS visited,
   `is_forward_direction`,
   `begin`,
   `end`,
@@ -86,7 +86,7 @@ SELECT
   mi.thumbnail_url,
   mi.id AS placeholderKey
 FROM relation
-LEFT JOIN visited ON visited.entity_id = linked_entity_id
+LEFT JOIN details_metadata ON details_metadata.entity_id = linked_entity_id
 LEFT JOIN mbid_image mi ON mi.mbid = linked_entity_id
 WHERE relation.entity_id = :entityId
 AND linked_entity IN :relatedEntities
@@ -114,7 +114,7 @@ SELECT
   `name`,
   `disambiguation`,
   `attributes`,
-  visited.entity_id IS NOT NULL AS visited,
+  details_metadata.entity_id IS NOT NULL AS visited,
   `is_forward_direction`,
   `begin`,
   `end`,
@@ -122,7 +122,7 @@ SELECT
   mi.thumbnail_url,
   mi.id AS placeholderKey
 FROM relation
-LEFT JOIN visited ON visited.entity_id = linked_entity_id
+LEFT JOIN details_metadata ON details_metadata.entity_id = linked_entity_id
 LEFT JOIN mbid_image mi ON mi.mbid = linked_entity_id
 WHERE relation.entity_id = :entityId
 AND linked_entity = :entityType

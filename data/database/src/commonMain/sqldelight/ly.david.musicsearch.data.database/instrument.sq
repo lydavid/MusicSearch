@@ -52,11 +52,11 @@ SELECT
   i.disambiguation,
   i.description,
   i.type,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM instrument i
 INNER JOIN collection_entity ce ON i.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN visited ON visited.entity_id = i.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = i.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
@@ -91,9 +91,9 @@ SELECT
   i.disambiguation,
   i.description,
   i.type,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM instrument i
-LEFT JOIN visited ON visited.entity_id = i.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = i.id
 WHERE (
   i.name LIKE :query OR
   i.disambiguation LIKE :query OR

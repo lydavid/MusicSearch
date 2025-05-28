@@ -29,7 +29,7 @@ import ly.david.musicsearch.data.repository.helpers.TestPlaceRepository
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
-import ly.david.musicsearch.shared.domain.history.VisitedDao
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -48,7 +48,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
     val koinTestRule = KoinTestRule()
 
     override val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    override val visitedDao: VisitedDao by inject()
+    override val visitedDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val placeDao: PlaceDao by inject()
     override val areaDao: AreaDao by inject()
@@ -68,7 +68,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                 }
             },
             entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
+            detailsMetadataDao = visitedDao,
             relationDao = relationDao,
         )
         return AreaRepositoryImpl(

@@ -72,10 +72,10 @@ SELECT
   w.type,
   w.language,
   w.iswcs,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM works_by_entity we
 INNER JOIN work w ON w.id = we.work_id
-LEFT JOIN visited ON visited.entity_id = w.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = w.id
 WHERE we.entity_id = :entityId
 AND (
   w.name LIKE :query
@@ -116,11 +116,11 @@ SELECT
   w.type,
   w.language,
   w.iswcs,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM work w
 INNER JOIN collection_entity ce ON w.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN visited ON visited.entity_id = w.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = w.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
@@ -158,9 +158,9 @@ SELECT
   w.type,
   w.language,
   w.iswcs,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM work w
-LEFT JOIN visited ON visited.entity_id = w.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = w.id
 WHERE (
   w.name LIKE :query
   OR w.disambiguation LIKE :query

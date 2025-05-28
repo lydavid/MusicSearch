@@ -34,10 +34,10 @@ import ly.david.musicsearch.data.database.dao.SearchResultDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.SpotifyHistoryDao
 import ly.david.musicsearch.data.database.dao.TrackDao
-import ly.david.musicsearch.data.database.dao.VisitedDaoImpl
+import ly.david.musicsearch.data.database.dao.DetailsMetadataDaoImpl
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
-import ly.david.musicsearch.shared.domain.history.VisitedDao
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.wikimedia.MbidWikipediaDao
 import org.koin.core.module.dsl.singleOf
@@ -54,7 +54,7 @@ val databaseDaoModule = module {
     singleOf(::CollectionEntityDao)
     single { CountryCodeDao(get()) }
     single { EntityHasRelationsDao(get()) }
-    singleOf(::VisitedDaoImpl) bind VisitedDao::class
+    singleOf(::DetailsMetadataDaoImpl) bind DetailsMetadataDao::class
     singleOf(::EventDao)
     singleOf(::InstrumentDao)
     singleOf(::GenreDao)

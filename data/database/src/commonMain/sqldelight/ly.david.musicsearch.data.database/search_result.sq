@@ -69,11 +69,11 @@ SELECT
   a.end,
   a.ended,
   cc.code,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM area a
 INNER JOIN search_result sr ON a.id = sr.entity_id
 LEFT JOIN country_code cc ON a.id = cc.area_id
-LEFT JOIN visited ON visited.entity_id = a.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = a.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -94,11 +94,11 @@ SELECT
   a.ended,
   mi.thumbnail_url,
   mi.id AS placeholderKey,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN artist a ON sr.entity_id = a.id
 LEFT JOIN mbid_image mi ON mi.mbid = a.id
-LEFT JOIN visited ON visited.entity_id = a.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = a.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -116,10 +116,10 @@ SELECT
   e.begin,
   e.end,
   e.ended,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN event e ON sr.entity_id = e.id
-LEFT JOIN visited ON visited.entity_id = e.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = e.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -133,10 +133,10 @@ SELECT
   i.disambiguation,
   i.description,
   i.type,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN instrument i ON sr.entity_id = i.id
-LEFT JOIN visited ON visited.entity_id = i.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = i.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -150,10 +150,10 @@ SELECT
   l.disambiguation,
   l.type,
   l.label_code,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN label l ON sr.entity_id = l.id
-LEFT JOIN visited ON visited.entity_id = l.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = l.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -172,10 +172,10 @@ SELECT
   p.begin,
   p.end,
   p.ended,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN place p ON sr.entity_id = p.id
-LEFT JOIN visited ON visited.entity_id = p.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = p.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -191,12 +191,12 @@ SELECT
   r.length,
   r.video,
   ac.name AS artist_credits,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN recording r ON sr.entity_id = r.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN visited ON visited.entity_id = r.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
 GROUP BY r.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
@@ -220,13 +220,13 @@ SELECT
     ),
     0
   ) AS releaseCountryCount,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN `release` r ON sr.entity_id = r.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = r.id
-LEFT JOIN visited ON visited.entity_id = r.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
 GROUP BY r.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
@@ -245,13 +245,13 @@ SELECT
   ac.name AS artist_credits,
   mi.thumbnail_url,
   mi.id AS placeholderKey,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN release_group rg ON sr.entity_id = rg.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = rg.id
-LEFT JOIN visited ON visited.entity_id = rg.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = rg.id
 GROUP BY rg.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
@@ -265,10 +265,10 @@ SELECT
   s.name,
   s.disambiguation,
   s.type,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN series s ON sr.entity_id = s.id
-LEFT JOIN visited ON visited.entity_id = s.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = s.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -283,9 +283,9 @@ SELECT
   w.type,
   w.language,
   w.iswcs,
-  visited.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN work w ON sr.entity_id = w.id
-LEFT JOIN visited ON visited.entity_id = w.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = w.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;

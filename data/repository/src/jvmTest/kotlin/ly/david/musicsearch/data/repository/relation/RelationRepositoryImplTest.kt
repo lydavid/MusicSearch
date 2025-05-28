@@ -15,7 +15,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
-import ly.david.musicsearch.shared.domain.history.VisitedDao
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
@@ -31,7 +31,7 @@ class RelationRepositoryImplTest : KoinTest {
     val koinTestRule = KoinTestRule()
 
     private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val visitedDao: VisitedDao by inject()
+    private val visitedDao: DetailsMetadataDao by inject()
     private val relationDao: RelationDao by inject()
 
     private fun createRepository(
@@ -40,7 +40,7 @@ class RelationRepositoryImplTest : KoinTest {
         return RelationRepositoryImpl(
             lookupApi = lookupApi,
             entityHasRelationsDao = entityHasRelationsDao,
-            visitedDao = visitedDao,
+            detailsMetadataDao = visitedDao,
             relationDao = relationDao,
         )
     }

@@ -1,0 +1,14 @@
+import kotlinx.datetime.Instant;
+
+CREATE TABLE IF NOT EXISTS details_metadata (
+  entity_id TEXT PRIMARY KEY NOT NULL,
+  last_updated INTEGER AS Instant NOT NULL
+);
+
+-- 1745666336 -- select unixepoch();
+-- 1745666355206 -- kotlinx
+INSERT INTO details_metadata (entity_id, last_updated)
+SELECT entity_id, unixepoch() * 1000
+FROM visited;
+
+DROP TABLE visited;
