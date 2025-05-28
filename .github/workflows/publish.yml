@@ -162,7 +162,7 @@ jobs:
         with:
           commit_message: 'chore: bump version to ${{ env.VERSION_NAME }} (${{ env.VERSION_CODE }}) [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          file_pattern: 'gradle.properties download.html icon.svg download'
+          file_pattern: 'gradle.properties download.html icon.svg'
 
       # See .releaserc for the artifacts we include in each release
       - name: Publish to GitHub
