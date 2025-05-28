@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS details_metadata (
 -- 1745666336 -- select unixepoch();
 -- 1745666355206 -- kotlinx
 INSERT INTO details_metadata (entity_id, last_updated)
-SELECT entity_id, unixepoch() * 1000
+SELECT entity_id, CAST(strftime('%s', 'now') AS INTEGER) * 1000
 FROM visited;
 
 DROP TABLE visited;
