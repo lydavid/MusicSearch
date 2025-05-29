@@ -4,7 +4,7 @@ androidGradlePlugin = "8.10.1"
 baselineprofile = "1.3.4"
 benchmarkMacroJunit4 = "1.3.4"
 chucker = "4.1.0"
-circuit = "0.27.1"
+circuit = "0.28.0"
 coil = "3.2.0"
 colorpicker = "1.1.2"
 compose-multiplatform = "1.8.1"
@@ -75,6 +75,7 @@ compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 composeCompiler-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
+compose-ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref = "compose-multiplatform" }
 desugarjdklibs = "com.android.tools:desugar_jdk_libs:2.1.5"
 detekt-compose = "io.nlopez.compose.rules:detekt:0.4.22"
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }

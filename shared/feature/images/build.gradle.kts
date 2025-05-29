@@ -26,6 +26,7 @@ kotlin {
                 implementation(libs.windowSizeClass)
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
+                implementation(libs.compose.ui.backhandler)
             }
         }
         val androidMain by getting {
