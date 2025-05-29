@@ -3594,6 +3594,29 @@
             ]
         },
         {
+            "uniqueId": "com.github.requery:sqlite-android",
+            "funding": [
+                
+            ],
+            "developers": [
+                {
+                    "name": "TODO"
+                }
+            ],
+            "artifactVersion": "3.45.0",
+            "description": "Android SQLite compatibility library",
+            "scm": {
+                "connection": "scm:git:git://github.com/requery/sqlite-android.git",
+                "url": "https://github.com/requery/sqlite-android/",
+                "developerConnection": "scm:git:ssh://git@github.com/requery/sqlite-android.git"
+            },
+            "name": "sqlite-android",
+            "website": "https://github.com/requery/sqlite-android/",
+            "licenses": [
+                "Apache-2.0"
+            ]
+        },
+        {
             "uniqueId": "com.github.skydoves:colorpicker-compose",
             "funding": [
                 
