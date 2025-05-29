@@ -231,7 +231,7 @@ internal fun SettingsUi(
             )
 
             val appVersionText = "${strings.appVersion}: $versionName ($versionCode)"
-            val databaseVersionText = "${strings.databaseVersion}: ${state.databaseVersion}"
+            val databaseVersionText = "${strings.databaseVersion}: ${state.appDatabaseVersion}"
             ClickableItem(
                 title = appVersionText,
                 subtitle = databaseVersionText,
@@ -255,6 +255,9 @@ internal fun SettingsUi(
                 DevSettingsSection(
                     isDeveloperMode = state.isDeveloperMode,
                     onDeveloperModeChange = { eventSink(SettingsUiEvent.EnableDeveloperMode(it)) },
+                )
+                ClickableItem(
+                    title = "SQLite version: ${state.sqliteVersion}",
                 )
             }
 

@@ -83,7 +83,8 @@ internal class SettingsPresenter(
             isCrashReportingEnabled = isCrashReportingEnabled,
             loginState = loginUiState,
             snackbarMessage = snackbarMessage,
-            databaseVersion = metadataRepository.getDatabaseVersion(),
+            appDatabaseVersion = metadataRepository.getAppDatabaseVersion(),
+            sqliteVersion = metadataRepository.getSQLiteVersion(),
             isDeveloperMode = isDeveloperMode,
             eventSink = ::eventSink,
         )

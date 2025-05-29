@@ -1,3 +1,6 @@
 getUserVersion {
 PRAGMA user_version;
 }
+
+getSQLiteVersion:
+SELECT sqlite_version();

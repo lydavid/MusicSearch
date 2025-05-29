@@ -12,7 +12,8 @@ internal data class SettingsUiState(
     val isCrashReportingEnabled: Boolean = false,
     val loginState: LoginUiState = LoginUiState(),
     val snackbarMessage: String? = null,
-    val databaseVersion: String = "",
+    val appDatabaseVersion: String = "",
+    val sqliteVersion: String = "",
     val isDeveloperMode: Boolean = false,
     val eventSink: (SettingsUiEvent) -> Unit = {},
 ) : CircuitUiState

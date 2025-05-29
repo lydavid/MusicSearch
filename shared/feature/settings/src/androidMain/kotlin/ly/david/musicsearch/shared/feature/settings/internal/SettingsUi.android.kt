@@ -40,7 +40,7 @@ internal fun PreviewSettingsScreenAndroid() {
         Surface {
             SettingsUi(
                 state = SettingsUiState(
-                    databaseVersion = "1",
+                    appDatabaseVersion = "1",
                 ),
                 showAndroidSettings = true,
                 isNotificationListenerEnabled = false,
@@ -58,7 +58,7 @@ internal fun PreviewSettingsScreenNotificationListenerEnable() {
         Surface {
             SettingsUi(
                 state = SettingsUiState(
-                    databaseVersion = "1",
+                    appDatabaseVersion = "1",
                 ),
                 showAndroidSettings = true,
                 isNotificationListenerEnabled = true,
@@ -76,7 +76,7 @@ internal fun PreviewSettingsScreenAndroidWithCrashReporting() {
         Surface {
             SettingsUi(
                 state = SettingsUiState(
-                    databaseVersion = "1",
+                    appDatabaseVersion = "1",
                     showCrashReporterSettings = true,
                 ),
                 showAndroidSettings = true,
@@ -94,7 +94,7 @@ internal fun PreviewSettingsScreenNonAndroid() {
         Surface {
             SettingsUi(
                 state = SettingsUiState(
-                    databaseVersion = "1",
+                    appDatabaseVersion = "1",
                 ),
                 showAndroidSettings = false,
                 versionName = "1.2.3",
@@ -111,7 +111,7 @@ internal fun PreviewSettingsScreenLoggedIn() {
         Surface {
             SettingsUi(
                 state = SettingsUiState(
-                    databaseVersion = "1",
+                    appDatabaseVersion = "1",
                     username = "david",
                     accessToken = "token",
                 ),

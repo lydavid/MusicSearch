@@ -7,6 +7,11 @@ class DatabaseMetadataDao(
 ) : EntityDao {
     override val transacter = database.database_metadataQueries
 
-    fun getUserVersion() =
-        transacter.getUserVersion().executeAsOne()
+    fun getUserVersion(): String {
+        return transacter.getUserVersion().executeAsOne()
+    }
+
+    fun getSQLiteVersion(): String {
+        return transacter.getSQLiteVersion().executeAsOne()
+    }
 }
