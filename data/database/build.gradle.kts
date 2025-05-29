@@ -33,6 +33,8 @@ kotlin {
             dependsOn(jvmCommon)
             dependencies {
                 implementation(libs.sqldelight.android.driver)
+                implementation(libs.sqlite.android)
+                implementation(libs.sqlite.framework)
             }
         }
         val jvmMain by getting {
