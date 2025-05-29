@@ -29,8 +29,8 @@ pagingMultiplatform = "3.3.0-alpha02-0.5.1"
 pagingTesting = "3.3.0-alpha02"
 paparazzi = "2.0.0-alpha01"
 profileinstaller = "1.4.1"
-sqldelight = "2.1.0"
 requery = "3.45.0"
+sqldelight = "2.1.0"
 stately = "2.1.0"
 turbine = "1.2.0"
 uiautomator = "2.3.0"
@@ -71,11 +71,11 @@ compose-foundation = { module = "androidx.compose.foundation:foundation" }
 compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref = "compose-multiplatform" }
 compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 composeCompiler-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
-compose-ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref = "compose-multiplatform" }
 desugarjdklibs = "com.android.tools:desugar_jdk_libs:2.1.5"
 detekt-compose = "io.nlopez.compose.rules:detekt:0.4.22"
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
