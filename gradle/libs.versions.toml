@@ -30,6 +30,7 @@ pagingTesting = "3.3.0-alpha02"
 paparazzi = "2.0.0-alpha01"
 profileinstaller = "1.4.1"
 sqldelight = "2.1.0"
+requery = "3.45.0"
 stately = "2.1.0"
 turbine = "1.2.0"
 uiautomator = "2.3.0"
@@ -123,6 +124,8 @@ sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", versi
 sqldelight-paging = { module = "app.cash.sqldelight:androidx-paging3-extensions", version.ref = "sqldelight" }
 sqldelight-primitive = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+sqlite-android = { module = "com.github.requery:sqlite-android", version.ref = "requery" }
+sqlite-framework = "androidx.sqlite:sqlite-framework:2.5.1"
 stately-common = { module = "co.touchlab:stately-common", version.ref = "stately" }
 stately-iso-collections = { module = "co.touchlab:stately-iso-collections", version.ref = "stately" }
 stately-isolate = { module = "co.touchlab:stately-isolate", version.ref = "stately" }
