@@ -3659,7 +3659,7 @@
                     "name": "TODO"
                 }
             ],
-            "artifactVersion": "3.45.0",
+            "artifactVersion": "3.49.0",
             "description": "Android SQLite compatibility library",
             "scm": {
                 "connection": "scm:git:git://github.com/requery/sqlite-android.git",
