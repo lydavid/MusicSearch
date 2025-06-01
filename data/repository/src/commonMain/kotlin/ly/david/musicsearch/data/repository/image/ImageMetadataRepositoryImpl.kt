@@ -4,6 +4,7 @@ import androidx.paging.cachedIn
 import app.cash.paging.Pager
 import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -91,6 +92,8 @@ internal class ImageMetadataRepositoryImpl(
             } else {
                 logger.e(ex)
             }
+        } catch (ex: CancellationException) {
+            throw ex
         } catch (ex: Exception) {
             logger.e(ex)
         }
