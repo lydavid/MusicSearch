@@ -26,10 +26,7 @@ class ArtistRepositoryImpl(
         }
 
         val artistDetailsModel = artistDao.getArtistForDetails(artistId)
-        val urlRelations = relationRepository.getRelationshipsByType(
-            entityId = artistId,
-            entity = MusicBrainzEntity.URL,
-        )
+        val urlRelations = relationRepository.getRelationshipsByType(artistId)
         val visited = relationRepository.visited(artistId)
 
         if (
