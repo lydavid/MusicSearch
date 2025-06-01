@@ -64,9 +64,13 @@ internal fun ArtistUi(
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
     val eventsLazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val releasesLazyPagingItems = state.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val releasesByEntityEventSink = state.releasesListUiState.eventSink
     val releaseGroupLazyPagingItems = state.releaseGroupsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val releaseGroupsByEntityEventSink = state.releaseGroupsListUiState.eventSink
+    val worksLazyPagingItems = state.worksListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val recordingsLazyPagingItems = state.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
 
     val loginEventSink = state.loginUiState.eventSink
 
@@ -101,19 +105,38 @@ internal fun ArtistUi(
                 title = state.title,
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = {
-                    RefreshMenuItem(
-                        onClick = {
-                            when (state.selectedTab) {
-                                ArtistTab.EVENTS -> {
-                                    eventsLazyPagingItems.refresh()
-                                }
+                    val selectedTab = state.selectedTab
 
+                    RefreshMenuItem(
+                        show = selectedTab != ArtistTab.STATS,
+                        onClick = {
+                            when (selectedTab) {
                                 ArtistTab.RELEASE_GROUPS -> {
                                     releaseGroupLazyPagingItems.refresh()
                                 }
 
+                                ArtistTab.RELEASES -> {
+                                    releasesLazyPagingItems.refresh()
+                                }
+
+                                ArtistTab.RECORDINGS -> {
+                                    recordingsLazyPagingItems.refresh()
+                                }
+
+                                ArtistTab.WORKS -> {
+                                    worksLazyPagingItems.refresh()
+                                }
+
+                                ArtistTab.EVENTS -> {
+                                    eventsLazyPagingItems.refresh()
+                                }
+
+                                ArtistTab.RELATIONSHIPS -> {
+                                    relationsLazyPagingItems.refresh()
+                                }
+
                                 else -> {
-                                    eventSink(ArtistUiEvent.ForceRefresh)
+                                    eventSink(ArtistUiEvent.ForceRefreshDetails)
                                 }
                             }
                         },
@@ -122,7 +145,7 @@ internal fun ArtistUi(
                         url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
-                    if (state.selectedTab == ArtistTab.RELEASE_GROUPS) {
+                    if (selectedTab == ArtistTab.RELEASE_GROUPS) {
                         ToggleMenuItem(
                             toggleOnText = strings.sort,
                             toggleOffText = strings.unsort,
@@ -134,7 +157,7 @@ internal fun ArtistUi(
                             },
                         )
                     }
-                    if (state.selectedTab == ArtistTab.RELEASES) {
+                    if (selectedTab == ArtistTab.RELEASES) {
                         ToggleMenuItem(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
@@ -189,7 +212,7 @@ internal fun ArtistUi(
                         showLoading = state.isLoading,
                         handledException = state.handledException,
                         onRefresh = {
-                            eventSink(ArtistUiEvent.ForceRefresh)
+                            eventSink(ArtistUiEvent.ForceRefreshDetails)
                         },
                         detailsModel = state.artist,
                     ) { artist ->
@@ -242,7 +265,7 @@ internal fun ArtistUi(
                 ArtistTab.RELEASES -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
-                            lazyPagingItems = state.releasesListUiState.lazyPagingItems,
+                            lazyPagingItems = releasesLazyPagingItems,
                             lazyListState = state.releasesListUiState.lazyListState,
                             showMoreInfo = state.releasesListUiState.showMoreInfo,
                         ),
@@ -272,7 +295,7 @@ internal fun ArtistUi(
                 ArtistTab.RECORDINGS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
-                            lazyPagingItems = state.recordingsListUiState.lazyPagingItems,
+                            lazyPagingItems = recordingsLazyPagingItems,
                             lazyListState = state.recordingsListUiState.lazyListState,
                         ),
                         modifier = Modifier
@@ -294,7 +317,7 @@ internal fun ArtistUi(
                 ArtistTab.WORKS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
-                            lazyPagingItems = state.worksListUiState.lazyPagingItems,
+                            lazyPagingItems = worksLazyPagingItems,
                             lazyListState = state.worksListUiState.lazyListState,
                         ),
                         modifier = Modifier
@@ -337,7 +360,7 @@ internal fun ArtistUi(
 
                 ArtistTab.RELATIONSHIPS -> {
                     RelationsListScreen(
-                        lazyPagingItems = state.relationsUiState.lazyPagingItems,
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

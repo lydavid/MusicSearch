@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
@@ -58,7 +59,9 @@ internal fun LabelUi(
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
+    val releasesLazyPagingItems = state.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val releasesByEntityEventSink = state.releasesListUiState.eventSink
+    val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
 
     val loginEventSink = state.loginUiState.eventSink
 
@@ -153,7 +156,7 @@ internal fun LabelUi(
                 LabelTab.RELEASES -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
-                            lazyPagingItems = state.releasesListUiState.lazyPagingItems,
+                            lazyPagingItems = releasesLazyPagingItems,
                             lazyListState = state.releasesListUiState.lazyListState,
                             showMoreInfo = state.releasesListUiState.showMoreInfo,
                         ),
@@ -182,7 +185,7 @@ internal fun LabelUi(
 
                 LabelTab.RELATIONSHIPS -> {
                     RelationsListScreen(
-                        lazyPagingItems = state.relationsUiState.lazyPagingItems,
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

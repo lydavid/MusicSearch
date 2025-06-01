@@ -57,6 +57,9 @@ internal fun WorkUi(
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
+    val recordingsLazyPagingItems = state.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
+
     val loginEventSink = state.loginUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
@@ -160,7 +163,7 @@ internal fun WorkUi(
                 WorkTab.RECORDINGS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
-                            lazyPagingItems = state.recordingsListUiState.lazyPagingItems,
+                            lazyPagingItems = recordingsLazyPagingItems,
                             lazyListState = state.recordingsListUiState.lazyListState,
                         ),
                         modifier = Modifier
@@ -181,7 +184,7 @@ internal fun WorkUi(
 
                 WorkTab.RELATIONSHIPS -> {
                     RelationsListScreen(
-                        lazyPagingItems = state.relationsUiState.lazyPagingItems,
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

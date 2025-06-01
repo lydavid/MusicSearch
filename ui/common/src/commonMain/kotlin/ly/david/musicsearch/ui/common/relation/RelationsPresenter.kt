@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
-import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
@@ -31,7 +30,7 @@ class RelationsPresenterImpl(
                 relatableEntities subtract setOf(MusicBrainzEntity.URL),
             )
         }
-        val relationListItems: Flow<PagingData<RelationListItemModel>> by rememberRetained(id, entity, query) {
+        val pagingDataFlow: Flow<PagingData<RelationListItemModel>> by rememberRetained(id, entity, query) {
             mutableStateOf(
                 getEntityRelationships(
                     entityId = id,
@@ -58,7 +57,7 @@ class RelationsPresenterImpl(
         }
 
         return RelationsUiState(
-            lazyPagingItems = relationListItems.collectAsLazyPagingItems(),
+            pagingDataFlow = pagingDataFlow,
             lazyListState = lazyListState,
             eventSink = ::eventSink,
         )

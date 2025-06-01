@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
@@ -60,6 +61,8 @@ internal fun InstrumentUi(
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
     val loginEventSink = state.loginUiState.eventSink
+
+    val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(InstrumentUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
@@ -139,7 +142,7 @@ internal fun InstrumentUi(
 
                 InstrumentTab.RELATIONSHIPS -> {
                     RelationsListScreen(
-                        lazyPagingItems = state.relationsUiState.lazyPagingItems,
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

@@ -9,8 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
-import app.cash.paging.compose.LazyPagingItems
-import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -30,7 +28,7 @@ class WorksListPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val workListItems: Flow<PagingData<ListItemModel>> by rememberRetained(query, browseMethod) {
+        val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(query, browseMethod) {
             mutableStateOf(
                 getWorks(
                     browseMethod = browseMethod,
@@ -57,7 +55,7 @@ class WorksListPresenter(
         }
 
         return WorksListUiState(
-            lazyPagingItems = workListItems.collectAsLazyPagingItems(),
+            pagingDataFlow = pagingDataFlow,
             lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
@@ -77,7 +75,7 @@ sealed interface WorksListUiEvent : CircuitUiEvent {
 
 @Stable
 data class WorksListUiState(
-    val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val pagingDataFlow: Flow<PagingData<ListItemModel>>,
     val lazyListState: LazyListState = LazyListState(),
     val eventSink: (WorksListUiEvent) -> Unit,
 ) : CircuitUiState

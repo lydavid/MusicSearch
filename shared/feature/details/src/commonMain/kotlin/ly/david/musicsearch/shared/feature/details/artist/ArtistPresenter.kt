@@ -253,32 +253,8 @@ internal class ArtistPresenter(
                     )
                 }
 
-                ArtistUiEvent.ForceRefresh -> {
-                    when (selectedTab) {
-                        ArtistTab.DETAILS -> {
-                            forceRefreshDetails = true
-                        }
-
-                        ArtistTab.RELEASES -> {
-                            releasesByEntityUiState.lazyPagingItems.refresh()
-                        }
-
-                        ArtistTab.RECORDINGS -> {
-                            recordingsByEntityUiState.lazyPagingItems.refresh()
-                        }
-
-                        ArtistTab.WORKS -> {
-                            worksByEntityUiState.lazyPagingItems.refresh()
-                        }
-
-                        ArtistTab.RELATIONSHIPS -> {
-                            relationsUiState.lazyPagingItems.refresh()
-                        }
-
-                        else -> {
-                            // No-op.
-                        }
-                    }
+                ArtistUiEvent.ForceRefreshDetails -> {
+                    forceRefreshDetails = true
                 }
 
                 ArtistUiEvent.NavigateToCollaboratorsGraph -> {
@@ -343,7 +319,7 @@ internal data class ArtistUiState(
 
 internal sealed interface ArtistUiEvent : CircuitUiEvent {
     data object NavigateUp : ArtistUiEvent
-    data object ForceRefresh : ArtistUiEvent
+    data object ForceRefreshDetails : ArtistUiEvent
     data class UpdateTab(val tab: ArtistTab) : ArtistUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,

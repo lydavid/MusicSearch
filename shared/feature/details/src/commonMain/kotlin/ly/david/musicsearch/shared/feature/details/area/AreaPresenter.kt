@@ -238,7 +238,20 @@ internal class AreaPresenter(
                 }
 
                 AreaUiEvent.ForceRefresh -> {
-                    forceRefreshDetails = true
+                    when (selectedTab) {
+                        AreaTab.DETAILS -> {
+                            forceRefreshDetails = true
+                        }
+                        AreaTab.RELATIONSHIPS -> TODO()
+                        AreaTab.ARTISTS -> {
+                            artistsByEntityUiState.pagingDataFlow
+                        }
+                        AreaTab.EVENTS -> TODO()
+                        AreaTab.LABELS -> TODO()
+                        AreaTab.RELEASES -> TODO()
+                        AreaTab.PLACES -> TODO()
+                        AreaTab.STATS -> TODO()
+                    }
                 }
             }
         }

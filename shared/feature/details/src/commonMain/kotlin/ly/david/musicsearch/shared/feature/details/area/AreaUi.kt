@@ -127,6 +127,10 @@ internal fun AreaUiInternal(
         initialPage = state.tabs.indexOf(state.selectedTab),
         pageCount = state.tabs::size,
     )
+    val labelsLazyPagingItems = state.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val placesLazyPagingItems = state.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val releasesLazyPagingItems = state.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(AreaUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
@@ -240,7 +244,7 @@ internal fun AreaUiInternal(
                 AreaTab.LABELS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
-                            lazyPagingItems = state.labelsListUiState.lazyPagingItems,
+                            lazyPagingItems = labelsLazyPagingItems,
                             lazyListState = state.labelsListUiState.lazyListState,
                         ),
                         modifier = Modifier
@@ -263,7 +267,7 @@ internal fun AreaUiInternal(
                 AreaTab.RELEASES -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
-                            lazyPagingItems = state.releasesListUiState.lazyPagingItems,
+                            lazyPagingItems = releasesLazyPagingItems,
                             lazyListState = state.releasesListUiState.lazyListState,
                             showMoreInfo = state.releasesListUiState.showMoreInfo,
                         ),
@@ -294,7 +298,7 @@ internal fun AreaUiInternal(
 
                 AreaTab.RELATIONSHIPS -> {
                     RelationsListScreen(
-                        lazyPagingItems = state.relationsUiState.lazyPagingItems,
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -315,7 +319,7 @@ internal fun AreaUiInternal(
                 AreaTab.PLACES -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
-                            lazyPagingItems = state.placesListUiState.lazyPagingItems,
+                            lazyPagingItems = placesLazyPagingItems,
                             lazyListState = state.placesListUiState.lazyListState,
                         ),
                         modifier = Modifier

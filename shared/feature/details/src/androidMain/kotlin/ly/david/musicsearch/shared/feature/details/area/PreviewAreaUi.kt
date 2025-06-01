@@ -4,7 +4,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
-import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
@@ -516,16 +515,16 @@ internal fun PreviewAreaDetails() {
                         pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
-                        lazyPagingItems = labels.collectAsLazyPagingItems(),
+                        pagingDataFlow = labels,
                     ),
                     placesListUiState = PlacesListUiState(
-                        lazyPagingItems = places.collectAsLazyPagingItems(),
+                        pagingDataFlow = places,
                     ),
                     releasesListUiState = ReleasesListUiState(
-                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -557,16 +556,16 @@ internal fun PreviewAreaDetailsError() {
                         pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
-                        lazyPagingItems = labels.collectAsLazyPagingItems(),
+                        pagingDataFlow = labels,
                     ),
                     placesListUiState = PlacesListUiState(
-                        lazyPagingItems = places.collectAsLazyPagingItems(),
+                        pagingDataFlow = places,
                     ),
                     releasesListUiState = ReleasesListUiState(
-                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -595,16 +594,16 @@ internal fun PreviewAreaRelationships() {
                         pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
-                        lazyPagingItems = labels.collectAsLazyPagingItems(),
+                        pagingDataFlow = labels,
                     ),
                     placesListUiState = PlacesListUiState(
-                        lazyPagingItems = places.collectAsLazyPagingItems(),
+                        pagingDataFlow = places,
                     ),
                     releasesListUiState = ReleasesListUiState(
-                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -633,16 +632,16 @@ internal fun PreviewAreaArtists() {
                         pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
-                        lazyPagingItems = labels.collectAsLazyPagingItems(),
+                        pagingDataFlow = labels,
                     ),
                     placesListUiState = PlacesListUiState(
-                        lazyPagingItems = places.collectAsLazyPagingItems(),
+                        pagingDataFlow = places,
                     ),
                     releasesListUiState = ReleasesListUiState(
-                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -671,16 +670,16 @@ internal fun PreviewAreaEvents() {
                         pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
-                        lazyPagingItems = labels.collectAsLazyPagingItems(),
+                        pagingDataFlow = labels,
                     ),
                     placesListUiState = PlacesListUiState(
-                        lazyPagingItems = places.collectAsLazyPagingItems(),
+                        pagingDataFlow = places,
                     ),
                     releasesListUiState = ReleasesListUiState(
-                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -709,16 +708,16 @@ internal fun PreviewAreaLabels() {
                         pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
-                        lazyPagingItems = labels.collectAsLazyPagingItems(),
+                        pagingDataFlow = labels,
                     ),
                     placesListUiState = PlacesListUiState(
-                        lazyPagingItems = places.collectAsLazyPagingItems(),
+                        pagingDataFlow = places,
                     ),
                     releasesListUiState = ReleasesListUiState(
-                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -747,16 +746,16 @@ internal fun PreviewAreaReleases() {
                         pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
-                        lazyPagingItems = labels.collectAsLazyPagingItems(),
+                        pagingDataFlow = labels,
                     ),
                     placesListUiState = PlacesListUiState(
-                        lazyPagingItems = places.collectAsLazyPagingItems(),
+                        pagingDataFlow = places,
                     ),
                     releasesListUiState = ReleasesListUiState(
-                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -785,16 +784,16 @@ internal fun PreviewAreaPlaces() {
                         pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
-                        lazyPagingItems = labels.collectAsLazyPagingItems(),
+                        pagingDataFlow = labels,
                     ),
                     placesListUiState = PlacesListUiState(
-                        lazyPagingItems = places.collectAsLazyPagingItems(),
+                        pagingDataFlow = places,
                     ),
                     releasesListUiState = ReleasesListUiState(
-                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -824,16 +823,16 @@ internal fun PreviewAreaStats() {
                         pagingDataFlow = events,
                     ),
                     labelsListUiState = LabelsListUiState(
-                        lazyPagingItems = labels.collectAsLazyPagingItems(),
+                        pagingDataFlow = labels,
                     ),
                     placesListUiState = PlacesListUiState(
-                        lazyPagingItems = places.collectAsLazyPagingItems(),
+                        pagingDataFlow = places,
                     ),
                     releasesListUiState = ReleasesListUiState(
-                        lazyPagingItems = canadianReleases.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
-                        lazyPagingItems = canadianRelations.collectAsLazyPagingItems(),
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",

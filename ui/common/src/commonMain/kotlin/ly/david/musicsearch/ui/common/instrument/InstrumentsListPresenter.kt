@@ -9,8 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
-import app.cash.paging.compose.LazyPagingItems
-import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -30,7 +28,7 @@ class InstrumentsListPresenter(
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val instrumentListItems: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query) {
+        val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query) {
             mutableStateOf(
                 getInstruments(
                     browseMethod = browseMethod,
@@ -57,7 +55,7 @@ class InstrumentsListPresenter(
         }
 
         return InstrumentsListUiState(
-            lazyPagingItems = instrumentListItems.collectAsLazyPagingItems(),
+            pagingDataFlow = pagingDataFlow,
             lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
@@ -77,7 +75,7 @@ sealed interface InstrumentsListUiEvent : CircuitUiEvent {
 
 @Stable
 data class InstrumentsListUiState(
-    val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val pagingDataFlow: Flow<PagingData<ListItemModel>>,
     val lazyListState: LazyListState = LazyListState(),
     val eventSink: (InstrumentsListUiEvent) -> Unit = {},
 ) : CircuitUiState

@@ -96,42 +96,42 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.GENRE -> {
                 EntitiesListUiState(
                     lazyListState = state.genresListUiState.lazyListState,
-                    lazyPagingItems = state.genresListUiState.lazyPagingItems,
+                    lazyPagingItems = state.genresListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                 )
             }
 
             MusicBrainzEntity.INSTRUMENT -> {
                 EntitiesListUiState(
                     lazyListState = state.instrumentsListUiState.lazyListState,
-                    lazyPagingItems = state.instrumentsListUiState.lazyPagingItems,
+                    lazyPagingItems = state.instrumentsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                 )
             }
 
             MusicBrainzEntity.LABEL -> {
                 EntitiesListUiState(
                     lazyListState = state.labelsListUiState.lazyListState,
-                    lazyPagingItems = state.labelsListUiState.lazyPagingItems,
+                    lazyPagingItems = state.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                 )
             }
 
             MusicBrainzEntity.PLACE -> {
                 EntitiesListUiState(
                     lazyListState = state.placesListUiState.lazyListState,
-                    lazyPagingItems = state.placesListUiState.lazyPagingItems,
+                    lazyPagingItems = state.placesListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                 )
             }
 
             MusicBrainzEntity.RECORDING -> {
                 EntitiesListUiState(
                     lazyListState = state.recordingsListUiState.lazyListState,
-                    lazyPagingItems = state.recordingsListUiState.lazyPagingItems,
+                    lazyPagingItems = state.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                 )
             }
 
             MusicBrainzEntity.RELEASE -> {
                 EntitiesListUiState(
                     lazyListState = state.releasesListUiState.lazyListState,
-                    lazyPagingItems = state.releasesListUiState.lazyPagingItems,
+                    lazyPagingItems = state.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                     showMoreInfo = state.releasesListUiState.showMoreInfo,
                 )
             }
@@ -146,14 +146,14 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.SERIES -> {
                 EntitiesListUiState(
                     lazyListState = state.seriesListUiState.lazyListState,
-                    lazyPagingItems = state.seriesListUiState.lazyPagingItems,
+                    lazyPagingItems = state.seriesListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                 )
             }
 
             MusicBrainzEntity.WORK -> {
                 EntitiesListUiState(
                     lazyListState = state.worksListUiState.lazyListState,
-                    lazyPagingItems = state.worksListUiState.lazyPagingItems,
+                    lazyPagingItems = state.worksListUiState.pagingDataFlow.collectAsLazyPagingItems(),
                 )
             }
 

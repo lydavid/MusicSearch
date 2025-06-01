@@ -60,6 +60,8 @@ internal fun ReleaseUi(
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
+    val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
+
     val loginEventSink = state.loginUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
@@ -231,7 +233,7 @@ internal fun ReleaseUi(
 
                 ReleaseTab.RELATIONSHIPS -> {
                     RelationsListScreen(
-                        lazyPagingItems = state.relationsUiState.lazyPagingItems,
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
