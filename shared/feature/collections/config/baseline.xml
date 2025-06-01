@@ -3,6 +3,5 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>CyclomaticComplexMethod:CollectionPresenter.kt$CollectionPresenter$@Composable override fun present(): CollectionUiState</ID>
-    <ID>CyclomaticComplexMethod:CollectionUi.kt$@OptIn(ExperimentalMaterial3Api::class) @Suppress("SwallowedException") @Composable internal fun CollectionUi( state: CollectionUiState, modifier: Modifier = Modifier, )</ID>
   </CurrentIssues>
 </SmellBaseline>
