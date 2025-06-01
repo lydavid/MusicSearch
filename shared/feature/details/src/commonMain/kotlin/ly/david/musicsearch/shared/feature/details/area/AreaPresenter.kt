@@ -89,7 +89,7 @@ internal class AreaPresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var area: AreaDetailsModel? by rememberRetained { mutableStateOf(null) }
-        val tabs: ImmutableList<Tab> by rememberSaveable {
+        val tabs: ImmutableList<Tab> by rememberRetained {
             mutableStateOf(areaTabs)
         }
         var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }

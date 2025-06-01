@@ -38,7 +38,7 @@ import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
+import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
@@ -52,15 +52,8 @@ internal fun AreaUi(
     entityId: String,
     modifier: Modifier = Modifier,
 ) {
-    val entity = MusicBrainzEntity.AREA
-
     val strings = LocalStrings.current
-    val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
-    val overlayHost = LocalOverlayHost.current
-
-    val releasesByEntityEventSink = state.releasesListUiState.eventSink
-    val loginEventSink = state.loginUiState.eventSink
 
     state.snackbarMessage?.let { message ->
         LaunchedEffect(message) {
@@ -73,34 +66,6 @@ internal fun AreaUi(
         entityId = entityId,
         modifier = modifier,
         snackbarHostState = snackbarHostState,
-        overflowDropdownMenuItems = {
-            OpenInBrowserMenuItem(
-                url = state.url,
-            )
-            CopyToClipboardMenuItem(entityId)
-            if (state.selectedTab == Tab.RELEASES) {
-                ToggleMenuItem(
-                    toggleOnText = strings.showMoreInfo,
-                    toggleOffText = strings.showLessInfo,
-                    toggled = state.releasesListUiState.showMoreInfo,
-                    onToggle = {
-                        releasesByEntityEventSink(
-                            ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
-                        )
-                    },
-                )
-            }
-            AddToCollectionMenuItem(
-                entity = entity,
-                entityId = entityId,
-                overlayHost = overlayHost,
-                coroutineScope = scope,
-                snackbarHostState = snackbarHostState,
-                onLoginClick = {
-                    loginEventSink(LoginUiEvent.StartLogin)
-                },
-            )
-        },
         strings = strings,
     )
 }
@@ -114,24 +79,28 @@ internal fun AreaUiInternal(
     entityId: String,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     scope: CoroutineScope = rememberCoroutineScope(),
     strings: AppStrings = LocalStrings.current,
     now: Instant = Clock.System.now(),
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
     val entity = MusicBrainzEntity.AREA
-    val eventSink = state.eventSink
-    val releasesByEntityEventSink = state.releasesListUiState.eventSink
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
         pageCount = state.tabs::size,
     )
-    val labelsLazyPagingItems = state.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val placesLazyPagingItems = state.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val releasesLazyPagingItems = state.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val overlayHost = LocalOverlayHost.current
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    val eventSink = state.eventSink
     val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val artistsLazyPagingItems = state.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val eventsLazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val labelsLazyPagingItems = state.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val releasesLazyPagingItems = state.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val releasesByEntityEventSink = state.releasesListUiState.eventSink
+    val placesLazyPagingItems = state.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+
+    val loginEventSink = state.loginUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(AreaUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
@@ -157,7 +126,48 @@ internal fun AreaUiInternal(
                 entity = entity,
                 title = state.title,
                 scrollBehavior = scrollBehavior,
-                overflowDropdownMenuItems = overflowDropdownMenuItems,
+                overflowDropdownMenuItems = {
+                    RefreshMenuItem(
+                        show = state.selectedTab != Tab.STATS,
+                        onClick = {
+                            when (state.selectedTab) {
+                                Tab.ARTISTS -> artistsLazyPagingItems.refresh()
+                                Tab.EVENTS -> eventsLazyPagingItems.refresh()
+                                Tab.LABELS -> labelsLazyPagingItems.refresh()
+                                Tab.PLACES -> placesLazyPagingItems.refresh()
+                                Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
+                                Tab.RELEASES -> releasesLazyPagingItems.refresh()
+                                else -> eventSink(AreaUiEvent.ForceRefreshDetails)
+                            }
+                        },
+                    )
+                    OpenInBrowserMenuItem(
+                        url = state.url,
+                    )
+                    CopyToClipboardMenuItem(entityId)
+                    if (state.selectedTab == Tab.RELEASES) {
+                        ToggleMenuItem(
+                            toggleOnText = strings.showMoreInfo,
+                            toggleOffText = strings.showLessInfo,
+                            toggled = state.releasesListUiState.showMoreInfo,
+                            onToggle = {
+                                releasesByEntityEventSink(
+                                    ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
+                                )
+                            },
+                        )
+                    }
+                    AddToCollectionMenuItem(
+                        entity = entity,
+                        entityId = entityId,
+                        overlayHost = overlayHost,
+                        coroutineScope = scope,
+                        snackbarHostState = snackbarHostState,
+                        onLoginClick = {
+                            loginEventSink(LoginUiEvent.StartLogin)
+                        },
+                    )
+                },
                 topAppBarFilterState = state.topAppBarFilterState,
                 additionalBar = {
                     TabsBar(
@@ -196,10 +206,30 @@ internal fun AreaUiInternal(
                     }
                 }
 
+                Tab.RELATIONSHIPS -> {
+                    RelationsListScreen(
+                        lazyPagingItems = relationsLazyPagingItems,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        lazyListState = state.relationsUiState.lazyListState,
+                        onItemClick = { entity, id, title ->
+                            eventSink(
+                                AreaUiEvent.ClickItem(
+                                    entity = entity,
+                                    id = id,
+                                    title = title,
+                                ),
+                            )
+                        },
+                    )
+                }
+
                 Tab.ARTISTS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
-                            lazyPagingItems = state.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
+                            lazyPagingItems = artistsLazyPagingItems,
                             lazyListState = state.artistsListUiState.lazyListState,
                         ),
                         modifier = Modifier
@@ -222,7 +252,7 @@ internal fun AreaUiInternal(
                 Tab.EVENTS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
-                            lazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
+                            lazyPagingItems = eventsLazyPagingItems,
                             lazyListState = state.eventsListUiState.lazyListState,
                         ),
                         modifier = Modifier
@@ -291,26 +321,6 @@ internal fun AreaUiInternal(
                             releasesByEntityEventSink(
                                 ReleasesListUiEvent.RequestForMissingCoverArtUrl(
                                     entityId = id,
-                                ),
-                            )
-                        },
-                    )
-                }
-
-                Tab.RELATIONSHIPS -> {
-                    RelationsListScreen(
-                        lazyPagingItems = relationsLazyPagingItems,
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.relationsUiState.lazyListState,
-                        onItemClick = { entity, id, title ->
-                            eventSink(
-                                AreaUiEvent.ClickItem(
-                                    entity = entity,
-                                    id = id,
-                                    title = title,
                                 ),
                             )
                         },
