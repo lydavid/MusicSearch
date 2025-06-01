@@ -38,6 +38,7 @@ import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
@@ -53,7 +54,11 @@ internal fun AreaUi(
     modifier: Modifier = Modifier,
 ) {
     val strings = LocalStrings.current
+    val overlayHost = LocalOverlayHost.current
     val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    val loginEventSink = state.loginUiState.eventSink
 
     state.snackbarMessage?.let { message ->
         LaunchedEffect(message) {
@@ -67,6 +72,18 @@ internal fun AreaUi(
         modifier = modifier,
         snackbarHostState = snackbarHostState,
         strings = strings,
+        additionalOverflowDropdownMenuItems = {
+            AddToCollectionMenuItem(
+                entity = MusicBrainzEntity.AREA,
+                entityId = entityId,
+                overlayHost = overlayHost,
+                coroutineScope = scope,
+                snackbarHostState = snackbarHostState,
+                onLoginClick = {
+                    loginEventSink(LoginUiEvent.StartLogin)
+                },
+            )
+        },
     )
 }
 
@@ -82,13 +99,13 @@ internal fun AreaUiInternal(
     scope: CoroutineScope = rememberCoroutineScope(),
     strings: AppStrings = LocalStrings.current,
     now: Instant = Clock.System.now(),
+    additionalOverflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit) = {},
 ) {
     val entity = MusicBrainzEntity.AREA
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
         pageCount = state.tabs::size,
     )
-    val overlayHost = LocalOverlayHost.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     val eventSink = state.eventSink
@@ -99,8 +116,6 @@ internal fun AreaUiInternal(
     val releasesLazyPagingItems = state.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val releasesByEntityEventSink = state.releasesListUiState.eventSink
     val placesLazyPagingItems = state.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
-
-    val loginEventSink = state.loginUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(AreaUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
@@ -157,16 +172,8 @@ internal fun AreaUiInternal(
                             },
                         )
                     }
-                    AddToCollectionMenuItem(
-                        entity = entity,
-                        entityId = entityId,
-                        overlayHost = overlayHost,
-                        coroutineScope = scope,
-                        snackbarHostState = snackbarHostState,
-                        onLoginClick = {
-                            loginEventSink(LoginUiEvent.StartLogin)
-                        },
-                    )
+
+                    additionalOverflowDropdownMenuItems()
                 },
                 topAppBarFilterState = state.topAppBarFilterState,
                 additionalBar = {
