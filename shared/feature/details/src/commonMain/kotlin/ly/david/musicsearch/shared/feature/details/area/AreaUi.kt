@@ -39,6 +39,7 @@ import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -77,7 +78,7 @@ internal fun AreaUi(
                 url = state.url,
             )
             CopyToClipboardMenuItem(entityId)
-            if (state.selectedTab == AreaTab.RELEASES) {
+            if (state.selectedTab == Tab.RELEASES) {
                 ToggleMenuItem(
                     toggleOnText = strings.showMoreInfo,
                     toggleOffText = strings.showLessInfo,
@@ -160,7 +161,7 @@ internal fun AreaUiInternal(
                 topAppBarFilterState = state.topAppBarFilterState,
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = state.tabs.map { it.tab.getTitle(strings) },
+                        tabsTitle = state.tabs.map { it.getTitle(strings) },
                         selectedTabIndex = state.tabs.indexOf(state.selectedTab),
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
@@ -175,7 +176,7 @@ internal fun AreaUiInternal(
             state = pagerState,
         ) { page ->
             when (state.tabs[page]) {
-                AreaTab.DETAILS -> {
+                Tab.DETAILS -> {
                     DetailsWithErrorHandling(
                         modifier = Modifier
                             .padding(innerPadding)
@@ -183,7 +184,7 @@ internal fun AreaUiInternal(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         handledException = state.handledException,
                         onRefresh = {
-                            eventSink(AreaUiEvent.ForceRefresh)
+                            eventSink(AreaUiEvent.ForceRefreshDetails)
                         },
                         detailsModel = state.area,
                     ) {
@@ -195,7 +196,7 @@ internal fun AreaUiInternal(
                     }
                 }
 
-                AreaTab.ARTISTS -> {
+                Tab.ARTISTS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = state.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
@@ -218,7 +219,7 @@ internal fun AreaUiInternal(
                     )
                 }
 
-                AreaTab.EVENTS -> {
+                Tab.EVENTS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
@@ -241,7 +242,7 @@ internal fun AreaUiInternal(
                     )
                 }
 
-                AreaTab.LABELS -> {
+                Tab.LABELS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = labelsLazyPagingItems,
@@ -264,7 +265,7 @@ internal fun AreaUiInternal(
                     )
                 }
 
-                AreaTab.RELEASES -> {
+                Tab.RELEASES -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = releasesLazyPagingItems,
@@ -296,7 +297,7 @@ internal fun AreaUiInternal(
                     )
                 }
 
-                AreaTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     RelationsListScreen(
                         lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
@@ -316,7 +317,7 @@ internal fun AreaUiInternal(
                     )
                 }
 
-                AreaTab.PLACES -> {
+                Tab.PLACES -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = placesLazyPagingItems,
@@ -339,18 +340,22 @@ internal fun AreaUiInternal(
                     )
                 }
 
-                AreaTab.STATS -> {
+                Tab.STATS -> {
                     CircuitContent(
                         StatsScreen(
                             entity = entity,
                             id = entityId,
-                            tabs = state.tabs.map { it.tab },
+                            tabs = state.tabs,
                         ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                     )
+                }
+
+                else -> {
+                    // no-op
                 }
             }
         }

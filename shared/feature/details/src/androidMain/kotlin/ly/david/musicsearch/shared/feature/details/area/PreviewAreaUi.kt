@@ -18,12 +18,14 @@ import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
 import ly.david.musicsearch.ui.common.event.EventsListUiState
 import ly.david.musicsearch.ui.common.label.LabelsListUiState
 import ly.david.musicsearch.ui.common.place.PlacesListUiState
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListUiState
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 private val canadianArtists = MutableStateFlow(
@@ -484,7 +486,7 @@ private val country = AreaDetailsModel(
             linkedEntity = MusicBrainzEntity.URL,
             linkedEntityId = "82973788-ebfc-46b5-ae59-bc8dcb5a67b9",
             label = "Geonames",
-            name = "https://www.geonames.org/6251999/canada.html",
+            name = "http://sws.geonames.org/6251999/",
         ),
         RelationListItemModel(
             id = "2",
@@ -493,6 +495,12 @@ private val country = AreaDetailsModel(
             label = "Wikidata",
             name = "https://m.wikidata.org/wiki/Q16",
         ),
+    ),
+    wikipediaExtract = WikipediaExtract(
+        extract = "Canada is a country in North America. Its ten provinces and three territories extend from " +
+            "the Atlantic Ocean to the Pacific Ocean and northward into the Arctic Ocean, " +
+            "making it the world's second-largest country by total area, with the world's longest coastline.",
+        wikipediaUrl = "https://en.wikipedia.org/wiki/Canada",
     ),
 )
 
@@ -506,8 +514,8 @@ internal fun PreviewAreaDetails() {
                     title = "Canada",
                     handledException = null,
                     area = country,
-                    tabs = AreaTab.entries.toList(),
-                    selectedTab = AreaTab.DETAILS,
+                    tabs = areaTabs,
+                    selectedTab = Tab.DETAILS,
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
@@ -547,8 +555,8 @@ internal fun PreviewAreaDetailsError() {
                         errorResolution = ErrorResolution.Retry,
                     ),
                     area = country,
-                    tabs = AreaTab.entries.toList(),
-                    selectedTab = AreaTab.DETAILS,
+                    tabs = areaTabs,
+                    selectedTab = Tab.DETAILS,
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
@@ -585,8 +593,8 @@ internal fun PreviewAreaRelationships() {
                     title = "Canada",
                     handledException = null,
                     area = country,
-                    tabs = AreaTab.entries.toList(),
-                    selectedTab = AreaTab.RELATIONSHIPS,
+                    tabs = areaTabs,
+                    selectedTab = Tab.RELATIONSHIPS,
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
@@ -623,8 +631,8 @@ internal fun PreviewAreaArtists() {
                     title = "Canada",
                     handledException = null,
                     area = country,
-                    tabs = AreaTab.entries.toList(),
-                    selectedTab = AreaTab.ARTISTS,
+                    tabs = areaTabs,
+                    selectedTab = Tab.ARTISTS,
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
@@ -661,8 +669,8 @@ internal fun PreviewAreaEvents() {
                     title = "Canada",
                     handledException = null,
                     area = country,
-                    tabs = AreaTab.entries.toList(),
-                    selectedTab = AreaTab.EVENTS,
+                    tabs = areaTabs,
+                    selectedTab = Tab.EVENTS,
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
@@ -699,8 +707,8 @@ internal fun PreviewAreaLabels() {
                     title = "Canada",
                     handledException = null,
                     area = country,
-                    tabs = AreaTab.entries.toList(),
-                    selectedTab = AreaTab.LABELS,
+                    tabs = areaTabs,
+                    selectedTab = Tab.LABELS,
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
@@ -737,8 +745,8 @@ internal fun PreviewAreaReleases() {
                     title = "Canada",
                     handledException = null,
                     area = country,
-                    tabs = AreaTab.entries.toList(),
-                    selectedTab = AreaTab.RELEASES,
+                    tabs = areaTabs,
+                    selectedTab = Tab.RELEASES,
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
@@ -775,8 +783,8 @@ internal fun PreviewAreaPlaces() {
                     title = "Canada",
                     handledException = null,
                     area = country,
-                    tabs = AreaTab.entries.toList(),
-                    selectedTab = AreaTab.PLACES,
+                    tabs = areaTabs,
+                    selectedTab = Tab.PLACES,
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
@@ -814,8 +822,8 @@ internal fun PreviewAreaStats() {
                     title = "Canada",
                     handledException = null,
                     area = country,
-                    tabs = AreaTab.entries.toList(),
-                    selectedTab = AreaTab.STATS,
+                    tabs = areaTabs,
+                    selectedTab = Tab.STATS,
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
                     ),

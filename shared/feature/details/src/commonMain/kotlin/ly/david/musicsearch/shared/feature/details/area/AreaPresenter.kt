@@ -17,6 +17,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
@@ -50,8 +52,20 @@ import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.RecordVisit
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
+
+internal val areaTabs = persistentListOf(
+    Tab.DETAILS,
+    Tab.RELATIONSHIPS,
+    Tab.ARTISTS,
+    Tab.EVENTS,
+    Tab.LABELS,
+    Tab.RELEASES,
+    Tab.PLACES,
+    Tab.STATS,
+)
 
 internal class AreaPresenter(
     private val screen: DetailsScreen,
@@ -75,10 +89,10 @@ internal class AreaPresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var area: AreaDetailsModel? by rememberRetained { mutableStateOf(null) }
-        val tabs: List<AreaTab> by rememberSaveable {
-            mutableStateOf(AreaTab.entries)
+        val tabs: ImmutableList<Tab> by rememberSaveable {
+            mutableStateOf(areaTabs)
         }
-        var selectedTab by rememberSaveable { mutableStateOf(AreaTab.DETAILS) }
+        var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
@@ -136,84 +150,18 @@ internal class AreaPresenter(
             }
         }
 
-        LaunchedEffect(
-            key1 = query,
-            key2 = selectedTab,
-        ) {
-            topAppBarFilterState.show(
-                selectedTab !in listOf(
-                    AreaTab.STATS,
-                ),
-            )
-            val browseMethod = BrowseMethod.ByEntity(
-                entityId = screen.id,
-                entity = screen.entity,
-            )
-            when (selectedTab) {
-                AreaTab.DETAILS -> {
-                    // Loaded above
-                }
-
-                AreaTab.RELATIONSHIPS -> {
-                    relationsEventSink(
-                        RelationsUiEvent.GetRelations(
-                            byEntityId = screen.id,
-                            byEntity = screen.entity,
-                        ),
-                    )
-                    relationsEventSink(RelationsUiEvent.UpdateQuery(query))
-                }
-
-                AreaTab.ARTISTS -> {
-                    artistsEventSink(
-                        ArtistsListUiEvent.Get(
-                            browseMethod = browseMethod,
-                        ),
-                    )
-                    artistsEventSink(ArtistsListUiEvent.UpdateQuery(query))
-                }
-
-                AreaTab.EVENTS -> {
-                    eventsEventSink(
-                        EventsListUiEvent.Get(
-                            browseMethod = browseMethod,
-                        ),
-                    )
-                    eventsEventSink(EventsListUiEvent.UpdateQuery(query))
-                }
-
-                AreaTab.LABELS -> {
-                    labelsEventSink(
-                        LabelsListUiEvent.Get(
-                            browseMethod = browseMethod,
-                        ),
-                    )
-                    labelsEventSink(LabelsListUiEvent.UpdateQuery(query))
-                }
-
-                AreaTab.RELEASES -> {
-                    releasesEventSink(
-                        ReleasesListUiEvent.Get(
-                            browseMethod = browseMethod,
-                        ),
-                    )
-                    releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))
-                }
-
-                AreaTab.PLACES -> {
-                    placesEventSink(
-                        PlacesListUiEvent.Get(
-                            browseMethod = browseMethod,
-                        ),
-                    )
-                    placesEventSink(PlacesListUiEvent.UpdateQuery(query))
-                }
-
-                AreaTab.STATS -> {
-                    // Handled in UI
-                }
-            }
-        }
+        LoadListItems(
+            screen = screen,
+            query = query,
+            selectedTab = selectedTab,
+            topAppBarFilterState = topAppBarFilterState,
+            relationsEventSink = relationsEventSink,
+            artistsEventSink = artistsEventSink,
+            eventsEventSink = eventsEventSink,
+            labelsEventSink = labelsEventSink,
+            releasesEventSink = releasesEventSink,
+            placesEventSink = placesEventSink,
+        )
 
         fun eventSink(event: AreaUiEvent) {
             when (event) {
@@ -237,21 +185,8 @@ internal class AreaPresenter(
                     )
                 }
 
-                AreaUiEvent.ForceRefresh -> {
-                    when (selectedTab) {
-                        AreaTab.DETAILS -> {
-                            forceRefreshDetails = true
-                        }
-                        AreaTab.RELATIONSHIPS -> TODO()
-                        AreaTab.ARTISTS -> {
-                            artistsByEntityUiState.pagingDataFlow
-                        }
-                        AreaTab.EVENTS -> TODO()
-                        AreaTab.LABELS -> TODO()
-                        AreaTab.RELEASES -> TODO()
-                        AreaTab.PLACES -> TODO()
-                        AreaTab.STATS -> TODO()
-                    }
+                AreaUiEvent.ForceRefreshDetails -> {
+                    forceRefreshDetails = true
                 }
             }
         }
@@ -280,14 +215,107 @@ internal class AreaPresenter(
     }
 }
 
+@Composable
+private fun LoadListItems(
+    screen: DetailsScreen,
+    query: String,
+    selectedTab: Tab,
+    topAppBarFilterState: TopAppBarFilterState,
+    relationsEventSink: (RelationsUiEvent) -> Unit,
+    artistsEventSink: (ArtistsListUiEvent) -> Unit,
+    eventsEventSink: (EventsListUiEvent) -> Unit,
+    labelsEventSink: (LabelsListUiEvent) -> Unit,
+    releasesEventSink: (ReleasesListUiEvent) -> Unit,
+    placesEventSink: (PlacesListUiEvent) -> Unit,
+) {
+    LaunchedEffect(
+        key1 = query,
+        key2 = selectedTab,
+    ) {
+        topAppBarFilterState.show(
+            selectedTab !in listOf(
+                Tab.STATS,
+            ),
+        )
+        val browseMethod = BrowseMethod.ByEntity(
+            entityId = screen.id,
+            entity = screen.entity,
+        )
+        when (selectedTab) {
+            Tab.DETAILS -> {
+                // Loaded above
+            }
+
+            Tab.RELATIONSHIPS -> {
+                relationsEventSink(
+                    RelationsUiEvent.GetRelations(
+                        byEntityId = screen.id,
+                        byEntity = screen.entity,
+                    ),
+                )
+                relationsEventSink(RelationsUiEvent.UpdateQuery(query))
+            }
+
+            Tab.ARTISTS -> {
+                artistsEventSink(
+                    ArtistsListUiEvent.Get(
+                        browseMethod = browseMethod,
+                    ),
+                )
+                artistsEventSink(ArtistsListUiEvent.UpdateQuery(query))
+            }
+
+            Tab.EVENTS -> {
+                eventsEventSink(
+                    EventsListUiEvent.Get(
+                        browseMethod = browseMethod,
+                    ),
+                )
+                eventsEventSink(EventsListUiEvent.UpdateQuery(query))
+            }
+
+            Tab.LABELS -> {
+                labelsEventSink(
+                    LabelsListUiEvent.Get(
+                        browseMethod = browseMethod,
+                    ),
+                )
+                labelsEventSink(LabelsListUiEvent.UpdateQuery(query))
+            }
+
+            Tab.RELEASES -> {
+                releasesEventSink(
+                    ReleasesListUiEvent.Get(
+                        browseMethod = browseMethod,
+                    ),
+                )
+                releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))
+            }
+
+            Tab.PLACES -> {
+                placesEventSink(
+                    PlacesListUiEvent.Get(
+                        browseMethod = browseMethod,
+                    ),
+                )
+                placesEventSink(PlacesListUiEvent.UpdateQuery(query))
+            }
+
+            else -> {
+                // no-op
+            }
+        }
+    }
+}
+
 @Stable
 internal data class AreaUiState(
     val title: String,
+    val tabs: ImmutableList<Tab>,
     val handledException: HandledException? = null,
     val area: AreaDetailsModel? = null,
     val url: String = "",
-    val tabs: List<AreaTab> = AreaTab.entries,
-    val selectedTab: AreaTab = AreaTab.DETAILS,
+    val selectedTab: Tab = Tab.DETAILS,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
@@ -303,8 +331,8 @@ internal data class AreaUiState(
 
 internal sealed interface AreaUiEvent : CircuitUiEvent {
     data object NavigateUp : AreaUiEvent
-    data object ForceRefresh : AreaUiEvent
-    data class UpdateTab(val tab: AreaTab) : AreaUiEvent
+    data object ForceRefreshDetails : AreaUiEvent
+    data class UpdateTab(val tab: Tab) : AreaUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,
