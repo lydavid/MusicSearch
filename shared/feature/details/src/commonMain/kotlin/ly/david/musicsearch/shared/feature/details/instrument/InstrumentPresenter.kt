@@ -17,6 +17,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
@@ -26,7 +28,6 @@ import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
-import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.shared.feature.details.utils.filterUrlRelations
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
@@ -34,8 +35,16 @@ import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.RecordVisit
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
+
+internal val instrumentTabs = persistentListOf(
+    Tab.DETAILS,
+    Tab.RELATIONSHIPS,
+    Tab.STATS,
+)
 
 internal class InstrumentPresenter(
     private val screen: DetailsScreen,
@@ -52,12 +61,10 @@ internal class InstrumentPresenter(
     @Composable
     override fun present(): InstrumentUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
+        val tabs: ImmutableList<Tab> = instrumentTabs
+        var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var instrument: InstrumentDetailsModel? by rememberRetained { mutableStateOf(null) }
-        val tabs: List<InstrumentTab> by rememberSaveable {
-            mutableStateOf(InstrumentTab.entries)
-        }
-        var selectedTab by rememberSaveable { mutableStateOf(InstrumentTab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
@@ -111,15 +118,15 @@ internal class InstrumentPresenter(
         ) {
             topAppBarFilterState.show(
                 selectedTab !in listOf(
-                    InstrumentTab.STATS,
+                    Tab.STATS,
                 ),
             )
             when (selectedTab) {
-                InstrumentTab.DETAILS -> {
+                Tab.DETAILS -> {
                     // Loaded above
                 }
 
-                InstrumentTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
@@ -129,8 +136,8 @@ internal class InstrumentPresenter(
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
                 }
 
-                InstrumentTab.STATS -> {
-                    // Handled in UI
+                else -> {
+                    // no-op
                 }
             }
         }
@@ -185,11 +192,11 @@ internal class InstrumentPresenter(
 @Stable
 internal data class InstrumentUiState(
     val title: String,
+    val tabs: ImmutableList<Tab>,
+    val selectedTab: Tab,
     val handledException: HandledException?,
     val instrument: InstrumentDetailsModel?,
     val url: String = "",
-    val tabs: List<InstrumentTab>,
-    val selectedTab: InstrumentTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
@@ -201,7 +208,7 @@ internal data class InstrumentUiState(
 internal sealed interface InstrumentUiEvent : CircuitUiEvent {
     data object NavigateUp : InstrumentUiEvent
     data object ForceRefresh : InstrumentUiEvent
-    data class UpdateTab(val tab: InstrumentTab) : InstrumentUiEvent
+    data class UpdateTab(val tab: Tab) : InstrumentUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

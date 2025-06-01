@@ -17,6 +17,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.error.HandledException
@@ -39,8 +41,18 @@ import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
+
+internal val placeTabs = persistentListOf(
+    Tab.DETAILS,
+
+    // TODO: Should exclude event-rels because they appear to be the same as the results from browse events by place
+    Tab.RELATIONSHIPS,
+    Tab.EVENTS,
+    Tab.STATS,
+)
 
 internal class PlacePresenter(
     private val screen: DetailsScreen,
@@ -58,12 +70,10 @@ internal class PlacePresenter(
     @Composable
     override fun present(): PlaceUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
+        val tabs: ImmutableList<Tab> = placeTabs
+        var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var place: PlaceDetailsModel? by rememberRetained { mutableStateOf(null) }
-        val tabs: List<PlaceTab> by rememberSaveable {
-            mutableStateOf(PlaceTab.entries)
-        }
-        var selectedTab by rememberSaveable { mutableStateOf(PlaceTab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
@@ -119,7 +129,7 @@ internal class PlacePresenter(
         ) {
             topAppBarFilterState.show(
                 selectedTab !in listOf(
-                    PlaceTab.STATS,
+                    Tab.STATS,
                 ),
             )
             val browseMethod = BrowseMethod.ByEntity(
@@ -127,11 +137,11 @@ internal class PlacePresenter(
                 entity = screen.entity,
             )
             when (selectedTab) {
-                PlaceTab.DETAILS -> {
+                Tab.DETAILS -> {
                     // Loaded above
                 }
 
-                PlaceTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
@@ -145,7 +155,7 @@ internal class PlacePresenter(
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
                 }
 
-                PlaceTab.EVENTS -> {
+                Tab.EVENTS -> {
                     eventsEventSink(
                         EventsListUiEvent.Get(
                             browseMethod = browseMethod,
@@ -154,8 +164,8 @@ internal class PlacePresenter(
                     eventsEventSink(EventsListUiEvent.UpdateQuery(query))
                 }
 
-                PlaceTab.STATS -> {
-                    // Handled in UI
+                else -> {
+                    // no-op
                 }
             }
         }
@@ -211,11 +221,11 @@ internal class PlacePresenter(
 @Stable
 internal data class PlaceUiState(
     val title: String,
+    val tabs: ImmutableList<Tab>,
+    val selectedTab: Tab,
     val handledException: HandledException?,
     val place: PlaceDetailsModel?,
     val url: String = "",
-    val tabs: List<PlaceTab>,
-    val selectedTab: PlaceTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
@@ -228,7 +238,7 @@ internal data class PlaceUiState(
 internal sealed interface PlaceUiEvent : CircuitUiEvent {
     data object NavigateUp : PlaceUiEvent
     data object ForceRefresh : PlaceUiEvent
-    data class UpdateTab(val tab: PlaceTab) : PlaceUiEvent
+    data class UpdateTab(val tab: Tab) : PlaceUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

@@ -17,7 +17,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
@@ -42,11 +42,20 @@ import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 import ly.david.musicsearch.ui.common.track.TracksByEntityUiEvent
 import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
+
+internal val releaseTabs = persistentListOf(
+    Tab.DETAILS,
+    Tab.TRACKS,
+    Tab.ARTISTS,
+    Tab.RELATIONSHIPS,
+    Tab.STATS,
+)
 
 internal class ReleasePresenter(
     private val screen: DetailsScreen,
@@ -67,11 +76,11 @@ internal class ReleasePresenter(
     override fun present(): ReleaseUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var subtitle by rememberSaveable { mutableStateOf("") }
+        val tabs: ImmutableList<Tab> = releaseTabs
+        var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var release: ReleaseDetailsModel? by rememberRetained { mutableStateOf(null) }
         var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
-        val tabs: ImmutableList<ReleaseTab> = ReleaseTab.entries.toPersistentList()
-        var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var forceRefreshDetails by rememberSaveable { mutableStateOf(false) }
@@ -149,7 +158,7 @@ internal class ReleasePresenter(
         ) {
             topAppBarFilterState.show(
                 selectedTab !in listOf(
-                    ReleaseTab.STATS,
+                    Tab.STATS,
                 ),
             )
             val browseMethod = BrowseMethod.ByEntity(
@@ -157,11 +166,11 @@ internal class ReleasePresenter(
                 entity = screen.entity,
             )
             when (selectedTab) {
-                ReleaseTab.DETAILS -> {
+                Tab.DETAILS -> {
                     // Loaded above
                 }
 
-                ReleaseTab.TRACKS -> {
+                Tab.TRACKS -> {
                     tracksEventSink(
                         TracksByEntityUiEvent.Get(
                             byEntityId = screen.id,
@@ -170,7 +179,7 @@ internal class ReleasePresenter(
                     tracksEventSink(TracksByEntityUiEvent.UpdateQuery(query))
                 }
 
-                ReleaseTab.ARTISTS -> {
+                Tab.ARTISTS -> {
                     artistsEventSink(
                         ArtistsListUiEvent.Get(
                             browseMethod = browseMethod,
@@ -179,7 +188,7 @@ internal class ReleasePresenter(
                     artistsEventSink(ArtistsListUiEvent.UpdateQuery(query))
                 }
 
-                ReleaseTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
@@ -189,8 +198,8 @@ internal class ReleasePresenter(
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
                 }
 
-                ReleaseTab.STATS -> {
-                    // Handled in UI
+                else -> {
+                    // no-op
                 }
             }
         }
@@ -285,8 +294,8 @@ internal class ReleasePresenter(
 internal data class ReleaseUiState(
     val title: String,
     val subtitle: String,
-    val tabs: ImmutableList<ReleaseTab>,
-    val selectedTab: ReleaseTab,
+    val tabs: ImmutableList<Tab>,
+    val selectedTab: Tab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val release: ReleaseDetailsModel?,
     val url: String = "",
@@ -310,7 +319,7 @@ internal sealed interface ReleaseUiEvent : CircuitUiEvent {
 
     data object ForceRefresh : ReleaseUiEvent
 
-    data class UpdateTab(val tab: ReleaseTab) : ReleaseUiEvent
+    data class UpdateTab(val tab: Tab) : ReleaseUiEvent
 
     data class ClickItem(
         val entity: MusicBrainzEntity,

@@ -112,7 +112,7 @@ internal class StatsPresenter(
                 }
             }
         val tabToStats = screen.tabs
-            .filterNot { listOf(Tab.DETAILS, Tab.TRACKS, Tab.STATS).contains(it) }
+            .filterNot { setOf(Tab.DETAILS, Tab.TRACKS, Tab.STATS).contains(it) }
             .associateWith { tab ->
                 val entity = tab.toMusicBrainzEntity()
                 observeEntityStats(
@@ -131,7 +131,7 @@ internal class StatsPresenter(
 
         return StatsUiState(
             stats = stats,
-            tabs = screen.tabs.toImmutableList(),
+            tabs = screen.tabs,
         )
     }
 

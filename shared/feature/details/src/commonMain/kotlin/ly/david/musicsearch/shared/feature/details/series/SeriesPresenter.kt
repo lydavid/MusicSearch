@@ -17,6 +17,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
@@ -34,8 +36,15 @@ import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
+
+internal val seriesTabs = persistentListOf(
+    Tab.DETAILS,
+    Tab.RELATIONSHIPS,
+    Tab.STATS,
+)
 
 internal class SeriesPresenter(
     private val screen: DetailsScreen,
@@ -54,10 +63,8 @@ internal class SeriesPresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var series: SeriesDetailsModel? by rememberRetained { mutableStateOf(null) }
-        val tabs: List<SeriesTab> by rememberSaveable {
-            mutableStateOf(SeriesTab.entries)
-        }
-        var selectedTab by rememberSaveable { mutableStateOf(SeriesTab.DETAILS) }
+        val tabs: ImmutableList<Tab> = seriesTabs
+        var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
@@ -111,15 +118,15 @@ internal class SeriesPresenter(
         ) {
             topAppBarFilterState.show(
                 selectedTab !in listOf(
-                    SeriesTab.STATS,
+                    Tab.STATS,
                 ),
             )
             when (selectedTab) {
-                SeriesTab.DETAILS -> {
+                Tab.DETAILS -> {
                     // Loaded above
                 }
 
-                SeriesTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
@@ -129,8 +136,8 @@ internal class SeriesPresenter(
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
                 }
 
-                SeriesTab.STATS -> {
-                    // Handled in UI
+                else -> {
+                    // no-op
                 }
             }
         }
@@ -185,11 +192,11 @@ internal class SeriesPresenter(
 @Stable
 internal data class SeriesUiState(
     val title: String,
+    val tabs: ImmutableList<Tab>,
+    val selectedTab: Tab,
     val handledException: HandledException?,
     val series: SeriesDetailsModel?,
     val url: String = "",
-    val tabs: List<SeriesTab>,
-    val selectedTab: SeriesTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
@@ -201,7 +208,7 @@ internal data class SeriesUiState(
 internal sealed interface SeriesUiEvent : CircuitUiEvent {
     data object NavigateUp : SeriesUiEvent
     data object ForceRefresh : SeriesUiEvent
-    data class UpdateTab(val tab: SeriesTab) : SeriesUiEvent
+    data class UpdateTab(val tab: Tab) : SeriesUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

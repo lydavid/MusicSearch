@@ -17,6 +17,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
@@ -28,7 +30,6 @@ import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
-import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.shared.feature.details.utils.filterUrlRelations
 import ly.david.musicsearch.ui.common.event.EventsListPresenter
 import ly.david.musicsearch.ui.common.event.EventsListUiEvent
@@ -49,11 +50,24 @@ import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiState
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.RecordVisit
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 import ly.david.musicsearch.ui.common.work.WorksListPresenter
 import ly.david.musicsearch.ui.common.work.WorksListUiEvent
 import ly.david.musicsearch.ui.common.work.WorksListUiState
+
+internal val artistTabs = persistentListOf(
+    Tab.DETAILS,
+    Tab.RELEASE_GROUPS,
+    Tab.RELEASES,
+    Tab.RECORDINGS,
+    Tab.WORKS,
+    Tab.EVENTS,
+    Tab.RELATIONSHIPS,
+    Tab.STATS,
+)
 
 internal class ArtistPresenter(
     private val screen: DetailsScreen,
@@ -77,12 +91,10 @@ internal class ArtistPresenter(
     override fun present(): ArtistUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var isLoading by rememberSaveable { mutableStateOf(true) }
-        var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
+        val tabs: ImmutableList<Tab> = artistTabs
+        var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         var artist: ArtistDetailsModel? by rememberRetained { mutableStateOf(null) }
-        val tabs: List<ArtistTab> by rememberSaveable {
-            mutableStateOf(ArtistTab.entries)
-        }
-        var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
+        var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
@@ -157,7 +169,7 @@ internal class ArtistPresenter(
         ) {
             topAppBarFilterState.show(
                 selectedTab !in listOf(
-                    ArtistTab.STATS,
+                    Tab.STATS,
                 ),
             )
             val browseMethod = BrowseMethod.ByEntity(
@@ -165,11 +177,11 @@ internal class ArtistPresenter(
                 entity = screen.entity,
             )
             when (selectedTab) {
-                ArtistTab.DETAILS -> {
+                Tab.DETAILS -> {
                     // Loaded above
                 }
 
-                ArtistTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
@@ -179,7 +191,7 @@ internal class ArtistPresenter(
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
                 }
 
-                ArtistTab.RECORDINGS -> {
+                Tab.RECORDINGS -> {
                     recordingsEventSink(
                         RecordingsListUiEvent.Get(
                             browseMethod = browseMethod,
@@ -188,7 +200,7 @@ internal class ArtistPresenter(
                     recordingsEventSink(RecordingsListUiEvent.UpdateQuery(query))
                 }
 
-                ArtistTab.RELEASES -> {
+                Tab.RELEASES -> {
                     releasesEventSink(
                         ReleasesListUiEvent.Get(
                             browseMethod = browseMethod,
@@ -197,7 +209,7 @@ internal class ArtistPresenter(
                     releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))
                 }
 
-                ArtistTab.RELEASE_GROUPS -> {
+                Tab.RELEASE_GROUPS -> {
                     releaseGroupsEventSink(
                         ReleaseGroupsListUiEvent.Get(
                             browseMethod = browseMethod,
@@ -207,7 +219,7 @@ internal class ArtistPresenter(
                     releaseGroupsEventSink(ReleaseGroupsListUiEvent.UpdateQuery(query))
                 }
 
-                ArtistTab.EVENTS -> {
+                Tab.EVENTS -> {
                     eventsEventSink(
                         EventsListUiEvent.Get(
                             browseMethod = browseMethod,
@@ -216,7 +228,7 @@ internal class ArtistPresenter(
                     eventsEventSink(EventsListUiEvent.UpdateQuery(query))
                 }
 
-                ArtistTab.WORKS -> {
+                Tab.WORKS -> {
                     worksEventSink(
                         WorksListUiEvent.Get(
                             browseMethod = browseMethod,
@@ -225,8 +237,8 @@ internal class ArtistPresenter(
                     worksEventSink(WorksListUiEvent.UpdateQuery(query))
                 }
 
-                ArtistTab.STATS -> {
-                    // Handled in UI
+                else -> {
+                    // no-op
                 }
             }
         }
@@ -299,11 +311,11 @@ internal class ArtistPresenter(
 internal data class ArtistUiState(
     val title: String,
     val isLoading: Boolean,
+    val tabs: ImmutableList<Tab>,
+    val selectedTab: Tab,
     val handledException: HandledException?,
     val artist: ArtistDetailsModel?,
     val url: String = "",
-    val tabs: List<ArtistTab>,
-    val selectedTab: ArtistTab,
     val topAppBarFilterState: TopAppBarFilterState,
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
@@ -320,7 +332,7 @@ internal data class ArtistUiState(
 internal sealed interface ArtistUiEvent : CircuitUiEvent {
     data object NavigateUp : ArtistUiEvent
     data object ForceRefreshDetails : ArtistUiEvent
-    data class UpdateTab(val tab: ArtistTab) : ArtistUiEvent
+    data class UpdateTab(val tab: Tab) : ArtistUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

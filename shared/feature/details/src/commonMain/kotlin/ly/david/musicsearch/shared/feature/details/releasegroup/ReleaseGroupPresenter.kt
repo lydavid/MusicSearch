@@ -17,6 +17,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
@@ -41,8 +43,16 @@ import ly.david.musicsearch.ui.common.release.ReleasesListUiState
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.RecordVisit
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
+
+internal val releaseGroupTabs = persistentListOf(
+    Tab.DETAILS,
+    Tab.RELEASES,
+    Tab.RELATIONSHIPS,
+    Tab.STATS,
+)
 
 internal class ReleaseGroupPresenter(
     private val screen: DetailsScreen,
@@ -65,10 +75,8 @@ internal class ReleaseGroupPresenter(
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
         var releaseGroup: ReleaseGroupDetailsModel? by rememberRetained { mutableStateOf(null) }
-        val tabs: List<ReleaseGroupTab> by rememberSaveable {
-            mutableStateOf(ReleaseGroupTab.entries)
-        }
-        var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.DETAILS) }
+        val tabs: ImmutableList<Tab> = releaseGroupTabs
+        var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
@@ -139,7 +147,7 @@ internal class ReleaseGroupPresenter(
         ) {
             topAppBarFilterState.show(
                 selectedTab !in listOf(
-                    ReleaseGroupTab.STATS,
+                    Tab.STATS,
                 ),
             )
             val browseMethod = BrowseMethod.ByEntity(
@@ -147,11 +155,11 @@ internal class ReleaseGroupPresenter(
                 entity = screen.entity,
             )
             when (selectedTab) {
-                ReleaseGroupTab.DETAILS -> {
+                Tab.DETAILS -> {
                     // Loaded above
                 }
 
-                ReleaseGroupTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
@@ -161,7 +169,7 @@ internal class ReleaseGroupPresenter(
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
                 }
 
-                ReleaseGroupTab.RELEASES -> {
+                Tab.RELEASES -> {
                     releasesEventSink(
                         ReleasesListUiEvent.Get(
                             browseMethod = browseMethod,
@@ -170,8 +178,8 @@ internal class ReleaseGroupPresenter(
                     releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))
                 }
 
-                ReleaseGroupTab.STATS -> {
-                    // Handled in UI
+                else -> {
+                    // no-op
                 }
             }
         }
@@ -241,12 +249,12 @@ internal class ReleaseGroupPresenter(
 internal data class ReleaseGroupUiState(
     val title: String,
     val subtitle: String,
+    val tabs: ImmutableList<Tab>,
+    val selectedTab: Tab,
     val handledException: HandledException?,
     val releaseGroup: ReleaseGroupDetailsModel?,
     val numberOfImages: Int? = null,
     val url: String = "",
-    val tabs: List<ReleaseGroupTab>,
-    val selectedTab: ReleaseGroupTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
@@ -259,7 +267,7 @@ internal data class ReleaseGroupUiState(
 internal sealed interface ReleaseGroupUiEvent : CircuitUiEvent {
     data object NavigateUp : ReleaseGroupUiEvent
     data object ForceRefresh : ReleaseGroupUiEvent
-    data class UpdateTab(val tab: ReleaseGroupTab) : ReleaseGroupUiEvent
+    data class UpdateTab(val tab: Tab) : ReleaseGroupUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

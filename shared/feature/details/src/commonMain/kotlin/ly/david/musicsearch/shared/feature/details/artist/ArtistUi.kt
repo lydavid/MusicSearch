@@ -38,6 +38,7 @@ import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -108,30 +109,30 @@ internal fun ArtistUi(
                     val selectedTab = state.selectedTab
 
                     RefreshMenuItem(
-                        show = selectedTab != ArtistTab.STATS,
+                        show = selectedTab != Tab.STATS,
                         onClick = {
                             when (selectedTab) {
-                                ArtistTab.RELEASE_GROUPS -> {
+                                Tab.RELEASE_GROUPS -> {
                                     releaseGroupLazyPagingItems.refresh()
                                 }
 
-                                ArtistTab.RELEASES -> {
+                                Tab.RELEASES -> {
                                     releasesLazyPagingItems.refresh()
                                 }
 
-                                ArtistTab.RECORDINGS -> {
+                                Tab.RECORDINGS -> {
                                     recordingsLazyPagingItems.refresh()
                                 }
 
-                                ArtistTab.WORKS -> {
+                                Tab.WORKS -> {
                                     worksLazyPagingItems.refresh()
                                 }
 
-                                ArtistTab.EVENTS -> {
+                                Tab.EVENTS -> {
                                     eventsLazyPagingItems.refresh()
                                 }
 
-                                ArtistTab.RELATIONSHIPS -> {
+                                Tab.RELATIONSHIPS -> {
                                     relationsLazyPagingItems.refresh()
                                 }
 
@@ -145,7 +146,7 @@ internal fun ArtistUi(
                         url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
-                    if (selectedTab == ArtistTab.RELEASE_GROUPS) {
+                    if (selectedTab == Tab.RELEASE_GROUPS) {
                         ToggleMenuItem(
                             toggleOnText = strings.sort,
                             toggleOffText = strings.unsort,
@@ -157,7 +158,7 @@ internal fun ArtistUi(
                             },
                         )
                     }
-                    if (selectedTab == ArtistTab.RELEASES) {
+                    if (selectedTab == Tab.RELEASES) {
                         ToggleMenuItem(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
@@ -190,7 +191,7 @@ internal fun ArtistUi(
                 topAppBarFilterState = state.topAppBarFilterState,
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = state.tabs.map { it.tab.getTitle(strings) },
+                        tabsTitle = state.tabs.map { it.getTitle(strings) },
                         selectedTabIndex = state.tabs.indexOf(state.selectedTab),
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
@@ -203,7 +204,7 @@ internal fun ArtistUi(
             state = pagerState,
         ) { page ->
             when (state.tabs[page]) {
-                ArtistTab.DETAILS -> {
+                Tab.DETAILS -> {
                     DetailsWithErrorHandling(
                         modifier = Modifier
                             .padding(innerPadding)
@@ -233,7 +234,7 @@ internal fun ArtistUi(
                     }
                 }
 
-                ArtistTab.RELEASE_GROUPS -> {
+                Tab.RELEASE_GROUPS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = releaseGroupLazyPagingItems,
@@ -262,7 +263,7 @@ internal fun ArtistUi(
                     )
                 }
 
-                ArtistTab.RELEASES -> {
+                Tab.RELEASES -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = releasesLazyPagingItems,
@@ -292,7 +293,7 @@ internal fun ArtistUi(
                     )
                 }
 
-                ArtistTab.RECORDINGS -> {
+                Tab.RECORDINGS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = recordingsLazyPagingItems,
@@ -314,7 +315,7 @@ internal fun ArtistUi(
                     )
                 }
 
-                ArtistTab.WORKS -> {
+                Tab.WORKS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = worksLazyPagingItems,
@@ -336,7 +337,7 @@ internal fun ArtistUi(
                     )
                 }
 
-                ArtistTab.EVENTS -> {
+                Tab.EVENTS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = eventsLazyPagingItems,
@@ -358,7 +359,7 @@ internal fun ArtistUi(
                     )
                 }
 
-                ArtistTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     RelationsListScreen(
                         lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
@@ -378,18 +379,22 @@ internal fun ArtistUi(
                     )
                 }
 
-                ArtistTab.STATS -> {
+                Tab.STATS -> {
                     CircuitContent(
                         StatsScreen(
                             entity = entity,
                             id = entityId,
-                            tabs = state.tabs.map { it.tab },
+                            tabs = state.tabs,
                         ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                     )
+                }
+
+                else -> {
+                    // no-op
                 }
             }
         }

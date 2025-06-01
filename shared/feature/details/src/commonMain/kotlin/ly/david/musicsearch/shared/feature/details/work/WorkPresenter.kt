@@ -17,6 +17,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.error.HandledException
@@ -41,8 +43,17 @@ import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.RecordVisit
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
+
+internal val workTabs = persistentListOf(
+    Tab.DETAILS,
+    Tab.RELATIONSHIPS,
+    Tab.ARTISTS,
+    Tab.RECORDINGS,
+    Tab.STATS,
+)
 
 internal class WorkPresenter(
     private val screen: DetailsScreen,
@@ -63,10 +74,8 @@ internal class WorkPresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var work: WorkDetailsModel? by rememberRetained { mutableStateOf(null) }
-        val tabs: List<WorkTab> by rememberSaveable {
-            mutableStateOf(WorkTab.entries)
-        }
-        var selectedTab by rememberSaveable { mutableStateOf(WorkTab.DETAILS) }
+        val tabs: ImmutableList<Tab> = workTabs
+        var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
@@ -124,7 +133,7 @@ internal class WorkPresenter(
         ) {
             topAppBarFilterState.show(
                 selectedTab !in listOf(
-                    WorkTab.STATS,
+                    Tab.STATS,
                 ),
             )
             val browseMethod = BrowseMethod.ByEntity(
@@ -132,11 +141,11 @@ internal class WorkPresenter(
                 entity = screen.entity,
             )
             when (selectedTab) {
-                WorkTab.DETAILS -> {
+                Tab.DETAILS -> {
                     // Loaded above
                 }
 
-                WorkTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
@@ -146,7 +155,7 @@ internal class WorkPresenter(
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
                 }
 
-                WorkTab.ARTISTS -> {
+                Tab.ARTISTS -> {
                     artistsEventSink(
                         ArtistsListUiEvent.Get(
                             browseMethod = browseMethod,
@@ -155,7 +164,7 @@ internal class WorkPresenter(
                     artistsEventSink(ArtistsListUiEvent.UpdateQuery(query))
                 }
 
-                WorkTab.RECORDINGS -> {
+                Tab.RECORDINGS -> {
                     recordingsEventSink(
                         RecordingsListUiEvent.Get(
                             browseMethod = browseMethod,
@@ -164,8 +173,8 @@ internal class WorkPresenter(
                     recordingsEventSink(RecordingsListUiEvent.UpdateQuery(query))
                 }
 
-                WorkTab.STATS -> {
-                    // Handled in UI
+                else -> {
+                    // no-op
                 }
             }
         }
@@ -222,11 +231,11 @@ internal class WorkPresenter(
 @Stable
 internal data class WorkUiState(
     val title: String,
+    val tabs: ImmutableList<Tab>,
+    val selectedTab: Tab,
     val handledException: HandledException?,
     val work: WorkDetailsModel?,
     val url: String = "",
-    val tabs: List<WorkTab>,
-    val selectedTab: WorkTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
@@ -240,7 +249,7 @@ internal data class WorkUiState(
 internal sealed interface WorkUiEvent : CircuitUiEvent {
     data object NavigateUp : WorkUiEvent
     data object ForceRefresh : WorkUiEvent
-    data class UpdateTab(val tab: WorkTab) : WorkUiEvent
+    data class UpdateTab(val tab: Tab) : WorkUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

@@ -33,6 +33,7 @@ import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
@@ -104,7 +105,7 @@ internal fun PlaceUi(
                 topAppBarFilterState = state.topAppBarFilterState,
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = state.tabs.map { it.tab.getTitle(strings) },
+                        tabsTitle = state.tabs.map { it.getTitle(strings) },
                         selectedTabIndex = state.tabs.indexOf(state.selectedTab),
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
@@ -117,7 +118,7 @@ internal fun PlaceUi(
             state = pagerState,
         ) { page ->
             when (state.tabs[page]) {
-                PlaceTab.DETAILS -> {
+                Tab.DETAILS -> {
                     DetailsWithErrorHandling(
                         modifier = Modifier
                             .padding(innerPadding)
@@ -146,7 +147,7 @@ internal fun PlaceUi(
                     }
                 }
 
-                PlaceTab.EVENTS -> {
+                Tab.EVENTS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
@@ -168,7 +169,7 @@ internal fun PlaceUi(
                     )
                 }
 
-                PlaceTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     RelationsListScreen(
                         lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
@@ -188,18 +189,22 @@ internal fun PlaceUi(
                     )
                 }
 
-                PlaceTab.STATS -> {
+                Tab.STATS -> {
                     CircuitContent(
                         StatsScreen(
                             entity = entity,
                             id = entityId,
-                            tabs = state.tabs.map { it.tab },
+                            tabs = state.tabs,
                         ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                     )
+                }
+
+                else -> {
+                    // no-op
                 }
             }
         }

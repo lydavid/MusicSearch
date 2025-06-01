@@ -17,6 +17,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.error.HandledException
@@ -38,8 +40,16 @@ import ly.david.musicsearch.ui.common.release.ReleasesListPresenter
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
+
+internal val labelTabs = persistentListOf(
+    Tab.DETAILS,
+    Tab.RELEASES,
+    Tab.RELATIONSHIPS,
+    Tab.STATS,
+)
 
 internal class LabelPresenter(
     private val screen: DetailsScreen,
@@ -57,12 +67,10 @@ internal class LabelPresenter(
     @Composable
     override fun present(): LabelUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
+        val tabs: ImmutableList<Tab> = labelTabs
+        var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var label: LabelDetailsModel? by rememberRetained { mutableStateOf(null) }
-        val tabs: List<LabelTab> by rememberSaveable {
-            mutableStateOf(LabelTab.entries)
-        }
-        var selectedTab by rememberSaveable { mutableStateOf(LabelTab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
@@ -118,7 +126,7 @@ internal class LabelPresenter(
         ) {
             topAppBarFilterState.show(
                 selectedTab !in listOf(
-                    LabelTab.STATS,
+                    Tab.STATS,
                 ),
             )
             val browseMethod = BrowseMethod.ByEntity(
@@ -126,11 +134,11 @@ internal class LabelPresenter(
                 entity = screen.entity,
             )
             when (selectedTab) {
-                LabelTab.DETAILS -> {
+                Tab.DETAILS -> {
                     // Loaded above
                 }
 
-                LabelTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
@@ -140,7 +148,7 @@ internal class LabelPresenter(
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
                 }
 
-                LabelTab.RELEASES -> {
+                Tab.RELEASES -> {
                     releasesEventSink(
                         ReleasesListUiEvent.Get(
                             browseMethod = browseMethod,
@@ -149,8 +157,8 @@ internal class LabelPresenter(
                     releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))
                 }
 
-                LabelTab.STATS -> {
-                    // Handled in UI
+                else -> {
+                    // no-op
                 }
             }
         }
@@ -185,12 +193,12 @@ internal class LabelPresenter(
 
         return LabelUiState(
             title = title,
+            tabs = tabs,
             handledException = handledException,
             label = label?.copy(
                 urls = label?.urls.filterUrlRelations(query = query),
             ),
             url = getMusicBrainzUrl(screen.entity, screen.id),
-            tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
             detailsLazyListState = detailsLazyListState,
@@ -206,11 +214,11 @@ internal class LabelPresenter(
 @Stable
 internal data class LabelUiState(
     val title: String,
+    val tabs: ImmutableList<Tab>,
+    val selectedTab: Tab,
     val handledException: HandledException?,
     val label: LabelDetailsModel?,
     val url: String = "",
-    val tabs: List<LabelTab>,
-    val selectedTab: LabelTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
@@ -223,7 +231,7 @@ internal data class LabelUiState(
 internal sealed interface LabelUiEvent : CircuitUiEvent {
     data object NavigateUp : LabelUiEvent
     data object ForceRefresh : LabelUiEvent
-    data class UpdateTab(val tab: LabelTab) : LabelUiEvent
+    data class UpdateTab(val tab: Tab) : LabelUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

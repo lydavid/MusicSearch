@@ -37,6 +37,7 @@ import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -103,7 +104,7 @@ internal fun ReleaseGroupUi(
                         url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
-                    if (state.selectedTab == ReleaseGroupTab.RELEASES) {
+                    if (state.selectedTab == Tab.RELEASES) {
                         ToggleMenuItem(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
@@ -149,7 +150,7 @@ internal fun ReleaseGroupUi(
                 topAppBarFilterState = state.topAppBarFilterState,
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = state.tabs.map { it.tab.getTitle(strings) },
+                        tabsTitle = state.tabs.map { it.getTitle(strings) },
                         selectedTabIndex = state.tabs.indexOf(state.selectedTab),
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
@@ -162,7 +163,7 @@ internal fun ReleaseGroupUi(
             state = pagerState,
         ) { page ->
             when (state.tabs[page]) {
-                ReleaseGroupTab.DETAILS -> {
+                Tab.DETAILS -> {
                     DetailsWithErrorHandling(
                         modifier = Modifier
                             .padding(innerPadding)
@@ -186,7 +187,7 @@ internal fun ReleaseGroupUi(
                     }
                 }
 
-                ReleaseGroupTab.RELEASES -> {
+                Tab.RELEASES -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = releasesLazyPagingItems,
@@ -216,7 +217,7 @@ internal fun ReleaseGroupUi(
                     )
                 }
 
-                ReleaseGroupTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     RelationsListScreen(
                         lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
@@ -236,18 +237,22 @@ internal fun ReleaseGroupUi(
                     )
                 }
 
-                ReleaseGroupTab.STATS -> {
+                Tab.STATS -> {
                     CircuitContent(
                         StatsScreen(
                             entity = entity,
                             id = entityId,
-                            tabs = state.tabs.map { it.tab },
+                            tabs = state.tabs,
                         ),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                     )
+                }
+
+                else -> {
+                    // no-op
                 }
             }
         }

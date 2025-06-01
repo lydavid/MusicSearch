@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common.screen
 
 import com.slack.circuit.runtime.screen.PopResult
 import com.slack.circuit.runtime.screen.Screen
+import kotlinx.collections.immutable.ImmutableList
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
@@ -70,7 +71,7 @@ data class CoverArtsScreen(
 data class StatsScreen(
     val entity: MusicBrainzEntity,
     val id: String,
-    val tabs: List<Tab>,
+    val tabs: ImmutableList<Tab>,
 ) : Screen
 
 @Parcelize

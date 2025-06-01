@@ -17,6 +17,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.event.EventDetailsModel
@@ -36,9 +38,15 @@ import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
+internal val eventTabs = persistentListOf(
+    Tab.DETAILS,
+    Tab.RELATIONSHIPS,
+    Tab.STATS,
+)
 internal class EventPresenter(
     private val screen: DetailsScreen,
     private val navigator: Navigator,
@@ -55,13 +63,11 @@ internal class EventPresenter(
     @Composable
     override fun present(): EventUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
+        val tabs: ImmutableList<Tab> = eventTabs
+        var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var event: EventDetailsModel? by rememberRetained { mutableStateOf(null) }
         var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
-        val tabs: List<EventTab> by rememberSaveable {
-            mutableStateOf(EventTab.entries)
-        }
-        var selectedTab by rememberSaveable { mutableStateOf(EventTab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
@@ -127,15 +133,15 @@ internal class EventPresenter(
         ) {
             topAppBarFilterState.show(
                 selectedTab !in listOf(
-                    EventTab.STATS,
+                    Tab.STATS,
                 ),
             )
             when (selectedTab) {
-                EventTab.DETAILS -> {
+                Tab.DETAILS -> {
                     // Loaded above
                 }
 
-                EventTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
@@ -145,8 +151,8 @@ internal class EventPresenter(
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
                 }
 
-                EventTab.STATS -> {
-                    // Handled in UI
+                else -> {
+                    // no-op
                 }
             }
         }
@@ -213,12 +219,12 @@ internal class EventPresenter(
 @Stable
 internal data class EventUiState(
     val title: String,
+    val tabs: ImmutableList<Tab>,
+    val selectedTab: Tab = Tab.DETAILS,
     val handledException: HandledException? = null,
     val event: EventDetailsModel? = null,
     val numberOfImages: Int? = null,
     val url: String = "",
-    val tabs: List<EventTab> = listOf(),
-    val selectedTab: EventTab = EventTab.DETAILS,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
@@ -230,7 +236,7 @@ internal data class EventUiState(
 internal sealed interface EventUiEvent : CircuitUiEvent {
     data object NavigateUp : EventUiEvent
     data object ForceRefresh : EventUiEvent
-    data class UpdateTab(val tab: EventTab) : EventUiEvent
+    data class UpdateTab(val tab: Tab) : EventUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,

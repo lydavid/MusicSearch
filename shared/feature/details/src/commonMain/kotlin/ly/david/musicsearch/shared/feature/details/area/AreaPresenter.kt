@@ -89,9 +89,7 @@ internal class AreaPresenter(
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var area: AreaDetailsModel? by rememberRetained { mutableStateOf(null) }
-        val tabs: ImmutableList<Tab> by rememberRetained {
-            mutableStateOf(areaTabs)
-        }
+        val tabs: ImmutableList<Tab> = areaTabs
         var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
@@ -313,10 +311,10 @@ private fun LoadListItems(
 internal data class AreaUiState(
     val title: String,
     val tabs: ImmutableList<Tab>,
+    val selectedTab: Tab = Tab.DETAILS,
     val handledException: HandledException? = null,
     val area: AreaDetailsModel? = null,
     val url: String = "",
-    val selectedTab: Tab = Tab.DETAILS,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,

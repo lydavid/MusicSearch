@@ -17,6 +17,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
@@ -39,8 +41,16 @@ import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.RecordVisit
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
+
+internal val recordingTabs = persistentListOf(
+    Tab.DETAILS,
+    Tab.RELEASES,
+    Tab.RELATIONSHIPS,
+    Tab.STATS,
+)
 
 internal class RecordingPresenter(
     private val screen: DetailsScreen,
@@ -59,12 +69,10 @@ internal class RecordingPresenter(
     override fun present(): RecordingUiState {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var subtitle by rememberSaveable { mutableStateOf("") }
+        val tabs: ImmutableList<Tab> = recordingTabs
+        var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var recording: RecordingDetailsModel? by rememberRetained { mutableStateOf(null) }
-        val tabs: List<RecordingTab> by rememberSaveable {
-            mutableStateOf(RecordingTab.entries)
-        }
-        var selectedTab by rememberSaveable { mutableStateOf(RecordingTab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
@@ -121,7 +129,7 @@ internal class RecordingPresenter(
         ) {
             topAppBarFilterState.show(
                 selectedTab !in listOf(
-                    RecordingTab.STATS,
+                    Tab.STATS,
                 ),
             )
             val browseMethod = BrowseMethod.ByEntity(
@@ -129,11 +137,11 @@ internal class RecordingPresenter(
                 entity = screen.entity,
             )
             when (selectedTab) {
-                RecordingTab.DETAILS -> {
+                Tab.DETAILS -> {
                     // Loaded above
                 }
 
-                RecordingTab.RELATIONSHIPS -> {
+                Tab.RELATIONSHIPS -> {
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = screen.id,
@@ -143,7 +151,7 @@ internal class RecordingPresenter(
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))
                 }
 
-                RecordingTab.RELEASES -> {
+                Tab.RELEASES -> {
                     releasesEventSink(
                         ReleasesListUiEvent.Get(
                             browseMethod = browseMethod,
@@ -152,8 +160,8 @@ internal class RecordingPresenter(
                     releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))
                 }
 
-                RecordingTab.STATS -> {
-                    // Handled in UI
+                else -> {
+                    // no-op
                 }
             }
         }
@@ -211,11 +219,11 @@ internal class RecordingPresenter(
 internal data class RecordingUiState(
     val title: String,
     val subtitle: String,
+    val tabs: ImmutableList<Tab>,
+    val selectedTab: Tab,
     val handledException: HandledException?,
     val recording: RecordingDetailsModel?,
     val url: String = "",
-    val tabs: List<RecordingTab>,
-    val selectedTab: RecordingTab,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
@@ -228,7 +236,7 @@ internal data class RecordingUiState(
 internal sealed interface RecordingUiEvent : CircuitUiEvent {
     data object NavigateUp : RecordingUiEvent
     data object ForceRefresh : RecordingUiEvent
-    data class UpdateTab(val tab: RecordingTab) : RecordingUiEvent
+    data class UpdateTab(val tab: Tab) : RecordingUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,
