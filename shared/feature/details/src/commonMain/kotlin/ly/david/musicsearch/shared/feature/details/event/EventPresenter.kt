@@ -111,6 +111,7 @@ internal class EventPresenter(
                 imageMetadata = imageMetadataWithCount.imageMetadata,
             )
             numberOfImages = imageMetadataWithCount.count
+            forceRefreshDetails = false
         }
 
         LaunchedEffect(forceRefreshDetails, event) {
