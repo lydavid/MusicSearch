@@ -100,17 +100,11 @@ internal class AreaPresenter(
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val artistsByEntityUiState = artistsListPresenter.present()
-        val artistsEventSink = artistsByEntityUiState.eventSink
         val eventsByEntityUiState = eventsListPresenter.present()
-        val eventsEventSink = eventsByEntityUiState.eventSink
         val labelsByEntityUiState = labelsListPresenter.present()
-        val labelsEventSink = labelsByEntityUiState.eventSink
         val releasesByEntityUiState = releasesListPresenter.present()
-        val releasesEventSink = releasesByEntityUiState.eventSink
         val placesByEntityUiState = placesListPresenter.present()
-        val placesEventSink = placesByEntityUiState.eventSink
         val relationsUiState = relationsPresenter.present()
-        val relationsEventSink = relationsUiState.eventSink
 
         val loginUiState = loginPresenter.present()
 
@@ -155,12 +149,12 @@ internal class AreaPresenter(
             query = query,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
-            relationsEventSink = relationsEventSink,
-            artistsEventSink = artistsEventSink,
-            eventsEventSink = eventsEventSink,
-            labelsEventSink = labelsEventSink,
-            releasesEventSink = releasesEventSink,
-            placesEventSink = placesEventSink,
+            relationsUiState = relationsUiState,
+            artistsByEntityUiState = artistsByEntityUiState,
+            eventsByEntityUiState = eventsByEntityUiState,
+            labelsByEntityUiState = labelsByEntityUiState,
+            releasesByEntityUiState = releasesByEntityUiState,
+            placesByEntityUiState = placesByEntityUiState,
         )
 
         fun eventSink(event: AreaUiEvent) {
@@ -221,13 +215,20 @@ private fun LoadListItems(
     query: String,
     selectedTab: Tab,
     topAppBarFilterState: TopAppBarFilterState,
-    relationsEventSink: (RelationsUiEvent) -> Unit,
-    artistsEventSink: (ArtistsListUiEvent) -> Unit,
-    eventsEventSink: (EventsListUiEvent) -> Unit,
-    labelsEventSink: (LabelsListUiEvent) -> Unit,
-    releasesEventSink: (ReleasesListUiEvent) -> Unit,
-    placesEventSink: (PlacesListUiEvent) -> Unit,
+    relationsUiState: RelationsUiState,
+    artistsByEntityUiState: ArtistsListUiState,
+    eventsByEntityUiState: EventsListUiState,
+    labelsByEntityUiState: LabelsListUiState,
+    releasesByEntityUiState: ReleasesListUiState,
+    placesByEntityUiState: PlacesListUiState,
 ) {
+    val relationsEventSink = relationsUiState.eventSink
+    val artistsEventSink = artistsByEntityUiState.eventSink
+    val eventsEventSink = eventsByEntityUiState.eventSink
+    val labelsEventSink = labelsByEntityUiState.eventSink
+    val releasesEventSink = releasesByEntityUiState.eventSink
+    val placesEventSink = placesByEntityUiState.eventSink
+
     LaunchedEffect(
         key1 = query,
         key2 = selectedTab,

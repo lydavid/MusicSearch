@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>CyclomaticComplexMethod:AreaPresenter.kt$AreaPresenter$@Composable override fun present(): AreaUiState</ID>
     <ID>CyclomaticComplexMethod:ArtistPresenter.kt$ArtistPresenter$@Composable override fun present(): ArtistUiState</ID>
     <ID>CyclomaticComplexMethod:ArtistUi.kt$@OptIn( ExperimentalMaterial3Api::class, ) @Composable internal fun ArtistUi( state: ArtistUiState, entityId: String, modifier: Modifier = Modifier, )</ID>
     <ID>CyclomaticComplexMethod:ReleaseGroupPresenter.kt$ReleaseGroupPresenter$@Composable override fun present(): ReleaseGroupUiState</ID>
