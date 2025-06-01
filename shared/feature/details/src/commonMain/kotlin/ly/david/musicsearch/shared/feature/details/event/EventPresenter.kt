@@ -190,7 +190,7 @@ internal class EventPresenter(
                     )
                 }
 
-                EventUiEvent.ForceRefresh -> {
+                EventUiEvent.ForceRefreshDetails -> {
                     forceRefreshDetails = true
                 }
             }
@@ -235,7 +235,7 @@ internal data class EventUiState(
 
 internal sealed interface EventUiEvent : CircuitUiEvent {
     data object NavigateUp : EventUiEvent
-    data object ForceRefresh : EventUiEvent
+    data object ForceRefreshDetails : EventUiEvent
     data class UpdateTab(val tab: Tab) : EventUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,

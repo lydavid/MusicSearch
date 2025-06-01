@@ -26,6 +26,7 @@ import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.feature.details.place.PlaceUiEvent
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
@@ -37,6 +38,7 @@ import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
@@ -95,6 +97,17 @@ internal fun RecordingUi(
                 subtitle = state.subtitle,
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = {
+                    val selectedTab = state.selectedTab
+                    RefreshMenuItem(
+                        show = selectedTab != Tab.STATS,
+                        onClick = {
+                            when (selectedTab) {
+                                Tab.RELEASES -> releasesLazyPagingItems.refresh()
+                                Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
+                                else -> eventSink(RecordingUiEvent.ForceRefreshDetails)
+                            }
+                        },
+                    )
                     OpenInBrowserMenuItem(
                         url = state.url,
                     )
@@ -164,7 +177,7 @@ internal fun RecordingUi(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         handledException = state.handledException,
                         onRefresh = {
-                            eventSink(RecordingUiEvent.ForceRefresh)
+                            eventSink(RecordingUiEvent.ForceRefreshDetails)
                         },
                         detailsModel = state.recording,
                     ) { recording ->

@@ -33,6 +33,7 @@ import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -58,8 +59,9 @@ internal fun WorkUi(
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
-    val recordingsLazyPagingItems = state.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val artistsLazyPagingItems = state.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val recordingsLazyPagingItems = state.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems()
 
     val loginEventSink = state.loginUiState.eventSink
 
@@ -88,6 +90,18 @@ internal fun WorkUi(
                 title = state.title,
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = {
+                    val selectedTab = state.selectedTab
+                    RefreshMenuItem(
+                        show = selectedTab != Tab.STATS,
+                        onClick = {
+                            when (selectedTab) {
+                                Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
+                                Tab.ARTISTS -> artistsLazyPagingItems.refresh()
+                                Tab.RECORDINGS -> recordingsLazyPagingItems.refresh()
+                                else -> eventSink(WorkUiEvent.ForceRefreshDetails)
+                            }
+                        },
+                    )
                     OpenInBrowserMenuItem(
                         url = state.url,
                     )
@@ -127,7 +141,7 @@ internal fun WorkUi(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         handledException = state.handledException,
                         onRefresh = {
-                            eventSink(WorkUiEvent.ForceRefresh)
+                            eventSink(WorkUiEvent.ForceRefreshDetails)
                         },
                         detailsModel = state.work,
                     ) { work ->
@@ -142,7 +156,7 @@ internal fun WorkUi(
                 Tab.ARTISTS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
-                            lazyPagingItems = state.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
+                            lazyPagingItems = artistsLazyPagingItems,
                             lazyListState = state.artistsListUiState.lazyListState,
                         ),
                         modifier = Modifier

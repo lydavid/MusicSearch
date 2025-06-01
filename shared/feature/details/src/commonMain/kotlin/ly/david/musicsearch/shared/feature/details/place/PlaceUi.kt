@@ -33,6 +33,7 @@ import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -59,6 +60,7 @@ internal fun PlaceUi(
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
     val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val eventsLazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
 
     val loginEventSink = state.loginUiState.eventSink
 
@@ -87,6 +89,17 @@ internal fun PlaceUi(
                 title = state.title,
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = {
+                    val selectedTab = state.selectedTab
+                    RefreshMenuItem(
+                        show = selectedTab != Tab.STATS,
+                        onClick = {
+                            when (selectedTab) {
+                                Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
+                                Tab.EVENTS -> eventsLazyPagingItems.refresh()
+                                else -> eventSink(PlaceUiEvent.ForceRefreshDetails)
+                            }
+                        },
+                    )
                     OpenInBrowserMenuItem(
                         url = state.url,
                     )
@@ -126,7 +139,7 @@ internal fun PlaceUi(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         handledException = state.handledException,
                         onRefresh = {
-                            eventSink(PlaceUiEvent.ForceRefresh)
+                            eventSink(PlaceUiEvent.ForceRefreshDetails)
                         },
                         detailsModel = state.place,
                     ) { place ->
@@ -150,7 +163,7 @@ internal fun PlaceUi(
                 Tab.EVENTS -> {
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
-                            lazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems(),
+                            lazyPagingItems = eventsLazyPagingItems,
                             lazyListState = state.eventsListUiState.lazyListState,
                         ),
                         modifier = Modifier

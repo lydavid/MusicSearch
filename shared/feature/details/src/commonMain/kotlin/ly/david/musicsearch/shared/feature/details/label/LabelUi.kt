@@ -34,6 +34,7 @@ import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
@@ -91,6 +92,17 @@ internal fun LabelUi(
                 title = state.title,
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = {
+                    val selectedTab = state.selectedTab
+                    RefreshMenuItem(
+                        show = selectedTab != Tab.STATS,
+                        onClick = {
+                            when (selectedTab) {
+                                Tab.RELEASES -> releasesLazyPagingItems.refresh()
+                                Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
+                                else -> eventSink(LabelUiEvent.ForceRefreshDetails)
+                            }
+                        },
+                    )
                     OpenInBrowserMenuItem(
                         url = state.url,
                     )
@@ -142,7 +154,7 @@ internal fun LabelUi(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         handledException = state.handledException,
                         onRefresh = {
-                            eventSink(LabelUiEvent.ForceRefresh)
+                            eventSink(LabelUiEvent.ForceRefreshDetails)
                         },
                         detailsModel = state.label,
                     ) { label ->

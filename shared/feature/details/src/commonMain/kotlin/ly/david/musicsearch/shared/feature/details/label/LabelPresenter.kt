@@ -185,7 +185,7 @@ internal class LabelPresenter(
                     )
                 }
 
-                LabelUiEvent.ForceRefresh -> {
+                LabelUiEvent.ForceRefreshDetails -> {
                     forceRefreshDetails = true
                 }
             }
@@ -230,7 +230,7 @@ internal data class LabelUiState(
 
 internal sealed interface LabelUiEvent : CircuitUiEvent {
     data object NavigateUp : LabelUiEvent
-    data object ForceRefresh : LabelUiEvent
+    data object ForceRefreshDetails : LabelUiEvent
     data class UpdateTab(val tab: Tab) : LabelUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,

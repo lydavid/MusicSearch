@@ -188,7 +188,7 @@ internal class RecordingPresenter(
                     )
                 }
 
-                RecordingUiEvent.ForceRefresh -> {
+                RecordingUiEvent.ForceRefreshDetails -> {
                     forceRefreshDetails = true
                 }
             }
@@ -235,7 +235,7 @@ internal data class RecordingUiState(
 
 internal sealed interface RecordingUiEvent : CircuitUiEvent {
     data object NavigateUp : RecordingUiEvent
-    data object ForceRefresh : RecordingUiEvent
+    data object ForceRefreshDetails : RecordingUiEvent
     data class UpdateTab(val tab: Tab) : RecordingUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,

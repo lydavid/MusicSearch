@@ -192,7 +192,7 @@ internal class PlacePresenter(
                     )
                 }
 
-                PlaceUiEvent.ForceRefresh -> {
+                PlaceUiEvent.ForceRefreshDetails -> {
                     forceRefreshDetails = true
                 }
             }
@@ -237,7 +237,7 @@ internal data class PlaceUiState(
 
 internal sealed interface PlaceUiEvent : CircuitUiEvent {
     data object NavigateUp : PlaceUiEvent
-    data object ForceRefresh : PlaceUiEvent
+    data object ForceRefreshDetails : PlaceUiEvent
     data class UpdateTab(val tab: Tab) : PlaceUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,

@@ -201,7 +201,7 @@ internal class WorkPresenter(
                     )
                 }
 
-                WorkUiEvent.ForceRefresh -> {
+                WorkUiEvent.ForceRefreshDetails -> {
                     forceRefreshDetails = true
                 }
             }
@@ -248,7 +248,7 @@ internal data class WorkUiState(
 
 internal sealed interface WorkUiEvent : CircuitUiEvent {
     data object NavigateUp : WorkUiEvent
-    data object ForceRefresh : WorkUiEvent
+    data object ForceRefreshDetails : WorkUiEvent
     data class UpdateTab(val tab: Tab) : WorkUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,

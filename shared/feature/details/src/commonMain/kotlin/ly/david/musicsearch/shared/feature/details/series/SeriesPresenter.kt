@@ -164,7 +164,7 @@ internal class SeriesPresenter(
                     )
                 }
 
-                SeriesUiEvent.ForceRefresh -> {
+                SeriesUiEvent.ForceRefreshDetails -> {
                     forceRefreshDetails = true
                 }
             }
@@ -207,7 +207,7 @@ internal data class SeriesUiState(
 
 internal sealed interface SeriesUiEvent : CircuitUiEvent {
     data object NavigateUp : SeriesUiEvent
-    data object ForceRefresh : SeriesUiEvent
+    data object ForceRefreshDetails : SeriesUiEvent
     data class UpdateTab(val tab: Tab) : SeriesUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,

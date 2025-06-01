@@ -217,7 +217,7 @@ internal class ReleaseGroupPresenter(
                     )
                 }
 
-                ReleaseGroupUiEvent.ForceRefresh -> {
+                ReleaseGroupUiEvent.ForceRefreshDetails -> {
                     forceRefreshDetails = true
                 }
             }
@@ -266,7 +266,7 @@ internal data class ReleaseGroupUiState(
 
 internal sealed interface ReleaseGroupUiEvent : CircuitUiEvent {
     data object NavigateUp : ReleaseGroupUiEvent
-    data object ForceRefresh : ReleaseGroupUiEvent
+    data object ForceRefreshDetails : ReleaseGroupUiEvent
     data class UpdateTab(val tab: Tab) : ReleaseGroupUiEvent
     data class ClickItem(
         val entity: MusicBrainzEntity,

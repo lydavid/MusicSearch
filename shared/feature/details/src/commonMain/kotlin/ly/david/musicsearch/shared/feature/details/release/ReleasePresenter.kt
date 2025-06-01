@@ -30,7 +30,6 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
-import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.shared.feature.details.utils.filterUrlRelations
 import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiEvent
@@ -42,6 +41,7 @@ import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
@@ -226,7 +226,8 @@ internal class ReleasePresenter(
                     )
                 }
 
-                ReleaseUiEvent.ForceRefresh -> {
+                ReleaseUiEvent.ForceRefreshDetails -> {
+                    // also for Tracks
                     forceRefreshDetails = true
                 }
 
@@ -317,7 +318,7 @@ internal data class ReleaseDetailsUiState(
 internal sealed interface ReleaseUiEvent : CircuitUiEvent {
     data object NavigateUp : ReleaseUiEvent
 
-    data object ForceRefresh : ReleaseUiEvent
+    data object ForceRefreshDetails : ReleaseUiEvent
 
     data class UpdateTab(val tab: Tab) : ReleaseUiEvent
 

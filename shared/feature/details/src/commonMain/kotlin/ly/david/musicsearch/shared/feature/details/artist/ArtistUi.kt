@@ -112,33 +112,13 @@ internal fun ArtistUi(
                         show = selectedTab != Tab.STATS,
                         onClick = {
                             when (selectedTab) {
-                                Tab.RELEASE_GROUPS -> {
-                                    releaseGroupLazyPagingItems.refresh()
-                                }
-
-                                Tab.RELEASES -> {
-                                    releasesLazyPagingItems.refresh()
-                                }
-
-                                Tab.RECORDINGS -> {
-                                    recordingsLazyPagingItems.refresh()
-                                }
-
-                                Tab.WORKS -> {
-                                    worksLazyPagingItems.refresh()
-                                }
-
-                                Tab.EVENTS -> {
-                                    eventsLazyPagingItems.refresh()
-                                }
-
-                                Tab.RELATIONSHIPS -> {
-                                    relationsLazyPagingItems.refresh()
-                                }
-
-                                else -> {
-                                    eventSink(ArtistUiEvent.ForceRefreshDetails)
-                                }
+                                Tab.RELEASE_GROUPS -> releaseGroupLazyPagingItems.refresh()
+                                Tab.RELEASES -> releasesLazyPagingItems.refresh()
+                                Tab.RECORDINGS -> recordingsLazyPagingItems.refresh()
+                                Tab.WORKS -> worksLazyPagingItems.refresh()
+                                Tab.EVENTS -> eventsLazyPagingItems.refresh()
+                                Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
+                                else -> eventSink(ArtistUiEvent.ForceRefreshDetails)
                             }
                         },
                     )
