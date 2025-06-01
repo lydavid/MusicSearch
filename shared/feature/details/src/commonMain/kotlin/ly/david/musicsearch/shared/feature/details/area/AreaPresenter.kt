@@ -119,6 +119,7 @@ internal class AreaPresenter(
             mbid = screen.id,
             title = title,
             entity = screen.entity,
+            searchHint = area?.sortName,
         )
 
         LaunchedEffect(forceRefreshDetails, area) {

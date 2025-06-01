@@ -58,6 +58,7 @@ internal class GenrePresenter(
             mbid = screen.id,
             title = title,
             entity = screen.entity,
+            searchHint = "",
         )
 
         fun genreSink(genre: GenreUiEvent) {

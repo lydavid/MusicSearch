@@ -19,17 +19,19 @@ interface RecordVisit {
         mbid: String,
         title: String,
         entity: MusicBrainzEntity,
+        searchHint: String?,
     ) {
         var recordedHistory by rememberSaveable { mutableStateOf(false) }
 
         if (!recordedHistory) {
-            LaunchedEffect(title) {
-                if (title.isNotEmpty()) {
+            LaunchedEffect(title, searchHint) {
+                if (title.isNotEmpty() && searchHint != null) {
                     incrementLookupHistory(
                         LookupHistory(
                             mbid = mbid,
                             title = title,
                             entity = entity,
+                            searchHint = searchHint,
                         ),
                     )
                     recordedHistory = true

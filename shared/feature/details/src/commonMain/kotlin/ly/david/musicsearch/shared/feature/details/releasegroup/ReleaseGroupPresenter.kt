@@ -104,6 +104,7 @@ internal class ReleaseGroupPresenter(
             mbid = screen.id,
             title = title,
             entity = screen.entity,
+            searchHint = "",
         )
 
         LaunchedEffect(forceRefreshDetails, releaseGroup) {

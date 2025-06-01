@@ -96,6 +96,7 @@ internal class PlacePresenter(
             mbid = screen.id,
             title = title,
             entity = screen.entity,
+            searchHint = "",
         )
 
         LaunchedEffect(forceRefreshDetails, place) {

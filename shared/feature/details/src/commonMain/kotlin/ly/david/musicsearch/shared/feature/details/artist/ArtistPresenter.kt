@@ -125,6 +125,7 @@ internal class ArtistPresenter(
             mbid = screen.id,
             title = title,
             entity = screen.entity,
+            searchHint = artist?.sortName,
         )
 
         LaunchedEffect(forceRefreshDetails, artist) {

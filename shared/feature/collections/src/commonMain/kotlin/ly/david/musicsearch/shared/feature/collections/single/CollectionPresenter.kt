@@ -154,6 +154,7 @@ internal class CollectionPresenter(
             mbid = collectionId,
             title = title,
             entity = MusicBrainzEntity.COLLECTION,
+            searchHint = "",
         )
 
         LaunchedEffect(topAppBarEditState.isEditMode) {

@@ -92,6 +92,7 @@ internal class EventPresenter(
             mbid = screen.id,
             title = title,
             entity = screen.entity,
+            searchHint = "",
         )
 
         LaunchedEffect(forceRefreshDetails, event) {

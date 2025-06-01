@@ -95,6 +95,7 @@ internal class LabelPresenter(
             mbid = screen.id,
             title = title,
             entity = screen.entity,
+            searchHint = "",
         )
 
         LaunchedEffect(forceRefreshDetails, label) {

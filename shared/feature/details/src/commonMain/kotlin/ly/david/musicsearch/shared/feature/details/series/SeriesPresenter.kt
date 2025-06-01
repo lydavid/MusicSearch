@@ -88,6 +88,7 @@ internal class SeriesPresenter(
             mbid = screen.id,
             title = title,
             entity = screen.entity,
+            searchHint = "",
         )
 
         LaunchedEffect(forceRefreshDetails, series) {

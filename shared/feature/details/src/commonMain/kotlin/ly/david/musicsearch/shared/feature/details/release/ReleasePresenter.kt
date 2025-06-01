@@ -111,6 +111,7 @@ internal class ReleasePresenter(
             mbid = screen.id,
             title = title,
             entity = screen.entity,
+            searchHint = "",
         )
 
         // Image fetching was split off from details model so that we can display data before images load

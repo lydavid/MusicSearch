@@ -88,6 +88,7 @@ internal class InstrumentPresenter(
             mbid = screen.id,
             title = title,
             entity = screen.entity,
+            searchHint = "",
         )
 
         LaunchedEffect(forceRefreshDetails, instrument) {
