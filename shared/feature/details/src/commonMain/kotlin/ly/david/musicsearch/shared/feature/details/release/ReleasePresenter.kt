@@ -87,6 +87,7 @@ internal class ReleasePresenter(
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
         var isReleaseEventsCollapsed by rememberSaveable { mutableStateOf(false) }
+        var isExternalLinksCollapsed by rememberSaveable { mutableStateOf(false) }
 
         val tracksByReleaseUiState = tracksByReleasePresenter.present()
         val tracksEventSink = tracksByReleaseUiState.eventSink
@@ -245,6 +246,10 @@ internal class ReleasePresenter(
                 is ReleaseUiEvent.ToggleCollapseExpandReleaseEvents -> {
                     isReleaseEventsCollapsed = !isReleaseEventsCollapsed
                 }
+
+                is ReleaseUiEvent.ToggleCollapseExpandExternalLinks -> {
+                    isExternalLinksCollapsed = !isExternalLinksCollapsed
+                }
             }
         }
 
@@ -276,11 +281,12 @@ internal class ReleasePresenter(
                 urls = release?.urls.filterUrlRelations(query = query),
             ),
             url = getMusicBrainzUrl(screen.entity, screen.id),
-            releaseDetailsUiState = ReleaseDetailsUiState(
+            detailsUiState = ReleaseDetailsUiState(
                 handledException = handledException,
                 numberOfImages = numberOfImages,
                 lazyListState = detailsLazyListState,
                 isReleaseEventsCollapsed = isReleaseEventsCollapsed,
+                isExternalLinksCollapsed = isExternalLinksCollapsed,
             ),
             relationsUiState = relationsUiState,
             tracksByReleaseUiState = tracksByReleaseUiState,
@@ -300,7 +306,7 @@ internal data class ReleaseUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val release: ReleaseDetailsModel?,
     val url: String = "",
-    val releaseDetailsUiState: ReleaseDetailsUiState,
+    val detailsUiState: ReleaseDetailsUiState,
     val relationsUiState: RelationsUiState,
     val tracksByReleaseUiState: TracksByReleaseUiState,
     val artistsListUiState: ArtistsListUiState,
@@ -313,6 +319,7 @@ internal data class ReleaseDetailsUiState(
     val numberOfImages: Int? = null,
     val lazyListState: LazyListState = LazyListState(),
     val isReleaseEventsCollapsed: Boolean = false,
+    val isExternalLinksCollapsed: Boolean = false,
 )
 
 internal sealed interface ReleaseUiEvent : CircuitUiEvent {
@@ -331,4 +338,6 @@ internal sealed interface ReleaseUiEvent : CircuitUiEvent {
     data object ClickImage : ReleaseUiEvent
 
     data object ToggleCollapseExpandReleaseEvents : ReleaseUiEvent
+
+    data object ToggleCollapseExpandExternalLinks : ReleaseUiEvent
 }

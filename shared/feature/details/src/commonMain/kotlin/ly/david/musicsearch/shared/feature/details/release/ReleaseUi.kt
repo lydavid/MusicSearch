@@ -175,7 +175,7 @@ internal fun ReleaseUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        handledException = state.releaseDetailsUiState.handledException,
+                        handledException = state.detailsUiState.handledException,
                         onRefresh = {
                             eventSink(ReleaseUiEvent.ForceRefreshDetails)
                         },
@@ -183,13 +183,16 @@ internal fun ReleaseUi(
                     ) { release ->
                         ReleaseDetailsUi(
                             release = release,
-                            releaseDetailsUiState = state.releaseDetailsUiState,
+                            detailsUiState = state.detailsUiState,
                             filterText = state.topAppBarFilterState.filterText,
                             onImageClick = {
                                 eventSink(ReleaseUiEvent.ClickImage)
                             },
-                            onCollapseExpand = {
+                            onCollapseExpandReleaseEvents = {
                                 eventSink(ReleaseUiEvent.ToggleCollapseExpandReleaseEvents)
+                            },
+                            onCollapseExpandExternalLinks = {
+                                eventSink(ReleaseUiEvent.ToggleCollapseExpandExternalLinks)
                             },
                             onItemClick = { entity, id, title ->
                                 eventSink(

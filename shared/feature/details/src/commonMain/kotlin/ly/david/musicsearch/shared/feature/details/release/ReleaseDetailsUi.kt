@@ -28,18 +28,19 @@ import ly.david.musicsearch.ui.core.LocalStrings
 @Composable
 internal fun ReleaseDetailsUi(
     release: ReleaseDetailsModel,
-    releaseDetailsUiState: ReleaseDetailsUiState,
+    detailsUiState: ReleaseDetailsUiState,
     modifier: Modifier = Modifier,
     filterText: String = "",
     onImageClick: () -> Unit = {},
-    onCollapseExpand: () -> Unit = {},
+    onCollapseExpandReleaseEvents: () -> Unit = {},
+    onCollapseExpandExternalLinks: () -> Unit = {},
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
 ) {
     val strings = LocalStrings.current
 
     LazyColumn(
         modifier = modifier,
-        state = releaseDetailsUiState.lazyListState,
+        state = detailsUiState.lazyListState,
     ) {
         release.run {
             item {
@@ -51,7 +52,7 @@ internal fun ReleaseDetailsUi(
                     )
                 }
                 ListSeparatorHeader(text = strings.informationHeader(strings.release))
-                releaseDetailsUiState.numberOfImages?.ifNotNull {
+                detailsUiState.numberOfImages?.ifNotNull {
                     TextWithHeading(
                         heading = strings.numberOfImages,
                         text = "$it",
@@ -178,13 +179,13 @@ internal fun ReleaseDetailsUi(
                 )
             }
 
-            val collapsed = releaseDetailsUiState.isReleaseEventsCollapsed
+            val collapsed = detailsUiState.isReleaseEventsCollapsed
             item {
                 areas.ifNotNullOrEmpty {
                     CollapsibleListSeparatorHeader(
                         text = strings.releaseEvents,
                         collapsed = collapsed,
-                        onClick = onCollapseExpand,
+                        onClick = onCollapseExpandReleaseEvents,
                     )
                 }
             }
@@ -207,6 +208,8 @@ internal fun ReleaseDetailsUi(
 
             urlsSection(
                 urls = urls,
+                collapsed = detailsUiState.isExternalLinksCollapsed,
+                onCollapseExpand = onCollapseExpandExternalLinks,
             )
         }
     }

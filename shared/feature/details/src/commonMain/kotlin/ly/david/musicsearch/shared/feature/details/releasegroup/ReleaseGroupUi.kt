@@ -181,7 +181,7 @@ internal fun ReleaseGroupUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        handledException = state.handledException,
+                        handledException = state.detailsUiState.handledException,
                         onRefresh = {
                             eventSink(ReleaseGroupUiEvent.ForceRefreshDetails)
                         },
@@ -189,11 +189,13 @@ internal fun ReleaseGroupUi(
                     ) { releaseGroup ->
                         ReleaseGroupDetailsUi(
                             releaseGroup = releaseGroup,
-                            numberOfImages = state.numberOfImages,
+                            detailsUiState = state.detailsUiState,
                             filterText = state.topAppBarFilterState.filterText,
-                            lazyListState = state.detailsLazyListState,
                             onImageClick = {
                                 eventSink(ReleaseGroupUiEvent.ClickImage)
+                            },
+                            onCollapseExpandExternalLinks = {
+                                eventSink(ReleaseGroupUiEvent.ToggleCollapseExpandExternalLinks)
                             },
                         )
                     }

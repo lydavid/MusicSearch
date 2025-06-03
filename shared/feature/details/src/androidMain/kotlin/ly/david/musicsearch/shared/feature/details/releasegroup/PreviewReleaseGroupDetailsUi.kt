@@ -3,9 +3,50 @@ package ly.david.musicsearch.shared.feature.details.releasegroup
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
+
+private val releaseGroup = ReleaseGroupDetailsModel(
+    id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
+    name = "Under Pressure",
+    primaryType = "Single",
+    firstReleaseDate = "1981-10",
+    wikipediaExtract = WikipediaExtract(
+        extract = "\"Under Pressure\" is a song by the British rock band Queen and " +
+            "singer David Bowie. Originally released as a single in October 1981, " +
+            "it was later included on Queen's 1982 album Hot Space. The song reached " +
+            "number one on the UK Singles Chart, becoming Queen's second number-one hit " +
+            "in their home country and Bowie's third, and also charted in the top 10 in " +
+            "more than 10 countries around the world.",
+        wikipediaUrl = "https://en.wikipedia.org/wiki/Under_Pressure",
+    ),
+    urls = listOf(
+        RelationListItemModel(
+            id = "1",
+            label = "Discogs",
+            name = "https://www.discogs.com/master/13442",
+            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntityId = "1",
+        ),
+        RelationListItemModel(
+            id = "2",
+            label = "Discogs",
+            name = "https://www.discogs.com/master/66626",
+            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntityId = "2",
+        ),
+        RelationListItemModel(
+            id = "3",
+            label = "Wikidata",
+            name = "https://www.wikidata.org/wiki/Q836667",
+            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntityId = "3",
+        ),
+    ),
+)
 
 @PreviewLightDark
 @Composable
@@ -13,17 +54,26 @@ internal fun PreviewReleaseGroupDetailsUi() {
     PreviewTheme {
         Surface {
             ReleaseGroupDetailsUi(
-                releaseGroup = ReleaseGroupDetailsModel(
-                    id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
-                    name = "Under Pressure",
-                    primaryType = "Single",
-                    firstReleaseDate = "1981-10",
-                    wikipediaExtract = WikipediaExtract(
-                        extract = "\"Under Pressure\" is a song by the British rock band Queen and singer David Bowie.",
-                        wikipediaUrl = "https://en.wikipedia.org/wiki/Under_Pressure",
-                    ),
+                releaseGroup = releaseGroup,
+                detailsUiState = ReleaseGroupDetailsUiState(
+                    numberOfImages = 1,
                 ),
-                numberOfImages = 1,
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewReleaseGroupDetailsUiCollapsed() {
+    PreviewTheme {
+        Surface {
+            ReleaseGroupDetailsUi(
+                releaseGroup = releaseGroup,
+                detailsUiState = ReleaseGroupDetailsUiState(
+                    numberOfImages = 1,
+                    isExternalLinksCollapsed = true,
+                ),
             )
         }
     }

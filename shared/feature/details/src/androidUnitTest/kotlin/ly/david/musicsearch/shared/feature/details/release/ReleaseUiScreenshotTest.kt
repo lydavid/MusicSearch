@@ -11,4 +11,11 @@ class ReleaseUiScreenshotTest : ScreenshotTest() {
             PreviewReleaseDetailsUi()
         }
     }
+
+    @Test
+    fun collapsed() {
+        snapshot {
+            PreviewReleaseDetailsUiCollapsed()
+        }
+    }
 }

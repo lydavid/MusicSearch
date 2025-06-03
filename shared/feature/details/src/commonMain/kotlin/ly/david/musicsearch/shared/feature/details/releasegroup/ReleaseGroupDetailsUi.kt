@@ -1,8 +1,6 @@
 package ly.david.musicsearch.shared.feature.details.releasegroup
 
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNull
@@ -19,17 +17,17 @@ import ly.david.musicsearch.ui.core.LocalStrings
 @Composable
 internal fun ReleaseGroupDetailsUi(
     releaseGroup: ReleaseGroupDetailsModel,
-    numberOfImages: Int?,
+    detailsUiState: ReleaseGroupDetailsUiState,
     modifier: Modifier = Modifier,
     filterText: String = "",
-    lazyListState: LazyListState = rememberLazyListState(),
     onImageClick: () -> Unit = {},
+    onCollapseExpandExternalLinks: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState,
+        state = detailsUiState.lazyListState,
     ) {
         releaseGroup.run {
             item {
@@ -42,7 +40,7 @@ internal fun ReleaseGroupDetailsUi(
                 }
 
                 ListSeparatorHeader(text = strings.informationHeader(strings.releaseGroup))
-                numberOfImages?.ifNotNull {
+                detailsUiState.numberOfImages?.ifNotNull {
                     TextWithHeading(
                         heading = strings.numberOfImages,
                         text = "$it",
@@ -72,6 +70,8 @@ internal fun ReleaseGroupDetailsUi(
 
             urlsSection(
                 urls = urls,
+                collapsed = detailsUiState.isExternalLinksCollapsed,
+                onCollapseExpand = onCollapseExpandExternalLinks,
             )
         }
     }

@@ -4,12 +4,75 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
+
+private val release = ReleaseDetailsModel(
+    id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
+    name = "ウタの歌 ONE PIECE FILM RED",
+    disambiguation = "初回限定盤",
+    date = "2022-08-10",
+    barcode = "4988031519660",
+    status = "Official",
+    formattedFormats = "CD + DVD",
+    formattedTracks = "10 + 3",
+    countryCode = "JP",
+    packaging = "Jewel Case",
+    packagingId = null,
+    asin = "B0B392M9SC",
+    quality = "normal",
+    coverArtArchive = CoverArtArchiveUiModel(count = 11),
+    textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
+    releaseGroup = ReleaseGroupForRelease(
+        id = "1",
+        name = "ウタの歌 ONE PIECE FILM RED",
+        firstReleaseDate = "",
+        primaryType = "Album",
+        secondaryTypes = listOf("Soundtrack"),
+    ),
+    areas = listOf(
+        AreaListItemModel(
+            id = "2db42837-c832-3c27-b4a3-08198f75693c",
+            name = "Japan",
+            type = COUNTRY,
+            countryCodes = listOf("JP"),
+            date = "2022-08-10",
+        ),
+    ),
+    labels = listOf(
+        LabelListItemModel(
+            id = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
+            name = "Virgin Music " +
+                "(a division of Universal Music Japan created in 2014 that replaces EMI R)",
+            type = "Original Production",
+            catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
+        ),
+    ),
+    releaseLength = 2836000,
+    urls = listOf(
+        RelationListItemModel(
+            id = "1",
+            label = "ASIN",
+            name = "https://www.amazon.co.jp/gp/product/B0B392M9SC",
+            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntityId = "1",
+        ),
+        RelationListItemModel(
+            id = "2",
+            label = "VGMdb",
+            name = "https://vgmdb.net/album/120991",
+            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntityId = "2",
+        ),
+    ),
+)
 
 @PreviewLightDark
 @Composable
@@ -17,58 +80,26 @@ internal fun PreviewReleaseDetailsUi() {
     PreviewTheme {
         Surface {
             ReleaseDetailsUi(
-                release = ReleaseDetailsModel(
-                    id = "r1",
-                    name = "Release",
-                    date = "1000-10-10",
-                    barcode = "123456789",
-                    status = "Official",
-                    countryCode = "CA",
-                    packaging = "Box",
-                    asin = "B12341234",
-                    quality = "normal",
-                    textRepresentation = TextRepresentationUiModel(
-                        script = "Latn",
-                        language = "eng",
-                    ),
-                    formattedFormats = "2xCD + Blu-ray",
-                    formattedTracks = "15 + 8 + 24",
-                    areas = listOf(
-                        AreaListItemModel(
-                            id = "a1",
-                            name = "Canada",
-                            type = COUNTRY,
-                            countryCodes = listOf("CA"),
-                            date = "2022-11-29",
-                        ),
-                        AreaListItemModel(
-                            id = "a2",
-                            name = "[Worldwide]",
-                            countryCodes = listOf("XW"),
-                            date = "2022-11-30",
-                        ),
-                    ),
-                    labels = listOf(
-                        LabelListItemModel(
-                            id = "l1",
-                            name = "Label 1",
-                            type = "Imprint",
-                            catalogNumbers = "ASDF-1010, ASDF-1011",
-                        ),
-                        LabelListItemModel(
-                            id = "l2",
-                            name = "Label 2",
-                            catalogNumbers = "123",
-                        ),
-                    ),
-                    releaseLength = 8000,
-                    hasNullLength = true,
-                    imageMetadata = ImageMetadata(
-                        largeUrl = "https://i.scdn.co/image/ab6761610000f1786761852cd2852fceb64e8cd9",
-                    ),
+                release = release,
+                detailsUiState = ReleaseDetailsUiState(
+                    numberOfImages = 11,
                 ),
-                releaseDetailsUiState = ReleaseDetailsUiState(
-                    numberOfImages = 1,
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewReleaseDetailsUiCollapsed() {
+    PreviewTheme {
+        Surface {
+            ReleaseDetailsUi(
+                release = release,
+                detailsUiState = ReleaseDetailsUiState(
+                    numberOfImages = 11,
+                    isReleaseEventsCollapsed = true,
+                    isExternalLinksCollapsed = true,
                 ),
             )
         }

@@ -82,6 +82,7 @@ internal class ReleaseGroupPresenter(
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
+        var isExternalLinksCollapsed by rememberSaveable { mutableStateOf(false) }
 
         val releasesByEntityUiState = releasesListPresenter.present()
         val releasesEventSink = releasesByEntityUiState.eventSink
@@ -220,23 +221,30 @@ internal class ReleaseGroupPresenter(
                 ReleaseGroupUiEvent.ForceRefreshDetails -> {
                     forceRefreshDetails = true
                 }
+
+                ReleaseGroupUiEvent.ToggleCollapseExpandExternalLinks -> {
+                    isExternalLinksCollapsed = !isExternalLinksCollapsed
+                }
             }
         }
 
         return ReleaseGroupUiState(
             title = title,
             subtitle = subtitle,
-            handledException = handledException,
-            releaseGroup = releaseGroup?.copy(
-                urls = releaseGroup?.urls.filterUrlRelations(query = query),
-            ),
-            numberOfImages = numberOfImages,
-            url = getMusicBrainzUrl(screen.entity, screen.id),
             tabs = tabs,
             selectedTab = selectedTab,
             topAppBarFilterState = topAppBarFilterState,
-            detailsLazyListState = detailsLazyListState,
+            url = getMusicBrainzUrl(screen.entity, screen.id),
+            releaseGroup = releaseGroup?.copy(
+                urls = releaseGroup?.urls.filterUrlRelations(query = query),
+            ),
             snackbarMessage = snackbarMessage,
+            detailsUiState = ReleaseGroupDetailsUiState(
+                handledException = handledException,
+                lazyListState = detailsLazyListState,
+                numberOfImages = numberOfImages,
+                isExternalLinksCollapsed = isExternalLinksCollapsed,
+            ),
             releasesListUiState = releasesByEntityUiState,
             relationsUiState = relationsUiState,
             loginUiState = loginUiState,
@@ -251,18 +259,23 @@ internal data class ReleaseGroupUiState(
     val subtitle: String,
     val tabs: ImmutableList<Tab>,
     val selectedTab: Tab,
-    val handledException: HandledException?,
     val releaseGroup: ReleaseGroupDetailsModel?,
-    val numberOfImages: Int? = null,
+    val detailsUiState: ReleaseGroupDetailsUiState = ReleaseGroupDetailsUiState(),
     val url: String = "",
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
-    val detailsLazyListState: LazyListState = LazyListState(),
     val snackbarMessage: String? = null,
     val releasesListUiState: ReleasesListUiState,
     val relationsUiState: RelationsUiState,
     val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (ReleaseGroupUiEvent) -> Unit,
 ) : CircuitUiState
+
+internal data class ReleaseGroupDetailsUiState(
+    val handledException: HandledException? = null,
+    val numberOfImages: Int? = null,
+    val lazyListState: LazyListState = LazyListState(),
+    val isExternalLinksCollapsed: Boolean = false,
+)
 
 internal sealed interface ReleaseGroupUiEvent : CircuitUiEvent {
     data object NavigateUp : ReleaseGroupUiEvent
@@ -275,4 +288,6 @@ internal sealed interface ReleaseGroupUiEvent : CircuitUiEvent {
     ) : ReleaseGroupUiEvent
 
     data object ClickImage : ReleaseGroupUiEvent
+
+    data object ToggleCollapseExpandExternalLinks : ReleaseGroupUiEvent
 }
