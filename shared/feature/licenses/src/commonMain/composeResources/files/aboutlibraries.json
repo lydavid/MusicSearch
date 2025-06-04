@@ -1271,7 +1271,7 @@
             "developers": [
                 
             ],
-            "artifactVersion": "2025.05.01",
+            "artifactVersion": "2025.06.00",
             "description": "A compatible set of Jetpack Compose libraries.",
             "name": "Jetpack Compose Libraries BOM",
             "website": "https://developer.android.com/jetpack",
