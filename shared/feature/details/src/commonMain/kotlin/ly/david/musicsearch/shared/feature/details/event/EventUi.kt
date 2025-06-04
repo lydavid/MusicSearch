@@ -23,7 +23,10 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.event.EventDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
@@ -48,7 +51,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 )
 @Composable
 internal fun EventUi(
-    state: EventUiState,
+    state: DetailsUiState<EventDetailsModel>,
     entityId: String,
     modifier: Modifier = Modifier,
 ) {
@@ -67,7 +70,7 @@ internal fun EventUi(
     val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = pagerState.currentPage) {
-        eventSink(EventUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
+        eventSink(DetailsUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
     }
 
     Scaffold(
@@ -85,7 +88,7 @@ internal fun EventUi(
         topBar = {
             TopAppBarWithFilter(
                 onBack = {
-                    eventSink(EventUiEvent.NavigateUp)
+                    eventSink(DetailsUiEvent.NavigateUp)
                 },
                 entity = entity,
                 title = state.title,
@@ -97,7 +100,7 @@ internal fun EventUi(
                         onClick = {
                             when (selectedTab) {
                                 Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
-                                else -> eventSink(EventUiEvent.ForceRefreshDetails)
+                                else -> eventSink(DetailsUiEvent.ForceRefreshDetails)
                             }
                         },
                     )
@@ -138,19 +141,21 @@ internal fun EventUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        handledException = state.handledException,
+                        handledException = state.detailsTabUiState.handledException,
                         onRefresh = {
-                            eventSink(EventUiEvent.ForceRefreshDetails)
+                            eventSink(DetailsUiEvent.ForceRefreshDetails)
                         },
-                        detailsModel = state.event,
+                        detailsModel = state.detailsModel,
                     ) { event ->
                         EventDetailsUi(
                             event = event,
-                            numberOfImages = state.numberOfImages,
+                            detailsTabUiState = state.detailsTabUiState,
                             filterText = state.topAppBarFilterState.filterText,
-                            lazyListState = state.detailsLazyListState,
                             onImageClick = {
-                                eventSink(EventUiEvent.ClickImage)
+                                eventSink(DetailsUiEvent.ClickImage)
+                            },
+                            onCollapseExpandExternalLinks = {
+                                eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
                             },
                         )
                     }
@@ -166,7 +171,7 @@ internal fun EventUi(
                         lazyListState = state.relationsUiState.lazyListState,
                         onItemClick = { entity, id, title ->
                             eventSink(
-                                EventUiEvent.ClickItem(
+                                DetailsUiEvent.ClickItem(
                                     entity = entity,
                                     id = id,
                                     title = title,

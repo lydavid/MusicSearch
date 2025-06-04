@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.event.EventDetailsModel
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 // region Previews
@@ -26,7 +27,9 @@ internal fun PreviewEventDetailsUi() {
                         ended = true,
                     ),
                 ),
-                numberOfImages = 0,
+                detailsTabUiState = DetailsTabUiState(
+                    numberOfImages = 0,
+                ),
             )
         }
     }
