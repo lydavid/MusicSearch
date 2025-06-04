@@ -54,7 +54,7 @@ class ArtistCollaborationRepositoryImplTest :
 
         createArtistRepository(
             artistMusicBrainzModel = aimerArtistMusicBrainzModel,
-        ).lookupArtistDetails(
+        ).lookupArtist(
             artistId = aimerArtistMusicBrainzModel.id,
             forceRefresh = false,
         )

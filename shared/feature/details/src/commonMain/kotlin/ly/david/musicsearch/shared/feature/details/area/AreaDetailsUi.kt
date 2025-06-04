@@ -17,7 +17,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 @Composable
 internal fun AreaDetailsUi(
     area: AreaDetailsModel,
-    detailsUiState: DetailsTabUiState,
+    detailsTabUiState: DetailsTabUiState,
     modifier: Modifier = Modifier,
     filterText: String = "",
     onCollapseExpandExternalLinks: () -> Unit = {},
@@ -26,7 +26,7 @@ internal fun AreaDetailsUi(
 
     LazyColumn(
         modifier = modifier,
-        state = detailsUiState.lazyListState,
+        state = detailsTabUiState.lazyListState,
     ) {
         item {
             area.run {
@@ -71,7 +71,7 @@ internal fun AreaDetailsUi(
 
         urlsSection(
             urls = area.urls,
-            collapsed = detailsUiState.isExternalLinksCollapsed,
+            collapsed = detailsTabUiState.isExternalLinksCollapsed,
             onCollapseExpand = onCollapseExpandExternalLinks,
         )
     }

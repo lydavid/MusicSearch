@@ -163,7 +163,7 @@ class ReleaseGroupsListRepositoryImplTest :
         val entity = MusicBrainzEntity.ARTIST
         createArtistRepository(
             tchaikovskyArtistMusicBrainzModel,
-        ).lookupArtistDetails(
+        ).lookupArtist(
             artistId = entityId,
             forceRefresh = false,
         )
@@ -228,7 +228,7 @@ class ReleaseGroupsListRepositoryImplTest :
         val entity = MusicBrainzEntity.ARTIST
         createArtistRepository(
             berlinerPhilharmonikerArtistMusicBrainzModel,
-        ).lookupArtistDetails(
+        ).lookupArtist(
             artistId = entityId,
             forceRefresh = false,
         )

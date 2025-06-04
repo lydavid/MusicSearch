@@ -4,13 +4,13 @@ import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.feature.details.area.AreaPresenter
 import ly.david.musicsearch.shared.feature.details.area.AreaUi
 import ly.david.musicsearch.shared.feature.details.artist.ArtistPresenter
 import ly.david.musicsearch.shared.feature.details.artist.ArtistUi
-import ly.david.musicsearch.shared.feature.details.artist.ArtistUiState
 import ly.david.musicsearch.shared.feature.details.event.EventPresenter
 import ly.david.musicsearch.shared.feature.details.event.EventUi
 import ly.david.musicsearch.shared.feature.details.event.EventUiState
@@ -72,14 +72,10 @@ val detailsFeatureModule = module {
                                 screen = screen,
                                 navigator = navigator,
                                 repository = get(),
-                                artistImageRepository = get(),
                                 wikimediaRepository = get(),
                                 incrementLookupHistory = get(),
-                                eventsListPresenter = get(),
-                                recordingsListPresenter = get(),
-                                releasesListPresenter = get(),
-                                releaseGroupsListPresenter = get(),
-                                worksListPresenter = get(),
+                                entitiesListPresenter = get(),
+                                imageMetadataRepository = get(),
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
@@ -259,7 +255,7 @@ val detailsFeatureModule = module {
                         }
 
                         MusicBrainzEntity.ARTIST -> {
-                            ui<ArtistUiState> { state, modifier ->
+                            ui<DetailsUiState<ArtistDetailsModel>> { state, modifier ->
                                 ArtistUi(
                                     state = state,
                                     entityId = screen.id,

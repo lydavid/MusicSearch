@@ -17,7 +17,7 @@ class ArtistRepositoryImpl(
     private val lookupApi: LookupApi,
 ) : ArtistRepository {
 
-    override suspend fun lookupArtistDetails(
+    override suspend fun lookupArtist(
         artistId: String,
         forceRefresh: Boolean,
     ): ArtistDetailsModel {
@@ -42,7 +42,7 @@ class ArtistRepositoryImpl(
 
         val artistMusicBrainzModel = lookupApi.lookupArtist(artistId)
         cache(artistMusicBrainzModel)
-        return lookupArtistDetails(
+        return lookupArtist(
             artistId = artistId,
             forceRefresh = false,
         )

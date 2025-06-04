@@ -63,7 +63,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ),
         )
 
-        val artistDetailsModel = artistRepositoryImpl.lookupArtistDetails(
+        val artistDetailsModel = artistRepositoryImpl.lookupArtist(
             "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
             false,
         )
@@ -113,7 +113,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ),
         )
 
-        val artistDetailsModel = artistRepositoryImpl.lookupArtistDetails(
+        val artistDetailsModel = artistRepositoryImpl.lookupArtist(
             "5441c29d-3602-4898-b1a1-b77fa23b8e50",
             false,
         )
@@ -221,7 +221,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 isnis = listOf("0000000121707484"),
             ),
         )
-        val artistDetailsModel = artistRepositoryImpl.lookupArtistDetails(
+        val artistDetailsModel = artistRepositoryImpl.lookupArtist(
             "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
             false,
         )
@@ -255,7 +255,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 name = "The Beatles",
             ),
         )
-        val sparseArtistDetailsModel = sparseArtistRepository.lookupArtistDetails(
+        val sparseArtistDetailsModel = sparseArtistRepository.lookupArtist(
             "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
             false,
         )
@@ -282,7 +282,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 isnis = listOf("0000000121707484"),
             ),
         )
-        var allDataArtistDetailsModel = allDataArtistRepository.lookupArtistDetails(
+        var allDataArtistDetailsModel = allDataArtistRepository.lookupArtist(
             "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
             false,
         )
@@ -293,7 +293,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ),
             allDataArtistDetailsModel,
         )
-        allDataArtistDetailsModel = allDataArtistRepository.lookupArtistDetails(
+        allDataArtistDetailsModel = allDataArtistRepository.lookupArtist(
             "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
             true,
         )

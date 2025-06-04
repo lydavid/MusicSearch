@@ -1,7 +1,7 @@
 package ly.david.musicsearch.shared.domain.artist
 
 interface ArtistRepository {
-    suspend fun lookupArtistDetails(
+    suspend fun lookupArtist(
         artistId: String,
         forceRefresh: Boolean,
     ): ArtistDetailsModel

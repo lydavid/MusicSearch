@@ -217,7 +217,7 @@ internal fun AreaUiInternal(
                     ) {
                         AreaDetailsUi(
                             area = it,
-                            detailsUiState = state.detailsTabUiState,
+                            detailsTabUiState = state.detailsTabUiState,
                             filterText = state.topAppBarFilterState.filterText,
                             onCollapseExpandExternalLinks = {
                                 eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)

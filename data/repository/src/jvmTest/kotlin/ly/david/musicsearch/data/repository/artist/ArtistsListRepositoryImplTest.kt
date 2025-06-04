@@ -493,7 +493,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             ),
         )
         // the first lookup will replace existing data
-        artistRepository.lookupArtistDetails(
+        artistRepository.lookupArtist(
             artistId = roseliaArtistMusicBrainzModel.id,
             forceRefresh = false,
         ).run {
@@ -511,7 +511,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                 this,
             )
         }
-        artistRepository.lookupArtistDetails(
+        artistRepository.lookupArtist(
             artistId = roseliaArtistMusicBrainzModel.id,
             forceRefresh = true,
         ).run {

@@ -709,7 +709,7 @@ class ReleasesListRepositoryImplTest :
         val entity = MusicBrainzEntity.ARTIST
         createArtistRepository(
             davidBowieArtistMusicBrainzModel,
-        ).lookupArtistDetails(
+        ).lookupArtist(
             artistId = entityId,
             forceRefresh = false,
         )

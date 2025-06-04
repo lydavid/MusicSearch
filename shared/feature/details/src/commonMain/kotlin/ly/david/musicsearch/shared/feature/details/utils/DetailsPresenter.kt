@@ -26,13 +26,13 @@ import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
+import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.EntitiesListPresenter
@@ -71,6 +71,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
     final override fun present(): DetailsUiState<DetailsModel> {
         var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var subtitle by rememberSaveable { mutableStateOf("") }
+        var isLoading by rememberSaveable { mutableStateOf(true) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
         var detailsModel: DetailsModel? by rememberRetained { mutableStateOf(null) }
@@ -92,6 +93,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
 
         LaunchedEffect(forceRefreshDetails) {
             try {
+                isLoading = true
                 val releaseGroupDetailsModel = lookupDetailsModel(
                     screen.id,
                     forceRefreshDetails,
@@ -105,6 +107,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 logger.e(ex)
                 handledException = ex
             }
+            isLoading = false
             forceRefreshDetails = false
         }
 
@@ -116,7 +119,13 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         )
 
         LaunchedEffect(forceRefreshDetails, detailsModel) {
-            if (detailsModel !is ReleaseGroupDetailsModel) return@LaunchedEffect
+            val showImage = setOf(
+                MusicBrainzEntity.ARTIST,
+                MusicBrainzEntity.EVENT,
+                MusicBrainzEntity.RELEASE,
+                MusicBrainzEntity.RELEASE_GROUP,
+            ).contains(screen.entity)
+            if (!showImage) return@LaunchedEffect
 
             val imageMetadataWithCount = imageMetadataRepository.getAndSaveImageMetadata(
                 mbid = detailsModel?.id ?: return@LaunchedEffect,
@@ -196,6 +205,10 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     selectedTab = event.tab
                 }
 
+                DetailsUiEvent.ForceRefreshDetails -> {
+                    forceRefreshDetails = true
+                }
+
                 is DetailsUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
@@ -219,8 +232,15 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     )
                 }
 
-                DetailsUiEvent.ForceRefreshDetails -> {
-                    forceRefreshDetails = true
+                DetailsUiEvent.NavigateToCollaboratorsGraph -> {
+                    navigator.onNavEvent(
+                        NavEvent.GoTo(
+                            ArtistCollaborationScreen(
+                                id = screen.id,
+                                name = title,
+                            ),
+                        ),
+                    )
                 }
 
                 DetailsUiEvent.ToggleCollapseExpandExternalLinks -> {
@@ -241,6 +261,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             snackbarMessage = snackbarMessage,
             topAppBarFilterState = topAppBarFilterState,
             detailsTabUiState = DetailsTabUiState(
+                isLoading = isLoading,
                 handledException = handledException,
                 numberOfImages = numberOfImages,
                 lazyListState = detailsLazyListState,
@@ -271,6 +292,7 @@ internal class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
 ) : CircuitUiState
 
 internal data class DetailsTabUiState(
+    val isLoading: Boolean = false,
     val handledException: HandledException? = null,
     val numberOfImages: Int? = null,
     val lazyListState: LazyListState = LazyListState(),
@@ -279,8 +301,11 @@ internal data class DetailsTabUiState(
 
 internal sealed interface DetailsUiEvent : CircuitUiEvent {
     data object NavigateUp : DetailsUiEvent
+
     data object ForceRefreshDetails : DetailsUiEvent
+
     data class UpdateTab(val tab: Tab) : DetailsUiEvent
+
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,
@@ -288,6 +313,8 @@ internal sealed interface DetailsUiEvent : CircuitUiEvent {
     ) : DetailsUiEvent
 
     data object ClickImage : DetailsUiEvent
+
+    data object NavigateToCollaboratorsGraph : DetailsUiEvent
 
     data object ToggleCollapseExpandExternalLinks : DetailsUiEvent
 }
