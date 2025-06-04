@@ -52,9 +52,8 @@ internal class DatabasePresenter(
     override fun present(): DatabaseUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val lazyListState = rememberLazyListState()
-        val countOfAllImages by musicBrainzImageMetadataRepository.observeCountOfAllImageMetadata().collectAsRetainedState(
-            0,
-        )
+        val countOfAllImages by
+            musicBrainzImageMetadataRepository.observeCountOfAllImageMetadata().collectAsRetainedState(0)
         val countOfAllAreas by areasListRepository.observeCountOfAllAreas().collectAsRetainedState(0)
         val countOfAllArtists by artistsListRepository.observeCountOfArtists(
             browseMethod = BrowseMethod.All,
