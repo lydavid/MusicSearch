@@ -27,6 +27,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
@@ -79,7 +80,7 @@ internal fun ReleaseGroupUi(
     val loginEventSink = state.loginUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
-        eventSink(ReleaseGroupUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
+        eventSink(DetailsUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
     }
 
     Scaffold(
@@ -97,7 +98,7 @@ internal fun ReleaseGroupUi(
         topBar = {
             TopAppBarWithFilter(
                 onBack = {
-                    eventSink(ReleaseGroupUiEvent.NavigateUp)
+                    eventSink(DetailsUiEvent.NavigateUp)
                 },
                 entity = entity,
                 title = state.title,
@@ -111,7 +112,7 @@ internal fun ReleaseGroupUi(
                             when (selectedTab) {
                                 Tab.RELEASES -> releasesLazyPagingItems.refresh()
                                 Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
-                                else -> eventSink(ReleaseGroupUiEvent.ForceRefreshDetails)
+                                else -> eventSink(DetailsUiEvent.ForceRefreshDetails)
                             }
                         },
                     )
@@ -152,7 +153,7 @@ internal fun ReleaseGroupUi(
                                 // Don't pass a title, because the name used here may not be the name used for the
                                 // the artist's page.
                                 eventSink(
-                                    ReleaseGroupUiEvent.ClickItem(
+                                    DetailsUiEvent.ClickItem(
                                         entity = MusicBrainzEntity.ARTIST,
                                         id = artistCredit.artistId,
                                         title = null,
@@ -186,7 +187,7 @@ internal fun ReleaseGroupUi(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         handledException = state.detailsTabUiState.handledException,
                         onRefresh = {
-                            eventSink(ReleaseGroupUiEvent.ForceRefreshDetails)
+                            eventSink(DetailsUiEvent.ForceRefreshDetails)
                         },
                         detailsModel = state.detailsModel,
                     ) { releaseGroup ->
@@ -195,10 +196,10 @@ internal fun ReleaseGroupUi(
                             detailsUiState = state.detailsTabUiState,
                             filterText = state.topAppBarFilterState.filterText,
                             onImageClick = {
-                                eventSink(ReleaseGroupUiEvent.ClickImage)
+                                eventSink(DetailsUiEvent.ClickImage)
                             },
                             onCollapseExpandExternalLinks = {
-                                eventSink(ReleaseGroupUiEvent.ToggleCollapseExpandExternalLinks)
+                                eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
                             },
                         )
                     }
@@ -217,7 +218,7 @@ internal fun ReleaseGroupUi(
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         onItemClick = { entity, id, title ->
                             eventSink(
-                                ReleaseGroupUiEvent.ClickItem(
+                                DetailsUiEvent.ClickItem(
                                     entity = entity,
                                     id = id,
                                     title = title,
@@ -244,7 +245,7 @@ internal fun ReleaseGroupUi(
                         lazyListState = state.relationsUiState.lazyListState,
                         onItemClick = { entity, id, title ->
                             eventSink(
-                                ReleaseGroupUiEvent.ClickItem(
+                                DetailsUiEvent.ClickItem(
                                     entity = entity,
                                     id = id,
                                     title = title,

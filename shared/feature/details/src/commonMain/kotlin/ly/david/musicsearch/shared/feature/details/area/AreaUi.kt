@@ -26,7 +26,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
@@ -49,7 +52,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 
 @Composable
 internal fun AreaUi(
-    state: AreaUiState,
+    state: DetailsUiState<AreaDetailsModel>,
     entityId: String,
     modifier: Modifier = Modifier,
 ) {
@@ -92,7 +95,7 @@ internal fun AreaUi(
 )
 @Composable
 internal fun AreaUiInternal(
-    state: AreaUiState,
+    state: DetailsUiState<AreaDetailsModel>,
     entityId: String,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
@@ -109,16 +112,23 @@ internal fun AreaUiInternal(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     val eventSink = state.eventSink
-    val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val artistsLazyPagingItems = state.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val eventsLazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val labelsLazyPagingItems = state.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val releasesLazyPagingItems = state.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val releasesByEntityEventSink = state.releasesListUiState.eventSink
-    val placesLazyPagingItems = state.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val relationsLazyPagingItems =
+        state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val artistsLazyPagingItems =
+        state.entitiesListUiState.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val eventsLazyPagingItems =
+        state.entitiesListUiState.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val labelsLazyPagingItems =
+        state.entitiesListUiState.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val releasesLazyPagingItems =
+        state.entitiesListUiState.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val releasesByEntityEventSink =
+        state.entitiesListUiState.releasesListUiState.eventSink
+    val placesLazyPagingItems =
+        state.entitiesListUiState.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = pagerState.currentPage) {
-        eventSink(AreaUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
+        eventSink(DetailsUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
     }
 
     Scaffold(
@@ -136,7 +146,7 @@ internal fun AreaUiInternal(
         topBar = {
             TopAppBarWithFilter(
                 onBack = {
-                    eventSink(AreaUiEvent.NavigateUp)
+                    eventSink(DetailsUiEvent.NavigateUp)
                 },
                 entity = entity,
                 title = state.title,
@@ -152,7 +162,7 @@ internal fun AreaUiInternal(
                                 Tab.PLACES -> placesLazyPagingItems.refresh()
                                 Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
                                 Tab.RELEASES -> releasesLazyPagingItems.refresh()
-                                else -> eventSink(AreaUiEvent.ForceRefreshDetails)
+                                else -> eventSink(DetailsUiEvent.ForceRefreshDetails)
                             }
                         },
                     )
@@ -164,7 +174,7 @@ internal fun AreaUiInternal(
                         ToggleMenuItem(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
-                            toggled = state.releasesListUiState.showMoreInfo,
+                            toggled = state.entitiesListUiState.releasesListUiState.showMoreInfo,
                             onToggle = {
                                 releasesByEntityEventSink(
                                     ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
@@ -199,16 +209,19 @@ internal fun AreaUiInternal(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        handledException = state.handledException,
+                        handledException = state.detailsTabUiState.handledException,
                         onRefresh = {
-                            eventSink(AreaUiEvent.ForceRefreshDetails)
+                            eventSink(DetailsUiEvent.ForceRefreshDetails)
                         },
-                        detailsModel = state.area,
+                        detailsModel = state.detailsModel,
                     ) {
                         AreaDetailsUi(
                             area = it,
+                            detailsUiState = state.detailsTabUiState,
                             filterText = state.topAppBarFilterState.filterText,
-                            lazyListState = state.detailsLazyListState,
+                            onCollapseExpandExternalLinks = {
+                                eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
+                            },
                         )
                     }
                 }
@@ -223,7 +236,7 @@ internal fun AreaUiInternal(
                         lazyListState = state.relationsUiState.lazyListState,
                         onItemClick = { entity, id, title ->
                             eventSink(
-                                AreaUiEvent.ClickItem(
+                                DetailsUiEvent.ClickItem(
                                     entity = entity,
                                     id = id,
                                     title = title,
@@ -237,7 +250,7 @@ internal fun AreaUiInternal(
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = artistsLazyPagingItems,
-                            lazyListState = state.artistsListUiState.lazyListState,
+                            lazyListState = state.entitiesListUiState.artistsListUiState.lazyListState,
                         ),
                         modifier = Modifier
                             .padding(innerPadding)
@@ -246,7 +259,7 @@ internal fun AreaUiInternal(
                         now = now,
                         onItemClick = { entity, id, title ->
                             eventSink(
-                                AreaUiEvent.ClickItem(
+                                DetailsUiEvent.ClickItem(
                                     entity = entity,
                                     id = id,
                                     title = title,
@@ -260,7 +273,7 @@ internal fun AreaUiInternal(
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = eventsLazyPagingItems,
-                            lazyListState = state.eventsListUiState.lazyListState,
+                            lazyListState = state.entitiesListUiState.eventsListUiState.lazyListState,
                         ),
                         modifier = Modifier
                             .padding(innerPadding)
@@ -269,7 +282,7 @@ internal fun AreaUiInternal(
                         now = now,
                         onItemClick = { entity, id, title ->
                             eventSink(
-                                AreaUiEvent.ClickItem(
+                                DetailsUiEvent.ClickItem(
                                     entity = entity,
                                     id = id,
                                     title = title,
@@ -283,7 +296,7 @@ internal fun AreaUiInternal(
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = labelsLazyPagingItems,
-                            lazyListState = state.labelsListUiState.lazyListState,
+                            lazyListState = state.entitiesListUiState.labelsListUiState.lazyListState,
                         ),
                         modifier = Modifier
                             .padding(innerPadding)
@@ -292,7 +305,7 @@ internal fun AreaUiInternal(
                         now = now,
                         onItemClick = { entity, id, title ->
                             eventSink(
-                                AreaUiEvent.ClickItem(
+                                DetailsUiEvent.ClickItem(
                                     entity = entity,
                                     id = id,
                                     title = title,
@@ -306,8 +319,8 @@ internal fun AreaUiInternal(
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = releasesLazyPagingItems,
-                            lazyListState = state.releasesListUiState.lazyListState,
-                            showMoreInfo = state.releasesListUiState.showMoreInfo,
+                            lazyListState = state.entitiesListUiState.releasesListUiState.lazyListState,
+                            showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
                         ),
                         modifier = Modifier
                             .padding(innerPadding)
@@ -317,7 +330,7 @@ internal fun AreaUiInternal(
                         now = now,
                         onItemClick = { entity, id, title ->
                             eventSink(
-                                AreaUiEvent.ClickItem(
+                                DetailsUiEvent.ClickItem(
                                     entity = entity,
                                     id = id,
                                     title = title,
@@ -338,7 +351,7 @@ internal fun AreaUiInternal(
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = placesLazyPagingItems,
-                            lazyListState = state.placesListUiState.lazyListState,
+                            lazyListState = state.entitiesListUiState.placesListUiState.lazyListState,
                         ),
                         modifier = Modifier
                             .padding(innerPadding)
@@ -347,7 +360,7 @@ internal fun AreaUiInternal(
                         now = now,
                         onItemClick = { entity, id, title ->
                             eventSink(
-                                AreaUiEvent.ClickItem(
+                                DetailsUiEvent.ClickItem(
                                     entity = entity,
                                     id = id,
                                     title = title,

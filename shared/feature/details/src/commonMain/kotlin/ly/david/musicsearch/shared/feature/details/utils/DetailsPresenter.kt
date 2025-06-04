@@ -12,6 +12,7 @@ import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
 import com.slack.circuit.retained.rememberRetained
+import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
@@ -25,8 +26,8 @@ import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
-import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUiEvent
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
@@ -115,6 +116,8 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         )
 
         LaunchedEffect(forceRefreshDetails, detailsModel) {
+            if (detailsModel !is ReleaseGroupDetailsModel) return@LaunchedEffect
+
             val imageMetadataWithCount = imageMetadataRepository.getAndSaveImageMetadata(
                 mbid = detailsModel?.id ?: return@LaunchedEffect,
                 entity = MusicBrainzEntity.RELEASE_GROUP,
@@ -183,17 +186,17 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             }
         }
 
-        fun eventSink(event: ReleaseGroupUiEvent) {
+        fun eventSink(event: DetailsUiEvent) {
             when (event) {
-                ReleaseGroupUiEvent.NavigateUp -> {
+                DetailsUiEvent.NavigateUp -> {
                     navigator.pop()
                 }
 
-                is ReleaseGroupUiEvent.UpdateTab -> {
+                is DetailsUiEvent.UpdateTab -> {
                     selectedTab = event.tab
                 }
 
-                is ReleaseGroupUiEvent.ClickItem -> {
+                is DetailsUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             DetailsScreen(
@@ -205,7 +208,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     )
                 }
 
-                ReleaseGroupUiEvent.ClickImage -> {
+                DetailsUiEvent.ClickImage -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             CoverArtsScreen(
@@ -216,11 +219,11 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     )
                 }
 
-                ReleaseGroupUiEvent.ForceRefreshDetails -> {
+                DetailsUiEvent.ForceRefreshDetails -> {
                     forceRefreshDetails = true
                 }
 
-                ReleaseGroupUiEvent.ToggleCollapseExpandExternalLinks -> {
+                DetailsUiEvent.ToggleCollapseExpandExternalLinks -> {
                     isExternalLinksCollapsed = !isExternalLinksCollapsed
                 }
             }
@@ -231,16 +234,16 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             subtitle = subtitle,
             tabs = getTabs(),
             selectedTab = selectedTab,
-            topAppBarFilterState = topAppBarFilterState,
             url = getMusicBrainzUrl(screen.entity, screen.id),
             detailsModel = detailsModel?.withUrls(
                 urls = detailsModel?.urls.filterUrlRelations(query = query),
             ) as DetailsModel?,
             snackbarMessage = snackbarMessage,
+            topAppBarFilterState = topAppBarFilterState,
             detailsTabUiState = DetailsTabUiState(
                 handledException = handledException,
-                lazyListState = detailsLazyListState,
                 numberOfImages = numberOfImages,
+                lazyListState = detailsLazyListState,
                 isExternalLinksCollapsed = isExternalLinksCollapsed,
             ),
             entitiesListUiState = entitiesListUiState,
@@ -253,18 +256,18 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
 
 internal class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
     val title: String,
-    val subtitle: String,
+    val subtitle: String = "",
     val tabs: ImmutableList<Tab>,
     val selectedTab: Tab,
+    val url: String = "",
     val detailsModel: DetailsModel?,
+    val snackbarMessage: String? = null,
+    val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
-    val url: String,
-    val topAppBarFilterState: TopAppBarFilterState,
-    val snackbarMessage: String?,
-    val entitiesListUiState: EntitiesListUiState,
-    val relationsUiState: RelationsUiState,
-    val loginUiState: LoginUiState,
-    val eventSink: (ReleaseGroupUiEvent) -> Unit,
+    val entitiesListUiState: EntitiesListUiState = EntitiesListUiState(),
+    val relationsUiState: RelationsUiState = RelationsUiState(),
+    val loginUiState: LoginUiState = LoginUiState(),
+    val eventSink: (DetailsUiEvent) -> Unit = {},
 ) : CircuitUiState
 
 internal data class DetailsTabUiState(
@@ -273,3 +276,18 @@ internal data class DetailsTabUiState(
     val lazyListState: LazyListState = LazyListState(),
     val isExternalLinksCollapsed: Boolean = false,
 )
+
+internal sealed interface DetailsUiEvent : CircuitUiEvent {
+    data object NavigateUp : DetailsUiEvent
+    data object ForceRefreshDetails : DetailsUiEvent
+    data class UpdateTab(val tab: Tab) : DetailsUiEvent
+    data class ClickItem(
+        val entity: MusicBrainzEntity,
+        val id: String,
+        val title: String?,
+    ) : DetailsUiEvent
+
+    data object ClickImage : DetailsUiEvent
+
+    data object ToggleCollapseExpandExternalLinks : DetailsUiEvent
+}

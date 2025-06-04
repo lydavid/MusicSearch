@@ -266,18 +266,18 @@ class EntitiesListPresenter(
 
 @Stable
 data class EntitiesListUiState(
-    val areasListUiState: AreasListUiState,
-    val artistsListUiState: ArtistsListUiState,
-    val eventsListUiState: EventsListUiState,
-    val genresListUiState: GenresListUiState,
-    val instrumentsListUiState: InstrumentsListUiState,
-    val labelsListUiState: LabelsListUiState,
-    val placesListUiState: PlacesListUiState,
-    val recordingsListUiState: RecordingsListUiState,
-    val releasesListUiState: ReleasesListUiState,
-    val releaseGroupsListUiState: ReleaseGroupsListUiState,
-    val seriesListUiState: SeriesListUiState,
-    val worksListUiState: WorksListUiState,
+    val areasListUiState: AreasListUiState = AreasListUiState(),
+    val artistsListUiState: ArtistsListUiState = ArtistsListUiState(),
+    val eventsListUiState: EventsListUiState = EventsListUiState(),
+    val genresListUiState: GenresListUiState = GenresListUiState(),
+    val instrumentsListUiState: InstrumentsListUiState = InstrumentsListUiState(),
+    val labelsListUiState: LabelsListUiState = LabelsListUiState(),
+    val placesListUiState: PlacesListUiState = PlacesListUiState(),
+    val recordingsListUiState: RecordingsListUiState = RecordingsListUiState(),
+    val releasesListUiState: ReleasesListUiState = ReleasesListUiState(),
+    val releaseGroupsListUiState: ReleaseGroupsListUiState = ReleaseGroupsListUiState(),
+    val seriesListUiState: SeriesListUiState = SeriesListUiState(),
+    val worksListUiState: WorksListUiState = WorksListUiState(),
     val eventSink: (EntitiesListUiEvent) -> Unit = {},
 ) : CircuitUiState
 

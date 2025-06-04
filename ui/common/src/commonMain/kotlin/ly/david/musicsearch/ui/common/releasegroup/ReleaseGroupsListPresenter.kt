@@ -17,6 +17,7 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -119,8 +120,8 @@ sealed interface ReleaseGroupsListUiEvent : CircuitUiEvent {
 
 @Stable
 data class ReleaseGroupsListUiState(
-    val pagingDataFlow: Flow<PagingData<ListItemModel>>,
+    val pagingDataFlow: Flow<PagingData<ListItemModel>> = emptyFlow(),
     val lazyListState: LazyListState = LazyListState(),
-    val sort: Boolean,
-    val eventSink: (ReleaseGroupsListUiEvent) -> Unit,
+    val sort: Boolean = true,
+    val eventSink: (ReleaseGroupsListUiEvent) -> Unit = {},
 ) : CircuitUiState

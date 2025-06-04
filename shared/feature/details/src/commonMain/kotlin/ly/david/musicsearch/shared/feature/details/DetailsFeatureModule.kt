@@ -3,11 +3,11 @@ package ly.david.musicsearch.shared.feature.details
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
+import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.feature.details.area.AreaPresenter
 import ly.david.musicsearch.shared.feature.details.area.AreaUi
-import ly.david.musicsearch.shared.feature.details.area.AreaUiState
 import ly.david.musicsearch.shared.feature.details.artist.ArtistPresenter
 import ly.david.musicsearch.shared.feature.details.artist.ArtistUi
 import ly.david.musicsearch.shared.feature.details.artist.ArtistUiState
@@ -57,11 +57,8 @@ val detailsFeatureModule = module {
                                 navigator = navigator,
                                 repository = get(),
                                 incrementLookupHistory = get(),
-                                artistsListPresenter = get(),
-                                eventsListPresenter = get(),
-                                labelsListPresenter = get(),
-                                placesListPresenter = get(),
-                                releasesListPresenter = get(),
+                                entitiesListPresenter = get(),
+                                imageMetadataRepository = get(),
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
@@ -252,7 +249,7 @@ val detailsFeatureModule = module {
                 is DetailsScreen -> {
                     when (screen.entity) {
                         MusicBrainzEntity.AREA -> {
-                            ui<AreaUiState> { state, modifier ->
+                            ui<DetailsUiState<AreaDetailsModel>> { state, modifier ->
                                 AreaUi(
                                     state = state,
                                     entityId = screen.id,

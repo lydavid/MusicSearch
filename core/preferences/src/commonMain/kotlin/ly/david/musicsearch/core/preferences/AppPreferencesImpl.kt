@@ -96,7 +96,7 @@ internal class AppPreferencesImpl(
     override val showMoreInfoInReleaseListItem: Flow<Boolean>
         get() = preferencesDataStore.data
             .map {
-                it[SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_PREFERENCE] ?: true
+                it[SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_PREFERENCE] != false
             }
             .distinctUntilChanged()
 
@@ -111,7 +111,7 @@ internal class AppPreferencesImpl(
     override val sortReleaseGroupListItems: Flow<Boolean>
         get() = preferencesDataStore.data
             .map {
-                it[SORT_RELEASE_GROUP_LIST_ITEMS_PREFERENCE] ?: true
+                it[SORT_RELEASE_GROUP_LIST_ITEMS_PREFERENCE] != false
             }
             .distinctUntilChanged()
 

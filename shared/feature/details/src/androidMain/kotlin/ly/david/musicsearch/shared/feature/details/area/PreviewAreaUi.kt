@@ -19,12 +19,15 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
 import ly.david.musicsearch.ui.common.event.EventsListUiState
 import ly.david.musicsearch.ui.common.label.LabelsListUiState
 import ly.david.musicsearch.ui.common.place.PlacesListUiState
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListUiState
+import ly.david.musicsearch.ui.common.screen.EntitiesListUiState
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
@@ -510,26 +513,27 @@ internal fun PreviewAreaDetails() {
     PreviewTheme {
         Surface {
             AreaUiInternal(
-                state = AreaUiState(
+                state = DetailsUiState(
                     title = "Canada",
-                    handledException = null,
-                    area = country,
+                    detailsModel = country,
                     tabs = areaTabs,
                     selectedTab = Tab.DETAILS,
-                    artistsListUiState = ArtistsListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EventsListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = LabelsListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = PlacesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = ReleasesListUiState(
-                        pagingDataFlow = canadianReleases,
+                    entitiesListUiState = EntitiesListUiState(
+                        artistsListUiState = ArtistsListUiState(
+                            pagingDataFlow = canadianArtists,
+                        ),
+                        eventsListUiState = EventsListUiState(
+                            pagingDataFlow = events,
+                        ),
+                        labelsListUiState = LabelsListUiState(
+                            pagingDataFlow = labels,
+                        ),
+                        placesListUiState = PlacesListUiState(
+                            pagingDataFlow = places,
+                        ),
+                        releasesListUiState = ReleasesListUiState(
+                            pagingDataFlow = canadianReleases,
+                        ),
                     ),
                     relationsUiState = RelationsUiState(
                         pagingDataFlow = canadianRelations,
@@ -548,29 +552,33 @@ internal fun PreviewAreaDetailsError() {
     PreviewTheme {
         Surface {
             AreaUiInternal(
-                state = AreaUiState(
+                state = DetailsUiState(
                     title = "Canada",
-                    handledException = HandledException(
-                        userMessage = "Network error. Check your internet connection.",
-                        errorResolution = ErrorResolution.Retry,
-                    ),
-                    area = country,
+                    detailsModel = country,
                     tabs = areaTabs,
                     selectedTab = Tab.DETAILS,
-                    artistsListUiState = ArtistsListUiState(
-                        pagingDataFlow = canadianArtists,
+                    detailsTabUiState = DetailsTabUiState(
+                        handledException = HandledException(
+                            userMessage = "Network error. Check your internet connection.",
+                            errorResolution = ErrorResolution.Retry,
+                        ),
                     ),
-                    eventsListUiState = EventsListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = LabelsListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = PlacesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = ReleasesListUiState(
-                        pagingDataFlow = canadianReleases,
+                    entitiesListUiState = EntitiesListUiState(
+                        artistsListUiState = ArtistsListUiState(
+                            pagingDataFlow = canadianArtists,
+                        ),
+                        eventsListUiState = EventsListUiState(
+                            pagingDataFlow = events,
+                        ),
+                        labelsListUiState = LabelsListUiState(
+                            pagingDataFlow = labels,
+                        ),
+                        placesListUiState = PlacesListUiState(
+                            pagingDataFlow = places,
+                        ),
+                        releasesListUiState = ReleasesListUiState(
+                            pagingDataFlow = canadianReleases,
+                        ),
                     ),
                     relationsUiState = RelationsUiState(
                         pagingDataFlow = canadianRelations,
@@ -589,26 +597,27 @@ internal fun PreviewAreaRelationships() {
     PreviewTheme {
         Surface {
             AreaUiInternal(
-                state = AreaUiState(
+                state = DetailsUiState(
                     title = "Canada",
-                    handledException = null,
-                    area = country,
+                    detailsModel = country,
                     tabs = areaTabs,
                     selectedTab = Tab.RELATIONSHIPS,
-                    artistsListUiState = ArtistsListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EventsListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = LabelsListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = PlacesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = ReleasesListUiState(
-                        pagingDataFlow = canadianReleases,
+                    entitiesListUiState = EntitiesListUiState(
+                        artistsListUiState = ArtistsListUiState(
+                            pagingDataFlow = canadianArtists,
+                        ),
+                        eventsListUiState = EventsListUiState(
+                            pagingDataFlow = events,
+                        ),
+                        labelsListUiState = LabelsListUiState(
+                            pagingDataFlow = labels,
+                        ),
+                        placesListUiState = PlacesListUiState(
+                            pagingDataFlow = places,
+                        ),
+                        releasesListUiState = ReleasesListUiState(
+                            pagingDataFlow = canadianReleases,
+                        ),
                     ),
                     relationsUiState = RelationsUiState(
                         pagingDataFlow = canadianRelations,
@@ -627,26 +636,27 @@ internal fun PreviewAreaArtists() {
     PreviewTheme {
         Surface {
             AreaUiInternal(
-                state = AreaUiState(
+                state = DetailsUiState(
                     title = "Canada",
-                    handledException = null,
-                    area = country,
+                    detailsModel = country,
                     tabs = areaTabs,
                     selectedTab = Tab.ARTISTS,
-                    artistsListUiState = ArtistsListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EventsListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = LabelsListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = PlacesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = ReleasesListUiState(
-                        pagingDataFlow = canadianReleases,
+                    entitiesListUiState = EntitiesListUiState(
+                        artistsListUiState = ArtistsListUiState(
+                            pagingDataFlow = canadianArtists,
+                        ),
+                        eventsListUiState = EventsListUiState(
+                            pagingDataFlow = events,
+                        ),
+                        labelsListUiState = LabelsListUiState(
+                            pagingDataFlow = labels,
+                        ),
+                        placesListUiState = PlacesListUiState(
+                            pagingDataFlow = places,
+                        ),
+                        releasesListUiState = ReleasesListUiState(
+                            pagingDataFlow = canadianReleases,
+                        ),
                     ),
                     relationsUiState = RelationsUiState(
                         pagingDataFlow = canadianRelations,
@@ -665,26 +675,27 @@ internal fun PreviewAreaEvents() {
     PreviewTheme {
         Surface {
             AreaUiInternal(
-                state = AreaUiState(
+                state = DetailsUiState(
                     title = "Canada",
-                    handledException = null,
-                    area = country,
+                    detailsModel = country,
                     tabs = areaTabs,
                     selectedTab = Tab.EVENTS,
-                    artistsListUiState = ArtistsListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EventsListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = LabelsListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = PlacesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = ReleasesListUiState(
-                        pagingDataFlow = canadianReleases,
+                    entitiesListUiState = EntitiesListUiState(
+                        artistsListUiState = ArtistsListUiState(
+                            pagingDataFlow = canadianArtists,
+                        ),
+                        eventsListUiState = EventsListUiState(
+                            pagingDataFlow = events,
+                        ),
+                        labelsListUiState = LabelsListUiState(
+                            pagingDataFlow = labels,
+                        ),
+                        placesListUiState = PlacesListUiState(
+                            pagingDataFlow = places,
+                        ),
+                        releasesListUiState = ReleasesListUiState(
+                            pagingDataFlow = canadianReleases,
+                        ),
                     ),
                     relationsUiState = RelationsUiState(
                         pagingDataFlow = canadianRelations,
@@ -703,26 +714,27 @@ internal fun PreviewAreaLabels() {
     PreviewTheme {
         Surface {
             AreaUiInternal(
-                state = AreaUiState(
+                state = DetailsUiState(
                     title = "Canada",
-                    handledException = null,
-                    area = country,
+                    detailsModel = country,
                     tabs = areaTabs,
                     selectedTab = Tab.LABELS,
-                    artistsListUiState = ArtistsListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EventsListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = LabelsListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = PlacesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = ReleasesListUiState(
-                        pagingDataFlow = canadianReleases,
+                    entitiesListUiState = EntitiesListUiState(
+                        artistsListUiState = ArtistsListUiState(
+                            pagingDataFlow = canadianArtists,
+                        ),
+                        eventsListUiState = EventsListUiState(
+                            pagingDataFlow = events,
+                        ),
+                        labelsListUiState = LabelsListUiState(
+                            pagingDataFlow = labels,
+                        ),
+                        placesListUiState = PlacesListUiState(
+                            pagingDataFlow = places,
+                        ),
+                        releasesListUiState = ReleasesListUiState(
+                            pagingDataFlow = canadianReleases,
+                        ),
                     ),
                     relationsUiState = RelationsUiState(
                         pagingDataFlow = canadianRelations,
@@ -741,26 +753,27 @@ internal fun PreviewAreaReleases() {
     PreviewTheme {
         Surface {
             AreaUiInternal(
-                state = AreaUiState(
+                state = DetailsUiState(
                     title = "Canada",
-                    handledException = null,
-                    area = country,
+                    detailsModel = country,
                     tabs = areaTabs,
                     selectedTab = Tab.RELEASES,
-                    artistsListUiState = ArtistsListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EventsListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = LabelsListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = PlacesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = ReleasesListUiState(
-                        pagingDataFlow = canadianReleases,
+                    entitiesListUiState = EntitiesListUiState(
+                        artistsListUiState = ArtistsListUiState(
+                            pagingDataFlow = canadianArtists,
+                        ),
+                        eventsListUiState = EventsListUiState(
+                            pagingDataFlow = events,
+                        ),
+                        labelsListUiState = LabelsListUiState(
+                            pagingDataFlow = labels,
+                        ),
+                        placesListUiState = PlacesListUiState(
+                            pagingDataFlow = places,
+                        ),
+                        releasesListUiState = ReleasesListUiState(
+                            pagingDataFlow = canadianReleases,
+                        ),
                     ),
                     relationsUiState = RelationsUiState(
                         pagingDataFlow = canadianRelations,
@@ -779,26 +792,27 @@ internal fun PreviewAreaPlaces() {
     PreviewTheme {
         Surface {
             AreaUiInternal(
-                state = AreaUiState(
+                state = DetailsUiState(
                     title = "Canada",
-                    handledException = null,
-                    area = country,
+                    detailsModel = country,
                     tabs = areaTabs,
                     selectedTab = Tab.PLACES,
-                    artistsListUiState = ArtistsListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EventsListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = LabelsListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = PlacesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = ReleasesListUiState(
-                        pagingDataFlow = canadianReleases,
+                    entitiesListUiState = EntitiesListUiState(
+                        artistsListUiState = ArtistsListUiState(
+                            pagingDataFlow = canadianArtists,
+                        ),
+                        eventsListUiState = EventsListUiState(
+                            pagingDataFlow = events,
+                        ),
+                        labelsListUiState = LabelsListUiState(
+                            pagingDataFlow = labels,
+                        ),
+                        placesListUiState = PlacesListUiState(
+                            pagingDataFlow = places,
+                        ),
+                        releasesListUiState = ReleasesListUiState(
+                            pagingDataFlow = canadianReleases,
+                        ),
                     ),
                     relationsUiState = RelationsUiState(
                         pagingDataFlow = canadianRelations,
@@ -818,26 +832,27 @@ internal fun PreviewAreaStats() {
     PreviewTheme {
         Surface {
             AreaUiInternal(
-                state = AreaUiState(
+                state = DetailsUiState(
                     title = "Canada",
-                    handledException = null,
-                    area = country,
+                    detailsModel = country,
                     tabs = areaTabs,
                     selectedTab = Tab.STATS,
-                    artistsListUiState = ArtistsListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EventsListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = LabelsListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = PlacesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = ReleasesListUiState(
-                        pagingDataFlow = canadianReleases,
+                    entitiesListUiState = EntitiesListUiState(
+                        artistsListUiState = ArtistsListUiState(
+                            pagingDataFlow = canadianArtists,
+                        ),
+                        eventsListUiState = EventsListUiState(
+                            pagingDataFlow = events,
+                        ),
+                        labelsListUiState = LabelsListUiState(
+                            pagingDataFlow = labels,
+                        ),
+                        placesListUiState = PlacesListUiState(
+                            pagingDataFlow = places,
+                        ),
+                        releasesListUiState = ReleasesListUiState(
+                            pagingDataFlow = canadianReleases,
+                        ),
                     ),
                     relationsUiState = RelationsUiState(
                         pagingDataFlow = canadianRelations,

@@ -1,13 +1,12 @@
 package ly.david.musicsearch.shared.feature.details.area
 
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -18,15 +17,16 @@ import ly.david.musicsearch.ui.core.LocalStrings
 @Composable
 internal fun AreaDetailsUi(
     area: AreaDetailsModel,
+    detailsUiState: DetailsTabUiState,
     modifier: Modifier = Modifier,
     filterText: String = "",
-    lazyListState: LazyListState = rememberLazyListState(),
+    onCollapseExpandExternalLinks: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState,
+        state = detailsUiState.lazyListState,
     ) {
         item {
             area.run {
@@ -71,6 +71,8 @@ internal fun AreaDetailsUi(
 
         urlsSection(
             urls = area.urls,
+            collapsed = detailsUiState.isExternalLinksCollapsed,
+            onCollapseExpand = onCollapseExpandExternalLinks,
         )
     }
 }
