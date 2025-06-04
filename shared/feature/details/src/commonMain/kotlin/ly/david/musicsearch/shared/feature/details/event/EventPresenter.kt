@@ -25,7 +25,7 @@ import ly.david.musicsearch.shared.domain.event.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
@@ -52,7 +52,7 @@ internal class EventPresenter(
     private val navigator: Navigator,
     private val repository: EventRepository,
     override val incrementLookupHistory: IncrementLookupHistory,
-    private val imageMetadataRepository: ImageMetadataRepository,
+    private val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository,
     private val relationsPresenter: RelationsPresenter,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
@@ -102,7 +102,7 @@ internal class EventPresenter(
         )
 
         LaunchedEffect(forceRefreshDetails, event) {
-            val imageMetadataWithCount = imageMetadataRepository.getAndSaveImageMetadata(
+            val imageMetadataWithCount = musicBrainzImageMetadataRepository.getAndSaveImageMetadata(
                 mbid = event?.id ?: return@LaunchedEffect,
                 entity = MusicBrainzEntity.EVENT,
                 forceRefresh = forceRefreshDetails,

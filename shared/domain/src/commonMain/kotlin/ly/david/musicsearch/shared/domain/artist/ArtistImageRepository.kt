@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.domain.artist
 
+import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 
 interface ArtistImageRepository {
@@ -11,7 +12,7 @@ interface ArtistImageRepository {
      * Also saves it to db.
      */
     suspend fun getArtistImageMetadata(
-        artistDetailsModel: ArtistDetailsModel,
+        detailsModel: MusicBrainzDetailsModel,
         forceRefresh: Boolean,
     ): ImageMetadata
 }

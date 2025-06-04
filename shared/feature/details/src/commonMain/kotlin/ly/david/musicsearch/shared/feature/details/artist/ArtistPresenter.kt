@@ -57,8 +57,8 @@ internal class ArtistPresenter(
         return artistTabs
     }
 
-    override fun getSubtitle(detailsModel: ArtistDetailsModel): String {
-        return ""
+    override fun getSearchHint(detailsModel: ArtistDetailsModel?): String? {
+        return detailsModel?.sortName
     }
 
     override suspend fun lookupDetailsModel(

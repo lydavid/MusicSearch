@@ -24,7 +24,7 @@ import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.common.appendOptionalText
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -38,7 +38,7 @@ internal class ImagesPresenter(
     private val screen: CoverArtsScreen,
     private val navigator: Navigator,
     private val appPreferences: AppPreferences,
-    private val imageMetadataRepository: ImageMetadataRepository,
+    private val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository,
     private val getMusicBrainzCoverArtUrl: GetMusicBrainzCoverArtUrl,
 ) : Presenter<ImagesUiState> {
 
@@ -57,7 +57,7 @@ internal class ImagesPresenter(
             sortOption,
         ) {
             mutableStateOf(
-                imageMetadataRepository.observeAllImageMetadata(
+                musicBrainzImageMetadataRepository.observeAllImageMetadata(
                     mbid = screen.id,
                     query = topAppBarFilterState.filterText,
                     sortOption = sortOption,

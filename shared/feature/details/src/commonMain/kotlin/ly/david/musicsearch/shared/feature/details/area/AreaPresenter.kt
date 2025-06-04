@@ -56,10 +56,6 @@ internal class AreaPresenter(
         return areaTabs
     }
 
-    override fun getSubtitle(detailsModel: AreaDetailsModel): String {
-        return ""
-    }
-
     override suspend fun lookupDetailsModel(
         id: String,
         forceRefresh: Boolean,

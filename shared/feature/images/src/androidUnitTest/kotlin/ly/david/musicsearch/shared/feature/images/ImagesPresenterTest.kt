@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
@@ -39,7 +39,7 @@ class ImagesPresenterTest {
             override val imagesSortOption: Flow<ImagesSortOption>
                 get() = flowOf(ImagesSortOption.RECENTLY_ADDED)
         },
-        imageMetadataRepository = object : ImageMetadataRepository {
+        musicBrainzImageMetadataRepository = object : MusicBrainzImageMetadataRepository {
             override suspend fun getAndSaveImageMetadata(
                 mbid: String,
                 entity: MusicBrainzEntity,

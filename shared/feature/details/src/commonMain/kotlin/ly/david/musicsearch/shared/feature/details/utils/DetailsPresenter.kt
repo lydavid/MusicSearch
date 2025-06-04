@@ -59,7 +59,13 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
 
     abstract fun getTabs(): ImmutableList<Tab>
 
-    abstract fun getSubtitle(detailsModel: DetailsModel): String
+    open fun getSubtitle(detailsModel: DetailsModel): String {
+        return ""
+    }
+
+    open fun getSearchHint(detailsModel: DetailsModel?): String? {
+        return ""
+    }
 
     abstract suspend fun lookupDetailsModel(
         id: String,
@@ -94,13 +100,13 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         LaunchedEffect(forceRefreshDetails) {
             try {
                 isLoading = true
-                val releaseGroupDetailsModel = lookupDetailsModel(
+                val newDetailsModel = lookupDetailsModel(
                     screen.id,
                     forceRefreshDetails,
                 )
-                title = releaseGroupDetailsModel.getNameWithDisambiguation()
-                subtitle = getSubtitle(releaseGroupDetailsModel)
-                detailsModel = releaseGroupDetailsModel
+                title = newDetailsModel.getNameWithDisambiguation()
+                subtitle = getSubtitle(newDetailsModel)
+                detailsModel = newDetailsModel
 
                 handledException = null
             } catch (ex: HandledException) {
@@ -115,7 +121,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             mbid = screen.id,
             title = title,
             entity = screen.entity,
-            searchHint = "",
+            searchHint = getSearchHint(detailsModel),
         )
 
         LaunchedEffect(forceRefreshDetails, detailsModel) {
@@ -128,8 +134,8 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             if (!showImage) return@LaunchedEffect
 
             val imageMetadataWithCount = imageMetadataRepository.getAndSaveImageMetadata(
-                mbid = detailsModel?.id ?: return@LaunchedEffect,
-                entity = MusicBrainzEntity.RELEASE_GROUP,
+                detailsModel = detailsModel ?: return@LaunchedEffect,
+                entity = screen.entity,
                 forceRefresh = forceRefreshDetails,
             )
             detailsModel = detailsModel?.withImageMetadata(

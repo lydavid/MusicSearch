@@ -36,7 +36,7 @@ import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
@@ -78,8 +78,8 @@ class ImageMetadataRepositoryImplTest :
 
     private fun createRepository(
         coverArtUrlsProducer: (id: String, entity: MusicBrainzEntity) -> List<CoverArtUrls>,
-    ): ImageMetadataRepository {
-        return ImageMetadataRepositoryImpl(
+    ): MusicBrainzImageMetadataRepository {
+        return MusicBrainzImageMetadataRepositoryImpl(
             coverArtArchiveApi = object : NoOpCoverArtArchiveApi() {
                 override suspend fun getCoverArts(
                     mbid: String,

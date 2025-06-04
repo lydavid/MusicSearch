@@ -19,7 +19,7 @@ import ly.david.musicsearch.shared.domain.area.AreasListRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
 import ly.david.musicsearch.shared.domain.event.EventsListRepository
 import ly.david.musicsearch.shared.domain.genre.GenresListRepository
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.instrument.InstrumentsListRepository
 import ly.david.musicsearch.shared.domain.label.LabelsListRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -34,7 +34,7 @@ import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 internal class DatabasePresenter(
     private val navigator: Navigator,
-    private val imageMetadataRepository: ImageMetadataRepository,
+    private val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository,
     private val areasListRepository: AreasListRepository,
     private val artistsListRepository: ArtistsListRepository,
     private val eventsListRepository: EventsListRepository,
@@ -52,7 +52,9 @@ internal class DatabasePresenter(
     override fun present(): DatabaseUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val lazyListState = rememberLazyListState()
-        val countOfAllImages by imageMetadataRepository.observeCountOfAllImageMetadata().collectAsRetainedState(0)
+        val countOfAllImages by musicBrainzImageMetadataRepository.observeCountOfAllImageMetadata().collectAsRetainedState(
+            0,
+        )
         val countOfAllAreas by areasListRepository.observeCountOfAllAreas().collectAsRetainedState(0)
         val countOfAllArtists by artistsListRepository.observeCountOfArtists(
             browseMethod = BrowseMethod.All,

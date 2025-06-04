@@ -5,13 +5,13 @@ import ly.david.musicsearch.data.spotify.api.SpotifyApi
 import ly.david.musicsearch.data.spotify.api.SpotifyArtist
 import ly.david.musicsearch.data.spotify.api.getLargeImageUrl
 import ly.david.musicsearch.data.spotify.api.getThumbnailImageUrl
-import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
+import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
-import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import kotlin.coroutines.cancellation.CancellationException
 
 class ArtistImageRepositoryImpl(
@@ -21,28 +21,28 @@ class ArtistImageRepositoryImpl(
 ) : ArtistImageRepository {
 
     override suspend fun getArtistImageMetadata(
-        artistDetailsModel: ArtistDetailsModel,
+        detailsModel: MusicBrainzDetailsModel,
         forceRefresh: Boolean,
     ): ImageMetadata {
         if (forceRefresh) {
-            imageUrlDao.deleteAllImageMetadtaById(artistDetailsModel.id)
+            imageUrlDao.deleteAllImageMetadtaById(detailsModel.id)
         }
 
-        val cachedImageUrl = imageUrlDao.getFrontImageMetadata(artistDetailsModel.id)
+        val cachedImageUrl = imageUrlDao.getFrontImageMetadata(detailsModel.id)
         return if (cachedImageUrl == null) {
-            saveArtistImageMetadataFromNetwork(artistDetailsModel)
-            imageUrlDao.getFrontImageMetadata(artistDetailsModel.id) ?: ImageMetadataWithCount()
+            saveArtistImageMetadataFromNetwork(detailsModel)
+            imageUrlDao.getFrontImageMetadata(detailsModel.id) ?: ImageMetadataWithCount()
         } else {
             cachedImageUrl
         }.imageMetadata
     }
 
     private suspend fun saveArtistImageMetadataFromNetwork(
-        artistDetailsModel: ArtistDetailsModel,
+        detailsModel: MusicBrainzDetailsModel,
     ) {
         try {
             val spotifyUrl =
-                artistDetailsModel.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name
+                detailsModel.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name
 
             val imageMetadata: ImageMetadata = if (spotifyUrl == null) {
                 ImageMetadata()
@@ -56,7 +56,7 @@ class ArtistImageRepositoryImpl(
             }
 
             imageUrlDao.saveImageMetadata(
-                mbid = artistDetailsModel.id,
+                mbid = detailsModel.id,
                 imageMetadataList = listOf(imageMetadata),
             )
         } catch (ex: CancellationException) {
@@ -64,7 +64,7 @@ class ArtistImageRepositoryImpl(
         } catch (ex: HandledException) {
             if (ex.errorResolution == ErrorResolution.None) {
                 imageUrlDao.saveImageMetadata(
-                    mbid = artistDetailsModel.id,
+                    mbid = detailsModel.id,
                     imageMetadataList = listOf(ImageMetadata()),
                 )
             } else {

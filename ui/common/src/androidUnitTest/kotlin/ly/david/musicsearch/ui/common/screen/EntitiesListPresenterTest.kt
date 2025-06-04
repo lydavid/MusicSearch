@@ -152,7 +152,7 @@ class EntitiesListPresenterTest {
                 }
             },
             appPreferences = NoOpAppPreferences(),
-            imageMetadataRepository = NoOpImageMetadataRepository(),
+            musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         releaseGroupsListPresenter = ReleaseGroupsListPresenter(
             getReleaseGroups = object : GetReleaseGroups {
@@ -180,7 +180,7 @@ class EntitiesListPresenterTest {
                 }
             },
             appPreferences = NoOpAppPreferences(),
-            imageMetadataRepository = NoOpImageMetadataRepository(),
+            musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         seriesListPresenter = SeriesListPresenter(
             getSeries = object : GetSeries {

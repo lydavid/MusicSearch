@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
@@ -33,7 +33,7 @@ class ReleasesListPresenter(
     private val getReleases: GetReleases,
     private val releasesListRepository: ReleasesListRepository,
     private val appPreferences: AppPreferences,
-    private val imageMetadataRepository: ImageMetadataRepository,
+    private val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository,
 ) : Presenter<ReleasesListUiState> {
     @Composable
     override fun present(): ReleasesListUiState {
@@ -65,7 +65,7 @@ class ReleasesListPresenter(
                     if (!requestedImageMetadataForIds.contains(event.entityId)) {
                         requestedImageMetadataForIds = requestedImageMetadataForIds + setOf(event.entityId)
                         scope.launch {
-                            imageMetadataRepository.saveImageMetadata(
+                            musicBrainzImageMetadataRepository.saveImageMetadata(
                                 mbid = event.entityId,
                                 entity = MusicBrainzEntity.RELEASE,
                                 itemsCount = releaseCount,

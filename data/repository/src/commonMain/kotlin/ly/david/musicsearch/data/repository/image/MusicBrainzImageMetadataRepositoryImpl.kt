@@ -20,7 +20,7 @@ import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
@@ -31,12 +31,12 @@ private const val THRESHOLD_TO_BATCH_WRITES = 200
 private const val MAX_BATCH_SIZE = 100
 private val maxWaitTime = 3.seconds
 
-internal class ImageMetadataRepositoryImpl(
+internal class MusicBrainzImageMetadataRepositoryImpl(
     private val coverArtArchiveApi: CoverArtArchiveApi,
     private val imageUrlDao: ImageUrlDao,
     private val logger: Logger,
     private val coroutineScope: CoroutineScope,
-) : ImageMetadataRepository {
+) : MusicBrainzImageMetadataRepository {
 
     override suspend fun getAndSaveImageMetadata(
         mbid: String,

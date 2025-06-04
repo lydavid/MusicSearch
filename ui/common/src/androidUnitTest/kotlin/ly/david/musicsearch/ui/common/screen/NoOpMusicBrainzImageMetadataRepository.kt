@@ -3,12 +3,12 @@ package ly.david.musicsearch.ui.common.screen
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
-class NoOpImageMetadataRepository : ImageMetadataRepository {
+class NoOpMusicBrainzImageMetadataRepository : MusicBrainzImageMetadataRepository {
     override suspend fun getAndSaveImageMetadata(
         mbid: String,
         entity: MusicBrainzEntity,

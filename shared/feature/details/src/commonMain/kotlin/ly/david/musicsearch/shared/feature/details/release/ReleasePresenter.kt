@@ -24,7 +24,7 @@ import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
-import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
@@ -63,7 +63,7 @@ internal class ReleasePresenter(
     private val repository: ReleaseRepository,
     override val incrementLookupHistory: IncrementLookupHistory,
     private val relationsPresenter: RelationsPresenter,
-    private val imageMetadataRepository: ImageMetadataRepository,
+    private val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository,
     private val tracksByReleasePresenter: TracksByReleasePresenter,
     private val artistsListPresenter: ArtistsListPresenter,
     private val logger: Logger,
@@ -126,7 +126,7 @@ internal class ReleasePresenter(
 
         // Image fetching was split off from details model so that we can display data before images load
         LaunchedEffect(forceRefreshDetails, release) {
-            val imageMetadataWithCount = imageMetadataRepository.getAndSaveImageMetadata(
+            val imageMetadataWithCount = musicBrainzImageMetadataRepository.getAndSaveImageMetadata(
                 mbid = release?.id ?: return@LaunchedEffect,
                 entity = MusicBrainzEntity.RELEASE,
                 forceRefresh = forceRefreshDetails,

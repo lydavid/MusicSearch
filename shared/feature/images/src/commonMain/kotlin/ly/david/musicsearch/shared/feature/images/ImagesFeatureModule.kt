@@ -16,7 +16,7 @@ val imagesFeatureModule = module {
                         screen = screen,
                         navigator = navigator,
                         appPreferences = get(),
-                        imageMetadataRepository = get(),
+                        musicBrainzImageMetadataRepository = get(),
                         getMusicBrainzCoverArtUrl = get(),
                     )
                 }
