@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.releasegroup
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
@@ -58,7 +58,7 @@ class ReleaseGroupRepositoryImpl(
         }
     }
 
-    private fun cache(releaseGroup: ReleaseGroupMusicBrainzModel) {
+    private fun cache(releaseGroup: ReleaseGroupMusicBrainzNetworkModel) {
         releaseGroupDao.withTransaction {
             releaseGroupDao.insertReleaseGroup(releaseGroup)
 

@@ -8,8 +8,8 @@ import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
@@ -39,12 +39,12 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
         val sparseRepository = createRecordingRepository(
-            musicBrainzModel = RecordingMusicBrainzModel(
+            musicBrainzModel = RecordingMusicBrainzNetworkModel(
                 id = "7e52152f-c71a-49b1-b98d-f95e04c44445",
                 name = "導火",
                 artistCredits = listOf(
                     ArtistCreditMusicBrainzModel(
-                        artist = ArtistMusicBrainzModel(
+                        artist = ArtistMusicBrainzNetworkModel(
                             id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
                             name = "月詠み",
                             disambiguation = "",
@@ -77,14 +77,14 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
         )
 
         val allDataRepository = createRecordingRepository(
-            musicBrainzModel = RecordingMusicBrainzModel(
+            musicBrainzModel = RecordingMusicBrainzNetworkModel(
                 id = "7e52152f-c71a-49b1-b98d-f95e04c44445",
                 name = "導火",
                 video = true,
                 length = 209000,
                 artistCredits = listOf(
                     ArtistCreditMusicBrainzModel(
-                        artist = ArtistMusicBrainzModel(
+                        artist = ArtistMusicBrainzNetworkModel(
                             id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
                             name = "月詠み",
                             disambiguation = "",

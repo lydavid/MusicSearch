@@ -7,7 +7,7 @@ import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
@@ -34,14 +34,14 @@ class InstrumentRepositoryImplTest : KoinTest {
     private val instrumentDao: InstrumentDao by inject()
 
     private fun createRepository(
-        musicBrainzModel: InstrumentMusicBrainzModel,
+        musicBrainzModel: InstrumentMusicBrainzNetworkModel,
     ): InstrumentRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupInstrument(
                     instrumentId: String,
                     include: String,
-                ): InstrumentMusicBrainzModel {
+                ): InstrumentMusicBrainzNetworkModel {
                     return musicBrainzModel
                 }
             },
@@ -56,7 +56,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                 override suspend fun lookupInstrument(
                     instrumentId: String,
                     include: String,
-                ): InstrumentMusicBrainzModel {
+                ): InstrumentMusicBrainzNetworkModel {
                     return musicBrainzModel
                 }
             },
@@ -66,7 +66,7 @@ class InstrumentRepositoryImplTest : KoinTest {
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
         val sparseRepository = createRepository(
-            musicBrainzModel = InstrumentMusicBrainzModel(
+            musicBrainzModel = InstrumentMusicBrainzNetworkModel(
                 id = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
                 name = "classical guitar",
             ),
@@ -84,7 +84,7 @@ class InstrumentRepositoryImplTest : KoinTest {
         )
 
         val allDataRepository = createRepository(
-            musicBrainzModel = InstrumentMusicBrainzModel(
+            musicBrainzModel = InstrumentMusicBrainzNetworkModel(
                 id = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
                 name = "classical guitar",
                 description = "Also known as Spanish guitar, it is used in classical, folk and other styles, the strings are nylon or gut.",

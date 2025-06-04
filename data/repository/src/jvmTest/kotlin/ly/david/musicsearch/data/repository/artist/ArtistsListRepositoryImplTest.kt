@@ -21,7 +21,7 @@ import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.testFilter
@@ -55,7 +55,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
     private val collectionEntityDao: CollectionEntityDao by inject()
 
     private fun createArtistsListRepository(
-        artists: List<ArtistMusicBrainzModel>,
+        artists: List<ArtistMusicBrainzNetworkModel>,
     ): ArtistsListRepository {
         return ArtistsListRepositoryImpl(
             browseRemoteMetadataDao = browseRemoteMetadataDao,
@@ -78,7 +78,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         )
     }
 
-    private val atarayoMusicBrainzModel = ArtistMusicBrainzModel(
+    private val atarayoMusicBrainzModel = ArtistMusicBrainzNetworkModel(
         id = "a5083194-56ab-46cd-a235-77a397723e93",
         name = "あたらよ",
         sortName = "Atarayo",
@@ -93,7 +93,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             ended = false,
         ),
     )
-    private val bumpOfChickenMusicBrainzModel = ArtistMusicBrainzModel(
+    private val bumpOfChickenMusicBrainzModel = ArtistMusicBrainzNetworkModel(
         id = "0f718079-e5ea-4cfb-b512-b2d04da66901",
         name = "BUMP OF CHICKEN",
         sortName = "BUMP OF CHICKEN",
@@ -108,7 +108,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             ended = false,
         ),
     )
-    private val arcadeFireMusicBrainzModel = ArtistMusicBrainzModel(
+    private val arcadeFireMusicBrainzModel = ArtistMusicBrainzNetworkModel(
         id = "52074ba6-e495-4ef3-9bb4-0703888a9f68",
         name = "Arcade Fire",
         sortName = "Arcade Fire",
@@ -116,7 +116,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         countryCode = "CA",
         lifeSpan = LifeSpanMusicBrainzModel(begin = "2001"),
     )
-    private val theWeekndMusicBrainzModel = ArtistMusicBrainzModel(
+    private val theWeekndMusicBrainzModel = ArtistMusicBrainzNetworkModel(
         id = "c8b03190-306c-4120-bb0b-6f2ebfc06ea9",
         name = "The Weeknd",
         sortName = "Weeknd, The",

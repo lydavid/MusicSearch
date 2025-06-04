@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
-import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -26,7 +26,7 @@ class WorkDao(
 ) : EntityDao {
     override val transacter: WorkQueries = database.workQueries
 
-    fun insert(work: WorkMusicBrainzModel) {
+    fun insert(work: WorkMusicBrainzNetworkModel) {
         work.run {
             transacter.insertWork(
                 Work(
@@ -42,7 +42,7 @@ class WorkDao(
         }
     }
 
-    fun insertAll(works: List<WorkMusicBrainzModel>) {
+    fun insertAll(works: List<WorkMusicBrainzNetworkModel>) {
         transacter.transaction {
             works.forEach { work ->
                 insert(work)

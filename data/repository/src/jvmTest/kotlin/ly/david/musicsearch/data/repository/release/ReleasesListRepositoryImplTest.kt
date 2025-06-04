@@ -44,7 +44,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
@@ -103,7 +103,7 @@ class ReleasesListRepositoryImplTest :
     override val areaDao: AreaDao by inject()
 
     private fun createReleasesListRepository(
-        releases: List<ReleaseMusicBrainzModel>,
+        releases: List<ReleaseMusicBrainzNetworkModel>,
     ): ReleasesListRepository {
         return ReleasesListRepositoryImpl(
             browseRemoteMetadataDao = browseRemoteMetadataDao,

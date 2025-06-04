@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -22,8 +22,8 @@ import lydavidmusicsearchdatadatabase.Release_group
 import lydavidmusicsearchdatadatabase.Release_groups_by_entity
 
 interface ReleaseGroupDao : EntityDao {
-    fun insertReleaseGroup(releaseGroup: ReleaseGroupMusicBrainzModel)
-    fun insertAllReleaseGroups(releaseGroups: List<ReleaseGroupMusicBrainzModel>)
+    fun insertReleaseGroup(releaseGroup: ReleaseGroupMusicBrainzNetworkModel)
+    fun insertAllReleaseGroups(releaseGroups: List<ReleaseGroupMusicBrainzNetworkModel>)
     fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupDetailsModel?
     fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease?
     fun deleteReleaseGroup(id: String)
@@ -53,7 +53,7 @@ class ReleaseGroupDaoImpl(
 ) : ReleaseGroupDao {
     override val transacter = database.release_groupQueries
 
-    override fun insertReleaseGroup(releaseGroup: ReleaseGroupMusicBrainzModel) {
+    override fun insertReleaseGroup(releaseGroup: ReleaseGroupMusicBrainzNetworkModel) {
         releaseGroup.run {
             transacter.insertReleaseGroup(
                 Release_group(
@@ -74,7 +74,7 @@ class ReleaseGroupDaoImpl(
         }
     }
 
-    override fun insertAllReleaseGroups(releaseGroups: List<ReleaseGroupMusicBrainzModel>) {
+    override fun insertAllReleaseGroups(releaseGroups: List<ReleaseGroupMusicBrainzNetworkModel>) {
         transacter.transaction {
             releaseGroups.forEach { releaseGroup ->
                 insertReleaseGroup(releaseGroup)

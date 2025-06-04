@@ -1,9 +1,9 @@
 package ly.david.data.test
 
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 
-val tsoAtMasseyHallEventMusicBrainzModel = EventMusicBrainzModel(
+val tsoAtMasseyHallEventMusicBrainzModel = EventMusicBrainzNetworkModel(
     id = "e636f98e-c214-4131-8ca9-2efd7c85197b",
     name = "Toronto Symphony Orchestra at Massey Hall",
     disambiguation = "",
@@ -16,7 +16,7 @@ val tsoAtMasseyHallEventMusicBrainzModel = EventMusicBrainzModel(
     cancelled = false,
 )
 
-val kissAtScotiabankArenaEventMusicBrainzModel = EventMusicBrainzModel(
+val kissAtScotiabankArenaEventMusicBrainzModel = EventMusicBrainzNetworkModel(
     id = "1fc7c24a-92f1-4b6b-86ff-1b59a0cd4d53",
     name = "KISS at Scotiabank Arena",
     disambiguation = "",
@@ -30,7 +30,7 @@ val kissAtScotiabankArenaEventMusicBrainzModel = EventMusicBrainzModel(
     time = "18:30",
 )
 
-val kissAtBudokanEventMusicBrainzModel = EventMusicBrainzModel(
+val kissAtBudokanEventMusicBrainzModel = EventMusicBrainzNetworkModel(
     id = "17e85876-40ea-423b-867c-80af2f0cdfe3",
     name = "KISS at Nippon Budokan",
     type = "Concert",
@@ -42,7 +42,7 @@ val kissAtBudokanEventMusicBrainzModel = EventMusicBrainzModel(
     cancelled = false,
 )
 
-val aimerAtBudokanEventMusicBrainzModel = EventMusicBrainzModel(
+val aimerAtBudokanEventMusicBrainzModel = EventMusicBrainzNetworkModel(
     id = "34f8a930-beb2-441b-b0d7-03c84f92f1ea",
     name = "Aimer Live in 武道館 ”blanc et noir\"",
     type = "Concert",

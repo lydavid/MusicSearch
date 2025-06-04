@@ -4,6 +4,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.feature.details.area.AreaPresenter
 import ly.david.musicsearch.shared.feature.details.area.AreaUi
 import ly.david.musicsearch.shared.feature.details.area.AreaUiState
@@ -33,10 +34,10 @@ import ly.david.musicsearch.shared.feature.details.release.ReleaseUi
 import ly.david.musicsearch.shared.feature.details.release.ReleaseUiState
 import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupPresenter
 import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUi
-import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUiState
 import ly.david.musicsearch.shared.feature.details.series.SeriesPresenter
 import ly.david.musicsearch.shared.feature.details.series.SeriesUi
 import ly.david.musicsearch.shared.feature.details.series.SeriesUiState
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.shared.feature.details.work.WorkPresenter
 import ly.david.musicsearch.shared.feature.details.work.WorkUi
 import ly.david.musicsearch.shared.feature.details.work.WorkUiState
@@ -197,7 +198,7 @@ val detailsFeatureModule = module {
                                 navigator = navigator,
                                 repository = get(),
                                 incrementLookupHistory = get(),
-                                releasesListPresenter = get(),
+                                entitiesListPresenter = get(),
                                 relationsPresenter = get(),
                                 imageMetadataRepository = get(),
                                 logger = get(),
@@ -340,7 +341,7 @@ val detailsFeatureModule = module {
                         }
 
                         MusicBrainzEntity.RELEASE_GROUP -> {
-                            ui<ReleaseGroupUiState> { state, modifier ->
+                            ui<DetailsUiState<ReleaseGroupDetailsModel>> { state, modifier ->
                                 ReleaseGroupUi(
                                     state = state,
                                     entityId = screen.id,

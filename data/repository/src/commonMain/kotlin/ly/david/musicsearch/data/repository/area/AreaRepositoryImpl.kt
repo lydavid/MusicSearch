@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.area
 
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.area.AreaRepository
@@ -49,7 +49,7 @@ class AreaRepositoryImpl(
         }
     }
 
-    private fun cache(area: AreaMusicBrainzModel) {
+    private fun cache(area: AreaMusicBrainzNetworkModel) {
         areaDao.withTransaction {
             areaDao.insertReplace(
                 area.copy(

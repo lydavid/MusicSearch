@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.genre
 
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
-import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.genre.GenreRepository
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 
@@ -17,7 +17,7 @@ class GenreRepositoryImpl(
     }
 }
 
-internal fun GenreMusicBrainzModel.toListItem() = GenreListItemModel(
+internal fun GenreMusicBrainzNetworkModel.toListItem() = GenreListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,

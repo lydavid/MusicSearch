@@ -1,11 +1,11 @@
 package ly.david.data.test
 
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.CoordinatesMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 
-val budokanPlaceMusicBrainzModel = PlaceMusicBrainzModel(
+val budokanPlaceMusicBrainzModel = PlaceMusicBrainzNetworkModel(
     id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
     name = "日本武道館",
     address = "〒102-8321 東京都千代田区北の丸公園2-3",
@@ -25,7 +25,7 @@ val budokanPlaceMusicBrainzModel = PlaceMusicBrainzModel(
     ),
 )
 
-val tokyoInternationForumHallAPlaceMusicBrainzModel = PlaceMusicBrainzModel(
+val tokyoInternationForumHallAPlaceMusicBrainzModel = PlaceMusicBrainzNetworkModel(
     id = "5d3c4d79-4934-4029-87b3-25f907c8f729",
     name = "東京国際フォーラム・ホールA",
     address = "〒100-0005 東京都千代田区丸の内三丁目5番1号",
@@ -39,7 +39,7 @@ val tokyoInternationForumHallAPlaceMusicBrainzModel = PlaceMusicBrainzModel(
         longitude = 139.7642,
         latitude = 35.676925,
     ),
-    area = AreaMusicBrainzModel(
+    area = AreaMusicBrainzNetworkModel(
         id = "41cd0808-6e0a-4ec6-ab02-14add4db58ae",
         name = "Marunouchi",
         sortName = "Marunouchi",
@@ -48,7 +48,7 @@ val tokyoInternationForumHallAPlaceMusicBrainzModel = PlaceMusicBrainzModel(
     ),
 )
 
-val tokyoInternationForumPlaceMusicBrainzModel = PlaceMusicBrainzModel(
+val tokyoInternationForumPlaceMusicBrainzModel = PlaceMusicBrainzNetworkModel(
     id = "623d61ce-d422-4d3a-b6bb-c02cd64c715d",
     name = "東京国際フォーラム",
     disambiguation = "complex; use ONLY if no more specific venue info is available!",
@@ -63,7 +63,7 @@ val tokyoInternationForumPlaceMusicBrainzModel = PlaceMusicBrainzModel(
         longitude = 139.7642,
         latitude = 35.676925,
     ),
-    area = AreaMusicBrainzModel(
+    area = AreaMusicBrainzNetworkModel(
         id = "41cd0808-6e0a-4ec6-ab02-14add4db58ae",
         name = "Marunouchi",
         sortName = "Marunouchi",

@@ -7,7 +7,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RelationDao
-import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlaceRepositoryImpl
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -23,14 +23,14 @@ interface TestPlaceRepository {
     val collectionEntityDao: CollectionEntityDao
 
     fun createPlaceRepository(
-        musicBrainzModel: PlaceMusicBrainzModel,
+        musicBrainzModel: PlaceMusicBrainzNetworkModel,
     ): PlaceRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupPlace(
                     placeId: String,
                     include: String?,
-                ): PlaceMusicBrainzModel {
+                ): PlaceMusicBrainzNetworkModel {
                     return musicBrainzModel
                 }
             },
@@ -46,7 +46,7 @@ interface TestPlaceRepository {
                 override suspend fun lookupPlace(
                     placeId: String,
                     include: String?,
-                ): PlaceMusicBrainzModel {
+                ): PlaceMusicBrainzNetworkModel {
                     return musicBrainzModel
                 }
             },

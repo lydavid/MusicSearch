@@ -8,7 +8,7 @@ import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkAttributeMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
@@ -38,7 +38,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository {
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
         val sparseRepository = createWorkRepository(
-            musicBrainzModel = WorkMusicBrainzModel(
+            musicBrainzModel = WorkMusicBrainzNetworkModel(
                 id = "717a6517-290e-3696-942a-aba233ffc398",
                 name = "君の知らない物語",
             ),
@@ -56,7 +56,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository {
         )
 
         val allDataRepository = createWorkRepository(
-            musicBrainzModel = WorkMusicBrainzModel(
+            musicBrainzModel = WorkMusicBrainzNetworkModel(
                 id = "717a6517-290e-3696-942a-aba233ffc398",
                 name = "君の知らない物語",
                 type = "Song",

@@ -11,7 +11,7 @@ import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrai
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 @Serializable
-data class ReleaseMusicBrainzModel(
+data class ReleaseMusicBrainzNetworkModel(
     @SerialName("id") override val id: String,
     @SerialName("title") override val name: String,
     @SerialName("disambiguation") override val disambiguation: String = "",
@@ -41,10 +41,10 @@ data class ReleaseMusicBrainzModel(
     @SerialName("label-info") val labelInfoList: List<LabelInfo>? = null,
 
     // inc=release-groups
-    @SerialName("release-group") val releaseGroup: ReleaseGroupMusicBrainzModel? = null,
+    @SerialName("release-group") val releaseGroup: ReleaseGroupMusicBrainzNetworkModel? = null,
 
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
-) : MusicBrainzModel(), Release
+) : MusicBrainzNetworkModel(), Release
 
 @Serializable
 data class CoverArtArchiveMusicBrainzModel(
@@ -63,7 +63,7 @@ data class TextRepresentationMusicBrainzModel(
 
 @Serializable
 data class ReleaseEventMusicBrainzModel(
-    @SerialName("area") val area: AreaMusicBrainzModel? = null,
+    @SerialName("area") val area: AreaMusicBrainzNetworkModel? = null,
     @SerialName("date") val date: String? = null,
     @SerialName("type") val type: String? = null,
     @SerialName("type-id") val typeId: String? = null,
@@ -75,5 +75,5 @@ data class ReleaseEventMusicBrainzModel(
 @Serializable
 data class LabelInfo(
     @SerialName("catalog-number") val catalogNumber: String? = null,
-    @SerialName("label") val label: LabelMusicBrainzModel? = null,
+    @SerialName("label") val label: LabelMusicBrainzNetworkModel? = null,
 )

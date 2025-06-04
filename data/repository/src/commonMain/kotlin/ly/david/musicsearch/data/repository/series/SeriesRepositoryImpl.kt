@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.series
 
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
-import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.series.SeriesDetailsModel
@@ -46,7 +46,7 @@ class SeriesRepositoryImpl(
         }
     }
 
-    private fun cache(series: SeriesMusicBrainzModel) {
+    private fun cache(series: SeriesMusicBrainzNetworkModel) {
         seriesDao.withTransaction {
             seriesDao.insert(series)
 

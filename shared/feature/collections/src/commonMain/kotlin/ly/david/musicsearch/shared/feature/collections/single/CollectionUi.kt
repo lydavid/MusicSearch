@@ -55,24 +55,36 @@ internal fun CollectionUi(
     val eventSink = state.eventSink
     val suspendEventSink = state.suspendEventSink
     val loginEventSink = state.loginUiState.eventSink
-    val releasesEventSink = state.releasesListUiState.eventSink
-    val releaseGroupsEventSink = state.releaseGroupsListUiState.eventSink
+    val releasesEventSink = state.entitiesListUiState.releasesListUiState.eventSink
+    val releaseGroupsEventSink = state.entitiesListUiState.releaseGroupsListUiState.eventSink
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val areasLazyPagingItems = state.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val artistsLazyPagingItems = state.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val eventsLazyPagingItems = state.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val genresLazyPagingItems = state.genresListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val instrumentsLazyPagingItems = state.instrumentsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val labelsLazyPagingItems = state.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val placesLazyPagingItems = state.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val recordingsLazyPagingItems = state.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val releasesLazyPagingItems = state.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val releaseGroupsLazyPagingItems = state.releaseGroupsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val seriesLazyPagingItems = state.seriesListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val worksLazyPagingItems = state.worksListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val areasLazyPagingItems =
+        state.entitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val artistsLazyPagingItems =
+        state.entitiesListUiState.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val eventsLazyPagingItems =
+        state.entitiesListUiState.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val genresLazyPagingItems =
+        state.entitiesListUiState.genresListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val instrumentsLazyPagingItems =
+        state.entitiesListUiState.instrumentsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val labelsLazyPagingItems =
+        state.entitiesListUiState.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val placesLazyPagingItems =
+        state.entitiesListUiState.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val recordingsLazyPagingItems =
+        state.entitiesListUiState.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val releasesLazyPagingItems =
+        state.entitiesListUiState.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val releaseGroupsLazyPagingItems =
+        state.entitiesListUiState.releaseGroupsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val seriesLazyPagingItems =
+        state.entitiesListUiState.seriesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val worksLazyPagingItems =
+        state.entitiesListUiState.worksListUiState.pagingDataFlow.collectAsLazyPagingItems()
 
     state.firstActionableResult?.let { result ->
         LaunchedEffect(result) {
@@ -168,7 +180,7 @@ internal fun CollectionUi(
                         ToggleMenuItem(
                             toggleOnText = strings.sort,
                             toggleOffText = strings.unsort,
-                            toggled = state.releaseGroupsListUiState.sort,
+                            toggled = state.entitiesListUiState.releaseGroupsListUiState.sort,
                             onToggle = {
                                 releaseGroupsEventSink(ReleaseGroupsListUiEvent.UpdateSortReleaseGroupListItem(it))
                             },
@@ -178,7 +190,7 @@ internal fun CollectionUi(
                         ToggleMenuItem(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
-                            toggled = state.releasesListUiState.showMoreInfo,
+                            toggled = state.entitiesListUiState.releasesListUiState.showMoreInfo,
                             onToggle = {
                                 releasesEventSink(ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it))
                             },
@@ -223,84 +235,84 @@ internal fun CollectionUi(
                 MusicBrainzEntity.AREA -> {
                     EntitiesListUiState(
                         lazyPagingItems = areasLazyPagingItems,
-                        lazyListState = state.areasListUiState.lazyListState,
+                        lazyListState = state.entitiesListUiState.areasListUiState.lazyListState,
                     )
                 }
 
                 MusicBrainzEntity.ARTIST -> {
                     EntitiesListUiState(
-                        lazyListState = state.artistsListUiState.lazyListState,
+                        lazyListState = state.entitiesListUiState.artistsListUiState.lazyListState,
                         lazyPagingItems = artistsLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.EVENT -> {
                     EntitiesListUiState(
-                        lazyListState = state.eventsListUiState.lazyListState,
+                        lazyListState = state.entitiesListUiState.eventsListUiState.lazyListState,
                         lazyPagingItems = eventsLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.GENRE -> {
                     EntitiesListUiState(
-                        lazyListState = state.genresListUiState.lazyListState,
+                        lazyListState = state.entitiesListUiState.genresListUiState.lazyListState,
                         lazyPagingItems = genresLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.INSTRUMENT -> {
                     EntitiesListUiState(
-                        lazyListState = state.instrumentsListUiState.lazyListState,
+                        lazyListState = state.entitiesListUiState.instrumentsListUiState.lazyListState,
                         lazyPagingItems = instrumentsLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.LABEL -> {
                     EntitiesListUiState(
-                        lazyListState = state.labelsListUiState.lazyListState,
+                        lazyListState = state.entitiesListUiState.labelsListUiState.lazyListState,
                         lazyPagingItems = labelsLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.PLACE -> {
                     EntitiesListUiState(
-                        lazyListState = state.placesListUiState.lazyListState,
+                        lazyListState = state.entitiesListUiState.placesListUiState.lazyListState,
                         lazyPagingItems = placesLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.RECORDING -> {
                     EntitiesListUiState(
-                        lazyListState = state.recordingsListUiState.lazyListState,
+                        lazyListState = state.entitiesListUiState.recordingsListUiState.lazyListState,
                         lazyPagingItems = recordingsLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.RELEASE -> {
                     EntitiesListUiState(
-                        lazyListState = state.releasesListUiState.lazyListState,
+                        lazyListState = state.entitiesListUiState.releasesListUiState.lazyListState,
                         lazyPagingItems = releasesLazyPagingItems,
-                        showMoreInfo = state.releasesListUiState.showMoreInfo,
+                        showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
                     )
                 }
 
                 MusicBrainzEntity.RELEASE_GROUP -> {
                     EntitiesListUiState(
-                        lazyListState = state.releaseGroupsListUiState.lazyListState,
+                        lazyListState = state.entitiesListUiState.releaseGroupsListUiState.lazyListState,
                         lazyPagingItems = releaseGroupsLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.SERIES -> {
                     EntitiesListUiState(
-                        lazyListState = state.seriesListUiState.lazyListState,
+                        lazyListState = state.entitiesListUiState.seriesListUiState.lazyListState,
                         lazyPagingItems = seriesLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.WORK -> {
                     EntitiesListUiState(
-                        lazyListState = state.worksListUiState.lazyListState,
+                        lazyListState = state.entitiesListUiState.worksListUiState.lazyListState,
                         lazyPagingItems = worksLazyPagingItems,
                     )
                 }

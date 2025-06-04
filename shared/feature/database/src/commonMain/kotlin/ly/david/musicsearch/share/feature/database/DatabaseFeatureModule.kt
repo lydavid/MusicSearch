@@ -35,18 +35,7 @@ val databaseFeatureModule = module {
                 is AllEntitiesScreen -> AllEntitiesPresenter(
                     screen = screen,
                     navigator = navigator,
-                    areasListPresenter = get(),
-                    artistsListPresenter = get(),
-                    instrumentsListPresenter = get(),
-                    labelsListPresenter = get(),
-                    placesListPresenter = get(),
-                    recordingsListPresenter = get(),
-                    eventsListPresenter = get(),
-                    genresListPresenter = get(),
-                    releasesListPresenter = get(),
-                    releaseGroupsListPresenter = get(),
-                    worksListPresenter = get(),
-                    seriesListPresenter = get(),
+                    entitiesListPresenter = get(),
                 )
 
                 else -> null

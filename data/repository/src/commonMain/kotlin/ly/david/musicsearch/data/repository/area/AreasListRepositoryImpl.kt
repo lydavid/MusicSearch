@@ -8,7 +8,7 @@ import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -22,7 +22,7 @@ class AreasListRepositoryImpl(
     private val areaDao: AreaDao,
     private val browseApi: BrowseApi,
 ) : AreasListRepository,
-    BrowseEntities<AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
+    BrowseEntities<AreaListItemModel, AreaMusicBrainzNetworkModel, BrowseAreasResponse>(
         browseEntity = MusicBrainzEntity.AREA,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
     ) {
@@ -91,7 +91,7 @@ class AreasListRepositoryImpl(
     override fun insertAllLinkingModels(
         entityId: String,
         entity: MusicBrainzEntity,
-        musicBrainzModels: List<AreaMusicBrainzModel>,
+        musicBrainzModels: List<AreaMusicBrainzNetworkModel>,
     ) {
         areaDao.insertAll(musicBrainzModels)
         when (entity) {

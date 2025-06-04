@@ -9,7 +9,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -23,7 +23,7 @@ class EventsListRepositoryImpl(
     private val eventDao: EventDao,
     private val browseApi: BrowseApi,
 ) : EventsListRepository,
-    BrowseEntities<EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
+    BrowseEntities<EventListItemModel, EventMusicBrainzNetworkModel, BrowseEventsResponse>(
         browseEntity = MusicBrainzEntity.EVENT,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
     ) {
@@ -90,7 +90,7 @@ class EventsListRepositoryImpl(
     override fun insertAllLinkingModels(
         entityId: String,
         entity: MusicBrainzEntity,
-        musicBrainzModels: List<EventMusicBrainzModel>,
+        musicBrainzModels: List<EventMusicBrainzNetworkModel>,
     ) {
         eventDao.insertAll(musicBrainzModels)
         when (entity) {

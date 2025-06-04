@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository.work
 
-import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
@@ -47,7 +47,7 @@ class WorkRepositoryImpl(
         }
     }
 
-    private fun cache(work: WorkMusicBrainzModel) {
+    private fun cache(work: WorkMusicBrainzNetworkModel) {
         workDao.withTransaction {
             workDao.insert(work)
             workAttributeDao.insertAttributesForWork(

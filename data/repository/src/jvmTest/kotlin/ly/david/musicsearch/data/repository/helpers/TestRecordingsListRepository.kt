@@ -5,7 +5,7 @@ import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseRecordingsResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.recording.RecordingsListRepositoryImpl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
@@ -16,7 +16,7 @@ interface TestRecordingsListRepository {
     val browseRemoteMetadataDao: BrowseRemoteMetadataDao
 
     fun createRecordingsListRepository(
-        recordings: List<RecordingMusicBrainzModel>,
+        recordings: List<RecordingMusicBrainzNetworkModel>,
     ): RecordingsListRepository {
         return RecordingsListRepositoryImpl(
             browseRemoteMetadataDao = browseRemoteMetadataDao,

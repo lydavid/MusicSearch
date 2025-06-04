@@ -15,8 +15,8 @@ import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
@@ -48,7 +48,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
     @Test
     fun `lookup artist`() = runTest {
         val artistRepositoryImpl = createArtistRepository(
-            artistMusicBrainzModel = ArtistMusicBrainzModel(
+            artistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
                 type = "Group",
@@ -92,7 +92,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
     @Test
     fun `lookup artist - area without iso-3166-1 code`() = runTest {
         val artistRepositoryImpl = createArtistRepository(
-            artistMusicBrainzModel = ArtistMusicBrainzModel(
+            artistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
                 id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
                 name = "David Bowie",
                 type = "Person",
@@ -103,7 +103,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                     ended = true,
                 ),
                 sortName = "Bowie, David",
-                area = AreaMusicBrainzModel(
+                area = AreaMusicBrainzNetworkModel(
                     id = "9d5dd675-3cf4-4296-9e39-67865ebee758",
                     name = "England",
                     countrySubDivisionCodes = listOf("GB-ENG"),
@@ -158,7 +158,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                         count = 1,
                         offset = 0,
                         musicBrainzModels = listOf(
-                            ArtistMusicBrainzModel(
+                            ArtistMusicBrainzNetworkModel(
                                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                                 name = "The Beatles",
                                 type = "Group",
@@ -207,7 +207,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
         )
 
         val artistRepositoryImpl = createArtistRepository(
-            artistMusicBrainzModel = ArtistMusicBrainzModel(
+            artistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
                 type = "Group",
@@ -250,7 +250,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
         val sparseArtistRepository = createArtistRepository(
-            artistMusicBrainzModel = ArtistMusicBrainzModel(
+            artistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
             ),
@@ -268,7 +268,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
         )
 
         val allDataArtistRepository = createArtistRepository(
-            artistMusicBrainzModel = ArtistMusicBrainzModel(
+            artistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
                 type = "Group",

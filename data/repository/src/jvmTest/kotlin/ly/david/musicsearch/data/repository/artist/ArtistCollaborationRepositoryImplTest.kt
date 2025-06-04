@@ -13,8 +13,8 @@ import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.TestRecordingsListRepository
 import ly.david.musicsearch.shared.domain.BrowseMethod
@@ -91,7 +91,7 @@ class ArtistCollaborationRepositoryImplTest :
 
         createRecordingsListRepository(
             recordings = listOf(
-                RecordingMusicBrainzModel(
+                RecordingMusicBrainzNetworkModel(
                     id = "fea5134e-f0ee-49d5-a643-470fbc893241",
                     name = "ninelie",
                     disambiguation = "",
@@ -102,7 +102,7 @@ class ArtistCollaborationRepositoryImplTest :
                             joinPhrase = " with ",
                         ),
                         ArtistCreditMusicBrainzModel(
-                            artist = ArtistMusicBrainzModel(
+                            artist = ArtistMusicBrainzNetworkModel(
                                 id = "4dfe9c0b-7602-4189-9919-151d493d1028",
                                 name = "chelly",
                             ),
@@ -110,7 +110,7 @@ class ArtistCollaborationRepositoryImplTest :
                         ),
                     ),
                 ),
-                RecordingMusicBrainzModel(
+                RecordingMusicBrainzNetworkModel(
                     id = "3c1234e3-13cb-4726-86ad-f7101fa3aef4",
                     name = "ninelie",
                     disambiguation = "TV size",
@@ -121,7 +121,7 @@ class ArtistCollaborationRepositoryImplTest :
                             joinPhrase = " with ",
                         ),
                         ArtistCreditMusicBrainzModel(
-                            artist = ArtistMusicBrainzModel(
+                            artist = ArtistMusicBrainzNetworkModel(
                                 id = "4dfe9c0b-7602-4189-9919-151d493d1028",
                                 name = "chelly",
                             ),
@@ -129,7 +129,7 @@ class ArtistCollaborationRepositoryImplTest :
                         ),
                     ),
                 ),
-                RecordingMusicBrainzModel(
+                RecordingMusicBrainzNetworkModel(
                     id = "1b401117-42ae-4771-bb96-7aa31025f766",
                     name = "春はゆく",
                     disambiguation = "",

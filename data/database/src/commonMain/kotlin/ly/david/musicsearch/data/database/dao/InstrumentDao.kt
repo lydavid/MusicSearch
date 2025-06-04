@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToInstrumentListItemModel
-import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
@@ -22,7 +22,7 @@ class InstrumentDao(
 ) : EntityDao {
     override val transacter = database.instrumentQueries
 
-    fun insert(instrument: InstrumentMusicBrainzModel) {
+    fun insert(instrument: InstrumentMusicBrainzNetworkModel) {
         instrument.run {
             transacter.insert(
                 Instrument(
@@ -37,7 +37,7 @@ class InstrumentDao(
         }
     }
 
-    fun insertAll(instruments: List<InstrumentMusicBrainzModel>) {
+    fun insertAll(instruments: List<InstrumentMusicBrainzNetworkModel>) {
         transacter.transaction {
             instruments.forEach { instrument ->
                 insert(instrument)

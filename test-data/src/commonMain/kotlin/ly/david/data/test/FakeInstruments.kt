@@ -2,12 +2,12 @@ package ly.david.data.test
 
 import ly.david.musicsearch.data.musicbrainz.api.BrowseInstrumentsResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchInstrumentsResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
-val fakeInstrument = InstrumentMusicBrainzModel(
+val fakeInstrument = InstrumentMusicBrainzNetworkModel(
     id = "instrument1",
     name = "Instrument Name",
     relations = listOf(

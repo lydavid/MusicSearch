@@ -11,7 +11,7 @@ import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToLabelListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.label.LabelDetailsModel
@@ -27,7 +27,7 @@ class LabelDao(
 ) : EntityDao {
     override val transacter = database.labelQueries
 
-    fun insert(label: LabelMusicBrainzModel) {
+    fun insert(label: LabelMusicBrainzNetworkModel) {
         label.run {
             transacter.insertLabel(
                 Label(
@@ -47,7 +47,7 @@ class LabelDao(
         }
     }
 
-    fun insertAll(labels: List<LabelMusicBrainzModel>?) {
+    fun insertAll(labels: List<LabelMusicBrainzNetworkModel>?) {
         transacter.transaction {
             labels?.forEach { label ->
                 insert(label)

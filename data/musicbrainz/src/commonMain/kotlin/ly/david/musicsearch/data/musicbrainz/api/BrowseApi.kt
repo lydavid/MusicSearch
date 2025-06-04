@@ -10,20 +10,20 @@ import kotlinx.serialization.Serializable
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.data.musicbrainz.SEARCH_BROWSE_LIMIT
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 
 const val ARTIST_CREDITS = "artist-credits"
 const val LABELS = "labels"
@@ -440,7 +440,7 @@ interface BrowseApiImpl : BrowseApi {
 /**
  * Generic response fields from a Browse request.
  */
-interface Browsable<MB : MusicBrainzModel> {
+interface Browsable<MB : MusicBrainzNetworkModel> {
     val count: Int
     val offset: Int
     val musicBrainzModels: List<MB>
@@ -450,89 +450,89 @@ interface Browsable<MB : MusicBrainzModel> {
 data class BrowseAreasResponse(
     @SerialName("area-count") override val count: Int,
     @SerialName("area-offset") override val offset: Int,
-    @SerialName("areas") override val musicBrainzModels: List<AreaMusicBrainzModel>,
-) : Browsable<AreaMusicBrainzModel>
+    @SerialName("areas") override val musicBrainzModels: List<AreaMusicBrainzNetworkModel>,
+) : Browsable<AreaMusicBrainzNetworkModel>
 
 @Serializable
 data class BrowseArtistsResponse(
     @SerialName("artist-count") override val count: Int,
     @SerialName("artist-offset") override val offset: Int,
-    @SerialName("artists") override val musicBrainzModels: List<ArtistMusicBrainzModel>,
-) : Browsable<ArtistMusicBrainzModel>
+    @SerialName("artists") override val musicBrainzModels: List<ArtistMusicBrainzNetworkModel>,
+) : Browsable<ArtistMusicBrainzNetworkModel>
 
 @Serializable
 data class BrowseCollectionsResponse(
     @SerialName("collection-count") override val count: Int = 0,
     @SerialName("collection-offset") override val offset: Int = 0,
-    @SerialName("collections") override val musicBrainzModels: List<CollectionMusicBrainzModel> = listOf(),
-) : Browsable<CollectionMusicBrainzModel>
+    @SerialName("collections") override val musicBrainzModels: List<CollectionMusicBrainzNetworkModel> = listOf(),
+) : Browsable<CollectionMusicBrainzNetworkModel>
 
 @Serializable
 data class BrowseEventsResponse(
     @SerialName("event-count") override val count: Int,
     @SerialName("event-offset") override val offset: Int,
-    @SerialName("events") override val musicBrainzModels: List<EventMusicBrainzModel>,
-) : Browsable<EventMusicBrainzModel>
+    @SerialName("events") override val musicBrainzModels: List<EventMusicBrainzNetworkModel>,
+) : Browsable<EventMusicBrainzNetworkModel>
 
 @Serializable
 data class BrowseGenresResponse(
     @SerialName("genre-count") override val count: Int,
     @SerialName("genre-offset") override val offset: Int,
-    @SerialName("genres") override val musicBrainzModels: List<GenreMusicBrainzModel>,
-) : Browsable<GenreMusicBrainzModel>
+    @SerialName("genres") override val musicBrainzModels: List<GenreMusicBrainzNetworkModel>,
+) : Browsable<GenreMusicBrainzNetworkModel>
 
 @Serializable
 data class BrowseInstrumentsResponse(
     @SerialName("instrument-count") override val count: Int,
     @SerialName("instrument-offset") override val offset: Int,
-    @SerialName("instruments") override val musicBrainzModels: List<InstrumentMusicBrainzModel>,
-) : Browsable<InstrumentMusicBrainzModel>
+    @SerialName("instruments") override val musicBrainzModels: List<InstrumentMusicBrainzNetworkModel>,
+) : Browsable<InstrumentMusicBrainzNetworkModel>
 
 @Serializable
 data class BrowseLabelsResponse(
     @SerialName("label-count") override val count: Int,
     @SerialName("label-offset") override val offset: Int,
-    @SerialName("labels") override val musicBrainzModels: List<LabelMusicBrainzModel>,
-) : Browsable<LabelMusicBrainzModel>
+    @SerialName("labels") override val musicBrainzModels: List<LabelMusicBrainzNetworkModel>,
+) : Browsable<LabelMusicBrainzNetworkModel>
 
 @Serializable
 data class BrowsePlacesResponse(
     @SerialName("place-count") override val count: Int,
     @SerialName("place-offset") override val offset: Int,
-    @SerialName("places") override val musicBrainzModels: List<PlaceMusicBrainzModel>,
-) : Browsable<PlaceMusicBrainzModel>
+    @SerialName("places") override val musicBrainzModels: List<PlaceMusicBrainzNetworkModel>,
+) : Browsable<PlaceMusicBrainzNetworkModel>
 
 @Serializable
 data class BrowseRecordingsResponse(
     @SerialName("recording-count") override val count: Int,
     @SerialName("recording-offset") override val offset: Int,
-    @SerialName("recordings") override val musicBrainzModels: List<RecordingMusicBrainzModel>,
-) : Browsable<RecordingMusicBrainzModel>
+    @SerialName("recordings") override val musicBrainzModels: List<RecordingMusicBrainzNetworkModel>,
+) : Browsable<RecordingMusicBrainzNetworkModel>
 
 @Serializable
 data class BrowseReleasesResponse(
     @SerialName("release-count") override val count: Int,
     @SerialName("release-offset") override val offset: Int,
-    @SerialName("releases") override val musicBrainzModels: List<ReleaseMusicBrainzModel>,
-) : Browsable<ReleaseMusicBrainzModel>
+    @SerialName("releases") override val musicBrainzModels: List<ReleaseMusicBrainzNetworkModel>,
+) : Browsable<ReleaseMusicBrainzNetworkModel>
 
 @Serializable
 data class BrowseReleaseGroupsResponse(
     @SerialName("release-group-count") override val count: Int,
     @SerialName("release-group-offset") override val offset: Int,
-    @SerialName("release-groups") override val musicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
-) : Browsable<ReleaseGroupMusicBrainzModel>
+    @SerialName("release-groups") override val musicBrainzModels: List<ReleaseGroupMusicBrainzNetworkModel>,
+) : Browsable<ReleaseGroupMusicBrainzNetworkModel>
 
 @Serializable
 data class BrowseSeriesResponse(
     @SerialName("series-count") override val count: Int,
     @SerialName("series-offset") override val offset: Int,
-    @SerialName("series") override val musicBrainzModels: List<SeriesMusicBrainzModel>,
-) : Browsable<SeriesMusicBrainzModel>
+    @SerialName("series") override val musicBrainzModels: List<SeriesMusicBrainzNetworkModel>,
+) : Browsable<SeriesMusicBrainzNetworkModel>
 
 @Serializable
 data class BrowseWorksResponse(
     @SerialName("work-count") override val count: Int,
     @SerialName("work-offset") override val offset: Int,
-    @SerialName("works") override val musicBrainzModels: List<WorkMusicBrainzModel>,
-) : Browsable<WorkMusicBrainzModel>
+    @SerialName("works") override val musicBrainzModels: List<WorkMusicBrainzNetworkModel>,
+) : Browsable<WorkMusicBrainzNetworkModel>

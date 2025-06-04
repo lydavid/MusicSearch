@@ -26,6 +26,8 @@ import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
@@ -55,7 +57,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 )
 @Composable
 internal fun ReleaseGroupUi(
-    state: ReleaseGroupUiState,
+    state: DetailsUiState<ReleaseGroupDetailsModel>,
     entityId: String,
     modifier: Modifier = Modifier,
 ) {
@@ -69,8 +71,9 @@ internal fun ReleaseGroupUi(
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
-    val releasesLazyPagingItems = state.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val releasesByEntityEventSink = state.releasesListUiState.eventSink
+    val releasesLazyPagingItems =
+        state.entitiesListUiState.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val releasesByEntityEventSink = state.entitiesListUiState.releasesListUiState.eventSink
     val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
 
     val loginEventSink = state.loginUiState.eventSink
@@ -120,7 +123,7 @@ internal fun ReleaseGroupUi(
                         ToggleMenuItem(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
-                            toggled = state.releasesListUiState.showMoreInfo,
+                            toggled = state.entitiesListUiState.releasesListUiState.showMoreInfo,
                             onToggle = {
                                 releasesByEntityEventSink(
                                     ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
@@ -140,7 +143,7 @@ internal fun ReleaseGroupUi(
                     )
                 },
                 subtitleDropdownMenuItems = {
-                    state.releaseGroup?.artistCredits?.forEach { artistCredit ->
+                    state.detailsModel?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(
                             text = { Text(artistCredit.name) },
                             leadingIcon = { EntityIcon(entity = MusicBrainzEntity.ARTIST) },
@@ -181,15 +184,15 @@ internal fun ReleaseGroupUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        handledException = state.detailsUiState.handledException,
+                        handledException = state.detailsTabUiState.handledException,
                         onRefresh = {
                             eventSink(ReleaseGroupUiEvent.ForceRefreshDetails)
                         },
-                        detailsModel = state.releaseGroup,
+                        detailsModel = state.detailsModel,
                     ) { releaseGroup ->
                         ReleaseGroupDetailsUi(
                             releaseGroup = releaseGroup,
-                            detailsUiState = state.detailsUiState,
+                            detailsUiState = state.detailsTabUiState,
                             filterText = state.topAppBarFilterState.filterText,
                             onImageClick = {
                                 eventSink(ReleaseGroupUiEvent.ClickImage)
@@ -205,8 +208,8 @@ internal fun ReleaseGroupUi(
                     EntitiesListScreen(
                         uiState = EntitiesListUiState(
                             lazyPagingItems = releasesLazyPagingItems,
-                            lazyListState = state.releasesListUiState.lazyListState,
-                            showMoreInfo = state.releasesListUiState.showMoreInfo,
+                            lazyListState = state.entitiesListUiState.releasesListUiState.lazyListState,
+                            showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
                         ),
                         modifier = Modifier
                             .padding(innerPadding)

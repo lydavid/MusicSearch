@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.place
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
-import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
@@ -51,7 +51,7 @@ class PlaceRepositoryImpl(
         }
     }
 
-    private fun cache(place: PlaceMusicBrainzModel) {
+    private fun cache(place: PlaceMusicBrainzNetworkModel) {
         placeDao.withTransaction {
             placeDao.insert(place)
             place.area?.let { areaMusicBrainzModel ->

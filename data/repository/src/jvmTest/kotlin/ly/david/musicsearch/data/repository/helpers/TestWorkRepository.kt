@@ -5,7 +5,7 @@ import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
-import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.work.WorkRepositoryImpl
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -19,14 +19,14 @@ interface TestWorkRepository {
     val workAttributeDao: WorkAttributeDao
 
     fun createWorkRepository(
-        musicBrainzModel: WorkMusicBrainzModel,
+        musicBrainzModel: WorkMusicBrainzNetworkModel,
     ): WorkRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupWork(
                     workId: String,
                     include: String?,
-                ): WorkMusicBrainzModel {
+                ): WorkMusicBrainzNetworkModel {
                     return musicBrainzModel
                 }
             },
@@ -42,7 +42,7 @@ interface TestWorkRepository {
                 override suspend fun lookupWork(
                     workId: String,
                     include: String?,
-                ): WorkMusicBrainzModel {
+                ): WorkMusicBrainzNetworkModel {
                     return musicBrainzModel
                 }
             },

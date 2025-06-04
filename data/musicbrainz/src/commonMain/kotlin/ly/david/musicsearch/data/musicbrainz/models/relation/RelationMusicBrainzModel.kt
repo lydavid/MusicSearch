@@ -3,19 +3,19 @@ package ly.david.musicsearch.data.musicbrainz.models.relation
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.shared.domain.LifeSpan
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 
 @Serializable
 data class RelationMusicBrainzModel(
@@ -42,18 +42,18 @@ data class RelationMusicBrainzModel(
 
     @SerialName("ordering-key") val orderingKey: Int? = null,
 
-    @SerialName("area") val area: AreaMusicBrainzModel? = null,
-    @SerialName("artist") val artist: ArtistMusicBrainzModel? = null, // could be composer, arranger, etc
-    @SerialName("event") val event: EventMusicBrainzModel? = null,
-    @SerialName("genre") val genre: GenreMusicBrainzModel? = null,
-    @SerialName("instrument") val instrument: InstrumentMusicBrainzModel? = null,
-    @SerialName("label") val label: LabelMusicBrainzModel? = null,
-    @SerialName("place") val place: PlaceMusicBrainzModel? = null,
-    @SerialName("recording") val recording: RecordingMusicBrainzModel? = null,
-    @SerialName("release") val release: ReleaseMusicBrainzModel? = null,
-    @SerialName("release_group") val releaseGroup: ReleaseGroupMusicBrainzModel? = null,
-    @SerialName("series") val series: SeriesMusicBrainzModel? = null,
-    @SerialName("work") val work: WorkMusicBrainzModel? = null,
+    @SerialName("area") val area: AreaMusicBrainzNetworkModel? = null,
+    @SerialName("artist") val artist: ArtistMusicBrainzNetworkModel? = null, // could be composer, arranger, etc
+    @SerialName("event") val event: EventMusicBrainzNetworkModel? = null,
+    @SerialName("genre") val genre: GenreMusicBrainzNetworkModel? = null,
+    @SerialName("instrument") val instrument: InstrumentMusicBrainzNetworkModel? = null,
+    @SerialName("label") val label: LabelMusicBrainzNetworkModel? = null,
+    @SerialName("place") val place: PlaceMusicBrainzNetworkModel? = null,
+    @SerialName("recording") val recording: RecordingMusicBrainzNetworkModel? = null,
+    @SerialName("release") val release: ReleaseMusicBrainzNetworkModel? = null,
+    @SerialName("release_group") val releaseGroup: ReleaseGroupMusicBrainzNetworkModel? = null,
+    @SerialName("series") val series: SeriesMusicBrainzNetworkModel? = null,
+    @SerialName("work") val work: WorkMusicBrainzNetworkModel? = null,
     @SerialName("url") val url: UrlMusicBrainzModel? = null,
 ) : LifeSpan
 

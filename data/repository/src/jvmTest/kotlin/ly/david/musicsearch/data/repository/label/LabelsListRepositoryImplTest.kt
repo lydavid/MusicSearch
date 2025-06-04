@@ -18,7 +18,7 @@ import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
@@ -43,7 +43,7 @@ class LabelsListRepositoryImplTest : KoinTest {
     private val collectionEntityDao: CollectionEntityDao by inject()
 
     private fun createRepository(
-        labels: List<LabelMusicBrainzModel>,
+        labels: List<LabelMusicBrainzNetworkModel>,
     ): LabelsListRepository {
         return LabelsListRepositoryImpl(
             browseRemoteMetadataDao = browseRemoteMetadataDao,

@@ -33,14 +33,14 @@ open class NoOpAppPreferences : AppPreferences {
     }
 
     override val showMoreInfoInReleaseListItem: Flow<Boolean>
-        get() = error("Not implemented")
+        get() = flowOf(true)
 
     override fun setShowMoreInfoInReleaseListItem(show: Boolean) {
         // No-op.
     }
 
     override val sortReleaseGroupListItems: Flow<Boolean>
-        get() = error("Not implemented")
+        get() = flowOf(true)
 
     override fun setSortReleaseGroupListItems(show: Boolean) {
         // No-op.

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToEventListItemModel
-import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.event.EventDetailsModel
@@ -25,7 +25,7 @@ class EventDao(
 ) : EntityDao {
     override val transacter = database.eventQueries
 
-    fun insert(event: EventMusicBrainzModel) {
+    fun insert(event: EventMusicBrainzNetworkModel) {
         event.run {
             transacter.insertEvent(
                 Event(
@@ -44,7 +44,7 @@ class EventDao(
         }
     }
 
-    fun insertAll(events: List<EventMusicBrainzModel>) {
+    fun insertAll(events: List<EventMusicBrainzNetworkModel>) {
         transacter.transaction {
             events.forEach { event ->
                 insert(event)

@@ -22,7 +22,7 @@ import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
@@ -63,7 +63,7 @@ class ReleaseGroupsListRepositoryImplTest :
     private val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
 
     private fun createReleaseGroupsListRepository(
-        releaseGroups: List<ReleaseGroupMusicBrainzModel>,
+        releaseGroups: List<ReleaseGroupMusicBrainzNetworkModel>,
     ): ReleaseGroupsListRepository {
         return ReleaseGroupsListRepositoryImpl(
             browseRemoteMetadataDao = browseRemoteMetadataDao,

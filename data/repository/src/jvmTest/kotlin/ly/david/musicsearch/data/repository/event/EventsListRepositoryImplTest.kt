@@ -23,7 +23,7 @@ import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestEventRepository
 import ly.david.musicsearch.data.repository.helpers.testFilter
@@ -55,7 +55,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
     private val collectionEntityDao: CollectionEntityDao by inject()
 
     private fun createEventsListRepository(
-        events: List<EventMusicBrainzModel>,
+        events: List<EventMusicBrainzNetworkModel>,
     ): EventsListRepository {
         return EventsListRepositoryImpl(
             browseRemoteMetadataDao = browseRemoteMetadataDao,

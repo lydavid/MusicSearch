@@ -27,10 +27,10 @@ import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.TestEventRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
@@ -140,7 +140,7 @@ class ImageMetadataRepositoryImplTest :
         val eventName = "aa"
         val eventDisambiguation = "d"
         createEventRepository(
-            EventMusicBrainzModel(
+            EventMusicBrainzNetworkModel(
                 id = eventId,
                 name = eventName,
                 disambiguation = eventDisambiguation,
@@ -209,11 +209,11 @@ class ImageMetadataRepositoryImplTest :
         val releaseName = "release name"
         val releaseDisambiguation = "release disambiguation"
         createReleaseRepository(
-            ReleaseMusicBrainzModel(
+            ReleaseMusicBrainzNetworkModel(
                 id = releaseId,
                 name = releaseName,
                 disambiguation = releaseDisambiguation,
-                releaseGroup = ReleaseGroupMusicBrainzModel(
+                releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
                     id = "release_group_id",
                     name = "release group name",
                     disambiguation = "release group disambiguation",
@@ -221,7 +221,7 @@ class ImageMetadataRepositoryImplTest :
                 artistCredits = listOf(
                     ArtistCreditMusicBrainzModel(
                         name = "artist name",
-                        artist = ArtistMusicBrainzModel(
+                        artist = ArtistMusicBrainzNetworkModel(
                             id = "artist_id",
                             name = "artist_name",
                         ),
@@ -312,7 +312,7 @@ class ImageMetadataRepositoryImplTest :
         val releaseName = "aa"
         val releaseDisambiguation = "d"
         releaseDao.insert(
-            ReleaseMusicBrainzModel(
+            ReleaseMusicBrainzNetworkModel(
                 id = releaseId,
                 name = releaseName,
                 disambiguation = releaseDisambiguation,
@@ -379,14 +379,14 @@ class ImageMetadataRepositoryImplTest :
         val releaseGroupName = "aa"
         val releaseGroupDisambiguation = "d"
         createReleaseGroupRepository(
-            ReleaseGroupMusicBrainzModel(
+            ReleaseGroupMusicBrainzNetworkModel(
                 id = releaseGroupId,
                 name = releaseGroupName,
                 disambiguation = releaseGroupDisambiguation,
                 artistCredits = listOf(
                     ArtistCreditMusicBrainzModel(
                         name = "artist name",
-                        artist = ArtistMusicBrainzModel(
+                        artist = ArtistMusicBrainzNetworkModel(
                             id = "artist_id",
                             name = "artist_name",
                         ),
@@ -472,7 +472,7 @@ class ImageMetadataRepositoryImplTest :
         )
 
         eventDao.insert(
-            EventMusicBrainzModel(
+            EventMusicBrainzNetworkModel(
                 id = eventId,
                 name = eventName,
                 disambiguation = eventDisambiguation,
@@ -499,7 +499,7 @@ class ImageMetadataRepositoryImplTest :
         val releaseName = "release name"
         val releaseDisambiguation = "d"
         releaseDao.insert(
-            ReleaseMusicBrainzModel(
+            ReleaseMusicBrainzNetworkModel(
                 id = releaseId,
                 name = releaseName,
                 disambiguation = releaseDisambiguation,
@@ -526,7 +526,7 @@ class ImageMetadataRepositoryImplTest :
         val releaseGroupName = "release group name"
         val releaseGroupDisambiguation = "d"
         releaseGroupDao.insertReleaseGroup(
-            ReleaseGroupMusicBrainzModel(
+            ReleaseGroupMusicBrainzNetworkModel(
                 id = releaseGroupId,
                 name = releaseGroupName,
                 disambiguation = releaseGroupDisambiguation,

@@ -8,7 +8,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseInstrumentsResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -22,7 +22,7 @@ class InstrumentsListRepositoryImpl(
     private val instrumentDao: InstrumentDao,
     private val browseApi: BrowseApi,
 ) : InstrumentsListRepository,
-    BrowseEntities<InstrumentListItemModel, InstrumentMusicBrainzModel, BrowseInstrumentsResponse>(
+    BrowseEntities<InstrumentListItemModel, InstrumentMusicBrainzNetworkModel, BrowseInstrumentsResponse>(
         browseEntity = MusicBrainzEntity.INSTRUMENT,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
     ) {
@@ -91,7 +91,7 @@ class InstrumentsListRepositoryImpl(
     override fun insertAllLinkingModels(
         entityId: String,
         entity: MusicBrainzEntity,
-        musicBrainzModels: List<InstrumentMusicBrainzModel>,
+        musicBrainzModels: List<InstrumentMusicBrainzNetworkModel>,
     ) {
         instrumentDao.insertAll(musicBrainzModels)
         when (entity) {

@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.instrument
 
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
-import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
@@ -41,7 +41,7 @@ class InstrumentRepositoryImpl(
         }
     }
 
-    private fun cache(instrument: InstrumentMusicBrainzModel) {
+    private fun cache(instrument: InstrumentMusicBrainzNetworkModel) {
         instrumentDao.withTransaction {
             instrumentDao.insert(instrument)
 

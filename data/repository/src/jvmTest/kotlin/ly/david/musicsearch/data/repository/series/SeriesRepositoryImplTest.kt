@@ -6,7 +6,7 @@ import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
@@ -35,14 +35,14 @@ class SeriesRepositoryImplTest : KoinTest {
     private val seriesDao: SeriesDao by inject()
 
     private fun createRelationRepository(
-        musicBrainzModel: SeriesMusicBrainzModel
+        musicBrainzModel: SeriesMusicBrainzNetworkModel
     ): RelationRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupSeries(
                     seriesId: String,
                     include: String?,
-                ): SeriesMusicBrainzModel {
+                ): SeriesMusicBrainzNetworkModel {
                     return musicBrainzModel
                 }
             },
@@ -54,7 +54,7 @@ class SeriesRepositoryImplTest : KoinTest {
     }
 
     private fun createSeriesRepository(
-        musicBrainzModel: SeriesMusicBrainzModel,
+        musicBrainzModel: SeriesMusicBrainzNetworkModel,
     ): SeriesRepository {
         val relationRepository = createRelationRepository(musicBrainzModel)
         return SeriesRepositoryImpl(
@@ -64,7 +64,7 @@ class SeriesRepositoryImplTest : KoinTest {
                 override suspend fun lookupSeries(
                     seriesId: String,
                     include: String?,
-                ): SeriesMusicBrainzModel {
+                ): SeriesMusicBrainzNetworkModel {
                     return musicBrainzModel
                 }
             },
@@ -74,7 +74,7 @@ class SeriesRepositoryImplTest : KoinTest {
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
         val sparseRepository = createSeriesRepository(
-            musicBrainzModel = SeriesMusicBrainzModel(
+            musicBrainzModel = SeriesMusicBrainzNetworkModel(
                 id = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
                 name = "Rolling Stone: 500 Greatest Albums of All Time: 2023 edition",
             ),
@@ -92,7 +92,7 @@ class SeriesRepositoryImplTest : KoinTest {
         )
 
         val allDataRepository = createSeriesRepository(
-            musicBrainzModel = SeriesMusicBrainzModel(
+            musicBrainzModel = SeriesMusicBrainzNetworkModel(
                 id = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
                 name = "Rolling Stone: 500 Greatest Albums of All Time: 2023 edition",
                 type = "Release group series",

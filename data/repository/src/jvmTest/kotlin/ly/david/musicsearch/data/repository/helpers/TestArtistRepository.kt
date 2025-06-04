@@ -6,7 +6,7 @@ import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.artist.ArtistRepositoryImpl
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
@@ -21,14 +21,14 @@ interface TestArtistRepository {
     val browseRemoteMetadataDao: BrowseRemoteMetadataDao
 
     fun createArtistRepository(
-        artistMusicBrainzModel: ArtistMusicBrainzModel,
+        artistMusicBrainzModel: ArtistMusicBrainzNetworkModel,
     ): ArtistRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupArtist(
                     artistId: String,
                     include: String?,
-                ): ArtistMusicBrainzModel {
+                ): ArtistMusicBrainzNetworkModel {
                     return artistMusicBrainzModel
                 }
             },
@@ -44,7 +44,7 @@ interface TestArtistRepository {
                 override suspend fun lookupArtist(
                     artistId: String,
                     include: String?,
-                ): ArtistMusicBrainzModel {
+                ): ArtistMusicBrainzNetworkModel {
                     return artistMusicBrainzModel
                 }
             },

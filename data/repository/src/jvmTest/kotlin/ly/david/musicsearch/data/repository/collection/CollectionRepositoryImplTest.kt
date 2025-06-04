@@ -11,7 +11,7 @@ import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseCollectionsResponse
 import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
-import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.BrowseRemoteMetadataRepositoryImpl
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
@@ -98,12 +98,12 @@ class CollectionRepositoryImplTest : KoinTest {
                         count = 2,
                         offset = 0,
                         musicBrainzModels = listOf(
-                            CollectionMusicBrainzModel(
+                            CollectionMusicBrainzNetworkModel(
                                 id = "1",
                                 name = "Artists",
                                 entityType = SerializableMusicBrainzEntity.ARTIST,
                             ),
-                            CollectionMusicBrainzModel(
+                            CollectionMusicBrainzNetworkModel(
                                 id = "2",
                                 name = "Areas",
                                 entityType = SerializableMusicBrainzEntity.AREA,
@@ -157,12 +157,12 @@ class CollectionRepositoryImplTest : KoinTest {
                         count = 2,
                         offset = 0,
                         musicBrainzModels = listOf(
-                            CollectionMusicBrainzModel(
+                            CollectionMusicBrainzNetworkModel(
                                 id = "1",
                                 name = "Artists",
                                 entityType = SerializableMusicBrainzEntity.ARTIST,
                             ),
-                            CollectionMusicBrainzModel(
+                            CollectionMusicBrainzNetworkModel(
                                 id = "2",
                                 name = "Areas",
                                 entityType = SerializableMusicBrainzEntity.AREA,
@@ -216,13 +216,13 @@ class CollectionRepositoryImplTest : KoinTest {
                         count = 2,
                         offset = 0,
                         musicBrainzModels = listOf(
-                            CollectionMusicBrainzModel(
+                            CollectionMusicBrainzNetworkModel(
                                 id = "1",
                                 name = "Artists",
                                 entityType = SerializableMusicBrainzEntity.ARTIST,
                                 artistCount = 3,
                             ),
-                            CollectionMusicBrainzModel(
+                            CollectionMusicBrainzNetworkModel(
                                 id = "2",
                                 name = "Areas",
                                 entityType = SerializableMusicBrainzEntity.AREA,
@@ -279,12 +279,12 @@ class CollectionRepositoryImplTest : KoinTest {
                         count = 2,
                         offset = 0,
                         musicBrainzModels = listOf(
-                            CollectionMusicBrainzModel(
+                            CollectionMusicBrainzNetworkModel(
                                 id = "1",
                                 name = "Artists",
                                 entityType = SerializableMusicBrainzEntity.ARTIST,
                             ),
-                            CollectionMusicBrainzModel(
+                            CollectionMusicBrainzNetworkModel(
                                 id = "2",
                                 name = "Areas",
                                 entityType = SerializableMusicBrainzEntity.AREA,
@@ -332,17 +332,17 @@ class CollectionRepositoryImplTest : KoinTest {
                         count = 2,
                         offset = 0,
                         musicBrainzModels = listOf(
-                            CollectionMusicBrainzModel(
+                            CollectionMusicBrainzNetworkModel(
                                 id = "1",
                                 name = "Won't see me",
                                 entityType = SerializableMusicBrainzEntity.ARTIST,
                             ),
-                            CollectionMusicBrainzModel(
+                            CollectionMusicBrainzNetworkModel(
                                 id = "2",
                                 name = "Artists",
                                 entityType = SerializableMusicBrainzEntity.ARTIST,
                             ),
-                            CollectionMusicBrainzModel(
+                            CollectionMusicBrainzNetworkModel(
                                 id = "3",
                                 name = "art",
                                 entityType = SerializableMusicBrainzEntity.ARTIST,

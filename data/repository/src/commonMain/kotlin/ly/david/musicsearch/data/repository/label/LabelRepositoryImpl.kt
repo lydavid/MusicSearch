@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.label
 
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.label.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.label.LabelRepository
@@ -41,7 +41,7 @@ class LabelRepositoryImpl(
         }
     }
 
-    private fun cache(label: LabelMusicBrainzModel) {
+    private fun cache(label: LabelMusicBrainzNetworkModel) {
         labelDao.withTransaction {
             labelDao.insert(label)
 

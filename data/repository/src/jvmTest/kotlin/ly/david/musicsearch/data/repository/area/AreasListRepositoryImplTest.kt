@@ -9,7 +9,7 @@ import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.AreasListRepository
@@ -33,7 +33,7 @@ class AreasListRepositoryImplTest : KoinTest {
     private val collectionEntityDao: CollectionEntityDao by inject()
 
     private fun createRepository(
-        areas: List<AreaMusicBrainzModel>,
+        areas: List<AreaMusicBrainzNetworkModel>,
     ): AreasListRepository {
         return AreasListRepositoryImpl(
             browseRemoteMetadataDao = browseRemoteMetadataDao,
@@ -59,38 +59,38 @@ class AreasListRepositoryImplTest : KoinTest {
     fun `areas by collection, filter by type`() = runTest {
         val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
         val areas = listOf(
-            AreaMusicBrainzModel(
+            AreaMusicBrainzNetworkModel(
                 id = "01428650-fbe2-4aab-aca2-a1d562a93caf",
                 name = "Ireland",
                 type = "Island",
                 typeId = "06dd0ae4-8c74-30bb-b43d-95dcedf961de",
             ),
-            AreaMusicBrainzModel(
+            AreaMusicBrainzNetworkModel(
                 id = "390b05d4-11ec-3bce-a343-703a366b34a5",
                 name = "Ireland",
                 countryCodes = listOf("IE"),
                 type = "Country",
                 typeId = "06dd0ae4-8c74-30bb-b43d-95dcedf961de",
             ),
-            AreaMusicBrainzModel(
+            AreaMusicBrainzNetworkModel(
                 id = "99c3f001-64d3-4174-a302-fb14204117af",
                 name = "Connaught",
                 type = "Subdivision",
                 typeId = "fd3d44c5-80a1-3842-9745-2c4972d35afa",
             ),
-            AreaMusicBrainzModel(
+            AreaMusicBrainzNetworkModel(
                 id = "3fca5006-e6c6-4935-b1f5-baa80df5a95c",
                 name = "County Galway",
                 type = "Subdivision",
                 typeId = "fd3d44c5-80a1-3842-9745-2c4972d35afa",
             ),
-            AreaMusicBrainzModel(
+            AreaMusicBrainzNetworkModel(
                 id = "db52f295-91e6-41b0-8491-a3356cc1f815",
                 name = "Galway",
                 type = "City",
                 typeId = "6fd8f29a-3d0a-32fc-980d-ea697b69da78",
             ),
-            AreaMusicBrainzModel(
+            AreaMusicBrainzNetworkModel(
                 id = "08ead5f6-a425-4a72-ac98-8a925d2fbd0d",
                 name = "Salthill",
                 type = "District",

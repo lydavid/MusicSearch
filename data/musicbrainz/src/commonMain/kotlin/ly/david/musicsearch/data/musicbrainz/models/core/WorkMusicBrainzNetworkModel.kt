@@ -7,7 +7,7 @@ import ly.david.musicsearch.shared.domain.work.WorkAttribute
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 @Serializable
-data class WorkMusicBrainzModel(
+data class WorkMusicBrainzNetworkModel(
     @SerialName("id") override val id: String,
     @SerialName("title") override val name: String,
     @SerialName("disambiguation") override val disambiguation: String? = null,
@@ -26,7 +26,7 @@ data class WorkMusicBrainzModel(
 
     // search API returns relations without target-type
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
-) : MusicBrainzModel(), Work
+) : MusicBrainzNetworkModel(), Work
 
 @Serializable
 data class WorkAttributeMusicBrainzModel(

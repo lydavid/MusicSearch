@@ -7,7 +7,7 @@ import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
@@ -38,7 +38,7 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
         val sparseRepository = createEventRepository(
-            musicBrainzModel = EventMusicBrainzModel(
+            musicBrainzModel = EventMusicBrainzNetworkModel(
                 id = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
                 name = "The Eras Tour: Toronto (night 1)",
             ),
@@ -56,7 +56,7 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
         )
 
         val allDataRepository = createEventRepository(
-            musicBrainzModel = EventMusicBrainzModel(
+            musicBrainzModel = EventMusicBrainzNetworkModel(
                 id = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
                 name = "The Eras Tour: Toronto (night 1)",
                 lifeSpan = LifeSpanMusicBrainzModel(

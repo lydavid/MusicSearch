@@ -1,9 +1,9 @@
 package ly.david.data.test
 
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkAttributeMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 
-val skycladObserverWorkMusicBrainzModel = WorkMusicBrainzModel(
+val skycladObserverWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
     id = "b04a6906-237c-3611-a5c6-b8bcd2627327",
     name = "スカイクラッドの観測者",
     type = "Song",
@@ -36,7 +36,7 @@ val skycladObserverWorkMusicBrainzModel = WorkMusicBrainzModel(
     ),
 )
 
-val hackingToTheGateWorkMusicBrainzModel = WorkMusicBrainzModel(
+val hackingToTheGateWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
     id = "a2f313bc-aadf-4d77-b367-e4f0d8a8e21c",
     name = "Hacking to the Gate",
     type = "Song",
@@ -69,7 +69,7 @@ val hackingToTheGateWorkMusicBrainzModel = WorkMusicBrainzModel(
     ),
 )
 
-val underPressureWorkMusicBrainzModel = WorkMusicBrainzModel(
+val underPressureWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
     id = "4e6a04c3-6897-391d-8e8c-1da7a6dce1ca",
     name = "Under Pressure",
     type = "Song",
@@ -94,7 +94,7 @@ val underPressureWorkMusicBrainzModel = WorkMusicBrainzModel(
     ),
 )
 
-val starmanWorkMusicBrainzModel = WorkMusicBrainzModel(
+val starmanWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
     id = "4491f749-d06a-348c-aa58-a288d2eafa5f",
     name = "Starman",
     type = "Song",
@@ -109,7 +109,7 @@ val starmanWorkMusicBrainzModel = WorkMusicBrainzModel(
     ),
 )
 
-val dontStopMeNowWorkMusicBrainzModel = WorkMusicBrainzModel(
+val dontStopMeNowWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
     id = "8f217f03-fd55-366c-b80e-66424027dc29",
     name = "Don’t Stop Me Now",
     type = "Song",

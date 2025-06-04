@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToPlaceListItemModel
-import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
@@ -26,7 +26,7 @@ class PlaceDao(
 ) : EntityDao {
     override val transacter = database.placeQueries
 
-    fun insert(place: PlaceMusicBrainzModel) {
+    fun insert(place: PlaceMusicBrainzNetworkModel) {
         place.run {
             transacter.insertPlace(
                 Place(
@@ -46,7 +46,7 @@ class PlaceDao(
         }
     }
 
-    fun insertAll(places: List<PlaceMusicBrainzModel>) {
+    fun insertAll(places: List<PlaceMusicBrainzNetworkModel>) {
         transacter.transaction {
             places.forEach { place ->
                 insert(place)

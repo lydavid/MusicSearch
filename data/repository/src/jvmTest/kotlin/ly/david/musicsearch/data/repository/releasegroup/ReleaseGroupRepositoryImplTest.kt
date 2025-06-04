@@ -8,8 +8,8 @@ import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
@@ -39,13 +39,13 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
         val sparseRepository = createReleaseGroupRepository(
-            musicBrainzModel = ReleaseGroupMusicBrainzModel(
+            musicBrainzModel = ReleaseGroupMusicBrainzNetworkModel(
                 id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                 name = "Today Is A Beautiful Day",
                 artistCredits = listOf(
                     ArtistCreditMusicBrainzModel(
                         name = "supercell (something)",
-                        artist = ArtistMusicBrainzModel(
+                        artist = ArtistMusicBrainzNetworkModel(
                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                             name = "supercell",
                             sortName = "supercell",
@@ -78,7 +78,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
         )
 
         val allDataRepository = createReleaseGroupRepository(
-            musicBrainzModel = ReleaseGroupMusicBrainzModel(
+            musicBrainzModel = ReleaseGroupMusicBrainzNetworkModel(
                 id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                 primaryType = "Album",
                 name = "Today Is A Beautiful Day",
@@ -86,7 +86,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                 artistCredits = listOf(
                     ArtistCreditMusicBrainzModel(
                         name = "supercell", // artist credit name changed
-                        artist = ArtistMusicBrainzModel(
+                        artist = ArtistMusicBrainzNetworkModel(
                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                             name = "supercell",
                             sortName = "supercell",

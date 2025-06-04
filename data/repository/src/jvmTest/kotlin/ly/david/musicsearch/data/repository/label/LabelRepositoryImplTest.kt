@@ -7,8 +7,8 @@ import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
@@ -37,7 +37,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
         val sparseRepository = createLabelRepository(
-            musicBrainzModel = LabelMusicBrainzModel(
+            musicBrainzModel = LabelMusicBrainzNetworkModel(
                 id = "7aaa37fe-2def-3476-b359-80245850062d",
                 name = "UNIVERSAL J",
             ),
@@ -55,7 +55,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
         )
 
         val allDataRepository = createLabelRepository(
-            musicBrainzModel = LabelMusicBrainzModel(
+            musicBrainzModel = LabelMusicBrainzNetworkModel(
                 id = "7aaa37fe-2def-3476-b359-80245850062d",
                 name = "UNIVERSAL J",
                 disambiguation = "Japanese label division, 2002–2022",
@@ -66,7 +66,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                     end = "2023-02",
                     ended = true,
                 ),
-                area = AreaMusicBrainzModel(
+                area = AreaMusicBrainzNetworkModel(
                     id = "2db42837-c832-3c27-b4a3-08198f75693c",
                     name = "Japan",
                     sortName = "Japan",

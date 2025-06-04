@@ -6,9 +6,9 @@ import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.AttributeValue
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
@@ -52,8 +52,8 @@ class RelationRepositoryImplTest : KoinTest {
                 override suspend fun lookupSeries(
                     seriesId: String,
                     include: String?,
-                ): SeriesMusicBrainzModel {
-                    return SeriesMusicBrainzModel(
+                ): SeriesMusicBrainzNetworkModel {
+                    return SeriesMusicBrainzNetworkModel(
                         id = "eca82a1b-1efa-4d6b-9278-e278523267f8",
                         name = "東方Project",
                         type = "Release group series",
@@ -63,7 +63,7 @@ class RelationRepositoryImplTest : KoinTest {
                                 typeId = "1cd0342c-69a1-4f97-8471-46748f8ecde1",
                                 direction = Direction.BACKWARD,
                                 targetType = SerializableMusicBrainzEntity.LABEL,
-                                label = LabelMusicBrainzModel(
+                                label = LabelMusicBrainzNetworkModel(
                                     id = "bad6d0fa-938e-45a2-95fd-b37ea37b783c",
                                     name = "上海アリス幻樂団",
                                     type = "Original Production",
@@ -75,7 +75,7 @@ class RelationRepositoryImplTest : KoinTest {
                                 typeId = "1cd0342c-69a1-4f97-8471-46748f8ecde1",
                                 direction = Direction.BACKWARD,
                                 targetType = SerializableMusicBrainzEntity.LABEL,
-                                label = LabelMusicBrainzModel(
+                                label = LabelMusicBrainzNetworkModel(
                                     id = "bad6d0fa-938e-45a2-95fd-b37ea37b783c",
                                     name = "黄昏フロンティア",
                                     type = "Original Production",
@@ -87,7 +87,7 @@ class RelationRepositoryImplTest : KoinTest {
                                 typeId = "01018437-91d8-36b9-bf89-3f885d53b5bd",
                                 direction = Direction.BACKWARD,
                                 targetType = SerializableMusicBrainzEntity.RELEASE_GROUP,
-                                releaseGroup = ReleaseGroupMusicBrainzModel(
+                                releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
                                     id = "b22e3f3e-6c90-3df9-915f-12d8f86c240b",
                                     name = "東方封魔録 〜 Story of Eastern Wonderland",
                                     primaryType = null,
@@ -108,7 +108,7 @@ class RelationRepositoryImplTest : KoinTest {
                                 typeId = "01018437-91d8-36b9-bf89-3f885d53b5bd",
                                 direction = Direction.BACKWARD,
                                 targetType = SerializableMusicBrainzEntity.RELEASE_GROUP,
-                                releaseGroup = ReleaseGroupMusicBrainzModel(
+                                releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
                                     id = "5d286f5b-7cc3-3f78-b1cf-a24d496af34b",
                                     name = "東方靈異伝 〜 Highly Responsive to Prayers",
                                     primaryType = null,
@@ -129,7 +129,7 @@ class RelationRepositoryImplTest : KoinTest {
                                 typeId = "a3af4c16-de83-4d63-b9b8-77e074c9babe",
                                 direction = Direction.FORWARD,
                                 targetType = SerializableMusicBrainzEntity.SERIES,
-                                series = SeriesMusicBrainzModel(
+                                series = SeriesMusicBrainzNetworkModel(
                                     id = "fbca86fc-1509-40d6-b985-f50e45796187",
                                     name = "ZUN's Music Collection",
                                     type = "Release group series",

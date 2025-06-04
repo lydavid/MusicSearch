@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.artist
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
@@ -58,7 +58,7 @@ class ArtistRepositoryImpl(
         }
     }
 
-    private fun cache(artist: ArtistMusicBrainzModel) {
+    private fun cache(artist: ArtistMusicBrainzNetworkModel) {
         artistDao.withTransaction {
             artistDao.insertReplace(artist)
             artist.area?.let { area ->

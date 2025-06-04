@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToRecordingListItemModel
-import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -26,7 +26,7 @@ class RecordingDao(
 ) : EntityDao {
     override val transacter = database.recordingQueries
 
-    fun insert(recording: RecordingMusicBrainzModel) {
+    fun insert(recording: RecordingMusicBrainzNetworkModel) {
         recording.run {
             transacter.insertRecording(
                 Recording(
@@ -46,7 +46,7 @@ class RecordingDao(
         }
     }
 
-    fun insertAll(recordings: List<RecordingMusicBrainzModel>) {
+    fun insertAll(recordings: List<RecordingMusicBrainzNetworkModel>) {
         transacter.transaction {
             recordings.forEach { recording ->
                 insert(recording)

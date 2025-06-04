@@ -7,6 +7,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 private val releaseGroup = ReleaseGroupDetailsModel(
@@ -55,7 +56,7 @@ internal fun PreviewReleaseGroupDetailsUi() {
         Surface {
             ReleaseGroupDetailsUi(
                 releaseGroup = releaseGroup,
-                detailsUiState = ReleaseGroupDetailsUiState(
+                detailsUiState = DetailsTabUiState(
                     numberOfImages = 1,
                 ),
             )
@@ -70,7 +71,7 @@ internal fun PreviewReleaseGroupDetailsUiCollapsed() {
         Surface {
             ReleaseGroupDetailsUi(
                 releaseGroup = releaseGroup,
-                detailsUiState = ReleaseGroupDetailsUiState(
+                detailsUiState = DetailsTabUiState(
                     numberOfImages = 1,
                     isExternalLinksCollapsed = true,
                 ),

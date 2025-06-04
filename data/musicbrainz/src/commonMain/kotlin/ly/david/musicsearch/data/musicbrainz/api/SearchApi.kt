@@ -8,17 +8,17 @@ import io.ktor.http.appendPathSegments
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.data.musicbrainz.SEARCH_BROWSE_LIMIT
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 
 /**
  * Search for MusicBrainz entities using text.
@@ -221,75 +221,75 @@ interface SearchApiImpl : SearchApi {
 data class SearchAreasResponse(
     @SerialName("count") val count: Int = 0,
     @SerialName("offset") val offset: Int = 0,
-    @SerialName("areas") val areas: List<AreaMusicBrainzModel> = listOf(),
+    @SerialName("areas") val areas: List<AreaMusicBrainzNetworkModel> = listOf(),
 )
 
 @Serializable
 data class SearchArtistsResponse(
     @SerialName("count") val count: Int = 0,
     @SerialName("offset") val offset: Int = 0,
-    @SerialName("artists") val artists: List<ArtistMusicBrainzModel> = listOf(),
+    @SerialName("artists") val artists: List<ArtistMusicBrainzNetworkModel> = listOf(),
 )
 
 @Serializable
 data class SearchEventsResponse(
     @SerialName("count") val count: Int = 0,
     @SerialName("offset") val offset: Int = 0,
-    @SerialName("events") val events: List<EventMusicBrainzModel> = listOf(),
+    @SerialName("events") val events: List<EventMusicBrainzNetworkModel> = listOf(),
 )
 
 @Serializable
 data class SearchInstrumentsResponse(
     @SerialName("count") val count: Int = 0,
     @SerialName("offset") val offset: Int = 0,
-    @SerialName("instruments") val instruments: List<InstrumentMusicBrainzModel> = listOf(),
+    @SerialName("instruments") val instruments: List<InstrumentMusicBrainzNetworkModel> = listOf(),
 )
 
 @Serializable
 data class SearchLabelsResponse(
     @SerialName("count") val count: Int = 0,
     @SerialName("offset") val offset: Int = 0,
-    @SerialName("labels") val labels: List<LabelMusicBrainzModel> = listOf(),
+    @SerialName("labels") val labels: List<LabelMusicBrainzNetworkModel> = listOf(),
 )
 
 @Serializable
 data class SearchPlacesResponse(
     @SerialName("count") val count: Int = 0,
     @SerialName("offset") val offset: Int = 0,
-    @SerialName("places") val places: List<PlaceMusicBrainzModel> = listOf(),
+    @SerialName("places") val places: List<PlaceMusicBrainzNetworkModel> = listOf(),
 )
 
 @Serializable
 data class SearchRecordingsResponse(
     @SerialName("count") val count: Int = 0,
     @SerialName("offset") val offset: Int = 0,
-    @SerialName("recordings") val recordings: List<RecordingMusicBrainzModel> = listOf(),
+    @SerialName("recordings") val recordings: List<RecordingMusicBrainzNetworkModel> = listOf(),
 )
 
 @Serializable
 data class SearchReleasesResponse(
     @SerialName("count") val count: Int = 0,
     @SerialName("offset") val offset: Int = 0,
-    @SerialName("releases") val releases: List<ReleaseMusicBrainzModel> = listOf(),
+    @SerialName("releases") val releases: List<ReleaseMusicBrainzNetworkModel> = listOf(),
 )
 
 @Serializable
 data class SearchReleaseGroupsResponse(
     @SerialName("count") val count: Int = 0,
     @SerialName("offset") val offset: Int = 0,
-    @SerialName("release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel> = listOf(),
+    @SerialName("release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzNetworkModel> = listOf(),
 )
 
 @Serializable
 data class SearchSeriesResponse(
     @SerialName("count") val count: Int = 0,
     @SerialName("offset") val offset: Int = 0,
-    @SerialName("series") val series: List<SeriesMusicBrainzModel> = listOf(),
+    @SerialName("series") val series: List<SeriesMusicBrainzNetworkModel> = listOf(),
 )
 
 @Serializable
 data class SearchWorksResponse(
     @SerialName("count") val count: Int = 0,
     @SerialName("offset") val offset: Int = 0,
-    @SerialName("works") val works: List<WorkMusicBrainzModel> = listOf(),
+    @SerialName("works") val works: List<WorkMusicBrainzNetworkModel> = listOf(),
 )

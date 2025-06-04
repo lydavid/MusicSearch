@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -31,7 +31,7 @@ class ReleaseDao(
 ) : EntityDao {
     override val transacter = database.releaseQueries
 
-    fun insertAll(releases: List<ReleaseMusicBrainzModel>) {
+    fun insertAll(releases: List<ReleaseMusicBrainzNetworkModel>) {
         transacter.transaction {
             releases.forEach { release ->
                 insert(release)
@@ -39,7 +39,7 @@ class ReleaseDao(
         }
     }
 
-    fun insert(release: ReleaseMusicBrainzModel) {
+    fun insert(release: ReleaseMusicBrainzNetworkModel) {
         release.run {
             transacter.insertRelease(
                 Release(
@@ -180,7 +180,7 @@ class ReleaseDao(
     // region releases by label
     fun insertReleasesByLabel(
         labelId: String,
-        releases: List<ReleaseMusicBrainzModel>,
+        releases: List<ReleaseMusicBrainzNetworkModel>,
     ) {
         transacter.transaction {
             releases.forEach { release ->
@@ -242,7 +242,7 @@ class ReleaseDao(
     // region releases by country
     fun insertReleasesByCountry(
         areaId: String,
-        releases: List<ReleaseMusicBrainzModel>,
+        releases: List<ReleaseMusicBrainzNetworkModel>,
     ) {
         transacter.transaction {
             releases.forEach { release ->
@@ -302,7 +302,7 @@ class ReleaseDao(
 
     fun insertReleasesByEntity(
         entityId: String,
-        releases: List<ReleaseMusicBrainzModel>,
+        releases: List<ReleaseMusicBrainzNetworkModel>,
     ) {
         transacter.transaction {
             releases.forEach { release ->

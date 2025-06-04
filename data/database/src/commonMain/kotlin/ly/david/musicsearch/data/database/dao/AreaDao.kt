@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
@@ -29,7 +29,7 @@ class AreaDao(
 ) : EntityDao {
     override val transacter: AreaQueries = database.areaQueries
 
-    fun insert(area: AreaMusicBrainzModel?) {
+    fun insert(area: AreaMusicBrainzNetworkModel?) {
         area?.run {
             transacter.insertArea(
                 Area(
@@ -51,7 +51,7 @@ class AreaDao(
         }
     }
 
-    fun insertReplace(area: AreaMusicBrainzModel?) {
+    fun insertReplace(area: AreaMusicBrainzNetworkModel?) {
         area?.run {
             transacter.insertOrReplaceArea(
                 Area(
@@ -73,7 +73,7 @@ class AreaDao(
         }
     }
 
-    fun insertAll(areas: List<AreaMusicBrainzModel>) {
+    fun insertAll(areas: List<AreaMusicBrainzNetworkModel>) {
         return transacter.transaction {
             areas.forEach { area ->
                 insert(area)
@@ -81,7 +81,7 @@ class AreaDao(
         }
     }
 
-    fun insertReplaceAll(areas: List<AreaMusicBrainzModel>) {
+    fun insertReplaceAll(areas: List<AreaMusicBrainzNetworkModel>) {
         return transacter.transaction {
             areas.forEach { area ->
                 insertReplace(area)

@@ -11,7 +11,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -29,7 +29,7 @@ class ReleaseGroupsListRepositoryImpl(
     private val browseApi: BrowseApi,
     private val releaseGroupDao: ReleaseGroupDao,
 ) : ReleaseGroupsListRepository,
-    BrowseEntities<ReleaseGroupListItemModel, ReleaseGroupMusicBrainzModel, BrowseReleaseGroupsResponse>(
+    BrowseEntities<ReleaseGroupListItemModel, ReleaseGroupMusicBrainzNetworkModel, BrowseReleaseGroupsResponse>(
         browseEntity = MusicBrainzEntity.RELEASE_GROUP,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
     ) {
@@ -117,7 +117,7 @@ class ReleaseGroupsListRepositoryImpl(
     override fun insertAllLinkingModels(
         entityId: String,
         entity: MusicBrainzEntity,
-        musicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
+        musicBrainzModels: List<ReleaseGroupMusicBrainzNetworkModel>,
     ) {
         releaseGroupDao.insertAllReleaseGroups(musicBrainzModels)
         return when (entity) {

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
-import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import ly.david.musicsearch.shared.domain.series.SeriesDetailsModel
@@ -23,7 +23,7 @@ class SeriesDao(
 ) : EntityDao {
     override val transacter: SeriesQueries = database.seriesQueries
 
-    fun insert(series: SeriesMusicBrainzModel) {
+    fun insert(series: SeriesMusicBrainzNetworkModel) {
         series.run {
             transacter.insert(
                 Series(
@@ -37,7 +37,7 @@ class SeriesDao(
         }
     }
 
-    fun insertAll(series: List<SeriesMusicBrainzModel>) {
+    fun insertAll(series: List<SeriesMusicBrainzNetworkModel>) {
         transacter.transaction {
             series.forEach { series ->
                 insert(series)

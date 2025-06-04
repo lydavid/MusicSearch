@@ -24,7 +24,7 @@ import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseWorksResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestWorkRepository
 import ly.david.musicsearch.data.repository.helpers.testFilter
@@ -59,7 +59,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
     private val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
 
     private fun createWorksListRepository(
-        works: List<WorkMusicBrainzModel>,
+        works: List<WorkMusicBrainzNetworkModel>,
     ): WorksListRepository {
         return WorksListRepositoryImpl(
             browseRemoteMetadataDao = browseRemoteMetadataDao,

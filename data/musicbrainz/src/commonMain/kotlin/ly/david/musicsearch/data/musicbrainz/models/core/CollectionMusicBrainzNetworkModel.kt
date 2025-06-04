@@ -6,7 +6,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 
 @Serializable
-data class CollectionMusicBrainzModel(
+data class CollectionMusicBrainzNetworkModel(
     @SerialName("id") override val id: String,
     @SerialName("name") override val name: String,
     override val disambiguation: String? = null,
@@ -26,9 +26,9 @@ data class CollectionMusicBrainzModel(
     @SerialName("release-group-count") val releaseGroupCount: Int? = null,
     @SerialName("series-count") val seriesCount: Int? = null,
     @SerialName("work-count") val workCount: Int? = null,
-) : MusicBrainzModel()
+) : MusicBrainzNetworkModel()
 
-fun CollectionMusicBrainzModel.getCount(): Int {
+fun CollectionMusicBrainzNetworkModel.getCount(): Int {
     return when (entityType.entity) {
         MusicBrainzEntity.AREA -> areaCount
         MusicBrainzEntity.ARTIST -> artistCount

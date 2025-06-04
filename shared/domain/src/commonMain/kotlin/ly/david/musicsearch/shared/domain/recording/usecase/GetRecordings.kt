@@ -15,11 +15,18 @@ import ly.david.musicsearch.shared.domain.listitem.appendLastUpdatedBanner
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
 
-class GetRecordings(
+interface GetRecordings {
+    operator fun invoke(
+        browseMethod: BrowseMethod?,
+        listFilters: ListFilters,
+    ): Flow<PagingData<ListItemModel>>
+}
+
+class GetRecordingsImpl(
     private val recordingsListRepository: RecordingsListRepository,
     private val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
     private val coroutineScope: CoroutineScope,
-) : GetEntitiesByEntity<ListItemModel> {
+) : GetEntitiesByEntity<ListItemModel>, GetRecordings {
     override operator fun invoke(
         browseMethod: BrowseMethod?,
         listFilters: ListFilters,

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToGenreListItemModel
-import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import lydavidmusicsearchdatadatabase.Genre
@@ -21,7 +21,7 @@ class GenreDao(
 ) : EntityDao {
     override val transacter = database.genreQueries
 
-    fun insert(genre: GenreMusicBrainzModel) {
+    fun insert(genre: GenreMusicBrainzNetworkModel) {
         genre.run {
             transacter.insert(
                 Genre(
@@ -33,7 +33,7 @@ class GenreDao(
         }
     }
 
-    fun insertAll(genres: List<GenreMusicBrainzModel>?) {
+    fun insertAll(genres: List<GenreMusicBrainzNetworkModel>?) {
         transacter.transaction {
             genres?.forEach { genre ->
                 insert(genre)

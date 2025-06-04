@@ -17,9 +17,9 @@ import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.CoordinatesMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
@@ -56,14 +56,14 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
     override val collectionEntityDao: CollectionEntityDao by inject()
 
     private fun createAreaRepositoryWithFakeNetworkData(
-        musicBrainzModel: AreaMusicBrainzModel,
+        musicBrainzModel: AreaMusicBrainzNetworkModel,
     ): AreaRepositoryImpl {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupArea(
                     areaId: String,
                     include: String?,
-                ): AreaMusicBrainzModel {
+                ): AreaMusicBrainzNetworkModel {
                     return musicBrainzModel
                 }
             },
@@ -78,7 +78,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                 override suspend fun lookupArea(
                     areaId: String,
                     include: String?,
-                ): AreaMusicBrainzModel {
+                ): AreaMusicBrainzNetworkModel {
                     return musicBrainzModel
                 }
             },
@@ -88,7 +88,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
         val sparseRepository = createPlaceRepository(
-            musicBrainzModel = PlaceMusicBrainzModel(
+            musicBrainzModel = PlaceMusicBrainzNetworkModel(
                 id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
                 name = "日本武道館",
                 address = "〒102-8321 東京都千代田区北の丸公園2-3",
@@ -108,7 +108,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         )
 
         val allDataRepository = createPlaceRepository(
-            musicBrainzModel = PlaceMusicBrainzModel(
+            musicBrainzModel = PlaceMusicBrainzNetworkModel(
                 id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
                 name = "日本武道館",
                 address = "〒102-8321 東京都千代田区北の丸公園2-3",
@@ -121,7 +121,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     longitude = 139.75,
                     latitude = 35.69333,
                 ),
-                area = AreaMusicBrainzModel(
+                area = AreaMusicBrainzNetworkModel(
                     id = "e24c0f02-9b5a-4f4f-9fe0-f8b3e67874f8",
                     name = "Kitanomaru Kōen",
                 ),
@@ -346,7 +346,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
 
         // Lookup a country
         val countryAreaRepository = createAreaRepositoryWithFakeNetworkData(
-            musicBrainzModel = AreaMusicBrainzModel(
+            musicBrainzModel = AreaMusicBrainzNetworkModel(
                 id = countryId,
                 name = "Japan",
                 type = "Country",
@@ -466,7 +466,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
 
         // Lookup the more specific area
         val districtAreaRepository = createAreaRepositoryWithFakeNetworkData(
-            musicBrainzModel = AreaMusicBrainzModel(
+            musicBrainzModel = AreaMusicBrainzNetworkModel(
                 id = districtId,
                 name = "Kitanomaru Kōen",
                 sortName = "Kitanomaru Kōen",

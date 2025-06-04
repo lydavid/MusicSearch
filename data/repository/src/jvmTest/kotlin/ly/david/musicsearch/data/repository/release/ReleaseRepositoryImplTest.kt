@@ -20,15 +20,15 @@ import ly.david.musicsearch.data.musicbrainz.models.MediumMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.CoverArtArchiveMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.TextRepresentationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
@@ -74,13 +74,13 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
         val sparseRepository = createReleaseRepository(
-            musicBrainzModel = ReleaseMusicBrainzModel(
+            musicBrainzModel = ReleaseMusicBrainzNetworkModel(
                 id = "8516ca87-f9c4-3854-a727-6d328cf44837",
                 name = "Today Is A Beautiful Day",
                 artistCredits = listOf(
                     ArtistCreditMusicBrainzModel(
                         name = "supercell (something)",
-                        artist = ArtistMusicBrainzModel(
+                        artist = ArtistMusicBrainzNetworkModel(
                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                             name = "supercell",
                             sortName = "supercell",
@@ -91,7 +91,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         joinPhrase = "",
                     ),
                 ),
-                releaseGroup = ReleaseGroupMusicBrainzModel(
+                releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
                     id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                     primaryType = "Album",
                     name = "Today Is A Beautiful Day",
@@ -125,7 +125,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
         )
 
         val allDataRepository = createReleaseRepository(
-            musicBrainzModel = ReleaseMusicBrainzModel(
+            musicBrainzModel = ReleaseMusicBrainzNetworkModel(
                 id = "8516ca87-f9c4-3854-a727-6d328cf44837",
                 name = "Today Is A Beautiful Day",
                 disambiguation = "初回生産限定盤",
@@ -147,7 +147,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
                 releaseEvents = listOf(
                     ReleaseEventMusicBrainzModel(
-                        area = AreaMusicBrainzModel(
+                        area = AreaMusicBrainzNetworkModel(
                             id = "2db42837-c832-3c27-b4a3-08198f75693c",
                             name = "Japan",
                             sortName = "Japan",
@@ -172,7 +172,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
@@ -183,7 +183,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                         joinPhrase = "",
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "ff84b4f1-7879-4936-8b62-35dc2c8a098a",
                                     name = "終わりへ向かう始まりの歌",
                                     length = 130000,
@@ -199,7 +199,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
@@ -210,7 +210,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                         joinPhrase = "",
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "1c8d2ed4-258f-4435-8db9-fa2f8be24712",
                                     name = "君の知らない物語",
                                     length = 341053,
@@ -226,14 +226,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "be5911d7-b349-49d7-b1de-d57fc27d0977",
                                     name = "ヒーロー",
                                     length = 311000,
@@ -248,14 +248,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "66512715-98f8-49d1-8df8-3fd80e5da2de",
                                     name = "Perfect Day",
                                     length = 286000,
@@ -270,14 +270,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "803f742f-6f81-4674-99bb-73ce768613c5",
                                     name = "復讐",
                                     length = 203000,
@@ -292,14 +292,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "a7875312-f3e4-4c8c-9029-c77c6e623acf",
                                     name = "ロックンロールなんですの",
                                     length = 216000,
@@ -314,14 +314,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "824c4fcd-a405-4faa-be72-82a01753d18e",
                                     name = "LOVE & ROLL",
                                     length = 295000,
@@ -336,14 +336,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "69ca2c36-8642-4968-9e7d-451d9d98114c",
                                     name = "Feel so good",
                                     length = 301000,
@@ -358,14 +358,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "c943aa35-24ad-4859-9f2f-ab6e218974bf",
                                     name = "星が瞬くこんな夜に",
                                     length = 269000,
@@ -380,14 +380,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "bf20591e-cf4b-4a0a-8b88-bc1ab6c92d8f",
                                     name = "うたかた花火",
                                     length = 360000,
@@ -402,14 +402,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "10c376ec-6f7f-44c6-b4b2-32f73e7bf816",
                                     name = "夜が明けるよ",
                                     length = 290000,
@@ -424,14 +424,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "0ef04153-cd64-4d38-bd58-8a469dae7664",
                                     name = "さよならメモリーズ",
                                     length = 367000,
@@ -446,14 +446,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "4714901e-d0e4-4121-900b-bc95043580a3",
                                     name = "私へ",
                                     length = 126000,
@@ -476,7 +476,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
@@ -484,7 +484,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "7587430d-910c-48dc-9dc1-d7d7061c5b01",
                                     name = "「君の知らない物語」 ×「君化物語」 コラボCM",
                                     length = 16000,
@@ -500,7 +500,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
@@ -508,7 +508,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "a4c9ce09-30cf-46e8-af86-eabcb1011c74",
                                     name = "「センコロールトレーラー映像",
                                     length = 85000,
@@ -524,7 +524,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
@@ -532,7 +532,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "45fa775f-bd06-4f66-92f5-2511f1609e5b",
                                     name = "「魔法使いの夜」トレーラー映像",
                                     length = 217000,
@@ -548,7 +548,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
@@ -556,7 +556,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "06772c49-9d19-43d9-8012-79b3c3add6d5",
                                     name = "「アオハル」トレーラー映像",
                                     length = 47000,
@@ -572,7 +572,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                                             name = "supercell",
                                             sortName = "supercell",
@@ -580,7 +580,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                         ),
                                     ),
                                 ),
-                                recording = RecordingMusicBrainzModel(
+                                recording = RecordingMusicBrainzNetworkModel(
                                     id = "946f6d26-a685-4ea6-8d3e-9b1c5996d063",
                                     name = "「Perfect Day」Music Clip",
                                     length = 297000,
@@ -593,7 +593,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 artistCredits = listOf(
                     ArtistCreditMusicBrainzModel(
                         name = "supercell",
-                        artist = ArtistMusicBrainzModel(
+                        artist = ArtistMusicBrainzNetworkModel(
                             id = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                             name = "supercell",
                             sortName = "supercell",
@@ -607,7 +607,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 labelInfoList = listOf(
                     LabelInfo(
                         catalogNumber = "SRCL-7486, SRCL-7487",
-                        label = LabelMusicBrainzModel(
+                        label = LabelMusicBrainzNetworkModel(
                             id = "dee62e1a-cfd1-466f-b578-846a0fdf435a",
                             name = "Sony Records",
                             type = "Imprint",
@@ -616,7 +616,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         ),
                     ),
                 ),
-                releaseGroup = ReleaseGroupMusicBrainzModel(
+                releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
                     id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                     primaryType = "Album",
                     name = "Today Is A Beautiful Day",
@@ -803,7 +803,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
         media: List<MediumMusicBrainzModel>?,
     ): ReleaseRepository {
         return createReleaseRepository(
-            musicBrainzModel = ReleaseMusicBrainzModel(
+            musicBrainzModel = ReleaseMusicBrainzNetworkModel(
                 id = "f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0",
                 name = "真・女神転生30th Anniversary Special Sound Compilation",
                 date = "2023-07-26",
@@ -824,7 +824,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
                 releaseEvents = listOf(
                     ReleaseEventMusicBrainzModel(
-                        area = AreaMusicBrainzModel(
+                        area = AreaMusicBrainzNetworkModel(
                             id = "2db42837-c832-3c27-b4a3-08198f75693c",
                             name = "Japan",
                             sortName = "Japan",
@@ -837,7 +837,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 artistCredits = listOf(
                     ArtistCreditMusicBrainzModel(
                         name = "アトラスサウンドチーム",
-                        artist = ArtistMusicBrainzModel(
+                        artist = ArtistMusicBrainzNetworkModel(
                             id = "37e85ee8-366a-4f17-a011-de94b6632408",
                             name = "アトラスサウンドチーム",
                             sortName = "ATLUS Sound Team",
@@ -848,7 +848,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         joinPhrase = "",
                     ),
                 ),
-                releaseGroup = ReleaseGroupMusicBrainzModel(
+                releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
                     id = "a5a83577-ddca-4428-bf6b-b852296bc5f3",
                     primaryType = "Album",
                     secondaryTypes = listOf(
@@ -883,7 +883,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                             artistCredits = listOf(
                                 ArtistCreditMusicBrainzModel(
                                     name = "アトラスサウンドチーム",
-                                    artist = ArtistMusicBrainzModel(
+                                    artist = ArtistMusicBrainzNetworkModel(
                                         id = "37e85ee8-366a-4f17-a011-de94b6632408",
                                         name = "アトラスサウンドチーム",
                                         sortName = "ATLUS Sound Team",
@@ -894,7 +894,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                     joinPhrase = "",
                                 ),
                             ),
-                            recording = RecordingMusicBrainzModel(
+                            recording = RecordingMusicBrainzNetworkModel(
                                 id = "994b2961-3527-43f7-830d-7c817d286577",
                                 name = "Demo",
                                 length = 18733,
@@ -1015,7 +1015,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                             artistCredits = listOf(
                                 ArtistCreditMusicBrainzModel(
                                     name = "増子司",
-                                    artist = ArtistMusicBrainzModel(
+                                    artist = ArtistMusicBrainzNetworkModel(
                                         id = "ff3c73e4-234e-41ba-8000-6948a2d0fd6d",
                                         name = "増子司",
                                         sortName = "Masuko, Tsukasa",
@@ -1026,7 +1026,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                     joinPhrase = "",
                                 ),
                             ),
-                            recording = RecordingMusicBrainzModel(
+                            recording = RecordingMusicBrainzNetworkModel(
                                 id = "994b2961-3527-43f7-830d-7c817d286577",
                                 name = "Demo",
                                 length = 18733,
@@ -1153,7 +1153,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
     fun `release with multiple labels and catalog numbers`() = runTest {
         val releaseRepository = createReleaseRepository(
             musicBrainzModel = releaseWithSameCatalogNumberWithDifferentLabels.copy(
-                releaseGroup = ReleaseGroupMusicBrainzModel(
+                releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
                     id = "a73cecde-0923-40ad-aad1-e8c24ba6c3d2",
                     name = "Red",
                     primaryType = "Album",

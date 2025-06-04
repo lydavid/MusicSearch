@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.shared.domain.release.Track
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 
 /**
  * A [Track] in [MediumMusicBrainzModel].
@@ -18,6 +18,6 @@ data class TrackMusicBrainzModel(
     @SerialName("length") override val length: Int? = null,
 
     @SerialName("artist-credit") val artistCredits: List<ArtistCreditMusicBrainzModel>? = null,
-    @SerialName("recording") val recording: RecordingMusicBrainzModel,
+    @SerialName("recording") val recording: RecordingMusicBrainzNetworkModel,
 //    @SerialName("relations") val relations: List<Relation>? = null,
 ) : Track

@@ -8,7 +8,7 @@ import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzMo
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 @Serializable
-data class PlaceMusicBrainzModel(
+data class PlaceMusicBrainzNetworkModel(
     @SerialName("id") override val id: String,
     @SerialName("name") override val name: String,
     @SerialName("disambiguation") override val disambiguation: String? = null,
@@ -18,9 +18,9 @@ data class PlaceMusicBrainzModel(
     @SerialName("coordinates") override val coordinates: CoordinatesMusicBrainzModel? = null,
     @SerialName("life-span") override val lifeSpan: LifeSpanMusicBrainzModel? = null,
 
-    @SerialName("area") val area: AreaMusicBrainzModel? = null,
+    @SerialName("area") val area: AreaMusicBrainzNetworkModel? = null,
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
-) : MusicBrainzModel(), Place
+) : MusicBrainzNetworkModel(), Place
 
 @Serializable
 data class CoordinatesMusicBrainzModel(

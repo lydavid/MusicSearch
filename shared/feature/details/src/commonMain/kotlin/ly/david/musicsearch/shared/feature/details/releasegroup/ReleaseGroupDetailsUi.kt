@@ -7,6 +7,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -17,7 +18,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 @Composable
 internal fun ReleaseGroupDetailsUi(
     releaseGroup: ReleaseGroupDetailsModel,
-    detailsUiState: ReleaseGroupDetailsUiState,
+    detailsUiState: DetailsTabUiState,
     modifier: Modifier = Modifier,
     filterText: String = "",
     onImageClick: () -> Unit = {},

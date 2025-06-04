@@ -9,7 +9,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseWorksResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -23,7 +23,7 @@ class WorksListRepositoryImpl(
     private val workDao: WorkDao,
     private val browseApi: BrowseApi,
 ) : WorksListRepository,
-    BrowseEntities<WorkListItemModel, WorkMusicBrainzModel, BrowseWorksResponse>(
+    BrowseEntities<WorkListItemModel, WorkMusicBrainzNetworkModel, BrowseWorksResponse>(
         browseEntity = MusicBrainzEntity.WORK,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
     ) {
@@ -90,7 +90,7 @@ class WorksListRepositoryImpl(
     override fun insertAllLinkingModels(
         entityId: String,
         entity: MusicBrainzEntity,
-        musicBrainzModels: List<WorkMusicBrainzModel>,
+        musicBrainzModels: List<WorkMusicBrainzNetworkModel>,
     ) {
         workDao.insertAll(musicBrainzModels)
         when (entity) {

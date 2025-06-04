@@ -5,7 +5,7 @@ import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.data.database.dao.RelationDao
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
@@ -29,7 +29,7 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
         val sparseRepository = createAreaRepository(
-            musicBrainzModel = AreaMusicBrainzModel(
+            musicBrainzModel = AreaMusicBrainzNetworkModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",
             ),
@@ -47,7 +47,7 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
         )
 
         val allDataRepository = createAreaRepository(
-            musicBrainzModel = AreaMusicBrainzModel(
+            musicBrainzModel = AreaMusicBrainzNetworkModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",
                 type = COUNTRY,

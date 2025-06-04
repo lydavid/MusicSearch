@@ -1,16 +1,16 @@
 package ly.david.data.test
 
 import ly.david.musicsearch.data.musicbrainz.api.BrowseCollectionsResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 
-val fakeAreaCollection = CollectionMusicBrainzModel(
+val fakeAreaCollection = CollectionMusicBrainzNetworkModel(
     id = "fakeAreaCollection",
     name = "My areas",
     entityType = SerializableMusicBrainzEntity.AREA,
 )
 
-val fakeArtistCollection = CollectionMusicBrainzModel(
+val fakeArtistCollection = CollectionMusicBrainzNetworkModel(
     id = "fakeArtistCollection",
     name = "My artists",
     entityType = SerializableMusicBrainzEntity.ARTIST,

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.Browsable
-import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.BrowseMethod
@@ -19,7 +19,7 @@ import ly.david.musicsearch.shared.domain.network.resourceUriPlural
 
 abstract class BrowseEntities<
     LI : ListItemModel,
-    MB : MusicBrainzModel,
+    MB : MusicBrainzNetworkModel,
     B : Browsable<MB>,
     >(
     val browseEntity: MusicBrainzEntity,

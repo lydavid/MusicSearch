@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToArtistListItemModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
@@ -26,7 +26,7 @@ class ArtistDao(
 ) : EntityDao {
     override val transacter = database.artistQueries
 
-    private fun ArtistMusicBrainzModel.toDatabaseModel() = Artist(
+    private fun ArtistMusicBrainzNetworkModel.toDatabaseModel() = Artist(
         id = id,
         name = name,
         sort_name = sortName,
@@ -46,13 +46,13 @@ class ArtistDao(
     /**
      * Appropriate for details screen, where we expect to have more data than previously found browsing.
      */
-    fun insertReplace(artist: ArtistMusicBrainzModel) {
+    fun insertReplace(artist: ArtistMusicBrainzNetworkModel) {
         transacter.insertOrReplaceArtist(
             artist = artist.toDatabaseModel(),
         )
     }
 
-    fun insertAll(artists: List<ArtistMusicBrainzModel>) {
+    fun insertAll(artists: List<ArtistMusicBrainzNetworkModel>) {
         transacter.transaction {
             artists.forEach { artist ->
                 transacter.insertOrIgnoreArtist(

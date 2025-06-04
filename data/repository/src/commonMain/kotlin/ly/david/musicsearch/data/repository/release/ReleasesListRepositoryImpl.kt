@@ -11,7 +11,7 @@ import ly.david.musicsearch.data.musicbrainz.api.ARTIST_CREDITS
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.api.LABELS
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -25,7 +25,7 @@ class ReleasesListRepositoryImpl(
     private val browseApi: BrowseApi,
     private val releaseDao: ReleaseDao,
 ) : ReleasesListRepository,
-    BrowseEntities<ReleaseListItemModel, ReleaseMusicBrainzModel, BrowseReleasesResponse>(
+    BrowseEntities<ReleaseListItemModel, ReleaseMusicBrainzNetworkModel, BrowseReleasesResponse>(
         browseEntity = MusicBrainzEntity.RELEASE,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
     ) {
@@ -111,7 +111,7 @@ class ReleasesListRepositoryImpl(
     override fun insertAllLinkingModels(
         entityId: String,
         entity: MusicBrainzEntity,
-        musicBrainzModels: List<ReleaseMusicBrainzModel>,
+        musicBrainzModels: List<ReleaseMusicBrainzNetworkModel>,
     ) {
         releaseDao.insertAll(musicBrainzModels)
         when (entity) {

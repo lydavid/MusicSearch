@@ -1,25 +1,25 @@
 package ly.david.data.test
 
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.CoverArtArchiveMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
-import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.TextRepresentationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 
-val underPressureRemasteredReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
+val underPressureRemasteredReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
     id = "eac6d0cd-1ed0-4e17-b5b0-d3cfc40547b2",
     name = "Under Pressure",
     date = "1988-11",
     artistCredits = listOf(
         ArtistCreditMusicBrainzModel(
-            artist = ArtistMusicBrainzModel(
+            artist = ArtistMusicBrainzNetworkModel(
                 id = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
                 name = "Queen",
                 sortName = "Queen",
@@ -31,7 +31,7 @@ val underPressureRemasteredReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
             joinPhrase = " & ",
         ),
         ArtistCreditMusicBrainzModel(
-            artist = ArtistMusicBrainzModel(
+            artist = ArtistMusicBrainzNetworkModel(
                 id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
                 name = "David Bowie",
                 sortName = "Bowie, David",
@@ -45,7 +45,7 @@ val underPressureRemasteredReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     ),
     releaseEvents = listOf(
         ReleaseEventMusicBrainzModel(
-            area = AreaMusicBrainzModel(
+            area = AreaMusicBrainzNetworkModel(
                 id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
                 name = "United Kingdom",
                 sortName = "United Kingdom",
@@ -80,13 +80,13 @@ val underPressureRemasterOf = RelationMusicBrainzModel(
     release = underPressureRemasteredReleaseMusicBrainzModel,
 )
 
-val underPressureReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
+val underPressureReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
     id = "61735bf8-219e-3164-a94c-b74b1482fd01",
     name = "Under Pressure",
     date = "1981-10",
     artistCredits = listOf(
         ArtistCreditMusicBrainzModel(
-            artist = ArtistMusicBrainzModel(
+            artist = ArtistMusicBrainzNetworkModel(
                 id = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
                 name = "Queen",
                 sortName = "Queen",
@@ -98,7 +98,7 @@ val underPressureReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
             joinPhrase = " & ",
         ),
         ArtistCreditMusicBrainzModel(
-            artist = ArtistMusicBrainzModel(
+            artist = ArtistMusicBrainzNetworkModel(
                 id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
                 name = "David Bowie",
                 sortName = "Bowie, David",
@@ -112,7 +112,7 @@ val underPressureReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     ),
     releaseEvents = listOf(
         ReleaseEventMusicBrainzModel(
-            area = AreaMusicBrainzModel(
+            area = AreaMusicBrainzNetworkModel(
                 id = "489ce91b-6658-3307-9877-795b68554c98",
                 name = "United States",
                 sortName = "United States",
@@ -144,13 +144,13 @@ val underPressureReleaseMusicBrainzModelWithLabel = underPressureReleaseMusicBra
     ),
 )
 
-val underPressureJapanReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
+val underPressureJapanReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
     id = "3e8fe20d-8d8b-454d-9350-2078007d4788",
     name = "Under Pressure",
     date = "1991",
     artistCredits = listOf(
         ArtistCreditMusicBrainzModel(
-            artist = ArtistMusicBrainzModel(
+            artist = ArtistMusicBrainzNetworkModel(
                 id = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
                 name = "Queen",
                 sortName = "Queen",
@@ -162,7 +162,7 @@ val underPressureJapanReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
             joinPhrase = " & ",
         ),
         ArtistCreditMusicBrainzModel(
-            artist = ArtistMusicBrainzModel(
+            artist = ArtistMusicBrainzNetworkModel(
                 id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
                 name = "David Bowie",
                 sortName = "Bowie, David",
@@ -176,7 +176,7 @@ val underPressureJapanReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     ),
     releaseEvents = listOf(
         ReleaseEventMusicBrainzModel(
-            area = AreaMusicBrainzModel(
+            area = AreaMusicBrainzNetworkModel(
                 id = "2db42837-c832-3c27-b4a3-08198f75693c",
                 name = "Japan",
                 sortName = "Japan",
@@ -200,7 +200,7 @@ val underPressureJapanReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     disambiguation = "",
 )
 
-val utaNoUtaReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
+val utaNoUtaReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
     id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
     name = "ウタの歌 ONE PIECE FILM RED",
     disambiguation = "初回限定盤",
@@ -235,7 +235,7 @@ val releaseWith3CatalogNumbersWithSameLabel = utaNoUtaReleaseMusicBrainzModel.co
     labelInfoList = listOf(
         LabelInfo(
             catalogNumber = "TYBX-10260",
-            label = LabelMusicBrainzModel(
+            label = LabelMusicBrainzNetworkModel(
                 id = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
                 name = "Virgin Music",
                 type = "Original Production",
@@ -246,7 +246,7 @@ val releaseWith3CatalogNumbersWithSameLabel = utaNoUtaReleaseMusicBrainzModel.co
         ),
         LabelInfo(
             catalogNumber = "TYCT-69245",
-            label = LabelMusicBrainzModel(
+            label = LabelMusicBrainzNetworkModel(
                 id = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
                 name = "Virgin Music",
                 type = "Original Production",
@@ -257,7 +257,7 @@ val releaseWith3CatalogNumbersWithSameLabel = utaNoUtaReleaseMusicBrainzModel.co
         ),
         LabelInfo(
             catalogNumber = "TYCX-60187",
-            label = LabelMusicBrainzModel(
+            label = LabelMusicBrainzNetworkModel(
                 id = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
                 name = "Virgin Music",
                 type = "Original Production",
@@ -269,7 +269,7 @@ val releaseWith3CatalogNumbersWithSameLabel = utaNoUtaReleaseMusicBrainzModel.co
     ),
 )
 
-val weirdAlGreatestHitsReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
+val weirdAlGreatestHitsReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
     id = "9eef0b6f-9aa2-4573-8f3e-53d1a4826e3f",
     name = "“Weird Al” Yankovic’s Greatest Hits",
     disambiguation = "",
@@ -287,7 +287,7 @@ val weirdAlGreatestHitsReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     ),
     artistCredits = listOf(
         ArtistCreditMusicBrainzModel(
-            artist = ArtistMusicBrainzModel(
+            artist = ArtistMusicBrainzNetworkModel(
                 id = "7746d775-9550-4360-b8d5-c37bd448ce01",
                 name = "“Weird Al” Yankovic",
                 sortName = "Yankovic, Weird Al",
@@ -300,7 +300,7 @@ val weirdAlGreatestHitsReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     ),
     releaseEvents = listOf(
         ReleaseEventMusicBrainzModel(
-            area = AreaMusicBrainzModel(
+            area = AreaMusicBrainzNetworkModel(
                 id = "aa95182f-df0a-3ad6-8bfb-4b63482cd276",
                 name = "Afghanistan",
                 sortName = "Afghanistan",
@@ -323,7 +323,7 @@ val weirdAlGreatestHitsReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     ),
 )
 
-val redReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
+val redReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
     id = "5dc1f2db-867c-4de5-92f0-9d8440b672e3",
     name = "Red",
     disambiguation = "",
@@ -340,7 +340,7 @@ val redReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
     ),
     artistCredits = listOf(
         ArtistCreditMusicBrainzModel(
-            artist = ArtistMusicBrainzModel(
+            artist = ArtistMusicBrainzNetworkModel(
                 id = "20244d07-534f-4eff-b4d4-930878889970",
                 name = "Taylor Swift",
                 sortName = "Swift, Taylor",
@@ -359,7 +359,7 @@ val redReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
             date = "2012-10-22",
         ),
         ReleaseEventMusicBrainzModel(
-            area = AreaMusicBrainzModel(
+            area = AreaMusicBrainzNetworkModel(
                 id = "c6500277-9a3d-349b-bf30-41afdbf42add",
                 name = "Italy",
                 sortName = "Italy",
@@ -370,7 +370,7 @@ val redReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
             date = "2012-10-23",
         ),
         ReleaseEventMusicBrainzModel(
-            area = AreaMusicBrainzModel(
+            area = AreaMusicBrainzNetworkModel(
                 id = "471c46a7-afc5-31c4-923c-d0444f5053a4",
                 name = "Spain",
                 sortName = "Spain",
@@ -381,7 +381,7 @@ val redReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
             date = "2012-10-23",
         ),
         ReleaseEventMusicBrainzModel(
-            area = AreaMusicBrainzModel(
+            area = AreaMusicBrainzNetworkModel(
                 id = "ef1b7cc0-cd26-36f4-8ea0-04d9623786c7",
                 name = "Netherlands",
                 sortName = "Netherlands",
@@ -392,7 +392,7 @@ val redReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
             date = "2012-10-26",
         ),
         ReleaseEventMusicBrainzModel(
-            area = AreaMusicBrainzModel(
+            area = AreaMusicBrainzNetworkModel(
                 id = "08310658-51eb-3801-80de-5a0739207115",
                 name = "France",
                 sortName = "France",
@@ -412,7 +412,7 @@ val releaseWithSameCatalogNumberWithDifferentLabels = redReleaseMusicBrainzModel
     labelInfoList = listOf(
         LabelInfo(
             catalogNumber = "3717453",
-            label = LabelMusicBrainzModel(
+            label = LabelMusicBrainzNetworkModel(
                 id = "1a917e6f-54f5-4964-bebf-5d4e2442ceb4",
                 name = "Big Machine Records",
                 type = "Production",
@@ -428,7 +428,7 @@ val releaseWithSameCatalogNumberWithDifferentLabels = redReleaseMusicBrainzModel
     ),
 )
 
-val bandoriCoverCollection8ReleaseMusicBrainzModel = ReleaseMusicBrainzModel(
+val bandoriCoverCollection8ReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
     id = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
     name = "バンドリ！ ガールズバンドパーティ！ カバーコレクション Vol.8",
 )

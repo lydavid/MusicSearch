@@ -8,7 +8,7 @@ import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrai
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 @Serializable
-data class ReleaseGroupMusicBrainzModel(
+data class ReleaseGroupMusicBrainzNetworkModel(
 
     @SerialName("id") override val id: String,
     @SerialName("title") override val name: String = "",
@@ -29,7 +29,7 @@ data class ReleaseGroupMusicBrainzModel(
     @SerialName("media") val media: List<MediumMusicBrainzModel>? = null,
 
     // lookup only, inc=releases
-    @SerialName("releases") val releases: List<ReleaseMusicBrainzModel>? = null,
+    @SerialName("releases") val releases: List<ReleaseMusicBrainzNetworkModel>? = null,
 
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
-) : MusicBrainzModel(), ReleaseGroup
+) : MusicBrainzNetworkModel(), ReleaseGroup

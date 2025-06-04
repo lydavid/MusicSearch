@@ -9,7 +9,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -23,7 +23,7 @@ class PlacesListRepositoryImpl(
     private val placeDao: PlaceDao,
     private val browseApi: BrowseApi,
 ) : PlacesListRepository,
-    BrowseEntities<PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
+    BrowseEntities<PlaceListItemModel, PlaceMusicBrainzNetworkModel, BrowsePlacesResponse>(
         browseEntity = MusicBrainzEntity.PLACE,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
     ) {
@@ -92,7 +92,7 @@ class PlacesListRepositoryImpl(
     override fun insertAllLinkingModels(
         entityId: String,
         entity: MusicBrainzEntity,
-        musicBrainzModels: List<PlaceMusicBrainzModel>,
+        musicBrainzModels: List<PlaceMusicBrainzNetworkModel>,
     ) {
         placeDao.insertAll(musicBrainzModels)
         when (entity) {

@@ -31,11 +31,11 @@ import ly.david.musicsearch.data.musicbrainz.api.SearchArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchEventsResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
@@ -128,7 +128,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                     return SearchArtistsResponse(
                         count = 1,
                         artists = listOf(
-                            ArtistMusicBrainzModel(
+                            ArtistMusicBrainzNetworkModel(
                                 id = "1",
                                 name = "Various Artists",
                             ),
@@ -171,19 +171,19 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                     return SearchArtistsResponse(
                         count = 4,
                         artists = listOf(
-                            ArtistMusicBrainzModel(
+                            ArtistMusicBrainzNetworkModel(
                                 id = "89ad4ac3-39f7-470e-963a-56509c546377",
                                 name = "Various Artists",
                             ),
-                            ArtistMusicBrainzModel(
+                            ArtistMusicBrainzNetworkModel(
                                 id = "b972f589-fb0e-474e-b64a-803b0364fa75",
                                 name = "Wolfgang Amadeus Mozart",
                             ),
-                            ArtistMusicBrainzModel(
+                            ArtistMusicBrainzNetworkModel(
                                 id = "125ec42a-7229-4250-afc5-e057484327fe",
                                 name = "[unknown]",
                             ),
-                            ArtistMusicBrainzModel(
+                            ArtistMusicBrainzNetworkModel(
                                 id = "7364dea6-ca9a-48e3-be01-b44ad0d19897",
                                 name = "a-ha",
                             ),
@@ -236,7 +236,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                     return SearchAreasResponse(
                         count = 1,
                         areas = listOf(
-                            AreaMusicBrainzModel(
+                            AreaMusicBrainzNetworkModel(
                                 id = "f42c1e2a-b7db-4acf-9742-1889b9c6d530",
                                 name = "A Coruña",
                             ),
@@ -252,7 +252,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                     return SearchArtistsResponse(
                         count = 1,
                         artists = listOf(
-                            ArtistMusicBrainzModel(
+                            ArtistMusicBrainzNetworkModel(
                                 id = "89ad4ac3-39f7-470e-963a-56509c546377",
                                 name = "Various Artists",
                             ),
@@ -310,11 +310,11 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                     return SearchEventsResponse(
                         count = 2,
                         events = listOf(
-                            EventMusicBrainzModel(
+                            EventMusicBrainzNetworkModel(
                                 id = "1bc74971-d5c8-4a21-b761-c24e74efb9b4",
                                 name = "Lollapalooza 2024",
                             ),
-                            EventMusicBrainzModel(
+                            EventMusicBrainzNetworkModel(
                                 id = "1bc74971-d5c8-4a21-b761-c24e74efb9b4",
                                 name = "Lollapalooza 2024",
                             ),
@@ -358,12 +358,12 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                     return SearchReleasesResponse(
                         count = 1,
                         releases = listOf(
-                            ReleaseMusicBrainzModel(
+                            ReleaseMusicBrainzNetworkModel(
                                 id = "0bc23883-16c2-4f9b-b3f5-b3685e530435",
                                 name = "Keep The Beats!",
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
-                                        artist = ArtistMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
                                             id = "122cce39-8303-4801-989e-cefa438bd98d",
                                             name = "Girls Dead Monster",
                                         ),
@@ -402,7 +402,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
     fun `inserting country from release event before searching for it will still show type`() = runTest {
         createReleaseRepository(
             redReleaseMusicBrainzModel.copy(
-                releaseGroup = ReleaseGroupMusicBrainzModel(
+                releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
                     id = "a73cecde-0923-40ad-aad1-e8c24ba6c3d2",
                     name = "Red",
                     primaryType = "Album",
@@ -423,7 +423,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                     return SearchAreasResponse(
                         count = 1,
                         areas = listOf(
-                            AreaMusicBrainzModel(
+                            AreaMusicBrainzNetworkModel(
                                 id = "c6500277-9a3d-349b-bf30-41afdbf42add",
                                 name = "Italy",
                                 sortName = "Italy",

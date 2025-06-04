@@ -3,13 +3,13 @@ package ly.david.data.test
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 
-val bandAid = ArtistMusicBrainzModel(
+val bandAid = ArtistMusicBrainzNetworkModel(
     id = "0ecaa896-58fa-4dca-b53d-8da7bc5f59c5",
     name = "Band Aid",
     type = "Group",
@@ -17,7 +17,7 @@ val bandAid = ArtistMusicBrainzModel(
     disambiguation = "UK charity supergroup",
 )
 
-val carlosAlomar = ArtistMusicBrainzModel(
+val carlosAlomar = ArtistMusicBrainzNetworkModel(
     id = "0719999c-d1bf-4e4b-b0a7-61a5384d0039",
     name = "Carlos Alomar",
     type = "Person",
@@ -34,7 +34,7 @@ val davidBowieDeezer = UrlMusicBrainzModel(
     resource = "https://www.deezer.com/artist/997",
 )
 
-val davidBowieArtistMusicBrainzModel = ArtistMusicBrainzModel(
+val davidBowieArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
     name = "David Bowie",
     type = "Person",
@@ -78,7 +78,7 @@ val davidBowieArtistMusicBrainzModel = ArtistMusicBrainzModel(
     ),
 )
 
-val queenArtistMusicBrainzModel = ArtistMusicBrainzModel(
+val queenArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     id = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
     name = "Queen",
     type = "Group",
@@ -86,7 +86,7 @@ val queenArtistMusicBrainzModel = ArtistMusicBrainzModel(
     disambiguation = "UK rock group",
 )
 
-val adoArtistMusicBrainzModel = ArtistMusicBrainzModel(
+val adoArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     id = "e134b52f-2e9e-4734-9bc3-bea9648d1fa1",
     type = "Person",
     sortName = "Ado",
@@ -101,7 +101,7 @@ val adoArtistCreditMusicBrainzModel = ArtistCreditMusicBrainzModel(
     joinPhrase = "",
 )
 
-val kissArtistMusicBrainzModel = ArtistMusicBrainzModel(
+val kissArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     id = "e1f1e33e-2e4c-4d43-b91b-7064068d3283",
     type = "Group",
     sortName = "KISS",
@@ -117,7 +117,7 @@ val kissArtistMusicBrainzModel = ArtistMusicBrainzModel(
     countryCode = "US",
 )
 
-val variousArtistsArtistMusicBrainzModel = ArtistMusicBrainzModel(
+val variousArtistsArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     id = "89ad4ac3-39f7-470e-963a-56509c546377",
     name = "Various Artists",
     sortName = "Various Artists",
@@ -131,7 +131,7 @@ val variousArtistsArtistMusicBrainzModel = ArtistMusicBrainzModel(
     ),
 )
 
-val roseliaArtistMusicBrainzModel = ArtistMusicBrainzModel(
+val roseliaArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     id = "adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
     name = "Roselia",
     sortName = "Roselia",
@@ -143,7 +143,7 @@ val roseliaArtistMusicBrainzModel = ArtistMusicBrainzModel(
     ),
 )
 
-val itouKanakoArtistMusicBrainzModel = ArtistMusicBrainzModel(
+val itouKanakoArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     id = "eee65fbc-ead0-4c01-b385-a6f563c418d3",
     name = "いとうかなこ",
     disambiguation = "singer",
@@ -155,7 +155,7 @@ val itouKanakoArtistMusicBrainzModel = ArtistMusicBrainzModel(
     ),
 )
 
-val tchaikovskyArtistMusicBrainzModel = ArtistMusicBrainzModel(
+val tchaikovskyArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     id = "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
     name = "Пётр Ильич Чайковский",
     disambiguation = "Russian romantic composer",
@@ -172,7 +172,7 @@ val tchaikovskyArtistMusicBrainzModel = ArtistMusicBrainzModel(
     countryCode = "RU",
 )
 
-val berlinerPhilharmonikerArtistMusicBrainzModel = ArtistMusicBrainzModel(
+val berlinerPhilharmonikerArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     id = "dea28aa9-1086-4ffa-8739-0ccc759de1ce",
     name = "Berliner Philharmoniker",
     disambiguation = "",
@@ -185,14 +185,14 @@ val berlinerPhilharmonikerArtistMusicBrainzModel = ArtistMusicBrainzModel(
     ),
     isnis = listOf("0000000120191498", "0000000121144247"),
     countryCode = null,
-    area = AreaMusicBrainzModel(
+    area = AreaMusicBrainzNetworkModel(
         id = "c9ac1239-e832-41bc-9930-e252a1fd1105",
         name = "Berlin",
         countrySubDivisionCodes = listOf("DE-BE"),
     ),
 )
 
-val aimerArtistMusicBrainzModel = ArtistMusicBrainzModel(
+val aimerArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     id = "9388cee2-7d57-4598-905f-106019b267d3",
     name = "Aimer",
     disambiguation = "Japanese pop singer",

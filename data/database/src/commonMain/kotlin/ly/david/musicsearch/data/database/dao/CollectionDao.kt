@@ -7,7 +7,7 @@ import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.getCount
 import lydavidmusicsearchdatadatabase.Collection
 
@@ -33,7 +33,7 @@ class CollectionDao(
         }
     }
 
-    private fun insertRemote(collection: CollectionMusicBrainzModel) {
+    private fun insertRemote(collection: CollectionMusicBrainzNetworkModel) {
         collection.run {
             transacter.insert(
                 Collection(
@@ -49,7 +49,7 @@ class CollectionDao(
         }
     }
 
-    fun insertAllRemote(collections: List<CollectionMusicBrainzModel>) {
+    fun insertAllRemote(collections: List<CollectionMusicBrainzNetworkModel>) {
         transacter.transaction {
             collections.forEach { collection ->
                 insertRemote(collection)

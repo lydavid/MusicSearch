@@ -11,7 +11,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.TrackDao
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.release.ReleaseRepositoryImpl
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -32,14 +32,14 @@ interface TestReleaseRepository {
     val relationDao: RelationDao
 
     fun createReleaseRepository(
-        musicBrainzModel: ReleaseMusicBrainzModel,
+        musicBrainzModel: ReleaseMusicBrainzNetworkModel,
     ): ReleaseRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupRelease(
                     releaseId: String,
                     include: String,
-                ): ReleaseMusicBrainzModel {
+                ): ReleaseMusicBrainzNetworkModel {
                     return musicBrainzModel
                 }
             },
@@ -61,7 +61,7 @@ interface TestReleaseRepository {
                 override suspend fun lookupRelease(
                     releaseId: String,
                     include: String,
-                ): ReleaseMusicBrainzModel {
+                ): ReleaseMusicBrainzNetworkModel {
                     return musicBrainzModel
                 }
             },

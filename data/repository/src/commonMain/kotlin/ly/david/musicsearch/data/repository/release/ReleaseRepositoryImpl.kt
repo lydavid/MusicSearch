@@ -18,7 +18,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.TrackAndMedium
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
@@ -107,7 +107,7 @@ class ReleaseRepositoryImpl(
         }
     }
 
-    private fun cache(release: ReleaseMusicBrainzModel) {
+    private fun cache(release: ReleaseMusicBrainzNetworkModel) {
         releaseDao.withTransaction {
             release.releaseGroup?.let { releaseGroup ->
                 releaseGroupDao.insertReleaseGroup(releaseGroup)
