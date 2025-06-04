@@ -23,7 +23,10 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
@@ -48,7 +51,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 )
 @Composable
 internal fun InstrumentUi(
-    state: InstrumentUiState,
+    state: DetailsUiState<InstrumentDetailsModel>,
     entityId: String,
     modifier: Modifier = Modifier,
 ) {
@@ -67,7 +70,7 @@ internal fun InstrumentUi(
     val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = pagerState.currentPage) {
-        eventSink(InstrumentUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
+        eventSink(DetailsUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
     }
 
     Scaffold(
@@ -85,7 +88,7 @@ internal fun InstrumentUi(
         topBar = {
             TopAppBarWithFilter(
                 onBack = {
-                    eventSink(InstrumentUiEvent.NavigateUp)
+                    eventSink(DetailsUiEvent.NavigateUp)
                 },
                 entity = entity,
                 title = state.title,
@@ -97,7 +100,7 @@ internal fun InstrumentUi(
                         onClick = {
                             when (selectedTab) {
                                 Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
-                                else -> eventSink(InstrumentUiEvent.ForceRefreshDetails)
+                                else -> eventSink(DetailsUiEvent.ForceRefreshDetails)
                             }
                         },
                     )
@@ -138,16 +141,17 @@ internal fun InstrumentUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        handledException = state.handledException,
+                        isLoading = state.detailsTabUiState.isLoading,
+                        handledException = state.detailsTabUiState.handledException,
                         onRefresh = {
-                            eventSink(InstrumentUiEvent.ForceRefreshDetails)
+                            eventSink(DetailsUiEvent.ForceRefreshDetails)
                         },
-                        detailsModel = state.instrument,
+                        detailsModel = state.detailsModel,
                     ) { instrument ->
                         InstrumentDetailsUi(
                             instrument = instrument,
+                            detailsTabUiState = state.detailsTabUiState,
                             filterText = state.topAppBarFilterState.filterText,
-                            lazyListState = state.detailsLazyListState,
                         )
                     }
                 }
@@ -162,7 +166,7 @@ internal fun InstrumentUi(
                         lazyListState = state.relationsUiState.lazyListState,
                         onItemClick = { entity, id, title ->
                             eventSink(
-                                InstrumentUiEvent.ClickItem(
+                                DetailsUiEvent.ClickItem(
                                     entity = entity,
                                     id = id,
                                     title = title,

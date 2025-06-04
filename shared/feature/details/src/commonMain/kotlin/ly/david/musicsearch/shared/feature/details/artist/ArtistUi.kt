@@ -201,7 +201,7 @@ internal fun ArtistUi(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        showLoading = state.detailsTabUiState.isLoading,
+                        isLoading = state.detailsTabUiState.isLoading,
                         handledException = state.detailsTabUiState.handledException,
                         onRefresh = {
                             eventSink(DetailsUiEvent.ForceRefreshDetails)

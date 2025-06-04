@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -23,14 +24,14 @@ import ly.david.musicsearch.ui.core.theme.TextStyles
 internal fun InstrumentDetailsUi(
     instrument: InstrumentDetailsModel,
     modifier: Modifier = Modifier,
+    detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    lazyListState: LazyListState = rememberLazyListState(),
 ) {
     val strings = LocalStrings.current
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState,
+        state = detailsTabUiState.lazyListState,
     ) {
         item {
             instrument.run {

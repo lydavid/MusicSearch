@@ -209,6 +209,7 @@ internal fun AreaUiInternal(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        isLoading = state.detailsTabUiState.isLoading,
                         handledException = state.detailsTabUiState.handledException,
                         onRefresh = {
                             eventSink(DetailsUiEvent.ForceRefreshDetails)

@@ -21,12 +21,12 @@ fun <T> DetailsWithErrorHandling(
     detailsModel: T?,
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
-    showLoading: Boolean = false,
+    isLoading: Boolean = false,
     handledException: HandledException? = null,
     detailsScreen: @Composable ((T) -> Unit),
 ) {
     val refreshState = rememberPullRefreshState(
-        refreshing = showLoading,
+        refreshing = isLoading,
         onRefresh = { onRefresh() },
     )
     Box(
@@ -48,7 +48,7 @@ fun <T> DetailsWithErrorHandling(
                 detailsScreen(detailsModel)
 
                 PullRefreshIndicator(
-                    refreshing = showLoading,
+                    refreshing = isLoading,
                     state = refreshState,
                     modifier = Modifier
                         .align(Alignment.TopCenter),

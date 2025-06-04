@@ -6,6 +6,7 @@ import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventDetailsModel
+import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.feature.details.area.AreaPresenter
@@ -19,7 +20,6 @@ import ly.david.musicsearch.shared.feature.details.genre.GenreUi
 import ly.david.musicsearch.shared.feature.details.genre.GenreUiState
 import ly.david.musicsearch.shared.feature.details.instrument.InstrumentPresenter
 import ly.david.musicsearch.shared.feature.details.instrument.InstrumentUi
-import ly.david.musicsearch.shared.feature.details.instrument.InstrumentUiState
 import ly.david.musicsearch.shared.feature.details.label.LabelPresenter
 import ly.david.musicsearch.shared.feature.details.label.LabelUi
 import ly.david.musicsearch.shared.feature.details.label.LabelUiState
@@ -116,6 +116,8 @@ val detailsFeatureModule = module {
                                 navigator = navigator,
                                 repository = get(),
                                 incrementLookupHistory = get(),
+                                imageMetadataRepository = get(),
+                                entitiesListPresenter = get(),
                                 relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
@@ -285,7 +287,7 @@ val detailsFeatureModule = module {
                         }
 
                         MusicBrainzEntity.INSTRUMENT -> {
-                            ui<InstrumentUiState> { state, modifier ->
+                            ui<DetailsUiState<InstrumentDetailsModel>> { state, modifier ->
                                 InstrumentUi(
                                     state = state,
                                     entityId = screen.id,
