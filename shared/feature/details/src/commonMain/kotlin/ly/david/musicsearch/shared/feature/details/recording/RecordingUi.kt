@@ -29,7 +29,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
-import ly.david.musicsearch.ui.common.list.EntitiesListUiState
+import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
@@ -190,7 +190,7 @@ internal fun RecordingUi(
 
                 Tab.RELEASES -> {
                     EntitiesListScreen(
-                        uiState = EntitiesListUiState(
+                        uiState = EntitiesPagingListUiState(
                             lazyPagingItems = releasesLazyPagingItems,
                             lazyListState = state.releasesListUiState.lazyListState,
                             showMoreInfo = state.releasesListUiState.showMoreInfo,

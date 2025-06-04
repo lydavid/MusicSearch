@@ -33,7 +33,8 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
-import ly.david.musicsearch.ui.common.list.EntitiesListUiState
+import ly.david.musicsearch.ui.common.list.EntitiesPagingListUi
+import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
@@ -199,6 +200,7 @@ internal fun AreaUiInternal(
 
         // TODO: consider generalizing this entire details ui, we can have all types of tabs here
         //  each details screen will provide its own list of tabs (which may be in different order)
+        //  see CollectionUi
         HorizontalPager(
             state = pagerState,
         ) { page ->
@@ -248,15 +250,13 @@ internal fun AreaUiInternal(
                 }
 
                 Tab.ARTISTS -> {
-                    EntitiesListScreen(
-                        uiState = EntitiesListUiState(
+                    EntitiesPagingListUi(
+                        uiState = EntitiesPagingListUiState(
                             lazyPagingItems = artistsLazyPagingItems,
                             lazyListState = state.entitiesListUiState.artistsListUiState.lazyListState,
                         ),
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        innerPadding = innerPadding,
+                        scrollBehavior = scrollBehavior,
                         now = now,
                         onItemClick = { entity, id, title ->
                             eventSink(
@@ -272,7 +272,7 @@ internal fun AreaUiInternal(
 
                 Tab.EVENTS -> {
                     EntitiesListScreen(
-                        uiState = EntitiesListUiState(
+                        uiState = EntitiesPagingListUiState(
                             lazyPagingItems = eventsLazyPagingItems,
                             lazyListState = state.entitiesListUiState.eventsListUiState.lazyListState,
                         ),
@@ -295,7 +295,7 @@ internal fun AreaUiInternal(
 
                 Tab.LABELS -> {
                     EntitiesListScreen(
-                        uiState = EntitiesListUiState(
+                        uiState = EntitiesPagingListUiState(
                             lazyPagingItems = labelsLazyPagingItems,
                             lazyListState = state.entitiesListUiState.labelsListUiState.lazyListState,
                         ),
@@ -318,7 +318,7 @@ internal fun AreaUiInternal(
 
                 Tab.RELEASES -> {
                     EntitiesListScreen(
-                        uiState = EntitiesListUiState(
+                        uiState = EntitiesPagingListUiState(
                             lazyPagingItems = releasesLazyPagingItems,
                             lazyListState = state.entitiesListUiState.releasesListUiState.lazyListState,
                             showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
@@ -350,7 +350,7 @@ internal fun AreaUiInternal(
 
                 Tab.PLACES -> {
                     EntitiesListScreen(
-                        uiState = EntitiesListUiState(
+                        uiState = EntitiesPagingListUiState(
                             lazyPagingItems = placesLazyPagingItems,
                             lazyListState = state.entitiesListUiState.placesListUiState.lazyListState,
                         ),

@@ -42,7 +42,7 @@ import ly.david.musicsearch.ui.common.work.WorkListItem
 
 @Composable
 fun EntitiesListScreen(
-    uiState: EntitiesListUiState,
+    uiState: EntitiesPagingListUiState,
     modifier: Modifier = Modifier,
     selectedIds: ImmutableSet<String> = persistentSetOf(),
     now: Instant = Clock.System.now(),

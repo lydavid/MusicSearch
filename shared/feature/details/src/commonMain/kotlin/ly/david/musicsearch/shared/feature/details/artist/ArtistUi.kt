@@ -31,7 +31,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.list.EntitiesListScreen
-import ly.david.musicsearch.ui.common.list.EntitiesListUiState
+import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsListScreen
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
@@ -230,7 +230,7 @@ internal fun ArtistUi(
 
                 Tab.RELEASE_GROUPS -> {
                     EntitiesListScreen(
-                        uiState = EntitiesListUiState(
+                        uiState = EntitiesPagingListUiState(
                             lazyPagingItems = releaseGroupLazyPagingItems,
                             lazyListState = state.entitiesListUiState.releaseGroupsListUiState.lazyListState,
                         ),
@@ -259,7 +259,7 @@ internal fun ArtistUi(
 
                 Tab.RELEASES -> {
                     EntitiesListScreen(
-                        uiState = EntitiesListUiState(
+                        uiState = EntitiesPagingListUiState(
                             lazyPagingItems = releasesLazyPagingItems,
                             lazyListState = state.entitiesListUiState.releasesListUiState.lazyListState,
                             showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
@@ -289,7 +289,7 @@ internal fun ArtistUi(
 
                 Tab.RECORDINGS -> {
                     EntitiesListScreen(
-                        uiState = EntitiesListUiState(
+                        uiState = EntitiesPagingListUiState(
                             lazyPagingItems = recordingsLazyPagingItems,
                             lazyListState = state.entitiesListUiState.recordingsListUiState.lazyListState,
                         ),
@@ -311,7 +311,7 @@ internal fun ArtistUi(
 
                 Tab.WORKS -> {
                     EntitiesListScreen(
-                        uiState = EntitiesListUiState(
+                        uiState = EntitiesPagingListUiState(
                             lazyPagingItems = worksLazyPagingItems,
                             lazyListState = state.entitiesListUiState.worksListUiState.lazyListState,
                         ),
@@ -333,7 +333,7 @@ internal fun ArtistUi(
 
                 Tab.EVENTS -> {
                     EntitiesListScreen(
-                        uiState = EntitiesListUiState(
+                        uiState = EntitiesPagingListUiState(
                             lazyPagingItems = eventsLazyPagingItems,
                             lazyListState = state.entitiesListUiState.eventsListUiState.lazyListState,
                         ),

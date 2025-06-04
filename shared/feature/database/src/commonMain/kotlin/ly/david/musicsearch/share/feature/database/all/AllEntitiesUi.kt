@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import app.cash.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getNamePlural
-import ly.david.musicsearch.ui.common.list.EntitiesListUi
-import ly.david.musicsearch.ui.common.list.EntitiesListUiState
+import ly.david.musicsearch.ui.common.list.EntitiesPagingListUi
+import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
@@ -76,7 +76,7 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.AREA -> {
                 val lazyPagingItems =
                     state.entitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()
-                EntitiesListUiState(
+                EntitiesPagingListUiState(
                     lazyListState = state.entitiesListUiState.areasListUiState.lazyListState,
                     lazyPagingItems = lazyPagingItems,
                 )
@@ -85,7 +85,7 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.ARTIST -> {
                 val lazyPagingItems =
                     state.entitiesListUiState.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-                EntitiesListUiState(
+                EntitiesPagingListUiState(
                     lazyListState = state.entitiesListUiState.artistsListUiState.lazyListState,
                     lazyPagingItems = lazyPagingItems,
                 )
@@ -94,7 +94,7 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.EVENT -> {
                 val lazyPagingItems =
                     state.entitiesListUiState.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-                EntitiesListUiState(
+                EntitiesPagingListUiState(
                     lazyListState = state.entitiesListUiState.eventsListUiState.lazyListState,
                     lazyPagingItems = lazyPagingItems,
                 )
@@ -103,7 +103,7 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.GENRE -> {
                 val lazyPagingItems =
                     state.entitiesListUiState.genresListUiState.pagingDataFlow.collectAsLazyPagingItems()
-                EntitiesListUiState(
+                EntitiesPagingListUiState(
                     lazyListState = state.entitiesListUiState.genresListUiState.lazyListState,
                     lazyPagingItems = lazyPagingItems,
                 )
@@ -112,7 +112,7 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.INSTRUMENT -> {
                 val lazyPagingItems =
                     state.entitiesListUiState.instrumentsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-                EntitiesListUiState(
+                EntitiesPagingListUiState(
                     lazyListState = state.entitiesListUiState.instrumentsListUiState.lazyListState,
                     lazyPagingItems = lazyPagingItems,
                 )
@@ -121,7 +121,7 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.LABEL -> {
                 val lazyPagingItems =
                     state.entitiesListUiState.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-                EntitiesListUiState(
+                EntitiesPagingListUiState(
                     lazyListState = state.entitiesListUiState.labelsListUiState.lazyListState,
                     lazyPagingItems = lazyPagingItems,
                 )
@@ -130,7 +130,7 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.PLACE -> {
                 val lazyPagingItems =
                     state.entitiesListUiState.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
-                EntitiesListUiState(
+                EntitiesPagingListUiState(
                     lazyListState = state.entitiesListUiState.placesListUiState.lazyListState,
                     lazyPagingItems = lazyPagingItems,
                 )
@@ -139,7 +139,7 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.RECORDING -> {
                 val lazyPagingItems =
                     state.entitiesListUiState.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-                EntitiesListUiState(
+                EntitiesPagingListUiState(
                     lazyListState = state.entitiesListUiState.recordingsListUiState.lazyListState,
                     lazyPagingItems = lazyPagingItems,
                 )
@@ -148,7 +148,7 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.RELEASE -> {
                 val lazyPagingItems =
                     state.entitiesListUiState.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
-                EntitiesListUiState(
+                EntitiesPagingListUiState(
                     lazyListState = state.entitiesListUiState.releasesListUiState.lazyListState,
                     lazyPagingItems = lazyPagingItems,
                     showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
@@ -158,7 +158,7 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.RELEASE_GROUP -> {
                 val lazyPagingItems =
                     state.entitiesListUiState.releaseGroupsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-                EntitiesListUiState(
+                EntitiesPagingListUiState(
                     lazyListState = state.entitiesListUiState.releaseGroupsListUiState.lazyListState,
                     lazyPagingItems = lazyPagingItems,
                 )
@@ -167,7 +167,7 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.SERIES -> {
                 val lazyPagingItems =
                     state.entitiesListUiState.seriesListUiState.pagingDataFlow.collectAsLazyPagingItems()
-                EntitiesListUiState(
+                EntitiesPagingListUiState(
                     lazyListState = state.entitiesListUiState.seriesListUiState.lazyListState,
                     lazyPagingItems = lazyPagingItems,
                 )
@@ -176,7 +176,7 @@ internal fun AllEntitiesUi(
             MusicBrainzEntity.WORK -> {
                 val lazyPagingItems =
                     state.entitiesListUiState.worksListUiState.pagingDataFlow.collectAsLazyPagingItems()
-                EntitiesListUiState(
+                EntitiesPagingListUiState(
                     lazyListState = state.entitiesListUiState.worksListUiState.lazyListState,
                     lazyPagingItems = lazyPagingItems,
                 )
@@ -186,7 +186,7 @@ internal fun AllEntitiesUi(
                 error("$entity is not supported for collections.")
             }
         }
-        EntitiesListUi(
+        EntitiesPagingListUi(
             uiState = uiState,
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,

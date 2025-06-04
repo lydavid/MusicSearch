@@ -23,8 +23,8 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.DeleteOutline
-import ly.david.musicsearch.ui.common.list.EntitiesListUi
-import ly.david.musicsearch.ui.common.list.EntitiesListUiState
+import ly.david.musicsearch.ui.common.list.EntitiesPagingListUi
+import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
@@ -233,63 +233,63 @@ internal fun CollectionUi(
         } else {
             val uiState = when (val entity = collection.entity) {
                 MusicBrainzEntity.AREA -> {
-                    EntitiesListUiState(
+                    EntitiesPagingListUiState(
                         lazyPagingItems = areasLazyPagingItems,
                         lazyListState = state.entitiesListUiState.areasListUiState.lazyListState,
                     )
                 }
 
                 MusicBrainzEntity.ARTIST -> {
-                    EntitiesListUiState(
+                    EntitiesPagingListUiState(
                         lazyListState = state.entitiesListUiState.artistsListUiState.lazyListState,
                         lazyPagingItems = artistsLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.EVENT -> {
-                    EntitiesListUiState(
+                    EntitiesPagingListUiState(
                         lazyListState = state.entitiesListUiState.eventsListUiState.lazyListState,
                         lazyPagingItems = eventsLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.GENRE -> {
-                    EntitiesListUiState(
+                    EntitiesPagingListUiState(
                         lazyListState = state.entitiesListUiState.genresListUiState.lazyListState,
                         lazyPagingItems = genresLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.INSTRUMENT -> {
-                    EntitiesListUiState(
+                    EntitiesPagingListUiState(
                         lazyListState = state.entitiesListUiState.instrumentsListUiState.lazyListState,
                         lazyPagingItems = instrumentsLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.LABEL -> {
-                    EntitiesListUiState(
+                    EntitiesPagingListUiState(
                         lazyListState = state.entitiesListUiState.labelsListUiState.lazyListState,
                         lazyPagingItems = labelsLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.PLACE -> {
-                    EntitiesListUiState(
+                    EntitiesPagingListUiState(
                         lazyListState = state.entitiesListUiState.placesListUiState.lazyListState,
                         lazyPagingItems = placesLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.RECORDING -> {
-                    EntitiesListUiState(
+                    EntitiesPagingListUiState(
                         lazyListState = state.entitiesListUiState.recordingsListUiState.lazyListState,
                         lazyPagingItems = recordingsLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.RELEASE -> {
-                    EntitiesListUiState(
+                    EntitiesPagingListUiState(
                         lazyListState = state.entitiesListUiState.releasesListUiState.lazyListState,
                         lazyPagingItems = releasesLazyPagingItems,
                         showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
@@ -297,21 +297,21 @@ internal fun CollectionUi(
                 }
 
                 MusicBrainzEntity.RELEASE_GROUP -> {
-                    EntitiesListUiState(
+                    EntitiesPagingListUiState(
                         lazyListState = state.entitiesListUiState.releaseGroupsListUiState.lazyListState,
                         lazyPagingItems = releaseGroupsLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.SERIES -> {
-                    EntitiesListUiState(
+                    EntitiesPagingListUiState(
                         lazyListState = state.entitiesListUiState.seriesListUiState.lazyListState,
                         lazyPagingItems = seriesLazyPagingItems,
                     )
                 }
 
                 MusicBrainzEntity.WORK -> {
-                    EntitiesListUiState(
+                    EntitiesPagingListUiState(
                         lazyListState = state.entitiesListUiState.worksListUiState.lazyListState,
                         lazyPagingItems = worksLazyPagingItems,
                     )
@@ -321,7 +321,7 @@ internal fun CollectionUi(
                     error("$entity is not supported for collections.")
                 }
             }
-            EntitiesListUi(
+            EntitiesPagingListUi(
                 uiState = uiState,
                 innerPadding = innerPadding,
                 scrollBehavior = scrollBehavior,

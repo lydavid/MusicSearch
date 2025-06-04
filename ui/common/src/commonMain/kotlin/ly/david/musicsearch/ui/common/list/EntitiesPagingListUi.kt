@@ -10,18 +10,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 
 @OptIn(
     ExperimentalMaterial3Api::class,
 )
 @Composable
-fun EntitiesListUi(
-    uiState: EntitiesListUiState,
+fun EntitiesPagingListUi(
+    uiState: EntitiesPagingListUiState,
     innerPadding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
-    selectedIds: ImmutableSet<String> = persistentSetOf(),
+    now: Instant = Clock.System.now(),
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
+    selectedIds: ImmutableSet<String> = persistentSetOf(),
     onSelect: (String) -> Unit = {},
     requestForMissingCoverArtUrl: (entityId: String) -> Unit = {},
 ) {
@@ -31,8 +34,9 @@ fun EntitiesListUi(
             .padding(innerPadding)
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
-        selectedIds = selectedIds,
+        now = now,
         onItemClick = onItemClick,
+        selectedIds = selectedIds,
         onSelect = onSelect,
         requestForMissingCoverArtUrl = { id ->
             requestForMissingCoverArtUrl(
