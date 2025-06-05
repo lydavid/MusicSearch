@@ -7,8 +7,14 @@ import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventDetailsModel
 import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
+import ly.david.musicsearch.shared.domain.label.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
+import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.series.SeriesDetailsModel
+import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
 import ly.david.musicsearch.shared.feature.details.area.AreaPresenter
 import ly.david.musicsearch.shared.feature.details.area.AreaUi
 import ly.david.musicsearch.shared.feature.details.artist.ArtistPresenter
@@ -22,25 +28,19 @@ import ly.david.musicsearch.shared.feature.details.instrument.InstrumentPresente
 import ly.david.musicsearch.shared.feature.details.instrument.InstrumentUi
 import ly.david.musicsearch.shared.feature.details.label.LabelPresenter
 import ly.david.musicsearch.shared.feature.details.label.LabelUi
-import ly.david.musicsearch.shared.feature.details.label.LabelUiState
 import ly.david.musicsearch.shared.feature.details.place.PlacePresenter
 import ly.david.musicsearch.shared.feature.details.place.PlaceUi
-import ly.david.musicsearch.shared.feature.details.place.PlaceUiState
 import ly.david.musicsearch.shared.feature.details.recording.RecordingPresenter
 import ly.david.musicsearch.shared.feature.details.recording.RecordingUi
-import ly.david.musicsearch.shared.feature.details.recording.RecordingUiState
 import ly.david.musicsearch.shared.feature.details.release.ReleasePresenter
 import ly.david.musicsearch.shared.feature.details.release.ReleaseUi
-import ly.david.musicsearch.shared.feature.details.release.ReleaseUiState
 import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupPresenter
 import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUi
 import ly.david.musicsearch.shared.feature.details.series.SeriesPresenter
 import ly.david.musicsearch.shared.feature.details.series.SeriesUi
-import ly.david.musicsearch.shared.feature.details.series.SeriesUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.shared.feature.details.work.WorkPresenter
 import ly.david.musicsearch.shared.feature.details.work.WorkUi
-import ly.david.musicsearch.shared.feature.details.work.WorkUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -59,7 +59,6 @@ val detailsFeatureModule = module {
                                 incrementLookupHistory = get(),
                                 entitiesListPresenter = get(),
                                 imageMetadataRepository = get(),
-                                relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
@@ -76,7 +75,6 @@ val detailsFeatureModule = module {
                                 incrementLookupHistory = get(),
                                 entitiesListPresenter = get(),
                                 imageMetadataRepository = get(),
-                                relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
@@ -91,7 +89,6 @@ val detailsFeatureModule = module {
                                 incrementLookupHistory = get(),
                                 imageMetadataRepository = get(),
                                 entitiesListPresenter = get(),
-                                relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
@@ -118,7 +115,6 @@ val detailsFeatureModule = module {
                                 incrementLookupHistory = get(),
                                 imageMetadataRepository = get(),
                                 entitiesListPresenter = get(),
-                                relationsPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
@@ -132,8 +128,8 @@ val detailsFeatureModule = module {
                                 navigator = navigator,
                                 repository = get(),
                                 incrementLookupHistory = get(),
-                                releasesListPresenter = get(),
-                                relationsPresenter = get(),
+                                imageMetadataRepository = get(),
+                                entitiesListPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
@@ -147,8 +143,8 @@ val detailsFeatureModule = module {
                                 navigator = navigator,
                                 repository = get(),
                                 incrementLookupHistory = get(),
-                                eventsListPresenter = get(),
-                                relationsPresenter = get(),
+                                imageMetadataRepository = get(),
+                                entitiesListPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
@@ -162,8 +158,8 @@ val detailsFeatureModule = module {
                                 navigator = navigator,
                                 repository = get(),
                                 incrementLookupHistory = get(),
-                                releasesListPresenter = get(),
-                                relationsPresenter = get(),
+                                imageMetadataRepository = get(),
+                                entitiesListPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
@@ -177,10 +173,8 @@ val detailsFeatureModule = module {
                                 navigator = navigator,
                                 repository = get(),
                                 incrementLookupHistory = get(),
-                                relationsPresenter = get(),
-                                musicBrainzImageMetadataRepository = get(),
-                                tracksByReleasePresenter = get(),
-                                artistsListPresenter = get(),
+                                imageMetadataRepository = get(),
+                                entitiesListPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
@@ -195,7 +189,6 @@ val detailsFeatureModule = module {
                                 repository = get(),
                                 incrementLookupHistory = get(),
                                 entitiesListPresenter = get(),
-                                relationsPresenter = get(),
                                 imageMetadataRepository = get(),
                                 logger = get(),
                                 loginPresenter = get(),
@@ -210,7 +203,8 @@ val detailsFeatureModule = module {
                                 navigator = navigator,
                                 repository = get(),
                                 incrementLookupHistory = get(),
-                                relationsPresenter = get(),
+                                entitiesListPresenter = get(),
+                                imageMetadataRepository = get(),
                                 logger = get(),
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
@@ -224,9 +218,8 @@ val detailsFeatureModule = module {
                                 navigator = navigator,
                                 repository = get(),
                                 incrementLookupHistory = get(),
-                                relationsPresenter = get(),
-                                artistsListPresenter = get(),
-                                recordingsListPresenter = get(),
+                                imageMetadataRepository = get(),
+                                entitiesListPresenter = get(),
                                 logger = get(),
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
@@ -297,7 +290,7 @@ val detailsFeatureModule = module {
                         }
 
                         MusicBrainzEntity.LABEL -> {
-                            ui<LabelUiState> { state, modifier ->
+                            ui<DetailsUiState<LabelDetailsModel>> { state, modifier ->
                                 LabelUi(
                                     state = state,
                                     entityId = screen.id,
@@ -307,7 +300,7 @@ val detailsFeatureModule = module {
                         }
 
                         MusicBrainzEntity.PLACE -> {
-                            ui<PlaceUiState> { state, modifier ->
+                            ui<DetailsUiState<PlaceDetailsModel>> { state, modifier ->
                                 PlaceUi(
                                     state = state,
                                     entityId = screen.id,
@@ -317,7 +310,7 @@ val detailsFeatureModule = module {
                         }
 
                         MusicBrainzEntity.RECORDING -> {
-                            ui<RecordingUiState> { state, modifier ->
+                            ui<DetailsUiState<RecordingDetailsModel>> { state, modifier ->
                                 RecordingUi(
                                     state = state,
                                     entityId = screen.id,
@@ -327,7 +320,7 @@ val detailsFeatureModule = module {
                         }
 
                         MusicBrainzEntity.RELEASE -> {
-                            ui<ReleaseUiState> { state, modifier ->
+                            ui<DetailsUiState<ReleaseDetailsModel>> { state, modifier ->
                                 ReleaseUi(
                                     state = state,
                                     entityId = screen.id,
@@ -347,7 +340,7 @@ val detailsFeatureModule = module {
                         }
 
                         MusicBrainzEntity.SERIES -> {
-                            ui<SeriesUiState> { state, modifier ->
+                            ui<DetailsUiState<SeriesDetailsModel>> { state, modifier ->
                                 SeriesUi(
                                     state = state,
                                     entityId = screen.id,
@@ -357,7 +350,7 @@ val detailsFeatureModule = module {
                         }
 
                         MusicBrainzEntity.WORK -> {
-                            ui<WorkUiState> { state, modifier ->
+                            ui<DetailsUiState<WorkDetailsModel>> { state, modifier ->
                                 WorkUi(
                                     state = state,
                                     entityId = screen.id,

@@ -1,9 +1,6 @@
 package ly.david.musicsearch.shared.feature.details.recording
 
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,20 +17,19 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import app.cash.paging.compose.collectAsLazyPagingItems
-import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
+import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.EntityIcon
-import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.musicsearch.ui.common.list.EntitiesListScreen
-import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
-import ly.david.musicsearch.ui.common.relation.RelationsListScreen
+import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
-import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
@@ -50,7 +46,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 )
 @Composable
 internal fun RecordingUi(
-    state: RecordingUiState,
+    state: DetailsUiState<RecordingDetailsModel>,
     entityId: String,
     modifier: Modifier = Modifier,
 ) {
@@ -61,17 +57,61 @@ internal fun RecordingUi(
     val scope = rememberCoroutineScope()
 
     val entity = MusicBrainzEntity.RECORDING
+    val browseMethod = BrowseMethod.ByEntity(entityId, entity)
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(pageCount = state.tabs::size)
 
-    val releasesLazyPagingItems = state.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val releasesByEntityEventSink = state.releasesListUiState.eventSink
-    val relationsLazyPagingItems = state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val areasLazyPagingItems =
+        state.entitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val artistsLazyPagingItems =
+        state.entitiesListUiState.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val eventsLazyPagingItems =
+        state.entitiesListUiState.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val genresLazyPagingItems =
+        state.entitiesListUiState.genresListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val instrumentsLazyPagingItems =
+        state.entitiesListUiState.instrumentsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val labelsLazyPagingItems =
+        state.entitiesListUiState.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val placesLazyPagingItems =
+        state.entitiesListUiState.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val recordingsLazyPagingItems =
+        state.entitiesListUiState.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val releasesLazyPagingItems =
+        state.entitiesListUiState.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val releaseGroupsLazyPagingItems =
+        state.entitiesListUiState.releaseGroupsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val seriesLazyPagingItems =
+        state.entitiesListUiState.seriesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val worksLazyPagingItems =
+        state.entitiesListUiState.worksListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val relationsLazyPagingItems =
+        state.entitiesListUiState.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val tracksLazyPagingItems =
+        state.entitiesListUiState.tracksByReleaseUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val entitiesLazyPagingItems = EntitiesLazyPagingItems(
+        areasLazyPagingItems = areasLazyPagingItems,
+        artistsLazyPagingItems = artistsLazyPagingItems,
+        eventsLazyPagingItems = eventsLazyPagingItems,
+        genresLazyPagingItems = genresLazyPagingItems,
+        instrumentsLazyPagingItems = instrumentsLazyPagingItems,
+        labelsLazyPagingItems = labelsLazyPagingItems,
+        placesLazyPagingItems = placesLazyPagingItems,
+        recordingsLazyPagingItems = recordingsLazyPagingItems,
+        releasesLazyPagingItems = releasesLazyPagingItems,
+        releaseGroupsLazyPagingItems = releaseGroupsLazyPagingItems,
+        seriesLazyPagingItems = seriesLazyPagingItems,
+        worksLazyPagingItems = worksLazyPagingItems,
+        relationsLazyPagingItems = relationsLazyPagingItems,
+        tracksLazyPagingItems = tracksLazyPagingItems,
+    )
+
+    val releasesByEntityEventSink = state.entitiesListUiState.releasesListUiState.eventSink
 
     val loginEventSink = state.loginUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
-        eventSink(RecordingUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
+        eventSink(DetailsUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
     }
 
     Scaffold(
@@ -89,7 +129,7 @@ internal fun RecordingUi(
         topBar = {
             TopAppBarWithFilter(
                 onBack = {
-                    eventSink(RecordingUiEvent.NavigateUp)
+                    eventSink(DetailsUiEvent.NavigateUp)
                 },
                 entity = entity,
                 title = state.title,
@@ -103,7 +143,7 @@ internal fun RecordingUi(
                             when (selectedTab) {
                                 Tab.RELEASES -> releasesLazyPagingItems.refresh()
                                 Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
-                                else -> eventSink(RecordingUiEvent.ForceRefreshDetails)
+                                else -> eventSink(DetailsUiEvent.ForceRefreshDetails)
                             }
                         },
                     )
@@ -115,7 +155,7 @@ internal fun RecordingUi(
                         ToggleMenuItem(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
-                            toggled = state.releasesListUiState.showMoreInfo,
+                            toggled = state.entitiesListUiState.releasesListUiState.showMoreInfo,
                             onToggle = {
                                 releasesByEntityEventSink(
                                     ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
@@ -135,14 +175,14 @@ internal fun RecordingUi(
                     )
                 },
                 subtitleDropdownMenuItems = {
-                    state.recording?.artistCredits?.forEach { artistCredit ->
+                    state.detailsModel?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(
                             text = { Text(artistCredit.name) },
                             leadingIcon = { EntityIcon(entity = MusicBrainzEntity.ARTIST) },
                             onClick = {
                                 closeMenu()
                                 eventSink(
-                                    RecordingUiEvent.ClickItem(
+                                    DetailsUiEvent.ClickItem(
                                         entity = MusicBrainzEntity.ARTIST,
                                         id = artistCredit.artistId,
                                         title = null,
@@ -164,98 +204,23 @@ internal fun RecordingUi(
         },
     ) { innerPadding ->
 
-        HorizontalPager(
-            state = pagerState,
-        ) { page ->
-            when (state.tabs[page]) {
-                Tab.DETAILS -> {
-                    DetailsWithErrorHandling(
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        handledException = state.handledException,
-                        onRefresh = {
-                            eventSink(RecordingUiEvent.ForceRefreshDetails)
-                        },
-                        detailsModel = state.recording,
-                    ) { recording ->
-                        RecordingDetailsUi(
-                            recording = recording,
-                            filterText = state.topAppBarFilterState.filterText,
-                            lazyListState = state.detailsLazyListState,
-                        )
-                    }
-                }
-
-                Tab.RELEASES -> {
-                    EntitiesListScreen(
-                        uiState = EntitiesPagingListUiState(
-                            lazyPagingItems = releasesLazyPagingItems,
-                            lazyListState = state.releasesListUiState.lazyListState,
-                            showMoreInfo = state.releasesListUiState.showMoreInfo,
-                        ),
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        onItemClick = { entity, id, title ->
-                            eventSink(
-                                RecordingUiEvent.ClickItem(
-                                    entity = entity,
-                                    id = id,
-                                    title = title,
-                                ),
-                            )
-                        },
-                        requestForMissingCoverArtUrl = { id ->
-                            releasesByEntityEventSink(
-                                ReleasesListUiEvent.RequestForMissingCoverArtUrl(
-                                    entityId = id,
-                                ),
-                            )
-                        },
-                    )
-                }
-
-                Tab.RELATIONSHIPS -> {
-                    RelationsListScreen(
-                        lazyPagingItems = relationsLazyPagingItems,
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.relationsUiState.lazyListState,
-                        onItemClick = { entity, id, title ->
-                            eventSink(
-                                RecordingUiEvent.ClickItem(
-                                    entity = entity,
-                                    id = id,
-                                    title = title,
-                                ),
-                            )
-                        },
-                    )
-                }
-
-                Tab.STATS -> {
-                    CircuitContent(
-                        StatsScreen(
-                            entity = entity,
-                            id = entityId,
-                            tabs = state.tabs,
-                        ),
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                    )
-                }
-
-                else -> {
-                    // no-op
-                }
-            }
-        }
+        DetailsHorizontalPager(
+            pagerState = pagerState,
+            state = state,
+            innerPadding = innerPadding,
+            scrollBehavior = scrollBehavior,
+            browseMethod = browseMethod,
+            entityLazyPagingItems = entitiesLazyPagingItems,
+            requestForMissingCoverArtUrl = { id, entity ->
+                releasesByEntityEventSink(ReleasesListUiEvent.RequestForMissingCoverArtUrl(id))
+            },
+            detailsScreen = { detailsModel ->
+                RecordingDetailsUi(
+                    recording = detailsModel,
+                    detailsTabUiState = state.detailsTabUiState,
+                    filterText = state.topAppBarFilterState.filterText,
+                )
+            },
+        )
     }
 }

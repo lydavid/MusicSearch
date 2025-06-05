@@ -37,6 +37,7 @@ import ly.david.musicsearch.ui.common.topappbar.TopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.toTab
 
 internal class CollectionPresenter(
     private val screen: CollectionScreen,
@@ -106,14 +107,14 @@ internal class CollectionPresenter(
         LaunchedEffect(
             key1 = query,
         ) {
-            val entity = collection?.entity ?: return@LaunchedEffect
+            val tab = collection?.entity?.toTab() ?: return@LaunchedEffect
             val browseMethod = BrowseMethod.ByEntity(
                 entityId = collectionId,
                 entity = MusicBrainzEntity.COLLECTION,
             )
             entitiesListEventSink(
                 EntitiesListUiEvent.Get(
-                    entityTab = entity,
+                    tab = tab,
                     browseMethod = browseMethod,
                     query = query,
                     isRemote = isRemote,

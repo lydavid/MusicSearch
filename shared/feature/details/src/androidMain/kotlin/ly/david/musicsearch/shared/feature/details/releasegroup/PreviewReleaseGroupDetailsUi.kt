@@ -56,7 +56,7 @@ internal fun PreviewReleaseGroupDetailsUi() {
         Surface {
             ReleaseGroupDetailsUi(
                 releaseGroup = releaseGroup,
-                detailsUiState = DetailsTabUiState(
+                detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 1,
                 ),
             )
@@ -71,7 +71,7 @@ internal fun PreviewReleaseGroupDetailsUiCollapsed() {
         Surface {
             ReleaseGroupDetailsUi(
                 releaseGroup = releaseGroup,
-                detailsUiState = DetailsTabUiState(
+                detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 1,
                     isExternalLinksCollapsed = true,
                 ),

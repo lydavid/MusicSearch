@@ -13,7 +13,6 @@ import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
-import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.EntitiesListPresenter
 import ly.david.musicsearch.ui.common.topappbar.Tab
@@ -31,7 +30,6 @@ internal class ReleaseGroupPresenter(
     private val repository: ReleaseGroupRepository,
     override val incrementLookupHistory: IncrementLookupHistory,
     entitiesListPresenter: EntitiesListPresenter,
-    relationsPresenter: RelationsPresenter,
     imageMetadataRepository: ImageMetadataRepository,
     logger: Logger,
     loginPresenter: LoginPresenter,
@@ -42,7 +40,6 @@ internal class ReleaseGroupPresenter(
     navigator = navigator,
     incrementLookupHistory = incrementLookupHistory,
     entitiesListPresenter = entitiesListPresenter,
-    relationsPresenter = relationsPresenter,
     imageMetadataRepository = imageMetadataRepository,
     logger = logger,
     loginPresenter = loginPresenter,

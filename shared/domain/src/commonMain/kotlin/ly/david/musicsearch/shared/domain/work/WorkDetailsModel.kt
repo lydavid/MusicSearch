@@ -1,5 +1,8 @@
 package ly.david.musicsearch.shared.domain.work
 
+import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 
@@ -11,6 +14,24 @@ data class WorkDetailsModel(
     override val language: String? = null,
     override val iswcs: List<String>? = null,
     val attributes: List<WorkAttributeUiModel> = listOf(),
-    val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
-    val urls: List<RelationListItemModel> = listOf(),
-) : Work
+    override val artistCredits: List<ArtistCreditUiModel> = listOf(),
+    override val imageMetadata: ImageMetadata = ImageMetadata(),
+    override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
+    override val urls: List<RelationListItemModel> = listOf(),
+) : Work, MusicBrainzDetailsModel {
+    override fun withArtistCredits(artistCredits: List<ArtistCreditUiModel>): MusicBrainzDetailsModel {
+        return copy(artistCredits = artistCredits)
+    }
+
+    override fun withImageMetadata(imageMetadata: ImageMetadata): MusicBrainzDetailsModel {
+        return copy(imageMetadata = imageMetadata)
+    }
+
+    override fun withWikipediaExtract(wikipediaExtract: WikipediaExtract): MusicBrainzDetailsModel {
+        return copy(wikipediaExtract = wikipediaExtract)
+    }
+
+    override fun withUrls(urls: List<RelationListItemModel>): MusicBrainzDetailsModel {
+        return copy(urls = urls)
+    }
+}

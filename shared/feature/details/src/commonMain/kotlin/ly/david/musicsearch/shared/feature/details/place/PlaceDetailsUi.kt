@@ -1,8 +1,6 @@
 package ly.david.musicsearch.shared.feature.details.place
 
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNull
@@ -11,27 +9,28 @@ import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.place.CoordinateListItem
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
+import ly.david.musicsearch.ui.core.LocalStrings
 
 @Composable
 internal fun PlaceDetailsUi(
     place: PlaceDetailsModel,
     modifier: Modifier = Modifier,
+    detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
 ) {
     val strings = LocalStrings.current
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState,
+        state = detailsTabUiState.lazyListState,
     ) {
         item {
             place.run {

@@ -11,7 +11,6 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.area.AreasListPresenter
 import ly.david.musicsearch.ui.common.area.AreasListUiEvent
 import ly.david.musicsearch.ui.common.area.AreasListUiState
@@ -36,6 +35,9 @@ import ly.david.musicsearch.ui.common.place.PlacesListUiState
 import ly.david.musicsearch.ui.common.recording.RecordingsListPresenter
 import ly.david.musicsearch.ui.common.recording.RecordingsListUiEvent
 import ly.david.musicsearch.ui.common.recording.RecordingsListUiState
+import ly.david.musicsearch.ui.common.relation.RelationsPresenter
+import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
+import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListPresenter
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListUiState
@@ -46,6 +48,10 @@ import ly.david.musicsearch.ui.common.series.SeriesListPresenter
 import ly.david.musicsearch.ui.common.series.SeriesListUiEvent
 import ly.david.musicsearch.ui.common.series.SeriesListUiState
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
+import ly.david.musicsearch.ui.common.topappbar.Tab
+import ly.david.musicsearch.ui.common.track.TracksByEntityUiEvent
+import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
+import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
 import ly.david.musicsearch.ui.common.work.WorksListPresenter
 import ly.david.musicsearch.ui.common.work.WorksListUiEvent
 import ly.david.musicsearch.ui.common.work.WorksListUiState
@@ -63,12 +69,14 @@ class EntitiesListPresenter(
     private val releaseGroupsListPresenter: ReleaseGroupsListPresenter,
     private val seriesListPresenter: SeriesListPresenter,
     private val worksListPresenter: WorksListPresenter,
+    private val tracksByReleasePresenter: TracksByReleasePresenter,
+    private val relationsPresenter: RelationsPresenter,
 ) : Presenter<EntitiesListUiState> {
 
     @Suppress("CyclomaticComplexMethod")
     @Composable
     override fun present(): EntitiesListUiState {
-        var entityTab: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
+        var tab: Tab? by rememberSaveable { mutableStateOf(null) }
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
@@ -97,17 +105,20 @@ class EntitiesListPresenter(
         val seriesEventSink = seriesByEntityUiState.eventSink
         val worksByEntityUiState = worksListPresenter.present()
         val worksEventSink = worksByEntityUiState.eventSink
+        val tracksByReleaseUiState = tracksByReleasePresenter.present()
+        val tracksEventSink = tracksByReleaseUiState.eventSink
+        val relationsUiState = relationsPresenter.present()
+        val relationsEventSink = relationsUiState.eventSink
 
         LaunchedEffect(
-            entityTab,
+            tab,
             browseMethod,
             query,
             isRemote,
         ) {
-            val capturedEntityTab = entityTab ?: return@LaunchedEffect
             val capturedBrowseMethod = browseMethod ?: return@LaunchedEffect
-            when (capturedEntityTab) {
-                MusicBrainzEntity.AREA -> {
+            when (tab) {
+                Tab.AREAS -> {
                     areasEventSink(
                         AreasListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
@@ -117,7 +128,7 @@ class EntitiesListPresenter(
                     areasEventSink(AreasListUiEvent.UpdateQuery(query))
                 }
 
-                MusicBrainzEntity.ARTIST -> {
+                Tab.ARTISTS -> {
                     artistsEventSink(
                         ArtistsListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
@@ -127,7 +138,7 @@ class EntitiesListPresenter(
                     artistsEventSink(ArtistsListUiEvent.UpdateQuery(query))
                 }
 
-                MusicBrainzEntity.EVENT -> {
+                Tab.EVENTS -> {
                     eventsEventSink(
                         EventsListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
@@ -137,7 +148,7 @@ class EntitiesListPresenter(
                     eventsEventSink(EventsListUiEvent.UpdateQuery(query))
                 }
 
-                MusicBrainzEntity.GENRE -> {
+                Tab.GENRES -> {
                     genresEventSink(
                         GenresListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
@@ -147,7 +158,7 @@ class EntitiesListPresenter(
                     genresEventSink(GenresListUiEvent.UpdateQuery(query))
                 }
 
-                MusicBrainzEntity.INSTRUMENT -> {
+                Tab.INSTRUMENTS -> {
                     instrumentsEventSink(
                         InstrumentsListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
@@ -157,7 +168,7 @@ class EntitiesListPresenter(
                     instrumentsEventSink(InstrumentsListUiEvent.UpdateQuery(query))
                 }
 
-                MusicBrainzEntity.LABEL -> {
+                Tab.LABELS -> {
                     labelsEventSink(
                         LabelsListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
@@ -167,7 +178,7 @@ class EntitiesListPresenter(
                     labelsEventSink(LabelsListUiEvent.UpdateQuery(query))
                 }
 
-                MusicBrainzEntity.PLACE -> {
+                Tab.PLACES -> {
                     placesEventSink(
                         PlacesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
@@ -177,7 +188,7 @@ class EntitiesListPresenter(
                     placesEventSink(PlacesListUiEvent.UpdateQuery(query))
                 }
 
-                MusicBrainzEntity.RECORDING -> {
+                Tab.RECORDINGS -> {
                     recordingsEventSink(
                         RecordingsListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
@@ -187,7 +198,7 @@ class EntitiesListPresenter(
                     recordingsEventSink(RecordingsListUiEvent.UpdateQuery(query))
                 }
 
-                MusicBrainzEntity.RELEASE -> {
+                Tab.RELEASES -> {
                     releasesEventSink(
                         ReleasesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
@@ -197,7 +208,7 @@ class EntitiesListPresenter(
                     releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))
                 }
 
-                MusicBrainzEntity.RELEASE_GROUP -> {
+                Tab.RELEASE_GROUPS -> {
                     releaseGroupsEventSink(
                         ReleaseGroupsListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
@@ -207,7 +218,7 @@ class EntitiesListPresenter(
                     releaseGroupsEventSink(ReleaseGroupsListUiEvent.UpdateQuery(query))
                 }
 
-                MusicBrainzEntity.SERIES -> {
+                Tab.SERIES -> {
                     seriesEventSink(
                         SeriesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
@@ -217,7 +228,7 @@ class EntitiesListPresenter(
                     seriesEventSink(SeriesListUiEvent.UpdateQuery(query))
                 }
 
-                MusicBrainzEntity.WORK -> {
+                Tab.WORKS -> {
                     worksEventSink(
                         WorksListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
@@ -227,10 +238,32 @@ class EntitiesListPresenter(
                     worksEventSink(WorksListUiEvent.UpdateQuery(query))
                 }
 
-                MusicBrainzEntity.COLLECTION,
-                MusicBrainzEntity.URL,
+                Tab.RELATIONSHIPS -> {
+                    val browseByEntity = capturedBrowseMethod as? BrowseMethod.ByEntity ?: return@LaunchedEffect
+                    relationsEventSink(
+                        RelationsUiEvent.GetRelations(
+                            byEntityId = browseByEntity.entityId,
+                            byEntity = browseByEntity.entity,
+                        ),
+                    )
+                    relationsEventSink(RelationsUiEvent.UpdateQuery(query))
+                }
+
+                Tab.TRACKS -> {
+                    val browseByEntity = capturedBrowseMethod as? BrowseMethod.ByEntity ?: return@LaunchedEffect
+                    tracksEventSink(
+                        TracksByEntityUiEvent.Get(
+                            byEntityId = browseByEntity.entityId,
+                        ),
+                    )
+                    tracksEventSink(TracksByEntityUiEvent.UpdateQuery(query))
+                }
+
+                Tab.DETAILS,
+                Tab.STATS,
+                null,
                 -> {
-                    error("$capturedEntityTab by collection not supported")
+                    // no-op
                 }
             }
         }
@@ -238,7 +271,7 @@ class EntitiesListPresenter(
         fun evenSink(event: EntitiesListUiEvent) {
             when (event) {
                 is EntitiesListUiEvent.Get -> {
-                    entityTab = event.entityTab
+                    tab = event.tab
                     browseMethod = event.browseMethod
                     query = event.query
                     isRemote = event.isRemote
@@ -259,6 +292,8 @@ class EntitiesListPresenter(
             releaseGroupsListUiState = releaseGroupsByEntityUiState,
             seriesListUiState = seriesByEntityUiState,
             worksListUiState = worksByEntityUiState,
+            relationsUiState = relationsUiState,
+            tracksByReleaseUiState = tracksByReleaseUiState,
             eventSink = ::evenSink,
         )
     }
@@ -278,12 +313,14 @@ data class EntitiesListUiState(
     val releaseGroupsListUiState: ReleaseGroupsListUiState = ReleaseGroupsListUiState(),
     val seriesListUiState: SeriesListUiState = SeriesListUiState(),
     val worksListUiState: WorksListUiState = WorksListUiState(),
+    val relationsUiState: RelationsUiState = RelationsUiState(),
+    val tracksByReleaseUiState: TracksByReleaseUiState = TracksByReleaseUiState(),
     val eventSink: (EntitiesListUiEvent) -> Unit = {},
 ) : CircuitUiState
 
 sealed interface EntitiesListUiEvent : CircuitUiEvent {
     data class Get(
-        val entityTab: MusicBrainzEntity,
+        val tab: Tab?,
         val browseMethod: BrowseMethod,
         val query: String = "",
         val isRemote: Boolean,

@@ -29,8 +29,6 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
-import ly.david.musicsearch.ui.common.relation.RelationsPresenter
-import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
@@ -42,14 +40,12 @@ import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
-import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
 
 internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>(
     private val screen: DetailsScreen,
     private val navigator: Navigator,
     override val incrementLookupHistory: IncrementLookupHistory,
     private val entitiesListPresenter: EntitiesListPresenter,
-    private val relationsPresenter: RelationsPresenter,
     private val imageMetadataRepository: ImageMetadataRepository,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
@@ -87,13 +83,11 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
+        var isReleaseEventsCollapsed by rememberSaveable { mutableStateOf(false) }
         var isExternalLinksCollapsed by rememberSaveable { mutableStateOf(false) }
 
         val entitiesListUiState = entitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
-
-        val relationsUiState = relationsPresenter.present()
-        val relationsEventSink = relationsUiState.eventSink
 
         val loginUiState = loginPresenter.present()
 
@@ -171,34 +165,14 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 entityId = screen.id,
                 entity = screen.entity,
             )
-            when (selectedTab) {
-                Tab.DETAILS, Tab.STATS -> {
-                    // no-op
-                }
-
-                // TODO: handle release tracks as well?
-
-                Tab.RELATIONSHIPS -> {
-                    relationsEventSink(
-                        RelationsUiEvent.GetRelations(
-                            byEntityId = screen.id,
-                            byEntity = screen.entity,
-                        ),
-                    )
-                    relationsEventSink(RelationsUiEvent.UpdateQuery(query))
-                }
-
-                else -> {
-                    entitiesListEventSink(
-                        EntitiesListUiEvent.Get(
-                            entityTab = selectedTab.toMusicBrainzEntity(),
-                            browseMethod = browseMethod,
-                            query = query,
-                            isRemote = true,
-                        ),
-                    )
-                }
-            }
+            entitiesListEventSink(
+                EntitiesListUiEvent.Get(
+                    tab = selectedTab,
+                    browseMethod = browseMethod,
+                    query = query,
+                    isRemote = true,
+                ),
+            )
         }
 
         fun eventSink(event: DetailsUiEvent) {
@@ -249,6 +223,10 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     )
                 }
 
+                DetailsUiEvent.ToggleCollapseExpandReleaseEvents -> {
+                    isReleaseEventsCollapsed = !isReleaseEventsCollapsed
+                }
+
                 DetailsUiEvent.ToggleCollapseExpandExternalLinks -> {
                     isExternalLinksCollapsed = !isExternalLinksCollapsed
                 }
@@ -271,10 +249,10 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 handledException = handledException,
                 numberOfImages = numberOfImages,
                 lazyListState = detailsLazyListState,
+                isReleaseEventsCollapsed = isReleaseEventsCollapsed,
                 isExternalLinksCollapsed = isExternalLinksCollapsed,
             ),
             entitiesListUiState = entitiesListUiState,
-            relationsUiState = relationsUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
         )
@@ -302,6 +280,7 @@ internal data class DetailsTabUiState(
     val handledException: HandledException? = null,
     val numberOfImages: Int? = null,
     val lazyListState: LazyListState = LazyListState(),
+    val isReleaseEventsCollapsed: Boolean = false,
     val isExternalLinksCollapsed: Boolean = false,
 )
 
@@ -323,4 +302,6 @@ internal sealed interface DetailsUiEvent : CircuitUiEvent {
     data object NavigateToCollaboratorsGraph : DetailsUiEvent
 
     data object ToggleCollapseExpandExternalLinks : DetailsUiEvent
+
+    data object ToggleCollapseExpandReleaseEvents : DetailsUiEvent
 }

@@ -14,6 +14,7 @@ import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
@@ -413,7 +414,7 @@ private val canadianReleases = MutableStateFlow(
     ),
 )
 
-private val canadianRelations = MutableStateFlow(
+private val canadianRelations: MutableStateFlow<PagingData<ListItemModel>> = MutableStateFlow(
     PagingData.from(
         data = listOf(
             RelationListItemModel(

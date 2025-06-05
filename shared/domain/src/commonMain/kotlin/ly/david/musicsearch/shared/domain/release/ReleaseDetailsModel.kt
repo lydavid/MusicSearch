@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.domain.release
 
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -22,21 +23,39 @@ data class ReleaseDetailsModel(
     override val asin: String? = null,
     override val quality: String? = null,
 
+    override val imageMetadata: ImageMetadata = ImageMetadata(),
+    override val artistCredits: List<ArtistCreditUiModel> = listOf(),
+    override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
+    override val urls: List<RelationListItemModel> = listOf(),
+
+    // TODO: unused
     val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
+
     val textRepresentation: TextRepresentationUiModel = TextRepresentationUiModel(),
-    val imageMetadata: ImageMetadata = ImageMetadata(),
 
     val formattedFormats: String = "",
     val formattedTracks: String = "",
 
-    val artistCredits: List<ArtistCreditUiModel> = listOf(),
-
     val releaseGroup: ReleaseGroupForRelease? = null,
     val areas: List<AreaListItemModel> = listOf(),
     val labels: List<LabelListItemModel> = listOf(),
-    val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
-    val urls: List<RelationListItemModel> = listOf(),
 
     val releaseLength: Int? = null,
     val hasNullLength: Boolean = false,
-) : Release
+) : Release, MusicBrainzDetailsModel {
+    override fun withArtistCredits(artistCredits: List<ArtistCreditUiModel>): MusicBrainzDetailsModel {
+        return copy(artistCredits = artistCredits)
+    }
+
+    override fun withImageMetadata(imageMetadata: ImageMetadata): MusicBrainzDetailsModel {
+        return copy(imageMetadata = imageMetadata)
+    }
+
+    override fun withWikipediaExtract(wikipediaExtract: WikipediaExtract): MusicBrainzDetailsModel {
+        return copy(wikipediaExtract = wikipediaExtract)
+    }
+
+    override fun withUrls(urls: List<RelationListItemModel>): MusicBrainzDetailsModel {
+        return copy(urls = urls)
+    }
+}

@@ -1,9 +1,6 @@
 package ly.david.musicsearch.shared.feature.details.area
 
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -18,27 +15,23 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import app.cash.paging.compose.collectAsLazyPagingItems
-import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.shared.strings.AppStrings
-import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.musicsearch.ui.common.list.EntitiesListScreen
-import ly.david.musicsearch.ui.common.list.EntitiesPagingListUi
-import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
-import ly.david.musicsearch.ui.common.relation.RelationsListScreen
+import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
+import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
-import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
@@ -106,6 +99,7 @@ internal fun AreaUiInternal(
     additionalOverflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit) = {},
 ) {
     val entity = MusicBrainzEntity.AREA
+    val browseMethod = BrowseMethod.ByEntity(entityId, entity)
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
         pageCount = state.tabs::size,
@@ -113,20 +107,54 @@ internal fun AreaUiInternal(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     val eventSink = state.eventSink
-    val relationsLazyPagingItems =
-        state.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
+
+    val areasLazyPagingItems =
+        state.entitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val artistsLazyPagingItems =
         state.entitiesListUiState.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val eventsLazyPagingItems =
         state.entitiesListUiState.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val genresLazyPagingItems =
+        state.entitiesListUiState.genresListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val instrumentsLazyPagingItems =
+        state.entitiesListUiState.instrumentsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val labelsLazyPagingItems =
         state.entitiesListUiState.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val releasesLazyPagingItems =
-        state.entitiesListUiState.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
-    val releasesByEntityEventSink =
-        state.entitiesListUiState.releasesListUiState.eventSink
     val placesLazyPagingItems =
         state.entitiesListUiState.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val recordingsLazyPagingItems =
+        state.entitiesListUiState.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val releasesLazyPagingItems =
+        state.entitiesListUiState.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val releaseGroupsLazyPagingItems =
+        state.entitiesListUiState.releaseGroupsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val seriesLazyPagingItems =
+        state.entitiesListUiState.seriesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val worksLazyPagingItems =
+        state.entitiesListUiState.worksListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val relationsLazyPagingItems =
+        state.entitiesListUiState.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val tracksLazyPagingItems =
+        state.entitiesListUiState.tracksByReleaseUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val entitiesLazyPagingItems = EntitiesLazyPagingItems(
+        areasLazyPagingItems = areasLazyPagingItems,
+        artistsLazyPagingItems = artistsLazyPagingItems,
+        eventsLazyPagingItems = eventsLazyPagingItems,
+        genresLazyPagingItems = genresLazyPagingItems,
+        instrumentsLazyPagingItems = instrumentsLazyPagingItems,
+        labelsLazyPagingItems = labelsLazyPagingItems,
+        placesLazyPagingItems = placesLazyPagingItems,
+        recordingsLazyPagingItems = recordingsLazyPagingItems,
+        releasesLazyPagingItems = releasesLazyPagingItems,
+        releaseGroupsLazyPagingItems = releaseGroupsLazyPagingItems,
+        seriesLazyPagingItems = seriesLazyPagingItems,
+        worksLazyPagingItems = worksLazyPagingItems,
+        relationsLazyPagingItems = relationsLazyPagingItems,
+        tracksLazyPagingItems = tracksLazyPagingItems,
+    )
+
+    val releasesByEntityEventSink =
+        state.entitiesListUiState.releasesListUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(DetailsUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
@@ -157,13 +185,8 @@ internal fun AreaUiInternal(
                         show = state.selectedTab != Tab.STATS,
                         onClick = {
                             when (state.selectedTab) {
-                                Tab.ARTISTS -> artistsLazyPagingItems.refresh()
-                                Tab.EVENTS -> eventsLazyPagingItems.refresh()
-                                Tab.LABELS -> labelsLazyPagingItems.refresh()
-                                Tab.PLACES -> placesLazyPagingItems.refresh()
-                                Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
-                                Tab.RELEASES -> releasesLazyPagingItems.refresh()
-                                else -> eventSink(DetailsUiEvent.ForceRefreshDetails)
+                                Tab.DETAILS -> eventSink(DetailsUiEvent.ForceRefreshDetails)
+                                else -> entitiesLazyPagingItems.getLazyPagingItemsForTab(state.selectedTab)?.refresh()
                             }
                         },
                     )
@@ -198,197 +221,31 @@ internal fun AreaUiInternal(
         },
     ) { innerPadding ->
 
-        // TODO: consider generalizing this entire details ui, we can have all types of tabs here
-        //  each details screen will provide its own list of tabs (which may be in different order)
-        //  see CollectionUi
-        HorizontalPager(
-            state = pagerState,
-        ) { page ->
-            when (state.tabs[page]) {
-                Tab.DETAILS -> {
-                    DetailsWithErrorHandling(
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        isLoading = state.detailsTabUiState.isLoading,
-                        handledException = state.detailsTabUiState.handledException,
-                        onRefresh = {
-                            eventSink(DetailsUiEvent.ForceRefreshDetails)
-                        },
-                        detailsModel = state.detailsModel,
-                    ) {
-                        AreaDetailsUi(
-                            area = it,
-                            detailsTabUiState = state.detailsTabUiState,
-                            filterText = state.topAppBarFilterState.filterText,
-                            onCollapseExpandExternalLinks = {
-                                eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
-                            },
-                        )
-                    }
-                }
-
-                Tab.RELATIONSHIPS -> {
-                    RelationsListScreen(
-                        lazyPagingItems = relationsLazyPagingItems,
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        lazyListState = state.relationsUiState.lazyListState,
-                        onItemClick = { entity, id, title ->
-                            eventSink(
-                                DetailsUiEvent.ClickItem(
-                                    entity = entity,
-                                    id = id,
-                                    title = title,
-                                ),
-                            )
-                        },
-                    )
-                }
-
-                Tab.ARTISTS -> {
-                    EntitiesPagingListUi(
-                        uiState = EntitiesPagingListUiState(
-                            lazyPagingItems = artistsLazyPagingItems,
-                            lazyListState = state.entitiesListUiState.artistsListUiState.lazyListState,
-                        ),
-                        innerPadding = innerPadding,
-                        scrollBehavior = scrollBehavior,
-                        now = now,
-                        onItemClick = { entity, id, title ->
-                            eventSink(
-                                DetailsUiEvent.ClickItem(
-                                    entity = entity,
-                                    id = id,
-                                    title = title,
-                                ),
-                            )
-                        },
-                    )
-                }
-
-                Tab.EVENTS -> {
-                    EntitiesListScreen(
-                        uiState = EntitiesPagingListUiState(
-                            lazyPagingItems = eventsLazyPagingItems,
-                            lazyListState = state.entitiesListUiState.eventsListUiState.lazyListState,
-                        ),
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        now = now,
-                        onItemClick = { entity, id, title ->
-                            eventSink(
-                                DetailsUiEvent.ClickItem(
-                                    entity = entity,
-                                    id = id,
-                                    title = title,
-                                ),
-                            )
-                        },
-                    )
-                }
-
-                Tab.LABELS -> {
-                    EntitiesListScreen(
-                        uiState = EntitiesPagingListUiState(
-                            lazyPagingItems = labelsLazyPagingItems,
-                            lazyListState = state.entitiesListUiState.labelsListUiState.lazyListState,
-                        ),
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        now = now,
-                        onItemClick = { entity, id, title ->
-                            eventSink(
-                                DetailsUiEvent.ClickItem(
-                                    entity = entity,
-                                    id = id,
-                                    title = title,
-                                ),
-                            )
-                        },
-                    )
-                }
-
-                Tab.RELEASES -> {
-                    EntitiesListScreen(
-                        uiState = EntitiesPagingListUiState(
-                            lazyPagingItems = releasesLazyPagingItems,
-                            lazyListState = state.entitiesListUiState.releasesListUiState.lazyListState,
-                            showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
-                        ),
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-
-                        now = now,
-                        onItemClick = { entity, id, title ->
-                            eventSink(
-                                DetailsUiEvent.ClickItem(
-                                    entity = entity,
-                                    id = id,
-                                    title = title,
-                                ),
-                            )
-                        },
-                        requestForMissingCoverArtUrl = { id ->
-                            releasesByEntityEventSink(
-                                ReleasesListUiEvent.RequestForMissingCoverArtUrl(
-                                    entityId = id,
-                                ),
-                            )
-                        },
-                    )
-                }
-
-                Tab.PLACES -> {
-                    EntitiesListScreen(
-                        uiState = EntitiesPagingListUiState(
-                            lazyPagingItems = placesLazyPagingItems,
-                            lazyListState = state.entitiesListUiState.placesListUiState.lazyListState,
-                        ),
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        now = now,
-                        onItemClick = { entity, id, title ->
-                            eventSink(
-                                DetailsUiEvent.ClickItem(
-                                    entity = entity,
-                                    id = id,
-                                    title = title,
-                                ),
-                            )
-                        },
-                    )
-                }
-
-                Tab.STATS -> {
-                    CircuitContent(
-                        StatsScreen(
-                            entity = entity,
-                            id = entityId,
-                            tabs = state.tabs,
-                        ),
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                    )
-                }
-
-                else -> {
-                    // no-op
-                }
-            }
-        }
+        DetailsHorizontalPager(
+            pagerState = pagerState,
+            state = state,
+            innerPadding = innerPadding,
+            scrollBehavior = scrollBehavior,
+            browseMethod = browseMethod,
+            entityLazyPagingItems = entitiesLazyPagingItems,
+            now = now,
+            requestForMissingCoverArtUrl = { id, _ ->
+                releasesByEntityEventSink(
+                    ReleasesListUiEvent.RequestForMissingCoverArtUrl(
+                        entityId = id,
+                    ),
+                )
+            },
+            detailsScreen = { detailsModel ->
+                AreaDetailsUi(
+                    area = detailsModel,
+                    detailsTabUiState = state.detailsTabUiState,
+                    filterText = state.topAppBarFilterState.filterText,
+                    onCollapseExpandExternalLinks = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
+                    },
+                )
+            },
+        )
     }
 }

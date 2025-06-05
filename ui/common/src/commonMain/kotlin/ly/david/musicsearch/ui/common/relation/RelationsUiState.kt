@@ -6,11 +6,11 @@ import app.cash.paging.PagingData
 import com.slack.circuit.runtime.CircuitUiState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 
 @Stable
 data class RelationsUiState(
-    val pagingDataFlow: Flow<PagingData<RelationListItemModel>> = emptyFlow(),
+    val pagingDataFlow: Flow<PagingData<ListItemModel>> = emptyFlow(),
     val lazyListState: LazyListState = LazyListState(),
     val eventSink: (RelationsUiEvent) -> Unit = {},
 ) : CircuitUiState

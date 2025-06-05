@@ -114,7 +114,7 @@ internal class StatsPresenter(
         val tabToStats = screen.tabs
             .filterNot { setOf(Tab.DETAILS, Tab.TRACKS, Tab.STATS).contains(it) }
             .associateWith { tab ->
-                val entity = tab.toMusicBrainzEntity()
+                val entity = tab.toMusicBrainzEntity() ?: return@associateWith EntityStats()
                 observeEntityStats(
                     entityId = screen.id,
                     entity = entity,

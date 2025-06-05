@@ -18,7 +18,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 @Composable
 internal fun ReleaseGroupDetailsUi(
     releaseGroup: ReleaseGroupDetailsModel,
-    detailsUiState: DetailsTabUiState,
+    detailsTabUiState: DetailsTabUiState,
     modifier: Modifier = Modifier,
     filterText: String = "",
     onImageClick: () -> Unit = {},
@@ -28,7 +28,7 @@ internal fun ReleaseGroupDetailsUi(
 
     LazyColumn(
         modifier = modifier,
-        state = detailsUiState.lazyListState,
+        state = detailsTabUiState.lazyListState,
     ) {
         releaseGroup.run {
             item {
@@ -41,7 +41,7 @@ internal fun ReleaseGroupDetailsUi(
                 }
 
                 ListSeparatorHeader(text = strings.informationHeader(strings.releaseGroup))
-                detailsUiState.numberOfImages?.ifNotNull {
+                detailsTabUiState.numberOfImages?.ifNotNull {
                     TextWithHeading(
                         heading = strings.numberOfImages,
                         text = "$it",
@@ -71,7 +71,7 @@ internal fun ReleaseGroupDetailsUi(
 
             urlsSection(
                 urls = urls,
-                collapsed = detailsUiState.isExternalLinksCollapsed,
+                collapsed = detailsTabUiState.isExternalLinksCollapsed,
                 onCollapseExpand = onCollapseExpandExternalLinks,
             )
         }

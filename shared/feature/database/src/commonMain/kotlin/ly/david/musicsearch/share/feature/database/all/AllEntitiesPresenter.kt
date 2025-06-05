@@ -24,6 +24,7 @@ import ly.david.musicsearch.ui.common.topappbar.TopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.toTab
 
 internal class AllEntitiesPresenter(
     private val screen: AllEntitiesScreen,
@@ -47,7 +48,7 @@ internal class AllEntitiesPresenter(
             val browseMethod = BrowseMethod.All
             entitiesListEventSink(
                 EntitiesListUiEvent.Get(
-                    entityTab = screen.entity,
+                    tab = screen.entity.toTab(),
                     browseMethod = browseMethod,
                     query = query,
                     isRemote = false,

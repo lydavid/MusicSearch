@@ -1,13 +1,12 @@
 package ly.david.musicsearch.shared.feature.details.work
 
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.urlsSection
@@ -19,14 +18,14 @@ import ly.david.musicsearch.ui.core.LocalStrings
 internal fun WorkDetailsUi(
     work: WorkDetailsModel,
     modifier: Modifier = Modifier,
+    detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    lazyListState: LazyListState = rememberLazyListState(),
 ) {
     val strings = LocalStrings.current
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState,
+        state = detailsTabUiState.lazyListState,
     ) {
         item {
             work.run {

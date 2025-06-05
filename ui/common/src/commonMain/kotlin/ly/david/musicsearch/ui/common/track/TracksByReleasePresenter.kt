@@ -9,13 +9,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
-import app.cash.paging.compose.LazyPagingItems
-import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.release.usecase.GetTracksByRelease
 
@@ -59,7 +58,7 @@ class TracksByReleasePresenter(
         }
 
         return TracksByReleaseUiState(
-            lazyPagingItems = tracksListItems.collectAsLazyPagingItems(),
+            pagingDataFlow = tracksListItems,
             lazyListState = lazyListState,
             collapsedMediumIds = collapsedMediumIds,
             eventSink = ::eventSink,
@@ -69,10 +68,10 @@ class TracksByReleasePresenter(
 
 @Stable
 data class TracksByReleaseUiState(
-    val lazyPagingItems: LazyPagingItems<ListItemModel>,
+    val pagingDataFlow: Flow<PagingData<ListItemModel>> = emptyFlow(),
     val lazyListState: LazyListState = LazyListState(),
     val collapsedMediumIds: Set<Long> = setOf(),
-    val eventSink: (TracksByEntityUiEvent) -> Unit,
+    val eventSink: (TracksByEntityUiEvent) -> Unit = {},
 ) : CircuitUiState
 
 sealed interface TracksByEntityUiEvent : CircuitUiEvent {

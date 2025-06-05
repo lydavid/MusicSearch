@@ -12,6 +12,7 @@ import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 private val release = ReleaseDetailsModel(
@@ -81,7 +82,7 @@ internal fun PreviewReleaseDetailsUi() {
         Surface {
             ReleaseDetailsUi(
                 release = release,
-                detailsUiState = ReleaseDetailsUiState(
+                detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 11,
                 ),
             )
@@ -96,7 +97,7 @@ internal fun PreviewReleaseDetailsUiCollapsed() {
         Surface {
             ReleaseDetailsUi(
                 release = release,
-                detailsUiState = ReleaseDetailsUiState(
+                detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 11,
                     isReleaseEventsCollapsed = true,
                     isExternalLinksCollapsed = true,

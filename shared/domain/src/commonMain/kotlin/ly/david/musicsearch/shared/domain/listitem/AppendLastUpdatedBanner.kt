@@ -17,7 +17,7 @@ fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
     browseMethod: BrowseMethod,
     browseEntity: MusicBrainzEntity,
 ): Flow<PagingData<ListItemModel>> {
-    return transformLatest { releaseGroups ->
+    return transformLatest { listItems ->
         val browseByEntity = browseMethod as? BrowseMethod.ByEntity
         if (browseByEntity != null) {
             browseRemoteMetadataRepository.observe(
@@ -25,10 +25,10 @@ fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
                 entity = browseEntity,
             ).collect { browseRemoteMetadata ->
                 if (browseRemoteMetadata == null) {
-                    emit(releaseGroups.map { it as ListItemModel })
+                    emit(listItems.map { it as ListItemModel })
                 } else {
                     emit(
-                        releaseGroups
+                        listItems
                             .map { it as ListItemModel }
                             .insertFooterItem(
                                 terminalSeparatorType = TerminalSeparatorType.FULLY_COMPLETE,
@@ -38,7 +38,14 @@ fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
                 }
             }
         } else {
-            emit(releaseGroups.map { it as ListItemModel })
+            emit(listItems.map { it as ListItemModel })
         }
+    }
+}
+
+@OptIn(ExperimentalCoroutinesApi::class)
+fun <T : ListItemModel> Flow<PagingData<T>>.appendPlaceholderLastUpdatedBanner(): Flow<PagingData<ListItemModel>> {
+    return transformLatest { listItems ->
+        emit(listItems.map { it as ListItemModel })
     }
 }

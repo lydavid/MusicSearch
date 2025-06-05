@@ -72,7 +72,8 @@ internal fun AllEntitiesUi(
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
-        val uiState = when (val entity = state.entity) {
+        val entity = state.entity
+        val uiState = when (entity) {
             MusicBrainzEntity.AREA -> {
                 val lazyPagingItems =
                     state.entitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()
@@ -200,7 +201,7 @@ internal fun AllEntitiesUi(
                 )
             },
             requestForMissingCoverArtUrl = { entityId ->
-                when (state.entity) {
+                when (entity) {
                     MusicBrainzEntity.RELEASE -> {
                         releasesEventSink(ReleasesListUiEvent.RequestForMissingCoverArtUrl(entityId))
                     }

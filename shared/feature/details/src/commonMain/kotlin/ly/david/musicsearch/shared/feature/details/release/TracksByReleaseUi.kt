@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.cash.paging.compose.LazyPagingItems
+import app.cash.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
@@ -23,7 +24,7 @@ internal fun TracksByReleaseUi(
     val eventSink = uiState.eventSink
 
     TracksByReleaseUi(
-        lazyPagingItems = uiState.lazyPagingItems,
+        lazyPagingItems = uiState.pagingDataFlow.collectAsLazyPagingItems(),
         modifier = modifier,
         lazyListState = uiState.lazyListState,
         collapsedMediumIds = uiState.collapsedMediumIds,

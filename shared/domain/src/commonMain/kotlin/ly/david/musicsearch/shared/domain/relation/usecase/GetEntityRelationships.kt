@@ -6,7 +6,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
-import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.appendPlaceholderLastUpdatedBanner
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
@@ -19,7 +20,7 @@ class GetEntityRelationships(
         entity: MusicBrainzEntity?,
         relatedEntities: Set<MusicBrainzEntity>,
         query: String,
-    ): Flow<PagingData<RelationListItemModel>> {
+    ): Flow<PagingData<ListItemModel>> {
         return when {
             entityId.isEmpty() || entity == null -> emptyFlow()
             else -> relationRepository.observeEntityRelationships(
@@ -28,8 +29,9 @@ class GetEntityRelationships(
                 relatedEntities = relatedEntities,
                 query = query,
             )
-                .distinctUntilChanged()
                 .cachedIn(scope = coroutineScope)
+                .appendPlaceholderLastUpdatedBanner()
+                .distinctUntilChanged()
         }
     }
 }

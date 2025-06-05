@@ -14,6 +14,7 @@ import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.core.LocalStrings
 
+// TODO: have one DetailsUi or make use of slots to insert the differences
 @Composable
 internal fun AreaDetailsUi(
     area: AreaDetailsModel,

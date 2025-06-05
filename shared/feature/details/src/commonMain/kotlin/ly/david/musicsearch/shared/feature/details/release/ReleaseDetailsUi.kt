@@ -13,6 +13,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.label.LabelListItem
@@ -28,7 +29,7 @@ import ly.david.musicsearch.ui.core.LocalStrings
 @Composable
 internal fun ReleaseDetailsUi(
     release: ReleaseDetailsModel,
-    detailsUiState: ReleaseDetailsUiState,
+    detailsTabUiState: DetailsTabUiState,
     modifier: Modifier = Modifier,
     filterText: String = "",
     onImageClick: () -> Unit = {},
@@ -40,7 +41,7 @@ internal fun ReleaseDetailsUi(
 
     LazyColumn(
         modifier = modifier,
-        state = detailsUiState.lazyListState,
+        state = detailsTabUiState.lazyListState,
     ) {
         release.run {
             item {
@@ -52,7 +53,7 @@ internal fun ReleaseDetailsUi(
                     )
                 }
                 ListSeparatorHeader(text = strings.informationHeader(strings.release))
-                detailsUiState.numberOfImages?.ifNotNull {
+                detailsTabUiState.numberOfImages?.ifNotNull {
                     TextWithHeading(
                         heading = strings.numberOfImages,
                         text = "$it",
@@ -179,7 +180,7 @@ internal fun ReleaseDetailsUi(
                 )
             }
 
-            val collapsed = detailsUiState.isReleaseEventsCollapsed
+            val collapsed = detailsTabUiState.isReleaseEventsCollapsed
             item {
                 areas.ifNotNullOrEmpty {
                     CollapsibleListSeparatorHeader(
@@ -208,7 +209,7 @@ internal fun ReleaseDetailsUi(
 
             urlsSection(
                 urls = urls,
-                collapsed = detailsUiState.isExternalLinksCollapsed,
+                collapsed = detailsTabUiState.isExternalLinksCollapsed,
                 onCollapseExpand = onCollapseExpandExternalLinks,
             )
         }

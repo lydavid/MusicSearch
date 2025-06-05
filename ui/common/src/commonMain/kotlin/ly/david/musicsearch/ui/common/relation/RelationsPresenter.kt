@@ -10,7 +10,7 @@ import app.cash.paging.PagingData
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.relatableEntities
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
@@ -30,7 +30,7 @@ class RelationsPresenterImpl(
                 relatableEntities subtract setOf(MusicBrainzEntity.URL),
             )
         }
-        val pagingDataFlow: Flow<PagingData<RelationListItemModel>> by rememberRetained(id, entity, query) {
+        val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(id, entity, query) {
             mutableStateOf(
                 getEntityRelationships(
                     entityId = id,

@@ -231,7 +231,8 @@ internal fun CollectionUi(
                     .padding(innerPadding),
             )
         } else {
-            val uiState = when (val entity = collection.entity) {
+            val entity = collection.entity
+            val uiState = when (entity) {
                 MusicBrainzEntity.AREA -> {
                     EntitiesPagingListUiState(
                         lazyPagingItems = areasLazyPagingItems,
@@ -343,7 +344,7 @@ internal fun CollectionUi(
                     )
                 },
                 requestForMissingCoverArtUrl = { entityId ->
-                    when (collection.entity) {
+                    when (entity) {
                         MusicBrainzEntity.RELEASE -> {
                             releasesEventSink(ReleasesListUiEvent.RequestForMissingCoverArtUrl(entityId))
                         }
