@@ -11,11 +11,20 @@ import ly.david.musicsearch.shared.domain.listitem.appendPlaceholderLastUpdatedB
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
-class GetEntityRelationships(
+interface GetEntityRelationships {
+    operator fun invoke(
+        entityId: String,
+        entity: MusicBrainzEntity?,
+        relatedEntities: Set<MusicBrainzEntity>,
+        query: String,
+    ): Flow<PagingData<ListItemModel>>
+}
+
+class GetEntityRelationshipsImpl(
     private val relationRepository: RelationRepository,
     private val coroutineScope: CoroutineScope,
-) {
-    operator fun invoke(
+) : GetEntityRelationships {
+    override operator fun invoke(
         entityId: String,
         entity: MusicBrainzEntity?,
         relatedEntities: Set<MusicBrainzEntity>,

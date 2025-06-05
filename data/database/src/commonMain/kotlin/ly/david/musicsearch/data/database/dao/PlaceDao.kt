@@ -7,16 +7,18 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToPlaceListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
-import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import lydavidmusicsearchdatadatabase.Area_place
 import lydavidmusicsearchdatadatabase.Place
 
@@ -56,7 +58,7 @@ class PlaceDao(
 
     fun getPlaceForDetails(placeId: String): PlaceDetailsModel? {
         return transacter.getPlaceForDetails(
-            placeId,
+            placeId = placeId,
             mapper = ::mapToDetailsModel,
         ).executeAsOneOrNull()
     }
@@ -72,6 +74,7 @@ class PlaceDao(
         begin: String?,
         end: String?,
         ended: Boolean?,
+        lastUpdated: Instant?,
     ) = PlaceDetailsModel(
         id = id,
         name = name,
@@ -87,6 +90,7 @@ class PlaceDao(
             end = end,
             ended = ended,
         ),
+        lastUpdated = lastUpdated ?: Clock.System.now(),
     )
 
     fun delete(id: String) {

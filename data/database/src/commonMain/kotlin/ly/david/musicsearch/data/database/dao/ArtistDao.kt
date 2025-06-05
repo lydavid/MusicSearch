@@ -7,6 +7,8 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToArtistListItemModel
@@ -84,14 +86,15 @@ class ArtistDao(
         areaId: String?,
         areaName: String?,
         countryCode: String?,
-        visited: Boolean?,
+        visitedArea: Boolean?,
+        lastUpdated: Instant?,
     ): ArtistDetailsModel {
         val area = if (areaId != null && areaName != null) {
             AreaListItemModel(
                 id = areaId,
                 name = areaName,
                 countryCodes = listOfNotNull(countryCode),
-                visited = visited == true,
+                visited = visitedArea == true,
             )
         } else {
             null
@@ -111,6 +114,7 @@ class ArtistDao(
                 ended = ended,
             ),
             areaListItemModel = area,
+            lastUpdated = lastUpdated ?: Clock.System.now(),
         )
     }
 

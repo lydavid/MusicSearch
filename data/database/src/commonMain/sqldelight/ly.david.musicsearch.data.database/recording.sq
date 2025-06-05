@@ -25,8 +25,11 @@ SELECT
   first_release_date,
   length,
   video,
-  isrcs
-FROM recording WHERE id = ?;
+  isrcs,
+  details_metadata.last_updated
+FROM recording
+LEFT JOIN details_metadata ON details_metadata.entity_id = id
+WHERE id = :recordingId;
 
 deleteRecording:
 DELETE FROM recording

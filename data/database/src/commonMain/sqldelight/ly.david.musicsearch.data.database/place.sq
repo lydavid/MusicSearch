@@ -29,8 +29,11 @@ SELECT
   latitude,
   begin,
   end,
-  ended
-FROM place WHERE id = ?;
+  ended,
+  details_metadata.last_updated
+FROM place
+LEFT JOIN details_metadata ON details_metadata.entity_id = id
+WHERE id = :placeId;
 
 deletePlace:
 DELETE FROM place

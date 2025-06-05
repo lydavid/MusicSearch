@@ -15,15 +15,18 @@ insertWork:
 INSERT OR IGNORE INTO work
 VALUES ?;
 
-getWork:
+getWorkForDetails:
 SELECT
   id,
   name,
   disambiguation,
   type,
   language,
-  iswcs
-FROM work WHERE id = ?;
+  iswcs,
+  details_metadata.last_updated
+FROM work
+LEFT JOIN details_metadata ON details_metadata.entity_id = id
+WHERE id = :workId;
 
 deleteWork:
 DELETE FROM work

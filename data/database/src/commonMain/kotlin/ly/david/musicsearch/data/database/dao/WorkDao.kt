@@ -8,6 +8,8 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
@@ -51,8 +53,8 @@ class WorkDao(
     }
 
     fun getWorkForDetails(workId: String): WorkDetailsModel? {
-        return transacter.getWork(
-            workId,
+        return transacter.getWorkForDetails(
+            workId = workId,
             mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
     }
@@ -64,6 +66,7 @@ class WorkDao(
         type: String?,
         language: String?,
         iswcs: List<String>?,
+        lastUpdated: Instant?,
     ) = WorkDetailsModel(
         id = id,
         name = name,
@@ -71,6 +74,7 @@ class WorkDao(
         type = type,
         language = language,
         iswcs = iswcs,
+        lastUpdated = lastUpdated ?: Clock.System.now(),
     )
 
     fun delete(id: String) {

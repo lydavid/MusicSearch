@@ -11,14 +11,17 @@ insert:
 INSERT OR IGNORE INTO instrument
 VALUES ?;
 
-getInstrument:
+getInstrumentForDetails:
 SELECT
   id,
   name,
   disambiguation,
   description,
-  type
-FROM instrument WHERE id = ?;
+  type,
+  details_metadata.last_updated
+FROM instrument
+LEFT JOIN details_metadata ON details_metadata.entity_id = id
+WHERE id = :instrumentId;
 
 delete:
 DELETE FROM instrument

@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.details
 
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -14,6 +16,7 @@ data class WorkDetailsModel(
     override val type: String? = null,
     override val language: String? = null,
     override val iswcs: List<String>? = null,
+    override val lastUpdated: Instant = Clock.System.now(),
     val attributes: List<WorkAttributeUiModel> = listOf(),
     override val artistCredits: List<ArtistCreditUiModel> = listOf(),
     override val imageMetadata: ImageMetadata = ImageMetadata(),

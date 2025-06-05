@@ -33,10 +33,12 @@ SELECT
   begin,
   end,
   ended,
-  cc.code
+  country_code.code,
+  details_metadata.last_updated
 FROM area
-LEFT JOIN country_code cc ON id = cc.area_id
-WHERE id = ?
+LEFT JOIN country_code ON id = country_code.area_id
+LEFT JOIN details_metadata ON details_metadata.entity_id = id
+WHERE id = :areaId
 GROUP BY id;
 
 -- areas by entity

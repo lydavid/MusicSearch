@@ -10,13 +10,16 @@ insert:
 INSERT OR IGNORE INTO series
 VALUES ?;
 
-getSeries:
+getSeriesForDetails:
 SELECT
   id,
   name,
   disambiguation,
-  type
-FROM series WHERE id = ?;
+  type,
+  details_metadata.last_updated
+FROM series
+LEFT JOIN details_metadata ON details_metadata.entity_id = id
+WHERE id = :seriesId;
 
 delete:
 DELETE FROM series

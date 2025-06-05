@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.details
 
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
@@ -18,6 +20,7 @@ data class PlaceDetailsModel(
     override val coordinates: CoordinatesUiModel = CoordinatesUiModel(),
     override val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val area: AreaListItemModel? = null,
+    override val lastUpdated: Instant = Clock.System.now(),
     override val artistCredits: List<ArtistCreditUiModel> = listOf(),
     override val imageMetadata: ImageMetadata = ImageMetadata(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),

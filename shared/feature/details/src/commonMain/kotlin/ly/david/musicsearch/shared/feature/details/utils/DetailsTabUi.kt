@@ -19,6 +19,7 @@ import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.image.LargeImage
+import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.urlsSection
@@ -104,6 +105,13 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 collapsed = detailsTabUiState.isExternalLinksCollapsed,
                 onCollapseExpand = onCollapseExpandExternalLinks,
             )
+
+            item {
+                LastUpdatedFooterItem(
+                    lastUpdated = lastUpdated,
+                    now = detailsTabUiState.now,
+                )
+            }
         }
     }
 }

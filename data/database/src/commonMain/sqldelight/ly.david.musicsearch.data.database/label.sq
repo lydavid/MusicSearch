@@ -32,8 +32,11 @@ SELECT
   isnis,
   begin,
   end,
-  ended
-FROM label WHERE id = ?;
+  ended,
+  details_metadata.last_updated
+FROM label
+LEFT JOIN details_metadata ON details_metadata.entity_id = id
+WHERE id = :labelId;
 
 deleteLabel:
 DELETE FROM label

@@ -7,6 +7,8 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToInstrumentListItemModel
@@ -46,8 +48,8 @@ class InstrumentDao(
     }
 
     fun getInstrumentForDetails(instrumentId: String): InstrumentDetailsModel? {
-        return transacter.getInstrument(
-            instrumentId,
+        return transacter.getInstrumentForDetails(
+            instrumentId = instrumentId,
             mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
     }
@@ -58,12 +60,14 @@ class InstrumentDao(
         disambiguation: String?,
         description: String?,
         type: String?,
+        lastUpdated: Instant?,
     ) = InstrumentDetailsModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
         description = description,
         type = type,
+        lastUpdated = lastUpdated ?: Clock.System.now(),
     )
 
     fun delete(id: String) {

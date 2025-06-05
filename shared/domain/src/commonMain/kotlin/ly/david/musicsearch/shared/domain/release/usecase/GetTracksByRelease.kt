@@ -9,11 +9,18 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 
-class GetTracksByRelease(
+interface GetTracksByRelease {
+    operator fun invoke(
+        releaseId: String,
+        query: String,
+    ): Flow<PagingData<ListItemModel>>
+}
+
+class GetTracksByReleaseImpl(
     private val releaseRepository: ReleaseRepository,
     private val coroutineScope: CoroutineScope,
-) {
-    operator fun invoke(
+) : GetTracksByRelease {
+    override operator fun invoke(
         releaseId: String,
         query: String,
     ): Flow<PagingData<ListItemModel>> {

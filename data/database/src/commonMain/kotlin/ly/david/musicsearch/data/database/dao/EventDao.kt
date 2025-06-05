@@ -7,6 +7,8 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToEventListItemModel
@@ -69,6 +71,7 @@ class EventDao(
         begin: String?,
         end: String?,
         ended: Boolean?,
+        lastUpdated: Instant?,
     ) = EventDetailsModel(
         id = id,
         name = name,
@@ -81,6 +84,7 @@ class EventDao(
             end = end,
             ended = ended,
         ),
+        lastUpdated = lastUpdated ?: Clock.System.now(),
     )
 
     fun delete(id: String) {

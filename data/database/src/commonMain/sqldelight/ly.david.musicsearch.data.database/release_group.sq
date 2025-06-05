@@ -23,8 +23,10 @@ SELECT
   rg.first_release_date,
   rg.disambiguation,
   rg.primary_type,
-  rg.secondary_types
+  rg.secondary_types,
+  details_metadata.last_updated
 FROM release_group rg
+LEFT JOIN details_metadata ON details_metadata.entity_id = rg.id
 WHERE rg.id = :releaseGroupId;
 
 getReleaseGroupForRelease:

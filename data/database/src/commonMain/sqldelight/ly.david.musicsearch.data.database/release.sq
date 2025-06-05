@@ -42,8 +42,10 @@ SELECT
     INNER JOIN `release` r ON m.release_id = r.id
     WHERE r.id = :releaseId
     AND t.length IS NULL
-  ) AS hasNullLength
+  ) AS hasNullLength,
+  details_metadata.last_updated
 FROM `release`
+LEFT JOIN details_metadata ON details_metadata.entity_id = `release`.id
 WHERE `release`.id = :releaseId
 LIMIT 1;
 

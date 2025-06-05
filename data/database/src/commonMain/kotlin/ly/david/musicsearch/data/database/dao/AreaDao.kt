@@ -7,6 +7,8 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
@@ -14,8 +16,8 @@ import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkM
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.area.ReleaseEvent
+import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.AreaQueries
@@ -91,7 +93,7 @@ class AreaDao(
 
     fun getAreaForDetails(areaId: String): AreaDetailsModel? {
         return transacter.getAreaForDetails(
-            id = areaId,
+            areaId = areaId,
             mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
     }
@@ -174,6 +176,7 @@ class AreaDao(
         end: String?,
         ended: Boolean?,
         countryCode: String?,
+        lastUpdated: Instant?,
     ) = AreaDetailsModel(
         id = id,
         name = name,
@@ -185,6 +188,7 @@ class AreaDao(
             ended = ended,
         ),
         countryCode = countryCode.orEmpty(),
+        lastUpdated = lastUpdated ?: Clock.System.now(),
     )
 
     fun delete(areaId: String) {

@@ -46,12 +46,14 @@ SELECT
   artist.ended,
   area.id,
   area.name,
-  cc.code,
-  details_metadata.entity_id IS NOT NULL AS visited
+  country_code.code,
+  area_details_metadata.entity_id IS NOT NULL AS visitedArea,
+  artist_details_metadata.last_updated
 FROM artist
 LEFT JOIN area ON artist.area_id = area.id
-LEFT JOIN country_code cc ON area.id = cc.area_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = area.id
+LEFT JOIN country_code ON area.id = country_code.area_id
+LEFT JOIN details_metadata area_details_metadata ON area_details_metadata.entity_id = area.id
+LEFT JOIN details_metadata artist_details_metadata ON artist_details_metadata.entity_id = artist.id
 WHERE artist.id = :artistId
 GROUP BY artist.id;
 

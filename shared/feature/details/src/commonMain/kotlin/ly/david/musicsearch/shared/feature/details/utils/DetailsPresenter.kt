@@ -17,6 +17,8 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
@@ -282,6 +284,7 @@ internal data class DetailsTabUiState(
     val lazyListState: LazyListState = LazyListState(),
     val isReleaseEventsCollapsed: Boolean = false,
     val isExternalLinksCollapsed: Boolean = false,
+    val now: Instant = Clock.System.now(),
 )
 
 internal sealed interface DetailsUiEvent : CircuitUiEvent {

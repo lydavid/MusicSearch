@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.details
 
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.area.Area
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
@@ -15,6 +17,7 @@ data class AreaDetailsModel(
     override val type: String? = "",
     override val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val countryCode: String = "",
+    override val lastUpdated: Instant = Clock.System.now(),
     override val artistCredits: List<ArtistCreditUiModel> = listOf(),
     override val imageMetadata: ImageMetadata = ImageMetadata(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
