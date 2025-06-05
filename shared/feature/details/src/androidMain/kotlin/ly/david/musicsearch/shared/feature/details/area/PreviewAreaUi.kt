@@ -535,9 +535,9 @@ internal fun PreviewAreaDetails() {
                         releasesListUiState = ReleasesListUiState(
                             pagingDataFlow = canadianReleases,
                         ),
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
+                        relationsUiState = RelationsUiState(
+                            pagingDataFlow = canadianRelations,
+                        ),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -580,9 +580,9 @@ internal fun PreviewAreaDetailsError() {
                         releasesListUiState = ReleasesListUiState(
                             pagingDataFlow = canadianReleases,
                         ),
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
+                        relationsUiState = RelationsUiState(
+                            pagingDataFlow = canadianRelations,
+                        ),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -619,9 +619,9 @@ internal fun PreviewAreaRelationships() {
                         releasesListUiState = ReleasesListUiState(
                             pagingDataFlow = canadianReleases,
                         ),
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
+                        relationsUiState = RelationsUiState(
+                            pagingDataFlow = canadianRelations,
+                        ),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -658,9 +658,9 @@ internal fun PreviewAreaArtists() {
                         releasesListUiState = ReleasesListUiState(
                             pagingDataFlow = canadianReleases,
                         ),
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
+                        relationsUiState = RelationsUiState(
+                            pagingDataFlow = canadianRelations,
+                        ),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -697,9 +697,9 @@ internal fun PreviewAreaEvents() {
                         releasesListUiState = ReleasesListUiState(
                             pagingDataFlow = canadianReleases,
                         ),
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
+                        relationsUiState = RelationsUiState(
+                            pagingDataFlow = canadianRelations,
+                        ),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -736,9 +736,9 @@ internal fun PreviewAreaLabels() {
                         releasesListUiState = ReleasesListUiState(
                             pagingDataFlow = canadianReleases,
                         ),
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
+                        relationsUiState = RelationsUiState(
+                            pagingDataFlow = canadianRelations,
+                        ),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -775,9 +775,9 @@ internal fun PreviewAreaReleases() {
                         releasesListUiState = ReleasesListUiState(
                             pagingDataFlow = canadianReleases,
                         ),
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
+                        relationsUiState = RelationsUiState(
+                            pagingDataFlow = canadianRelations,
+                        ),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -814,9 +814,9 @@ internal fun PreviewAreaPlaces() {
                         releasesListUiState = ReleasesListUiState(
                             pagingDataFlow = canadianReleases,
                         ),
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
+                        relationsUiState = RelationsUiState(
+                            pagingDataFlow = canadianRelations,
+                        ),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -854,9 +854,9 @@ internal fun PreviewAreaStats() {
                         releasesListUiState = ReleasesListUiState(
                             pagingDataFlow = canadianReleases,
                         ),
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
+                        relationsUiState = RelationsUiState(
+                            pagingDataFlow = canadianRelations,
+                        ),
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
