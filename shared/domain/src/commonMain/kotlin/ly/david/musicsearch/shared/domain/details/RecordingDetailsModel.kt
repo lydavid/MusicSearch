@@ -1,24 +1,24 @@
-package ly.david.musicsearch.shared.domain.work
+package ly.david.musicsearch.shared.domain.details
 
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
-import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.recording.Recording
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 
-data class WorkDetailsModel(
+data class RecordingDetailsModel(
     override val id: String,
     override val name: String,
-    override val disambiguation: String? = null,
-    override val type: String? = null,
-    override val language: String? = null,
-    override val iswcs: List<String>? = null,
-    val attributes: List<WorkAttributeUiModel> = listOf(),
+    override val firstReleaseDate: String? = null,
+    override val disambiguation: String = "",
+    override val length: Int? = null,
+    override val video: Boolean = false,
+    val isrcs: List<String>? = null,
     override val artistCredits: List<ArtistCreditUiModel> = listOf(),
     override val imageMetadata: ImageMetadata = ImageMetadata(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val urls: List<RelationListItemModel> = listOf(),
-) : Work, MusicBrainzDetailsModel {
+) : Recording, MusicBrainzDetailsModel {
     override fun withArtistCredits(artistCredits: List<ArtistCreditUiModel>): MusicBrainzDetailsModel {
         return copy(artistCredits = artistCredits)
     }

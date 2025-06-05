@@ -20,7 +20,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
+import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -175,10 +175,13 @@ internal fun WorkUi(
             browseMethod = browseMethod,
             entityLazyPagingItems = entitiesLazyPagingItems,
             detailsScreen = { detailsModel ->
-                WorkDetailsUi(
+                WorkDetailsTabUi(
                     work = detailsModel,
                     filterText = state.topAppBarFilterState.filterText,
                     detailsTabUiState = state.detailsTabUiState,
+                    onCollapseExpandExternalLinks = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
+                    },
                 )
             },
         )

@@ -6,7 +6,7 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
-import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
+import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository

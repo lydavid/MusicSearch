@@ -8,7 +8,7 @@ import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
-import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
 import org.junit.Assert.assertEquals
 import org.junit.Rule

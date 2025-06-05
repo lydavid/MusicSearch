@@ -21,9 +21,8 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -213,36 +212,12 @@ internal fun ReleaseUi(
             browseMethod = browseMethod,
             entityLazyPagingItems = entitiesLazyPagingItems,
             detailsScreen = { detailsModel ->
-                ReleaseDetailsUi(
-                    release = detailsModel.copy(
-                        labels = detailsModel.labels
-                            .filter { label ->
-                                val searchText = state.topAppBarFilterState.filterText.lowercase()
-                                listOf(
-                                    label.getNameWithDisambiguation(),
-                                    label.type,
-                                    label.labelCode.toString(),
-                                    label.catalogNumbers,
-                                ).any { it?.lowercase()?.contains(searchText) == true }
-                            },
-                        areas = detailsModel.areas.filter { area ->
-                            val searchText = state.topAppBarFilterState.filterText.lowercase()
-                            listOf(
-                                area.getNameWithDisambiguation(),
-                                area.date,
-                            ).any { it?.lowercase()?.contains(searchText) == true }
-                        },
-                    ),
+                ReleaseDetailsTabUi(
+                    release = detailsModel,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
                     onImageClick = {
                         eventSink(DetailsUiEvent.ClickImage)
-                    },
-                    onCollapseExpandReleaseEvents = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandReleaseEvents)
-                    },
-                    onCollapseExpandExternalLinks = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
                     },
                     onItemClick = { entity, id, title ->
                         eventSink(
@@ -253,93 +228,14 @@ internal fun ReleaseUi(
                             ),
                         )
                     },
+                    onCollapseExpandReleaseEvents = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandReleaseEvents)
+                    },
+                    onCollapseExpandExternalLinks = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
+                    },
                 )
             },
         )
-//        HorizontalPager(
-//            state = pagerState,
-//        ) { page ->
-//            when (state.tabs[page]) {
-//                Tab.DETAILS -> {
-//                    DetailsWithErrorHandling(
-//                        modifier = Modifier
-//                            .padding(innerPadding)
-//                            .fillMaxSize()
-//                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-//                        handledException = state.detailsUiState.handledException,
-//                        onRefresh = {
-//                            eventSink(DetailsUiEvent.ForceRefreshDetails)
-//                        },
-//                        detailsModel = state.release,
-//                    ) { release ->
-//
-//                    }
-//                }
-//
-//                Tab.TRACKS -> {
-//
-//                }
-//
-//                Tab.ARTISTS -> {
-//                    EntitiesListScreen(
-//                        uiState = EntitiesPagingListUiState(
-//                            lazyPagingItems = artistsLazyPagingItems,
-//                            lazyListState = state.artistsListUiState.lazyListState,
-//                        ),
-//                        modifier = Modifier
-//                            .padding(innerPadding)
-//                            .fillMaxSize()
-//                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-//                        onItemClick = { entity, id, title ->
-//                            eventSink(
-//                                DetailsUiEvent.ClickItem(
-//                                    entity = entity,
-//                                    id = id,
-//                                    title = title,
-//                                ),
-//                            )
-//                        },
-//                    )
-//                }
-//
-//                Tab.RELATIONSHIPS -> {
-// //                    RelationsListScreen(
-// //                        lazyPagingItems = relationsLazyPagingItems,
-// //                        modifier = Modifier
-// //                            .padding(innerPadding)
-// //                            .fillMaxSize()
-// //                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-// //                        lazyListState = state.relationsUiState.lazyListState,
-// //                        onItemClick = { entity, id, title ->
-// //                            eventSink(
-// //                                DetailsUiEvent.ClickItem(
-// //                                    entity = entity,
-// //                                    id = id,
-// //                                    title = title,
-// //                                ),
-// //                            )
-// //                        },
-// //                    )
-//                }
-//
-//                Tab.STATS -> {
-//                    CircuitContent(
-//                        StatsScreen(
-//                            entity = entity,
-//                            id = entityId,
-//                            tabs = state.tabs,
-//                        ),
-//                        modifier = Modifier
-//                            .padding(innerPadding)
-//                            .fillMaxSize()
-//                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-//                    )
-//                }
-//
-//                else -> {
-//                    // no-op
-//                }
-//            }
-//        }
     }
 }

@@ -155,6 +155,7 @@ data class AppStrings(
     val seeCollaborators: String,
     val collaborationsWith: (String) -> String,
     val wikipedia: String,
+    val readMore: String,
     val numberOfImages: String,
     val lastUpdatedFromMusicBrainz: (period: String, dateTime: String) -> String,
     val justNow: String,

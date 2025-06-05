@@ -6,7 +6,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
-import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
+import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
@@ -14,7 +14,7 @@ import ly.david.musicsearch.ui.core.theme.PreviewTheme
 internal fun PreviewPlaceDetailsUi() {
     PreviewTheme {
         Surface {
-            PlaceDetailsUi(
+            PlaceDetailsTabUi(
                 place = PlaceDetailsModel(
                     id = "p1",
                     name = "Some Place",

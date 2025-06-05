@@ -19,7 +19,7 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.label.LabelDetailsModel
+import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
@@ -193,10 +193,13 @@ internal fun LabelUi(
                 releasesByEntityEventSink(ReleasesListUiEvent.RequestForMissingCoverArtUrl(id))
             },
             detailsScreen = { detailsModel ->
-                LabelDetailsUi(
+                LabelDetailsTabUi(
                     label = detailsModel,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
+                    onCollapseExpandExternalLinks = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
+                    },
                 )
             },
         )

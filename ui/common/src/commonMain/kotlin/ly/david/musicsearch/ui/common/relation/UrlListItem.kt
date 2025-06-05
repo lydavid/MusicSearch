@@ -55,7 +55,9 @@ fun UrlListItem(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     val imageVectorAndTint = when (relation.label) {
-                        strings.wikipedia -> {
+                        strings.readMore,
+                        strings.wikipedia,
+                        -> {
                             CustomIcons.Wikipedia to LocalContentColor.current
                         }
 

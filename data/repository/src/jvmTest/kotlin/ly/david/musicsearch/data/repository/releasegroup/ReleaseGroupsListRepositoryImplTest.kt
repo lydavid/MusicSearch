@@ -33,7 +33,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule

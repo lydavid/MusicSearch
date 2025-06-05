@@ -5,7 +5,7 @@ import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository

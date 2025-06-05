@@ -14,7 +14,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.label.LabelDetailsModel
+import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.Label

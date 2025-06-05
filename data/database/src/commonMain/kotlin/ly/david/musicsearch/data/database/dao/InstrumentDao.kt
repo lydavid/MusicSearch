@@ -12,7 +12,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToInstrumentListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
+import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import lydavidmusicsearchdatadatabase.Instrument
 

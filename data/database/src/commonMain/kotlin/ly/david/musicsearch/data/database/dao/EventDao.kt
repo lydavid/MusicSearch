@@ -13,7 +13,7 @@ import ly.david.musicsearch.data.database.mapper.mapToEventListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.event.EventDetailsModel
+import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.Event

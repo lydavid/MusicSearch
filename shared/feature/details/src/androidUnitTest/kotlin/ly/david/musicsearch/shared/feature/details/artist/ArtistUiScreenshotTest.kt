@@ -13,6 +13,13 @@ class ArtistUiScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun collapsed() {
+        snapshot {
+            PreviewArtistDetailsUiCollapsed()
+        }
+    }
+
+    @Test
     fun withWikipediaUrlButNoExtract() {
         snapshot {
             PreviewArtistDetailsUiWithWikipediaUrlButNoExtract()

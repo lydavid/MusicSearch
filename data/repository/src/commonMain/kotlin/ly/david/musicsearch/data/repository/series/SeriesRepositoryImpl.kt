@@ -5,7 +5,7 @@ import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
-import ly.david.musicsearch.shared.domain.series.SeriesDetailsModel
+import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.series.SeriesRepository
 
 class SeriesRepositoryImpl(

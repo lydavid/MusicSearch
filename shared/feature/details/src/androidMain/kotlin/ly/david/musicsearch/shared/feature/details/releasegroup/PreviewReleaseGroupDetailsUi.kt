@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
@@ -54,7 +54,7 @@ private val releaseGroup = ReleaseGroupDetailsModel(
 internal fun PreviewReleaseGroupDetailsUi() {
     PreviewTheme {
         Surface {
-            ReleaseGroupDetailsUi(
+            ReleaseGroupDetailsTabUi(
                 releaseGroup = releaseGroup,
                 detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 1,
@@ -69,7 +69,7 @@ internal fun PreviewReleaseGroupDetailsUi() {
 internal fun PreviewReleaseGroupDetailsUiCollapsed() {
     PreviewTheme {
         Surface {
-            ReleaseGroupDetailsUi(
+            ReleaseGroupDetailsTabUi(
                 releaseGroup = releaseGroup,
                 detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 1,

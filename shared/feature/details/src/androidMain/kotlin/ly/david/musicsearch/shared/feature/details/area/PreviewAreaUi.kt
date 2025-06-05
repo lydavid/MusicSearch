@@ -7,7 +7,7 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
@@ -508,36 +508,57 @@ private val country = AreaDetailsModel(
     ),
 )
 
+private val detailsUiState = DetailsUiState(
+    title = "Canada",
+    detailsModel = country,
+    tabs = areaTabs,
+    selectedTab = Tab.DETAILS,
+    entitiesListUiState = EntitiesListUiState(
+        artistsListUiState = ArtistsListUiState(
+            pagingDataFlow = canadianArtists,
+        ),
+        eventsListUiState = EventsListUiState(
+            pagingDataFlow = events,
+        ),
+        labelsListUiState = LabelsListUiState(
+            pagingDataFlow = labels,
+        ),
+        placesListUiState = PlacesListUiState(
+            pagingDataFlow = places,
+        ),
+        releasesListUiState = ReleasesListUiState(
+            pagingDataFlow = canadianReleases,
+        ),
+        relationsUiState = RelationsUiState(
+            pagingDataFlow = canadianRelations,
+        ),
+    ),
+)
+
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaDetails() {
     PreviewTheme {
         Surface {
             AreaUiInternal(
-                state = DetailsUiState(
-                    title = "Canada",
-                    detailsModel = country,
-                    tabs = areaTabs,
-                    selectedTab = Tab.DETAILS,
-                    entitiesListUiState = EntitiesListUiState(
-                        artistsListUiState = ArtistsListUiState(
-                            pagingDataFlow = canadianArtists,
-                        ),
-                        eventsListUiState = EventsListUiState(
-                            pagingDataFlow = events,
-                        ),
-                        labelsListUiState = LabelsListUiState(
-                            pagingDataFlow = labels,
-                        ),
-                        placesListUiState = PlacesListUiState(
-                            pagingDataFlow = places,
-                        ),
-                        releasesListUiState = ReleasesListUiState(
-                            pagingDataFlow = canadianReleases,
-                        ),
-                        relationsUiState = RelationsUiState(
-                            pagingDataFlow = canadianRelations,
-                        ),
+                state = detailsUiState,
+                entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                now = Instant.parse("2025-04-26T16:42:20Z"),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewAreaDetailsCollapsed() {
+    PreviewTheme {
+        Surface {
+            AreaUiInternal(
+                state =
+                detailsUiState.copy(
+                    detailsTabUiState = DetailsTabUiState(
+                        isExternalLinksCollapsed = true,
                     ),
                 ),
                 entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
@@ -553,35 +574,12 @@ internal fun PreviewAreaDetailsError() {
     PreviewTheme {
         Surface {
             AreaUiInternal(
-                state = DetailsUiState(
-                    title = "Canada",
-                    detailsModel = country,
-                    tabs = areaTabs,
-                    selectedTab = Tab.DETAILS,
+                state =
+                detailsUiState.copy(
                     detailsTabUiState = DetailsTabUiState(
                         handledException = HandledException(
                             userMessage = "Network error. Check your internet connection.",
                             errorResolution = ErrorResolution.Retry,
-                        ),
-                    ),
-                    entitiesListUiState = EntitiesListUiState(
-                        artistsListUiState = ArtistsListUiState(
-                            pagingDataFlow = canadianArtists,
-                        ),
-                        eventsListUiState = EventsListUiState(
-                            pagingDataFlow = events,
-                        ),
-                        labelsListUiState = LabelsListUiState(
-                            pagingDataFlow = labels,
-                        ),
-                        placesListUiState = PlacesListUiState(
-                            pagingDataFlow = places,
-                        ),
-                        releasesListUiState = ReleasesListUiState(
-                            pagingDataFlow = canadianReleases,
-                        ),
-                        relationsUiState = RelationsUiState(
-                            pagingDataFlow = canadianRelations,
                         ),
                     ),
                 ),

@@ -4,7 +4,7 @@ import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
+import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 

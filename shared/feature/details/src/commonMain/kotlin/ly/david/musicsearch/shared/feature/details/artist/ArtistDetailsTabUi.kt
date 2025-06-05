@@ -1,28 +1,22 @@
 package ly.david.musicsearch.shared.feature.details.artist
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.area.AreaListItem
-import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.url.urlsSection
-import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.core.LocalStrings
 
 @Composable
-internal fun ArtistDetailsUi(
+internal fun ArtistDetailsTabUi(
     artist: ArtistDetailsModel,
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
@@ -30,39 +24,31 @@ internal fun ArtistDetailsUi(
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
     onCollapseExpandExternalLinks: () -> Unit = {},
 ) {
-    LazyColumn(
+    DetailsTabUi(
+        detailsModel = artist,
+        detailsTabUiState = detailsTabUiState,
         modifier = modifier,
-        state = detailsTabUiState.lazyListState,
-    ) {
-        artist.run {
-            item {
-                if (filterText.isBlank()) {
-                    LargeImage(
-                        url = imageMetadata.largeUrl,
-                        placeholderKey = imageMetadata.databaseId.toString(),
+        filterText = filterText,
+        onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
+        entityInfoSection = {
+            ArtistInformationSection(
+                filterText = filterText,
+            )
+        },
+        bringYourOwnLabelsSection = {
+            artist.run {
+                item {
+                    AreaSection(
+                        areaListItemModel = areaListItemModel,
+                        filterText = filterText,
+                        onItemClick = onItemClick,
                     )
                 }
-                ArtistInformationSection(
-                    filterText = filterText,
-                )
-            }
-            item {
-                AreaSection(
-                    areaListItemModel = areaListItemModel,
-                    filterText = filterText,
-                    onItemClick = onItemClick,
-                )
-            }
 
-            // TODO: begin area, end area
-
-            urlsSection(
-                urls = urls,
-                collapsed = detailsTabUiState.isExternalLinksCollapsed,
-                onCollapseExpand = onCollapseExpandExternalLinks,
-            )
-        }
-    }
+                // TODO: begin area, end area
+            }
+        },
+    )
 }
 
 @Composable
@@ -71,7 +57,6 @@ private fun ArtistDetailsModel.ArtistInformationSection(
 ) {
     val strings = LocalStrings.current
 
-    ListSeparatorHeader(text = strings.informationHeader(strings.artist))
     sortName.ifNotNullOrEmpty {
         TextWithHeading(
             heading = strings.sortName,
@@ -124,13 +109,6 @@ private fun ArtistDetailsModel.ArtistInformationSection(
             filterText = filterText,
         )
     }
-
-    WikipediaSection(
-        extract = wikipediaExtract,
-        filterText = filterText,
-    )
-
-    Spacer(modifier = Modifier.padding(bottom = 16.dp))
 }
 
 @Composable

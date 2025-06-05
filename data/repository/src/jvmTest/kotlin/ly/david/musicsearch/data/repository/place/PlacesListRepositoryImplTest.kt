@@ -34,7 +34,7 @@ import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
-import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
+import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.place.PlacesListRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule

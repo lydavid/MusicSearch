@@ -15,7 +15,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkM
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
+import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import lydavidmusicsearchdatadatabase.Work
 import lydavidmusicsearchdatadatabase.WorkQueries
 import lydavidmusicsearchdatadatabase.Works_by_entity

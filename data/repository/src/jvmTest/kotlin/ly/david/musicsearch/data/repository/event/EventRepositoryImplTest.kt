@@ -13,7 +13,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.helpers.TestEventRepository
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.event.EventDetailsModel
+import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity

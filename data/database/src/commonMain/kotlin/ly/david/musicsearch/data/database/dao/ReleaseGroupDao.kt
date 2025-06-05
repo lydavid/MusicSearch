@@ -15,7 +15,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import lydavidmusicsearchdatadatabase.Release_group

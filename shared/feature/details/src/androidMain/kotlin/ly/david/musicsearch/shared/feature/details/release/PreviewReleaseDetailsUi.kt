@@ -9,7 +9,7 @@ import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
-import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
@@ -80,7 +80,7 @@ private val release = ReleaseDetailsModel(
 internal fun PreviewReleaseDetailsUi() {
     PreviewTheme {
         Surface {
-            ReleaseDetailsUi(
+            ReleaseDetailsTabUi(
                 release = release,
                 detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 11,
@@ -95,7 +95,7 @@ internal fun PreviewReleaseDetailsUi() {
 internal fun PreviewReleaseDetailsUiCollapsed() {
     PreviewTheme {
         Surface {
-            ReleaseDetailsUi(
+            ReleaseDetailsTabUi(
                 release = release,
                 detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 11,

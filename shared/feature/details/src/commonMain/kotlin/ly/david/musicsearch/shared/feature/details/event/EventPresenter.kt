@@ -4,7 +4,7 @@ import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.shared.domain.event.EventDetailsModel
+import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository

@@ -259,7 +259,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
     }
 }
 
-internal class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
+internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
     val title: String,
     val subtitle: String = "",
     val tabs: ImmutableList<Tab>,

@@ -4,7 +4,7 @@ import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.shared.domain.event.EventDetailsModel
+import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 

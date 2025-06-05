@@ -16,7 +16,7 @@ import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.FormatTrackCount
-import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import lydavidmusicsearchdatadatabase.Release
 import lydavidmusicsearchdatadatabase.Releases_by_entity

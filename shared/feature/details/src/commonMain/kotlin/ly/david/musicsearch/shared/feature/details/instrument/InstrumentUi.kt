@@ -19,7 +19,7 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
+import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
@@ -178,10 +178,13 @@ internal fun InstrumentUi(
             browseMethod = browseMethod,
             entityLazyPagingItems = entitiesLazyPagingItems,
             detailsScreen = { detailsModel ->
-                InstrumentDetailsUi(
+                InstrumentDetailsTabUi(
                     instrument = detailsModel,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
+                    onCollapseExpandExternalLinks = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
+                    },
                 )
             },
         )

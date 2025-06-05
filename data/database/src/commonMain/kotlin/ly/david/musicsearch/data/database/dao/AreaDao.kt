@@ -14,7 +14,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkM
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.area.ReleaseEvent
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import lydavidmusicsearchdatadatabase.Area

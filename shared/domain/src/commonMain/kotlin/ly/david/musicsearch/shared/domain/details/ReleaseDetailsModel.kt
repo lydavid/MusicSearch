@@ -1,11 +1,13 @@
-package ly.david.musicsearch.shared.domain.release
+package ly.david.musicsearch.shared.domain.details
 
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
-import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
+import ly.david.musicsearch.shared.domain.release.Release
+import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 

@@ -13,7 +13,7 @@ import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
-import ly.david.musicsearch.shared.domain.series.SeriesDetailsModel
+import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import lydavidmusicsearchdatadatabase.Series
 import lydavidmusicsearchdatadatabase.SeriesQueries
 

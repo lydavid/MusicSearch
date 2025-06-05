@@ -18,7 +18,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test

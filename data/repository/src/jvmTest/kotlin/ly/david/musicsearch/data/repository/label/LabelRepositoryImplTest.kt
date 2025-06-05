@@ -15,7 +15,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBr
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.helpers.TestLabelRepository
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.label.LabelDetailsModel
+import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert.assertEquals

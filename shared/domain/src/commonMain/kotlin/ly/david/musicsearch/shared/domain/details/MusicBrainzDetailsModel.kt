@@ -6,7 +6,7 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 
-interface MusicBrainzDetailsModel : MusicBrainzModel {
+sealed interface MusicBrainzDetailsModel : MusicBrainzModel {
     val artistCredits: List<ArtistCreditUiModel>
     val imageMetadata: ImageMetadata
     val wikipediaExtract: WikipediaExtract

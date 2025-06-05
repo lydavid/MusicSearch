@@ -32,7 +32,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toAreaListItemModel
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
-import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 
 class ReleaseRepositoryImpl(

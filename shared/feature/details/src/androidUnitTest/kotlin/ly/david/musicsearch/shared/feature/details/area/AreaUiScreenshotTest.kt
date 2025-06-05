@@ -13,6 +13,13 @@ class AreaUiScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun detailsCollapsed() {
+        snapshot {
+            PreviewAreaDetailsCollapsed()
+        }
+    }
+
+    @Test
     fun detailsError() {
         snapshot {
             PreviewAreaDetailsError()

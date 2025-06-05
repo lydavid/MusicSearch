@@ -22,7 +22,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -215,10 +215,13 @@ internal fun RecordingUi(
                 releasesByEntityEventSink(ReleasesListUiEvent.RequestForMissingCoverArtUrl(id))
             },
             detailsScreen = { detailsModel ->
-                RecordingDetailsUi(
+                RecordingDetailsTabUi(
                     recording = detailsModel,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
+                    onCollapseExpandExternalLinks = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
+                    },
                 )
             },
         )

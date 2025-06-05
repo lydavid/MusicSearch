@@ -8,7 +8,7 @@ import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
-import ly.david.musicsearch.shared.domain.recording.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.recording.RecordingRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter

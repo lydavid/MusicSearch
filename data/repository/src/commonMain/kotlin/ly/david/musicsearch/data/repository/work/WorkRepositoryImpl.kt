@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.work
 
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
-import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
+import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi

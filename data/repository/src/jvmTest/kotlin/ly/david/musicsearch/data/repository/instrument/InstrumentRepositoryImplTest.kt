@@ -13,7 +13,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
-import ly.david.musicsearch.shared.domain.instrument.InstrumentDetailsModel
+import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity

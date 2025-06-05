@@ -34,7 +34,7 @@ import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
-import ly.david.musicsearch.shared.domain.work.WorkDetailsModel
+import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.work.WorksListRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule

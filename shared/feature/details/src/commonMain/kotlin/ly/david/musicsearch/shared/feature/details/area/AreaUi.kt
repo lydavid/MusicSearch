@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.area.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
@@ -237,7 +237,7 @@ internal fun AreaUiInternal(
                 )
             },
             detailsScreen = { detailsModel ->
-                AreaDetailsUi(
+                AreaDetailsTabUi(
                     area = detailsModel,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,

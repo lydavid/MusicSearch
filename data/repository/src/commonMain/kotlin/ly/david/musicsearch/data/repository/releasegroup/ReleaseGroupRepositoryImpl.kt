@@ -6,7 +6,7 @@ import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 
 class ReleaseGroupRepositoryImpl(

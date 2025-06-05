@@ -13,7 +13,7 @@ import ly.david.musicsearch.data.database.mapper.mapToArtistListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.artist.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity

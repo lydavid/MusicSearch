@@ -16,7 +16,7 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
-import ly.david.musicsearch.shared.domain.place.PlaceDetailsModel
+import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import lydavidmusicsearchdatadatabase.Area_place
 import lydavidmusicsearchdatadatabase.Place
 

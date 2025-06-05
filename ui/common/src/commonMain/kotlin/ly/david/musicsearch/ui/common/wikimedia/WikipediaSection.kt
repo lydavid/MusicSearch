@@ -23,6 +23,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
+import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
@@ -36,13 +37,16 @@ fun WikipediaSection(
     val clipboard = LocalClipboard.current
     val coroutineScope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
+    val strings = LocalStrings.current
 
-    Column(
-        modifier = modifier,
+    if (extract.extract.isNotBlank() &&
+        extract.extract.contains(filterText, ignoreCase = true)
     ) {
-        if (extract.extract.isNotBlank() &&
-            extract.extract.contains(filterText, ignoreCase = true)
+        Column(
+            modifier = modifier,
         ) {
+            ListSeparatorHeader(text = strings.wikipedia)
+
             var expanded by remember { mutableStateOf(false) }
 
             Text(
@@ -66,17 +70,11 @@ fun WikipediaSection(
                 color = MaterialTheme.colorScheme.onBackground,
                 style = TextStyles.getCardBodyTextStyle(),
             )
-        }
-
-        if (extract.wikipediaUrl.isNotBlank() &&
-            extract.wikipediaUrl.contains(filterText, ignoreCase = true)
-        ) {
-            val strings = LocalStrings.current
 
             UrlListItem(
                 relation = RelationListItemModel(
                     id = "wikipedia_section",
-                    label = strings.wikipedia,
+                    label = strings.readMore,
                     linkedEntity = MusicBrainzEntity.URL,
                     name = extract.wikipediaUrl,
                     linkedEntityId = "wikipedia_section",

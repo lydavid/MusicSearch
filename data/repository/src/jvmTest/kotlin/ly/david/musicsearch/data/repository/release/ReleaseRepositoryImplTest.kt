@@ -44,7 +44,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
-import ly.david.musicsearch.shared.domain.release.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
