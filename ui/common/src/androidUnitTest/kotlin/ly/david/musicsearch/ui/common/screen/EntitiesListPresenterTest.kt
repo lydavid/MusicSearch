@@ -18,10 +18,13 @@ import ly.david.musicsearch.shared.domain.label.usecase.GetLabels
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.usecase.GetPlaces
 import ly.david.musicsearch.shared.domain.recording.usecase.GetRecordings
+import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 import ly.david.musicsearch.shared.domain.release.usecase.GetReleases
+import ly.david.musicsearch.shared.domain.release.usecase.GetTracksByRelease
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import ly.david.musicsearch.shared.domain.releasegroup.usecase.GetReleaseGroups
@@ -35,9 +38,11 @@ import ly.david.musicsearch.ui.common.instrument.InstrumentsListPresenter
 import ly.david.musicsearch.ui.common.label.LabelsListPresenter
 import ly.david.musicsearch.ui.common.place.PlacesListPresenter
 import ly.david.musicsearch.ui.common.recording.RecordingsListPresenter
+import ly.david.musicsearch.ui.common.relation.RelationsPresenterImpl
 import ly.david.musicsearch.ui.common.release.ReleasesListPresenter
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListPresenter
 import ly.david.musicsearch.ui.common.series.SeriesListPresenter
+import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
 import ly.david.musicsearch.ui.common.work.WorksListPresenter
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -202,6 +207,28 @@ class EntitiesListPresenterTest {
                 }
             },
         ),
+        relationsPresenter = RelationsPresenterImpl(
+            getEntityRelationships = object : GetEntityRelationships {
+                override fun invoke(
+                    entityId: String,
+                    entity: MusicBrainzEntity?,
+                    relatedEntities: Set<MusicBrainzEntity>,
+                    query: String
+                ): Flow<PagingData<ListItemModel>> {
+                    return flowOf(PagingData.from(listItems))
+                }
+            }
+        ),
+        tracksByReleasePresenter = TracksByReleasePresenter(
+            getTracksByRelease = object : GetTracksByRelease {
+                override fun invoke(
+                    releaseId: String,
+                    query: String
+                ): Flow<PagingData<ListItemModel>> {
+                    return flowOf(PagingData.from(listItems))
+                }
+            }
+        )
     )
 
     @Test
