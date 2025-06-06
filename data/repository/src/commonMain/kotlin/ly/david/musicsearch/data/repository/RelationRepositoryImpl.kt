@@ -5,8 +5,9 @@ import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
+import kotlinx.datetime.Clock
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
@@ -23,7 +24,7 @@ import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 
 class RelationRepositoryImpl(
     private val lookupApi: LookupApi,
-    private val entityHasRelationsDao: EntityHasRelationsDao,
+    private val relationsMetadataDao: RelationsMetadataDao,
     private val detailsMetadataDao: DetailsMetadataDao,
     private val relationDao: RelationDao,
 ) : RelationRepository {
@@ -51,7 +52,10 @@ class RelationRepositoryImpl(
 
         // We need to mark because an entity may have no relationships,
         // which would cause us to keep trying to fetch it from remote
-        entityHasRelationsDao.markEntityHasRelationsStored(entityId)
+        relationsMetadataDao.upsert(
+            entityId = entityId,
+            lastUpdated = Clock.System.now(),
+        )
     }
 
     private suspend fun lookupEntityWithRelations(
@@ -185,7 +189,7 @@ class RelationRepositoryImpl(
     }
 
     private fun hasRelationsBeenSavedFor(entityId: String): Boolean {
-        return entityHasRelationsDao.hasRelationsBeenSavedFor(
+        return relationsMetadataDao.hasRelationsBeenSavedFor(
             entityId = entityId,
         )
     }

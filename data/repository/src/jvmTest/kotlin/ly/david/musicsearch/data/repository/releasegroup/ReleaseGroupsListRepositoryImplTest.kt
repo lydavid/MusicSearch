@@ -18,7 +18,7 @@ import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
@@ -51,7 +51,7 @@ class ReleaseGroupsListRepositoryImplTest :
 
     override val releaseGroupDao: ReleaseGroupDao by inject()
     override val artistCreditDao: ArtistCreditDao by inject()
-    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val visitedDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()

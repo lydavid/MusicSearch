@@ -10,7 +10,7 @@ import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.CountryCodeDao
 import ly.david.musicsearch.data.database.dao.DatabaseMetadataDao
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.GenreDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
@@ -53,7 +53,7 @@ val databaseDaoModule = module {
     single { CollectionDao(get(), get()) }
     singleOf(::CollectionEntityDao)
     single { CountryCodeDao(get()) }
-    single { EntityHasRelationsDao(get()) }
+    single { RelationsMetadataDao(get()) }
     singleOf(::DetailsMetadataDaoImpl) bind DetailsMetadataDao::class
     singleOf(::EventDao)
     singleOf(::InstrumentDao)

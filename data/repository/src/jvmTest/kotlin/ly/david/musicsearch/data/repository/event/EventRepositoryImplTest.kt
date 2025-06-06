@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.event
 
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
@@ -30,7 +30,7 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val visitedDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val eventDao: EventDao by inject()

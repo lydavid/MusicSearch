@@ -18,6 +18,7 @@ import lydavidmusicsearchdatadatabase.Medium
 import lydavidmusicsearchdatadatabase.Now_playing_history
 import lydavidmusicsearchdatadatabase.Recording
 import lydavidmusicsearchdatadatabase.Relation
+import lydavidmusicsearchdatadatabase.Relations_metadata
 import lydavidmusicsearchdatadatabase.Release
 import lydavidmusicsearchdatadatabase.Release_group
 import lydavidmusicsearchdatadatabase.Search_history
@@ -104,6 +105,9 @@ fun createDatabase(driver: SqlDriver): Database {
             typesAdapter = ImmutableListStringColumnAdapter,
         ),
         details_metadataAdapter = Details_metadata.Adapter(
+            last_updatedAdapter = InstantLongColumnAdapter,
+        ),
+        relations_metadataAdapter = Relations_metadata.Adapter(
             last_updatedAdapter = InstantLongColumnAdapter,
         ),
     )

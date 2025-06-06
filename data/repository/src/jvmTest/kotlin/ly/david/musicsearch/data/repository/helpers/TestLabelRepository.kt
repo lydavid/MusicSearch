@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.helpers
 
 import ly.david.data.test.api.FakeLookupApi
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
@@ -12,7 +12,7 @@ import ly.david.musicsearch.shared.domain.label.LabelRepository
 
 interface TestLabelRepository {
 
-    val entityHasRelationsDao: EntityHasRelationsDao
+    val relationsMetadataDao: RelationsMetadataDao
     val visitedDao: DetailsMetadataDao
     val relationDao: RelationDao
     val labelDao: LabelDao
@@ -29,7 +29,7 @@ interface TestLabelRepository {
                     return musicBrainzModel
                 }
             },
-            entityHasRelationsDao = entityHasRelationsDao,
+            relationsMetadataDao = relationsMetadataDao,
             detailsMetadataDao = visitedDao,
             relationDao = relationDao,
         )

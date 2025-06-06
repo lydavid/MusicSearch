@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.helpers
 
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
@@ -14,7 +14,7 @@ import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 interface TestReleaseGroupRepository {
     val releaseGroupDao: ReleaseGroupDao
     val artistCreditDao: ArtistCreditDao
-    val entityHasRelationsDao: EntityHasRelationsDao
+    val relationsMetadataDao: RelationsMetadataDao
     val visitedDao: DetailsMetadataDao
     val relationDao: RelationDao
     fun createReleaseGroupRepository(
@@ -29,7 +29,7 @@ interface TestReleaseGroupRepository {
                     return musicBrainzModel
                 }
             },
-            entityHasRelationsDao = entityHasRelationsDao,
+            relationsMetadataDao = relationsMetadataDao,
             detailsMetadataDao = visitedDao,
             relationDao = relationDao,
         )

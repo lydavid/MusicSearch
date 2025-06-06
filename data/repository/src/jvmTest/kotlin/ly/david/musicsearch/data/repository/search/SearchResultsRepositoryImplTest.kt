@@ -10,7 +10,7 @@ import ly.david.data.test.redReleaseMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.LabelDao
@@ -66,7 +66,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
     override val labelDao: LabelDao by inject()
     override val mediumDao: MediumDao by inject()
     override val trackDao: TrackDao by inject()
-    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val visitedDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     private val placeDao: PlaceDao by inject()
