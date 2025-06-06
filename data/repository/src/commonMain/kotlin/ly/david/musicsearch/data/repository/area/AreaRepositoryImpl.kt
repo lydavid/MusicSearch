@@ -1,11 +1,12 @@
 package ly.david.musicsearch.data.repository.area
 
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.area.AreaRepository
+import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class AreaRepositoryImpl(
@@ -17,6 +18,7 @@ class AreaRepositoryImpl(
     override suspend fun lookupArea(
         areaId: String,
         forceRefresh: Boolean,
+        lastUpdated: Instant,
     ): AreaDetailsModel {
         if (forceRefresh) {
             delete(areaId)
@@ -35,10 +37,14 @@ class AreaRepositoryImpl(
         }
 
         val areaMusicBrainzModel = lookupApi.lookupArea(areaId)
-        cache(areaMusicBrainzModel)
+        cache(
+            area = areaMusicBrainzModel,
+            lastUpdated = lastUpdated,
+        )
         return lookupArea(
             areaId = areaId,
             forceRefresh = false,
+            lastUpdated = lastUpdated,
         )
     }
 
@@ -49,7 +55,10 @@ class AreaRepositoryImpl(
         }
     }
 
-    private fun cache(area: AreaMusicBrainzNetworkModel) {
+    private fun cache(
+        area: AreaMusicBrainzNetworkModel,
+        lastUpdated: Instant,
+    ) {
         areaDao.withTransaction {
             areaDao.insertReplace(
                 area.copy(
@@ -61,6 +70,7 @@ class AreaRepositoryImpl(
             relationRepository.insertAllUrlRelations(
                 entityId = area.id,
                 relationWithOrderList = relationWithOrderList,
+                lastUpdated = lastUpdated,
             )
         }
     }

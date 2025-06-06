@@ -17,11 +17,11 @@ import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
 import ly.david.musicsearch.data.coverart.api.ThumbnailsUrls
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
@@ -34,12 +34,13 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetwo
 import ly.david.musicsearch.data.repository.helpers.TestEventRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
-import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUri
 import org.junit.After
@@ -148,6 +149,7 @@ class ImageMetadataRepositoryImplTest :
         ).lookupEvent(
             eventId = eventId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         val repository = createRepository(
             coverArtUrlsProducer = { _, _ ->
@@ -231,6 +233,7 @@ class ImageMetadataRepositoryImplTest :
         ).lookupRelease(
             releaseId = releaseId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
 
         val repository = createRepository(
@@ -396,6 +399,7 @@ class ImageMetadataRepositoryImplTest :
         ).lookupReleaseGroup(
             releaseGroupId = releaseGroupId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
 
         val repository = createRepository(

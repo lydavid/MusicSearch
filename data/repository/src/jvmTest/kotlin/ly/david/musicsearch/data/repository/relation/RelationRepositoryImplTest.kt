@@ -2,7 +2,6 @@ package ly.david.musicsearch.data.repository.relation
 
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.RelationDao
@@ -16,6 +15,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -144,12 +144,11 @@ class RelationRepositoryImplTest : KoinTest {
             },
         )
 
-        val now = Instant.parse("2025-05-26T16:42:20Z")
         val flow = relationRepository.observeEntityRelationships(
             entity = MusicBrainzEntity.SERIES,
             entityId = "eca82a1b-1efa-4d6b-9278-e278523267f8",
             query = "",
-            now = now,
+            lastUpdated = testDateTimeInThePast,
         )
         val seriesRelationships = flow.asSnapshot()
         assertEquals(
@@ -164,7 +163,7 @@ class RelationRepositoryImplTest : KoinTest {
                     linkedEntity = MusicBrainzEntity.LABEL,
                     visited = false,
                     isForwardDirection = false,
-                    lastUpdated = now,
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 RelationListItemModel(
                     id = "bad6d0fa-938e-45a2-95fd-b37ea37b783c_6",
@@ -176,7 +175,7 @@ class RelationRepositoryImplTest : KoinTest {
                     linkedEntity = MusicBrainzEntity.LABEL,
                     visited = false,
                     isForwardDirection = false,
-                    lastUpdated = now,
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 RelationListItemModel(
                     id = "5d286f5b-7cc3-3f78-b1cf-a24d496af34b_1",
@@ -188,7 +187,7 @@ class RelationRepositoryImplTest : KoinTest {
                     linkedEntity = MusicBrainzEntity.RELEASE_GROUP,
                     visited = false,
                     isForwardDirection = false,
-                    lastUpdated = now,
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 RelationListItemModel(
                     id = "b22e3f3e-6c90-3df9-915f-12d8f86c240b_2",
@@ -200,7 +199,7 @@ class RelationRepositoryImplTest : KoinTest {
                     linkedEntity = MusicBrainzEntity.RELEASE_GROUP,
                     visited = false,
                     isForwardDirection = false,
-                    lastUpdated = now,
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 RelationListItemModel(
                     id = "fbca86fc-1509-40d6-b985-f50e45796187_9",
@@ -212,9 +211,9 @@ class RelationRepositoryImplTest : KoinTest {
                     linkedEntity = MusicBrainzEntity.SERIES,
                     visited = false,
                     isForwardDirection = true,
-                    lastUpdated = now,
+                    lastUpdated = testDateTimeInThePast,
                 ),
-                LastUpdatedFooter(lastUpdated = now),
+                LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
             ),
             seriesRelationships,
         )

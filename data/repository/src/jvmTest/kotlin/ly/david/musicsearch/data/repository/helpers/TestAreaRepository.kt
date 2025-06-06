@@ -16,6 +16,10 @@ interface TestAreaRepository {
     val relationDao: RelationDao
     val areaDao: AreaDao
 
+    /**
+     * This builds [AreaRepositoryImpl] cast as [AreaRepository].
+     * Database interactions are real. Only network and time are faked.
+     */
     fun createAreaRepository(
         musicBrainzModel: AreaMusicBrainzNetworkModel,
     ): AreaRepository {

@@ -17,19 +17,20 @@ import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
+import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
@@ -496,6 +497,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         artistRepository.lookupArtist(
             artistId = roseliaArtistMusicBrainzModel.id,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         ).run {
             assertEquals(
                 ArtistDetailsModel(
@@ -507,6 +509,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     lifeSpan = LifeSpanUiModel(
                         begin = "2016-09-15",
                     ),
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 this,
             )
@@ -514,6 +517,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         artistRepository.lookupArtist(
             artistId = roseliaArtistMusicBrainzModel.id,
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         ).run {
             assertEquals(
                 ArtistDetailsModel(
@@ -525,6 +529,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     lifeSpan = LifeSpanUiModel(
                         begin = "2016-09-15",
                     ),
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 this,
             )

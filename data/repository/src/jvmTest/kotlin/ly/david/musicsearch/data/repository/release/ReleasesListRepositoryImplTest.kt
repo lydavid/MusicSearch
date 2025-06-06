@@ -34,11 +34,11 @@ import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
@@ -52,17 +52,18 @@ import ly.david.musicsearch.data.repository.helpers.TestLabelRepository
 import ly.david.musicsearch.data.repository.helpers.TestRecordingRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
-import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
@@ -135,6 +136,7 @@ class ReleasesListRepositoryImplTest :
             labelRepository.lookupLabel(
                 labelId = labelId,
                 forceRefresh = false,
+                lastUpdated = testDateTimeInThePast,
             )
 
             val releasesListRepository = createReleasesListRepository(
@@ -190,6 +192,7 @@ class ReleasesListRepositoryImplTest :
         labelRepository.lookupLabel(
             labelId = labelId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
 
         val releasesListRepository = createReleasesListRepository(
@@ -225,6 +228,7 @@ class ReleasesListRepositoryImplTest :
         labelRepository.lookupLabel(
             labelId = labelId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
 
         val releasesListRepository = createReleasesListRepository(
@@ -371,6 +375,7 @@ class ReleasesListRepositoryImplTest :
         areaRepository.lookupArea(
             areaId = entityId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
 
         val entity = MusicBrainzEntity.AREA
@@ -473,6 +478,7 @@ class ReleasesListRepositoryImplTest :
         areaRepository.lookupArea(
             areaId = areaId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
 
         val entity = MusicBrainzEntity.AREA
@@ -587,6 +593,7 @@ class ReleasesListRepositoryImplTest :
         areaRepository.lookupArea(
             areaId = areaId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
 
         val releases = listOf(
@@ -712,6 +719,7 @@ class ReleasesListRepositoryImplTest :
         ).lookupArtist(
             artistId = entityId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         val releases = listOf(
             underPressureReleaseMusicBrainzModel,
@@ -789,6 +797,7 @@ class ReleasesListRepositoryImplTest :
         ).lookupRecording(
             recordingId = entityId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         val releases = listOf(
             underPressureReleaseMusicBrainzModel,
@@ -866,6 +875,7 @@ class ReleasesListRepositoryImplTest :
         ).lookupReleaseGroup(
             releaseGroupId = entityId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         val releases = listOf(
             underPressureReleaseMusicBrainzModel,
@@ -1073,10 +1083,12 @@ class ReleasesListRepositoryImplTest :
                     date = "1991",
                 ),
             ),
+            lastUpdated = testDateTimeInThePast,
         )
         releaseRepository.lookupRelease(
             releaseId = underPressureJapanReleaseMusicBrainzModel.id,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         ).let { releaseDetailsModel ->
             assertEquals(
                 expectedReleaseDetails,
@@ -1086,6 +1098,7 @@ class ReleasesListRepositoryImplTest :
         releaseRepository.lookupRelease(
             releaseId = underPressureJapanReleaseMusicBrainzModel.id,
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         ).let { releaseDetailsModel ->
             assertEquals(
                 expectedReleaseDetails.copy(
@@ -1245,10 +1258,12 @@ class ReleasesListRepositoryImplTest :
                     date = "1991",
                 ),
             ),
+            lastUpdated = testDateTimeInThePast,
         )
         releaseRepository.lookupRelease(
             releaseId = underPressureJapanReleaseMusicBrainzModel.id,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         ).let { releaseDetailsModel ->
             assertEquals(
                 expectedReleaseDetails,
@@ -1258,6 +1273,7 @@ class ReleasesListRepositoryImplTest :
         releaseRepository.lookupRelease(
             releaseId = underPressureJapanReleaseMusicBrainzModel.id,
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         ).let { releaseDetailsModel ->
             assertEquals(
                 expectedReleaseDetails.copy(
@@ -1412,10 +1428,12 @@ class ReleasesListRepositoryImplTest :
                         date = "1991",
                     ),
                 ),
+                lastUpdated = testDateTimeInThePast,
             )
             releaseRepository.lookupRelease(
                 releaseId = underPressureJapanReleaseMusicBrainzModel.id,
                 forceRefresh = false,
+                lastUpdated = testDateTimeInThePast,
             ).let { releaseDetailsModel ->
                 assertEquals(
                     expectedReleaseDetails,
@@ -1425,6 +1443,7 @@ class ReleasesListRepositoryImplTest :
             releaseRepository.lookupRelease(
                 releaseId = underPressureJapanReleaseMusicBrainzModel.id,
                 forceRefresh = true,
+                lastUpdated = testDateTimeInThePast,
             ).let { releaseDetailsModel ->
                 assertEquals(
                     expectedReleaseDetails.copy(

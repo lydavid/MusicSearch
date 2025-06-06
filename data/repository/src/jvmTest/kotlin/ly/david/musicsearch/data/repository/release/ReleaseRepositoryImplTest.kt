@@ -8,10 +8,10 @@ import ly.david.data.test.releaseWithSameCatalogNumberWithDifferentLabels
 import ly.david.data.test.utaNoUtaReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
@@ -34,7 +34,9 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -44,7 +46,6 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
-import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
@@ -102,6 +103,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
         val sparseDetailsModel = sparseRepository.lookupRelease(
             releaseId = "8516ca87-f9c4-3854-a727-6d328cf44837",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             ReleaseDetailsModel(
@@ -120,6 +122,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     name = "Today Is A Beautiful Day",
                     firstReleaseDate = "2011-03-16",
                 ),
+                lastUpdated = testDateTimeInThePast,
             ),
             sparseDetailsModel,
         )
@@ -669,6 +672,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
         var allDataArtistDetailsModel = allDataRepository.lookupRelease(
             releaseId = "8516ca87-f9c4-3854-a727-6d328cf44837",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             ReleaseDetailsModel(
@@ -687,12 +691,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     name = "Today Is A Beautiful Day",
                     firstReleaseDate = "2011-03-16",
                 ),
+                lastUpdated = testDateTimeInThePast,
             ),
             allDataArtistDetailsModel,
         )
         allDataArtistDetailsModel = allDataRepository.lookupRelease(
             releaseId = "8516ca87-f9c4-3854-a727-6d328cf44837",
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             ReleaseDetailsModel(
@@ -746,6 +752,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         catalogNumbers = "SRCL-7486, SRCL-7487",
                     ),
                 ),
+                lastUpdated = testDateTimeInThePast,
                 urls = listOf(
                     RelationListItemModel(
                         id = "8248e638-ee4d-4e03-a6c3-ba4ad7af00c1_4",
@@ -908,6 +915,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
         val artistDetailsModelBeforeEdit = releaseRepositoryBeforeEdit.lookupRelease(
             releaseId = releaseId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             ReleaseDetailsModel(
@@ -964,12 +972,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 urls = emptyList(),
                 releaseLength = 18733,
                 hasNullLength = false,
+                lastUpdated = testDateTimeInThePast,
             ),
             artistDetailsModelBeforeEdit,
         )
         val tracksFlowBeforeEdit = releaseRepositoryBeforeEdit.observeTracksByRelease(
-            releaseId,
-            "",
+            releaseId = releaseId,
+            query = "",
+            lastUpdated = testDateTimeInThePast,
         )
         val listItemModelsBeforeEdit: List<ListItemModel> = tracksFlowBeforeEdit.asSnapshot()
         assertEquals(
@@ -1038,8 +1048,9 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             ),
         )
         val tracksFlowAfterEdit = releaseRepositoryAfterEdit.observeTracksByRelease(
-            releaseId,
-            "",
+            releaseId = releaseId,
+            query = "",
+            lastUpdated = testDateTimeInThePast,
         )
         val listItemModelsAfterEdit: List<ListItemModel> = tracksFlowAfterEdit.asSnapshot {
             refresh()
@@ -1126,11 +1137,13 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
                 ),
             ),
+            lastUpdated = testDateTimeInThePast,
         )
 
         releaseRepository.lookupRelease(
             releaseId = releaseWith3CatalogNumbersWithSameLabel.id,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         ).run {
             assertEquals(
                 expectedReleaseDetailsModel,
@@ -1141,6 +1154,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
         releaseRepository.lookupRelease(
             releaseId = releaseWith3CatalogNumbersWithSameLabel.id,
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         ).run {
             assertEquals(
                 expectedReleaseDetailsModel,
@@ -1245,11 +1259,13 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     catalogNumbers = "3717453",
                 ),
             ),
+            lastUpdated = testDateTimeInThePast,
         )
 
         releaseRepository.lookupRelease(
             releaseId = releaseWithSameCatalogNumberWithDifferentLabels.id,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         ).run {
             assertEquals(
                 expectedReleaseDetailsModel,
@@ -1260,6 +1276,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
         releaseRepository.lookupRelease(
             releaseId = releaseWithSameCatalogNumberWithDifferentLabels.id,
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         ).run {
             assertEquals(
                 expectedReleaseDetailsModel,

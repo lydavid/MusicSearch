@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.recording
 
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -19,6 +20,7 @@ class RecordingRepositoryImpl(
     override suspend fun lookupRecording(
         recordingId: String,
         forceRefresh: Boolean,
+        lastUpdated: Instant,
     ): RecordingDetailsModel {
         if (forceRefresh) {
             delete(recordingId)
@@ -29,7 +31,10 @@ class RecordingRepositoryImpl(
             cachedData
         } else {
             val recordingMusicBrainzModel = lookupApi.lookupRecording(recordingId)
-            cache(recordingMusicBrainzModel)
+            cache(
+                recording = recordingMusicBrainzModel,
+                lastUpdated = lastUpdated,
+            )
             getCachedData(recordingId) ?: error("Failed to get cached data")
         }
     }
@@ -60,7 +65,10 @@ class RecordingRepositoryImpl(
         }
     }
 
-    private fun cache(recording: RecordingMusicBrainzNetworkModel) {
+    private fun cache(
+        recording: RecordingMusicBrainzNetworkModel,
+        lastUpdated: Instant,
+    ) {
         recordingDao.withTransaction {
             recordingDao.insert(recording)
 
@@ -68,6 +76,7 @@ class RecordingRepositoryImpl(
             relationRepository.insertAllUrlRelations(
                 entityId = recording.id,
                 relationWithOrderList = relationWithOrderList,
+                lastUpdated = lastUpdated,
             )
         }
     }

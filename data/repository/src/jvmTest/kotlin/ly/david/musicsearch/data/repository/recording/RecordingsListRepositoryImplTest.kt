@@ -22,6 +22,7 @@ import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestRecordingRepository
 import ly.david.musicsearch.data.repository.helpers.TestRecordingsListRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -373,6 +374,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingRepository.lookupRecording(
             recordingId = skycladObserverCoverRecordingMusicBrainzModel.id,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         ).let { recordingDetailsModel ->
             assertEquals(
                 RecordingDetailsModel(
@@ -393,6 +395,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                         ),
                     ),
                     disambiguation = "",
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 recordingDetailsModel,
             )
@@ -400,6 +403,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingRepository.lookupRecording(
             recordingId = skycladObserverCoverRecordingMusicBrainzModel.id,
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         ).let { recordingDetailsModel ->
             assertEquals(
                 RecordingDetailsModel(
@@ -420,12 +424,11 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                         ),
                     ),
                     disambiguation = "changes will be ignored if recording is linked to multiple entities",
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 recordingDetailsModel,
             )
         }
-
-
     }
 
     @Test

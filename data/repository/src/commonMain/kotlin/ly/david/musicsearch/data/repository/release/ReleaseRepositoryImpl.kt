@@ -8,6 +8,7 @@ import app.cash.paging.insertSeparators
 import app.cash.paging.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.LabelDao
@@ -51,9 +52,11 @@ class ReleaseRepositoryImpl(
     // TODO: split up what data to include when calling from details/tracks tabs?
     //  initial load only requires 1 api call to display data on both tabs
     //  but swipe to refresh should only refresh its own tab
+    //  I'm leaning towards not doing this to keep things simple
     override suspend fun lookupRelease(
         releaseId: String,
         forceRefresh: Boolean,
+        lastUpdated: Instant,
     ): ReleaseDetailsModel {
         if (forceRefresh) {
             delete(releaseId)
@@ -89,10 +92,14 @@ class ReleaseRepositoryImpl(
         }
 
         val releaseMusicBrainzModel = lookupApi.lookupRelease(releaseId)
-        cache(releaseMusicBrainzModel)
+        cache(
+            release = releaseMusicBrainzModel,
+            lastUpdated = lastUpdated,
+        )
         return lookupRelease(
             releaseId = releaseId,
             forceRefresh = false,
+            lastUpdated = lastUpdated,
         )
     }
 
@@ -107,7 +114,10 @@ class ReleaseRepositoryImpl(
         }
     }
 
-    private fun cache(release: ReleaseMusicBrainzNetworkModel) {
+    private fun cache(
+        release: ReleaseMusicBrainzNetworkModel,
+        lastUpdated: Instant,
+    ) {
         releaseDao.withTransaction {
             release.releaseGroup?.let { releaseGroup ->
                 releaseGroupDao.insertReleaseGroup(releaseGroup)
@@ -148,6 +158,7 @@ class ReleaseRepositoryImpl(
             relationRepository.insertAllUrlRelations(
                 entityId = release.id,
                 relationWithOrderList = relationWithOrderList,
+                lastUpdated = lastUpdated,
             )
         }
     }
@@ -157,6 +168,7 @@ class ReleaseRepositoryImpl(
     override fun observeTracksByRelease(
         releaseId: String,
         query: String,
+        lastUpdated: Instant,
     ): Flow<PagingData<ListItemModel>> {
         return Pager(
             config = CommonPagingConfig.pagingConfig,
@@ -166,6 +178,7 @@ class ReleaseRepositoryImpl(
                     lookupRelease(
                         releaseId = releaseId,
                         forceRefresh = false,
+                        lastUpdated = lastUpdated,
                     )
                 },
                 deleteLocalEntity = { deleteMediaAndTracksByRelease(releaseId) },

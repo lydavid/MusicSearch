@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.instrument
 
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
@@ -17,6 +18,7 @@ class InstrumentRepositoryImpl(
     override suspend fun lookupInstrument(
         instrumentId: String,
         forceRefresh: Boolean,
+        lastUpdated: Instant,
     ): InstrumentDetailsModel {
         if (forceRefresh) {
             delete(instrumentId)
@@ -30,8 +32,15 @@ class InstrumentRepositoryImpl(
         }
 
         val instrumentMusicBrainzModel = lookupApi.lookupInstrument(instrumentId)
-        cache(instrumentMusicBrainzModel)
-        return lookupInstrument(instrumentId, false)
+        cache(
+            instrument = instrumentMusicBrainzModel,
+            lastUpdated = lastUpdated,
+        )
+        return lookupInstrument(
+            instrumentId = instrumentId,
+            forceRefresh = false,
+            lastUpdated = lastUpdated,
+        )
     }
 
     private fun delete(id: String) {
@@ -41,7 +50,10 @@ class InstrumentRepositoryImpl(
         }
     }
 
-    private fun cache(instrument: InstrumentMusicBrainzNetworkModel) {
+    private fun cache(
+        instrument: InstrumentMusicBrainzNetworkModel,
+        lastUpdated: Instant,
+    ) {
         instrumentDao.withTransaction {
             instrumentDao.insert(instrument)
 
@@ -49,6 +61,7 @@ class InstrumentRepositoryImpl(
             relationRepository.insertAllUrlRelations(
                 entityId = instrument.id,
                 relationWithOrderList = relationWithOrderList,
+                lastUpdated = lastUpdated,
             )
         }
     }

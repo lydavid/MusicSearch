@@ -1,12 +1,13 @@
 package ly.david.musicsearch.data.repository.artist
 
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
+import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
@@ -20,6 +21,7 @@ class ArtistRepositoryImpl(
     override suspend fun lookupArtist(
         artistId: String,
         forceRefresh: Boolean,
+        lastUpdated: Instant,
     ): ArtistDetailsModel {
         if (forceRefresh) {
             delete(artistId)
@@ -41,10 +43,14 @@ class ArtistRepositoryImpl(
         }
 
         val artistMusicBrainzModel = lookupApi.lookupArtist(artistId)
-        cache(artistMusicBrainzModel)
+        cache(
+            artist = artistMusicBrainzModel,
+            lastUpdated = lastUpdated,
+        )
         return lookupArtist(
             artistId = artistId,
             forceRefresh = false,
+            lastUpdated = lastUpdated,
         )
     }
 
@@ -58,7 +64,10 @@ class ArtistRepositoryImpl(
         }
     }
 
-    private fun cache(artist: ArtistMusicBrainzNetworkModel) {
+    private fun cache(
+        artist: ArtistMusicBrainzNetworkModel,
+        lastUpdated: Instant,
+    ) {
         artistDao.withTransaction {
             artistDao.insertReplace(artist)
             artist.area?.let { area ->
@@ -69,6 +78,7 @@ class ArtistRepositoryImpl(
             relationRepository.insertAllUrlRelations(
                 entityId = artist.id,
                 relationWithOrderList = relationWithOrderList,
+                lastUpdated = lastUpdated,
             )
         }
     }

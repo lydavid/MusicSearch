@@ -18,23 +18,24 @@ import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestPlaceRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
-import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.place.PlacesListRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -369,6 +370,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         placeRepository.lookupPlace(
             placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         ).run {
             assertEquals(
                 PlaceDetailsModel(
@@ -388,6 +390,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                     area = marunouchiAreaListItemModel.copy(
                         type = null,
                     ),
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 this,
             )
@@ -395,6 +398,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         placeRepository.lookupPlace(
             placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         ).run {
             assertEquals(
                 PlaceDetailsModel(
@@ -414,6 +418,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                     area = marunouchiAreaListItemModel.copy(
                         type = null,
                     ),
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 this,
             )

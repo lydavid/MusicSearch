@@ -11,13 +11,14 @@ import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -31,6 +32,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import kotlin.time.Duration.Companion.hours
 
 class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
 
@@ -64,8 +66,9 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
         )
 
         val artistDetailsModel = artistRepositoryImpl.lookupArtist(
-            "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
-            false,
+            artistId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             ArtistDetailsModel(
@@ -84,6 +87,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                     countryCodes = listOf("GB"),
                 ),
                 isnis = listOf("0000000121707484"),
+                lastUpdated = testDateTimeInThePast,
             ),
             artistDetailsModel,
         )
@@ -114,8 +118,9 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
         )
 
         val artistDetailsModel = artistRepositoryImpl.lookupArtist(
-            "5441c29d-3602-4898-b1a1-b77fa23b8e50",
-            false,
+            artistId = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             ArtistDetailsModel(
@@ -136,6 +141,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 ),
                 ipis = listOf("00003960406", "00015471209"),
                 isnis = listOf("0000000114448576", "0000000458257298"),
+                lastUpdated = testDateTimeInThePast,
             ),
             artistDetailsModel,
         )
@@ -222,8 +228,9 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ),
         )
         val artistDetailsModel = artistRepositoryImpl.lookupArtist(
-            "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
-            false,
+            artistId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             ArtistDetailsModel(
@@ -242,6 +249,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                     countryCodes = listOf("GB"),
                 ),
                 isnis = listOf("0000000121707484"),
+                lastUpdated = testDateTimeInThePast,
             ),
             artistDetailsModel,
         )
@@ -256,13 +264,15 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ),
         )
         val sparseArtistDetailsModel = sparseArtistRepository.lookupArtist(
-            "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
-            false,
+            artistId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             ArtistDetailsModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
+                lastUpdated = testDateTimeInThePast,
             ),
             sparseArtistDetailsModel,
         )
@@ -283,19 +293,22 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ),
         )
         var allDataArtistDetailsModel = allDataArtistRepository.lookupArtist(
-            "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
-            false,
+            artistId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast.plus(1.hours),
         )
         assertEquals(
             ArtistDetailsModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
+                lastUpdated = testDateTimeInThePast,
             ),
             allDataArtistDetailsModel,
         )
         allDataArtistDetailsModel = allDataArtistRepository.lookupArtist(
-            "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
-            true,
+            artistId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+            forceRefresh = true,
+            lastUpdated = testDateTimeInThePast.plus(2.hours),
         )
         assertEquals(
             ArtistDetailsModel(
@@ -314,6 +327,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                     countryCodes = listOf("GB"),
                 ),
                 isnis = listOf("0000000121707484"),
+                lastUpdated = testDateTimeInThePast.plus(2.hours),
             ),
             allDataArtistDetailsModel,
         )

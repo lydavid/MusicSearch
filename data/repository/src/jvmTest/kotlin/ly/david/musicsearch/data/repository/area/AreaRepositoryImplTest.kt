@@ -7,6 +7,7 @@ import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -15,6 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import kotlin.time.Duration.Companion.minutes
 
 class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
 
@@ -37,11 +39,13 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
         val sparseDetailsModel = sparseRepository.lookupArea(
             areaId = "38ce2215-162b-3f3c-af41-34800017e1d8",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             AreaDetailsModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",
+                lastUpdated = testDateTimeInThePast,
             ),
             sparseDetailsModel,
         )
@@ -57,17 +61,20 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
         var allDataArtistDetailsModel = allDataRepository.lookupArea(
             areaId = "38ce2215-162b-3f3c-af41-34800017e1d8",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast.plus(1.minutes),
         )
         assertEquals(
             AreaDetailsModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",
+                lastUpdated = testDateTimeInThePast, // not updated without refreshing
             ),
             allDataArtistDetailsModel,
         )
         allDataArtistDetailsModel = allDataRepository.lookupArea(
             areaId = "38ce2215-162b-3f3c-af41-34800017e1d8",
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast.plus(2.minutes),
         )
         assertEquals(
             AreaDetailsModel(
@@ -75,6 +82,7 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
                 name = "South Georgia and the South Sandwich Islands",
                 type = COUNTRY,
                 countryCode = "GS",
+                lastUpdated = testDateTimeInThePast.plus(2.minutes),
             ),
             allDataArtistDetailsModel,
         )

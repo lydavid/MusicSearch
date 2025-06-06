@@ -3,9 +3,10 @@ package ly.david.musicsearch.shared.feature.details.area
 import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.datetime.Clock
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.area.AreaRepository
+import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
@@ -60,6 +61,7 @@ internal class AreaPresenter(
         return repository.lookupArea(
             areaId = id,
             forceRefresh = forceRefresh,
+            lastUpdated = Clock.System.now(),
         )
     }
 }

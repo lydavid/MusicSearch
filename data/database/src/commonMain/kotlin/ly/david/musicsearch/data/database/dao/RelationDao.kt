@@ -5,7 +5,6 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
@@ -138,7 +137,7 @@ class RelationDao(
         ),
         imageUrl = thumbnailUrl,
         imageId = placeholderKey ?: 0L,
-        lastUpdated = lastUpdated ?: Clock.System.now(),
+        lastUpdated = lastUpdated,
     )
 
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<CountOfEachRelationshipType>> =

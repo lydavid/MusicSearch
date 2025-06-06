@@ -2,8 +2,8 @@ package ly.david.musicsearch.data.repository.work
 
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
@@ -13,11 +13,12 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.helpers.TestWorkRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
+import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
-import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -46,11 +47,13 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository {
         val sparseDetailsModel = sparseRepository.lookupWork(
             workId = "717a6517-290e-3696-942a-aba233ffc398",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             WorkDetailsModel(
                 id = "717a6517-290e-3696-942a-aba233ffc398",
                 name = "君の知らない物語",
+                lastUpdated = testDateTimeInThePast,
             ),
             sparseDetailsModel,
         )
@@ -232,17 +235,20 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository {
         var allDataArtistDetailsModel = allDataRepository.lookupWork(
             workId = "717a6517-290e-3696-942a-aba233ffc398",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             WorkDetailsModel(
                 id = "717a6517-290e-3696-942a-aba233ffc398",
                 name = "君の知らない物語",
+                lastUpdated = testDateTimeInThePast,
             ),
             allDataArtistDetailsModel,
         )
         allDataArtistDetailsModel = allDataRepository.lookupWork(
             workId = "717a6517-290e-3696-942a-aba233ffc398",
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             WorkDetailsModel(
@@ -283,6 +289,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository {
                         value = "006685 500 19",
                     ),
                 ),
+                lastUpdated = testDateTimeInThePast,
                 urls = listOf(
                     RelationListItemModel(
                         id = "7fb958bb-035c-4405-ac74-65dd33af6ac4_25",

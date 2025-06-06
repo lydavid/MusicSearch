@@ -1,22 +1,23 @@
 package ly.david.musicsearch.data.repository.series
 
 import kotlinx.coroutines.test.runTest
+import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeLookupApi
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
+import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
-import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.series.SeriesRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -35,7 +36,7 @@ class SeriesRepositoryImplTest : KoinTest {
     private val seriesDao: SeriesDao by inject()
 
     private fun createRelationRepository(
-        musicBrainzModel: SeriesMusicBrainzNetworkModel
+        musicBrainzModel: SeriesMusicBrainzNetworkModel,
     ): RelationRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
@@ -82,11 +83,13 @@ class SeriesRepositoryImplTest : KoinTest {
         val sparseDetailsModel = sparseRepository.lookupSeries(
             seriesId = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             SeriesDetailsModel(
                 id = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
                 name = "Rolling Stone: 500 Greatest Albums of All Time: 2023 edition",
+                lastUpdated = testDateTimeInThePast,
             ),
             sparseDetailsModel,
         )
@@ -123,23 +126,27 @@ class SeriesRepositoryImplTest : KoinTest {
         var allDataDetailsModel = allDataRepository.lookupSeries(
             seriesId = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             SeriesDetailsModel(
                 id = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
                 name = "Rolling Stone: 500 Greatest Albums of All Time: 2023 edition",
+                lastUpdated = testDateTimeInThePast,
             ),
             allDataDetailsModel,
         )
         allDataDetailsModel = allDataRepository.lookupSeries(
             seriesId = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             SeriesDetailsModel(
                 id = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
                 name = "Rolling Stone: 500 Greatest Albums of All Time: 2023 edition",
                 type = "Release group series",
+                lastUpdated = testDateTimeInThePast,
                 urls = listOf(
                     RelationListItemModel(
                         id = "61036cd9-8819-4f56-8739-d7f9bd16d675_3",

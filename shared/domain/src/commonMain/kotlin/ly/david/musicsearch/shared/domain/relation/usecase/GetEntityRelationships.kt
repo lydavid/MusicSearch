@@ -37,7 +37,7 @@ class GetEntityRelationshipsImpl(
                 entityId = entityId,
                 relatedEntities = relatedEntities,
                 query = query,
-                now = Clock.System.now(),
+                lastUpdated = Clock.System.now(),
             )
                 .cachedIn(scope = coroutineScope)
                 .distinctUntilChanged()

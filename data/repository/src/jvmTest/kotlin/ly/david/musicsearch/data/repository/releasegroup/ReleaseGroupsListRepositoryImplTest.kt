@@ -18,22 +18,23 @@ import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -166,6 +167,7 @@ class ReleaseGroupsListRepositoryImplTest :
         ).lookupArtist(
             artistId = entityId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         val releaseGroups = listOf(
             nutcrackerReleaseGroupMusicBrainzModel,
@@ -231,6 +233,7 @@ class ReleaseGroupsListRepositoryImplTest :
         ).lookupArtist(
             artistId = entityId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         val releaseGroups = listOf(
             alsoSprachZarathustraReleaseGroupMusicBrainzModel,
@@ -420,6 +423,7 @@ class ReleaseGroupsListRepositoryImplTest :
         releaseGroupRepository.lookupReleaseGroup(
             releaseGroupId = tchaikovskyOverturesReleaseGroupMusicBrainzModel.id,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         ).let { releaseGroupDetailsModel ->
             assertEquals(
                 ReleaseGroupDetailsModel(
@@ -445,6 +449,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     primaryType = "Album",
                     firstReleaseDate = "2000-02-01",
                     disambiguation = "",
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 releaseGroupDetailsModel,
             )
@@ -452,6 +457,7 @@ class ReleaseGroupsListRepositoryImplTest :
         releaseGroupRepository.lookupReleaseGroup(
             releaseGroupId = tchaikovskyOverturesReleaseGroupMusicBrainzModel.id,
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         ).let { releaseGroupDetailsModel ->
             assertEquals(
                 ReleaseGroupDetailsModel(
@@ -477,6 +483,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     primaryType = "Album",
                     firstReleaseDate = "2000-02-01",
                     disambiguation = "changes will be ignored if release group is linked to multiple entities",
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 releaseGroupDetailsModel,
             )

@@ -36,16 +36,23 @@ class RelationRepositoryImpl(
     override fun insertAllUrlRelations(
         entityId: String,
         relationWithOrderList: List<RelationWithOrder>?,
+        lastUpdated: Instant,
     ) {
         relationDao.insertAll(relationWithOrderList)
-        detailsMetadataDao.upsert(entityId = entityId)
+
+        // TODO: move this to entity repository
+        //  and consider creating a base repository for them or interface
+        detailsMetadataDao.upsert(
+            entityId = entityId,
+            lastUpdated = lastUpdated,
+        )
     }
 
     override suspend fun insertAllRelations(
         entity: MusicBrainzEntity,
         entityId: String,
         relatedEntities: Set<MusicBrainzEntity>,
-        now: Instant,
+        lastUpdated: Instant,
     ) {
         val relationMusicBrainzModels = lookupEntityWithRelations(
             entity = entity,
@@ -59,7 +66,7 @@ class RelationRepositoryImpl(
         // which would cause us to keep trying to fetch it from remote
         relationsMetadataDao.upsert(
             entityId = entityId,
-            lastUpdated = now,
+            lastUpdated = lastUpdated,
         )
     }
 
@@ -163,7 +170,7 @@ class RelationRepositoryImpl(
         entityId: String,
         relatedEntities: Set<MusicBrainzEntity>,
         query: String,
-        now: Instant,
+        lastUpdated: Instant,
     ): Flow<PagingData<ListItemModel>> {
         return Pager(
             config = CommonPagingConfig.pagingConfig,
@@ -175,7 +182,7 @@ class RelationRepositoryImpl(
                         entityId = entityId,
                         relatedEntities = relatedEntities,
                         forceRefresh = forceRefresh,
-                        now = now,
+                        lastUpdated = lastUpdated,
                     )
                 },
                 deleteLocalEntity = {
@@ -199,7 +206,7 @@ class RelationRepositoryImpl(
                         terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
                     ) { before: RelationListItemModel?, after: RelationListItemModel? ->
                         if (before != null && after == null) {
-                            LastUpdatedFooter(lastUpdated = before.lastUpdated ?: now)
+                            LastUpdatedFooter(lastUpdated = before.lastUpdated ?: lastUpdated)
                         } else {
                             null
                         }
@@ -218,7 +225,7 @@ class RelationRepositoryImpl(
         entityId: String,
         relatedEntities: Set<MusicBrainzEntity>,
         forceRefresh: Boolean,
-        now: Instant,
+        lastUpdated: Instant,
     ) {
         if (!forceRefresh) return
 
@@ -226,7 +233,7 @@ class RelationRepositoryImpl(
             entity = entity,
             entityId = entityId,
             relatedEntities = relatedEntities,
-            now = now,
+            lastUpdated = lastUpdated,
         )
     }
 

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.event
 
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
@@ -17,6 +18,7 @@ class EventRepositoryImpl(
     override suspend fun lookupEvent(
         eventId: String,
         forceRefresh: Boolean,
+        lastUpdated: Instant,
     ): EventDetailsModel {
         if (forceRefresh) {
             delete(eventId)
@@ -35,10 +37,14 @@ class EventRepositoryImpl(
         }
 
         val eventMusicBrainzModel = lookupApi.lookupEvent(eventId)
-        cache(eventMusicBrainzModel)
+        cache(
+            event = eventMusicBrainzModel,
+            lastUpdated = lastUpdated,
+        )
         return lookupEvent(
             eventId = eventId,
             forceRefresh = false,
+            lastUpdated = lastUpdated,
         )
     }
 
@@ -49,7 +55,10 @@ class EventRepositoryImpl(
         }
     }
 
-    private fun cache(event: EventMusicBrainzNetworkModel) {
+    private fun cache(
+        event: EventMusicBrainzNetworkModel,
+        lastUpdated: Instant,
+    ) {
         eventDao.withTransaction {
             eventDao.insert(event)
 
@@ -57,6 +66,7 @@ class EventRepositoryImpl(
             relationRepository.insertAllUrlRelations(
                 entityId = event.id,
                 relationWithOrderList = relationWithOrderList,
+                lastUpdated = lastUpdated,
             )
         }
     }
