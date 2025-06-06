@@ -39,9 +39,11 @@ fun WikipediaSection(
     val haptics = LocalHapticFeedback.current
     val strings = LocalStrings.current
 
-    if (extract.extract.isNotBlank() &&
+    val showExtract = extract.extract.isNotBlank() &&
         extract.extract.contains(filterText, ignoreCase = true)
-    ) {
+    val showUrl = extract.wikipediaUrl.isNotBlank() &&
+        extract.wikipediaUrl.contains(filterText, ignoreCase = true)
+    if (showExtract || showUrl) {
         Column(
             modifier = modifier,
         ) {
@@ -49,37 +51,41 @@ fun WikipediaSection(
 
             var expanded by remember { mutableStateOf(false) }
 
-            Text(
-                text = extract.extract,
-                modifier = Modifier
-                    .combinedClickable(
-                        onClick = {
-                            expanded = !expanded
-                        },
-                        onLongClick = {
-                            coroutineScope.launch {
-                                haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-                                clipboard.setClipEntry(clipEntryWith(extract.extract))
-                            }
-                        },
-                    )
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-                    .animateContentSize(),
-                maxLines = if (expanded) Int.MAX_VALUE else 4,
-                overflow = TextOverflow.Ellipsis,
-                color = MaterialTheme.colorScheme.onBackground,
-                style = TextStyles.getCardBodyTextStyle(),
-            )
+            if (showExtract) {
+                Text(
+                    text = extract.extract,
+                    modifier = Modifier
+                        .combinedClickable(
+                            onClick = {
+                                expanded = !expanded
+                            },
+                            onLongClick = {
+                                coroutineScope.launch {
+                                    haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    clipboard.setClipEntry(clipEntryWith(extract.extract))
+                                }
+                            },
+                        )
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .animateContentSize(),
+                    maxLines = if (expanded) Int.MAX_VALUE else 4,
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = TextStyles.getCardBodyTextStyle(),
+                )
+            }
 
-            UrlListItem(
-                relation = RelationListItemModel(
-                    id = "wikipedia_section",
-                    label = strings.readMore,
-                    linkedEntity = MusicBrainzEntity.URL,
-                    name = extract.wikipediaUrl,
-                    linkedEntityId = "wikipedia_section",
-                ),
-            )
+            if (showUrl) {
+                UrlListItem(
+                    relation = RelationListItemModel(
+                        id = "wikipedia_section",
+                        label = strings.readMore,
+                        linkedEntity = MusicBrainzEntity.URL,
+                        name = extract.wikipediaUrl,
+                        linkedEntityId = "wikipedia_section",
+                    ),
+                )
+            }
         }
     }
 }
