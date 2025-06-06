@@ -15,7 +15,7 @@ interface TestReleaseGroupRepository {
     val releaseGroupDao: ReleaseGroupDao
     val artistCreditDao: ArtistCreditDao
     val relationsMetadataDao: RelationsMetadataDao
-    val visitedDao: DetailsMetadataDao
+    val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     fun createReleaseGroupRepository(
         musicBrainzModel: ReleaseGroupMusicBrainzNetworkModel,
@@ -30,7 +30,7 @@ interface TestReleaseGroupRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = visitedDao,
+            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return ReleaseGroupRepositoryImpl(

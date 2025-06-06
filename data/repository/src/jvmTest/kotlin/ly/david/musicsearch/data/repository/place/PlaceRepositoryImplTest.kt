@@ -48,7 +48,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
     val koinTestRule = KoinTestRule()
 
     override val relationsMetadataDao: RelationsMetadataDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val placeDao: PlaceDao by inject()
     override val areaDao: AreaDao by inject()
@@ -68,7 +68,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = visitedDao,
+            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return AreaRepositoryImpl(

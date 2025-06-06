@@ -13,7 +13,7 @@ import ly.david.musicsearch.shared.domain.work.WorkRepository
 
 interface TestWorkRepository {
     val relationsMetadataDao: RelationsMetadataDao
-    val visitedDao: DetailsMetadataDao
+    val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val workDao: WorkDao
     val workAttributeDao: WorkAttributeDao
@@ -31,7 +31,7 @@ interface TestWorkRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = visitedDao,
+            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return WorkRepositoryImpl(

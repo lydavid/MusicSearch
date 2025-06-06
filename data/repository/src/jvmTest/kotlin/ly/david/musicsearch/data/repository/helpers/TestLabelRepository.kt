@@ -13,7 +13,7 @@ import ly.david.musicsearch.shared.domain.label.LabelRepository
 interface TestLabelRepository {
 
     val relationsMetadataDao: RelationsMetadataDao
-    val visitedDao: DetailsMetadataDao
+    val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val labelDao: LabelDao
 
@@ -30,7 +30,7 @@ interface TestLabelRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = visitedDao,
+            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return LabelRepositoryImpl(

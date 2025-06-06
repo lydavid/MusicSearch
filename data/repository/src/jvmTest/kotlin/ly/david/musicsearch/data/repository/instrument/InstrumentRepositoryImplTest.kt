@@ -29,7 +29,7 @@ class InstrumentRepositoryImplTest : KoinTest {
     val koinTestRule = KoinTestRule()
 
     private val relationsMetadataDao: RelationsMetadataDao by inject()
-    private val visitedDao: DetailsMetadataDao by inject()
+    private val detailsMetadataDao: DetailsMetadataDao by inject()
     private val relationDao: RelationDao by inject()
     private val instrumentDao: InstrumentDao by inject()
 
@@ -46,7 +46,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = visitedDao,
+            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return InstrumentRepositoryImpl(

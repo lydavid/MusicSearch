@@ -33,7 +33,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
     override val releaseGroupDao: ReleaseGroupDao by inject()
     override val artistCreditDao: ArtistCreditDao by inject()
     override val relationsMetadataDao: RelationsMetadataDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
 
     @Test

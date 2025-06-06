@@ -49,7 +49,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
     override val placeDao: PlaceDao by inject()
     override val areaDao: AreaDao by inject()
     override val relationsMetadataDao: RelationsMetadataDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     private val collectionDao: CollectionDao by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()

@@ -50,7 +50,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
     override val areaDao: AreaDao by inject()
     override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     private val collectionDao: CollectionDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 

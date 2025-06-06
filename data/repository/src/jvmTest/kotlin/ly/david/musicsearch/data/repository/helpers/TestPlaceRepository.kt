@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.place.PlaceRepository
 
 interface TestPlaceRepository {
     val relationsMetadataDao: RelationsMetadataDao
-    val visitedDao: DetailsMetadataDao
+    val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val placeDao: PlaceDao
     val areaDao: AreaDao
@@ -35,7 +35,7 @@ interface TestPlaceRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = visitedDao,
+            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return PlaceRepositoryImpl(

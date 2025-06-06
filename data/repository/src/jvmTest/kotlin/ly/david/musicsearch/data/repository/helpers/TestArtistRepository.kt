@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 interface TestArtistRepository {
     val artistDao: ArtistDao
     val relationsMetadataDao: RelationsMetadataDao
-    val visitedDao: DetailsMetadataDao
+    val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val areaDao: AreaDao
     val browseRemoteMetadataDao: BrowseRemoteMetadataDao
@@ -33,7 +33,7 @@ interface TestArtistRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = visitedDao,
+            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return ArtistRepositoryImpl(

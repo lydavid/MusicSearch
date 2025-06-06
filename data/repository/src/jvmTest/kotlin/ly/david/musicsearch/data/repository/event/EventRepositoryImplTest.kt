@@ -31,7 +31,7 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
     val koinTestRule = KoinTestRule()
 
     override val relationsMetadataDao: RelationsMetadataDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val eventDao: EventDao by inject()
 

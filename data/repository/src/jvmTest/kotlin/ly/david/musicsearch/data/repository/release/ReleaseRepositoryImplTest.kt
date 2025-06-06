@@ -68,7 +68,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
     override val mediumDao: MediumDao by inject()
     override val trackDao: TrackDao by inject()
     override val relationsMetadataDao: RelationsMetadataDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
 
     @Test

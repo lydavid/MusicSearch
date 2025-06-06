@@ -28,7 +28,7 @@ interface TestReleaseRepository {
     val mediumDao: MediumDao
     val trackDao: TrackDao
     val relationsMetadataDao: RelationsMetadataDao
-    val visitedDao: DetailsMetadataDao
+    val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
 
     fun createReleaseRepository(
@@ -44,7 +44,7 @@ interface TestReleaseRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = visitedDao,
+            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return ReleaseRepositoryImpl(

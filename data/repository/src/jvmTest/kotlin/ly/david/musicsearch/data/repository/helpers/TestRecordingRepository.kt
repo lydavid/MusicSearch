@@ -13,7 +13,7 @@ import ly.david.musicsearch.shared.domain.recording.RecordingRepository
 
 interface TestRecordingRepository {
     val relationsMetadataDao: RelationsMetadataDao
-    val visitedDao: DetailsMetadataDao
+    val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val recordingDao: RecordingDao
     val artistCreditDao: ArtistCreditDao
@@ -31,7 +31,7 @@ interface TestRecordingRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = visitedDao,
+            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return RecordingRepositoryImpl(

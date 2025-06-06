@@ -44,7 +44,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
     override val recordingDao: RecordingDao by inject()
     override val artistCreditDao: ArtistCreditDao by inject()
     override val relationsMetadataDao: RelationsMetadataDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     private val collectionDao: CollectionDao by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
