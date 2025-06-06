@@ -189,6 +189,7 @@ internal fun AreaUiInternal(
                                 else -> entitiesLazyPagingItems.getLazyPagingItemsForTab(state.selectedTab)?.refresh()
                             }
                         },
+                        tab = state.selectedTab,
                     )
                     OpenInBrowserMenuItem(
                         url = state.url,

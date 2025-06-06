@@ -34,6 +34,7 @@ import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.musicsearch.ui.common.topappbar.toTab
 import ly.david.musicsearch.ui.core.LocalStrings
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -150,6 +151,7 @@ internal fun CollectionUi(
                 },
                 overflowDropdownMenuItems = {
                     RefreshMenuItem(
+                        tab = entity?.toTab(),
                         onClick = {
                             when (entity) {
                                 MusicBrainzEntity.AREA -> areasLazyPagingItems.refresh()

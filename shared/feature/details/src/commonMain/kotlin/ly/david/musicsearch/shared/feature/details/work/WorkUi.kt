@@ -19,13 +19,14 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
+import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
@@ -131,12 +132,11 @@ internal fun WorkUi(
                     val selectedTab = state.selectedTab
                     RefreshMenuItem(
                         show = selectedTab != Tab.STATS,
+                        tab = selectedTab,
                         onClick = {
                             when (selectedTab) {
-                                Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
-                                Tab.ARTISTS -> artistsLazyPagingItems.refresh()
-                                Tab.RECORDINGS -> recordingsLazyPagingItems.refresh()
-                                else -> eventSink(DetailsUiEvent.ForceRefreshDetails)
+                                Tab.DETAILS -> eventSink(DetailsUiEvent.ForceRefreshDetails)
+                                else -> entitiesLazyPagingItems.getLazyPagingItemsForTab(state.selectedTab)?.refresh()
                             }
                         },
                     )

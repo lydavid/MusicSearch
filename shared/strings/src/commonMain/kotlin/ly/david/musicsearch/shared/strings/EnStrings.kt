@@ -47,6 +47,8 @@ val EnStrings = AppStrings(
 
     refresh = "Refresh",
 
+    refreshXTab = { p0 -> "Refresh %s".fmt(p0) },
+
     filter = "Filter",
 
     cancel = "Cancel",

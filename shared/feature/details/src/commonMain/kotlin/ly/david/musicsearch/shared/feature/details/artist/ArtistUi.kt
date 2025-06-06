@@ -149,6 +149,7 @@ internal fun ArtistUi(
 
                     RefreshMenuItem(
                         show = selectedTab != Tab.STATS,
+                        tab = selectedTab,
                         onClick = {
                             when (selectedTab) {
                                 Tab.DETAILS -> eventSink(DetailsUiEvent.ForceRefreshDetails)

@@ -26,6 +26,7 @@ data class AppStrings(
     val back: String,
     val openInBrowser: String,
     val refresh: String,
+    val refreshXTab: (String) -> String,
     val filter: String,
     val cancel: String,
     val clearFilter: String,

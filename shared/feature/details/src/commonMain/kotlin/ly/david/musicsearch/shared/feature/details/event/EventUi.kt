@@ -137,6 +137,7 @@ internal fun EventUi(
                     val selectedTab = state.selectedTab
                     RefreshMenuItem(
                         show = selectedTab != Tab.STATS,
+                        tab = selectedTab,
                         onClick = {
                             when (selectedTab) {
                                 Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()

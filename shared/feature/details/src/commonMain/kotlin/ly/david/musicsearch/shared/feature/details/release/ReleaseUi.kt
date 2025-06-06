@@ -21,8 +21,8 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -136,6 +136,7 @@ internal fun ReleaseUi(
                     val selectedTab = state.selectedTab
                     RefreshMenuItem(
                         show = selectedTab != Tab.STATS,
+                        tab = selectedTab,
                         onClick = {
                             when (selectedTab) {
                                 Tab.ARTISTS -> artistsLazyPagingItems.refresh()

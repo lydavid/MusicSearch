@@ -135,6 +135,7 @@ internal fun LabelUi(
                     val selectedTab = state.selectedTab
                     RefreshMenuItem(
                         show = selectedTab != Tab.STATS,
+                        tab = selectedTab,
                         onClick = {
                             when (selectedTab) {
                                 Tab.RELEASES -> releasesLazyPagingItems.refresh()

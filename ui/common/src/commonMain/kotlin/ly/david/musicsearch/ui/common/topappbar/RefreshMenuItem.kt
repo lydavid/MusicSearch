@@ -9,15 +9,25 @@ import ly.david.musicsearch.ui.core.LocalStrings
 @Composable
 fun OverflowMenuScope.RefreshMenuItem(
     show: Boolean = true,
+    tab: Tab? = null,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val strings = LocalStrings.current
 
+    val tabTitle = tab?.getTitle(strings)
+    val title = if (tabTitle == null) {
+        strings.refresh
+    } else {
+        strings.refreshXTab(tabTitle)
+    }
+
     if (show) {
         DropdownMenuItem(
             text = {
-                Text(strings.refresh)
+                Text(
+                    text = title,
+                )
             },
             onClick = {
                 onClick()
