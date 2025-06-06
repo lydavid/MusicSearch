@@ -3,9 +3,9 @@ package ly.david.musicsearch.data.repository.recording
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
@@ -14,24 +14,26 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.helpers.TestRecordingRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import kotlin.time.Duration.Companion.days
 
 class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val recordingDao: RecordingDao by inject()
     override val artistCreditDao: ArtistCreditDao by inject()
@@ -60,6 +62,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
         val sparseDetailsModel = sparseRepository.lookupRecording(
             recordingId = "7e52152f-c71a-49b1-b98d-f95e04c44445",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             RecordingDetailsModel(
@@ -72,6 +75,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                         joinPhrase = "",
                     ),
                 ),
+                lastUpdated = testDateTimeInThePast,
             ),
             sparseDetailsModel,
         )
@@ -113,6 +117,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
         var allDataArtistDetailsModel = allDataRepository.lookupRecording(
             recordingId = "7e52152f-c71a-49b1-b98d-f95e04c44445",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast.plus(2.days),
         )
         assertEquals(
             RecordingDetailsModel(
@@ -125,12 +130,14 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                         joinPhrase = "",
                     ),
                 ),
+                lastUpdated = testDateTimeInThePast,
             ),
             allDataArtistDetailsModel,
         )
         allDataArtistDetailsModel = allDataRepository.lookupRecording(
             recordingId = "7e52152f-c71a-49b1-b98d-f95e04c44445",
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast.plus(3.days),
         )
         assertEquals(
             RecordingDetailsModel(
@@ -145,6 +152,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                     ),
                 ),
                 video = true,
+                lastUpdated = testDateTimeInThePast.plus(3.days),
                 urls = listOf(
                     RelationListItemModel(
                         id = "b5322490-3003-42e9-a043-d26a83bd1bbd_1",

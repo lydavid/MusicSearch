@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.repository.helpers
 
 import ly.david.data.test.api.FakeLookupApi
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
@@ -12,8 +12,8 @@ import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.work.WorkRepository
 
 interface TestWorkRepository {
-    val entityHasRelationsDao: EntityHasRelationsDao
-    val visitedDao: DetailsMetadataDao
+    val relationsMetadataDao: RelationsMetadataDao
+    val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val workDao: WorkDao
     val workAttributeDao: WorkAttributeDao
@@ -30,8 +30,8 @@ interface TestWorkRepository {
                     return musicBrainzModel
                 }
             },
-            entityHasRelationsDao = entityHasRelationsDao,
-            detailsMetadataDao = visitedDao,
+            relationsMetadataDao = relationsMetadataDao,
+            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return WorkRepositoryImpl(

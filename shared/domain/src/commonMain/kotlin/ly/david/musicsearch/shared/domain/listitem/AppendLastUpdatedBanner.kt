@@ -42,10 +42,3 @@ fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
         }
     }
 }
-
-@OptIn(ExperimentalCoroutinesApi::class)
-fun <T : ListItemModel> Flow<PagingData<T>>.appendPlaceholderLastUpdatedBanner(): Flow<PagingData<ListItemModel>> {
-    return transformLatest { listItems ->
-        emit(listItems.map { it as ListItemModel })
-    }
-}

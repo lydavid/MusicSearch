@@ -3,9 +3,10 @@ package ly.david.musicsearch.shared.feature.details.artist
 import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.datetime.Clock
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
+import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
@@ -65,6 +66,7 @@ internal class ArtistPresenter(
         return repository.lookupArtist(
             artistId = id,
             forceRefresh = forceRefresh,
+            lastUpdated = Clock.System.now(),
         )
     }
 }

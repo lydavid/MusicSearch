@@ -19,22 +19,23 @@ import ly.david.data.test.underPressureWorkMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseWorksResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestWorkRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
-import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.work.WorksListRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -49,8 +50,8 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
 
     override val workDao: WorkDao by inject()
     override val workAttributeDao: WorkAttributeDao by inject()
-    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     private val collectionDao: CollectionDao by inject()
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
@@ -437,6 +438,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         workRepository.lookupWork(
             workId = underPressureWorkMusicBrainzModel.id,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         ).let { workDetailsModel ->
             assertEquals(
                 WorkDetailsModel(
@@ -460,6 +462,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                             typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
                         ),
                     ),
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 workDetailsModel,
             )
@@ -467,6 +470,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         workRepository.lookupWork(
             workId = underPressureWorkMusicBrainzModel.id,
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         ).let { workDetailsModel ->
             assertEquals(
                 WorkDetailsModel(
@@ -491,6 +495,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                             typeId = "955305a2-58ec-4c64-94f7-7fb9b209416c",
                         ),
                     ),
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 workDetailsModel,
             )

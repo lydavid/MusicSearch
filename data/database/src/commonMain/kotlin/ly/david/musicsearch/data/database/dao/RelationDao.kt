@@ -5,6 +5,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
@@ -118,6 +119,7 @@ class RelationDao(
         ended: Boolean?,
         thumbnailUrl: String?,
         placeholderKey: Long?,
+        lastUpdated: Instant? = null,
     ) = RelationListItemModel(
         id = "${linkedEntityId}_$order",
         linkedEntityId = linkedEntityId,
@@ -135,6 +137,7 @@ class RelationDao(
         ),
         imageUrl = thumbnailUrl,
         imageId = placeholderKey ?: 0L,
+        lastUpdated = lastUpdated,
     )
 
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<CountOfEachRelationshipType>> =

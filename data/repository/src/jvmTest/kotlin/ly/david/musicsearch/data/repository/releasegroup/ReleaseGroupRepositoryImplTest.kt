@@ -1,10 +1,10 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
 import kotlinx.coroutines.test.runTest
+import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
@@ -13,12 +13,13 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -32,8 +33,8 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
 
     override val releaseGroupDao: ReleaseGroupDao by inject()
     override val artistCreditDao: ArtistCreditDao by inject()
-    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
 
     @Test
@@ -61,6 +62,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
         val sparseDetailsModel = sparseRepository.lookupReleaseGroup(
             releaseGroupId = "93bb79c2-2995-4607-af5e-061a25a4e06f",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             ReleaseGroupDetailsModel(
@@ -73,6 +75,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                         joinPhrase = "",
                     ),
                 ),
+                lastUpdated = testDateTimeInThePast,
             ),
             sparseDetailsModel,
         )
@@ -134,6 +137,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
         var allDataArtistDetailsModel = allDataRepository.lookupReleaseGroup(
             releaseGroupId = "93bb79c2-2995-4607-af5e-061a25a4e06f",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             ReleaseGroupDetailsModel(
@@ -146,12 +150,14 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                         joinPhrase = "",
                     ),
                 ),
+                lastUpdated = testDateTimeInThePast,
             ),
             allDataArtistDetailsModel,
         )
         allDataArtistDetailsModel = allDataRepository.lookupReleaseGroup(
             releaseGroupId = "93bb79c2-2995-4607-af5e-061a25a4e06f",
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             ReleaseGroupDetailsModel(
@@ -166,6 +172,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                         joinPhrase = "",
                     ),
                 ),
+                lastUpdated = testDateTimeInThePast,
                 urls = listOf(
                     RelationListItemModel(
                         id = "c3e175ed-6618-42d9-8d0f-680883a35f43_4",

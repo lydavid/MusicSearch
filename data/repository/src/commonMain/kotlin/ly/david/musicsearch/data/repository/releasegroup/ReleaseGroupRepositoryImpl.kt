@@ -1,12 +1,13 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 
 class ReleaseGroupRepositoryImpl(
@@ -19,6 +20,7 @@ class ReleaseGroupRepositoryImpl(
     override suspend fun lookupReleaseGroup(
         releaseGroupId: String,
         forceRefresh: Boolean,
+        lastUpdated: Instant,
     ): ReleaseGroupDetailsModel {
         if (forceRefresh) {
             delete(releaseGroupId)
@@ -29,7 +31,10 @@ class ReleaseGroupRepositoryImpl(
             cachedData
         } else {
             val releaseGroupMusicBrainzModel = lookupApi.lookupReleaseGroup(releaseGroupId)
-            cache(releaseGroupMusicBrainzModel)
+            cache(
+                releaseGroup = releaseGroupMusicBrainzModel,
+                lastUpdated = lastUpdated,
+            )
             getCachedData(releaseGroupId) ?: error("Failed to get cached data")
         }
     }
@@ -58,7 +63,10 @@ class ReleaseGroupRepositoryImpl(
         }
     }
 
-    private fun cache(releaseGroup: ReleaseGroupMusicBrainzNetworkModel) {
+    private fun cache(
+        releaseGroup: ReleaseGroupMusicBrainzNetworkModel,
+        lastUpdated: Instant,
+    ) {
         releaseGroupDao.withTransaction {
             releaseGroupDao.insertReleaseGroup(releaseGroup)
 
@@ -66,6 +74,7 @@ class ReleaseGroupRepositoryImpl(
             relationRepository.insertAllUrlRelations(
                 entityId = releaseGroup.id,
                 relationWithOrderList = relationWithOrderList,
+                lastUpdated = lastUpdated,
             )
         }
     }

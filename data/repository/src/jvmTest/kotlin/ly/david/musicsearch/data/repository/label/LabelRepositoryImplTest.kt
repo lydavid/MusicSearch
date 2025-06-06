@@ -1,10 +1,10 @@
 package ly.david.musicsearch.data.repository.label
 
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
@@ -12,10 +12,11 @@ import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetwork
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.helpers.TestLabelRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert.assertEquals
@@ -23,14 +24,15 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import kotlin.time.Duration.Companion.milliseconds
 
 class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val labelDao: LabelDao by inject()
 
@@ -45,11 +47,14 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
         val sparseDetailsModel = sparseRepository.lookupLabel(
             labelId = "7aaa37fe-2def-3476-b359-80245850062d",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
+
         )
         assertEquals(
             LabelDetailsModel(
                 id = "7aaa37fe-2def-3476-b359-80245850062d",
                 name = "UNIVERSAL J",
+                lastUpdated = testDateTimeInThePast,
             ),
             sparseDetailsModel,
         )
@@ -129,17 +134,20 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
         var allDataArtistDetailsModel = allDataRepository.lookupLabel(
             labelId = "7aaa37fe-2def-3476-b359-80245850062d",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast.plus(1.milliseconds),
         )
         assertEquals(
             LabelDetailsModel(
                 id = "7aaa37fe-2def-3476-b359-80245850062d",
                 name = "UNIVERSAL J",
+                lastUpdated = testDateTimeInThePast,
             ),
             allDataArtistDetailsModel,
         )
         allDataArtistDetailsModel = allDataRepository.lookupLabel(
             labelId = "7aaa37fe-2def-3476-b359-80245850062d",
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast.plus(2.milliseconds),
         )
         assertEquals(
             LabelDetailsModel(
@@ -152,6 +160,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                     end = "2023-02",
                     ended = true,
                 ),
+                lastUpdated = testDateTimeInThePast.plus(2.milliseconds),
                 urls = listOf(
                     RelationListItemModel(
                         id = "2741a789-1c8a-453a-a8d3-fb8a5cc6f090_5",

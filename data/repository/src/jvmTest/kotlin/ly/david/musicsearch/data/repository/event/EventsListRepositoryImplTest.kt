@@ -19,13 +19,14 @@ import ly.david.data.test.tsoAtMasseyHallListItemModel
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestEventRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
@@ -47,8 +48,8 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
     val koinTestRule = KoinTestRule()
 
     override val eventDao: EventDao by inject()
-    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     private val collectionDao: CollectionDao by inject()
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
@@ -599,6 +600,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
         eventRepository.lookupEvent(
             eventId = aimerAtBudokanEventMusicBrainzModel.id,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         ).let { eventDetailsModel ->
             assertEquals(
                 EventDetailsModel(
@@ -612,6 +614,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                     ),
                     cancelled = false,
                     time = "18:00",
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 eventDetailsModel,
             )
@@ -619,6 +622,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
         eventRepository.lookupEvent(
             eventId = aimerAtBudokanEventMusicBrainzModel.id,
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         ).let { eventDetailsModel ->
             assertEquals(
                 EventDetailsModel(
@@ -633,6 +637,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                     ),
                     cancelled = false,
                     time = "18:00",
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 eventDetailsModel,
             )

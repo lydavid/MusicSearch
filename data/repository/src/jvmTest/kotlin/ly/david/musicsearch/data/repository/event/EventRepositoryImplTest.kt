@@ -2,9 +2,9 @@ package ly.david.musicsearch.data.repository.event
 
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
@@ -12,6 +12,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.helpers.TestEventRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -22,6 +23,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import kotlin.time.Duration.Companion.days
 
 interface IEventRepositoryImplTest
 
@@ -30,8 +32,8 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val eventDao: EventDao by inject()
 
@@ -46,11 +48,13 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
         val sparseDetailsModel = sparseRepository.lookupEvent(
             eventId = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             EventDetailsModel(
                 id = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
                 name = "The Eras Tour: Toronto (night 1)",
+                lastUpdated = testDateTimeInThePast,
             ),
             sparseDetailsModel,
         )
@@ -80,17 +84,20 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
         var allDataArtistDetailsModel = allDataRepository.lookupEvent(
             eventId = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast.plus(1.days),
         )
         assertEquals(
             EventDetailsModel(
                 id = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
                 name = "The Eras Tour: Toronto (night 1)",
+                lastUpdated = testDateTimeInThePast,
             ),
             allDataArtistDetailsModel,
         )
         allDataArtistDetailsModel = allDataRepository.lookupEvent(
             eventId = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast.plus(2.days),
         )
         assertEquals(
             EventDetailsModel(
@@ -111,8 +118,10 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
                         linkedEntity = MusicBrainzEntity.URL,
                         visited = true,
                         isForwardDirection = true,
+                        lastUpdated = null,
                     ),
                 ),
+                lastUpdated = testDateTimeInThePast.plus(2.days),
             ),
             allDataArtistDetailsModel,
         )

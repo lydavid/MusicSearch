@@ -1,11 +1,12 @@
 package ly.david.musicsearch.data.repository.work
 
-import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
-import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.work.WorkRepository
 
@@ -19,6 +20,7 @@ class WorkRepositoryImpl(
     override suspend fun lookupWork(
         workId: String,
         forceRefresh: Boolean,
+        lastUpdated: Instant,
     ): WorkDetailsModel {
         if (forceRefresh) {
             delete(workId)
@@ -36,8 +38,15 @@ class WorkRepositoryImpl(
         }
 
         val workMusicBrainzModel = lookupApi.lookupWork(workId = workId)
-        cache(workMusicBrainzModel)
-        return lookupWork(workId, false)
+        cache(
+            work = workMusicBrainzModel,
+            lastUpdated = lastUpdated,
+        )
+        return lookupWork(
+            workId = workId,
+            forceRefresh = false,
+            lastUpdated = lastUpdated,
+        )
     }
 
     private fun delete(id: String) {
@@ -47,7 +56,10 @@ class WorkRepositoryImpl(
         }
     }
 
-    private fun cache(work: WorkMusicBrainzNetworkModel) {
+    private fun cache(
+        work: WorkMusicBrainzNetworkModel,
+        lastUpdated: Instant,
+    ) {
         workDao.withTransaction {
             workDao.insert(work)
             workAttributeDao.insertAttributesForWork(
@@ -59,6 +71,7 @@ class WorkRepositoryImpl(
             relationRepository.insertAllUrlRelations(
                 entityId = work.id,
                 relationWithOrderList = relationWithOrderList,
+                lastUpdated = lastUpdated,
             )
         }
     }

@@ -4,9 +4,9 @@ import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlaceRepositoryImpl
@@ -14,8 +14,8 @@ import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
 
 interface TestPlaceRepository {
-    val entityHasRelationsDao: EntityHasRelationsDao
-    val visitedDao: DetailsMetadataDao
+    val relationsMetadataDao: RelationsMetadataDao
+    val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val placeDao: PlaceDao
     val areaDao: AreaDao
@@ -34,8 +34,8 @@ interface TestPlaceRepository {
                     return musicBrainzModel
                 }
             },
-            entityHasRelationsDao = entityHasRelationsDao,
-            detailsMetadataDao = visitedDao,
+            relationsMetadataDao = relationsMetadataDao,
+            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return PlaceRepositoryImpl(

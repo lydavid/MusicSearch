@@ -31,7 +31,6 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
-import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
@@ -272,7 +271,6 @@ internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     val entitiesListUiState: EntitiesListUiState = EntitiesListUiState(),
-    val relationsUiState: RelationsUiState = RelationsUiState(),
     val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (DetailsUiEvent) -> Unit = {},
 ) : CircuitUiState

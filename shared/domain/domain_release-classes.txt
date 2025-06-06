@@ -135,7 +135,7 @@ unstable class GetAllCollections {
 }
 stable class GetCollection {
   runtime val collectionRepository: CollectionRepository
-  runtime val visitedDao: VisitedDao
+  runtime val detailsMetadataDao: VisitedDao
   <runtime stability> = 
 }
 stable class ActionableResult {

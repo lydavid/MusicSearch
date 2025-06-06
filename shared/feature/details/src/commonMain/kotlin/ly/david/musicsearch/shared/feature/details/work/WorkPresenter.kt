@@ -3,12 +3,13 @@ package ly.david.musicsearch.shared.feature.details.work
 import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.datetime.Clock
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
-import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.work.WorkRepository
 import ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
@@ -57,6 +58,7 @@ internal class WorkPresenter(
         return repository.lookupWork(
             workId = id,
             forceRefresh = forceRefresh,
+            lastUpdated = Clock.System.now(),
         )
     }
 }

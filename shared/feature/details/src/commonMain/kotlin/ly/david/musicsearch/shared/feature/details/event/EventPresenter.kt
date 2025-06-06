@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.details.event
 import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.datetime.Clock
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventRepository
@@ -56,6 +57,7 @@ internal class EventPresenter(
         return repository.lookupEvent(
             eventId = id,
             forceRefresh = forceRefresh,
+            lastUpdated = Clock.System.now(),
         )
     }
 }

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.label
 
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
@@ -17,6 +18,7 @@ class LabelRepositoryImpl(
     override suspend fun lookupLabel(
         labelId: String,
         forceRefresh: Boolean,
+        lastUpdated: Instant,
     ): LabelDetailsModel {
         if (forceRefresh) {
             delete(labelId)
@@ -30,8 +32,15 @@ class LabelRepositoryImpl(
         }
 
         val labelMusicBrainzModel = lookupApi.lookupLabel(labelId)
-        cache(labelMusicBrainzModel)
-        return lookupLabel(labelId, false)
+        cache(
+            label = labelMusicBrainzModel,
+            lastUpdated = lastUpdated,
+        )
+        return lookupLabel(
+            labelId = labelId,
+            forceRefresh = false,
+            lastUpdated = lastUpdated,
+        )
     }
 
     private fun delete(id: String) {
@@ -41,7 +50,10 @@ class LabelRepositoryImpl(
         }
     }
 
-    private fun cache(label: LabelMusicBrainzNetworkModel) {
+    private fun cache(
+        label: LabelMusicBrainzNetworkModel,
+        lastUpdated: Instant,
+    ) {
         labelDao.withTransaction {
             labelDao.insert(label)
 
@@ -49,6 +61,7 @@ class LabelRepositoryImpl(
             relationRepository.insertAllUrlRelations(
                 entityId = label.id,
                 relationWithOrderList = relationWithOrderList,
+                lastUpdated = lastUpdated,
             )
         }
     }

@@ -6,6 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.datetime.Clock
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 
@@ -30,6 +31,7 @@ class GetTracksByReleaseImpl(
             releaseRepository.observeTracksByRelease(
                 releaseId = releaseId,
                 query = query,
+                lastUpdated = Clock.System.now(),
             )
                 .distinctUntilChanged()
                 .cachedIn(scope = coroutineScope)

@@ -16,20 +16,21 @@ import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestRecordingRepository
 import ly.david.musicsearch.data.repository.helpers.TestRecordingsListRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -43,8 +44,8 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
 
     override val recordingDao: RecordingDao by inject()
     override val artistCreditDao: ArtistCreditDao by inject()
-    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     private val collectionDao: CollectionDao by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
@@ -373,6 +374,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingRepository.lookupRecording(
             recordingId = skycladObserverCoverRecordingMusicBrainzModel.id,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         ).let { recordingDetailsModel ->
             assertEquals(
                 RecordingDetailsModel(
@@ -393,6 +395,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                         ),
                     ),
                     disambiguation = "",
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 recordingDetailsModel,
             )
@@ -400,6 +403,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingRepository.lookupRecording(
             recordingId = skycladObserverCoverRecordingMusicBrainzModel.id,
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         ).let { recordingDetailsModel ->
             assertEquals(
                 RecordingDetailsModel(
@@ -420,12 +424,11 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                         ),
                     ),
                     disambiguation = "changes will be ignored if recording is linked to multiple entities",
+                    lastUpdated = testDateTimeInThePast,
                 ),
                 recordingDetailsModel,
             )
         }
-
-
     }
 
     @Test

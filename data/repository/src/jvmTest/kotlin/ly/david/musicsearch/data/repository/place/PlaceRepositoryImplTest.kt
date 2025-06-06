@@ -11,9 +11,9 @@ import ly.david.data.test.budokanPlaceMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
@@ -26,16 +26,17 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBr
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.data.repository.helpers.TestPlaceRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
-import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -47,8 +48,8 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    override val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val placeDao: PlaceDao by inject()
     override val areaDao: AreaDao by inject()
@@ -67,8 +68,8 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     return musicBrainzModel
                 }
             },
-            entityHasRelationsDao = entityHasRelationsDao,
-            detailsMetadataDao = visitedDao,
+            relationsMetadataDao = relationsMetadataDao,
+            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return AreaRepositoryImpl(
@@ -97,12 +98,14 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         val sparseDetailsModel = sparseRepository.lookupPlace(
             placeId = "4d43b9d8-162d-4ac5-8068-dfb009722484",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             PlaceDetailsModel(
                 id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
                 name = "日本武道館",
                 address = "〒102-8321 東京都千代田区北の丸公園2-3",
+                lastUpdated = testDateTimeInThePast,
             ),
             sparseDetailsModel,
         )
@@ -212,18 +215,21 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         var allDataArtistDetailsModel = allDataRepository.lookupPlace(
             placeId = "4d43b9d8-162d-4ac5-8068-dfb009722484",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             PlaceDetailsModel(
                 id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
                 name = "日本武道館",
                 address = "〒102-8321 東京都千代田区北の丸公園2-3",
+                lastUpdated = testDateTimeInThePast,
             ),
             allDataArtistDetailsModel,
         )
         allDataArtistDetailsModel = allDataRepository.lookupPlace(
             placeId = "4d43b9d8-162d-4ac5-8068-dfb009722484",
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             PlaceDetailsModel(
@@ -242,6 +248,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     id = "e24c0f02-9b5a-4f4f-9fe0-f8b3e67874f8",
                     name = "Kitanomaru Kōen",
                 ),
+                lastUpdated = testDateTimeInThePast,
                 urls = listOf(
                     RelationListItemModel(
                         id = "e893b81b-a678-4989-858f-c83a30243b7b_8",
@@ -356,6 +363,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         countryAreaRepository.lookupArea(
             areaId = countryId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
 
         // Browse places in the country
@@ -414,6 +422,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         var artistDetailsModel = placeRepository.lookupPlace(
             placeId = placeId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             PlaceDetailsModel(
@@ -434,12 +443,14 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     name = "Kitanomaru Kōen",
                     sortName = "Kitanomaru Kōen",
                 ),
+                lastUpdated = testDateTimeInThePast,
             ),
             artistDetailsModel,
         )
         artistDetailsModel = placeRepository.lookupPlace(
             placeId = placeId,
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             PlaceDetailsModel(
@@ -460,6 +471,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     name = "Kitanomaru Kōen",
                     sortName = "Kitanomaru Kōen",
                 ),
+                lastUpdated = testDateTimeInThePast,
             ),
             artistDetailsModel,
         )
@@ -476,6 +488,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         val district = districtAreaRepository.lookupArea(
             areaId = districtId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             AreaDetailsModel(
@@ -483,6 +496,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                 name = "Kitanomaru Kōen",
                 sortName = "",
                 type = "District",
+                lastUpdated = testDateTimeInThePast,
             ),
             district,
         )
@@ -491,6 +505,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         artistDetailsModel = placeRepository.lookupPlace(
             placeId = placeId,
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             PlaceDetailsModel(
@@ -513,12 +528,14 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     type = "District",
                     visited = true,
                 ),
+                lastUpdated = testDateTimeInThePast,
             ),
             artistDetailsModel,
         )
         artistDetailsModel = placeRepository.lookupPlace(
             placeId = placeId,
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             PlaceDetailsModel(
@@ -541,6 +558,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     type = "District",
                     visited = true,
                 ),
+                lastUpdated = testDateTimeInThePast,
             ),
             artistDetailsModel,
         )

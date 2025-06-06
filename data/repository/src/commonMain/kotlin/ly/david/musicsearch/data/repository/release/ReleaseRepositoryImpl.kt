@@ -1,13 +1,14 @@
 package ly.david.musicsearch.data.repository.release
 
+import androidx.paging.Pager
 import androidx.paging.TerminalSeparatorType
 import app.cash.paging.ExperimentalPagingApi
-import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import app.cash.paging.insertSeparators
 import app.cash.paging.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.LabelDao
@@ -25,6 +26,7 @@ import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.area.NonCountryAreaWithCode
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.getFormatsForDisplay
 import ly.david.musicsearch.shared.domain.getTracksForDisplay
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
@@ -32,7 +34,6 @@ import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toAreaListItemModel
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
-import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 
 class ReleaseRepositoryImpl(
@@ -51,9 +52,11 @@ class ReleaseRepositoryImpl(
     // TODO: split up what data to include when calling from details/tracks tabs?
     //  initial load only requires 1 api call to display data on both tabs
     //  but swipe to refresh should only refresh its own tab
+    //  I'm leaning towards not doing this to keep things simple
     override suspend fun lookupRelease(
         releaseId: String,
         forceRefresh: Boolean,
+        lastUpdated: Instant,
     ): ReleaseDetailsModel {
         if (forceRefresh) {
             delete(releaseId)
@@ -89,10 +92,14 @@ class ReleaseRepositoryImpl(
         }
 
         val releaseMusicBrainzModel = lookupApi.lookupRelease(releaseId)
-        cache(releaseMusicBrainzModel)
+        cache(
+            release = releaseMusicBrainzModel,
+            lastUpdated = lastUpdated,
+        )
         return lookupRelease(
             releaseId = releaseId,
             forceRefresh = false,
+            lastUpdated = lastUpdated,
         )
     }
 
@@ -107,7 +114,10 @@ class ReleaseRepositoryImpl(
         }
     }
 
-    private fun cache(release: ReleaseMusicBrainzNetworkModel) {
+    private fun cache(
+        release: ReleaseMusicBrainzNetworkModel,
+        lastUpdated: Instant,
+    ) {
         releaseDao.withTransaction {
             release.releaseGroup?.let { releaseGroup ->
                 releaseGroupDao.insertReleaseGroup(releaseGroup)
@@ -148,6 +158,7 @@ class ReleaseRepositoryImpl(
             relationRepository.insertAllUrlRelations(
                 entityId = release.id,
                 relationWithOrderList = relationWithOrderList,
+                lastUpdated = lastUpdated,
             )
         }
     }
@@ -157,6 +168,7 @@ class ReleaseRepositoryImpl(
     override fun observeTracksByRelease(
         releaseId: String,
         query: String,
+        lastUpdated: Instant,
     ): Flow<PagingData<ListItemModel>> {
         return Pager(
             config = CommonPagingConfig.pagingConfig,
@@ -166,6 +178,7 @@ class ReleaseRepositoryImpl(
                     lookupRelease(
                         releaseId = releaseId,
                         forceRefresh = false,
+                        lastUpdated = lastUpdated,
                     )
                 },
                 deleteLocalEntity = { deleteMediaAndTracksByRelease(releaseId) },

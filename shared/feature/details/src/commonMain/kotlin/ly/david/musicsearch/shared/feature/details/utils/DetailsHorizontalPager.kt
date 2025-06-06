@@ -141,7 +141,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
 
                     Tab.RELATIONSHIPS -> EntitiesPagingListUiState(
                         lazyPagingItems = entityLazyPagingItems.relationsLazyPagingItems,
-                        lazyListState = state.relationsUiState.lazyListState,
+                        lazyListState = state.entitiesListUiState.relationsUiState.lazyListState,
                     )
 
                     else -> {

@@ -1,0 +1,23 @@
+import kotlinx.datetime.Instant;
+
+CREATE TABLE IF NOT EXISTS relations_metadata (
+  entity_id TEXT PRIMARY KEY NOT NULL,
+  last_updated INTEGER AS Instant NOT NULL
+);
+
+upsert {
+  UPDATE relations_metadata
+  SET
+    last_updated = :lastUpdated
+  WHERE entity_id = :entityId;
+
+  INSERT OR IGNORE INTO relations_metadata
+  VALUES (
+    :entityId,
+    :lastUpdated
+  );
+}
+
+contains:
+SELECT entity_id FROM relations_metadata
+WHERE entity_id = :entityId;

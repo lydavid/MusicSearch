@@ -1,19 +1,20 @@
 package ly.david.musicsearch.data.repository.instrument
 
 import kotlinx.coroutines.test.runTest
+import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeLookupApi
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
-import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -22,14 +23,15 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import kotlin.time.Duration.Companion.seconds
 
 class InstrumentRepositoryImplTest : KoinTest {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val entityHasRelationsDao: EntityHasRelationsDao by inject()
-    private val visitedDao: DetailsMetadataDao by inject()
+    private val relationsMetadataDao: RelationsMetadataDao by inject()
+    private val detailsMetadataDao: DetailsMetadataDao by inject()
     private val relationDao: RelationDao by inject()
     private val instrumentDao: InstrumentDao by inject()
 
@@ -45,8 +47,8 @@ class InstrumentRepositoryImplTest : KoinTest {
                     return musicBrainzModel
                 }
             },
-            entityHasRelationsDao = entityHasRelationsDao,
-            detailsMetadataDao = visitedDao,
+            relationsMetadataDao = relationsMetadataDao,
+            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return InstrumentRepositoryImpl(
@@ -74,11 +76,13 @@ class InstrumentRepositoryImplTest : KoinTest {
         val sparseDetailsModel = sparseRepository.lookupInstrument(
             instrumentId = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             InstrumentDetailsModel(
                 id = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
                 name = "classical guitar",
+                lastUpdated = testDateTimeInThePast,
             ),
             sparseDetailsModel,
         )
@@ -137,17 +141,20 @@ class InstrumentRepositoryImplTest : KoinTest {
         var allDataArtistDetailsModel = allDataRepository.lookupInstrument(
             instrumentId = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
             forceRefresh = false,
+            lastUpdated = testDateTimeInThePast.plus(1.seconds),
         )
         assertEquals(
             InstrumentDetailsModel(
                 id = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
                 name = "classical guitar",
+                lastUpdated = testDateTimeInThePast,
             ),
             allDataArtistDetailsModel,
         )
         allDataArtistDetailsModel = allDataRepository.lookupInstrument(
             instrumentId = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
             forceRefresh = true,
+            lastUpdated = testDateTimeInThePast.plus(2.seconds),
         )
         assertEquals(
             InstrumentDetailsModel(
@@ -156,6 +163,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                 description = "Also known as Spanish guitar, it is used in classical, folk and other styles, the strings are nylon or gut.",
                 disambiguation = "Modern acoustic gut/nylon string guitar",
                 type = "String instrument",
+                lastUpdated = testDateTimeInThePast.plus(2.seconds),
                 urls = listOf(
                     RelationListItemModel(
                         id = "a_7",

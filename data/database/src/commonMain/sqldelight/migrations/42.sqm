@@ -1,0 +1,14 @@
+import kotlinx.datetime.Instant;
+
+CREATE TABLE relations_metadata (
+  entity_id TEXT PRIMARY KEY NOT NULL,
+  last_updated INTEGER AS Instant NOT NULL
+);
+
+-- 1745666336 -- CAST(strftime('%s', 'now') AS INTEGER);
+-- 1745666355206 -- kotlinx
+INSERT INTO relations_metadata (entity_id, last_updated)
+SELECT entity_id, CAST(strftime('%s', 'now') AS INTEGER) * 1000
+FROM mb_entity_has_relations;
+
+DROP TABLE mb_entity_has_relations;

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.place
 
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -19,6 +20,7 @@ class PlaceRepositoryImpl(
     override suspend fun lookupPlace(
         placeId: String,
         forceRefresh: Boolean,
+        lastUpdated: Instant,
     ): PlaceDetailsModel {
         if (forceRefresh) {
             delete(placeId)
@@ -39,8 +41,15 @@ class PlaceRepositoryImpl(
         }
 
         val placeMusicBrainzModel = lookupApi.lookupPlace(placeId)
-        cache(placeMusicBrainzModel)
-        return lookupPlace(placeId, false)
+        cache(
+            place = placeMusicBrainzModel,
+            lastUpdated = lastUpdated,
+        )
+        return lookupPlace(
+            placeId = placeId,
+            forceRefresh = false,
+            lastUpdated = lastUpdated,
+        )
     }
 
     private fun delete(id: String) {
@@ -51,7 +60,10 @@ class PlaceRepositoryImpl(
         }
     }
 
-    private fun cache(place: PlaceMusicBrainzNetworkModel) {
+    private fun cache(
+        place: PlaceMusicBrainzNetworkModel,
+        lastUpdated: Instant,
+    ) {
         placeDao.withTransaction {
             placeDao.insert(place)
             place.area?.let { areaMusicBrainzModel ->
@@ -66,6 +78,7 @@ class PlaceRepositoryImpl(
             relationRepository.insertAllUrlRelations(
                 entityId = place.id,
                 relationWithOrderList = relationWithOrderList,
+                lastUpdated = lastUpdated,
             )
         }
     }

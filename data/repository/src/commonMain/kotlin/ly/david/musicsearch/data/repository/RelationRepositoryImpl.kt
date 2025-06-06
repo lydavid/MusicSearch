@@ -1,18 +1,23 @@
 package ly.david.musicsearch.data.repository
 
 import androidx.paging.Pager
+import androidx.paging.TerminalSeparatorType
 import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.PagingData
+import app.cash.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUri
@@ -23,7 +28,7 @@ import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 
 class RelationRepositoryImpl(
     private val lookupApi: LookupApi,
-    private val entityHasRelationsDao: EntityHasRelationsDao,
+    private val relationsMetadataDao: RelationsMetadataDao,
     private val detailsMetadataDao: DetailsMetadataDao,
     private val relationDao: RelationDao,
 ) : RelationRepository {
@@ -31,15 +36,23 @@ class RelationRepositoryImpl(
     override fun insertAllUrlRelations(
         entityId: String,
         relationWithOrderList: List<RelationWithOrder>?,
+        lastUpdated: Instant,
     ) {
         relationDao.insertAll(relationWithOrderList)
-        detailsMetadataDao.upsert(entityId = entityId)
+
+        // TODO: move this to entity repository
+        //  and consider creating a base repository for them or interface
+        detailsMetadataDao.upsert(
+            entityId = entityId,
+            lastUpdated = lastUpdated,
+        )
     }
 
     override suspend fun insertAllRelations(
         entity: MusicBrainzEntity,
         entityId: String,
         relatedEntities: Set<MusicBrainzEntity>,
+        lastUpdated: Instant,
     ) {
         val relationMusicBrainzModels = lookupEntityWithRelations(
             entity = entity,
@@ -51,7 +64,10 @@ class RelationRepositoryImpl(
 
         // We need to mark because an entity may have no relationships,
         // which would cause us to keep trying to fetch it from remote
-        entityHasRelationsDao.markEntityHasRelationsStored(entityId)
+        relationsMetadataDao.upsert(
+            entityId = entityId,
+            lastUpdated = lastUpdated,
+        )
     }
 
     private suspend fun lookupEntityWithRelations(
@@ -154,7 +170,8 @@ class RelationRepositoryImpl(
         entityId: String,
         relatedEntities: Set<MusicBrainzEntity>,
         query: String,
-    ): Flow<PagingData<RelationListItemModel>> {
+        lastUpdated: Instant,
+    ): Flow<PagingData<ListItemModel>> {
         return Pager(
             config = CommonPagingConfig.pagingConfig,
             remoteMediator = LookupEntityRemoteMediator(
@@ -165,6 +182,7 @@ class RelationRepositoryImpl(
                         entityId = entityId,
                         relatedEntities = relatedEntities,
                         forceRefresh = forceRefresh,
+                        lastUpdated = lastUpdated,
                     )
                 },
                 deleteLocalEntity = {
@@ -182,10 +200,22 @@ class RelationRepositoryImpl(
                 )
             },
         ).flow
+            .map { pagingData ->
+                pagingData
+                    .insertSeparators(
+                        terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
+                    ) { before: RelationListItemModel?, after: RelationListItemModel? ->
+                        if (before != null && after == null) {
+                            LastUpdatedFooter(lastUpdated = before.lastUpdated ?: lastUpdated)
+                        } else {
+                            null
+                        }
+                    }
+            }
     }
 
     private fun hasRelationsBeenSavedFor(entityId: String): Boolean {
-        return entityHasRelationsDao.hasRelationsBeenSavedFor(
+        return relationsMetadataDao.hasRelationsBeenSavedFor(
             entityId = entityId,
         )
     }
@@ -195,6 +225,7 @@ class RelationRepositoryImpl(
         entityId: String,
         relatedEntities: Set<MusicBrainzEntity>,
         forceRefresh: Boolean,
+        lastUpdated: Instant,
     ) {
         if (!forceRefresh) return
 
@@ -202,6 +233,7 @@ class RelationRepositoryImpl(
             entity = entity,
             entityId = entityId,
             relatedEntities = relatedEntities,
+            lastUpdated = lastUpdated,
         )
     }
 
