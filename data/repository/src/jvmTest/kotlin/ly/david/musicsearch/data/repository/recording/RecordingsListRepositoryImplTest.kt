@@ -16,9 +16,9 @@ import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestRecordingRepository
 import ly.david.musicsearch.data.repository.helpers.TestRecordingsListRepository
@@ -26,10 +26,10 @@ import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -43,7 +43,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
 
     override val recordingDao: RecordingDao by inject()
     override val artistCreditDao: ArtistCreditDao by inject()
-    val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val visitedDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     private val collectionDao: CollectionDao by inject()

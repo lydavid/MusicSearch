@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.repository.release
 
+import androidx.paging.Pager
 import androidx.paging.TerminalSeparatorType
 import app.cash.paging.ExperimentalPagingApi
-import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import app.cash.paging.insertSeparators
 import app.cash.paging.map
@@ -25,6 +25,7 @@ import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.area.NonCountryAreaWithCode
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.getFormatsForDisplay
 import ly.david.musicsearch.shared.domain.getTracksForDisplay
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
@@ -32,7 +33,6 @@ import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toAreaListItemModel
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
-import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 
 class ReleaseRepositoryImpl(

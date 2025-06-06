@@ -11,9 +11,9 @@ import ly.david.data.test.budokanPlaceMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
@@ -29,13 +29,13 @@ import ly.david.musicsearch.data.repository.helpers.TestPlaceRepository
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
-import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -47,7 +47,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val visitedDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val placeDao: PlaceDao by inject()

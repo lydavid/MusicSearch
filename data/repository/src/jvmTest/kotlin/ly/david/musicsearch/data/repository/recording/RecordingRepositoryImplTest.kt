@@ -3,9 +3,9 @@ package ly.david.musicsearch.data.repository.recording
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
@@ -15,10 +15,10 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.helpers.TestRecordingRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -30,7 +30,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val visitedDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val recordingDao: RecordingDao by inject()

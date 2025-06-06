@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.domain.listitem
 
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.Relation
@@ -24,4 +25,5 @@ data class RelationListItemModel(
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val imageUrl: String? = null,
     val imageId: Long = 0L,
+    val lastUpdated: Instant? = null,
 ) : ListItemModel(), Relation, Visitable

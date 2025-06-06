@@ -84,10 +84,12 @@ SELECT
   `end`,
   `ended`,
   mi.thumbnail_url,
-  mi.id AS placeholderKey
+  mi.id AS placeholderKey,
+  relations_metadata.last_updated
 FROM relation
 LEFT JOIN details_metadata ON details_metadata.entity_id = linked_entity_id
 LEFT JOIN mbid_image mi ON mi.mbid = linked_entity_id
+LEFT JOIN relations_metadata ON relations_metadata.entity_id = relation.entity_id
 WHERE relation.entity_id = :entityId
 AND linked_entity IN :relatedEntities
 AND (

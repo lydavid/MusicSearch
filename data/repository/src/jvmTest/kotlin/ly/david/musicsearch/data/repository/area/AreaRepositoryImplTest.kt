@@ -1,15 +1,15 @@
 package ly.david.musicsearch.data.repository.area
 
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.data.database.dao.AreaDao
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
-import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
-import ly.david.musicsearch.data.database.dao.RelationDao
-import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.data.test.KoinTestRule
+import ly.david.musicsearch.data.database.dao.AreaDao
+import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
-import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
+import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -22,7 +22,7 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
     val koinTestRule = KoinTestRule()
 
     override val relationsMetadataDao: RelationsMetadataDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val areaDao: AreaDao by inject()
 

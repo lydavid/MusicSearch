@@ -1,11 +1,13 @@
 package ly.david.musicsearch.data.repository
 
 import androidx.paging.Pager
+import androidx.paging.TerminalSeparatorType
 import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.PagingData
+import app.cash.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -14,6 +16,8 @@ import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUri
@@ -41,6 +45,7 @@ class RelationRepositoryImpl(
         entity: MusicBrainzEntity,
         entityId: String,
         relatedEntities: Set<MusicBrainzEntity>,
+        now: Instant,
     ) {
         val relationMusicBrainzModels = lookupEntityWithRelations(
             entity = entity,
@@ -54,7 +59,7 @@ class RelationRepositoryImpl(
         // which would cause us to keep trying to fetch it from remote
         relationsMetadataDao.upsert(
             entityId = entityId,
-            lastUpdated = Clock.System.now(),
+            lastUpdated = now,
         )
     }
 
@@ -158,7 +163,8 @@ class RelationRepositoryImpl(
         entityId: String,
         relatedEntities: Set<MusicBrainzEntity>,
         query: String,
-    ): Flow<PagingData<RelationListItemModel>> {
+        now: Instant,
+    ): Flow<PagingData<ListItemModel>> {
         return Pager(
             config = CommonPagingConfig.pagingConfig,
             remoteMediator = LookupEntityRemoteMediator(
@@ -169,6 +175,7 @@ class RelationRepositoryImpl(
                         entityId = entityId,
                         relatedEntities = relatedEntities,
                         forceRefresh = forceRefresh,
+                        now = now,
                     )
                 },
                 deleteLocalEntity = {
@@ -186,6 +193,18 @@ class RelationRepositoryImpl(
                 )
             },
         ).flow
+            .map { pagingData ->
+                pagingData
+                    .insertSeparators(
+                        terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
+                    ) { before: RelationListItemModel?, after: RelationListItemModel? ->
+                        if (before != null && after == null) {
+                            LastUpdatedFooter(lastUpdated = before.lastUpdated ?: now)
+                        } else {
+                            null
+                        }
+                    }
+            }
     }
 
     private fun hasRelationsBeenSavedFor(entityId: String): Boolean {
@@ -199,6 +218,7 @@ class RelationRepositoryImpl(
         entityId: String,
         relatedEntities: Set<MusicBrainzEntity>,
         forceRefresh: Boolean,
+        now: Instant,
     ) {
         if (!forceRefresh) return
 
@@ -206,6 +226,7 @@ class RelationRepositoryImpl(
             entity = entity,
             entityId = entityId,
             relatedEntities = relatedEntities,
+            now = now,
         )
     }
 

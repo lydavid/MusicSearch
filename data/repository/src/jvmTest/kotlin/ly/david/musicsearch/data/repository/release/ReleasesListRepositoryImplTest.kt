@@ -97,7 +97,7 @@ class ReleasesListRepositoryImplTest :
     override val artistCreditDao: ArtistCreditDao by inject()
     override val artistDao: ArtistDao by inject()
     override val relationsMetadataDao: RelationsMetadataDao by inject()
-    override val visitedDao: DetailsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val recordingDao: RecordingDao by inject()
     override val areaDao: AreaDao by inject()
