@@ -484,6 +484,7 @@ private val country = AreaDetailsModel(
     name = "Canada",
     type = "Country",
     countryCode = "CA",
+    lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
     urls = listOf(
         RelationListItemModel(
             id = "1",
@@ -532,6 +533,9 @@ private val detailsUiState = DetailsUiState(
         relationsUiState = RelationsUiState(
             pagingDataFlow = canadianRelations,
         ),
+    ),
+    detailsTabUiState = DetailsTabUiState(
+        now = Instant.parse("2025-06-05T20:42:20Z"),
     ),
 )
 

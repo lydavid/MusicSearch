@@ -3,13 +3,14 @@ package ly.david.musicsearch.shared.feature.details.release
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
+import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
-import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
@@ -57,6 +58,7 @@ private val release = ReleaseDetailsModel(
         ),
     ),
     releaseLength = 2836000,
+    lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
     urls = listOf(
         RelationListItemModel(
             id = "1",
@@ -84,6 +86,7 @@ internal fun PreviewReleaseDetailsUi() {
                 release = release,
                 detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 11,
+                    now = Instant.parse("2025-06-05T19:42:20Z"),
                 ),
             )
         }
@@ -101,6 +104,7 @@ internal fun PreviewReleaseDetailsUiCollapsed() {
                     numberOfImages = 11,
                     isReleaseEventsCollapsed = true,
                     isExternalLinksCollapsed = true,
+                    now = Instant.parse("2025-06-05T19:42:20Z"),
                 ),
             )
         }

@@ -3,9 +3,10 @@ package ly.david.musicsearch.shared.feature.details.releasegroup
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlinx.datetime.Instant
+import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
@@ -15,6 +16,7 @@ private val releaseGroup = ReleaseGroupDetailsModel(
     name = "Under Pressure",
     primaryType = "Single",
     firstReleaseDate = "1981-10",
+    lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
     wikipediaExtract = WikipediaExtract(
         extract = "\"Under Pressure\" is a song by the British rock band Queen and " +
             "singer David Bowie. Originally released as a single in October 1981, " +
@@ -58,6 +60,7 @@ internal fun PreviewReleaseGroupDetailsUi() {
                 releaseGroup = releaseGroup,
                 detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 1,
+                    now = Instant.parse("2025-06-05T19:42:20Z"),
                 ),
             )
         }
@@ -73,6 +76,7 @@ internal fun PreviewReleaseGroupDetailsUiCollapsed() {
                 releaseGroup = releaseGroup,
                 detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 1,
+                    now = Instant.parse("2025-06-05T19:42:20Z"),
                     isExternalLinksCollapsed = true,
                 ),
             )
