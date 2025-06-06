@@ -99,6 +99,7 @@ internal fun PreviewArtistDetailsUiWithWikipediaUrlButNoExtract() {
                     wikipediaExtract = WikipediaExtract(
                         wikipediaUrl = "https://en.wikipedia.org/wiki/Various_artists",
                     ),
+                    lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
                     urls = listOf(
                         RelationListItemModel(
                             id = "1",
