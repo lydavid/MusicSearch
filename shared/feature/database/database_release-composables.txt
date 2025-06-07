@@ -12,7 +12,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DatabaseU
   stable onDestinationClick: Function1<Screen, Unit>
   stable modifier: Modifier? = @static Companion
 )
-fun present(
+scheme("[presenter]") fun present(
   stable <this>: AllEntitiesPresenter
 ): AllEntitiesUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AllEntitiesUi(

@@ -1,6 +1,6 @@
 stable class DatabasePresenter {
   stable val navigator: Navigator
-  unstable val imageMetadataRepository: ImageMetadataRepository
+  unstable val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository
   unstable val areasListRepository: AreasListRepository
   unstable val artistsListRepository: ArtistsListRepository
   unstable val eventsListRepository: EventsListRepository
@@ -29,18 +29,7 @@ stable class GoToScreen {
 stable class AllEntitiesPresenter {
   stable val screen: AllEntitiesScreen
   stable val navigator: Navigator
-  stable val areasListPresenter: AreasListPresenter
-  stable val artistsListPresenter: ArtistsListPresenter
-  stable val eventsListPresenter: EventsListPresenter
-  stable val genresListPresenter: GenresListPresenter
-  stable val instrumentsListPresenter: InstrumentsListPresenter
-  stable val labelsListPresenter: LabelsListPresenter
-  stable val placesListPresenter: PlacesListPresenter
-  stable val recordingsListPresenter: RecordingsListPresenter
-  stable val releasesListPresenter: ReleasesListPresenter
-  stable val releaseGroupsListPresenter: ReleaseGroupsListPresenter
-  stable val seriesListPresenter: SeriesListPresenter
-  stable val worksListPresenter: WorksListPresenter
+  stable val entitiesListPresenter: EntitiesListPresenter
   <runtime stability> = Stable
 }
 stable class AllEntitiesUiState {
@@ -48,18 +37,7 @@ stable class AllEntitiesUiState {
   stable val entity: MusicBrainzEntity
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val topAppBarEditState: TopAppBarEditState
-  stable val areasListUiState: AreasListUiState
-  stable val artistsListUiState: ArtistsListUiState
-  stable val eventsListUiState: EventsListUiState
-  stable val genresListUiState: GenresListUiState
-  stable val instrumentsListUiState: InstrumentsListUiState
-  stable val labelsListUiState: LabelsListUiState
-  stable val placesListUiState: PlacesListUiState
-  stable val recordingsListUiState: RecordingsListUiState
-  stable val releasesListUiState: ReleasesListUiState
-  stable val releaseGroupsListUiState: ReleaseGroupsListUiState
-  stable val seriesListUiState: SeriesListUiState
-  stable val worksListUiState: WorksListUiState
+  stable val entitiesListUiState: EntitiesListUiState
   stable val eventSink: Function1<AllEntitiesUiEvent, Unit>
 }
 stable class NavigateUp {

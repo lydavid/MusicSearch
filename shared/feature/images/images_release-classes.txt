@@ -2,7 +2,7 @@ stable class ImagesPresenter {
   stable val screen: CoverArtsScreen
   stable val navigator: Navigator
   unstable val appPreferences: AppPreferences
-  unstable val imageMetadataRepository: ImageMetadataRepository
+  unstable val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository
   runtime val getMusicBrainzCoverArtUrl: GetMusicBrainzCoverArtUrl
   <runtime stability> = Stable
 }

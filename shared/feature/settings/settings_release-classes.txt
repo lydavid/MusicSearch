@@ -48,7 +48,8 @@ stable class SettingsUiState {
   stable val isCrashReportingEnabled: Boolean
   stable val loginState: LoginUiState
   stable val snackbarMessage: String?
-  stable val databaseVersion: String
+  stable val appDatabaseVersion: String
+  stable val sqliteVersion: String
   stable val isDeveloperMode: Boolean
   stable val eventSink: Function1<SettingsUiEvent, Unit>
   <runtime stability> = Stable
