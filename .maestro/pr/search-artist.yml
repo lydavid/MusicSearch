@@ -56,6 +56,11 @@ appId: io.github.lydavid.musicsearch.debug
 
 - tapOn: "Database"
 - tapOn: "History"
+- tapOn: "Filter"
+- inputText: "zutomayo" # aliases are currently not stored
+- assertNotVisible: "ずっと真夜中でいいのに。 (Japanese pop band)"
+- tapOn: Clear filter text
+- inputText: "zutto mayo"
 - tapOn: "ずっと真夜中でいいのに。 (Japanese pop band)"
 
 
