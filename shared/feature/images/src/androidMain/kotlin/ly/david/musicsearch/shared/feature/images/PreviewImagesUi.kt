@@ -9,7 +9,7 @@ import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
-import ly.david.musicsearch.ui.core.preview.DefaultPreviews
+import ly.david.musicsearch.ui.common.preview.DefaultPreviews
 
 val images = MutableStateFlow(
     PagingData.from(

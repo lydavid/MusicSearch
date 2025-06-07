@@ -53,7 +53,6 @@ kotlin {
             dependencies {
                 implementation(projects.android.feature.nowplaying)
                 implementation(projects.android.feature.spotify)
-                implementation(projects.ui.core)
                 implementation(compose.preview)
             }
         }

@@ -7,7 +7,7 @@ import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
 @Composable
-private fun FooterLoadingIndicatorPreview() {
+internal fun PreviewFooterLoadingIndicator() {
     PreviewTheme {
         Surface {
             FooterLoadingIndicator()
