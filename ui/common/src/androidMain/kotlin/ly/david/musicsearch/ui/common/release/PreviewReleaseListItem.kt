@@ -3,6 +3,7 @@ package ly.david.musicsearch.ui.common.release
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 
 @PreviewLightDark
@@ -185,6 +186,22 @@ internal fun PreviewReleaseListItemVisited() {
                 formattedFormats = "2×CD + Blu-ray",
                 formattedTracks = "15 + 8 + 24",
                 visited = true,
+            ),
+            showMoreInfo = true,
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewReleaseListItemWithCoverArt() {
+    InitializeFakeImageLoader()
+    PreviewWithSharedElementTransition {
+        ReleaseListItem(
+            release = ReleaseListItemModel(
+                id = "1",
+                name = "Release title",
+                imageUrl = "https://www.example.com/image.jpg",
             ),
             showMoreInfo = true,
         )

@@ -45,6 +45,7 @@ kotlin {
         val androidMain by getting {
             dependsOn(jvmCommon)
             dependencies {
+                implementation(projects.test.image)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.coil.network.okhttp)
             }

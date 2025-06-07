@@ -1,6 +1,5 @@
 package ly.david.musicsearch.ui.common.release
 
-import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 
@@ -86,14 +85,7 @@ class ReleaseListItemTest : ScreenshotTest() {
     @Test
     fun withCoverArt() {
         snapshot {
-            ReleaseListItem(
-                release = ReleaseListItemModel(
-                    id = "1",
-                    name = "Release title",
-                    imageUrl = "https://www.example.com/image.jpg",
-                ),
-                showMoreInfo = true,
-            )
+            PreviewReleaseListItemWithCoverArt()
         }
     }
 }

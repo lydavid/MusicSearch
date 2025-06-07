@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
+import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 
 @PreviewLightDark
@@ -89,6 +90,22 @@ internal fun PreviewArtistListItemSelected() {
                 sortName = "sort name should not be seen",
             ),
             isSelected = true,
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewArtistListItemWithCoverArt() {
+    InitializeFakeImageLoader()
+    PreviewWithSharedElementTransition {
+        ArtistListItem(
+            artist = ArtistListItemModel(
+                id = "1",
+                name = "Artist name",
+                sortName = "",
+                imageUrl = "https://www.example.com/image.jpg",
+            ),
         )
     }
 }
