@@ -30,12 +30,9 @@ class ImageMetadataRepositoryImpl(
     ): ImageMetadataWithCount {
         return when (entity) {
             MusicBrainzEntity.ARTIST -> {
-                ImageMetadataWithCount(
-                    imageMetadata = artistImageRepository.getArtistImageMetadata(
-                        detailsModel = detailsModel,
-                        forceRefresh = forceRefresh,
-                    ),
-                    count = 1,
+                artistImageRepository.getArtistImageMetadata(
+                    detailsModel = detailsModel,
+                    forceRefresh = forceRefresh,
                 )
             }
 

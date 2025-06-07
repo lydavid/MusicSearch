@@ -23,7 +23,7 @@ class ArtistImageRepositoryImpl(
     override suspend fun getArtistImageMetadata(
         detailsModel: MusicBrainzDetailsModel,
         forceRefresh: Boolean,
-    ): ImageMetadata {
+    ): ImageMetadataWithCount {
         if (forceRefresh) {
             imageUrlDao.deleteAllImageMetadtaById(detailsModel.id)
         }
@@ -34,7 +34,7 @@ class ArtistImageRepositoryImpl(
             imageUrlDao.getFrontImageMetadata(detailsModel.id) ?: ImageMetadataWithCount()
         } else {
             cachedImageUrl
-        }.imageMetadata
+        }
     }
 
     private suspend fun saveArtistImageMetadataFromNetwork(
