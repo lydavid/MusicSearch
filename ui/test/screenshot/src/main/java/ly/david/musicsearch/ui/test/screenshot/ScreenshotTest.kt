@@ -1,6 +1,5 @@
 package ly.david.musicsearch.ui.test.screenshot
 
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
@@ -16,7 +15,6 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import ly.david.musicsearch.test.image.getFakeImageLoader
-import ly.david.musicsearch.ui.core.theme.PreviewTheme
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -52,14 +50,7 @@ abstract class ScreenshotTest(
 
     protected fun snapshot(content: @Composable () -> Unit) {
         paparazzi.snapshot {
-            // TODO: PreviewTheme doesn't need to be here if we're passing it in
-            //  then move PreviewTheme to ui:common
-            //  and consider merging PreviewWithSharedElementTransition
-            PreviewTheme {
-                Surface {
-                    content()
-                }
-            }
+            content()
         }
     }
 
