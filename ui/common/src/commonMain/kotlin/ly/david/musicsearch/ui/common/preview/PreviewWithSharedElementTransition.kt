@@ -18,4 +18,3 @@ fun PreviewWithSharedElementTransition(content: @Composable () -> Unit) {
         }
     }
 }
-
