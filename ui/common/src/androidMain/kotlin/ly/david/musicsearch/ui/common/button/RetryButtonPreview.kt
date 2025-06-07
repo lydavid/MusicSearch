@@ -7,7 +7,7 @@ import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 @PreviewLightDark
 @Composable
-private fun Preview() {
+internal fun PreviewRetryButton() {
     PreviewTheme {
         Surface {
             RetryButton()

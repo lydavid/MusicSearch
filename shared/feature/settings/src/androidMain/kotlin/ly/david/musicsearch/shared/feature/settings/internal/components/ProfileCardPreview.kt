@@ -2,11 +2,10 @@ package ly.david.musicsearch.shared.feature.settings.internal.components
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
-import ly.david.musicsearch.ui.core.preview.DefaultPreviews
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewProfileCardLoggedOut() {
     PreviewTheme {
@@ -19,7 +18,7 @@ internal fun PreviewProfileCardLoggedOut() {
     }
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewProfileCardLoggedIn() {
     PreviewTheme {
@@ -32,7 +31,7 @@ internal fun PreviewProfileCardLoggedIn() {
     }
 }
 
-@DefaultPreviews
+@PreviewLightDark
 @Composable
 internal fun PreviewProfileCardLoggedInWaitingForUsername() {
     PreviewTheme {
