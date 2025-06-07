@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 
 internal fun mapToReleaseGroupListItemModel(
@@ -22,6 +23,6 @@ internal fun mapToReleaseGroupListItemModel(
     secondaryTypes = secondaryTypes.orEmpty(),
     formattedArtistCredits = formattedArtistCreditNames,
     imageUrl = thumbnailUrl,
-    imageId = placeholderKey ?: 0L,
+    imageId = placeholderKey?.let { ImageId(it) },
     visited = visited == true,
 )

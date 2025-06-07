@@ -5,6 +5,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
@@ -14,14 +15,14 @@ val images = MutableStateFlow(
     PagingData.from(
         listOf(
             ImageMetadata(
-                databaseId = 1,
+                imageId = ImageId(1),
                 thumbnailUrl = "https://www.example.com/blue.jpg",
                 largeUrl = "https://www.example.com/blue.jpg",
                 types = persistentListOf("Front"),
                 comment = "",
             ),
             ImageMetadata(
-                databaseId = 2,
+                imageId = ImageId(2),
                 thumbnailUrl = "https://www.example.com/red.jpg",
                 largeUrl = "https://www.example.com/red.jpg",
                 types = persistentListOf("Back"),

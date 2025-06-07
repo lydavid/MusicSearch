@@ -81,7 +81,7 @@ fun PlaceListItem(
         leadingContent = {
             ThumbnailImage(
                 url = "",
-                placeholderKey = "",
+                placeholderKey = null,
                 placeholderIcon = MusicBrainzEntity.PLACE.getIcon(),
                 modifier = Modifier
                     .clickable {

@@ -61,7 +61,7 @@ fun SeriesListItem(
         leadingContent = {
             ThumbnailImage(
                 url = "",
-                placeholderKey = "",
+                placeholderKey = null,
                 placeholderIcon = MusicBrainzEntity.SERIES.getIcon(),
                 modifier = Modifier
                     .clickable {

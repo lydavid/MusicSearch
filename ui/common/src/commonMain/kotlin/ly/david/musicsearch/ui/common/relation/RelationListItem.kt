@@ -40,7 +40,7 @@ fun RelationListItem(
         leadingContent = {
             ThumbnailImage(
                 url = relation.imageUrl.orEmpty(),
-                placeholderKey = relation.imageId.toString(),
+                placeholderKey = relation.imageId,
                 placeholderIcon = relation.linkedEntity.getIcon(),
                 clipCircle = relation.linkedEntity == MusicBrainzEntity.ARTIST,
             )

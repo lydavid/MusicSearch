@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.domain.listitem
 
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.Artist
+import ly.david.musicsearch.shared.domain.image.ImageId
 
 data class ArtistListItemModel(
     override val id: String,
@@ -13,6 +14,6 @@ data class ArtistListItemModel(
     val countryCode: String? = null,
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val imageUrl: String? = null,
-    val imageId: Long = 0L,
+    val imageId: ImageId? = null,
     override val visited: Boolean = false,
 ) : ListItemModel(), Artist, Visitable

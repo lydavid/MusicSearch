@@ -15,6 +15,7 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.slack.circuit.sharedelements.SharedElementTransitionScope
 import ly.david.musicsearch.shared.domain.common.useHttps
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.ui.common.listitem.ListItemSharedTransitionKey
 import net.engawapg.lib.zoomable.rememberZoomState
 import net.engawapg.lib.zoomable.zoomable
@@ -26,7 +27,7 @@ import net.engawapg.lib.zoomable.zoomable
 @Composable
 fun LargeImage(
     url: String,
-    placeholderKey: String,
+    placeholderKey: ImageId?,
     modifier: Modifier = Modifier,
     isCompact: Boolean = true,
     zoomEnabled: Boolean = false,
@@ -45,18 +46,22 @@ fun LargeImage(
                     Modifier.fillMaxHeight()
                 },
             )
-        val modifierWithSharedBounds = imageModifier.sharedBounds(
-            sharedContentState = rememberSharedContentState(
-                ListItemSharedTransitionKey(
-                    id = placeholderKey,
-                    type = ListItemSharedTransitionKey.ElementType.Image,
+        val modifierWithSharedBounds = if (placeholderKey == null) {
+            imageModifier
+        } else {
+            imageModifier.sharedBounds(
+                sharedContentState = rememberSharedContentState(
+                    ListItemSharedTransitionKey(
+                        imageId = placeholderKey,
+                        type = ListItemSharedTransitionKey.ElementType.Image,
+                    ),
                 ),
-            ),
-            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-            animatedVisibilityScope = requireAnimatedScope(
-                SharedElementTransitionScope.AnimatedScope.Navigation,
-            ),
-        )
+                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                animatedVisibilityScope = requireAnimatedScope(
+                    SharedElementTransitionScope.AnimatedScope.Navigation,
+                ),
+            )
+        }
         val zoomableImageModifier = modifierWithSharedBounds
             .zoomable(
                 zoomState = zoomState,
@@ -92,7 +97,7 @@ fun LargeImage(
                 model = ImageRequest.Builder(LocalPlatformContext.current)
                     .data(url.useHttps())
                     .crossfade(true)
-                    .placeholderMemoryCacheKey(placeholderKey)
+                    .placeholderMemoryCacheKey(placeholderKey?.value?.toString().orEmpty())
                     .build(),
                 contentDescription = null,
                 contentScale = contentScale,

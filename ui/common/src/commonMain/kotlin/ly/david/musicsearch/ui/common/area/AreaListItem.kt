@@ -42,7 +42,7 @@ fun AreaListItem(
             {
                 ThumbnailImage(
                     url = "",
-                    placeholderKey = "",
+                    placeholderKey = null,
                     placeholderIcon = MusicBrainzEntity.AREA.getIcon(),
                     modifier = Modifier
                         .clickable {

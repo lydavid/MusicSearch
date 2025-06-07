@@ -42,7 +42,6 @@ val weirdAlGreatestHitsReleaseListItemModel = ReleaseListItemModel(
     coverArtArchive = CoverArtArchiveUiModel(count = 2),
     textRepresentation = TextRepresentationUiModel(script = "Latn", language = "eng"),
     imageUrl = null,
-    imageId = 0,
     formattedFormats = null,
     formattedTracks = null,
     formattedArtistCredits = "“Weird Al” Yankovic",

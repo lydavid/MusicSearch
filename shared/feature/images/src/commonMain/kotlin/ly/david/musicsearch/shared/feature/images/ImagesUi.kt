@@ -240,7 +240,7 @@ private fun CoverArtsGrid(
     ) {
         items(
             count = imageMetadataList.itemCount,
-            key = imageMetadataList.itemKey { it.databaseId },
+            key = imageMetadataList.itemKey { it.imageId.value },
             contentType = { ImageMetadata() },
         ) { index ->
             imageMetadataList[index]?.let { imageMetadata ->
@@ -248,7 +248,7 @@ private fun CoverArtsGrid(
                 // the placeholder key must not depend on the index of the initial set of images
                 ThumbnailImage(
                     url = imageMetadata.thumbnailUrl,
-                    placeholderKey = imageMetadata.databaseId.toString(),
+                    placeholderKey = imageMetadata.imageId,
                     placeholderIcon = imageMetadata.entity?.getIcon(),
                     size = imageSize,
                     modifier = Modifier.clickable {
@@ -328,7 +328,7 @@ private fun CoverArtsPager(
                 ) {
                     LargeImage(
                         url = imageMetadata.largeUrl,
-                        placeholderKey = imageMetadata.databaseId.toString(),
+                        placeholderKey = imageMetadata.imageId,
                         isCompact = isCompact,
                         zoomEnabled = true,
                     )

@@ -6,7 +6,7 @@ import ly.david.musicsearch.shared.domain.NameWithDisambiguation
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 data class ImageMetadata(
-    val databaseId: Long = 0L,
+    val imageId: ImageId = ImageId(0L),
     val thumbnailUrl: String = "",
     val largeUrl: String = "",
     val types: ImmutableList<String> = persistentListOf(),
@@ -16,8 +16,3 @@ data class ImageMetadata(
     override val disambiguation: String? = null,
     val entity: MusicBrainzEntity? = null,
 ) : NameWithDisambiguation
-
-data class ImageMetadataWithCount(
-    val imageMetadata: ImageMetadata = ImageMetadata(),
-    val count: Int = 0,
-)

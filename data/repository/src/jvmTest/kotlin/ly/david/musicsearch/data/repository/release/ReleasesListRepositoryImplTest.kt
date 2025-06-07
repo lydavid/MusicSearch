@@ -59,6 +59,7 @@ import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
@@ -176,7 +177,7 @@ class ReleasesListRepositoryImplTest :
                         catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
                         textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-                        imageId = 1,
+                        imageId = ImageId(1L),
                     ),
                 ),
                 releases,
@@ -511,7 +512,7 @@ class ReleasesListRepositoryImplTest :
                     expectedResult = listOf(
                         utaNoUtaReleaseListItemModel.copy(
                             releaseCountryCount = 1,
-                            imageId = 1,
+                            imageId = ImageId(1L),
                             imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                         ),
                         weirdAlGreatestHitsReleaseListItemModel.copy(
@@ -542,7 +543,7 @@ class ReleasesListRepositoryImplTest :
                 listOf(
                     utaNoUtaReleaseListItemModel.copy(
                         releaseCountryCount = 1,
-                        imageId = 1,
+                        imageId = ImageId(1L),
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                     ),
                     weirdAlGreatestHitsReleaseListItemModel.copy(
@@ -572,7 +573,7 @@ class ReleasesListRepositoryImplTest :
                 listOf(
                     utaNoUtaReleaseListItemModel.copy(
                         releaseCountryCount = 1,
-                        imageId = 1,
+                        imageId = ImageId(1L),
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                         catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
                     ),
@@ -623,7 +624,7 @@ class ReleasesListRepositoryImplTest :
                     expectedResult = listOf(
                         utaNoUtaReleaseListItemModel.copy(
                             releaseCountryCount = 1,
-                            imageId = 1,
+                            imageId = ImageId(1L),
                             imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                         ),
                         weirdAlGreatestHitsReleaseListItemModel.copy(
@@ -656,7 +657,7 @@ class ReleasesListRepositoryImplTest :
                 listOf(
                     utaNoUtaReleaseListItemModel.copy(
                         releaseCountryCount = 1,
-                        imageId = 1,
+                        imageId = ImageId(1L),
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                         catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
                     ),
@@ -679,7 +680,7 @@ class ReleasesListRepositoryImplTest :
                 listOf(
                     utaNoUtaReleaseListItemModel.copy(
                         releaseCountryCount = 1,
-                        imageId = 1,
+                        imageId = ImageId(1L),
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                     ),
                 ),
@@ -700,7 +701,7 @@ class ReleasesListRepositoryImplTest :
                 listOf(
                     utaNoUtaReleaseListItemModel.copy(
                         releaseCountryCount = 1,
-                        imageId = 1,
+                        imageId = ImageId(1L),
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                         catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
                     ),

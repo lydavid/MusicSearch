@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.domain.listitem
 
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.Release
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
@@ -23,7 +24,7 @@ data class ReleaseListItemModel(
     val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
     val textRepresentation: TextRepresentationUiModel? = TextRepresentationUiModel(),
     val imageUrl: String? = null,
-    val imageId: Long = 0L,
+    val imageId: ImageId? = null,
 
     val formattedFormats: String? = null,
     val formattedTracks: String? = null,

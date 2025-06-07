@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
@@ -48,7 +49,7 @@ internal fun mapToReleaseListItemModel(
     ),
     formattedArtistCredits = formattedArtistCreditNames,
     imageUrl = thumbnailUrl,
-    imageId = placeholderKey ?: 0L,
+    imageId = placeholderKey?.let { ImageId(it) },
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited == true,
 )
@@ -101,7 +102,7 @@ internal fun mapToReleaseListItemModel(
     catalogNumbers = catalogNumber,
     formattedArtistCredits = formattedArtistCreditNames,
     imageUrl = thumbnailUrl,
-    imageId = placeholderKey ?: 0L,
+    imageId = placeholderKey?.let { ImageId(it) },
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited == true,
 )

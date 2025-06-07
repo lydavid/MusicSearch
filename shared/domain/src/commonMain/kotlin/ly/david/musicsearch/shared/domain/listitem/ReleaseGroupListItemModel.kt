@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.domain.listitem
 
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroup
 
 data class ReleaseGroupListItemModel(
@@ -11,6 +12,6 @@ data class ReleaseGroupListItemModel(
     override val secondaryTypes: List<String>? = listOf(),
     val formattedArtistCredits: String? = null,
     val imageUrl: String? = null,
-    val imageId: Long = 0L,
+    val imageId: ImageId? = null,
     override val visited: Boolean = false,
 ) : ListItemModel(), ReleaseGroup, Visitable

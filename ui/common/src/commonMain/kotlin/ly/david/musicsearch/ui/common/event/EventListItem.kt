@@ -105,7 +105,7 @@ fun EventListItem(
         leadingContent = {
             ThumbnailImage(
                 url = "",
-                placeholderKey = "",
+                placeholderKey = null,
                 placeholderIcon = MusicBrainzEntity.EVENT.getIcon(),
                 modifier = Modifier
                     .clickable {

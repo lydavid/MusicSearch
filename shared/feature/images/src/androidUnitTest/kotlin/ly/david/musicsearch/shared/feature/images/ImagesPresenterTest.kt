@@ -9,10 +9,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.preferences.NoOpAppPreferences
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
-import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -97,7 +98,7 @@ class ImagesPresenterTest {
         val presenter = createPresenter(
             imageMetadataList = listOf(
                 ImageMetadata(
-                    databaseId = 1,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "a",
                     largeUrl = "b",
                 ),
@@ -110,7 +111,7 @@ class ImagesPresenterTest {
             assertEquals(
                 listOf(
                     ImageMetadata(
-                        databaseId = 1,
+                        imageId = ImageId(1L),
                         thumbnailUrl = "a",
                         largeUrl = "b",
                     ),
@@ -132,7 +133,7 @@ class ImagesPresenterTest {
             state = awaitItem()
             assertEquals(
                 ImageMetadata(
-                    databaseId = 1,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "a",
                     largeUrl = "b",
                 ),
@@ -147,7 +148,7 @@ class ImagesPresenterTest {
         val presenter = createPresenter(
             imageMetadataList = listOf(
                 ImageMetadata(
-                    databaseId = 1,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "a",
                     largeUrl = "b",
                     types = persistentListOf("Booklet"),
@@ -162,7 +163,7 @@ class ImagesPresenterTest {
             assertEquals(
                 listOf(
                     ImageMetadata(
-                        databaseId = 1,
+                        imageId = ImageId(1L),
                         thumbnailUrl = "a",
                         largeUrl = "b",
                         types = persistentListOf("Booklet"),
@@ -187,7 +188,7 @@ class ImagesPresenterTest {
             state = awaitItem()
             assertEquals(
                 ImageMetadata(
-                    databaseId = 1,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "a",
                     largeUrl = "b",
                     types = persistentListOf("Booklet"),
@@ -208,7 +209,7 @@ class ImagesPresenterTest {
         val presenter = createPresenter(
             imageMetadataList = listOf(
                 ImageMetadata(
-                    databaseId = 1,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "a",
                     largeUrl = "b",
                     types = persistentListOf("Booklet"),
@@ -226,7 +227,7 @@ class ImagesPresenterTest {
             assertEquals(
                 listOf(
                     ImageMetadata(
-                        databaseId = 1,
+                        imageId = ImageId(1L),
                         thumbnailUrl = "a",
                         largeUrl = "b",
                         types = persistentListOf("Booklet"),
@@ -254,7 +255,7 @@ class ImagesPresenterTest {
             state = awaitItem()
             assertEquals(
                 ImageMetadata(
-                    databaseId = 1,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "a",
                     largeUrl = "b",
                     types = persistentListOf("Booklet"),
@@ -278,7 +279,7 @@ class ImagesPresenterTest {
         val presenter = createPresenter(
             imageMetadataList = listOf(
                 ImageMetadata(
-                    databaseId = 1,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "a",
                     largeUrl = "b",
                     types = persistentListOf("Booklet"),
@@ -288,7 +289,7 @@ class ImagesPresenterTest {
                     entity = MusicBrainzEntity.RELEASE,
                 ),
                 ImageMetadata(
-                    databaseId = 2,
+                    imageId = ImageId(2L),
                     thumbnailUrl = "a",
                     largeUrl = "b",
                     mbid = "c",
@@ -296,7 +297,7 @@ class ImagesPresenterTest {
                     entity = MusicBrainzEntity.RELEASE_GROUP,
                 ),
                 ImageMetadata(
-                    databaseId = 3,
+                    imageId = ImageId(3L),
                     thumbnailUrl = "a",
                     largeUrl = "b",
                     mbid = "c",
@@ -312,7 +313,7 @@ class ImagesPresenterTest {
             assertEquals(
                 listOf(
                     ImageMetadata(
-                        databaseId = 1,
+                        imageId = ImageId(1L),
                         thumbnailUrl = "a",
                         largeUrl = "b",
                         types = persistentListOf("Booklet"),
@@ -322,7 +323,7 @@ class ImagesPresenterTest {
                         entity = MusicBrainzEntity.RELEASE,
                     ),
                     ImageMetadata(
-                        databaseId = 2,
+                        imageId = ImageId(2L),
                         thumbnailUrl = "a",
                         largeUrl = "b",
                         mbid = "c",
@@ -330,7 +331,7 @@ class ImagesPresenterTest {
                         entity = MusicBrainzEntity.RELEASE_GROUP,
                     ),
                     ImageMetadata(
-                        databaseId = 3,
+                        imageId = ImageId(3L),
                         thumbnailUrl = "a",
                         largeUrl = "b",
                         mbid = "c",
@@ -356,7 +357,7 @@ class ImagesPresenterTest {
             state = awaitItem()
             assertEquals(
                 ImageMetadata(
-                    databaseId = 1,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "a",
                     largeUrl = "b",
                     types = persistentListOf("Booklet"),
@@ -383,7 +384,7 @@ class ImagesPresenterTest {
             assertEquals(1, state.selectedImageIndex)
             assertEquals(
                 ImageMetadata(
-                    databaseId = 2,
+                    imageId = ImageId(2L),
                     thumbnailUrl = "a",
                     largeUrl = "b",
                     mbid = "c",
@@ -408,7 +409,7 @@ class ImagesPresenterTest {
             assertEquals(2, state.selectedImageIndex)
             assertEquals(
                 ImageMetadata(
-                    databaseId = 3,
+                    imageId = ImageId(3L),
                     thumbnailUrl = "a",
                     largeUrl = "b",
                     mbid = "c",

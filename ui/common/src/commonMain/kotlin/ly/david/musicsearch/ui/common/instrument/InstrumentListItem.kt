@@ -70,7 +70,7 @@ fun InstrumentListItem(
         leadingContent = {
             ThumbnailImage(
                 url = "",
-                placeholderKey = "",
+                placeholderKey = null,
                 placeholderIcon = MusicBrainzEntity.INSTRUMENT.getIcon(),
                 modifier = Modifier
                     .clickable {

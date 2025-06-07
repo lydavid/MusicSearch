@@ -10,6 +10,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
@@ -125,7 +126,7 @@ private fun mapToImageMetadata(
     types: ImmutableList<String>?,
     comment: String?,
 ) = ImageMetadata(
-    databaseId = id,
+    imageId = ImageId(id),
     thumbnailUrl = thumbnailUrl,
     largeUrl = largeUrl,
     types = types ?: persistentListOf(),
@@ -141,7 +142,7 @@ private fun mapToImageMetadataWithCount(
     count: Long,
 ) = ImageMetadataWithCount(
     imageMetadata = ImageMetadata(
-        databaseId = id,
+        imageId = ImageId(id),
         thumbnailUrl = thumbnailUrl,
         largeUrl = largeUrl,
         types = types ?: persistentListOf(),
@@ -161,7 +162,7 @@ private fun mapToImageMetadata(
     disambiguation: String? = null,
     entity: String? = null,
 ) = ImageMetadata(
-    databaseId = id,
+    imageId = ImageId(id),
     thumbnailUrl = thumbnailUrl,
     largeUrl = largeUrl,
     types = types ?: persistentListOf(),

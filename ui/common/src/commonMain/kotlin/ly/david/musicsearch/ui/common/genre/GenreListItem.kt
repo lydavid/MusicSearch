@@ -40,7 +40,7 @@ fun GenreListItem(
         leadingContent = {
             ThumbnailImage(
                 url = "",
-                placeholderKey = "",
+                placeholderKey = null,
                 placeholderIcon = MusicBrainzEntity.GENRE.getIcon(),
                 modifier = Modifier
                     .clickable {

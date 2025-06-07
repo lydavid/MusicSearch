@@ -36,6 +36,7 @@ import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
@@ -116,7 +117,7 @@ class ImageMetadataRepositoryImplTest :
         Assert.assertEquals(
             ImageMetadataWithCount(
                 ImageMetadata(
-                    databaseId = 1L,
+                    imageId = ImageId(1L),
                 ),
                 count = 0,
             ),
@@ -172,7 +173,7 @@ class ImageMetadataRepositoryImplTest :
         Assert.assertEquals(
             ImageMetadataWithCount(
                 imageMetadata = ImageMetadata(
-                    databaseId = 1L,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                     largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                 ),
@@ -193,7 +194,7 @@ class ImageMetadataRepositoryImplTest :
         )
         Assert.assertEquals(
             ImageMetadata(
-                databaseId = 1L,
+                imageId = ImageId(1L),
                 thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                 largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                 mbid = eventId,
@@ -264,7 +265,7 @@ class ImageMetadataRepositoryImplTest :
         Assert.assertEquals(
             ImageMetadataWithCount(
                 imageMetadata = ImageMetadata(
-                    databaseId = 1L,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                     largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                 ),
@@ -286,7 +287,7 @@ class ImageMetadataRepositoryImplTest :
         Assert.assertEquals(
             listOf(
                 ImageMetadata(
-                    databaseId = 2L,
+                    imageId = ImageId(2L),
                     thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.png",
                     largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.png",
                     mbid = releaseId,
@@ -295,7 +296,7 @@ class ImageMetadataRepositoryImplTest :
                     entity = MusicBrainzEntity.RELEASE,
                 ),
                 ImageMetadata(
-                    databaseId = 1L,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                     largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                     mbid = releaseId,
@@ -342,7 +343,7 @@ class ImageMetadataRepositoryImplTest :
         Assert.assertEquals(
             ImageMetadataWithCount(
                 imageMetadata = ImageMetadata(
-                    databaseId = 1L,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                     largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                 ),
@@ -364,7 +365,7 @@ class ImageMetadataRepositoryImplTest :
         )
         Assert.assertEquals(
             ImageMetadata(
-                databaseId = 1L,
+                imageId = ImageId(1L),
                 thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                 largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                 mbid = releaseId,
@@ -423,7 +424,7 @@ class ImageMetadataRepositoryImplTest :
         Assert.assertEquals(
             ImageMetadataWithCount(
                 imageMetadata = ImageMetadata(
-                    databaseId = 1L,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                     largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                 ),
@@ -443,7 +444,7 @@ class ImageMetadataRepositoryImplTest :
             )
             Assert.assertEquals(
                 ImageMetadata(
-                    databaseId = 1L,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                     largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
                     mbid = releaseGroupId,
@@ -490,7 +491,7 @@ class ImageMetadataRepositoryImplTest :
         Assert.assertEquals(
             ImageMetadataWithCount(
                 imageMetadata = ImageMetadata(
-                    databaseId = 1L,
+                    imageId = ImageId(1L),
                     thumbnailUrl = "http://someartarchive.org/event/$eventId/1.png",
                     largeUrl = "http://someartarchive.org/event/$eventId/1.png",
                 ),
@@ -517,7 +518,7 @@ class ImageMetadataRepositoryImplTest :
         Assert.assertEquals(
             ImageMetadataWithCount(
                 imageMetadata = ImageMetadata(
-                    databaseId = 2L,
+                    imageId = ImageId(2L),
                     thumbnailUrl = "http://someartarchive.org/release/$releaseId/1.png",
                     largeUrl = "http://someartarchive.org/release/$releaseId/1.png",
                 ),
@@ -545,7 +546,7 @@ class ImageMetadataRepositoryImplTest :
             ImageMetadataWithCount(
                 imageMetadata =
                 ImageMetadata(
-                    databaseId = 3L,
+                    imageId = ImageId(3L),
                     thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
                     largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
                 ),
@@ -566,7 +567,7 @@ class ImageMetadataRepositoryImplTest :
             Assert.assertEquals(
                 listOf(
                     ImageMetadata(
-                        databaseId = 3L,
+                        imageId = ImageId(3L),
                         thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
                         largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
                         mbid = releaseGroupId,
@@ -575,7 +576,7 @@ class ImageMetadataRepositoryImplTest :
                         entity = MusicBrainzEntity.RELEASE_GROUP,
                     ),
                     ImageMetadata(
-                        databaseId = 2L,
+                        imageId = ImageId(2L),
                         thumbnailUrl = "http://someartarchive.org/release/$releaseId/1.png",
                         largeUrl = "http://someartarchive.org/release/$releaseId/1.png",
                         mbid = releaseId,
@@ -584,7 +585,7 @@ class ImageMetadataRepositoryImplTest :
                         entity = MusicBrainzEntity.RELEASE,
                     ),
                     ImageMetadata(
-                        databaseId = 1L,
+                        imageId = ImageId(1L),
                         thumbnailUrl = "http://someartarchive.org/event/$eventId/1.png",
                         largeUrl = "http://someartarchive.org/event/$eventId/1.png",
                         mbid = eventId,
@@ -609,7 +610,7 @@ class ImageMetadataRepositoryImplTest :
             Assert.assertEquals(
                 listOf(
                     ImageMetadata(
-                        databaseId = 1L,
+                        imageId = ImageId(1L),
                         thumbnailUrl = "http://someartarchive.org/event/$eventId/1.png",
                         largeUrl = "http://someartarchive.org/event/$eventId/1.png",
                         mbid = eventId,
@@ -618,7 +619,7 @@ class ImageMetadataRepositoryImplTest :
                         entity = MusicBrainzEntity.EVENT,
                     ),
                     ImageMetadata(
-                        databaseId = 2L,
+                        imageId = ImageId(2L),
                         thumbnailUrl = "http://someartarchive.org/release/$releaseId/1.png",
                         largeUrl = "http://someartarchive.org/release/$releaseId/1.png",
                         mbid = releaseId,
@@ -627,7 +628,7 @@ class ImageMetadataRepositoryImplTest :
                         entity = MusicBrainzEntity.RELEASE,
                     ),
                     ImageMetadata(
-                        databaseId = 3L,
+                        imageId = ImageId(3L),
                         thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
                         largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
                         mbid = releaseGroupId,
@@ -652,7 +653,7 @@ class ImageMetadataRepositoryImplTest :
             Assert.assertEquals(
                 listOf(
                     ImageMetadata(
-                        databaseId = 1L,
+                        imageId = ImageId(1L),
                         thumbnailUrl = "http://someartarchive.org/event/$eventId/1.png",
                         largeUrl = "http://someartarchive.org/event/$eventId/1.png",
                         mbid = eventId,
@@ -661,7 +662,7 @@ class ImageMetadataRepositoryImplTest :
                         entity = MusicBrainzEntity.EVENT,
                     ),
                     ImageMetadata(
-                        databaseId = 3L,
+                        imageId = ImageId(3L),
                         thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
                         largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
                         mbid = releaseGroupId,
@@ -670,7 +671,7 @@ class ImageMetadataRepositoryImplTest :
                         entity = MusicBrainzEntity.RELEASE_GROUP,
                     ),
                     ImageMetadata(
-                        databaseId = 2L,
+                        imageId = ImageId(2L),
                         thumbnailUrl = "http://someartarchive.org/release/$releaseId/1.png",
                         largeUrl = "http://someartarchive.org/release/$releaseId/1.png",
                         mbid = releaseId,
@@ -695,7 +696,7 @@ class ImageMetadataRepositoryImplTest :
             Assert.assertEquals(
                 listOf(
                     ImageMetadata(
-                        databaseId = 2L,
+                        imageId = ImageId(2L),
                         thumbnailUrl = "http://someartarchive.org/release/$releaseId/1.png",
                         largeUrl = "http://someartarchive.org/release/$releaseId/1.png",
                         mbid = releaseId,
@@ -704,7 +705,7 @@ class ImageMetadataRepositoryImplTest :
                         entity = MusicBrainzEntity.RELEASE,
                     ),
                     ImageMetadata(
-                        databaseId = 3L,
+                        imageId = ImageId(3L),
                         thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
                         largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
                         mbid = releaseGroupId,
@@ -713,7 +714,7 @@ class ImageMetadataRepositoryImplTest :
                         entity = MusicBrainzEntity.RELEASE_GROUP,
                     ),
                     ImageMetadata(
-                        databaseId = 1L,
+                        imageId = ImageId(1L),
                         thumbnailUrl = "http://someartarchive.org/event/$eventId/1.png",
                         largeUrl = "http://someartarchive.org/event/$eventId/1.png",
                         mbid = eventId,

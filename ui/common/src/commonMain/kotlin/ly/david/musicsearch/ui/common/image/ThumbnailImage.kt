@@ -23,6 +23,7 @@ import coil3.request.crossfade
 import coil3.size.Scale
 import com.slack.circuit.sharedelements.SharedElementTransitionScope
 import ly.david.musicsearch.shared.domain.common.useHttps
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.ui.common.icons.CheckCircle
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.listitem.ListItemSharedTransitionKey
@@ -32,7 +33,7 @@ import ly.david.musicsearch.ui.core.SMALL_IMAGE_SIZE
 @Composable
 fun ThumbnailImage(
     url: String,
-    placeholderKey: String,
+    placeholderKey: ImageId?,
     placeholderIcon: ImageVector?,
     modifier: Modifier = Modifier,
     clipCircle: Boolean = false,
@@ -41,14 +42,13 @@ fun ThumbnailImage(
 ) {
     SharedElementTransitionScope {
         val resizeModifier = modifier.size(size)
-        // TODO: Consider a value class for image database id which is used as placeholderKey
-        val modifierWithSharedBounds = if (placeholderKey.isEmpty() || placeholderKey == 0L.toString()) {
+        val modifierWithSharedBounds = if (placeholderKey == null) {
             resizeModifier
         } else {
             resizeModifier.sharedBounds(
                 sharedContentState = rememberSharedContentState(
                     ListItemSharedTransitionKey(
-                        id = placeholderKey,
+                        imageId = placeholderKey,
                         type = ListItemSharedTransitionKey.ElementType.Image,
                     ),
                 ),
@@ -86,7 +86,7 @@ fun ThumbnailImage(
                         .data(url.useHttps())
                         .scale(Scale.FILL)
                         .crossfade(true)
-                        .memoryCacheKey(placeholderKey)
+                        .memoryCacheKey(placeholderKey?.value?.toString().orEmpty())
                         .build(),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,

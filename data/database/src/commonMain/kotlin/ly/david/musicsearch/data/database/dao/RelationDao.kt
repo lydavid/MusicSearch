@@ -9,6 +9,7 @@ import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
@@ -136,7 +137,7 @@ class RelationDao(
             ended = ended,
         ),
         imageUrl = thumbnailUrl,
-        imageId = placeholderKey ?: 0L,
+        imageId = placeholderKey?.let { ImageId(it) },
         lastUpdated = lastUpdated,
     )
 

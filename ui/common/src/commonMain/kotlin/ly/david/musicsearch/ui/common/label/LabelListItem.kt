@@ -38,7 +38,7 @@ fun LabelListItem(
             {
                 ThumbnailImage(
                     url = "",
-                    placeholderKey = "",
+                    placeholderKey = null,
                     placeholderIcon = MusicBrainzEntity.LABEL.getIcon(),
                     modifier = Modifier
                         .clickable {

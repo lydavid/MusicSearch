@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.mapper
 
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 
 fun mapToArtistListItemModel(
@@ -31,6 +32,6 @@ fun mapToArtistListItemModel(
         ended = ended,
     ),
     imageUrl = thumbnailUrl,
-    imageId = placeholderKey ?: 0L,
+    imageId = placeholderKey?.let { ImageId(it) },
     visited = visited == true,
 )
