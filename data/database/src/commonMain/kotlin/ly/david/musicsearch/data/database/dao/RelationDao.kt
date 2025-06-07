@@ -119,7 +119,7 @@ class RelationDao(
         end: String?,
         ended: Boolean?,
         thumbnailUrl: String?,
-        placeholderKey: Long?,
+        imageId: Long?,
         lastUpdated: Instant? = null,
     ) = RelationListItemModel(
         id = "${linkedEntityId}_$order",
@@ -137,7 +137,7 @@ class RelationDao(
             ended = ended,
         ),
         imageUrl = thumbnailUrl,
-        imageId = placeholderKey?.let { ImageId(it) },
+        imageId = imageId?.let { ImageId(it) },
         lastUpdated = lastUpdated,
     )
 

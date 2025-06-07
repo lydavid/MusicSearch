@@ -52,7 +52,7 @@ SELECT
   lh.number_of_visits,
   lh.last_accessed,
   mi.thumbnail_url,
-  mi.id AS placeholderKey
+  mi.id AS imageId
 FROM lookup_history lh
 LEFT JOIN mbid_image mi ON mi.mbid = lh.mbid
 WHERE

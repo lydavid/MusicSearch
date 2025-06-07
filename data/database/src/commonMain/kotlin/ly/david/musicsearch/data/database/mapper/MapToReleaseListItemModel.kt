@@ -24,7 +24,7 @@ internal fun mapToReleaseListItemModel(
     coverArtCount: Int,
     formattedArtistCreditNames: String,
     thumbnailUrl: String?,
-    placeholderKey: Long?,
+    imageId: Long?,
     releaseCountryCount: Long,
     visited: Boolean?,
 ) = ReleaseListItemModel(
@@ -49,7 +49,7 @@ internal fun mapToReleaseListItemModel(
     ),
     formattedArtistCredits = formattedArtistCreditNames,
     imageUrl = thumbnailUrl,
-    imageId = placeholderKey?.let { ImageId(it) },
+    imageId = imageId?.let { ImageId(it) },
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited == true,
 )
@@ -76,7 +76,7 @@ internal fun mapToReleaseListItemModel(
     catalogNumber: String?,
     formattedArtistCreditNames: String,
     thumbnailUrl: String?,
-    placeholderKey: Long?,
+    imageId: Long?,
     releaseCountryCount: Long,
     visited: Boolean?,
 ) = ReleaseListItemModel(
@@ -102,7 +102,7 @@ internal fun mapToReleaseListItemModel(
     catalogNumbers = catalogNumber,
     formattedArtistCredits = formattedArtistCreditNames,
     imageUrl = thumbnailUrl,
-    imageId = placeholderKey?.let { ImageId(it) },
+    imageId = imageId?.let { ImageId(it) },
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited == true,
 )

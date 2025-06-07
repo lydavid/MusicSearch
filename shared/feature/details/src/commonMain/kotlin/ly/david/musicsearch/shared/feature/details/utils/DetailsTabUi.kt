@@ -65,7 +65,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 if (filterText.isBlank()) {
                     LargeImage(
                         url = imageMetadata.largeUrl,
-                        placeholderKey = imageMetadata.imageId,
+                        imageId = imageMetadata.imageId,
                         onClick = onImageClick,
                     )
                 }

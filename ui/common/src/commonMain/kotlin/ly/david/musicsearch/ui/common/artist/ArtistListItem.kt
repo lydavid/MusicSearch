@@ -83,7 +83,7 @@ fun ArtistListItem(
         leadingContent = {
             ThumbnailImage(
                 url = artist.imageUrl.orEmpty(),
-                placeholderKey = artist.imageId,
+                imageId = artist.imageId,
                 placeholderIcon = MusicBrainzEntity.ARTIST.getIcon(),
                 modifier = Modifier
                     .clickable {

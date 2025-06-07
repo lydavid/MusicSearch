@@ -436,7 +436,7 @@ fun present(
 restartable skippable fun InitializeImageLoader()
 restartable skippable fun LargeImage(
   stable url: String
-  stable placeholderKey: String
+  stable imageId: String
   stable modifier: Modifier? = @static Companion
   stable isCompact: Boolean = @static true
   stable zoomEnabled: Boolean = @static false
@@ -448,7 +448,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Placehold
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ThumbnailImage(
   stable url: String
-  stable placeholderKey: String
+  stable imageId: String
   stable placeholderIcon: ImageVector?
   stable modifier: Modifier? = @static Companion
   stable isSelected: Boolean = @static false

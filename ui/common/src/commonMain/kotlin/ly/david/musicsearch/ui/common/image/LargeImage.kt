@@ -21,13 +21,13 @@ import net.engawapg.lib.zoomable.rememberZoomState
 import net.engawapg.lib.zoomable.zoomable
 
 /**
- * @param placeholderKey A unique ID that we use as a cache key.
+ * @param imageId A unique ID that we use as a cache key.
  */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun LargeImage(
     url: String,
-    placeholderKey: ImageId?,
+    imageId: ImageId?,
     modifier: Modifier = Modifier,
     isCompact: Boolean = true,
     zoomEnabled: Boolean = false,
@@ -46,13 +46,13 @@ fun LargeImage(
                     Modifier.fillMaxHeight()
                 },
             )
-        val modifierWithSharedBounds = if (placeholderKey == null) {
+        val modifierWithSharedBounds = if (imageId == null) {
             imageModifier
         } else {
             imageModifier.sharedBounds(
                 sharedContentState = rememberSharedContentState(
                     ListItemSharedTransitionKey(
-                        imageId = placeholderKey,
+                        imageId = imageId,
                         type = ListItemSharedTransitionKey.ElementType.Image,
                     ),
                 ),
@@ -97,7 +97,7 @@ fun LargeImage(
                 model = ImageRequest.Builder(LocalPlatformContext.current)
                     .data(url.useHttps())
                     .crossfade(true)
-                    .placeholderMemoryCacheKey(placeholderKey?.value?.toString().orEmpty())
+                    .placeholderMemoryCacheKey(imageId?.value?.toString().orEmpty())
                     .build(),
                 contentDescription = null,
                 contentScale = contentScale,

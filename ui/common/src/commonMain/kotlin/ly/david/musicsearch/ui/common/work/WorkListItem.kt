@@ -78,7 +78,7 @@ fun WorkListItem(
         leadingContent = {
             ThumbnailImage(
                 url = "",
-                placeholderKey = null,
+                imageId = null,
                 placeholderIcon = MusicBrainzEntity.WORK.getIcon(),
                 modifier = Modifier
                     .clickable {

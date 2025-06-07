@@ -84,7 +84,7 @@ SELECT
   `end`,
   `ended`,
   mi.thumbnail_url,
-  mi.id AS placeholderKey,
+  mi.id AS imageId,
   relations_metadata.last_updated
 FROM relation
 LEFT JOIN details_metadata ON details_metadata.entity_id = linked_entity_id
@@ -122,7 +122,7 @@ SELECT
   `end`,
   `ended`,
   mi.thumbnail_url,
-  mi.id AS placeholderKey
+  mi.id AS imageId
 FROM relation
 LEFT JOIN details_metadata ON details_metadata.entity_id = linked_entity_id
 LEFT JOIN mbid_image mi ON mi.mbid = linked_entity_id

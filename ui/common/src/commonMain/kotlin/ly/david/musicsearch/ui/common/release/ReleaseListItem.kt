@@ -156,7 +156,7 @@ fun ReleaseListItem(
         leadingContent = {
             ThumbnailImage(
                 url = release.imageUrl.orEmpty(),
-                placeholderKey = release.imageId,
+                imageId = release.imageId,
                 placeholderIcon = MusicBrainzEntity.RELEASE.getIcon(),
                 modifier = Modifier
                     .clickable {

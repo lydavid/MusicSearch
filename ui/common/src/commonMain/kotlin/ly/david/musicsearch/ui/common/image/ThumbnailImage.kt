@@ -33,7 +33,7 @@ import ly.david.musicsearch.ui.core.SMALL_IMAGE_SIZE
 @Composable
 fun ThumbnailImage(
     url: String,
-    placeholderKey: ImageId?,
+    imageId: ImageId?,
     placeholderIcon: ImageVector?,
     modifier: Modifier = Modifier,
     clipCircle: Boolean = false,
@@ -42,13 +42,13 @@ fun ThumbnailImage(
 ) {
     SharedElementTransitionScope {
         val resizeModifier = modifier.size(size)
-        val modifierWithSharedBounds = if (placeholderKey == null) {
+        val modifierWithSharedBounds = if (imageId == null) {
             resizeModifier
         } else {
             resizeModifier.sharedBounds(
                 sharedContentState = rememberSharedContentState(
                     ListItemSharedTransitionKey(
-                        imageId = placeholderKey,
+                        imageId = imageId,
                         type = ListItemSharedTransitionKey.ElementType.Image,
                     ),
                 ),
@@ -86,7 +86,7 @@ fun ThumbnailImage(
                         .data(url.useHttps())
                         .scale(Scale.FILL)
                         .crossfade(true)
-                        .memoryCacheKey(placeholderKey?.value?.toString().orEmpty())
+                        .memoryCacheKey(imageId?.value?.toString().orEmpty())
                         .build(),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,

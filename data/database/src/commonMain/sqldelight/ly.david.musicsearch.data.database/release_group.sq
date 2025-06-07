@@ -97,7 +97,7 @@ SELECT
   rg.secondary_types,
   ac.name AS artist_credits,
   mi.thumbnail_url,
-  mi.id AS placeholderKey,
+  mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM release_group rg
 INNER JOIN release_groups_by_entity arg ON rg.id = arg.release_group_id
@@ -156,7 +156,7 @@ SELECT
   rg.secondary_types,
   ac.name AS artist_credits,
   mi.thumbnail_url,
-  mi.id AS placeholderKey,
+  mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM release_group rg
 INNER JOIN collection_entity ce ON rg.id = ce.entity_id
@@ -213,7 +213,7 @@ SELECT
   rg.secondary_types,
   ac.name AS artist_credits,
   mi.thumbnail_url,
-  mi.id AS placeholderKey,
+  mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM release_group rg
 INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id

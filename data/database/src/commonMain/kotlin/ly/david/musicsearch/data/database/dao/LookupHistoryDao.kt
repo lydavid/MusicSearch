@@ -90,7 +90,7 @@ private fun mapToLookupHistoryListItemModel(
     numberOfVisits: Int,
     lastAccessed: Instant,
     imageUrl: String?,
-    placeholderKey: Long?,
+    imageId: Long?,
 ) = LookupHistoryListItemModel(
     id = mbid,
     title = title,
@@ -98,5 +98,5 @@ private fun mapToLookupHistoryListItemModel(
     numberOfVisits = numberOfVisits,
     lastAccessed = lastAccessed,
     imageUrl = imageUrl,
-    imageId = placeholderKey?.let { ImageId(it) },
+    imageId = imageId?.let { ImageId(it) },
 )

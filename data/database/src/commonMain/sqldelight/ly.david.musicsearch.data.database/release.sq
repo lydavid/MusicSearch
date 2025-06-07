@@ -115,7 +115,7 @@ SELECT
   ) AS catalogNumbers,
   ac.name AS artistCreditNames,
   mi.thumbnail_url,
-  mi.id AS placeholderKey,
+  mi.id AS imageId,
   COALESCE(
     (
       SELECT COUNT(cc.area_id)
@@ -179,7 +179,7 @@ SELECT
   r.*,
   ac.name AS artistCreditNames,
   mi.thumbnail_url,
-  mi.id AS placeholderKey,
+  mi.id AS imageId,
   (
     SELECT COUNT(cc.area_id)
     FROM `release`
@@ -239,7 +239,7 @@ SELECT
   r.*,
   ac.name AS artistCreditNames,
   mi.thumbnail_url,
-  mi.id AS placeholderKey,
+  mi.id AS imageId,
   COALESCE(
     (
       SELECT COUNT(cc.area_id)
@@ -298,7 +298,7 @@ SELECT
   r.*,
   ac.name AS artistCreditNames,
   mi.thumbnail_url,
-  mi.id AS placeholderKey,
+  mi.id AS imageId,
   COALESCE(
     (
       SELECT COUNT(cc.area_id)
@@ -353,7 +353,7 @@ SELECT
   r.*,
   ac.name AS artistCreditNames,
   mi.thumbnail_url,
-  mi.id AS placeholderKey,
+  mi.id AS imageId,
   COALESCE(
     (
       SELECT COUNT(cc.area_id)

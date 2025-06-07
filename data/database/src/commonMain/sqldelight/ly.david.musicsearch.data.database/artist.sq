@@ -106,7 +106,7 @@ SELECT
   a.end,
   a.ended,
   mi.thumbnail_url,
-  mi.id AS placeholderKey,
+  mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM artists_by_entity ae
 INNER JOIN artist a ON a.id = ae.artist_id
@@ -160,7 +160,7 @@ SELECT
   a.end,
   a.ended,
   mi.thumbnail_url,
-  mi.id AS placeholderKey,
+  mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM artist a
 INNER JOIN collection_entity ce ON a.id = ce.entity_id
@@ -213,7 +213,7 @@ SELECT
   a.end,
   a.ended,
   mi.thumbnail_url,
-  mi.id AS placeholderKey,
+  mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM artist a
 LEFT JOIN mbid_image mi ON mi.mbid = a.id
