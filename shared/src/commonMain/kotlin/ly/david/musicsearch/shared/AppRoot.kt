@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -16,10 +17,14 @@ import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.overlay.ContentWithOverlays
 import com.slack.circuit.runtime.Navigator
+import com.slack.circuit.sharedelements.SharedElementTransitionLayout
 import com.slack.circuitx.gesturenavigation.GestureNavigationDecorationFactory
 import ly.david.musicsearch.ui.common.image.InitializeImageLoader
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+@OptIn(
+    ExperimentalMaterial3WindowSizeClassApi::class,
+    ExperimentalSharedTransitionApi::class,
+)
 @Composable
 fun AppRoot(
     circuit: Circuit,
@@ -30,51 +35,53 @@ fun AppRoot(
     InitializeImageLoader()
 
     CircuitCompositionLocals(circuit) {
-        ContentWithOverlays {
-            val windowSizeClass = calculateWindowSizeClass()
-            val isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
+        SharedElementTransitionLayout {
+            ContentWithOverlays {
+                val windowSizeClass = calculateWindowSizeClass()
+                val isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
 
-            Scaffold(
-                modifier = modifier,
-                contentWindowInsets = WindowInsets(0),
-                bottomBar = {
-                    if (isCompact) {
-                        AppBottomNavigationBar(
-                            currentTopLevelScreen = backStack.last().screen,
-                            navigateToTopLevelScreen = { screen ->
-                                navigator.resetRoot(screen)
-                            },
+                Scaffold(
+                    modifier = modifier,
+                    contentWindowInsets = WindowInsets(0),
+                    bottomBar = {
+                        if (isCompact) {
+                            AppBottomNavigationBar(
+                                currentTopLevelScreen = backStack.last().screen,
+                                navigateToTopLevelScreen = { screen ->
+                                    navigator.resetRoot(screen)
+                                },
+                            )
+                        }
+                    },
+                ) { innerPadding ->
+
+                    Row(
+                        modifier = Modifier
+                            .padding(innerPadding),
+                    ) {
+                        if (!isCompact) {
+                            AppNavigationRail(
+                                currentTopLevelScreen = backStack.last().screen,
+                                navigateToTopLevelScreen = { screen ->
+                                    navigator.resetRoot(screen)
+                                },
+                            )
+                        }
+
+                        val contentModifier: Modifier = if (isCompact) {
+                            Modifier
+                        } else {
+                            Modifier.navigationBarsPadding()
+                        }
+                        NavigableCircuitContent(
+                            navigator = navigator,
+                            backStack = backStack,
+                            modifier = contentModifier,
+                            decoratorFactory = GestureNavigationDecorationFactory(
+                                onBackInvoked = navigator::pop,
+                            ),
                         )
                     }
-                },
-            ) { innerPadding ->
-
-                Row(
-                    modifier = Modifier
-                        .padding(innerPadding),
-                ) {
-                    if (!isCompact) {
-                        AppNavigationRail(
-                            currentTopLevelScreen = backStack.last().screen,
-                            navigateToTopLevelScreen = { screen ->
-                                navigator.resetRoot(screen)
-                            },
-                        )
-                    }
-
-                    val contentModifier: Modifier = if (isCompact) {
-                        Modifier
-                    } else {
-                        Modifier.navigationBarsPadding()
-                    }
-                    NavigableCircuitContent(
-                        navigator = navigator,
-                        backStack = backStack,
-                        modifier = contentModifier,
-                        decoratorFactory = GestureNavigationDecorationFactory(
-                            onBackInvoked = navigator::pop,
-                        ),
-                    )
                 }
             }
         }

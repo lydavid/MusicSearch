@@ -4,12 +4,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
@@ -85,13 +83,13 @@ fun ArtistListItem(
         leadingContent = {
             ThumbnailImage(
                 url = artist.imageUrl.orEmpty(),
-                placeholderKey = artist.id,
+                placeholderKey = artist.imageId.toString(),
                 placeholderIcon = MusicBrainzEntity.ARTIST.getIcon(),
                 modifier = Modifier
-                    .clip(CircleShape)
                     .clickable {
                         onSelect(artist.id)
                     },
+                clipCircle = true,
                 isSelected = isSelected,
             )
         },

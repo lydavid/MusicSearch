@@ -3,13 +3,11 @@ package ly.david.musicsearch.ui.common.relation
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -40,16 +38,11 @@ fun RelationListItem(
 
     ListItem(
         leadingContent = {
-            val clipModifier = if (relation.linkedEntity == MusicBrainzEntity.ARTIST) {
-                Modifier.clip(CircleShape)
-            } else {
-                Modifier
-            }
             ThumbnailImage(
                 url = relation.imageUrl.orEmpty(),
                 placeholderKey = relation.imageId.toString(),
                 placeholderIcon = relation.linkedEntity.getIcon(),
-                modifier = clipModifier,
+                clipCircle = relation.linkedEntity == MusicBrainzEntity.ARTIST,
             )
         },
         headlineContent = {

@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.images
 
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
@@ -8,8 +7,8 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
+import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 import ly.david.musicsearch.ui.core.preview.DefaultPreviews
-import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 val images = MutableStateFlow(
     PagingData.from(
@@ -36,16 +35,14 @@ val images = MutableStateFlow(
 @Composable
 internal fun PreviewImagesGridUi() {
     InitializeFakeImageLoader()
-    PreviewTheme {
-        Surface {
-            ImagesUi(
-                state = ImagesUiState(
-                    title = ImagesTitle.All,
-                    imageMetadataPagingDataFlow = images,
-                ),
-                isCompact = false,
-            )
-        }
+    PreviewWithSharedElementTransition {
+        ImagesUi(
+            state = ImagesUiState(
+                title = ImagesTitle.All,
+                imageMetadataPagingDataFlow = images,
+            ),
+            isCompact = false,
+        )
     }
 }
 
@@ -53,22 +50,20 @@ internal fun PreviewImagesGridUi() {
 @Composable
 internal fun PreviewImagesPagerUiCompact() {
     InitializeFakeImageLoader()
-    PreviewTheme {
-        Surface {
-            ImagesUi(
-                state = ImagesUiState(
-                    title = ImagesTitle.Selected(
-                        typeAndComment = "Front",
-                        page = 1,
-                        totalPages = 2,
-                    ),
-                    subtitle = "Title (with disambiguation)",
-                    imageMetadataPagingDataFlow = images,
-                    selectedImageIndex = 0,
+    PreviewWithSharedElementTransition {
+        ImagesUi(
+            state = ImagesUiState(
+                title = ImagesTitle.Selected(
+                    typeAndComment = "Front",
+                    page = 1,
+                    totalPages = 2,
                 ),
-                isCompact = true,
-            )
-        }
+                subtitle = "Title (with disambiguation)",
+                imageMetadataPagingDataFlow = images,
+                selectedImageIndex = 0,
+            ),
+            isCompact = true,
+        )
     }
 }
 
@@ -76,21 +71,19 @@ internal fun PreviewImagesPagerUiCompact() {
 @Composable
 internal fun PreviewImagesPagerUiNonCompact() {
     InitializeFakeImageLoader()
-    PreviewTheme {
-        Surface {
-            ImagesUi(
-                state = ImagesUiState(
-                    title = ImagesTitle.Selected(
-                        typeAndComment = "Front",
-                        page = 1,
-                        totalPages = 2,
-                    ),
-                    subtitle = "Title (with disambiguation)",
-                    imageMetadataPagingDataFlow = images,
-                    selectedImageIndex = 0,
+    PreviewWithSharedElementTransition {
+        ImagesUi(
+            state = ImagesUiState(
+                title = ImagesTitle.Selected(
+                    typeAndComment = "Front",
+                    page = 1,
+                    totalPages = 2,
                 ),
-                isCompact = false,
-            )
-        }
+                subtitle = "Title (with disambiguation)",
+                imageMetadataPagingDataFlow = images,
+                selectedImageIndex = 0,
+            ),
+            isCompact = false,
+        )
     }
 }

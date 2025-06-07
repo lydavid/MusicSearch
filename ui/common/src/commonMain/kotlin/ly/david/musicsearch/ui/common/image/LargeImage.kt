@@ -1,5 +1,7 @@
 package ly.david.musicsearch.ui.common.image
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,13 +13,16 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import com.slack.circuit.sharedelements.SharedElementTransitionScope
 import ly.david.musicsearch.shared.domain.common.useHttps
+import ly.david.musicsearch.ui.common.listitem.ListItemSharedTransitionKey
 import net.engawapg.lib.zoomable.rememberZoomState
 import net.engawapg.lib.zoomable.zoomable
 
 /**
  * @param placeholderKey A unique ID that we use as a cache key.
  */
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun LargeImage(
     url: String,
@@ -27,58 +32,72 @@ fun LargeImage(
     zoomEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
-    val zoomState = rememberZoomState(
-        maxScale = 8f,
-    )
-
-    val imageModifier = modifier.testTag(LargeImageTestTag.IMAGE.name)
-        .then(
-            if (isCompact) {
-                Modifier.fillMaxWidth()
-            } else {
-                Modifier.fillMaxHeight()
-            },
+    SharedElementTransitionScope {
+        val zoomState = rememberZoomState(
+            maxScale = 8f,
         )
-    val zoomableImageModifier = imageModifier
-        .zoomable(
-            zoomState = zoomState,
-            zoomEnabled = zoomEnabled,
-            onDoubleTap = { position ->
-                if (!zoomEnabled) return@zoomable
 
-                val targetScale = when {
-                    zoomState.scale < 4f -> 4f
-                    zoomState.scale < 8f -> 8f
-                    else -> 1f
-                }
-                zoomState.changeScale(targetScale, position)
-            },
+        val imageModifier = modifier.testTag(LargeImageTestTag.IMAGE.name)
+            .then(
+                if (isCompact) {
+                    Modifier.fillMaxWidth()
+                } else {
+                    Modifier.fillMaxHeight()
+                },
+            )
+        val modifierWithSharedBounds = imageModifier.sharedBounds(
+            sharedContentState = rememberSharedContentState(
+                ListItemSharedTransitionKey(
+                    id = placeholderKey,
+                    type = ListItemSharedTransitionKey.ElementType.Image,
+                ),
+            ),
+            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+            animatedVisibilityScope = requireAnimatedScope(
+                SharedElementTransitionScope.AnimatedScope.Navigation,
+            ),
         )
-    val clickableZoomableImageModifier = if (onClick == null) {
-        zoomableImageModifier
-    } else {
-        zoomableImageModifier
-            // This gives us the ripple feedback
-            .clickable(onClick = onClick)
-    }
+        val zoomableImageModifier = modifierWithSharedBounds
+            .zoomable(
+                zoomState = zoomState,
+                zoomEnabled = zoomEnabled,
+                onDoubleTap = { position ->
+                    if (!zoomEnabled) return@zoomable
 
-    val contentScale = if (isCompact) {
-        ContentScale.FillWidth
-    } else {
-        ContentScale.Fit
-    }
+                    val targetScale = when {
+                        zoomState.scale < 4f -> 4f
+                        zoomState.scale < 8f -> 8f
+                        else -> 1f
+                    }
+                    zoomState.changeScale(targetScale, position)
+                },
+            )
+        val clickableZoomableImageModifier = if (onClick == null) {
+            zoomableImageModifier
+        } else {
+            zoomableImageModifier
+                // This gives us the ripple feedback
+                .clickable(onClick = onClick)
+        }
 
-    if (url.isNotEmpty()) {
-        AsyncImage(
-            modifier = clickableZoomableImageModifier,
-            model = ImageRequest.Builder(LocalPlatformContext.current)
-                .data(url.useHttps())
-                .crossfade(true)
-                .placeholderMemoryCacheKey(placeholderKey)
-                .build(),
-            contentDescription = null,
-            contentScale = contentScale,
-        )
+        val contentScale = if (isCompact) {
+            ContentScale.FillWidth
+        } else {
+            ContentScale.Fit
+        }
+
+        if (url.isNotEmpty()) {
+            AsyncImage(
+                modifier = clickableZoomableImageModifier,
+                model = ImageRequest.Builder(LocalPlatformContext.current)
+                    .data(url.useHttps())
+                    .crossfade(true)
+                    .placeholderMemoryCacheKey(placeholderKey)
+                    .build(),
+                contentDescription = null,
+                contentScale = contentScale,
+            )
+        }
     }
 }
 

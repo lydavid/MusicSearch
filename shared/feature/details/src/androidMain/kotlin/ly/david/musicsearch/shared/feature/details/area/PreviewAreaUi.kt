@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.area
 
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
@@ -26,11 +25,11 @@ import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
 import ly.david.musicsearch.ui.common.event.EventsListUiState
 import ly.david.musicsearch.ui.common.label.LabelsListUiState
 import ly.david.musicsearch.ui.common.place.PlacesListUiState
+import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListUiState
 import ly.david.musicsearch.ui.common.screen.EntitiesListUiState
 import ly.david.musicsearch.ui.common.topappbar.Tab
-import ly.david.musicsearch.ui.core.theme.PreviewTheme
 
 private val canadianArtists = MutableStateFlow(
     PagingData.from(
@@ -542,289 +541,271 @@ private val detailsUiState = DetailsUiState(
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaDetails() {
-    PreviewTheme {
-        Surface {
-            AreaUiInternal(
-                state = detailsUiState,
-                entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                now = Instant.parse("2025-04-26T16:42:20Z"),
-            )
-        }
+    PreviewWithSharedElementTransition {
+        AreaUiInternal(
+            state = detailsUiState,
+            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+        )
     }
 }
 
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaDetailsCollapsed() {
-    PreviewTheme {
-        Surface {
-            AreaUiInternal(
-                state =
-                detailsUiState.copy(
-                    detailsTabUiState = DetailsTabUiState(
-                        isExternalLinksCollapsed = true,
-                    ),
+    PreviewWithSharedElementTransition {
+        AreaUiInternal(
+            state =
+            detailsUiState.copy(
+                detailsTabUiState = DetailsTabUiState(
+                    isExternalLinksCollapsed = true,
                 ),
-                entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                now = Instant.parse("2025-04-26T16:42:20Z"),
-            )
-        }
+            ),
+            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+        )
     }
 }
 
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaDetailsError() {
-    PreviewTheme {
-        Surface {
-            AreaUiInternal(
-                state =
-                detailsUiState.copy(
-                    detailsTabUiState = DetailsTabUiState(
-                        handledException = HandledException(
-                            userMessage = "Network error. Check your internet connection.",
-                            errorResolution = ErrorResolution.Retry,
-                        ),
+    PreviewWithSharedElementTransition {
+        AreaUiInternal(
+            state =
+            detailsUiState.copy(
+                detailsTabUiState = DetailsTabUiState(
+                    handledException = HandledException(
+                        userMessage = "Network error. Check your internet connection.",
+                        errorResolution = ErrorResolution.Retry,
                     ),
                 ),
-                entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                now = Instant.parse("2025-04-26T16:42:20Z"),
-            )
-        }
+            ),
+            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+        )
     }
 }
 
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaRelationships() {
-    PreviewTheme {
-        Surface {
-            AreaUiInternal(
-                state = DetailsUiState(
-                    title = "Canada",
-                    detailsModel = country,
-                    tabs = areaTabs,
-                    selectedTab = Tab.RELATIONSHIPS,
-                    entitiesListUiState = EntitiesListUiState(
-                        artistsListUiState = ArtistsListUiState(
-                            pagingDataFlow = canadianArtists,
-                        ),
-                        eventsListUiState = EventsListUiState(
-                            pagingDataFlow = events,
-                        ),
-                        labelsListUiState = LabelsListUiState(
-                            pagingDataFlow = labels,
-                        ),
-                        placesListUiState = PlacesListUiState(
-                            pagingDataFlow = places,
-                        ),
-                        releasesListUiState = ReleasesListUiState(
-                            pagingDataFlow = canadianReleases,
-                        ),
-                        relationsUiState = RelationsUiState(
-                            pagingDataFlow = canadianRelations,
-                        ),
+    PreviewWithSharedElementTransition {
+        AreaUiInternal(
+            state = DetailsUiState(
+                title = "Canada",
+                detailsModel = country,
+                tabs = areaTabs,
+                selectedTab = Tab.RELATIONSHIPS,
+                entitiesListUiState = EntitiesListUiState(
+                    artistsListUiState = ArtistsListUiState(
+                        pagingDataFlow = canadianArtists,
+                    ),
+                    eventsListUiState = EventsListUiState(
+                        pagingDataFlow = events,
+                    ),
+                    labelsListUiState = LabelsListUiState(
+                        pagingDataFlow = labels,
+                    ),
+                    placesListUiState = PlacesListUiState(
+                        pagingDataFlow = places,
+                    ),
+                    releasesListUiState = ReleasesListUiState(
+                        pagingDataFlow = canadianReleases,
+                    ),
+                    relationsUiState = RelationsUiState(
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
-                entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                now = Instant.parse("2025-04-26T16:42:20Z"),
-            )
-        }
+            ),
+            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+        )
     }
 }
 
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaArtists() {
-    PreviewTheme {
-        Surface {
-            AreaUiInternal(
-                state = DetailsUiState(
-                    title = "Canada",
-                    detailsModel = country,
-                    tabs = areaTabs,
-                    selectedTab = Tab.ARTISTS,
-                    entitiesListUiState = EntitiesListUiState(
-                        artistsListUiState = ArtistsListUiState(
-                            pagingDataFlow = canadianArtists,
-                        ),
-                        eventsListUiState = EventsListUiState(
-                            pagingDataFlow = events,
-                        ),
-                        labelsListUiState = LabelsListUiState(
-                            pagingDataFlow = labels,
-                        ),
-                        placesListUiState = PlacesListUiState(
-                            pagingDataFlow = places,
-                        ),
-                        releasesListUiState = ReleasesListUiState(
-                            pagingDataFlow = canadianReleases,
-                        ),
-                        relationsUiState = RelationsUiState(
-                            pagingDataFlow = canadianRelations,
-                        ),
+    PreviewWithSharedElementTransition {
+        AreaUiInternal(
+            state = DetailsUiState(
+                title = "Canada",
+                detailsModel = country,
+                tabs = areaTabs,
+                selectedTab = Tab.ARTISTS,
+                entitiesListUiState = EntitiesListUiState(
+                    artistsListUiState = ArtistsListUiState(
+                        pagingDataFlow = canadianArtists,
+                    ),
+                    eventsListUiState = EventsListUiState(
+                        pagingDataFlow = events,
+                    ),
+                    labelsListUiState = LabelsListUiState(
+                        pagingDataFlow = labels,
+                    ),
+                    placesListUiState = PlacesListUiState(
+                        pagingDataFlow = places,
+                    ),
+                    releasesListUiState = ReleasesListUiState(
+                        pagingDataFlow = canadianReleases,
+                    ),
+                    relationsUiState = RelationsUiState(
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
-                entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                now = Instant.parse("2025-04-26T16:42:20Z"),
-            )
-        }
+            ),
+            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+        )
     }
 }
 
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaEvents() {
-    PreviewTheme {
-        Surface {
-            AreaUiInternal(
-                state = DetailsUiState(
-                    title = "Canada",
-                    detailsModel = country,
-                    tabs = areaTabs,
-                    selectedTab = Tab.EVENTS,
-                    entitiesListUiState = EntitiesListUiState(
-                        artistsListUiState = ArtistsListUiState(
-                            pagingDataFlow = canadianArtists,
-                        ),
-                        eventsListUiState = EventsListUiState(
-                            pagingDataFlow = events,
-                        ),
-                        labelsListUiState = LabelsListUiState(
-                            pagingDataFlow = labels,
-                        ),
-                        placesListUiState = PlacesListUiState(
-                            pagingDataFlow = places,
-                        ),
-                        releasesListUiState = ReleasesListUiState(
-                            pagingDataFlow = canadianReleases,
-                        ),
-                        relationsUiState = RelationsUiState(
-                            pagingDataFlow = canadianRelations,
-                        ),
+    PreviewWithSharedElementTransition {
+        AreaUiInternal(
+            state = DetailsUiState(
+                title = "Canada",
+                detailsModel = country,
+                tabs = areaTabs,
+                selectedTab = Tab.EVENTS,
+                entitiesListUiState = EntitiesListUiState(
+                    artistsListUiState = ArtistsListUiState(
+                        pagingDataFlow = canadianArtists,
+                    ),
+                    eventsListUiState = EventsListUiState(
+                        pagingDataFlow = events,
+                    ),
+                    labelsListUiState = LabelsListUiState(
+                        pagingDataFlow = labels,
+                    ),
+                    placesListUiState = PlacesListUiState(
+                        pagingDataFlow = places,
+                    ),
+                    releasesListUiState = ReleasesListUiState(
+                        pagingDataFlow = canadianReleases,
+                    ),
+                    relationsUiState = RelationsUiState(
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
-                entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                now = Instant.parse("2025-04-26T16:42:20Z"),
-            )
-        }
+            ),
+            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+        )
     }
 }
 
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaLabels() {
-    PreviewTheme {
-        Surface {
-            AreaUiInternal(
-                state = DetailsUiState(
-                    title = "Canada",
-                    detailsModel = country,
-                    tabs = areaTabs,
-                    selectedTab = Tab.LABELS,
-                    entitiesListUiState = EntitiesListUiState(
-                        artistsListUiState = ArtistsListUiState(
-                            pagingDataFlow = canadianArtists,
-                        ),
-                        eventsListUiState = EventsListUiState(
-                            pagingDataFlow = events,
-                        ),
-                        labelsListUiState = LabelsListUiState(
-                            pagingDataFlow = labels,
-                        ),
-                        placesListUiState = PlacesListUiState(
-                            pagingDataFlow = places,
-                        ),
-                        releasesListUiState = ReleasesListUiState(
-                            pagingDataFlow = canadianReleases,
-                        ),
-                        relationsUiState = RelationsUiState(
-                            pagingDataFlow = canadianRelations,
-                        ),
+    PreviewWithSharedElementTransition {
+        AreaUiInternal(
+            state = DetailsUiState(
+                title = "Canada",
+                detailsModel = country,
+                tabs = areaTabs,
+                selectedTab = Tab.LABELS,
+                entitiesListUiState = EntitiesListUiState(
+                    artistsListUiState = ArtistsListUiState(
+                        pagingDataFlow = canadianArtists,
+                    ),
+                    eventsListUiState = EventsListUiState(
+                        pagingDataFlow = events,
+                    ),
+                    labelsListUiState = LabelsListUiState(
+                        pagingDataFlow = labels,
+                    ),
+                    placesListUiState = PlacesListUiState(
+                        pagingDataFlow = places,
+                    ),
+                    releasesListUiState = ReleasesListUiState(
+                        pagingDataFlow = canadianReleases,
+                    ),
+                    relationsUiState = RelationsUiState(
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
-                entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                now = Instant.parse("2025-04-26T16:42:20Z"),
-            )
-        }
+            ),
+            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+        )
     }
 }
 
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaReleases() {
-    PreviewTheme {
-        Surface {
-            AreaUiInternal(
-                state = DetailsUiState(
-                    title = "Canada",
-                    detailsModel = country,
-                    tabs = areaTabs,
-                    selectedTab = Tab.RELEASES,
-                    entitiesListUiState = EntitiesListUiState(
-                        artistsListUiState = ArtistsListUiState(
-                            pagingDataFlow = canadianArtists,
-                        ),
-                        eventsListUiState = EventsListUiState(
-                            pagingDataFlow = events,
-                        ),
-                        labelsListUiState = LabelsListUiState(
-                            pagingDataFlow = labels,
-                        ),
-                        placesListUiState = PlacesListUiState(
-                            pagingDataFlow = places,
-                        ),
-                        releasesListUiState = ReleasesListUiState(
-                            pagingDataFlow = canadianReleases,
-                        ),
-                        relationsUiState = RelationsUiState(
-                            pagingDataFlow = canadianRelations,
-                        ),
+    PreviewWithSharedElementTransition {
+        AreaUiInternal(
+            state = DetailsUiState(
+                title = "Canada",
+                detailsModel = country,
+                tabs = areaTabs,
+                selectedTab = Tab.RELEASES,
+                entitiesListUiState = EntitiesListUiState(
+                    artistsListUiState = ArtistsListUiState(
+                        pagingDataFlow = canadianArtists,
+                    ),
+                    eventsListUiState = EventsListUiState(
+                        pagingDataFlow = events,
+                    ),
+                    labelsListUiState = LabelsListUiState(
+                        pagingDataFlow = labels,
+                    ),
+                    placesListUiState = PlacesListUiState(
+                        pagingDataFlow = places,
+                    ),
+                    releasesListUiState = ReleasesListUiState(
+                        pagingDataFlow = canadianReleases,
+                    ),
+                    relationsUiState = RelationsUiState(
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
-                entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                now = Instant.parse("2025-04-26T16:42:20Z"),
-            )
-        }
+            ),
+            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+        )
     }
 }
 
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaPlaces() {
-    PreviewTheme {
-        Surface {
-            AreaUiInternal(
-                state = DetailsUiState(
-                    title = "Canada",
-                    detailsModel = country,
-                    tabs = areaTabs,
-                    selectedTab = Tab.PLACES,
-                    entitiesListUiState = EntitiesListUiState(
-                        artistsListUiState = ArtistsListUiState(
-                            pagingDataFlow = canadianArtists,
-                        ),
-                        eventsListUiState = EventsListUiState(
-                            pagingDataFlow = events,
-                        ),
-                        labelsListUiState = LabelsListUiState(
-                            pagingDataFlow = labels,
-                        ),
-                        placesListUiState = PlacesListUiState(
-                            pagingDataFlow = places,
-                        ),
-                        releasesListUiState = ReleasesListUiState(
-                            pagingDataFlow = canadianReleases,
-                        ),
-                        relationsUiState = RelationsUiState(
-                            pagingDataFlow = canadianRelations,
-                        ),
+    PreviewWithSharedElementTransition {
+        AreaUiInternal(
+            state = DetailsUiState(
+                title = "Canada",
+                detailsModel = country,
+                tabs = areaTabs,
+                selectedTab = Tab.PLACES,
+                entitiesListUiState = EntitiesListUiState(
+                    artistsListUiState = ArtistsListUiState(
+                        pagingDataFlow = canadianArtists,
+                    ),
+                    eventsListUiState = EventsListUiState(
+                        pagingDataFlow = events,
+                    ),
+                    labelsListUiState = LabelsListUiState(
+                        pagingDataFlow = labels,
+                    ),
+                    placesListUiState = PlacesListUiState(
+                        pagingDataFlow = places,
+                    ),
+                    releasesListUiState = ReleasesListUiState(
+                        pagingDataFlow = canadianReleases,
+                    ),
+                    relationsUiState = RelationsUiState(
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
-                entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                now = Instant.parse("2025-04-26T16:42:20Z"),
-            )
-        }
+            ),
+            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+        )
     }
 }
 
@@ -832,38 +813,36 @@ internal fun PreviewAreaPlaces() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaStats() {
-    PreviewTheme {
-        Surface {
-            AreaUiInternal(
-                state = DetailsUiState(
-                    title = "Canada",
-                    detailsModel = country,
-                    tabs = areaTabs,
-                    selectedTab = Tab.STATS,
-                    entitiesListUiState = EntitiesListUiState(
-                        artistsListUiState = ArtistsListUiState(
-                            pagingDataFlow = canadianArtists,
-                        ),
-                        eventsListUiState = EventsListUiState(
-                            pagingDataFlow = events,
-                        ),
-                        labelsListUiState = LabelsListUiState(
-                            pagingDataFlow = labels,
-                        ),
-                        placesListUiState = PlacesListUiState(
-                            pagingDataFlow = places,
-                        ),
-                        releasesListUiState = ReleasesListUiState(
-                            pagingDataFlow = canadianReleases,
-                        ),
-                        relationsUiState = RelationsUiState(
-                            pagingDataFlow = canadianRelations,
-                        ),
+    PreviewWithSharedElementTransition {
+        AreaUiInternal(
+            state = DetailsUiState(
+                title = "Canada",
+                detailsModel = country,
+                tabs = areaTabs,
+                selectedTab = Tab.STATS,
+                entitiesListUiState = EntitiesListUiState(
+                    artistsListUiState = ArtistsListUiState(
+                        pagingDataFlow = canadianArtists,
+                    ),
+                    eventsListUiState = EventsListUiState(
+                        pagingDataFlow = events,
+                    ),
+                    labelsListUiState = LabelsListUiState(
+                        pagingDataFlow = labels,
+                    ),
+                    placesListUiState = PlacesListUiState(
+                        pagingDataFlow = places,
+                    ),
+                    releasesListUiState = ReleasesListUiState(
+                        pagingDataFlow = canadianReleases,
+                    ),
+                    relationsUiState = RelationsUiState(
+                        pagingDataFlow = canadianRelations,
                     ),
                 ),
-                entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-                now = Instant.parse("2025-04-26T16:42:20Z"),
-            )
-        }
+            ),
+            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+        )
     }
 }

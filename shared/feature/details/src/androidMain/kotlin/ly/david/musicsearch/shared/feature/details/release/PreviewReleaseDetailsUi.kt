@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.release
 
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.datetime.Instant
@@ -14,7 +13,7 @@ import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
-import ly.david.musicsearch.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 
 private val release = ReleaseDetailsModel(
     id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
@@ -80,33 +79,29 @@ private val release = ReleaseDetailsModel(
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseDetailsUi() {
-    PreviewTheme {
-        Surface {
-            ReleaseDetailsTabUi(
-                release = release,
-                detailsTabUiState = DetailsTabUiState(
-                    numberOfImages = 11,
-                    now = Instant.parse("2025-06-05T19:42:20Z"),
-                ),
-            )
-        }
+    PreviewWithSharedElementTransition {
+        ReleaseDetailsTabUi(
+            release = release,
+            detailsTabUiState = DetailsTabUiState(
+                numberOfImages = 11,
+                now = Instant.parse("2025-06-05T19:42:20Z"),
+            ),
+        )
     }
 }
 
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseDetailsUiCollapsed() {
-    PreviewTheme {
-        Surface {
-            ReleaseDetailsTabUi(
-                release = release,
-                detailsTabUiState = DetailsTabUiState(
-                    numberOfImages = 11,
-                    isReleaseEventsCollapsed = true,
-                    isExternalLinksCollapsed = true,
-                    now = Instant.parse("2025-06-05T19:42:20Z"),
-                ),
-            )
-        }
+    PreviewWithSharedElementTransition {
+        ReleaseDetailsTabUi(
+            release = release,
+            detailsTabUiState = DetailsTabUiState(
+                numberOfImages = 11,
+                isReleaseEventsCollapsed = true,
+                isExternalLinksCollapsed = true,
+                now = Instant.parse("2025-06-05T19:42:20Z"),
+            ),
+        )
     }
 }

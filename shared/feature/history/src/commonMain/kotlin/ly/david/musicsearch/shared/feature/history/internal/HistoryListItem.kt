@@ -2,22 +2,20 @@ package ly.david.musicsearch.shared.feature.history.internal
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import ly.david.musicsearch.shared.domain.common.getTimeFormatted
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.common.image.ThumbnailImage
-import ly.david.musicsearch.ui.common.getName
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.getName
+import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
+import ly.david.musicsearch.ui.core.LocalStrings
 import ly.david.musicsearch.ui.core.theme.TextStyles
 
 @Composable
@@ -53,16 +51,11 @@ internal fun HistoryListItem(
                     )
                 },
                 leadingContent = {
-                    val clipModifier = if (lookupHistory.entity == MusicBrainzEntity.ARTIST) {
-                        Modifier.clip(CircleShape)
-                    } else {
-                        Modifier
-                    }
                     ThumbnailImage(
                         url = lookupHistory.imageUrl.orEmpty(),
                         placeholderKey = lookupHistory.imageId.toString(),
                         placeholderIcon = lookupHistory.entity.getIcon(),
-                        modifier = clipModifier,
+                        clipCircle = lookupHistory.entity == MusicBrainzEntity.ARTIST,
                     )
                 },
                 trailingContent = {

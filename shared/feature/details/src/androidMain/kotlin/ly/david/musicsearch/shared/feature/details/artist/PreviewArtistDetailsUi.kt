@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.artist
 
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.datetime.Instant
@@ -11,7 +10,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
-import ly.david.musicsearch.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 
 private val artist = ArtistDetailsModel(
     id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
@@ -57,63 +56,57 @@ private val artist = ArtistDetailsModel(
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistDetailsUi() {
-    PreviewTheme {
-        Surface {
-            ArtistDetailsTabUi(
-                artist = artist,
-                detailsTabUiState = DetailsTabUiState(
-                    now = Instant.parse("2025-06-05T19:42:20Z"),
-                ),
-            )
-        }
+    PreviewWithSharedElementTransition {
+        ArtistDetailsTabUi(
+            artist = artist,
+            detailsTabUiState = DetailsTabUiState(
+                now = Instant.parse("2025-06-05T19:42:20Z"),
+            ),
+        )
     }
 }
 
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistDetailsUiCollapsed() {
-    PreviewTheme {
-        Surface {
-            ArtistDetailsTabUi(
-                artist = artist,
-                detailsTabUiState = DetailsTabUiState(
-                    isExternalLinksCollapsed = true,
-                    now = Instant.parse("2025-06-05T19:42:20Z"),
-                ),
-            )
-        }
+    PreviewWithSharedElementTransition {
+        ArtistDetailsTabUi(
+            artist = artist,
+            detailsTabUiState = DetailsTabUiState(
+                isExternalLinksCollapsed = true,
+                now = Instant.parse("2025-06-05T19:42:20Z"),
+            ),
+        )
     }
 }
 
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistDetailsUiWithWikipediaUrlButNoExtract() {
-    PreviewTheme {
-        Surface {
-            ArtistDetailsTabUi(
-                artist = ArtistDetailsModel(
-                    id = "89ad4ac3-39f7-470e-963a-56509c546377",
-                    name = "Various Artists",
-                    type = "Other",
-                    sortName = "Various Artists",
-                    wikipediaExtract = WikipediaExtract(
-                        wikipediaUrl = "https://en.wikipedia.org/wiki/Various_artists",
-                    ),
-                    lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
-                    urls = listOf(
-                        RelationListItemModel(
-                            id = "1",
-                            label = "Wikidata",
-                            name = "https://www.wikidata.org/wiki/Q3108914",
-                            linkedEntity = MusicBrainzEntity.URL,
-                            linkedEntityId = "1",
-                        ),
+    PreviewWithSharedElementTransition {
+        ArtistDetailsTabUi(
+            artist = ArtistDetailsModel(
+                id = "89ad4ac3-39f7-470e-963a-56509c546377",
+                name = "Various Artists",
+                type = "Other",
+                sortName = "Various Artists",
+                wikipediaExtract = WikipediaExtract(
+                    wikipediaUrl = "https://en.wikipedia.org/wiki/Various_artists",
+                ),
+                lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
+                urls = listOf(
+                    RelationListItemModel(
+                        id = "1",
+                        label = "Wikidata",
+                        name = "https://www.wikidata.org/wiki/Q3108914",
+                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntityId = "1",
                     ),
                 ),
-                detailsTabUiState = DetailsTabUiState(
-                    now = Instant.parse("2025-06-05T19:42:20Z"),
-                ),
-            )
-        }
+            ),
+            detailsTabUiState = DetailsTabUiState(
+                now = Instant.parse("2025-06-05T19:42:20Z"),
+            ),
+        )
     }
 }

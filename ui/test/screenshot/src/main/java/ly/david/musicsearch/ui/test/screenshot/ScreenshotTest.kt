@@ -52,6 +52,9 @@ abstract class ScreenshotTest(
 
     protected fun snapshot(content: @Composable () -> Unit) {
         paparazzi.snapshot {
+            // TODO: PreviewTheme doesn't need to be here if we're passing it in
+            //  then move PreviewTheme to ui:common
+            //  and consider merging PreviewWithSharedElementTransition
             PreviewTheme {
                 Surface {
                     content()
