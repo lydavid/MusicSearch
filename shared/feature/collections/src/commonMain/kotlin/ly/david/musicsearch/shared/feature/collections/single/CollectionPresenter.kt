@@ -55,7 +55,7 @@ internal class CollectionPresenter(
     override fun present(): CollectionUiState {
         val collectionId = screen.collectionId
 
-        var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
+        var collection: CollectionListItemModel? by rememberRetained { mutableStateOf(null) }
         var title: String by rememberSaveable { mutableStateOf("") }
         var firstActionableResult: ActionableResult? by remember { mutableStateOf(null) }
         var secondActionableResult: ActionableResult? by remember { mutableStateOf(null) }
