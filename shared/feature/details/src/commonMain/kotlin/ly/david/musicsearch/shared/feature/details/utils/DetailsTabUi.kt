@@ -4,7 +4,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
@@ -21,7 +20,6 @@ import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import ly.david.musicsearch.ui.core.LocalStrings
@@ -70,17 +68,11 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                     )
                 }
 
-                ListSeparatorHeader(text = strings.informationHeader(getCapitalizedName(strings)))
+                ListSeparatorHeader(
+                    text = strings.informationHeader(getCapitalizedName(strings)),
+                    numberOfImages = detailsTabUiState.numberOfImages,
+                )
 
-                // TODO: better location for number of images? I put it here to be close to the image itself
-                //  but it's not part of the entity's information
-                detailsTabUiState.numberOfImages?.ifNotNull {
-                    TextWithHeading(
-                        heading = strings.numberOfImages,
-                        text = "$it",
-                        filterText = filterText,
-                    )
-                }
                 entityInfoSection()
             }
 
