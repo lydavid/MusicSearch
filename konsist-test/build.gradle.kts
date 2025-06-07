@@ -11,11 +11,6 @@ android {
 kotlin {
     sourceSets {
         val androidMain by getting
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(libs.compose.ui.preview)
-            }
-        }
     }
 }
 
@@ -24,7 +19,7 @@ tasks.withType<Test> {
 }
 
 dependencies {
-    testImplementation(projects.ui.core)
+    implementation(compose.preview)
     // https://github.com/LemonAppDev/konsist/blob/main/samples/starter-projects/konsist-starter-kmp-gradle-kotlin-junit5/konsistTest/build.gradle.kts
     testImplementation(libs.konsist)
     testImplementation(libs.junit.jupiter.engine)

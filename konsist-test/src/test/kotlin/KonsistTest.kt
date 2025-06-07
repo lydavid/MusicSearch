@@ -8,7 +8,6 @@ import com.lemonappdev.konsist.api.ext.list.withAnnotationOf
 import com.lemonappdev.konsist.api.ext.list.withNameEndingWith
 import com.lemonappdev.konsist.api.verify.assertFalse
 import com.lemonappdev.konsist.api.verify.assertTrue
-import ly.david.musicsearch.ui.core.preview.DefaultPreviews
 import org.junit.jupiter.api.Test
 
 class KonsistTest {
@@ -87,7 +86,6 @@ class KonsistTest {
             .withAnnotationOf(
                 Preview::class,
                 PreviewLightDark::class,
-                DefaultPreviews::class,
             )
             .assertTrue {
                 it.hasNameContaining("Preview")
