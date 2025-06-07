@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.toImmutableMap
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.common.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.preview.PreviewTheme
 
 @PreviewLightDark
 @Composable

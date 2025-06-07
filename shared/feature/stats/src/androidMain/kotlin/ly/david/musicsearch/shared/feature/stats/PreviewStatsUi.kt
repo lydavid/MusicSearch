@@ -10,7 +10,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.ui.common.topappbar.Tab
-import ly.david.musicsearch.ui.common.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.preview.PreviewTheme
 
 @PreviewLightDark
 @Composable

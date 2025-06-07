@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.common.getTimeFormatted
 import ly.david.musicsearch.shared.domain.listitem.NowPlayingHistoryListItemModel
-import ly.david.musicsearch.ui.common.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.preview.PreviewTheme
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable

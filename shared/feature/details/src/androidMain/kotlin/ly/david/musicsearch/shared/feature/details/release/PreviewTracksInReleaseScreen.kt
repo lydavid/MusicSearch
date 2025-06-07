@@ -8,7 +8,7 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
-import ly.david.musicsearch.ui.common.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.preview.PreviewTheme
 
 @PreviewLightDark
 @Composable

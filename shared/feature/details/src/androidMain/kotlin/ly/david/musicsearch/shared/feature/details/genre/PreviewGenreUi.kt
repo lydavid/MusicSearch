@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.feature.details.genre
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
-import ly.david.musicsearch.ui.common.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.preview.PreviewTheme
 
 @PreviewLightDark
 @Composable
