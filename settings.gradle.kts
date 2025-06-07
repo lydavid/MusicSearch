@@ -73,7 +73,6 @@ include(
     ":shared:strings",
     ":test-data",
     ":ui:common",
-    ":ui:core",
     ":ui:test:screenshot",
     ":konsist-test",
     ":test:image",

@@ -12,7 +12,7 @@ import ly.david.musicsearch.shared.AppRoot
 import ly.david.musicsearch.shared.di.sharedModule
 import ly.david.musicsearch.shared.useDarkTheme
 import ly.david.musicsearch.ui.common.screen.SearchScreen
-import ly.david.musicsearch.ui.core.theme.BaseTheme
+import ly.david.musicsearch.ui.common.theme.BaseTheme
 import org.koin.core.context.startKoin
 
 fun main() = application {

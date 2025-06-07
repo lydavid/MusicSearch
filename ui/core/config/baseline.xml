@@ -1,8 +1,0 @@
-<?xml version="1.0" ?>
-<SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>CompositionLocalAllowlist:ExtendedColors.kt$LocalExtendedColors</ID>
-    <ID>CompositionLocalAllowlist:LocalStrings.kt$LocalStrings</ID>
-  </CurrentIssues>
-</SmellBaseline>

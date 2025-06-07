@@ -4,7 +4,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.theme.PreviewTheme
 
 @PreviewLightDark
 @Composable

@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.slack.circuit.runtime.screen.Screen
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
 fun AppNavigationRail(

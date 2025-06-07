@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.core.app.NotificationManagerCompat
-import ly.david.musicsearch.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.theme.PreviewTheme
 
 @Composable
 internal actual fun SettingsUi(

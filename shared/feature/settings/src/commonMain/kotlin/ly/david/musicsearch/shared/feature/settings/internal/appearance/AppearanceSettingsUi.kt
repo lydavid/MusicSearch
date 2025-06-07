@@ -36,7 +36,7 @@ import ly.david.musicsearch.shared.feature.settings.internal.components.SettingS
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
 internal expect fun AppearanceSettingsUi(

@@ -4,7 +4,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
 fun OverflowMenuScope.RefreshMenuItem(

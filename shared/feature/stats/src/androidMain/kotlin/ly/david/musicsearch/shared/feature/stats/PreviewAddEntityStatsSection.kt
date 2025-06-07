@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
-import ly.david.musicsearch.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.theme.PreviewTheme
 
 @PreviewLightDark
 @Composable

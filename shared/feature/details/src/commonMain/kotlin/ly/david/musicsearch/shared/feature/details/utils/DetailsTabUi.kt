@@ -22,7 +22,7 @@ import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 fun <T : MusicBrainzDetailsModel> T.getCapitalizedName(strings: AppStrings): String {
     return when (this) {

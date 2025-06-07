@@ -34,7 +34,7 @@ import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 /**
  * The top-level screen for an instrument.

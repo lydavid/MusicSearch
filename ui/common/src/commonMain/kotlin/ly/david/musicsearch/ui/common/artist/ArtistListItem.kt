@@ -21,7 +21,7 @@ import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.release.ReleaseListItem
 import ly.david.musicsearch.ui.common.text.fontWeight
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 /**
  * Displays the artist's image if it exists.

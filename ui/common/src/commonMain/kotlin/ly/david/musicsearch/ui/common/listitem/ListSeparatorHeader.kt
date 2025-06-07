@@ -18,8 +18,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.PhotoLibrary
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
 fun ListSeparatorHeader(

@@ -13,8 +13,8 @@ import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.common.getTimeFormatted
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listitem.SpotifyHistoryListItemModel
-import ly.david.musicsearch.ui.core.theme.PreviewTheme
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
 internal fun SpotifyHistoryCard(

@@ -29,11 +29,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.collectableEntities
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.ResourceDropdownPicker
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
 fun CreateNewCollectionDialogContent(

@@ -63,7 +63,7 @@ import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.screen.screenContainerSize
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @OptIn(
     ExperimentalMaterial3WindowSizeClassApi::class,

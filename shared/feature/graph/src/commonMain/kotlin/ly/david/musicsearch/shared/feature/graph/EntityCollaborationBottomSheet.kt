@@ -12,7 +12,7 @@ import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.getName
 import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.theme.PreviewTheme
 
 @PreviewLightDark
 @Composable

@@ -28,7 +28,7 @@ import ly.david.musicsearch.ui.common.screen.AllEntitiesScreen
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.HistoryScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -15,8 +15,8 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenContent
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

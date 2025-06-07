@@ -15,8 +15,8 @@ import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import ly.david.musicsearch.shared.domain.place.formatForDisplay
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.PinDrop
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 private const val ZOOM_LEVEL = 16
 

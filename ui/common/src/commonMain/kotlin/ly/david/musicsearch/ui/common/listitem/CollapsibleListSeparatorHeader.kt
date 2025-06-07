@@ -19,7 +19,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.ui.common.icons.ArrowDropDown
 import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 private const val COLLAPSED_ROTATION_DEGREE = -90f
 

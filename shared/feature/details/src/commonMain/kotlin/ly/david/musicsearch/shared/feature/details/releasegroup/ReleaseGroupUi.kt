@@ -39,7 +39,7 @@ import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 /**
  * Equivalent to a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756

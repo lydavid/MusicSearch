@@ -16,9 +16,9 @@ import kotlinx.datetime.DateTimePeriod
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.core.theme.TextStyles
-import ly.david.musicsearch.ui.core.theme.getSubTextColor
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.getSubTextColor
 
 @Composable
 fun LastUpdatedFooterItem(

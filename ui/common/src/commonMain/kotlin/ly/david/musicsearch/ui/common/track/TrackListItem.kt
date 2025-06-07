@@ -13,7 +13,7 @@ import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.common.recording.RecordingListItem
 import ly.david.musicsearch.ui.common.text.fontWeight
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 /**
  * Also see [RecordingListItem].

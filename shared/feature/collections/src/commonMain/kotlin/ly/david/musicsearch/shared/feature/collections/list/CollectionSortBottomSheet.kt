@@ -8,7 +8,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.strings.AppStrings
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons

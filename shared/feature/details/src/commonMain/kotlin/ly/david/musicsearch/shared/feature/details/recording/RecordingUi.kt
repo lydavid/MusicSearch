@@ -39,7 +39,7 @@ import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @OptIn(
     ExperimentalMaterial3Api::class,

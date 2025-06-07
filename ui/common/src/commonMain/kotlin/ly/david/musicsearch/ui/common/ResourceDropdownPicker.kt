@@ -24,7 +24,7 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUri
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

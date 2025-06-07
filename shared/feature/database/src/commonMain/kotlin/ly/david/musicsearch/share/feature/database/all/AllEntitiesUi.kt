@@ -18,7 +18,7 @@ import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Suppress("CyclomaticComplexMethod")
 @OptIn(ExperimentalMaterial3Api::class)

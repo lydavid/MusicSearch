@@ -40,7 +40,7 @@ import ly.david.musicsearch.ui.common.release.ReleaseListItem
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
 import ly.david.musicsearch.ui.common.series.SeriesListItem
 import ly.david.musicsearch.ui.common.work.WorkListItem
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
 internal fun SearchResultsUi(

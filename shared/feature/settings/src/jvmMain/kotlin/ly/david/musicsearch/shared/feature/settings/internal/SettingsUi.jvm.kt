@@ -26,8 +26,8 @@ import androidx.compose.ui.window.Dialog
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
 internal actual fun SettingsUi(

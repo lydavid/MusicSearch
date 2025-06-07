@@ -27,7 +27,7 @@ import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.ui.common.icons.CheckCircle
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.listitem.ListItemSharedTransitionKey
-import ly.david.musicsearch.ui.core.SMALL_IMAGE_SIZE
+import ly.david.musicsearch.ui.common.theme.SMALL_IMAGE_SIZE
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable

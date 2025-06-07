@@ -40,10 +40,10 @@ import ly.david.musicsearch.shared.feature.graph.viz.compose.renderText
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.core.theme.ExtendedColors
-import ly.david.musicsearch.ui.core.theme.LocalExtendedColors
-import ly.david.musicsearch.ui.core.theme.getSubTextColor
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.ExtendedColors
+import ly.david.musicsearch.ui.common.theme.LocalExtendedColors
+import ly.david.musicsearch.ui.common.theme.getSubTextColor
 
 private const val MIN_SCALE = 0.1f
 private const val MAX_SCALE = 3f

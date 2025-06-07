@@ -9,7 +9,7 @@ import kotlinx.datetime.Instant
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.getCachedLocalOfRemoteStringFunction
 import ly.david.musicsearch.ui.common.topappbar.getTitle
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
 internal fun StatsUi(

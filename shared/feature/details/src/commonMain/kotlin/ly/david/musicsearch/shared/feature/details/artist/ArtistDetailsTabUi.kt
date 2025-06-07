@@ -13,7 +13,7 @@ import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
 internal fun ArtistDetailsTabUi(

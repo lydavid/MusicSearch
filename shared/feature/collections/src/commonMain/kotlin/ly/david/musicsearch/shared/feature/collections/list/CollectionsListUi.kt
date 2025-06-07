@@ -46,7 +46,7 @@ import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 /**
  * Displays a list of all of your collections.

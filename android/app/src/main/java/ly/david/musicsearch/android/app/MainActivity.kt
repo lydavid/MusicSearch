@@ -31,7 +31,7 @@ import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.HistoryScreen
 import ly.david.musicsearch.ui.common.screen.SearchScreen
 import ly.david.musicsearch.ui.common.screen.SettingsScreen
-import ly.david.musicsearch.ui.core.theme.BaseTheme
+import ly.david.musicsearch.ui.common.theme.BaseTheme
 import org.koin.android.ext.android.inject
 
 internal class MainActivity : ComponentActivity() {

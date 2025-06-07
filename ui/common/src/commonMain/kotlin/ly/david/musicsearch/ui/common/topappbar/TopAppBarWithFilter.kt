@@ -41,7 +41,7 @@ import ly.david.musicsearch.ui.common.icons.ArrowBack
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.FindInPage
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 /**
  * [ScrollableTopAppBar] with filtering.

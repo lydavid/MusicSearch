@@ -19,8 +19,8 @@ import ly.david.musicsearch.ui.common.icons.CheckCircle
 import ly.david.musicsearch.ui.common.icons.Cloud
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.text.fontWeight
-import ly.david.musicsearch.ui.core.SMALL_IMAGE_SIZE
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.SMALL_IMAGE_SIZE
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
 internal fun CollectionListItem(

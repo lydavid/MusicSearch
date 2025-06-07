@@ -17,7 +17,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.shared.domain)
-                api(projects.ui.core)
+                api(projects.shared.strings)
                 implementation(projects.core.logging.api)
 
                 implementation(compose.foundation)
@@ -29,13 +29,13 @@ kotlin {
                 implementation(libs.circuit.foundation)
                 implementation(libs.circuit.overlay)
                 implementation(libs.circuitx.overlays)
-                implementation(libs.koin.core)
-                implementation(libs.lyricist.library)
-                implementation(libs.paging.common)
-                implementation(libs.paging.compose)
-
                 implementation(libs.coil)
                 implementation(libs.coil.compose)
+                implementation(libs.koin.core)
+                implementation(libs.lyricist.library)
+                implementation(libs.materialKolor)
+                implementation(libs.paging.common)
+                implementation(libs.paging.compose)
                 implementation(libs.zoomable)
             }
         }

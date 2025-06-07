@@ -22,7 +22,7 @@ import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.work.getDisplayScript
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
 internal fun ReleaseDetailsTabUi(

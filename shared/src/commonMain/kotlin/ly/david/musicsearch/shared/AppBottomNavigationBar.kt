@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.slack.circuit.runtime.screen.Screen
 import ly.david.musicsearch.shared.strings.AppStrings
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 internal fun AppNavigationItem.getText(strings: AppStrings): String =
     when (this) {

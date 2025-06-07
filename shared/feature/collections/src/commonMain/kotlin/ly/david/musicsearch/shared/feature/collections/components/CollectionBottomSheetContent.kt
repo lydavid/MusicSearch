@@ -18,8 +18,8 @@ import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.ui.common.icons.Add
 import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
 internal fun CollectionBottomSheetContent(

@@ -31,7 +31,7 @@ import ly.david.musicsearch.ui.common.button.RetryButton
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenErrorWithRetry
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 /**
  * Handles loading and errors for paging screens.

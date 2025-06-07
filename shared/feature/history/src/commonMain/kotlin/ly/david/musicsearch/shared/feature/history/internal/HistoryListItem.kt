@@ -15,8 +15,8 @@ import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.getName
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
 internal fun HistoryListItem(

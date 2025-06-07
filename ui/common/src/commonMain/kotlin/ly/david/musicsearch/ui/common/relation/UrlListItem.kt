@@ -27,8 +27,8 @@ import ly.david.musicsearch.ui.common.icons.Link
 import ly.david.musicsearch.ui.common.icons.Wikidata
 import ly.david.musicsearch.ui.common.icons.Wikipedia
 import ly.david.musicsearch.ui.common.text.fontWeight
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
 fun UrlListItem(

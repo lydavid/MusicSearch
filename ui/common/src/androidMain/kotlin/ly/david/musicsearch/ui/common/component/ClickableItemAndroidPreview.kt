@@ -7,7 +7,7 @@ import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Person
 import ly.david.musicsearch.ui.common.icons.Search
-import ly.david.musicsearch.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.theme.PreviewTheme
 
 @PreviewLightDark
 @Composable

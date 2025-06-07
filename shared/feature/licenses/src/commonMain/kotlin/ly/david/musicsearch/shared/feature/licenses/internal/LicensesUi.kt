@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import com.mikepenz.aboutlibraries.ui.compose.rememberLibraries
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import musicsearch.shared.feature.licenses.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi

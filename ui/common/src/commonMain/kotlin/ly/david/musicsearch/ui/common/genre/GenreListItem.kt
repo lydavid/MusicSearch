@@ -13,7 +13,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.listItemColors
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
 fun GenreListItem(

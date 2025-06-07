@@ -12,7 +12,7 @@ import ly.david.musicsearch.shared.domain.listitem.Header
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 

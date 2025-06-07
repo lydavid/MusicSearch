@@ -37,7 +37,7 @@ import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.icons.ArrowBack
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.MoreVert
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 /**
  * Assuming an average api call finishes under 300ms, we should delay showing the loading indicator until we

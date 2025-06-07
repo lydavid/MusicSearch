@@ -18,7 +18,7 @@ import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 internal fun LazyListScope.addEntityStatsSection(
     entityStats: EntityStats,

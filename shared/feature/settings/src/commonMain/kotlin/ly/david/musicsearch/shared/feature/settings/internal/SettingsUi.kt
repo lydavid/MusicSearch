@@ -43,8 +43,8 @@ import ly.david.musicsearch.ui.common.screen.LicensesScreen
 import ly.david.musicsearch.ui.common.screen.NowPlayingHistoryScreen
 import ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.core.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
 internal expect fun SettingsUi(

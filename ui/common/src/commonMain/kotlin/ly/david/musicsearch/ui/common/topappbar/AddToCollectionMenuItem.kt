@@ -14,7 +14,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.screen.AddToCollectionScreen
 import ly.david.musicsearch.ui.common.screen.showInBottomSheet
-import ly.david.musicsearch.ui.core.LocalStrings
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
 fun OverflowMenuScope.AddToCollectionMenuItem(

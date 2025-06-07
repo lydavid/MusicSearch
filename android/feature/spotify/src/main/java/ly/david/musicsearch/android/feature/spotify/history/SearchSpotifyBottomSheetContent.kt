@@ -16,8 +16,8 @@ import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Search
-import ly.david.musicsearch.ui.core.LocalStrings
-import ly.david.musicsearch.ui.core.theme.PreviewTheme
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.PreviewTheme
 
 @Composable
 internal fun SearchSpotifyBottomSheetContent(
