@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.mapper
 
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 
 fun mapToEventListItemModel(
@@ -13,6 +14,8 @@ fun mapToEventListItemModel(
     begin: String?,
     end: String?,
     ended: Boolean?,
+    thumbnailUrl: String?,
+    imageId: Long?,
     visited: Boolean?,
 ) = EventListItemModel(
     id = id,
@@ -26,5 +29,7 @@ fun mapToEventListItemModel(
         end = end,
         ended = ended,
     ),
+    imageUrl = thumbnailUrl,
+    imageId = imageId?.let { ImageId(it) },
     visited = visited == true,
 )

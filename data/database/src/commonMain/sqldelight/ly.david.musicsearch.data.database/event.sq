@@ -82,9 +82,12 @@ SELECT
   e.begin,
   e.end,
   e.ended,
+  mi.thumbnail_url,
+  mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM events_by_entity ee
 INNER JOIN event e ON e.id = ee.event_id
+LEFT JOIN mbid_image mi ON mi.mbid = e.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = e.id
 WHERE ee.entity_id = :entityId
 AND (
@@ -95,6 +98,7 @@ AND (
   e.begin LIKE :query OR
   e.end LIKE :query
 )
+GROUP BY e.id
 ORDER BY e.begin, e.end, e.name
 LIMIT :limit OFFSET :offset;
 
@@ -129,10 +133,13 @@ SELECT
   e.begin,
   e.end,
   e.ended,
+  mi.thumbnail_url,
+  mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM event e
 INNER JOIN collection_entity ce ON e.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN mbid_image mi ON mi.mbid = e.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = e.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
@@ -144,6 +151,7 @@ AND (
   e.begin LIKE :query OR
   e.end LIKE :query
 )
+GROUP BY e.id
 ORDER BY e.begin, e.end, e.name
 LIMIT :limit OFFSET :offset;
 
@@ -174,8 +182,11 @@ SELECT
   e.begin,
   e.end,
   e.ended,
+  mi.thumbnail_url,
+  mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM event e
+LEFT JOIN mbid_image mi ON mi.mbid = e.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = e.id
 WHERE (
   e.name LIKE :query OR
@@ -185,5 +196,6 @@ WHERE (
   e.begin LIKE :query OR
   e.end LIKE :query
 )
+GROUP BY e.id
 ORDER BY e.begin, e.end, e.name
 LIMIT :limit OFFSET :offset;

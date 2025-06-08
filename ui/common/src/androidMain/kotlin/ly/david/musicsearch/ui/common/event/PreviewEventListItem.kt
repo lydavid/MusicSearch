@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
+import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 
 @PreviewLightDark
@@ -99,6 +100,26 @@ internal fun PreviewEventListItemCancelled() {
                 ),
                 cancelled = true,
             ),
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewEventListItemWithCoverArt() {
+    InitializeFakeImageLoader()
+    PreviewWithSharedElementTransition {
+        EventListItemModel(
+            id = "76a88474-912b-4a6e-b9e2-a98fd75ae51f",
+            name = "コミックマーケット105",
+            type = "Convention/Expo",
+            lifeSpan = LifeSpanUiModel(
+                begin = "2024-12-29",
+                end = "2024-12-30",
+                ended = true,
+            ),
+            imageUrl = "https://www.example.com/image.jpg",
+            imageId = null,
         )
     }
 }

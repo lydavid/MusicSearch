@@ -104,8 +104,8 @@ fun EventListItem(
         colors = listItemColors(isSelected = isSelected),
         leadingContent = {
             ThumbnailImage(
-                url = "",
-                imageId = null,
+                url = event.imageUrl.orEmpty(),
+                imageId = event.imageId,
                 placeholderIcon = MusicBrainzEntity.EVENT.getIcon(),
                 modifier = Modifier
                     .clickable {

@@ -39,4 +39,11 @@ class EventListItemTest : ScreenshotTest() {
             PreviewEventListItemCancelled()
         }
     }
+
+    @Test
+    fun withCoverArt() {
+        snapshot {
+            PreviewEventListItemWithCoverArt()
+        }
+    }
 }

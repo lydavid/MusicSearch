@@ -89,8 +89,8 @@ SELECT
   a.type,
   a.gender,
   a.country_code,
-  a.begin,
-  a.end,
+  a.`begin`,
+  a.`end`,
   a.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
@@ -116,10 +116,14 @@ SELECT
   e.begin,
   e.end,
   e.ended,
+  mi.thumbnail_url,
+  mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM search_result sr
 INNER JOIN event e ON sr.entity_id = e.id
+LEFT JOIN mbid_image mi ON mi.mbid = e.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = e.id
+GROUP BY e.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
