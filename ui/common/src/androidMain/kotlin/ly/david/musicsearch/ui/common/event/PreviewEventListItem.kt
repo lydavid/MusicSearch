@@ -3,6 +3,7 @@ package ly.david.musicsearch.ui.common.event
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
@@ -91,7 +92,7 @@ internal fun PreviewEventListItemMultiDay() {
 internal fun PreviewEventListItemCancelled() {
     PreviewWithSharedElementTransition {
         EventListItem(
-            EventListItemModel(
+            event = EventListItemModel(
                 id = "b7c3f330-4fa8-4355-95de-af6e7c5d20b9",
                 name = "1973-03-06: Vancouver Gardens, Vancouver, BC, Canada",
                 type = "Concert",
@@ -109,17 +110,19 @@ internal fun PreviewEventListItemCancelled() {
 internal fun PreviewEventListItemWithCoverArt() {
     InitializeFakeImageLoader()
     PreviewWithSharedElementTransition {
-        EventListItemModel(
-            id = "76a88474-912b-4a6e-b9e2-a98fd75ae51f",
-            name = "コミックマーケット105",
-            type = "Convention/Expo",
-            lifeSpan = LifeSpanUiModel(
-                begin = "2024-12-29",
-                end = "2024-12-30",
-                ended = true,
+        EventListItem(
+            event = EventListItemModel(
+                id = "76a88474-912b-4a6e-b9e2-a98fd75ae51f",
+                name = "コミックマーケット105",
+                type = "Convention/Expo",
+                lifeSpan = LifeSpanUiModel(
+                    begin = "2024-12-29",
+                    end = "2024-12-30",
+                    ended = true,
+                ),
+                imageUrl = "https://www.example.com/image.jpg",
+                imageId = ImageId(1L),
             ),
-            imageUrl = "https://www.example.com/image.jpg",
-            imageId = null,
         )
     }
 }
