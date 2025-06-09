@@ -160,14 +160,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.7.0",
+            "artifactVersion": "1.7.1",
             "description": "Provides backwards-compatible implementations of UI-related Android SDK functionality, including dark mode and Material theming.",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "AppCompat",
-            "website": "https://developer.android.com/jetpack/androidx/releases/appcompat#1.7.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/appcompat#1.7.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -185,14 +185,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.7.0",
+            "artifactVersion": "1.7.1",
             "description": "Provides backward-compatible implementations of resource-related Android SDKfunctionality, including color state list theming.",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "AppCompat Resources",
-            "website": "https://developer.android.com/jetpack/androidx/releases/appcompat#1.7.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/appcompat#1.7.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -1843,14 +1843,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.8.5",
+            "artifactVersion": "1.8.8",
             "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren't a part of the framework APIs. Compatible on devices running API 14 or later.",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "fragment",
-            "website": "https://developer.android.com/jetpack/androidx/releases/fragment#1.8.5",
+            "website": "https://developer.android.com/jetpack/androidx/releases/fragment#1.8.8",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -1868,14 +1868,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.8.5",
+            "artifactVersion": "1.8.8",
             "description": "Kotlin extensions for 'fragment' artifact",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Fragment Kotlin Extensions",
-            "website": "https://developer.android.com/jetpack/androidx/releases/fragment#1.8.5",
+            "website": "https://developer.android.com/jetpack/androidx/releases/fragment#1.8.8",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -5040,7 +5040,7 @@
                     "name": "Arnaud Giuliani"
                 }
             ],
-            "artifactVersion": "4.0.4",
+            "artifactVersion": "4.1.0",
             "description": "KOIN - Kotlin simple Dependency Injection Framework",
             "scm": {
                 "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
@@ -5062,7 +5062,7 @@
                     "name": "Arnaud Giuliani"
                 }
             ],
-            "artifactVersion": "4.0.4",
+            "artifactVersion": "4.1.0",
             "description": "KOIN - Kotlin simple Dependency Injection Framework",
             "scm": {
                 "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
@@ -5084,7 +5084,7 @@
                     "name": "Arnaud Giuliani"
                 }
             ],
-            "artifactVersion": "4.0.4",
+            "artifactVersion": "4.1.0",
             "description": "KOIN - Kotlin simple Dependency Injection Framework",
             "scm": {
                 "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
@@ -5097,7 +5097,7 @@
             ]
         },
         {
-            "uniqueId": "io.insert-koin:koin-compose-jvm",
+            "uniqueId": "io.insert-koin:koin-compose-android",
             "funding": [
                 
             ],
@@ -5106,7 +5106,7 @@
                     "name": "Arnaud Giuliani"
                 }
             ],
-            "artifactVersion": "4.0.4",
+            "artifactVersion": "4.1.0",
             "description": "KOIN - Kotlin simple Dependency Injection Framework",
             "scm": {
                 "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
@@ -5128,7 +5128,7 @@
                     "name": "Arnaud Giuliani"
                 }
             ],
-            "artifactVersion": "4.0.4",
+            "artifactVersion": "4.1.0",
             "description": "KOIN - Kotlin simple Dependency Injection Framework",
             "scm": {
                 "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
@@ -5141,7 +5141,7 @@
             ]
         },
         {
-            "uniqueId": "io.insert-koin:koin-compose-viewmodel-jvm",
+            "uniqueId": "io.insert-koin:koin-compose-viewmodel-android",
             "funding": [
                 
             ],
@@ -5150,7 +5150,7 @@
                     "name": "Arnaud Giuliani"
                 }
             ],
-            "artifactVersion": "4.0.4",
+            "artifactVersion": "4.1.0",
             "description": "KOIN - Kotlin simple Dependency Injection Framework",
             "scm": {
                 "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
@@ -5172,7 +5172,7 @@
                     "name": "Arnaud Giuliani"
                 }
             ],
-            "artifactVersion": "4.0.4",
+            "artifactVersion": "4.1.0",
             "description": "KOIN - Kotlin simple Dependency Injection Framework",
             "scm": {
                 "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
@@ -5194,7 +5194,7 @@
                     "name": "Arnaud Giuliani"
                 }
             ],
-            "artifactVersion": "4.0.4",
+            "artifactVersion": "4.1.0",
             "description": "KOIN - Kotlin simple Dependency Injection Framework",
             "scm": {
                 "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
@@ -5216,7 +5216,7 @@
                     "name": "Arnaud Giuliani"
                 }
             ],
-            "artifactVersion": "4.0.4",
+            "artifactVersion": "4.1.0",
             "description": "KOIN - Kotlin simple Dependency Injection Framework",
             "scm": {
                 "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
@@ -5229,7 +5229,7 @@
             ]
         },
         {
-            "uniqueId": "io.insert-koin:koin-core-viewmodel-jvm",
+            "uniqueId": "io.insert-koin:koin-core-viewmodel-android",
             "funding": [
                 
             ],
@@ -5238,7 +5238,7 @@
                     "name": "Arnaud Giuliani"
                 }
             ],
-            "artifactVersion": "4.0.4",
+            "artifactVersion": "4.1.0",
             "description": "KOIN - Kotlin simple Dependency Injection Framework",
             "scm": {
                 "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
@@ -6090,54 +6090,6 @@
             ]
         },
         {
-            "uniqueId": "org.jetbrains.androidx.core:core-bundle",
-            "funding": [
-                
-            ],
-            "developers": [
-                {
-                    "organisationUrl": "https://www.jetbrains.com",
-                    "name": "Compose Multiplatform Team"
-                }
-            ],
-            "artifactVersion": "1.0.1",
-            "description": "Provides Bundle in Kotlin Multiplatform projects",
-            "scm": {
-                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
-                "url": "https://github.com/JetBrains/compose-jb",
-                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
-            },
-            "name": "androidx.core:core-bundle",
-            "website": "https://github.com/JetBrains/compose-jb",
-            "licenses": [
-                "Apache-2.0"
-            ]
-        },
-        {
-            "uniqueId": "org.jetbrains.androidx.core:core-bundle-android",
-            "funding": [
-                
-            ],
-            "developers": [
-                {
-                    "organisationUrl": "https://www.jetbrains.com",
-                    "name": "Compose Multiplatform Team"
-                }
-            ],
-            "artifactVersion": "1.0.1",
-            "description": "Provides Bundle in Kotlin Multiplatform projects",
-            "scm": {
-                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
-                "url": "https://github.com/JetBrains/compose-jb",
-                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
-            },
-            "name": "androidx.core:core-bundle",
-            "website": "https://github.com/JetBrains/compose-jb",
-            "licenses": [
-                "Apache-2.0"
-            ]
-        },
-        {
             "uniqueId": "org.jetbrains.androidx.lifecycle:lifecycle-common",
             "funding": [
                 
@@ -6148,7 +6100,7 @@
                     "name": "Compose Multiplatform Team"
                 }
             ],
-            "artifactVersion": "2.8.4",
+            "artifactVersion": "2.9.0-beta01",
             "description": "Android Lifecycle-Common",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
@@ -6220,7 +6172,7 @@
                     "name": "Compose Multiplatform Team"
                 }
             ],
-            "artifactVersion": "2.8.4",
+            "artifactVersion": "2.9.0-beta01",
             "description": "Android Lifecycle ViewModel",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
@@ -6244,7 +6196,7 @@
                     "name": "Compose Multiplatform Team"
                 }
             ],
-            "artifactVersion": "2.8.3",
+            "artifactVersion": "2.9.0-beta01",
             "description": "Compose integration with Lifecycle ViewModel",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
@@ -6268,7 +6220,7 @@
                     "name": "Compose Multiplatform Team"
                 }
             ],
-            "artifactVersion": "2.8.3",
+            "artifactVersion": "2.9.0-beta01",
             "description": "Android Lifecycle ViewModel",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
@@ -6292,7 +6244,7 @@
                     "name": "Compose Multiplatform Team"
                 }
             ],
-            "artifactVersion": "1.2.2",
+            "artifactVersion": "1.3.0-beta01",
             "description": "Android Lifecycle Saved State",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
