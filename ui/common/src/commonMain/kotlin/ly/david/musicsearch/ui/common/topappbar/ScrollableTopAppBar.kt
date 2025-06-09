@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
@@ -132,26 +133,31 @@ private fun TitleAndSubtitle(
     if (showLoading) {
         DotsFlashing()
     } else {
-        Column {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.horizontalScroll(rememberScrollState()),
-            ) {
-                if (entity != null) {
-                    EntityIcon(
-                        entity = entity,
-                        modifier = Modifier.padding(end = 8.dp),
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.semantics {
+                isTraversalGroup = true
+            },
+        ) {
+            if (entity != null) {
+                EntityIcon(
+                    entity = entity,
+                    modifier = Modifier.padding(end = 8.dp),
+                )
+            }
+            Column {
+                SelectionContainer {
+                    Text(
+                        text = title,
+                        modifier = Modifier.horizontalScroll(rememberScrollState()),
                     )
                 }
-                SelectionContainer {
-                    Text(text = title)
+                if (subtitle.isNotEmpty()) {
+                    SubtitleWithOverflow(
+                        subtitle = subtitle,
+                        subtitleDropdownMenuItems = subtitleDropdownMenuItems,
+                    )
                 }
-            }
-            if (subtitle.isNotEmpty()) {
-                SubtitleWithOverflow(
-                    subtitle = subtitle,
-                    subtitleDropdownMenuItems = subtitleDropdownMenuItems,
-                )
             }
         }
     }
