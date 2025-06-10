@@ -140,6 +140,8 @@ deleteRelationshipsByType:
 DELETE FROM relation
 WHERE entity_id = :entityId AND linked_entity = :entityType;
 
+-- This counts the total number of relationships
+-- which will not match up if we had grouped any with the same linked_entity_id
 countOfEachRelationshipType:
 SELECT linked_entity, count(entity_id) AS entity_count
 FROM relation

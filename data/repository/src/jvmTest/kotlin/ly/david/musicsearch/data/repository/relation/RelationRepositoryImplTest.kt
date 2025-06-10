@@ -406,5 +406,44 @@ class RelationRepositoryImplTest : KoinTest {
                 this,
             )
         }
+
+        // when filtering, the linked entities that were filtered out will not be grouped
+        relationRepository.observeEntityRelationships(
+            entity = MusicBrainzEntity.WORK,
+            entityId = "dfe5d4e5-ee03-4a8c-b7b3-4e231dcbcf6c",
+            query = "pre",
+            lastUpdated = testDateTimeInThePast,
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    RelationListItemModel(
+                        id = "ae6c957d-c33e-4028-abdd-688bddec3be8_6",
+                        name = "バルーン",
+                        disambiguation = "Vocaloid producer",
+                        linkedEntityId = "ae6c957d-c33e-4028-abdd-688bddec3be8",
+                        label = "premiered by",
+                        attributes = "",
+                        linkedEntity = MusicBrainzEntity.ARTIST,
+                        visited = false,
+                        isForwardDirection = false,
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    RelationListItemModel(
+                        id = "2708d1f1-d8f1-45fd-a3c6-074a410e61d8_7",
+                        name = "v flower",
+                        disambiguation = "Vocaloid; \uD835\uDC87lower",
+                        linkedEntityId = "2708d1f1-d8f1-45fd-a3c6-074a410e61d8",
+                        label = "premiered by",
+                        attributes = "",
+                        linkedEntity = MusicBrainzEntity.ARTIST,
+                        visited = false,
+                        isForwardDirection = false,
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                ),
+                this,
+            )
+        }
     }
 }
