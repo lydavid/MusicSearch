@@ -1940,14 +1940,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Android Lifecycle-Common",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle-Common",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -1965,14 +1965,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Android Lifecycle-Common for Java 8 Language",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle-Common for Java 8",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -1990,14 +1990,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Android Lifecycle-Common",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle-Common",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2015,14 +2015,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Android Lifecycle LiveData",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle LiveData",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2040,14 +2040,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Android Lifecycle LiveData Core",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle LiveData Core",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2065,14 +2065,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Kotlin extensions for 'livedata-core' artifact",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "LiveData Core Kotlin Extensions",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2090,14 +2090,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Android Lifecycle Process",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle Process",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2115,14 +2115,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Android Lifecycle Runtime",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle Runtime",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2140,14 +2140,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Android Lifecycle Runtime",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle Runtime",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2165,14 +2165,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Compose integration with Lifecycle",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle Runtime Compose",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2190,14 +2190,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Compose integration with Lifecycle",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle Runtime Compose",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2215,14 +2215,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Kotlin extensions for 'lifecycle' artifact",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle Kotlin Extensions",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2240,14 +2240,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Kotlin extensions for 'lifecycle' artifact",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle Kotlin Extensions",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2265,14 +2265,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Android Lifecycle ViewModel",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle ViewModel",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2290,14 +2290,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Android Lifecycle ViewModel",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle ViewModel",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2315,14 +2315,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Compose integration with Lifecycle ViewModel",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle ViewModel Compose",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2340,14 +2340,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Compose integration with Lifecycle ViewModel",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle ViewModel Compose",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2365,14 +2365,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Kotlin extensions for 'viewmodel' artifact",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle ViewModel Kotlin Extensions",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2390,14 +2390,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Android Lifecycle ViewModel",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle ViewModel with SavedState",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2415,14 +2415,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.0",
+            "artifactVersion": "2.9.1",
             "description": "Android Lifecycle ViewModel",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle ViewModel with SavedState",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -4028,7 +4028,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit (Backstack)",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4051,7 +4051,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit (Backstack)",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4074,7 +4074,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit Foundation",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4097,7 +4097,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit Foundation",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4120,7 +4120,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit (Overlay)",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4143,7 +4143,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit (Overlay)",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4166,7 +4166,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit (Retained)",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4189,7 +4189,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit (Retained)",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4212,7 +4212,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit Runtime",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4235,7 +4235,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit Runtime",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4258,7 +4258,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit Presenter",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4281,7 +4281,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit Presenter",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4304,7 +4304,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit (Screen)",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4327,7 +4327,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit (Screen)",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4350,7 +4350,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit UI",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4373,7 +4373,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit UI",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4396,7 +4396,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit Shared Elements",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4419,7 +4419,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "Circuit Shared Elements",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4442,7 +4442,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "CircuitX (Gesture Navigation)",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4465,7 +4465,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "CircuitX (Gesture Navigation)",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4488,7 +4488,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "CircuitX (Overlays)",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -4511,7 +4511,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.28.0",
+            "artifactVersion": "0.28.1",
             "description": "CircuitX (Overlays)",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
@@ -6868,7 +6868,7 @@
                     "name": "JetBrains Team"
                 }
             ],
-            "artifactVersion": "2.1.10",
+            "artifactVersion": "2.1.21",
             "description": "Kotlin is a statically typed programming language that compiles to JVM byte codes and JavaScript",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
@@ -6964,7 +6964,7 @@
                     "name": "Kotlin Team"
                 }
             ],
-            "artifactVersion": "2.1.10",
+            "artifactVersion": "2.1.21",
             "description": "Kotlin Standard Library JDK 7 extension",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
@@ -6988,7 +6988,7 @@
                     "name": "Kotlin Team"
                 }
             ],
-            "artifactVersion": "2.1.10",
+            "artifactVersion": "2.1.21",
             "description": "Kotlin Standard Library JDK 8 extension",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
