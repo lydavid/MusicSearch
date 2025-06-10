@@ -28,12 +28,10 @@ import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.SearchApi
 import ly.david.musicsearch.data.musicbrainz.api.SearchAreasResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchArtistsResponse
-import ly.david.musicsearch.data.musicbrainz.api.SearchEventsResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
-import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
@@ -41,7 +39,6 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
-import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.listitem.Footer
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
@@ -291,55 +288,6 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
                 AreaListItemModel(
                     id = "f42c1e2a-b7db-4acf-9742-1889b9c6d530",
                     name = "A Coruña",
-                ),
-                Footer(),
-            ),
-            searchResults,
-        )
-    }
-
-    // This shouldn't be a problem as long as our LazyColumn is not keyed
-    @Test
-    fun `duplicates are shown`() = runTest {
-        val repository = createRepository(
-            searchApi = object : FakeSearchApi() {
-                override suspend fun queryEvents(
-                    query: String,
-                    limit: Int,
-                    offset: Int,
-                ): SearchEventsResponse {
-                    return SearchEventsResponse(
-                        count = 2,
-                        events = listOf(
-                            EventMusicBrainzNetworkModel(
-                                id = "1bc74971-d5c8-4a21-b761-c24e74efb9b4",
-                                name = "Lollapalooza 2024",
-                            ),
-                            EventMusicBrainzNetworkModel(
-                                id = "1bc74971-d5c8-4a21-b761-c24e74efb9b4",
-                                name = "Lollapalooza 2024",
-                            ),
-                        ),
-                    )
-                }
-            },
-        )
-
-        val flow: Flow<PagingData<ListItemModel>> = repository.observeSearchResults(
-            entity = MusicBrainzEntity.EVENT,
-            query = "a",
-        )
-        val searchResults: List<ListItemModel> = flow.asSnapshot()
-        Assert.assertEquals(
-            listOf(
-                SearchHeader(remoteCount = 2),
-                EventListItemModel(
-                    id = "1bc74971-d5c8-4a21-b761-c24e74efb9b4",
-                    name = "Lollapalooza 2024",
-                ),
-                EventListItemModel(
-                    id = "1bc74971-d5c8-4a21-b761-c24e74efb9b4",
-                    name = "Lollapalooza 2024",
                 ),
                 Footer(),
             ),

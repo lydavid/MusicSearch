@@ -58,7 +58,7 @@ INSERT OR IGNORE INTO relation
 VALUES ?;
 
 countEntityRelationships:
-SELECT count(*)
+SELECT COUNT(DISTINCT linked_entity_id)
 FROM relation
 WHERE entity_id = :entityId
 AND linked_entity IN :relatedEntities
@@ -74,7 +74,7 @@ SELECT
   `linked_entity_id`,
   `linked_entity`,
   `order`,
-  `label`,
+  GROUP_CONCAT(`label`, ', '),
   `name`,
   `disambiguation`,
   `attributes`,
@@ -98,7 +98,7 @@ AND (
   OR label LIKE :query
   OR attributes LIKE :query
 )
-GROUP BY linked_entity_id, `order`
+GROUP BY linked_entity_id
 ORDER BY linked_entity, label, `order`
 LIMIT :limit OFFSET :offset;
 

@@ -7,9 +7,11 @@ import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.AttributeValue
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
@@ -78,10 +80,9 @@ class RelationRepositoryImplTest : KoinTest {
                                 direction = Direction.BACKWARD,
                                 targetType = SerializableMusicBrainzEntity.LABEL,
                                 label = LabelMusicBrainzNetworkModel(
-                                    id = "bad6d0fa-938e-45a2-95fd-b37ea37b783c",
+                                    id = "09676c82-b1d0-4bb1-b827-91f4a8e52cb3",
                                     name = "黄昏フロンティア",
                                     type = "Original Production",
-                                    disambiguation = "dōjin game developer",
                                 ),
                             ),
                             RelationMusicBrainzModel(
@@ -144,78 +145,266 @@ class RelationRepositoryImplTest : KoinTest {
             },
         )
 
-        val flow = relationRepository.observeEntityRelationships(
+        relationRepository.observeEntityRelationships(
             entity = MusicBrainzEntity.SERIES,
             entityId = "eca82a1b-1efa-4d6b-9278-e278523267f8",
             query = "",
             lastUpdated = testDateTimeInThePast,
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    RelationListItemModel(
+                        id = "bad6d0fa-938e-45a2-95fd-b37ea37b783c_5",
+                        linkedEntityId = "bad6d0fa-938e-45a2-95fd-b37ea37b783c",
+                        label = "publishing label",
+                        name = "上海アリス幻樂団",
+                        disambiguation = "dōjin game developer",
+                        attributes = "",
+                        linkedEntity = MusicBrainzEntity.LABEL,
+                        visited = false,
+                        isForwardDirection = false,
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    RelationListItemModel(
+                        id = "09676c82-b1d0-4bb1-b827-91f4a8e52cb3_6",
+                        linkedEntityId = "09676c82-b1d0-4bb1-b827-91f4a8e52cb3",
+                        label = "publishing label",
+                        name = "黄昏フロンティア",
+                        attributes = "",
+                        linkedEntity = MusicBrainzEntity.LABEL,
+                        visited = false,
+                        isForwardDirection = false,
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    RelationListItemModel(
+                        id = "5d286f5b-7cc3-3f78-b1cf-a24d496af34b_1",
+                        linkedEntityId = "5d286f5b-7cc3-3f78-b1cf-a24d496af34b",
+                        label = "has parts",
+                        name = "東方靈異伝 〜 Highly Responsive to Prayers",
+                        disambiguation = "",
+                        attributes = "number: 1",
+                        linkedEntity = MusicBrainzEntity.RELEASE_GROUP,
+                        visited = false,
+                        isForwardDirection = false,
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    RelationListItemModel(
+                        id = "b22e3f3e-6c90-3df9-915f-12d8f86c240b_2",
+                        linkedEntityId = "b22e3f3e-6c90-3df9-915f-12d8f86c240b",
+                        label = "has parts",
+                        name = "東方封魔録 〜 Story of Eastern Wonderland",
+                        disambiguation = "",
+                        attributes = "number: 2",
+                        linkedEntity = MusicBrainzEntity.RELEASE_GROUP,
+                        visited = false,
+                        isForwardDirection = false,
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    RelationListItemModel(
+                        id = "fbca86fc-1509-40d6-b985-f50e45796187_9",
+                        linkedEntityId = "fbca86fc-1509-40d6-b985-f50e45796187",
+                        label = "subseries",
+                        name = "ZUN's Music Collection",
+                        disambiguation = null,
+                        attributes = "",
+                        linkedEntity = MusicBrainzEntity.SERIES,
+                        visited = false,
+                        isForwardDirection = true,
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                ),
+                this,
+            )
+        }
+    }
+
+    @Test
+    fun `the same target entity is grouped`() = runTest {
+        val relationRepository = createRepository(
+            lookupApi = object : FakeLookupApi() {
+                override suspend fun lookupWork(
+                    workId: String,
+                    include: String?,
+                ): WorkMusicBrainzNetworkModel {
+                    return WorkMusicBrainzNetworkModel(
+                        id = "2506ad88-1db3-454a-aed0-32cd5162fa1e",
+                        name = "悪魔の子",
+                        type = "Song",
+                        language = "jpn",
+                        iswcs = listOf("T-309.230.043-7"),
+                        relations = listOf(
+                            RelationMusicBrainzModel(
+                                type = "composer",
+                                typeId = "d59d99ea-23d4-4a80-b066-edca32ee158f",
+                                direction = Direction.BACKWARD,
+                                targetType = SerializableMusicBrainzEntity.ARTIST,
+                                artist = ArtistMusicBrainzNetworkModel(
+                                    id = "ae6c957d-c33e-4028-abdd-688bddec3be8",
+                                    name = "ヒグチアイ",
+                                    sortName = "Higuchi, Ai",
+                                    type = "Person",
+                                    countryCode = "JP",
+                                ),
+                            ),
+                            RelationMusicBrainzModel(
+                                type = "lyricist",
+                                typeId = "3e48faba-ec01-47fd-8e89-30e81161661c",
+                                direction = Direction.BACKWARD,
+                                targetType = SerializableMusicBrainzEntity.ARTIST,
+                                artist = ArtistMusicBrainzNetworkModel(
+                                    id = "ae6c957d-c33e-4028-abdd-688bddec3be8",
+                                    name = "ヒグチアイ",
+                                    sortName = "Higuchi, Ai",
+                                    type = "Person",
+                                    countryCode = "JP",
+                                ),
+                            ),
+                        ),
+                    )
+                }
+            },
         )
-        val seriesRelationships = flow.asSnapshot()
-        assertEquals(
-            listOf(
-                RelationListItemModel(
-                    id = "bad6d0fa-938e-45a2-95fd-b37ea37b783c_5",
-                    linkedEntityId = "bad6d0fa-938e-45a2-95fd-b37ea37b783c",
-                    label = "publishing label",
-                    name = "上海アリス幻樂団",
-                    disambiguation = "dōjin game developer",
-                    attributes = "",
-                    linkedEntity = MusicBrainzEntity.LABEL,
-                    visited = false,
-                    isForwardDirection = false,
-                    lastUpdated = testDateTimeInThePast,
+
+        relationRepository.observeEntityRelationships(
+            entity = MusicBrainzEntity.WORK,
+            entityId = "2506ad88-1db3-454a-aed0-32cd5162fa1e",
+            query = "",
+            lastUpdated = testDateTimeInThePast,
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    RelationListItemModel(
+                        id = "ae6c957d-c33e-4028-abdd-688bddec3be8_2",
+                        linkedEntityId = "ae6c957d-c33e-4028-abdd-688bddec3be8",
+                        label = "composer, lyricist",
+                        name = "ヒグチアイ",
+                        attributes = "",
+                        linkedEntity = MusicBrainzEntity.ARTIST,
+                        visited = false,
+                        isForwardDirection = false,
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
-                RelationListItemModel(
-                    id = "bad6d0fa-938e-45a2-95fd-b37ea37b783c_6",
-                    linkedEntityId = "bad6d0fa-938e-45a2-95fd-b37ea37b783c",
-                    label = "publishing label",
-                    name = "黄昏フロンティア",
-                    disambiguation = "dōjin game developer",
-                    attributes = "",
-                    linkedEntity = MusicBrainzEntity.LABEL,
-                    visited = false,
-                    isForwardDirection = false,
-                    lastUpdated = testDateTimeInThePast,
-                ),
-                RelationListItemModel(
-                    id = "5d286f5b-7cc3-3f78-b1cf-a24d496af34b_1",
-                    linkedEntityId = "5d286f5b-7cc3-3f78-b1cf-a24d496af34b",
-                    label = "has parts",
-                    name = "東方靈異伝 〜 Highly Responsive to Prayers",
-                    disambiguation = "",
-                    attributes = "number: 1",
-                    linkedEntity = MusicBrainzEntity.RELEASE_GROUP,
-                    visited = false,
-                    isForwardDirection = false,
-                    lastUpdated = testDateTimeInThePast,
-                ),
-                RelationListItemModel(
-                    id = "b22e3f3e-6c90-3df9-915f-12d8f86c240b_2",
-                    linkedEntityId = "b22e3f3e-6c90-3df9-915f-12d8f86c240b",
-                    label = "has parts",
-                    name = "東方封魔録 〜 Story of Eastern Wonderland",
-                    disambiguation = "",
-                    attributes = "number: 2",
-                    linkedEntity = MusicBrainzEntity.RELEASE_GROUP,
-                    visited = false,
-                    isForwardDirection = false,
-                    lastUpdated = testDateTimeInThePast,
-                ),
-                RelationListItemModel(
-                    id = "fbca86fc-1509-40d6-b985-f50e45796187_9",
-                    linkedEntityId = "fbca86fc-1509-40d6-b985-f50e45796187",
-                    label = "subseries",
-                    name = "ZUN's Music Collection",
-                    disambiguation = null,
-                    attributes = "",
-                    linkedEntity = MusicBrainzEntity.SERIES,
-                    visited = false,
-                    isForwardDirection = true,
-                    lastUpdated = testDateTimeInThePast,
-                ),
-                LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
-            ),
-            seriesRelationships,
+                this,
+            )
+        }
+    }
+
+    @Test
+    fun `the same target entity is grouped, label is repeated for different entities unlike MB`() = runTest {
+        val relationRepository = createRepository(
+            lookupApi = object : FakeLookupApi() {
+                override suspend fun lookupWork(
+                    workId: String,
+                    include: String?,
+                ): WorkMusicBrainzNetworkModel {
+                    return WorkMusicBrainzNetworkModel(
+                        id = "dfe5d4e5-ee03-4a8c-b7b3-4e231dcbcf6c",
+                        name = "シャルル",
+                        type = "Song",
+                        language = "jpn",
+                        iswcs = listOf("T-921.450.584-7"),
+                        relations = listOf(
+                            RelationMusicBrainzModel(
+                                type = "composer",
+                                typeId = "d59d99ea-23d4-4a80-b066-edca32ee158f",
+                                direction = Direction.BACKWARD,
+                                targetType = SerializableMusicBrainzEntity.ARTIST,
+                                artist = ArtistMusicBrainzNetworkModel(
+                                    id = "ae6c957d-c33e-4028-abdd-688bddec3be8",
+                                    name = "バルーン",
+                                    disambiguation = "Vocaloid producer",
+                                    sortName = "balloon",
+                                    type = "Person",
+                                    countryCode = "JP",
+                                ),
+                            ),
+                            RelationMusicBrainzModel(
+                                type = "lyricist",
+                                typeId = "3e48faba-ec01-47fd-8e89-30e81161661c",
+                                direction = Direction.BACKWARD,
+                                targetType = SerializableMusicBrainzEntity.ARTIST,
+                                artist = ArtistMusicBrainzNetworkModel(
+                                    id = "ae6c957d-c33e-4028-abdd-688bddec3be8",
+                                    name = "バルーン",
+                                    disambiguation = "Vocaloid producer",
+                                    sortName = "balloon",
+                                    type = "Person",
+                                    countryCode = "JP",
+                                ),
+                            ),
+                            RelationMusicBrainzModel(
+                                type = "premiere",
+                                typeId = "5cc8cfb5-cca0-4395-a44b-b7d3c1777608",
+                                direction = Direction.BACKWARD,
+                                targetType = SerializableMusicBrainzEntity.ARTIST,
+                                artist = ArtistMusicBrainzNetworkModel(
+                                    id = "ae6c957d-c33e-4028-abdd-688bddec3be8",
+                                    name = "バルーン",
+                                    disambiguation = "Vocaloid producer",
+                                    sortName = "balloon",
+                                    type = "Person",
+                                    countryCode = "JP",
+                                ),
+                            ),
+                            RelationMusicBrainzModel(
+                                type = "premiere",
+                                typeId = "5cc8cfb5-cca0-4395-a44b-b7d3c1777608",
+                                direction = Direction.BACKWARD,
+                                targetType = SerializableMusicBrainzEntity.ARTIST,
+                                artist = ArtistMusicBrainzNetworkModel(
+                                    id = "2708d1f1-d8f1-45fd-a3c6-074a410e61d8",
+                                    name = "v flower",
+                                    disambiguation = "Vocaloid; \uD835\uDC87lower",
+                                    sortName = "v flower",
+                                    type = "Character",
+                                    countryCode = null,
+                                ),
+                            ),
+                        ),
+                    )
+                }
+            },
         )
+
+        relationRepository.observeEntityRelationships(
+            entity = MusicBrainzEntity.WORK,
+            entityId = "dfe5d4e5-ee03-4a8c-b7b3-4e231dcbcf6c",
+            query = "",
+            lastUpdated = testDateTimeInThePast,
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    RelationListItemModel(
+                        id = "ae6c957d-c33e-4028-abdd-688bddec3be8_4",
+                        name = "バルーン",
+                        disambiguation = "Vocaloid producer",
+                        linkedEntityId = "ae6c957d-c33e-4028-abdd-688bddec3be8",
+                        label = "composer, lyricist, premiered by",
+                        attributes = "",
+                        linkedEntity = MusicBrainzEntity.ARTIST,
+                        visited = false,
+                        isForwardDirection = false,
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    RelationListItemModel(
+                        id = "2708d1f1-d8f1-45fd-a3c6-074a410e61d8_7",
+                        name = "v flower",
+                        disambiguation = "Vocaloid; \uD835\uDC87lower",
+                        linkedEntityId = "2708d1f1-d8f1-45fd-a3c6-074a410e61d8",
+                        label = "premiered by",
+                        attributes = "",
+                        linkedEntity = MusicBrainzEntity.ARTIST,
+                        visited = false,
+                        isForwardDirection = false,
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                ),
+                this,
+            )
+        }
     }
 }
