@@ -79,7 +79,7 @@ jobs:
       - run: git pull --rebase --autostash
 
       - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@3cc016cfc892e0844046da36fc68da4e525e081f # v6.0.0
+        uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6.0.1
         with:
           commit_message: 'chore: update app store screenshots [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
