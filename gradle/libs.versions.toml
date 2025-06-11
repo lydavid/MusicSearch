@@ -32,7 +32,7 @@ profileinstaller = "1.4.1"
 requery = "3.49.0"
 sqldelight = "2.1.0"
 stately = "2.1.0"
-turbine = "1.2.0"
+turbine = "1.2.1"
 uiautomator = "2.3.0"
 zoomable = "2.8.0"
 
