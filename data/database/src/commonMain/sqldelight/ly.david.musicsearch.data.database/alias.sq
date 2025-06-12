@@ -1,0 +1,38 @@
+import kotlin.Boolean;
+
+CREATE TABLE alias (
+  id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  mbid TEXT NOT NULL,
+  name TEXT NOT NULL,
+  is_primary INTEGER AS Boolean NOT NULL,
+  locale TEXT,
+  type_id TEXT,
+  begin_date TEXT NOT NULL,
+  end_date TEXT NOT NULL
+);
+
+CREATE INDEX index_alias_mbid ON alias (mbid);
+CREATE INDEX index_alias_name ON alias (name);
+
+
+insert:
+INSERT INTO alias (
+  id,
+  mbid,
+  name,
+  locale,
+  type_id,
+  is_primary,
+  begin_date,
+  end_date
+)
+VALUES (
+  nullif(:id, 0),
+  :mbid,
+  :name,
+  :locale,
+  :typeId,
+  :isPrimary,
+  :beginDate,
+  :endDate
+);

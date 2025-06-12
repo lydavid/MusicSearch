@@ -15,9 +15,6 @@ VALUES (
   :name
 );
 
-lastInsertRowId:
-SELECT last_insert_rowid();
-
 getArtistCreditByName:
 SELECT *
 FROM artist_credit

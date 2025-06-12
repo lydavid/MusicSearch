@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database
 
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCollaborationDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
@@ -10,7 +11,7 @@ import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.CountryCodeDao
 import ly.david.musicsearch.data.database.dao.DatabaseMetadataDao
-import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.DetailsMetadataDaoImpl
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.GenreDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
@@ -23,6 +24,7 @@ import ly.david.musicsearch.data.database.dao.NowPlayingHistoryDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
@@ -34,7 +36,6 @@ import ly.david.musicsearch.data.database.dao.SearchResultDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.SpotifyHistoryDao
 import ly.david.musicsearch.data.database.dao.TrackDao
-import ly.david.musicsearch.data.database.dao.DetailsMetadataDaoImpl
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -80,4 +81,5 @@ val databaseDaoModule = module {
     singleOf(::MbidWikipediaDaoImpl) bind MbidWikipediaDao::class
     single { SearchResultDao(get(), get()) }
     singleOf(::DatabaseMetadataDao)
+    singleOf(::AliasDao)
 }

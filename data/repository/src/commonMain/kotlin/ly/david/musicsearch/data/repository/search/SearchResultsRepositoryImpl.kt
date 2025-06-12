@@ -6,6 +6,7 @@ import app.cash.paging.Pager
 import app.cash.paging.RemoteMediator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.EventDao
@@ -43,6 +44,7 @@ internal class SearchResultsRepositoryImpl(
     private val releaseGroupDao: ReleaseGroupDao,
     private val seriesDao: SeriesDao,
     private val workDao: WorkDao,
+    private val aliasDao: AliasDao,
 ) : SearchResultsRepository {
 
     override fun observeSearchResults(
@@ -126,6 +128,12 @@ internal class SearchResultsRepositoryImpl(
                 artistDao.withTransaction {
                     removeAll()
                     artistDao.insertAll(artists)
+                    artists.forEach { artist ->
+                        aliasDao.insertAll(
+                            mbid = artist.id,
+                            aliases = artist.aliases.orEmpty(),
+                        )
+                    }
                     searchResultDao.insertAll(artists.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
