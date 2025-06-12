@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.musicbrainz.models.core
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.shared.domain.artist.Artist

@@ -2,10 +2,11 @@ package ly.david.musicsearch.data.musicbrainz.models.core
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroup
 import ly.david.musicsearch.data.musicbrainz.models.MediumMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroup
 
 @Serializable
 data class ReleaseGroupMusicBrainzNetworkModel(
@@ -32,4 +33,5 @@ data class ReleaseGroupMusicBrainzNetworkModel(
     @SerialName("releases") val releases: List<ReleaseMusicBrainzNetworkModel>? = null,
 
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
+    @SerialName("aliases") val aliases: List<AliasMusicBrainzNetworkModel>? = null,
 ) : MusicBrainzNetworkModel(), ReleaseGroup

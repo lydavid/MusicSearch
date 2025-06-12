@@ -159,6 +159,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                     entity: MusicBrainzEntity,
                     limit: Int,
                     offset: Int,
+                    include: String,
                 ): BrowseArtistsResponse {
                     return BrowseArtistsResponse(
                         count = 1,

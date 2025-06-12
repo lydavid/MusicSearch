@@ -14,7 +14,6 @@ CREATE TABLE alias (
 CREATE INDEX index_alias_mbid ON alias (mbid);
 CREATE INDEX index_alias_name ON alias (name);
 
-
 insert:
 INSERT INTO alias (
   id,
@@ -36,3 +35,7 @@ VALUES (
   :beginDate,
   :endDate
 );
+
+delete:
+DELETE FROM alias
+WHERE mbid = :mbid;

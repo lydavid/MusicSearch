@@ -34,35 +34,39 @@ upsert {
 }
 
 getAllLookupHistoryCount:
-SELECT COUNT(*)
+SELECT COUNT(DISTINCT lookup_history.mbid)
 FROM lookup_history
+LEFT JOIN alias ON lookup_history.mbid = alias.mbid
 WHERE
   `deleted` = 0
   AND (
-    `title` LIKE :query
-    OR `entity` LIKE :query
-    OR `search_hint` LIKE :query
+    `title` LIKE :query OR
+    `entity` LIKE :query OR
+    `search_hint` LIKE :query OR
+    alias.name LIKE :query
   );
 
 getAllLookupHistory:
 SELECT
-  lh.mbid,
-  lh.title,
-  lh.entity,
-  lh.number_of_visits,
-  lh.last_accessed,
+  lookup_history.mbid,
+  lookup_history.title,
+  lookup_history.entity,
+  lookup_history.number_of_visits,
+  lookup_history.last_accessed,
   mi.thumbnail_url,
   mi.id AS imageId
-FROM lookup_history lh
-LEFT JOIN mbid_image mi ON mi.mbid = lh.mbid
+FROM lookup_history
+LEFT JOIN alias ON lookup_history.mbid = alias.mbid
+LEFT JOIN mbid_image mi ON mi.mbid = lookup_history.mbid
 WHERE
   `deleted` = 0
   AND (
-    `title` LIKE :query
-    OR `entity` LIKE :query
-    OR `search_hint` LIKE :query
+    `title` LIKE :query OR
+    `entity` LIKE :query OR
+    `search_hint` LIKE :query OR
+    alias.name LIKE :query
   )
-GROUP BY lh.mbid
+GROUP BY lookup_history.mbid
 ORDER BY
   CASE WHEN :alphabetically THEN `title` END ASC,
   CASE WHEN :alphabeticallyReverse THEN `title` END DESC,

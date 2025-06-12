@@ -61,19 +61,22 @@ DELETE FROM release_groups_by_entity WHERE entity_id = :entityId;
 getNumberOfReleaseGroupsByEntity:
 SELECT IFNULL(
   (
-    SELECT COUNT(DISTINCT rg.id)
-    FROM release_group rg
-    INNER JOIN release_groups_by_entity arg ON rg.id = arg.release_group_id
+    SELECT COUNT(DISTINCT release_group.id)
+    FROM release_group
+    INNER JOIN release_groups_by_entity arg ON release_group.id = arg.release_group_id
     INNER JOIN artist a ON a.id = arg.entity_id
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN alias ON release_group.id = alias.mbid
     WHERE a.id = :artistId
     AND (
-      rg.name LIKE :query
-      OR rg.disambiguation LIKE :query
-      OR rg.first_release_date LIKE :query
-      OR rg.primary_type LIKE :query OR rg.secondary_types LIKE :query
-      OR ac.name LIKE :query
+      release_group.name LIKE :query OR
+      release_group.disambiguation LIKE :query OR
+      release_group.first_release_date LIKE :query OR
+      release_group.primary_type LIKE :query OR
+      release_group.secondary_types LIKE :query OR
+      ac.name LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -89,36 +92,39 @@ GROUP BY rg.primary_type, rg.secondary_types;
 
 getReleaseGroupsByEntity:
 SELECT
-  rg.id,
-  rg.name,
-  rg.first_release_date,
-  rg.disambiguation,
-  rg.primary_type,
-  rg.secondary_types,
+  release_group.id,
+  release_group.name,
+  release_group.first_release_date,
+  release_group.disambiguation,
+  release_group.primary_type,
+  release_group.secondary_types,
   ac.name AS artist_credits,
   mi.thumbnail_url,
   mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM release_group rg
-INNER JOIN release_groups_by_entity arg ON rg.id = arg.release_group_id
+FROM release_group
+INNER JOIN release_groups_by_entity arg ON release_group.id = arg.release_group_id
 INNER JOIN artist a ON a.id = arg.entity_id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN mbid_image mi ON mi.mbid = rg.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = rg.id
+LEFT JOIN alias ON release_group.id = alias.mbid
+LEFT JOIN mbid_image mi ON mi.mbid = release_group.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = release_group.id
 WHERE a.id = :artistId
 AND (
-  rg.name LIKE :query
-  OR rg.disambiguation LIKE :query
-  OR rg.first_release_date LIKE :query
-  OR rg.primary_type LIKE :query OR rg.secondary_types LIKE :query
-  OR ac.name LIKE :query
+  release_group.name LIKE :query OR
+  release_group.disambiguation LIKE :query OR
+  release_group.first_release_date LIKE :query OR
+  release_group.primary_type LIKE :query OR
+  release_group.secondary_types LIKE :query OR
+  ac.name LIKE :query OR
+  alias.name LIKE :query
 )
-GROUP BY rg.id
+GROUP BY release_group.id
 ORDER BY
-  CASE WHEN :sorted THEN rg.primary_type ELSE arg.rowid END,
-  CASE WHEN :sorted THEN rg.secondary_types END,
-  CASE WHEN :sorted THEN rg.first_release_date END
+  CASE WHEN :sorted THEN release_group.primary_type ELSE arg.rowid END,
+  CASE WHEN :sorted THEN release_group.secondary_types END,
+  CASE WHEN :sorted THEN release_group.first_release_date END
 LIMIT :limit OFFSET :offset;
 
 -- release groups by collection
@@ -126,21 +132,23 @@ LIMIT :limit OFFSET :offset;
 getNumberOfReleaseGroupsByCollection:
 SELECT IFNULL(
   (
-    SELECT COUNT(DISTINCT rg.id)
-    FROM release_group rg
-    INNER JOIN collection_entity ce ON rg.id = ce.entity_id
+    SELECT COUNT(DISTINCT release_group.id)
+    FROM release_group
+    INNER JOIN collection_entity ce ON release_group.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN alias ON release_group.id = alias.mbid
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
-      rg.name LIKE :query
-      OR rg.disambiguation LIKE :query
-      OR rg.first_release_date LIKE :query
-      OR rg.primary_type LIKE :query
-      OR rg.secondary_types LIKE :query
-      OR ac.name LIKE :query
+      release_group.name LIKE :query OR
+      release_group.disambiguation LIKE :query OR
+      release_group.first_release_date LIKE :query OR
+      release_group.primary_type LIKE :query OR
+      release_group.secondary_types LIKE :query OR
+      ac.name LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -148,38 +156,40 @@ SELECT IFNULL(
 
 getReleaseGroupsByCollection:
 SELECT
-  rg.id,
-  rg.name,
-  rg.first_release_date,
-  rg.disambiguation,
-  rg.primary_type,
-  rg.secondary_types,
+  release_group.id,
+  release_group.name,
+  release_group.first_release_date,
+  release_group.disambiguation,
+  release_group.primary_type,
+  release_group.secondary_types,
   ac.name AS artist_credits,
   mi.thumbnail_url,
   mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM release_group rg
-INNER JOIN collection_entity ce ON rg.id = ce.entity_id
+FROM release_group
+INNER JOIN collection_entity ce ON release_group.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN mbid_image mi ON mi.mbid = rg.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = rg.id
+LEFT JOIN alias ON release_group.id = alias.mbid
+LEFT JOIN mbid_image mi ON mi.mbid = release_group.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = release_group.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
-  rg.name LIKE :query
-  OR rg.disambiguation LIKE :query
-  OR rg.first_release_date LIKE :query
-  OR rg.primary_type LIKE :query
-  OR rg.secondary_types LIKE :query
-  OR ac.name LIKE :query
+  release_group.name LIKE :query OR
+  release_group.disambiguation LIKE :query OR
+  release_group.first_release_date LIKE :query OR
+  release_group.primary_type LIKE :query OR
+  release_group.secondary_types LIKE :query OR
+  ac.name LIKE :query OR
+  alias.name LIKE :query
 )
-GROUP BY rg.id
+GROUP BY release_group.id
 ORDER BY
-  CASE WHEN :sorted THEN rg.primary_type ELSE ce.rowid END,
-  CASE WHEN :sorted THEN rg.secondary_types END,
-  CASE WHEN :sorted THEN rg.first_release_date END
+  CASE WHEN :sorted THEN release_group.primary_type ELSE ce.rowid END,
+  CASE WHEN :sorted THEN release_group.secondary_types END,
+  CASE WHEN :sorted THEN release_group.first_release_date END
 LIMIT :limit OFFSET :offset;
 
 -- all release groups
@@ -187,17 +197,19 @@ LIMIT :limit OFFSET :offset;
 getCountOfAllReleaseGroups:
 SELECT IFNULL(
   (
-    SELECT COUNT(DISTINCT rg.id)
-    FROM release_group rg
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
+    SELECT COUNT(DISTINCT release_group.id)
+    FROM release_group release_group
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN alias ON release_group.id = alias.mbid
     WHERE (
-      rg.name LIKE :query
-      OR rg.disambiguation LIKE :query
-      OR rg.first_release_date LIKE :query
-      OR rg.primary_type LIKE :query
-      OR rg.secondary_types LIKE :query
-      OR ac.name LIKE :query
+      release_group.name LIKE :query OR
+      release_group.disambiguation LIKE :query OR
+      release_group.first_release_date LIKE :query OR
+      release_group.primary_type LIKE :query OR
+      release_group.secondary_types LIKE :query OR
+      ac.name LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -205,32 +217,34 @@ SELECT IFNULL(
 
 getAllReleaseGroups:
 SELECT
-  rg.id,
-  rg.name,
-  rg.first_release_date,
-  rg.disambiguation,
-  rg.primary_type,
-  rg.secondary_types,
+  release_group.id,
+  release_group.name,
+  release_group.first_release_date,
+  release_group.disambiguation,
+  release_group.primary_type,
+  release_group.secondary_types,
   ac.name AS artist_credits,
   mi.thumbnail_url,
   mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM release_group rg
-INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
+FROM release_group
+INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN mbid_image mi ON mi.mbid = rg.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = rg.id
+LEFT JOIN alias ON release_group.id = alias.mbid
+LEFT JOIN mbid_image mi ON mi.mbid = release_group.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = release_group.id
 WHERE (
-  rg.name LIKE :query
-  OR rg.disambiguation LIKE :query
-  OR rg.first_release_date LIKE :query
-  OR rg.primary_type LIKE :query
-  OR rg.secondary_types LIKE :query
-  OR ac.name LIKE :query
+  release_group.name LIKE :query OR
+  release_group.disambiguation LIKE :query OR
+  release_group.first_release_date LIKE :query OR
+  release_group.primary_type LIKE :query OR
+  release_group.secondary_types LIKE :query OR
+  ac.name LIKE :query OR
+  alias.name LIKE :query
 )
-GROUP BY rg.id
+GROUP BY release_group.id
 ORDER BY
-  CASE WHEN :sorted THEN rg.primary_type ELSE rg.rowid END,
-  CASE WHEN :sorted THEN rg.secondary_types END,
-  CASE WHEN :sorted THEN rg.first_release_date END
+  CASE WHEN :sorted THEN release_group.primary_type ELSE release_group.rowid END,
+  CASE WHEN :sorted THEN release_group.secondary_types END,
+  CASE WHEN :sorted THEN release_group.first_release_date END
 LIMIT :limit OFFSET :offset;

@@ -62,15 +62,17 @@ DELETE FROM labels_by_entity WHERE entity_id = :entityId;
 getNumberOfLabelsByEntity:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(DISTINCT label.id)
     FROM labels_by_entity le
-    INNER JOIN label l ON l.id = le.label_id
+    INNER JOIN label ON label.id = le.label_id
+    LEFT JOIN alias ON label.id = alias.mbid
     WHERE le.entity_id = :entityId
     AND (
-      l.name LIKE :query OR
-      l.disambiguation LIKE :query OR
-      l.type LIKE :query OR
-      l.label_code LIKE :query
+      label.name LIKE :query OR
+      label.disambiguation LIKE :query OR
+      label.type LIKE :query OR
+      label.label_code LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -78,22 +80,25 @@ SELECT IFNULL(
 
 getLabelsByEntity:
 SELECT
-  l.id,
-  l.name,
-  l.disambiguation,
-  l.type,
-  l.label_code,
+  label.id,
+  label.name,
+  label.disambiguation,
+  label.type,
+  label.label_code,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM labels_by_entity le
-INNER JOIN label l ON l.id = le.label_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = l.id
+INNER JOIN label ON label.id = le.label_id
+LEFT JOIN alias ON label.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
 WHERE le.entity_id = :entityId
 AND (
-  l.name LIKE :query OR
-  l.disambiguation LIKE :query OR
-  l.type LIKE :query OR
-  l.label_code LIKE :query
+  label.name LIKE :query OR
+  label.disambiguation LIKE :query OR
+  label.type LIKE :query OR
+  label.label_code LIKE :query OR
+  alias.name LIKE :query
 )
+GROUP BY label.id
 LIMIT :limit OFFSET :offset;
 
 -- labels by collection
@@ -101,17 +106,19 @@ LIMIT :limit OFFSET :offset;
 getNumberOfLabelsByCollection:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
-    FROM label l
-    INNER JOIN collection_entity ce ON l.id = ce.entity_id
+    SELECT COUNT(DISTINCT label.id)
+    FROM label
+    INNER JOIN collection_entity ce ON label.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
+    LEFT JOIN alias ON label.id = alias.mbid
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
-      l.name LIKE :query OR
-      l.disambiguation LIKE :query OR
-      l.type LIKE :query OR
-      l.label_code LIKE :query
+      label.name LIKE :query OR
+      label.disambiguation LIKE :query OR
+      label.type LIKE :query OR
+      label.label_code LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -119,65 +126,70 @@ SELECT IFNULL(
 
 getLabelsByCollection:
 SELECT
-  l.id,
-  l.name,
-  l.disambiguation,
-  l.type,
-  l.label_code,
+  label.id,
+  label.name,
+  label.disambiguation,
+  label.type,
+  label.label_code,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM label l
-INNER JOIN collection_entity ce ON l.id = ce.entity_id
+FROM label label
+INNER JOIN collection_entity ce ON label.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = l.id
+LEFT JOIN alias ON label.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
-  l.name LIKE :query OR
-  l.disambiguation LIKE :query OR
-  l.type LIKE :query OR
-  l.label_code LIKE :query
+  label.name LIKE :query OR
+  label.disambiguation LIKE :query OR
+  label.type LIKE :query OR
+  label.label_code LIKE :query OR
+  alias.name LIKE :query
 )
+GROUP BY label.id
 LIMIT :limit OFFSET :offset;
 
 -- labels by release
 
 getLabelsByRelease:
 SELECT
-  l.id,
-  l.name,
-  l.disambiguation,
-  l.type,
-  l.label_code,
+  label.id,
+  label.name,
+  label.disambiguation,
+  label.type,
+  label.label_code,
   COALESCE(
     (
       SELECT GROUP_CONCAT(catalog_number, ', ')
       FROM release_label rl
       WHERE rl.release_id = :releaseId
-      AND rl.label_id = l.id
+      AND rl.label_id = label.id
       ORDER BY rl.catalog_number
     ),
     ''
   ) AS catalogNumbers,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM label l
-INNER JOIN labels_by_entity le ON l.id = le.label_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = l.id
+FROM label
+INNER JOIN labels_by_entity le ON label.id = le.label_id
+LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
 WHERE le.entity_id = :releaseId
-GROUP BY l.id, l.name, l.disambiguation, l.type, l.label_code
-ORDER BY l.name;
+GROUP BY label.id, label.name, label.disambiguation, label.type, label.label_code
+ORDER BY label.name;
 
 -- all labels
 
 getCountOfAllLabels:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
-    FROM label l
+    SELECT COUNT(DISTINCT label.id)
+    FROM label
+    LEFT JOIN alias ON label.id = alias.mbid
     WHERE (
-      l.name LIKE :query OR
-      l.disambiguation LIKE :query OR
-      l.type LIKE :query OR
-      l.label_code LIKE :query
+      label.name LIKE :query OR
+      label.disambiguation LIKE :query OR
+      label.type LIKE :query OR
+      label.label_code LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -185,18 +197,21 @@ SELECT IFNULL(
 
 getAllLabels:
 SELECT
-  l.id,
-  l.name,
-  l.disambiguation,
-  l.type,
-  l.label_code,
+  label.id,
+  label.name,
+  label.disambiguation,
+  label.type,
+  label.label_code,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM label l
-LEFT JOIN details_metadata ON details_metadata.entity_id = l.id
+FROM label
+LEFT JOIN alias ON label.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
 WHERE (
-  l.name LIKE :query OR
-  l.disambiguation LIKE :query OR
-  l.type LIKE :query OR
-  l.label_code LIKE :query
+  label.name LIKE :query OR
+  label.disambiguation LIKE :query OR
+  label.type LIKE :query OR
+  label.label_code LIKE :query OR
+  alias.name LIKE :query
 )
+GROUP BY label.id
 LIMIT :limit OFFSET :offset;

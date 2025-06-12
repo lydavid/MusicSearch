@@ -52,16 +52,18 @@ DELETE FROM works_by_entity WHERE entity_id = :entityId;
 getNumberOfWorksByEntity:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(DISTINCT work.id)
     FROM works_by_entity we
-    INNER JOIN work w ON w.id = we.work_id
+    INNER JOIN work ON work.id = we.work_id
+    LEFT JOIN alias ON work.id = alias.mbid
     WHERE we.entity_id = :entityId
     AND (
-      w.name LIKE :query
-      OR w.disambiguation LIKE :query
-      OR w.type LIKE :query
-      OR w.language LIKE :query
-      OR w.iswcs LIKE :query
+      work.name LIKE :query OR
+      work.disambiguation LIKE :query OR
+      work.type LIKE :query OR
+      work.language LIKE :query OR
+      work.iswcs LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -69,24 +71,27 @@ SELECT IFNULL(
 
 getWorksByEntity:
 SELECT
-  w.id,
-  w.name,
-  w.disambiguation,
-  w.type,
-  w.language,
-  w.iswcs,
+  work.id,
+  work.name,
+  work.disambiguation,
+  work.type,
+  work.language,
+  work.iswcs,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM works_by_entity we
-INNER JOIN work w ON w.id = we.work_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = w.id
+INNER JOIN work ON work.id = we.work_id
+LEFT JOIN alias ON work.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = work.id
 WHERE we.entity_id = :entityId
 AND (
-  w.name LIKE :query
-  OR w.disambiguation LIKE :query
-  OR w.type LIKE :query
-  OR w.language LIKE :query
-  OR w.iswcs LIKE :query
+  work.name LIKE :query OR
+  work.disambiguation LIKE :query OR
+  work.type LIKE :query OR
+  work.language LIKE :query OR
+  work.iswcs LIKE :query OR
+  alias.name LIKE :query
 )
+GROUP BY work.id
 LIMIT :limit OFFSET :offset;
 
 -- works by collection
@@ -94,18 +99,20 @@ LIMIT :limit OFFSET :offset;
 getNumberOfWorksByCollection:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
-    FROM work w
-    INNER JOIN collection_entity ce ON w.id = ce.entity_id
+    SELECT COUNT(DISTINCT work.id)
+    FROM work
+    INNER JOIN collection_entity ce ON work.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
+    LEFT JOIN alias ON work.id = alias.mbid
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
-      w.name LIKE :query
-      OR w.disambiguation LIKE :query
-      OR w.type LIKE :query
-      OR w.language LIKE :query
-      OR w.iswcs LIKE :query
+      work.name LIKE :query OR
+      work.disambiguation LIKE :query OR
+      work.type LIKE :query OR
+      work.language LIKE :query OR
+      work.iswcs LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -113,26 +120,29 @@ SELECT IFNULL(
 
 getWorksByCollection:
 SELECT
-  w.id,
-  w.name,
-  w.disambiguation,
-  w.type,
-  w.language,
-  w.iswcs,
+  work.id,
+  work.name,
+  work.disambiguation,
+  work.type,
+  work.language,
+  work.iswcs,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM work w
-INNER JOIN collection_entity ce ON w.id = ce.entity_id
+FROM work
+INNER JOIN collection_entity ce ON work.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = w.id
+LEFT JOIN alias ON work.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = work.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
-  w.name LIKE :query
-  OR w.disambiguation LIKE :query
-  OR w.type LIKE :query
-  OR w.language LIKE :query
-  OR w.iswcs LIKE :query
+  work.name LIKE :query OR
+  work.disambiguation LIKE :query OR
+  work.type LIKE :query OR
+  work.language LIKE :query OR
+  work.iswcs LIKE :query OR
+  alias.name LIKE :query
 )
+GROUP BY work.id
 LIMIT :limit OFFSET :offset;
 
 -- all works
@@ -140,14 +150,16 @@ LIMIT :limit OFFSET :offset;
 getCountOfAllWorks:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
-    FROM work w
+    SELECT COUNT(DISTINCT work.id)
+    FROM work
+    LEFT JOIN alias ON work.id = alias.mbid
     WHERE (
-      w.name LIKE :query
-      OR w.disambiguation LIKE :query
-      OR w.type LIKE :query
-      OR w.language LIKE :query
-      OR w.iswcs LIKE :query
+      work.name LIKE :query OR
+      work.disambiguation LIKE :query OR
+      work.type LIKE :query OR
+      work.language LIKE :query OR
+      work.iswcs LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -155,20 +167,23 @@ SELECT IFNULL(
 
 getAllWorks:
 SELECT
-  w.id,
-  w.name,
-  w.disambiguation,
-  w.type,
-  w.language,
-  w.iswcs,
+  work.id,
+  work.name,
+  work.disambiguation,
+  work.type,
+  work.language,
+  work.iswcs,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM work w
-LEFT JOIN details_metadata ON details_metadata.entity_id = w.id
+FROM work
+LEFT JOIN alias ON work.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = work.id
 WHERE (
-  w.name LIKE :query
-  OR w.disambiguation LIKE :query
-  OR w.type LIKE :query
-  OR w.language LIKE :query
-  OR w.iswcs LIKE :query
+  work.name LIKE :query OR
+  work.disambiguation LIKE :query OR
+  work.type LIKE :query OR
+  work.language LIKE :query OR
+  work.iswcs LIKE :query OR
+  alias.name LIKE :query
 )
+GROUP BY work.id
 LIMIT :limit OFFSET :offset;

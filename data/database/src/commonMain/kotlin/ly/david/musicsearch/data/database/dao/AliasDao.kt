@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.data.musicbrainz.models.core.AliasMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import lydavidmusicsearchdatadatabase.AliasQueries
 
 class AliasDao(
@@ -9,10 +9,11 @@ class AliasDao(
 ) : EntityDao {
     override val transacter: AliasQueries = database.aliasQueries
 
-    fun insertAll(
+    fun insertReplaceAll(
         mbid: String,
         aliases: List<AliasMusicBrainzNetworkModel>,
     ) {
+        transacter.delete(mbid)
         aliases.forEach { alias ->
             insert(mbid, alias)
         }
