@@ -16,7 +16,7 @@ val utaNoUtaReleaseGroupListItemModel = ReleaseGroupListItemModel(
     primaryType = "Album",
     secondaryTypes = listOf(),
     disambiguation = "",
-    formattedArtistCredits = "ado",
+    formattedArtistCredits = "Ado",
     firstReleaseDate = "2022-08-10",
 )
 

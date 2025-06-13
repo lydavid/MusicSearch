@@ -4,6 +4,7 @@ import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.WorkDao
@@ -22,10 +23,12 @@ class WorksListRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
     private val workDao: WorkDao,
     private val browseApi: BrowseApi,
+    aliasDao: AliasDao,
 ) : WorksListRepository,
     BrowseEntities<WorkListItemModel, WorkMusicBrainzNetworkModel, BrowseWorksResponse>(
         browseEntity = MusicBrainzEntity.WORK,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
+        aliasDao = aliasDao,
     ) {
 
     override fun observeWorks(
@@ -87,7 +90,7 @@ class WorksListRepositoryImpl(
         )
     }
 
-    override fun insertAllLinkingModels(
+    override fun insertAll(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<WorkMusicBrainzNetworkModel>,

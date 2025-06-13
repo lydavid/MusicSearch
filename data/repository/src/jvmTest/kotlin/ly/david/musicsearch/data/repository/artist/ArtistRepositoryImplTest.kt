@@ -7,6 +7,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.unitedKingdomAreaMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
@@ -46,6 +47,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
     override val areaDao: AreaDao by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
+    private val aliasDao: AliasDao by inject()
 
     @Test
     fun `lookup artist`() = runTest {
@@ -153,6 +155,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
             artistDao = artistDao,
+            aliasDao = aliasDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseArtistsByEntity(
                     entityId: String,

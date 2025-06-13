@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.area
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -21,10 +22,12 @@ class AreasListRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
     private val areaDao: AreaDao,
     private val browseApi: BrowseApi,
+    aliasDao: AliasDao,
 ) : AreasListRepository,
     BrowseEntities<AreaListItemModel, AreaMusicBrainzNetworkModel, BrowseAreasResponse>(
         browseEntity = MusicBrainzEntity.AREA,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
+        aliasDao = aliasDao,
     ) {
 
     override fun observeAreas(
@@ -88,7 +91,7 @@ class AreasListRepositoryImpl(
         }
     }
 
-    override fun insertAllLinkingModels(
+    override fun insertAll(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<AreaMusicBrainzNetworkModel>,

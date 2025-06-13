@@ -4,6 +4,7 @@ import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.aimerArtistMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCollaborationDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
@@ -46,6 +47,7 @@ class ArtistCollaborationRepositoryImplTest :
     private val artistCollaborationDao: ArtistCollaborationDao by inject()
     override val collectionEntityDao: CollectionEntityDao by inject()
     override val recordingDao: RecordingDao by inject()
+    override val aliasDao: AliasDao by inject()
 
     @Test
     fun `lookup artist, then recordings, releases, release groups, and collaborations`() = runTest {

@@ -20,6 +20,7 @@ open class FakeBrowseApi : BrowseApi {
         collectionId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseAreasResponse {
         return BrowseAreasResponse(
             count = 0,
@@ -47,6 +48,7 @@ open class FakeBrowseApi : BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseEventsResponse {
         return BrowseEventsResponse(
             count = 0,
@@ -72,6 +74,7 @@ open class FakeBrowseApi : BrowseApi {
         collectionId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseInstrumentsResponse {
         return BrowseInstrumentsResponse(
             count = 0,
@@ -85,6 +88,7 @@ open class FakeBrowseApi : BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseLabelsResponse {
         return BrowseLabelsResponse(
             count = 0,
@@ -98,6 +102,7 @@ open class FakeBrowseApi : BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowsePlacesResponse {
         return BrowsePlacesResponse(
             count = 0,
@@ -138,6 +143,7 @@ open class FakeBrowseApi : BrowseApi {
         collectionId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseSeriesResponse {
         return BrowseSeriesResponse(
             count = 0,
@@ -151,6 +157,7 @@ open class FakeBrowseApi : BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseWorksResponse {
         return BrowseWorksResponse(
             count = 0,

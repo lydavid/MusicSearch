@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.releasegroup
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
+import ly.david.data.test.adoArtistMusicBrainzModel
 import ly.david.data.test.alsoSprachZarathustraReleaseGroupListItemModel
 import ly.david.data.test.alsoSprachZarathustraReleaseGroupMusicBrainzModel
 import ly.david.data.test.api.FakeBrowseApi
@@ -12,6 +13,9 @@ import ly.david.data.test.nutcrackerReleaseGroupMusicBrainzModel
 import ly.david.data.test.tchaikovskyArtistMusicBrainzModel
 import ly.david.data.test.tchaikovskyOverturesReleaseGroupListItemModel
 import ly.david.data.test.tchaikovskyOverturesReleaseGroupMusicBrainzModel
+import ly.david.data.test.utaNoUtaReleaseGroupListItemModel
+import ly.david.data.test.utaNoUtaReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
@@ -22,6 +26,7 @@ import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
+import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
@@ -60,6 +65,7 @@ class ReleaseGroupsListRepositoryImplTest :
     override val areaDao: AreaDao by inject()
     private val collectionDao: CollectionDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
+    private val aliasDao: AliasDao by inject()
 
     private val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
 
@@ -70,6 +76,7 @@ class ReleaseGroupsListRepositoryImplTest :
             browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
             releaseGroupDao = releaseGroupDao,
+            aliasDao = aliasDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseReleaseGroupsByEntity(
                     entityId: String,
@@ -508,5 +515,75 @@ class ReleaseGroupsListRepositoryImplTest :
                 this,
             )
         }
+    }
+
+    @Test
+    fun `filter by alias`() = runTest {
+        val entityId = adoArtistMusicBrainzModel.id
+        val entity = MusicBrainzEntity.ARTIST
+        createArtistRepository(
+            adoArtistMusicBrainzModel,
+        ).lookupArtist(
+            artistId = entityId,
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
+        )
+        val releaseGroups = listOf(
+            utaNoUtaReleaseGroupMusicBrainzModel.copy(
+                aliases = listOf(
+                    AliasMusicBrainzNetworkModel(
+                        name = "UTA'S SONGS ONE PIECE FILM RED",
+                        typeId = "156e24ca-8746-3cfc-99ae-0a867c765c67",
+                        isPrimary = true,
+                        locale = "en",
+                    ),
+                ),
+            ),
+        )
+        val releaseGroupsListRepository = createReleaseGroupsListRepository(
+            releaseGroups = releaseGroups,
+        )
+
+        testFilter(
+            pagingFlowProducer = { query ->
+                releaseGroupsListRepository.observeReleaseGroups(
+                    browseMethod = BrowseMethod.ByEntity(
+                        entityId = entityId,
+                        entity = entity,
+                    ),
+                    listFilters = ListFilters(
+                        query = query,
+                    ),
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "no filter",
+                    query = "",
+                    expectedResult = listOf(
+                        utaNoUtaReleaseGroupListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "bad filter",
+                    query = "blah",
+                    expectedResult = listOf(),
+                ),
+                FilterTestCase(
+                    description = "filter by alias",
+                    query = "uta",
+                    expectedResult = listOf(
+                        utaNoUtaReleaseGroupListItemModel,
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by name",
+                    query = "歌",
+                    expectedResult = listOf(
+                        utaNoUtaReleaseGroupListItemModel,
+                    ),
+                ),
+            ),
+        )
     }
 }

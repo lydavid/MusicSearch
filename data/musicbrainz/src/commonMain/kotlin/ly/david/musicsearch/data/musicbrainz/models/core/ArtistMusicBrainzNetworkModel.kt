@@ -23,5 +23,5 @@ data class ArtistMusicBrainzNetworkModel(
 
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
     @SerialName("area") val area: AreaMusicBrainzNetworkModel? = null,
-    @SerialName("aliases") val aliases: List<AliasMusicBrainzNetworkModel>? = null,
-) : MusicBrainzNetworkModel(), Artist
+    @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
+) : MusicBrainzNetworkModel, Artist

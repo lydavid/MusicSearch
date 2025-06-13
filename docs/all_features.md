@@ -8,9 +8,11 @@ Inspired by [Spotless' feature matrix](https://github.com/diffplug/spotless?tab=
 
 | Feature                                                     | Android | Desktop | iOS |
 |-------------------------------------------------------------|---------|---------|-----|
+| [Aliases](#aliases)                                         | ✅       | ✅       | ✅   |
 | [Browse](#browse)                                           | ✅       | ✅       | ✅   |
 | [Collections](#collections)                                 | ✅       | ✅       | ✅   |
 | [Export](#export)                                           | ✅       | ✅       | ⬜   |
+| [Filtering](#filtering)                                     | ✅       | ✅       | ✅   |
 | [Images](#images)                                           | ✅       | ✅       | ✅   |
 | [Graph](#graph)                                             | ✅       | ✅       | ✅   |
 | [Local Database](#local-database)                           | ✅       | ✅       | ✅   |
@@ -22,6 +24,13 @@ Inspired by [Spotless' feature matrix](https://github.com/diffplug/spotless?tab=
 | [Themes](#themes)                                           | ✅       | ✅       | ✅   |
 | [Up navigation from subtitle](#up-navigation-from-subtitle) | ✅       | ✅       | ✅   |
 | [Wikipedia Extract](#wikipedia-extract)                     | ✅       | ✅       | ✅   |
+
+## Aliases
+
+When [filtering](#filtering), aliases will also be used.
+This means you can type text in your own language and find results.
+This depends on the alias existing in your language in MusicBrainz.
+Consider adding it if it's missing.
 
 ## Browse
 
@@ -100,6 +109,15 @@ See below for the supported types of collections.
 Exporting the app's database as a sqlite database is supported.
 
 You will need to use a tool such as [SQLite's CLI](https://www.sqlite.org/cli.html) to interact with it.
+
+## Filtering
+
+Most screen supports filtering its content by text.
+
+| Screen  | Filterable fields                                      |
+|---------|--------------------------------------------------------|
+| Search  | (not yet supported)                                    |
+| History | name + disambiguation, entity type, sort name, aliases |
 
 
 ## Images

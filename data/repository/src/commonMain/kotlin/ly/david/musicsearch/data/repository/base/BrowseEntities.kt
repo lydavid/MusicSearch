@@ -1,11 +1,12 @@
 package ly.david.musicsearch.data.repository.base
 
+import androidx.paging.Pager
 import app.cash.paging.ExperimentalPagingApi
-import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.Browsable
 import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzNetworkModel
@@ -24,6 +25,7 @@ abstract class BrowseEntities<
     >(
     val browseEntity: MusicBrainzEntity,
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
+    private val aliasDao: AliasDao,
 ) {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -118,7 +120,9 @@ abstract class BrowseEntities<
                 lastUpdated = Clock.System.now(),
             )
 
-            insertAllLinkingModels(
+            aliasDao.insertReplaceAll(musicBrainzNetworkModels = musicBrainzModels)
+
+            insertAll(
                 entityId = entityId,
                 entity = entity,
                 musicBrainzModels = musicBrainzModels,
@@ -134,7 +138,7 @@ abstract class BrowseEntities<
         offset: Int,
     ): B
 
-    abstract fun insertAllLinkingModels(
+    abstract fun insertAll(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<MB>,

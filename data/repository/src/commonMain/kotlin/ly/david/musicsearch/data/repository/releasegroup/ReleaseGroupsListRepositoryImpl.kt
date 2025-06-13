@@ -6,6 +6,7 @@ import app.cash.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
@@ -28,10 +29,12 @@ class ReleaseGroupsListRepositoryImpl(
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
     private val browseApi: BrowseApi,
     private val releaseGroupDao: ReleaseGroupDao,
+    aliasDao: AliasDao,
 ) : ReleaseGroupsListRepository,
     BrowseEntities<ReleaseGroupListItemModel, ReleaseGroupMusicBrainzNetworkModel, BrowseReleaseGroupsResponse>(
         browseEntity = MusicBrainzEntity.RELEASE_GROUP,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
+        aliasDao = aliasDao,
     ) {
 
     override fun observeReleaseGroups(
@@ -114,7 +117,7 @@ class ReleaseGroupsListRepositoryImpl(
         )
     }
 
-    override fun insertAllLinkingModels(
+    override fun insertAll(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<ReleaseGroupMusicBrainzNetworkModel>,

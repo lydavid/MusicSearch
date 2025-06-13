@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.genre
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.GenreDao
@@ -21,10 +22,12 @@ class GenresListRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
     private val genreDao: GenreDao,
     private val musicBrainzApi: MusicBrainzApi,
+    aliasDao: AliasDao,
 ) : GenresListRepository,
     BrowseEntities<GenreListItemModel, GenreMusicBrainzNetworkModel, BrowseGenresResponse>(
         browseEntity = MusicBrainzEntity.GENRE,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
+        aliasDao = aliasDao,
     ) {
 
     override fun observeGenres(
@@ -85,7 +88,7 @@ class GenresListRepositoryImpl(
         )
     }
 
-    override fun insertAllLinkingModels(
+    override fun insertAll(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<GenreMusicBrainzNetworkModel>,

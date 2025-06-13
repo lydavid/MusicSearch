@@ -4,9 +4,11 @@ import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
+import ly.david.musicsearch.data.musicbrainz.api.ALIASES
 import ly.david.musicsearch.data.musicbrainz.api.ARTIST_CREDITS
 import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
@@ -24,10 +26,12 @@ class ReleasesListRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
     private val browseApi: BrowseApi,
     private val releaseDao: ReleaseDao,
+    aliasDao: AliasDao,
 ) : ReleasesListRepository,
     BrowseEntities<ReleaseListItemModel, ReleaseMusicBrainzNetworkModel, BrowseReleasesResponse>(
         browseEntity = MusicBrainzEntity.RELEASE,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
+        aliasDao = aliasDao,
     ) {
 
     override fun observeReleases(
@@ -94,7 +98,7 @@ class ReleasesListRepositoryImpl(
                     entityId = entityId,
                     entity = entity,
                     offset = offset,
-                    include = "$ARTIST_CREDITS+$LABELS",
+                    include = "$ARTIST_CREDITS+$LABELS+$ALIASES",
                 )
             }
 
@@ -108,7 +112,7 @@ class ReleasesListRepositoryImpl(
         }
     }
 
-    override fun insertAllLinkingModels(
+    override fun insertAll(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<ReleaseMusicBrainzNetworkModel>,

@@ -21,8 +21,8 @@ data class PlaceMusicBrainzNetworkModel(
 
     @SerialName("area") val area: AreaMusicBrainzNetworkModel? = null,
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
-    @SerialName("aliases") val aliases: List<AliasMusicBrainzNetworkModel>? = null,
-) : MusicBrainzNetworkModel(), Place
+    @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
+) : MusicBrainzNetworkModel, Place
 
 @Serializable
 data class CoordinatesMusicBrainzModel(

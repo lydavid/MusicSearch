@@ -12,6 +12,7 @@ import ly.david.data.test.skycladObserverRecordingMusicBrainzModel
 import ly.david.data.test.skycladObserverWorkMusicBrainzModel
 import ly.david.data.test.underPressureRecordingListItemModel
 import ly.david.data.test.underPressureRecordingMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
@@ -50,6 +51,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
     private val collectionDao: CollectionDao by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     override val collectionEntityDao: CollectionEntityDao by inject()
+    override val aliasDao: AliasDao by inject()
     private val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
 
     @Test

@@ -16,6 +16,7 @@ import ly.david.data.test.starmanWorkListItemModel
 import ly.david.data.test.starmanWorkMusicBrainzModel
 import ly.david.data.test.underPressureWorkListItemModel
 import ly.david.data.test.underPressureWorkMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -56,6 +57,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
     private val collectionDao: CollectionDao by inject()
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
+    private val aliasDao: AliasDao by inject()
 
     private val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
 
@@ -66,12 +68,14 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
             browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
             workDao = workDao,
+            aliasDao = aliasDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseWorksByEntity(
                     entityId: String,
                     entity: MusicBrainzEntity,
                     limit: Int,
                     offset: Int,
+                    include: String,
                 ): BrowseWorksResponse {
                     return BrowseWorksResponse(
                         count = 1,

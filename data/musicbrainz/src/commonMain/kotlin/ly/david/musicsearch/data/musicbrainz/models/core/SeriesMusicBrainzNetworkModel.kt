@@ -15,5 +15,5 @@ data class SeriesMusicBrainzNetworkModel(
     @SerialName("type-id") val typeId: String? = null,
 
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
-    @SerialName("aliases") val aliases: List<AliasMusicBrainzNetworkModel>? = null,
-) : MusicBrainzNetworkModel(), Series
+    @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
+) : MusicBrainzNetworkModel, Series

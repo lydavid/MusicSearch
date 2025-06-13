@@ -45,8 +45,8 @@ data class ReleaseMusicBrainzNetworkModel(
     @SerialName("release-group") val releaseGroup: ReleaseGroupMusicBrainzNetworkModel? = null,
 
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
-    @SerialName("aliases") val aliases: List<AliasMusicBrainzNetworkModel>? = null,
-) : MusicBrainzNetworkModel(), Release
+    @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
+) : MusicBrainzNetworkModel, Release
 
 @Serializable
 data class CoverArtArchiveMusicBrainzModel(

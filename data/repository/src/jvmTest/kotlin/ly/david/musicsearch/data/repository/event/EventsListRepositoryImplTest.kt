@@ -16,6 +16,7 @@ import ly.david.data.test.kissAtScotiabankArenaListItemModel
 import ly.david.data.test.kitanomaruAreaMusicBrainzModel
 import ly.david.data.test.tsoAtMasseyHallEventMusicBrainzModel
 import ly.david.data.test.tsoAtMasseyHallListItemModel
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -54,6 +55,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
     private val collectionDao: CollectionDao by inject()
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
+    private val aliasDao: AliasDao by inject()
 
     private fun createEventsListRepository(
         events: List<EventMusicBrainzNetworkModel>,
@@ -62,12 +64,14 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
             eventDao = eventDao,
+            aliasDao = aliasDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseEventsByEntity(
                     entityId: String,
                     entity: MusicBrainzEntity,
                     limit: Int,
                     offset: Int,
+                    include: String,
                 ): BrowseEventsResponse {
                     return BrowseEventsResponse(
                         count = 1,

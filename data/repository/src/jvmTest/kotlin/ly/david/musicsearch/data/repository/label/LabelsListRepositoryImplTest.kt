@@ -13,6 +13,7 @@ import ly.david.data.test.flyingDogLabelMusicBrainzModel
 import ly.david.data.test.japanAreaMusicBrainzModel
 import ly.david.data.test.virginLabelListItemModel
 import ly.david.data.test.virginMusicLabelMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -41,6 +42,7 @@ class LabelsListRepositoryImplTest : KoinTest {
     private val collectionDao: CollectionDao by inject()
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
+    private val aliasDao: AliasDao by inject()
 
     private fun createRepository(
         labels: List<LabelMusicBrainzNetworkModel>,
@@ -49,12 +51,14 @@ class LabelsListRepositoryImplTest : KoinTest {
             browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
             labelDao = labelDao,
+            aliasDao = aliasDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseLabelsByEntity(
                     entityId: String,
                     entity: MusicBrainzEntity,
                     limit: Int,
                     offset: Int,
+                    include: String,
                 ): BrowseLabelsResponse {
                     return BrowseLabelsResponse(
                         count = 0,

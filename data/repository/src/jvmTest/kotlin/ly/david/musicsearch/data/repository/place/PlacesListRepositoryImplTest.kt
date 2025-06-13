@@ -14,6 +14,7 @@ import ly.david.data.test.tokyoInternationForumHallAPlaceListItemModel
 import ly.david.data.test.tokyoInternationForumHallAPlaceMusicBrainzModel
 import ly.david.data.test.tokyoInternationForumPlaceListItemModel
 import ly.david.data.test.tokyoInternationForumPlaceMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
@@ -55,6 +56,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
     private val collectionDao: CollectionDao by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     override val collectionEntityDao: CollectionEntityDao by inject()
+    private val aliasDao: AliasDao by inject()
 
     private fun createPlacesListRepository(
         places: List<PlaceMusicBrainzNetworkModel>,
@@ -63,12 +65,14 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
             browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
             placeDao = placeDao,
+            aliasDao = aliasDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browsePlacesByEntity(
                     entityId: String,
                     entity: MusicBrainzEntity,
                     limit: Int,
                     offset: Int,
+                    include: String,
                 ): BrowsePlacesResponse {
                     return BrowsePlacesResponse(
                         count = 1,

@@ -27,8 +27,8 @@ data class WorkMusicBrainzNetworkModel(
 
     // search API returns relations without target-type
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
-    @SerialName("aliases") val aliases: List<AliasMusicBrainzNetworkModel>? = null,
-) : MusicBrainzNetworkModel(), Work
+    @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
+) : MusicBrainzNetworkModel, Work
 
 @Serializable
 data class WorkAttributeMusicBrainzModel(

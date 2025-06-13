@@ -106,13 +106,8 @@ internal class SearchResultsRepositoryImpl(
                 val areas = response.areas
                 areaDao.withTransaction {
                     removeAll()
-                    areaDao.insertReplaceAll(areas)
-                    areas.forEach { area ->
-                        aliasDao.insertReplaceAll(
-                            mbid = area.id,
-                            aliases = area.aliases.orEmpty(),
-                        )
-                    }
+                    areaDao.insertReplaceAll(areas = areas)
+                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = areas)
                     searchResultDao.insertAll(areas.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -134,12 +129,7 @@ internal class SearchResultsRepositoryImpl(
                 artistDao.withTransaction {
                     removeAll()
                     artistDao.insertAll(artists)
-                    artists.forEach { artist ->
-                        aliasDao.insertReplaceAll(
-                            mbid = artist.id,
-                            aliases = artist.aliases.orEmpty(),
-                        )
-                    }
+                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = artists)
                     searchResultDao.insertAll(artists.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -161,12 +151,7 @@ internal class SearchResultsRepositoryImpl(
                 eventDao.withTransaction {
                     removeAll()
                     eventDao.insertAll(events)
-                    events.forEach { event ->
-                        aliasDao.insertReplaceAll(
-                            mbid = event.id,
-                            aliases = event.aliases.orEmpty(),
-                        )
-                    }
+                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = events)
                     searchResultDao.insertAll(events.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -188,12 +173,7 @@ internal class SearchResultsRepositoryImpl(
                 instrumentDao.withTransaction {
                     removeAll()
                     instrumentDao.insertAll(instruments)
-                    instruments.forEach { instrument ->
-                        aliasDao.insertReplaceAll(
-                            mbid = instrument.id,
-                            aliases = instrument.aliases.orEmpty(),
-                        )
-                    }
+                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = instruments)
                     searchResultDao.insertAll(instruments.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -215,12 +195,7 @@ internal class SearchResultsRepositoryImpl(
                 labelDao.withTransaction {
                     removeAll()
                     labelDao.insertAll(labels)
-                    labels.forEach { label ->
-                        aliasDao.insertReplaceAll(
-                            mbid = label.id,
-                            aliases = label.aliases.orEmpty(),
-                        )
-                    }
+                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = labels)
                     searchResultDao.insertAll(labels.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -242,12 +217,7 @@ internal class SearchResultsRepositoryImpl(
                 placeDao.withTransaction {
                     removeAll()
                     placeDao.insertAll(places)
-                    places.forEach { place ->
-                        aliasDao.insertReplaceAll(
-                            mbid = place.id,
-                            aliases = place.aliases.orEmpty(),
-                        )
-                    }
+                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = places)
                     searchResultDao.insertAll(places.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -269,12 +239,7 @@ internal class SearchResultsRepositoryImpl(
                 recordingDao.withTransaction {
                     removeAll()
                     recordingDao.insertAll(recordings)
-                    recordings.forEach { recording ->
-                        aliasDao.insertReplaceAll(
-                            mbid = recording.id,
-                            aliases = recording.aliases.orEmpty(),
-                        )
-                    }
+                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = recordings)
                     searchResultDao.insertAll(recordings.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -296,12 +261,7 @@ internal class SearchResultsRepositoryImpl(
                 releaseDao.withTransaction {
                     removeAll()
                     releaseDao.insertAll(releases)
-                    releases.forEach { release ->
-                        aliasDao.insertReplaceAll(
-                            mbid = release.id,
-                            aliases = release.aliases.orEmpty(),
-                        )
-                    }
+                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = releases)
                     searchResultDao.insertAll(releases.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -323,12 +283,7 @@ internal class SearchResultsRepositoryImpl(
                 releaseGroupDao.withTransaction {
                     removeAll()
                     releaseGroupDao.insertAllReleaseGroups(releaseGroups)
-                    releaseGroups.forEach { releaseGroup ->
-                        aliasDao.insertReplaceAll(
-                            mbid = releaseGroup.id,
-                            aliases = releaseGroup.aliases.orEmpty(),
-                        )
-                    }
+                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = releaseGroups)
                     searchResultDao.insertAll(releaseGroups.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -350,12 +305,7 @@ internal class SearchResultsRepositoryImpl(
                 seriesDao.withTransaction {
                     removeAll()
                     seriesDao.insertAll(series)
-                    series.forEach { series ->
-                        aliasDao.insertReplaceAll(
-                            mbid = series.id,
-                            aliases = series.aliases.orEmpty(),
-                        )
-                    }
+                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = series)
                     searchResultDao.insertAll(series.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -377,12 +327,7 @@ internal class SearchResultsRepositoryImpl(
                 workDao.withTransaction {
                     removeAll()
                     workDao.insertAll(works)
-                    works.forEach { work ->
-                        aliasDao.insertReplaceAll(
-                            mbid = work.id,
-                            aliases = work.aliases.orEmpty(),
-                        )
-                    }
+                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = works)
                     searchResultDao.insertAll(works.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,

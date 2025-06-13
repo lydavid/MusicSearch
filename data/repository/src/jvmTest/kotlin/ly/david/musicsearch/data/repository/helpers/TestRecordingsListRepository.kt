@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.helpers
 
 import ly.david.data.test.api.FakeBrowseApi
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
@@ -14,6 +15,7 @@ interface TestRecordingsListRepository {
     val recordingDao: RecordingDao
     val collectionEntityDao: CollectionEntityDao
     val browseRemoteMetadataDao: BrowseRemoteMetadataDao
+    val aliasDao: AliasDao
 
     fun createRecordingsListRepository(
         recordings: List<RecordingMusicBrainzNetworkModel>,
@@ -22,6 +24,7 @@ interface TestRecordingsListRepository {
             browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
             recordingDao = recordingDao,
+            aliasDao = aliasDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseRecordingsByEntity(
                     entityId: String,

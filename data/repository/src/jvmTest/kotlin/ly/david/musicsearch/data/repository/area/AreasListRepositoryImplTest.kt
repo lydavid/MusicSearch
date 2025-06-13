@@ -4,6 +4,7 @@ import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
@@ -31,6 +32,7 @@ class AreasListRepositoryImplTest : KoinTest {
     private val collectionDao: CollectionDao by inject()
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
+    private val aliasDao: AliasDao by inject()
 
     private fun createRepository(
         areas: List<AreaMusicBrainzNetworkModel>,
@@ -39,11 +41,13 @@ class AreasListRepositoryImplTest : KoinTest {
             browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
             areaDao = areaDao,
+            aliasDao = aliasDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseAreasByCollection(
                     collectionId: String,
                     limit: Int,
                     offset: Int,
+                    include: String,
                 ): BrowseAreasResponse {
                     return BrowseAreasResponse(
                         count = 1,

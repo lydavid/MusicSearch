@@ -12,6 +12,7 @@ import ly.david.data.test.roseliaArtistListItemModel
 import ly.david.data.test.roseliaArtistMusicBrainzModel
 import ly.david.data.test.variousArtistsArtistListItemModel
 import ly.david.data.test.variousArtistsArtistMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
@@ -54,6 +55,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
     override val detailsMetadataDao: DetailsMetadataDao by inject()
     private val collectionDao: CollectionDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
+    private val aliasDao: AliasDao by inject()
 
     private fun createArtistsListRepository(
         artists: List<ArtistMusicBrainzNetworkModel>,
@@ -62,6 +64,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
             artistDao = artistDao,
+            aliasDao = aliasDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseArtistsByEntity(
                     entityId: String,

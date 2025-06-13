@@ -28,6 +28,7 @@ import ly.david.data.test.virginMusicLabelMusicBrainzModel
 import ly.david.data.test.weirdAlGreatestHitsReleaseListItemModel
 import ly.david.data.test.weirdAlGreatestHitsReleaseMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
@@ -103,6 +104,7 @@ class ReleasesListRepositoryImplTest :
     override val relationDao: RelationDao by inject()
     override val recordingDao: RecordingDao by inject()
     override val areaDao: AreaDao by inject()
+    private val aliasDao: AliasDao by inject()
 
     private fun createReleasesListRepository(
         releases: List<ReleaseMusicBrainzNetworkModel>,
@@ -110,6 +112,8 @@ class ReleasesListRepositoryImplTest :
         return ReleasesListRepositoryImpl(
             browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
+            releaseDao = releaseDao,
+            aliasDao = aliasDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseReleasesByEntity(
                     entityId: String,
@@ -123,7 +127,6 @@ class ReleasesListRepositoryImplTest :
                     musicBrainzModels = releases,
                 )
             },
-            releaseDao = releaseDao,
         )
     }
 

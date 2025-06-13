@@ -4,6 +4,7 @@ import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
@@ -22,10 +23,12 @@ class RecordingsListRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
     private val recordingDao: RecordingDao,
     private val browseApi: BrowseApi,
+    aliasDao: AliasDao,
 ) : RecordingsListRepository,
     BrowseEntities<RecordingListItemModel, RecordingMusicBrainzNetworkModel, BrowseRecordingsResponse>(
         browseEntity = MusicBrainzEntity.RECORDING,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
+        aliasDao = aliasDao,
     ) {
 
     override fun observeRecordings(
@@ -87,7 +90,7 @@ class RecordingsListRepositoryImpl(
         )
     }
 
-    override fun insertAllLinkingModels(
+    override fun insertAll(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<RecordingMusicBrainzNetworkModel>,

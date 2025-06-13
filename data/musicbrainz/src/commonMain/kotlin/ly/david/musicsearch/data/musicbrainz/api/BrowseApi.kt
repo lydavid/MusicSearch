@@ -25,6 +25,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkM
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUri
 
+const val ALIASES = "aliases"
 const val ARTIST_CREDITS = "artist-credits"
 const val LABELS = "labels"
 
@@ -40,6 +41,7 @@ interface BrowseApi {
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ALIASES,
     ): BrowseAreasResponse
 
     suspend fun browseArtistsByEntity(
@@ -47,7 +49,7 @@ interface BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
-        include: String = "aliases",
+        include: String = ALIASES,
     ): BrowseArtistsResponse
 
     suspend fun browseEventsByEntity(
@@ -55,6 +57,7 @@ interface BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ALIASES,
     ): BrowseEventsResponse
 
     suspend fun browseGenresByEntity(
@@ -68,6 +71,7 @@ interface BrowseApi {
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ALIASES,
     ): BrowseInstrumentsResponse
 
     suspend fun browseLabelsByEntity(
@@ -75,6 +79,7 @@ interface BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ALIASES,
     ): BrowseLabelsResponse
 
     suspend fun browsePlacesByEntity(
@@ -82,6 +87,7 @@ interface BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ALIASES,
     ): BrowsePlacesResponse
 
     suspend fun browseRecordingsByEntity(
@@ -89,7 +95,7 @@ interface BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
-        include: String = ARTIST_CREDITS,
+        include: String = "$ARTIST_CREDITS+$ALIASES",
     ): BrowseRecordingsResponse
 
     suspend fun browseReleasesByEntity(
@@ -97,7 +103,7 @@ interface BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
-        include: String = ARTIST_CREDITS,
+        include: String = "$ARTIST_CREDITS+$ALIASES",
     ): BrowseReleasesResponse
 
     suspend fun browseReleaseGroupsByEntity(
@@ -105,13 +111,14 @@ interface BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
-        include: String = ARTIST_CREDITS,
+        include: String = "$ARTIST_CREDITS+$ALIASES",
     ): BrowseReleaseGroupsResponse
 
     suspend fun browseSeriesByCollection(
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ALIASES,
     ): BrowseSeriesResponse
 
     suspend fun browseWorksByEntity(
@@ -119,6 +126,7 @@ interface BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ALIASES,
     ): BrowseWorksResponse
 }
 
@@ -129,6 +137,7 @@ interface BrowseApiImpl : BrowseApi {
         collectionId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseAreasResponse {
         return httpClient.get {
             url {
@@ -144,6 +153,10 @@ interface BrowseApiImpl : BrowseApi {
                 parameter(
                     "offset",
                     offset,
+                )
+                parameter(
+                    "inc",
+                    include,
                 )
             }
         }.body()
@@ -184,6 +197,7 @@ interface BrowseApiImpl : BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseEventsResponse {
         return httpClient.get {
             url {
@@ -199,6 +213,10 @@ interface BrowseApiImpl : BrowseApi {
                 parameter(
                     "offset",
                     offset,
+                )
+                parameter(
+                    "inc",
+                    include,
                 )
             }
         }.body()
@@ -233,6 +251,7 @@ interface BrowseApiImpl : BrowseApi {
         collectionId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseInstrumentsResponse {
         return httpClient.get {
             url {
@@ -249,6 +268,10 @@ interface BrowseApiImpl : BrowseApi {
                     "offset",
                     offset,
                 )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -258,6 +281,7 @@ interface BrowseApiImpl : BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseLabelsResponse {
         return httpClient.get {
             url {
@@ -274,6 +298,10 @@ interface BrowseApiImpl : BrowseApi {
                     "offset",
                     offset,
                 )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -283,6 +311,7 @@ interface BrowseApiImpl : BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowsePlacesResponse {
         return httpClient.get {
             url {
@@ -298,6 +327,10 @@ interface BrowseApiImpl : BrowseApi {
                 parameter(
                     "offset",
                     offset,
+                )
+                parameter(
+                    "inc",
+                    include,
                 )
             }
         }.body()
@@ -397,6 +430,7 @@ interface BrowseApiImpl : BrowseApi {
         collectionId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseSeriesResponse {
         return httpClient.get {
             url {
@@ -413,6 +447,10 @@ interface BrowseApiImpl : BrowseApi {
                     "offset",
                     offset,
                 )
+                parameter(
+                    "inc",
+                    include,
+                )
             }
         }.body()
     }
@@ -422,6 +460,7 @@ interface BrowseApiImpl : BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseWorksResponse {
         return httpClient.get {
             url {
@@ -437,6 +476,10 @@ interface BrowseApiImpl : BrowseApi {
                 parameter(
                     "offset",
                     offset,
+                )
+                parameter(
+                    "inc",
+                    include,
                 )
             }
         }.body()

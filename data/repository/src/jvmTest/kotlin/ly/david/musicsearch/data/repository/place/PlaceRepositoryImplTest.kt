@@ -8,6 +8,7 @@ import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.data.test.budokanPlaceMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -55,6 +56,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
     override val areaDao: AreaDao by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     override val collectionEntityDao: CollectionEntityDao by inject()
+    private val aliasDao: AliasDao by inject()
 
     private fun createAreaRepositoryWithFakeNetworkData(
         musicBrainzModel: AreaMusicBrainzNetworkModel,
@@ -370,13 +372,15 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         val placesListRepositoryImpl = PlacesListRepositoryImpl(
             browseRemoteMetadataDao = browseRemoteMetadataDao,
             collectionEntityDao = collectionEntityDao,
-            placeDao = this@PlaceRepositoryImplTest.placeDao,
+            placeDao = placeDao,
+            aliasDao = aliasDao,
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browsePlacesByEntity(
                     entityId: String,
                     entity: MusicBrainzEntity,
                     limit: Int,
                     offset: Int,
+                    include: String,
                 ): BrowsePlacesResponse {
                     return BrowsePlacesResponse(
                         count = 1,

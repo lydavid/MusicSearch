@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.instrument
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
@@ -21,10 +22,12 @@ class InstrumentsListRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
     private val instrumentDao: InstrumentDao,
     private val browseApi: BrowseApi,
+    aliasDao: AliasDao,
 ) : InstrumentsListRepository,
     BrowseEntities<InstrumentListItemModel, InstrumentMusicBrainzNetworkModel, BrowseInstrumentsResponse>(
         browseEntity = MusicBrainzEntity.INSTRUMENT,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
+        aliasDao = aliasDao,
     ) {
 
     override fun observeInstruments(
@@ -88,7 +91,7 @@ class InstrumentsListRepositoryImpl(
         }
     }
 
-    override fun insertAllLinkingModels(
+    override fun insertAll(
         entityId: String,
         entity: MusicBrainzEntity,
         musicBrainzModels: List<InstrumentMusicBrainzNetworkModel>,
