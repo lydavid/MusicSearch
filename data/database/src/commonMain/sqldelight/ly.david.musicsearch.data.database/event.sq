@@ -58,14 +58,19 @@ DELETE FROM events_by_entity WHERE entity_id = :entityId;
 getNumberOfEventsByEntity:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(DISTINCT event.id)
     FROM events_by_entity ee
-    INNER JOIN event e ON e.id = ee.event_id
+    INNER JOIN event ON event.id = ee.event_id
+    LEFT JOIN alias ON event.id = alias.mbid
     WHERE ee.entity_id = :entityId
     AND (
-      e.name LIKE :query OR
-      e.disambiguation LIKE :query OR
-      e.type LIKE :query
+      event.name LIKE :query OR
+      event.disambiguation LIKE :query OR
+      event.type LIKE :query OR
+      event.time LIKE :query OR
+      event.begin LIKE :query OR
+      event.end LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -73,33 +78,35 @@ SELECT IFNULL(
 
 getEventsByEntity:
 SELECT
-  e.id,
-  e.name,
-  e.disambiguation,
-  e.type,
-  e.time,
-  e.cancelled,
-  e.begin,
-  e.end,
-  e.ended,
+  event.id,
+  event.name,
+  event.disambiguation,
+  event.type,
+  event.time,
+  event.cancelled,
+  event.begin,
+  event.end,
+  event.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM events_by_entity ee
-INNER JOIN event e ON e.id = ee.event_id
-LEFT JOIN mbid_image mi ON mi.mbid = e.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = e.id
+INNER JOIN event ON event.id = ee.event_id
+LEFT JOIN alias ON event.id = alias.mbid
+LEFT JOIN mbid_image mi ON mi.mbid = event.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = event.id
 WHERE ee.entity_id = :entityId
 AND (
-  e.name LIKE :query OR
-  e.disambiguation LIKE :query OR
-  e.type LIKE :query OR
-  e.time LIKE :query OR
-  e.begin LIKE :query OR
-  e.end LIKE :query
+  event.name LIKE :query OR
+  event.disambiguation LIKE :query OR
+  event.type LIKE :query OR
+  event.time LIKE :query OR
+  event.begin LIKE :query OR
+  event.end LIKE :query OR
+  alias.name LIKE :query
 )
-GROUP BY e.id
-ORDER BY e.begin, e.end, e.name
+GROUP BY event.id
+ORDER BY event.begin, event.end, event.name
 LIMIT :limit OFFSET :offset;
 
 -- events by collection
@@ -107,16 +114,18 @@ LIMIT :limit OFFSET :offset;
 getNumberOfEventsByCollection:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
-    FROM event e
-    INNER JOIN collection_entity ce ON e.id = ce.entity_id
+    SELECT COUNT(DISTINCT event.id)
+    FROM event
+    INNER JOIN collection_entity ce ON event.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
+    LEFT JOIN alias ON event.id = alias.mbid
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
-      e.name LIKE :query OR
-      e.disambiguation LIKE :query OR
-      e.type LIKE :query
+      event.name LIKE :query OR
+      event.disambiguation LIKE :query OR
+      event.type LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -124,35 +133,37 @@ SELECT IFNULL(
 
 getEventsByCollection:
 SELECT
-  e.id,
-  e.name,
-  e.disambiguation,
-  e.type,
-  e.time,
-  e.cancelled,
-  e.begin,
-  e.end,
-  e.ended,
+  event.id,
+  event.name,
+  event.disambiguation,
+  event.type,
+  event.time,
+  event.cancelled,
+  event.begin,
+  event.end,
+  event.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM event e
-INNER JOIN collection_entity ce ON e.id = ce.entity_id
+FROM event
+INNER JOIN collection_entity ce ON event.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN mbid_image mi ON mi.mbid = e.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = e.id
+LEFT JOIN alias ON event.id = alias.mbid
+LEFT JOIN mbid_image mi ON mi.mbid = event.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = event.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
-  e.name LIKE :query OR
-  e.disambiguation LIKE :query OR
-  e.type LIKE :query OR
-  e.time LIKE :query OR
-  e.begin LIKE :query OR
-  e.end LIKE :query
+  event.name LIKE :query OR
+  event.disambiguation LIKE :query OR
+  event.type LIKE :query OR
+  event.time LIKE :query OR
+  event.begin LIKE :query OR
+  event.end LIKE :query OR
+  alias.name LIKE :query
 )
-GROUP BY e.id
-ORDER BY e.begin, e.end, e.name
+GROUP BY event.id
+ORDER BY event.begin, event.end, event.name
 LIMIT :limit OFFSET :offset;
 
 -- all events
@@ -160,12 +171,14 @@ LIMIT :limit OFFSET :offset;
 getCountOfAllEvents:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(e.id)
     FROM event e
+    LEFT JOIN alias ON e.id = alias.mbid
     WHERE (
       e.name LIKE :query OR
       e.disambiguation LIKE :query OR
-      e.type LIKE :query
+      e.type LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -186,6 +199,7 @@ SELECT
   mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM event e
+LEFT JOIN alias ON e.id = alias.mbid
 LEFT JOIN mbid_image mi ON mi.mbid = e.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = e.id
 WHERE (
@@ -194,7 +208,8 @@ WHERE (
   e.type LIKE :query OR
   e.time LIKE :query OR
   e.begin LIKE :query OR
-  e.end LIKE :query
+  e.end LIKE :query OR
+  alias.name LIKE :query
 )
 GROUP BY e.id
 ORDER BY e.begin, e.end, e.name

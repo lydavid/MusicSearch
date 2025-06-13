@@ -55,17 +55,19 @@ DELETE FROM recordings_by_entity WHERE entity_id = :entityId;
 getNumberOfRecordingsByEntity:
 SELECT IFNULL(
   (
-    SELECT COUNT(DISTINCT r.id)
+    SELECT COUNT(DISTINCT recording.id)
     FROM recordings_by_entity re
-    INNER JOIN recording r ON r.id = re.recording_id
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    INNER JOIN recording ON recording.id = re.recording_id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN alias ON recording.id = alias.mbid
     WHERE re.entity_id = :entityId
     AND (
-      r.name LIKE :query
-      OR r.disambiguation LIKE :query
-      OR r.first_release_date LIKE :query
-      OR ac.name LIKE :query
+      recording.name LIKE :query OR
+      recording.disambiguation LIKE :query OR
+      recording.first_release_date LIKE :query OR
+      ac.name LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -73,28 +75,30 @@ SELECT IFNULL(
 
 getRecordingsByEntity:
 SELECT
-  r.id,
-  r.name,
-  r.disambiguation,
-  r.first_release_date,
-  r.length,
-  r.video,
+  recording.id,
+  recording.name,
+  recording.disambiguation,
+  recording.first_release_date,
+  recording.length,
+  recording.video,
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited
 FROM recordings_by_entity re
-INNER JOIN recording r ON r.id = re.recording_id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN recording ON recording.id = re.recording_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
+LEFT JOIN alias ON recording.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
 WHERE re.entity_id = :entityId
 AND (
-  r.name LIKE :query
-  OR r.disambiguation LIKE :query
-  OR r.first_release_date LIKE :query
-  OR ac.name LIKE :query
+  recording.name LIKE :query OR
+  recording.disambiguation LIKE :query OR
+  recording.first_release_date LIKE :query OR
+  ac.name LIKE :query OR
+  alias.name LIKE :query
 )
-GROUP BY r.id
-ORDER BY r.first_release_date, r.name
+GROUP BY recording.id
+ORDER BY recording.first_release_date, recording.name
 LIMIT :limit OFFSET :offset;
 
 -- recordings by collection
@@ -102,19 +106,21 @@ LIMIT :limit OFFSET :offset;
 getNumberOfRecordingsByCollection:
 SELECT IFNULL(
   (
-    SELECT COUNT(DISTINCT r.id)
-    FROM recording r
-    INNER JOIN collection_entity ce ON r.id = ce.entity_id
+    SELECT COUNT(DISTINCT recording.id)
+    FROM recording
+    INNER JOIN collection_entity ce ON recording.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN alias ON recording.id = alias.mbid
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
-      r.name LIKE :query
-      OR r.disambiguation LIKE :query
-      OR r.first_release_date LIKE :query
-      OR ac.name LIKE :query
+      recording.name LIKE :query OR
+      recording.disambiguation LIKE :query OR
+      recording.first_release_date LIKE :query OR
+      ac.name LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -122,30 +128,32 @@ SELECT IFNULL(
 
 getRecordingsByCollection:
 SELECT
-  r.id,
-  r.name,
-  r.disambiguation,
-  r.first_release_date,
-  r.length,
-  r.video,
+  recording.id,
+  recording.name,
+  recording.disambiguation,
+  recording.first_release_date,
+  recording.length,
+  recording.video,
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM recording r
-INNER JOIN collection_entity ce ON r.id = ce.entity_id
+FROM recording
+INNER JOIN collection_entity ce ON recording.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
+LEFT JOIN alias ON recording.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
-  r.name LIKE :query
-  OR r.disambiguation LIKE :query
-  OR r.first_release_date LIKE :query
-  OR ac.name LIKE :query
+  recording.name LIKE :query OR
+  recording.disambiguation LIKE :query OR
+  recording.first_release_date LIKE :query OR
+  ac.name LIKE :query OR
+  alias.name LIKE :query
 )
-GROUP BY r.id
-ORDER BY r.first_release_date, r.name
+GROUP BY recording.id
+ORDER BY recording.first_release_date, recording.name
 LIMIT :limit OFFSET :offset;
 
 -- all recordings
@@ -153,15 +161,17 @@ LIMIT :limit OFFSET :offset;
 getCountOfAllRecordings:
 SELECT IFNULL(
   (
-    SELECT COUNT(DISTINCT r.id)
-    FROM recording r
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    SELECT COUNT(DISTINCT recording.id)
+    FROM recording
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN alias ON recording.id = alias.mbid
     WHERE (
-      r.name LIKE :query
-      OR r.disambiguation LIKE :query
-      OR r.first_release_date LIKE :query
-      OR ac.name LIKE :query
+      recording.name LIKE :query OR
+      recording.disambiguation LIKE :query OR
+      recording.first_release_date LIKE :query OR
+      ac.name LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -169,24 +179,26 @@ SELECT IFNULL(
 
 getAllRecordings:
 SELECT
-  r.id,
-  r.name,
-  r.disambiguation,
-  r.first_release_date,
-  r.length,
-  r.video,
+  recording.id,
+  recording.name,
+  recording.disambiguation,
+  recording.first_release_date,
+  recording.length,
+  recording.video,
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM recording r
-INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+FROM recording
+INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
+LEFT JOIN alias ON recording.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
 WHERE (
-  r.name LIKE :query
-  OR r.disambiguation LIKE :query
-  OR r.first_release_date LIKE :query
-  OR ac.name LIKE :query
+  recording.name LIKE :query OR
+  recording.disambiguation LIKE :query OR
+  recording.first_release_date LIKE :query OR
+  ac.name LIKE :query OR
+  alias.name LIKE :query
 )
-GROUP BY r.id
-ORDER BY r.first_release_date, r.name
+GROUP BY recording.id
+ORDER BY recording.first_release_date, recording.name
 LIMIT :limit OFFSET :offset;

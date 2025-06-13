@@ -59,13 +59,15 @@ VALUES ?;
 getCountOfAllAreas:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
-    FROM area a
+    SELECT COUNT(DISTINCT area.id)
+    FROM area
+    LEFT JOIN alias ON area.id = alias.mbid
     WHERE (
-      a.name LIKE :query OR
-      a.disambiguation LIKE :query OR
-      a.sort_name LIKE :query OR
-      a.type LIKE :query
+      area.name LIKE :query OR
+      area.disambiguation LIKE :query OR
+      area.sort_name LIKE :query OR
+      area.type LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -73,26 +75,29 @@ SELECT IFNULL(
 
 getAllAreas:
 SELECT
-  a.id,
-  a.name,
-  a.sort_name,
-  a.disambiguation,
-  a.type,
-  a.begin,
-  a.end,
-  a.ended,
+  area.id,
+  area.name,
+  area.sort_name,
+  area.disambiguation,
+  area.type,
+  area.begin,
+  area.end,
+  area.ended,
   cc.code,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM area a
-LEFT JOIN country_code cc ON a.id = cc.area_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = a.id
+FROM area
+LEFT JOIN alias ON area.id = alias.mbid
+LEFT JOIN country_code cc ON area.id = cc.area_id
+LEFT JOIN details_metadata ON details_metadata.entity_id = area.id
 WHERE (
-  a.name LIKE :query OR
-  a.disambiguation LIKE :query OR
-  a.sort_name LIKE :query OR
-  a.type LIKE :query
+  area.name LIKE :query OR
+  area.disambiguation LIKE :query OR
+  area.sort_name LIKE :query OR
+  area.type LIKE :query OR
+  alias.name LIKE :query
 )
-ORDER BY a.begin, a.end, a.name
+GROUP BY area.id
+ORDER BY area.begin, area.end, area.name
 LIMIT :limit OFFSET :offset;
 
 -- areas by collection
@@ -100,17 +105,19 @@ LIMIT :limit OFFSET :offset;
 getNumberOfAreasByCollection:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
-    FROM area a
-    INNER JOIN collection_entity ce ON a.id = ce.entity_id
+    SELECT COUNT(DISTINCT area.id)
+    FROM area
+    INNER JOIN collection_entity ce ON area.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
+    LEFT JOIN alias ON area.id = alias.mbid
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
-      a.name LIKE :query OR
-      a.disambiguation LIKE :query OR
-      a.sort_name LIKE :query OR
-      a.type LIKE :query
+      area.name LIKE :query OR
+      area.disambiguation LIKE :query OR
+      area.sort_name LIKE :query OR
+      area.type LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -118,49 +125,52 @@ SELECT IFNULL(
 
 getAreasByCollection:
 SELECT
-  a.id,
-  a.name,
-  a.sort_name,
-  a.disambiguation,
-  a.type,
-  a.begin,
-  a.end,
-  a.ended,
+  area.id,
+  area.name,
+  area.sort_name,
+  area.disambiguation,
+  area.type,
+  area.begin,
+  area.end,
+  area.ended,
   cc.code,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM area a
-INNER JOIN collection_entity ce ON a.id = ce.entity_id
+FROM area
+INNER JOIN collection_entity ce ON area.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN country_code cc ON a.id = cc.area_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = a.id
+LEFT JOIN alias ON area.id = alias.mbid
+LEFT JOIN country_code cc ON area.id = cc.area_id
+LEFT JOIN details_metadata ON details_metadata.entity_id = area.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
-  a.name LIKE :query OR
-  a.disambiguation LIKE :query OR
-  a.sort_name LIKE :query OR
-  a.type LIKE :query
+  area.name LIKE :query OR
+  area.disambiguation LIKE :query OR
+  area.sort_name LIKE :query OR
+  area.type LIKE :query OR
+  alias.name LIKE :query
 )
-ORDER BY a.begin, a.end, a.name
+GROUP BY area.id
+ORDER BY area.begin, area.end, area.name
 LIMIT :limit OFFSET :offset;
 
 -- area by place
 
 getAreasByPlace:
 SELECT
-  a.id,
-  a.name,
-  a.sort_name,
-  a.disambiguation,
-  a.type,
-  a.begin,
-  a.end,
-  a.ended,
+  area.id,
+  area.name,
+  area.sort_name,
+  area.disambiguation,
+  area.type,
+  area.begin,
+  area.end,
+  area.ended,
   '' AS countryCode,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM area a
-INNER JOIN area_place ap ON a.id = ap.area_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = a.id
+FROM area
+INNER JOIN area_place ap ON area.id = ap.area_id
+LEFT JOIN details_metadata ON details_metadata.entity_id = area.id
 WHERE ap.place_id = :placeId;
 
 -- An area that does not have a type is the area for a place that has never been visited.

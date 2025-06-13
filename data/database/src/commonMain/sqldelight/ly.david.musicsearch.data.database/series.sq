@@ -30,16 +30,18 @@ WHERE id = :id;
 getNumberOfSeriesByCollection:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
-    FROM series s
-    INNER JOIN collection_entity ce ON s.id = ce.entity_id
+    SELECT COUNT(DISTINCT series.id)
+    FROM series
+    INNER JOIN collection_entity ce ON series.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
+    LEFT JOIN alias ON series.id = alias.mbid
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
-      s.name LIKE :query
-      OR s.disambiguation LIKE :query
-      OR s.type LIKE :query
+      series.name LIKE :query OR
+      series.disambiguation LIKE :query OR
+      series.type LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -47,22 +49,25 @@ SELECT IFNULL(
 
 getSeriesByCollection:
 SELECT
-  s.id,
-  s.name,
-  s.disambiguation,
-  s.type,
+  series.id,
+  series.name,
+  series.disambiguation,
+  series.type,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM series s
-INNER JOIN collection_entity ce ON s.id = ce.entity_id
+FROM series
+INNER JOIN collection_entity ce ON series.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = s.id
+LEFT JOIN alias ON series.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = series.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
-  s.name LIKE :query
-  OR s.disambiguation LIKE :query
-  OR s.type LIKE :query
+  series.name LIKE :query OR
+  series.disambiguation LIKE :query OR
+  series.type LIKE :query OR
+  alias.name LIKE :query
 )
+GROUP BY series.id
 LIMIT :limit OFFSET :offset;
 
 -- all series
@@ -70,12 +75,14 @@ LIMIT :limit OFFSET :offset;
 getCountOfAllSeries:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
-    FROM series s
+    SELECT COUNT(DISTINCT series.id)
+    FROM series
+    LEFT JOIN alias ON series.id = alias.mbid
     WHERE (
-      s.name LIKE :query
-      OR s.disambiguation LIKE :query
-      OR s.type LIKE :query
+      series.name LIKE :query OR
+      series.disambiguation LIKE :query OR
+      series.type LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -83,16 +90,19 @@ SELECT IFNULL(
 
 getAllSeries:
 SELECT
-  s.id,
-  s.name,
-  s.disambiguation,
-  s.type,
+  series.id,
+  series.name,
+  series.disambiguation,
+  series.type,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM series s
-LEFT JOIN details_metadata ON details_metadata.entity_id = s.id
+FROM series
+LEFT JOIN alias ON series.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = series.id
 WHERE (
-  s.name LIKE :query
-  OR s.disambiguation LIKE :query
-  OR s.type LIKE :query
+  series.name LIKE :query OR
+  series.disambiguation LIKE :query OR
+  series.type LIKE :query OR
+  alias.name LIKE :query
 )
+GROUP BY series.id
 LIMIT :limit OFFSET :offset;

@@ -7,6 +7,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeSearchApi
 import ly.david.data.test.redReleaseMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
@@ -25,7 +26,6 @@ import ly.david.musicsearch.data.database.dao.SearchResultDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.database.dao.WorkDao
-import ly.david.musicsearch.data.musicbrainz.api.SearchApi
 import ly.david.musicsearch.data.musicbrainz.api.SearchAreasResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchReleasesResponse
@@ -35,6 +35,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetwor
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
+import ly.david.musicsearch.data.repository.helpers.TestSearchResultsRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
@@ -44,61 +45,41 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHeader
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.search.results.SearchResultsRepository
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
+class SearchResultsRepositoryImplTest : KoinTest, TestSearchResultsRepository, TestReleaseRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val searchResultDao: SearchResultDao by inject()
+    override val searchResultDao: SearchResultDao by inject()
     override val areaDao: AreaDao by inject()
-    private val artistDao: ArtistDao by inject()
-    private val eventDao: EventDao by inject()
-    private val instrumentDao: InstrumentDao by inject()
+    override val artistDao: ArtistDao by inject()
+    override val eventDao: EventDao by inject()
+    override val instrumentDao: InstrumentDao by inject()
     override val labelDao: LabelDao by inject()
     override val mediumDao: MediumDao by inject()
     override val trackDao: TrackDao by inject()
     override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
-    private val placeDao: PlaceDao by inject()
-    private val recordingDao: RecordingDao by inject()
+    override val placeDao: PlaceDao by inject()
+    override val recordingDao: RecordingDao by inject()
     override val releaseDao: ReleaseDao by inject()
     override val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
     override val releaseGroupDao: ReleaseGroupDao by inject()
     override val artistCreditDao: ArtistCreditDao by inject()
-    private val seriesDao: SeriesDao by inject()
-    private val workDao: WorkDao by inject()
-
-    private fun createRepository(
-        searchApi: SearchApi,
-    ): SearchResultsRepository {
-        return SearchResultsRepositoryImpl(
-            searchApi = searchApi,
-            searchResultDao = searchResultDao,
-            areaDao = areaDao,
-            artistDao = artistDao,
-            eventDao = eventDao,
-            instrumentDao = instrumentDao,
-            labelDao = labelDao,
-            placeDao = placeDao,
-            recordingDao = recordingDao,
-            releaseDao = releaseDao,
-            releaseGroupDao = releaseGroupDao,
-            seriesDao = seriesDao,
-            workDao = workDao,
-        )
-    }
+    override val seriesDao: SeriesDao by inject()
+    override val workDao: WorkDao by inject()
+    override val aliasDao: AliasDao by inject()
 
     @Test
     fun `empty network, no list items`() = runTest {
-        val repository = createRepository(
+        val repository = createSearchResultsRepository(
             searchApi = FakeSearchApi(),
         )
 
@@ -115,51 +96,8 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
     }
 
     @Test
-    fun `one more list item is returned as footer`() = runTest {
-        val repository = createRepository(
-            searchApi = object : FakeSearchApi() {
-                override suspend fun queryArtists(
-                    query: String,
-                    limit: Int,
-                    offset: Int,
-                ): SearchArtistsResponse {
-                    return SearchArtistsResponse(
-                        count = 1,
-                        artists = listOf(
-                            ArtistMusicBrainzNetworkModel(
-                                id = "1",
-                                name = "Various Artists",
-                            ),
-                        ),
-                    )
-                }
-            },
-        )
-
-        val flow: Flow<PagingData<ListItemModel>> = repository.observeSearchResults(
-            entity = MusicBrainzEntity.ARTIST,
-            query = "a",
-        )
-        val searchResults: List<ListItemModel> = flow.asSnapshot()
-
-        Assert.assertEquals(
-            listOf(
-                SearchHeader(
-                    remoteCount = 1,
-                ),
-                ArtistListItemModel(
-                    id = "1",
-                    name = "Various Artists",
-                ),
-                Footer(),
-            ),
-            searchResults,
-        )
-    }
-
-    @Test
     fun `results are ordered`() = runTest {
-        val sut = createRepository(
+        val sut = createSearchResultsRepository(
             searchApi = object : FakeSearchApi() {
                 override suspend fun queryArtists(
                     query: String,
@@ -224,7 +162,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
 
     @Test
     fun `changing query will not have old results show up`() = runTest {
-        val sut = createRepository(
+        val sut = createSearchResultsRepository(
             searchApi = object : FakeSearchApi() {
                 override suspend fun queryAreas(
                     query: String,
@@ -297,7 +235,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
 
     @Test
     fun `release must include artist credits`() = runTest {
-        val repository = createRepository(
+        val repository = createSearchResultsRepository(
             searchApi = object : FakeSearchApi() {
                 override suspend fun queryReleases(
                     query: String,
@@ -363,7 +301,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestReleaseRepository {
             lastUpdated = testDateTimeInThePast,
         )
 
-        val searchResultsRepository = createRepository(
+        val searchResultsRepository = createSearchResultsRepository(
             searchApi = object : FakeSearchApi() {
                 override suspend fun queryAreas(
                     query: String,

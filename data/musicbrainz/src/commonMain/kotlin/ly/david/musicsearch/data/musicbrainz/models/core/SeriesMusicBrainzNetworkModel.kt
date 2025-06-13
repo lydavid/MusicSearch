@@ -2,8 +2,9 @@ package ly.david.musicsearch.data.musicbrainz.models.core
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.shared.domain.series.Series
+import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
+import ly.david.musicsearch.shared.domain.series.Series
 
 @Serializable
 data class SeriesMusicBrainzNetworkModel(
@@ -14,4 +15,5 @@ data class SeriesMusicBrainzNetworkModel(
     @SerialName("type-id") val typeId: String? = null,
 
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
+    @SerialName("aliases") val aliases: List<AliasMusicBrainzNetworkModel>? = null,
 ) : MusicBrainzNetworkModel(), Series

@@ -60,34 +60,41 @@ DELETE FROM area_place WHERE area_id = :areaId;
 getNumberOfPlacesByArea:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
-    FROM place p
-    INNER JOIN area_place ap ON p.id = ap.place_id
+    SELECT COUNT(DISTINCT place.id)
+    FROM place
+    INNER JOIN area_place ap ON place.id = ap.place_id
     WHERE ap.area_id = :areaId
-    AND (p.name LIKE :query OR p.disambiguation LIKE :query OR p.type LIKE :query)
+    AND (place.name LIKE :query OR place.disambiguation LIKE :query OR place.type LIKE :query)
   ),
   0
 ) AS count;
 
 getPlacesByArea:
 SELECT
-  p.id,
-  p.name,
-  p.disambiguation,
-  p.address,
-  p.type,
-  p.longitude,
-  p.latitude,
-  p.`begin`,
-  p.`end`,
-  p.`ended`,
+  place.id,
+  place.name,
+  place.disambiguation,
+  place.address,
+  place.type,
+  place.longitude,
+  place.latitude,
+  place.`begin`,
+  place.`end`,
+  place.`ended`,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM place p
-INNER JOIN area_place ap ON p.id = ap.place_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = p.id
+FROM place
+INNER JOIN area_place ap ON place.id = ap.place_id
+LEFT JOIN alias ON place.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = place.id
 WHERE ap.area_id = :areaId
-AND (p.name LIKE :query OR p.disambiguation LIKE :query OR p.type LIKE :query)
-ORDER BY p.name, p.address
+AND (
+  place.name LIKE :query OR
+  place.disambiguation LIKE :query OR
+  place.type LIKE :query OR
+  alias.name LIKE :query
+)
+GROUP BY place.id
+ORDER BY place.name, place.address
 LIMIT :limit OFFSET :offset;
 
 -- places by collection
@@ -95,17 +102,19 @@ LIMIT :limit OFFSET :offset;
 getNumberOfPlacesByCollection:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
-    FROM place p
-    INNER JOIN collection_entity ce ON p.id = ce.entity_id
+    SELECT COUNT(DISTINCT place.id)
+    FROM place
+    INNER JOIN collection_entity ce ON place.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
+    LEFT JOIN alias ON place.id = alias.mbid
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
-      p.name LIKE :query OR
-      p.disambiguation LIKE :query OR
-      p.address LIKE :query OR
-      p.type LIKE :query
+      place.name LIKE :query OR
+      place.disambiguation LIKE :query OR
+      place.address LIKE :query OR
+      place.type LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -113,30 +122,33 @@ SELECT IFNULL(
 
 getPlacesByCollection:
 SELECT
-  p.id,
-  p.name,
-  p.disambiguation,
-  p.address,
-  p.type,
-  p.longitude,
-  p.latitude,
-  p.`begin`,
-  p.`end`,
-  p.`ended`,
+  place.id,
+  place.name,
+  place.disambiguation,
+  place.address,
+  place.type,
+  place.longitude,
+  place.latitude,
+  place.`begin`,
+  place.`end`,
+  place.`ended`,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM place p
-INNER JOIN collection_entity ce ON p.id = ce.entity_id
+FROM place
+INNER JOIN collection_entity ce ON place.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = p.id
+LEFT JOIN alias ON place.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = place.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
-  p.name LIKE :query OR
-  p.disambiguation LIKE :query OR
-  p.address LIKE :query OR
-  p.type LIKE :query
+  place.name LIKE :query OR
+  place.disambiguation LIKE :query OR
+  place.address LIKE :query OR
+  place.type LIKE :query OR
+  alias.name LIKE :query
 )
-ORDER BY p.name, p.address
+GROUP BY place.id
+ORDER BY place.name, place.address
 LIMIT :limit OFFSET :offset;
 
 -- all places
@@ -144,13 +156,15 @@ LIMIT :limit OFFSET :offset;
 getCountOfAllPlaces:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
-    FROM place p
+    SELECT COUNT(DISTINCT place.id)
+    FROM place
+    LEFT JOIN alias ON place.id = alias.mbid
     WHERE (
-      p.name LIKE :query OR
-      p.disambiguation LIKE :query OR
-      p.address LIKE :query OR
-      p.type LIKE :query
+      place.name LIKE :query OR
+      place.disambiguation LIKE :query OR
+      place.address LIKE :query OR
+      place.type LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -158,24 +172,27 @@ SELECT IFNULL(
 
 getAllPlaces:
 SELECT
-  p.id,
-  p.name,
-  p.disambiguation,
-  p.address,
-  p.type,
-  p.longitude,
-  p.latitude,
-  p.`begin`,
-  p.`end`,
-  p.`ended`,
+  place.id,
+  place.name,
+  place.disambiguation,
+  place.address,
+  place.type,
+  place.longitude,
+  place.latitude,
+  place.`begin`,
+  place.`end`,
+  place.`ended`,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM place p
-LEFT JOIN details_metadata ON details_metadata.entity_id = p.id
+FROM place
+LEFT JOIN alias ON place.id = alias.mbid
+LEFT JOIN details_metadata ON details_metadata.entity_id = place.id
 WHERE (
-  p.name LIKE :query OR
-  p.disambiguation LIKE :query OR
-  p.address LIKE :query OR
-  p.type LIKE :query
+  place.name LIKE :query OR
+  place.disambiguation LIKE :query OR
+  place.address LIKE :query OR
+  place.type LIKE :query OR
+  alias.name LIKE :query
 )
-ORDER BY p.name, p.address
+GROUP BY place.id
+ORDER BY place.name, place.address
 LIMIT :limit OFFSET :offset;

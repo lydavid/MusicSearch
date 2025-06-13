@@ -52,8 +52,9 @@ internal class SearchMusicBrainzRemoteMediator(
                 }
 
                 LoadType.APPEND -> {
-                    val localCount = searchResultDao.getMetadata()?.localCount ?: 0
-                    val remoteCount = searchResultDao.getMetadata()?.remoteCount
+                    val searchResultMetadata = searchResultDao.getMetadata()
+                    val localCount = searchResultMetadata?.localCount ?: 0
+                    val remoteCount = searchResultMetadata?.remoteCount
 
                     if (localCount == remoteCount) {
                         return MediatorResult.Success(endOfPaginationReached = true)
@@ -67,7 +68,6 @@ internal class SearchMusicBrainzRemoteMediator(
             val numberOfEntities = fetchAndStore(
                 nextOffset,
             ) {
-                /* removeAll */
                 if (loadType == LoadType.REFRESH) {
                     searchResultDao.removeAll()
                 }

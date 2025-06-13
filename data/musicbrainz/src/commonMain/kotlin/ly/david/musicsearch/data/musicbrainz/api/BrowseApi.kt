@@ -7,8 +7,6 @@ import io.ktor.client.request.parameter
 import io.ktor.http.appendPathSegments
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.data.musicbrainz.SEARCH_BROWSE_LIMIT
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
@@ -24,6 +22,8 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.resourceUri
 
 const val ARTIST_CREDITS = "artist-credits"
 const val LABELS = "labels"
@@ -47,6 +47,7 @@ interface BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = "aliases",
     ): BrowseArtistsResponse
 
     suspend fun browseEventsByEntity(
@@ -153,6 +154,7 @@ interface BrowseApiImpl : BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseArtistsResponse {
         return httpClient.get {
             url {
@@ -168,6 +170,10 @@ interface BrowseApiImpl : BrowseApi {
                 parameter(
                     "offset",
                     offset,
+                )
+                parameter(
+                    "inc",
+                    include,
                 )
             }
         }.body()

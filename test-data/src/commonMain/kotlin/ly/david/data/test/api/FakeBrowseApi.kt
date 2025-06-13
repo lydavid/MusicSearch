@@ -33,6 +33,7 @@ open class FakeBrowseApi : BrowseApi {
         entity: MusicBrainzEntity,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseArtistsResponse {
         return BrowseArtistsResponse(
             count = 0,

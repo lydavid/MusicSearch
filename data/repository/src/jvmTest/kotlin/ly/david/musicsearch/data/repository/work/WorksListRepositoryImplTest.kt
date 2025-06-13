@@ -322,9 +322,9 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                     expectedResult = listOf(
                         starmanWorkListItemModel,
                         underPressureWorkListItemModel,
+                        dontStopMeNowWorkListItemModel,
                         hackingToTheGateWorkListItemModel,
                         skycladObserverWorkListItemModel,
-                        dontStopMeNowWorkListItemModel,
                     ),
                 ),
                 FilterTestCase(

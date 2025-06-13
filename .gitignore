@@ -47,3 +47,5 @@ output/
 
 # For semantic-release
 node_modules/
+
+*.sql

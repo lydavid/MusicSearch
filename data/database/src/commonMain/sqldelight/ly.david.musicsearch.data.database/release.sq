@@ -81,20 +81,22 @@ SELECT IFNULL(
   (
     SELECT COUNT(*)
     FROM (
-      SELECT DISTINCT r.*
+      SELECT DISTINCT r.id
       FROM `release` r
       INNER JOIN releases_by_entity re ON re.release_id = r.id
       INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
       INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
       LEFT JOIN release_label rl ON r.id = rl.release_id
+      LEFT JOIN alias ON r.id = alias.mbid
       WHERE re.entity_id = :labelId
       AND (
-        r.name LIKE :query
-        OR r.disambiguation LIKE :query
-        OR r.date LIKE :query
-        OR r.country_code LIKE :query
-        OR ac.name LIKE :query
-        OR rl.catalog_number LIKE :query
+        r.name LIKE :query OR
+        r.disambiguation LIKE :query OR
+        r.date LIKE :query OR
+        r.country_code LIKE :query OR
+        ac.name LIKE :query OR
+        rl.catalog_number LIKE :query OR
+        alias.name LIKE :query
       )
     )
   ),
@@ -131,17 +133,19 @@ FROM `release` r
 INNER JOIN releases_by_entity re ON re.release_id = r.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN alias ON r.id = alias.mbid
 LEFT JOIN release_label rl ON r.id = rl.release_id
 LEFT JOIN mbid_image mi ON mi.mbid = r.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
 WHERE re.entity_id = :labelId
 AND (
-  r.name LIKE :query
-  OR r.disambiguation LIKE :query
-  OR r.date LIKE :query
-  OR r.country_code LIKE :query
-  OR ac.name LIKE :query
-  OR rl.catalog_number LIKE :query
+  r.name LIKE :query OR
+  r.disambiguation LIKE :query OR
+  r.date LIKE :query OR
+  r.country_code LIKE :query OR
+  ac.name LIKE :query OR
+  rl.catalog_number LIKE :query OR
+  alias.name LIKE :query
 )
 GROUP BY r.id
 ORDER BY r.date, r.name
@@ -161,14 +165,16 @@ SELECT IFNULL(
     INNER JOIN releases_by_entity re ON re.release_id = r.id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN alias ON r.id = alias.mbid
     LEFT JOIN release_country rc ON r.id = rc.release_id
     WHERE re.entity_id = :areaId
     AND (
-      r.name LIKE :query
-      OR r.disambiguation LIKE :query
-      OR r.date LIKE :query
-      OR r.country_code LIKE :query
-      OR ac.name LIKE :query
+      r.name LIKE :query OR
+      r.disambiguation LIKE :query OR
+      r.date LIKE :query OR
+      r.country_code LIKE :query OR
+      ac.name LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -192,16 +198,18 @@ FROM `release` r
 INNER JOIN releases_by_entity re ON re.release_id = r.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN alias ON r.id = alias.mbid
 LEFT JOIN release_country rc ON r.id = rc.release_id
 LEFT JOIN mbid_image mi ON mi.mbid = r.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
 WHERE re.entity_id = :areaId
 AND (
-  r.name LIKE :query
-  OR r.disambiguation LIKE :query
-  OR r.date LIKE :query
-  OR r.country_code LIKE :query
-  OR ac.name LIKE :query
+  r.name LIKE :query OR
+  r.disambiguation LIKE :query OR
+  r.date LIKE :query OR
+  r.country_code LIKE :query OR
+  ac.name LIKE :query OR
+  alias.name LIKE :query
 )
 GROUP BY r.id
 LIMIT :limit OFFSET :offset;
@@ -221,14 +229,16 @@ SELECT IFNULL(
     INNER JOIN collection c ON c.id = ce.id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN alias ON r.id = alias.mbid
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
-      r.name LIKE :query
-      OR r.disambiguation LIKE :query
-      OR r.date LIKE :query
-      OR r.country_code LIKE :query
-      OR ac.name LIKE :query
+      r.name LIKE :query OR
+      r.disambiguation LIKE :query OR
+      r.date LIKE :query OR
+      r.country_code LIKE :query OR
+      ac.name LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -256,16 +266,18 @@ INNER JOIN collection_entity ce ON r.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN alias ON r.id = alias.mbid
 LEFT JOIN mbid_image mi ON mi.mbid = r.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
-  r.name LIKE :query
-  OR r.disambiguation LIKE :query
-  OR r.date LIKE :query
-  OR r.country_code LIKE :query
-  OR ac.name LIKE :query
+  r.name LIKE :query OR
+  r.disambiguation LIKE :query OR
+  r.date LIKE :query OR
+  r.country_code LIKE :query OR
+  ac.name LIKE :query OR
+  alias.name LIKE :query
 )
 GROUP BY r.id
 ORDER BY r.date, r.name
@@ -281,13 +293,15 @@ SELECT IFNULL(
     INNER JOIN releases_by_entity re ON r.id = re.release_id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN alias ON r.id = alias.mbid
     WHERE re.entity_id = :entityId
     AND (
-      r.name LIKE :query
-      OR r.disambiguation LIKE :query
-      OR r.date LIKE :query
-      OR r.country_code LIKE :query
-      OR ac.name LIKE :query
+      r.name LIKE :query OR
+      r.disambiguation LIKE :query OR
+      r.date LIKE :query OR
+      r.country_code LIKE :query OR
+      ac.name LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -314,15 +328,17 @@ FROM `release` r
 INNER JOIN releases_by_entity re ON r.id = re.release_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN alias ON r.id = alias.mbid
 LEFT JOIN mbid_image mi ON mi.mbid = r.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
 WHERE re.entity_id = :entityId
 AND (
-  r.name LIKE :query
-  OR r.disambiguation LIKE :query
-  OR r.date LIKE :query
-  OR r.country_code LIKE :query
-  OR ac.name LIKE :query
+  r.name LIKE :query OR
+  r.disambiguation LIKE :query OR
+  r.date LIKE :query OR
+  r.country_code LIKE :query OR
+  ac.name LIKE :query OR
+  alias.name LIKE :query
 )
 GROUP BY r.id
 ORDER BY r.date, r.name
@@ -337,12 +353,14 @@ SELECT IFNULL(
     FROM `release` r
     INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN alias ON r.id = alias.mbid
     WHERE (
-      r.name LIKE :query
-      OR r.disambiguation LIKE :query
-      OR r.date LIKE :query
-      OR r.country_code LIKE :query
-      OR ac.name LIKE :query
+      r.name LIKE :query OR
+      r.disambiguation LIKE :query OR
+      r.date LIKE :query OR
+      r.country_code LIKE :query OR
+      ac.name LIKE :query OR
+      alias.name LIKE :query
     )
   ),
   0
@@ -368,14 +386,16 @@ SELECT
 FROM `release` r
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN alias ON r.id = alias.mbid
 LEFT JOIN mbid_image mi ON mi.mbid = r.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
 WHERE (
-  r.name LIKE :query
-  OR r.disambiguation LIKE :query
-  OR r.date LIKE :query
-  OR r.country_code LIKE :query
-  OR ac.name LIKE :query
+  r.name LIKE :query OR
+  r.disambiguation LIKE :query OR
+  r.date LIKE :query OR
+  r.country_code LIKE :query OR
+  ac.name LIKE :query OR
+  alias.name LIKE :query
 )
 GROUP BY r.id
 ORDER BY r.date, r.name

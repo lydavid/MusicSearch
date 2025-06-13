@@ -2,13 +2,14 @@ package ly.david.musicsearch.data.musicbrainz.models.core
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ly.david.musicsearch.data.musicbrainz.models.MediumMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.shared.domain.NameWithDisambiguation
 import ly.david.musicsearch.shared.domain.release.CoverArtArchive
 import ly.david.musicsearch.shared.domain.release.Release
 import ly.david.musicsearch.shared.domain.release.TextRepresentation
-import ly.david.musicsearch.data.musicbrainz.models.MediumMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 @Serializable
 data class ReleaseMusicBrainzNetworkModel(
@@ -44,6 +45,7 @@ data class ReleaseMusicBrainzNetworkModel(
     @SerialName("release-group") val releaseGroup: ReleaseGroupMusicBrainzNetworkModel? = null,
 
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
+    @SerialName("aliases") val aliases: List<AliasMusicBrainzNetworkModel>? = null,
 ) : MusicBrainzNetworkModel(), Release
 
 @Serializable

@@ -1,11 +1,12 @@
 package ly.david.musicsearch.data.repository.search
 
 import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
 import androidx.paging.PagingData
-import app.cash.paging.Pager
 import app.cash.paging.RemoteMediator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.EventDao
@@ -43,6 +44,7 @@ internal class SearchResultsRepositoryImpl(
     private val releaseGroupDao: ReleaseGroupDao,
     private val seriesDao: SeriesDao,
     private val workDao: WorkDao,
+    private val aliasDao: AliasDao,
 ) : SearchResultsRepository {
 
     override fun observeSearchResults(
@@ -105,6 +107,12 @@ internal class SearchResultsRepositoryImpl(
                 areaDao.withTransaction {
                     removeAll()
                     areaDao.insertReplaceAll(areas)
+                    areas.forEach { area ->
+                        aliasDao.insertReplaceAll(
+                            mbid = area.id,
+                            aliases = area.aliases.orEmpty(),
+                        )
+                    }
                     searchResultDao.insertAll(areas.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -126,6 +134,12 @@ internal class SearchResultsRepositoryImpl(
                 artistDao.withTransaction {
                     removeAll()
                     artistDao.insertAll(artists)
+                    artists.forEach { artist ->
+                        aliasDao.insertReplaceAll(
+                            mbid = artist.id,
+                            aliases = artist.aliases.orEmpty(),
+                        )
+                    }
                     searchResultDao.insertAll(artists.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -147,6 +161,12 @@ internal class SearchResultsRepositoryImpl(
                 eventDao.withTransaction {
                     removeAll()
                     eventDao.insertAll(events)
+                    events.forEach { event ->
+                        aliasDao.insertReplaceAll(
+                            mbid = event.id,
+                            aliases = event.aliases.orEmpty(),
+                        )
+                    }
                     searchResultDao.insertAll(events.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -168,6 +188,12 @@ internal class SearchResultsRepositoryImpl(
                 instrumentDao.withTransaction {
                     removeAll()
                     instrumentDao.insertAll(instruments)
+                    instruments.forEach { instrument ->
+                        aliasDao.insertReplaceAll(
+                            mbid = instrument.id,
+                            aliases = instrument.aliases.orEmpty(),
+                        )
+                    }
                     searchResultDao.insertAll(instruments.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -189,6 +215,12 @@ internal class SearchResultsRepositoryImpl(
                 labelDao.withTransaction {
                     removeAll()
                     labelDao.insertAll(labels)
+                    labels.forEach { label ->
+                        aliasDao.insertReplaceAll(
+                            mbid = label.id,
+                            aliases = label.aliases.orEmpty(),
+                        )
+                    }
                     searchResultDao.insertAll(labels.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -210,6 +242,12 @@ internal class SearchResultsRepositoryImpl(
                 placeDao.withTransaction {
                     removeAll()
                     placeDao.insertAll(places)
+                    places.forEach { place ->
+                        aliasDao.insertReplaceAll(
+                            mbid = place.id,
+                            aliases = place.aliases.orEmpty(),
+                        )
+                    }
                     searchResultDao.insertAll(places.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -231,6 +269,12 @@ internal class SearchResultsRepositoryImpl(
                 recordingDao.withTransaction {
                     removeAll()
                     recordingDao.insertAll(recordings)
+                    recordings.forEach { recording ->
+                        aliasDao.insertReplaceAll(
+                            mbid = recording.id,
+                            aliases = recording.aliases.orEmpty(),
+                        )
+                    }
                     searchResultDao.insertAll(recordings.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -252,6 +296,12 @@ internal class SearchResultsRepositoryImpl(
                 releaseDao.withTransaction {
                     removeAll()
                     releaseDao.insertAll(releases)
+                    releases.forEach { release ->
+                        aliasDao.insertReplaceAll(
+                            mbid = release.id,
+                            aliases = release.aliases.orEmpty(),
+                        )
+                    }
                     searchResultDao.insertAll(releases.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -273,6 +323,12 @@ internal class SearchResultsRepositoryImpl(
                 releaseGroupDao.withTransaction {
                     removeAll()
                     releaseGroupDao.insertAllReleaseGroups(releaseGroups)
+                    releaseGroups.forEach { releaseGroup ->
+                        aliasDao.insertReplaceAll(
+                            mbid = releaseGroup.id,
+                            aliases = releaseGroup.aliases.orEmpty(),
+                        )
+                    }
                     searchResultDao.insertAll(releaseGroups.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -294,6 +350,12 @@ internal class SearchResultsRepositoryImpl(
                 seriesDao.withTransaction {
                     removeAll()
                     seriesDao.insertAll(series)
+                    series.forEach { series ->
+                        aliasDao.insertReplaceAll(
+                            mbid = series.id,
+                            aliases = series.aliases.orEmpty(),
+                        )
+                    }
                     searchResultDao.insertAll(series.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
@@ -315,6 +377,12 @@ internal class SearchResultsRepositoryImpl(
                 workDao.withTransaction {
                     removeAll()
                     workDao.insertAll(works)
+                    works.forEach { work ->
+                        aliasDao.insertReplaceAll(
+                            mbid = work.id,
+                            aliases = work.aliases.orEmpty(),
+                        )
+                    }
                     searchResultDao.insertAll(works.map { it.id })
                     searchResultDao.rewriteMetadata(
                         entity = entity,
