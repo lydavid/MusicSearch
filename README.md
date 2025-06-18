@@ -54,13 +54,13 @@ See [all features here](./docs/all_features.md).
 
 ## Screenshots
 
-| Search artist                             | Artist details                             | Release groups by artist                          | Release details                             |
-|-------------------------------------------|--------------------------------------------|---------------------------------------------------|---------------------------------------------|
-| ![](fastlane/metadata/android/en-US/images/phoneScreenshots/1_search_artist.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/2_artist_details.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/3_artist_release_groups.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/4_release_details.png) | 
+| Search artist                                                                    | Artist details                                                                    | Release groups by artist                                                                 | Release groups by artist (filtered)                                                             |
+|----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| ![](fastlane/metadata/android/en-US/images/phoneScreenshots/1_search_artist.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/2_artist_details.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/3_artist_release_groups.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/4_artist_release_groups_filter.png) | 
 
-| Release tracks                             | All collections                             | Collection of releases                 | Lookup history                             |
-|--------------------------------------------|---------------------------------------------|----------------------------------------|--------------------------------------------|
-| ![](fastlane/metadata/android/en-US/images/phoneScreenshots/5_release_tracks.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/6_all_collections.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/7_collection.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/8_lookup_history.png) |
+| Release details                                                                    | Release tracks                                                                    | All collections                                                                    | Local database                                                                    |
+|------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| ![](fastlane/metadata/android/en-US/images/phoneScreenshots/5_release_details.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/6_release_tracks.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/7_all_collections.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/8_local_database.png) |
 
 ## Development
 
