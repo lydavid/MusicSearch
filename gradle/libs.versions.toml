@@ -126,7 +126,7 @@ sqldelight-paging = { module = "app.cash.sqldelight:androidx-paging3-extensions"
 sqldelight-primitive = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 sqlite-android = { module = "com.github.requery:sqlite-android", version.ref = "requery" }
-sqlite-framework = "androidx.sqlite:sqlite-framework:2.5.1"
+sqlite-framework = "androidx.sqlite:sqlite-framework:2.5.2"
 stately-common = { module = "co.touchlab:stately-common", version.ref = "stately" }
 stately-iso-collections = { module = "co.touchlab:stately-iso-collections", version.ref = "stately" }
 stately-isolate = { module = "co.touchlab:stately-isolate", version.ref = "stately" }
