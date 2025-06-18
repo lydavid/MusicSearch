@@ -2684,14 +2684,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.5.1",
+            "artifactVersion": "2.5.2",
             "description": "SQLite API",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "SQLite",
-            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.5.1",
+            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.5.2",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2709,14 +2709,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.5.1",
+            "artifactVersion": "2.5.2",
             "description": "SQLite API",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "SQLite",
-            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.5.1",
+            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.5.2",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2734,14 +2734,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.5.1",
+            "artifactVersion": "2.5.2",
             "description": "The implementation of SQLite library using the framework code.",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "SQLite Framework Integration",
-            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.5.1",
+            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.5.2",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -2759,14 +2759,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.5.1",
+            "artifactVersion": "2.5.2",
             "description": "The implementation of SQLite library using the framework code.",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "SQLite Framework Integration",
-            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.5.1",
+            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.5.2",
             "licenses": [
                 "Apache-2.0"
             ],
