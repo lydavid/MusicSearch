@@ -41,16 +41,20 @@ Desktop releases are packaged by [Conveyor](https://www.hydraulic.dev/) and avai
 
 - Search MusicBrainz's massive database for any information related to your favorite artist or song
 - Offline-first; all data is cached on device after loading each page/tab
-- See every page you've visited in the history screen, and quickly get back to them
 - Almost every tab allows you to filter its content instantaneously
+- Aliases will be used when filtering to help find things in other languages
+- See every page you've visited in the history screen, and quickly get back to them
 - Save anything to a collection
 - Login using your MusicBrainz account to add to your existing collections
 - Listening on Spotify? Enable Device Broadcast Status to search the artist or song from the app
 - Have a Pixel phone? Enable notification listener to record Now Playing history
-- Dark theme
-- Material You theme
+- Customize the app's appearance with: Light/Dark theme, Material theme based on your wallpaper, or pick a custom color
+- An artist's discography is incomplete? Aliases missing? Other data missing? Contribute it to MusicBrainz: https://musicbrainz.org/
 
 See [all features here](./docs/all_features.md).
+
+This is a music database/discovery app, not a music player.
+There are external links to various streaming platforms which will open the album/song in their app if it's installed.
 
 ## Screenshots
 
