@@ -202,3 +202,11 @@ val aimerArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     ipis = listOf("00656032457"),
     isnis = listOf("0000000407348085"),
 )
+
+val zutomayoArtistMusicBrainzNetworkModel = ArtistMusicBrainzNetworkModel(
+    id = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
+    name = "ずっと真夜中でいいのに",
+    disambiguation = "Japanese pop band",
+    sortName = "Zutto Mayonaka de Iinoni.",
+    type = "Group",
+)

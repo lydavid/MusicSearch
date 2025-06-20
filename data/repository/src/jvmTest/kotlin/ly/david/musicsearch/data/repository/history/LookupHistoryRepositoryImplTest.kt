@@ -5,6 +5,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeSearchApi
+import ly.david.data.test.zutomayoArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
@@ -25,7 +26,6 @@ import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.SearchArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
-import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.TestSearchResultsRepository
@@ -133,12 +133,6 @@ class LookupHistoryRepositoryImplTest :
 
     @Test
     fun `aliases are inserted after searching and are used in history`() = runTest {
-        val zutomayoArtistMusicBrainzNetworkModel = ArtistMusicBrainzNetworkModel(
-            id = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
-            name = "ずっと真夜中でいいのに",
-            disambiguation = "Japanese pop band",
-            type = "Group",
-        )
         val searchResultsRepository = createSearchResultsRepository(
             searchApi = object : FakeSearchApi() {
                 override suspend fun queryArtists(
@@ -194,6 +188,7 @@ class LookupHistoryRepositoryImplTest :
                         id = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
                         name = "ずっと真夜中でいいのに",
                         disambiguation = "Japanese pop band",
+                        sortName = "Zutto Mayonaka de Iinoni.",
                         type = "Group",
                     ),
                     Footer(),
@@ -216,6 +211,7 @@ class LookupHistoryRepositoryImplTest :
                     name = "ずっと真夜中でいいのに",
                     disambiguation = "Japanese pop band",
                     type = "Group",
+                    sortName = "Zutto Mayonaka de Iinoni.",
                     lastUpdated = currentTime,
                 ),
                 this,
@@ -231,6 +227,7 @@ class LookupHistoryRepositoryImplTest :
                 mbid = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
                 title = "ずっと真夜中でいいのに",
                 entity = MusicBrainzEntity.ARTIST,
+                searchHint = "Zutto Mayonaka de Iinoni.",
                 lastAccessed = currentTime,
             ),
         )

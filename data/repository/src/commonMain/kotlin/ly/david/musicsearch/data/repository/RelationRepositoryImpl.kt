@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.TerminalSeparatorType
+import androidx.paging.map
 import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.PagingData
 import app.cash.paging.insertSeparators
@@ -200,6 +201,7 @@ class RelationRepositoryImpl(
                 )
             },
         ).flow
+            .withDistinctLabels()
             .map { pagingData ->
                 pagingData
                     .insertSeparators(
@@ -212,6 +214,26 @@ class RelationRepositoryImpl(
                         }
                     }
             }
+    }
+
+    private fun Flow<PagingData<RelationListItemModel>>.withDistinctLabels(): Flow<PagingData<RelationListItemModel>> {
+        return map { pagingData ->
+            pagingData.map { relationListItem ->
+                relationListItem.copy(
+                    label = relationListItem.label
+                        .split(", ")
+                        .mapIndexed { index, part ->
+                            if (index == 0 || relationListItem.label.split(", ")[index - 1] != part.trim()) {
+                                part.trim()
+                            } else {
+                                null
+                            }
+                        }
+                        .filterNotNull()
+                        .joinToString(", "),
+                )
+            }
+        }
     }
 
     private fun hasRelationsBeenSavedFor(entityId: String): Boolean {

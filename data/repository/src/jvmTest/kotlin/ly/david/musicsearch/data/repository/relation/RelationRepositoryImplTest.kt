@@ -4,12 +4,26 @@ import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.data.test.zutomayoArtistMusicBrainzNetworkModel
+import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
+import ly.david.musicsearch.data.coverart.api.CoverArtUrls
+import ly.david.musicsearch.data.coverart.api.ThumbnailsUrls
+import ly.david.musicsearch.data.database.dao.AreaDao
+import ly.david.musicsearch.data.database.dao.ArtistCreditDao
+import ly.david.musicsearch.data.database.dao.LabelDao
+import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.ReleaseDao
+import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.AttributeValue
@@ -17,8 +31,12 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
+import ly.david.musicsearch.data.repository.he.TestMusicBrainzImageMetadataRepository
+import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -29,14 +47,27 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class RelationRepositoryImplTest : KoinTest {
+class RelationRepositoryImplTest :
+    KoinTest,
+    TestReleaseRepository,
+    TestMusicBrainzImageMetadataRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val relationsMetadataDao: RelationsMetadataDao by inject()
-    private val detailsMetadataDao: DetailsMetadataDao by inject()
-    private val relationDao: RelationDao by inject()
+    override val releaseDao: ReleaseDao by inject()
+    override val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
+    override val releaseGroupDao: ReleaseGroupDao by inject()
+    override val artistCreditDao: ArtistCreditDao by inject()
+    override val areaDao: AreaDao by inject()
+    override val labelDao: LabelDao by inject()
+    override val mediumDao: MediumDao by inject()
+    override val trackDao: TrackDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
+    override val relationDao: RelationDao by inject()
+    override val imageUrlDao: ImageUrlDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     private fun createRepository(
         lookupApi: LookupApi,
@@ -438,6 +469,115 @@ class RelationRepositoryImplTest : KoinTest {
                         linkedEntity = MusicBrainzEntity.ARTIST,
                         visited = false,
                         isForwardDirection = false,
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                ),
+                this,
+            )
+        }
+    }
+
+    @Test
+    fun `the same target entity is grouped, multiple images does not duplicate labels`() = runTest {
+        val releaseId = "f6832901-a1ff-4ba9-8574-d3c54663fac4"
+        createReleaseRepository(
+            ReleaseMusicBrainzNetworkModel(
+                id = releaseId,
+                name = "ぐされ",
+                disambiguation = "初回限定LIVE盤",
+                releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
+                    id = "11159944-a346-4f66-88cd-7d4e6a0fc0fe",
+                    name = "ぐされ",
+                    disambiguation = "",
+                ),
+                artistCredits = listOf(
+                    ArtistCreditMusicBrainzModel(
+                        name = "ずっと真夜中でいいのに。",
+                        artist = zutomayoArtistMusicBrainzNetworkModel,
+                    ),
+                ),
+            ),
+        ).lookupRelease(
+            releaseId = releaseId,
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
+        )
+
+        createMusicBrainzImageMetadataRepository(
+            coverArtUrlsProducer = { _, _ ->
+                listOf(
+                    CoverArtUrls(
+                        imageUrl = "https://coverartarchive.org/release/f6832901-a1ff-4ba9-8574-d3c54663fac4/28470415015.jpg",
+                        front = true,
+                        thumbnailsUrls = ThumbnailsUrls(
+                            resolution250Url = "https://coverartarchive.org/release/f6832901-a1ff-4ba9-8574-d3c54663fac4/28470415015-250.jpg",
+                        ),
+                        types = listOf("Front")
+                    ),
+                    CoverArtUrls(
+                        imageUrl = "https://coverartarchive.org/release/f6832901-a1ff-4ba9-8574-d3c54663fac4/28470416613.jpg",
+                        front = false,
+                        thumbnailsUrls = ThumbnailsUrls(
+                            resolution250Url = "https://coverartarchive.org/release/f6832901-a1ff-4ba9-8574-d3c54663fac4/28470416613-250.jpg",
+                        ),
+                        types = listOf("Back")
+                    ),
+                )
+            },
+        ).getAndSaveImageMetadata(
+            mbid = releaseId,
+            entity = MusicBrainzEntity.RELEASE,
+            forceRefresh = false,
+        )
+
+        val relationRepository = createRepository(
+            lookupApi = object : FakeLookupApi() {
+                override suspend fun lookupArtist(
+                    artistId: String,
+                    include: String?,
+                ): ArtistMusicBrainzNetworkModel {
+                    return zutomayoArtistMusicBrainzNetworkModel.copy(
+                        relations = listOf(
+                            RelationMusicBrainzModel(
+                                type = "producer",
+                                typeId = "8bf377ba-8d71-4ecc-97f2-7bb2d8a2a75f",
+                                direction = Direction.BACKWARD,
+                                targetType = SerializableMusicBrainzEntity.RELEASE,
+                                release = ReleaseMusicBrainzNetworkModel(
+                                    id = releaseId,
+                                    name = "ぐされ",
+                                    disambiguation = "初回限定LIVE盤",
+                                    countryCode = "JP",
+                                    date = "2021-02-10",
+                                ),
+                            ),
+                        ),
+                    )
+                }
+            },
+        )
+
+        relationRepository.observeEntityRelationships(
+            entity = MusicBrainzEntity.ARTIST,
+            entityId = zutomayoArtistMusicBrainzNetworkModel.id,
+            query = "",
+            lastUpdated = testDateTimeInThePast,
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    RelationListItemModel(
+                        id = "${releaseId}_1",
+                        name = "ぐされ",
+                        disambiguation = "初回限定LIVE盤",
+                        linkedEntityId = releaseId,
+                        label = "producer",
+                        attributes = "",
+                        linkedEntity = MusicBrainzEntity.RELEASE,
+                        visited = true,
+                        isForwardDirection = false,
+                        imageUrl = "https://coverartarchive.org/release/f6832901-a1ff-4ba9-8574-d3c54663fac4/28470415015-250.jpg",
+                        imageId = ImageId(1),
                         lastUpdated = testDateTimeInThePast,
                     ),
                     LastUpdatedFooter(lastUpdated = testDateTimeInThePast),

@@ -3,17 +3,13 @@ package ly.david.musicsearch.data.repository.image
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import ly.david.data.test.KoinTestRule
-import ly.david.data.test.api.NoOpCoverArtArchiveApi
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtUrls
-import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
 import ly.david.musicsearch.data.coverart.api.ThumbnailsUrls
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
@@ -31,6 +27,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetwor
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
+import ly.david.musicsearch.data.repository.he.TestMusicBrainzImageMetadataRepository
 import ly.david.musicsearch.data.repository.helpers.TestEventRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
@@ -41,7 +38,6 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
-import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUri
 import org.junit.After
@@ -56,6 +52,7 @@ import kotlin.time.Duration.Companion.seconds
 @OptIn(ExperimentalCoroutinesApi::class)
 class ImageMetadataRepositoryImplTest :
     KoinTest,
+    TestMusicBrainzImageMetadataRepository,
     TestEventRepository,
     TestReleaseRepository,
     TestReleaseGroupRepository {
@@ -63,8 +60,8 @@ class ImageMetadataRepositoryImplTest :
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val imageUrlDao: ImageUrlDao by inject()
-    private val coroutineDispatchers: CoroutineDispatchers by inject()
+    override val imageUrlDao: ImageUrlDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
     override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
@@ -78,37 +75,9 @@ class ImageMetadataRepositoryImplTest :
     override val mediumDao: MediumDao by inject()
     override val trackDao: TrackDao by inject()
 
-    private fun createRepository(
-        coverArtUrlsProducer: (id: String, entity: MusicBrainzEntity) -> List<CoverArtUrls>,
-    ): MusicBrainzImageMetadataRepository {
-        return MusicBrainzImageMetadataRepositoryImpl(
-            coverArtArchiveApi = object : NoOpCoverArtArchiveApi() {
-                override suspend fun getCoverArts(
-                    mbid: String,
-                    entity: MusicBrainzEntity,
-                ): CoverArtsResponse {
-                    return CoverArtsResponse(
-                        coverArtUrls = coverArtUrlsProducer(mbid, entity),
-                    )
-                }
-            },
-            imageUrlDao = imageUrlDao,
-            logger = object : Logger {
-                override fun d(text: String) {
-                    println(text)
-                }
-
-                override fun e(exception: Exception) {
-                    error(exception)
-                }
-            },
-            coroutineScope = TestScope(coroutineDispatchers.io),
-        )
-    }
-
     @Test
     fun empty() = runTest {
-        val repository = createRepository(coverArtUrlsProducer = { _, _ -> listOf() })
+        val repository = createMusicBrainzImageMetadataRepository(coverArtUrlsProducer = { _, _ -> listOf() })
         val imageMetadataWithCount = repository.getAndSaveImageMetadata(
             mbid = "",
             entity = MusicBrainzEntity.RELEASE,
@@ -152,7 +121,7 @@ class ImageMetadataRepositoryImplTest :
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
-        val repository = createRepository(
+        val repository = createMusicBrainzImageMetadataRepository(
             coverArtUrlsProducer = { _, _ ->
                 listOf(
                     CoverArtUrls(
@@ -237,7 +206,7 @@ class ImageMetadataRepositoryImplTest :
             lastUpdated = testDateTimeInThePast,
         )
 
-        val repository = createRepository(
+        val repository = createMusicBrainzImageMetadataRepository(
             coverArtUrlsProducer = { _, _ ->
                 listOf(
                     CoverArtUrls(
@@ -322,7 +291,7 @@ class ImageMetadataRepositoryImplTest :
                 disambiguation = releaseDisambiguation,
             ),
         )
-        val repository = createRepository(
+        val repository = createMusicBrainzImageMetadataRepository(
             coverArtUrlsProducer = { _, _ ->
                 listOf(
                     CoverArtUrls(
@@ -403,7 +372,7 @@ class ImageMetadataRepositoryImplTest :
             lastUpdated = testDateTimeInThePast,
         )
 
-        val repository = createRepository(
+        val repository = createMusicBrainzImageMetadataRepository(
             coverArtUrlsProducer = { _, _ ->
                 listOf(
                     CoverArtUrls(
@@ -462,7 +431,7 @@ class ImageMetadataRepositoryImplTest :
         val eventId = "event-id"
         val eventName = "event name"
         val eventDisambiguation = "d"
-        val repository = createRepository(
+        val repository = createMusicBrainzImageMetadataRepository(
             coverArtUrlsProducer = { mbid, entity ->
                 listOf(
                     CoverArtUrls(
@@ -545,11 +514,11 @@ class ImageMetadataRepositoryImplTest :
         Assert.assertEquals(
             ImageMetadataWithCount(
                 imageMetadata =
-                ImageMetadata(
-                    imageId = ImageId(3L),
-                    thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
-                    largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
-                ),
+                    ImageMetadata(
+                        imageId = ImageId(3L),
+                        thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
+                        largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
+                    ),
                 count = 1,
             ),
             releaseGroupImageMetadata,
@@ -730,7 +699,7 @@ class ImageMetadataRepositoryImplTest :
 
     @Test
     fun `queue 99, then 1 more lookup for image metadata`() = runTest {
-        val repository = createRepository(
+        val repository = createMusicBrainzImageMetadataRepository(
             coverArtUrlsProducer = { _, _ ->
                 listOf(
                     CoverArtUrls(
@@ -780,7 +749,7 @@ class ImageMetadataRepositoryImplTest :
 
     @Test
     fun `queue 100 lookups that returns more than 1 image metadata each`() = runTest {
-        val repository = createRepository(
+        val repository = createMusicBrainzImageMetadataRepository(
             coverArtUrlsProducer = { _, _ ->
                 listOf(
                     CoverArtUrls(
@@ -824,7 +793,7 @@ class ImageMetadataRepositoryImplTest :
 
     @Test
     fun `queue 99 lookups for image metadata, waiting for timeout to write`() = runTest {
-        val repository = createRepository(
+        val repository = createMusicBrainzImageMetadataRepository(
             coverArtUrlsProducer = { _, _ ->
                 listOf(
                     CoverArtUrls(
@@ -860,7 +829,7 @@ class ImageMetadataRepositoryImplTest :
 
     @Test
     fun `when less than 200 items, save immediately, otherwise batch writes`() = runTest {
-        val repository = createRepository(
+        val repository = createMusicBrainzImageMetadataRepository(
             coverArtUrlsProducer = { _, _ ->
                 listOf(
                     CoverArtUrls(
