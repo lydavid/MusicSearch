@@ -27,6 +27,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
@@ -36,7 +37,6 @@ import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -56,7 +56,10 @@ internal fun LabelUi(
     val entity = MusicBrainzEntity.LABEL
     val browseMethod = BrowseMethod.ByEntity(entityId, entity)
     val eventSink = state.eventSink
-    val pagerState = rememberPagerState(pageCount = state.tabs::size)
+    val pagerState = rememberPagerState(
+        initialPage = state.tabs.indexOf(state.selectedTab),
+        pageCount = state.tabs::size,
+    )
 
     val areasLazyPagingItems =
         state.entitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()

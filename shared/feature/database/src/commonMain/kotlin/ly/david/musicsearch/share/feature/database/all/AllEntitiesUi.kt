@@ -1,6 +1,8 @@
 package ly.david.musicsearch.share.feature.database.all
 
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -9,6 +11,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import app.cash.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getNamePlural
@@ -16,9 +19,9 @@ import ly.david.musicsearch.ui.common.list.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Suppress("CyclomaticComplexMethod")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -189,8 +192,10 @@ internal fun AllEntitiesUi(
         }
         EntitiesPagingListUi(
             uiState = uiState,
-            innerPadding = innerPadding,
-            scrollBehavior = scrollBehavior,
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
             onItemClick = { entity, id, title ->
                 eventSink(
                     AllEntitiesUiEvent.ClickItem(

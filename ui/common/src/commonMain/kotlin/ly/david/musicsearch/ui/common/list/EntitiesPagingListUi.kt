@@ -1,13 +1,7 @@
 package ly.david.musicsearch.ui.common.list
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.datetime.Clock
@@ -48,38 +42,9 @@ import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
 import ly.david.musicsearch.ui.common.series.SeriesListItem
 import ly.david.musicsearch.ui.common.work.WorkListItem
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-)
-@Composable
-fun EntitiesPagingListUi(
-    uiState: EntitiesPagingListUiState,
-    innerPadding: PaddingValues,
-    scrollBehavior: TopAppBarScrollBehavior,
-    modifier: Modifier = Modifier,
-    now: Instant = Clock.System.now(),
-    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
-    selectedIds: ImmutableSet<String> = persistentSetOf(),
-    onSelect: (String) -> Unit = {},
-    requestForMissingCoverArtUrl: (entityId: String) -> Unit = { _ -> },
-) {
-    EntitiesPagingListUi(
-        uiState = uiState,
-        modifier = modifier
-            .padding(innerPadding)
-            .fillMaxSize()
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
-        now = now,
-        onItemClick = onItemClick,
-        selectedIds = selectedIds,
-        onSelect = onSelect,
-        requestForMissingCoverArtUrl = requestForMissingCoverArtUrl,
-    )
-}
-
 @Suppress("CyclomaticComplexMethod")
 @Composable
-private fun EntitiesPagingListUi(
+fun EntitiesPagingListUi(
     uiState: EntitiesPagingListUiState,
     modifier: Modifier = Modifier,
     selectedIds: ImmutableSet<String> = persistentSetOf(),

@@ -42,16 +42,16 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
 
     HorizontalPager(
         state = pagerState,
+        modifier = Modifier
+            .padding(innerPadding)
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { page ->
         val tab = state.tabs[page]
 
         when (tab) {
             Tab.DETAILS -> {
                 DetailsWithErrorHandling(
-                    modifier = Modifier.Companion
-                        .padding(innerPadding)
-                        .fillMaxSize()
-                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    modifier = Modifier.fillMaxSize(),
                     isLoading = state.detailsTabUiState.isLoading,
                     handledException = state.detailsTabUiState.handledException,
                     onRefresh = {
@@ -65,25 +65,18 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
 
             Tab.STATS -> {
                 CircuitContent(
-                    StatsScreen(
+                    screen = StatsScreen(
                         entity = browseMethod.entity,
                         id = browseMethod.entityId,
                         tabs = state.tabs,
                     ),
-                    modifier = Modifier.Companion
-                        .padding(innerPadding)
-                        .fillMaxSize()
-                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    modifier = Modifier.fillMaxSize(),
                 )
             }
 
             Tab.TRACKS -> {
                 TracksByReleaseUi(
                     uiState = state.entitiesListUiState.tracksByReleaseUiState,
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .fillMaxSize()
-                        .nestedScroll(scrollBehavior.nestedScrollConnection),
                     onRecordingClick = { id, title ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
@@ -151,8 +144,6 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                 val tabEntity = tab.toMusicBrainzEntity()
                 EntitiesPagingListUi(
                     uiState = uiState,
-                    innerPadding = innerPadding,
-                    scrollBehavior = scrollBehavior,
                     now = now,
                     onItemClick = { entity, id, title ->
                         eventSink(

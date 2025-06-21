@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.feature.details.artist
 
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,6 +32,7 @@ import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
@@ -40,7 +42,6 @@ import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -60,7 +61,10 @@ internal fun ArtistUi(
     val entity = MusicBrainzEntity.ARTIST
     val browseMethod = BrowseMethod.ByEntity(entityId, entity)
     val eventSink = state.eventSink
-    val pagerState = rememberPagerState(pageCount = state.tabs::size)
+    val pagerState: PagerState = rememberPagerState(
+        initialPage = state.tabs.indexOf(state.selectedTab),
+        pageCount = state.tabs::size,
+    )
 
     val areasLazyPagingItems =
         state.entitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()

@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.feature.collections.single
 
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import app.cash.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
@@ -28,6 +30,7 @@ import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.EditToggle
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
@@ -35,7 +38,6 @@ import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.toTab
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import kotlin.coroutines.cancellation.CancellationException
 
 /**
@@ -326,8 +328,10 @@ internal fun CollectionUi(
             }
             EntitiesPagingListUi(
                 uiState = uiState,
-                innerPadding = innerPadding,
-                scrollBehavior = scrollBehavior,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
                 selectedIds = state.selectedIds,
                 onItemClick = { entity, id, title ->
                     eventSink(
