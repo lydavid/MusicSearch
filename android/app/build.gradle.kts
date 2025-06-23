@@ -91,8 +91,8 @@ android {
 }
 
 dependencies {
-    implementation(projects.android.feature.nowplaying)
-    implementation(projects.android.feature.spotify)
+    implementation(projects.shared.feature.nowplaying)
+    implementation(projects.shared.feature.spotify)
     implementation(projects.core.coroutines)
     implementation(projects.core.logging.api)
     implementation(projects.shared.domain)
@@ -112,7 +112,6 @@ dependencies {
     googlePlayImplementation(libs.firebase.analytics)
     googlePlayImplementation(libs.firebase.crashlytics)
 
-    debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.leakcanary.android)
 }
 
@@ -126,5 +125,9 @@ aboutLibraries {
     prettyPrint = true
     android {
         registerAndroidTasks = false
+    }
+    library {
+        duplicationMode = com.mikepenz.aboutlibraries.plugin.DuplicateMode.MERGE
+        duplicationRule = com.mikepenz.aboutlibraries.plugin.DuplicateRule.GROUP
     }
 }

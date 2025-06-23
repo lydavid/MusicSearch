@@ -19,11 +19,11 @@ import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.toImmutableList
-import ly.david.musicsearch.android.feature.spotify.BroadcastTypes
-import ly.david.musicsearch.android.feature.spotify.SpotifyBroadcastReceiver
 import ly.david.musicsearch.shared.AppRoot
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
+import ly.david.musicsearch.shared.feature.spotify.BroadcastTypes
+import ly.david.musicsearch.shared.feature.spotify.SpotifyBroadcastReceiver
 import ly.david.musicsearch.shared.useDarkTheme
 import ly.david.musicsearch.ui.common.screen.CollectionListScreen
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
