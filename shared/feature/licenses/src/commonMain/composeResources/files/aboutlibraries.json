@@ -6844,7 +6844,7 @@
                     "name": "Kotlin Team"
                 }
             ],
-            "artifactVersion": "2.1.21",
+            "artifactVersion": "2.2.0",
             "description": "Kotlin Android Extensions Runtime",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
@@ -6892,7 +6892,7 @@
                     "name": "Kotlin Team"
                 }
             ],
-            "artifactVersion": "2.1.21",
+            "artifactVersion": "2.2.0",
             "description": "Runtime library for the Parcelize compiler plugin",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
@@ -6916,7 +6916,7 @@
                     "name": "Kotlin Team"
                 }
             ],
-            "artifactVersion": "2.1.21",
+            "artifactVersion": "2.2.0",
             "description": "Kotlin Standard Library",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
@@ -6940,7 +6940,7 @@
                     "name": "Kotlin Team"
                 }
             ],
-            "artifactVersion": "2.1.21",
+            "artifactVersion": "2.2.0",
             "description": "Kotlin Common Standard Library (legacy, use kotlin-stdlib instead)",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
