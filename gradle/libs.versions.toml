@@ -1,6 +1,6 @@
 [versions]
 aboutlibraries = "12.2.3"
-androidGradlePlugin = "8.10.1"
+androidGradlePlugin = "8.11.0"
 baselineprofile = "1.3.4"
 benchmarkMacroJunit4 = "1.3.4"
 chucker = "4.1.0"
