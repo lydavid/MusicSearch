@@ -9,8 +9,8 @@ import ly.david.musicsearch.core.preferences.di.preferencesDataStoreModule
 import ly.david.musicsearch.data.common.network.di.HttpClientModule
 import ly.david.musicsearch.data.coverart.di.coverArtModule
 import ly.david.musicsearch.data.database.databaseDaoModule
-import ly.david.musicsearch.data.database.databasePlatformModule
 import ly.david.musicsearch.data.database.databaseModule
+import ly.david.musicsearch.data.database.databasePlatformModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzApiModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzAuthModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzDataModule

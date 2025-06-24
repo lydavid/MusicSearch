@@ -51,8 +51,8 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(projects.android.feature.nowplaying)
-                implementation(projects.android.feature.spotify)
+                implementation(projects.shared.feature.nowplaying)
+                implementation(projects.shared.feature.spotify)
                 implementation(compose.preview)
             }
         }
