@@ -39,11 +39,15 @@ interface CollectionRepository {
     suspend fun addToCollection(
         collectionId: String,
         entity: MusicBrainzEntity,
-        entityId: String,
+        entityIds: Set<String>,
     ): ActionableResult
 
     suspend fun deleteCollection(
         collectionId: String,
         collectionName: String,
     ): ActionableResult
+
+    fun observeEntityIsInACollection(
+        entityId: String,
+    ): Flow<Boolean>
 }

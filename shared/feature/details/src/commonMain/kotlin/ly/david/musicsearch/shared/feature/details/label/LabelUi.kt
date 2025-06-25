@@ -28,7 +28,8 @@ import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.theme.LocalStrings
-import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
+import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
+import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
@@ -134,6 +135,19 @@ internal fun LabelUi(
                 entity = entity,
                 title = state.title,
                 scrollBehavior = scrollBehavior,
+                additionalActions = {
+                    AddToCollectionActionToggle(
+                        partOfACollection = state.isInACollection,
+                        entity = entity,
+                        entityId = entityId,
+                        overlayHost = overlayHost,
+                        coroutineScope = scope,
+                        snackbarHostState = snackbarHostState,
+                        onLoginClick = {
+                            loginEventSink(LoginUiEvent.StartLogin)
+                        },
+                    )
+                },
                 overflowDropdownMenuItems = {
                     val selectedTab = state.selectedTab
                     RefreshMenuItem(
@@ -163,9 +177,9 @@ internal fun LabelUi(
                             },
                         )
                     }
-                    AddToCollectionMenuItem(
-                        entity = entity,
-                        entityId = entityId,
+                    AddAllToCollectionMenuItem(
+                        tab = state.selectedTab,
+                        entityIds = state.selectedIds,
                         overlayHost = overlayHost,
                         coroutineScope = scope,
                         snackbarHostState = snackbarHostState,
@@ -175,6 +189,7 @@ internal fun LabelUi(
                     )
                 },
                 topAppBarFilterState = state.topAppBarFilterState,
+                topAppBarEditState = state.topAppBarEditState,
                 additionalBar = {
                     TabsBar(
                         tabsTitle = state.tabs.map { it.getTitle(strings) },

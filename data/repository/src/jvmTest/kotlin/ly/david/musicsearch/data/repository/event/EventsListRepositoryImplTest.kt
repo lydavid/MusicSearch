@@ -102,7 +102,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                 entity = MusicBrainzEntity.EVENT,
             ),
         )
-        collectionEntityDao.insertAll(
+        collectionEntityDao.addAllToCollection(
             collectionId = collectionId,
             entityIds = events.map { it.id },
         )

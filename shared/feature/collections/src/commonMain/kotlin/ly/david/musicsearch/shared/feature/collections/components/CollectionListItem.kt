@@ -56,6 +56,7 @@ internal fun CollectionListItem(
         trailingContent = {
             Row {
                 // TODO: not accurate for remote collections we have not clicked into yet
+                //  or haven't loaded all
                 Text(
                     text = "${collection.cachedEntityCount}",
                     modifier = Modifier.padding(end = 8.dp),

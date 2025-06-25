@@ -83,7 +83,7 @@ internal class CollectionPresenter(
             collectionRepository.addToCollection(
                 collectionId = nonNullCollection.id,
                 entity = nonNullCollection.entity,
-                entityId = oneShotNewCollectableId ?: return@LaunchedEffect,
+                entityIds = oneShotNewCollectableId?.run { setOf(this) } ?: return@LaunchedEffect,
             )
             oneShotNewCollectableId = null
         }

@@ -68,7 +68,7 @@ class WorksListRepositoryImpl(
 
             when (entity) {
                 MusicBrainzEntity.COLLECTION -> {
-                    collectionEntityDao.deleteEntityLinksFromCollection(entityId)
+                    collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
                 else -> {
@@ -98,7 +98,7 @@ class WorksListRepositoryImpl(
         workDao.insertAll(musicBrainzModels)
         when (entity) {
             MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.insertAll(
+                collectionEntityDao.addAllToCollection(
                     collectionId = entityId,
                     entityIds = musicBrainzModels.map { work -> work.id },
                 )

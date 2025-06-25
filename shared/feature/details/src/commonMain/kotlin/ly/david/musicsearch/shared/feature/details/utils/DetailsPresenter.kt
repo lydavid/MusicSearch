@@ -11,16 +11,21 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
@@ -39,7 +44,9 @@ import ly.david.musicsearch.ui.common.screen.EntitiesListUiEvent
 import ly.david.musicsearch.ui.common.screen.EntitiesListUiState
 import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.ui.common.topappbar.Tab
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>(
@@ -52,6 +59,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
     private val loginPresenter: LoginPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
     private val wikimediaRepository: WikimediaRepository,
+    private val collectionRepository: CollectionRepository,
 ) : Presenter<DetailsUiState<DetailsModel>>, RecordVisit {
 
     abstract fun getTabs(): ImmutableList<Tab>
@@ -79,6 +87,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
         var detailsModel: DetailsModel? by rememberRetained { mutableStateOf(null) }
         var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
+        val topAppBarEditState: TopAppBarEditState = rememberTopAppBarEditState()
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var forceRefreshDetails by remember { mutableStateOf(false) }
@@ -86,6 +95,10 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
         var isReleaseEventsCollapsed by rememberSaveable { mutableStateOf(false) }
         var isExternalLinksCollapsed by rememberSaveable { mutableStateOf(false) }
+        var selectedIds: Set<String> by rememberSaveable { mutableStateOf(setOf()) }
+        val isInACollection by collectionRepository.observeEntityIsInACollection(
+            entityId = screen.id,
+        ).collectAsRetainedState(false)
 
         val entitiesListUiState = entitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
@@ -176,6 +189,15 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             )
         }
 
+        LaunchedEffect(topAppBarEditState.isEditMode) {
+            if (!topAppBarEditState.isEditMode) {
+                selectedIds = setOf()
+            }
+            if (selectedIds.isEmpty()) {
+                topAppBarEditState.customTitle = ""
+            }
+        }
+
         fun eventSink(event: DetailsUiEvent) {
             when (event) {
                 DetailsUiEvent.NavigateUp -> {
@@ -184,10 +206,26 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
 
                 is DetailsUiEvent.UpdateTab -> {
                     selectedTab = event.tab
+                    // TODO: this will clear when returning from backstack
+                    //  whereas returning to a collection does not clear
+                    //  When switching tabs, it is necessary to clear,
+                    //  otherwise we may add entities to the wrong collection type
+                    topAppBarEditState.toggleEditMode(false)
                 }
 
                 DetailsUiEvent.ForceRefreshDetails -> {
                     forceRefreshDetails = true
+                    topAppBarEditState.toggleEditMode(false)
+                }
+
+                is DetailsUiEvent.ToggleSelectItem -> {
+                    selectedIds = if (selectedIds.contains(event.collectableId)) {
+                        selectedIds.minus(event.collectableId)
+                    } else {
+                        selectedIds.plus(event.collectableId)
+                    }
+                    topAppBarEditState.toggleEditMode(selectedIds.isNotEmpty())
+                    topAppBarEditState.customTitle = "Selected ${selectedIds.size}"
                 }
 
                 is DetailsUiEvent.ClickItem -> {
@@ -243,8 +281,10 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             detailsModel = detailsModel?.withUrls(
                 urls = detailsModel?.urls.filterUrlRelations(query = query),
             ) as DetailsModel?,
+            isInACollection = isInACollection,
             snackbarMessage = snackbarMessage,
             topAppBarFilterState = topAppBarFilterState,
+            topAppBarEditState = topAppBarEditState,
             detailsTabUiState = DetailsTabUiState(
                 isLoading = isLoading,
                 handledException = handledException,
@@ -255,6 +295,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             ),
             entitiesListUiState = entitiesListUiState,
             loginUiState = loginUiState,
+            selectedIds = selectedIds.toPersistentSet(),
             eventSink = ::eventSink,
         )
     }
@@ -267,9 +308,12 @@ internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
     val selectedTab: Tab,
     val url: String = "",
     val detailsModel: DetailsModel?,
+    val isInACollection: Boolean = false,
     val snackbarMessage: String? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
+    val topAppBarEditState: TopAppBarEditState = TopAppBarEditState(),
     val detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
+    val selectedIds: ImmutableSet<String> = persistentSetOf(),
     val entitiesListUiState: EntitiesListUiState = EntitiesListUiState(),
     val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (DetailsUiEvent) -> Unit = {},
@@ -291,6 +335,10 @@ internal sealed interface DetailsUiEvent : CircuitUiEvent {
     data object ForceRefreshDetails : DetailsUiEvent
 
     data class UpdateTab(val tab: Tab) : DetailsUiEvent
+
+    data class ToggleSelectItem(
+        val collectableId: String,
+    ) : DetailsUiEvent
 
     data class ClickItem(
         val entity: MusicBrainzEntity,

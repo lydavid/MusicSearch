@@ -12,8 +12,11 @@ CREATE TABLE IF NOT EXISTS collection_entity (
   ON DELETE CASCADE
 );
 
-insertOrFail:
-INSERT OR FAIL INTO collection_entity
+-- TODO: Add index on entity_id
+-- only when we need to check a list of entity ids
+
+insert:
+INSERT OR IGNORE INTO collection_entity
 VALUES ?;
 
 getEntitiesFromCollection:
@@ -22,7 +25,7 @@ FROM collection_entity ce
 INNER JOIN collection c ON c.id = ce.id
 WHERE c.id = :collectionId;
 
-deleteEntitiyLinksFromCollection:
+deleteAllFromCollection:
 DELETE FROM collection_entity
 WHERE id = :collectionId;
 
@@ -65,3 +68,9 @@ SELECT IFNULL(
   ),
   0
 ) AS count;
+
+entityIsInACollection:
+SELECT COUNT(collection.id) > 0
+FROM collection_entity
+INNER JOIN collection ON collection_entity.id = collection.id
+WHERE collection_entity.entity_id = :entityId;

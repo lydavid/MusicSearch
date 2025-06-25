@@ -2,10 +2,12 @@ package ly.david.musicsearch.data.repository.collection
 
 import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
+import app.cash.turbine.test
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeCollectionApi
+import ly.david.data.test.zutomayoArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -295,27 +297,26 @@ class CollectionRepositoryImplTest : KoinTest {
             },
         )
 
-        val flow: Flow<PagingData<CollectionListItemModel>> = repository.observeAllCollections(
+        repository.observeAllCollections(
             username = "user",
             entity = MusicBrainzEntity.ARTIST,
             query = "",
             showLocal = true,
             showRemote = true,
             sortOption = CollectionSortOption.ALPHABETICALLY,
-        )
-        val collections: List<CollectionListItemModel> = flow.asSnapshot()
-
-        Assert.assertEquals(
-            listOf(
-                CollectionListItemModel(
-                    id = "1",
-                    name = "Artists",
-                    entity = MusicBrainzEntity.ARTIST,
-                    isRemote = true,
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                listOf(
+                    CollectionListItemModel(
+                        id = "1",
+                        name = "Artists",
+                        entity = MusicBrainzEntity.ARTIST,
+                        isRemote = true,
+                    ),
                 ),
-            ),
-            collections,
-        )
+                this,
+            )
+        }
     }
 
     @Test
@@ -510,5 +511,63 @@ class CollectionRepositoryImplTest : KoinTest {
             collection,
             null,
         )
+    }
+
+    @Test
+    fun `observe entity is part of a collection`() = runTest {
+        val repository = createRepository(
+            collectionApi = object : FakeCollectionApi() {
+                override suspend fun browseCollectionsByUser(
+                    username: String,
+                    limit: Int,
+                    offset: Int,
+                    include: String?,
+                ): BrowseCollectionsResponse {
+                    return BrowseCollectionsResponse(
+                        count = 1,
+                        offset = 0,
+                        musicBrainzModels = listOf(
+                            CollectionMusicBrainzNetworkModel(
+                                id = "1",
+                                name = "Artists",
+                                entityType = SerializableMusicBrainzEntity.ARTIST,
+                            ),
+                        ),
+                    )
+                }
+            },
+        )
+        repository.observeAllCollections(
+            username = "user",
+            entity = MusicBrainzEntity.ARTIST,
+            query = "",
+            showLocal = true,
+            showRemote = true,
+            sortOption = CollectionSortOption.ALPHABETICALLY,
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                listOf(
+                    CollectionListItemModel(
+                        id = "1",
+                        name = "Artists",
+                        entity = MusicBrainzEntity.ARTIST,
+                        isRemote = true,
+                    ),
+                ),
+                this,
+            )
+        }
+
+        val entityId = zutomayoArtistMusicBrainzNetworkModel.id
+        repository.observeEntityIsInACollection(entityId).test {
+            Assert.assertEquals(false, awaitItem())
+
+            repository.addToCollection(
+                collectionId = "1",
+                entity = MusicBrainzEntity.ARTIST,
+                entityIds = setOf(entityId),
+            )
+            Assert.assertEquals(true, awaitItem())
+        }
     }
 }

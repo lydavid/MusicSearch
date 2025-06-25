@@ -5,6 +5,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
@@ -34,6 +35,7 @@ internal class InstrumentPresenter(
     loginPresenter: LoginPresenter,
     getMusicBrainzUrl: GetMusicBrainzUrl,
     wikimediaRepository: WikimediaRepository,
+    collectionRepository: CollectionRepository,
 ) : DetailsPresenter<InstrumentDetailsModel>(
     screen = screen,
     navigator = navigator,
@@ -44,6 +46,7 @@ internal class InstrumentPresenter(
     loginPresenter = loginPresenter,
     getMusicBrainzUrl = getMusicBrainzUrl,
     wikimediaRepository = wikimediaRepository,
+    collectionRepository = collectionRepository,
 ) {
     override fun getTabs(): ImmutableList<Tab> {
         return instrumentTabs

@@ -66,7 +66,7 @@ class GenresListRepositoryImpl(
 
             when (entity) {
                 MusicBrainzEntity.COLLECTION -> {
-                    collectionEntityDao.deleteEntityLinksFromCollection(entityId)
+                    collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
                 else -> {
@@ -96,7 +96,7 @@ class GenresListRepositoryImpl(
         genreDao.insertAll(musicBrainzModels)
         when (entity) {
             MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.insertAll(
+                collectionEntityDao.addAllToCollection(
                     collectionId = entityId,
                     entityIds = musicBrainzModels.map { genre -> genre.id },
                 )

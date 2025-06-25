@@ -1,40 +1,38 @@
 package ly.david.musicsearch.data.database.dao
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
+import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import lydavidmusicsearchdatadatabase.Collection_entity
 
 class CollectionEntityDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.collection_entityQueries
 
-    @Suppress("SwallowedException")
-    fun insert(
+    private fun addToCollection(
         collectionId: String,
         entityId: String,
     ): Long {
-        return try {
-            transacter.insertOrFail(
-                Collection_entity(
-                    id = collectionId,
-                    entity_id = entityId,
-                    deleted = false,
-                ),
-            )
-            1
-        } catch (ex: Exception) {
-            INSERTION_FAILED_DUE_TO_CONFLICT
-        }
+        return transacter.insert(
+            Collection_entity(
+                id = collectionId,
+                entity_id = entityId,
+                deleted = false,
+            ),
+        ).value
     }
 
-    fun insertAll(
+    fun addAllToCollection(
         collectionId: String,
         entityIds: List<String>,
-    ) {
-        return transacter.transaction {
-            entityIds.forEach { entityId ->
-                insert(
+    ): Long {
+        return transacter.transactionWithResult {
+            entityIds.sumOf { entityId ->
+                addToCollection(
                     collectionId = collectionId,
                     entityId = entityId,
                 )
@@ -42,8 +40,8 @@ class CollectionEntityDao(
         }
     }
 
-    fun deleteEntityLinksFromCollection(collectionId: String) {
-        transacter.deleteEntitiyLinksFromCollection(collectionId)
+    fun deleteAllFromCollection(collectionId: String) {
+        transacter.deleteAllFromCollection(collectionId = collectionId)
     }
 
     fun markDeletedFromCollection(
@@ -69,7 +67,7 @@ class CollectionEntityDao(
     fun getIdsMarkedForDeletionFromCollection(
         collectionId: String,
     ): Set<String> {
-        return transacter.getIdsMarkedForDeletionFromCollection(collectionId)
+        return transacter.getIdsMarkedForDeletionFromCollection(collectionId = collectionId)
             .executeAsList()
             .toSet()
     }
@@ -85,7 +83,7 @@ class CollectionEntityDao(
     fun deleteCollection(
         collectionId: String,
     ) {
-        transacter.deleteCollection(collectionId)
+        transacter.deleteCollection(collectionId = collectionId)
     }
 
     fun getCountOfEntitiesByCollection(collectionId: String): Int =
@@ -94,4 +92,11 @@ class CollectionEntityDao(
         )
             .executeAsOne()
             .toInt()
+
+    fun entityIsInACollection(entityId: String): Flow<Boolean> =
+        transacter.entityIsInACollection(
+            entityId = entityId,
+        )
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
 }

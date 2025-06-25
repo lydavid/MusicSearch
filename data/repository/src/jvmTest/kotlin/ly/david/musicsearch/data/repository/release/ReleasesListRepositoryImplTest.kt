@@ -304,7 +304,7 @@ class ReleasesListRepositoryImplTest :
                 entity = MusicBrainzEntity.RELEASE,
             ),
         )
-        collectionEntityDao.insertAll(
+        collectionEntityDao.addAllToCollection(
             collectionId = collectionId,
             entityIds = releases.map { it.id },
         )

@@ -66,7 +66,7 @@ class AreasListRepositoryImpl(
 
             when (entity) {
                 MusicBrainzEntity.COLLECTION -> {
-                    collectionEntityDao.deleteEntityLinksFromCollection(entityId)
+                    collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
                 else -> error(browseEntitiesNotSupported(entity))
@@ -99,7 +99,7 @@ class AreasListRepositoryImpl(
         areaDao.insertAll(musicBrainzModels)
         when (entity) {
             MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.insertAll(
+                collectionEntityDao.addAllToCollection(
                     collectionId = entityId,
                     entityIds = musicBrainzModels.map { area -> area.id },
                 )

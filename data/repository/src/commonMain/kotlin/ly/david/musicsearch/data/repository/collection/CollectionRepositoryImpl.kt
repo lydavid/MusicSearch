@@ -7,7 +7,6 @@ import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
-import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -172,7 +171,7 @@ class CollectionRepositoryImpl(
     override suspend fun addToCollection(
         collectionId: String,
         entity: MusicBrainzEntity,
-        entityId: String,
+        entityIds: Set<String>,
     ): ActionableResult {
         val collection = collectionDao.getCollection(collectionId) ?: return ActionableResult("Does not exist")
 
@@ -182,7 +181,7 @@ class CollectionRepositoryImpl(
                 collectionApi.addToCollection(
                     collectionId = collectionId,
                     resourceUriPlural = entity.resourceUriPlural,
-                    mbids = entityId,
+                    mbids = entityIds,
                 )
             } catch (ex: HandledException) {
                 val userFacingError = "Failed to add to ${collection.name}. ${ex.userMessage}"
@@ -195,16 +194,18 @@ class CollectionRepositoryImpl(
         }
 
         collectionEntityDao.withTransaction {
-            val insertedOneEntry = collectionEntityDao.insert(
+            val insertions = collectionEntityDao.addAllToCollection(
                 collectionId = collectionId,
-                entityId = entityId,
+                entityIds = entityIds.toList(),
             )
 
-            result = if (insertedOneEntry == INSERTION_FAILED_DUE_TO_CONFLICT) {
-                ActionableResult("Already in ${collection.name}.")
-            } else {
-                ActionableResult("Added to ${collection.name}.")
-            }
+            result = ActionableResult(
+                message = when {
+                    insertions == 0L -> "Already in ${collection.name}."
+                    entityIds.size == 1 -> "Added to ${collection.name}."
+                    else -> "Added ${insertions.toInt()} to ${collection.name}."
+                },
+            )
         }
 
         return result
@@ -218,5 +219,11 @@ class CollectionRepositoryImpl(
             collectionId,
         )
         return ActionableResult("Deleted $collectionName.")
+    }
+
+    override fun observeEntityIsInACollection(
+        entityId: String,
+    ): Flow<Boolean> {
+        return collectionEntityDao.entityIsInACollection(entityId)
     }
 }

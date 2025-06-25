@@ -72,7 +72,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                 entity = MusicBrainzEntity.RECORDING,
             ),
         )
-        collectionEntityDao.insertAll(
+        collectionEntityDao.addAllToCollection(
             collectionId = collectionId,
             entityIds = recordings.map { it.id },
         )

@@ -41,7 +41,11 @@ internal class AddToCollectionPresenter(
                     entity = screen.entity,
                     showLocal = true,
                     showRemote = true,
-                    entityIdToCheckExists = screen.id,
+                    entityIdToCheckExists = if (screen.collectableIds.size == 1) {
+                        screen.collectableIds.first()
+                    } else {
+                        null
+                    },
                 ),
             )
         }
@@ -62,9 +66,9 @@ internal class AddToCollectionPresenter(
                 is AddToCollectionUiEvent.AddToCollection -> {
                     scope.launch {
                         val result: ActionableResult = collectionRepository.addToCollection(
-                            collectionId = event.id,
+                            collectionId = event.collectionId,
                             entity = screen.entity,
-                            entityId = screen.id,
+                            entityIds = screen.collectableIds,
                         )
                         navigator.pop(
                             SnackbarPopResult(
@@ -95,6 +99,6 @@ internal data class AddToCollectionUiState(
 internal sealed interface AddToCollectionUiEvent : CircuitUiEvent {
     data class CreateNewCollection(val newCollection: CreateNewCollectionResult.NewCollection) : AddToCollectionUiEvent
     data class AddToCollection(
-        val id: String,
+        val collectionId: String,
     ) : AddToCollectionUiEvent
 }

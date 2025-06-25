@@ -1,6 +1,7 @@
 package ly.david.musicsearch.ui.common.topappbar
 
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -11,33 +12,42 @@ import com.slack.circuit.overlay.OverlayHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.PlaylistAdd
 import ly.david.musicsearch.ui.common.screen.AddToCollectionScreen
 import ly.david.musicsearch.ui.common.screen.showInBottomSheet
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
-fun OverflowMenuScope.AddToCollectionMenuItem(
-    entity: MusicBrainzEntity,
-    entityId: String,
+fun OverflowMenuScope.AddAllToCollectionMenuItem(
+    tab: Tab,
+    entityIds: Set<String>,
     overlayHost: OverlayHost,
     coroutineScope: CoroutineScope,
     snackbarHostState: SnackbarHostState,
     onLoginClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val strings = LocalStrings.current
+    val entity = tab.toMusicBrainzEntity() ?: return
+    if (entityIds.isEmpty()) return
 
     DropdownMenuItem(
         text = {
-            Text(strings.addToCollection)
+            Text(
+                text = "Add ${entityIds.size} to collection",
+            )
+        },
+        leadingIcon = {
+            Icon(
+                imageVector = CustomIcons.PlaylistAdd,
+                contentDescription = null,
+            )
         },
         onClick = {
             coroutineScope.launch {
                 val result = overlayHost.showInBottomSheet(
                     AddToCollectionScreen(
                         entity = entity,
-                        id = entityId,
+                        collectableIds = entityIds,
                     ),
                 )
                 result.message.ifNotNullOrEmpty {

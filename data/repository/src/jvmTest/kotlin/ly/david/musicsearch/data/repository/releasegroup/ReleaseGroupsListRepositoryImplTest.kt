@@ -113,7 +113,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 entity = MusicBrainzEntity.RELEASE_GROUP,
             ),
         )
-        collectionEntityDao.insertAll(
+        collectionEntityDao.addAllToCollection(
             collectionId = collectionId,
             entityIds = releaseGroups.map { it.id },
         )

@@ -68,7 +68,7 @@ class ArtistsListRepositoryImpl(
 
             when (entity) {
                 MusicBrainzEntity.COLLECTION -> {
-                    collectionEntityDao.deleteEntityLinksFromCollection(entityId)
+                    collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
                 else -> {
@@ -98,7 +98,7 @@ class ArtistsListRepositoryImpl(
         artistDao.insertAll(musicBrainzModels)
         when (entity) {
             MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.insertAll(
+                collectionEntityDao.addAllToCollection(
                     collectionId = entityId,
                     entityIds = musicBrainzModels.map { artist -> artist.id },
                 )

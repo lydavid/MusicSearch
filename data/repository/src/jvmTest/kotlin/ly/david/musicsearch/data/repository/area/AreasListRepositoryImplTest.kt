@@ -113,7 +113,7 @@ class AreasListRepositoryImplTest : KoinTest {
                 entity = MusicBrainzEntity.AREA,
             ),
         )
-        collectionEntityDao.insertAll(
+        collectionEntityDao.addAllToCollection(
             collectionId = collectionId,
             entityIds = areas.map { it.id },
         )

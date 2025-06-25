@@ -5,6 +5,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
@@ -34,6 +35,7 @@ internal class EventPresenter(
     loginPresenter: LoginPresenter,
     getMusicBrainzUrl: GetMusicBrainzUrl,
     wikimediaRepository: WikimediaRepository,
+    collectionRepository: CollectionRepository,
 ) : DetailsPresenter<EventDetailsModel>(
     screen = screen,
     navigator = navigator,
@@ -44,6 +46,7 @@ internal class EventPresenter(
     loginPresenter = loginPresenter,
     getMusicBrainzUrl = getMusicBrainzUrl,
     wikimediaRepository = wikimediaRepository,
+    collectionRepository = collectionRepository,
 ) {
 
     override fun getTabs(): ImmutableList<Tab> {

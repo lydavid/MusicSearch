@@ -106,7 +106,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                 entity = MusicBrainzEntity.WORK,
             ),
         )
-        collectionEntityDao.insertAll(
+        collectionEntityDao.addAllToCollection(
             collectionId = collectionId,
             entityIds = works.map { it.id },
         )

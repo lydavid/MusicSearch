@@ -102,7 +102,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                 entity = MusicBrainzEntity.PLACE,
             ),
         )
-        collectionEntityDao.insertAll(
+        collectionEntityDao.addAllToCollection(
             collectionId = collectionId,
             entityIds = places.map { it.id },
         )

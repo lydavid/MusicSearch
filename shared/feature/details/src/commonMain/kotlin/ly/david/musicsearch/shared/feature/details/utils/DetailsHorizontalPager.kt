@@ -154,6 +154,12 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                             ),
                         )
                     },
+                    selectedIds = state.selectedIds,
+                    onSelect = {
+                        eventSink(
+                            DetailsUiEvent.ToggleSelectItem(collectableId = it),
+                        )
+                    },
                     requestForMissingCoverArtUrl = { entityId ->
                         requestForMissingCoverArtUrl(entityId, tabEntity)
                     },

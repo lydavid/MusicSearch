@@ -90,7 +90,7 @@ class LabelsListRepositoryImplTest : KoinTest {
                 entity = MusicBrainzEntity.LABEL,
             ),
         )
-        collectionEntityDao.insertAll(
+        collectionEntityDao.addAllToCollection(
             collectionId = collectionId,
             entityIds = labels.map { it.id },
         )

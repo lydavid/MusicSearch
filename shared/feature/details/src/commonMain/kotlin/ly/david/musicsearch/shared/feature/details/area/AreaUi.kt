@@ -32,7 +32,9 @@ import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
-import ly.david.musicsearch.ui.common.topappbar.AddToCollectionMenuItem
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
+import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
@@ -42,7 +44,6 @@ import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
 internal fun AreaUi(
@@ -69,10 +70,23 @@ internal fun AreaUi(
         modifier = modifier,
         snackbarHostState = snackbarHostState,
         strings = strings,
-        additionalOverflowDropdownMenuItems = {
-            AddToCollectionMenuItem(
+        additionalActions = {
+            AddToCollectionActionToggle(
+                partOfACollection = state.isInACollection,
                 entity = MusicBrainzEntity.AREA,
                 entityId = entityId,
+                overlayHost = overlayHost,
+                coroutineScope = scope,
+                snackbarHostState = snackbarHostState,
+                onLoginClick = {
+                    loginEventSink(LoginUiEvent.StartLogin)
+                },
+            )
+        },
+        additionalOverflowDropdownMenuItems = {
+            AddAllToCollectionMenuItem(
+                tab = state.selectedTab,
+                entityIds = state.selectedIds,
                 overlayHost = overlayHost,
                 coroutineScope = scope,
                 snackbarHostState = snackbarHostState,
@@ -96,6 +110,7 @@ internal fun AreaUiInternal(
     scope: CoroutineScope = rememberCoroutineScope(),
     strings: AppStrings = LocalStrings.current,
     now: Instant = Clock.System.now(),
+    additionalActions: @Composable () -> Unit = {},
     additionalOverflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit) = {},
 ) {
     val entity = MusicBrainzEntity.AREA
@@ -180,6 +195,7 @@ internal fun AreaUiInternal(
                 entity = entity,
                 title = state.title,
                 scrollBehavior = scrollBehavior,
+                additionalActions = additionalActions,
                 overflowDropdownMenuItems = {
                     RefreshMenuItem(
                         show = state.selectedTab != Tab.STATS,
@@ -211,6 +227,7 @@ internal fun AreaUiInternal(
                     additionalOverflowDropdownMenuItems()
                 },
                 topAppBarFilterState = state.topAppBarFilterState,
+                topAppBarEditState = state.topAppBarEditState,
                 additionalBar = {
                     TabsBar(
                         tabsTitle = state.tabs.map { it.getTitle(strings) },

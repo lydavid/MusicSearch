@@ -75,7 +75,7 @@ class ReleasesListRepositoryImpl(
                 }
 
                 MusicBrainzEntity.COLLECTION -> {
-                    collectionEntityDao.deleteEntityLinksFromCollection(entityId)
+                    collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
                 MusicBrainzEntity.LABEL -> {
@@ -127,7 +127,7 @@ class ReleasesListRepositoryImpl(
             }
 
             MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.insertAll(
+                collectionEntityDao.addAllToCollection(
                     collectionId = entityId,
                     entityIds = musicBrainzModels.map { release -> release.id },
                 )

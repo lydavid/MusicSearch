@@ -8,13 +8,13 @@ import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.details.area.AreaPresenter
 import ly.david.musicsearch.shared.feature.details.area.AreaUi
 import ly.david.musicsearch.shared.feature.details.artist.ArtistPresenter
@@ -63,6 +63,7 @@ val detailsFeatureModule = module {
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
+                                collectionRepository = get(),
                             )
                         }
 
@@ -72,6 +73,7 @@ val detailsFeatureModule = module {
                                 navigator = navigator,
                                 repository = get(),
                                 wikimediaRepository = get(),
+                                collectionRepository = get(),
                                 incrementLookupHistory = get(),
                                 entitiesListPresenter = get(),
                                 imageMetadataRepository = get(),
@@ -93,6 +95,7 @@ val detailsFeatureModule = module {
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
+                                collectionRepository = get(),
                             )
                         }
 
@@ -119,6 +122,7 @@ val detailsFeatureModule = module {
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
+                                collectionRepository = get(),
                             )
                         }
 
@@ -134,6 +138,7 @@ val detailsFeatureModule = module {
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
+                                collectionRepository = get(),
                             )
                         }
 
@@ -149,6 +154,7 @@ val detailsFeatureModule = module {
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
+                                collectionRepository = get(),
                             )
                         }
 
@@ -164,6 +170,7 @@ val detailsFeatureModule = module {
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
+                                collectionRepository = get(),
                             )
                         }
 
@@ -179,6 +186,7 @@ val detailsFeatureModule = module {
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
+                                collectionRepository = get(),
                             )
                         }
 
@@ -194,6 +202,7 @@ val detailsFeatureModule = module {
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
+                                collectionRepository = get(),
                             )
                         }
 
@@ -209,6 +218,7 @@ val detailsFeatureModule = module {
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
+                                collectionRepository = get(),
                             )
                         }
 
@@ -224,6 +234,7 @@ val detailsFeatureModule = module {
                                 loginPresenter = get(),
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
+                                collectionRepository = get(),
                             )
                         }
 

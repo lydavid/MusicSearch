@@ -18,7 +18,7 @@ interface CollectionApi {
     suspend fun addToCollection(
         collectionId: String,
         resourceUriPlural: String,
-        mbids: String,
+        mbids: Set<String>,
         client: String = "MusicSearch",
     )
 
@@ -43,12 +43,17 @@ interface CollectionApiImpl : CollectionApi {
     override suspend fun addToCollection(
         collectionId: String,
         resourceUriPlural: String,
-        mbids: String,
+        mbids: Set<String>,
         client: String,
     ) {
         httpClient.put {
             url {
-                appendPathSegments("collection", collectionId, resourceUriPlural, mbids)
+                appendPathSegments(
+                    "collection",
+                    collectionId,
+                    resourceUriPlural,
+                    mbids.joinToString(";"),
+                )
                 parameter("client", client)
             }
         }

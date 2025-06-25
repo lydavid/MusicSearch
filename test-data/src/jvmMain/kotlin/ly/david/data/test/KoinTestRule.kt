@@ -44,8 +44,8 @@ class KoinTestRule : TestWatcher() {
     override fun starting(description: Description) {
         startKoin {
             modules(
-                databaseDaoModule,
                 testCoroutineDispatchersModule,
+                databaseDaoModule,
                 testDatabaseModule,
             )
         }
