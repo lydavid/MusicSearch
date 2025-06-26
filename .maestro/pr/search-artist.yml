@@ -86,7 +86,7 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "japan"
 - assertVisible: "Japan"
 - tapOn: Cancel
-- tapOn: "Add to collection"
+- tapOn: "Add to another collection"
 - tapOn: "Artists"
 - assertVisible: "Already in Artists."
 
@@ -125,5 +125,13 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "Back"
 - tapOn: "Cancel"
 - assertVisible: "Collections"
+- tapOn: "More actions"
+- tapOn: "Edit"
+- assertVisible: "Editing..."
+- swipe:
+    from: "Artists"
+    direction: LEFT
+- tapOn: "More actions"
+- tapOn: "View"
 
 - stopRecording
