@@ -5,6 +5,7 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -27,6 +28,8 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.Group
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
@@ -36,11 +39,12 @@ import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
+import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
+import ly.david.musicsearch.ui.common.topappbar.SortToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
-import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
 
@@ -180,10 +184,8 @@ internal fun ArtistUi(
                     )
                     CopyToClipboardMenuItem(entityId)
                     if (selectedTab == Tab.RELEASE_GROUPS) {
-                        ToggleMenuItem(
-                            toggleOnText = strings.sort,
-                            toggleOffText = strings.unsort,
-                            toggled = state.entitiesListUiState.releaseGroupsListUiState.sort,
+                        SortToggleMenuItem(
+                            sorted = state.entitiesListUiState.releaseGroupsListUiState.sort,
                             onToggle = {
                                 releaseGroupsByEntityEventSink(
                                     ReleaseGroupsListUiEvent.UpdateSortReleaseGroupListItem(it),
@@ -192,10 +194,8 @@ internal fun ArtistUi(
                         )
                     }
                     if (selectedTab == Tab.RELEASES) {
-                        ToggleMenuItem(
-                            toggleOnText = strings.showMoreInfo,
-                            toggleOffText = strings.showLessInfo,
-                            toggled = state.entitiesListUiState.releasesListUiState.showMoreInfo,
+                        MoreInfoToggleMenuItem(
+                            showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
                             onToggle = {
                                 releasesByEntityEventSink(
                                     ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
@@ -205,6 +205,12 @@ internal fun ArtistUi(
                     }
                     DropdownMenuItem(
                         text = { Text(strings.seeCollaborators) },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = CustomIcons.Group,
+                                contentDescription = null,
+                            )
+                        },
                         onClick = {
                             eventSink(DetailsUiEvent.NavigateToCollaboratorsGraph)
                             closeMenu()

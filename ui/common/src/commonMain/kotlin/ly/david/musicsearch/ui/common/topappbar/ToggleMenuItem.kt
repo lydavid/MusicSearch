@@ -12,11 +12,13 @@ fun OverflowMenuScope.ToggleMenuItem(
     toggled: Boolean,
     onToggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    leadingIcon: @Composable (() -> Unit)? = null,
 ) {
     DropdownMenuItem(
         text = {
             Text(if (toggled) toggleOffText else toggleOnText)
         },
+        leadingIcon = leadingIcon,
         onClick = {
             closeMenu()
             onToggle(!toggled)

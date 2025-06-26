@@ -20,7 +20,8 @@ import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.theme.LocalStrings
-import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
+import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
+import ly.david.musicsearch.ui.common.topappbar.SortToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 
 @Suppress("CyclomaticComplexMethod")
@@ -49,20 +50,16 @@ internal fun AllEntitiesUi(
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = {
                     if (state.entity == MusicBrainzEntity.RELEASE_GROUP) {
-                        ToggleMenuItem(
-                            toggleOnText = strings.sort,
-                            toggleOffText = strings.unsort,
-                            toggled = state.entitiesListUiState.releaseGroupsListUiState.sort,
+                        SortToggleMenuItem(
+                            sorted = state.entitiesListUiState.releaseGroupsListUiState.sort,
                             onToggle = {
                                 releaseGroupsEventSink(ReleaseGroupsListUiEvent.UpdateSortReleaseGroupListItem(it))
                             },
                         )
                     }
                     if (state.entity == MusicBrainzEntity.RELEASE) {
-                        ToggleMenuItem(
-                            toggleOnText = strings.showMoreInfo,
-                            toggleOffText = strings.showLessInfo,
-                            toggled = state.entitiesListUiState.releasesListUiState.showMoreInfo,
+                        MoreInfoToggleMenuItem(
+                            showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
                             onToggle = {
                                 releasesEventSink(ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it))
                             },

@@ -36,12 +36,12 @@ import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
+import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
-import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
 
@@ -212,10 +212,8 @@ internal fun AreaUiInternal(
                     )
                     CopyToClipboardMenuItem(entityId)
                     if (state.selectedTab == Tab.RELEASES) {
-                        ToggleMenuItem(
-                            toggleOnText = strings.showMoreInfo,
-                            toggleOffText = strings.showLessInfo,
-                            toggled = state.entitiesListUiState.releasesListUiState.showMoreInfo,
+                        MoreInfoToggleMenuItem(
+                            showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
                             onToggle = {
                                 releasesByEntityEventSink(
                                     ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
