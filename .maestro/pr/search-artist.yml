@@ -31,7 +31,6 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "japan"
 - assertVisible: "Japan"
 - tapOn: Cancel
-- tapOn: "More actions"
 - tapOn: "Add to collection"
 - tapOn: "Create a collection"
 - inputText: "Artists"
@@ -87,7 +86,6 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "japan"
 - assertVisible: "Japan"
 - tapOn: Cancel
-- tapOn: "More actions"
 - tapOn: "Add to collection"
 - tapOn: "Artists"
 - assertVisible: "Already in Artists."
