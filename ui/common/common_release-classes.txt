@@ -1,7 +1,3 @@
-unstable class LifeSpanPreviewParameterProvider {
-  unstable val values: Sequence<LifeSpanUiModel>
-  <runtime stability> = Unstable
-}
 stable class LoginPresenterImpl {
   runtime val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract
   unstable val login: Login
@@ -361,7 +357,7 @@ stable class CollectionScreen {
 }
 stable class AddToCollectionScreen {
   stable val entity: MusicBrainzEntity
-  stable val id: String
+  unstable val collectableIds: Set<String>
   <runtime stability> = Stable
 }
 stable class SnackbarPopResult {
@@ -421,6 +417,25 @@ stable class SeriesListUiState {
   unstable val pagingDataFlow: Flow<PagingData<ListItemModel>>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<SeriesListUiEvent, Unit>
+}
+stable class ExtendedColors {
+  stable val artist: Color
+  stable val area: Color
+  stable val collection: Color
+  stable val event: Color
+  stable val genre: Color
+  stable val instrument: Color
+  stable val label: Color
+  stable val place: Color
+  stable val recording: Color
+  stable val release: Color
+  stable val releaseGroup: Color
+  stable val series: Color
+  stable val work: Color
+  stable val url: Color
+}
+stable class TextStyles {
+  <runtime stability> = Stable
 }
 stable class TopAppBarEditState {
   stable val showEditIcon: Boolean

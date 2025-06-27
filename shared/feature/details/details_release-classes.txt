@@ -80,6 +80,7 @@ stable class DetailsPresenter {
   stable val loginPresenter: LoginPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
   unstable val wikimediaRepository: WikimediaRepository
+  unstable val collectionRepository: CollectionRepository
   <runtime stability> = Stable
 }
 stable class DetailsUiState {
@@ -89,9 +90,12 @@ stable class DetailsUiState {
   stable val selectedTab: Tab
   stable val url: String
   runtime val detailsModel: DetailsModel?
+  stable val isInACollection: Boolean
   stable val snackbarMessage: String?
   stable val topAppBarFilterState: TopAppBarFilterState
+  stable val topAppBarEditState: TopAppBarEditState
   runtime val detailsTabUiState: DetailsTabUiState
+  stable val selectedIds: ImmutableSet<String>
   stable val entitiesListUiState: EntitiesListUiState
   stable val loginUiState: LoginUiState
   stable val eventSink: Function1<DetailsUiEvent, Unit>
@@ -115,6 +119,10 @@ stable class ForceRefreshDetails {
 }
 stable class UpdateTab {
   stable val tab: Tab
+  <runtime stability> = Stable
+}
+stable class ToggleSelectItem {
+  stable val collectableId: String
   <runtime stability> = Stable
 }
 stable class ClickItem {

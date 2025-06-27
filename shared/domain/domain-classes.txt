@@ -428,6 +428,8 @@ stable class EventListItemModel {
   stable val time: String?
   stable val cancelled: Boolean?
   stable val lifeSpan: LifeSpanUiModel
+  stable val imageUrl: String?
+  stable val imageId: ImageId?
   stable val visited: Boolean
   <runtime stability> = Stable
 }

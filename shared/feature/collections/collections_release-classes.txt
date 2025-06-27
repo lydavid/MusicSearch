@@ -16,7 +16,7 @@ stable class CreateNewCollection {
   <runtime stability> = Stable
 }
 stable class AddToCollection {
-  stable val id: String
+  stable val collectionId: String
   <runtime stability> = Stable
 }
 stable class CollectionListPresenter {

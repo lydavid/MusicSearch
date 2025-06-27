@@ -5,7 +5,7 @@ ly.david.musicsearch.shared.feature.search.PreviewRecentSearchesHeader,PreviewRe
 ly.david.musicsearch.shared.feature.search.PreviewSearchHistoryListItem,PreviewSearchHistoryListItem,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.search.RecentSearchesHeader,RecentSearchesHeader,1,1,1,0,0,0,0,0,1,2,
 ly.david.musicsearch.shared.feature.search.SearchHistoryListItem,SearchHistoryListItem,1,1,1,0,0,0,0,0,1,2,
-ly.david.musicsearch.shared.feature.search.SearchHistoryUi,SearchHistoryUi,1,1,1,0,0,0,1,0,3,6,
+ly.david.musicsearch.shared.feature.search.SearchHistoryUi,SearchHistoryUi,1,1,1,0,0,0,1,0,4,6,
 ly.david.musicsearch.shared.feature.search.SearchPresenter.present,present,1,0,0,0,0,0,0,0,1,8,
 ly.david.musicsearch.shared.feature.search.SearchResultsUi,SearchResultsUi,1,1,1,0,0,0,1,0,2,4,
 ly.david.musicsearch.shared.feature.search.ListItemUi,ListItemUi,1,1,1,0,0,0,0,0,15,15,

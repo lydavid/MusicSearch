@@ -4,13 +4,13 @@
   "readonlyComposables": 0,
   "totalComposables": 23,
   "restartGroups": 22,
-  "totalGroups": 28,
+  "totalGroups": 34,
   "staticArguments": 43,
-  "certainArguments": 9,
+  "certainArguments": 10,
   "knownStableArguments": 218,
-  "knownUnstableArguments": 11,
+  "knownUnstableArguments": 16,
   "unknownStableArguments": 2,
-  "totalArguments": 231,
+  "totalArguments": 236,
   "markedStableClasses": 1,
   "inferredStableClasses": 8,
   "inferredUnstableClasses": 0,
@@ -25,7 +25,7 @@
   "featureFlags": {
     "StrongSkipping": true,
     "IntrinsicRemember": true,
-    "OptimizeNonSkippingGroups": false,
-    "PausableComposition": false
+    "OptimizeNonSkippingGroups": true,
+    "PausableComposition": true
   }
 }

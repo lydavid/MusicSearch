@@ -1,8 +1,9 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewNowPlayingHistoryCard()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewNowPlayingHistoryUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryCard(
   nowPlayingHistory: NowPlayingHistoryListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onClick: @[ExtensionFunctionType] Function1<NowPlayingHistoryListItemModel, Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):NowPlayingCard.kt#9igjgp")
+  stable onClick: @[ExtensionFunctionType] Function1<NowPlayingHistoryListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 137551641, "CC(remember):NowPlayingHistoryCard.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -10,10 +11,9 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
-tmp0_group@ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryCard
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryCard
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewNowPlayingHistoryCard()
 fun present(
   stable <this>: NowPlayingHistoryPresenter
 ): NowPlayingHistoryUiState
@@ -26,8 +26,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayin
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic LazyListState()
   stable topAppBarFilterState: TopAppBarFilterState? = @dynamic TopAppBarFilterState()
-  stable onBack: Function0<Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
+  stable onBack: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1246838388, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -35,10 +34,9 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
-tmp0_group@ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryUi
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUi
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static sourceInformationMarkerStart($composer, 1246840957, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity   ->
 
@@ -46,10 +44,9 @@ val tmp1_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
-tmp1_group@ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryUi
-  stable onDelete: Function1<String, Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
+sourceInformationMarkerEnd($composer)
+tmp1_group@ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUi
+  stable onDelete: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 1246842420, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
 val tmp2_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -57,15 +54,14 @@ val tmp2_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
-tmp2_group@ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryUi
+sourceInformationMarkerEnd($composer)
+tmp2_group@ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUi
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayingHistoryContent(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic LazyListState()
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static sourceInformationMarkerStart($composer, 2032603106, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity   ->
 
@@ -73,10 +69,9 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
-tmp0_group@ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryContent
-  stable onDelete: Function1<String, Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryContent
+  stable onDelete: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 2032604569, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -84,7 +79,6 @@ val tmp1_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
-tmp1_group@ly.david.musicsearch.android.feature.nowplaying.internal.NowPlayingHistoryContent
+sourceInformationMarkerEnd($composer)
+tmp1_group@ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryContent
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewNowPlayingHistoryUi()

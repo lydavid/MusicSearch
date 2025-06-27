@@ -7,10 +7,10 @@
   "totalGroups": 25,
   "staticArguments": 26,
   "certainArguments": 7,
-  "knownStableArguments": 167,
-  "knownUnstableArguments": 1,
+  "knownStableArguments": 168,
+  "knownUnstableArguments": 3,
   "unknownStableArguments": 6,
-  "totalArguments": 174,
+  "totalArguments": 177,
   "markedStableClasses": 1,
   "inferredStableClasses": 4,
   "inferredUnstableClasses": 1,
@@ -25,7 +25,7 @@
   "featureFlags": {
     "StrongSkipping": true,
     "IntrinsicRemember": true,
-    "OptimizeNonSkippingGroups": false,
-    "PausableComposition": false
+    "OptimizeNonSkippingGroups": true,
+    "PausableComposition": true
   }
 }

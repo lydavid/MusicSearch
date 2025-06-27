@@ -34,8 +34,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingsU
   stable showAndroidSettings: Boolean
   stable modifier: Modifier? = @static Companion
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable versionName: String? = @static "1.37.0"
-  stable versionCode: Int = @dynamic val <elvis> = "642".toIntOrNull()
+  stable versionName: String? = @static "1.41.0"
+  stable versionCode: Int = @dynamic val <elvis> = "658".toIntOrNull()
 when {
   <elvis>  @  ly.david.musicsearch.shared.feature.settings.internal.SettingsUi   ==   null   ->   {
     0
@@ -46,8 +46,7 @@ when {
 
 }
 
-  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):SettingsUi.kt#9igjgp")
+  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 455752864, "CC(remember):SettingsUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -55,7 +54,7 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
+sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.SettingsUi
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingsUi(
@@ -63,8 +62,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingsU
   stable showAndroidSettings: Boolean
   stable modifier: Modifier? = @static Companion
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable versionName: String? = @static "1.37.0"
-  stable versionCode: Int = @dynamic val <elvis> = "642".toIntOrNull()
+  stable versionName: String? = @static "1.41.0"
+  stable versionCode: Int = @dynamic val <elvis> = "658".toIntOrNull()
 when {
   <elvis>  @  ly.david.musicsearch.shared.feature.settings.internal.SettingsUi   ==   null   ->   {
     0
@@ -75,8 +74,7 @@ when {
 
 }
 
-  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):SettingsUi.kt#9igjgp")
+  stable onGoToNotificationListenerSettings: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1869776006, "CC(remember):SettingsUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -84,10 +82,9 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
+sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.SettingsUi
-  stable eventSink: Function1<SettingsUiEvent, Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):SettingsUi.kt#9igjgp")
+  stable eventSink: Function1<SettingsUiEvent, Unit>? = @static sourceInformationMarkerStart($composer, -1869774502, "CC(remember):SettingsUi.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   SettingsUiEvent   ->
 
@@ -95,10 +92,9 @@ val tmp1_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
+sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.shared.feature.settings.internal.SettingsUi
-  stable loginEventSink: Function1<LoginUiEvent, Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):SettingsUi.kt#9igjgp")
+  stable loginEventSink: Function1<LoginUiEvent, Unit>? = @static sourceInformationMarkerStart($composer, -1869772934, "CC(remember):SettingsUi.kt#9igjgp")
 val tmp2_group = $composer.cache(false) {
   {     it  :   LoginUiEvent   ->
 
@@ -106,7 +102,7 @@ val tmp2_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
+sourceInformationMarkerEnd($composer)
 tmp2_group@ly.david.musicsearch.shared.feature.settings.internal.SettingsUi
 )
 fun present(
@@ -126,8 +122,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CustomCol
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ProfileCard(
   stable username: String
   stable showLogin: Boolean
-  stable onLoginClick: Function0<Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):ProfileCard.kt#9igjgp")
+  stable onLoginClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1301457000, "CC(remember):ProfileCard.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -135,10 +130,9 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
+sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
-  stable onLogoutClick: Function0<Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):ProfileCard.kt#9igjgp")
+  stable onLogoutClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1301458152, "CC(remember):ProfileCard.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -146,7 +140,7 @@ val tmp1_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
+sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingSwitch(
@@ -154,8 +148,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingSw
   stable checked: Boolean
   stable modifier: Modifier? = @static Companion
   stable subtitle: String? = @static ""
-  stable onCheckedChange: Function1<Boolean, Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):SettingSwitch.kt#9igjgp")
+  stable onCheckedChange: Function1<Boolean, Unit>? = @static sourceInformationMarkerStart($composer, -1136154463, "CC(remember):SettingSwitch.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {     it  :   Boolean   ->
 
@@ -163,15 +156,14 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
+sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingWithDialogChoices(
   stable title: String
   stable choices: ImmutableList<String>
   stable selectedChoiceIndex: Int
-  stable onSelectChoiceIndex: Function1<Int, Unit>? = @static $composer.startReplaceGroup(1849434622)
-sourceInformation($composer, "CC(remember):SettingWithDialogChoices.kt#9igjgp")
+  stable onSelectChoiceIndex: Function1<Int, Unit>? = @static sourceInformationMarkerStart($composer, 491752804, "CC(remember):SettingWithDialogChoices.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {     it  :   Int   ->
 
@@ -179,7 +171,7 @@ val tmp0_group = $composer.cache(false) {
 
 }
 
-$composer.endReplaceGroup()
+sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
 )
 fun present(
