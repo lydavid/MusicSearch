@@ -25,7 +25,7 @@ class SeriesListRepositoryImpl(
     aliasDao: AliasDao,
 ) : SeriesListRepository,
     BrowseEntities<SeriesListItemModel, SeriesMusicBrainzNetworkModel, BrowseSeriesResponse>(
-        browseEntity = MusicBrainzEntity.WORK,
+        browseEntity = MusicBrainzEntity.SERIES,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
         aliasDao = aliasDao,
     ) {
