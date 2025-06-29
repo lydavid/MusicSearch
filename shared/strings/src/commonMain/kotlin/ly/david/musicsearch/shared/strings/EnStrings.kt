@@ -229,6 +229,11 @@ val EnStrings = AppStrings(
 
     retry = "Retry",
 
+    cachedAreas = { p0, p1 ->
+        "Cached %d of %d areas"
+            .fmt(p0, p1)
+    },
+
     cachedArtists = { p0, p1 ->
         "Cached %d of %d artists"
             .fmt(p0, p1)
@@ -236,6 +241,16 @@ val EnStrings = AppStrings(
 
     cachedEvents = { p0, p1 ->
         "Cached %d of %d events"
+            .fmt(p0, p1)
+    },
+
+    cachedGenres = { p0, p1 ->
+        "Cached %d of %d genres"
+            .fmt(p0, p1)
+    },
+
+    cachedInstruments = { p0, p1 ->
+        "Cached %d of %d instruments"
             .fmt(p0, p1)
     },
 
@@ -261,6 +276,11 @@ val EnStrings = AppStrings(
 
     cachedReleaseGroups = { p0, p1 ->
         "Cached %d of %d release groups"
+            .fmt(p0, p1)
+    },
+
+    cachedSeries = { p0, p1 ->
+        "Cached %d of %d series"
             .fmt(p0, p1)
     },
 
