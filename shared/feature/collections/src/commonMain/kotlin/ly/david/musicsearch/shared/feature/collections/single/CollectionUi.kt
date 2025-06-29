@@ -18,9 +18,12 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.slack.circuit.overlay.LocalOverlayHost
+import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -30,12 +33,14 @@ import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
+import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.EditToggle
 import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.SortToggleMenuItem
+import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.toTab
 import kotlin.coroutines.cancellation.CancellationException
@@ -61,6 +66,8 @@ internal fun CollectionUi(
     val releasesEventSink = state.entitiesListUiState.releasesListUiState.eventSink
     val releaseGroupsEventSink = state.entitiesListUiState.releaseGroupsListUiState.eventSink
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val overlayHost = LocalOverlayHost.current
+    val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
     val areasLazyPagingItems =
@@ -172,6 +179,15 @@ internal fun CollectionUi(
                                 }
                             }
                         },
+                    )
+                    StatsMenuItem(
+                        statsScreen = StatsScreen(
+                            id = collection?.id.orEmpty(),
+                            tabs = listOfNotNull(entity?.toTab()).toPersistentList(),
+                            isCollection = true,
+                        ),
+                        overlayHost = overlayHost,
+                        coroutineScope = coroutineScope,
                     )
                     if (collection?.isRemote == true) {
                         OpenInBrowserMenuItem(

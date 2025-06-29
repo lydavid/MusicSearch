@@ -90,6 +90,14 @@ INNER JOIN artist a ON a.id = arg.entity_id
 WHERE a.id = :artistId
 GROUP BY rg.primary_type, rg.secondary_types;
 
+getCountOfEachAlbumTypeByCollection:
+SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) AS count
+FROM release_group rg
+INNER JOIN collection_entity ON rg.id = collection_entity.entity_id
+INNER JOIN collection ON collection.id = collection_entity.id
+WHERE collection.id = :collectionId
+GROUP BY rg.primary_type, rg.secondary_types;
+
 getReleaseGroupsByEntity:
 SELECT
   release_group.id,

@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
+import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.event.EventsListRepository
 import ly.david.musicsearch.shared.domain.label.LabelsListRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -38,79 +39,14 @@ internal class StatsPresenter(
     private val releaseGroupsListRepository: ReleaseGroupsListRepository,
     private val recordingsListRepository: RecordingsListRepository,
     private val worksListRepository: WorksListRepository,
+    private val collectionRepository: CollectionRepository,
 ) : Presenter<StatsUiState> {
 
     @Composable
     override fun present(): StatsUiState {
         val relationTypeCounts
             by getCountOfEachRelationshipTypeUseCase(screen.id).collectAsState(listOf())
-        val getLocalCountFlow: (
-            entity: MusicBrainzEntity,
-            entityId: String,
-        ) -> Flow<Int> = { entity, entityId ->
-            when (entity) {
-                MusicBrainzEntity.ARTIST -> artistsListRepository.observeCountOfArtists(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
-                MusicBrainzEntity.EVENT -> eventsListRepository.observeCountOfEvents(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
-                MusicBrainzEntity.LABEL -> labelsListRepository.observeCountOfLabels(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
-                MusicBrainzEntity.PLACE -> placesListRepository.observeCountOfPlaces(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
-                MusicBrainzEntity.RECORDING -> recordingsListRepository.observeCountOfRecordings(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
-                MusicBrainzEntity.RELEASE -> releasesListRepository.observeCountOfReleases(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
-                MusicBrainzEntity.RELEASE_GROUP -> releaseGroupsListRepository.observeCountOfReleaseGroups(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
-                MusicBrainzEntity.WORK -> worksListRepository.observeCountOfWorks(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
-                else -> flowOf(0)
-            }
-        }
-        val getCountOfEachAlbumTypeFlow: (
-            entity: MusicBrainzEntity,
-            entityId: String,
-        ) -> Flow<List<ReleaseGroupTypeCount>> =
-            { entity, entityId ->
-                if (entity == MusicBrainzEntity.RELEASE_GROUP) {
-                    releaseGroupsListRepository.getCountOfEachAlbumType(entityId)
-                } else {
-                    flowOf(listOf())
-                }
-            }
+
         val tabToStats = screen.tabs
             .filterNot { setOf(Tab.DETAILS, Tab.TRACKS, Tab.STATS).contains(it) }
             .associateWith { tab ->
@@ -118,8 +54,23 @@ internal class StatsPresenter(
                 observeEntityStats(
                     entityId = screen.id,
                     entity = entity,
-                    localCountFlow = { entityId -> getLocalCountFlow(entity, entityId) },
-                    countOfEachAlbumTypeFlow = { entityId -> getCountOfEachAlbumTypeFlow(entity, entityId) },
+                    localCountFlow = { entityId ->
+                        observeLocalCount(
+                            entity = entity,
+                            entityId = entityId,
+                            isCollection = screen.isCollection,
+                        )
+                    },
+                    countOfEachAlbumTypeFlow = { entityId ->
+                        if (entity == MusicBrainzEntity.RELEASE_GROUP) {
+                            observeCountOfEachAlbumType(
+                                entityId = entityId,
+                                isCollection = screen.isCollection,
+                            )
+                        } else {
+                            flowOf(listOf())
+                        }
+                    },
                 ).collectAsState(EntityStats()).value
             }.toPersistentHashMap()
 
@@ -132,6 +83,88 @@ internal class StatsPresenter(
         return StatsUiState(
             stats = stats,
             tabs = screen.tabs,
+        )
+    }
+
+    private fun observeLocalCount(
+        entity: MusicBrainzEntity,
+        entityId: String,
+        isCollection: Boolean,
+    ): Flow<Int> {
+        return if (isCollection) {
+            collectionRepository.observeCountOfEntitiesByCollection(
+                collectionId = entityId,
+            )
+        } else {
+            when (entity) {
+                MusicBrainzEntity.ARTIST -> artistsListRepository.observeCountOfArtists(
+                    browseMethod = BrowseMethod.ByEntity(
+                        entity = entity,
+                        entityId = entityId,
+                    ),
+                )
+
+                MusicBrainzEntity.EVENT -> eventsListRepository.observeCountOfEvents(
+                    browseMethod = BrowseMethod.ByEntity(
+                        entity = entity,
+                        entityId = entityId,
+                    ),
+                )
+
+                MusicBrainzEntity.LABEL -> labelsListRepository.observeCountOfLabels(
+                    browseMethod = BrowseMethod.ByEntity(
+                        entity = entity,
+                        entityId = entityId,
+                    ),
+                )
+
+                MusicBrainzEntity.PLACE -> placesListRepository.observeCountOfPlaces(
+                    browseMethod = BrowseMethod.ByEntity(
+                        entity = entity,
+                        entityId = entityId,
+                    ),
+                )
+
+                MusicBrainzEntity.RECORDING -> recordingsListRepository.observeCountOfRecordings(
+                    browseMethod = BrowseMethod.ByEntity(
+                        entity = entity,
+                        entityId = entityId,
+                    ),
+                )
+
+                MusicBrainzEntity.RELEASE -> releasesListRepository.observeCountOfReleases(
+                    browseMethod = BrowseMethod.ByEntity(
+                        entity = entity,
+                        entityId = entityId,
+                    ),
+                )
+
+                MusicBrainzEntity.RELEASE_GROUP -> releaseGroupsListRepository.observeCountOfReleaseGroups(
+                    browseMethod = BrowseMethod.ByEntity(
+                        entity = entity,
+                        entityId = entityId,
+                    ),
+                )
+
+                MusicBrainzEntity.WORK -> worksListRepository.observeCountOfWorks(
+                    browseMethod = BrowseMethod.ByEntity(
+                        entity = entity,
+                        entityId = entityId,
+                    ),
+                )
+
+                else -> flowOf(0)
+            }
+        }
+    }
+
+    private fun observeCountOfEachAlbumType(
+        entityId: String,
+        isCollection: Boolean,
+    ): Flow<List<ReleaseGroupTypeCount>> {
+        return releaseGroupsListRepository.observeCountOfEachAlbumType(
+            entityId = entityId,
+            isCollection = isCollection,
         )
     }
 
@@ -151,7 +184,8 @@ internal class StatsPresenter(
             countOfEachAlbumTypeFlow(entityId),
         ) { browseRemoteMetadata, localCount, releaseGroupTypeCount ->
             EntityStats(
-                totalRemote = browseRemoteMetadata?.remoteCount,
+                // after adding to a remote collection, the local count may be higher than the remote count
+                totalRemote = maxOf(localCount, browseRemoteMetadata?.remoteCount ?: 0),
                 totalLocal = localCount,
                 releaseGroupTypeCounts = releaseGroupTypeCount.map {
                     ReleaseGroupTypeCount(

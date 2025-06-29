@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Collection_entity
@@ -92,6 +93,14 @@ class CollectionEntityDao(
         )
             .executeAsOne()
             .toInt()
+
+    fun observeCountOfEntitiesByCollection(collectionId: String): Flow<Int> =
+        transacter.getCountOfEntitiesByCollection(
+            collectionId = collectionId,
+        )
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
 
     fun entityIsInACollection(entityId: String): Flow<Boolean> =
         transacter.entityIsInACollection(

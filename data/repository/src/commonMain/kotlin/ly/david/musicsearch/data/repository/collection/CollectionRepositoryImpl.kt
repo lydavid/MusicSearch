@@ -221,6 +221,14 @@ class CollectionRepositoryImpl(
         return ActionableResult("Deleted $collectionName.")
     }
 
+    override fun observeCountOfEntitiesByCollection(
+        collectionId: String,
+    ): Flow<Int> {
+        return collectionEntityDao.observeCountOfEntitiesByCollection(
+            collectionId = collectionId,
+        )
+    }
+
     override fun observeEntityIsInACollection(
         entityId: String,
     ): Flow<Boolean> {

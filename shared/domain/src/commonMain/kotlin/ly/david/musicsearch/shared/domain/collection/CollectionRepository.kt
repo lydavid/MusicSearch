@@ -47,6 +47,10 @@ interface CollectionRepository {
         collectionName: String,
     ): ActionableResult
 
+    fun observeCountOfEntitiesByCollection(
+        collectionId: String,
+    ): Flow<Int>
+
     fun observeEntityIsInACollection(
         entityId: String,
     ): Flow<Boolean>

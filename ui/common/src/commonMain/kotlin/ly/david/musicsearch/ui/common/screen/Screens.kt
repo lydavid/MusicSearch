@@ -69,9 +69,9 @@ data class CoverArtsScreen(
 
 @Parcelize
 data class StatsScreen(
-    val entity: MusicBrainzEntity,
     val id: String,
     val tabs: ImmutableList<Tab>,
+    val isCollection: Boolean,
 ) : Screen
 
 @Parcelize

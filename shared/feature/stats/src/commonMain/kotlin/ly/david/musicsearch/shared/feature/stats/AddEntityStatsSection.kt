@@ -34,6 +34,7 @@ internal fun LazyListScope.addEntityStatsSection(
                 totalRemote = entityStats.totalRemote,
                 totalLocal = entityStats.totalLocal,
                 cachedLocalOfRemote = cachedLocalOfRemote,
+                modifier = Modifier.padding(top = 4.dp),
             )
         }
     }

@@ -38,7 +38,11 @@ interface ReleaseGroupDao : EntityDao {
     fun deleteReleaseGroupLinksByArtist(artistId: String)
     fun observeCountOfReleaseGroupsByArtist(artistId: String): Flow<Int>
     fun getCountOfReleaseGroupsByArtist(artistId: String): Int
-    fun getCountOfEachAlbumType(artistId: String): Flow<List<ReleaseGroupTypeCount>>
+    fun observeCountOfEachAlbumType(
+        entityId: String,
+        isCollection: Boolean,
+    ): Flow<List<ReleaseGroupTypeCount>>
+
     fun getReleaseGroups(
         browseMethod: BrowseMethod,
         query: String,
@@ -166,19 +170,36 @@ class ReleaseGroupDaoImpl(
             .executeAsOne()
             .toInt()
 
-    override fun getCountOfEachAlbumType(artistId: String): Flow<List<ReleaseGroupTypeCount>> =
-        transacter.getCountOfEachAlbumType(
-            artistId = artistId,
-            mapper = { primaryType, secondaryTypes, count ->
-                ReleaseGroupTypeCount(
-                    primaryType = primaryType,
-                    secondaryTypes = secondaryTypes,
-                    count = count.toInt(),
-                )
-            },
-        )
+    override fun observeCountOfEachAlbumType(
+        entityId: String,
+        isCollection: Boolean,
+    ): Flow<List<ReleaseGroupTypeCount>> {
+        return if (isCollection) {
+            transacter.getCountOfEachAlbumTypeByCollection(
+                collectionId = entityId,
+                mapper = { primaryType, secondaryTypes, count ->
+                    ReleaseGroupTypeCount(
+                        primaryType = primaryType,
+                        secondaryTypes = secondaryTypes,
+                        count = count.toInt(),
+                    )
+                },
+            )
+        } else {
+            transacter.getCountOfEachAlbumType(
+                artistId = entityId,
+                mapper = { primaryType, secondaryTypes, count ->
+                    ReleaseGroupTypeCount(
+                        primaryType = primaryType,
+                        secondaryTypes = secondaryTypes,
+                        count = count.toInt(),
+                    )
+                },
+            )
+        }
             .asFlow()
             .mapToList(coroutineDispatchers.io)
+    }
 
     override fun getReleaseGroups(
         browseMethod: BrowseMethod,

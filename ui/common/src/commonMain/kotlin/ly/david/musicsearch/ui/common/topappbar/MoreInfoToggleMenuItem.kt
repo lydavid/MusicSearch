@@ -12,7 +12,7 @@ import ly.david.musicsearch.ui.common.theme.LocalStrings
 fun OverflowMenuScope.MoreInfoToggleMenuItem(
     showMoreInfo: Boolean,
     onToggle: (Boolean) -> Unit,
-    modifier: Modifier = Modifier.Companion,
+    modifier: Modifier = Modifier,
 ) {
     val strings = LocalStrings.current
 

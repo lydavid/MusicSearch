@@ -14,5 +14,8 @@ interface ReleaseGroupsListRepository {
 
     fun observeCountOfReleaseGroups(browseMethod: BrowseMethod?): Flow<Int>
 
-    fun getCountOfEachAlbumType(artistId: String): Flow<List<ReleaseGroupTypeCount>>
+    fun observeCountOfEachAlbumType(
+        entityId: String,
+        isCollection: Boolean,
+    ): Flow<List<ReleaseGroupTypeCount>>
 }

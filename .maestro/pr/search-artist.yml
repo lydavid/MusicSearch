@@ -103,6 +103,10 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "art"
 - tapOn: "Artists"
 
+- tapOn: "More actions"
+- tapOn: "Stats"
+- assertVisible: "Cached 1 of 1 artists"
+- back
 - longPressOn: "ずっと真夜中でいいのに。"
 - assertVisible: "Selected 1"
 - tapOn: "Back"

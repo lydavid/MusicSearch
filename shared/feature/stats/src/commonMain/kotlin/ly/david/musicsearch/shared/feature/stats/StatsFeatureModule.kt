@@ -24,6 +24,7 @@ val statsFeatureModule = module {
                         releaseGroupsListRepository = get(),
                         recordingsListRepository = get(),
                         worksListRepository = get(),
+                        collectionRepository = get(),
                     )
                 }
 

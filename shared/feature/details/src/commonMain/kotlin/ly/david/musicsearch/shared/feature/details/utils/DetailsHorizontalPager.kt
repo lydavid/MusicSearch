@@ -66,9 +66,9 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
             Tab.STATS -> {
                 CircuitContent(
                     screen = StatsScreen(
-                        entity = browseMethod.entity,
                         id = browseMethod.entityId,
                         tabs = state.tabs,
+                        isCollection = false,
                     ),
                     modifier = Modifier.fillMaxSize(),
                 )

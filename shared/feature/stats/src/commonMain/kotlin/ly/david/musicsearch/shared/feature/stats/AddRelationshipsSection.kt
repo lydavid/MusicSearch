@@ -31,7 +31,9 @@ internal fun LazyListScope.addRelationshipsSection(
         ListSeparatorHeader(strings.relationships)
 
         Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 4.dp),
             style = TextStyles.getCardBodyTextStyle(),
             text = if (totalRelations == null) {
                 "No relationship stats available. Tap Relationships tab to fetch this entity's relationships."

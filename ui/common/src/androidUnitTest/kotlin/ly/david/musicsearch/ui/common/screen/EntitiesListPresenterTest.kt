@@ -169,7 +169,10 @@ class EntitiesListPresenterTest {
                 }
             },
             releaseGroupsListRepository = object : ReleaseGroupsListRepository {
-                override fun getCountOfEachAlbumType(artistId: String): Flow<List<ReleaseGroupTypeCount>> {
+                override fun observeCountOfEachAlbumType(
+                    entityId: String,
+                    isCollection: Boolean
+                ): Flow<List<ReleaseGroupTypeCount>> {
                     error("Not used")
                 }
 

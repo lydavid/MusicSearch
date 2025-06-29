@@ -19,9 +19,10 @@ internal fun LocalRemoteProgressBar(
     totalRemote: Int?,
     totalLocal: Int,
     cachedLocalOfRemote: (Int, Int) -> String,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
     ) {

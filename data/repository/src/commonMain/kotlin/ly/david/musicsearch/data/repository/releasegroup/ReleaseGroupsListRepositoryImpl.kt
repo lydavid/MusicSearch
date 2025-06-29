@@ -66,8 +66,14 @@ class ReleaseGroupsListRepositoryImpl(
         return releaseGroupDao.observeCountOfAllReleaseGroups(browseMethod = browseMethod)
     }
 
-    override fun getCountOfEachAlbumType(artistId: String): Flow<List<ReleaseGroupTypeCount>> {
-        return releaseGroupDao.getCountOfEachAlbumType(artistId = artistId)
+    override fun observeCountOfEachAlbumType(
+        entityId: String,
+        isCollection: Boolean,
+    ): Flow<List<ReleaseGroupTypeCount>> {
+        return releaseGroupDao.observeCountOfEachAlbumType(
+            entityId = entityId,
+            isCollection = isCollection,
+        )
     }
 
     override fun getLinkedEntitiesPagingSource(
