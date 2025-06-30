@@ -14,6 +14,32 @@ internal fun mapToAreaListItemModel(
     ended: Boolean?,
     countryCode: String?,
     visited: Boolean?,
+) = mapToAreaListItemModel(
+    id = id,
+    name = name,
+    sortName = sortName,
+    disambiguation = disambiguation,
+    type = type,
+    begin = begin,
+    end = end,
+    ended = ended,
+    countryCode = countryCode,
+    visited = visited,
+    collected = false,
+)
+
+internal fun mapToAreaListItemModel(
+    id: String,
+    name: String,
+    sortName: String,
+    disambiguation: String?,
+    type: String?,
+    begin: String?,
+    end: String?,
+    ended: Boolean?,
+    countryCode: String?,
+    visited: Boolean?,
+    collected: Boolean?,
 ) = AreaListItemModel(
     id = id,
     name = name,
@@ -27,4 +53,5 @@ internal fun mapToAreaListItemModel(
     ),
     countryCodes = listOfNotNull(countryCode.takeIf { !it.isNullOrEmpty() }),
     visited = visited == true,
+    collected = collected == true,
 )

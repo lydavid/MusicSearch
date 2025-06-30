@@ -128,39 +128,57 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        underPressureWorkListItemModel,
-                        hackingToTheGateWorkListItemModel,
-                        skycladObserverWorkListItemModel,
+                        underPressureWorkListItemModel.copy(
+                            collected = true,
+                        ),
+                        hackingToTheGateWorkListItemModel.copy(
+                            collected = true,
+                        ),
+                        skycladObserverWorkListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "und",
                     expectedResult = listOf(
-                        underPressureWorkListItemModel,
+                        underPressureWorkListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by type",
                     query = "so",
                     expectedResult = listOf(
-                        underPressureWorkListItemModel,
-                        hackingToTheGateWorkListItemModel,
-                        skycladObserverWorkListItemModel,
+                        underPressureWorkListItemModel.copy(
+                            collected = true,
+                        ),
+                        hackingToTheGateWorkListItemModel.copy(
+                            collected = true,
+                        ),
+                        skycladObserverWorkListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by language",
                     query = "en",
                     expectedResult = listOf(
-                        underPressureWorkListItemModel,
+                        underPressureWorkListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by iswc",
                     query = "8.9",
                     expectedResult = listOf(
-                        hackingToTheGateWorkListItemModel,
+                        hackingToTheGateWorkListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
             ),
@@ -304,8 +322,8 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
     @Test
     fun `all works`() = runTest {
         setupWorksByDavidBowie()
-        setupWorksByCollection()
         setupWorksByQueen()
+        setupWorksByCollection()
 
         val worksListRepository = createWorksListRepository(
             works = listOf(),
@@ -325,18 +343,28 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                     query = "",
                     expectedResult = listOf(
                         starmanWorkListItemModel,
-                        underPressureWorkListItemModel,
+                        underPressureWorkListItemModel.copy(
+                            collected = true,
+                        ),
                         dontStopMeNowWorkListItemModel,
-                        hackingToTheGateWorkListItemModel,
-                        skycladObserverWorkListItemModel,
+                        hackingToTheGateWorkListItemModel.copy(
+                            collected = true,
+                        ),
+                        skycladObserverWorkListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by language",
                     query = "jpn",
                     expectedResult = listOf(
-                        hackingToTheGateWorkListItemModel,
-                        skycladObserverWorkListItemModel,
+                        hackingToTheGateWorkListItemModel.copy(
+                            collected = true,
+                        ),
+                        skycladObserverWorkListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
             ),
@@ -373,7 +401,9 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         }.run {
             assertEquals(
                 listOf(
-                    underPressureWorkListItemModel,
+                    underPressureWorkListItemModel.copy(
+                        collected = true,
+                    ),
                     starmanWorkListItemModel.copy(
                         id = "new-id-is-considered-a-different-work",
                     ),
@@ -392,7 +422,9 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    underPressureWorkListItemModel,
+                    underPressureWorkListItemModel.copy(
+                        collected = true,
+                    ),
                     dontStopMeNowWorkListItemModel,
                 ),
                 this,
@@ -407,9 +439,15 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    underPressureWorkListItemModel,
-                    hackingToTheGateWorkListItemModel,
-                    skycladObserverWorkListItemModel,
+                    underPressureWorkListItemModel.copy(
+                        collected = true,
+                    ),
+                    hackingToTheGateWorkListItemModel.copy(
+                        collected = true,
+                    ),
+                    skycladObserverWorkListItemModel.copy(
+                        collected = true,
+                    ),
                 ),
                 this,
             )
@@ -421,10 +459,16 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
             assertEquals(
                 listOf(
                     starmanWorkListItemModel,
-                    underPressureWorkListItemModel,
+                    underPressureWorkListItemModel.copy(
+                        collected = true,
+                    ),
                     dontStopMeNowWorkListItemModel,
-                    hackingToTheGateWorkListItemModel,
-                    skycladObserverWorkListItemModel,
+                    hackingToTheGateWorkListItemModel.copy(
+                        collected = true,
+                    ),
+                    skycladObserverWorkListItemModel.copy(
+                        collected = true,
+                    ),
                     starmanWorkListItemModel.copy(
                         id = "new-id-is-considered-a-different-work",
                     ),

@@ -6,4 +6,4 @@ data class SearchHistoryListItemModel(
     override val id: String,
     val query: String,
     val entity: MusicBrainzEntity,
-) : ListItemModel()
+) : ListItemModel

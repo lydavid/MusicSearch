@@ -216,8 +216,12 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             )
             assertEquals(
                 listOf(
-                    bumpOfChickenListItemModel,
-                    atarayoListItemModel,
+                    bumpOfChickenListItemModel.copy(
+                        collected = true,
+                    ),
+                    atarayoListItemModel.copy(
+                        collected = true,
+                    ),
                 ),
                 this,
             )
@@ -235,7 +239,9 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             )
             assertEquals(
                 listOf(
-                    atarayoListItemModel,
+                    atarayoListItemModel.copy(
+                        collected = true,
+                    ),
                 ),
                 this,
             )

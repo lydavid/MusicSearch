@@ -8,4 +8,5 @@ data class SeriesListItemModel(
     override val disambiguation: String? = null,
     override val type: String? = null,
     override val visited: Boolean = false,
-) : ListItemModel(), Series, Visitable
+    override val collected: Boolean = false,
+) : EntityListItemModel, Series

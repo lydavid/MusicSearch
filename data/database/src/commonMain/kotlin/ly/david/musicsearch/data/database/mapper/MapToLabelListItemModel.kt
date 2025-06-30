@@ -9,6 +9,7 @@ fun mapToLabelListItemModel(
     type: String?,
     labelCode: Int?,
     visited: Boolean?,
+    collected: Boolean?,
 ) = LabelListItemModel(
     id = id,
     name = name,
@@ -16,6 +17,7 @@ fun mapToLabelListItemModel(
     type = type,
     labelCode = labelCode,
     visited = visited == true,
+    collected = collected == true,
 )
 
 fun mapToLabelListItemModel(

@@ -11,4 +11,5 @@ data class LabelListItemModel(
 
     val catalogNumbers: String? = null,
     override val visited: Boolean = false,
-) : ListItemModel(), Label, Visitable
+    override val collected: Boolean = false,
+) : EntityListItemModel, Label

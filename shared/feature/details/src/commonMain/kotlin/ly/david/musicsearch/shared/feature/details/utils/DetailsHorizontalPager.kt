@@ -35,6 +35,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
     innerPadding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
     now: Instant = Clock.System.now(),
+    onEditCollectionClick: (String) -> Unit = {},
     requestForMissingCoverArtUrl: (entityId: String, entity: MusicBrainzEntity?) -> Unit = { _, _ -> },
     detailsScreen: @Composable ((T) -> Unit),
 ) {
@@ -160,6 +161,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                             DetailsUiEvent.ToggleSelectItem(collectableId = it),
                         )
                     },
+                    onEditCollectionClick = onEditCollectionClick,
                     requestForMissingCoverArtUrl = { entityId ->
                         requestForMissingCoverArtUrl(entityId, tabEntity)
                     },

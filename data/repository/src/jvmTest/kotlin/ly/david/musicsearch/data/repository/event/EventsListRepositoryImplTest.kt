@@ -124,44 +124,60 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        aimerAtBudokanListItemModel,
-                        kissAtScotiabankArenaListItemModel,
+                        aimerAtBudokanListItemModel.copy(
+                            collected = true,
+                        ),
+                        kissAtScotiabankArenaListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "kis",
                     expectedResult = listOf(
-                        kissAtScotiabankArenaListItemModel,
+                        kissAtScotiabankArenaListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by type",
                     query = "con",
                     expectedResult = listOf(
-                        aimerAtBudokanListItemModel,
-                        kissAtScotiabankArenaListItemModel,
+                        aimerAtBudokanListItemModel.copy(
+                            collected = true,
+                        ),
+                        kissAtScotiabankArenaListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by begin date",
                     query = "2017",
                     expectedResult = listOf(
-                        aimerAtBudokanListItemModel,
+                        aimerAtBudokanListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by end date",
                     query = "2019",
                     expectedResult = listOf(
-                        kissAtScotiabankArenaListItemModel,
+                        kissAtScotiabankArenaListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by time",
                     query = "18:0",
                     expectedResult = listOf(
-                        aimerAtBudokanListItemModel,
+                        aimerAtBudokanListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
             ),
@@ -472,15 +488,21 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                     expectedResult = listOf(
                         kissAtBudokanListItemModel,
                         tsoAtMasseyHallListItemModel,
-                        aimerAtBudokanListItemModel,
-                        kissAtScotiabankArenaListItemModel,
+                        aimerAtBudokanListItemModel.copy(
+                            collected = true,
+                        ),
+                        kissAtScotiabankArenaListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "ai",
                     expectedResult = listOf(
-                        aimerAtBudokanListItemModel,
+                        aimerAtBudokanListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
             ),

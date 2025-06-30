@@ -14,4 +14,5 @@ data class ReleaseGroupListItemModel(
     val imageUrl: String? = null,
     val imageId: ImageId? = null,
     override val visited: Boolean = false,
-) : ListItemModel(), ReleaseGroup, Visitable
+    override val collected: Boolean = false,
+) : EntityListItemModel, ReleaseGroup

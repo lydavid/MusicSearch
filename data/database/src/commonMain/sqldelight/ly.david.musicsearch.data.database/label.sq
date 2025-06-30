@@ -85,7 +85,10 @@ SELECT
   label.disambiguation,
   label.type,
   label.label_code,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = label.id
+  ) AS collected
 FROM labels_by_entity le
 INNER JOIN label ON label.id = le.label_id
 LEFT JOIN alias ON label.id = alias.mbid
@@ -131,7 +134,10 @@ SELECT
   label.disambiguation,
   label.type,
   label.label_code,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = label.id
+  ) AS collected
 FROM label label
 INNER JOIN collection_entity ce ON label.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -202,7 +208,10 @@ SELECT
   label.disambiguation,
   label.type,
   label.label_code,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = label.id
+  ) AS collected
 FROM label
 LEFT JOIN alias ON label.id = alias.mbid
 LEFT JOIN details_metadata ON details_metadata.entity_id = label.id

@@ -14,4 +14,5 @@ data class PlaceListItemModel(
     override val coordinates: Coordinates? = null,
     override val lifeSpan: LifeSpanUiModel? = null,
     override val visited: Boolean = false,
-) : ListItemModel(), Place, Visitable
+    override val collected: Boolean = false,
+) : EntityListItemModel, Place

@@ -109,7 +109,10 @@ SELECT
   ac.name AS artist_credits,
   mi.thumbnail_url,
   mi.id AS imageId,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
+  ) AS collected
 FROM release_group
 INNER JOIN release_groups_by_entity arg ON release_group.id = arg.release_group_id
 INNER JOIN artist a ON a.id = arg.entity_id
@@ -173,7 +176,8 @@ SELECT
   ac.name AS artist_credits,
   mi.thumbnail_url,
   mi.id AS imageId,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  ce.id IS NOT NULL AS collected
 FROM release_group
 INNER JOIN collection_entity ce ON release_group.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -234,7 +238,10 @@ SELECT
   ac.name AS artist_credits,
   mi.thumbnail_url,
   mi.id AS imageId,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+      SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
+  ) AS collected
 FROM release_group
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id

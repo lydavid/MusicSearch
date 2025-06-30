@@ -13,4 +13,4 @@ data class LookupHistoryListItemModel(
     val lastAccessed: Instant = Clock.System.now(),
     val imageUrl: String? = null,
     val imageId: ImageId? = null,
-) : ListItemModel()
+) : ListItemModel

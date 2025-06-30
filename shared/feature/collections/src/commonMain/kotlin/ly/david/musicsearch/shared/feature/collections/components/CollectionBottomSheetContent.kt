@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -49,7 +49,7 @@ internal fun CollectionBottomSheetContent(
             }
         }
 
-        Divider(modifier = Modifier.padding(top = 16.dp))
+        HorizontalDivider(Modifier.padding(top = 16.dp))
 
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),

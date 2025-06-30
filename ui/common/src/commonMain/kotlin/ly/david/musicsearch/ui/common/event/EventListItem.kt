@@ -17,6 +17,7 @@ import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
@@ -31,6 +32,7 @@ fun EventListItem(
     onEventClick: EventListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
+    onEditCollectionClick: (String) -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -112,6 +114,12 @@ fun EventListItem(
                         onSelect(event.id)
                     },
                 isSelected = isSelected,
+            )
+        },
+        trailingContent = {
+            AddToCollectionIconButton(
+                entityListItemModel = event,
+                onClick = onEditCollectionClick,
             )
         },
     )

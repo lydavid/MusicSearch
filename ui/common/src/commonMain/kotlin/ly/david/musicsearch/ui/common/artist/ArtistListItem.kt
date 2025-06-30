@@ -9,13 +9,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
@@ -35,6 +35,7 @@ fun ArtistListItem(
     onClick: ArtistListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
+    onEditCollectionClick: (String) -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -70,12 +71,15 @@ fun ArtistListItem(
                     )
                 }
 
-                artist.lifeSpan.ifNotNull {
+                val countryAndLifeSpan = listOfNotNull(
+                    artist.countryCode?.let { "${it.toFlagEmoji()} $it" },
+                    artist.lifeSpan.getLifeSpanForDisplay().takeIf { it.isNotEmpty() },
+                ).joinToString("・")
+                if (countryAndLifeSpan.isNotEmpty()) {
                     Text(
-                        text = it.getLifeSpanForDisplay(),
-                        modifier = Modifier.padding(top = 4.dp),
+                        text = countryAndLifeSpan,
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = artist.fontWeight,
+                        modifier = Modifier.padding(top = 4.dp),
                     )
                 }
             }
@@ -94,12 +98,10 @@ fun ArtistListItem(
             )
         },
         trailingContent = {
-            artist.countryCode?.ifNotNullOrEmpty { countryCode ->
-                Text(
-                    text = "${countryCode.toFlagEmoji()} $countryCode",
-                    style = TextStyles.getCardBodyTextStyle(),
-                )
-            }
+            AddToCollectionIconButton(
+                entityListItemModel = artist,
+                onClick = onEditCollectionClick,
+            )
         },
     )
 }

@@ -32,4 +32,5 @@ data class ReleaseListItemModel(
 
     val releaseCountryCount: Int = 0,
     override val visited: Boolean = false,
-) : ListItemModel(), Release, Visitable
+    override val collected: Boolean = false,
+) : EntityListItemModel, Release

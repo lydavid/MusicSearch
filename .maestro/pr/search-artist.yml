@@ -31,7 +31,7 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "japan"
 - assertVisible: "Japan"
 - tapOn: Cancel
-- tapOn: "Add to collection"
+- tapOn: "Add ずっと真夜中でいいのに。 (Japanese pop band) to collection"
 - tapOn: "Create a collection"
 - inputText: "Artists"
 - tapOn: "OK"
@@ -86,7 +86,7 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "japan"
 - assertVisible: "Japan"
 - tapOn: Cancel
-- tapOn: "Add to another collection"
+- tapOn: "Add ずっと真夜中でいいのに。 (Japanese pop band) to another collection"
 - tapOn: "Artists"
 - assertVisible: "Already in Artists."
 

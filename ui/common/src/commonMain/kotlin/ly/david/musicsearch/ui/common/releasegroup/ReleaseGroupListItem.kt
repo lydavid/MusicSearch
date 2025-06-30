@@ -18,6 +18,7 @@ import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
@@ -33,6 +34,7 @@ fun ReleaseGroupListItem(
     onClick: ReleaseGroupListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
+    onEditCollectionClick: (String) -> Unit = {},
 ) {
     val latestRequestForMissingCoverArtUrl by rememberUpdatedState(requestForMissingCoverArtUrl)
     LaunchedEffect(key1 = releaseGroup.id) {
@@ -101,6 +103,12 @@ fun ReleaseGroupListItem(
                         onSelect(releaseGroup.id)
                     },
                 isSelected = isSelected,
+            )
+        },
+        trailingContent = {
+            AddToCollectionIconButton(
+                entityListItemModel = releaseGroup,
+                onClick = onEditCollectionClick,
             )
         },
     )

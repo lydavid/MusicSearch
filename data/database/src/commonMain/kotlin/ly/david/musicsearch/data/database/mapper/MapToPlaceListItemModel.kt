@@ -16,6 +16,7 @@ fun mapToPlaceListItemModel(
     end: String?,
     ended: Boolean?,
     visited: Boolean?,
+    collected: Boolean?,
 ) = PlaceListItemModel(
     id = id,
     name = name,
@@ -32,4 +33,5 @@ fun mapToPlaceListItemModel(
         ended = ended,
     ),
     visited = visited == true,
+    collected = collected == true,
 )

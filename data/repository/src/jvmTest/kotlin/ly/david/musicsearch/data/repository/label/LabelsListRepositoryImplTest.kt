@@ -114,15 +114,21 @@ class LabelsListRepositoryImplTest : KoinTest {
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        virginLabelListItemModel,
-                        elektraLabelListItemModel,
+                        virginLabelListItemModel.copy(
+                            collected = true,
+                        ),
+                        elektraLabelListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by label code",
                     query = "19",
                     expectedResult = listOf(
-                        elektraLabelListItemModel,
+                        elektraLabelListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
             ),
@@ -252,8 +258,12 @@ class LabelsListRepositoryImplTest : KoinTest {
                     query = "",
                     expectedResult = listOf(
                         flyingDogLabelListItemModel,
-                        virginLabelListItemModel,
-                        elektraLabelListItemModel,
+                        virginLabelListItemModel.copy(
+                            collected = true,
+                        ),
+                        elektraLabelListItemModel.copy(
+                            collected = true,
+                        ),
                         elektraMusicGroupLabelListItemModel,
                     ),
                 ),
@@ -261,7 +271,9 @@ class LabelsListRepositoryImplTest : KoinTest {
                     description = "filter by label code",
                     query = "19",
                     expectedResult = listOf(
-                        elektraLabelListItemModel,
+                        elektraLabelListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
             ),

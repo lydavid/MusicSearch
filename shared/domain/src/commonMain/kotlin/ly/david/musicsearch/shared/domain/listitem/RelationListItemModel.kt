@@ -27,4 +27,4 @@ data class RelationListItemModel(
     val imageUrl: String? = null,
     val imageId: ImageId? = null,
     val lastUpdated: Instant? = null,
-) : ListItemModel(), Relation, Visitable
+) : ListItemModel, Relation, Visitable

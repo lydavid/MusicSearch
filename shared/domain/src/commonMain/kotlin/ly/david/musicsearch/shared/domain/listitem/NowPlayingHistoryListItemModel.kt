@@ -9,7 +9,7 @@ data class NowPlayingHistoryListItemModel(
     val title: String,
     val artist: String,
     val lastPlayed: Instant = Clock.System.now(),
-) : ListItemModel()
+) : ListItemModel
 
 private const val TITLE_ARTIST_DELIMITER = "by"
 

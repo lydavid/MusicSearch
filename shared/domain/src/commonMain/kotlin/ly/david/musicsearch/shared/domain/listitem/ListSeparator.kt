@@ -6,4 +6,4 @@ package ly.david.musicsearch.shared.domain.listitem
 data class ListSeparator(
     override val id: String,
     val text: String,
-) : ListItemModel()
+) : ListItemModel

@@ -13,6 +13,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
@@ -26,6 +27,7 @@ fun InstrumentListItem(
     onInstrumentClick: InstrumentListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
+    onEditCollectionClick: (String) -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -77,6 +79,12 @@ fun InstrumentListItem(
                         onSelect(instrument.id)
                     },
                 isSelected = isSelected,
+            )
+        },
+        trailingContent = {
+            AddToCollectionIconButton(
+                entityListItemModel = instrument,
+                onClick = onEditCollectionClick,
             )
         },
     )

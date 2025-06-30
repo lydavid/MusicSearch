@@ -5,4 +5,4 @@ import kotlinx.datetime.Instant
 data class LastUpdatedFooter(
     override val id: String = "LastUpdatedFooter",
     val lastUpdated: Instant,
-) : ListItemModel()
+) : ListItemModel

@@ -127,6 +127,7 @@ private fun AreaSection(
                 area = this,
                 showType = false,
                 showIcon = false,
+                showEditCollection = false,
                 onAreaClick = {
                     onItemClick(
                         MusicBrainzEntity.AREA,

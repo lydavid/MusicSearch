@@ -27,6 +27,7 @@ internal fun mapToReleaseListItemModel(
     imageId: Long?,
     releaseCountryCount: Long,
     visited: Boolean?,
+    collected: Boolean?,
 ) = ReleaseListItemModel(
     id = id,
     name = name,
@@ -52,6 +53,7 @@ internal fun mapToReleaseListItemModel(
     imageId = imageId?.let { ImageId(it) },
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited == true,
+    collected = collected == true,
 )
 
 /**
@@ -79,6 +81,7 @@ internal fun mapToReleaseListItemModel(
     imageId: Long?,
     releaseCountryCount: Long,
     visited: Boolean?,
+    collected: Boolean?,
 ) = ReleaseListItemModel(
     id = id,
     name = name,
@@ -105,4 +108,5 @@ internal fun mapToReleaseListItemModel(
     imageId = imageId?.let { ImageId(it) },
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited == true,
+    collected = collected == true,
 )
