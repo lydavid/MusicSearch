@@ -1422,7 +1422,7 @@
                     "name": "usuiat"
                 }
             ],
-            "artifactVersion": "2.8.0",
+            "artifactVersion": "2.8.1",
             "description": "An android library for Jetpack Compose that enables contents zoomable.",
             "scm": {
                 "connection": "scm:git:git://github.com/usuiat/Zoomable.git",
