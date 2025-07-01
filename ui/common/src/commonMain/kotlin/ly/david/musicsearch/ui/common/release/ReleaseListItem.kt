@@ -17,7 +17,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
-import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
@@ -72,24 +71,13 @@ fun ReleaseListItem(
                 )
 
                 if (showMoreInfo) {
-                    val countryAndDate = buildString {
-                        val countryCode = release.countryCode
-                        countryCode?.let { countryCode ->
+                    val countryAndDate = release.countryCode?.let { countryCode ->
+                        buildString {
                             append("${countryCode.toFlagEmoji()} $countryCode")
-                            val count = release.releaseCountryCount
-                            val additionalReleaseEvents = if (count > 1) {
-                                "+ ${count - 1}"
-                            } else {
-                                ""
-                            }
-                            append(additionalReleaseEvents.transformThisIfNotNullOrEmpty { " $it" })
+                            if (release.releaseCountryCount > 1) append(" + ${release.releaseCountryCount - 1}")
+                            if (release.date.isNotEmpty()) append("・${release.date}")
                         }
-                        if (countryCode.isNullOrEmpty()) {
-                            append(release.date)
-                        } else {
-                            append("・${release.date}")
-                        }
-                    }
+                    } ?: release.date
                     if (countryAndDate.isNotEmpty()) {
                         Text(
                             text = countryAndDate,
@@ -100,6 +88,8 @@ fun ReleaseListItem(
                         )
                     }
 
+                    // TODO: formats/tracks count are not currently shown
+                    //  consider showing at least in release group's releases to help disambiguate
                     Row {
                         release.formattedFormats.ifNotNullOrEmpty {
                             Text(
