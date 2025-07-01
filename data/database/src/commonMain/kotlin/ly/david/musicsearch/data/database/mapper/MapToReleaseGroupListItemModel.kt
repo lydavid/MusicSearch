@@ -14,6 +14,7 @@ internal fun mapToReleaseGroupListItemModel(
     thumbnailUrl: String?,
     imageId: Long?,
     visited: Boolean?,
+    collected: Boolean?,
 ) = ReleaseGroupListItemModel(
     id = id,
     name = name,
@@ -25,4 +26,5 @@ internal fun mapToReleaseGroupListItemModel(
     imageUrl = thumbnailUrl,
     imageId = imageId?.let { ImageId(it) },
     visited = visited == true,
+    collected = collected == true,
 )

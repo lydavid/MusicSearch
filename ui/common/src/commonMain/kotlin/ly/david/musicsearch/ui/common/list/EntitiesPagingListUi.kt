@@ -51,6 +51,7 @@ fun EntitiesPagingListUi(
     now: Instant = Clock.System.now(),
     onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
     onSelect: (String) -> Unit = {},
+    onEditCollectionClick: (String) -> Unit = {},
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = { _ -> },
 ) {
     ScreenWithPagingLoadingAndError(
@@ -71,6 +72,7 @@ fun EntitiesPagingListUi(
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
                     onSelect = onSelect,
+                    onEditCollectionClick = onEditCollectionClick,
                 )
             }
 
@@ -86,6 +88,7 @@ fun EntitiesPagingListUi(
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
                     onSelect = onSelect,
+                    onEditCollectionClick = onEditCollectionClick,
                 )
             }
 
@@ -101,6 +104,7 @@ fun EntitiesPagingListUi(
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
                     onSelect = onSelect,
+                    onEditCollectionClick = onEditCollectionClick,
                 )
             }
 
@@ -131,6 +135,7 @@ fun EntitiesPagingListUi(
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
                     onSelect = onSelect,
+                    onEditCollectionClick = onEditCollectionClick,
                 )
             }
 
@@ -146,6 +151,7 @@ fun EntitiesPagingListUi(
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
                     onSelect = onSelect,
+                    onEditCollectionClick = onEditCollectionClick,
                 )
             }
 
@@ -161,6 +167,7 @@ fun EntitiesPagingListUi(
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
                     onSelect = onSelect,
+                    onEditCollectionClick = onEditCollectionClick,
                 )
             }
 
@@ -176,6 +183,7 @@ fun EntitiesPagingListUi(
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
                     onSelect = onSelect,
+                    onEditCollectionClick = onEditCollectionClick,
                 )
             }
 
@@ -195,6 +203,7 @@ fun EntitiesPagingListUi(
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
                     onSelect = onSelect,
+                    onEditCollectionClick = onEditCollectionClick,
                 )
             }
 
@@ -214,6 +223,7 @@ fun EntitiesPagingListUi(
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
                     onSelect = onSelect,
+                    onEditCollectionClick = onEditCollectionClick,
                 )
             }
 
@@ -229,6 +239,7 @@ fun EntitiesPagingListUi(
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
                     onSelect = onSelect,
+                    onEditCollectionClick = onEditCollectionClick,
                 )
             }
 
@@ -244,6 +255,7 @@ fun EntitiesPagingListUi(
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
                     onSelect = onSelect,
+                    onEditCollectionClick = onEditCollectionClick,
                 )
             }
 

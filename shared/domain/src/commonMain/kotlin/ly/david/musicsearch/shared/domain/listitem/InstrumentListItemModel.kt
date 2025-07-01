@@ -9,4 +9,5 @@ data class InstrumentListItemModel(
     override val description: String? = null,
     override val type: String? = null,
     override val visited: Boolean = false,
-) : ListItemModel(), Instrument, Visitable
+    override val collected: Boolean = false,
+) : EntityListItemModel, Instrument

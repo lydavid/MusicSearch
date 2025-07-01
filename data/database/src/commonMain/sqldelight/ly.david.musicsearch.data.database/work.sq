@@ -77,7 +77,10 @@ SELECT
   work.type,
   work.language,
   work.iswcs,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = work.id
+  ) AS collected
 FROM works_by_entity we
 INNER JOIN work ON work.id = we.work_id
 LEFT JOIN alias ON work.id = alias.mbid
@@ -126,7 +129,8 @@ SELECT
   work.type,
   work.language,
   work.iswcs,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  ce.id IS NOT NULL AS collected
 FROM work
 INNER JOIN collection_entity ce ON work.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -173,7 +177,10 @@ SELECT
   work.type,
   work.language,
   work.iswcs,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = work.id
+  ) AS collected
 FROM work
 LEFT JOIN alias ON work.id = alias.mbid
 LEFT JOIN details_metadata ON details_metadata.entity_id = work.id

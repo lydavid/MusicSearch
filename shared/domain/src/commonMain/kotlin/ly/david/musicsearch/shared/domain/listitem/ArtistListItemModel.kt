@@ -16,4 +16,5 @@ data class ArtistListItemModel(
     val imageUrl: String? = null,
     val imageId: ImageId? = null,
     override val visited: Boolean = false,
-) : ListItemModel(), Artist, Visitable
+    override val collected: Boolean = false,
+) : EntityListItemModel, Artist

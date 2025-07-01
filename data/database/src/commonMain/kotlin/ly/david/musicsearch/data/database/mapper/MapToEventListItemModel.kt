@@ -17,6 +17,7 @@ fun mapToEventListItemModel(
     thumbnailUrl: String?,
     imageId: Long?,
     visited: Boolean?,
+    collected: Boolean?,
 ) = EventListItemModel(
     id = id,
     name = name,
@@ -32,4 +33,5 @@ fun mapToEventListItemModel(
     imageUrl = thumbnailUrl,
     imageId = imageId?.let { ImageId(it) },
     visited = visited == true,
+    collected = collected == true,
 )

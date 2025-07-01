@@ -39,8 +39,8 @@ import ly.david.musicsearch.ui.common.recording.RecordingListItem
 import ly.david.musicsearch.ui.common.release.ReleaseListItem
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
 import ly.david.musicsearch.ui.common.series.SeriesListItem
-import ly.david.musicsearch.ui.common.work.WorkListItem
 import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.work.WorkListItem
 
 @Composable
 internal fun SearchResultsUi(
@@ -79,6 +79,7 @@ private fun ListItemUi(
             )
         }
 
+        // TODO: support editing collection from search results
         is AreaListItemModel -> {
             AreaListItem(
                 area = listItemModel,

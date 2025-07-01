@@ -326,44 +326,60 @@ class ReleasesListRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        redReleaseListItemModel,
-                        utaNoUtaReleaseListItemModel,
+                        redReleaseListItemModel.copy(
+                            collected = true,
+                        ),
+                        utaNoUtaReleaseListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "red",
                     expectedResult = listOf(
-                        redReleaseListItemModel,
-                        utaNoUtaReleaseListItemModel,
+                        redReleaseListItemModel.copy(
+                            collected = true,
+                        ),
+                        utaNoUtaReleaseListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by disambiguation",
                     query = "限",
                     expectedResult = listOf(
-                        utaNoUtaReleaseListItemModel,
+                        utaNoUtaReleaseListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "-22",
                     expectedResult = listOf(
-                        redReleaseListItemModel,
+                        redReleaseListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by country code",
                     query = "J",
                     expectedResult = listOf(
-                        utaNoUtaReleaseListItemModel,
+                        utaNoUtaReleaseListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit name",
                     query = "swift",
                     expectedResult = listOf(
-                        redReleaseListItemModel,
+                        redReleaseListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
             ),

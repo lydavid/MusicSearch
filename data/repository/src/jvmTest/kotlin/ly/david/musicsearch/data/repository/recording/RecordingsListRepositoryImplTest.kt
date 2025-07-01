@@ -94,29 +94,39 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        underPressureRecordingListItemModel,
-                        skycladObserverRecordingListItemModel,
+                        underPressureRecordingListItemModel.copy(
+                            collected = true,
+                        ),
+                        skycladObserverRecordingListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "ス",
                     expectedResult = listOf(
-                        skycladObserverRecordingListItemModel,
+                        skycladObserverRecordingListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit",
                     query = "&",
                     expectedResult = listOf(
-                        underPressureRecordingListItemModel,
+                        underPressureRecordingListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by first release date",
                     query = "2009",
                     expectedResult = listOf(
-                        skycladObserverRecordingListItemModel,
+                        skycladObserverRecordingListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
             ),
@@ -242,8 +252,12 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        underPressureRecordingListItemModel,
-                        skycladObserverRecordingListItemModel,
+                        underPressureRecordingListItemModel.copy(
+                            collected = true,
+                        ),
+                        skycladObserverRecordingListItemModel.copy(
+                            collected = true,
+                        ),
                         skycladObserverCoverRecordingListItemModel,
                     ),
                 ),
@@ -251,7 +265,9 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                     description = "filter by artist name",
                     query = "bowie",
                     expectedResult = listOf(
-                        underPressureRecordingListItemModel,
+                        underPressureRecordingListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
             ),
@@ -477,8 +493,12 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    underPressureRecordingListItemModel,
-                    skycladObserverRecordingListItemModel,
+                    underPressureRecordingListItemModel.copy(
+                        collected = true,
+                    ),
+                    skycladObserverRecordingListItemModel.copy(
+                        collected = true,
+                    ),
                 ),
                 this,
             )

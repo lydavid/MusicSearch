@@ -15,6 +15,7 @@ import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
@@ -28,6 +29,7 @@ fun PlaceListItem(
     onPlaceClick: PlaceListItemModel.() -> Unit = {},
     onSelect: (String) -> Unit = {},
     isSelected: Boolean = false,
+    onEditCollectionClick: (String) -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -88,6 +90,12 @@ fun PlaceListItem(
                         onSelect(place.id)
                     },
                 isSelected = isSelected,
+            )
+        },
+        trailingContent = {
+            AddToCollectionIconButton(
+                entityListItemModel = place,
+                onClick = onEditCollectionClick,
             )
         },
     )

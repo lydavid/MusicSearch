@@ -22,6 +22,7 @@ kotlin {
                 implementation(compose.ui)
 
                 implementation(libs.circuit.foundation)
+                implementation(libs.circuit.overlay)
                 implementation(libs.koin.core)
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)

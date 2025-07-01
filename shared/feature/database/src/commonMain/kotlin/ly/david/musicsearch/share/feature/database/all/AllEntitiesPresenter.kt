@@ -15,6 +15,8 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
+import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.screen.AllEntitiesScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.EntitiesListPresenter
@@ -30,6 +32,7 @@ internal class AllEntitiesPresenter(
     private val screen: AllEntitiesScreen,
     private val navigator: Navigator,
     private val entitiesListPresenter: EntitiesListPresenter,
+    private val loginPresenter: LoginPresenter,
 ) : Presenter<AllEntitiesUiState> {
 
     @Composable
@@ -41,6 +44,7 @@ internal class AllEntitiesPresenter(
 
         val entitiesListUiState = entitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
+        val loginUiState = loginPresenter.present()
 
         LaunchedEffect(
             key1 = query,
@@ -82,6 +86,7 @@ internal class AllEntitiesPresenter(
             topAppBarFilterState = topAppBarFilterState,
             topAppBarEditState = topAppBarEditState,
             entitiesListUiState = entitiesListUiState,
+            loginUiState = loginUiState,
             eventSink = ::eventSink,
         )
     }
@@ -94,6 +99,7 @@ internal data class AllEntitiesUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val topAppBarEditState: TopAppBarEditState,
     val entitiesListUiState: EntitiesListUiState,
+    val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (AllEntitiesUiEvent) -> Unit,
 ) : CircuitUiState
 

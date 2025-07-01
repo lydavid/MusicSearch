@@ -18,6 +18,7 @@ import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
@@ -33,9 +34,11 @@ fun AreaListItem(
     modifier: Modifier = Modifier,
     showType: Boolean = true,
     showIcon: Boolean = true,
+    showEditCollection: Boolean = true,
     onAreaClick: AreaListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
+    onEditCollectionClick: (String) -> Unit = {},
 ) {
     val leadingContent: @Composable (() -> Unit)? =
         if (showIcon) {
@@ -107,6 +110,14 @@ fun AreaListItem(
         },
         leadingContent = leadingContent,
         trailingContent = {
+            if (showEditCollection) {
+                AddToCollectionIconButton(
+                    entityListItemModel = area,
+                    onClick = onEditCollectionClick,
+                )
+            }
+
+            // Only for release events
             area.date.ifNotNullOrEmpty {
                 Column(horizontalAlignment = Alignment.End) {
                     Text(

@@ -128,7 +128,10 @@ SELECT
     ),
     0
   ) AS releaseCountryCount,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = r.id
+  ) AS collected
 FROM `release` r
 INNER JOIN releases_by_entity re ON re.release_id = r.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
@@ -193,7 +196,10 @@ SELECT
     INNER JOIN country_code cc ON cc.area_id = release_country.country_id
     WHERE r.id = `release`.id
   ) AS releaseCountryCount,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = r.id
+  ) AS collected
 FROM `release` r
 INNER JOIN releases_by_entity re ON re.release_id = r.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
@@ -260,7 +266,8 @@ SELECT
     ),
     0
   ) AS releaseCountryCount,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  ce.id IS NOT NULL AS collected
 FROM `release` r
 INNER JOIN collection_entity ce ON r.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -323,7 +330,10 @@ SELECT
     ),
     0
   ) AS releaseCountryCount,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = r.id
+  ) AS collected
 FROM `release` r
 INNER JOIN releases_by_entity re ON r.id = re.release_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
@@ -382,7 +392,10 @@ SELECT
     ),
     0
   ) AS releaseCountryCount,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = r.id
+  ) AS collected
 FROM `release` r
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id

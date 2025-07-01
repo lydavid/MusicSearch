@@ -9,6 +9,7 @@ fun mapToInstrumentListItemModel(
     description: String?,
     type: String?,
     visited: Boolean?,
+    collected: Boolean?,
 ) = InstrumentListItemModel(
     id = id,
     name = name,
@@ -16,4 +17,5 @@ fun mapToInstrumentListItemModel(
     description = description,
     type = type,
     visited = visited == true,
+    collected = collected == true,
 )

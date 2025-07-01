@@ -12,8 +12,7 @@ CREATE TABLE IF NOT EXISTS collection_entity (
   ON DELETE CASCADE
 );
 
--- TODO: Add index on entity_id
--- only when we need to check a list of entity ids
+CREATE INDEX idx_collection_entity_entity_id ON collection_entity(entity_id);
 
 insert:
 INSERT OR IGNORE INTO collection_entity

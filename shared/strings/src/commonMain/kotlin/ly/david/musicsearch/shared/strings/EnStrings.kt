@@ -307,7 +307,7 @@ val EnStrings = AppStrings(
 
     collectionNamePlaceholder = "Enter name",
 
-    addToCollection = "Add this to collection",
+    addToCollection = "Add to collection",
 
     about = "About",
 

@@ -89,7 +89,10 @@ SELECT
   event.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = event.id
+  ) AS collected
 FROM events_by_entity ee
 INNER JOIN event ON event.id = ee.event_id
 LEFT JOIN alias ON event.id = alias.mbid
@@ -144,7 +147,8 @@ SELECT
   event.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  ce.id IS NOT NULL AS collected
 FROM event
 INNER JOIN collection_entity ce ON event.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -186,31 +190,34 @@ SELECT IFNULL(
 
 getAllEvents:
 SELECT
-  e.id,
-  e.name,
-  e.disambiguation,
-  e.type,
-  e.time,
-  e.cancelled,
-  e.begin,
-  e.end,
-  e.ended,
+  event.id,
+  event.name,
+  event.disambiguation,
+  event.type,
+  event.time,
+  event.cancelled,
+  event.begin,
+  event.end,
+  event.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
-  details_metadata.entity_id IS NOT NULL AS visited
-FROM event e
-LEFT JOIN alias ON e.id = alias.mbid
-LEFT JOIN mbid_image mi ON mi.mbid = e.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = e.id
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = event.id
+  ) AS collected
+FROM event
+LEFT JOIN alias ON event.id = alias.mbid
+LEFT JOIN mbid_image mi ON mi.mbid = event.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = event.id
 WHERE (
-  e.name LIKE :query OR
-  e.disambiguation LIKE :query OR
-  e.type LIKE :query OR
-  e.time LIKE :query OR
-  e.begin LIKE :query OR
-  e.end LIKE :query OR
+  event.name LIKE :query OR
+  event.disambiguation LIKE :query OR
+  event.type LIKE :query OR
+  event.time LIKE :query OR
+  event.begin LIKE :query OR
+  event.end LIKE :query OR
   alias.name LIKE :query
 )
-GROUP BY e.id
-ORDER BY e.begin, e.end, e.name
+GROUP BY event.id
+ORDER BY event.begin, event.end, event.name
 LIMIT :limit OFFSET :offset;

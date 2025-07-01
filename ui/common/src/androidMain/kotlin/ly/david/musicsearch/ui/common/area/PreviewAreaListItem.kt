@@ -78,6 +78,7 @@ internal fun PreviewReleaseEvent() {
             ),
             showType = false,
             showIcon = false,
+            showEditCollection = false,
         )
     }
 }
@@ -127,6 +128,7 @@ internal fun PreviewReleaseEventVisited() {
                 visited = true,
             ),
             showType = false,
+            showEditCollection = false,
         )
     }
 }

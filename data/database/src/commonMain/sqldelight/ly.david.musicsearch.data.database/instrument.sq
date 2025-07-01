@@ -57,7 +57,8 @@ SELECT
   instrument.disambiguation,
   instrument.description,
   instrument.type,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  ce.id IS NOT NULL AS collected
 FROM instrument
 INNER JOIN collection_entity ce ON instrument.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -101,7 +102,10 @@ SELECT
   instrument.disambiguation,
   instrument.description,
   instrument.type,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = instrument.id
+  ) AS collected
 FROM instrument
 LEFT JOIN alias ON instrument.id = alias.mbid
 LEFT JOIN details_metadata ON details_metadata.entity_id = instrument.id

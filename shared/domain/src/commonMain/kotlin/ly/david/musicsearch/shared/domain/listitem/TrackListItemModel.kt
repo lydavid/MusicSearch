@@ -16,4 +16,4 @@ data class TrackListItemModel(
     val mediumName: String? = null,
     val trackCount: Int = 0,
     val format: String? = null,
-) : ListItemModel(), Track, Visitable
+) : ListItemModel, Track, Visitable

@@ -118,8 +118,12 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    budokanPlaceListItemModel,
-                    tokyoInternationForumHallAPlaceListItemModel,
+                    budokanPlaceListItemModel.copy(
+                        collected = true,
+                    ),
+                    tokyoInternationForumHallAPlaceListItemModel.copy(
+                        collected = true,
+                    ),
                 ),
                 this,
             )
@@ -133,7 +137,9 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    budokanPlaceListItemModel,
+                    budokanPlaceListItemModel.copy(
+                        collected = true,
+                    ),
                 ),
                 this,
             )
@@ -290,9 +296,13 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    budokanPlaceListItemModel,
+                    budokanPlaceListItemModel.copy(
+                        collected = true,
+                    ),
                     tokyoInternationForumPlaceListItemModel,
-                    tokyoInternationForumHallAPlaceListItemModel,
+                    tokyoInternationForumHallAPlaceListItemModel.copy(
+                        collected = true,
+                    ),
                 ),
                 this,
             )
@@ -306,7 +316,9 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
             assertEquals(
                 listOf(
                     tokyoInternationForumPlaceListItemModel,
-                    tokyoInternationForumHallAPlaceListItemModel,
+                    tokyoInternationForumHallAPlaceListItemModel.copy(
+                        collected = true,
+                    ),
                 ),
                 this,
             )

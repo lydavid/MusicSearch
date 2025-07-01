@@ -20,9 +20,9 @@ import ly.david.musicsearch.ui.common.label.LabelListItem
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.work.getDisplayScript
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
 internal fun ReleaseDetailsTabUi(
@@ -168,6 +168,7 @@ internal fun ReleaseDetailsTabUi(
                             )
                         },
                         showIcon = false,
+                        showEditCollection = false,
                     )
                 }
 
@@ -187,6 +188,7 @@ internal fun ReleaseDetailsTabUi(
                             area = area,
                             showType = false,
                             showIcon = false,
+                            showEditCollection = false,
                             onAreaClick = {
                                 onItemClick(
                                     MusicBrainzEntity.AREA,

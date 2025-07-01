@@ -1,0 +1,1 @@
+CREATE INDEX idx_collection_entity_entity_id ON collection_entity(entity_id);

@@ -10,13 +10,17 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.slack.circuit.overlay.LocalOverlayHost
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.getNamePlural
 import ly.david.musicsearch.ui.common.list.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
+import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.theme.LocalStrings
@@ -34,9 +38,12 @@ internal fun AllEntitiesUi(
     val eventSink = state.eventSink
     val releasesEventSink = state.entitiesListUiState.releasesListUiState.eventSink
     val releaseGroupsEventSink = state.entitiesListUiState.releaseGroupsListUiState.eventSink
+    val loginEventSink = state.loginUiState.eventSink
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+    val overlayHost = LocalOverlayHost.current
 
     Scaffold(
         modifier = modifier,
@@ -200,6 +207,18 @@ internal fun AllEntitiesUi(
                         id = id,
                         title = title,
                     ),
+                )
+            },
+            onEditCollectionClick = {
+                showAddToCollectionSheet(
+                    coroutineScope = coroutineScope,
+                    overlayHost = overlayHost,
+                    entity = entity,
+                    entityIds = setOf(it),
+                    snackbarHostState = snackbarHostState,
+                    onLoginClick = {
+                        loginEventSink(LoginUiEvent.StartLogin)
+                    },
                 )
             },
             requestForMissingCoverArtUrl = { entityId ->

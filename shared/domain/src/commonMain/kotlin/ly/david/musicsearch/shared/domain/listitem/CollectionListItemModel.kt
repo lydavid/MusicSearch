@@ -14,4 +14,4 @@ data class CollectionListItemModel(
     val cachedEntityCount: Int = 0,
     override val visited: Boolean = false,
     val containsEntity: Boolean = false,
-) : ListItemModel(), Visitable
+) : ListItemModel, Visitable

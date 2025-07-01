@@ -109,7 +109,10 @@ SELECT
   artist.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = artist.id
+  ) AS collected
 FROM artists_by_entity ae
 INNER JOIN artist ON artist.id = ae.artist_id
 LEFT JOIN alias ON artist.id = alias.mbid
@@ -166,7 +169,8 @@ SELECT
   artist.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  ce.id IS NOT NULL AS collected
 FROM artist
 INNER JOIN collection_entity ce ON artist.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -223,7 +227,10 @@ SELECT
   artist.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = artist.id
+  ) AS collected
 FROM artist
 LEFT JOIN alias ON artist.id = alias.mbid
 LEFT JOIN mbid_image mi ON mi.mbid = artist.id

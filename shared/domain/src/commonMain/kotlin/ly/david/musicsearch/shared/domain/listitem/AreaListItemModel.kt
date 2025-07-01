@@ -14,7 +14,8 @@ data class AreaListItemModel(
     val countryCodes: List<String> = listOf(),
     val date: String? = "",
     override val visited: Boolean = false,
-) : ListItemModel(), Area, Visitable
+    override val collected: Boolean = false,
+) : EntityListItemModel, Area
 
 fun ReleaseEvent.toAreaListItemModel() = AreaListItemModel(
     id = id,

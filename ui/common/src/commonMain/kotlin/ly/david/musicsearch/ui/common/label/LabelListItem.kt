@@ -15,6 +15,7 @@ import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.text.fontWeight
@@ -27,9 +28,11 @@ fun LabelListItem(
     label: LabelListItemModel,
     modifier: Modifier = Modifier,
     showIcon: Boolean = true,
+    showEditCollection: Boolean = true,
     onLabelClick: LabelListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
+    onEditCollectionClick: (String) -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -95,5 +98,13 @@ fun LabelListItem(
         ),
         colors = listItemColors(isSelected = isSelected),
         leadingContent = leadingContent,
+        trailingContent = {
+            if (showEditCollection) {
+                AddToCollectionIconButton(
+                    entityListItemModel = label,
+                    onClick = onEditCollectionClick,
+                )
+            }
+        },
     )
 }

@@ -11,4 +11,5 @@ data class RecordingListItemModel(
     override val video: Boolean = false,
     val formattedArtistCredits: String? = null,
     override val visited: Boolean = false,
-) : ListItemModel(), Recording, Visitable
+    override val collected: Boolean = false,
+) : EntityListItemModel, Recording

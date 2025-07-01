@@ -11,6 +11,7 @@ internal fun mapToRecordingListItemModel(
     video: Boolean,
     formattedArtistCreditNames: String,
     visited: Boolean?,
+    collected: Boolean?,
 ) = RecordingListItemModel(
     id = id,
     name = name,
@@ -20,4 +21,5 @@ internal fun mapToRecordingListItemModel(
     video = video,
     formattedArtistCredits = formattedArtistCreditNames,
     visited = visited == true,
+    collected = collected == true,
 )

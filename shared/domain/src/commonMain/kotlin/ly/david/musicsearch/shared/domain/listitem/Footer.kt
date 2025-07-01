@@ -7,4 +7,4 @@ package ly.david.musicsearch.shared.domain.listitem
 data class Footer(
     override val id: String = "Footer",
     val text: String = "",
-) : ListItemModel()
+) : ListItemModel

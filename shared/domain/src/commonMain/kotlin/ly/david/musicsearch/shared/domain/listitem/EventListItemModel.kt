@@ -15,4 +15,5 @@ data class EventListItemModel(
     val imageUrl: String? = null,
     val imageId: ImageId? = null,
     override val visited: Boolean = false,
-) : ListItemModel(), Event, Visitable
+    override val collected: Boolean = false,
+) : EntityListItemModel, Event

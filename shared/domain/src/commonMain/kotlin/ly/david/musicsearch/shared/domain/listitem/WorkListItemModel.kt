@@ -12,4 +12,5 @@ data class WorkListItemModel(
     override val iswcs: List<String>? = null,
     val attributes: List<WorkAttributeUiModel> = listOf(),
     override val visited: Boolean = false,
-) : ListItemModel(), Work, Visitable
+    override val collected: Boolean = false,
+) : EntityListItemModel, Work

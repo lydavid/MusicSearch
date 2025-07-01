@@ -60,20 +60,23 @@ SELECT IFNULL(
 
 getAreaSearchResults:
 SELECT
-  a.id,
-  a.name,
-  a.sort_name,
-  a.disambiguation,
-  a.type,
-  a.begin,
-  a.end,
-  a.ended,
+  area.id,
+  area.name,
+  area.sort_name,
+  area.disambiguation,
+  area.type,
+  area.begin,
+  area.end,
+  area.ended,
   cc.code,
-  details_metadata.entity_id IS NOT NULL AS visited
-FROM area a
-INNER JOIN search_result sr ON a.id = sr.entity_id
-LEFT JOIN country_code cc ON a.id = cc.area_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = a.id
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = area.id
+  ) AS collected
+FROM area
+INNER JOIN search_result sr ON area.id = sr.entity_id
+LEFT JOIN country_code cc ON area.id = cc.area_id
+LEFT JOIN details_metadata ON details_metadata.entity_id = area.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -82,23 +85,26 @@ LIMIT :limit OFFSET :offset;
 
 getArtistSearchResults:
 SELECT
-  a.id,
-  a.name,
-  a.sort_name,
-  a.disambiguation,
-  a.type,
-  a.gender,
-  a.country_code,
-  a.`begin`,
-  a.`end`,
-  a.ended,
+  artist.id,
+  artist.name,
+  artist.sort_name,
+  artist.disambiguation,
+  artist.type,
+  artist.gender,
+  artist.country_code,
+  artist.`begin`,
+  artist.`end`,
+  artist.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = artist.id
+  ) AS collected
 FROM search_result sr
-INNER JOIN artist a ON sr.entity_id = a.id
-LEFT JOIN mbid_image mi ON mi.mbid = a.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = a.id
+INNER JOIN artist ON sr.entity_id = artist.id
+LEFT JOIN mbid_image mi ON mi.mbid = artist.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = artist.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -107,23 +113,26 @@ LIMIT :limit OFFSET :offset;
 
 getEventSearchResults:
 SELECT
-  e.id,
-  e.name,
-  e.disambiguation,
-  e.type,
-  e.time,
-  e.cancelled,
-  e.begin,
-  e.end,
-  e.ended,
+  event.id,
+  event.name,
+  event.disambiguation,
+  event.type,
+  event.time,
+  event.cancelled,
+  event.begin,
+  event.end,
+  event.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = event.id
+  ) AS collected
 FROM search_result sr
-INNER JOIN event e ON sr.entity_id = e.id
-LEFT JOIN mbid_image mi ON mi.mbid = e.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = e.id
-GROUP BY e.id
+INNER JOIN event ON sr.entity_id = event.id
+LEFT JOIN mbid_image mi ON mi.mbid = event.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = event.id
+GROUP BY event.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -132,15 +141,18 @@ LIMIT :limit OFFSET :offset;
 
 getInstrumentSearchResults:
 SELECT
-  i.id,
-  i.name,
-  i.disambiguation,
-  i.description,
-  i.type,
-  details_metadata.entity_id IS NOT NULL AS visited
+  instrument.id,
+  instrument.name,
+  instrument.disambiguation,
+  instrument.description,
+  instrument.type,
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = instrument.id
+  ) AS collected
 FROM search_result sr
-INNER JOIN instrument i ON sr.entity_id = i.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = i.id
+INNER JOIN instrument ON sr.entity_id = instrument.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = instrument.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -149,15 +161,18 @@ LIMIT :limit OFFSET :offset;
 
 getLabelSearchResults:
 SELECT
-  l.id,
-  l.name,
-  l.disambiguation,
-  l.type,
-  l.label_code,
-  details_metadata.entity_id IS NOT NULL AS visited
+  label.id,
+  label.name,
+  label.disambiguation,
+  label.type,
+  label.label_code,
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = label.id
+  ) AS collected
 FROM search_result sr
-INNER JOIN label l ON sr.entity_id = l.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = l.id
+INNER JOIN label ON sr.entity_id = label.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -166,20 +181,23 @@ LIMIT :limit OFFSET :offset;
 
 getPlaceSearchResults:
 SELECT
-  p.id,
-  p.name,
-  p.disambiguation,
-  p.address,
-  p.type,
-  p.longitude,
-  p.latitude,
-  p.begin,
-  p.end,
-  p.ended,
-  details_metadata.entity_id IS NOT NULL AS visited
+  place.id,
+  place.name,
+  place.disambiguation,
+  place.address,
+  place.type,
+  place.longitude,
+  place.latitude,
+  place.begin,
+  place.end,
+  place.ended,
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = place.id
+  ) AS collected
 FROM search_result sr
-INNER JOIN place p ON sr.entity_id = p.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = p.id
+INNER JOIN place ON sr.entity_id = place.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = place.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -188,20 +206,23 @@ LIMIT :limit OFFSET :offset;
 
 getRecordingSearchResults:
 SELECT
-  r.id,
-  r.name,
-  r.disambiguation,
-  r.first_release_date,
-  r.length,
-  r.video,
+  recording.id,
+  recording.name,
+  recording.disambiguation,
+  recording.first_release_date,
+  recording.length,
+  recording.video,
   ac.name AS artist_credits,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = recording.id
+  ) AS collected
 FROM search_result sr
-INNER JOIN recording r ON sr.entity_id = r.id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN recording ON sr.entity_id = recording.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
-GROUP BY r.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
+GROUP BY recording.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -210,28 +231,31 @@ LIMIT :limit OFFSET :offset;
 
 getReleaseSearchResults:
 SELECT
-  r.*,
+  `release`.*,
   ac.name AS artistCreditNames,
   mi.thumbnail_url,
   mi.id AS imageId,
   COALESCE(
     (
       SELECT COUNT(cc.area_id)
-      FROM `release`
-      LEFT JOIN release_country rc ON rc.release_id = `release`.id
+      FROM `release` r2
+      LEFT JOIN release_country rc ON rc.release_id = r2.id
       LEFT JOIN country_code cc ON cc.area_id = rc.country_id
-      WHERE r.id = `release`.id
+      WHERE r2.id = `release`.id
     ),
     0
   ) AS releaseCountryCount,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = `release`.id
+  ) AS collected
 FROM search_result sr
-INNER JOIN `release` r ON sr.entity_id = r.id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN `release` ON sr.entity_id = `release`.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN mbid_image mi ON mi.mbid = r.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
-GROUP BY r.id
+LEFT JOIN mbid_image mi ON mi.mbid = `release`.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = `release`.id
+GROUP BY `release`.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -240,23 +264,26 @@ LIMIT :limit OFFSET :offset;
 
 getReleaseGroupSearchResults:
 SELECT
-  rg.id,
-  rg.name,
-  rg.first_release_date,
-  rg.disambiguation,
-  rg.primary_type,
-  rg.secondary_types,
+  release_group.id,
+  release_group.name,
+  release_group.first_release_date,
+  release_group.disambiguation,
+  release_group.primary_type,
+  release_group.secondary_types,
   ac.name AS artist_credits,
   mi.thumbnail_url,
   mi.id AS imageId,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
+  ) AS collected
 FROM search_result sr
-INNER JOIN release_group rg ON sr.entity_id = rg.id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
+INNER JOIN release_group ON sr.entity_id = release_group.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN mbid_image mi ON mi.mbid = rg.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = rg.id
-GROUP BY rg.id
+LEFT JOIN mbid_image mi ON mi.mbid = release_group.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = release_group.id
+GROUP BY release_group.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -265,14 +292,17 @@ LIMIT :limit OFFSET :offset;
 
 getSeriesSearchResults:
 SELECT
-  s.id,
-  s.name,
-  s.disambiguation,
-  s.type,
-  details_metadata.entity_id IS NOT NULL AS visited
+  series.id,
+  series.name,
+  series.disambiguation,
+  series.type,
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = series.id
+  ) AS collected
 FROM search_result sr
-INNER JOIN series s ON sr.entity_id = s.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = s.id
+INNER JOIN series ON sr.entity_id = series.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = series.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -281,15 +311,18 @@ LIMIT :limit OFFSET :offset;
 
 getWorkSearchResults:
 SELECT
-  w.id,
-  w.name,
-  w.disambiguation,
-  w.type,
-  w.language,
-  w.iswcs,
-  details_metadata.entity_id IS NOT NULL AS visited
+  work.id,
+  work.name,
+  work.disambiguation,
+  work.type,
+  work.language,
+  work.iswcs,
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = work.id
+  ) AS collected
 FROM search_result sr
-INNER JOIN work w ON sr.entity_id = w.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = w.id
+INNER JOIN work ON sr.entity_id = work.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = work.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;

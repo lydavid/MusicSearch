@@ -53,7 +53,8 @@ SELECT
   series.name,
   series.disambiguation,
   series.type,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  ce.id IS NOT NULL AS collected
 FROM series
 INNER JOIN collection_entity ce ON series.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -94,7 +95,10 @@ SELECT
   series.name,
   series.disambiguation,
   series.type,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = series.id
+  ) AS collected
 FROM series
 LEFT JOIN alias ON series.id = alias.mbid
 LEFT JOIN details_metadata ON details_metadata.entity_id = series.id

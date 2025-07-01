@@ -36,6 +36,7 @@ val databaseFeatureModule = module {
                     screen = screen,
                     navigator = navigator,
                     entitiesListPresenter = get(),
+                    loginPresenter = get(),
                 )
 
                 else -> null

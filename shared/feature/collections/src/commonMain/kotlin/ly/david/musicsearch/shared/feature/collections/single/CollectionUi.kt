@@ -25,6 +25,7 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.DeleteOutline
@@ -358,6 +359,18 @@ internal fun CollectionUi(
                         CollectionUiEvent.ToggleSelectItem(
                             collectableId = it,
                         ),
+                    )
+                },
+                onEditCollectionClick = {
+                    showAddToCollectionSheet(
+                        coroutineScope = coroutineScope,
+                        overlayHost = overlayHost,
+                        entity = entity,
+                        entityIds = setOf(it),
+                        snackbarHostState = snackbarHostState,
+                        onLoginClick = {
+                            loginEventSink(LoginUiEvent.StartLogin)
+                        },
                     )
                 },
                 requestForMissingCoverArtUrl = { entityId ->

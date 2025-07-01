@@ -81,7 +81,10 @@ SELECT
   place.`begin`,
   place.`end`,
   place.`ended`,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = place.id
+  ) AS collected
 FROM place
 INNER JOIN area_place ap ON place.id = ap.place_id
 LEFT JOIN alias ON place.id = alias.mbid
@@ -132,7 +135,8 @@ SELECT
   place.`begin`,
   place.`end`,
   place.`ended`,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  ce.id IS NOT NULL AS collected
 FROM place
 INNER JOIN collection_entity ce ON place.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -182,7 +186,10 @@ SELECT
   place.`begin`,
   place.`end`,
   place.`ended`,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = place.id
+  ) AS collected
 FROM place
 LEFT JOIN alias ON place.id = alias.mbid
 LEFT JOIN details_metadata ON details_metadata.entity_id = place.id

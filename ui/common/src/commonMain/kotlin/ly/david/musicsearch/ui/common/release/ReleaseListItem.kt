@@ -17,18 +17,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
-import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
-// TODO: rethink showing release country -> could be misleading, and expensive joins
-//  with cover art loaded by default, we can prob hide the other info by default
 @Composable
 fun ReleaseListItem(
     release: ReleaseListItemModel,
@@ -38,6 +36,7 @@ fun ReleaseListItem(
     onClick: ReleaseListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
+    onEditCollectionClick: (String) -> Unit = {},
 ) {
     val latestRequestForMissingCoverArtUrl by rememberUpdatedState(requestForMissingCoverArtUrl)
     LaunchedEffect(key1 = release.id) {
@@ -72,38 +71,25 @@ fun ReleaseListItem(
                 )
 
                 if (showMoreInfo) {
-                    Row {
-                        release.date.ifNotNullOrEmpty {
-                            Text(
-                                text = it,
-                                modifier = Modifier
-                                    .padding(top = 4.dp)
-                                    .weight(1f),
-                                style = TextStyles.getCardBodySubTextStyle(),
-                                fontWeight = release.fontWeight,
-                            )
+                    val countryAndDate = release.countryCode?.let { countryCode ->
+                        buildString {
+                            append("${countryCode.toFlagEmoji()} $countryCode")
+                            if (release.releaseCountryCount > 1) append(" + ${release.releaseCountryCount - 1}")
+                            if (release.date.isNotEmpty()) append("・${release.date}")
                         }
-
-                        release.countryCode.ifNotNullOrEmpty { countryCode ->
-                            val count = release.releaseCountryCount
-                            val additionalReleaseEvents = if (count > 1) {
-                                "+ ${count - 1}"
-                            } else {
-                                ""
-                            }
-                            Text(
-                                text = "${countryCode.toFlagEmoji()} $countryCode" +
-                                    additionalReleaseEvents.transformThisIfNotNullOrEmpty { " $it" },
-                                modifier = Modifier
-                                    .padding(top = 4.dp)
-                                    .weight(1f),
-                                style = TextStyles.getCardBodySubTextStyle(),
-                                textAlign = TextAlign.End,
-                                fontWeight = release.fontWeight,
-                            )
-                        }
+                    } ?: release.date
+                    if (countryAndDate.isNotEmpty()) {
+                        Text(
+                            text = countryAndDate,
+                            style = TextStyles.getCardBodySubTextStyle(),
+                            textAlign = TextAlign.End,
+                            fontWeight = release.fontWeight,
+                            modifier = Modifier.padding(top = 4.dp),
+                        )
                     }
 
+                    // TODO: formats/tracks count are not currently shown
+                    //  consider showing at least in release group's releases to help disambiguate
                     Row {
                         release.formattedFormats.ifNotNullOrEmpty {
                             Text(
@@ -163,6 +149,12 @@ fun ReleaseListItem(
                         onSelect(release.id)
                     },
                 isSelected = isSelected,
+            )
+        },
+        trailingContent = {
+            AddToCollectionIconButton(
+                entityListItemModel = release,
+                onClick = onEditCollectionClick,
             )
         },
     )

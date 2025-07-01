@@ -82,7 +82,10 @@ SELECT
   recording.length,
   recording.video,
   ac.name AS artist_credits,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = recording.id
+  ) AS collected
 FROM recordings_by_entity re
 INNER JOIN recording ON recording.id = re.recording_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
@@ -135,7 +138,8 @@ SELECT
   recording.length,
   recording.video,
   ac.name AS artist_credits,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  ce.id IS NOT NULL AS collected
 FROM recording
 INNER JOIN collection_entity ce ON recording.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -186,7 +190,10 @@ SELECT
   recording.length,
   recording.video,
   ac.name AS artist_credits,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = recording.id
+  ) AS collected
 FROM recording
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id

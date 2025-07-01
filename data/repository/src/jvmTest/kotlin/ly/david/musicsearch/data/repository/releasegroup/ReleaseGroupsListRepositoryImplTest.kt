@@ -135,30 +135,42 @@ class ReleaseGroupsListRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        alsoSprachZarathustraReleaseGroupListItemModel,
-                        tchaikovskyOverturesReleaseGroupListItemModel,
+                        alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "1812",
                     expectedResult = listOf(
-                        tchaikovskyOverturesReleaseGroupListItemModel,
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by type",
                     query = "album",
                     expectedResult = listOf(
-                        alsoSprachZarathustraReleaseGroupListItemModel,
-                        tchaikovskyOverturesReleaseGroupListItemModel,
+                        alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit name",
                     query = "tchai",
                     expectedResult = listOf(
-                        tchaikovskyOverturesReleaseGroupListItemModel,
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
             ),
@@ -302,9 +314,10 @@ class ReleaseGroupsListRepositoryImplTest :
 
     @Test
     fun `all release groups`() = runTest {
+        // order matters, otherwise these will have some of their items marked as collected
         setupReleaseGroupsByTchaikovsky()
-        setupReleaseGroupsByCollection()
         setupReleaseGroupsByBerlinerPhilharmoniker()
+        setupReleaseGroupsByCollection()
 
         val releaseGroupsListRepository = createReleaseGroupsListRepository(
             releaseGroups = listOf(),
@@ -324,8 +337,12 @@ class ReleaseGroupsListRepositoryImplTest :
                     query = "",
                     expectedResult = listOf(
                         nutcrackerReleaseGroupListItemModel,
-                        tchaikovskyOverturesReleaseGroupListItemModel,
-                        alsoSprachZarathustraReleaseGroupListItemModel,
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
+                        alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
             ),
@@ -363,11 +380,15 @@ class ReleaseGroupsListRepositoryImplTest :
         }.run {
             assertEquals(
                 listOf(
-                    alsoSprachZarathustraReleaseGroupListItemModel,
+                    alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                        collected = true,
+                    ),
                     nutcrackerReleaseGroupListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),
-                    tchaikovskyOverturesReleaseGroupListItemModel,
+                    tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                        collected = true,
+                    ),
                 ),
                 this,
             )
@@ -384,7 +405,9 @@ class ReleaseGroupsListRepositoryImplTest :
             assertEquals(
                 listOf(
                     nutcrackerReleaseGroupListItemModel,
-                    tchaikovskyOverturesReleaseGroupListItemModel,
+                    tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                        collected = true,
+                    ),
                 ),
                 this,
             )
@@ -398,8 +421,12 @@ class ReleaseGroupsListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    alsoSprachZarathustraReleaseGroupListItemModel,
-                    tchaikovskyOverturesReleaseGroupListItemModel,
+                    alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                        collected = true,
+                    ),
+                    tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                        collected = true,
+                    ),
                 ),
                 this,
             )
@@ -410,9 +437,13 @@ class ReleaseGroupsListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    alsoSprachZarathustraReleaseGroupListItemModel,
+                    alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                        collected = true,
+                    ),
                     nutcrackerReleaseGroupListItemModel,
-                    tchaikovskyOverturesReleaseGroupListItemModel,
+                    tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                        collected = true,
+                    ),
                     nutcrackerReleaseGroupListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),
@@ -502,7 +533,9 @@ class ReleaseGroupsListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    alsoSprachZarathustraReleaseGroupListItemModel,
+                    alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                        collected = true,
+                    ),
                     nutcrackerReleaseGroupListItemModel,
                     nutcrackerReleaseGroupListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
@@ -510,6 +543,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     tchaikovskyOverturesReleaseGroupListItemModel.copy(
                         disambiguation = "changes will be ignored if release group is linked to multiple entities",
                         visited = true,
+                        collected = true,
                     ),
                 ),
                 this,

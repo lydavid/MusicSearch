@@ -28,6 +28,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.shared.strings.AppStrings
+import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
@@ -44,6 +45,7 @@ import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
+import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
 
 @Composable
 internal fun AreaUi(
@@ -54,7 +56,7 @@ internal fun AreaUi(
     val strings = LocalStrings.current
     val overlayHost = LocalOverlayHost.current
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+    val coroutineScope = rememberCoroutineScope()
 
     val loginEventSink = state.loginUiState.eventSink
 
@@ -72,15 +74,16 @@ internal fun AreaUi(
         strings = strings,
         additionalActions = {
             AddToCollectionActionToggle(
-                partOfACollection = state.isInACollection,
+                collected = state.collected,
                 entity = MusicBrainzEntity.AREA,
                 entityId = entityId,
                 overlayHost = overlayHost,
-                coroutineScope = scope,
+                coroutineScope = coroutineScope,
                 snackbarHostState = snackbarHostState,
                 onLoginClick = {
                     loginEventSink(LoginUiEvent.StartLogin)
                 },
+                nameWithDisambiguation = state.title,
             )
         },
         additionalOverflowDropdownMenuItems = {
@@ -88,7 +91,19 @@ internal fun AreaUi(
                 tab = state.selectedTab,
                 entityIds = state.selectedIds,
                 overlayHost = overlayHost,
-                coroutineScope = scope,
+                coroutineScope = coroutineScope,
+                snackbarHostState = snackbarHostState,
+                onLoginClick = {
+                    loginEventSink(LoginUiEvent.StartLogin)
+                },
+            )
+        },
+        onEditCollectionClick = {
+            showAddToCollectionSheet(
+                coroutineScope = coroutineScope,
+                overlayHost = overlayHost,
+                entity = state.selectedTab.toMusicBrainzEntity() ?: return@AreaUiInternal,
+                entityIds = setOf(it),
                 snackbarHostState = snackbarHostState,
                 onLoginClick = {
                     loginEventSink(LoginUiEvent.StartLogin)
@@ -112,6 +127,7 @@ internal fun AreaUiInternal(
     now: Instant = Clock.System.now(),
     additionalActions: @Composable () -> Unit = {},
     additionalOverflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit) = {},
+    onEditCollectionClick: (String) -> Unit = {},
 ) {
     val entity = MusicBrainzEntity.AREA
     val browseMethod = BrowseMethod.ByEntity(entityId, entity)
@@ -245,6 +261,7 @@ internal fun AreaUiInternal(
             browseMethod = browseMethod,
             entityLazyPagingItems = entitiesLazyPagingItems,
             now = now,
+            onEditCollectionClick = onEditCollectionClick,
             requestForMissingCoverArtUrl = { id, _ ->
                 releasesByEntityEventSink(
                     ReleasesListUiEvent.RequestForMissingCoverArtUrl(
