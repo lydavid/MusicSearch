@@ -136,9 +136,7 @@ SELECT
   place.`end`,
   place.`ended`,
   details_metadata.entity_id IS NOT NULL AS visited,
-  EXISTS (
-    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = place.id
-  ) AS collected
+  ce.id IS NOT NULL AS collected
 FROM place
 INNER JOIN collection_entity ce ON place.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id

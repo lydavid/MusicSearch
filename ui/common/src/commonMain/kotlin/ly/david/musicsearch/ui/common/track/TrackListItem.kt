@@ -51,7 +51,7 @@ fun TrackListItem(
                 style = TextStyles.getCardBodySubTextStyle(),
                 fontWeight = track.fontWeight,
             )
-            // TODO: support edit collection
+            // TODO: support edit collection on underlying recording
         },
         supportingContent = {
             track.formattedArtistCredits.ifNotNullOrEmpty {

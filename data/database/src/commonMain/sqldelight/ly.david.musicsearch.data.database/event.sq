@@ -148,9 +148,7 @@ SELECT
   mi.thumbnail_url,
   mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited,
-  EXISTS (
-    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = event.id
-  ) AS collected
+  ce.id IS NOT NULL AS collected
 FROM event
 INNER JOIN collection_entity ce ON event.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id

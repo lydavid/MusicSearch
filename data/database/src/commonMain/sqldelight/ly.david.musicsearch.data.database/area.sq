@@ -138,9 +138,7 @@ SELECT
   area.ended,
   cc.code,
   details_metadata.entity_id IS NOT NULL AS visited,
-  EXISTS (
-    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = area.id
-  ) AS collected
+  ce.id IS NOT NULL AS collected
 FROM area
 INNER JOIN collection_entity ce ON area.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id

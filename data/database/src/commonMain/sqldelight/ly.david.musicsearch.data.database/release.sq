@@ -267,9 +267,7 @@ SELECT
     0
   ) AS releaseCountryCount,
   details_metadata.entity_id IS NOT NULL AS visited,
-  EXISTS (
-    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = r.id
-  ) AS collected
+  ce.id IS NOT NULL AS collected
 FROM `release` r
 INNER JOIN collection_entity ce ON r.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id

@@ -130,9 +130,7 @@ SELECT
   work.language,
   work.iswcs,
   details_metadata.entity_id IS NOT NULL AS visited,
-  EXISTS (
-    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = work.id
-  ) AS collected
+  ce.id IS NOT NULL AS collected
 FROM work
 INNER JOIN collection_entity ce ON work.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
