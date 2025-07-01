@@ -28,6 +28,7 @@ fun LabelListItem(
     label: LabelListItemModel,
     modifier: Modifier = Modifier,
     showIcon: Boolean = true,
+    showEditCollection: Boolean = true,
     onLabelClick: LabelListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
@@ -98,10 +99,12 @@ fun LabelListItem(
         colors = listItemColors(isSelected = isSelected),
         leadingContent = leadingContent,
         trailingContent = {
-            AddToCollectionIconButton(
-                entityListItemModel = label,
-                onClick = onEditCollectionClick,
-            )
+            if (showEditCollection) {
+                AddToCollectionIconButton(
+                    entityListItemModel = label,
+                    onClick = onEditCollectionClick,
+                )
+            }
         },
     )
 }

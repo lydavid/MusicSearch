@@ -11,13 +11,13 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 
 @Composable
 fun AddToCollectionIcon(
-    partOfACollection: Boolean,
+    collected: Boolean,
     modifier: Modifier = Modifier,
     nameWithDisambiguation: String = "",
 ) {
-    val imageVector = if (partOfACollection) CustomIcons.BookmarkFilled else CustomIcons.Bookmark
-    val tint = if (partOfACollection) MaterialTheme.colorScheme.primary else LocalContentColor.current
-    val contentDescription = if (partOfACollection) {
+    val imageVector = if (collected) CustomIcons.BookmarkFilled else CustomIcons.Bookmark
+    val tint = if (collected) MaterialTheme.colorScheme.primary else LocalContentColor.current
+    val contentDescription = if (collected) {
         "Add $nameWithDisambiguation to another collection"
     } else {
         "Add $nameWithDisambiguation to collection"

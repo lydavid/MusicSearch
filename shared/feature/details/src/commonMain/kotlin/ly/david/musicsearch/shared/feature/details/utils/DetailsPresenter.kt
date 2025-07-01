@@ -96,7 +96,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         var isReleaseEventsCollapsed by rememberSaveable { mutableStateOf(false) }
         var isExternalLinksCollapsed by rememberSaveable { mutableStateOf(false) }
         var selectedIds: Set<String> by rememberSaveable { mutableStateOf(setOf()) }
-        val isInACollection by collectionRepository.observeEntityIsInACollection(
+        val collected by collectionRepository.observeEntityIsInACollection(
             entityId = screen.id,
         ).collectAsRetainedState(false)
 
@@ -281,7 +281,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             detailsModel = detailsModel?.withUrls(
                 urls = detailsModel?.urls.filterUrlRelations(query = query),
             ) as DetailsModel?,
-            isInACollection = isInACollection,
+            collected = collected,
             snackbarMessage = snackbarMessage,
             topAppBarFilterState = topAppBarFilterState,
             topAppBarEditState = topAppBarEditState,
@@ -308,7 +308,7 @@ internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
     val selectedTab: Tab,
     val url: String = "",
     val detailsModel: DetailsModel?,
-    val isInACollection: Boolean = false,
+    val collected: Boolean = false,
     val snackbarMessage: String? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val topAppBarEditState: TopAppBarEditState = TopAppBarEditState(),

@@ -19,7 +19,7 @@ fun AddToCollectionIconButton(
         },
     ) {
         AddToCollectionIcon(
-            partOfACollection = entityListItemModel.collected,
+            collected = entityListItemModel.collected,
             nameWithDisambiguation = entityListItemModel.getNameWithDisambiguation(),
         )
     }

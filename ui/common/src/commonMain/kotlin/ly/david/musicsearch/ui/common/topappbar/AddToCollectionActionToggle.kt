@@ -12,7 +12,7 @@ import ly.david.musicsearch.ui.common.icon.AddToCollectionIcon
 
 @Composable
 fun AddToCollectionActionToggle(
-    partOfACollection: Boolean,
+    collected: Boolean,
     entity: MusicBrainzEntity,
     entityId: String,
     overlayHost: OverlayHost,
@@ -37,7 +37,7 @@ fun AddToCollectionActionToggle(
         },
     ) {
         AddToCollectionIcon(
-            partOfACollection = partOfACollection,
+            collected = collected,
             nameWithDisambiguation = nameWithDisambiguation,
         )
     }

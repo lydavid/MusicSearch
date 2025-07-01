@@ -74,7 +74,7 @@ internal fun AreaUi(
         strings = strings,
         additionalActions = {
             AddToCollectionActionToggle(
-                partOfACollection = state.isInACollection,
+                collected = state.collected,
                 entity = MusicBrainzEntity.AREA,
                 entityId = entityId,
                 overlayHost = overlayHost,

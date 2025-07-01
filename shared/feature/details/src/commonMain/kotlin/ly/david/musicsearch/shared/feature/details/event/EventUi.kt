@@ -141,7 +141,7 @@ internal fun EventUi(
                 scrollBehavior = scrollBehavior,
                 additionalActions = {
                     AddToCollectionActionToggle(
-                        partOfACollection = state.isInACollection,
+                        collected = state.collected,
                         entity = entity,
                         entityId = entityId,
                         overlayHost = overlayHost,
