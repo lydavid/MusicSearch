@@ -13,6 +13,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LocalRemo
   stable totalRemote: Int?
   stable totalLocal: Int
   stable cachedLocalOfRemote: Function2<Int, Int, String>
+  stable modifier: Modifier? = @static Companion
 )
 fun present(
   stable <this>: StatsPresenter

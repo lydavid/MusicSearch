@@ -42,7 +42,7 @@ tmp1_group@ly.david.musicsearch.shared.feature.collections.components.Collection
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionListItem(
   collection: CollectionListItemModel
   stable modifier: Modifier? = @static Companion
-  stable colors: ListItemColors? = @dynamic ListItemDefaults.colors(<unsafe-coerce>(0L), <unsafe-coerce>(0L), <unsafe-coerce>(0L), <unsafe-coerce>(0L), <unsafe-coerce>(0L), <unsafe-coerce>(0L), <unsafe-coerce>(0L), <unsafe-coerce>(0L), <unsafe-coerce>(0L), $composer, ListItemDefaults.$stable shl 0b00011011, 0b000111111111)
+  stable colors: ListItemColors? = @dynamic ListItemDefaults.colors($composer, ListItemDefaults.$stable)
   stable onClick: @[ExtensionFunctionType] Function1<CollectionListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -1234463733, "CC(remember):CollectionListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {

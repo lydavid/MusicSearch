@@ -12,7 +12,7 @@ val tmp0_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.AppBottomNavigationBar
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AppNavigationRail(
+restartable skippable fun AppNavigationRail(
   stable currentTopLevelScreen: Screen
   stable modifier: Modifier? = @static Companion
   stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static sourceInformationMarkerStart($composer, -224104547, "CC(remember):AppNavigationRail.kt#9igjgp")

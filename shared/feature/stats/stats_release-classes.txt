@@ -22,6 +22,7 @@ stable class StatsPresenter {
   unstable val releaseGroupsListRepository: ReleaseGroupsListRepository
   unstable val recordingsListRepository: RecordingsListRepository
   unstable val worksListRepository: WorksListRepository
+  unstable val collectionRepository: CollectionRepository
   <runtime stability> = Stable
 }
 stable class StatsUiState {

@@ -49,7 +49,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable state: DetailsUiState<AreaDetailsModel>
   stable entityId: String
   stable modifier: Modifier? = @static Companion
-  stable snackbarHostState: SnackbarHostState? = @static sourceInformationMarkerStart($composer, 2048171301, "CC(remember):AreaUi.kt#9igjgp")
+  stable snackbarHostState: SnackbarHostState? = @static sourceInformationMarkerStart($composer, -1555901448, "CC(remember):AreaUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   SnackbarHostState  (  )
 }
@@ -59,8 +59,18 @@ tmp0_group@ly.david.musicsearch.shared.feature.details.area.AreaUiInternal
   unstable scope: CoroutineScope? = @dynamic rememberCoroutineScope(null, $composer, 0, 0b0001)
   unstable strings: AppStrings? = @dynamic LocalStrings.<get-current>($composer, 0)
   stable now: Instant? = @dynamic System.now()
-  stable additionalActions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$AreaUiKt.lambda$-1334968357
-  stable additionalOverflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static ComposableSingletons$AreaUiKt.lambda$1793267749
+  stable additionalActions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$AreaUiKt.lambda$-84646930
+  stable additionalOverflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static ComposableSingletons$AreaUiKt.lambda$1644636088
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -1555889862, "CC(remember):AreaUi.kt#9igjgp")
+val tmp1_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp1_group@ly.david.musicsearch.shared.feature.details.area.AreaUiInternal
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistDetailsTabUi(
   artist: ArtistDetailsModel
@@ -394,9 +404,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable innerPadding: PaddingValues
   stable scrollBehavior: TopAppBarScrollBehavior
   stable now: Instant? = @dynamic System.now()
-  stable requestForMissingCoverArtUrl: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity?, Unit>? = @static sourceInformationMarkerStart($composer, -609466361, "CC(remember):DetailsHorizontalPager.kt#9igjgp")
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -405019413, "CC(remember):DetailsHorizontalPager.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity?   ->
+  {     it  :   String   ->
 
   }
 
@@ -404,6 +414,16 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
+  stable requestForMissingCoverArtUrl: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity?, Unit>? = @static sourceInformationMarkerStart($composer, -405016364, "CC(remember):DetailsHorizontalPager.kt#9igjgp")
+val tmp1_group = $composer.cache(false) {
+  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity?   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp1_group@ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
   stable detailsScreen: Function3<T, Composer, Int, Unit>
 )
 scheme("[presenter]") fun present(

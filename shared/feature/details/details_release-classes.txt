@@ -90,7 +90,7 @@ stable class DetailsUiState {
   stable val selectedTab: Tab
   stable val url: String
   runtime val detailsModel: DetailsModel?
-  stable val isInACollection: Boolean
+  stable val collected: Boolean
   stable val snackbarMessage: String?
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val topAppBarEditState: TopAppBarEditState

@@ -17,4 +17,4 @@ ly.david.musicsearch.shared.feature.collections.list.CollectionListPresenter.pre
 ly.david.musicsearch.shared.feature.collections.list.CollectionListUi,CollectionListUi,1,1,1,0,0,0,0,0,3,5,
 ly.david.musicsearch.shared.feature.collections.list.CollectionListUi,CollectionListUi,1,1,1,0,0,0,1,0,4,6,
 ly.david.musicsearch.shared.feature.collections.single.CollectionPresenter.present,present,1,0,0,0,0,0,0,0,1,13,
-ly.david.musicsearch.shared.feature.collections.single.CollectionUi,CollectionUi,1,1,1,0,0,0,0,0,5,17,
+ly.david.musicsearch.shared.feature.collections.single.CollectionUi,CollectionUi,1,1,1,0,0,0,0,0,5,19,

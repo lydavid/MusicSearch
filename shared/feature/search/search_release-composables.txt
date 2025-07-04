@@ -90,7 +90,7 @@ sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.search.SearchResultsUi
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ListItemUi(
-  listItemModel: ListItemModel?
+  unstable listItemModel: ListItemModel?
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchUi(

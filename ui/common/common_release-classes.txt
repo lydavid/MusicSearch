@@ -377,9 +377,9 @@ stable class CoverArtsScreen {
   <runtime stability> = Stable
 }
 stable class StatsScreen {
-  stable val entity: MusicBrainzEntity
   stable val id: String
   stable val tabs: ImmutableList<Tab>
+  stable val isCollection: Boolean
   <runtime stability> = Stable
 }
 stable class SettingsScreen {

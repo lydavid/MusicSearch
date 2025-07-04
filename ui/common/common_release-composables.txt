@@ -161,7 +161,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaListI
   stable modifier: Modifier? = @static Companion
   stable showType: Boolean = @static true
   stable showIcon: Boolean = @static true
-  stable onAreaClick: @[ExtensionFunctionType] Function1<AreaListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 1008460652, "CC(remember):AreaListItem.kt#9igjgp")
+  stable showEditCollection: Boolean = @static true
+  stable onAreaClick: @[ExtensionFunctionType] Function1<AreaListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 383392597, "CC(remember):AreaListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -172,7 +173,7 @@ val tmp0_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.area.AreaListItem
   stable isSelected: Boolean = @static false
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 1008462892, "CC(remember):AreaListItem.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 383394837, "CC(remember):AreaListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -182,6 +183,16 @@ val tmp1_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.ui.common.area.AreaListItem
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 383396437, "CC(remember):AreaListItem.kt#9igjgp")
+val tmp2_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp2_group@ly.david.musicsearch.ui.common.area.AreaListItem
 )
 fun present(
   stable <this>: AreasListPresenter
@@ -189,7 +200,7 @@ fun present(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistListItem(
   artist: ArtistListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onClick: @[ExtensionFunctionType] Function1<ArtistListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 718839488, "CC(remember):ArtistListItem.kt#9igjgp")
+  stable onClick: @[ExtensionFunctionType] Function1<ArtistListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 1407147469, "CC(remember):ArtistListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -200,7 +211,7 @@ val tmp0_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.artist.ArtistListItem
   stable isSelected: Boolean = @static false
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 718841728, "CC(remember):ArtistListItem.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 1407149709, "CC(remember):ArtistListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -210,6 +221,16 @@ val tmp1_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.ui.common.artist.ArtistListItem
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 1407151309, "CC(remember):ArtistListItem.kt#9igjgp")
+val tmp2_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp2_group@ly.david.musicsearch.ui.common.artist.ArtistListItem
 )
 fun present(
   stable <this>: ArtistsListPresenter
@@ -337,7 +358,7 @@ tmp1_group@ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventListItem(
   event: EventListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onEventClick: @[ExtensionFunctionType] Function1<EventListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -477329928, "CC(remember):EventListItem.kt#9igjgp")
+  stable onEventClick: @[ExtensionFunctionType] Function1<EventListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -833772347, "CC(remember):EventListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -348,7 +369,7 @@ val tmp0_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.event.EventListItem
   stable isSelected: Boolean = @static false
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -477327688, "CC(remember):EventListItem.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -833770107, "CC(remember):EventListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -358,6 +379,16 @@ val tmp1_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.ui.common.event.EventListItem
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -833768507, "CC(remember):EventListItem.kt#9igjgp")
+val tmp2_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp2_group@ly.david.musicsearch.ui.common.event.EventListItem
 )
 fun present(
   stable <this>: EventsListPresenter
@@ -423,6 +454,16 @@ tmp1_group@ly.david.musicsearch.ui.common.genre.GenreListItem
 fun present(
   stable <this>: GenresListPresenter
 ): GenresListUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AddToCollectionIcon(
+  stable collected: Boolean
+  stable modifier: Modifier? = @static Companion
+  stable nameWithDisambiguation: String? = @static ""
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AddToCollectionIconButton(
+  unstable entityListItemModel: EntityListItemModel
+  stable onClick: Function1<String, Unit>
+  stable modifier: Modifier? = @static Companion
+)
 restartable skippable fun InitializeImageLoader()
 restartable skippable fun LargeImage(
   stable url: String
@@ -448,7 +489,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Thumbnail
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentListItem(
   instrument: InstrumentListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onInstrumentClick: @[ExtensionFunctionType] Function1<InstrumentListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -873048256, "CC(remember):InstrumentListItem.kt#9igjgp")
+  stable onInstrumentClick: @[ExtensionFunctionType] Function1<InstrumentListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -618841779, "CC(remember):InstrumentListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -459,7 +500,7 @@ val tmp0_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.instrument.InstrumentListItem
   stable isSelected: Boolean = @static false
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -873046016, "CC(remember):InstrumentListItem.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -618839539, "CC(remember):InstrumentListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -469,6 +510,16 @@ val tmp1_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.ui.common.instrument.InstrumentListItem
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -618837939, "CC(remember):InstrumentListItem.kt#9igjgp")
+val tmp2_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp2_group@ly.david.musicsearch.ui.common.instrument.InstrumentListItem
 )
 fun present(
   stable <this>: InstrumentsListPresenter
@@ -477,7 +528,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelList
   label: LabelListItemModel
   stable modifier: Modifier? = @static Companion
   stable showIcon: Boolean = @static true
-  stable onLabelClick: @[ExtensionFunctionType] Function1<LabelListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -512689528, "CC(remember):LabelListItem.kt#9igjgp")
+  stable showEditCollection: Boolean = @static true
+  stable onLabelClick: @[ExtensionFunctionType] Function1<LabelListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 1654841521, "CC(remember):LabelListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -488,7 +540,7 @@ val tmp0_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.label.LabelListItem
   stable isSelected: Boolean = @static false
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -512687288, "CC(remember):LabelListItem.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 1654843761, "CC(remember):LabelListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -498,6 +550,16 @@ val tmp1_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.ui.common.label.LabelListItem
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 1654845361, "CC(remember):LabelListItem.kt#9igjgp")
+val tmp2_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp2_group@ly.david.musicsearch.ui.common.label.LabelListItem
 )
 fun present(
   stable <this>: LabelsListPresenter
@@ -507,7 +569,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EntitiesP
   stable modifier: Modifier? = @static Companion
   stable selectedIds: ImmutableSet<String>? = @static persistentSetOf()
   stable now: Instant? = @dynamic System.now()
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static sourceInformationMarkerStart($composer, -1805068004, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static sourceInformationMarkerStart($composer, 1960767727, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
 
@@ -517,7 +579,7 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.list.EntitiesPagingListUi
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -1805066448, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 1960769283, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -527,9 +589,9 @@ val tmp1_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.ui.common.list.EntitiesPagingListUi
-  unstable requestForMissingCoverArtUrl: SuspendFunction1<@[ParameterName(name = 'id')] String, Unit>? = @dynamic sourceInformationMarkerStart($composer, -1805064234, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 1960770883, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
 val tmp2_group = $composer.cache(false) {
-  {     <unused var>  :   String   ->
+  {     it  :   String   ->
 
   }
 
@@ -537,6 +599,16 @@ val tmp2_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp2_group@ly.david.musicsearch.ui.common.list.EntitiesPagingListUi
+  unstable requestForMissingCoverArtUrl: SuspendFunction1<@[ParameterName(name = 'id')] String, Unit>? = @dynamic sourceInformationMarkerStart($composer, 1960773097, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
+val tmp3_group = $composer.cache(false) {
+  {     <unused var>  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp3_group@ly.david.musicsearch.ui.common.list.EntitiesPagingListUi
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollapsibleListSeparatorHeader(
   stable text: String
@@ -632,7 +704,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Coordinat
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceListItem(
   place: PlaceListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onPlaceClick: @[ExtensionFunctionType] Function1<PlaceListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 107508274, "CC(remember):PlaceListItem.kt#9igjgp")
+  stable onPlaceClick: @[ExtensionFunctionType] Function1<PlaceListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 448739455, "CC(remember):PlaceListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -642,7 +714,7 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.place.PlaceListItem
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 107509458, "CC(remember):PlaceListItem.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 448740639, "CC(remember):PlaceListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -653,6 +725,16 @@ val tmp1_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.ui.common.place.PlaceListItem
   stable isSelected: Boolean = @static false
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 448743295, "CC(remember):PlaceListItem.kt#9igjgp")
+val tmp2_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp2_group@ly.david.musicsearch.ui.common.place.PlaceListItem
 )
 fun present(
   stable <this>: PlacesListPresenter
@@ -667,7 +749,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingListItem(
   recording: RecordingListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onRecordingClick: @[ExtensionFunctionType] Function1<RecordingListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 1809775814, "CC(remember):RecordingListItem.kt#9igjgp")
+  stable onRecordingClick: @[ExtensionFunctionType] Function1<RecordingListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -2055467757, "CC(remember):RecordingListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -678,7 +760,7 @@ val tmp0_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.recording.RecordingListItem
   stable isSelected: Boolean = @static false
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 1809778054, "CC(remember):RecordingListItem.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -2055465517, "CC(remember):RecordingListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -688,6 +770,16 @@ val tmp1_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.ui.common.recording.RecordingListItem
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -2055463917, "CC(remember):RecordingListItem.kt#9igjgp")
+val tmp2_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp2_group@ly.david.musicsearch.ui.common.recording.RecordingListItem
 )
 fun present(
   stable <this>: RecordingsListPresenter
@@ -732,7 +824,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseLi
   release: ReleaseListItemModel
   stable modifier: Modifier? = @static Companion
   stable showMoreInfo: Boolean = @static true
-  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @dynamic sourceInformationMarkerStart($composer, 350687766, "CC(remember):ReleaseListItem.kt#9igjgp")
+  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @dynamic sourceInformationMarkerStart($composer, -403368733, "CC(remember):ReleaseListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -742,7 +834,7 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.release.ReleaseListItem
-  stable onClick: @[ExtensionFunctionType] Function1<ReleaseListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 350689398, "CC(remember):ReleaseListItem.kt#9igjgp")
+  stable onClick: @[ExtensionFunctionType] Function1<ReleaseListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -403367101, "CC(remember):ReleaseListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -753,7 +845,7 @@ val tmp1_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.ui.common.release.ReleaseListItem
   stable isSelected: Boolean = @static false
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 350691638, "CC(remember):ReleaseListItem.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -403364861, "CC(remember):ReleaseListItem.kt#9igjgp")
 val tmp2_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -763,6 +855,16 @@ val tmp2_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp2_group@ly.david.musicsearch.ui.common.release.ReleaseListItem
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -403363261, "CC(remember):ReleaseListItem.kt#9igjgp")
+val tmp3_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp3_group@ly.david.musicsearch.ui.common.release.ReleaseListItem
 )
 fun present(
   stable <this>: ReleasesListPresenter
@@ -771,7 +873,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGr
   releaseGroup: ReleaseGroupListItemModel
   stable showType: Boolean
   stable modifier: Modifier? = @static Companion
-  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @dynamic sourceInformationMarkerStart($composer, -1252428262, "CC(remember):ReleaseGroupListItem.kt#9igjgp")
+  unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @dynamic sourceInformationMarkerStart($composer, -1017715033, "CC(remember):ReleaseGroupListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -781,7 +883,7 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
-  stable onClick: @[ExtensionFunctionType] Function1<ReleaseGroupListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -1252426470, "CC(remember):ReleaseGroupListItem.kt#9igjgp")
+  stable onClick: @[ExtensionFunctionType] Function1<ReleaseGroupListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -1017713241, "CC(remember):ReleaseGroupListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -792,7 +894,7 @@ val tmp1_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
   stable isSelected: Boolean = @static false
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -1252424230, "CC(remember):ReleaseGroupListItem.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -1017711001, "CC(remember):ReleaseGroupListItem.kt#9igjgp")
 val tmp2_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -802,6 +904,16 @@ val tmp2_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp2_group@ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -1017709401, "CC(remember):ReleaseGroupListItem.kt#9igjgp")
+val tmp3_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp3_group@ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
 )
 fun present(
   stable <this>: ReleaseGroupsListPresenter
@@ -819,7 +931,7 @@ fun RecordVisit(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesListItem(
   series: SeriesListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onSeriesClick: @[ExtensionFunctionType] Function1<SeriesListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 2104901408, "CC(remember):SeriesListItem.kt#9igjgp")
+  stable onSeriesClick: @[ExtensionFunctionType] Function1<SeriesListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -2059633107, "CC(remember):SeriesListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -830,7 +942,7 @@ val tmp0_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.series.SeriesListItem
   stable isSelected: Boolean = @static false
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 2104903648, "CC(remember):SeriesListItem.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -2059630867, "CC(remember):SeriesListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -840,6 +952,16 @@ val tmp1_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.ui.common.series.SeriesListItem
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -2059629267, "CC(remember):SeriesListItem.kt#9igjgp")
+val tmp2_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp2_group@ly.david.musicsearch.ui.common.series.SeriesListItem
 )
 fun present(
   stable <this>: SeriesListPresenter
@@ -882,7 +1004,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AddAllToC
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AddToCollectionActionToggle(
-  stable partOfACollection: Boolean
+  stable collected: Boolean
   stable entity: MusicBrainzEntity
   stable entityId: String
   stable overlayHost: OverlayHost
@@ -890,6 +1012,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AddToColl
   stable snackbarHostState: SnackbarHostState
   stable onLoginClick: Function0<Unit>
   stable modifier: Modifier? = @static Companion
+  stable nameWithDisambiguation: String? = @static ""
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CopyToClipboardMenuItem(
   <this>: OverflowMenuScope
@@ -968,6 +1091,13 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SortToggl
   <this>: OverflowMenuScope
   stable sorted: Boolean
   stable onToggle: Function1<Boolean, Unit>
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun StatsMenuItem(
+  <this>: OverflowMenuScope
+  stable statsScreen: StatsScreen
+  stable overlayHost: OverlayHost
+  unstable coroutineScope: CoroutineScope
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TabsBar(
@@ -1051,7 +1181,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Wikipedia
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorkListItem(
   work: WorkListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onWorkClick: @[ExtensionFunctionType] Function1<WorkListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 484955820, "CC(remember):WorkListItem.kt#9igjgp")
+  stable onWorkClick: @[ExtensionFunctionType] Function1<WorkListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 509383737, "CC(remember):WorkListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -1062,7 +1192,7 @@ val tmp0_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.work.WorkListItem
   stable isSelected: Boolean = @static false
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 484958060, "CC(remember):WorkListItem.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 509385977, "CC(remember):WorkListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -1072,6 +1202,16 @@ val tmp1_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.ui.common.work.WorkListItem
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 509387577, "CC(remember):WorkListItem.kt#9igjgp")
+val tmp2_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp2_group@ly.david.musicsearch.ui.common.work.WorkListItem
 )
 fun present(
   stable <this>: WorksListPresenter

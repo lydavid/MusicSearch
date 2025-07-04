@@ -30,6 +30,7 @@ stable class AllEntitiesPresenter {
   stable val screen: AllEntitiesScreen
   stable val navigator: Navigator
   stable val entitiesListPresenter: EntitiesListPresenter
+  stable val loginPresenter: LoginPresenter
   <runtime stability> = Stable
 }
 stable class AllEntitiesUiState {
@@ -38,6 +39,7 @@ stable class AllEntitiesUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val topAppBarEditState: TopAppBarEditState
   stable val entitiesListUiState: EntitiesListUiState
+  stable val loginUiState: LoginUiState
   stable val eventSink: Function1<AllEntitiesUiEvent, Unit>
 }
 stable class NavigateUp {

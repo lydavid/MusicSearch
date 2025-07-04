@@ -407,6 +407,7 @@ unstable class AreaListItemModel {
   unstable val countryCodes: List<String>
   stable val date: String?
   stable val visited: Boolean
+  stable val collected: Boolean
   <runtime stability> = Unstable
 }
 stable class ArtistListItemModel {
@@ -421,6 +422,7 @@ stable class ArtistListItemModel {
   stable val imageUrl: String?
   stable val imageId: ImageId?
   stable val visited: Boolean
+  stable val collected: Boolean
   <runtime stability> = Stable
 }
 stable class CollectionListItemModel {
@@ -445,6 +447,7 @@ stable class EventListItemModel {
   stable val imageUrl: String?
   stable val imageId: ImageId?
   stable val visited: Boolean
+  stable val collected: Boolean
   <runtime stability> = Stable
 }
 stable class Footer {
@@ -469,6 +472,7 @@ stable class InstrumentListItemModel {
   stable val description: String?
   stable val type: String?
   stable val visited: Boolean
+  stable val collected: Boolean
   <runtime stability> = Stable
 }
 stable class LabelListItemModel {
@@ -479,14 +483,12 @@ stable class LabelListItemModel {
   stable val labelCode: Int?
   stable val catalogNumbers: String?
   stable val visited: Boolean
+  stable val collected: Boolean
   <runtime stability> = Stable
 }
 stable class LastUpdatedFooter {
   stable val id: String
   stable val lastUpdated: Instant
-  <runtime stability> = Stable
-}
-stable class ListItemModel {
   <runtime stability> = Stable
 }
 stable class ListSeparator {
@@ -520,6 +522,7 @@ runtime class PlaceListItemModel {
   runtime val coordinates: Coordinates?
   stable val lifeSpan: LifeSpanUiModel?
   stable val visited: Boolean
+  stable val collected: Boolean
   <runtime stability> = Uncertain(Coordinates)
 }
 stable class RecordingListItemModel {
@@ -531,6 +534,7 @@ stable class RecordingListItemModel {
   stable val video: Boolean
   stable val formattedArtistCredits: String?
   stable val visited: Boolean
+  stable val collected: Boolean
   <runtime stability> = Stable
 }
 stable class RelationListItemModel {
@@ -560,6 +564,7 @@ unstable class ReleaseGroupListItemModel {
   stable val imageUrl: String?
   stable val imageId: ImageId?
   stable val visited: Boolean
+  stable val collected: Boolean
   <runtime stability> = Unstable
 }
 stable class ReleaseListItemModel {
@@ -585,6 +590,7 @@ stable class ReleaseListItemModel {
   stable val formattedArtistCredits: String?
   stable val releaseCountryCount: Int
   stable val visited: Boolean
+  stable val collected: Boolean
   <runtime stability> = Stable
 }
 stable class SearchHeader {
@@ -604,6 +610,7 @@ stable class SeriesListItemModel {
   stable val disambiguation: String?
   stable val type: String?
   stable val visited: Boolean
+  stable val collected: Boolean
   <runtime stability> = Stable
 }
 stable class SpotifyHistoryListItemModel {
@@ -641,6 +648,7 @@ unstable class WorkListItemModel {
   unstable val iswcs: List<String>?
   unstable val attributes: List<WorkAttributeUiModel>
   stable val visited: Boolean
+  stable val collected: Boolean
   <runtime stability> = Unstable
 }
 runtime class GetMusicBrainzCoverArtUrl {
