@@ -65,8 +65,32 @@ class SeriesListPresenter(
             pagingDataFlow = pagingDataFlow,
             count = count,
             lazyListState = lazyListState,
-            eventSink = ::eventSink,
+            eventSink = { event ->
+                handleEvent(
+                    event = event,
+                    onBrowseMethodChanged = { browseMethod = it },
+                    onIsRemoteChanged = { isRemote = it },
+                    onQueryChanged = { query = it },
+                )
+            },
         )
+    }
+
+    private fun handleEvent(
+        event: SeriesListUiEvent,
+        onBrowseMethodChanged: (BrowseMethod) -> Unit,
+        onIsRemoteChanged: (Boolean) -> Unit,
+        onQueryChanged: (String) -> Unit,
+    ) {
+        when (event) {
+            is SeriesListUiEvent.Get -> {
+                onBrowseMethodChanged(event.browseMethod)
+                onIsRemoteChanged(event.isRemote)
+            }
+            is SeriesListUiEvent.UpdateQuery -> {
+                onQueryChanged(event.query)
+            }
+        }
     }
 }
 

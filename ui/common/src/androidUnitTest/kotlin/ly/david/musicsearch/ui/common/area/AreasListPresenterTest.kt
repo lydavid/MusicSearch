@@ -58,17 +58,38 @@ class AreasListPresenterTest {
         )
 
         presenterTestOf({ presenter.present() }) {
-            val state = awaitItem()
-            assertEquals(
-                listOf(
-                    AreaListItemModel(
-                        id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
-                        name = "United Kingdom",
-                        countryCodes = listOf("GB"),
+            awaitItem().run {
+                assertEquals(
+                    listOf(
+                        AreaListItemModel(
+                            id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+                            name = "United Kingdom",
+                            countryCodes = listOf("GB"),
+                        ),
                     ),
-                ),
-                state.pagingDataFlow.asSnapshot(),
-            )
+                    pagingDataFlow.asSnapshot(),
+                )
+                assertEquals(
+                    0,
+                    count,
+                )
+            }
+            awaitItem().run {
+                assertEquals(
+                    listOf(
+                        AreaListItemModel(
+                            id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
+                            name = "United Kingdom",
+                            countryCodes = listOf("GB"),
+                        ),
+                    ),
+                    pagingDataFlow.asSnapshot(),
+                )
+                assertEquals(
+                    1,
+                    count,
+                )
+            }
         }
     }
 }

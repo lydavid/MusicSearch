@@ -42,24 +42,37 @@ class RelationsPresenterImpl(
         }
         val lazyListState = rememberLazyListState()
 
-        fun eventSink(event: RelationsUiEvent) {
-            when (event) {
-                is RelationsUiEvent.GetRelations -> {
-                    id = event.byEntityId
-                    entity = event.byEntity
-                    relatedEntities = event.relatedEntities
-                }
-
-                is RelationsUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-            }
-        }
-
         return RelationsUiState(
             pagingDataFlow = pagingDataFlow,
             lazyListState = lazyListState,
-            eventSink = ::eventSink,
+            eventSink = { event ->
+                handleEvent(
+                    event = event,
+                    onIdChanged = { id = it },
+                    onEntityChanged = { entity = it },
+                    onRelatedEntitiesChanged = { relatedEntities = it },
+                    onQueryChanged = { query = it },
+                )
+            },
         )
+    }
+
+    private fun handleEvent(
+        event: RelationsUiEvent,
+        onIdChanged: (String) -> Unit,
+        onEntityChanged: (MusicBrainzEntity) -> Unit,
+        onRelatedEntitiesChanged: (Set<MusicBrainzEntity>) -> Unit,
+        onQueryChanged: (String) -> Unit,
+    ) {
+        when (event) {
+            is RelationsUiEvent.GetRelations -> {
+                onIdChanged(event.byEntityId)
+                onEntityChanged(event.byEntity)
+                onRelatedEntitiesChanged(event.relatedEntities)
+            }
+            is RelationsUiEvent.UpdateQuery -> {
+                onQueryChanged(event.query)
+            }
+        }
     }
 }

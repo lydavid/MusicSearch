@@ -36,33 +36,45 @@ class TracksByReleasePresenter(
         val lazyListState: LazyListState = rememberLazyListState()
         var collapsedMediumIds: Set<Long> by rememberSaveable { mutableStateOf(setOf()) }
 
-        fun eventSink(event: TracksByEntityUiEvent) {
-            when (event) {
-                is TracksByEntityUiEvent.Get -> {
-                    id = event.byEntityId
-                }
-
-                is TracksByEntityUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-
-                is TracksByEntityUiEvent.ToggleMedium -> {
-                    val mediumId = event.id.toLong()
-                    collapsedMediumIds = if (collapsedMediumIds.contains(mediumId)) {
-                        collapsedMediumIds.filter { it != mediumId }.toSet()
-                    } else {
-                        collapsedMediumIds + setOf(mediumId)
-                    }
-                }
-            }
-        }
-
         return TracksByReleaseUiState(
             pagingDataFlow = tracksListItems,
             lazyListState = lazyListState,
             collapsedMediumIds = collapsedMediumIds,
-            eventSink = ::eventSink,
+            eventSink = { event ->
+                handleEvent(
+                    event = event,
+                    onIdChanged = { id = it },
+                    onQueryChanged = { query = it },
+                    onToggleMedium = { id ->
+                        val mediumId = id.toLong()
+                        collapsedMediumIds = if (collapsedMediumIds.contains(mediumId)) {
+                            collapsedMediumIds.filter { it != mediumId }.toSet()
+                        } else {
+                            collapsedMediumIds + setOf(mediumId)
+                        }
+                    },
+                )
+            },
         )
+    }
+
+    private fun handleEvent(
+        event: TracksByEntityUiEvent,
+        onIdChanged: (String) -> Unit,
+        onQueryChanged: (String) -> Unit,
+        onToggleMedium: (String) -> Unit = {},
+    ) {
+        when (event) {
+            is TracksByEntityUiEvent.Get -> {
+                onIdChanged(event.byEntityId)
+            }
+            is TracksByEntityUiEvent.UpdateQuery -> {
+                onQueryChanged(event.query)
+            }
+            is TracksByEntityUiEvent.ToggleMedium -> {
+                onToggleMedium(event.id)
+            }
+        }
     }
 }
 

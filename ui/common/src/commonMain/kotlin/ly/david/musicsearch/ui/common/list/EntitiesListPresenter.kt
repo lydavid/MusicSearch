@@ -278,8 +278,33 @@ class EntitiesListPresenter(
             worksListUiState = worksByEntityUiState,
             relationsUiState = relationsUiState,
             tracksByReleaseUiState = tracksByReleaseUiState,
-            eventSink = ::evenSink,
+            eventSink = { event ->
+                handleEvent(
+                    event = event,
+                    onTabChanged = { tab = it },
+                    onBrowseMethodChanged = { browseMethod = it },
+                    onQueryChanged = { query = it },
+                    onIsRemoteChanged = { isRemote = it },
+                )
+            },
         )
+    }
+
+    private fun handleEvent(
+        event: EntitiesListUiEvent,
+        onTabChanged: (Tab?) -> Unit,
+        onBrowseMethodChanged: (BrowseMethod?) -> Unit,
+        onQueryChanged: (String) -> Unit,
+        onIsRemoteChanged: (Boolean) -> Unit,
+    ) {
+        when (event) {
+            is EntitiesListUiEvent.Get -> {
+                onTabChanged(event.tab)
+                onBrowseMethodChanged(event.browseMethod)
+                onQueryChanged(event.query)
+                onIsRemoteChanged(event.isRemote)
+            }
+        }
     }
 }
 

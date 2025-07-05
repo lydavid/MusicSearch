@@ -48,25 +48,36 @@ class AreasListPresenter(
         ).collectAsRetainedState(0)
         val lazyListState = rememberLazyListState()
 
-        fun eventSink(event: AreasListUiEvent) {
-            when (event) {
-                is AreasListUiEvent.Get -> {
-                    browseMethod = event.browseMethod
-                    isRemote = event.isRemote
-                }
-
-                is AreasListUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-            }
-        }
-
         return AreasListUiState(
             pagingDataFlow = pagingDataFlow,
             count = count,
             lazyListState = lazyListState,
-            eventSink = ::eventSink,
+            eventSink = { event ->
+                handleEvent(
+                    event = event,
+                    onBrowseMethodChanged = { browseMethod = it },
+                    onIsRemoteChanged = { isRemote = it },
+                    onQueryChanged = { query = it },
+                )
+            },
         )
+    }
+
+    private fun handleEvent(
+        event: AreasListUiEvent,
+        onBrowseMethodChanged: (BrowseMethod) -> Unit,
+        onIsRemoteChanged: (Boolean) -> Unit,
+        onQueryChanged: (String) -> Unit,
+    ) {
+        when (event) {
+            is AreasListUiEvent.Get -> {
+                onBrowseMethodChanged(event.browseMethod)
+                onIsRemoteChanged(event.isRemote)
+            }
+            is AreasListUiEvent.UpdateQuery -> {
+                onQueryChanged(event.query)
+            }
+        }
     }
 }
 

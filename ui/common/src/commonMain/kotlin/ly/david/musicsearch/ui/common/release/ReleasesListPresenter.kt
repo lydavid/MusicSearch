@@ -59,43 +59,58 @@ class ReleasesListPresenter(
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
         var requestedImageMetadataForIds: Set<String> by remember { mutableStateOf(setOf()) }
 
-        fun eventSink(event: ReleasesListUiEvent) {
-            when (event) {
-                is ReleasesListUiEvent.RequestForMissingCoverArtUrl -> {
-                    if (!requestedImageMetadataForIds.contains(event.entityId)) {
-                        requestedImageMetadataForIds = requestedImageMetadataForIds + setOf(event.entityId)
-                        scope.launch {
-                            musicBrainzImageMetadataRepository.saveImageMetadata(
-                                mbid = event.entityId,
-                                entity = MusicBrainzEntity.RELEASE,
-                                itemsCount = count,
-                            )
-                        }
-                    }
-                }
-
-                is ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
-                    appPreferences.setShowMoreInfoInReleaseListItem(event.showMore)
-                }
-
-                is ReleasesListUiEvent.Get -> {
-                    browseMethod = event.browseMethod
-                    isRemote = event.isRemote
-                }
-
-                is ReleasesListUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-            }
-        }
-
         return ReleasesListUiState(
             pagingDataFlow = pagingDataFlow,
             count = count,
             lazyListState = lazyListState,
             showMoreInfo = showMoreInfoInReleaseListItem,
-            eventSink = ::eventSink,
+            eventSink = { event ->
+                handleEvent(
+                    event = event,
+                    onBrowseMethodChanged = { browseMethod = it },
+                    onIsRemoteChanged = { isRemote = it },
+                    onQueryChanged = { query = it },
+                    onRequestForMissingCoverArtUrl = { entityId ->
+                        if (!requestedImageMetadataForIds.contains(entityId)) {
+                            requestedImageMetadataForIds = requestedImageMetadataForIds + setOf(entityId)
+                            scope.launch {
+                                musicBrainzImageMetadataRepository.saveImageMetadata(
+                                    mbid = entityId,
+                                    entity = MusicBrainzEntity.RELEASE,
+                                    itemsCount = count,
+                                )
+                            }
+                        }
+                    },
+                )
+            },
         )
+    }
+
+    private fun handleEvent(
+        event: ReleasesListUiEvent,
+        onBrowseMethodChanged: (BrowseMethod) -> Unit,
+        onIsRemoteChanged: (Boolean) -> Unit,
+        onQueryChanged: (String) -> Unit,
+        onRequestForMissingCoverArtUrl: (String) -> Unit,
+    ) {
+        when (event) {
+            is ReleasesListUiEvent.Get -> {
+                onBrowseMethodChanged(event.browseMethod)
+                onIsRemoteChanged(event.isRemote)
+            }
+            is ReleasesListUiEvent.UpdateQuery -> {
+                onQueryChanged(event.query)
+            }
+
+            is ReleasesListUiEvent.RequestForMissingCoverArtUrl -> {
+                onRequestForMissingCoverArtUrl(event.entityId)
+            }
+
+            is ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
+                appPreferences.setShowMoreInfoInReleaseListItem(event.showMore)
+            }
+        }
     }
 }
 
