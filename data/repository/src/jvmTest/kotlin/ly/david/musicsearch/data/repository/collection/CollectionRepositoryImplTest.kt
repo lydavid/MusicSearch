@@ -383,6 +383,13 @@ class CollectionRepositoryImplTest : KoinTest {
         )
     }
 
+    private val newCollection = CollectionListItemModel(
+        id = NEW_COLLECTION_ID,
+        isRemote = false,
+        name = "New collection",
+        entity = MusicBrainzEntity.ARTIST,
+    )
+
     private fun testAddingACollection(repository: CollectionRepository) = runTest {
         val flow: Flow<PagingData<CollectionListItemModel>> = repository.observeAllCollections(
             username = "",
@@ -399,24 +406,12 @@ class CollectionRepositoryImplTest : KoinTest {
         )
 
         repository.insertLocal(
-            collection = CollectionListItemModel(
-                id = NEW_COLLECTION_ID,
-                isRemote = false,
-                name = "New collection",
-                entity = MusicBrainzEntity.ARTIST,
-            ),
+            collection = newCollection,
         )
         collections = flow.asSnapshot()
         Assert.assertEquals(
             collections,
-            listOf(
-                CollectionListItemModel(
-                    id = NEW_COLLECTION_ID,
-                    isRemote = false,
-                    name = "New collection",
-                    entity = MusicBrainzEntity.ARTIST,
-                ),
-            ),
+            listOf(newCollection),
         )
     }
 
@@ -443,22 +438,57 @@ class CollectionRepositoryImplTest : KoinTest {
     }
 
     private suspend fun testDeletingACollection(repository: CollectionRepository) {
-        repository.deleteCollections(
-            collectionIds = setOf(NEW_COLLECTION_ID),
+        repository.markDeletedCollections(
+            collectionIds = setOf(newCollection.id),
         )
-        val flow: Flow<PagingData<CollectionListItemModel>> = repository.observeAllCollections(
+        repository.observeAllCollections(
             username = "",
             entity = null,
             query = "",
             showLocal = true,
             showRemote = true,
             sortOption = CollectionSortOption.ALPHABETICALLY,
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                listOf<CollectionListItemModel>(),
+                this,
+            )
+        }
+
+        repository.unMarkDeletedCollections()
+        repository.observeAllCollections(
+            username = "",
+            entity = null,
+            query = "",
+            showLocal = true,
+            showRemote = true,
+            sortOption = CollectionSortOption.ALPHABETICALLY,
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                listOf(
+                    newCollection,
+                ),
+                this,
+            )
+        }
+
+        repository.markDeletedCollections(
+            collectionIds = setOf(NEW_COLLECTION_ID),
         )
-        val collections: List<CollectionListItemModel> = flow.asSnapshot()
-        Assert.assertEquals(
-            0,
-            collections.size,
-        )
+        repository.deleteCollectionsMarkedForDeletion()
+        repository.observeAllCollections(
+            username = "",
+            entity = null,
+            query = "",
+            showLocal = true,
+            showRemote = true,
+            sortOption = CollectionSortOption.ALPHABETICALLY,
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                listOf<CollectionListItemModel>(),
+                this,
+            )
+        }
     }
 
     @Test

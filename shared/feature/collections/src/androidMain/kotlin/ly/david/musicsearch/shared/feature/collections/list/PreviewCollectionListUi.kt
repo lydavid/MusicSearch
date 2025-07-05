@@ -35,8 +35,11 @@ internal fun PreviewCollectionListUi() {
         )
 
         CollectionListUi(
-            selectionState = rememberSelectionState(),
-            lazyPagingItems = items.collectAsLazyPagingItems(),
+            state = CollectionsListUiState(
+                selectionState = rememberSelectionState(),
+                lazyPagingItems = items.collectAsLazyPagingItems(),
+            ),
+            onSortClick = {},
         )
     }
 }
@@ -68,8 +71,11 @@ internal fun PreviewCollectionListUiSelection() {
         val selectionState = rememberSelectionState(totalCount = 300)
         selectionState.toggleSelection(id = "2", totalLoadedCount = 200)
         CollectionListUi(
-            selectionState = selectionState,
-            lazyPagingItems = items.collectAsLazyPagingItems(),
+            state = CollectionsListUiState(
+                selectionState = selectionState,
+                lazyPagingItems = items.collectAsLazyPagingItems(),
+            ),
+            onSortClick = {},
         )
     }
 }
@@ -101,8 +107,11 @@ internal fun PreviewCollectionListUiSelectedAll() {
         val selectionState = rememberSelectionState(totalCount = 2)
         selectionState.toggleSelectAll(ids = listOf("1", "2"))
         CollectionListUi(
-            selectionState = selectionState,
-            lazyPagingItems = items.collectAsLazyPagingItems(),
+            state = CollectionsListUiState(
+                selectionState = selectionState,
+                lazyPagingItems = items.collectAsLazyPagingItems(),
+            ),
+            onSortClick = {},
         )
     }
 }

@@ -165,7 +165,7 @@ internal fun PreviewTopAppBarWithFilterWithTabsFilterMode() {
 @OptIn(ExperimentalMaterial3Api::class)
 @PreviewLightDark
 @Composable
-internal fun PreviewTopAppBarWithFilterWithWithSelectionDeselectAll() {
+internal fun PreviewTopAppBarWithFilterWithSelectedOne() {
     PreviewTheme {
         val selectionState = rememberSelectionState(totalCount = 300)
         selectionState.toggleSelection(
@@ -182,11 +182,27 @@ internal fun PreviewTopAppBarWithFilterWithWithSelectionDeselectAll() {
 @OptIn(ExperimentalMaterial3Api::class)
 @PreviewLightDark
 @Composable
-internal fun PreviewTopAppBarWithFilterWithSelectionSelectAll() {
+internal fun PreviewTopAppBarWithFilterWithSelectedAll() {
     PreviewTheme {
         val selectionState = rememberSelectionState(totalCount = 200)
         selectionState.toggleSelectAll(
             ids = (1..200).map { it.toString() },
+        )
+        TopAppBarWithFilterInternal(
+            title = "Title",
+            selectionState = selectionState,
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@PreviewLightDark
+@Composable
+internal fun PreviewTopAppBarWithFilterWithSelectedAllExceptOne() {
+    PreviewTheme {
+        val selectionState = rememberSelectionState(totalCount = 200)
+        selectionState.toggleSelectAll(
+            ids = (1..199).map { it.toString() },
         )
         TopAppBarWithFilterInternal(
             title = "Title",

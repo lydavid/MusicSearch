@@ -28,7 +28,6 @@ val collectionsFeatureModule = module {
                     appPreferences = get(),
                     getAllCollections = get(),
                     createCollection = get(),
-                    deleteCollection = get(),
                     collectionRepository = get(),
                 )
 

@@ -8,7 +8,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
@@ -18,12 +17,10 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.collection.CreateNewCollectionResult
 import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
-import ly.david.musicsearch.shared.domain.collection.usecase.DeleteCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
@@ -42,13 +39,11 @@ internal class CollectionListPresenter(
     private val appPreferences: AppPreferences,
     private val getAllCollections: GetAllCollections,
     private val createCollection: CreateCollection,
-    private val deleteCollection: DeleteCollection,
     private val collectionRepository: CollectionRepository,
 ) : Presenter<CollectionsListUiState> {
     @Composable
     override fun present(): CollectionsListUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
-        val scope = rememberCoroutineScope()
         val query = topAppBarFilterState.filterText
         val showLocal by appPreferences.showLocalCollections.collectAsRetainedState(true)
         val showRemote by appPreferences.showRemoteCollections.collectAsRetainedState(true)
@@ -71,7 +66,8 @@ internal class CollectionListPresenter(
             totalCount = count,
         )
         val lazyListState = rememberLazyListState()
-        var actionableResult: ActionableResult? by remember { mutableStateOf(null) }
+        var firstActionableResult: ActionableResult? by remember { mutableStateOf(null) }
+        var secondActionableResult: ActionableResult? by remember { mutableStateOf(null) }
 
         var oneShotNewCollectionId: String? by rememberRetained {
             mutableStateOf(screen.newCollectionId)
@@ -127,13 +123,24 @@ internal class CollectionListPresenter(
                     navigator.goTo(CollectionScreen(event.id))
                 }
 
-                CollectionsListUiEvent.DeleteSelectedCollections -> {
-                    scope.launch {
-                        actionableResult = deleteCollection(
-                            collectionIds = selectionState.selectedIds,
-                        )
-                        selectionState.clearSelection()
-                    }
+                CollectionsListUiEvent.MarkSelectedItemsAsDeleted -> {
+                    firstActionableResult = collectionRepository.markDeletedCollections(
+                        collectionIds = selectionState.selectedIds,
+                    )
+                    selectionState.clearSelection()
+                }
+
+                CollectionsListUiEvent.UnMarkItemsAsDeleted -> {
+                    collectionRepository.unMarkDeletedCollections()
+                }
+            }
+        }
+
+        suspend fun suspendEventSink(event: SuspendCollectionsListUiEvent) {
+            when (event) {
+                is SuspendCollectionsListUiEvent.DeleteItemsMarkedAsDeleted -> {
+                    // We cannot launch a new scope if we want to run this as part of the cancellation of the parent scope.
+                    secondActionableResult = collectionRepository.deleteCollectionsMarkedForDeletion()
                 }
             }
         }
@@ -146,8 +153,10 @@ internal class CollectionListPresenter(
             selectionState = selectionState,
             lazyListState = lazyListState,
             lazyPagingItems = listItems.collectAsLazyPagingItems(),
-            actionableResult = actionableResult,
+            firstActionableResult = firstActionableResult,
+            secondActionableResult = secondActionableResult,
             eventSink = ::eventSink,
+            suspendEventSink = ::suspendEventSink,
         )
     }
 }
@@ -155,14 +164,16 @@ internal class CollectionListPresenter(
 @Stable
 internal data class CollectionsListUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
-    val showLocal: Boolean,
-    val showRemote: Boolean,
-    val sortOption: CollectionSortOption,
-    val selectionState: SelectionState,
+    val showLocal: Boolean = true,
+    val showRemote: Boolean = true,
+    val sortOption: CollectionSortOption = CollectionSortOption.ALPHABETICALLY,
+    val selectionState: SelectionState = SelectionState(),
     val lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
-    val lazyListState: LazyListState,
-    val actionableResult: ActionableResult?,
-    val eventSink: (CollectionsListUiEvent) -> Unit,
+    val lazyListState: LazyListState = LazyListState(),
+    val firstActionableResult: ActionableResult? = null,
+    val secondActionableResult: ActionableResult? = null,
+    val eventSink: (CollectionsListUiEvent) -> Unit = {},
+    val suspendEventSink: suspend (SuspendCollectionsListUiEvent) -> Unit = {},
 ) : CircuitUiState
 
 internal sealed interface CollectionsListUiEvent : CircuitUiEvent {
@@ -174,5 +185,10 @@ internal sealed interface CollectionsListUiEvent : CircuitUiEvent {
         val id: String,
     ) : CollectionsListUiEvent
 
-    data object DeleteSelectedCollections : CollectionsListUiEvent
+    data object MarkSelectedItemsAsDeleted : CollectionsListUiEvent
+    data object UnMarkItemsAsDeleted : CollectionsListUiEvent
+}
+
+internal sealed interface SuspendCollectionsListUiEvent : CircuitUiEvent {
+    data object DeleteItemsMarkedAsDeleted : SuspendCollectionsListUiEvent
 }
