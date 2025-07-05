@@ -1,13 +1,13 @@
 import kotlin.Boolean;
 
 CREATE TABLE IF NOT EXISTS collection_entity (
-  `id` TEXT NOT NULL,
-  `entity_id` TEXT NOT NULL,
-  `deleted` INTEGER AS Boolean NOT NULL DEFAULT 0,
+  id TEXT NOT NULL,
+  entity_id TEXT NOT NULL,
+  deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
 
-  PRIMARY KEY(`id`, `entity_id`),
+  PRIMARY KEY(id, entity_id),
 
-  FOREIGN KEY(`id`) REFERENCES `collection`(`id`)
+  FOREIGN KEY(id) REFERENCES collection(id)
   ON UPDATE CASCADE
   ON DELETE CASCADE
 );
@@ -49,14 +49,6 @@ deleteFromCollection:
 DELETE FROM collection_entity
 WHERE id = :collectionId
 AND deleted = 1;
-
-deleteCollection {
-DELETE FROM collection
-WHERE id = :collectionId;
-
-DELETE FROM collection_entity
-WHERE id = :collectionId;
-}
 
 getCountOfEntitiesByCollection:
 SELECT IFNULL(

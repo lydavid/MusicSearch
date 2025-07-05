@@ -41,7 +41,6 @@ fun createDatabase(driver: SqlDriver): Database {
             last_updatedAdapter = InstantLongColumnAdapter,
         ),
         collectionAdapter = Collection.Adapter(
-            entity_countAdapter = IntColumnAdapter,
             entityAdapter = MusicBrainzEntityStringColumnAdapter,
         ),
         labelAdapter = Label.Adapter(

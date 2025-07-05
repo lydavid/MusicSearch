@@ -1,0 +1,40 @@
+import kotlin.Boolean;
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
+
+CREATE TABLE collection_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  is_remote INTEGER AS Boolean NOT NULL,
+  name TEXT NOT NULL,
+  entity TEXT AS MusicBrainzEntity NOT NULL,
+  type TEXT,
+  type_id TEXT,
+  deleted INTEGER AS Boolean NOT NULL DEFAULT 0
+);
+
+INSERT INTO collection_temp(
+  id,
+  is_remote,
+  name,
+  entity,
+  type,
+  type_id,
+  deleted
+)
+SELECT
+  id,
+  is_remote,
+  name,
+  entity,
+  type,
+  type_id,
+  0
+FROM collection;
+
+DROP TABLE collection;
+
+ALTER TABLE collection_temp RENAME TO collection;
+
+CREATE VIEW collection_view AS
+SELECT *
+FROM collection
+WHERE deleted = 0;
