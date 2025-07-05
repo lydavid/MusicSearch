@@ -37,7 +37,9 @@ internal fun CollectionListItem(
                 onClick(collection.id)
             },
             onLongClick = {
-                onSelect(collection.id)
+                if (!collection.isRemote) {
+                    onSelect(collection.id)
+                }
             },
         )
     } else {
