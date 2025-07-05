@@ -87,6 +87,7 @@ jobs:
           disable-animations: true
           sdcard-path-or-size: 100M
           script: |
+            adb uninstall io.github.lydavid.musicsearch.debug
             ./gradlew assembleFDroidDebug installFDroidDebug
             adb shell settings put system show_touches 1
             adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural
