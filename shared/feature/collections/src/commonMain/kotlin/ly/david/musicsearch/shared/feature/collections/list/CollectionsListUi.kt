@@ -2,7 +2,6 @@ package ly.david.musicsearch.shared.feature.collections.list
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -11,6 +10,7 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberSwipeToDismissBoxState
@@ -24,13 +24,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import app.cash.paging.compose.LazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import com.slack.circuitx.overlays.BasicDialogOverlay
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.collection.CreateNewCollectionResult
-import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.feature.collections.components.CollectionListItem
 import ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
@@ -40,9 +37,8 @@ import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.DeleteMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
-import ly.david.musicsearch.ui.common.topappbar.SelectionState
-import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * Displays a list of all of your collections.
@@ -56,7 +52,6 @@ internal fun CollectionListUi(
     val eventSink = state.eventSink
     val scope = rememberCoroutineScope()
     val overlayHost = LocalOverlayHost.current
-
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
 
     if (showBottomSheet) {
@@ -70,12 +65,11 @@ internal fun CollectionListUi(
     }
 
     CollectionListUi(
-        lazyPagingItems = state.lazyPagingItems,
-        lazyListState = state.lazyListState,
+        state = state,
         modifier = modifier,
-        sortOption = state.sortOption,
-        topAppBarFilterState = state.topAppBarFilterState,
-        selectionState = state.selectionState,
+        onSortClick = {
+            showBottomSheet = true
+        },
         onCreateCollectionClick = {
             scope.launch {
                 val basicDialogOverlay: BasicDialogOverlay<Unit, CreateNewCollectionResult> = BasicDialogOverlay(
@@ -103,24 +97,6 @@ internal fun CollectionListUi(
                 }
             }
         },
-        showLocal = state.showLocal,
-        onShowLocalToggle = {
-            eventSink(CollectionsListUiEvent.UpdateShowLocal(it))
-        },
-        showRemote = state.showRemote,
-        onShowRemoteToggle = {
-            eventSink(CollectionsListUiEvent.UpdateShowRemote(it))
-        },
-        onCollectionClick = {
-            eventSink(CollectionsListUiEvent.GoToCollection(it))
-        },
-        onSortClick = {
-            showBottomSheet = true
-        },
-        actionableResult = state.actionableResult,
-        onDeleteClick = {
-            eventSink(CollectionsListUiEvent.DeleteSelectedCollections)
-        },
     )
 }
 
@@ -129,27 +105,42 @@ internal fun CollectionListUi(
 )
 @Composable
 internal fun CollectionListUi(
-    lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
-    selectionState: SelectionState,
+    state: CollectionsListUiState,
     modifier: Modifier = Modifier,
-    lazyListState: LazyListState = LazyListState(),
-    topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
-    onCreateCollectionClick: () -> Unit = {},
-    showLocal: Boolean = true,
-    onShowLocalToggle: (Boolean) -> Unit = {},
-    showRemote: Boolean = true,
-    onShowRemoteToggle: (Boolean) -> Unit = {},
-    onCollectionClick: (String) -> Unit = {},
-    sortOption: CollectionSortOption = CollectionSortOption.ALPHABETICALLY,
     onSortClick: () -> Unit = {},
-    actionableResult: ActionableResult? = null,
-    onDeleteClick: () -> Unit = {},
+    onCreateCollectionClick: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
+    val eventSink = state.eventSink
+    val suspendEventSink = state.suspendEventSink
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    actionableResult?.let { result ->
+    state.firstActionableResult?.let { result ->
+        LaunchedEffect(result) {
+            try {
+                val snackbarResult = snackbarHostState.showSnackbar(
+                    message = result.message,
+                    actionLabel = result.action?.name,
+                    duration = SnackbarDuration.Short,
+                    withDismissAction = true,
+                )
+
+                when (snackbarResult) {
+                    SnackbarResult.ActionPerformed -> {
+                        eventSink(CollectionsListUiEvent.UnMarkItemsAsDeleted)
+                    }
+
+                    SnackbarResult.Dismissed -> {
+                        suspendEventSink(SuspendCollectionsListUiEvent.DeleteItemsMarkedAsDeleted)
+                    }
+                }
+            } catch (_: CancellationException) {
+                suspendEventSink(SuspendCollectionsListUiEvent.DeleteItemsMarkedAsDeleted)
+            }
+        }
+    }
+    state.secondActionableResult?.let { result ->
         LaunchedEffect(result) {
             snackbarHostState.showSnackbar(
                 message = result.message,
@@ -168,7 +159,7 @@ internal fun CollectionListUi(
                 showBackButton = false,
                 title = strings.collections,
                 scrollBehavior = scrollBehavior,
-                topAppBarFilterState = topAppBarFilterState,
+                topAppBarFilterState = state.topAppBarFilterState,
                 additionalActions = {
                     IconButton(onClick = onCreateCollectionClick) {
                         Icon(
@@ -179,30 +170,36 @@ internal fun CollectionListUi(
                 },
                 overflowDropdownMenuItems = {
                     RefreshMenuItem(
-                        onClick = { lazyPagingItems.refresh() },
+                        onClick = { state.lazyPagingItems.refresh() },
                     )
-                    if (selectionState.selectedIds.isNotEmpty()) {
+                    if (state.selectionState.selectedIds.isNotEmpty()) {
                         DeleteMenuItem(
-                            selectionState = selectionState,
-                            onClick = onDeleteClick,
+                            selectionState = state.selectionState,
+                            onClick = {
+                                eventSink(CollectionsListUiEvent.MarkSelectedItemsAsDeleted)
+                            },
                         )
                     }
                 },
-                selectionState = selectionState,
+                selectionState = state.selectionState,
                 onSelectAllToggle = {
-                    selectionState.toggleSelectAll(
-                        ids = lazyPagingItems.itemSnapshotList.items
+                    state.selectionState.toggleSelectAll(
+                        ids = state.lazyPagingItems.itemSnapshotList.items
                             .filterNot { item -> item.isRemote }
                             .map { item -> item.id },
                     )
                 },
                 additionalBar = {
                     CollectionsFilterChipsBar(
-                        sortOption = sortOption,
-                        showLocal = showLocal,
-                        onShowLocalToggle = onShowLocalToggle,
-                        showRemote = showRemote,
-                        onShowRemoteToggle = onShowRemoteToggle,
+                        sortOption = state.sortOption,
+                        showLocal = state.showLocal,
+                        onShowLocalToggle = {
+                            eventSink(CollectionsListUiEvent.UpdateShowLocal(it))
+                        },
+                        showRemote = state.showRemote,
+                        onShowRemoteToggle = {
+                            eventSink(CollectionsListUiEvent.UpdateShowRemote(it))
+                        },
                         onSortClick = onSortClick,
                     )
                 },
@@ -220,23 +217,25 @@ internal fun CollectionListUi(
     ) { innerPadding ->
 
         ScreenWithPagingLoadingAndError(
-            lazyPagingItems = lazyPagingItems,
+            lazyPagingItems = state.lazyPagingItems,
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-            lazyListState = lazyListState,
+            lazyListState = state.lazyListState,
         ) { collectionListItemModel: CollectionListItemModel? ->
             when (collectionListItemModel) {
                 is CollectionListItemModel -> {
                     CollectionListItem(
                         collection = collectionListItemModel,
-                        onClick = onCollectionClick,
-                        enabled = !selectionState.isEditMode || !collectionListItemModel.isRemote,
-                        isSelected = selectionState.selectedIds.contains(collectionListItemModel.id),
+                        onClick = {
+                            eventSink(CollectionsListUiEvent.GoToCollection(id = collectionListItemModel.id))
+                        },
+                        enabled = !state.selectionState.isEditMode || !collectionListItemModel.isRemote,
+                        isSelected = state.selectionState.selectedIds.contains(collectionListItemModel.id),
                         onSelect = {
-                            selectionState.toggleSelection(
+                            state.selectionState.toggleSelection(
                                 id = it,
-                                totalLoadedCount = lazyPagingItems.itemSnapshotList.items
+                                totalLoadedCount = state.lazyPagingItems.itemSnapshotList.items
                                     .filterNot { item -> item.isRemote }
                                     .map { item -> item.id }.size,
                             )

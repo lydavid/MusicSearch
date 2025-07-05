@@ -81,16 +81,6 @@ class CollectionEntityDao(
         )
     }
 
-    fun deleteCollections(
-        collectionIds: Set<String>,
-    ) {
-        withTransaction {
-            collectionIds.forEach { collectionId ->
-                transacter.deleteCollection(collectionId = collectionId)
-            }
-        }
-    }
-
     fun getCountOfEntitiesByCollection(collectionId: String): Int =
         getCountOfEntitiesByCollectionQuery(
             collectionId = collectionId,

@@ -216,14 +216,30 @@ class CollectionRepositoryImpl(
         return result
     }
 
-    override suspend fun deleteCollections(
+    override fun markDeletedCollections(
         collectionIds: Set<String>,
     ): ActionableResult {
-        collectionEntityDao.deleteCollections(
-            collectionIds,
+        collectionDao.markDeletedCollections(
+            collectionIds = collectionIds,
         )
-        // TODO: support undoing deleting a local collection
-        return ActionableResult("Deleted ${collectionIds.size}.")
+        val message = if (collectionIds.size == 1) {
+            "Deleting ${collectionIds.size} collection."
+        } else {
+            "Deleting ${collectionIds.size} collections."
+        }
+        return ActionableResult(
+            message = message,
+            action = Action.Undo,
+        )
+    }
+
+    override fun unMarkDeletedCollections() {
+        collectionDao.unMarkDeletedCollections()
+    }
+
+    override suspend fun deleteCollectionsMarkedForDeletion(): ActionableResult {
+        collectionDao.deleteCollectionsMarkedForDeletion()
+        return ActionableResult(message = "Deleted selected collections.")
     }
 
     override fun observeEntityIsInACollection(

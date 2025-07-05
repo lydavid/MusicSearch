@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzNetworkModel
-import ly.david.musicsearch.data.musicbrainz.models.core.getCount
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -32,7 +31,7 @@ class CollectionDao(
                     entity = entity,
                     type = null,
                     type_id = null,
-                    entity_count = cachedEntityCount,
+                    deleted = false,
                 ),
             )
         }
@@ -48,7 +47,7 @@ class CollectionDao(
                     entity = entityType.entity,
                     type = type,
                     type_id = typeId,
-                    entity_count = getCount(),
+                    deleted = false,
                 ),
             )
         }
@@ -172,5 +171,25 @@ class CollectionDao(
 
     fun deleteMusicBrainzCollections() {
         transacter.deleteMusicBrainzCollections()
+    }
+
+    fun markDeletedCollections(
+        collectionIds: Set<String>,
+    ) {
+        transacter.transaction {
+            collectionIds.forEach { collectionId ->
+                transacter.markDeletedCollection(
+                    collectionId = collectionId,
+                )
+            }
+        }
+    }
+
+    fun unMarkDeletedCollections() {
+        transacter.unMarkDeletedCollections()
+    }
+
+    fun deleteCollectionsMarkedForDeletion() {
+        transacter.deleteCollectionsMarkedForDeletion()
     }
 }

@@ -1,19 +1,20 @@
 import kotlin.Boolean;
-import kotlin.Int;
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
 
-CREATE TABLE IF NOT EXISTS collection (
+CREATE TABLE collection (
   id TEXT PRIMARY KEY NOT NULL,
   is_remote INTEGER AS Boolean NOT NULL,
   name TEXT NOT NULL,
   entity TEXT AS MusicBrainzEntity NOT NULL,
   type TEXT,
   type_id TEXT,
-
-  -- not used, but meant for remote collections where we may not have stored all of their entities,
-  -- so a COUNT(*) would be inaccurate
-  entity_count INTEGER AS Int NOT NULL
+  deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
+
+CREATE VIEW collection_view AS
+SELECT *
+FROM collection
+WHERE deleted = 0;
 
 insert:
 INSERT OR IGNORE INTO collection
@@ -22,12 +23,12 @@ VALUES ?;
 getCountOfCollections:
 SELECT IFNULL(
   (
-    SELECT count(*) FROM collection
+    SELECT count(*) FROM collection_view
     WHERE id IN (
-      SELECT id FROM collection
+      SELECT id FROM collection_view
       WHERE is_remote = 0 AND :showLocal
       UNION
-      SELECT id FROM collection
+      SELECT id FROM collection_view
       WHERE is_remote AND :showRemote
     )
     AND name LIKE :query
@@ -49,7 +50,7 @@ SELECT
     FROM collection_entity
     WHERE id = c.id AND entity_id = :entityIdToCheckExists
   ) AS contains_entity
-FROM collection c
+FROM collection_view c
 LEFT JOIN (
   SELECT id, COUNT(entity_id) AS entity_count
   FROM collection_entity
@@ -57,10 +58,10 @@ LEFT JOIN (
 ) ce ON c.id = ce.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = c.id
 WHERE c.id IN (
-  SELECT id FROM collection
+  SELECT id FROM collection_view
   WHERE is_remote = 0 AND :showLocal
   UNION
-  SELECT id FROM collection
+  SELECT id FROM collection_view
   WHERE is_remote AND :showRemote
 )
 AND name LIKE :query
@@ -74,13 +75,9 @@ LIMIT :limit OFFSET :offset;
 
 getAllCollectionsOfType:
 SELECT *
-FROM collection
+FROM collection_view
 WHERE entity = :entity
 ORDER BY name;
-
-deleteMusicBrainzCollections:
-DELETE FROM collection
-WHERE is_remote;
 
 getCollection:
 SELECT
@@ -90,7 +87,7 @@ SELECT
   c.entity,
   COALESCE(ce.entity_count, 0) AS entity_count,
   details_metadata.entity_id IS NOT NULL AS visited
-FROM collection c
+FROM collection_view c
 LEFT JOIN (
   SELECT id, COUNT(entity_id) AS entity_count
   FROM collection_entity
@@ -98,3 +95,27 @@ LEFT JOIN (
 ) ce ON c.id = ce.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = c.id
 WHERE c.id = :id;
+
+deleteMusicBrainzCollections:
+DELETE FROM collection
+WHERE is_remote;
+
+markDeletedCollection:
+UPDATE collection
+SET deleted = 1
+WHERE id = :collectionId;
+
+unMarkDeletedCollections:
+UPDATE collection
+SET deleted = 0
+WHERE deleted = 1;
+
+deleteCollectionsMarkedForDeletion {
+DELETE FROM collection_entity
+WHERE collection_entity.id IN (
+    SELECT id FROM collection WHERE deleted = 1
+);
+
+DELETE FROM collection
+WHERE deleted = 1;
+}

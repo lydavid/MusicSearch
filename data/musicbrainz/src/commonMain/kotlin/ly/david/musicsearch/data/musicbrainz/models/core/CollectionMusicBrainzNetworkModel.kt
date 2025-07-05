@@ -4,7 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 @Serializable
 data class CollectionMusicBrainzNetworkModel(
@@ -30,20 +29,3 @@ data class CollectionMusicBrainzNetworkModel(
 
     @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
 ) : MusicBrainzNetworkModel
-
-fun CollectionMusicBrainzNetworkModel.getCount(): Int {
-    return when (entityType.entity) {
-        MusicBrainzEntity.AREA -> areaCount
-        MusicBrainzEntity.ARTIST -> artistCount
-        MusicBrainzEntity.EVENT -> eventCount
-        MusicBrainzEntity.INSTRUMENT -> instrumentCount
-        MusicBrainzEntity.LABEL -> labelCount
-        MusicBrainzEntity.PLACE -> placeCount
-        MusicBrainzEntity.RECORDING -> recordingCount
-        MusicBrainzEntity.RELEASE -> releaseCount
-        MusicBrainzEntity.RELEASE_GROUP -> releaseGroupCount
-        MusicBrainzEntity.SERIES -> seriesCount
-        MusicBrainzEntity.WORK -> workCount
-        else -> 0
-    } ?: 0
-}

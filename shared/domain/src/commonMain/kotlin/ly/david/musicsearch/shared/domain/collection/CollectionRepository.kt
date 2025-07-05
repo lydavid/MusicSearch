@@ -44,9 +44,13 @@ interface CollectionRepository {
         entityIds: Set<String>,
     ): ActionableResult
 
-    suspend fun deleteCollections(
+    fun markDeletedCollections(
         collectionIds: Set<String>,
     ): ActionableResult
+
+    fun unMarkDeletedCollections()
+
+    suspend fun deleteCollectionsMarkedForDeletion(): ActionableResult
 
     fun observeEntityIsInACollection(
         entityId: String,

@@ -48,16 +48,23 @@ class TopAppBarWithFilterTest : ScreenshotTest() {
     }
 
     @Test
-    fun selectionDeselectAll() {
+    fun selectedOne() {
         snapshot {
-            PreviewTopAppBarWithFilterWithWithSelectionDeselectAll()
+            PreviewTopAppBarWithFilterWithSelectedOne()
         }
     }
 
     @Test
-    fun selectionSelectAll() {
+    fun selectedAll() {
         snapshot {
-            PreviewTopAppBarWithFilterWithSelectionSelectAll()
+            PreviewTopAppBarWithFilterWithSelectedAll()
+        }
+    }
+
+    @Test
+    fun selectedAllExceptOne() {
+        snapshot {
+            PreviewTopAppBarWithFilterWithSelectedAllExceptOne()
         }
     }
 }
