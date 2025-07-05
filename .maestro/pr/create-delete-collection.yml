@@ -17,10 +17,9 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "Local"
 - tapOn: "Remote"
 
+- longPressOn: "Delete me"
 - tapOn: "More actions"
-- tapOn: "Edit"
-- swipe:
-      from: "Delete me"
-      direction: LEFT
+- tapOn: "Delete 1"
+- assertNotVisible: "Delete me"
 
 - stopRecording

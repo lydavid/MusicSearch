@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.area.AreasListRepository
 import ly.david.musicsearch.shared.domain.area.usecase.GetAreas
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
@@ -28,6 +29,18 @@ class AreasListPresenterTest {
                 listFilters: ListFilters,
             ): Flow<PagingData<ListItemModel>> {
                 return flowOf(PagingData.from(listItems))
+            }
+        },
+        areasListRepository = object : AreasListRepository {
+            override fun observeAreas(
+                browseMethod: BrowseMethod,
+                listFilters: ListFilters,
+            ): Flow<PagingData<AreaListItemModel>> {
+                error("Not used")
+            }
+
+            override fun observeCountOfAreas(browseMethod: BrowseMethod?): Flow<Int> {
+                return flowOf(listItems.size)
             }
         },
     )
