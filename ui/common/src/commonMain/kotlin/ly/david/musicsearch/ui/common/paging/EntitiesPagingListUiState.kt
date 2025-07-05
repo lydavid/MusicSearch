@@ -1,4 +1,4 @@
-package ly.david.musicsearch.ui.common.list
+package ly.david.musicsearch.ui.common.paging
 
 import androidx.compose.foundation.lazy.LazyListState
 import app.cash.paging.compose.LazyPagingItems

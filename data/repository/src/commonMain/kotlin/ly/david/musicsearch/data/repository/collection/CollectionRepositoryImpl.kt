@@ -110,6 +110,10 @@ class CollectionRepositoryImpl(
         }
     }
 
+    override fun observeCountOfLocalCollections(): Flow<Int> {
+        return collectionDao.observeCountOfLocalCollections()
+    }
+
     override fun getCollection(entityId: String): CollectionListItemModel? {
         return collectionDao.getCollection(entityId)
     }
@@ -178,6 +182,7 @@ class CollectionRepositoryImpl(
         var result = ActionableResult()
         if (collection.isRemote) {
             try {
+                // TODO: support adding more than 16KB worth of items at a time
                 collectionApi.addToCollection(
                     collectionId = collectionId,
                     resourceUriPlural = entity.resourceUriPlural,
@@ -211,22 +216,14 @@ class CollectionRepositoryImpl(
         return result
     }
 
-    override suspend fun deleteCollection(
-        collectionId: String,
-        collectionName: String,
+    override suspend fun deleteCollections(
+        collectionIds: Set<String>,
     ): ActionableResult {
-        collectionEntityDao.deleteCollection(
-            collectionId,
+        collectionEntityDao.deleteCollections(
+            collectionIds,
         )
-        return ActionableResult("Deleted $collectionName.")
-    }
-
-    override fun observeCountOfEntitiesByCollection(
-        collectionId: String,
-    ): Flow<Int> {
-        return collectionEntityDao.observeCountOfEntitiesByCollection(
-            collectionId = collectionId,
-        )
+        // TODO: support undoing deleting a local collection
+        return ActionableResult("Deleted ${collectionIds.size}.")
     }
 
     override fun observeEntityIsInACollection(

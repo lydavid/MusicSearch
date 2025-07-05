@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
@@ -67,14 +68,11 @@ fun ScrollableTopAppBar(
     title: String = "",
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
-    isEditMode: Boolean = false,
-
+    containerColor: Color = Color.Unspecified,
     actions: @Composable () -> Unit = {},
-
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
-
-    additionalBar: @Composable () -> Unit = {},
+    additionalBar: @Composable ColumnScope.() -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -89,7 +87,7 @@ fun ScrollableTopAppBar(
                 )
             },
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = if (isEditMode) MaterialTheme.colorScheme.surfaceVariant else Color.Unspecified,
+                containerColor = containerColor,
             ),
             scrollBehavior = scrollBehavior,
             navigationIcon = {

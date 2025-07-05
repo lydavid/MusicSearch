@@ -27,6 +27,7 @@ class AreaDao(
     database: Database,
     private val countryCodeDao: CountryCodeDao,
     private val releaseCountryDao: ReleaseCountryDao,
+    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter: AreaQueries = database.areaQueries
@@ -116,8 +117,18 @@ class AreaDao(
         }
     }
 
-    fun observeCountOfAllAreas(): Flow<Int> =
-        getCountOfAllAreas(query = "")
+    fun observeCountOfAreas(browseMethod: BrowseMethod): Flow<Int> =
+        when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                    collectionId = browseMethod.entityId,
+                )
+            }
+
+            else -> {
+                getCountOfAllAreas(query = "")
+            }
+        }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }

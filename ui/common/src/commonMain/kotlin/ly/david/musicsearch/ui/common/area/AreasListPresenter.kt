@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -17,12 +18,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.area.AreasListRepository
 import ly.david.musicsearch.shared.domain.area.usecase.GetAreas
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class AreasListPresenter(
     private val getAreas: GetAreas,
+    private val areasListRepository: AreasListRepository,
 ) : Presenter<AreasListUiState> {
     @Composable
     override fun present(): AreasListUiState {
@@ -40,6 +43,9 @@ class AreasListPresenter(
                 ),
             )
         }
+        val count by areasListRepository.observeCountOfAreas(
+            browseMethod = browseMethod,
+        ).collectAsRetainedState(0)
         val lazyListState = rememberLazyListState()
 
         fun eventSink(event: AreasListUiEvent) {
@@ -57,6 +63,7 @@ class AreasListPresenter(
 
         return AreasListUiState(
             pagingDataFlow = pagingDataFlow,
+            count = count,
             lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
@@ -77,6 +84,7 @@ sealed interface AreasListUiEvent : CircuitUiEvent {
 @Stable
 data class AreasListUiState(
     val pagingDataFlow: Flow<PagingData<ListItemModel>> = emptyFlow(),
+    val count: Int = 0,
     val lazyListState: LazyListState = LazyListState(),
     val eventSink: (AreasListUiEvent) -> Unit = {},
 ) : CircuitUiState

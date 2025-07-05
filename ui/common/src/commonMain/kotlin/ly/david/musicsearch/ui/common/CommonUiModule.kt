@@ -12,7 +12,7 @@ import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsPresenterImpl
 import ly.david.musicsearch.ui.common.release.ReleasesListPresenter
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListPresenter
-import ly.david.musicsearch.ui.common.screen.EntitiesListPresenter
+import ly.david.musicsearch.ui.common.list.EntitiesListPresenter
 import ly.david.musicsearch.ui.common.series.SeriesListPresenter
 import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
 import ly.david.musicsearch.ui.common.work.WorksListPresenter

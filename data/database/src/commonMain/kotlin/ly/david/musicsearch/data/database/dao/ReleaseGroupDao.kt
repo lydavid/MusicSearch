@@ -55,6 +55,7 @@ interface ReleaseGroupDao : EntityDao {
 class ReleaseGroupDaoImpl(
     database: Database,
     private val artistCreditDao: ArtistCreditDao,
+    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : ReleaseGroupDao {
     override val transacter = database.release_groupQueries
@@ -231,13 +232,23 @@ class ReleaseGroupDaoImpl(
     }
 
     override fun observeCountOfAllReleaseGroups(browseMethod: BrowseMethod): Flow<Int> =
-        if (browseMethod is BrowseMethod.ByEntity) {
-            getCountOfReleaseGroupsByArtistQuery(
-                artistId = browseMethod.entityId,
-                query = "",
-            )
-        } else {
-            getCountOfAllReleaseGroups(query = "")
+        when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                        collectionId = browseMethod.entityId,
+                    )
+                } else {
+                    getCountOfReleaseGroupsByArtistQuery(
+                        artistId = browseMethod.entityId,
+                        query = "",
+                    )
+                }
+            }
+
+            BrowseMethod.All -> {
+                getCountOfAllReleaseGroups(query = "")
+            }
         }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)

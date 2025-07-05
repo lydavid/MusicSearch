@@ -48,16 +48,16 @@ class TopAppBarWithFilterTest : ScreenshotTest() {
     }
 
     @Test
-    fun editMode() {
+    fun selectionDeselectAll() {
         snapshot {
-            PreviewTopAppBarWithFilterWithEditMode()
+            PreviewTopAppBarWithFilterWithWithSelectionDeselectAll()
         }
     }
 
     @Test
-    fun editModeActive() {
+    fun selectionSelectAll() {
         snapshot {
-            PreviewTopAppBarWithFilterWithEditModeActive()
+            PreviewTopAppBarWithFilterWithSelectionSelectAll()
         }
     }
 }

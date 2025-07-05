@@ -9,11 +9,13 @@ import kotlinx.collections.immutable.toPersistentHashMap
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
-import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.BrowseMethod.ByEntity
+import ly.david.musicsearch.shared.domain.area.AreasListRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
-import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.event.EventsListRepository
+import ly.david.musicsearch.shared.domain.genre.GenresListRepository
+import ly.david.musicsearch.shared.domain.instrument.InstrumentsListRepository
 import ly.david.musicsearch.shared.domain.label.LabelsListRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.PlacesListRepository
@@ -22,6 +24,7 @@ import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelatio
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
+import ly.david.musicsearch.shared.domain.series.SeriesListRepository
 import ly.david.musicsearch.shared.domain.work.WorksListRepository
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.Tab
@@ -31,15 +34,18 @@ internal class StatsPresenter(
     private val screen: StatsScreen,
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
+    private val areasListRepository: AreasListRepository,
     private val artistsListRepository: ArtistsListRepository,
     private val eventsListRepository: EventsListRepository,
+    private val genresListRepository: GenresListRepository,
+    private val instrumentsListRepository: InstrumentsListRepository,
     private val labelsListRepository: LabelsListRepository,
     private val placesListRepository: PlacesListRepository,
     private val releasesListRepository: ReleasesListRepository,
     private val releaseGroupsListRepository: ReleaseGroupsListRepository,
     private val recordingsListRepository: RecordingsListRepository,
     private val worksListRepository: WorksListRepository,
-    private val collectionRepository: CollectionRepository,
+    private val seriesListRepository: SeriesListRepository,
 ) : Presenter<StatsUiState> {
 
     @Composable
@@ -91,70 +97,65 @@ internal class StatsPresenter(
         entityId: String,
         isCollection: Boolean,
     ): Flow<Int> {
-        return if (isCollection) {
-            collectionRepository.observeCountOfEntitiesByCollection(
-                collectionId = entityId,
+        // TODO: this is an incorrect usage of ByEntity
+        //  but worked for non-collection entity because there was a single count query for each
+        //  and the ByEntity.entity did not matter
+        val browseMethod = ByEntity(
+            entity = if (isCollection) MusicBrainzEntity.COLLECTION else entity,
+            entityId = entityId,
+        )
+        return when (entity) {
+            MusicBrainzEntity.AREA -> areasListRepository.observeCountOfAreas(
+                browseMethod = browseMethod,
             )
-        } else {
-            when (entity) {
-                MusicBrainzEntity.ARTIST -> artistsListRepository.observeCountOfArtists(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
 
-                MusicBrainzEntity.EVENT -> eventsListRepository.observeCountOfEvents(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
+            MusicBrainzEntity.ARTIST -> artistsListRepository.observeCountOfArtists(
+                browseMethod = browseMethod,
+            )
 
-                MusicBrainzEntity.LABEL -> labelsListRepository.observeCountOfLabels(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
+            MusicBrainzEntity.EVENT -> eventsListRepository.observeCountOfEvents(
+                browseMethod = browseMethod,
+            )
 
-                MusicBrainzEntity.PLACE -> placesListRepository.observeCountOfPlaces(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
+            MusicBrainzEntity.GENRE -> genresListRepository.observeCountOfGenres(
+                browseMethod = browseMethod,
+            )
 
-                MusicBrainzEntity.RECORDING -> recordingsListRepository.observeCountOfRecordings(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
+            MusicBrainzEntity.INSTRUMENT -> instrumentsListRepository.observeCountOfInstruments(
+                browseMethod = browseMethod,
+            )
 
-                MusicBrainzEntity.RELEASE -> releasesListRepository.observeCountOfReleases(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
+            MusicBrainzEntity.LABEL -> labelsListRepository.observeCountOfLabels(
+                browseMethod = browseMethod,
+            )
 
-                MusicBrainzEntity.RELEASE_GROUP -> releaseGroupsListRepository.observeCountOfReleaseGroups(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
+            MusicBrainzEntity.PLACE -> placesListRepository.observeCountOfPlaces(
+                browseMethod = browseMethod,
+            )
 
-                MusicBrainzEntity.WORK -> worksListRepository.observeCountOfWorks(
-                    browseMethod = BrowseMethod.ByEntity(
-                        entity = entity,
-                        entityId = entityId,
-                    ),
-                )
+            MusicBrainzEntity.RECORDING -> recordingsListRepository.observeCountOfRecordings(
+                browseMethod = browseMethod,
+            )
 
-                else -> flowOf(0)
-            }
+            MusicBrainzEntity.RELEASE -> releasesListRepository.observeCountOfReleases(
+                browseMethod = browseMethod,
+            )
+
+            MusicBrainzEntity.RELEASE_GROUP -> releaseGroupsListRepository.observeCountOfReleaseGroups(
+                browseMethod = browseMethod,
+            )
+
+            MusicBrainzEntity.WORK -> worksListRepository.observeCountOfWorks(
+                browseMethod = browseMethod,
+            )
+
+            MusicBrainzEntity.SERIES -> seriesListRepository.observeCountOfSeries(
+                browseMethod = browseMethod,
+            )
+
+            MusicBrainzEntity.COLLECTION,
+            MusicBrainzEntity.URL,
+            -> flowOf(0)
         }
     }
 

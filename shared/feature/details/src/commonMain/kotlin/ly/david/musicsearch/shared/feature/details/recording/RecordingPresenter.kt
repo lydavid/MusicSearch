@@ -16,7 +16,7 @@ import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
-import ly.david.musicsearch.ui.common.screen.EntitiesListPresenter
+import ly.david.musicsearch.ui.common.list.EntitiesListPresenter
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
 internal val recordingTabs = persistentListOf(

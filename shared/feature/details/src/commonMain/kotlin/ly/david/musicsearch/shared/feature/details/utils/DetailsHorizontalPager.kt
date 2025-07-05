@@ -18,9 +18,10 @@ import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.musicsearch.ui.common.list.EntitiesPagingListUi
-import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
+import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
+import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
+import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
@@ -31,7 +32,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
     pagerState: PagerState,
     state: DetailsUiState<T>,
     browseMethod: BrowseMethod.ByEntity,
-    entityLazyPagingItems: EntitiesLazyPagingItems,
+    entitiesLazyPagingItems: EntitiesLazyPagingItems,
     innerPadding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
     now: Instant = Clock.System.now(),
@@ -93,48 +94,48 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
             else -> {
                 val uiState = when (tab) {
                     Tab.ARTISTS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entityLazyPagingItems.artistsLazyPagingItems,
+                        lazyPagingItems = entitiesLazyPagingItems.artistsLazyPagingItems,
                         lazyListState = state.entitiesListUiState.artistsListUiState.lazyListState,
                     )
 
                     Tab.EVENTS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entityLazyPagingItems.eventsLazyPagingItems,
+                        lazyPagingItems = entitiesLazyPagingItems.eventsLazyPagingItems,
                         lazyListState = state.entitiesListUiState.eventsListUiState.lazyListState,
                     )
 
                     Tab.LABELS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entityLazyPagingItems.labelsLazyPagingItems,
+                        lazyPagingItems = entitiesLazyPagingItems.labelsLazyPagingItems,
                         lazyListState = state.entitiesListUiState.labelsListUiState.lazyListState,
                     )
 
                     Tab.PLACES -> EntitiesPagingListUiState(
-                        lazyPagingItems = entityLazyPagingItems.placesLazyPagingItems,
+                        lazyPagingItems = entitiesLazyPagingItems.placesLazyPagingItems,
                         lazyListState = state.entitiesListUiState.placesListUiState.lazyListState,
                     )
 
                     Tab.RECORDINGS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entityLazyPagingItems.recordingsLazyPagingItems,
+                        lazyPagingItems = entitiesLazyPagingItems.recordingsLazyPagingItems,
                         lazyListState = state.entitiesListUiState.recordingsListUiState.lazyListState,
                     )
 
                     Tab.RELEASES -> EntitiesPagingListUiState(
-                        lazyPagingItems = entityLazyPagingItems.releasesLazyPagingItems,
+                        lazyPagingItems = entitiesLazyPagingItems.releasesLazyPagingItems,
                         lazyListState = state.entitiesListUiState.releasesListUiState.lazyListState,
                         showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
                     )
 
                     Tab.RELEASE_GROUPS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entityLazyPagingItems.releaseGroupsLazyPagingItems,
+                        lazyPagingItems = entitiesLazyPagingItems.releaseGroupsLazyPagingItems,
                         lazyListState = state.entitiesListUiState.releaseGroupsListUiState.lazyListState,
                     )
 
                     Tab.WORKS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entityLazyPagingItems.worksLazyPagingItems,
+                        lazyPagingItems = entitiesLazyPagingItems.worksLazyPagingItems,
                         lazyListState = state.entitiesListUiState.worksListUiState.lazyListState,
                     )
 
                     Tab.RELATIONSHIPS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entityLazyPagingItems.relationsLazyPagingItems,
+                        lazyPagingItems = entitiesLazyPagingItems.relationsLazyPagingItems,
                         lazyListState = state.entitiesListUiState.relationsUiState.lazyListState,
                     )
 
@@ -155,10 +156,15 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                             ),
                         )
                     },
-                    selectedIds = state.selectedIds,
+                    selectedIds = state.selectionState.selectedIds,
                     onSelect = {
                         eventSink(
-                            DetailsUiEvent.ToggleSelectItem(collectableId = it),
+                            DetailsUiEvent.ToggleSelectItem(
+                                collectableId = it,
+                                loadedCount = entitiesLazyPagingItems.getLoadedIdsForTab(
+                                    tab = tab,
+                                ).size,
+                            ),
                         )
                     },
                     onEditCollectionClick = onEditCollectionClick,

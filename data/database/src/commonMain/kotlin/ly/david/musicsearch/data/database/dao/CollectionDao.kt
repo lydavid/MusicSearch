@@ -1,14 +1,19 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.Query
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
-import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.getCount
+import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
+import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.Collection
 
 class CollectionDao(
@@ -63,8 +68,20 @@ class CollectionDao(
             mapper = ::mapToCollectionListItem,
         ).executeAsOneOrNull()
 
+    private fun getCountOfCollectionsQuery(
+        showLocal: Boolean,
+        showRemote: Boolean,
+        query: String,
+        entity: MusicBrainzEntity?,
+    ): Query<Long> = transacter.getCountOfCollections(
+        showLocal = showLocal,
+        showRemote = showRemote,
+        query = query,
+        entity = entity,
+    )
+
     fun getCountOfRemoteCollections() =
-        transacter.getNumberOfCollections(
+        getCountOfCollectionsQuery(
             showLocal = false,
             showRemote = true,
             query = "%%",
@@ -72,6 +89,17 @@ class CollectionDao(
         )
             .executeAsOne()
             .toInt()
+
+    fun observeCountOfLocalCollections(): Flow<Int> =
+        getCountOfCollectionsQuery(
+            showLocal = true,
+            showRemote = false,
+            query = "%%",
+            entity = null,
+        )
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
 
     fun getAllCollections(
         entity: MusicBrainzEntity?,
@@ -81,7 +109,7 @@ class CollectionDao(
         sortOption: CollectionSortOption,
         entityIdToCheckExists: String?,
     ): PagingSource<Int, CollectionListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfCollections(
+        countQuery = getCountOfCollectionsQuery(
             showLocal = showLocal,
             showRemote = showRemote,
             query = query,

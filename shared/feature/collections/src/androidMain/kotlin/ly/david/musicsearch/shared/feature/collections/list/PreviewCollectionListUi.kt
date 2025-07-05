@@ -7,13 +7,13 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.common.topappbar.TopAppBarEditState
-import ly.david.musicsearch.ui.common.preview.PreviewTheme
+import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.topappbar.rememberSelectionState
 
 @PreviewLightDark
 @Composable
-internal fun PreviewCollectionList() {
-    PreviewTheme {
+internal fun PreviewCollectionListUi() {
+    PreviewWithSharedElementTransition {
         val items = MutableStateFlow(
             PagingData.from(
                 listOf(
@@ -35,6 +35,7 @@ internal fun PreviewCollectionList() {
         )
 
         CollectionListUi(
+            selectionState = rememberSelectionState(),
             lazyPagingItems = items.collectAsLazyPagingItems(),
         )
     }
@@ -42,8 +43,8 @@ internal fun PreviewCollectionList() {
 
 @PreviewLightDark
 @Composable
-internal fun PreviewCollectionListEditMode() {
-    PreviewTheme {
+internal fun PreviewCollectionListUiSelection() {
+    PreviewWithSharedElementTransition {
         val items = MutableStateFlow(
             PagingData.from(
                 listOf(
@@ -64,8 +65,43 @@ internal fun PreviewCollectionListEditMode() {
             ),
         )
 
+        val selectionState = rememberSelectionState(totalCount = 300)
+        selectionState.toggleSelection(id = "2", totalLoadedCount = 200)
         CollectionListUi(
-            topAppBarEditState = TopAppBarEditState(initialIsEditMode = true),
+            selectionState = selectionState,
+            lazyPagingItems = items.collectAsLazyPagingItems(),
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewCollectionListUiSelectedAll() {
+    PreviewWithSharedElementTransition {
+        val items = MutableStateFlow(
+            PagingData.from(
+                listOf(
+                    CollectionListItemModel(
+                        id = "1",
+                        isRemote = false,
+                        name = "Favorite works",
+                        entity = MusicBrainzEntity.WORK,
+                    ),
+                    CollectionListItemModel(
+                        id = "2",
+                        isRemote = false,
+                        name = "My CD collection",
+                        entity = MusicBrainzEntity.RELEASE,
+                        visited = true,
+                    ),
+                ),
+            ),
+        )
+
+        val selectionState = rememberSelectionState(totalCount = 2)
+        selectionState.toggleSelectAll(ids = listOf("1", "2"))
+        CollectionListUi(
+            selectionState = selectionState,
             lazyPagingItems = items.collectAsLazyPagingItems(),
         )
     }

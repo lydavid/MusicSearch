@@ -54,16 +54,21 @@ internal class DatabasePresenter(
         val lazyListState = rememberLazyListState()
         val countOfAllImages by
             musicBrainzImageMetadataRepository.observeCountOfAllImageMetadata().collectAsRetainedState(0)
-        val countOfAllAreas by areasListRepository.observeCountOfAllAreas().collectAsRetainedState(0)
+        val countOfAllAreas by areasListRepository.observeCountOfAreas(
+            browseMethod = BrowseMethod.All,
+        ).collectAsRetainedState(0)
         val countOfAllArtists by artistsListRepository.observeCountOfArtists(
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
         val countOfAllEvents by eventsListRepository.observeCountOfEvents(
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
-        val countOfAllGenres by genresListRepository.observeCountOfAllGenres().collectAsRetainedState(0)
-        val countOfAllInstruments by instrumentsListRepository.observeCountOfAllInstruments()
-            .collectAsRetainedState(0)
+        val countOfAllGenres by genresListRepository.observeCountOfGenres(
+            browseMethod = BrowseMethod.All,
+        ).collectAsRetainedState(0)
+        val countOfAllInstruments by instrumentsListRepository.observeCountOfInstruments(
+            browseMethod = BrowseMethod.All,
+        ).collectAsRetainedState(0)
         val countOfAllLabels by labelsListRepository.observeCountOfLabels(
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
@@ -79,7 +84,9 @@ internal class DatabasePresenter(
         val countOfAllReleaseGroups by releaseGroupsListRepository.observeCountOfReleaseGroups(
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
-        val countOfAllSeries by seriesListRepository.observeCountOfAllSeries().collectAsRetainedState(0)
+        val countOfAllSeries by seriesListRepository.observeCountOfSeries(
+            browseMethod = BrowseMethod.All,
+        ).collectAsRetainedState(0)
         val countOfAllWorks by worksListRepository.observeCountOfWorks(
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)

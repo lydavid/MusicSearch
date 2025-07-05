@@ -15,16 +15,14 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.list.EntitiesListPresenter
+import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
+import ly.david.musicsearch.ui.common.list.EntitiesListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.screen.AllEntitiesScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
-import ly.david.musicsearch.ui.common.screen.EntitiesListPresenter
-import ly.david.musicsearch.ui.common.screen.EntitiesListUiEvent
-import ly.david.musicsearch.ui.common.screen.EntitiesListUiState
-import ly.david.musicsearch.ui.common.topappbar.TopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
-import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarEditState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.toTab
 
@@ -40,7 +38,6 @@ internal class AllEntitiesPresenter(
         var subtitle: String by rememberSaveable { mutableStateOf("") }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        val topAppBarEditState: TopAppBarEditState = rememberTopAppBarEditState()
 
         val entitiesListUiState = entitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
@@ -84,7 +81,6 @@ internal class AllEntitiesPresenter(
             subtitle = subtitle,
             entity = screen.entity,
             topAppBarFilterState = topAppBarFilterState,
-            topAppBarEditState = topAppBarEditState,
             entitiesListUiState = entitiesListUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
@@ -97,7 +93,6 @@ internal data class AllEntitiesUiState(
     val subtitle: String,
     val entity: MusicBrainzEntity,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
-    val topAppBarEditState: TopAppBarEditState,
     val entitiesListUiState: EntitiesListUiState,
     val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (AllEntitiesUiEvent) -> Unit,

@@ -1,6 +1,7 @@
 package ly.david.musicsearch.ui.common.paging
 
 import app.cash.paging.compose.LazyPagingItems
+import ly.david.musicsearch.shared.domain.listitem.EntityListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
@@ -21,7 +22,7 @@ data class EntitiesLazyPagingItems(
     val tracksLazyPagingItems: LazyPagingItems<ListItemModel>,
 )
 
-fun EntitiesLazyPagingItems.getLazyPagingItemsForTab(tab: Tab): LazyPagingItems<ListItemModel>? {
+fun EntitiesLazyPagingItems.getLazyPagingItemsForTab(tab: Tab?): LazyPagingItems<ListItemModel>? {
     return when (tab) {
         Tab.AREAS -> areasLazyPagingItems
         Tab.ARTISTS -> artistsLazyPagingItems
@@ -39,6 +40,14 @@ fun EntitiesLazyPagingItems.getLazyPagingItemsForTab(tab: Tab): LazyPagingItems<
         Tab.TRACKS -> tracksLazyPagingItems
         Tab.DETAILS,
         Tab.STATS,
+        null,
         -> null
     }
+}
+
+fun EntitiesLazyPagingItems.getLoadedIdsForTab(tab: Tab?): List<String> {
+    return getLazyPagingItemsForTab(tab)?.itemSnapshotList?.items
+        ?.filterIsInstance<EntityListItemModel>()
+        ?.map { item -> item.id }
+        .orEmpty()
 }

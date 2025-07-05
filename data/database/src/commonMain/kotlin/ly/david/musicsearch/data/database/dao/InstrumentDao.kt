@@ -20,6 +20,7 @@ import lydavidmusicsearchdatadatabase.Instrument
 
 class InstrumentDao(
     database: Database,
+    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.instrumentQueries
@@ -92,8 +93,18 @@ class InstrumentDao(
         }
     }
 
-    fun observeCountOfAllInstruments(): Flow<Int> =
-        getCountOfAllInstruments(query = "")
+    fun observeCountOfInstruments(browseMethod: BrowseMethod): Flow<Int> =
+        when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                    collectionId = browseMethod.entityId,
+                )
+            }
+
+            else -> {
+                getCountOfAllInstruments(query = "")
+            }
+        }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }

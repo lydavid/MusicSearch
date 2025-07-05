@@ -20,4 +20,11 @@ class CollectionListItemTest : ScreenshotTest() {
             )
         }
     }
+
+    @Test
+    fun disabled() {
+        snapshot {
+            PreviewCollectionListItemDisabled()
+        }
+    }
 }

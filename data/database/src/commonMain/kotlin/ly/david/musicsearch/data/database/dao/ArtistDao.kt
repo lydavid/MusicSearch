@@ -24,6 +24,7 @@ import lydavidmusicsearchdatadatabase.Artists_by_entity
 
 class ArtistDao(
     database: Database,
+    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.artistQueries
@@ -184,13 +185,23 @@ class ArtistDao(
     }
 
     fun observeCountOfArtists(browseMethod: BrowseMethod): Flow<Int> =
-        if (browseMethod is BrowseMethod.ByEntity) {
-            getCountOfArtistsByEntityQuery(
-                entityId = browseMethod.entityId,
-                query = "",
-            )
-        } else {
-            getCountOfAllArtists(query = "")
+        when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                        collectionId = browseMethod.entityId,
+                    )
+                } else {
+                    getCountOfArtistsByEntityQuery(
+                        entityId = browseMethod.entityId,
+                        query = "",
+                    )
+                }
+            }
+
+            else -> {
+                getCountOfAllArtists(query = "")
+            }
         }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)

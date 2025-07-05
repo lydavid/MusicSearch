@@ -108,12 +108,11 @@ appId: io.github.lydavid.musicsearch.debug
 - assertVisible: "Cached 1 of 1 artists"
 - back
 - longPressOn: "ずっと真夜中でいいのに。"
-- assertVisible: "Selected 1"
-- tapOn: "Back"
+- assertVisible: "Selected 1 / 1"
+- back
 - assertVisible: "Artists"
-- tapOn: "Edit"
 - longPressOn: "ずっと真夜中でいいのに。"
-- assertVisible: "Selected 1"
+- assertVisible: "Selected 1 / 1"
 - tapOn: "Filter"
 - inputText: "zutto"
 - tapOn: "Cancel"
@@ -129,13 +128,9 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "Back"
 - tapOn: "Cancel"
 - assertVisible: "Collections"
+- longPressOn: "Artists"
 - tapOn: "More actions"
-- tapOn: "Edit"
-- assertVisible: "Editing..."
-- swipe:
-    from: "Artists"
-    direction: LEFT
-- tapOn: "More actions"
-- tapOn: "View"
+- tapOn: "Delete 1"
+- assertNotVisible: "Artists"
 
 - stopRecording

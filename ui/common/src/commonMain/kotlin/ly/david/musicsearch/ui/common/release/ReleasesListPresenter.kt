@@ -51,7 +51,7 @@ class ReleasesListPresenter(
                 ),
             )
         }
-        val releaseCount by releasesListRepository.observeCountOfReleases(
+        val count by releasesListRepository.observeCountOfReleases(
             browseMethod = browseMethod,
         ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()
@@ -68,7 +68,7 @@ class ReleasesListPresenter(
                             musicBrainzImageMetadataRepository.saveImageMetadata(
                                 mbid = event.entityId,
                                 entity = MusicBrainzEntity.RELEASE,
-                                itemsCount = releaseCount,
+                                itemsCount = count,
                             )
                         }
                     }
@@ -91,6 +91,7 @@ class ReleasesListPresenter(
 
         return ReleasesListUiState(
             pagingDataFlow = pagingDataFlow,
+            count = count,
             lazyListState = lazyListState,
             showMoreInfo = showMoreInfoInReleaseListItem,
             eventSink = ::eventSink,
@@ -120,6 +121,7 @@ sealed interface ReleasesListUiEvent : CircuitUiEvent {
 @Stable
 data class ReleasesListUiState(
     val pagingDataFlow: Flow<PagingData<ListItemModel>> = emptyFlow(),
+    val count: Int = 0,
     val lazyListState: LazyListState = LazyListState(),
     val showMoreInfo: Boolean = true,
     val eventSink: (ReleasesListUiEvent) -> Unit = {},

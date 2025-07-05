@@ -443,9 +443,8 @@ class CollectionRepositoryImplTest : KoinTest {
     }
 
     private suspend fun testDeletingACollection(repository: CollectionRepository) {
-        repository.deleteCollection(
-            collectionId = NEW_COLLECTION_ID,
-            collectionName = "New collection",
+        repository.deleteCollections(
+            collectionIds = setOf(NEW_COLLECTION_ID),
         )
         val flow: Flow<PagingData<CollectionListItemModel>> = repository.observeAllCollections(
             username = "",

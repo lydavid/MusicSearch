@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.area
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
@@ -40,8 +41,9 @@ class AreasListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfAllAreas(): Flow<Int> {
-        return areaDao.observeCountOfAllAreas()
+    override fun observeCountOfAreas(browseMethod: BrowseMethod?): Flow<Int> {
+        if (browseMethod == null) return flowOf()
+        return areaDao.observeCountOfAreas(browseMethod = browseMethod)
     }
 
     override fun getLinkedEntitiesPagingSource(

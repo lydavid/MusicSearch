@@ -18,9 +18,9 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.getNamePlural
-import ly.david.musicsearch.ui.common.list.EntitiesPagingListUi
-import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
+import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
+import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.theme.LocalStrings
@@ -74,7 +74,6 @@ internal fun AllEntitiesUi(
                     }
                 },
                 topAppBarFilterState = state.topAppBarFilterState,
-                topAppBarEditState = state.topAppBarEditState,
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },

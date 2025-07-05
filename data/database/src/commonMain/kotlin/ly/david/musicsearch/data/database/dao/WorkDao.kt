@@ -15,15 +15,16 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import lydavidmusicsearchdatadatabase.Work
 import lydavidmusicsearchdatadatabase.WorkQueries
 import lydavidmusicsearchdatadatabase.Works_by_entity
 
 class WorkDao(
     database: Database,
+    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter: WorkQueries = database.workQueries
@@ -133,13 +134,23 @@ class WorkDao(
     }
 
     fun observeCountOfWorks(browseMethod: BrowseMethod): Flow<Int> =
-        if (browseMethod is BrowseMethod.ByEntity) {
-            getCountOfWorksByEntityQuery(
-                entityId = browseMethod.entityId,
-                query = "",
-            )
-        } else {
-            getCountOfAllWorks(query = "")
+        when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                        collectionId = browseMethod.entityId,
+                    )
+                } else {
+                    getCountOfWorksByEntityQuery(
+                        entityId = browseMethod.entityId,
+                        query = "",
+                    )
+                }
+            }
+
+            else -> {
+                getCountOfAllWorks(query = "")
+            }
         }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)

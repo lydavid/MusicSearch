@@ -19,7 +19,7 @@ insert:
 INSERT OR IGNORE INTO collection
 VALUES ?;
 
-getNumberOfCollections:
+getCountOfCollections:
 SELECT IFNULL(
   (
     SELECT count(*) FROM collection

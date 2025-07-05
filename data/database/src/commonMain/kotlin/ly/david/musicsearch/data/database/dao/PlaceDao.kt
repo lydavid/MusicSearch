@@ -24,6 +24,7 @@ import lydavidmusicsearchdatadatabase.Place
 
 class PlaceDao(
     database: Database,
+    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.placeQueries
@@ -162,13 +163,23 @@ class PlaceDao(
     }
 
     fun observeCountOfPlaces(browseMethod: BrowseMethod): Flow<Int> =
-        if (browseMethod is BrowseMethod.ByEntity) {
-            getPlacesByAreaCountQuery(
-                areaId = browseMethod.entityId,
-                query = "",
-            )
-        } else {
-            getCountOfAllPlaces(query = "")
+        when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                        collectionId = browseMethod.entityId,
+                    )
+                } else {
+                    getPlacesByAreaCountQuery(
+                        areaId = browseMethod.entityId,
+                        query = "",
+                    )
+                }
+            }
+
+            else -> {
+                getCountOfAllPlaces(query = "")
+            }
         }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)

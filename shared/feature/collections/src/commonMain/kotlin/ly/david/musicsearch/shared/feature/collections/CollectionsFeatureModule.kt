@@ -6,8 +6,8 @@ import com.slack.circuit.runtime.ui.ui
 import ly.david.musicsearch.shared.feature.collections.add.AddToCollectionPresenter
 import ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUi
 import ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUiState
-import ly.david.musicsearch.shared.feature.collections.list.CollectionListUi
 import ly.david.musicsearch.shared.feature.collections.list.CollectionListPresenter
+import ly.david.musicsearch.shared.feature.collections.list.CollectionListUi
 import ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiState
 import ly.david.musicsearch.shared.feature.collections.single.CollectionPresenter
 import ly.david.musicsearch.shared.feature.collections.single.CollectionUi
@@ -29,6 +29,7 @@ val collectionsFeatureModule = module {
                     getAllCollections = get(),
                     createCollection = get(),
                     deleteCollection = get(),
+                    collectionRepository = get(),
                 )
 
                 is CollectionScreen -> CollectionPresenter(

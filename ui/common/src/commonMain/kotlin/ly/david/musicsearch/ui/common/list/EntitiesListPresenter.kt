@@ -1,60 +1,44 @@
-package ly.david.musicsearch.ui.common.screen
+package ly.david.musicsearch.ui.common.list
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.runtime.CircuitUiEvent
-import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.ui.common.area.AreasListPresenter
 import ly.david.musicsearch.ui.common.area.AreasListUiEvent
-import ly.david.musicsearch.ui.common.area.AreasListUiState
 import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiEvent
-import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
 import ly.david.musicsearch.ui.common.event.EventsListPresenter
 import ly.david.musicsearch.ui.common.event.EventsListUiEvent
-import ly.david.musicsearch.ui.common.event.EventsListUiState
 import ly.david.musicsearch.ui.common.genre.GenresListPresenter
 import ly.david.musicsearch.ui.common.genre.GenresListUiEvent
-import ly.david.musicsearch.ui.common.genre.GenresListUiState
 import ly.david.musicsearch.ui.common.instrument.InstrumentsListPresenter
 import ly.david.musicsearch.ui.common.instrument.InstrumentsListUiEvent
-import ly.david.musicsearch.ui.common.instrument.InstrumentsListUiState
 import ly.david.musicsearch.ui.common.label.LabelsListPresenter
 import ly.david.musicsearch.ui.common.label.LabelsListUiEvent
-import ly.david.musicsearch.ui.common.label.LabelsListUiState
 import ly.david.musicsearch.ui.common.place.PlacesListPresenter
 import ly.david.musicsearch.ui.common.place.PlacesListUiEvent
-import ly.david.musicsearch.ui.common.place.PlacesListUiState
 import ly.david.musicsearch.ui.common.recording.RecordingsListPresenter
 import ly.david.musicsearch.ui.common.recording.RecordingsListUiEvent
-import ly.david.musicsearch.ui.common.recording.RecordingsListUiState
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
-import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListPresenter
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
-import ly.david.musicsearch.ui.common.release.ReleasesListUiState
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListPresenter
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
-import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiState
 import ly.david.musicsearch.ui.common.series.SeriesListPresenter
 import ly.david.musicsearch.ui.common.series.SeriesListUiEvent
-import ly.david.musicsearch.ui.common.series.SeriesListUiState
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.track.TracksByEntityUiEvent
 import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
-import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
 import ly.david.musicsearch.ui.common.work.WorksListPresenter
 import ly.david.musicsearch.ui.common.work.WorksListUiEvent
-import ly.david.musicsearch.ui.common.work.WorksListUiState
 
 class EntitiesListPresenter(
     private val areasListPresenter: AreasListPresenter,
@@ -298,25 +282,6 @@ class EntitiesListPresenter(
         )
     }
 }
-
-@Stable
-data class EntitiesListUiState(
-    val areasListUiState: AreasListUiState = AreasListUiState(),
-    val artistsListUiState: ArtistsListUiState = ArtistsListUiState(),
-    val eventsListUiState: EventsListUiState = EventsListUiState(),
-    val genresListUiState: GenresListUiState = GenresListUiState(),
-    val instrumentsListUiState: InstrumentsListUiState = InstrumentsListUiState(),
-    val labelsListUiState: LabelsListUiState = LabelsListUiState(),
-    val placesListUiState: PlacesListUiState = PlacesListUiState(),
-    val recordingsListUiState: RecordingsListUiState = RecordingsListUiState(),
-    val releasesListUiState: ReleasesListUiState = ReleasesListUiState(),
-    val releaseGroupsListUiState: ReleaseGroupsListUiState = ReleaseGroupsListUiState(),
-    val seriesListUiState: SeriesListUiState = SeriesListUiState(),
-    val worksListUiState: WorksListUiState = WorksListUiState(),
-    val relationsUiState: RelationsUiState = RelationsUiState(),
-    val tracksByReleaseUiState: TracksByReleaseUiState = TracksByReleaseUiState(),
-    val eventSink: (EntitiesListUiEvent) -> Unit = {},
-) : CircuitUiState
 
 sealed interface EntitiesListUiEvent : CircuitUiEvent {
     data class Get(

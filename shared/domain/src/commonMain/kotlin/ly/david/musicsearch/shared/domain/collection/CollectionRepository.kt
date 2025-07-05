@@ -17,6 +17,8 @@ interface CollectionRepository {
         entityIdToCheckExists: String? = null,
     ): Flow<PagingData<CollectionListItemModel>>
 
+    fun observeCountOfLocalCollections(): Flow<Int>
+
     fun getCollection(entityId: String): CollectionListItemModel?
 
     fun insertLocal(
@@ -42,14 +44,9 @@ interface CollectionRepository {
         entityIds: Set<String>,
     ): ActionableResult
 
-    suspend fun deleteCollection(
-        collectionId: String,
-        collectionName: String,
+    suspend fun deleteCollections(
+        collectionIds: Set<String>,
     ): ActionableResult
-
-    fun observeCountOfEntitiesByCollection(
-        collectionId: String,
-    ): Flow<Int>
 
     fun observeEntityIsInACollection(
         entityId: String,

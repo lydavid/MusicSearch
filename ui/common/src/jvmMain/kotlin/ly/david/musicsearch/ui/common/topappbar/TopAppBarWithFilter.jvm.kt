@@ -18,15 +18,13 @@ actual fun TopAppBarWithFilter(
     title: String,
     subtitle: String,
     scrollBehavior: TopAppBarScrollBehavior?,
-
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
-
     topAppBarFilterState: TopAppBarFilterState,
-    topAppBarEditState: TopAppBarEditState,
-
+    selectionState: SelectionState,
     additionalActions: @Composable () -> Unit,
     additionalBar: @Composable () -> Unit,
+    onSelectAllToggle: () -> Unit,
 ) {
     TopAppBarWithFilterInternal(
         modifier = modifier,
@@ -39,8 +37,9 @@ actual fun TopAppBarWithFilter(
         overflowDropdownMenuItems = overflowDropdownMenuItems,
         subtitleDropdownMenuItems = subtitleDropdownMenuItems,
         topAppBarFilterState = topAppBarFilterState,
-        topAppBarEditState = topAppBarEditState,
+        selectionState = selectionState,
         additionalActions = additionalActions,
         additionalBar = additionalBar,
+        onSelectAllToggle = onSelectAllToggle,
     )
 }

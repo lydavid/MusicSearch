@@ -15,8 +15,6 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import kotlinx.collections.immutable.ImmutableSet
-import kotlinx.collections.immutable.toPersistentSet
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
@@ -25,17 +23,18 @@ import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.list.EntitiesListPresenter
+import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
+import ly.david.musicsearch.ui.common.list.EntitiesListUiState
+import ly.david.musicsearch.ui.common.list.getTotalLocalCount
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
-import ly.david.musicsearch.ui.common.screen.EntitiesListPresenter
-import ly.david.musicsearch.ui.common.screen.EntitiesListUiEvent
-import ly.david.musicsearch.ui.common.screen.EntitiesListUiState
 import ly.david.musicsearch.ui.common.screen.RecordVisit
-import ly.david.musicsearch.ui.common.topappbar.TopAppBarEditState
+import ly.david.musicsearch.ui.common.topappbar.SelectionState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
-import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarEditState
+import ly.david.musicsearch.ui.common.topappbar.rememberSelectionState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.toTab
 
@@ -62,13 +61,15 @@ internal class CollectionPresenter(
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val topAppBarEditState: TopAppBarEditState = rememberTopAppBarEditState()
-        var selectedIds: Set<String> by rememberSaveable { mutableStateOf(setOf()) }
 
         val loginUiState = loginPresenter.present()
 
         val entitiesListUiState = entitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
+
+        val selectionState = rememberSelectionState(
+            totalCount = entitiesListUiState.getTotalLocalCount(collection?.entity),
+        )
 
         var oneShotNewCollectableId: String? by rememberRetained {
             mutableStateOf(screen.collectableId)
@@ -95,15 +96,6 @@ internal class CollectionPresenter(
             searchHint = "",
         )
 
-        LaunchedEffect(topAppBarEditState.isEditMode) {
-            if (!topAppBarEditState.isEditMode) {
-                selectedIds = setOf()
-            }
-            if (selectedIds.isEmpty()) {
-                topAppBarEditState.customTitle = ""
-            }
-        }
-
         LaunchedEffect(
             key1 = query,
         ) {
@@ -128,16 +120,6 @@ internal class CollectionPresenter(
                     navigator.pop()
                 }
 
-                is CollectionUiEvent.ToggleSelectItem -> {
-                    selectedIds = if (selectedIds.contains(event.collectableId)) {
-                        selectedIds.minus(event.collectableId)
-                    } else {
-                        selectedIds.plus(event.collectableId)
-                    }
-                    topAppBarEditState.toggleEditMode(selectedIds.isNotEmpty())
-                    topAppBarEditState.customTitle = "Selected ${selectedIds.size}"
-                }
-
                 is CollectionUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
@@ -153,10 +135,9 @@ internal class CollectionPresenter(
                 is CollectionUiEvent.MarkSelectedItemsAsDeleted -> {
                     firstActionableResult = collectionRepository.markDeletedFromCollection(
                         collection = collection ?: return,
-                        collectableIds = selectedIds,
+                        collectableIds = selectionState.selectedIds,
                     )
-                    selectedIds = setOf()
-                    topAppBarEditState.toggleEditMode(false)
+                    selectionState.clearSelection()
                 }
 
                 is CollectionUiEvent.UnMarkItemsAsDeleted -> {
@@ -185,8 +166,7 @@ internal class CollectionPresenter(
             firstActionableResult = firstActionableResult,
             secondActionableResult = secondActionableResult,
             topAppBarFilterState = topAppBarFilterState,
-            topAppBarEditState = topAppBarEditState,
-            selectedIds = selectedIds.toPersistentSet(),
+            selectionState = selectionState,
             loginUiState = loginUiState,
             entitiesListUiState = entitiesListUiState,
             eventSink = ::eventSink,
@@ -203,8 +183,7 @@ internal data class CollectionUiState(
     val secondActionableResult: ActionableResult?,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val url: String,
-    val topAppBarEditState: TopAppBarEditState,
-    val selectedIds: ImmutableSet<String>,
+    val selectionState: SelectionState,
     val loginUiState: LoginUiState,
     val entitiesListUiState: EntitiesListUiState,
     val eventSink: (CollectionUiEvent) -> Unit,
@@ -213,10 +192,6 @@ internal data class CollectionUiState(
 
 internal sealed interface CollectionUiEvent : CircuitUiEvent {
     data object NavigateUp : CollectionUiEvent
-
-    data class ToggleSelectItem(
-        val collectableId: String,
-    ) : CollectionUiEvent
 
     data object MarkSelectedItemsAsDeleted : CollectionUiEvent
 

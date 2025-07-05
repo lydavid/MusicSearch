@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.genre
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -40,8 +41,9 @@ class GenresListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfAllGenres(): Flow<Int> {
-        return genreDao.observeCountOfAllGenres()
+    override fun observeCountOfGenres(browseMethod: BrowseMethod?): Flow<Int> {
+        if (browseMethod == null) return flowOf()
+        return genreDao.observeCountOfGenres(browseMethod)
     }
 
     override fun getLinkedEntitiesPagingSource(

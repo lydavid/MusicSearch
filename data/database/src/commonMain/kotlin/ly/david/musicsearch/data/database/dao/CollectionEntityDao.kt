@@ -1,9 +1,9 @@
 package ly.david.musicsearch.data.database.dao
 
+import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Collection_entity
@@ -81,26 +81,27 @@ class CollectionEntityDao(
         )
     }
 
-    fun deleteCollection(
-        collectionId: String,
+    fun deleteCollections(
+        collectionIds: Set<String>,
     ) {
-        transacter.deleteCollection(collectionId = collectionId)
+        withTransaction {
+            collectionIds.forEach { collectionId ->
+                transacter.deleteCollection(collectionId = collectionId)
+            }
+        }
     }
 
     fun getCountOfEntitiesByCollection(collectionId: String): Int =
-        transacter.getCountOfEntitiesByCollection(
+        getCountOfEntitiesByCollectionQuery(
             collectionId = collectionId,
         )
             .executeAsOne()
             .toInt()
 
-    fun observeCountOfEntitiesByCollection(collectionId: String): Flow<Int> =
+    internal fun getCountOfEntitiesByCollectionQuery(collectionId: String): Query<Long> =
         transacter.getCountOfEntitiesByCollection(
             collectionId = collectionId,
         )
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
 
     fun entityIsInACollection(entityId: String): Flow<Boolean> =
         transacter.entityIsInACollection(

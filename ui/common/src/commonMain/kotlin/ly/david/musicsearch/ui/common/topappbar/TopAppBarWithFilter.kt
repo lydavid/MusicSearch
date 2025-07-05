@@ -3,23 +3,30 @@ package ly.david.musicsearch.ui.common.topappbar
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,14 +34,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.icons.ArrowBack
@@ -56,15 +71,13 @@ expect fun TopAppBarWithFilter(
     title: String = "",
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
-
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
-
     topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
-    topAppBarEditState: TopAppBarEditState = TopAppBarEditState(),
-
+    selectionState: SelectionState = SelectionState(),
     additionalActions: @Composable () -> Unit = {},
     additionalBar: @Composable () -> Unit = {},
+    onSelectAllToggle: () -> Unit = {},
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,15 +90,13 @@ internal fun TopAppBarWithFilterInternal(
     title: String = "",
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
-
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
-
     topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
-    topAppBarEditState: TopAppBarEditState = TopAppBarEditState(),
-
+    selectionState: SelectionState = SelectionState(),
     additionalActions: @Composable () -> Unit = {},
     additionalBar: @Composable () -> Unit = {},
+    onSelectAllToggle: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -172,24 +183,26 @@ internal fun TopAppBarWithFilterInternal(
             }
         }
 
+        val isEditMode = selectionState.isEditMode
+        val containerColor = if (isEditMode) MaterialTheme.colorScheme.surfaceVariant else Color.Unspecified
         ScrollableTopAppBar(
             onBack = {
-                if (topAppBarEditState.isEditMode) {
-                    topAppBarEditState.dismiss()
+                if (isEditMode) {
+                    selectionState.clearSelection()
                 } else {
                     onBack()
                 }
             },
             showBackButton = showBackButton,
             entity = entity,
-            title = if (topAppBarEditState.isEditMode) {
-                topAppBarEditState.customTitle.ifEmpty { "Editing..." }
+            title = if (isEditMode) {
+                selectionState.title.ifEmpty { "Editing..." }
             } else {
                 title
             },
             subtitle = subtitle,
-            scrollBehavior = scrollBehavior,
-            isEditMode = topAppBarEditState.isEditMode,
+            scrollBehavior = scrollBehavior.takeIf { !isEditMode },
+            containerColor = containerColor,
             actions = {
                 if (topAppBarFilterState.show) {
                     IconButton(onClick = {
@@ -205,7 +218,49 @@ internal fun TopAppBarWithFilterInternal(
             },
             overflowDropdownMenuItems = overflowDropdownMenuItems,
             subtitleDropdownMenuItems = subtitleDropdownMenuItems,
-            additionalBar = additionalBar,
+            additionalBar = {
+                if (isEditMode) {
+                    Row(
+                        modifier = Modifier
+                            .background(containerColor)
+                            .padding(2.dp)
+                            .fillMaxWidth(),
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .clip(shape = RoundedCornerShape(28.dp))
+                                .clickable {
+                                    onSelectAllToggle()
+                                }
+                                .semantics(mergeDescendants = true) {
+                                    role = Role.Checkbox
+                                }
+                                .padding(horizontal = 14.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            val toggleableState = when (selectionState.selectAllState) {
+                                SelectAllState.None -> ToggleableState.Off
+                                SelectAllState.Some -> ToggleableState.Indeterminate
+                                SelectAllState.All -> ToggleableState.On
+                            }
+                            TriStateCheckbox(
+                                state = toggleableState,
+                                colors = CheckboxDefaults.colors(
+                                    checkedColor = MaterialTheme.colorScheme.primary,
+                                ),
+                                onClick = null,
+                            )
+                            Text(
+                                text = selectionState.checkboxText,
+                                modifier = Modifier.padding(start = 8.dp),
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.SemiBold,
+                            )
+                        }
+                    }
+                }
+                additionalBar()
+            },
         )
     }
 }

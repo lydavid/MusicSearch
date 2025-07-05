@@ -24,11 +24,11 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
 import ly.david.musicsearch.ui.common.event.EventsListUiState
 import ly.david.musicsearch.ui.common.label.LabelsListUiState
+import ly.david.musicsearch.ui.common.list.EntitiesListUiState
 import ly.david.musicsearch.ui.common.place.PlacesListUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.release.ReleasesListUiState
-import ly.david.musicsearch.ui.common.screen.EntitiesListUiState
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
 private val canadianArtists = MutableStateFlow(
@@ -510,9 +510,12 @@ private val country = AreaDetailsModel(
 
 private val detailsUiState = DetailsUiState(
     title = "Canada",
-    detailsModel = country,
     tabs = areaTabs,
     selectedTab = Tab.DETAILS,
+    detailsModel = country,
+    detailsTabUiState = DetailsTabUiState(
+        now = Instant.parse("2025-06-05T20:42:20Z"),
+    ),
     entitiesListUiState = EntitiesListUiState(
         artistsListUiState = ArtistsListUiState(
             pagingDataFlow = canadianArtists,
@@ -532,9 +535,6 @@ private val detailsUiState = DetailsUiState(
         relationsUiState = RelationsUiState(
             pagingDataFlow = canadianRelations,
         ),
-    ),
-    detailsTabUiState = DetailsTabUiState(
-        now = Instant.parse("2025-06-05T20:42:20Z"),
     ),
 )
 
@@ -594,9 +594,9 @@ internal fun PreviewAreaRelationships() {
         AreaUiInternal(
             state = DetailsUiState(
                 title = "Canada",
-                detailsModel = country,
                 tabs = areaTabs,
                 selectedTab = Tab.RELATIONSHIPS,
+                detailsModel = country,
                 entitiesListUiState = EntitiesListUiState(
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
@@ -631,9 +631,9 @@ internal fun PreviewAreaArtists() {
         AreaUiInternal(
             state = DetailsUiState(
                 title = "Canada",
-                detailsModel = country,
                 tabs = areaTabs,
                 selectedTab = Tab.ARTISTS,
+                detailsModel = country,
                 entitiesListUiState = EntitiesListUiState(
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
@@ -668,9 +668,9 @@ internal fun PreviewAreaEvents() {
         AreaUiInternal(
             state = DetailsUiState(
                 title = "Canada",
-                detailsModel = country,
                 tabs = areaTabs,
                 selectedTab = Tab.EVENTS,
+                detailsModel = country,
                 entitiesListUiState = EntitiesListUiState(
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
@@ -705,9 +705,9 @@ internal fun PreviewAreaLabels() {
         AreaUiInternal(
             state = DetailsUiState(
                 title = "Canada",
-                detailsModel = country,
                 tabs = areaTabs,
                 selectedTab = Tab.LABELS,
+                detailsModel = country,
                 entitiesListUiState = EntitiesListUiState(
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
@@ -742,9 +742,9 @@ internal fun PreviewAreaReleases() {
         AreaUiInternal(
             state = DetailsUiState(
                 title = "Canada",
-                detailsModel = country,
                 tabs = areaTabs,
                 selectedTab = Tab.RELEASES,
+                detailsModel = country,
                 entitiesListUiState = EntitiesListUiState(
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
@@ -779,9 +779,9 @@ internal fun PreviewAreaPlaces() {
         AreaUiInternal(
             state = DetailsUiState(
                 title = "Canada",
-                detailsModel = country,
                 tabs = areaTabs,
                 selectedTab = Tab.PLACES,
+                detailsModel = country,
                 entitiesListUiState = EntitiesListUiState(
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,
@@ -817,9 +817,9 @@ internal fun PreviewAreaStats() {
         AreaUiInternal(
             state = DetailsUiState(
                 title = "Canada",
-                detailsModel = country,
                 tabs = areaTabs,
                 selectedTab = Tab.STATS,
+                detailsModel = country,
                 entitiesListUiState = EntitiesListUiState(
                     artistsListUiState = ArtistsListUiState(
                         pagingDataFlow = canadianArtists,

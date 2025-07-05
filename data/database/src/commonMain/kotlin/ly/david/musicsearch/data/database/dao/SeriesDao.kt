@@ -14,13 +14,14 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
+import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import lydavidmusicsearchdatadatabase.Series
 import lydavidmusicsearchdatadatabase.SeriesQueries
 
 class SeriesDao(
     database: Database,
+    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter: SeriesQueries = database.seriesQueries
@@ -111,8 +112,18 @@ class SeriesDao(
         },
     )
 
-    fun observeCountOfAllSeries(): Flow<Int> =
-        getCountOfAllSeries(query = "")
+    fun observeCountOfSeries(browseMethod: BrowseMethod): Flow<Int> =
+        when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                    collectionId = browseMethod.entityId,
+                )
+            }
+
+            else -> {
+                getCountOfAllSeries(query = "")
+            }
+        }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }

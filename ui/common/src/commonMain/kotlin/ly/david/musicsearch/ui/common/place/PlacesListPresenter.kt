@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import app.cash.paging.PagingData
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -18,11 +19,13 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.place.PlacesListRepository
 import ly.david.musicsearch.shared.domain.place.usecase.GetPlaces
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class PlacesListPresenter(
     private val getPlaces: GetPlaces,
+    private val placesListRepository: PlacesListRepository,
 ) : Presenter<PlacesListUiState> {
     @Composable
     override fun present(): PlacesListUiState {
@@ -40,6 +43,9 @@ class PlacesListPresenter(
                 ),
             )
         }
+        val count by placesListRepository.observeCountOfPlaces(
+            browseMethod = browseMethod,
+        ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()
 
         fun eventSink(event: PlacesListUiEvent) {
@@ -57,6 +63,7 @@ class PlacesListPresenter(
 
         return PlacesListUiState(
             pagingDataFlow = pagingDataFlow,
+            count = count,
             lazyListState = lazyListState,
             eventSink = ::eventSink,
         )
@@ -77,6 +84,7 @@ sealed interface PlacesListUiEvent : CircuitUiEvent {
 @Stable
 data class PlacesListUiState(
     val pagingDataFlow: Flow<PagingData<ListItemModel>> = emptyFlow(),
+    val count: Int = 0,
     val lazyListState: LazyListState = LazyListState(),
     val eventSink: (PlacesListUiEvent) -> Unit = {},
 ) : CircuitUiState

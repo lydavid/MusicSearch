@@ -1,13 +1,12 @@
 package ly.david.musicsearch.shared.feature.collections.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemColors
-import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +17,7 @@ import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.icons.CheckCircle
 import ly.david.musicsearch.ui.common.icons.Cloud
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.SMALL_IMAGE_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -26,9 +26,23 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 internal fun CollectionListItem(
     collection: CollectionListItemModel,
     modifier: Modifier = Modifier,
-    colors: ListItemColors = ListItemDefaults.colors(),
-    onClick: CollectionListItemModel.() -> Unit = {},
+    onClick: (String) -> Unit = {},
+    enabled: Boolean = true,
+    isSelected: Boolean = false,
+    onSelect: (String) -> Unit = {},
 ) {
+    val listItemModifier = if (enabled) {
+        modifier.combinedClickable(
+            onClick = {
+                onClick(collection.id)
+            },
+            onLongClick = {
+                onSelect(collection.id)
+            },
+        )
+    } else {
+        modifier
+    }
     ListItem(
         headlineContent = {
             Text(
@@ -37,21 +51,36 @@ internal fun CollectionListItem(
                 fontWeight = collection.fontWeight,
             )
         },
-        modifier = modifier.clickable { onClick(collection) },
-        colors = colors,
-        supportingContent = {
-            // We currently don't support adding descriptions. Descriptions are not returned from MB's API either.
-            Text(
-                text = collection.description,
-                style = TextStyles.getCardBodyTextStyle(),
-                fontWeight = collection.fontWeight,
-            )
-        },
+        modifier = listItemModifier,
+        colors = listItemColors(
+            isSelected = isSelected,
+            enabled = enabled,
+        ),
+        // We currently don't support adding descriptions. Descriptions are not returned from MB's API either.
         leadingContent = {
-            EntityIcon(
-                entity = collection.entity,
-                modifier = Modifier.size(SMALL_IMAGE_SIZE.dp),
-            )
+            val sizeModifier = Modifier
+                .size(SMALL_IMAGE_SIZE.dp)
+            val finalModifier = if (collection.isRemote) {
+                sizeModifier
+            } else {
+                sizeModifier.clickable {
+                    onSelect(collection.id)
+                }
+            }
+
+            if (isSelected) {
+                Icon(
+                    modifier = finalModifier,
+                    imageVector = CustomIcons.CheckCircle,
+                    tint = MaterialTheme.colorScheme.primary,
+                    contentDescription = "selected",
+                )
+            } else {
+                EntityIcon(
+                    entity = collection.entity,
+                    modifier = finalModifier,
+                )
+            }
         },
         trailingContent = {
             Row {

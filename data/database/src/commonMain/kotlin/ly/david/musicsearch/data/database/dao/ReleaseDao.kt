@@ -29,6 +29,7 @@ class ReleaseDao(
     private val mediumDao: MediumDao,
     private val releaseLabelDao: ReleaseLabelDao,
     private val releaseCountryDao: ReleaseCountryDao,
+    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.releaseQueries
@@ -332,15 +333,6 @@ class ReleaseDao(
         query = "%$query%",
     )
 
-    fun observeCountOfReleasesByEntity(entityId: String): Flow<Int> =
-        getCountOfReleasesByEntityQuery(
-            entityId = entityId,
-            query = "",
-        )
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
-
     fun getCountOfReleasesByEntity(entityId: String): Int =
         getCountOfReleasesByEntityQuery(
             entityId = entityId,
@@ -396,13 +388,23 @@ class ReleaseDao(
     fun observeCountOfReleases(
         browseMethod: BrowseMethod,
     ): Flow<Int> =
-        if (browseMethod is BrowseMethod.ByEntity) {
-            getCountOfReleasesByEntityQuery(
-                entityId = browseMethod.entityId,
-                query = "",
-            )
-        } else {
-            getCountOfAllReleases(query = "")
+        when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                        collectionId = browseMethod.entityId,
+                    )
+                } else {
+                    getCountOfReleasesByEntityQuery(
+                        entityId = browseMethod.entityId,
+                        query = "",
+                    )
+                }
+            }
+
+            else -> {
+                getCountOfAllReleases(query = "")
+            }
         }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)

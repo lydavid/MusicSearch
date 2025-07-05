@@ -1,4 +1,4 @@
-package ly.david.musicsearch.ui.common.list
+package ly.david.musicsearch.ui.common.paging
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,7 +33,6 @@ import ly.david.musicsearch.ui.common.instrument.InstrumentListItem
 import ly.david.musicsearch.ui.common.label.LabelListItem
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.place.PlaceListItem
 import ly.david.musicsearch.ui.common.recording.RecordingListItem
 import ly.david.musicsearch.ui.common.relation.RelationListItem

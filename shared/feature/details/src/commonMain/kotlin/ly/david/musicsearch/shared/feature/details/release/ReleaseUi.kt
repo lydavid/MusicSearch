@@ -30,6 +30,7 @@ import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
+import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
@@ -138,7 +139,16 @@ internal fun ReleaseUi(
                 subtitle = state.subtitle,
                 scrollBehavior = scrollBehavior,
                 topAppBarFilterState = state.topAppBarFilterState,
-                topAppBarEditState = state.topAppBarEditState,
+                selectionState = state.selectionState,
+                onSelectAllToggle = {
+                    eventSink(
+                        DetailsUiEvent.ToggleSelectAllItems(
+                            collectableIds = entitiesLazyPagingItems.getLoadedIdsForTab(
+                                tab = state.selectedTab,
+                            ),
+                        ),
+                    )
+                },
                 additionalActions = {
                     AddToCollectionActionToggle(
                         collected = state.collected,
@@ -172,7 +182,7 @@ internal fun ReleaseUi(
                     CopyToClipboardMenuItem(entityId)
                     AddAllToCollectionMenuItem(
                         tab = state.selectedTab,
-                        entityIds = state.selectedIds,
+                        entityIds = state.selectionState.selectedIds,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
                         snackbarHostState = snackbarHostState,
@@ -232,7 +242,7 @@ internal fun ReleaseUi(
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,
             browseMethod = browseMethod,
-            entityLazyPagingItems = entitiesLazyPagingItems,
+            entitiesLazyPagingItems = entitiesLazyPagingItems,
             onEditCollectionClick = {
                 showAddToCollectionSheet(
                     coroutineScope = coroutineScope,

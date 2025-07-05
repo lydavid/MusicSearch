@@ -31,3 +31,25 @@ internal fun PreviewCollectionListItem(
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewCollectionListItemDisabled() {
+    PreviewTheme {
+        Surface {
+            CollectionListItem(
+                collection = CollectionListItemModel(
+                    id = "3048448c-0605-494a-9e9f-c1a0521906f1",
+                    isRemote = true,
+                    name = "My collection with a very long title",
+                    description = "Some songs",
+                    entity = MusicBrainzEntity.RECORDING,
+                    cachedEntityCount = 9999,
+                    visited = true,
+                    containsEntity = false,
+                ),
+                enabled = false,
+            )
+        }
+    }
+}

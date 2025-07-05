@@ -3,12 +3,9 @@ package ly.david.musicsearch.shared.feature.collections.list
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
@@ -39,14 +36,13 @@ import ly.david.musicsearch.shared.feature.collections.components.CollectionList
 import ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
 import ly.david.musicsearch.ui.common.icons.Add
 import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.musicsearch.ui.common.topappbar.EditToggle
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.topappbar.DeleteMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
-import ly.david.musicsearch.ui.common.topappbar.TopAppBarEditState
+import ly.david.musicsearch.ui.common.topappbar.SelectionState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 /**
  * Displays a list of all of your collections.
@@ -79,7 +75,7 @@ internal fun CollectionListUi(
         modifier = modifier,
         sortOption = state.sortOption,
         topAppBarFilterState = state.topAppBarFilterState,
-        topAppBarEditState = state.topAppBarEditState,
+        selectionState = state.selectionState,
         onCreateCollectionClick = {
             scope.launch {
                 val basicDialogOverlay: BasicDialogOverlay<Unit, CreateNewCollectionResult> = BasicDialogOverlay(
@@ -122,13 +118,8 @@ internal fun CollectionListUi(
             showBottomSheet = true
         },
         actionableResult = state.actionableResult,
-        onDeleteCollection = {
-            eventSink(
-                CollectionsListUiEvent.DeleteCollection(
-                    id,
-                    name,
-                ),
-            )
+        onDeleteClick = {
+            eventSink(CollectionsListUiEvent.DeleteSelectedCollections)
         },
     )
 }
@@ -139,10 +130,10 @@ internal fun CollectionListUi(
 @Composable
 internal fun CollectionListUi(
     lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
+    selectionState: SelectionState,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = LazyListState(),
     topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
-    topAppBarEditState: TopAppBarEditState = TopAppBarEditState(),
     onCreateCollectionClick: () -> Unit = {},
     showLocal: Boolean = true,
     onShowLocalToggle: (Boolean) -> Unit = {},
@@ -152,7 +143,7 @@ internal fun CollectionListUi(
     sortOption: CollectionSortOption = CollectionSortOption.ALPHABETICALLY,
     onSortClick: () -> Unit = {},
     actionableResult: ActionableResult? = null,
-    onDeleteCollection: CollectionListItemModel.() -> Unit = {},
+    onDeleteClick: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -178,7 +169,6 @@ internal fun CollectionListUi(
                 title = strings.collections,
                 scrollBehavior = scrollBehavior,
                 topAppBarFilterState = topAppBarFilterState,
-                topAppBarEditState = topAppBarEditState,
                 additionalActions = {
                     IconButton(onClick = onCreateCollectionClick) {
                         Icon(
@@ -191,17 +181,19 @@ internal fun CollectionListUi(
                     RefreshMenuItem(
                         onClick = { lazyPagingItems.refresh() },
                     )
-                    DropdownMenuItem(
-                        text = {
-                            EditToggle(
-                                topAppBarEditState = topAppBarEditState,
-                                includeTextSeparately = true,
-                            )
-                        },
-                        onClick = {
-                            topAppBarEditState.toggleEditMode()
-                            closeMenu()
-                        },
+                    if (selectionState.selectedIds.isNotEmpty()) {
+                        DeleteMenuItem(
+                            selectionState = selectionState,
+                            onClick = onDeleteClick,
+                        )
+                    }
+                },
+                selectionState = selectionState,
+                onSelectAllToggle = {
+                    selectionState.toggleSelectAll(
+                        ids = lazyPagingItems.itemSnapshotList.items
+                            .filterNot { item -> item.isRemote }
+                            .map { item -> item.id },
                     )
                 },
                 additionalBar = {
@@ -236,26 +228,19 @@ internal fun CollectionListUi(
         ) { collectionListItemModel: CollectionListItemModel? ->
             when (collectionListItemModel) {
                 is CollectionListItemModel -> {
-                    val isEditMode = topAppBarEditState.isEditMode
-                    val isRemote = collectionListItemModel.isRemote
-                    val isEditable = topAppBarEditState.isEditMode && !isRemote
-
-                    SwipeToDeleteListItem(
-                        content = {
-                            CollectionListItem(
-                                collection = collectionListItemModel,
-                                colors = ListItemDefaults.colors(
-                                    containerColor = if (isEditMode && isRemote) {
-                                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-                                    } else {
-                                        MaterialTheme.colorScheme.surface
-                                    },
-                                ),
-                                onClick = { onCollectionClick(id) },
+                    CollectionListItem(
+                        collection = collectionListItemModel,
+                        onClick = onCollectionClick,
+                        enabled = !selectionState.isEditMode || !collectionListItemModel.isRemote,
+                        isSelected = selectionState.selectedIds.contains(collectionListItemModel.id),
+                        onSelect = {
+                            selectionState.toggleSelection(
+                                id = it,
+                                totalLoadedCount = lazyPagingItems.itemSnapshotList.items
+                                    .filterNot { item -> item.isRemote }
+                                    .map { item -> item.id }.size,
                             )
                         },
-                        disable = !isEditable,
-                        onDelete = { onDeleteCollection(collectionListItemModel) },
                     )
                 }
 

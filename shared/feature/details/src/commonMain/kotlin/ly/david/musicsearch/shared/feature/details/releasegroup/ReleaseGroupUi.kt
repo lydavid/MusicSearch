@@ -30,6 +30,7 @@ import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
+import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
@@ -189,7 +190,7 @@ internal fun ReleaseGroupUi(
                     }
                     AddAllToCollectionMenuItem(
                         tab = state.selectedTab,
-                        entityIds = state.selectedIds,
+                        entityIds = state.selectionState.selectedIds,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
                         snackbarHostState = snackbarHostState,
@@ -219,7 +220,16 @@ internal fun ReleaseGroupUi(
                     }
                 },
                 topAppBarFilterState = state.topAppBarFilterState,
-                topAppBarEditState = state.topAppBarEditState,
+                selectionState = state.selectionState,
+                onSelectAllToggle = {
+                    eventSink(
+                        DetailsUiEvent.ToggleSelectAllItems(
+                            collectableIds = entitiesLazyPagingItems.getLoadedIdsForTab(
+                                tab = state.selectedTab,
+                            ),
+                        ),
+                    )
+                },
                 additionalBar = {
                     TabsBar(
                         tabsTitle = state.tabs.map { it.getTitle(strings) },
@@ -237,7 +247,7 @@ internal fun ReleaseGroupUi(
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,
             browseMethod = browseMethod,
-            entityLazyPagingItems = entitiesLazyPagingItems,
+            entitiesLazyPagingItems = entitiesLazyPagingItems,
             onEditCollectionClick = {
                 showAddToCollectionSheet(
                     coroutineScope = coroutineScope,

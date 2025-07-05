@@ -3,17 +3,12 @@ package ly.david.musicsearch.shared.feature.collections.single
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,22 +16,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import app.cash.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.flow.flowOf
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
-import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.common.icons.DeleteOutline
-import ly.david.musicsearch.ui.common.list.EntitiesPagingListUi
-import ly.david.musicsearch.ui.common.list.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
+import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
+import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
+import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
+import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
+import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
-import ly.david.musicsearch.ui.common.topappbar.EditToggle
+import ly.david.musicsearch.ui.common.topappbar.DeleteMenuItem
 import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
@@ -95,6 +94,24 @@ internal fun CollectionUi(
         state.entitiesListUiState.seriesListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val worksLazyPagingItems =
         state.entitiesListUiState.worksListUiState.pagingDataFlow.collectAsLazyPagingItems()
+    val unusedLazyPagingItems =
+        flowOf(PagingData.from(listOf<ListItemModel>())).collectAsLazyPagingItems()
+    val entitiesLazyPagingItems = EntitiesLazyPagingItems(
+        areasLazyPagingItems = areasLazyPagingItems,
+        artistsLazyPagingItems = artistsLazyPagingItems,
+        eventsLazyPagingItems = eventsLazyPagingItems,
+        genresLazyPagingItems = genresLazyPagingItems,
+        instrumentsLazyPagingItems = instrumentsLazyPagingItems,
+        labelsLazyPagingItems = labelsLazyPagingItems,
+        placesLazyPagingItems = placesLazyPagingItems,
+        recordingsLazyPagingItems = recordingsLazyPagingItems,
+        releasesLazyPagingItems = releasesLazyPagingItems,
+        releaseGroupsLazyPagingItems = releaseGroupsLazyPagingItems,
+        seriesLazyPagingItems = seriesLazyPagingItems,
+        worksLazyPagingItems = worksLazyPagingItems,
+        relationsLazyPagingItems = unusedLazyPagingItems,
+        tracksLazyPagingItems = unusedLazyPagingItems,
+    )
 
     state.firstActionableResult?.let { result ->
         LaunchedEffect(result) {
@@ -151,36 +168,15 @@ internal fun CollectionUi(
                 },
                 title = state.title,
                 scrollBehavior = scrollBehavior,
-                additionalActions = {
-                    IconButton(onClick = {
-                        state.topAppBarEditState.toggleEditMode()
-                    }) {
-                        EditToggle(state.topAppBarEditState)
-                    }
-                },
                 overflowDropdownMenuItems = {
-                    RefreshMenuItem(
-                        tab = entity?.toTab(),
-                        onClick = {
-                            when (entity) {
-                                MusicBrainzEntity.AREA -> areasLazyPagingItems.refresh()
-                                MusicBrainzEntity.ARTIST -> artistsLazyPagingItems.refresh()
-                                MusicBrainzEntity.EVENT -> eventsLazyPagingItems.refresh()
-                                MusicBrainzEntity.GENRE -> genresLazyPagingItems.refresh()
-                                MusicBrainzEntity.INSTRUMENT -> instrumentsLazyPagingItems.refresh()
-                                MusicBrainzEntity.LABEL -> labelsLazyPagingItems.refresh()
-                                MusicBrainzEntity.PLACE -> placesLazyPagingItems.refresh()
-                                MusicBrainzEntity.RECORDING -> recordingsLazyPagingItems.refresh()
-                                MusicBrainzEntity.RELEASE -> releasesLazyPagingItems.refresh()
-                                MusicBrainzEntity.RELEASE_GROUP -> releaseGroupsLazyPagingItems.refresh()
-                                MusicBrainzEntity.SERIES -> seriesLazyPagingItems.refresh()
-                                MusicBrainzEntity.WORK -> worksLazyPagingItems.refresh()
-                                else -> {
-                                    // no-op
-                                }
-                            }
-                        },
-                    )
+                    entity?.toTab()?.let { tab ->
+                        RefreshMenuItem(
+                            tab = tab,
+                            onClick = {
+                                entitiesLazyPagingItems.getLazyPagingItemsForTab(tab)?.refresh()
+                            },
+                        )
+                    }
                     StatsMenuItem(
                         statsScreen = StatsScreen(
                             id = collection?.id.orEmpty(),
@@ -212,30 +208,24 @@ internal fun CollectionUi(
                             },
                         )
                     }
-                    if (state.selectedIds.isNotEmpty()) {
-                        DropdownMenuItem(
-                            text = {
-                                Text(
-                                    text = "Delete ${state.selectedIds.size}",
-                                    color = MaterialTheme.colorScheme.error,
-                                )
-                            },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = CustomIcons.DeleteOutline,
-                                    tint = MaterialTheme.colorScheme.error,
-                                    contentDescription = null,
-                                )
-                            },
+                    if (state.selectionState.selectedIds.isNotEmpty()) {
+                        DeleteMenuItem(
+                            selectionState = state.selectionState,
                             onClick = {
-                                closeMenu()
                                 eventSink(CollectionUiEvent.MarkSelectedItemsAsDeleted)
                             },
                         )
                     }
                 },
                 topAppBarFilterState = state.topAppBarFilterState,
-                topAppBarEditState = state.topAppBarEditState,
+                selectionState = state.selectionState,
+                onSelectAllToggle = {
+                    state.selectionState.toggleSelectAll(
+                        ids = entitiesLazyPagingItems.getLoadedIdsForTab(
+                            tab = entity?.toTab(),
+                        ),
+                    )
+                },
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -344,7 +334,7 @@ internal fun CollectionUi(
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
-                selectedIds = state.selectedIds,
+                selectedIds = state.selectionState.selectedIds,
                 onItemClick = { entity, id, title ->
                     eventSink(
                         CollectionUiEvent.ClickItem(
@@ -355,10 +345,11 @@ internal fun CollectionUi(
                     )
                 },
                 onSelect = {
-                    eventSink(
-                        CollectionUiEvent.ToggleSelectItem(
-                            collectableId = it,
-                        ),
+                    state.selectionState.toggleSelection(
+                        id = it,
+                        totalLoadedCount = entitiesLazyPagingItems.getLoadedIdsForTab(
+                            tab = entity.toTab(),
+                        ).size,
                     )
                 },
                 onEditCollectionClick = {

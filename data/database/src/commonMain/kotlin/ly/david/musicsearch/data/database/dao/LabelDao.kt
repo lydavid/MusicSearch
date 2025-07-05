@@ -24,8 +24,9 @@ import lydavidmusicsearchdatadatabase.Labels_by_entity
 
 class LabelDao(
     database: Database,
-    private val coroutineDispatchers: CoroutineDispatchers,
     private val releaseLabelDao: ReleaseLabelDao,
+    private val collectionEntityDao: CollectionEntityDao,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.labelQueries
 
@@ -160,13 +161,23 @@ class LabelDao(
     }
 
     fun observeCountOfLabels(browseMethod: BrowseMethod): Flow<Int> =
-        if (browseMethod is BrowseMethod.ByEntity) {
-            getCountOfLabelsByEntityQuery(
-                entityId = browseMethod.entityId,
-                query = "",
-            )
-        } else {
-            getCountOfAllLabels(query = "")
+        when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                        collectionId = browseMethod.entityId,
+                    )
+                } else {
+                    getCountOfLabelsByEntityQuery(
+                        entityId = browseMethod.entityId,
+                        query = "",
+                    )
+                }
+            }
+
+            else -> {
+                getCountOfAllLabels(query = "")
+            }
         }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)

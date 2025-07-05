@@ -23,8 +23,9 @@ import lydavidmusicsearchdatadatabase.Recordings_by_entity
 
 class RecordingDao(
     database: Database,
-    private val coroutineDispatchers: CoroutineDispatchers,
     private val artistCreditDao: ArtistCreditDao,
+    private val collectionEntityDao: CollectionEntityDao,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.recordingQueries
 
@@ -151,13 +152,23 @@ class RecordingDao(
     }
 
     fun observeCountOfRecordings(browseMethod: BrowseMethod): Flow<Int> =
-        if (browseMethod is BrowseMethod.ByEntity) {
-            getCountOfRecordingsByEntityQuery(
-                entityId = browseMethod.entityId,
-                query = "",
-            )
-        } else {
-            getCountOfAllRecordings(query = "")
+        when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                        collectionId = browseMethod.entityId,
+                    )
+                } else {
+                    getCountOfRecordingsByEntityQuery(
+                        entityId = browseMethod.entityId,
+                        query = "",
+                    )
+                }
+            }
+
+            else -> {
+                getCountOfAllRecordings(query = "")
+            }
         }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)

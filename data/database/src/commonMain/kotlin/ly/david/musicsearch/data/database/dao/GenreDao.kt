@@ -17,6 +17,7 @@ import lydavidmusicsearchdatadatabase.Genre
 
 class GenreDao(
     database: Database,
+    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.genreQueries
@@ -59,8 +60,18 @@ class GenreDao(
         }
     }
 
-    fun observeCountOfAllGenres(): Flow<Int> =
-        getCountOfAllGenres(query = "")
+    fun observeCountOfGenres(browseMethod: BrowseMethod): Flow<Int> =
+        when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                    collectionId = browseMethod.entityId,
+                )
+            }
+
+            else -> {
+                getCountOfAllGenres(query = "")
+            }
+        }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }

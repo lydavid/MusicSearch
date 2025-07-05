@@ -26,22 +26,20 @@ actual fun TopAppBarWithFilter(
     title: String,
     subtitle: String,
     scrollBehavior: TopAppBarScrollBehavior?,
-
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
-
     topAppBarFilterState: TopAppBarFilterState,
-    topAppBarEditState: TopAppBarEditState,
-
+    selectionState: SelectionState,
     additionalActions: @Composable () -> Unit,
     additionalBar: @Composable () -> Unit,
+    onSelectAllToggle: () -> Unit,
 ) {
-    if (topAppBarFilterState.isFilterMode || topAppBarEditState.isEditMode) {
+    if (topAppBarFilterState.isFilterMode || selectionState.isEditMode) {
         BackHandler {
             if (topAppBarFilterState.isFilterMode) {
                 topAppBarFilterState.dismiss()
-            } else if (topAppBarEditState.isEditMode) {
-                topAppBarEditState.dismiss()
+            } else if (selectionState.isEditMode) {
+                selectionState.clearSelection()
             }
         }
     }
@@ -57,9 +55,10 @@ actual fun TopAppBarWithFilter(
         overflowDropdownMenuItems = overflowDropdownMenuItems,
         subtitleDropdownMenuItems = subtitleDropdownMenuItems,
         topAppBarFilterState = topAppBarFilterState,
-        topAppBarEditState = topAppBarEditState,
+        selectionState = selectionState,
         additionalActions = additionalActions,
         additionalBar = additionalBar,
+        onSelectAllToggle = onSelectAllToggle,
     )
 }
 
@@ -166,12 +165,16 @@ internal fun PreviewTopAppBarWithFilterWithTabsFilterMode() {
 @OptIn(ExperimentalMaterial3Api::class)
 @PreviewLightDark
 @Composable
-internal fun PreviewTopAppBarWithFilterWithEditMode() {
+internal fun PreviewTopAppBarWithFilterWithWithSelectionDeselectAll() {
     PreviewTheme {
-        val topAppBarEditState = rememberTopAppBarEditState()
+        val selectionState = rememberSelectionState(totalCount = 300)
+        selectionState.toggleSelection(
+            id = "1",
+            totalLoadedCount = 200,
+        )
         TopAppBarWithFilterInternal(
             title = "Title",
-            topAppBarEditState = topAppBarEditState,
+            selectionState = selectionState,
         )
     }
 }
@@ -179,12 +182,15 @@ internal fun PreviewTopAppBarWithFilterWithEditMode() {
 @OptIn(ExperimentalMaterial3Api::class)
 @PreviewLightDark
 @Composable
-internal fun PreviewTopAppBarWithFilterWithEditModeActive() {
+internal fun PreviewTopAppBarWithFilterWithSelectionSelectAll() {
     PreviewTheme {
-        val topAppBarEditState = rememberTopAppBarEditState(initialIsEditMode = true)
+        val selectionState = rememberSelectionState(totalCount = 200)
+        selectionState.toggleSelectAll(
+            ids = (1..200).map { it.toString() },
+        )
         TopAppBarWithFilterInternal(
             title = "Title",
-            topAppBarEditState = topAppBarEditState,
+            selectionState = selectionState,
         )
     }
 }
