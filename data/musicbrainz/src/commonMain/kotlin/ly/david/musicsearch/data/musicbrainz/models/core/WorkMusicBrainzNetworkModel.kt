@@ -14,15 +14,8 @@ data class WorkMusicBrainzNetworkModel(
     @SerialName("disambiguation") override val disambiguation: String? = null,
     @SerialName("type") override val type: String? = null,
     @SerialName("type-id") val typeId: String? = null,
-
-    /**
-     * This is null when languages is empty.
-     */
-    @SerialName("language") override val language: String? = null,
-//    @SerialName("languages") override val languages: List<String>? = null,
-
+    @SerialName("languages") override val languages: List<String>? = null,
     @SerialName("iswcs") override val iswcs: List<String>? = null,
-
     @SerialName("attributes") val attributes: List<WorkAttributeMusicBrainzModel>? = null,
 
     // search API returns relations without target-type

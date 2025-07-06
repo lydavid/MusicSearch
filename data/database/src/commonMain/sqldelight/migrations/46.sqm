@@ -1,0 +1,4 @@
+import kotlin.String;
+import kotlin.collections.List;
+
+ALTER TABLE work ADD COLUMN languages TEXT AS List<String>;

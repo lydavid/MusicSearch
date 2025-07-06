@@ -326,7 +326,7 @@ internal class SearchResultsRepositoryImpl(
                 val works = response.works
                 workDao.withTransaction {
                     removeAll()
-                    workDao.insertAll(works)
+                    workDao.insertOrUpdateAll(works)
                     aliasDao.insertReplaceAll(musicBrainzNetworkModels = works)
                     searchResultDao.insertAll(works.map { it.id })
                     searchResultDao.rewriteMetadata(

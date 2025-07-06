@@ -95,7 +95,7 @@ class WorksListRepositoryImpl(
         entity: MusicBrainzEntity,
         musicBrainzModels: List<WorkMusicBrainzNetworkModel>,
     ) {
-        workDao.insertAll(musicBrainzModels)
+        workDao.insertOrUpdateAll(musicBrainzModels)
         when (entity) {
             MusicBrainzEntity.COLLECTION -> {
                 collectionEntityDao.addAllToCollection(
@@ -106,7 +106,7 @@ class WorksListRepositoryImpl(
 
             else -> {
                 workDao.insertWorksByEntity(
-                    entityId,
+                    entityId = entityId,
                     workIds = musicBrainzModels.map { work -> work.id },
                 )
             }

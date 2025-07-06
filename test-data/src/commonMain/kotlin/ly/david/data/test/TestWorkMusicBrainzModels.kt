@@ -8,7 +8,7 @@ val skycladObserverWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
     name = "スカイクラッドの観測者",
     type = "Song",
     typeId = "f061270a-2fd6-32f1-a641-f0f8676d14e6",
-    language = "jpn",
+    languages = listOf("jpn"),
     iswcs = listOf(
         "T-101.979.913-2",
     ),
@@ -41,7 +41,7 @@ val hackingToTheGateWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
     name = "Hacking to the Gate",
     type = "Song",
     typeId = "f061270a-2fd6-32f1-a641-f0f8676d14e6",
-    language = "jpn",
+    languages = listOf("jpn"),
     iswcs = listOf(
         "T-102.018.970-0",
     ),
@@ -74,7 +74,7 @@ val underPressureWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
     name = "Under Pressure",
     type = "Song",
     typeId = "f061270a-2fd6-32f1-a641-f0f8676d14e6",
-    language = "eng",
+    languages = listOf("eng"),
     iswcs = listOf(
         "T-010.475.727-8",
         "T-011.226.466-0",
@@ -99,7 +99,7 @@ val starmanWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
     name = "Starman",
     type = "Song",
     typeId = "f061270a-2fd6-32f1-a641-f0f8676d14e6",
-    language = "eng",
+    languages = listOf("eng"),
     iswcs = listOf(
         "T-900.196.834-9",
         "T-011.559.559-9",
@@ -114,7 +114,7 @@ val dontStopMeNowWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
     name = "Don’t Stop Me Now",
     type = "Song",
     typeId = "f061270a-2fd6-32f1-a641-f0f8676d14e6",
-    language = "eng",
+    languages = listOf("eng"),
     iswcs = listOf(
         "T-010.115.271-9",
         "T-010.180.479-8",

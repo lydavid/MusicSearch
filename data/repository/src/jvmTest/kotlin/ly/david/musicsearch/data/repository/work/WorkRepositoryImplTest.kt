@@ -64,7 +64,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository {
                 name = "君の知らない物語",
                 type = "Song",
                 typeId = "f061270a-2fd6-32f1-a641-f0f8676d14e6",
-                language = "jpn",
+                languages = listOf("jpn"),
                 iswcs = listOf("T-903.769.392-8"),
                 attributes = listOf(
                     WorkAttributeMusicBrainzModel(
@@ -255,7 +255,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository {
                 id = "717a6517-290e-3696-942a-aba233ffc398",
                 name = "君の知らない物語",
                 type = "Song",
-                language = "jpn",
+                languages = listOf("jpn"),
                 iswcs = listOf("T-903.769.392-8"),
                 attributes = listOf(
                     WorkAttributeUiModel(

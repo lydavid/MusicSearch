@@ -9,8 +9,8 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 
 @Composable
 internal fun WorkDetailsTabUi(
@@ -36,14 +36,16 @@ internal fun WorkDetailsTabUi(
                     filterText = filterText,
                 )
             }
-            language?.getDisplayLanguage(strings).ifNotNullOrEmpty {
+            languages.ifNotNullOrEmpty {
                 TextWithHeading(
                     heading = strings.language,
-                    text = it,
+                    text = it.mapNotNull { language ->
+                        language.getDisplayLanguage(strings)
+                    }.joinToString(", "),
                     filterText = filterText,
                 )
             }
-            iswcs?.ifNotNullOrEmpty {
+            iswcs.ifNotNullOrEmpty {
                 TextWithHeading(
                     heading = strings.iswc,
                     text = it.joinToString(", "),

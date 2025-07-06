@@ -45,9 +45,9 @@ fun WorkListItem(
                         disambiguation = disambiguation,
                         fontWeight = work.fontWeight,
                     )
-                    iswcs?.ifNotNullOrEmpty {
+                    iswcs.ifNotNullOrEmpty {
                         Text(
-                            text = it.joinToString("\n"),
+                            text = it.joinToString(", "),
                             style = TextStyles.getCardBodySubTextStyle(),
                             fontWeight = work.fontWeight,
                         )
@@ -59,9 +59,11 @@ fun WorkListItem(
                             fontWeight = work.fontWeight,
                         )
                     }
-                    language?.getDisplayLanguage(strings).ifNotNullOrEmpty {
+                    languages.ifNotNullOrEmpty {
                         Text(
-                            text = it,
+                            text = it.mapNotNull { language ->
+                                language.getDisplayLanguage(strings)
+                            }.joinToString(", "),
                             style = TextStyles.getCardBodySubTextStyle(),
                             fontWeight = work.fontWeight,
                         )
