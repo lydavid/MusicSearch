@@ -19,12 +19,13 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.genre.GenresListRepository
-import ly.david.musicsearch.shared.domain.genre.usecase.GetGenres
+import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class GenresListPresenter(
-    private val getGenres: GetGenres,
+    private val getEntities: GetEntities,
     private val genresListRepository: GenresListRepository,
 ) : Presenter<GenresListUiState> {
     @Composable
@@ -34,7 +35,8 @@ class GenresListPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(query, browseMethod) {
             mutableStateOf(
-                getGenres(
+                getEntities(
+                    entity = MusicBrainzEntity.GENRE,
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
@@ -47,19 +49,6 @@ class GenresListPresenter(
             browseMethod = browseMethod,
         ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()
-
-        fun eventSink(event: GenresListUiEvent) {
-            when (event) {
-                is GenresListUiEvent.Get -> {
-                    browseMethod = event.browseMethod
-                    isRemote = event.isRemote
-                }
-
-                is GenresListUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-            }
-        }
 
         return GenresListUiState(
             pagingDataFlow = pagingDataFlow,

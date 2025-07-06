@@ -10,17 +10,12 @@ import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.AreasListRepository
-import ly.david.musicsearch.shared.domain.area.usecase.GetAreas
 import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
-import ly.david.musicsearch.shared.domain.artist.usecase.GetArtists
 import ly.david.musicsearch.shared.domain.event.EventsListRepository
-import ly.david.musicsearch.shared.domain.event.usecase.GetEvents
 import ly.david.musicsearch.shared.domain.genre.GenresListRepository
-import ly.david.musicsearch.shared.domain.genre.usecase.GetGenres
 import ly.david.musicsearch.shared.domain.instrument.InstrumentsListRepository
-import ly.david.musicsearch.shared.domain.instrument.usecase.GetInstruments
 import ly.david.musicsearch.shared.domain.label.LabelsListRepository
-import ly.david.musicsearch.shared.domain.label.usecase.GetLabels
+import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
@@ -35,20 +30,14 @@ import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.place.PlacesListRepository
-import ly.david.musicsearch.shared.domain.place.usecase.GetPlaces
 import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
-import ly.david.musicsearch.shared.domain.recording.usecase.GetRecordings
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
-import ly.david.musicsearch.shared.domain.release.usecase.GetReleases
 import ly.david.musicsearch.shared.domain.release.usecase.GetTracksByRelease
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
-import ly.david.musicsearch.shared.domain.releasegroup.usecase.GetReleaseGroups
 import ly.david.musicsearch.shared.domain.series.SeriesListRepository
-import ly.david.musicsearch.shared.domain.series.usecase.GetSeries
 import ly.david.musicsearch.shared.domain.work.WorksListRepository
-import ly.david.musicsearch.shared.domain.work.usecase.GetWorks
 import ly.david.musicsearch.ui.common.area.AreasListPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
 import ly.david.musicsearch.ui.common.event.EventsListPresenter
@@ -76,8 +65,9 @@ class EntitiesListPresenterTest {
         listItems: List<ListItemModel>,
     ) = EntitiesListPresenter(
         areasListPresenter = AreasListPresenter(
-            getAreas = object : GetAreas {
+            getEntities = object : GetEntities {
                 override fun invoke(
+                    entity: MusicBrainzEntity,
                     browseMethod: BrowseMethod?,
                     listFilters: ListFilters,
                 ): Flow<PagingData<ListItemModel>> {
@@ -98,8 +88,9 @@ class EntitiesListPresenterTest {
             },
         ),
         artistsListPresenter = ArtistsListPresenter(
-            getArtists = object : GetArtists {
+            getEntities = object : GetEntities {
                 override fun invoke(
+                    entity: MusicBrainzEntity,
                     browseMethod: BrowseMethod?,
                     listFilters: ListFilters,
                 ): Flow<PagingData<ListItemModel>> {
@@ -120,8 +111,9 @@ class EntitiesListPresenterTest {
             },
         ),
         eventsListPresenter = EventsListPresenter(
-            getEvents = object : GetEvents {
+            getEntities = object : GetEntities {
                 override fun invoke(
+                    entity: MusicBrainzEntity,
                     browseMethod: BrowseMethod?,
                     listFilters: ListFilters,
                 ): Flow<PagingData<ListItemModel>> {
@@ -142,8 +134,9 @@ class EntitiesListPresenterTest {
             },
         ),
         genresListPresenter = GenresListPresenter(
-            getGenres = object : GetGenres {
+            getEntities = object : GetEntities {
                 override fun invoke(
+                    entity: MusicBrainzEntity,
                     browseMethod: BrowseMethod?,
                     listFilters: ListFilters,
                 ): Flow<PagingData<ListItemModel>> {
@@ -164,8 +157,9 @@ class EntitiesListPresenterTest {
             },
         ),
         instrumentsListPresenter = InstrumentsListPresenter(
-            getInstruments = object : GetInstruments {
+            getEntities = object : GetEntities {
                 override fun invoke(
+                    entity: MusicBrainzEntity,
                     browseMethod: BrowseMethod?,
                     listFilters: ListFilters,
                 ): Flow<PagingData<ListItemModel>> {
@@ -186,8 +180,9 @@ class EntitiesListPresenterTest {
             },
         ),
         labelsListPresenter = LabelsListPresenter(
-            getLabels = object : GetLabels {
+            getEntities = object : GetEntities {
                 override fun invoke(
+                    entity: MusicBrainzEntity,
                     browseMethod: BrowseMethod?,
                     listFilters: ListFilters,
                 ): Flow<PagingData<ListItemModel>> {
@@ -195,7 +190,7 @@ class EntitiesListPresenterTest {
                 }
             },
             labelsListRepository = object : LabelsListRepository {
-                override fun observeLabelsByEntity(
+                override fun observeLabels(
                     browseMethod: BrowseMethod,
                     listFilters: ListFilters,
                 ): Flow<PagingData<LabelListItemModel>> {
@@ -208,8 +203,9 @@ class EntitiesListPresenterTest {
             },
         ),
         placesListPresenter = PlacesListPresenter(
-            getPlaces = object : GetPlaces {
+            getEntities = object : GetEntities {
                 override fun invoke(
+                    entity: MusicBrainzEntity,
                     browseMethod: BrowseMethod?,
                     listFilters: ListFilters,
                 ): Flow<PagingData<ListItemModel>> {
@@ -230,8 +226,9 @@ class EntitiesListPresenterTest {
             },
         ),
         recordingsListPresenter = RecordingsListPresenter(
-            getRecordings = object : GetRecordings {
+            getEntities = object : GetEntities {
                 override fun invoke(
+                    entity: MusicBrainzEntity,
                     browseMethod: BrowseMethod?,
                     listFilters: ListFilters,
                 ): Flow<PagingData<ListItemModel>> {
@@ -252,8 +249,9 @@ class EntitiesListPresenterTest {
             },
         ),
         releasesListPresenter = ReleasesListPresenter(
-            getReleases = object : GetReleases {
+            getEntities = object : GetEntities {
                 override fun invoke(
+                    entity: MusicBrainzEntity,
                     browseMethod: BrowseMethod?,
                     listFilters: ListFilters,
                 ): Flow<PagingData<ListItemModel>> {
@@ -276,8 +274,9 @@ class EntitiesListPresenterTest {
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         releaseGroupsListPresenter = ReleaseGroupsListPresenter(
-            getReleaseGroups = object : GetReleaseGroups {
+            getEntities = object : GetEntities {
                 override fun invoke(
+                    entity: MusicBrainzEntity,
                     browseMethod: BrowseMethod?,
                     listFilters: ListFilters,
                 ): Flow<PagingData<ListItemModel>> {
@@ -307,8 +306,9 @@ class EntitiesListPresenterTest {
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         seriesListPresenter = SeriesListPresenter(
-            getSeries = object : GetSeries {
+            getEntities = object : GetEntities {
                 override fun invoke(
+                    entity: MusicBrainzEntity,
                     browseMethod: BrowseMethod?,
                     listFilters: ListFilters,
                 ): Flow<PagingData<ListItemModel>> {
@@ -329,8 +329,9 @@ class EntitiesListPresenterTest {
             },
         ),
         worksListPresenter = WorksListPresenter(
-            getWorks = object : GetWorks {
+            getEntities = object : GetEntities {
                 override fun invoke(
+                    entity: MusicBrainzEntity,
                     browseMethod: BrowseMethod?,
                     listFilters: ListFilters,
                 ): Flow<PagingData<ListItemModel>> {

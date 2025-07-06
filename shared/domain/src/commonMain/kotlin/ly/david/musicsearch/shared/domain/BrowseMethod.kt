@@ -2,10 +2,12 @@ package ly.david.musicsearch.shared.domain
 
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
-// TODO: combine all classes that uses this, and switch on it based on MusicBrainzEntity
-//  All should accept MusicBrainzEntity as well
-//  Everytime I change one of these, I have to change them everywhere, so they belong together
-//  Yes, there will be 10+ parameters injected, just gotta accept it
+/**
+ * The purpose of this is to distinguish between ways to browse a list of entities.
+ * [ByEntity.entity] is NOT the entity we are browsing, it is the entity of the containing screen.
+ * (e.g. [MusicBrainzEntity.COLLECTION] while we are browsing works.
+ * Or [MusicBrainzEntity.ARTIST] while we are browsing their release groups.)
+ */
 sealed class BrowseMethod {
     data object All : BrowseMethod()
     data class ByEntity(

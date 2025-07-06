@@ -246,7 +246,7 @@ class ReleaseGroupDaoImpl(
                 }
             }
 
-            BrowseMethod.All -> {
+            is BrowseMethod.All -> {
                 getCountOfAllReleaseGroups(query = "")
             }
         }

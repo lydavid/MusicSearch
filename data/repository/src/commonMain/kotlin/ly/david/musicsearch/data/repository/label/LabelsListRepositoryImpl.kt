@@ -31,7 +31,7 @@ class LabelsListRepositoryImpl(
         aliasDao = aliasDao,
     ) {
 
-    override fun observeLabelsByEntity(
+    override fun observeLabels(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<LabelListItemModel>> {

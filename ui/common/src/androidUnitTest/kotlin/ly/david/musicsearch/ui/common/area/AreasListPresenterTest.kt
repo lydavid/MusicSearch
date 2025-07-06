@@ -9,9 +9,10 @@ import kotlinx.coroutines.test.runTest
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.AreasListRepository
-import ly.david.musicsearch.shared.domain.area.usecase.GetAreas
+import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,8 +24,9 @@ class AreasListPresenterTest {
     private fun createPresenter(
         listItems: List<ListItemModel>,
     ) = AreasListPresenter(
-        getAreas = object : GetAreas {
+        getEntities = object : GetEntities {
             override fun invoke(
+                entity: MusicBrainzEntity,
                 browseMethod: BrowseMethod?,
                 listFilters: ListFilters,
             ): Flow<PagingData<ListItemModel>> {

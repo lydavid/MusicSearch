@@ -19,12 +19,16 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.AreasListRepository
-import ly.david.musicsearch.shared.domain.area.usecase.GetAreas
+import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
+// TODO: all of these XListPresenter can be moved into EntitiesListPresenter
+//  but need to make sure they are not all called, only when tab is opened
+//  we need more than one pagingDataFlow if we want to preserve scroll position when switching tabs
 class AreasListPresenter(
-    private val getAreas: GetAreas,
+    private val getEntities: GetEntities,
     private val areasListRepository: AreasListRepository,
 ) : Presenter<AreasListUiState> {
     @Composable
@@ -34,7 +38,8 @@ class AreasListPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(query, browseMethod) {
             mutableStateOf(
-                getAreas(
+                getEntities(
+                    entity = MusicBrainzEntity.AREA,
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,

@@ -22,15 +22,15 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
+import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
-import ly.david.musicsearch.shared.domain.releasegroup.usecase.GetReleaseGroups
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class ReleaseGroupsListPresenter(
-    private val getReleaseGroups: GetReleaseGroups,
+    private val getEntities: GetEntities,
     private val releaseGroupsListRepository: ReleaseGroupsListRepository,
     private val appPreferences: AppPreferences,
     private val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository,
@@ -44,7 +44,8 @@ class ReleaseGroupsListPresenter(
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query, sorted) {
             mutableStateOf(
-                getReleaseGroups(
+                getEntities(
+                    entity = MusicBrainzEntity.RELEASE_GROUP,
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,

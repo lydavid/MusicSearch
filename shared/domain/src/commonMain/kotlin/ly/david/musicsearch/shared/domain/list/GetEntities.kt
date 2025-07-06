@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.domain.recording.usecase
+package ly.david.musicsearch.shared.domain.list
 
 import androidx.paging.PagingData
 import app.cash.paging.cachedIn
@@ -8,33 +8,34 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.base.usecase.GetEntitiesByEntity
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.appendLastUpdatedBanner
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
 
-interface GetRecordings {
+interface GetEntities {
     operator fun invoke(
+        entity: MusicBrainzEntity,
         browseMethod: BrowseMethod?,
         listFilters: ListFilters,
     ): Flow<PagingData<ListItemModel>>
 }
 
-class GetRecordingsImpl(
-    private val recordingsListRepository: RecordingsListRepository,
+class GetEntitiesImpl(
+    private val entitiesListRepository: EntitiesListRepository,
     private val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
     private val coroutineScope: CoroutineScope,
-) : GetEntitiesByEntity<ListItemModel>, GetRecordings {
+) : GetEntities {
     override operator fun invoke(
+        entity: MusicBrainzEntity,
         browseMethod: BrowseMethod?,
         listFilters: ListFilters,
     ): Flow<PagingData<ListItemModel>> {
         return if (browseMethod == null) {
             emptyFlow()
         } else {
-            recordingsListRepository.observeRecordings(
+            entitiesListRepository.observeEntities(
+                entity = entity,
                 browseMethod = browseMethod,
                 listFilters = listFilters,
             )
@@ -42,7 +43,7 @@ class GetRecordingsImpl(
                 .appendLastUpdatedBanner(
                     browseRemoteMetadataRepository = browseRemoteMetadataRepository,
                     browseMethod = browseMethod,
-                    browseEntity = MusicBrainzEntity.RECORDING,
+                    browseEntity = entity,
                 )
                 .distinctUntilChanged()
         }

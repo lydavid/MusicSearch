@@ -19,12 +19,13 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.instrument.InstrumentsListRepository
-import ly.david.musicsearch.shared.domain.instrument.usecase.GetInstruments
+import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class InstrumentsListPresenter(
-    private val getInstruments: GetInstruments,
+    private val getEntities: GetEntities,
     private val instrumentsListRepository: InstrumentsListRepository,
 ) : Presenter<InstrumentsListUiState> {
     @Composable
@@ -34,7 +35,8 @@ class InstrumentsListPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query) {
             mutableStateOf(
-                getInstruments(
+                getEntities(
+                    entity = MusicBrainzEntity.INSTRUMENT,
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
@@ -47,19 +49,6 @@ class InstrumentsListPresenter(
             browseMethod = browseMethod,
         ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()
-
-        fun eventSink(event: InstrumentsListUiEvent) {
-            when (event) {
-                is InstrumentsListUiEvent.Get -> {
-                    browseMethod = event.browseMethod
-                    isRemote = event.isRemote
-                }
-
-                is InstrumentsListUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-            }
-        }
 
         return InstrumentsListUiState(
             pagingDataFlow = pagingDataFlow,

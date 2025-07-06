@@ -102,7 +102,7 @@ class LabelsListRepositoryImplTest : KoinTest {
 
         testFilter(
             pagingFlowProducer = { query ->
-                labelsListRepository.observeLabelsByEntity(
+                labelsListRepository.observeLabels(
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
@@ -155,7 +155,7 @@ class LabelsListRepositoryImplTest : KoinTest {
             entityId = entityId,
             entity = entity,
         )
-        labelsListRepository.observeLabelsByEntity(
+        labelsListRepository.observeLabels(
             browseMethod = browseMethod,
             listFilters = ListFilters(),
         ).asSnapshot().run {
@@ -167,7 +167,7 @@ class LabelsListRepositoryImplTest : KoinTest {
                 this,
             )
         }
-        labelsListRepository.observeLabelsByEntity(
+        labelsListRepository.observeLabels(
             browseMethod = browseMethod,
             listFilters = ListFilters(
                 query = "do",
@@ -197,7 +197,7 @@ class LabelsListRepositoryImplTest : KoinTest {
         )
         testFilter(
             pagingFlowProducer = { query ->
-                labelsListRepository.observeLabelsByEntity(
+                labelsListRepository.observeLabels(
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
@@ -245,7 +245,7 @@ class LabelsListRepositoryImplTest : KoinTest {
 
         testFilter(
             pagingFlowProducer = { query ->
-                labelsListRepository.observeLabelsByEntity(
+                labelsListRepository.observeLabels(
                     browseMethod = BrowseMethod.All,
                     listFilters = ListFilters(
                         query = query,

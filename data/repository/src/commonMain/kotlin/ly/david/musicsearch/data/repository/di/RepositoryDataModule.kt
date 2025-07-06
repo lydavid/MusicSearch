@@ -1,27 +1,26 @@
 package ly.david.musicsearch.data.repository.di
 
 import ly.david.musicsearch.data.repository.BrowseRemoteMetadataRepositoryImpl
-import ly.david.musicsearch.data.repository.collection.CollectionRepositoryImpl
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.NowPlayingHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
-import ly.david.musicsearch.data.repository.search.SearchHistoryRepositoryImpl
-import ly.david.musicsearch.data.repository.search.SearchResultsRepositoryImpl
 import ly.david.musicsearch.data.repository.SpotifyHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreasListRepositoryImpl
 import ly.david.musicsearch.data.repository.artist.ArtistCollaborationRepositoryImpl
 import ly.david.musicsearch.data.repository.artist.ArtistRepositoryImpl
 import ly.david.musicsearch.data.repository.artist.ArtistsListRepositoryImpl
+import ly.david.musicsearch.data.repository.collection.CollectionRepositoryImpl
 import ly.david.musicsearch.data.repository.event.EventRepositoryImpl
 import ly.david.musicsearch.data.repository.event.EventsListRepositoryImpl
-import ly.david.musicsearch.data.repository.genre.GenresListRepositoryImpl
 import ly.david.musicsearch.data.repository.genre.GenreRepositoryImpl
+import ly.david.musicsearch.data.repository.genre.GenresListRepositoryImpl
 import ly.david.musicsearch.data.repository.image.MusicBrainzImageMetadataRepositoryImpl
 import ly.david.musicsearch.data.repository.instrument.InstrumentRepositoryImpl
 import ly.david.musicsearch.data.repository.instrument.InstrumentsListRepositoryImpl
 import ly.david.musicsearch.data.repository.label.LabelRepositoryImpl
 import ly.david.musicsearch.data.repository.label.LabelsListRepositoryImpl
+import ly.david.musicsearch.data.repository.list.EntitiesListRepositoryImpl
 import ly.david.musicsearch.data.repository.metadata.MetadataRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlaceRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlacesListRepositoryImpl
@@ -31,6 +30,8 @@ import ly.david.musicsearch.data.repository.release.ReleaseRepositoryImpl
 import ly.david.musicsearch.data.repository.release.ReleasesListRepositoryImpl
 import ly.david.musicsearch.data.repository.releasegroup.ReleaseGroupRepositoryImpl
 import ly.david.musicsearch.data.repository.releasegroup.ReleaseGroupsListRepositoryImpl
+import ly.david.musicsearch.data.repository.search.SearchHistoryRepositoryImpl
+import ly.david.musicsearch.data.repository.search.SearchResultsRepositoryImpl
 import ly.david.musicsearch.data.repository.series.SeriesListRepositoryImpl
 import ly.david.musicsearch.data.repository.series.SeriesRepositoryImpl
 import ly.david.musicsearch.data.repository.work.WorkRepositoryImpl
@@ -44,8 +45,8 @@ import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.event.EventsListRepository
-import ly.david.musicsearch.shared.domain.genre.GenresListRepository
 import ly.david.musicsearch.shared.domain.genre.GenreRepository
+import ly.david.musicsearch.shared.domain.genre.GenresListRepository
 import ly.david.musicsearch.shared.domain.history.LookupHistoryRepository
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepositoryImpl
@@ -54,6 +55,7 @@ import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.instrument.InstrumentsListRepository
 import ly.david.musicsearch.shared.domain.label.LabelRepository
 import ly.david.musicsearch.shared.domain.label.LabelsListRepository
+import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
 import ly.david.musicsearch.shared.domain.metadata.MetadataRepository
 import ly.david.musicsearch.shared.domain.nowplaying.NowPlayingHistoryRepository
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
@@ -110,6 +112,7 @@ val repositoryDataModule = module {
     singleOf(::SeriesListRepositoryImpl) bind SeriesListRepository::class
     singleOf(::WorkRepositoryImpl) bind WorkRepository::class
     singleOf(::WorksListRepositoryImpl) bind WorksListRepository::class
+    singleOf(::EntitiesListRepositoryImpl) bind EntitiesListRepository::class
     singleOf(::MetadataRepositoryImpl) bind MetadataRepository::class
     singleOf(::ImageMetadataRepositoryImpl) bind ImageMetadataRepository::class
     singleOf(::MusicBrainzImageMetadataRepositoryImpl) bind MusicBrainzImageMetadataRepository::class

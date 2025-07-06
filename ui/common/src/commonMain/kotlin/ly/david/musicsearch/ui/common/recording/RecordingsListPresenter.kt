@@ -18,13 +18,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
-import ly.david.musicsearch.shared.domain.recording.usecase.GetRecordings
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class RecordingsListPresenter(
-    private val getRecordings: GetRecordings,
+    private val getEntities: GetEntities,
     private val recordingsListRepository: RecordingsListRepository,
 ) : Presenter<RecordingsListUiState> {
     @Composable
@@ -34,7 +35,8 @@ class RecordingsListPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query) {
             mutableStateOf(
-                getRecordings(
+                getEntities(
+                    entity = MusicBrainzEntity.RECORDING,
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
@@ -47,19 +49,6 @@ class RecordingsListPresenter(
             browseMethod = browseMethod,
         ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()
-
-        fun eventSink(event: RecordingsListUiEvent) {
-            when (event) {
-                is RecordingsListUiEvent.Get -> {
-                    browseMethod = event.browseMethod
-                    isRemote = event.isRemote
-                }
-
-                is RecordingsListUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-            }
-        }
 
         return RecordingsListUiState(
             pagingDataFlow = pagingDataFlow,

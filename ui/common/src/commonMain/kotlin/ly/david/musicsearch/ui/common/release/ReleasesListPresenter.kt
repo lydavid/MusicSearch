@@ -22,15 +22,15 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
+import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
-import ly.david.musicsearch.shared.domain.release.usecase.GetReleases
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class ReleasesListPresenter(
-    private val getReleases: GetReleases,
+    private val getEntities: GetEntities,
     private val releasesListRepository: ReleasesListRepository,
     private val appPreferences: AppPreferences,
     private val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository,
@@ -42,7 +42,8 @@ class ReleasesListPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query) {
             mutableStateOf(
-                getReleases(
+                getEntities(
+                    entity = MusicBrainzEntity.RELEASE,
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,

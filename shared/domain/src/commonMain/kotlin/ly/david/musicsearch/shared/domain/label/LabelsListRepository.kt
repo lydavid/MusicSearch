@@ -7,7 +7,7 @@ import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 
 interface LabelsListRepository {
-    fun observeLabelsByEntity(
+    fun observeLabels(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<LabelListItemModel>>

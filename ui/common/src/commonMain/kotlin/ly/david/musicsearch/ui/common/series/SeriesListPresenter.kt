@@ -18,13 +18,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.series.SeriesListRepository
-import ly.david.musicsearch.shared.domain.series.usecase.GetSeries
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class SeriesListPresenter(
-    private val getSeries: GetSeries,
+    private val getEntities: GetEntities,
     private val seriesListRepository: SeriesListRepository,
 ) : Presenter<SeriesListUiState> {
     @Composable
@@ -34,7 +35,8 @@ class SeriesListPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query) {
             mutableStateOf(
-                getSeries(
+                getEntities(
+                    entity = MusicBrainzEntity.SERIES,
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
@@ -47,19 +49,6 @@ class SeriesListPresenter(
             browseMethod = browseMethod,
         ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()
-
-        fun eventSink(event: SeriesListUiEvent) {
-            when (event) {
-                is SeriesListUiEvent.Get -> {
-                    browseMethod = event.browseMethod
-                    isRemote = event.isRemote
-                }
-
-                is SeriesListUiEvent.UpdateQuery -> {
-                    query = event.query
-                }
-            }
-        }
 
         return SeriesListUiState(
             pagingDataFlow = pagingDataFlow,
