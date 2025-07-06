@@ -252,17 +252,6 @@ class EntitiesListPresenter(
             }
         }
 
-        fun evenSink(event: EntitiesListUiEvent) {
-            when (event) {
-                is EntitiesListUiEvent.Get -> {
-                    tab = event.tab
-                    browseMethod = event.browseMethod
-                    query = event.query
-                    isRemote = event.isRemote
-                }
-            }
-        }
-
         return EntitiesListUiState(
             areasListUiState = areasByEntityUiState,
             artistsListUiState = artistsByEntityUiState,

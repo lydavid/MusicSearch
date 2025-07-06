@@ -18,11 +18,14 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.list.EntitiesListPresenter
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.EntitiesListUiState
+import ly.david.musicsearch.ui.common.list.getTotalLocalCount
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.screen.AllEntitiesScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.topappbar.SelectionState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.rememberSelectionState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.toTab
 
@@ -41,6 +44,11 @@ internal class AllEntitiesPresenter(
 
         val entitiesListUiState = entitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
+
+        val selectionState = rememberSelectionState(
+            totalCount = entitiesListUiState.getTotalLocalCount(screen.entity),
+        )
+
         val loginUiState = loginPresenter.present()
 
         LaunchedEffect(
@@ -81,6 +89,7 @@ internal class AllEntitiesPresenter(
             subtitle = subtitle,
             entity = screen.entity,
             topAppBarFilterState = topAppBarFilterState,
+            selectionState = selectionState,
             entitiesListUiState = entitiesListUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
@@ -93,6 +102,7 @@ internal data class AllEntitiesUiState(
     val subtitle: String,
     val entity: MusicBrainzEntity,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
+    val selectionState: SelectionState = SelectionState(),
     val entitiesListUiState: EntitiesListUiState,
     val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (AllEntitiesUiEvent) -> Unit,

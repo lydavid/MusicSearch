@@ -6,4 +6,6 @@ data class GenreListItemModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String? = null,
-) : ListItemModel, Genre
+    override val visited: Boolean = false,
+    override val collected: Boolean = false,
+) : EntityListItemModel, Genre

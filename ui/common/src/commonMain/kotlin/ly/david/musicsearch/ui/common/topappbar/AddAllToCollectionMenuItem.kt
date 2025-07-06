@@ -14,7 +14,7 @@ import ly.david.musicsearch.ui.common.icons.PlaylistAdd
 
 @Composable
 fun OverflowMenuScope.AddAllToCollectionMenuItem(
-    tab: Tab,
+    tab: Tab?,
     entityIds: Set<String>,
     overlayHost: OverlayHost,
     coroutineScope: CoroutineScope,
@@ -22,7 +22,7 @@ fun OverflowMenuScope.AddAllToCollectionMenuItem(
     onLoginClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val entity = tab.toMusicBrainzEntity() ?: return
+    val entity = tab?.toMusicBrainzEntity() ?: return
     if (entityIds.isEmpty()) return
 
     DropdownMenuItem(

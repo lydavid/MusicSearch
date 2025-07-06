@@ -11,8 +11,10 @@ import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.listItemColors
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
@@ -22,6 +24,7 @@ fun GenreListItem(
     onGenreClick: GenreListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
+    onEditCollectionClick: (String) -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -29,6 +32,7 @@ fun GenreListItem(
                 Text(
                     text = genre.getNameWithDisambiguation(),
                     style = TextStyles.getCardBodyTextStyle(),
+                    fontWeight = genre.fontWeight,
                 )
             }
         },
@@ -47,6 +51,12 @@ fun GenreListItem(
                         onSelect(genre.id)
                     },
                 isSelected = isSelected,
+            )
+        },
+        trailingContent = {
+            AddToCollectionIconButton(
+                entityListItemModel = genre,
+                onClick = onEditCollectionClick,
             )
         },
     )

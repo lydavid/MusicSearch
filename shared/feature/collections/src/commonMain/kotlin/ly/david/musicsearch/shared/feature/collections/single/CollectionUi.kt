@@ -34,6 +34,7 @@ import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.screen.StatsScreen
+import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.DeleteMenuItem
 import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
@@ -208,6 +209,16 @@ internal fun CollectionUi(
                             },
                         )
                     }
+                    AddAllToCollectionMenuItem(
+                        tab = entity?.toTab(),
+                        entityIds = state.selectionState.selectedIds,
+                        overlayHost = overlayHost,
+                        coroutineScope = coroutineScope,
+                        snackbarHostState = snackbarHostState,
+                        onLoginClick = {
+                            loginEventSink(LoginUiEvent.StartLogin)
+                        },
+                    )
                     if (state.selectionState.selectedIds.isNotEmpty()) {
                         DeleteMenuItem(
                             selectionState = state.selectionState,
@@ -334,7 +345,6 @@ internal fun CollectionUi(
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
-                selectedIds = state.selectionState.selectedIds,
                 onItemClick = { entity, id, title ->
                     eventSink(
                         CollectionUiEvent.ClickItem(
@@ -344,6 +354,7 @@ internal fun CollectionUi(
                         ),
                     )
                 },
+                selectedIds = state.selectionState.selectedIds,
                 onSelect = {
                     state.selectionState.toggleSelection(
                         id = it,

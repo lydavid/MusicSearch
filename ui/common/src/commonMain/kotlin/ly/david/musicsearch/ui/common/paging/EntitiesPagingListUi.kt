@@ -119,6 +119,7 @@ fun EntitiesPagingListUi(
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
                     onSelect = onSelect,
+                    onEditCollectionClick = onEditCollectionClick,
                 )
             }
 
