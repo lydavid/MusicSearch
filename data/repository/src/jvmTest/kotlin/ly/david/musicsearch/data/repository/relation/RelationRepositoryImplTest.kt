@@ -262,7 +262,7 @@ class RelationRepositoryImplTest :
                         id = "2506ad88-1db3-454a-aed0-32cd5162fa1e",
                         name = "悪魔の子",
                         type = "Song",
-                        language = "jpn",
+                        languages = listOf("jpn"),
                         iswcs = listOf("T-309.230.043-7"),
                         relations = listOf(
                             RelationMusicBrainzModel(
@@ -335,7 +335,7 @@ class RelationRepositoryImplTest :
                         id = "dfe5d4e5-ee03-4a8c-b7b3-4e231dcbcf6c",
                         name = "シャルル",
                         type = "Song",
-                        language = "jpn",
+                        languages = listOf("jpn"),
                         iswcs = listOf("T-921.450.584-7"),
                         relations = listOf(
                             RelationMusicBrainzModel(

@@ -7,6 +7,6 @@ interface Work : NameWithDisambiguation {
     override val name: String
     override val disambiguation: String?
     val type: String?
-    val language: String?
+    val languages: List<String>?
     val iswcs: List<String>?
 }

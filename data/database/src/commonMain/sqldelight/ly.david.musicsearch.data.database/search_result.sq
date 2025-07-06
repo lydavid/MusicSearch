@@ -315,7 +315,7 @@ SELECT
   work.name,
   work.disambiguation,
   work.type,
-  work.language,
+  work.languages,
   work.iswcs,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (

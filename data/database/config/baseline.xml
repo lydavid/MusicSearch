@@ -3,7 +3,6 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>CyclomaticComplexMethod:ToRelationDatabaseModel.kt$fun RelationMusicBrainzModel.toRelationDatabaseModel( entityId: String, index: Int, numberOfRelationships: Int, ): RelationWithOrder?</ID>
-    <ID>LongMethod:MusicSearchDatabase.kt$fun createDatabase(driver: SqlDriver): Database</ID>
     <ID>LongMethod:ToRelationDatabaseModel.kt$fun RelationMusicBrainzModel.toRelationDatabaseModel( entityId: String, index: Int, numberOfRelationships: Int, ): RelationWithOrder?</ID>
     <ID>ReturnCount:ToRelationDatabaseModel.kt$fun RelationMusicBrainzModel.toRelationDatabaseModel( entityId: String, index: Int, numberOfRelationships: Int, ): RelationWithOrder?</ID>
   </CurrentIssues>

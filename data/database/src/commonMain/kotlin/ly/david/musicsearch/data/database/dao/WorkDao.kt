@@ -18,7 +18,6 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import lydavidmusicsearchdatadatabase.Work
 import lydavidmusicsearchdatadatabase.WorkQueries
 import lydavidmusicsearchdatadatabase.Works_by_entity
 
@@ -29,26 +28,25 @@ class WorkDao(
 ) : EntityDao {
     override val transacter: WorkQueries = database.workQueries
 
-    fun insert(work: WorkMusicBrainzNetworkModel) {
+    fun insertOrUpdate(work: WorkMusicBrainzNetworkModel) {
         work.run {
-            transacter.insertWork(
-                Work(
-                    id = id,
-                    name = name,
-                    disambiguation = disambiguation,
-                    type = type,
-                    type_id = typeId,
-                    language = language,
-                    iswcs = iswcs?.sorted()?.toImmutableList(),
-                ),
+            transacter.upsert(
+                id = id,
+                name = name,
+                disambiguation = disambiguation,
+                type = type,
+                typeId = typeId,
+                languages = languages.orEmpty(),
+                language = null,
+                iswcs = iswcs?.sorted()?.toImmutableList(),
             )
         }
     }
 
-    fun insertAll(works: List<WorkMusicBrainzNetworkModel>) {
+    fun insertOrUpdateAll(works: List<WorkMusicBrainzNetworkModel>) {
         transacter.transaction {
             works.forEach { work ->
-                insert(work)
+                insertOrUpdate(work)
             }
         }
     }
@@ -65,7 +63,7 @@ class WorkDao(
         name: String,
         disambiguation: String?,
         type: String?,
-        language: String?,
+        languages: List<String>?,
         iswcs: List<String>?,
         lastUpdated: Instant?,
     ) = WorkDetailsModel(
@@ -73,8 +71,8 @@ class WorkDao(
         name = name,
         disambiguation = disambiguation,
         type = type,
-        language = language,
-        iswcs = iswcs,
+        languages = languages.orEmpty(),
+        iswcs = iswcs.orEmpty(),
         lastUpdated = lastUpdated ?: Clock.System.now(),
     )
 

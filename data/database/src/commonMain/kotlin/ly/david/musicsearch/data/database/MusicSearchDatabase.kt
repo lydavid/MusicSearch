@@ -28,6 +28,7 @@ import lydavidmusicsearchdatadatabase.Spotify_track_listen
 import lydavidmusicsearchdatadatabase.Track
 import lydavidmusicsearchdatadatabase.Work
 
+@Suppress("LongMethod")
 fun createDatabase(driver: SqlDriver): Database {
     return Database(
         driver = driver,
@@ -61,6 +62,7 @@ fun createDatabase(driver: SqlDriver): Database {
         ),
         workAdapter = Work.Adapter(
             iswcsAdapter = ListStringColumnAdapter,
+            languagesAdapter = ListStringColumnAdapter,
         ),
         releaseAdapter = Release.Adapter(
             cover_art_countAdapter = IntColumnAdapter,

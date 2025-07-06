@@ -13,9 +13,9 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter
+import ly.david.musicsearch.ui.common.list.EntitiesListPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
-import ly.david.musicsearch.ui.common.list.EntitiesListPresenter
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
 internal val artistTabs = persistentListOf(
@@ -57,6 +57,9 @@ internal class ArtistPresenter(
     override fun getTabs(): ImmutableList<Tab> {
         return artistTabs
     }
+
+    // TODO: consider using getFirstTabListItems, getSecondTabListItems, ..., getSixthTabListItems
+    //  to store all the possible list items
 
     override fun getSearchHint(detailsModel: ArtistDetailsModel?): String? {
         return detailsModel?.sortName

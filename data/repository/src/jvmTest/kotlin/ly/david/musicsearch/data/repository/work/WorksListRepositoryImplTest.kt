@@ -371,6 +371,9 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         )
     }
 
+    // Works are the first entity type to upsert in both list items and details
+    // which works nicely to allow refreshing data in lists without deleting the item, which may mess up paging on
+    // other screens.
     @Test
     fun `refreshing works does not delete the work`() = runTest {
         setupWorksByDavidBowie()
@@ -382,7 +385,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                 id = "new-id-is-considered-a-different-work",
             ),
             underPressureWorkMusicBrainzModel.copy(
-                disambiguation = "changes will be ignored if work is linked to multiple entities",
+                disambiguation = "changes will still show up",
             ),
         )
         val worksListRepository = createWorksListRepository(
@@ -402,6 +405,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
             assertEquals(
                 listOf(
                     underPressureWorkListItemModel.copy(
+                        disambiguation = "changes will still show up",
                         collected = true,
                     ),
                     starmanWorkListItemModel.copy(
@@ -423,6 +427,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
             assertEquals(
                 listOf(
                     underPressureWorkListItemModel.copy(
+                        disambiguation = "changes will still show up",
                         collected = true,
                     ),
                     dontStopMeNowWorkListItemModel,
@@ -440,6 +445,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
             assertEquals(
                 listOf(
                     underPressureWorkListItemModel.copy(
+                        disambiguation = "changes will still show up",
                         collected = true,
                     ),
                     hackingToTheGateWorkListItemModel.copy(
@@ -460,6 +466,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                 listOf(
                     starmanWorkListItemModel,
                     underPressureWorkListItemModel.copy(
+                        disambiguation = "changes will still show up",
                         collected = true,
                     ),
                     dontStopMeNowWorkListItemModel,
@@ -480,9 +487,10 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         // now visit the work and refresh it
         val workRepository = createWorkRepository(
             underPressureWorkMusicBrainzModel.copy(
-                disambiguation = "changes will be ignored if work is linked to multiple entities",
+                disambiguation = "some change",
             ),
         )
+        // because we have never visited this page, the first visit will load from network
         workRepository.lookupWork(
             workId = underPressureWorkMusicBrainzModel.id,
             forceRefresh = false,
@@ -492,8 +500,9 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                 WorkDetailsModel(
                     id = "4e6a04c3-6897-391d-8e8c-1da7a6dce1ca",
                     name = "Under Pressure",
+                    disambiguation = "some change",
                     type = "Song",
-                    language = "eng",
+                    languages = listOf("eng"),
                     iswcs = listOf(
                         "T-010.475.727-8",
                         "T-011.226.466-0",
@@ -523,10 +532,10 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
             assertEquals(
                 WorkDetailsModel(
                     id = "4e6a04c3-6897-391d-8e8c-1da7a6dce1ca",
-                    disambiguation = "changes will be ignored if work is linked to multiple entities",
+                    disambiguation = "some change",
                     name = "Under Pressure",
                     type = "Song",
-                    language = "eng",
+                    languages = listOf("eng"),
                     iswcs = listOf(
                         "T-010.475.727-8",
                         "T-011.226.466-0",

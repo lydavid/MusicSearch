@@ -1,19 +1,42 @@
 import kotlin.String;
 import kotlin.collections.List;
 
-CREATE TABLE IF NOT EXISTS work (
+CREATE TABLE work (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
   disambiguation TEXT,
   type TEXT,
   type_id TEXT,
+  -- TODO: drop this
   language TEXT,
-  iswcs TEXT AS List<String>
+  iswcs TEXT AS List<String>,
+  languages TEXT AS List<String>
 );
 
-insertWork:
+upsert {
+UPDATE work
+SET
+  name = :name,
+  disambiguation = :disambiguation,
+  type = :type,
+  type_id = :typeId,
+  language = :language,
+  iswcs = :iswcs,
+  languages = :languages
+WHERE id = :id;
+
 INSERT OR IGNORE INTO work
-VALUES ?;
+VALUES (
+  :id,
+  :name,
+  :disambiguation,
+  :type,
+  :typeId,
+  :language,
+  :iswcs,
+  :languages
+);
+}
 
 getWorkForDetails:
 SELECT
@@ -21,7 +44,7 @@ SELECT
   name,
   disambiguation,
   type,
-  language,
+  languages,
   iswcs,
   details_metadata.last_updated
 FROM work
@@ -61,7 +84,7 @@ SELECT IFNULL(
       work.name LIKE :query OR
       work.disambiguation LIKE :query OR
       work.type LIKE :query OR
-      work.language LIKE :query OR
+      work.languages LIKE :query OR
       work.iswcs LIKE :query OR
       alias.name LIKE :query
     )
@@ -75,7 +98,7 @@ SELECT
   work.name,
   work.disambiguation,
   work.type,
-  work.language,
+  work.languages,
   work.iswcs,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
@@ -90,7 +113,7 @@ AND (
   work.name LIKE :query OR
   work.disambiguation LIKE :query OR
   work.type LIKE :query OR
-  work.language LIKE :query OR
+  work.languages LIKE :query OR
   work.iswcs LIKE :query OR
   alias.name LIKE :query
 )
@@ -113,7 +136,7 @@ SELECT IFNULL(
       work.name LIKE :query OR
       work.disambiguation LIKE :query OR
       work.type LIKE :query OR
-      work.language LIKE :query OR
+      work.languages LIKE :query OR
       work.iswcs LIKE :query OR
       alias.name LIKE :query
     )
@@ -127,7 +150,7 @@ SELECT
   work.name,
   work.disambiguation,
   work.type,
-  work.language,
+  work.languages,
   work.iswcs,
   details_metadata.entity_id IS NOT NULL AS visited,
   ce.id IS NOT NULL AS collected
@@ -142,7 +165,7 @@ AND (
   work.name LIKE :query OR
   work.disambiguation LIKE :query OR
   work.type LIKE :query OR
-  work.language LIKE :query OR
+  work.languages LIKE :query OR
   work.iswcs LIKE :query OR
   alias.name LIKE :query
 )
@@ -161,7 +184,7 @@ SELECT IFNULL(
       work.name LIKE :query OR
       work.disambiguation LIKE :query OR
       work.type LIKE :query OR
-      work.language LIKE :query OR
+      work.languages LIKE :query OR
       work.iswcs LIKE :query OR
       alias.name LIKE :query
     )
@@ -175,7 +198,7 @@ SELECT
   work.name,
   work.disambiguation,
   work.type,
-  work.language,
+  work.languages,
   work.iswcs,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
@@ -188,7 +211,7 @@ WHERE (
   work.name LIKE :query OR
   work.disambiguation LIKE :query OR
   work.type LIKE :query OR
-  work.language LIKE :query OR
+  work.languages LIKE :query OR
   work.iswcs LIKE :query OR
   alias.name LIKE :query
 )

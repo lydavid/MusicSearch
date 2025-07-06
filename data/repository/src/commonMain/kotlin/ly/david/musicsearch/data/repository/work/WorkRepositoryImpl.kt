@@ -61,7 +61,7 @@ class WorkRepositoryImpl(
         lastUpdated: Instant,
     ) {
         workDao.withTransaction {
-            workDao.insert(work)
+            workDao.insertOrUpdate(work)
             workAttributeDao.insertAttributesForWork(
                 workId = work.id,
                 work.attributes,
