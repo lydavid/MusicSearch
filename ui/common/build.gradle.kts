@@ -84,13 +84,12 @@ kotlin {
         }
     }
 
-    // Copied from https://github.com/chrisbanes/tivi/pull/1827/commits/0840a6c769c8b91f520e03c5a2fa6292431a99ea
+    // Copied from https://github.com/slackhq/circuit/blob/e9955929fcbb2833622d74d4a738d70e14708613/samples/bottom-navigation/build.gradle.kts#L79
     targets.configureEach {
-        val isAndroidTarget = platformType == KotlinPlatformType.androidJvm
-        compilations.configureEach {
-            compileTaskProvider.configure {
-                compilerOptions {
-                    if (isAndroidTarget) {
+        if (platformType == KotlinPlatformType.androidJvm) {
+            compilations.configureEach {
+                compileTaskProvider.configure {
+                    compilerOptions {
                         freeCompilerArgs.addAll(
                             "-P",
                             "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=" +

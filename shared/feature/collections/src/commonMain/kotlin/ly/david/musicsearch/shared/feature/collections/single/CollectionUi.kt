@@ -180,9 +180,9 @@ internal fun CollectionUi(
                     }
                     StatsMenuItem(
                         statsScreen = StatsScreen(
-                            id = collection?.id.orEmpty(),
+                            byEntityId = collection?.id.orEmpty(),
+                            byEntity = MusicBrainzEntity.COLLECTION,
                             tabs = listOfNotNull(entity?.toTab()).toPersistentList(),
-                            isCollection = true,
                         ),
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,

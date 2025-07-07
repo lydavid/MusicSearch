@@ -67,11 +67,15 @@ data class CoverArtsScreen(
     val entity: MusicBrainzEntity? = null,
 ) : Screen
 
+/**
+ * This is meant to take in [ly.david.musicsearch.shared.domain.BrowseMethod.ByEntity].
+ * Had to split it up otherwise would have to parcelize its sealed interface in domain
+ */
 @Parcelize
 data class StatsScreen(
-    val id: String,
+    val byEntityId: String,
+    val byEntity: MusicBrainzEntity,
     val tabs: ImmutableList<Tab>,
-    val isCollection: Boolean,
 ) : Screen
 
 @Parcelize

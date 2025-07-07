@@ -9,7 +9,7 @@ import kotlinx.collections.immutable.toPersistentHashMap
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
-import ly.david.musicsearch.shared.domain.BrowseMethod.ByEntity
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.area.AreasListRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
@@ -50,28 +50,31 @@ internal class StatsPresenter(
 
     @Composable
     override fun present(): StatsUiState {
+        val byEntity = BrowseMethod.ByEntity(
+            entityId = screen.byEntityId,
+            entity = screen.byEntity,
+        )
         val relationTypeCounts
-            by getCountOfEachRelationshipTypeUseCase(screen.id).collectAsState(listOf())
+            by getCountOfEachRelationshipTypeUseCase(byEntity.entityId).collectAsState(listOf())
 
         val tabToStats = screen.tabs
             .filterNot { setOf(Tab.DETAILS, Tab.TRACKS, Tab.STATS).contains(it) }
             .associateWith { tab ->
-                val entity = tab.toMusicBrainzEntity() ?: return@associateWith EntityStats()
+                val browseEntity = tab.toMusicBrainzEntity() ?: return@associateWith EntityStats()
                 observeEntityStats(
-                    entityId = screen.id,
-                    entity = entity,
-                    localCountFlow = { entityId ->
+                    byEntity = byEntity,
+                    entity = browseEntity,
+                    localCountFlow = {
                         observeLocalCount(
-                            entity = entity,
-                            entityId = entityId,
-                            isCollection = screen.isCollection,
+                            browseEntity = browseEntity,
+                            byEntity = byEntity,
                         )
                     },
                     countOfEachAlbumTypeFlow = { entityId ->
-                        if (entity == MusicBrainzEntity.RELEASE_GROUP) {
+                        if (browseEntity == MusicBrainzEntity.RELEASE_GROUP) {
                             observeCountOfEachAlbumType(
                                 entityId = entityId,
-                                isCollection = screen.isCollection,
+                                isCollection = byEntity.entity == MusicBrainzEntity.COLLECTION,
                             )
                         } else {
                             flowOf(listOf())
@@ -93,64 +96,56 @@ internal class StatsPresenter(
     }
 
     private fun observeLocalCount(
-        entity: MusicBrainzEntity,
-        entityId: String,
-        isCollection: Boolean,
+        browseEntity: MusicBrainzEntity,
+        byEntity: BrowseMethod.ByEntity,
     ): Flow<Int> {
-        // TODO: this is an incorrect usage of ByEntity
-        //  but worked for non-collection entity because there was a single count query for each
-        //  and the ByEntity.entity did not matter
-        val browseMethod = ByEntity(
-            entity = if (isCollection) MusicBrainzEntity.COLLECTION else entity,
-            entityId = entityId,
-        )
-        return when (entity) {
+        return when (browseEntity) {
             MusicBrainzEntity.AREA -> areasListRepository.observeCountOfAreas(
-                browseMethod = browseMethod,
+                browseMethod = byEntity,
             )
 
             MusicBrainzEntity.ARTIST -> artistsListRepository.observeCountOfArtists(
-                browseMethod = browseMethod,
+                browseMethod = byEntity,
             )
 
             MusicBrainzEntity.EVENT -> eventsListRepository.observeCountOfEvents(
-                browseMethod = browseMethod,
+                browseMethod = byEntity,
             )
 
             MusicBrainzEntity.GENRE -> genresListRepository.observeCountOfGenres(
-                browseMethod = browseMethod,
+                browseMethod = byEntity,
             )
 
             MusicBrainzEntity.INSTRUMENT -> instrumentsListRepository.observeCountOfInstruments(
-                browseMethod = browseMethod,
+                browseMethod = byEntity,
             )
 
             MusicBrainzEntity.LABEL -> labelsListRepository.observeCountOfLabels(
-                browseMethod = browseMethod,
+                browseMethod = byEntity,
             )
 
             MusicBrainzEntity.PLACE -> placesListRepository.observeCountOfPlaces(
-                browseMethod = browseMethod,
+                browseMethod = byEntity,
             )
 
             MusicBrainzEntity.RECORDING -> recordingsListRepository.observeCountOfRecordings(
-                browseMethod = browseMethod,
+                browseMethod = byEntity,
             )
 
             MusicBrainzEntity.RELEASE -> releasesListRepository.observeCountOfReleases(
-                browseMethod = browseMethod,
+                browseMethod = byEntity,
             )
 
             MusicBrainzEntity.RELEASE_GROUP -> releaseGroupsListRepository.observeCountOfReleaseGroups(
-                browseMethod = browseMethod,
+                browseMethod = byEntity,
             )
 
             MusicBrainzEntity.WORK -> worksListRepository.observeCountOfWorks(
-                browseMethod = browseMethod,
+                browseMethod = byEntity,
             )
 
             MusicBrainzEntity.SERIES -> seriesListRepository.observeCountOfSeries(
-                browseMethod = browseMethod,
+                browseMethod = byEntity,
             )
 
             MusicBrainzEntity.COLLECTION,
@@ -170,19 +165,19 @@ internal class StatsPresenter(
     }
 
     private fun observeEntityStats(
-        entityId: String,
         entity: MusicBrainzEntity,
-        localCountFlow: (entityId: String) -> Flow<Int>,
+        byEntity: BrowseMethod.ByEntity,
+        localCountFlow: () -> Flow<Int>,
         countOfEachAlbumTypeFlow: (entityId: String) -> Flow<List<ReleaseGroupTypeCount>>,
     ): Flow<EntityStats> {
         val browseRemoteMetadataFlow = browseRemoteMetadataRepository.observe(
-            entityId = entityId,
+            entityId = byEntity.entityId,
             entity = entity,
         )
         return combine(
             browseRemoteMetadataFlow,
-            localCountFlow(entityId),
-            countOfEachAlbumTypeFlow(entityId),
+            localCountFlow(),
+            countOfEachAlbumTypeFlow(byEntity.entityId),
         ) { browseRemoteMetadata, localCount, releaseGroupTypeCount ->
             EntityStats(
                 // after adding to a remote collection, the local count may be higher than the remote count
