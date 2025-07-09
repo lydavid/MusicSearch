@@ -41,8 +41,8 @@ SELECT
   artist.gender,
   artist.ipis,
   artist.isnis,
-  artist.begin,
-  artist.end,
+  artist.`begin`,
+  artist.`end`,
   artist.ended,
   area.id,
   area.name,
@@ -104,8 +104,8 @@ SELECT
   artist.type,
   artist.gender,
   artist.country_code,
-  artist.begin,
-  artist.end,
+  artist.`begin`,
+  artist.`end`,
   artist.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
@@ -164,8 +164,8 @@ SELECT
   artist.type,
   artist.gender,
   artist.country_code,
-  artist.begin,
-  artist.end,
+  artist.`begin`,
+  artist.`end`,
   artist.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
@@ -189,7 +189,7 @@ AND (
   alias.name LIKE :query
 )
 GROUP BY artist.id
-ORDER BY artist.begin, artist.end, artist.name
+ORDER BY artist.`begin`, artist.`end`, artist.name
 LIMIT :limit OFFSET :offset;
 
 -- all artists
@@ -222,8 +222,8 @@ SELECT
   artist.type,
   artist.gender,
   artist.country_code,
-  artist.begin,
-  artist.end,
+  artist.`begin`,
+  artist.`end`,
   artist.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
@@ -245,5 +245,5 @@ WHERE (
   alias.name LIKE :query
 )
 GROUP BY artist.id
-ORDER BY artist.begin, artist.end, artist.name
+ORDER BY artist.`begin`, artist.`end`, artist.name
 LIMIT :limit OFFSET :offset;
