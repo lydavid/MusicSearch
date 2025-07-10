@@ -47,7 +47,7 @@ internal class StatsPresenter(
                     localCountFlow = {
                         entitiesListRepository.observeLocalCount(
                             browseEntity = browseEntity,
-                            byEntity = byEntity,
+                            browseMethod = byEntity,
                         )
                     },
                     countOfEachAlbumTypeFlow = { entityId ->

@@ -18,18 +18,7 @@ val databaseFeatureModule = module {
                 is DatabaseScreen -> DatabasePresenter(
                     navigator = navigator,
                     musicBrainzImageMetadataRepository = get(),
-                    areasListRepository = get(),
-                    artistsListRepository = get(),
-                    eventsListRepository = get(),
-                    genresListRepository = get(),
-                    instrumentsListRepository = get(),
-                    labelsListRepository = get(),
-                    placesListRepository = get(),
-                    recordingsListRepository = get(),
-                    releasesListRepository = get(),
-                    releaseGroupsListRepository = get(),
-                    seriesListRepository = get(),
-                    worksListRepository = get(),
+                    entitiesListRepository = get(),
                 )
 
                 is AllEntitiesScreen -> AllEntitiesPresenter(

@@ -111,55 +111,55 @@ class EntitiesListRepositoryImpl(
 
     override fun observeLocalCount(
         browseEntity: MusicBrainzEntity,
-        byEntity: BrowseMethod.ByEntity,
+        browseMethod: BrowseMethod,
     ): Flow<Int> {
         return when (browseEntity) {
             MusicBrainzEntity.AREA -> areasListRepository.observeCountOfAreas(
-                browseMethod = byEntity,
+                browseMethod = browseMethod,
             )
 
             MusicBrainzEntity.ARTIST -> artistsListRepository.observeCountOfArtists(
-                browseMethod = byEntity,
+                browseMethod = browseMethod,
             )
 
             MusicBrainzEntity.EVENT -> eventsListRepository.observeCountOfEvents(
-                browseMethod = byEntity,
+                browseMethod = browseMethod,
             )
 
             MusicBrainzEntity.GENRE -> genresListRepository.observeCountOfGenres(
-                browseMethod = byEntity,
+                browseMethod = browseMethod,
             )
 
             MusicBrainzEntity.INSTRUMENT -> instrumentsListRepository.observeCountOfInstruments(
-                browseMethod = byEntity,
+                browseMethod = browseMethod,
             )
 
             MusicBrainzEntity.LABEL -> labelsListRepository.observeCountOfLabels(
-                browseMethod = byEntity,
+                browseMethod = browseMethod,
             )
 
             MusicBrainzEntity.PLACE -> placesListRepository.observeCountOfPlaces(
-                browseMethod = byEntity,
+                browseMethod = browseMethod,
             )
 
             MusicBrainzEntity.RECORDING -> recordingsListRepository.observeCountOfRecordings(
-                browseMethod = byEntity,
+                browseMethod = browseMethod,
             )
 
             MusicBrainzEntity.RELEASE -> releasesListRepository.observeCountOfReleases(
-                browseMethod = byEntity,
+                browseMethod = browseMethod,
             )
 
             MusicBrainzEntity.RELEASE_GROUP -> releaseGroupsListRepository.observeCountOfReleaseGroups(
-                browseMethod = byEntity,
+                browseMethod = browseMethod,
             )
 
             MusicBrainzEntity.WORK -> worksListRepository.observeCountOfWorks(
-                browseMethod = byEntity,
+                browseMethod = browseMethod,
             )
 
             MusicBrainzEntity.SERIES -> seriesListRepository.observeCountOfSeries(
-                browseMethod = byEntity,
+                browseMethod = browseMethod,
             )
 
             MusicBrainzEntity.COLLECTION,

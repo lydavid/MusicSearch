@@ -16,6 +16,6 @@ interface EntitiesListRepository {
 
     fun observeLocalCount(
         browseEntity: MusicBrainzEntity,
-        byEntity: BrowseMethod.ByEntity,
+        browseMethod: BrowseMethod,
     ): Flow<Int>
 }
