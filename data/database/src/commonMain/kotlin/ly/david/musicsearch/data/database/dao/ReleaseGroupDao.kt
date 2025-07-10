@@ -30,14 +30,13 @@ interface ReleaseGroupDao : EntityDao {
     fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease?
     fun deleteReleaseGroup(id: String)
 
-    fun insertReleaseGroupsByArtist(
-        artistId: String,
+    fun insertReleaseGroupsByEntity(
+        entityId: String,
         releaseGroupIds: List<String>,
     )
 
-    fun deleteReleaseGroupLinksByArtist(artistId: String)
-    fun observeCountOfReleaseGroupsByArtist(artistId: String): Flow<Int>
-    fun getCountOfReleaseGroupsByArtist(artistId: String): Int
+    fun deleteReleaseGroupLinksByEntity(entityId: String)
+    fun getCountOfReleaseGroupsByArtist(entityId: String): Int
     fun observeCountOfEachAlbumType(
         entityId: String,
         isCollection: Boolean,
@@ -49,7 +48,7 @@ interface ReleaseGroupDao : EntityDao {
         sorted: Boolean,
     ): PagingSource<Int, ReleaseGroupListItemModel>
 
-    fun observeCountOfAllReleaseGroups(browseMethod: BrowseMethod): Flow<Int>
+    fun observeCountOfReleaseGroups(browseMethod: BrowseMethod): Flow<Int>
 }
 
 class ReleaseGroupDaoImpl(
@@ -132,15 +131,15 @@ class ReleaseGroupDaoImpl(
         transacter.deleteReleaseGroup(id)
     }
 
-    override fun insertReleaseGroupsByArtist(
-        artistId: String,
+    override fun insertReleaseGroupsByEntity(
+        entityId: String,
         releaseGroupIds: List<String>,
     ) {
         transacter.transaction {
             releaseGroupIds.forEach { releaseGroupId ->
                 transacter.insertOrIgnoreReleaseGroupByEntity(
                     Release_groups_by_entity(
-                        entity_id = artistId,
+                        entity_id = entityId,
                         release_group_id = releaseGroupId,
                     ),
                 )
@@ -148,26 +147,20 @@ class ReleaseGroupDaoImpl(
         }
     }
 
-    override fun deleteReleaseGroupLinksByArtist(artistId: String) {
-        transacter.deleteReleaseGroupLinksByEntity(entityId = artistId)
+    override fun deleteReleaseGroupLinksByEntity(entityId: String) {
+        transacter.deleteReleaseGroupLinksByEntity(entityId = entityId)
     }
 
-    private fun getCountOfReleaseGroupsByArtistQuery(
-        artistId: String,
+    private fun getCountOfReleaseGroupsByEntityQuery(
+        entityId: String,
         query: String,
     ) = transacter.getNumberOfReleaseGroupsByEntity(
-        artistId = artistId,
+        entityId = entityId,
         query = "%$query%",
     )
 
-    override fun observeCountOfReleaseGroupsByArtist(artistId: String): Flow<Int> =
-        getCountOfReleaseGroupsByArtistQuery(artistId, query = "")
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
-
-    override fun getCountOfReleaseGroupsByArtist(artistId: String): Int =
-        getCountOfReleaseGroupsByArtistQuery(artistId, query = "")
+    override fun getCountOfReleaseGroupsByArtist(entityId: String): Int =
+        getCountOfReleaseGroupsByEntityQuery(entityId = entityId, query = "")
             .executeAsOne()
             .toInt()
 
@@ -188,7 +181,7 @@ class ReleaseGroupDaoImpl(
             )
         } else {
             transacter.getCountOfEachAlbumType(
-                artistId = entityId,
+                entityId = entityId,
                 mapper = { primaryType, secondaryTypes, count ->
                     ReleaseGroupTypeCount(
                         primaryType = primaryType,
@@ -231,7 +224,7 @@ class ReleaseGroupDaoImpl(
         }
     }
 
-    override fun observeCountOfAllReleaseGroups(browseMethod: BrowseMethod): Flow<Int> =
+    override fun observeCountOfReleaseGroups(browseMethod: BrowseMethod): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
                 if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
@@ -239,8 +232,8 @@ class ReleaseGroupDaoImpl(
                         collectionId = browseMethod.entityId,
                     )
                 } else {
-                    getCountOfReleaseGroupsByArtistQuery(
-                        artistId = browseMethod.entityId,
+                    getCountOfReleaseGroupsByEntityQuery(
+                        entityId = browseMethod.entityId,
                         query = "",
                     )
                 }
@@ -285,15 +278,15 @@ class ReleaseGroupDaoImpl(
         query: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
-        countQuery = getCountOfReleaseGroupsByArtistQuery(
-            artistId = entityId,
+        countQuery = getCountOfReleaseGroupsByEntityQuery(
+            entityId = entityId,
             query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
             transacter.getReleaseGroupsByEntity(
-                artistId = entityId,
+                entityId = entityId,
                 query = "%$query%",
                 sorted = sorted,
                 limit = limit,

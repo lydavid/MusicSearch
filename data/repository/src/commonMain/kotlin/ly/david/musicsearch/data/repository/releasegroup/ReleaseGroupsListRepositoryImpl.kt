@@ -63,7 +63,7 @@ class ReleaseGroupsListRepositoryImpl(
 
     override fun observeCountOfReleaseGroups(browseMethod: BrowseMethod?): Flow<Int> {
         if (browseMethod == null) return flowOf()
-        return releaseGroupDao.observeCountOfAllReleaseGroups(browseMethod = browseMethod)
+        return releaseGroupDao.observeCountOfReleaseGroups(browseMethod = browseMethod)
     }
 
     override fun observeCountOfEachAlbumType(
@@ -99,7 +99,7 @@ class ReleaseGroupsListRepositoryImpl(
 
             when (entity) {
                 MusicBrainzEntity.ARTIST -> {
-                    releaseGroupDao.deleteReleaseGroupLinksByArtist(entityId)
+                    releaseGroupDao.deleteReleaseGroupLinksByEntity(entityId)
                 }
 
                 MusicBrainzEntity.COLLECTION -> {
@@ -131,8 +131,8 @@ class ReleaseGroupsListRepositoryImpl(
         releaseGroupDao.insertAllReleaseGroups(musicBrainzModels)
         when (entity) {
             MusicBrainzEntity.ARTIST -> {
-                releaseGroupDao.insertReleaseGroupsByArtist(
-                    artistId = entityId,
+                releaseGroupDao.insertReleaseGroupsByEntity(
+                    entityId = entityId,
                     releaseGroupIds = musicBrainzModels.map { releaseGroup -> releaseGroup.id },
                 )
             }

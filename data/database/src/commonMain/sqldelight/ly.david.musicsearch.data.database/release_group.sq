@@ -63,12 +63,11 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT release_group.id)
     FROM release_group
-    INNER JOIN release_groups_by_entity arg ON release_group.id = arg.release_group_id
-    INNER JOIN artist a ON a.id = arg.entity_id
+    INNER JOIN release_groups_by_entity ON release_group.id = release_groups_by_entity.release_group_id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
     LEFT JOIN alias ON release_group.id = alias.mbid
-    WHERE a.id = :artistId
+    WHERE release_groups_by_entity.entity_id = :entityId
     AND (
       release_group.name LIKE :query OR
       release_group.disambiguation LIKE :query OR
@@ -85,9 +84,8 @@ SELECT IFNULL(
 getCountOfEachAlbumType:
 SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) AS count
 FROM release_group rg
-INNER JOIN release_groups_by_entity arg ON rg.id = arg.release_group_id
-INNER JOIN artist a ON a.id = arg.entity_id
-WHERE a.id = :artistId
+INNER JOIN release_groups_by_entity ON rg.id = release_groups_by_entity.release_group_id
+WHERE release_groups_by_entity.entity_id = :entityId
 GROUP BY rg.primary_type, rg.secondary_types;
 
 getCountOfEachAlbumTypeByCollection:
@@ -114,14 +112,13 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
   ) AS collected
 FROM release_group
-INNER JOIN release_groups_by_entity arg ON release_group.id = arg.release_group_id
-INNER JOIN artist a ON a.id = arg.entity_id
+INNER JOIN release_groups_by_entity ON release_group.id = release_groups_by_entity.release_group_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN alias ON release_group.id = alias.mbid
 LEFT JOIN mbid_image mi ON mi.mbid = release_group.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = release_group.id
-WHERE a.id = :artistId
+WHERE release_groups_by_entity.entity_id = :entityId
 AND (
   release_group.name LIKE :query OR
   release_group.disambiguation LIKE :query OR
@@ -133,7 +130,7 @@ AND (
 )
 GROUP BY release_group.id
 ORDER BY
-  CASE WHEN :sorted THEN release_group.primary_type ELSE arg.rowid END,
+  CASE WHEN :sorted THEN release_group.primary_type ELSE release_groups_by_entity.rowid END,
   CASE WHEN :sorted THEN release_group.secondary_types END,
   CASE WHEN :sorted THEN release_group.first_release_date END
 LIMIT :limit OFFSET :offset;
