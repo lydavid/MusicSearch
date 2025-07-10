@@ -108,4 +108,63 @@ class EntitiesListRepositoryImpl(
             -> flowOf(PagingData.empty())
         }
     }
+
+    override fun observeLocalCount(
+        browseEntity: MusicBrainzEntity,
+        byEntity: BrowseMethod.ByEntity,
+    ): Flow<Int> {
+        return when (browseEntity) {
+            MusicBrainzEntity.AREA -> areasListRepository.observeCountOfAreas(
+                browseMethod = byEntity,
+            )
+
+            MusicBrainzEntity.ARTIST -> artistsListRepository.observeCountOfArtists(
+                browseMethod = byEntity,
+            )
+
+            MusicBrainzEntity.EVENT -> eventsListRepository.observeCountOfEvents(
+                browseMethod = byEntity,
+            )
+
+            MusicBrainzEntity.GENRE -> genresListRepository.observeCountOfGenres(
+                browseMethod = byEntity,
+            )
+
+            MusicBrainzEntity.INSTRUMENT -> instrumentsListRepository.observeCountOfInstruments(
+                browseMethod = byEntity,
+            )
+
+            MusicBrainzEntity.LABEL -> labelsListRepository.observeCountOfLabels(
+                browseMethod = byEntity,
+            )
+
+            MusicBrainzEntity.PLACE -> placesListRepository.observeCountOfPlaces(
+                browseMethod = byEntity,
+            )
+
+            MusicBrainzEntity.RECORDING -> recordingsListRepository.observeCountOfRecordings(
+                browseMethod = byEntity,
+            )
+
+            MusicBrainzEntity.RELEASE -> releasesListRepository.observeCountOfReleases(
+                browseMethod = byEntity,
+            )
+
+            MusicBrainzEntity.RELEASE_GROUP -> releaseGroupsListRepository.observeCountOfReleaseGroups(
+                browseMethod = byEntity,
+            )
+
+            MusicBrainzEntity.WORK -> worksListRepository.observeCountOfWorks(
+                browseMethod = byEntity,
+            )
+
+            MusicBrainzEntity.SERIES -> seriesListRepository.observeCountOfSeries(
+                browseMethod = byEntity,
+            )
+
+            MusicBrainzEntity.COLLECTION,
+            MusicBrainzEntity.URL,
+            -> flowOf(0)
+        }
+    }
 }

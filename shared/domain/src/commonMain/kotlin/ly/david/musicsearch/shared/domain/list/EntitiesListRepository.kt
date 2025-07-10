@@ -13,4 +13,9 @@ interface EntitiesListRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<ListItemModel>>
+
+    fun observeLocalCount(
+        browseEntity: MusicBrainzEntity,
+        byEntity: BrowseMethod.ByEntity,
+    ): Flow<Int>
 }

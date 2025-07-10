@@ -16,18 +16,8 @@ val statsFeatureModule = module {
                         screen = screen,
                         getCountOfEachRelationshipTypeUseCase = get(),
                         browseRemoteMetadataRepository = get(),
-                        areasListRepository = get(),
-                        artistsListRepository = get(),
-                        eventsListRepository = get(),
-                        genresListRepository = get(),
-                        instrumentsListRepository = get(),
-                        labelsListRepository = get(),
-                        placesListRepository = get(),
-                        releasesListRepository = get(),
+                        entitiesListRepository = get(),
                         releaseGroupsListRepository = get(),
-                        recordingsListRepository = get(),
-                        worksListRepository = get(),
-                        seriesListRepository = get(),
                     )
                 }
 
