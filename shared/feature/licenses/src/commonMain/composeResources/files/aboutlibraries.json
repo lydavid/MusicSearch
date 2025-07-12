@@ -1055,7 +1055,7 @@
                     "name": "Olivier Perez"
                 }
             ],
-            "artifactVersion": "4.1.0",
+            "artifactVersion": "4.2.0",
             "description": "Android in-app HTTP inspector",
             "scm": {
                 "connection": "scm:git:git://github.com/ChuckerTeam/chucker.git",
