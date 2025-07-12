@@ -18,25 +18,26 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
 import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class RecordingsListPresenter(
     private val getEntities: GetEntities,
-    private val recordingsListRepository: RecordingsListRepository,
+    private val entitiesListRepository: EntitiesListRepository,
 ) : Presenter<RecordingsListUiState> {
     @Composable
     override fun present(): RecordingsListUiState {
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
+        val entity = MusicBrainzEntity.RECORDING
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query) {
             mutableStateOf(
                 getEntities(
-                    entity = MusicBrainzEntity.RECORDING,
+                    entity = entity,
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
@@ -45,7 +46,8 @@ class RecordingsListPresenter(
                 ),
             )
         }
-        val count by recordingsListRepository.observeCountOfRecordings(
+        val count by entitiesListRepository.observeLocalCount(
+            browseEntity = entity,
             browseMethod = browseMethod,
         ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()

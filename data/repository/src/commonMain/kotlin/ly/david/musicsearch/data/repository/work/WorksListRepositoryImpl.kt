@@ -3,7 +3,6 @@ package ly.david.musicsearch.data.repository.work
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -41,8 +40,7 @@ class WorksListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfWorks(browseMethod: BrowseMethod?): Flow<Int> {
-        if (browseMethod == null) return flowOf()
+    override fun observeCountOfWorks(browseMethod: BrowseMethod): Flow<Int> {
         return workDao.observeCountOfWorks(browseMethod = browseMethod)
     }
 

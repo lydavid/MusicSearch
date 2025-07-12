@@ -22,16 +22,16 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
+import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
 import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class ReleaseGroupsListPresenter(
     private val getEntities: GetEntities,
-    private val releaseGroupsListRepository: ReleaseGroupsListRepository,
+    private val entitiesListRepository: EntitiesListRepository,
     private val appPreferences: AppPreferences,
     private val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository,
 ) : Presenter<ReleaseGroupsListUiState> {
@@ -42,10 +42,11 @@ class ReleaseGroupsListPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
+        val entity = MusicBrainzEntity.RELEASE_GROUP
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query, sorted) {
             mutableStateOf(
                 getEntities(
-                    entity = MusicBrainzEntity.RELEASE_GROUP,
+                    entity = entity,
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
@@ -55,7 +56,8 @@ class ReleaseGroupsListPresenter(
                 ),
             )
         }
-        val count by releaseGroupsListRepository.observeCountOfReleaseGroups(
+        val count by entitiesListRepository.observeLocalCount(
+            browseEntity = entity,
             browseMethod = browseMethod,
         ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()
@@ -78,7 +80,7 @@ class ReleaseGroupsListPresenter(
                             scope.launch {
                                 musicBrainzImageMetadataRepository.saveImageMetadata(
                                     mbid = entityId,
-                                    entity = MusicBrainzEntity.RELEASE_GROUP,
+                                    entity = entity,
                                     itemsCount = count,
                                 )
                             }

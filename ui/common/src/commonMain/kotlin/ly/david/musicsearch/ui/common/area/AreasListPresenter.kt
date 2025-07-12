@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.area.AreasListRepository
+import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
 import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -29,17 +29,18 @@ import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 //  we need more than one pagingDataFlow if we want to preserve scroll position when switching tabs
 class AreasListPresenter(
     private val getEntities: GetEntities,
-    private val areasListRepository: AreasListRepository,
+    private val entitiesListRepository: EntitiesListRepository,
 ) : Presenter<AreasListUiState> {
     @Composable
     override fun present(): AreasListUiState {
         var query by rememberSaveable { mutableStateOf("") }
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
+        val entity = MusicBrainzEntity.AREA
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(query, browseMethod) {
             mutableStateOf(
                 getEntities(
-                    entity = MusicBrainzEntity.AREA,
+                    entity = entity,
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
@@ -48,7 +49,8 @@ class AreasListPresenter(
                 ),
             )
         }
-        val count by areasListRepository.observeCountOfAreas(
+        val count by entitiesListRepository.observeLocalCount(
+            browseEntity = entity,
             browseMethod = browseMethod,
         ).collectAsRetainedState(0)
         val lazyListState = rememberLazyListState()

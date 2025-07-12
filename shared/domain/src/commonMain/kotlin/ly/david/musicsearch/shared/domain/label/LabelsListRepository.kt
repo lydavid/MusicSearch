@@ -12,5 +12,5 @@ interface LabelsListRepository {
         listFilters: ListFilters,
     ): Flow<PagingData<LabelListItemModel>>
 
-    fun observeCountOfLabels(browseMethod: BrowseMethod?): Flow<Int>
+    fun observeCountOfLabels(browseMethod: BrowseMethod): Flow<Int>
 }

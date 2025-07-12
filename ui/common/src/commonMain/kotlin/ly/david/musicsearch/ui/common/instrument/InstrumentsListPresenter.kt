@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.instrument.InstrumentsListRepository
+import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
 import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -26,17 +26,18 @@ import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class InstrumentsListPresenter(
     private val getEntities: GetEntities,
-    private val instrumentsListRepository: InstrumentsListRepository,
+    private val entitiesListRepository: EntitiesListRepository,
 ) : Presenter<InstrumentsListUiState> {
     @Composable
     override fun present(): InstrumentsListUiState {
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
+        val entity = MusicBrainzEntity.INSTRUMENT
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query) {
             mutableStateOf(
                 getEntities(
-                    entity = MusicBrainzEntity.INSTRUMENT,
+                    entity = entity,
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
@@ -45,7 +46,8 @@ class InstrumentsListPresenter(
                 ),
             )
         }
-        val count by instrumentsListRepository.observeCountOfInstruments(
+        val count by entitiesListRepository.observeLocalCount(
+            browseEntity = entity,
             browseMethod = browseMethod,
         ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()

@@ -3,7 +3,6 @@ package ly.david.musicsearch.data.repository.place
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -41,8 +40,7 @@ class PlacesListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfPlaces(browseMethod: BrowseMethod?): Flow<Int> {
-        if (browseMethod == null) return flowOf()
+    override fun observeCountOfPlaces(browseMethod: BrowseMethod): Flow<Int> {
         return placeDao.observeCountOfPlaces(browseMethod = browseMethod)
     }
 

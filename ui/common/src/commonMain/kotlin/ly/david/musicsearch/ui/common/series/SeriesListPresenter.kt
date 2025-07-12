@@ -18,25 +18,26 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
 import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.series.SeriesListRepository
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 class SeriesListPresenter(
     private val getEntities: GetEntities,
-    private val seriesListRepository: SeriesListRepository,
+    private val entitiesListRepository: EntitiesListRepository,
 ) : Presenter<SeriesListUiState> {
     @Composable
     override fun present(): SeriesListUiState {
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
+        val entity = MusicBrainzEntity.SERIES
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(browseMethod, query) {
             mutableStateOf(
                 getEntities(
-                    entity = MusicBrainzEntity.SERIES,
+                    entity = entity,
                     browseMethod = browseMethod,
                     listFilters = ListFilters(
                         query = query,
@@ -45,7 +46,8 @@ class SeriesListPresenter(
                 ),
             )
         }
-        val count by seriesListRepository.observeCountOfSeries(
+        val count by entitiesListRepository.observeLocalCount(
+            browseEntity = entity,
             browseMethod = browseMethod,
         ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()

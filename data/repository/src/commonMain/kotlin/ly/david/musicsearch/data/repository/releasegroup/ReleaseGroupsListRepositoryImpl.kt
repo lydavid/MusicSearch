@@ -4,7 +4,6 @@ import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
 import app.cash.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
@@ -61,8 +60,7 @@ class ReleaseGroupsListRepositoryImpl(
         }
     }
 
-    override fun observeCountOfReleaseGroups(browseMethod: BrowseMethod?): Flow<Int> {
-        if (browseMethod == null) return flowOf()
+    override fun observeCountOfReleaseGroups(browseMethod: BrowseMethod): Flow<Int> {
         return releaseGroupDao.observeCountOfReleaseGroups(browseMethod = browseMethod)
     }
 

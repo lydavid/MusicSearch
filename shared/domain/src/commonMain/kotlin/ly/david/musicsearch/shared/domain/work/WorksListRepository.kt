@@ -12,5 +12,5 @@ interface WorksListRepository {
         listFilters: ListFilters,
     ): Flow<PagingData<WorkListItemModel>>
 
-    fun observeCountOfWorks(browseMethod: BrowseMethod?): Flow<Int>
+    fun observeCountOfWorks(browseMethod: BrowseMethod): Flow<Int>
 }

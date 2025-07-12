@@ -12,7 +12,7 @@ interface ReleaseGroupsListRepository {
         listFilters: ListFilters,
     ): Flow<PagingData<ListItemModel>>
 
-    fun observeCountOfReleaseGroups(browseMethod: BrowseMethod?): Flow<Int>
+    fun observeCountOfReleaseGroups(browseMethod: BrowseMethod): Flow<Int>
 
     fun observeCountOfEachAlbumType(
         entityId: String,

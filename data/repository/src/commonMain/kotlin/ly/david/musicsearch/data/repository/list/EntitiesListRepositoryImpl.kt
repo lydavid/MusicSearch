@@ -111,8 +111,9 @@ class EntitiesListRepositoryImpl(
 
     override fun observeLocalCount(
         browseEntity: MusicBrainzEntity,
-        browseMethod: BrowseMethod,
+        browseMethod: BrowseMethod?,
     ): Flow<Int> {
+        if (browseMethod == null) return flowOf(0)
         return when (browseEntity) {
             MusicBrainzEntity.AREA -> areasListRepository.observeCountOfAreas(
                 browseMethod = browseMethod,
