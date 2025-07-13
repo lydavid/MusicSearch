@@ -6,7 +6,10 @@ import com.slack.circuit.test.presenterTestOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import ly.david.data.test.itouKanakoArtistListItemModel
 import ly.david.data.test.preferences.NoOpAppPreferences
+import ly.david.data.test.variousArtistsArtistListItemModel
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -19,12 +22,14 @@ import ly.david.musicsearch.ui.common.genre.GenresListPresenter
 import ly.david.musicsearch.ui.common.instrument.InstrumentsListPresenter
 import ly.david.musicsearch.ui.common.label.LabelsListPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
+import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.place.PlacesListPresenter
 import ly.david.musicsearch.ui.common.recording.RecordingsListPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsPresenterImpl
 import ly.david.musicsearch.ui.common.release.ReleasesListPresenter
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListPresenter
 import ly.david.musicsearch.ui.common.series.SeriesListPresenter
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
 import ly.david.musicsearch.ui.common.utils.FakeEntitiesListRepository
 import ly.david.musicsearch.ui.common.utils.FakeGetEntities
@@ -38,77 +43,78 @@ import org.robolectric.RobolectricTestRunner
 class EntitiesListPresenterTest {
 
     private fun createPresenter(
-        listItems: List<ListItemModel>,
+        areasListItems: List<ListItemModel>,
+        artistsListItems: List<ListItemModel>,
     ) = AllEntitiesListPresenter(
         areasListPresenter = AreasListPresenter(
-            getEntities = FakeGetEntities(listItems),
-            entitiesListRepository = FakeEntitiesListRepository(listItems),
+            getEntities = FakeGetEntities(areasListItems),
+            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         artistsListPresenter = ArtistsListPresenter(
-            getEntities = FakeGetEntities(listItems),
-            entitiesListRepository = FakeEntitiesListRepository(listItems),
+            getEntities = FakeGetEntities(artistsListItems),
+            entitiesListRepository = FakeEntitiesListRepository(artistsListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         eventsListPresenter = EventsListPresenter(
-            getEntities = FakeGetEntities(listItems),
-            entitiesListRepository = FakeEntitiesListRepository(listItems),
+            getEntities = FakeGetEntities(areasListItems),
+            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         genresListPresenter = GenresListPresenter(
-            getEntities = FakeGetEntities(listItems),
-            entitiesListRepository = FakeEntitiesListRepository(listItems),
+            getEntities = FakeGetEntities(areasListItems),
+            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         instrumentsListPresenter = InstrumentsListPresenter(
-            getEntities = FakeGetEntities(listItems),
-            entitiesListRepository = FakeEntitiesListRepository(listItems),
+            getEntities = FakeGetEntities(areasListItems),
+            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         labelsListPresenter = LabelsListPresenter(
-            getEntities = FakeGetEntities(listItems),
-            entitiesListRepository = FakeEntitiesListRepository(listItems),
+            getEntities = FakeGetEntities(areasListItems),
+            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         placesListPresenter = PlacesListPresenter(
-            getEntities = FakeGetEntities(listItems),
-            entitiesListRepository = FakeEntitiesListRepository(listItems),
+            getEntities = FakeGetEntities(areasListItems),
+            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         recordingsListPresenter = RecordingsListPresenter(
-            getEntities = FakeGetEntities(listItems),
-            entitiesListRepository = FakeEntitiesListRepository(listItems),
+            getEntities = FakeGetEntities(areasListItems),
+            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         releasesListPresenter = ReleasesListPresenter(
-            getEntities = FakeGetEntities(listItems),
-            entitiesListRepository = FakeEntitiesListRepository(listItems),
+            getEntities = FakeGetEntities(areasListItems),
+            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         releaseGroupsListPresenter = ReleaseGroupsListPresenter(
-            getEntities = FakeGetEntities(listItems),
-            entitiesListRepository = FakeEntitiesListRepository(listItems),
+            getEntities = FakeGetEntities(areasListItems),
+            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         seriesListPresenter = SeriesListPresenter(
-            getEntities = FakeGetEntities(listItems),
-            entitiesListRepository = FakeEntitiesListRepository(listItems),
+            getEntities = FakeGetEntities(areasListItems),
+            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         worksListPresenter = WorksListPresenter(
-            getEntities = FakeGetEntities(listItems),
-            entitiesListRepository = FakeEntitiesListRepository(listItems),
+            getEntities = FakeGetEntities(areasListItems),
+            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
@@ -120,7 +126,7 @@ class EntitiesListPresenterTest {
                     relatedEntities: Set<MusicBrainzEntity>,
                     query: String,
                 ): Flow<PagingData<ListItemModel>> {
-                    return flowOf(PagingData.from(listItems))
+                    return flowOf(PagingData.from(areasListItems))
                 }
             },
         ),
@@ -130,7 +136,7 @@ class EntitiesListPresenterTest {
                     releaseId: String,
                     query: String,
                 ): Flow<PagingData<ListItemModel>> {
-                    return flowOf(PagingData.from(listItems))
+                    return flowOf(PagingData.from(areasListItems))
                 }
             },
         ),
@@ -139,17 +145,20 @@ class EntitiesListPresenterTest {
     @Test
     fun `parameters are passed through`() = runTest {
         val presenter = createPresenter(
-            listItems = listOf(
+            areasListItems = listOf(
                 AreaListItemModel(
                     id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
                     name = "United Kingdom",
                     countryCodes = listOf("GB"),
                 ),
             ),
+            artistsListItems = listOf(
+                variousArtistsArtistListItemModel,
+                itouKanakoArtistListItemModel,
+            ),
         )
 
         presenterTestOf({ presenter.present() }) {
-            // TODO: can't sink event
             awaitItem().run {
                 assertEquals(
                     listOf(
@@ -180,6 +189,39 @@ class EntitiesListPresenterTest {
                 assertEquals(
                     1,
                     areasListUiState.count,
+                )
+                assertEquals(
+                    listOf(
+                        variousArtistsArtistListItemModel,
+                        itouKanakoArtistListItemModel,
+                    ),
+                    artistsListUiState.pagingDataFlow.asSnapshot(),
+                )
+                assertEquals(
+                    2,
+                    artistsListUiState.count,
+                )
+                // whether we sink this event or not, it doesn't matter in this test
+                eventSink(
+                    AllEntitiesListUiEvent.Get(
+                        tab = Tab.ARTISTS,
+                        browseMethod = BrowseMethod.All,
+                        query = "",
+                        isRemote = false,
+                    ),
+                )
+            }
+            awaitItem().run {
+                assertEquals(
+                    listOf(
+                        variousArtistsArtistListItemModel,
+                        itouKanakoArtistListItemModel,
+                    ),
+                    artistsListUiState.pagingDataFlow.asSnapshot(),
+                )
+                assertEquals(
+                    2,
+                    artistsListUiState.count,
                 )
             }
         }
