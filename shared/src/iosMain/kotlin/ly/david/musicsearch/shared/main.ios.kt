@@ -19,12 +19,15 @@ import org.koin.core.context.startKoin
 import platform.UIKit.UIViewController
 
 @Suppress("unused")
-fun initKoin() {
+fun initializeApp() {
     startKoin {
         modules(
             sharedModule,
         )
     }.koin
+
+    enableCrashlytics()
+    setCrashlyticsUnhandledExceptionHook()
 }
 
 class AppComponent : KoinComponent {
@@ -36,8 +39,6 @@ class AppComponent : KoinComponent {
 fun MainViewController(): UIViewController =
     ComposeUIViewController {
         val appComponent = AppComponent()
-        enableCrashlytics()
-        setCrashlyticsUnhandledExceptionHook()
         BaseTheme(
             appPreferences = appComponent.appPreferences,
             darkTheme = appComponent.appPreferences.useDarkTheme(),

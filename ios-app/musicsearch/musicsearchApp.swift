@@ -27,7 +27,7 @@ struct musicsearchApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     init() {
-        Main_iosKt.doInitKoin()
+        Main_iosKt.initializeApp()
     }
     
     var body: some Scene {

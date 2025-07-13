@@ -155,10 +155,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 631D2DDB2BBF8AE700C6F58F /* Build configuration list for PBXNativeTarget "musicsearch" */;
 			buildPhases = (
-				631D2DE42BBF8D7600C6F58F /* ShellScript */,
+				631D2DE42BBF8D7600C6F58F /* Embed and sign Apple frameworks for Xcode */,
 				631D2DB32BBF8AE600C6F58F /* Sources */,
 				631D2DB42BBF8AE600C6F58F /* Frameworks */,
 				631D2DB52BBF8AE600C6F58F /* Resources */,
+				63BCAF672E23F1B200015E39 /* Upload dSYMs */,
 			);
 			buildRules = (
 			);
@@ -279,8 +280,9 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		631D2DE42BBF8D7600C6F58F /* ShellScript */ = {
+		631D2DE42BBF8D7600C6F58F /* Embed and sign Apple frameworks for Xcode */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -288,6 +290,7 @@
 			);
 			inputPaths = (
 			);
+			name = "Embed and sign Apple frameworks for Xcode";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -295,6 +298,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd \"$SRCROOT/..\"\nexport JAVA_HOME=$(/usr/libexec/java_home -v 19)\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
+		};
+		63BCAF672E23F1B200015E39 /* Upload dSYMs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = "Upload dSYMs";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -467,6 +493,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"musicsearch/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
