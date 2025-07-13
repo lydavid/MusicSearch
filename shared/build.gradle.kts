@@ -56,6 +56,11 @@ kotlin {
                 implementation(compose.preview)
             }
         }
+        val iosMain by getting {
+            dependencies {
+                implementation(libs.crashkios)
+            }
+        }
 
         targets.withType<KotlinNativeTarget>().configureEach {
             binaries.framework {

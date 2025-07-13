@@ -1,5 +1,6 @@
 package ly.david.musicsearch.core.logging
 
+import co.touchlab.crashkios.crashlytics.CrashlyticsKotlin
 import ly.david.musicsearch.core.logging.crash.CrashReporterSettings
 import ly.david.musicsearch.core.logging.crash.NoOpCrashReporterSettings
 import org.koin.core.module.Module
@@ -15,7 +16,7 @@ actual val loggingModule: Module = module {
             }
 
             override fun e(exception: Exception) {
-                println(exception)
+                CrashlyticsKotlin.sendHandledException(exception)
             }
         }
     }

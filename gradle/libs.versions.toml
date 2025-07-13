@@ -78,6 +78,7 @@ detekt-gradlePlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plug
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-bom = "com.google.firebase:firebase-bom:33.16.0"
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+crashkios = "co.touchlab.crashkios:crashlytics:0.9.0"
 junit = { module = "junit:junit", version.ref = "junit" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiterEngine" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
