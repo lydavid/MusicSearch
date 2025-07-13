@@ -27,8 +27,8 @@ import ly.david.musicsearch.shared.domain.network.searchableEntities
 import ly.david.musicsearch.ui.common.ResourceDropdownPicker
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
