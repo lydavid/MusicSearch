@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
-import ly.david.musicsearch.ui.common.list.EntitiesListPresenter
+import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
 internal val areaTabs = persistentListOf(
@@ -34,7 +34,7 @@ internal class AreaPresenter(
     navigator: Navigator,
     private val repository: AreaRepository,
     override val incrementLookupHistory: IncrementLookupHistory,
-    entitiesListPresenter: EntitiesListPresenter,
+    allEntitiesListPresenter: AllEntitiesListPresenter,
     imageMetadataRepository: ImageMetadataRepository,
     logger: Logger,
     loginPresenter: LoginPresenter,
@@ -45,7 +45,7 @@ internal class AreaPresenter(
     screen = screen,
     navigator = navigator,
     incrementLookupHistory = incrementLookupHistory,
-    entitiesListPresenter = entitiesListPresenter,
+    allEntitiesListPresenter = allEntitiesListPresenter,
     imageMetadataRepository = imageMetadataRepository,
     logger = logger,
     loginPresenter = loginPresenter,

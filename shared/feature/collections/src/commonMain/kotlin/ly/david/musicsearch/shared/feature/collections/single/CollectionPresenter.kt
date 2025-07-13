@@ -23,9 +23,9 @@ import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.ui.common.list.EntitiesListPresenter
-import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
-import ly.david.musicsearch.ui.common.list.EntitiesListUiState
+import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
+import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
+import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
 import ly.david.musicsearch.ui.common.list.getTotalLocalCount
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
@@ -44,7 +44,7 @@ internal class CollectionPresenter(
     private val getCollection: GetCollection,
     override val incrementLookupHistory: IncrementLookupHistory,
     private val loginPresenter: LoginPresenter,
-    private val entitiesListPresenter: EntitiesListPresenter,
+    private val allEntitiesListPresenter: AllEntitiesListPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
     private val collectionRepository: CollectionRepository,
 ) : Presenter<CollectionUiState>, RecordVisit {
@@ -64,7 +64,7 @@ internal class CollectionPresenter(
 
         val loginUiState = loginPresenter.present()
 
-        val entitiesListUiState = entitiesListPresenter.present()
+        val entitiesListUiState = allEntitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
 
         val selectionState = rememberSelectionState(
@@ -105,7 +105,7 @@ internal class CollectionPresenter(
                 entity = MusicBrainzEntity.COLLECTION,
             )
             entitiesListEventSink(
-                EntitiesListUiEvent.Get(
+                AllEntitiesListUiEvent.Get(
                     tab = tab,
                     browseMethod = browseMethod,
                     query = query,
@@ -168,7 +168,7 @@ internal class CollectionPresenter(
             topAppBarFilterState = topAppBarFilterState,
             selectionState = selectionState,
             loginUiState = loginUiState,
-            entitiesListUiState = entitiesListUiState,
+            allEntitiesListUiState = entitiesListUiState,
             eventSink = ::eventSink,
             suspendEventSink = ::suspendEventSink,
         )
@@ -185,7 +185,7 @@ internal data class CollectionUiState(
     val url: String,
     val selectionState: SelectionState,
     val loginUiState: LoginUiState,
-    val entitiesListUiState: EntitiesListUiState,
+    val allEntitiesListUiState: AllEntitiesListUiState,
     val eventSink: (CollectionUiEvent) -> Unit,
     val suspendEventSink: suspend (SuspendCollectionUiEvent) -> Unit,
 ) : CircuitUiState

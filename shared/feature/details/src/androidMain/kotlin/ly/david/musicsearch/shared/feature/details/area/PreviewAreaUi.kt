@@ -21,14 +21,10 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
-import ly.david.musicsearch.ui.common.artist.ArtistsListUiState
-import ly.david.musicsearch.ui.common.event.EventsListUiState
-import ly.david.musicsearch.ui.common.label.LabelsListUiState
+import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
 import ly.david.musicsearch.ui.common.list.EntitiesListUiState
-import ly.david.musicsearch.ui.common.place.PlacesListUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
-import ly.david.musicsearch.ui.common.release.ReleasesListUiState
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
 private val canadianArtists = MutableStateFlow(
@@ -516,20 +512,20 @@ private val detailsUiState = DetailsUiState(
     detailsTabUiState = DetailsTabUiState(
         now = Instant.parse("2025-06-05T20:42:20Z"),
     ),
-    entitiesListUiState = EntitiesListUiState(
-        artistsListUiState = ArtistsListUiState(
+    allEntitiesListUiState = AllEntitiesListUiState(
+        artistsListUiState = EntitiesListUiState(
             pagingDataFlow = canadianArtists,
         ),
-        eventsListUiState = EventsListUiState(
+        eventsListUiState = EntitiesListUiState(
             pagingDataFlow = events,
         ),
-        labelsListUiState = LabelsListUiState(
+        labelsListUiState = EntitiesListUiState(
             pagingDataFlow = labels,
         ),
-        placesListUiState = PlacesListUiState(
+        placesListUiState = EntitiesListUiState(
             pagingDataFlow = places,
         ),
-        releasesListUiState = ReleasesListUiState(
+        releasesListUiState = EntitiesListUiState(
             pagingDataFlow = canadianReleases,
         ),
         relationsUiState = RelationsUiState(
@@ -597,20 +593,20 @@ internal fun PreviewAreaRelationships() {
                 tabs = areaTabs,
                 selectedTab = Tab.RELATIONSHIPS,
                 detailsModel = country,
-                entitiesListUiState = EntitiesListUiState(
-                    artistsListUiState = ArtistsListUiState(
+                allEntitiesListUiState = AllEntitiesListUiState(
+                    artistsListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
-                    eventsListUiState = EventsListUiState(
+                    eventsListUiState = EntitiesListUiState(
                         pagingDataFlow = events,
                     ),
-                    labelsListUiState = LabelsListUiState(
+                    labelsListUiState = EntitiesListUiState(
                         pagingDataFlow = labels,
                     ),
-                    placesListUiState = PlacesListUiState(
+                    placesListUiState = EntitiesListUiState(
                         pagingDataFlow = places,
                     ),
-                    releasesListUiState = ReleasesListUiState(
+                    releasesListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
@@ -634,20 +630,20 @@ internal fun PreviewAreaArtists() {
                 tabs = areaTabs,
                 selectedTab = Tab.ARTISTS,
                 detailsModel = country,
-                entitiesListUiState = EntitiesListUiState(
-                    artistsListUiState = ArtistsListUiState(
+                allEntitiesListUiState = AllEntitiesListUiState(
+                    artistsListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
-                    eventsListUiState = EventsListUiState(
+                    eventsListUiState = EntitiesListUiState(
                         pagingDataFlow = events,
                     ),
-                    labelsListUiState = LabelsListUiState(
+                    labelsListUiState = EntitiesListUiState(
                         pagingDataFlow = labels,
                     ),
-                    placesListUiState = PlacesListUiState(
+                    placesListUiState = EntitiesListUiState(
                         pagingDataFlow = places,
                     ),
-                    releasesListUiState = ReleasesListUiState(
+                    releasesListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
@@ -671,20 +667,20 @@ internal fun PreviewAreaEvents() {
                 tabs = areaTabs,
                 selectedTab = Tab.EVENTS,
                 detailsModel = country,
-                entitiesListUiState = EntitiesListUiState(
-                    artistsListUiState = ArtistsListUiState(
+                allEntitiesListUiState = AllEntitiesListUiState(
+                    artistsListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
-                    eventsListUiState = EventsListUiState(
+                    eventsListUiState = EntitiesListUiState(
                         pagingDataFlow = events,
                     ),
-                    labelsListUiState = LabelsListUiState(
+                    labelsListUiState = EntitiesListUiState(
                         pagingDataFlow = labels,
                     ),
-                    placesListUiState = PlacesListUiState(
+                    placesListUiState = EntitiesListUiState(
                         pagingDataFlow = places,
                     ),
-                    releasesListUiState = ReleasesListUiState(
+                    releasesListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
@@ -708,20 +704,20 @@ internal fun PreviewAreaLabels() {
                 tabs = areaTabs,
                 selectedTab = Tab.LABELS,
                 detailsModel = country,
-                entitiesListUiState = EntitiesListUiState(
-                    artistsListUiState = ArtistsListUiState(
+                allEntitiesListUiState = AllEntitiesListUiState(
+                    artistsListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
-                    eventsListUiState = EventsListUiState(
+                    eventsListUiState = EntitiesListUiState(
                         pagingDataFlow = events,
                     ),
-                    labelsListUiState = LabelsListUiState(
+                    labelsListUiState = EntitiesListUiState(
                         pagingDataFlow = labels,
                     ),
-                    placesListUiState = PlacesListUiState(
+                    placesListUiState = EntitiesListUiState(
                         pagingDataFlow = places,
                     ),
-                    releasesListUiState = ReleasesListUiState(
+                    releasesListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
@@ -745,20 +741,20 @@ internal fun PreviewAreaReleases() {
                 tabs = areaTabs,
                 selectedTab = Tab.RELEASES,
                 detailsModel = country,
-                entitiesListUiState = EntitiesListUiState(
-                    artistsListUiState = ArtistsListUiState(
+                allEntitiesListUiState = AllEntitiesListUiState(
+                    artistsListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
-                    eventsListUiState = EventsListUiState(
+                    eventsListUiState = EntitiesListUiState(
                         pagingDataFlow = events,
                     ),
-                    labelsListUiState = LabelsListUiState(
+                    labelsListUiState = EntitiesListUiState(
                         pagingDataFlow = labels,
                     ),
-                    placesListUiState = PlacesListUiState(
+                    placesListUiState = EntitiesListUiState(
                         pagingDataFlow = places,
                     ),
-                    releasesListUiState = ReleasesListUiState(
+                    releasesListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
@@ -782,20 +778,20 @@ internal fun PreviewAreaPlaces() {
                 tabs = areaTabs,
                 selectedTab = Tab.PLACES,
                 detailsModel = country,
-                entitiesListUiState = EntitiesListUiState(
-                    artistsListUiState = ArtistsListUiState(
+                allEntitiesListUiState = AllEntitiesListUiState(
+                    artistsListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
-                    eventsListUiState = EventsListUiState(
+                    eventsListUiState = EntitiesListUiState(
                         pagingDataFlow = events,
                     ),
-                    labelsListUiState = LabelsListUiState(
+                    labelsListUiState = EntitiesListUiState(
                         pagingDataFlow = labels,
                     ),
-                    placesListUiState = PlacesListUiState(
+                    placesListUiState = EntitiesListUiState(
                         pagingDataFlow = places,
                     ),
-                    releasesListUiState = ReleasesListUiState(
+                    releasesListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(
@@ -820,20 +816,20 @@ internal fun PreviewAreaStats() {
                 tabs = areaTabs,
                 selectedTab = Tab.STATS,
                 detailsModel = country,
-                entitiesListUiState = EntitiesListUiState(
-                    artistsListUiState = ArtistsListUiState(
+                allEntitiesListUiState = AllEntitiesListUiState(
+                    artistsListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianArtists,
                     ),
-                    eventsListUiState = EventsListUiState(
+                    eventsListUiState = EntitiesListUiState(
                         pagingDataFlow = events,
                     ),
-                    labelsListUiState = LabelsListUiState(
+                    labelsListUiState = EntitiesListUiState(
                         pagingDataFlow = labels,
                     ),
-                    placesListUiState = PlacesListUiState(
+                    placesListUiState = EntitiesListUiState(
                         pagingDataFlow = places,
                     ),
-                    releasesListUiState = ReleasesListUiState(
+                    releasesListUiState = EntitiesListUiState(
                         pagingDataFlow = canadianReleases,
                     ),
                     relationsUiState = RelationsUiState(

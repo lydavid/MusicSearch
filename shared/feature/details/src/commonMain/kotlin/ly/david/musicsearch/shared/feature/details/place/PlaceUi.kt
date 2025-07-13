@@ -64,33 +64,33 @@ internal fun PlaceUi(
     )
 
     val areasLazyPagingItems =
-        state.entitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val artistsLazyPagingItems =
-        state.entitiesListUiState.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val eventsLazyPagingItems =
-        state.entitiesListUiState.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val genresLazyPagingItems =
-        state.entitiesListUiState.genresListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.genresListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val instrumentsLazyPagingItems =
-        state.entitiesListUiState.instrumentsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.instrumentsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val labelsLazyPagingItems =
-        state.entitiesListUiState.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val placesLazyPagingItems =
-        state.entitiesListUiState.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val recordingsLazyPagingItems =
-        state.entitiesListUiState.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val releasesLazyPagingItems =
-        state.entitiesListUiState.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val releaseGroupsLazyPagingItems =
-        state.entitiesListUiState.releaseGroupsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.releaseGroupsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val seriesLazyPagingItems =
-        state.entitiesListUiState.seriesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.seriesListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val worksLazyPagingItems =
-        state.entitiesListUiState.worksListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.worksListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val relationsLazyPagingItems =
-        state.entitiesListUiState.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
     val tracksLazyPagingItems =
-        state.entitiesListUiState.tracksByReleaseUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.tracksByReleaseUiState.pagingDataFlow.collectAsLazyPagingItems()
     val entitiesLazyPagingItems = EntitiesLazyPagingItems(
         areasLazyPagingItems = areasLazyPagingItems,
         artistsLazyPagingItems = artistsLazyPagingItems,

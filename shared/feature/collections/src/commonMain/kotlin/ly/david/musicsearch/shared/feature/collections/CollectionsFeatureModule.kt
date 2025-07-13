@@ -37,7 +37,7 @@ val collectionsFeatureModule = module {
                     getCollection = get(),
                     incrementLookupHistory = get(),
                     loginPresenter = get(),
-                    entitiesListPresenter = get(),
+                    allEntitiesListPresenter = get(),
                     getMusicBrainzUrl = get(),
                     collectionRepository = get(),
                 )

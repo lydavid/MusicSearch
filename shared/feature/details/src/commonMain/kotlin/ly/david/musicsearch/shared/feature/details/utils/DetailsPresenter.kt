@@ -31,9 +31,9 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
-import ly.david.musicsearch.ui.common.list.EntitiesListPresenter
-import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
-import ly.david.musicsearch.ui.common.list.EntitiesListUiState
+import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
+import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
+import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
 import ly.david.musicsearch.ui.common.list.getTotalLocalCount
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
@@ -52,7 +52,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
     private val screen: DetailsScreen,
     private val navigator: Navigator,
     override val incrementLookupHistory: IncrementLookupHistory,
-    private val entitiesListPresenter: EntitiesListPresenter,
+    private val allEntitiesListPresenter: AllEntitiesListPresenter,
     private val imageMetadataRepository: ImageMetadataRepository,
     private val logger: Logger,
     private val loginPresenter: LoginPresenter,
@@ -97,7 +97,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             entityId = screen.id,
         ).collectAsRetainedState(false)
 
-        val entitiesListUiState = entitiesListPresenter.present()
+        val entitiesListUiState = allEntitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
 
         val selectionState = rememberSelectionState(
@@ -181,7 +181,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 entity = screen.entity,
             )
             entitiesListEventSink(
-                EntitiesListUiEvent.Get(
+                AllEntitiesListUiEvent.Get(
                     tab = selectedTab,
                     browseMethod = browseMethod,
                     query = query,
@@ -282,7 +282,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 isReleaseEventsCollapsed = isReleaseEventsCollapsed,
                 isExternalLinksCollapsed = isExternalLinksCollapsed,
             ),
-            entitiesListUiState = entitiesListUiState,
+            allEntitiesListUiState = entitiesListUiState,
             loginUiState = loginUiState,
             eventSink = ::eventSink,
         )
@@ -301,7 +301,7 @@ internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val selectionState: SelectionState = SelectionState(),
     val detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
-    val entitiesListUiState: EntitiesListUiState = EntitiesListUiState(),
+    val allEntitiesListUiState: AllEntitiesListUiState = AllEntitiesListUiState(),
     val loginUiState: LoginUiState = LoginUiState(),
     val eventSink: (DetailsUiEvent) -> Unit = {},
 ) : CircuitUiState

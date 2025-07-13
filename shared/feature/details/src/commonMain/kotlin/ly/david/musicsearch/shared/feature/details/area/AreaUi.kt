@@ -29,11 +29,11 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
+import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
-import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
@@ -141,33 +141,33 @@ internal fun AreaUiInternal(
     val eventSink = state.eventSink
 
     val areasLazyPagingItems =
-        state.entitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val artistsLazyPagingItems =
-        state.entitiesListUiState.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.artistsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val eventsLazyPagingItems =
-        state.entitiesListUiState.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.eventsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val genresLazyPagingItems =
-        state.entitiesListUiState.genresListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.genresListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val instrumentsLazyPagingItems =
-        state.entitiesListUiState.instrumentsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.instrumentsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val labelsLazyPagingItems =
-        state.entitiesListUiState.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.labelsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val placesLazyPagingItems =
-        state.entitiesListUiState.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.placesListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val recordingsLazyPagingItems =
-        state.entitiesListUiState.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.recordingsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val releasesLazyPagingItems =
-        state.entitiesListUiState.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.releasesListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val releaseGroupsLazyPagingItems =
-        state.entitiesListUiState.releaseGroupsListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.releaseGroupsListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val seriesLazyPagingItems =
-        state.entitiesListUiState.seriesListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.seriesListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val worksLazyPagingItems =
-        state.entitiesListUiState.worksListUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.worksListUiState.pagingDataFlow.collectAsLazyPagingItems()
     val relationsLazyPagingItems =
-        state.entitiesListUiState.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.relationsUiState.pagingDataFlow.collectAsLazyPagingItems()
     val tracksLazyPagingItems =
-        state.entitiesListUiState.tracksByReleaseUiState.pagingDataFlow.collectAsLazyPagingItems()
+        state.allEntitiesListUiState.tracksByReleaseUiState.pagingDataFlow.collectAsLazyPagingItems()
     val entitiesLazyPagingItems = EntitiesLazyPagingItems(
         areasLazyPagingItems = areasLazyPagingItems,
         artistsLazyPagingItems = artistsLazyPagingItems,
@@ -186,7 +186,7 @@ internal fun AreaUiInternal(
     )
 
     val releasesByEntityEventSink =
-        state.entitiesListUiState.releasesListUiState.eventSink
+        state.allEntitiesListUiState.releasesListUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(DetailsUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
@@ -230,10 +230,10 @@ internal fun AreaUiInternal(
                     CopyToClipboardMenuItem(entityId)
                     if (state.selectedTab == Tab.RELEASES) {
                         MoreInfoToggleMenuItem(
-                            showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
+                            showMoreInfo = state.allEntitiesListUiState.releasesListUiState.showMoreInfo,
                             onToggle = {
                                 releasesByEntityEventSink(
-                                    ReleasesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
+                                    EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
                                 )
                             },
                         )
@@ -274,7 +274,7 @@ internal fun AreaUiInternal(
             onEditCollectionClick = onEditCollectionClick,
             requestForMissingCoverArtUrl = { id, _ ->
                 releasesByEntityEventSink(
-                    ReleasesListUiEvent.RequestForMissingCoverArtUrl(
+                    EntitiesListUiEvent.RequestForMissingCoverArtUrl(
                         entityId = id,
                     ),
                 )

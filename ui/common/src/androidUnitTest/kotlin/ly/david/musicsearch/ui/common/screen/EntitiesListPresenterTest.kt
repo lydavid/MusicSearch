@@ -7,10 +7,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.preferences.NoOpAppPreferences
-import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
-import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -22,7 +18,7 @@ import ly.david.musicsearch.ui.common.event.EventsListPresenter
 import ly.david.musicsearch.ui.common.genre.GenresListPresenter
 import ly.david.musicsearch.ui.common.instrument.InstrumentsListPresenter
 import ly.david.musicsearch.ui.common.label.LabelsListPresenter
-import ly.david.musicsearch.ui.common.list.EntitiesListPresenter
+import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.place.PlacesListPresenter
 import ly.david.musicsearch.ui.common.recording.RecordingsListPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsPresenterImpl
@@ -30,6 +26,8 @@ import ly.david.musicsearch.ui.common.release.ReleasesListPresenter
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListPresenter
 import ly.david.musicsearch.ui.common.series.SeriesListPresenter
 import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
+import ly.david.musicsearch.ui.common.utils.FakeEntitiesListRepository
+import ly.david.musicsearch.ui.common.utils.FakeGetEntities
 import ly.david.musicsearch.ui.common.work.WorksListPresenter
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -39,67 +37,56 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class EntitiesListPresenterTest {
 
-    private class FakeGetEntities(private val listItems: List<ListItemModel>) : GetEntities {
-        override fun invoke(
-            entity: MusicBrainzEntity,
-            browseMethod: BrowseMethod?,
-            listFilters: ListFilters,
-        ): Flow<PagingData<ListItemModel>> {
-            return flowOf(PagingData.from(listItems))
-        }
-    }
-
-    private class FakeEntitiesListRepository(private val listItems: List<ListItemModel>) : EntitiesListRepository {
-        override fun observeEntities(
-            entity: MusicBrainzEntity,
-            browseMethod: BrowseMethod,
-            listFilters: ListFilters,
-        ): Flow<PagingData<ListItemModel>> {
-            error("not used")
-        }
-
-        override fun observeLocalCount(
-            browseEntity: MusicBrainzEntity,
-            browseMethod: BrowseMethod?,
-        ): Flow<Int> {
-            return flowOf(listItems.size)
-        }
-    }
-
     private fun createPresenter(
         listItems: List<ListItemModel>,
-    ) = EntitiesListPresenter(
+    ) = AllEntitiesListPresenter(
         areasListPresenter = AreasListPresenter(
             getEntities = FakeGetEntities(listItems),
             entitiesListRepository = FakeEntitiesListRepository(listItems),
+            appPreferences = NoOpAppPreferences(),
+            musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         artistsListPresenter = ArtistsListPresenter(
             getEntities = FakeGetEntities(listItems),
             entitiesListRepository = FakeEntitiesListRepository(listItems),
+            appPreferences = NoOpAppPreferences(),
+            musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         eventsListPresenter = EventsListPresenter(
             getEntities = FakeGetEntities(listItems),
             entitiesListRepository = FakeEntitiesListRepository(listItems),
+            appPreferences = NoOpAppPreferences(),
+            musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         genresListPresenter = GenresListPresenter(
             getEntities = FakeGetEntities(listItems),
             entitiesListRepository = FakeEntitiesListRepository(listItems),
+            appPreferences = NoOpAppPreferences(),
+            musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         instrumentsListPresenter = InstrumentsListPresenter(
             getEntities = FakeGetEntities(listItems),
             entitiesListRepository = FakeEntitiesListRepository(listItems),
+            appPreferences = NoOpAppPreferences(),
+            musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         labelsListPresenter = LabelsListPresenter(
             getEntities = FakeGetEntities(listItems),
             entitiesListRepository = FakeEntitiesListRepository(listItems),
+            appPreferences = NoOpAppPreferences(),
+            musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         placesListPresenter = PlacesListPresenter(
             getEntities = FakeGetEntities(listItems),
             entitiesListRepository = FakeEntitiesListRepository(listItems),
+            appPreferences = NoOpAppPreferences(),
+            musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         recordingsListPresenter = RecordingsListPresenter(
             getEntities = FakeGetEntities(listItems),
             entitiesListRepository = FakeEntitiesListRepository(listItems),
+            appPreferences = NoOpAppPreferences(),
+            musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         releasesListPresenter = ReleasesListPresenter(
             getEntities = FakeGetEntities(listItems),
@@ -116,10 +103,14 @@ class EntitiesListPresenterTest {
         seriesListPresenter = SeriesListPresenter(
             getEntities = FakeGetEntities(listItems),
             entitiesListRepository = FakeEntitiesListRepository(listItems),
+            appPreferences = NoOpAppPreferences(),
+            musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         worksListPresenter = WorksListPresenter(
             getEntities = FakeGetEntities(listItems),
             entitiesListRepository = FakeEntitiesListRepository(listItems),
+            appPreferences = NoOpAppPreferences(),
+            musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         relationsPresenter = RelationsPresenterImpl(
             getEntityRelationships = object : GetEntityRelationships {

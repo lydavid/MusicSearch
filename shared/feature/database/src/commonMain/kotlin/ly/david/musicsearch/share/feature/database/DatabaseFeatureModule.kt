@@ -3,9 +3,9 @@ package ly.david.musicsearch.share.feature.database
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
-import ly.david.musicsearch.share.feature.database.all.AllEntitiesPresenter
-import ly.david.musicsearch.share.feature.database.all.AllEntitiesUi
-import ly.david.musicsearch.share.feature.database.all.AllEntitiesUiState
+import ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesPresenter
+import ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUi
+import ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiState
 import ly.david.musicsearch.ui.common.screen.AllEntitiesScreen
 import ly.david.musicsearch.ui.common.screen.DatabaseScreen
 import org.koin.core.qualifier.named
@@ -21,10 +21,10 @@ val databaseFeatureModule = module {
                     entitiesListRepository = get(),
                 )
 
-                is AllEntitiesScreen -> AllEntitiesPresenter(
+                is AllEntitiesScreen -> AllLocalEntitiesPresenter(
                     screen = screen,
                     navigator = navigator,
-                    entitiesListPresenter = get(),
+                    allEntitiesListPresenter = get(),
                     loginPresenter = get(),
                 )
 
@@ -45,8 +45,8 @@ val databaseFeatureModule = module {
                 }
 
                 is AllEntitiesScreen -> {
-                    ui<AllEntitiesUiState> { state, modifier ->
-                        AllEntitiesUi(
+                    ui<AllLocalEntitiesUiState> { state, modifier ->
+                        AllLocalEntitiesUi(
                             state = state,
                             modifier = modifier,
                         )

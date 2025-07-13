@@ -1,18 +1,14 @@
 package ly.david.musicsearch.ui.common.area
 
 import androidx.paging.testing.asSnapshot
-import app.cash.paging.PagingData
 import com.slack.circuit.test.presenterTestOf
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
-import ly.david.musicsearch.shared.domain.list.GetEntities
+import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.screen.NoOpMusicBrainzImageMetadataRepository
+import ly.david.musicsearch.ui.common.utils.FakeEntitiesListRepository
+import ly.david.musicsearch.ui.common.utils.FakeGetEntities
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,31 +20,10 @@ class AreasListPresenterTest {
     private fun createPresenter(
         listItems: List<ListItemModel>,
     ) = AreasListPresenter(
-        getEntities = object : GetEntities {
-            override fun invoke(
-                entity: MusicBrainzEntity,
-                browseMethod: BrowseMethod?,
-                listFilters: ListFilters,
-            ): Flow<PagingData<ListItemModel>> {
-                return flowOf(PagingData.from(listItems))
-            }
-        },
-        entitiesListRepository = object : EntitiesListRepository {
-            override fun observeEntities(
-                entity: MusicBrainzEntity,
-                browseMethod: BrowseMethod,
-                listFilters: ListFilters,
-            ): Flow<androidx.paging.PagingData<ListItemModel>> {
-                error("not used")
-            }
-
-            override fun observeLocalCount(
-                browseEntity: MusicBrainzEntity,
-                browseMethod: BrowseMethod?,
-            ): Flow<Int> {
-                return flowOf(listItems.size)
-            }
-        },
+        getEntities = FakeGetEntities(listItems),
+        entitiesListRepository = FakeEntitiesListRepository(listItems),
+        appPreferences = NoOpAppPreferences(),
+        musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
     )
 
     @Test

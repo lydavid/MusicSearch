@@ -30,6 +30,8 @@ private const val PLURAL_RESOURCE_SERIES = "series"
 private const val PLURAL_RESOURCE_WORK = "works"
 private const val PLURAL_RESOURCE_URL = "urls"
 
+// TODO: rename to MusicBrainzEntityType
+//  then a MusicBrainzEntity is made of MusicBrainzEntityType and UUID
 enum class MusicBrainzEntity {
     AREA,
 

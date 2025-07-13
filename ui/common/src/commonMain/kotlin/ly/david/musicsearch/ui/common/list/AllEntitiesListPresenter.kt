@@ -10,37 +10,25 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.ui.common.area.AreasListPresenter
-import ly.david.musicsearch.ui.common.area.AreasListUiEvent
 import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
-import ly.david.musicsearch.ui.common.artist.ArtistsListUiEvent
 import ly.david.musicsearch.ui.common.event.EventsListPresenter
-import ly.david.musicsearch.ui.common.event.EventsListUiEvent
 import ly.david.musicsearch.ui.common.genre.GenresListPresenter
-import ly.david.musicsearch.ui.common.genre.GenresListUiEvent
 import ly.david.musicsearch.ui.common.instrument.InstrumentsListPresenter
-import ly.david.musicsearch.ui.common.instrument.InstrumentsListUiEvent
 import ly.david.musicsearch.ui.common.label.LabelsListPresenter
-import ly.david.musicsearch.ui.common.label.LabelsListUiEvent
 import ly.david.musicsearch.ui.common.place.PlacesListPresenter
-import ly.david.musicsearch.ui.common.place.PlacesListUiEvent
 import ly.david.musicsearch.ui.common.recording.RecordingsListPresenter
-import ly.david.musicsearch.ui.common.recording.RecordingsListUiEvent
 import ly.david.musicsearch.ui.common.relation.RelationsPresenter
 import ly.david.musicsearch.ui.common.relation.RelationsUiEvent
 import ly.david.musicsearch.ui.common.release.ReleasesListPresenter
-import ly.david.musicsearch.ui.common.release.ReleasesListUiEvent
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListPresenter
-import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListUiEvent
 import ly.david.musicsearch.ui.common.series.SeriesListPresenter
-import ly.david.musicsearch.ui.common.series.SeriesListUiEvent
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.track.TracksByEntityUiEvent
 import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
 import ly.david.musicsearch.ui.common.work.WorksListPresenter
-import ly.david.musicsearch.ui.common.work.WorksListUiEvent
 
-class EntitiesListPresenter(
+class AllEntitiesListPresenter(
     private val areasListPresenter: AreasListPresenter,
     private val artistsListPresenter: ArtistsListPresenter,
     private val eventsListPresenter: EventsListPresenter,
@@ -55,11 +43,11 @@ class EntitiesListPresenter(
     private val worksListPresenter: WorksListPresenter,
     private val tracksByReleasePresenter: TracksByReleasePresenter,
     private val relationsPresenter: RelationsPresenter,
-) : Presenter<EntitiesListUiState> {
+) : Presenter<AllEntitiesListUiState> {
 
     @Suppress("CyclomaticComplexMethod")
     @Composable
-    override fun present(): EntitiesListUiState {
+    override fun present(): AllEntitiesListUiState {
         var tab: Tab? by rememberSaveable { mutableStateOf(null) }
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
@@ -104,122 +92,122 @@ class EntitiesListPresenter(
             when (tab) {
                 Tab.AREAS -> {
                     areasEventSink(
-                        AreasListUiEvent.Get(
+                        EntitiesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
                             isRemote = isRemote,
                         ),
                     )
-                    areasEventSink(AreasListUiEvent.UpdateQuery(query))
+                    areasEventSink(EntitiesListUiEvent.UpdateQuery(query))
                 }
 
                 Tab.ARTISTS -> {
                     artistsEventSink(
-                        ArtistsListUiEvent.Get(
+                        EntitiesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
                             isRemote = isRemote,
                         ),
                     )
-                    artistsEventSink(ArtistsListUiEvent.UpdateQuery(query))
+                    artistsEventSink(EntitiesListUiEvent.UpdateQuery(query))
                 }
 
                 Tab.EVENTS -> {
                     eventsEventSink(
-                        EventsListUiEvent.Get(
+                        EntitiesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
                             isRemote = isRemote,
                         ),
                     )
-                    eventsEventSink(EventsListUiEvent.UpdateQuery(query))
+                    eventsEventSink(EntitiesListUiEvent.UpdateQuery(query))
                 }
 
                 Tab.GENRES -> {
                     genresEventSink(
-                        GenresListUiEvent.Get(
+                        EntitiesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
                             isRemote = isRemote,
                         ),
                     )
-                    genresEventSink(GenresListUiEvent.UpdateQuery(query))
+                    genresEventSink(EntitiesListUiEvent.UpdateQuery(query))
                 }
 
                 Tab.INSTRUMENTS -> {
                     instrumentsEventSink(
-                        InstrumentsListUiEvent.Get(
+                        EntitiesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
                             isRemote = isRemote,
                         ),
                     )
-                    instrumentsEventSink(InstrumentsListUiEvent.UpdateQuery(query))
+                    instrumentsEventSink(EntitiesListUiEvent.UpdateQuery(query))
                 }
 
                 Tab.LABELS -> {
                     labelsEventSink(
-                        LabelsListUiEvent.Get(
+                        EntitiesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
                             isRemote = isRemote,
                         ),
                     )
-                    labelsEventSink(LabelsListUiEvent.UpdateQuery(query))
+                    labelsEventSink(EntitiesListUiEvent.UpdateQuery(query))
                 }
 
                 Tab.PLACES -> {
                     placesEventSink(
-                        PlacesListUiEvent.Get(
+                        EntitiesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
                             isRemote = isRemote,
                         ),
                     )
-                    placesEventSink(PlacesListUiEvent.UpdateQuery(query))
+                    placesEventSink(EntitiesListUiEvent.UpdateQuery(query))
                 }
 
                 Tab.RECORDINGS -> {
                     recordingsEventSink(
-                        RecordingsListUiEvent.Get(
+                        EntitiesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
                             isRemote = isRemote,
                         ),
                     )
-                    recordingsEventSink(RecordingsListUiEvent.UpdateQuery(query))
+                    recordingsEventSink(EntitiesListUiEvent.UpdateQuery(query))
                 }
 
                 Tab.RELEASES -> {
                     releasesEventSink(
-                        ReleasesListUiEvent.Get(
+                        EntitiesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
                             isRemote = isRemote,
                         ),
                     )
-                    releasesEventSink(ReleasesListUiEvent.UpdateQuery(query))
+                    releasesEventSink(EntitiesListUiEvent.UpdateQuery(query))
                 }
 
                 Tab.RELEASE_GROUPS -> {
                     releaseGroupsEventSink(
-                        ReleaseGroupsListUiEvent.Get(
+                        EntitiesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
                             isRemote = isRemote,
                         ),
                     )
-                    releaseGroupsEventSink(ReleaseGroupsListUiEvent.UpdateQuery(query))
+                    releaseGroupsEventSink(EntitiesListUiEvent.UpdateQuery(query))
                 }
 
                 Tab.SERIES -> {
                     seriesEventSink(
-                        SeriesListUiEvent.Get(
+                        EntitiesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
                             isRemote = isRemote,
                         ),
                     )
-                    seriesEventSink(SeriesListUiEvent.UpdateQuery(query))
+                    seriesEventSink(EntitiesListUiEvent.UpdateQuery(query))
                 }
 
                 Tab.WORKS -> {
                     worksEventSink(
-                        WorksListUiEvent.Get(
+                        EntitiesListUiEvent.Get(
                             browseMethod = capturedBrowseMethod,
                             isRemote = isRemote,
                         ),
                     )
-                    worksEventSink(WorksListUiEvent.UpdateQuery(query))
+                    worksEventSink(EntitiesListUiEvent.UpdateQuery(query))
                 }
 
                 Tab.RELATIONSHIPS -> {
@@ -252,7 +240,7 @@ class EntitiesListPresenter(
             }
         }
 
-        return EntitiesListUiState(
+        return AllEntitiesListUiState(
             areasListUiState = areasByEntityUiState,
             artistsListUiState = artistsByEntityUiState,
             eventsListUiState = eventsByEntityUiState,
@@ -280,14 +268,14 @@ class EntitiesListPresenter(
     }
 
     private fun handleEvent(
-        event: EntitiesListUiEvent,
+        event: AllEntitiesListUiEvent,
         onTabChanged: (Tab?) -> Unit,
         onBrowseMethodChanged: (BrowseMethod?) -> Unit,
         onQueryChanged: (String) -> Unit,
         onIsRemoteChanged: (Boolean) -> Unit,
     ) {
         when (event) {
-            is EntitiesListUiEvent.Get -> {
+            is AllEntitiesListUiEvent.Get -> {
                 onTabChanged(event.tab)
                 onBrowseMethodChanged(event.browseMethod)
                 onQueryChanged(event.query)
@@ -297,11 +285,11 @@ class EntitiesListPresenter(
     }
 }
 
-sealed interface EntitiesListUiEvent : CircuitUiEvent {
+sealed interface AllEntitiesListUiEvent : CircuitUiEvent {
     data class Get(
         val tab: Tab?,
         val browseMethod: BrowseMethod,
         val query: String = "",
         val isRemote: Boolean,
-    ) : EntitiesListUiEvent
+    ) : AllEntitiesListUiEvent
 }

@@ -78,7 +78,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
 
             Tab.TRACKS -> {
                 TracksByReleaseUi(
-                    uiState = state.entitiesListUiState.tracksByReleaseUiState,
+                    uiState = state.allEntitiesListUiState.tracksByReleaseUiState,
                     onRecordingClick = { id, title ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
@@ -95,48 +95,48 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                 val uiState = when (tab) {
                     Tab.ARTISTS -> EntitiesPagingListUiState(
                         lazyPagingItems = entitiesLazyPagingItems.artistsLazyPagingItems,
-                        lazyListState = state.entitiesListUiState.artistsListUiState.lazyListState,
+                        lazyListState = state.allEntitiesListUiState.artistsListUiState.lazyListState,
                     )
 
                     Tab.EVENTS -> EntitiesPagingListUiState(
                         lazyPagingItems = entitiesLazyPagingItems.eventsLazyPagingItems,
-                        lazyListState = state.entitiesListUiState.eventsListUiState.lazyListState,
+                        lazyListState = state.allEntitiesListUiState.eventsListUiState.lazyListState,
                     )
 
                     Tab.LABELS -> EntitiesPagingListUiState(
                         lazyPagingItems = entitiesLazyPagingItems.labelsLazyPagingItems,
-                        lazyListState = state.entitiesListUiState.labelsListUiState.lazyListState,
+                        lazyListState = state.allEntitiesListUiState.labelsListUiState.lazyListState,
                     )
 
                     Tab.PLACES -> EntitiesPagingListUiState(
                         lazyPagingItems = entitiesLazyPagingItems.placesLazyPagingItems,
-                        lazyListState = state.entitiesListUiState.placesListUiState.lazyListState,
+                        lazyListState = state.allEntitiesListUiState.placesListUiState.lazyListState,
                     )
 
                     Tab.RECORDINGS -> EntitiesPagingListUiState(
                         lazyPagingItems = entitiesLazyPagingItems.recordingsLazyPagingItems,
-                        lazyListState = state.entitiesListUiState.recordingsListUiState.lazyListState,
+                        lazyListState = state.allEntitiesListUiState.recordingsListUiState.lazyListState,
                     )
 
                     Tab.RELEASES -> EntitiesPagingListUiState(
                         lazyPagingItems = entitiesLazyPagingItems.releasesLazyPagingItems,
-                        lazyListState = state.entitiesListUiState.releasesListUiState.lazyListState,
-                        showMoreInfo = state.entitiesListUiState.releasesListUiState.showMoreInfo,
+                        lazyListState = state.allEntitiesListUiState.releasesListUiState.lazyListState,
+                        showMoreInfo = state.allEntitiesListUiState.releasesListUiState.showMoreInfo,
                     )
 
                     Tab.RELEASE_GROUPS -> EntitiesPagingListUiState(
                         lazyPagingItems = entitiesLazyPagingItems.releaseGroupsLazyPagingItems,
-                        lazyListState = state.entitiesListUiState.releaseGroupsListUiState.lazyListState,
+                        lazyListState = state.allEntitiesListUiState.releaseGroupsListUiState.lazyListState,
                     )
 
                     Tab.WORKS -> EntitiesPagingListUiState(
                         lazyPagingItems = entitiesLazyPagingItems.worksLazyPagingItems,
-                        lazyListState = state.entitiesListUiState.worksListUiState.lazyListState,
+                        lazyListState = state.allEntitiesListUiState.worksListUiState.lazyListState,
                     )
 
                     Tab.RELATIONSHIPS -> EntitiesPagingListUiState(
                         lazyPagingItems = entitiesLazyPagingItems.relationsLazyPagingItems,
-                        lazyListState = state.entitiesListUiState.relationsUiState.lazyListState,
+                        lazyListState = state.allEntitiesListUiState.relationsUiState.lazyListState,
                     )
 
                     else -> {
