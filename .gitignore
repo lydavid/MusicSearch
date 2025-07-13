@@ -19,6 +19,7 @@ release-keystore.jks
 
 # Firebase keys
 **/google-services.json
+GoogleService-Info.plist
 
 # Generated credentials from google-github-actions/auth
 gha-creds-*.json

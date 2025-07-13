@@ -1,14 +1,16 @@
 package ly.david.musicsearch.shared
 
 import androidx.compose.ui.window.ComposeUIViewController
+import co.touchlab.crashkios.crashlytics.enableCrashlytics
+import co.touchlab.crashkios.crashlytics.setCrashlyticsUnhandledExceptionHook
 import com.slack.circuit.backstack.SaveableBackStack
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.persistentListOf
-import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.di.sharedModule
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.screen.SearchScreen
 import ly.david.musicsearch.ui.common.theme.BaseTheme
 import org.koin.core.component.KoinComponent
@@ -34,6 +36,8 @@ class AppComponent : KoinComponent {
 fun MainViewController(): UIViewController =
     ComposeUIViewController {
         val appComponent = AppComponent()
+        enableCrashlytics()
+        setCrashlyticsUnhandledExceptionHook()
         BaseTheme(
             appPreferences = appComponent.appPreferences,
             darkTheme = appComponent.appPreferences.useDarkTheme(),
