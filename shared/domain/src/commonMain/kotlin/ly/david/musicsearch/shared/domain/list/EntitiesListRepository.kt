@@ -18,4 +18,9 @@ interface EntitiesListRepository {
         browseEntity: MusicBrainzEntity,
         browseMethod: BrowseMethod?,
     ): Flow<Int>
+
+    fun observeVisitedCount(
+        browseEntity: MusicBrainzEntity,
+        browseMethod: BrowseMethod?,
+    ): Flow<Int?>
 }

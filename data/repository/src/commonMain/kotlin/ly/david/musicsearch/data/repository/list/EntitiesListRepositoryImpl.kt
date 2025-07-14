@@ -151,7 +151,7 @@ class EntitiesListRepositoryImpl(
                 browseMethod = browseMethod,
             )
 
-            MusicBrainzEntity.RELEASE_GROUP -> releaseGroupsListRepository.observeCountOfReleaseGroups(
+            MusicBrainzEntity.RELEASE_GROUP -> releaseGroupsListRepository.observeLocalCount(
                 browseMethod = browseMethod,
             )
 
@@ -166,6 +166,29 @@ class EntitiesListRepositoryImpl(
             MusicBrainzEntity.COLLECTION,
             MusicBrainzEntity.URL,
             -> flowOf(0)
+        }
+    }
+
+    override fun observeVisitedCount(
+        browseEntity: MusicBrainzEntity,
+        browseMethod: BrowseMethod?,
+    ): Flow<Int?> {
+        if (browseMethod == null) return flowOf(null)
+        return when (browseEntity) {
+            MusicBrainzEntity.AREA -> flowOf(null)
+            MusicBrainzEntity.ARTIST -> flowOf(null)
+            MusicBrainzEntity.COLLECTION -> flowOf(null)
+            MusicBrainzEntity.EVENT -> flowOf(null)
+            MusicBrainzEntity.GENRE -> flowOf(null)
+            MusicBrainzEntity.INSTRUMENT -> flowOf(null)
+            MusicBrainzEntity.LABEL -> flowOf(null)
+            MusicBrainzEntity.PLACE -> flowOf(null)
+            MusicBrainzEntity.RECORDING -> flowOf(null)
+            MusicBrainzEntity.RELEASE -> flowOf(null)
+            MusicBrainzEntity.RELEASE_GROUP -> releaseGroupsListRepository.observeVisitedCount(browseMethod)
+            MusicBrainzEntity.SERIES -> flowOf(null)
+            MusicBrainzEntity.WORK -> flowOf(null)
+            MusicBrainzEntity.URL -> flowOf(null)
         }
     }
 }

@@ -48,7 +48,8 @@ interface ReleaseGroupDao : EntityDao {
         sorted: Boolean,
     ): PagingSource<Int, ReleaseGroupListItemModel>
 
-    fun observeCountOfReleaseGroups(browseMethod: BrowseMethod): Flow<Int>
+    fun observeLocalCount(browseMethod: BrowseMethod): Flow<Int>
+    fun observeVisitedCount(browseMethod: BrowseMethod): Flow<Int>
 }
 
 class ReleaseGroupDaoImpl(
@@ -154,7 +155,7 @@ class ReleaseGroupDaoImpl(
     private fun getCountOfReleaseGroupsByEntityQuery(
         entityId: String,
         query: String,
-    ) = transacter.getNumberOfReleaseGroupsByEntity(
+    ) = transacter.getCountOfReleaseGroupsByEntity(
         entityId = entityId,
         query = "%$query%",
     )
@@ -224,7 +225,7 @@ class ReleaseGroupDaoImpl(
         }
     }
 
-    override fun observeCountOfReleaseGroups(browseMethod: BrowseMethod): Flow<Int> =
+    override fun observeLocalCount(browseMethod: BrowseMethod): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
                 if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
@@ -301,7 +302,7 @@ class ReleaseGroupDaoImpl(
         query: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfReleaseGroupsByCollection(
+        countQuery = transacter.getCountOfReleaseGroupsByCollection(
             collectionId = collectionId,
             query = "%$query%",
         ),
@@ -318,4 +319,26 @@ class ReleaseGroupDaoImpl(
             )
         },
     )
+
+    override fun observeVisitedCount(browseMethod: BrowseMethod): Flow<Int> =
+        when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                    transacter.getCountOfVisitedReleaseGroupsByCollection(
+                        collectionId = browseMethod.entityId,
+                    )
+                } else {
+                    transacter.getCountOfVisitedReleaseGroupsByEntity(
+                        entityId = browseMethod.entityId,
+                    )
+                }
+            }
+
+            is BrowseMethod.All -> {
+                transacter.getCountOfAllVisitedReleaseGroups()
+            }
+        }
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
 }

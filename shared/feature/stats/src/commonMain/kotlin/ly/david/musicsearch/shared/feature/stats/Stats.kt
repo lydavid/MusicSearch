@@ -20,6 +20,7 @@ internal data class Stats(
 internal data class EntityStats(
     val totalRemote: Int? = null,
     val totalLocal: Int = 0,
+    val totalVisited: Int? = null,
     val releaseGroupTypeCounts: ImmutableList<ReleaseGroupTypeCount> = persistentListOf(),
     val lastUpdated: Instant? = null,
 )

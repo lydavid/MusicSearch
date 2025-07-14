@@ -50,6 +50,12 @@ internal class StatsPresenter(
                             browseMethod = byEntity,
                         )
                     },
+                    visitedCountFlow = {
+                        entitiesListRepository.observeVisitedCount(
+                            browseEntity = browseEntity,
+                            browseMethod = byEntity,
+                        )
+                    },
                     countOfEachAlbumTypeFlow = { entityId ->
                         if (browseEntity == MusicBrainzEntity.RELEASE_GROUP) {
                             observeCountOfEachAlbumType(
@@ -89,6 +95,7 @@ internal class StatsPresenter(
         entity: MusicBrainzEntity,
         byEntity: BrowseMethod.ByEntity,
         localCountFlow: () -> Flow<Int>,
+        visitedCountFlow: () -> Flow<Int?>,
         countOfEachAlbumTypeFlow: (entityId: String) -> Flow<List<ReleaseGroupTypeCount>>,
     ): Flow<EntityStats> {
         val browseRemoteMetadataFlow = browseRemoteMetadataRepository.observe(
@@ -98,8 +105,9 @@ internal class StatsPresenter(
         return combine(
             browseRemoteMetadataFlow,
             localCountFlow(),
+            visitedCountFlow(),
             countOfEachAlbumTypeFlow(byEntity.entityId),
-        ) { browseRemoteMetadata, localCount, releaseGroupTypeCount ->
+        ) { browseRemoteMetadata, localCount, visitedCount, releaseGroupTypeCount ->
             EntityStats(
                 // we distinguish between null and 0
                 totalRemote = browseRemoteMetadata?.remoteCount?.let { remoteCount ->
@@ -107,6 +115,7 @@ internal class StatsPresenter(
                     maxOf(localCount, remoteCount)
                 },
                 totalLocal = localCount,
+                totalVisited = visitedCount,
                 releaseGroupTypeCounts = releaseGroupTypeCount.map {
                     ReleaseGroupTypeCount(
                         primaryType = it.primaryType,

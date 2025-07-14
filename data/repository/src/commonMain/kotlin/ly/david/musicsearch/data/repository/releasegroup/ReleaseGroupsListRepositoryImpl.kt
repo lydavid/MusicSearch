@@ -60,8 +60,12 @@ class ReleaseGroupsListRepositoryImpl(
         }
     }
 
-    override fun observeCountOfReleaseGroups(browseMethod: BrowseMethod): Flow<Int> {
-        return releaseGroupDao.observeCountOfReleaseGroups(browseMethod = browseMethod)
+    override fun observeLocalCount(browseMethod: BrowseMethod): Flow<Int> {
+        return releaseGroupDao.observeLocalCount(browseMethod = browseMethod)
+    }
+
+    override fun observeVisitedCount(browseMethod: BrowseMethod): Flow<Int> {
+        return releaseGroupDao.observeVisitedCount(browseMethod)
     }
 
     override fun observeCountOfEachAlbumType(

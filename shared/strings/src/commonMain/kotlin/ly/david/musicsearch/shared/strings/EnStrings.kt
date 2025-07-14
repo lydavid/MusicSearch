@@ -231,6 +231,8 @@ val EnStrings = AppStrings(
 
     cached = "Cached",
 
+    visited = "Visited",
+
     moreActions = "More actions",
 
     openGoogleMaps = "Open in Google maps",
