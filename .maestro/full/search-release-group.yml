@@ -23,6 +23,6 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "Cancel"
 - tapOn: "Releases"
 - tapOn: "Stats"
-- assertVisible: "Cached 13 of 13 releases"
+- assertVisible: "Cached 13 / 13"
 
 - stopRecording

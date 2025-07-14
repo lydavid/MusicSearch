@@ -105,7 +105,7 @@ appId: io.github.lydavid.musicsearch.debug
 
 - tapOn: "More actions"
 - tapOn: "Stats"
-- assertVisible: "Cached 1 of 1 artists"
+- assertVisible: "Cached 1 / 1"
 - back
 - longPressOn: "ずっと真夜中でいいのに。"
 - assertVisible: "Selected 1 / 1"
