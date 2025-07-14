@@ -24,4 +24,11 @@ class FakeEntitiesListRepository(private val listItems: List<ListItemModel>) : E
     ): Flow<Int> {
         return flowOf(listItems.size)
     }
+
+    override fun observeVisitedCount(
+        browseEntity: MusicBrainzEntity,
+        browseMethod: BrowseMethod?,
+    ): Flow<Int?> {
+        return flowOf(null)
+    }
 }

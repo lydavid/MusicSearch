@@ -37,8 +37,8 @@ import ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheet
 import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import kotlin.coroutines.cancellation.CancellationException
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -182,6 +182,7 @@ internal fun CollectionUi(
                             byEntityId = collection?.id.orEmpty(),
                             byEntity = MusicBrainzEntity.COLLECTION,
                             tabs = listOfNotNull(entity?.toTab()).toPersistentList(),
+                            isRemote = collection?.isRemote == true,
                         ),
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
