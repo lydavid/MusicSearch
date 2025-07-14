@@ -22,9 +22,6 @@ internal fun PreviewAddEntityStatsSection() {
                         lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
                     ),
                     header = "Releases",
-                    cachedLocalOfRemote = { local, remote ->
-                        "Cached $local of $remote releases"
-                    },
                     now = Instant.parse("2025-04-26T16:42:20Z"),
                 )
             }
@@ -59,9 +56,6 @@ internal fun PreviewAddEntityStatsSectionReleaseGroup() {
                         lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
                     ),
                     header = "Release Groups",
-                    cachedLocalOfRemote = { local, remote ->
-                        "Cached $local of $remote release groups"
-                    },
                     now = Instant.parse("2025-04-26T16:42:20Z"),
                 )
             }

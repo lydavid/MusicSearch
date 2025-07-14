@@ -18,22 +18,23 @@ import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 internal fun LazyListScope.addEntityStatsSection(
     entityStats: EntityStats,
     header: String,
-    cachedLocalOfRemote: (Int, Int) -> String,
     now: Instant = Clock.System.now(),
 ) {
     item {
+        val strings = LocalStrings.current
         Column {
             ListSeparatorHeader(header)
 
-            LocalRemoteProgressBar(
-                totalRemote = entityStats.totalRemote,
-                totalLocal = entityStats.totalLocal,
-                cachedLocalOfRemote = cachedLocalOfRemote,
+            CompletionProgressBar(
+                totalCount = entityStats.totalRemote,
+                currentCount = entityStats.totalLocal,
+                formatProgressText = strings.cached,
                 modifier = Modifier.padding(top = 4.dp),
             )
         }

@@ -101,8 +101,11 @@ internal class StatsPresenter(
             countOfEachAlbumTypeFlow(byEntity.entityId),
         ) { browseRemoteMetadata, localCount, releaseGroupTypeCount ->
             EntityStats(
-                // after adding to a remote collection, the local count may be higher than the remote count
-                totalRemote = maxOf(localCount, browseRemoteMetadata?.remoteCount ?: 0),
+                // we distinguish between null and 0
+                totalRemote = browseRemoteMetadata?.remoteCount?.let { remoteCount ->
+                    // after adding to a remote collection, the local count may be higher than the remote count
+                    maxOf(localCount, remoteCount)
+                },
                 totalLocal = localCount,
                 releaseGroupTypeCounts = releaseGroupTypeCount.map {
                     ReleaseGroupTypeCount(

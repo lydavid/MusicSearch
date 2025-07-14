@@ -39,4 +39,11 @@ class LocalRemoteProgressBarTest : ScreenshotTest() {
             PreviewLocalRemoteProgressBarOverflow()
         }
     }
+
+    @Test
+    fun unknown() {
+        snapshot {
+            PreviewLocalRemoteProgressBarUnknown()
+        }
+    }
 }

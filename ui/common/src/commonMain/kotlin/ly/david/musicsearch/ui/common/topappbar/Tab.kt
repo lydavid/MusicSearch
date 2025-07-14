@@ -87,25 +87,3 @@ fun MusicBrainzEntity.toTab(): Tab? {
         -> null
     }
 }
-
-fun Tab.getCachedLocalOfRemoteStringFunction(strings: AppStrings): (Int, Int) -> String {
-    return when (this) {
-        Tab.AREAS -> strings.cachedAreas
-        Tab.ARTISTS -> strings.cachedArtists
-        Tab.EVENTS -> strings.cachedEvents
-        Tab.GENRES -> strings.cachedGenres
-        Tab.INSTRUMENTS -> strings.cachedInstruments
-        Tab.LABELS -> strings.cachedLabels
-        Tab.PLACES -> strings.cachedPlaces
-        Tab.RECORDINGS -> strings.cachedRecordings
-        Tab.RELEASES -> strings.cachedReleases
-        Tab.RELEASE_GROUPS -> strings.cachedReleaseGroups
-        Tab.SERIES -> strings.cachedSeries
-        Tab.WORKS -> strings.cachedWorks
-        Tab.DETAILS,
-        Tab.RELATIONSHIPS,
-        Tab.STATS,
-        Tab.TRACKS,
-        -> { _, _ -> "" }
-    }
-}

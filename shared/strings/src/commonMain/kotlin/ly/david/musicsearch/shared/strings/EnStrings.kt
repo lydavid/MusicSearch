@@ -229,65 +229,7 @@ val EnStrings = AppStrings(
 
     retry = "Retry",
 
-    cachedAreas = { p0, p1 ->
-        "Cached %d of %d areas"
-            .fmt(p0, p1)
-    },
-
-    cachedArtists = { p0, p1 ->
-        "Cached %d of %d artists"
-            .fmt(p0, p1)
-    },
-
-    cachedEvents = { p0, p1 ->
-        "Cached %d of %d events"
-            .fmt(p0, p1)
-    },
-
-    cachedGenres = { p0, p1 ->
-        "Cached %d of %d genres"
-            .fmt(p0, p1)
-    },
-
-    cachedInstruments = { p0, p1 ->
-        "Cached %d of %d instruments"
-            .fmt(p0, p1)
-    },
-
-    cachedLabels = { p0, p1 ->
-        "Cached %d of %d labels"
-            .fmt(p0, p1)
-    },
-
-    cachedPlaces = { p0, p1 ->
-        "Cached %d of %d places"
-            .fmt(p0, p1)
-    },
-
-    cachedRecordings = { p0, p1 ->
-        "Cached %d of %d recordings"
-            .fmt(p0, p1)
-    },
-
-    cachedReleases = { p0, p1 ->
-        "Cached %d of %d releases"
-            .fmt(p0, p1)
-    },
-
-    cachedReleaseGroups = { p0, p1 ->
-        "Cached %d of %d release groups"
-            .fmt(p0, p1)
-    },
-
-    cachedSeries = { p0, p1 ->
-        "Cached %d of %d series"
-            .fmt(p0, p1)
-    },
-
-    cachedWorks = { p0, p1 ->
-        "Cached %d of %d works"
-            .fmt(p0, p1)
-    },
+    cached = "Cached",
 
     moreActions = "More actions",
 

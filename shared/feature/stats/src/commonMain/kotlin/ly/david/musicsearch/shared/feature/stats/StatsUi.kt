@@ -6,10 +6,9 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import ly.david.musicsearch.ui.common.topappbar.Tab
-import ly.david.musicsearch.ui.common.topappbar.getCachedLocalOfRemoteStringFunction
-import ly.david.musicsearch.ui.common.topappbar.getTitle
 import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.topappbar.Tab
+import ly.david.musicsearch.ui.common.topappbar.getTitle
 
 @Composable
 internal fun StatsUi(
@@ -50,7 +49,6 @@ internal fun StatsUi(
                         addEntityStatsSection(
                             entityStats = entityStats,
                             header = tab.getTitle(strings),
-                            cachedLocalOfRemote = tab.getCachedLocalOfRemoteStringFunction(strings),
                             now = now,
                         )
                     }
