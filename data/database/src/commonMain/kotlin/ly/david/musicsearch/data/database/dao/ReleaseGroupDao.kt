@@ -49,7 +49,6 @@ interface ReleaseGroupDao : EntityDao {
     ): PagingSource<Int, ReleaseGroupListItemModel>
 
     fun observeLocalCount(browseMethod: BrowseMethod): Flow<Int>
-    fun observeVisitedCount(browseMethod: BrowseMethod): Flow<Int>
 }
 
 class ReleaseGroupDaoImpl(
@@ -319,26 +318,4 @@ class ReleaseGroupDaoImpl(
             )
         },
     )
-
-    override fun observeVisitedCount(browseMethod: BrowseMethod): Flow<Int> =
-        when (browseMethod) {
-            is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
-                    transacter.getCountOfVisitedReleaseGroupsByCollection(
-                        collectionId = browseMethod.entityId,
-                    )
-                } else {
-                    transacter.getCountOfVisitedReleaseGroupsByEntity(
-                        entityId = browseMethod.entityId,
-                    )
-                }
-            }
-
-            is BrowseMethod.All -> {
-                transacter.getCountOfAllVisitedReleaseGroups()
-            }
-        }
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
 }

@@ -38,15 +38,12 @@ internal fun LazyListScope.addEntityStatsSection(
                 modifier = Modifier.padding(top = 4.dp),
             )
 
-            // TODO: change to hide based on whether there are any in remote after implementing all
-            entityStats.totalVisited?.let {
-                CompletionProgressBar(
-                    totalCount = entityStats.totalRemote,
-                    currentCount = entityStats.totalVisited,
-                    formatProgressText = strings.visited,
-                    modifier = Modifier.padding(top = 4.dp),
-                )
-            }
+            CompletionProgressBar(
+                totalCount = entityStats.totalRemote,
+                currentCount = entityStats.totalVisited,
+                formatProgressText = strings.visited,
+                modifier = Modifier.padding(top = 4.dp),
+            )
         }
     }
     val releaseGroupTypeCounts = entityStats.releaseGroupTypeCounts

@@ -81,13 +81,6 @@ SELECT IFNULL(
   0
 ) AS count;
 
-getCountOfVisitedReleaseGroupsByEntity:
-SELECT COUNT(release_group.id)
-FROM release_groups_by_entity
-INNER JOIN release_group ON release_groups_by_entity.release_group_id = release_group.id
-INNER JOIN details_metadata ON details_metadata.entity_id = release_group.id
-WHERE release_groups_by_entity.entity_id = :entityId;
-
 getCountOfCollectedReleaseGroupsByEntity:
 SELECT COUNT(release_group.id)
 FROM release_groups_by_entity
@@ -176,13 +169,6 @@ SELECT IFNULL(
   0
 ) AS count;
 
-getCountOfVisitedReleaseGroupsByCollection:
-SELECT COUNT(release_group.id)
-FROM collection_entity
-INNER JOIN release_group ON release_group.id = collection_entity.entity_id
-INNER JOIN details_metadata ON details_metadata.entity_id = release_group.id
-WHERE collection_entity.id = :collectionId;
-
 getReleaseGroupsByCollection:
 SELECT
   release_group.id,
@@ -223,11 +209,6 @@ ORDER BY
 LIMIT :limit OFFSET :offset;
 
 -- all release groups
-
-getCountOfAllVisitedReleaseGroups:
-SELECT COUNT(release_group.id)
-FROM release_group
-INNER JOIN details_metadata ON details_metadata.entity_id = release_group.id;
 
 getCountOfAllReleaseGroups:
 SELECT IFNULL(

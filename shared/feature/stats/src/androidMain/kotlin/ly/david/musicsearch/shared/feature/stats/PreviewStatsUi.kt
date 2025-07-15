@@ -9,8 +9,8 @@ import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
-import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
+import ly.david.musicsearch.ui.common.topappbar.Tab
 
 @PreviewLightDark
 @Composable
@@ -19,9 +19,9 @@ internal fun PreviewStatsUi() {
         Surface {
             StatsUi(
                 tabs = persistentListOf(
-                    Tab.RELATIONSHIPS,
                     Tab.RELEASE_GROUPS,
                     Tab.RELEASES,
+                    Tab.RELATIONSHIPS,
                     Tab.PLACES,
                 ),
                 stats = Stats(
@@ -40,6 +40,7 @@ internal fun PreviewStatsUi() {
                         Tab.RELEASE_GROUPS to EntityStats(
                             totalRemote = 280,
                             totalLocal = 279,
+                            totalVisited = 100,
                             releaseGroupTypeCounts = persistentListOf(
                                 ReleaseGroupTypeCount(
                                     primaryType = "Album",
@@ -59,6 +60,7 @@ internal fun PreviewStatsUi() {
                         Tab.RELEASES to EntityStats(
                             totalRemote = 20,
                             totalLocal = 15,
+                            totalVisited = 5,
                             lastUpdated = Instant.parse("2024-04-26T06:42:20Z"),
                         ),
                     ),

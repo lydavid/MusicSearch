@@ -1,0 +1,143 @@
+-- by collection
+
+getCountOfVisitedEntitiesByCollection:
+SELECT COUNT(collection_entity.id)
+FROM collection_entity
+INNER JOIN details_metadata ON details_metadata.entity_id = collection_entity.entity_id
+WHERE collection_entity.id = :collectionId;
+
+-- by entity
+
+getCountOfVisitedAreasByEntity:
+SELECT COUNT(areas_by_entity.entity_id)
+FROM areas_by_entity
+INNER JOIN details_metadata ON details_metadata.entity_id = areas_by_entity.area_id
+WHERE areas_by_entity.entity_id = :entityId;
+
+getCountOfVisitedArtistsByEntity:
+SELECT COUNT(artists_by_entity.entity_id)
+FROM artists_by_entity
+INNER JOIN details_metadata ON details_metadata.entity_id = artists_by_entity.artist_id
+WHERE artists_by_entity.entity_id = :entityId;
+
+getCountOfVisitedEventsByEntity:
+SELECT COUNT(events_by_entity.entity_id)
+FROM events_by_entity
+INNER JOIN details_metadata ON details_metadata.entity_id = events_by_entity.event_id
+WHERE events_by_entity.entity_id = :entityId;
+
+-- getCountOfVisitedGenresByEntity:
+-- SELECT COUNT(genres_by_entity.entity_id)
+-- FROM genres_by_entity
+-- INNER JOIN details_metadata ON details_metadata.entity_id = genres_by_entity.genre_id
+-- WHERE genres_by_entity.entity_id = :entityId;
+--
+-- getCountOfVisitedInstrumentsByEntity:
+-- SELECT COUNT(instruments_by_entity.entity_id)
+-- FROM instruments_by_entity
+-- INNER JOIN details_metadata ON details_metadata.entity_id = instruments_by_entity.instrument_id
+-- WHERE instruments_by_entity.entity_id = :entityId;
+
+getCountOfVisitedLabelsByEntity:
+SELECT COUNT(labels_by_entity.entity_id)
+FROM labels_by_entity
+INNER JOIN details_metadata ON details_metadata.entity_id = labels_by_entity.label_id
+WHERE labels_by_entity.entity_id = :entityId;
+
+getCountOfVisitedPlacesByEntity:
+SELECT COUNT(area_place.area_id)
+FROM area_place
+INNER JOIN details_metadata ON details_metadata.entity_id = area_place.place_id
+WHERE area_place.area_id = :entityId;
+
+getCountOfVisitedRecordingsByEntity:
+SELECT COUNT(recordings_by_entity.entity_id)
+FROM recordings_by_entity
+INNER JOIN details_metadata ON details_metadata.entity_id = recordings_by_entity.recording_id
+WHERE recordings_by_entity.entity_id = :entityId;
+
+getCountOfVisitedReleasesByEntity:
+SELECT COUNT(releases_by_entity.entity_id)
+FROM releases_by_entity
+INNER JOIN details_metadata ON details_metadata.entity_id = releases_by_entity.release_id
+WHERE releases_by_entity.entity_id = :entityId;
+
+getCountOfVisitedReleaseGroupsByEntity:
+SELECT COUNT(release_groups_by_entity.entity_id)
+FROM release_groups_by_entity
+INNER JOIN details_metadata ON details_metadata.entity_id = release_groups_by_entity.release_group_id
+WHERE release_groups_by_entity.entity_id = :entityId;
+
+-- getCountOfVisitedSeriesByEntity:
+-- SELECT COUNT(series_by_entity.entity_id)
+-- FROM series_by_entity
+-- INNER JOIN details_metadata ON details_metadata.entity_id = series_by_entity.series_id
+-- WHERE series_by_entity.entity_id = :entityId;
+
+getCountOfVisitedWorksByEntity:
+SELECT COUNT(works_by_entity.entity_id)
+FROM works_by_entity
+INNER JOIN details_metadata ON details_metadata.entity_id = works_by_entity.work_id
+WHERE works_by_entity.entity_id = :entityId;
+
+-- all
+
+getCountOfAllVisitedAreas:
+SELECT COUNT(area.id)
+FROM area
+INNER JOIN details_metadata ON details_metadata.entity_id = area.id;
+
+getCountOfAllVisitedArtists:
+SELECT COUNT(artist.id)
+FROM artist
+INNER JOIN details_metadata ON details_metadata.entity_id = artist.id;
+
+getCountOfAllVisitedEvents:
+SELECT COUNT(event.id)
+FROM event
+INNER JOIN details_metadata ON details_metadata.entity_id = event.id;
+
+getCountOfAllVisitedGenres:
+SELECT COUNT(genre.id)
+FROM genre
+INNER JOIN details_metadata ON details_metadata.entity_id = genre.id;
+
+getCountOfAllVisitedInstruments:
+SELECT COUNT(instrument.id)
+FROM instrument
+INNER JOIN details_metadata ON details_metadata.entity_id = instrument.id;
+
+getCountOfAllVisitedLabels:
+SELECT COUNT(label.id)
+FROM label
+INNER JOIN details_metadata ON details_metadata.entity_id = label.id;
+
+getCountOfAllVisitedPlaces:
+SELECT COUNT(place.id)
+FROM place
+INNER JOIN details_metadata ON details_metadata.entity_id = place.id;
+
+getCountOfAllVisitedRecordings:
+SELECT COUNT(recording.id)
+FROM recording
+INNER JOIN details_metadata ON details_metadata.entity_id = recording.id;
+
+getCountOfAllVisitedReleases:
+SELECT COUNT(release.id)
+FROM release
+INNER JOIN details_metadata ON details_metadata.entity_id = release.id;
+
+getCountOfAllVisitedReleaseGroups:
+SELECT COUNT(release_group.id)
+FROM release_group
+INNER JOIN details_metadata ON details_metadata.entity_id = release_group.id;
+
+getCountOfAllVisitedSeries:
+SELECT COUNT(series.id)
+FROM series
+INNER JOIN details_metadata ON details_metadata.entity_id = series.id;
+
+getCountOfAllVisitedWorks:
+SELECT COUNT(work.id)
+FROM work
+INNER JOIN details_metadata ON details_metadata.entity_id = work.id;

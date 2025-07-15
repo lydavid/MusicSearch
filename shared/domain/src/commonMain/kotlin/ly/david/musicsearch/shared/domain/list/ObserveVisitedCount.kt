@@ -8,5 +8,5 @@ interface ObserveVisitedCount {
     operator fun invoke(
         browseEntity: MusicBrainzEntity,
         browseMethod: BrowseMethod?,
-    ): Flow<Int?>
+    ): Flow<Int>
 }

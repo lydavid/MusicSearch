@@ -17,8 +17,9 @@ internal fun PreviewAddEntityStatsSection() {
             LazyColumn {
                 addEntityStatsSection(
                     entityStats = EntityStats(
-                        totalLocal = 10,
-                        totalRemote = 20,
+                        totalLocal = 100,
+                        totalRemote = 200,
+                        totalVisited = 18,
                         lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
                     ),
                     header = "Releases",
@@ -38,7 +39,8 @@ internal fun PreviewAddEntityStatsSectionReleaseGroup() {
                 addEntityStatsSection(
                     entityStats = EntityStats(
                         totalRemote = 280,
-                        totalLocal = 281,
+                        totalLocal = 280,
+                        totalVisited = 140,
                         releaseGroupTypeCounts = persistentListOf(
                             ReleaseGroupTypeCount(
                                 primaryType = "Album",

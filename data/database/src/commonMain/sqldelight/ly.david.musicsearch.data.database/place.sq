@@ -41,6 +41,7 @@ WHERE id = :id;
 
 -- places by area
 
+-- TODO: rename
 -- Reuse this if we need a places_by_entity
 CREATE TABLE IF NOT EXISTS area_place (
   area_id TEXT NOT NULL,
