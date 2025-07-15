@@ -40,10 +40,6 @@ class WorksListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfWorks(browseMethod: BrowseMethod): Flow<Int> {
-        return workDao.observeCountOfWorks(browseMethod = browseMethod)
-    }
-
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

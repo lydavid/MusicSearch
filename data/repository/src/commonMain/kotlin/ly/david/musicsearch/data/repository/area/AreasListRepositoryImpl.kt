@@ -40,10 +40,6 @@ class AreasListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfAreas(browseMethod: BrowseMethod): Flow<Int> {
-        return areaDao.observeCountOfAreas(browseMethod = browseMethod)
-    }
-
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

@@ -16,8 +16,9 @@ val statsFeatureModule = module {
                         screen = screen,
                         getCountOfEachRelationshipTypeUseCase = get(),
                         browseRemoteMetadataRepository = get(),
-                        entitiesListRepository = get(),
-                        releaseGroupsListRepository = get(),
+                        observeLocalCount = get(),
+                        observeVisitedCount = get(),
+                        observeCountOfEachAlbumType = get(),
                     )
                 }
 

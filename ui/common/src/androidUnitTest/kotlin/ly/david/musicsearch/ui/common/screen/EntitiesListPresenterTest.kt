@@ -31,8 +31,8 @@ import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListPresenter
 import ly.david.musicsearch.ui.common.series.SeriesListPresenter
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
-import ly.david.musicsearch.ui.common.utils.FakeEntitiesListRepository
 import ly.david.musicsearch.ui.common.utils.FakeGetEntities
+import ly.david.musicsearch.ui.common.utils.FakeObserveLocalCount
 import ly.david.musicsearch.ui.common.work.WorksListPresenter
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -48,73 +48,73 @@ class EntitiesListPresenterTest {
     ) = AllEntitiesListPresenter(
         areasListPresenter = AreasListPresenter(
             getEntities = FakeGetEntities(areasListItems),
-            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
+            observeLocalCount = FakeObserveLocalCount(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         artistsListPresenter = ArtistsListPresenter(
             getEntities = FakeGetEntities(artistsListItems),
-            entitiesListRepository = FakeEntitiesListRepository(artistsListItems),
+            observeLocalCount = FakeObserveLocalCount(artistsListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         eventsListPresenter = EventsListPresenter(
             getEntities = FakeGetEntities(areasListItems),
-            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
+            observeLocalCount = FakeObserveLocalCount(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         genresListPresenter = GenresListPresenter(
             getEntities = FakeGetEntities(areasListItems),
-            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
+            observeLocalCount = FakeObserveLocalCount(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         instrumentsListPresenter = InstrumentsListPresenter(
             getEntities = FakeGetEntities(areasListItems),
-            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
+            observeLocalCount = FakeObserveLocalCount(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         labelsListPresenter = LabelsListPresenter(
             getEntities = FakeGetEntities(areasListItems),
-            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
+            observeLocalCount = FakeObserveLocalCount(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         placesListPresenter = PlacesListPresenter(
             getEntities = FakeGetEntities(areasListItems),
-            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
+            observeLocalCount = FakeObserveLocalCount(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         recordingsListPresenter = RecordingsListPresenter(
             getEntities = FakeGetEntities(areasListItems),
-            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
+            observeLocalCount = FakeObserveLocalCount(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         releasesListPresenter = ReleasesListPresenter(
             getEntities = FakeGetEntities(areasListItems),
-            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
+            observeLocalCount = FakeObserveLocalCount(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         releaseGroupsListPresenter = ReleaseGroupsListPresenter(
             getEntities = FakeGetEntities(areasListItems),
-            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
+            observeLocalCount = FakeObserveLocalCount(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         seriesListPresenter = SeriesListPresenter(
             getEntities = FakeGetEntities(areasListItems),
-            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
+            observeLocalCount = FakeObserveLocalCount(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),
         worksListPresenter = WorksListPresenter(
             getEntities = FakeGetEntities(areasListItems),
-            entitiesListRepository = FakeEntitiesListRepository(areasListItems),
+            observeLocalCount = FakeObserveLocalCount(areasListItems),
             appPreferences = NoOpAppPreferences(),
             musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
         ),

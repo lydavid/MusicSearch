@@ -40,10 +40,6 @@ class RecordingsListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfRecordings(browseMethod: BrowseMethod): Flow<Int> {
-        return recordingDao.observeCountOfRecordings(browseMethod = browseMethod)
-    }
-
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

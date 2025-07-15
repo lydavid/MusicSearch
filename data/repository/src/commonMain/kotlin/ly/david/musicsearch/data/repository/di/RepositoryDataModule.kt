@@ -21,6 +21,8 @@ import ly.david.musicsearch.data.repository.instrument.InstrumentsListRepository
 import ly.david.musicsearch.data.repository.label.LabelRepositoryImpl
 import ly.david.musicsearch.data.repository.label.LabelsListRepositoryImpl
 import ly.david.musicsearch.data.repository.list.EntitiesListRepositoryImpl
+import ly.david.musicsearch.data.repository.list.ObserveLocalCountImpl
+import ly.david.musicsearch.data.repository.list.ObserveVisitedCountImpl
 import ly.david.musicsearch.data.repository.metadata.MetadataRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlaceRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlacesListRepositoryImpl
@@ -28,6 +30,7 @@ import ly.david.musicsearch.data.repository.recording.RecordingRepositoryImpl
 import ly.david.musicsearch.data.repository.recording.RecordingsListRepositoryImpl
 import ly.david.musicsearch.data.repository.release.ReleaseRepositoryImpl
 import ly.david.musicsearch.data.repository.release.ReleasesListRepositoryImpl
+import ly.david.musicsearch.data.repository.releasegroup.ObserveCountOfEachAlbumTypeImpl
 import ly.david.musicsearch.data.repository.releasegroup.ReleaseGroupRepositoryImpl
 import ly.david.musicsearch.data.repository.releasegroup.ReleaseGroupsListRepositoryImpl
 import ly.david.musicsearch.data.repository.search.SearchHistoryRepositoryImpl
@@ -56,6 +59,8 @@ import ly.david.musicsearch.shared.domain.instrument.InstrumentsListRepository
 import ly.david.musicsearch.shared.domain.label.LabelRepository
 import ly.david.musicsearch.shared.domain.label.LabelsListRepository
 import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
+import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
+import ly.david.musicsearch.shared.domain.list.ObserveVisitedCount
 import ly.david.musicsearch.shared.domain.metadata.MetadataRepository
 import ly.david.musicsearch.shared.domain.nowplaying.NowPlayingHistoryRepository
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
@@ -65,6 +70,7 @@ import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
+import ly.david.musicsearch.shared.domain.releasegroup.ObserveCountOfEachAlbumType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import ly.david.musicsearch.shared.domain.search.history.SearchHistoryRepository
@@ -105,6 +111,7 @@ val repositoryDataModule = module {
     singleOf(::ReleasesListRepositoryImpl) bind ReleasesListRepository::class
     singleOf(::ReleaseGroupRepositoryImpl) bind ReleaseGroupRepository::class
     singleOf(::ReleaseGroupsListRepositoryImpl) bind ReleaseGroupsListRepository::class
+    singleOf(::ObserveCountOfEachAlbumTypeImpl) bind ObserveCountOfEachAlbumType::class
     singleOf(::SearchResultsRepositoryImpl) bind SearchResultsRepository::class
     singleOf(::SearchHistoryRepositoryImpl) bind SearchHistoryRepository::class
     singleOf(::SpotifyHistoryRepositoryImpl) bind SpotifyHistoryRepository::class
@@ -116,4 +123,6 @@ val repositoryDataModule = module {
     singleOf(::MetadataRepositoryImpl) bind MetadataRepository::class
     singleOf(::ImageMetadataRepositoryImpl) bind ImageMetadataRepository::class
     singleOf(::MusicBrainzImageMetadataRepositoryImpl) bind MusicBrainzImageMetadataRepository::class
+    singleOf(::ObserveLocalCountImpl) bind ObserveLocalCount::class
+    singleOf(::ObserveVisitedCountImpl) bind ObserveVisitedCount::class
 }

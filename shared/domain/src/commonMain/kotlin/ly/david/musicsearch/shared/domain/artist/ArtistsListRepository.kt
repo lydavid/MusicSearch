@@ -11,6 +11,4 @@ interface ArtistsListRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<ArtistListItemModel>>
-
-    fun observeCountOfArtists(browseMethod: BrowseMethod): Flow<Int>
 }

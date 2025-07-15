@@ -40,10 +40,6 @@ class GenresListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfGenres(browseMethod: BrowseMethod): Flow<Int> {
-        return genreDao.observeCountOfGenres(browseMethod)
-    }
-
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

@@ -40,10 +40,6 @@ class ArtistsListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfArtists(browseMethod: BrowseMethod): Flow<Int> {
-        return artistDao.observeCountOfArtists(browseMethod = browseMethod)
-    }
-
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

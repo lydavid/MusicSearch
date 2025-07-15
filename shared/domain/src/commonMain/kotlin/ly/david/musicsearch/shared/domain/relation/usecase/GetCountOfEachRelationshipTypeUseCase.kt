@@ -1,13 +1,17 @@
 package ly.david.musicsearch.shared.domain.relation.usecase
 
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 
-class GetCountOfEachRelationshipTypeUseCase(
+interface GetCountOfEachRelationshipTypeUseCase {
+    operator fun invoke(entityId: String): Flow<List<RelationTypeCount>>
+}
+
+class GetCountOfEachRelationshipTypeUseCaseImpl(
     private val relationRepository: RelationRepository,
-) {
-    operator fun invoke(entityId: String): Flow<List<RelationTypeCount>> {
+) : GetCountOfEachRelationshipTypeUseCase {
+    override operator fun invoke(entityId: String): Flow<List<RelationTypeCount>> {
         return relationRepository.getCountOfEachRelationshipType(entityId)
     }
 }

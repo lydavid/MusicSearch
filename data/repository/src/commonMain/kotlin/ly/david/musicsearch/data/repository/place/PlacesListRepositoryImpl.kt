@@ -40,10 +40,6 @@ class PlacesListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfPlaces(browseMethod: BrowseMethod): Flow<Int> {
-        return placeDao.observeCountOfPlaces(browseMethod = browseMethod)
-    }
-
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

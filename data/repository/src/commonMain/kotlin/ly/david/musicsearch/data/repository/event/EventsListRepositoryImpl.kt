@@ -50,10 +50,6 @@ class EventsListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfEvents(browseMethod: BrowseMethod): Flow<Int> {
-        return eventDao.observeCountOfEvents(browseMethod = browseMethod)
-    }
-
     override fun deleteEntityLinksByEntity(
         entityId: String,
         entity: MusicBrainzEntity,

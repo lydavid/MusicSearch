@@ -11,6 +11,4 @@ interface SeriesListRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<SeriesListItemModel>>
-
-    fun observeCountOfSeries(browseMethod: BrowseMethod): Flow<Int>
 }

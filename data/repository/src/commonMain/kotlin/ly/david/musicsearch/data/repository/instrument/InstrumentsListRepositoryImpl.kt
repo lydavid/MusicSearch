@@ -40,10 +40,6 @@ class InstrumentsListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfInstruments(browseMethod: BrowseMethod): Flow<Int> {
-        return instrumentDao.observeCountOfInstruments(browseMethod)
-    }
-
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

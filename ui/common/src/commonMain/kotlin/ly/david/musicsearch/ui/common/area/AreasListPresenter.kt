@@ -1,20 +1,20 @@
 package ly.david.musicsearch.ui.common.area
 
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
-import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
 import ly.david.musicsearch.shared.domain.list.GetEntities
+import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.list.BaseListPresenter
 
 class AreasListPresenter(
     getEntities: GetEntities,
-    entitiesListRepository: EntitiesListRepository,
+    observeLocalCount: ObserveLocalCount,
     appPreferences: AppPreferences,
     musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository,
 ) : BaseListPresenter(
     getEntities,
-    entitiesListRepository,
+    observeLocalCount,
     appPreferences,
     musicBrainzImageMetadataRepository,
 ) {

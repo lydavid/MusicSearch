@@ -12,11 +12,12 @@ import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadata
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
-import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
+import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
+import ly.david.musicsearch.shared.domain.list.ObserveVisitedCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
+import ly.david.musicsearch.shared.domain.releasegroup.ObserveCountOfEachAlbumType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
@@ -25,8 +26,9 @@ internal class StatsPresenter(
     private val screen: StatsScreen,
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
-    private val entitiesListRepository: EntitiesListRepository,
-    private val releaseGroupsListRepository: ReleaseGroupsListRepository,
+    private val observeLocalCount: ObserveLocalCount,
+    private val observeVisitedCount: ObserveVisitedCount,
+    private val observeCountOfEachAlbumType: ObserveCountOfEachAlbumType,
 ) : Presenter<StatsUiState> {
 
     @Composable
@@ -70,16 +72,6 @@ internal class StatsPresenter(
         )
     }
 
-    private fun observeCountOfEachAlbumType(
-        entityId: String,
-        isCollection: Boolean,
-    ): Flow<List<ReleaseGroupTypeCount>> {
-        return releaseGroupsListRepository.observeCountOfEachAlbumType(
-            entityId = entityId,
-            isCollection = isCollection,
-        )
-    }
-
     private fun observeEntityStats(
         browseEntity: MusicBrainzEntity,
         byEntity: BrowseMethod.ByEntity,
@@ -89,11 +81,11 @@ internal class StatsPresenter(
             entityId = byEntity.entityId,
             entity = browseEntity,
         )
-        val localCountFlow = entitiesListRepository.observeLocalCount(
+        val localCountFlow = observeLocalCount(
             browseEntity = browseEntity,
             browseMethod = byEntity,
         )
-        val visitedCountFlow = entitiesListRepository.observeVisitedCount(
+        val visitedCountFlow = observeVisitedCount(
             browseEntity = browseEntity,
             browseMethod = byEntity,
         )

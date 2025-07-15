@@ -43,10 +43,6 @@ class ReleasesListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfReleases(browseMethod: BrowseMethod): Flow<Int> {
-        return releaseDao.observeCountOfReleases(browseMethod = browseMethod)
-    }
-
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

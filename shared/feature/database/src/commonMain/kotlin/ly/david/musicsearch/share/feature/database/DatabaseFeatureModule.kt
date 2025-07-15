@@ -18,7 +18,7 @@ val databaseFeatureModule = module {
                 is DatabaseScreen -> DatabasePresenter(
                     navigator = navigator,
                     musicBrainzImageMetadataRepository = get(),
-                    entitiesListRepository = get(),
+                    observeLocalCount = get(),
                 )
 
                 is AllEntitiesScreen -> AllLocalEntitiesPresenter(

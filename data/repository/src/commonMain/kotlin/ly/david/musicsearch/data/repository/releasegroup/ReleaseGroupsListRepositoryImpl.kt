@@ -19,7 +19,6 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 
@@ -58,24 +57,6 @@ class ReleaseGroupsListRepositoryImpl(
                     }
                 }
         }
-    }
-
-    override fun observeLocalCount(browseMethod: BrowseMethod): Flow<Int> {
-        return releaseGroupDao.observeLocalCount(browseMethod = browseMethod)
-    }
-
-    override fun observeVisitedCount(browseMethod: BrowseMethod): Flow<Int> {
-        return releaseGroupDao.observeVisitedCount(browseMethod)
-    }
-
-    override fun observeCountOfEachAlbumType(
-        entityId: String,
-        isCollection: Boolean,
-    ): Flow<List<ReleaseGroupTypeCount>> {
-        return releaseGroupDao.observeCountOfEachAlbumType(
-            entityId = entityId,
-            isCollection = isCollection,
-        )
     }
 
     override fun getLinkedEntitiesPagingSource(

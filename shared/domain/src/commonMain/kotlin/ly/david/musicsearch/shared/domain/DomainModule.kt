@@ -22,6 +22,7 @@ import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrlI
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.DeleteNowPlayingHistory
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.GetNowPlayingHistory
 import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
+import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCaseImpl
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationshipsImpl
 import ly.david.musicsearch.shared.domain.release.usecase.GetTracksByRelease
@@ -48,7 +49,7 @@ val domainModule = module {
     singleOf(::UnMarkLookupHistoryForDeletionImpl) bind UnMarkLookupHistoryForDeletion::class
     singleOf(::DeleteNowPlayingHistory)
     singleOf(::GetNowPlayingHistory)
-    singleOf(::GetCountOfEachRelationshipTypeUseCase)
+    singleOf(::GetCountOfEachRelationshipTypeUseCaseImpl) bind GetCountOfEachRelationshipTypeUseCase::class
     singleOf(::GetEntityRelationshipsImpl) bind GetEntityRelationships::class
     singleOf(::GetTracksByReleaseImpl) bind GetTracksByRelease::class
     singleOf(::DeleteSearchHistory)

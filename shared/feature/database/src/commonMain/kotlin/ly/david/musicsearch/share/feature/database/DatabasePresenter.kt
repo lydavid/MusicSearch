@@ -16,7 +16,7 @@ import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableMap
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
-import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
+import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
@@ -24,7 +24,7 @@ import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 internal class DatabasePresenter(
     private val navigator: Navigator,
     private val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository,
-    private val entitiesListRepository: EntitiesListRepository,
+    private val observeLocalCount: ObserveLocalCount,
 ) : Presenter<DatabaseUiState> {
     @Composable
     override fun present(): DatabaseUiState {
@@ -32,51 +32,51 @@ internal class DatabasePresenter(
         val lazyListState = rememberLazyListState()
         val countOfAllImages by
             musicBrainzImageMetadataRepository.observeCountOfAllImageMetadata().collectAsRetainedState(0)
-        val countOfAllAreas by entitiesListRepository.observeLocalCount(
+        val countOfAllAreas by observeLocalCount(
             browseEntity = MusicBrainzEntity.AREA,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
-        val countOfAllArtists by entitiesListRepository.observeLocalCount(
+        val countOfAllArtists by observeLocalCount(
             browseEntity = MusicBrainzEntity.ARTIST,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
-        val countOfAllEvents by entitiesListRepository.observeLocalCount(
+        val countOfAllEvents by observeLocalCount(
             browseEntity = MusicBrainzEntity.EVENT,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
-        val countOfAllGenres by entitiesListRepository.observeLocalCount(
+        val countOfAllGenres by observeLocalCount(
             browseEntity = MusicBrainzEntity.GENRE,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
-        val countOfAllInstruments by entitiesListRepository.observeLocalCount(
+        val countOfAllInstruments by observeLocalCount(
             browseEntity = MusicBrainzEntity.INSTRUMENT,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
-        val countOfAllLabels by entitiesListRepository.observeLocalCount(
+        val countOfAllLabels by observeLocalCount(
             browseEntity = MusicBrainzEntity.LABEL,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
-        val countOfAllPlaces by entitiesListRepository.observeLocalCount(
+        val countOfAllPlaces by observeLocalCount(
             browseEntity = MusicBrainzEntity.PLACE,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
-        val countOfAllRecordings by entitiesListRepository.observeLocalCount(
+        val countOfAllRecordings by observeLocalCount(
             browseEntity = MusicBrainzEntity.RECORDING,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
-        val countOfAllReleases by entitiesListRepository.observeLocalCount(
+        val countOfAllReleases by observeLocalCount(
             browseEntity = MusicBrainzEntity.RELEASE,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
-        val countOfAllReleaseGroups by entitiesListRepository.observeLocalCount(
+        val countOfAllReleaseGroups by observeLocalCount(
             browseEntity = MusicBrainzEntity.RELEASE_GROUP,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
-        val countOfAllSeries by entitiesListRepository.observeLocalCount(
+        val countOfAllSeries by observeLocalCount(
             browseEntity = MusicBrainzEntity.SERIES,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
-        val countOfAllWorks by entitiesListRepository.observeLocalCount(
+        val countOfAllWorks by observeLocalCount(
             browseEntity = MusicBrainzEntity.WORK,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)

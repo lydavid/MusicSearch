@@ -11,13 +11,4 @@ interface ReleaseGroupsListRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<ListItemModel>>
-
-    fun observeLocalCount(browseMethod: BrowseMethod): Flow<Int>
-
-    fun observeVisitedCount(browseMethod: BrowseMethod): Flow<Int>
-
-    fun observeCountOfEachAlbumType(
-        entityId: String,
-        isCollection: Boolean,
-    ): Flow<List<ReleaseGroupTypeCount>>
 }

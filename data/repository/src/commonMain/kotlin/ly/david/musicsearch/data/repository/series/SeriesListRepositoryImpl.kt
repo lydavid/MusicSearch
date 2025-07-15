@@ -40,10 +40,6 @@ class SeriesListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfSeries(browseMethod: BrowseMethod): Flow<Int> {
-        return seriesDao.observeCountOfSeries(browseMethod)
-    }
-
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

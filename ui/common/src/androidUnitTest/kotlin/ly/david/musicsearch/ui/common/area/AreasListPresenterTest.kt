@@ -7,8 +7,8 @@ import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.ui.common.screen.NoOpMusicBrainzImageMetadataRepository
-import ly.david.musicsearch.ui.common.utils.FakeEntitiesListRepository
 import ly.david.musicsearch.ui.common.utils.FakeGetEntities
+import ly.david.musicsearch.ui.common.utils.FakeObserveLocalCount
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,7 +21,7 @@ class AreasListPresenterTest {
         listItems: List<ListItemModel>,
     ) = AreasListPresenter(
         getEntities = FakeGetEntities(listItems),
-        entitiesListRepository = FakeEntitiesListRepository(listItems),
+        observeLocalCount = FakeObserveLocalCount(listItems),
         appPreferences = NoOpAppPreferences(),
         musicBrainzImageMetadataRepository = NoOpMusicBrainzImageMetadataRepository(),
     )

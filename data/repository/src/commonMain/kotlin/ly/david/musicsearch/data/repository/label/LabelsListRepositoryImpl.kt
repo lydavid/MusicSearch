@@ -40,10 +40,6 @@ class LabelsListRepositoryImpl(
         )
     }
 
-    override fun observeCountOfLabels(browseMethod: BrowseMethod): Flow<Int> {
-        return labelDao.observeCountOfLabels(browseMethod = browseMethod)
-    }
-
     override fun getLinkedEntitiesPagingSource(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,

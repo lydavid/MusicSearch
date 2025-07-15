@@ -11,6 +11,4 @@ interface GenresListRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<GenreListItemModel>>
-
-    fun observeCountOfGenres(browseMethod: BrowseMethod): Flow<Int>
 }

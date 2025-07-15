@@ -22,8 +22,8 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
-import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
 import ly.david.musicsearch.shared.domain.list.GetEntities
+import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
@@ -31,7 +31,7 @@ import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 abstract class BaseListPresenter(
     private val getEntities: GetEntities,
-    private val entitiesListRepository: EntitiesListRepository,
+    private val observeLocalCount: ObserveLocalCount,
     private val appPreferences: AppPreferences,
     private val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository,
 ) : Presenter<EntitiesListUiState> {
@@ -57,7 +57,7 @@ abstract class BaseListPresenter(
                 ),
             )
         }
-        val count by entitiesListRepository.observeLocalCount(
+        val count by observeLocalCount(
             browseEntity = getEntityType(),
             browseMethod = browseMethod,
         ).collectAsRetainedState(0)

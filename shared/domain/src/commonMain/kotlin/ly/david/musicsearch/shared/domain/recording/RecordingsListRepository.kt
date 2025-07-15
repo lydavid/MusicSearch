@@ -11,6 +11,4 @@ interface RecordingsListRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<RecordingListItemModel>>
-
-    fun observeCountOfRecordings(browseMethod: BrowseMethod): Flow<Int>
 }

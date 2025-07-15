@@ -11,6 +11,4 @@ interface InstrumentsListRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<InstrumentListItemModel>>
-
-    fun observeCountOfInstruments(browseMethod: BrowseMethod): Flow<Int>
 }

@@ -29,6 +29,13 @@ kotlin {
             dependencies {
                 implementation(projects.ui.test.screenshot)
                 implementation(libs.test.parameter.injector)
+                implementation(libs.junit)
+                implementation(libs.circuit.test)
+                implementation(libs.robolectric)
+                implementation(libs.androidx.paging.testing)
+                implementation(libs.koin.test)
+                implementation(libs.kotlin.test)
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
     }
