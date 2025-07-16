@@ -266,8 +266,8 @@ getReleaseGroupSearchResults:
 SELECT
   release_group.id,
   release_group.name,
-  release_group.first_release_date,
   release_group.disambiguation,
+  release_group.first_release_date,
   release_group.primary_type,
   release_group.secondary_types,
   ac.name AS artist_credits,
