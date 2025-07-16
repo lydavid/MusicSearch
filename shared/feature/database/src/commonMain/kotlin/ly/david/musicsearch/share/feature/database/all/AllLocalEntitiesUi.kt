@@ -16,6 +16,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import app.cash.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -27,10 +28,12 @@ import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.SortToggleMenuItem
+import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.toTab
 
@@ -106,6 +109,16 @@ internal fun AllLocalEntitiesUi(
                 title = entity.getNamePlural(strings),
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = {
+                    StatsMenuItem(
+                        statsScreen = StatsScreen(
+                            byEntityId = null,
+                            byEntity = null,
+                            tabs = listOfNotNull(entity.toTab()).toPersistentList(),
+                            isRemote = false,
+                        ),
+                        overlayHost = overlayHost,
+                        coroutineScope = coroutineScope,
+                    )
                     if (entity == MusicBrainzEntity.RELEASE_GROUP) {
                         SortToggleMenuItem(
                             sorted = state.allEntitiesListUiState.releaseGroupsListUiState.sort,

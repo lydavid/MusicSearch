@@ -39,7 +39,7 @@ class StatsPresenterTest {
                 tabs = artistTabs,
             ),
             getCountOfEachRelationshipTypeUseCase = object : GetCountOfEachRelationshipTypeUseCase {
-                override fun invoke(entityId: String): Flow<List<RelationTypeCount>> {
+                override fun invoke(browseMethod: BrowseMethod): Flow<List<RelationTypeCount>> {
                     return flowOf(
                         listOf(
                             RelationTypeCount(
@@ -96,8 +96,7 @@ class StatsPresenterTest {
             },
             observeCountOfEachAlbumType = object : ObserveCountOfEachAlbumType {
                 override operator fun invoke(
-                    entityId: String,
-                    isCollection: Boolean,
+                    browseMethod: BrowseMethod,
                 ): Flow<List<ReleaseGroupTypeCount>> {
                     return flowOf(listOf())
                 }

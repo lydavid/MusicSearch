@@ -33,12 +33,18 @@ internal class StatsPresenter(
 
     @Composable
     override fun present(): StatsUiState {
-        val byEntity = BrowseMethod.ByEntity(
-            entityId = screen.byEntityId,
-            entity = screen.byEntity,
-        )
+        val byEntityId = screen.byEntityId
+        val byEntity = screen.byEntity
+        val browseMethod = if (byEntityId == null || byEntity == null) {
+            BrowseMethod.All
+        } else {
+            BrowseMethod.ByEntity(
+                entityId = byEntityId,
+                entity = byEntity,
+            )
+        }
         val relationTypeCounts
-            by getCountOfEachRelationshipTypeUseCase(byEntity.entityId).collectAsState(listOf())
+            by getCountOfEachRelationshipTypeUseCase(browseMethod).collectAsState(listOf())
 
         val tabToStats = screen.tabs
             .filterNot { setOf(Tab.DETAILS, Tab.TRACKS, Tab.STATS).contains(it) }
@@ -46,12 +52,11 @@ internal class StatsPresenter(
                 val browseEntity = tab.toMusicBrainzEntity() ?: return@associateWith EntityStats()
                 observeEntityStats(
                     browseEntity = browseEntity,
-                    byEntity = byEntity,
+                    browseMethod = browseMethod,
                     countOfEachAlbumTypeFlow = {
                         if (browseEntity == MusicBrainzEntity.RELEASE_GROUP) {
                             observeCountOfEachAlbumType(
-                                entityId = byEntity.entityId,
-                                isCollection = byEntity.entity == MusicBrainzEntity.COLLECTION,
+                                browseMethod = browseMethod,
                             )
                         } else {
                             flowOf(listOf())
@@ -74,20 +79,27 @@ internal class StatsPresenter(
 
     private fun observeEntityStats(
         browseEntity: MusicBrainzEntity,
-        byEntity: BrowseMethod.ByEntity,
+        browseMethod: BrowseMethod,
         countOfEachAlbumTypeFlow: () -> Flow<List<ReleaseGroupTypeCount>>,
     ): Flow<EntityStats> {
-        val browseRemoteMetadataFlow = browseRemoteMetadataRepository.observe(
-            entityId = byEntity.entityId,
-            entity = browseEntity,
-        )
+        val browseRemoteMetadataFlow: Flow<BrowseRemoteMetadata?> = when (browseMethod) {
+            BrowseMethod.All -> {
+                flowOf(null)
+            }
+            is BrowseMethod.ByEntity -> {
+                browseRemoteMetadataRepository.observe(
+                    entityId = browseMethod.entityId,
+                    entity = browseEntity,
+                )
+            }
+        }
         val localCountFlow = observeLocalCount(
             browseEntity = browseEntity,
-            browseMethod = byEntity,
+            browseMethod = browseMethod,
         )
         val visitedCountFlow = observeVisitedCount(
             browseEntity = browseEntity,
-            browseMethod = byEntity,
+            browseMethod = browseMethod,
         )
         return combine(
             browseRemoteMetadataFlow,

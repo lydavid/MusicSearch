@@ -88,14 +88,19 @@ INNER JOIN release_group ON release_groups_by_entity.release_group_id = release_
 INNER JOIN collection_entity ON collection_entity.entity_id = release_group.id
 WHERE release_groups_by_entity.entity_id = :entityId;
 
-getCountOfEachAlbumType:
+getCountOfEachAlbumTypes:
+SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) AS count
+FROM release_group rg
+GROUP BY rg.primary_type, rg.secondary_types;
+
+getCountOfEachAlbumTypesByEntity:
 SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) AS count
 FROM release_group rg
 INNER JOIN release_groups_by_entity ON rg.id = release_groups_by_entity.release_group_id
 WHERE release_groups_by_entity.entity_id = :entityId
 GROUP BY rg.primary_type, rg.secondary_types;
 
-getCountOfEachAlbumTypeByCollection:
+getCountOfEachAlbumTypesByCollection:
 SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) AS count
 FROM release_group rg
 INNER JOIN collection_entity ON rg.id = collection_entity.entity_id

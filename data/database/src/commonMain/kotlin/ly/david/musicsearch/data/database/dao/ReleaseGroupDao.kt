@@ -38,8 +38,7 @@ interface ReleaseGroupDao : EntityDao {
     fun deleteReleaseGroupLinksByEntity(entityId: String)
     fun getCountOfReleaseGroupsByArtist(entityId: String): Int
     fun observeCountOfEachAlbumType(
-        entityId: String,
-        isCollection: Boolean,
+        browseMethod: BrowseMethod,
     ): Flow<List<ReleaseGroupTypeCount>>
 
     fun getReleaseGroups(
@@ -67,6 +66,7 @@ class ReleaseGroupDaoImpl(
                     name = name,
                     disambiguation = disambiguation,
                     first_release_date = firstReleaseDate,
+                    // TODO: coalesce null types to empty
                     primary_type = primaryType,
                     primary_type_id = primaryTypeId,
                     secondary_types = secondaryTypes,
@@ -165,31 +165,46 @@ class ReleaseGroupDaoImpl(
             .toInt()
 
     override fun observeCountOfEachAlbumType(
-        entityId: String,
-        isCollection: Boolean,
+        browseMethod: BrowseMethod,
     ): Flow<List<ReleaseGroupTypeCount>> {
-        return if (isCollection) {
-            transacter.getCountOfEachAlbumTypeByCollection(
-                collectionId = entityId,
-                mapper = { primaryType, secondaryTypes, count ->
-                    ReleaseGroupTypeCount(
-                        primaryType = primaryType,
-                        secondaryTypes = secondaryTypes,
-                        count = count.toInt(),
+        return when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                    transacter.getCountOfEachAlbumTypesByCollection(
+                        collectionId = browseMethod.entityId,
+                        mapper = { primaryType, secondaryTypes, count ->
+                            ReleaseGroupTypeCount(
+                                primaryType = primaryType,
+                                secondaryTypes = secondaryTypes,
+                                count = count.toInt(),
+                            )
+                        },
                     )
-                },
-            )
-        } else {
-            transacter.getCountOfEachAlbumType(
-                entityId = entityId,
-                mapper = { primaryType, secondaryTypes, count ->
-                    ReleaseGroupTypeCount(
-                        primaryType = primaryType,
-                        secondaryTypes = secondaryTypes,
-                        count = count.toInt(),
+                } else {
+                    transacter.getCountOfEachAlbumTypesByEntity(
+                        entityId = browseMethod.entityId,
+                        mapper = { primaryType, secondaryTypes, count ->
+                            ReleaseGroupTypeCount(
+                                primaryType = primaryType,
+                                secondaryTypes = secondaryTypes,
+                                count = count.toInt(),
+                            )
+                        },
                     )
-                },
-            )
+                }
+            }
+
+            BrowseMethod.All -> {
+                transacter.getCountOfEachAlbumTypes(
+                    mapper = { primaryType, secondaryTypes, count ->
+                        ReleaseGroupTypeCount(
+                            primaryType = primaryType,
+                            secondaryTypes = secondaryTypes,
+                            count = count.toInt(),
+                        )
+                    },
+                )
+            }
         }
             .asFlow()
             .mapToList(coroutineDispatchers.io)
