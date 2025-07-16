@@ -13,8 +13,8 @@ data class ReleaseGroupMusicBrainzNetworkModel(
 
     @SerialName("id") override val id: String,
     @SerialName("title") override val name: String = "",
-    @SerialName("first-release-date") override val firstReleaseDate: String = "",
     @SerialName("disambiguation") override val disambiguation: String = "",
+    @SerialName("first-release-date") override val firstReleaseDate: String = "",
     @SerialName("primary-type") override val primaryType: String? = null,
     @SerialName("primary-type-id") val primaryTypeId: String? = null,
     @SerialName("secondary-types") override val secondaryTypes: List<String>? = null,
