@@ -6,10 +6,10 @@ import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroup
 data class ReleaseGroupListItemModel(
     override val id: String,
     override val name: String,
-    override val firstReleaseDate: String = "",
     override val disambiguation: String = "",
-    override val primaryType: String? = null,
-    override val secondaryTypes: List<String>? = listOf(),
+    override val firstReleaseDate: String = "",
+    override val primaryType: String = "",
+    override val secondaryTypes: List<String> = listOf(),
     val formattedArtistCredits: String? = null,
     val imageUrl: String? = null,
     val imageId: ImageId? = null,

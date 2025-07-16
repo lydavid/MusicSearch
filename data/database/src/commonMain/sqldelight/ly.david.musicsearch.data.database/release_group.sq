@@ -1,15 +1,15 @@
 import kotlin.String;
 import kotlin.collections.List;
 
-CREATE TABLE IF NOT EXISTS release_group (
-  `id` TEXT PRIMARY KEY NOT NULL,
-  `name` TEXT NOT NULL,
-  `first_release_date` TEXT NOT NULL,
-  `disambiguation` TEXT NOT NULL,
-  `primary_type` TEXT,
-  `primary_type_id` TEXT,
-  `secondary_types` TEXT AS List<String>,
-  `secondary_type_ids` TEXT AS List<String>
+CREATE TABLE release_group (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  first_release_date TEXT NOT NULL,
+  primary_type TEXT NOT NULL ,
+  primary_type_id TEXT NOT NULL ,
+  secondary_types TEXT AS List<String> NOT NULL,
+  secondary_type_ids TEXT AS List<String> NOT NULL
 );
 
 insertReleaseGroup:
@@ -20,8 +20,8 @@ getReleaseGroupForDetails:
 SELECT
   rg.id,
   rg.name,
-  rg.first_release_date,
   rg.disambiguation,
+  rg.first_release_date,
   rg.primary_type,
   rg.secondary_types,
   details_metadata.last_updated
@@ -105,8 +105,8 @@ getReleaseGroupsByEntity:
 SELECT
   release_group.id,
   release_group.name,
-  release_group.first_release_date,
   release_group.disambiguation,
+  release_group.first_release_date,
   release_group.primary_type,
   release_group.secondary_types,
   ac.name AS artist_credits,
@@ -171,8 +171,8 @@ getReleaseGroupsByCollection:
 SELECT
   release_group.id,
   release_group.name,
-  release_group.first_release_date,
   release_group.disambiguation,
+  release_group.first_release_date,
   release_group.primary_type,
   release_group.secondary_types,
   ac.name AS artist_credits,
@@ -233,8 +233,8 @@ getAllReleaseGroups:
 SELECT
   release_group.id,
   release_group.name,
-  release_group.first_release_date,
   release_group.disambiguation,
+  release_group.first_release_date,
   release_group.primary_type,
   release_group.secondary_types,
   ac.name AS artist_credits,

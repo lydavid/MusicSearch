@@ -1,0 +1,80 @@
+import androidx.compose.ui.text.AnnotationType.String;
+import com.android.build.gradle.internal.dsl.decorator.SupportedPropertyType.Collection.List;
+
+DROP VIEW coalesced_entity;
+
+CREATE TABLE release_group_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  first_release_date TEXT NOT NULL,
+  primary_type TEXT NOT NULL ,
+  primary_type_id TEXT NOT NULL ,
+  secondary_types TEXT AS List<String> NOT NULL,
+  secondary_type_ids TEXT AS List<String> NOT NULL
+);
+
+INSERT OR IGNORE INTO release_group_temp(
+  id,
+  name,
+  disambiguation,
+  first_release_date,
+  primary_type,
+  primary_type_id,
+  secondary_types,
+  secondary_type_ids
+)
+SELECT
+  id,
+  name,
+  disambiguation,
+  first_release_date,
+  COALESCE(primary_type, ''),
+  COALESCE(primary_type_id, ''),
+  COALESCE(secondary_types, ''),
+  COALESCE(secondary_type_ids, '')
+FROM release_group;
+
+DROP TABLE release_group;
+
+ALTER TABLE release_group_temp RENAME TO release_group;
+
+-- recreate view that references release_group
+CREATE VIEW coalesced_entity AS
+SELECT
+  id,
+  name,
+  sort_name,
+  disambiguation,
+  'artist' AS entity_type
+FROM artist
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'event' AS entity_type
+FROM event
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'release' AS entity_type
+FROM `release`
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'release-group' AS entity_type
+FROM release_group;
