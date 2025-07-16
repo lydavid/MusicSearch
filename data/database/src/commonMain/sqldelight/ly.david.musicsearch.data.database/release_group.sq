@@ -81,13 +81,6 @@ SELECT IFNULL(
   0
 ) AS count;
 
-getCountOfCollectedReleaseGroupsByEntity:
-SELECT COUNT(release_group.id)
-FROM release_groups_by_entity
-INNER JOIN release_group ON release_groups_by_entity.release_group_id = release_group.id
-INNER JOIN collection_entity ON collection_entity.entity_id = release_group.id
-WHERE release_groups_by_entity.entity_id = :entityId;
-
 getCountOfEachAlbumTypes:
 SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) AS count
 FROM release_group rg

@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadata
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
+import ly.david.musicsearch.shared.domain.list.ObserveCollectedCount
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.list.ObserveVisitedCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -28,6 +29,7 @@ internal class StatsPresenter(
     private val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
     private val observeLocalCount: ObserveLocalCount,
     private val observeVisitedCount: ObserveVisitedCount,
+    private val observeCollectedCount: ObserveCollectedCount,
     private val observeCountOfEachAlbumType: ObserveCountOfEachAlbumType,
 ) : Presenter<StatsUiState> {
 
@@ -101,12 +103,17 @@ internal class StatsPresenter(
             browseEntity = browseEntity,
             browseMethod = browseMethod,
         )
+        val collectedCountFlow = observeCollectedCount(
+            browseEntity = browseEntity,
+            browseMethod = browseMethod,
+        )
         return combine(
             browseRemoteMetadataFlow,
             localCountFlow,
             visitedCountFlow,
+            collectedCountFlow,
             countOfEachAlbumTypeFlow(),
-        ) { browseRemoteMetadata, localCount, visitedCount, releaseGroupTypeCount ->
+        ) { browseRemoteMetadata, localCount, visitedCount, collectedCount, releaseGroupTypeCount ->
             EntityStats(
                 totalRemote = getTotalRemote(
                     browseRemoteMetadata = browseRemoteMetadata,
@@ -114,6 +121,7 @@ internal class StatsPresenter(
                 ),
                 totalLocal = localCount,
                 totalVisited = visitedCount,
+                totalCollected = collectedCount,
                 releaseGroupTypeCounts = releaseGroupTypeCount.map {
                     ReleaseGroupTypeCount(
                         primaryType = it.primaryType,

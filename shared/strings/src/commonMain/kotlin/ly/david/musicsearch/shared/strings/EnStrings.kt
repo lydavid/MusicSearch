@@ -233,6 +233,8 @@ val EnStrings = AppStrings(
 
     visited = "Visited",
 
+    collected = "Collected",
+
     moreActions = "More actions",
 
     openGoogleMaps = "Open in Google maps",

@@ -21,6 +21,7 @@ import ly.david.musicsearch.data.repository.instrument.InstrumentsListRepository
 import ly.david.musicsearch.data.repository.label.LabelRepositoryImpl
 import ly.david.musicsearch.data.repository.label.LabelsListRepositoryImpl
 import ly.david.musicsearch.data.repository.list.EntitiesListRepositoryImpl
+import ly.david.musicsearch.data.repository.list.ObserveCollectedCountImpl
 import ly.david.musicsearch.data.repository.list.ObserveLocalCountImpl
 import ly.david.musicsearch.data.repository.list.ObserveVisitedCountImpl
 import ly.david.musicsearch.data.repository.metadata.MetadataRepositoryImpl
@@ -59,6 +60,7 @@ import ly.david.musicsearch.shared.domain.instrument.InstrumentsListRepository
 import ly.david.musicsearch.shared.domain.label.LabelRepository
 import ly.david.musicsearch.shared.domain.label.LabelsListRepository
 import ly.david.musicsearch.shared.domain.list.EntitiesListRepository
+import ly.david.musicsearch.shared.domain.list.ObserveCollectedCount
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.list.ObserveVisitedCount
 import ly.david.musicsearch.shared.domain.metadata.MetadataRepository
@@ -124,5 +126,6 @@ val repositoryDataModule = module {
     singleOf(::ImageMetadataRepositoryImpl) bind ImageMetadataRepository::class
     singleOf(::MusicBrainzImageMetadataRepositoryImpl) bind MusicBrainzImageMetadataRepository::class
     singleOf(::ObserveLocalCountImpl) bind ObserveLocalCount::class
+    singleOf(::ObserveCollectedCountImpl) bind ObserveCollectedCount::class
     singleOf(::ObserveVisitedCountImpl) bind ObserveVisitedCount::class
 }

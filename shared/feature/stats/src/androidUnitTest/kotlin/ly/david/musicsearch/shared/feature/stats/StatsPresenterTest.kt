@@ -10,6 +10,7 @@ import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadata
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
+import ly.david.musicsearch.shared.domain.list.ObserveCollectedCount
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.list.ObserveVisitedCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -94,6 +95,14 @@ class StatsPresenterTest {
                     return flowOf(2)
                 }
             },
+            observeCollectedCount = object : ObserveCollectedCount {
+                override fun invoke(
+                    browseEntity: MusicBrainzEntity,
+                    browseMethod: BrowseMethod?,
+                ): Flow<Int> {
+                    return flowOf(1)
+                }
+            },
             observeCountOfEachAlbumType = object : ObserveCountOfEachAlbumType {
                 override operator fun invoke(
                     browseMethod: BrowseMethod,
@@ -149,30 +158,35 @@ class StatsPresenterTest {
                                     totalRemote = 300,
                                     totalLocal = 200,
                                     totalVisited = 2,
+                                    totalCollected = 1,
                                     lastUpdated = lastUpdated,
                                 ),
                                 Tab.RELEASE_GROUPS to EntityStats(
                                     totalRemote = 300,
                                     totalLocal = 200,
                                     totalVisited = 2,
+                                    totalCollected = 1,
                                     lastUpdated = lastUpdated,
                                 ),
                                 Tab.EVENTS to EntityStats(
                                     totalRemote = 300,
                                     totalLocal = 200,
                                     totalVisited = 2,
+                                    totalCollected = 1,
                                     lastUpdated = lastUpdated,
                                 ),
                                 Tab.WORKS to EntityStats(
                                     totalRemote = 300,
                                     totalLocal = 200,
                                     totalVisited = 2,
+                                    totalCollected = 1,
                                     lastUpdated = lastUpdated,
                                 ),
                                 Tab.RELEASES to EntityStats(
                                     totalRemote = 300,
                                     totalLocal = 200,
                                     totalVisited = 2,
+                                    totalCollected = 1,
                                     lastUpdated = lastUpdated,
                                 ),
                             ),

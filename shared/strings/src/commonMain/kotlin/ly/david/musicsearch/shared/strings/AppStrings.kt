@@ -116,6 +116,7 @@ data class AppStrings(
     val retry: String,
     val cached: String,
     val visited: String,
+    val collected: String,
     val moreActions: String,
     val openGoogleMaps: String,
     val sort: String,

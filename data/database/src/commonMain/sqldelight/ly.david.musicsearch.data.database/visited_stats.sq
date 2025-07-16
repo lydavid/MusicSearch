@@ -26,18 +26,6 @@ FROM events_by_entity
 INNER JOIN details_metadata ON details_metadata.entity_id = events_by_entity.event_id
 WHERE events_by_entity.entity_id = :entityId;
 
--- getCountOfVisitedGenresByEntity:
--- SELECT COUNT(genres_by_entity.entity_id)
--- FROM genres_by_entity
--- INNER JOIN details_metadata ON details_metadata.entity_id = genres_by_entity.genre_id
--- WHERE genres_by_entity.entity_id = :entityId;
---
--- getCountOfVisitedInstrumentsByEntity:
--- SELECT COUNT(instruments_by_entity.entity_id)
--- FROM instruments_by_entity
--- INNER JOIN details_metadata ON details_metadata.entity_id = instruments_by_entity.instrument_id
--- WHERE instruments_by_entity.entity_id = :entityId;
-
 getCountOfVisitedLabelsByEntity:
 SELECT COUNT(labels_by_entity.entity_id)
 FROM labels_by_entity
@@ -68,11 +56,11 @@ FROM release_groups_by_entity
 INNER JOIN details_metadata ON details_metadata.entity_id = release_groups_by_entity.release_group_id
 WHERE release_groups_by_entity.entity_id = :entityId;
 
--- getCountOfVisitedSeriesByEntity:
--- SELECT COUNT(series_by_entity.entity_id)
--- FROM series_by_entity
--- INNER JOIN details_metadata ON details_metadata.entity_id = series_by_entity.series_id
--- WHERE series_by_entity.entity_id = :entityId;
+getCountOfCollectedReleaseGroupsByEntity:
+SELECT COUNT(release_groups_by_entity.entity_id)
+FROM release_groups_by_entity
+INNER JOIN collection_entity ON collection_entity.entity_id = release_groups_by_entity.release_group_id
+WHERE release_groups_by_entity.entity_id = :entityId;
 
 getCountOfVisitedWorksByEntity:
 SELECT COUNT(works_by_entity.entity_id)

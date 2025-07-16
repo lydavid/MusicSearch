@@ -20,6 +20,7 @@ internal fun PreviewAddEntityStatsSection() {
                         totalLocal = 100,
                         totalRemote = 200,
                         totalVisited = 18,
+                        totalCollected = 9,
                         lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
                     ),
                     header = "Releases",
@@ -41,6 +42,7 @@ internal fun PreviewAddEntityStatsSectionReleaseGroup() {
                         totalRemote = 280,
                         totalLocal = 280,
                         totalVisited = 140,
+                        totalCollected = 200,
                         releaseGroupTypeCounts = persistentListOf(
                             ReleaseGroupTypeCount(
                                 primaryType = "Album",

@@ -7,6 +7,7 @@ import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDaoImpl
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
+import ly.david.musicsearch.data.database.dao.CollectedStatsDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.CountryCodeDao
@@ -83,5 +84,6 @@ val databaseDaoModule = module {
     single { SearchResultDao(get(), get()) }
     singleOf(::DatabaseMetadataDao)
     singleOf(::AliasDao)
+    singleOf(::CollectedStatsDao)
     singleOf(::VisitedStatsDao)
 }

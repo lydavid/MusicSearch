@@ -18,6 +18,7 @@ val statsFeatureModule = module {
                         browseRemoteMetadataRepository = get(),
                         observeLocalCount = get(),
                         observeVisitedCount = get(),
+                        observeCollectedCount = get(),
                         observeCountOfEachAlbumType = get(),
                     )
                 }

@@ -41,6 +41,7 @@ internal fun PreviewStatsUi() {
                             totalRemote = 280,
                             totalLocal = 279,
                             totalVisited = 100,
+                            totalCollected = 23,
                             releaseGroupTypeCounts = persistentListOf(
                                 ReleaseGroupTypeCount(
                                     primaryType = "Album",

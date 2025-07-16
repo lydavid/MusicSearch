@@ -44,6 +44,13 @@ internal fun LazyListScope.addEntityStatsSection(
                 formatProgressText = strings.visited,
                 modifier = Modifier.padding(top = 4.dp),
             )
+
+            CompletionProgressBar(
+                totalCount = entityStats.totalRemote,
+                currentCount = entityStats.totalCollected,
+                formatProgressText = strings.collected,
+                modifier = Modifier.padding(top = 4.dp),
+            )
         }
     }
     val releaseGroupTypeCounts = entityStats.releaseGroupTypeCounts
