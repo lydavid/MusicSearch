@@ -9,8 +9,8 @@ interface ReleaseGroup : NameWithDisambiguation, ReleaseGroupTypes {
 
     val id: String
     override val name: String
-    val firstReleaseDate: String
     override val disambiguation: String
+    val firstReleaseDate: String
 
     override val primaryType: String?
     override val secondaryTypes: List<String>?

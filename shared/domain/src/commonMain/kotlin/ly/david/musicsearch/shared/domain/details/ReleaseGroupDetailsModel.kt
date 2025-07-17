@@ -11,10 +11,10 @@ import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 data class ReleaseGroupDetailsModel(
     override val id: String,
     override val name: String,
-    override val firstReleaseDate: String = "",
     override val disambiguation: String = "",
-    override val primaryType: String? = null,
-    override val secondaryTypes: List<String>? = null,
+    override val firstReleaseDate: String = "",
+    override val primaryType: String = "",
+    override val secondaryTypes: List<String> = listOf(),
     override val lastUpdated: Instant = Clock.System.now(),
     override val artistCredits: List<ArtistCreditUiModel> = listOf(),
     override val imageMetadata: ImageMetadata = ImageMetadata(),

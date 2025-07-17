@@ -66,11 +66,10 @@ class ReleaseGroupDaoImpl(
                     name = name,
                     disambiguation = disambiguation,
                     first_release_date = firstReleaseDate,
-                    // TODO: coalesce null types to empty
-                    primary_type = primaryType,
-                    primary_type_id = primaryTypeId,
-                    secondary_types = secondaryTypes,
-                    secondary_type_ids = secondaryTypeIds,
+                    primary_type = primaryType.orEmpty(),
+                    primary_type_id = primaryTypeId.orEmpty(),
+                    secondary_types = secondaryTypes.orEmpty(),
+                    secondary_type_ids = secondaryTypeIds.orEmpty(),
                 ),
             )
             artistCreditDao.insertArtistCredits(
@@ -97,16 +96,16 @@ class ReleaseGroupDaoImpl(
     private fun mapToReleaseGroupForDetails(
         id: String,
         name: String,
-        firstReleaseDate: String,
         disambiguation: String,
-        primaryType: String?,
-        secondaryTypes: List<String>?,
+        firstReleaseDate: String,
+        primaryType: String,
+        secondaryTypes: List<String>,
         lastUpdated: Instant?,
     ) = ReleaseGroupDetailsModel(
         id = id,
         name = name,
-        firstReleaseDate = firstReleaseDate,
         disambiguation = disambiguation,
+        firstReleaseDate = firstReleaseDate,
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
         lastUpdated = lastUpdated ?: Clock.System.now(),
@@ -115,12 +114,12 @@ class ReleaseGroupDaoImpl(
     override fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease? =
         transacter.getReleaseGroupForRelease(
             releaseId = releaseId,
-            mapper = { id, name, firstReleaseDate, disambiguation, primaryType, _, secondaryTypes, _ ->
+            mapper = { id, name, disambiguation, firstReleaseDate, primaryType, _, secondaryTypes, _ ->
                 ReleaseGroupForRelease(
                     id = id,
                     name = name,
-                    firstReleaseDate = firstReleaseDate,
                     disambiguation = disambiguation,
+                    firstReleaseDate = firstReleaseDate,
                     primaryType = primaryType,
                     secondaryTypes = secondaryTypes,
                 )
