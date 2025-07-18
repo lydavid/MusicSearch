@@ -1,3 +1,0 @@
-package,name,composable,skippable,restartable,readonly,inline,isLambda,hasDefaults,defaultsGroup,groups,calls,
-ly.david.musicsearch.shared.strings.rememberStrings,rememberStrings,1,0,0,0,0,0,0,0,1,1,
-ly.david.musicsearch.shared.strings.ProvideStrings,ProvideStrings,1,0,1,0,0,0,0,0,1,1,

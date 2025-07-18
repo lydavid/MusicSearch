@@ -1,7 +1,0 @@
-fun rememberStrings(
-  stable languageTag: String? = @static Locales.EN
-): Lyricist<AppStrings>
-restartable scheme("[0, [0]]") fun ProvideStrings(
-  unstable lyricist: Lyricist<AppStrings>
-  stable content: Function2<Composer, Int, Unit>
-)
