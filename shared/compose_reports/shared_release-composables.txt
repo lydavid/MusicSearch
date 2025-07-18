@@ -1,0 +1,37 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAppBottomNavigationBar()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AppBottomNavigationBar(
+  stable currentTopLevelScreen: Screen
+  stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static sourceInformationMarkerStart($composer, -1304362298, "CC(remember):AppBottomNavigationBar.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {     it  :   Screen   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.shared.AppBottomNavigationBar
+)
+restartable skippable fun AppNavigationRail(
+  stable currentTopLevelScreen: Screen
+  stable modifier: Modifier? = @static Companion
+  stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static sourceInformationMarkerStart($composer, -224104547, "CC(remember):AppNavigationRail.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {     it  :   Screen   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.shared.AppNavigationRail
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AppRoot(
+  stable circuit: Circuit
+  stable backStack: SaveableBackStack
+  stable navigator: Navigator
+  stable modifier: Modifier? = @static Companion
+)
+fun useDarkTheme(
+  unstable <this>: AppPreferences
+): Boolean

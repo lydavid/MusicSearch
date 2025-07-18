@@ -1,0 +1,21 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewDatabaseUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewDatabaseUiWithCounts()
+fun present(
+  stable <this>: DatabasePresenter
+): DatabaseUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DatabaseUi(
+  stable state: DatabaseUiState
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DatabaseUi(
+  stable state: DatabaseUiState
+  stable onDestinationClick: Function1<Screen, Unit>
+  stable modifier: Modifier? = @static Companion
+)
+scheme("[presenter]") fun present(
+  stable <this>: AllLocalEntitiesPresenter
+): AllLocalEntitiesUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AllLocalEntitiesUi(
+  stable state: AllLocalEntitiesUiState
+  stable modifier: Modifier? = @static Companion
+)

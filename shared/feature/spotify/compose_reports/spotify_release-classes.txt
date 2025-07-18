@@ -1,0 +1,42 @@
+stable class BroadcastTypes {
+  stable val SPOTIFY_PACKAGE: String
+  stable val PLAYBACK_STATE_CHANGED: String
+  stable val QUEUE_CHANGED: String
+  stable val METADATA_CHANGED: String
+  <runtime stability> = Stable
+}
+unstable class SpotifyBroadcastReceiver {
+  unstable val spotifyHistoryRepository$delegate: Lazy<SpotifyHistoryRepository>
+  <runtime stability> = Unstable
+}
+stable class SpotifyHistoryPresenter {
+  stable val navigator: Navigator
+  unstable val spotifyHistoryRepository: SpotifyHistoryRepository
+  <runtime stability> = Stable
+}
+stable class SpotifyUiState {
+  stable val topAppBarFilterState: TopAppBarFilterState
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable val lazyListState: LazyListState
+  stable val eventSink: Function1<SpotifyUiEvent, Unit>
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class GoToSearch {
+  stable val query: String
+  stable val entity: MusicBrainzEntity
+  <runtime stability> = Stable
+}
+stable class MarkForDeletion {
+  runtime val history: SpotifyHistoryListItemModel
+  <runtime stability> = Stable
+}
+stable class UndoMarkForDeletion {
+  runtime val history: SpotifyHistoryListItemModel
+  <runtime stability> = Stable
+}
+stable class Delete {
+  runtime val history: SpotifyHistoryListItemModel
+  <runtime stability> = Stable
+}

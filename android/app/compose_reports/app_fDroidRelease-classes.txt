@@ -1,0 +1,15 @@
+unstable class CrashlyticsCrashReporterSettings {
+  <runtime stability> = Unstable
+}
+unstable class CrashlyticsTree {
+  <runtime stability> = Unstable
+}
+unstable class MainActivity {
+  unstable val appPreferences$delegate: Lazy<AppPreferences>
+  unstable val circuit$delegate: Lazy<Circuit>
+  unstable val broadcastReceiver$delegate: Lazy<SpotifyBroadcastReceiver>
+  <runtime stability> = Unstable
+}
+unstable class MusicSearchApplication {
+  <runtime stability> = Unstable
+}
