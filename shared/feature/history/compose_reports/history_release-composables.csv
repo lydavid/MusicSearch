@@ -1,0 +1,8 @@
+package,name,composable,skippable,restartable,readonly,inline,isLambda,hasDefaults,defaultsGroup,groups,calls,
+ly.david.musicsearch.shared.feature.history.PreviewLookupHistoryReleaseGroup,PreviewLookupHistoryReleaseGroup,1,1,1,0,0,0,0,0,1,2,
+ly.david.musicsearch.shared.feature.history.PreviewLookupHistoryRelease,PreviewLookupHistoryRelease,1,1,1,0,0,0,0,0,1,2,
+ly.david.musicsearch.shared.feature.history.PreviewLookupHistoryArtist,PreviewLookupHistoryArtist,1,1,1,0,0,0,0,0,1,2,
+ly.david.musicsearch.shared.feature.history.internal.HistoryListItem,HistoryListItem,1,1,1,0,0,0,0,0,1,3,
+ly.david.musicsearch.shared.feature.history.internal.HistoryPresenter.present,present,1,0,0,0,0,0,0,0,1,4,
+ly.david.musicsearch.shared.feature.history.internal.HistoryUi,HistoryUi,1,1,1,0,0,0,0,0,5,12,
+ly.david.musicsearch.shared.feature.history.internal.HistoryUi,HistoryUi,1,1,1,0,0,0,1,0,2,2,

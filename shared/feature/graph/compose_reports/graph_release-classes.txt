@@ -1,0 +1,224 @@
+stable class ArtistCollaborationGraphPresenter {
+  stable val screen: ArtistCollaborationScreen
+  stable val navigator: Navigator
+  unstable val graphSimulation: ArtistCollaborationGraphSimulation
+  unstable val artistCollaborationRepository: ArtistCollaborationRepository
+  unstable val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ArtistCollaborationGraphUiState {
+  stable val artistName: String
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val collaborationEntityType: MusicBrainzEntity
+  unstable val edges: List<GraphEdge>
+  unstable val nodes: List<GraphNode>
+  stable val isDeveloperMode: Boolean
+  stable val eventSink: Function1<ArtistCollaborationGraphUiEvent, Unit>
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class SelectEntity {
+  stable val entity: MusicBrainzEntity
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class GraphNode {
+  stable val id: String
+  stable val name: String
+  stable val entity: MusicBrainzEntity
+  stable val radius: Double
+  stable val x: Double
+  stable val y: Double
+  <runtime stability> = Stable
+}
+stable class GraphEdge {
+  stable val x0: Double
+  stable val y0: Double
+  stable val x1: Double
+  stable val y1: Double
+  <runtime stability> = Stable
+}
+stable class GraphSimulationUiState {
+  stable val edges: ImmutableList<GraphEdge>
+  stable val nodes: ImmutableList<GraphNode>
+  <runtime stability> = 
+}
+unstable class ArtistCollaborationGraphSimulation {
+  unstable val _uiState: MutableStateFlow<GraphSimulationUiState>
+  unstable var forceLinks: ForceLink<GraphNode>?
+  unstable var simulation: ForceSimulation<GraphNode>
+  <runtime stability> = Unstable
+}
+stable class Point {
+  stable val x: Double
+  stable val y: Double
+  <runtime stability> = Stable
+}
+unstable class Rectangle {
+  stable var x0: Double
+  stable var y0: Double
+  stable var x1: Double
+  stable var y1: Double
+  <runtime stability> = Unstable
+}
+stable class Vector {
+  stable val vx: Double
+  stable val vy: Double
+  <runtime stability> = Stable
+}
+unstable class ForceCenter {
+  unstable var _nodes: List<ForceNode<D>>
+  stable var center: Point
+  <runtime stability> = Unstable
+}
+unstable class ForceCollision {
+  stable val x: Function1<ForceNode<D>, Double>
+  stable val y: Function1<ForceNode<D>, Double>
+  stable var ri: Double
+  stable var ri2: Double
+  stable var xi: Double
+  stable var yi: Double
+  unstable var currentNode: ForceNode<D>
+  stable var iterations: Int
+  stable var strength: Percent
+  stable var radiusGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Double>
+  unstable var _nodes: List<ForceNode<D>>
+  unstable var _radiuses: List<Double>
+  <runtime stability> = Unstable
+}
+unstable class Link {
+  unstable val source: ForceNode<D>
+  unstable val target: ForceNode<D>
+  stable val distance: Double
+  stable var strength: Double
+  <runtime stability> = Unstable
+}
+unstable class ForceLink {
+  unstable var _nodes: List<ForceNode<D>>
+  unstable var _links: List<Link<D>>
+  unstable var bias: Array<Double>
+  unstable var count: Array<Int>
+  stable var iterations: Int
+  stable var linkGet: @[ExtensionFunctionType] Function1<ForceNode<D>, List<Link<D>>?>
+  <runtime stability> = Unstable
+}
+unstable class ForceNBody {
+  stable var theta2: Double
+  stable var distanceMin2: Double
+  stable var distanceMax2: Double
+  stable val x: Function1<ForceNode<D>, Double>
+  stable val y: Function1<ForceNode<D>, Double>
+  stable var currentIntensity: Double
+  unstable var currentNode: ForceNode<D>
+  stable var strengthGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Double>
+  unstable var _nodes: List<ForceNode<D>>
+  unstable var _strengths: List<Double>
+  <runtime stability> = Unstable
+}
+unstable class ForceNode {
+  stable val index: Int
+  runtime val domain: D
+  stable var x: Double
+  stable var y: Double
+  stable var vx: Double
+  stable var vy: Double
+  stable var fixedX: Double?
+  stable var fixedY: Double?
+  <runtime stability> = Unstable
+}
+unstable class ForcePoint {
+  stable val defaultPoint: Point
+  stable var pointGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Point>
+  stable var strengthGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Percent>
+  unstable var _nodes: List<ForceNode<D>>
+  unstable var _strengths: List<Double>
+  unstable var _x: List<Double>
+  unstable var _y: List<Double>
+  <runtime stability> = Unstable
+}
+unstable class ForceRadial {
+  stable var radiusGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Double>
+  stable var strengthGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Percent>
+  stable var centerGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Point>
+  stable val defaultCenter: Point
+  unstable var _nodes: List<ForceNode<D>>
+  unstable var _strengths: List<Double>
+  unstable var _centers: List<Point>
+  unstable var _radiuses: List<Double>
+  <runtime stability> = Unstable
+}
+unstable class ForceSimulation {
+  stable var started: Boolean
+  stable var initForceNode: @[ExtensionFunctionType] Function1<ForceNode<D>, Unit>
+  unstable var domainObjects: List<D>
+  unstable var _nodes: List<ForceNode<D>>
+  unstable var _forces: List<Force<D>>
+  unstable val tickEvents: MutableMap<String, Function1<ForceSimulation<D>, Unit>>
+  unstable val endEvents: MutableMap<String, Function1<ForceSimulation<D>, Unit>>
+  stable var intensity: Percent
+  stable var intensityMin: Percent
+  stable var intensityDecay: Percent
+  stable var intensityTarget: Percent
+  stable var _friction: Double
+  <runtime stability> = Unstable
+}
+unstable class ForceX {
+  stable var xGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Double>
+  stable var strengthGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Percent>
+  unstable var _nodes: List<ForceNode<D>>
+  unstable var _strengths: List<Double>
+  unstable var _x: List<Double>
+  <runtime stability> = Unstable
+}
+unstable class ForceY {
+  stable var yGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Double>
+  stable var strengthGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Percent>
+  unstable var _nodes: List<ForceNode<D>>
+  unstable var _strengths: List<Double>
+  unstable var _y: List<Double>
+  <runtime stability> = Unstable
+}
+stable class NodePair {
+  runtime val source: QuadtreeNode<D>
+  runtime val target: QuadtreeNode<D>
+  <runtime stability> = 
+}
+unstable class InternalNode {
+  runtime var NE_0: QuadtreeNode<D>?
+  runtime var NW_1: QuadtreeNode<D>?
+  runtime var SE_2: QuadtreeNode<D>?
+  runtime var SW_3: QuadtreeNode<D>?
+  stable var value: Double?
+  stable var x: Double
+  stable var y: Double
+  <runtime stability> = Unstable
+}
+unstable class LeafNode {
+  runtime val data: D
+  unstable var next: LeafNode<D>?
+  stable var value: Double?
+  stable var x: Double
+  stable var y: Double
+  <runtime stability> = Unstable
+}
+runtime class Quad {
+  runtime val node: QuadtreeNode<D>?
+  stable val x0: Double
+  stable val y0: Double
+  stable val x1: Double
+  stable val y1: Double
+  <runtime stability> = Uncertain(QuadtreeNode)
+}
+unstable class Quadtree {
+  stable val x: Function1<D, Double>
+  stable val y: Function1<D, Double>
+  runtime var root: QuadtreeNode<D>?
+  unstable var rectangle: Rectangle
+  <runtime stability> = Unstable
+}

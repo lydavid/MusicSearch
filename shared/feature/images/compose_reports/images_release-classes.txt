@@ -1,0 +1,51 @@
+stable class ImagesPresenter {
+  stable val screen: CoverArtsScreen
+  stable val navigator: Navigator
+  unstable val appPreferences: AppPreferences
+  unstable val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository
+  runtime val getMusicBrainzCoverArtUrl: GetMusicBrainzCoverArtUrl
+  <runtime stability> = Stable
+}
+stable class All {
+  <runtime stability> = Stable
+}
+stable class Selected {
+  stable val page: Int
+  stable val totalPages: Int
+  stable val typeAndComment: String
+  <runtime stability> = Stable
+}
+stable class ImagesTitle {
+  <runtime stability> = Stable
+}
+stable class ImagesUiState {
+  stable val title: ImagesTitle
+  stable val subtitle: String
+  stable val url: String?
+  stable val numberOfImagesPerRow: Int
+  stable val imagesGridPaddingDp: Int
+  unstable val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadata>>
+  stable val lazyGridState: LazyGridState
+  stable val sortOption: ImagesSortOption
+  stable val selectedImageIndex: Int?
+  runtime val selectedImageMetadata: ImageMetadata?
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val eventSink: Function1<ImagesUiEvent, Unit>
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class SelectImage {
+  stable val index: Int
+  unstable val imageMetadataSnapshot: List<ImageMetadata?>
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class UpdateSortOption {
+  stable val sortOptionIndex: Int
+  <runtime stability> = Stable
+}

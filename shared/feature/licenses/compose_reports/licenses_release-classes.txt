@@ -1,0 +1,29 @@
+stable class drawable {
+  <runtime stability> = Stable
+}
+stable class string {
+  <runtime stability> = Stable
+}
+stable class array {
+  <runtime stability> = Stable
+}
+stable class plurals {
+  <runtime stability> = Stable
+}
+stable class font {
+  <runtime stability> = Stable
+}
+stable class Res {
+  <runtime stability> = Stable
+}
+stable class LicensesPresenter {
+  stable val navigator: Navigator
+  <runtime stability> = Stable
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class LicensesUiState {
+  stable val eventSink: Function1<LicensesUiEvent, Unit>
+  <runtime stability> = Stable
+}

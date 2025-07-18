@@ -1,0 +1,6 @@
+package,name,composable,skippable,restartable,readonly,inline,isLambda,hasDefaults,defaultsGroup,groups,calls,
+ly.david.musicsearch.shared.PreviewAppBottomNavigationBar,PreviewAppBottomNavigationBar,1,1,1,0,0,0,0,0,1,1,
+ly.david.musicsearch.shared.AppBottomNavigationBar,AppBottomNavigationBar,1,1,1,0,0,0,0,0,1,3,
+ly.david.musicsearch.shared.AppNavigationRail,AppNavigationRail,1,1,1,0,0,0,0,0,1,3,
+ly.david.musicsearch.shared.AppRoot,AppRoot,1,1,1,0,0,0,0,0,1,3,
+ly.david.musicsearch.shared.useDarkTheme,useDarkTheme,1,0,0,0,0,0,0,0,4,2,
