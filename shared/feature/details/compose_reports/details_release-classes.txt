@@ -1,0 +1,154 @@
+stable class AreaPresenter {
+  unstable val repository: AreaRepository
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class ArtistPresenter {
+  unstable val repository: ArtistRepository
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class EventPresenter {
+  unstable val repository: EventRepository
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class GenrePresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val repository: GenreRepository
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  unstable val logger: Logger
+  unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  <runtime stability> = Stable
+}
+stable class GenreUiState {
+  stable val title: String
+  runtime val genre: GenreListItemModel?
+  runtime val handledException: HandledException?
+  stable val url: String
+  stable val eventSink: Function1<GenreUiEvent, Unit>
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class InstrumentPresenter {
+  unstable val repository: InstrumentRepository
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class LabelPresenter {
+  unstable val repository: LabelRepository
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class PlacePresenter {
+  unstable val repository: PlaceRepository
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class RecordingPresenter {
+  unstable val repository: RecordingRepository
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class ReleasePresenter {
+  unstable val repository: ReleaseRepository
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class ReleaseGroupPresenter {
+  unstable val repository: ReleaseGroupRepository
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class SeriesPresenter {
+  unstable val repository: SeriesRepository
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class DetailsPresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  stable val allEntitiesListPresenter: AllEntitiesListPresenter
+  unstable val imageMetadataRepository: ImageMetadataRepository
+  unstable val logger: Logger
+  stable val loginPresenter: LoginPresenter
+  unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  unstable val wikimediaRepository: WikimediaRepository
+  unstable val collectionRepository: CollectionRepository
+  <runtime stability> = Stable
+}
+stable class DetailsUiState {
+  stable val title: String
+  stable val subtitle: String
+  stable val tabs: ImmutableList<Tab>
+  stable val selectedTab: Tab
+  stable val url: String
+  runtime val detailsModel: DetailsModel?
+  stable val collected: Boolean
+  stable val snackbarMessage: String?
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val selectionState: SelectionState
+  runtime val detailsTabUiState: DetailsTabUiState
+  stable val allEntitiesListUiState: AllEntitiesListUiState
+  stable val loginUiState: LoginUiState
+  stable val eventSink: Function1<DetailsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+runtime class DetailsTabUiState {
+  stable val isLoading: Boolean
+  runtime val handledException: HandledException?
+  stable val numberOfImages: Int?
+  stable val lazyListState: LazyListState
+  stable val isReleaseEventsCollapsed: Boolean
+  stable val isExternalLinksCollapsed: Boolean
+  stable val now: Instant
+  <runtime stability> = Runtime(HandledException)
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ForceRefreshDetails {
+  <runtime stability> = Stable
+}
+stable class UpdateTab {
+  stable val tab: Tab
+  <runtime stability> = Stable
+}
+stable class ToggleSelectItem {
+  stable val collectableId: String
+  stable val loadedCount: Int
+  <runtime stability> = Stable
+}
+stable class ToggleSelectAllItems {
+  unstable val collectableIds: List<String>
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class ClickImage {
+  <runtime stability> = Stable
+}
+stable class NavigateToCollaboratorsGraph {
+  <runtime stability> = Stable
+}
+stable class ToggleCollapseExpandExternalLinks {
+  <runtime stability> = Stable
+}
+stable class ToggleCollapseExpandReleaseEvents {
+  <runtime stability> = Stable
+}
+stable class WorkPresenter {
+  unstable val repository: WorkRepository
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}

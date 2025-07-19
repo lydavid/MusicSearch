@@ -1,8 +1,0 @@
-package,name,composable,skippable,restartable,readonly,inline,isLambda,hasDefaults,defaultsGroup,groups,calls,
-ly.david.musicsearch.share.feature.database.PreviewDatabaseUi,PreviewDatabaseUi,1,1,1,0,0,0,0,0,1,1,
-ly.david.musicsearch.share.feature.database.PreviewDatabaseUiWithCounts,PreviewDatabaseUiWithCounts,1,1,1,0,0,0,0,0,1,1,
-ly.david.musicsearch.share.feature.database.DatabasePresenter.present,present,1,0,0,0,0,0,0,0,1,15,
-ly.david.musicsearch.share.feature.database.DatabaseUi,DatabaseUi,1,1,1,0,0,0,0,0,1,5,
-ly.david.musicsearch.share.feature.database.DatabaseUi,DatabaseUi,1,1,1,0,0,0,0,0,1,3,
-ly.david.musicsearch.share.feature.database.all.AllEntitiesPresenter.present,present,1,0,0,0,0,0,0,0,1,6,
-ly.david.musicsearch.share.feature.database.all.AllEntitiesUi,AllEntitiesUi,1,1,1,0,0,0,0,0,1,8,

@@ -1,0 +1,114 @@
+stable class AddToCollectionPresenter {
+  stable val screen: AddToCollectionScreen
+  stable val navigator: Navigator
+  runtime val getAllCollections: GetAllCollections
+  runtime val createCollection: CreateCollection
+  unstable val collectionRepository: CollectionRepository
+  <runtime stability> = Stable
+}
+stable class AddToCollectionUiState {
+  stable val defaultEntity: MusicBrainzEntity
+  runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
+  stable val eventSink: Function1<AddToCollectionUiEvent, Unit>
+}
+stable class CreateNewCollection {
+  runtime val newCollection: NewCollection
+  <runtime stability> = Stable
+}
+stable class AddToCollection {
+  stable val collectionId: String
+  <runtime stability> = Stable
+}
+stable class CollectionListPresenter {
+  stable val screen: CollectionListScreen
+  stable val navigator: Navigator
+  unstable val appPreferences: AppPreferences
+  runtime val getAllCollections: GetAllCollections
+  runtime val createCollection: CreateCollection
+  unstable val collectionRepository: CollectionRepository
+  <runtime stability> = Stable
+}
+stable class CollectionsListUiState {
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val showLocal: Boolean
+  stable val showRemote: Boolean
+  stable val sortOption: CollectionSortOption
+  stable val selectionState: SelectionState
+  runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
+  stable val lazyListState: LazyListState
+  runtime val firstActionableResult: ActionableResult?
+  runtime val secondActionableResult: ActionableResult?
+  stable val eventSink: Function1<CollectionsListUiEvent, Unit>
+  unstable val suspendEventSink: SuspendFunction1<SuspendCollectionsListUiEvent, Unit>
+}
+stable class UpdateShowLocal {
+  stable val show: Boolean
+  <runtime stability> = Stable
+}
+stable class UpdateShowRemote {
+  stable val show: Boolean
+  <runtime stability> = Stable
+}
+stable class UpdateSortOption {
+  stable val sortOption: CollectionSortOption
+  <runtime stability> = Stable
+}
+stable class CreateNewCollection {
+  runtime val newCollection: NewCollection
+  <runtime stability> = Stable
+}
+stable class GoToCollection {
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class MarkSelectedItemsAsDeleted {
+  <runtime stability> = Stable
+}
+stable class UnMarkItemsAsDeleted {
+  <runtime stability> = Stable
+}
+stable class DeleteItemsMarkedAsDeleted {
+  <runtime stability> = Stable
+}
+stable class CollectionPresenter {
+  stable val screen: CollectionScreen
+  stable val navigator: Navigator
+  runtime val getCollection: GetCollection
+  unstable val incrementLookupHistory: IncrementLookupHistory
+  stable val loginPresenter: LoginPresenter
+  stable val allEntitiesListPresenter: AllEntitiesListPresenter
+  unstable val getMusicBrainzUrl: GetMusicBrainzUrl
+  unstable val collectionRepository: CollectionRepository
+  <runtime stability> = Stable
+}
+stable class CollectionUiState {
+  stable val title: String
+  runtime val collection: CollectionListItemModel?
+  runtime val firstActionableResult: ActionableResult?
+  runtime val secondActionableResult: ActionableResult?
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val url: String
+  stable val selectionState: SelectionState
+  stable val loginUiState: LoginUiState
+  stable val allEntitiesListUiState: AllEntitiesListUiState
+  stable val eventSink: Function1<CollectionUiEvent, Unit>
+  unstable val suspendEventSink: SuspendFunction1<SuspendCollectionUiEvent, Unit>
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class MarkSelectedItemsAsDeleted {
+  <runtime stability> = Stable
+}
+stable class UnMarkItemsAsDeleted {
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntity
+  stable val id: String
+  stable val title: String?
+  <runtime stability> = Stable
+}
+stable class DeleteItemsMarkedAsDeleted {
+  <runtime stability> = Stable
+}

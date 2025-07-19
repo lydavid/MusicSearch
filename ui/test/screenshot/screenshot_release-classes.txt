@@ -1,6 +1,0 @@
-unstable class ScreenshotTest {
-  stable val isFullScreen: Boolean
-  stable var nightMode: NightMode
-  unstable val paparazzi$delegate: Lazy<Paparazzi>
-  <runtime stability> = Unstable
-}
