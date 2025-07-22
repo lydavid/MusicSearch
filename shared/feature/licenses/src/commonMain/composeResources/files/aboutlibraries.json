@@ -1286,7 +1286,7 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "3.11.0",
+            "artifactVersion": "3.15.0",
             "description": "A modern I/O library for Android, Java, and Kotlin Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/square/okio.git",
@@ -1355,7 +1355,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.2.0",
+            "artifactVersion": "3.3.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
