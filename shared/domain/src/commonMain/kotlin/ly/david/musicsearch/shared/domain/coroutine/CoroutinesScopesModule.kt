@@ -1,11 +1,10 @@
-package ly.david.musicsearch.core.coroutines.di
+package ly.david.musicsearch.shared.domain.coroutine
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import org.koin.dsl.module
 
-val coroutinesScopesModule = module {
+internal val coroutinesScopesModule = module {
     single<CoroutineScope> {
         CoroutineScope(SupervisorJob() + get<CoroutineDispatchers>().default)
     }

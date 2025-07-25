@@ -72,7 +72,6 @@ kotlin {
                 implementation(libs.robolectric)
                 implementation(libs.androidx.paging.testing)
                 implementation(libs.koin.test)
-                implementation(projects.core.coroutines)
                 implementation(libs.kotlin.test)
                 implementation(libs.kotlinx.coroutines.test)
             }

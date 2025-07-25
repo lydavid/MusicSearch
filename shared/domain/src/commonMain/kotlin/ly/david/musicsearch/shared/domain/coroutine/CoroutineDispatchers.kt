@@ -1,4 +1,4 @@
-package ly.david.musicsearch.core.coroutines
+package ly.david.musicsearch.shared.domain.coroutine
 
 import kotlin.coroutines.CoroutineContext
 

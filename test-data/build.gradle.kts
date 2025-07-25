@@ -7,7 +7,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.shared.domain)
-                implementation(projects.core.coroutines)
                 implementation(projects.data.database)
                 implementation(projects.data.musicbrainz)
                 implementation(projects.data.coverart)

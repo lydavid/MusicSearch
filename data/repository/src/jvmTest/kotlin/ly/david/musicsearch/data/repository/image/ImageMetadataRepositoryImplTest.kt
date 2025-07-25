@@ -8,7 +8,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import ly.david.data.test.KoinTestRule
-import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.coverart.api.CoverArtUrls
 import ly.david.musicsearch.data.coverart.api.ThumbnailsUrls
 import ly.david.musicsearch.data.database.dao.AreaDao

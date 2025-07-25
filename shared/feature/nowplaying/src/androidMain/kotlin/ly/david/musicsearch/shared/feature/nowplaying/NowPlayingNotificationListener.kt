@@ -3,8 +3,10 @@ package ly.david.musicsearch.shared.feature.nowplaying
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.NowPlayingHistory
 import ly.david.musicsearch.shared.domain.nowplaying.NowPlayingHistoryRepository
 import org.koin.core.component.KoinComponent
@@ -15,7 +17,8 @@ private const val ANDROID_TITLE_KEY = "android.title"
 
 class NowPlayingNotificationListener : NotificationListenerService(), KoinComponent {
 
-    private val coroutineScope: CoroutineScope by inject()
+    private val coroutineDispatchers: CoroutineDispatchers by inject()
+    private val coroutineScope = CoroutineScope(SupervisorJob() + coroutineDispatchers.io)
     private val nowPlayingHistoryRepository: NowPlayingHistoryRepository by inject()
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {

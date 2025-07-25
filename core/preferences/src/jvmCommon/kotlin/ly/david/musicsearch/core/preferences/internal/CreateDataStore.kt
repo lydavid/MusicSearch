@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import java.io.File
 
 

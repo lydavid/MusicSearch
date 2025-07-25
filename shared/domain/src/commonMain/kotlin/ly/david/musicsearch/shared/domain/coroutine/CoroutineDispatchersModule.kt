@@ -1,12 +1,11 @@
-package ly.david.musicsearch.core.coroutines.di
+package ly.david.musicsearch.shared.domain.coroutine
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import org.koin.dsl.module
 
-val coroutineDispatchersModule = module {
-    factory {
+internal val coroutineDispatchersModule = module {
+    single<CoroutineDispatchers> {
         CoroutineDispatchers(
             default = Dispatchers.Default,
             io = Dispatchers.IO,

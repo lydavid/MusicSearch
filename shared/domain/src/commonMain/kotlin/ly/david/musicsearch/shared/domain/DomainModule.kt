@@ -4,6 +4,8 @@ import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCoun
 import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
+import ly.david.musicsearch.shared.domain.coroutine.coroutineDispatchersModule
+import ly.david.musicsearch.shared.domain.coroutine.coroutinesScopesModule
 import ly.david.musicsearch.shared.domain.history.usecase.DeleteLookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.DeleteLookupHistoryImpl
 import ly.david.musicsearch.shared.domain.history.usecase.GetPagedHistory
@@ -36,6 +38,11 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val domainModule = module {
+    includes(
+        coroutinesScopesModule,
+        coroutineDispatchersModule,
+    )
+
     singleOf(::GetEntitiesImpl) bind GetEntities::class
     singleOf(::ObserveBrowseEntityCount)
     singleOf(::CreateCollection)

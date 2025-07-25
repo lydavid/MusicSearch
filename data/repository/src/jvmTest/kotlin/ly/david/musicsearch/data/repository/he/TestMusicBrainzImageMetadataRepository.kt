@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.he
 
 import kotlinx.coroutines.test.TestScope
 import ly.david.data.test.api.NoOpCoverArtArchiveApi
-import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtUrls
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse

@@ -14,7 +14,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.core.coroutines)
                 implementation(projects.core.logging.implementation)
                 implementation(projects.shared.domain)
                 implementation(projects.core.preferences)

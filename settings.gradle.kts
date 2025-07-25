@@ -47,7 +47,6 @@ include(
     ":shared:feature:nowplaying",
     ":shared:feature:spotify",
     ":desktop:app",
-    ":core:coroutines",
     ":core:logging:api",
     ":core:logging:implementation",
     ":core:preferences",

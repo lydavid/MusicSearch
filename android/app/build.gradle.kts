@@ -93,7 +93,6 @@ android {
 dependencies {
     implementation(projects.shared.feature.nowplaying)
     implementation(projects.shared.feature.spotify)
-    implementation(projects.core.coroutines)
     implementation(projects.core.logging.api)
     implementation(projects.shared.domain)
     implementation(projects.shared)

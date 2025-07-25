@@ -1,8 +1,6 @@
 package ly.david.musicsearch.shared.di
 
 import com.slack.circuit.foundation.Circuit
-import ly.david.musicsearch.core.coroutines.di.coroutineDispatchersModule
-import ly.david.musicsearch.core.coroutines.di.coroutinesScopesModule
 import ly.david.musicsearch.core.logging.loggingModule
 import ly.david.musicsearch.core.preferences.di.appPreferencesModule
 import ly.david.musicsearch.core.preferences.di.preferencesDataStoreModule
@@ -61,7 +59,6 @@ val circuitModule = module {
 val sharedModule: Module = module {
     includes(
         platformModule,
-        coroutinesScopesModule,
         loggingModule,
         musicBrainzAuthModule,
         HttpClientModule,
@@ -72,7 +69,6 @@ val sharedModule: Module = module {
         databaseModule,
         databaseDaoModule,
         stringsModule,
-        coroutineDispatchersModule,
         coverArtModule,
         spotifyApiModule,
         wikimediaModule,

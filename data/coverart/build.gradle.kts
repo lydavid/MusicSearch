@@ -9,7 +9,6 @@ kotlin {
             dependencies {
                 implementation(projects.shared.domain)
                 implementation(projects.core.logging.api)
-                implementation(projects.core.coroutines)
                 implementation(libs.koin.core)
                 implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client.core)

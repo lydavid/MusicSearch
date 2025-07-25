@@ -5,7 +5,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.data.test.zutomayoArtistMusicBrainzNetworkModel
-import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.coverart.api.CoverArtUrls
 import ly.david.musicsearch.data.coverart.api.ThumbnailsUrls
 import ly.david.musicsearch.data.database.dao.AreaDao
