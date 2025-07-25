@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.nowplaying
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.history.NowPlayingHistory
 import ly.david.musicsearch.shared.domain.nowplaying.NowPlayingHistoryRepository
@@ -33,5 +34,10 @@ class NowPlayingNotificationListener : NotificationListenerService(), KoinCompon
                 )
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        coroutineScope.cancel()
     }
 }
