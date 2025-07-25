@@ -3,9 +3,11 @@ package ly.david.musicsearch.ui.common.musicbrainz
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalUriHandler
+import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.auth.Login
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthorizationUrl
 
@@ -17,6 +19,7 @@ internal class LoginPresenterImpl(
     override fun present(): LoginUiState {
         val uriHandler = LocalUriHandler.current
         var showDialog by rememberSaveable { mutableStateOf(false) }
+        val coroutineScope = rememberCoroutineScope()
 
         fun eventSink(event: LoginUiEvent) {
             when (event) {
@@ -34,7 +37,9 @@ internal class LoginPresenterImpl(
                 }
 
                 is LoginUiEvent.SubmitAuthCode -> {
-                    login(event.authCode)
+                    coroutineScope.launch {
+                        login(event.authCode)
+                    }
                 }
             }
         }
