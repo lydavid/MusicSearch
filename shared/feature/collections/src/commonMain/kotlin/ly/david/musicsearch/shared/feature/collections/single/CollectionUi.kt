@@ -61,7 +61,6 @@ internal fun CollectionUi(
     val collection = state.collection
     val entity = collection?.entity
     val eventSink = state.eventSink
-    val suspendEventSink = state.suspendEventSink
     val loginEventSink = state.loginUiState.eventSink
     val releasesEventSink = state.allEntitiesListUiState.releasesListUiState.eventSink
     val releaseGroupsEventSink = state.allEntitiesListUiState.releaseGroupsListUiState.eventSink
@@ -129,11 +128,11 @@ internal fun CollectionUi(
                     }
 
                     SnackbarResult.Dismissed -> {
-                        suspendEventSink(SuspendCollectionUiEvent.DeleteItemsMarkedAsDeleted)
+                        eventSink(CollectionUiEvent.DeleteItemsMarkedAsDeleted)
                     }
                 }
             } catch (_: CancellationException) {
-                suspendEventSink(SuspendCollectionUiEvent.DeleteItemsMarkedAsDeleted)
+                eventSink(CollectionUiEvent.DeleteItemsMarkedAsDeleted)
             }
         }
     }

@@ -112,7 +112,6 @@ internal fun CollectionListUi(
 ) {
     val strings = LocalStrings.current
     val eventSink = state.eventSink
-    val suspendEventSink = state.suspendEventSink
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -132,11 +131,11 @@ internal fun CollectionListUi(
                     }
 
                     SnackbarResult.Dismissed -> {
-                        suspendEventSink(SuspendCollectionsListUiEvent.DeleteItemsMarkedAsDeleted)
+                        eventSink(CollectionsListUiEvent.DeleteItemsMarkedAsDeleted)
                     }
                 }
             } catch (_: CancellationException) {
-                suspendEventSink(SuspendCollectionsListUiEvent.DeleteItemsMarkedAsDeleted)
+                eventSink(CollectionsListUiEvent.DeleteItemsMarkedAsDeleted)
             }
         }
     }

@@ -29,6 +29,7 @@ val collectionsFeatureModule = module {
                     getAllCollections = get(),
                     createCollection = get(),
                     collectionRepository = get(),
+                    externalScope = get(),
                 )
 
                 is CollectionScreen -> CollectionPresenter(
@@ -40,6 +41,7 @@ val collectionsFeatureModule = module {
                     allEntitiesListPresenter = get(),
                     getMusicBrainzUrl = get(),
                     collectionRepository = get(),
+                    externalScope = get(),
                 )
 
                 is AddToCollectionScreen -> AddToCollectionPresenter(

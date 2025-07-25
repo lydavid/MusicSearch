@@ -17,6 +17,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.collection.CreateNewCollectionResult
@@ -40,6 +42,7 @@ internal class CollectionListPresenter(
     private val getAllCollections: GetAllCollections,
     private val createCollection: CreateCollection,
     private val collectionRepository: CollectionRepository,
+    private val externalScope: CoroutineScope,
 ) : Presenter<CollectionsListUiState> {
     @Composable
     override fun present(): CollectionsListUiState {
@@ -133,14 +136,11 @@ internal class CollectionListPresenter(
                 CollectionsListUiEvent.UnMarkItemsAsDeleted -> {
                     collectionRepository.unMarkDeletedCollections()
                 }
-            }
-        }
 
-        suspend fun suspendEventSink(event: SuspendCollectionsListUiEvent) {
-            when (event) {
-                is SuspendCollectionsListUiEvent.DeleteItemsMarkedAsDeleted -> {
-                    // We cannot launch a new scope if we want to run this as part of the cancellation of the parent scope.
-                    secondActionableResult = collectionRepository.deleteCollectionsMarkedForDeletion()
+                is CollectionsListUiEvent.DeleteItemsMarkedAsDeleted -> {
+                    externalScope.launch {
+                        secondActionableResult = collectionRepository.deleteCollectionsMarkedForDeletion()
+                    }
                 }
             }
         }
@@ -156,7 +156,6 @@ internal class CollectionListPresenter(
             firstActionableResult = firstActionableResult,
             secondActionableResult = secondActionableResult,
             eventSink = ::eventSink,
-            suspendEventSink = ::suspendEventSink,
         )
     }
 }
@@ -173,7 +172,6 @@ internal data class CollectionsListUiState(
     val firstActionableResult: ActionableResult? = null,
     val secondActionableResult: ActionableResult? = null,
     val eventSink: (CollectionsListUiEvent) -> Unit = {},
-    val suspendEventSink: suspend (SuspendCollectionsListUiEvent) -> Unit = {},
 ) : CircuitUiState
 
 internal sealed interface CollectionsListUiEvent : CircuitUiEvent {
@@ -187,8 +185,5 @@ internal sealed interface CollectionsListUiEvent : CircuitUiEvent {
 
     data object MarkSelectedItemsAsDeleted : CollectionsListUiEvent
     data object UnMarkItemsAsDeleted : CollectionsListUiEvent
-}
-
-internal sealed interface SuspendCollectionsListUiEvent : CircuitUiEvent {
-    data object DeleteItemsMarkedAsDeleted : SuspendCollectionsListUiEvent
+    data object DeleteItemsMarkedAsDeleted : CollectionsListUiEvent
 }

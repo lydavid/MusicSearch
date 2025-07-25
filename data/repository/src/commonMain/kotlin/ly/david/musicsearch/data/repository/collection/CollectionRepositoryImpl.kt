@@ -3,9 +3,7 @@ package ly.david.musicsearch.data.repository.collection
 import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.Pager
 import app.cash.paging.PagingData
-import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
@@ -144,18 +142,13 @@ class CollectionRepositoryImpl(
         val idsMarkedForDeletion = collectionEntityDao.getIdsMarkedForDeletionFromCollection(collection.id)
         if (collection.isRemote) {
             try {
-                // This is to ensure clean up of any collectibles marked as deleted when the user navigates away.
-                // But it is still possible to have leftover collectibles marked as deleted if the user kills the app
-                // before this is run. Refreshing will fix this faulty experience.
-                withContext(NonCancellable) {
-                    // TODO: handle deleting more than 400 items at a time
-                    //  https://musicbrainz.org/doc/MusicBrainz_API#collections
-                    collectionApi.deleteFromCollection(
-                        collectionId = collection.id,
-                        resourceUriPlural = collection.entity.resourceUriPlural,
-                        mbids = idsMarkedForDeletion,
-                    )
-                }
+                // TODO: handle deleting more than 400 items at a time
+                //  https://musicbrainz.org/doc/MusicBrainz_API#collections
+                collectionApi.deleteFromCollection(
+                    collectionId = collection.id,
+                    resourceUriPlural = collection.entity.resourceUriPlural,
+                    mbids = idsMarkedForDeletion,
+                )
             } catch (ex: HandledException) {
                 val userFacingError = "Failed to delete from collection ${collection.name}. ${ex.userMessage}"
                 return ActionableResult(

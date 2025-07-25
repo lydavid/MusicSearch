@@ -15,6 +15,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
@@ -47,6 +49,7 @@ internal class CollectionPresenter(
     private val allEntitiesListPresenter: AllEntitiesListPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
     private val collectionRepository: CollectionRepository,
+    private val externalScope: CoroutineScope,
 ) : Presenter<CollectionUiState>, RecordVisit {
 
     @Suppress("CyclomaticComplexMethod")
@@ -145,16 +148,13 @@ internal class CollectionPresenter(
                         collectionId = collection?.id ?: return,
                     )
                 }
-            }
-        }
 
-        suspend fun suspendEventSink(event: SuspendCollectionUiEvent) {
-            when (event) {
-                is SuspendCollectionUiEvent.DeleteItemsMarkedAsDeleted -> {
-                    // We cannot launch a new scope if we want to run this as part of the cancellation of the parent scope.
-                    secondActionableResult = collectionRepository.deleteFromCollection(
-                        collection = collection ?: return,
-                    )
+                is CollectionUiEvent.DeleteItemsMarkedAsDeleted -> {
+                    externalScope.launch {
+                        secondActionableResult = collectionRepository.deleteFromCollection(
+                            collection = collection ?: return@launch,
+                        )
+                    }
                 }
             }
         }
@@ -170,7 +170,6 @@ internal class CollectionPresenter(
             loginUiState = loginUiState,
             allEntitiesListUiState = entitiesListUiState,
             eventSink = ::eventSink,
-            suspendEventSink = ::suspendEventSink,
         )
     }
 }
@@ -187,7 +186,6 @@ internal data class CollectionUiState(
     val loginUiState: LoginUiState,
     val allEntitiesListUiState: AllEntitiesListUiState,
     val eventSink: (CollectionUiEvent) -> Unit,
-    val suspendEventSink: suspend (SuspendCollectionUiEvent) -> Unit,
 ) : CircuitUiState
 
 internal sealed interface CollectionUiEvent : CircuitUiEvent {
@@ -202,8 +200,6 @@ internal sealed interface CollectionUiEvent : CircuitUiEvent {
         val id: String,
         val title: String?,
     ) : CollectionUiEvent
-}
 
-internal sealed interface SuspendCollectionUiEvent : CircuitUiEvent {
-    data object DeleteItemsMarkedAsDeleted : SuspendCollectionUiEvent
+    data object DeleteItemsMarkedAsDeleted : CollectionUiEvent
 }
