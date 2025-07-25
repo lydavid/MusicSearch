@@ -2,11 +2,11 @@ package ly.david.musicsearch.data.repository.he
 
 import kotlinx.coroutines.test.TestScope
 import ly.david.data.test.api.NoOpCoverArtArchiveApi
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtUrls
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
 import ly.david.musicsearch.data.repository.image.MusicBrainzImageMetadataRepositoryImpl
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -41,6 +41,7 @@ interface TestMusicBrainzImageMetadataRepository {
                 }
             },
             coroutineScope = TestScope(coroutineDispatchers.io),
+            coroutineDispatchers = coroutineDispatchers,
         )
     }
 }

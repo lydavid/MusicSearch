@@ -17,6 +17,7 @@ import kotlinx.datetime.Clock
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
@@ -36,6 +37,7 @@ internal class MusicBrainzImageMetadataRepositoryImpl(
     private val imageUrlDao: ImageUrlDao,
     private val logger: Logger,
     private val coroutineScope: CoroutineScope,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : MusicBrainzImageMetadataRepository {
 
     override suspend fun getAndSaveImageMetadata(
@@ -121,7 +123,7 @@ internal class MusicBrainzImageMetadataRepositoryImpl(
         }
 
         saveImageMetadataJob?.cancel()
-        val newJob = coroutineScope.launch {
+        val newJob = CoroutineScope(coroutineDispatchers.io).launch {
             val shouldBatch = itemsCount > THRESHOLD_TO_BATCH_WRITES
             val isReadyToSave = !shouldBatch ||
                 mbidToImageMetadataMap.size >= MAX_BATCH_SIZE ||
