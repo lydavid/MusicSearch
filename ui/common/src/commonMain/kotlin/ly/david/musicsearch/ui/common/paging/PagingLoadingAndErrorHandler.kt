@@ -1,7 +1,6 @@
 package ly.david.musicsearch.ui.common.paging
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,12 +10,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import app.cash.paging.LoadStateError
@@ -45,7 +42,7 @@ import ly.david.musicsearch.ui.common.theme.LocalStrings
  *
  *  @param itemContent Composable UI for each [lazyPagingItems].
  */
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     lazyPagingItems: LazyPagingItems<T>,
@@ -59,14 +56,14 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     val noResultsText = customNoResultsText.ifEmpty {
         strings.noResultsFound
     }
-    val refreshing = lazyPagingItems.loadState.refresh == LoadStateLoading
-    val refreshState = rememberPullRefreshState(
-        refreshing = refreshing,
-        onRefresh = lazyPagingItems::refresh,
-    )
+    val isRefreshing = lazyPagingItems.loadState.refresh == LoadStateLoading
+    val refreshState = rememberPullToRefreshState()
 
-    Box(
-        modifier = modifier.pullRefresh(refreshState),
+    PullToRefreshBox(
+        modifier = modifier,
+        state = refreshState,
+        isRefreshing = isRefreshing,
+        onRefresh = lazyPagingItems::refresh,
     ) {
         // This doesn't affect "loads" from db/source.
         when {
@@ -135,12 +132,5 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
                 }
             }
         }
-
-        PullRefreshIndicator(
-            refreshing = refreshing,
-            state = refreshState,
-            modifier = Modifier
-                .align(Alignment.TopCenter),
-        )
     }
 }

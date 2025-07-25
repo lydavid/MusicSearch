@@ -1,12 +1,9 @@
 package ly.david.musicsearch.ui.common.fullscreen
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.error.HandledException
 
@@ -15,7 +12,7 @@ import ly.david.musicsearch.shared.domain.error.HandledException
  * handling errors when [handledException] is not null, and delegating retry with [onRefresh].
  * Supports pull to refresh, delegating to [onRefresh].
  */
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> DetailsWithErrorHandling(
     detailsModel: T?,
@@ -25,12 +22,12 @@ fun <T> DetailsWithErrorHandling(
     handledException: HandledException? = null,
     detailsScreen: @Composable ((T) -> Unit),
 ) {
-    val refreshState = rememberPullRefreshState(
-        refreshing = isLoading,
-        onRefresh = { onRefresh() },
-    )
-    Box(
-        modifier = modifier.pullRefresh(refreshState),
+    val refreshState = rememberPullToRefreshState()
+    PullToRefreshBox(
+        modifier = modifier,
+        state = refreshState,
+        isRefreshing = isLoading,
+        onRefresh = onRefresh,
     ) {
         when {
             handledException != null -> {
@@ -46,13 +43,6 @@ fun <T> DetailsWithErrorHandling(
 
             else -> {
                 detailsScreen(detailsModel)
-
-                PullRefreshIndicator(
-                    refreshing = isLoading,
-                    state = refreshState,
-                    modifier = Modifier
-                        .align(Alignment.TopCenter),
-                )
             }
         }
     }
