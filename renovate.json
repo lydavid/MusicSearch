@@ -27,8 +27,8 @@
       ]
     },
     {
-      "matchPackageNames": ["semantic-release"],
-      "allowedVersions": ">24.2.4"
+      "matchPackageNames": ["org.jetbrains.compose"],
+      "allowedVersions": ">1.9.0-beta01"
     }
   ]
 }
