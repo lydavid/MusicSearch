@@ -80,7 +80,7 @@ SELECT IFNULL(
     SELECT COUNT(DISTINCT artist.id)
     FROM artists_by_entity ae
     INNER JOIN artist ON artist.id = ae.artist_id
-    LEFT JOIN alias ON artist.id = alias.mbid
+    LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id
     WHERE ae.entity_id = :entityId
     AND (
       artist.name LIKE :query OR
@@ -89,7 +89,7 @@ SELECT IFNULL(
       artist.type LIKE :query OR
       artist.gender LIKE :query OR
       artist.country_code LIKE :query OR
-      alias.name LIKE :query
+      artist_alias.name LIKE :query
     )
   ),
   0
@@ -115,7 +115,7 @@ SELECT
   ) AS collected
 FROM artists_by_entity ae
 INNER JOIN artist ON artist.id = ae.artist_id
-LEFT JOIN alias ON artist.id = alias.mbid
+LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id
 LEFT JOIN mbid_image mi ON mi.mbid = artist.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = artist.id
 WHERE ae.entity_id = :entityId
@@ -126,7 +126,7 @@ AND (
   artist.type LIKE :query OR
   artist.gender LIKE :query OR
   artist.country_code LIKE :query OR
-  alias.name LIKE :query
+  artist_alias.name LIKE :query
 )
 GROUP BY artist.id
 LIMIT :limit OFFSET :offset;
@@ -140,7 +140,7 @@ SELECT IFNULL(
     FROM artist
     INNER JOIN collection_entity ce ON artist.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN alias ON artist.id = alias.mbid
+    LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
@@ -174,7 +174,7 @@ SELECT
 FROM artist
 INNER JOIN collection_entity ce ON artist.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN alias ON artist.id = alias.mbid
+LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id
 LEFT JOIN mbid_image mi ON mi.mbid = artist.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = artist.id
 WHERE c.id = :collectionId
@@ -186,7 +186,7 @@ AND (
   artist.type LIKE :query OR
   artist.gender LIKE :query OR
   artist.country_code LIKE :query OR
-  alias.name LIKE :query
+  artist_alias.name LIKE :query
 )
 GROUP BY artist.id
 ORDER BY artist.`begin`, artist.`end`, artist.name
@@ -199,7 +199,7 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT artist.id)
     FROM artist
-    LEFT JOIN alias ON artist.id = alias.mbid
+    LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id
     WHERE (
       artist.name LIKE :query OR
       artist.disambiguation LIKE :query OR
@@ -207,7 +207,7 @@ SELECT IFNULL(
       artist.type LIKE :query OR
       artist.gender LIKE :query OR
       artist.country_code LIKE :query OR
-      alias.name LIKE :query
+      artist_alias.name LIKE :query
     )
   ),
   0
@@ -232,7 +232,7 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = artist.id
   ) AS collected
 FROM artist
-LEFT JOIN alias ON artist.id = alias.mbid
+LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id
 LEFT JOIN mbid_image mi ON mi.mbid = artist.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = artist.id
 WHERE (
@@ -242,7 +242,7 @@ WHERE (
   artist.type LIKE :query OR
   artist.gender LIKE :query OR
   artist.country_code LIKE :query OR
-  alias.name LIKE :query
+  artist_alias.name LIKE :query
 )
 GROUP BY artist.id
 ORDER BY artist.`begin`, artist.`end`, artist.name

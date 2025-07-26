@@ -66,7 +66,7 @@ SELECT IFNULL(
     INNER JOIN release_groups_by_entity ON release_group.id = release_groups_by_entity.release_group_id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-    LEFT JOIN alias ON release_group.id = alias.mbid
+    LEFT JOIN release_group_alias ON release_group.id = release_group_alias.release_group_id
     WHERE release_groups_by_entity.entity_id = :entityId
     AND (
       release_group.name LIKE :query OR
@@ -75,7 +75,7 @@ SELECT IFNULL(
       release_group.primary_type LIKE :query OR
       release_group.secondary_types LIKE :query OR
       ac.name LIKE :query OR
-      alias.name LIKE :query
+      release_group_alias.name LIKE :query
     )
   ),
   0
@@ -120,7 +120,7 @@ FROM release_group
 INNER JOIN release_groups_by_entity ON release_group.id = release_groups_by_entity.release_group_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN alias ON release_group.id = alias.mbid
+LEFT JOIN release_group_alias ON release_group.id = release_group_alias.release_group_id
 LEFT JOIN mbid_image mi ON mi.mbid = release_group.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = release_group.id
 WHERE release_groups_by_entity.entity_id = :entityId
@@ -131,7 +131,7 @@ AND (
   release_group.primary_type LIKE :query OR
   release_group.secondary_types LIKE :query OR
   ac.name LIKE :query OR
-  alias.name LIKE :query
+  release_group_alias.name LIKE :query
 )
 GROUP BY release_group.id
 ORDER BY
@@ -151,7 +151,7 @@ SELECT IFNULL(
     INNER JOIN collection c ON c.id = ce.id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-    LEFT JOIN alias ON release_group.id = alias.mbid
+    LEFT JOIN release_group_alias ON release_group.id = release_group_alias.release_group_id
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
@@ -161,7 +161,7 @@ SELECT IFNULL(
       release_group.primary_type LIKE :query OR
       release_group.secondary_types LIKE :query OR
       ac.name LIKE :query OR
-      alias.name LIKE :query
+      release_group_alias.name LIKE :query
     )
   ),
   0
@@ -185,7 +185,7 @@ INNER JOIN collection_entity ce ON release_group.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN alias ON release_group.id = alias.mbid
+LEFT JOIN release_group_alias ON release_group.id = release_group_alias.release_group_id
 LEFT JOIN mbid_image mi ON mi.mbid = release_group.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = release_group.id
 WHERE c.id = :collectionId
@@ -197,7 +197,7 @@ AND (
   release_group.primary_type LIKE :query OR
   release_group.secondary_types LIKE :query OR
   ac.name LIKE :query OR
-  alias.name LIKE :query
+  release_group_alias.name LIKE :query
 )
 GROUP BY release_group.id
 ORDER BY
@@ -215,7 +215,7 @@ SELECT IFNULL(
     FROM release_group release_group
     INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-    LEFT JOIN alias ON release_group.id = alias.mbid
+    LEFT JOIN release_group_alias ON release_group.id = release_group_alias.release_group_id
     WHERE (
       release_group.name LIKE :query OR
       release_group.disambiguation LIKE :query OR
@@ -223,7 +223,7 @@ SELECT IFNULL(
       release_group.primary_type LIKE :query OR
       release_group.secondary_types LIKE :query OR
       ac.name LIKE :query OR
-      alias.name LIKE :query
+      release_group_alias.name LIKE :query
     )
   ),
   0
@@ -247,7 +247,7 @@ SELECT
 FROM release_group
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN alias ON release_group.id = alias.mbid
+LEFT JOIN release_group_alias ON release_group.id = release_group_alias.release_group_id
 LEFT JOIN mbid_image mi ON mi.mbid = release_group.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = release_group.id
 WHERE (
@@ -257,7 +257,7 @@ WHERE (
   release_group.primary_type LIKE :query OR
   release_group.secondary_types LIKE :query OR
   ac.name LIKE :query OR
-  alias.name LIKE :query
+  release_group_alias.name LIKE :query
 )
 GROUP BY release_group.id
 ORDER BY

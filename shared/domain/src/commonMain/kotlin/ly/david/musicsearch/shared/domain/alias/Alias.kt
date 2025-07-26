@@ -7,4 +7,5 @@ interface Alias {
     val typeId: String?
     val beginDate: String?
     val endDate: String?
+    val ended: Boolean?
 }

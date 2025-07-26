@@ -36,7 +36,7 @@ SELECT IFNULL(
     FROM instrument
     INNER JOIN collection_entity ce ON instrument.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN alias ON instrument.id = alias.mbid
+    LEFT JOIN instrument_alias ON instrument.id = instrument_alias.instrument_id
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
@@ -44,7 +44,7 @@ SELECT IFNULL(
       instrument.disambiguation LIKE :query OR
       instrument.type LIKE :query OR
       instrument.description LIKE :query OR
-      alias.name LIKE :query
+      instrument_alias.name LIKE :query
     )
   ),
   0
@@ -62,7 +62,7 @@ SELECT
 FROM instrument
 INNER JOIN collection_entity ce ON instrument.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN alias ON instrument.id = alias.mbid
+LEFT JOIN instrument_alias ON instrument.id = instrument_alias.instrument_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = instrument.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
@@ -71,7 +71,7 @@ AND (
   instrument.disambiguation LIKE :query OR
   instrument.type LIKE :query OR
   instrument.description LIKE :query OR
-  alias.name LIKE :query
+  instrument_alias.name LIKE :query
 )
 GROUP BY instrument.id
 LIMIT :limit OFFSET :offset;
@@ -83,13 +83,13 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT instrument.id)
     FROM instrument
-    LEFT JOIN alias ON instrument.id = alias.mbid
+    LEFT JOIN instrument_alias ON instrument.id = instrument_alias.instrument_id
     WHERE (
       instrument.name LIKE :query OR
       instrument.disambiguation LIKE :query OR
       instrument.type LIKE :query OR
       instrument.description LIKE :query OR
-      alias.name LIKE :query
+      instrument_alias.name LIKE :query
     )
   ),
   0
@@ -107,14 +107,14 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = instrument.id
   ) AS collected
 FROM instrument
-LEFT JOIN alias ON instrument.id = alias.mbid
+LEFT JOIN instrument_alias ON instrument.id = instrument_alias.instrument_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = instrument.id
 WHERE (
   instrument.name LIKE :query OR
   instrument.disambiguation LIKE :query OR
   instrument.type LIKE :query OR
   instrument.description LIKE :query OR
-  alias.name LIKE :query
+  instrument_alias.name LIKE :query
 )
 GROUP BY instrument.id
 LIMIT :limit OFFSET :offset;

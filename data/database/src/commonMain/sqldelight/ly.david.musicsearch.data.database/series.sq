@@ -34,14 +34,14 @@ SELECT IFNULL(
     FROM series
     INNER JOIN collection_entity ce ON series.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN alias ON series.id = alias.mbid
+    LEFT JOIN series_alias ON series.id = series_alias.series_id
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
       series.name LIKE :query OR
       series.disambiguation LIKE :query OR
       series.type LIKE :query OR
-      alias.name LIKE :query
+      series_alias.name LIKE :query
     )
   ),
   0
@@ -58,7 +58,7 @@ SELECT
 FROM series
 INNER JOIN collection_entity ce ON series.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN alias ON series.id = alias.mbid
+LEFT JOIN series_alias ON series.id = series_alias.series_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = series.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
@@ -66,7 +66,7 @@ AND (
   series.name LIKE :query OR
   series.disambiguation LIKE :query OR
   series.type LIKE :query OR
-  alias.name LIKE :query
+  series_alias.name LIKE :query
 )
 GROUP BY series.id
 LIMIT :limit OFFSET :offset;
@@ -78,12 +78,12 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT series.id)
     FROM series
-    LEFT JOIN alias ON series.id = alias.mbid
+    LEFT JOIN series_alias ON series.id = series_alias.series_id
     WHERE (
       series.name LIKE :query OR
       series.disambiguation LIKE :query OR
       series.type LIKE :query OR
-      alias.name LIKE :query
+      series_alias.name LIKE :query
     )
   ),
   0
@@ -100,13 +100,13 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = series.id
   ) AS collected
 FROM series
-LEFT JOIN alias ON series.id = alias.mbid
+LEFT JOIN series_alias ON series.id = series_alias.series_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = series.id
 WHERE (
   series.name LIKE :query OR
   series.disambiguation LIKE :query OR
   series.type LIKE :query OR
-  alias.name LIKE :query
+  series_alias.name LIKE :query
 )
 GROUP BY series.id
 LIMIT :limit OFFSET :offset;

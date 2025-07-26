@@ -78,7 +78,7 @@ SELECT IFNULL(
     SELECT COUNT(DISTINCT work.id)
     FROM works_by_entity we
     INNER JOIN work ON work.id = we.work_id
-    LEFT JOIN alias ON work.id = alias.mbid
+    LEFT JOIN work_alias ON work.id = work_alias.work_id
     WHERE we.entity_id = :entityId
     AND (
       work.name LIKE :query OR
@@ -86,7 +86,7 @@ SELECT IFNULL(
       work.type LIKE :query OR
       work.languages LIKE :query OR
       work.iswcs LIKE :query OR
-      alias.name LIKE :query
+      work_alias.name LIKE :query
     )
   ),
   0
@@ -106,7 +106,7 @@ SELECT
   ) AS collected
 FROM works_by_entity we
 INNER JOIN work ON work.id = we.work_id
-LEFT JOIN alias ON work.id = alias.mbid
+LEFT JOIN work_alias ON work.id = work_alias.work_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = work.id
 WHERE we.entity_id = :entityId
 AND (
@@ -115,7 +115,7 @@ AND (
   work.type LIKE :query OR
   work.languages LIKE :query OR
   work.iswcs LIKE :query OR
-  alias.name LIKE :query
+  work_alias.name LIKE :query
 )
 GROUP BY work.id
 LIMIT :limit OFFSET :offset;
@@ -129,7 +129,7 @@ SELECT IFNULL(
     FROM work
     INNER JOIN collection_entity ce ON work.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN alias ON work.id = alias.mbid
+    LEFT JOIN work_alias ON work.id = work_alias.work_id
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
@@ -138,7 +138,7 @@ SELECT IFNULL(
       work.type LIKE :query OR
       work.languages LIKE :query OR
       work.iswcs LIKE :query OR
-      alias.name LIKE :query
+      work_alias.name LIKE :query
     )
   ),
   0
@@ -157,7 +157,7 @@ SELECT
 FROM work
 INNER JOIN collection_entity ce ON work.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN alias ON work.id = alias.mbid
+LEFT JOIN work_alias ON work.id = work_alias.work_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = work.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
@@ -167,7 +167,7 @@ AND (
   work.type LIKE :query OR
   work.languages LIKE :query OR
   work.iswcs LIKE :query OR
-  alias.name LIKE :query
+  work_alias.name LIKE :query
 )
 GROUP BY work.id
 LIMIT :limit OFFSET :offset;
@@ -179,14 +179,14 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT work.id)
     FROM work
-    LEFT JOIN alias ON work.id = alias.mbid
+    LEFT JOIN work_alias ON work.id = work_alias.work_id
     WHERE (
       work.name LIKE :query OR
       work.disambiguation LIKE :query OR
       work.type LIKE :query OR
       work.languages LIKE :query OR
       work.iswcs LIKE :query OR
-      alias.name LIKE :query
+      work_alias.name LIKE :query
     )
   ),
   0
@@ -205,7 +205,7 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = work.id
   ) AS collected
 FROM work
-LEFT JOIN alias ON work.id = alias.mbid
+LEFT JOIN work_alias ON work.id = work_alias.work_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = work.id
 WHERE (
   work.name LIKE :query OR
@@ -213,7 +213,7 @@ WHERE (
   work.type LIKE :query OR
   work.languages LIKE :query OR
   work.iswcs LIKE :query OR
-  alias.name LIKE :query
+  work_alias.name LIKE :query
 )
 GROUP BY work.id
 LIMIT :limit OFFSET :offset;
