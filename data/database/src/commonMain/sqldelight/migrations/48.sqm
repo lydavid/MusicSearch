@@ -1,5 +1,6 @@
 import kotlin.Boolean;
 
+-- Create new alias tables
 CREATE TABLE area_alias (
   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   area_id TEXT NOT NULL,
@@ -156,6 +157,68 @@ CREATE TABLE work_alias (
   FOREIGN KEY (work_id) REFERENCES work(id)
 );
 
+-- Migrate data from original alias table to entity-specific tables
+INSERT INTO area_alias (area_id, name, is_primary, locale, type_id, begin_date, end_date, ended)
+SELECT alias.mbid, alias.name, alias.is_primary, alias.locale, alias.type_id, alias.begin_date, alias.end_date, 0
+FROM alias
+INNER JOIN area ON area.id = alias.mbid;
+
+INSERT INTO artist_alias (artist_id, name, is_primary, locale, type_id, begin_date, end_date, ended)
+SELECT alias.mbid, alias.name, alias.is_primary, alias.locale, alias.type_id, alias.begin_date, alias.end_date, 0
+FROM alias
+INNER JOIN artist ON artist.id = alias.mbid;
+
+INSERT INTO event_alias (event_id, name, is_primary, locale, type_id, begin_date, end_date, ended)
+SELECT alias.mbid, alias.name, alias.is_primary, alias.locale, alias.type_id, alias.begin_date, alias.end_date, 0
+FROM alias
+INNER JOIN event ON event.id = alias.mbid;
+
+INSERT INTO genre_alias (genre_id, name, is_primary, locale, type_id, begin_date, end_date, ended)
+SELECT alias.mbid, alias.name, alias.is_primary, alias.locale, alias.type_id, alias.begin_date, alias.end_date, 0
+FROM alias
+INNER JOIN genre ON genre.id = alias.mbid;
+
+INSERT INTO instrument_alias (instrument_id, name, is_primary, locale, type_id, begin_date, end_date, ended)
+SELECT alias.mbid, alias.name, alias.is_primary, alias.locale, alias.type_id, alias.begin_date, alias.end_date, 0
+FROM alias
+INNER JOIN instrument ON instrument.id = alias.mbid;
+
+INSERT INTO label_alias (label_id, name, is_primary, locale, type_id, begin_date, end_date, ended)
+SELECT alias.mbid, alias.name, alias.is_primary, alias.locale, alias.type_id, alias.begin_date, alias.end_date, 0
+FROM alias
+INNER JOIN label ON label.id = alias.mbid;
+
+INSERT INTO place_alias (place_id, name, is_primary, locale, type_id, begin_date, end_date, ended)
+SELECT alias.mbid, alias.name, alias.is_primary, alias.locale, alias.type_id, alias.begin_date, alias.end_date, 0
+FROM alias
+INNER JOIN place ON place.id = alias.mbid;
+
+INSERT INTO recording_alias (recording_id, name, is_primary, locale, type_id, begin_date, end_date, ended)
+SELECT alias.mbid, alias.name, alias.is_primary, alias.locale, alias.type_id, alias.begin_date, alias.end_date, 0
+FROM alias
+INNER JOIN recording ON recording.id = alias.mbid;
+
+INSERT INTO release_alias (release_id, name, is_primary, locale, type_id, begin_date, end_date, ended)
+SELECT alias.mbid, alias.name, alias.is_primary, alias.locale, alias.type_id, alias.begin_date, alias.end_date, 0
+FROM alias
+INNER JOIN `release` ON `release`.id = alias.mbid;
+
+INSERT INTO release_group_alias (release_group_id, name, is_primary, locale, type_id, begin_date, end_date, ended)
+SELECT alias.mbid, alias.name, alias.is_primary, alias.locale, alias.type_id, alias.begin_date, alias.end_date, 0
+FROM alias
+INNER JOIN release_group ON release_group.id = alias.mbid;
+
+INSERT INTO series_alias (series_id, name, is_primary, locale, type_id, begin_date, end_date, ended)
+SELECT alias.mbid, alias.name, alias.is_primary, alias.locale, alias.type_id, alias.begin_date, alias.end_date, 0
+FROM alias
+INNER JOIN series ON series.id = alias.mbid;
+
+INSERT INTO work_alias (work_id, name, is_primary, locale, type_id, begin_date, end_date, ended)
+SELECT alias.mbid, alias.name, alias.is_primary, alias.locale, alias.type_id, alias.begin_date, alias.end_date, 0
+FROM alias
+INNER JOIN work ON work.id = alias.mbid;
+
+-- Create indexes
 CREATE INDEX idx_area_alias_area_id ON area_alias(area_id);
 CREATE INDEX idx_area_alias_name ON area_alias(name);
 
@@ -217,338 +280,4 @@ SELECT series_id AS mbid, name FROM series_alias
 UNION ALL
 SELECT work_id AS mbid, name FROM work_alias;
 
-insertAreaAlias:
-INSERT INTO area_alias (
-  id,
-  area_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteAreaAlias:
-DELETE FROM area_alias
-WHERE area_id = :mbid;
-
-insertArtistAlias:
-INSERT INTO artist_alias (
-  id,
-  artist_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteArtistAlias:
-DELETE FROM artist_alias
-WHERE artist_id = :mbid;
-
-insertEventAlias:
-INSERT INTO event_alias (
-  id,
-  event_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteEventAlias:
-DELETE FROM event_alias
-WHERE event_id = :mbid;
-
-insertGenreAlias:
-INSERT INTO genre_alias (
-  id,
-  genre_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteGenreAlias:
-DELETE FROM genre_alias
-WHERE genre_id = :mbid;
-
-insertInstrumentAlias:
-INSERT INTO instrument_alias (
-  id,
-  instrument_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteInstrumentAlias:
-DELETE FROM instrument_alias
-WHERE instrument_id = :mbid;
-
-insertLabelAlias:
-INSERT INTO label_alias (
-  id,
-  label_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteLabelAlias:
-DELETE FROM label_alias
-WHERE label_id = :mbid;
-
-insertPlaceAlias:
-INSERT INTO place_alias (
-  id,
-  place_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deletePlaceAlias:
-DELETE FROM place_alias
-WHERE place_id = :mbid;
-
-insertRecordingAlias:
-INSERT INTO recording_alias (
-  id,
-  recording_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteRecordingAlias:
-DELETE FROM recording_alias
-WHERE recording_id = :mbid;
-
-insertReleaseAlias:
-INSERT INTO release_alias (
-  id,
-  release_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteReleaseAlias:
-DELETE FROM release_alias
-WHERE release_id = :mbid;
-
-insertReleaseGroupAlias:
-INSERT INTO release_group_alias (
-  id,
-  release_group_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteReleaseGroupAlias:
-DELETE FROM release_group_alias
-WHERE release_group_id = :mbid;
-
-insertSeriesAlias:
-INSERT INTO series_alias (
-  id,
-  series_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteSeriesAlias:
-DELETE FROM series_alias
-WHERE series_id = :mbid;
-
-insertWorkAlias:
-INSERT INTO work_alias (
-  id,
-  work_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteWorkAlias:
-DELETE FROM work_alias
-WHERE work_id = :mbid;
+DROP TABLE alias;

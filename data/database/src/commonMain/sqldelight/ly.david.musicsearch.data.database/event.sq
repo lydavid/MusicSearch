@@ -61,7 +61,7 @@ SELECT IFNULL(
     SELECT COUNT(DISTINCT event.id)
     FROM events_by_entity ee
     INNER JOIN event ON event.id = ee.event_id
-    LEFT JOIN alias ON event.id = alias.mbid
+    LEFT JOIN event_alias ON event.id = event_alias.event_id
     WHERE ee.entity_id = :entityId
     AND (
       event.name LIKE :query OR
@@ -70,7 +70,7 @@ SELECT IFNULL(
       event.time LIKE :query OR
       event.begin LIKE :query OR
       event.end LIKE :query OR
-      alias.name LIKE :query
+      event_alias.name LIKE :query
     )
   ),
   0
@@ -95,7 +95,7 @@ SELECT
   ) AS collected
 FROM events_by_entity ee
 INNER JOIN event ON event.id = ee.event_id
-LEFT JOIN alias ON event.id = alias.mbid
+LEFT JOIN event_alias ON event.id = event_alias.event_id
 LEFT JOIN mbid_image mi ON mi.mbid = event.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = event.id
 WHERE ee.entity_id = :entityId
@@ -106,7 +106,7 @@ AND (
   event.time LIKE :query OR
   event.begin LIKE :query OR
   event.end LIKE :query OR
-  alias.name LIKE :query
+  event_alias.name LIKE :query
 )
 GROUP BY event.id
 ORDER BY event.begin, event.end, event.name
@@ -121,14 +121,14 @@ SELECT IFNULL(
     FROM event
     INNER JOIN collection_entity ce ON event.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN alias ON event.id = alias.mbid
+    LEFT JOIN event_alias ON event.id = event_alias.event_id
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
       event.name LIKE :query OR
       event.disambiguation LIKE :query OR
       event.type LIKE :query OR
-      alias.name LIKE :query
+      event_alias.name LIKE :query
     )
   ),
   0
@@ -152,7 +152,7 @@ SELECT
 FROM event
 INNER JOIN collection_entity ce ON event.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN alias ON event.id = alias.mbid
+LEFT JOIN event_alias ON event.id = event_alias.event_id
 LEFT JOIN mbid_image mi ON mi.mbid = event.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = event.id
 WHERE c.id = :collectionId
@@ -164,7 +164,7 @@ AND (
   event.time LIKE :query OR
   event.begin LIKE :query OR
   event.end LIKE :query OR
-  alias.name LIKE :query
+  event_alias.name LIKE :query
 )
 GROUP BY event.id
 ORDER BY event.begin, event.end, event.name
@@ -177,12 +177,12 @@ SELECT IFNULL(
   (
     SELECT COUNT(e.id)
     FROM event e
-    LEFT JOIN alias ON e.id = alias.mbid
+    LEFT JOIN event_alias ON e.id = event_alias.event_id
     WHERE (
       e.name LIKE :query OR
       e.disambiguation LIKE :query OR
       e.type LIKE :query OR
-      alias.name LIKE :query
+      event_alias.name LIKE :query
     )
   ),
   0
@@ -206,7 +206,7 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = event.id
   ) AS collected
 FROM event
-LEFT JOIN alias ON event.id = alias.mbid
+LEFT JOIN event_alias ON event.id = event_alias.event_id
 LEFT JOIN mbid_image mi ON mi.mbid = event.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = event.id
 WHERE (
@@ -216,7 +216,7 @@ WHERE (
   event.time LIKE :query OR
   event.begin LIKE :query OR
   event.end LIKE :query OR
-  alias.name LIKE :query
+  event_alias.name LIKE :query
 )
 GROUP BY event.id
 ORDER BY event.begin, event.end, event.name

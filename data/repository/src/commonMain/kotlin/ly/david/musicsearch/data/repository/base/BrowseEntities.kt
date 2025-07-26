@@ -120,12 +120,15 @@ abstract class BrowseEntities<
                 lastUpdated = Clock.System.now(),
             )
 
-            aliasDao.insertReplaceAll(musicBrainzNetworkModels = musicBrainzModels)
-
+            // Make sure to insert the entities before inserting the aliases.
             insertAll(
                 entityId = entityId,
                 entity = entity,
                 musicBrainzModels = musicBrainzModels,
+            )
+
+            aliasDao.insertReplaceAll(
+                musicBrainzNetworkModels = musicBrainzModels,
             )
         }
 

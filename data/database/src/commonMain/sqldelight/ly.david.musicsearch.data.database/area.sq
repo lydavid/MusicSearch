@@ -61,13 +61,13 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT area.id)
     FROM area
-    LEFT JOIN alias ON area.id = alias.mbid
+    LEFT JOIN area_alias ON area.id = area_alias.area_id
     WHERE (
       area.name LIKE :query OR
       area.disambiguation LIKE :query OR
       area.sort_name LIKE :query OR
       area.type LIKE :query OR
-      alias.name LIKE :query
+      area_alias.name LIKE :query
     )
   ),
   0
@@ -89,7 +89,7 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = area.id
   ) AS collected
 FROM area
-LEFT JOIN alias ON area.id = alias.mbid
+LEFT JOIN area_alias ON area.id = area_alias.area_id
 LEFT JOIN country_code cc ON area.id = cc.area_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = area.id
 WHERE (
@@ -97,7 +97,7 @@ WHERE (
   area.disambiguation LIKE :query OR
   area.sort_name LIKE :query OR
   area.type LIKE :query OR
-  alias.name LIKE :query
+  area_alias.name LIKE :query
 )
 GROUP BY area.id
 ORDER BY area.begin, area.end, area.name
@@ -112,7 +112,7 @@ SELECT IFNULL(
     FROM area
     INNER JOIN collection_entity ce ON area.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN alias ON area.id = alias.mbid
+    LEFT JOIN area_alias ON area.id = area_alias.area_id
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
@@ -120,7 +120,7 @@ SELECT IFNULL(
       area.disambiguation LIKE :query OR
       area.sort_name LIKE :query OR
       area.type LIKE :query OR
-      alias.name LIKE :query
+      area_alias.name LIKE :query
     )
   ),
   0
@@ -142,7 +142,7 @@ SELECT
 FROM area
 INNER JOIN collection_entity ce ON area.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN alias ON area.id = alias.mbid
+LEFT JOIN area_alias ON area.id = area_alias.area_id
 LEFT JOIN country_code cc ON area.id = cc.area_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = area.id
 WHERE c.id = :collectionId
@@ -152,7 +152,7 @@ AND (
   area.disambiguation LIKE :query OR
   area.sort_name LIKE :query OR
   area.type LIKE :query OR
-  alias.name LIKE :query
+  area_alias.name LIKE :query
 )
 GROUP BY area.id
 ORDER BY area.begin, area.end, area.name

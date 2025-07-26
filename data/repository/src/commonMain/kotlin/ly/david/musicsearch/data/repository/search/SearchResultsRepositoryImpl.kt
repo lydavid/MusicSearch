@@ -20,6 +20,7 @@ import ly.david.musicsearch.data.database.dao.SearchResultDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.SearchApi
+import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.insertFooterItemForNonEmpty
 import ly.david.musicsearch.data.repository.internal.paging.insertHeaderItemForNonEmpty
@@ -89,6 +90,7 @@ internal class SearchResultsRepositoryImpl(
         )
     }
 
+    @Suppress("LongMethod")
     private suspend fun fetchAndStore(
         entity: MusicBrainzEntity,
         query: String,
@@ -107,12 +109,11 @@ internal class SearchResultsRepositoryImpl(
                 areaDao.withTransaction {
                     removeAll()
                     areaDao.insertReplaceAll(areas = areas)
-                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = areas)
-                    searchResultDao.insertAll(areas.map { it.id })
-                    searchResultDao.rewriteMetadata(
-                        entity = entity,
+                    insertIntoCommonTables(
+                        entityType = entity,
+                        entities = areas,
                         query = query,
-                        localCount = offset + areas.size,
+                        offset = offset,
                         remoteCount = response.count,
                     )
                 }
@@ -129,12 +130,11 @@ internal class SearchResultsRepositoryImpl(
                 artistDao.withTransaction {
                     removeAll()
                     artistDao.insertAll(artists)
-                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = artists)
-                    searchResultDao.insertAll(artists.map { it.id })
-                    searchResultDao.rewriteMetadata(
-                        entity = entity,
+                    insertIntoCommonTables(
+                        entityType = entity,
+                        entities = artists,
                         query = query,
-                        localCount = offset + artists.size,
+                        offset = offset,
                         remoteCount = response.count,
                     )
                 }
@@ -151,12 +151,11 @@ internal class SearchResultsRepositoryImpl(
                 eventDao.withTransaction {
                     removeAll()
                     eventDao.insertAll(events)
-                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = events)
-                    searchResultDao.insertAll(events.map { it.id })
-                    searchResultDao.rewriteMetadata(
-                        entity = entity,
+                    insertIntoCommonTables(
+                        entityType = entity,
+                        entities = events,
                         query = query,
-                        localCount = offset + events.size,
+                        offset = offset,
                         remoteCount = response.count,
                     )
                 }
@@ -173,12 +172,11 @@ internal class SearchResultsRepositoryImpl(
                 instrumentDao.withTransaction {
                     removeAll()
                     instrumentDao.insertAll(instruments)
-                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = instruments)
-                    searchResultDao.insertAll(instruments.map { it.id })
-                    searchResultDao.rewriteMetadata(
-                        entity = entity,
+                    insertIntoCommonTables(
+                        entityType = entity,
+                        entities = instruments,
                         query = query,
-                        localCount = offset + instruments.size,
+                        offset = offset,
                         remoteCount = response.count,
                     )
                 }
@@ -195,12 +193,11 @@ internal class SearchResultsRepositoryImpl(
                 labelDao.withTransaction {
                     removeAll()
                     labelDao.insertAll(labels)
-                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = labels)
-                    searchResultDao.insertAll(labels.map { it.id })
-                    searchResultDao.rewriteMetadata(
-                        entity = entity,
+                    insertIntoCommonTables(
+                        entityType = entity,
+                        entities = labels,
                         query = query,
-                        localCount = offset + labels.size,
+                        offset = offset,
                         remoteCount = response.count,
                     )
                 }
@@ -217,12 +214,11 @@ internal class SearchResultsRepositoryImpl(
                 placeDao.withTransaction {
                     removeAll()
                     placeDao.insertAll(places)
-                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = places)
-                    searchResultDao.insertAll(places.map { it.id })
-                    searchResultDao.rewriteMetadata(
-                        entity = entity,
+                    insertIntoCommonTables(
+                        entityType = entity,
+                        entities = places,
                         query = query,
-                        localCount = offset + places.size,
+                        offset = offset,
                         remoteCount = response.count,
                     )
                 }
@@ -239,12 +235,11 @@ internal class SearchResultsRepositoryImpl(
                 recordingDao.withTransaction {
                     removeAll()
                     recordingDao.insertAll(recordings)
-                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = recordings)
-                    searchResultDao.insertAll(recordings.map { it.id })
-                    searchResultDao.rewriteMetadata(
-                        entity = entity,
+                    insertIntoCommonTables(
+                        entityType = entity,
+                        entities = recordings,
                         query = query,
-                        localCount = offset + recordings.size,
+                        offset = offset,
                         remoteCount = response.count,
                     )
                 }
@@ -261,12 +256,11 @@ internal class SearchResultsRepositoryImpl(
                 releaseDao.withTransaction {
                     removeAll()
                     releaseDao.insertAll(releases)
-                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = releases)
-                    searchResultDao.insertAll(releases.map { it.id })
-                    searchResultDao.rewriteMetadata(
-                        entity = entity,
+                    insertIntoCommonTables(
+                        entityType = entity,
+                        entities = releases,
                         query = query,
-                        localCount = offset + releases.size,
+                        offset = offset,
                         remoteCount = response.count,
                     )
                 }
@@ -283,12 +277,11 @@ internal class SearchResultsRepositoryImpl(
                 releaseGroupDao.withTransaction {
                     removeAll()
                     releaseGroupDao.insertAllReleaseGroups(releaseGroups)
-                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = releaseGroups)
-                    searchResultDao.insertAll(releaseGroups.map { it.id })
-                    searchResultDao.rewriteMetadata(
-                        entity = entity,
+                    insertIntoCommonTables(
+                        entityType = entity,
+                        entities = releaseGroups,
                         query = query,
-                        localCount = offset + releaseGroups.size,
+                        offset = offset,
                         remoteCount = response.count,
                     )
                 }
@@ -305,12 +298,11 @@ internal class SearchResultsRepositoryImpl(
                 seriesDao.withTransaction {
                     removeAll()
                     seriesDao.insertAll(series)
-                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = series)
-                    searchResultDao.insertAll(series.map { it.id })
-                    searchResultDao.rewriteMetadata(
-                        entity = entity,
+                    insertIntoCommonTables(
+                        entityType = entity,
+                        entities = series,
                         query = query,
-                        localCount = offset + series.size,
+                        offset = offset,
                         remoteCount = response.count,
                     )
                 }
@@ -327,12 +319,11 @@ internal class SearchResultsRepositoryImpl(
                 workDao.withTransaction {
                     removeAll()
                     workDao.insertOrUpdateAll(works)
-                    aliasDao.insertReplaceAll(musicBrainzNetworkModels = works)
-                    searchResultDao.insertAll(works.map { it.id })
-                    searchResultDao.rewriteMetadata(
-                        entity = entity,
+                    insertIntoCommonTables(
+                        entityType = entity,
+                        entities = works,
                         query = query,
-                        localCount = offset + works.size,
+                        offset = offset,
                         remoteCount = response.count,
                     )
                 }
@@ -346,5 +337,24 @@ internal class SearchResultsRepositoryImpl(
                 error(IllegalStateException("Cannot search $entity"))
             }
         }
+    }
+
+    private fun insertIntoCommonTables(
+        entityType: MusicBrainzEntity,
+        entities: List<MusicBrainzNetworkModel>,
+        query: String,
+        offset: Int,
+        remoteCount: Int,
+    ) {
+        aliasDao.insertReplaceAll(
+            musicBrainzNetworkModels = entities,
+        )
+        searchResultDao.insertAll(entities.map { it.id })
+        searchResultDao.rewriteMetadata(
+            entity = entityType,
+            query = query,
+            localCount = offset + entities.size,
+            remoteCount = remoteCount,
+        )
     }
 }

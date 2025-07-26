@@ -36,14 +36,14 @@ upsert {
 getAllLookupHistoryCount:
 SELECT COUNT(DISTINCT lookup_history.mbid)
 FROM lookup_history
-LEFT JOIN alias ON lookup_history.mbid = alias.mbid
+LEFT JOIN all_alias_names ON lookup_history.mbid = all_alias_names.mbid
 WHERE
   `deleted` = 0
   AND (
     `title` LIKE :query OR
     `entity` LIKE :query OR
     `search_hint` LIKE :query OR
-    alias.name LIKE :query
+    all_alias_names.name LIKE :query
   );
 
 getAllLookupHistory:
@@ -56,7 +56,7 @@ SELECT
   mi.thumbnail_url,
   mi.id AS imageId
 FROM lookup_history
-LEFT JOIN alias ON lookup_history.mbid = alias.mbid
+LEFT JOIN all_alias_names ON lookup_history.mbid = all_alias_names.mbid
 LEFT JOIN mbid_image mi ON mi.mbid = lookup_history.mbid
 WHERE
   `deleted` = 0
@@ -64,7 +64,7 @@ WHERE
     `title` LIKE :query OR
     `entity` LIKE :query OR
     `search_hint` LIKE :query OR
-    alias.name LIKE :query
+    all_alias_names.name LIKE :query
   )
 GROUP BY lookup_history.mbid
 ORDER BY

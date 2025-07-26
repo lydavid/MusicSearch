@@ -60,14 +60,14 @@ SELECT IFNULL(
     INNER JOIN recording ON recording.id = re.recording_id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-    LEFT JOIN alias ON recording.id = alias.mbid
+    LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id
     WHERE re.entity_id = :entityId
     AND (
       recording.name LIKE :query OR
       recording.disambiguation LIKE :query OR
       recording.first_release_date LIKE :query OR
       ac.name LIKE :query OR
-      alias.name LIKE :query
+      recording_alias.name LIKE :query
     )
   ),
   0
@@ -90,7 +90,7 @@ FROM recordings_by_entity re
 INNER JOIN recording ON recording.id = re.recording_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN alias ON recording.id = alias.mbid
+LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
 WHERE re.entity_id = :entityId
 AND (
@@ -98,7 +98,7 @@ AND (
   recording.disambiguation LIKE :query OR
   recording.first_release_date LIKE :query OR
   ac.name LIKE :query OR
-  alias.name LIKE :query
+  recording_alias.name LIKE :query
 )
 GROUP BY recording.id
 ORDER BY recording.first_release_date, recording.name
@@ -115,7 +115,7 @@ SELECT IFNULL(
     INNER JOIN collection c ON c.id = ce.id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-    LEFT JOIN alias ON recording.id = alias.mbid
+    LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
@@ -123,7 +123,7 @@ SELECT IFNULL(
       recording.disambiguation LIKE :query OR
       recording.first_release_date LIKE :query OR
       ac.name LIKE :query OR
-      alias.name LIKE :query
+      recording_alias.name LIKE :query
     )
   ),
   0
@@ -145,7 +145,7 @@ INNER JOIN collection_entity ce ON recording.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN alias ON recording.id = alias.mbid
+LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
@@ -154,7 +154,7 @@ AND (
   recording.disambiguation LIKE :query OR
   recording.first_release_date LIKE :query OR
   ac.name LIKE :query OR
-  alias.name LIKE :query
+  recording_alias.name LIKE :query
 )
 GROUP BY recording.id
 ORDER BY recording.first_release_date, recording.name
@@ -169,13 +169,13 @@ SELECT IFNULL(
     FROM recording
     INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-    LEFT JOIN alias ON recording.id = alias.mbid
+    LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id
     WHERE (
       recording.name LIKE :query OR
       recording.disambiguation LIKE :query OR
       recording.first_release_date LIKE :query OR
       ac.name LIKE :query OR
-      alias.name LIKE :query
+      recording_alias.name LIKE :query
     )
   ),
   0
@@ -197,14 +197,14 @@ SELECT
 FROM recording
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN alias ON recording.id = alias.mbid
+LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
 WHERE (
   recording.name LIKE :query OR
   recording.disambiguation LIKE :query OR
   recording.first_release_date LIKE :query OR
   ac.name LIKE :query OR
-  alias.name LIKE :query
+  recording_alias.name LIKE :query
 )
 GROUP BY recording.id
 ORDER BY recording.first_release_date, recording.name

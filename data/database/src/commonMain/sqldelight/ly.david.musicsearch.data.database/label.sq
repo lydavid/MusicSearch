@@ -65,14 +65,14 @@ SELECT IFNULL(
     SELECT COUNT(DISTINCT label.id)
     FROM labels_by_entity le
     INNER JOIN label ON label.id = le.label_id
-    LEFT JOIN alias ON label.id = alias.mbid
+    LEFT JOIN label_alias ON label.id = label_alias.label_id
     WHERE le.entity_id = :entityId
     AND (
       label.name LIKE :query OR
       label.disambiguation LIKE :query OR
       label.type LIKE :query OR
       label.label_code LIKE :query OR
-      alias.name LIKE :query
+      label_alias.name LIKE :query
     )
   ),
   0
@@ -91,7 +91,7 @@ SELECT
   ) AS collected
 FROM labels_by_entity le
 INNER JOIN label ON label.id = le.label_id
-LEFT JOIN alias ON label.id = alias.mbid
+LEFT JOIN label_alias ON label.id = label_alias.label_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
 WHERE le.entity_id = :entityId
 AND (
@@ -99,7 +99,7 @@ AND (
   label.disambiguation LIKE :query OR
   label.type LIKE :query OR
   label.label_code LIKE :query OR
-  alias.name LIKE :query
+  label_alias.name LIKE :query
 )
 GROUP BY label.id
 LIMIT :limit OFFSET :offset;
@@ -113,7 +113,7 @@ SELECT IFNULL(
     FROM label
     INNER JOIN collection_entity ce ON label.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN alias ON label.id = alias.mbid
+    LEFT JOIN label_alias ON label.id = label_alias.label_id
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
@@ -121,7 +121,7 @@ SELECT IFNULL(
       label.disambiguation LIKE :query OR
       label.type LIKE :query OR
       label.label_code LIKE :query OR
-      alias.name LIKE :query
+      label_alias.name LIKE :query
     )
   ),
   0
@@ -139,7 +139,7 @@ SELECT
 FROM label label
 INNER JOIN collection_entity ce ON label.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN alias ON label.id = alias.mbid
+LEFT JOIN label_alias ON label.id = label_alias.label_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
@@ -148,7 +148,7 @@ AND (
   label.disambiguation LIKE :query OR
   label.type LIKE :query OR
   label.label_code LIKE :query OR
-  alias.name LIKE :query
+  label_alias.name LIKE :query
 )
 GROUP BY label.id
 LIMIT :limit OFFSET :offset;
@@ -187,13 +187,13 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT label.id)
     FROM label
-    LEFT JOIN alias ON label.id = alias.mbid
+    LEFT JOIN label_alias ON label.id = label_alias.label_id
     WHERE (
       label.name LIKE :query OR
       label.disambiguation LIKE :query OR
       label.type LIKE :query OR
       label.label_code LIKE :query OR
-      alias.name LIKE :query
+      label_alias.name LIKE :query
     )
   ),
   0
@@ -211,14 +211,14 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = label.id
   ) AS collected
 FROM label
-LEFT JOIN alias ON label.id = alias.mbid
+LEFT JOIN label_alias ON label.id = label_alias.label_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
 WHERE (
   label.name LIKE :query OR
   label.disambiguation LIKE :query OR
   label.type LIKE :query OR
   label.label_code LIKE :query OR
-  alias.name LIKE :query
+  label_alias.name LIKE :query
 )
 GROUP BY label.id
 LIMIT :limit OFFSET :offset;
