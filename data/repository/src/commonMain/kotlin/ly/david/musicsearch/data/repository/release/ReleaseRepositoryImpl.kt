@@ -9,6 +9,7 @@ import app.cash.paging.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.LabelDao
@@ -46,6 +47,7 @@ class ReleaseRepositoryImpl(
     private val relationRepository: RelationRepository,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
+    private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
 ) : ReleaseRepository {
 
@@ -127,6 +129,8 @@ class ReleaseRepositoryImpl(
                 )
             }
             releaseDao.insert(release)
+
+            aliasDao.insertReplaceAll(listOf(release))
 
             // This serves as a replacement for browsing labels by release.
             // Unless we find a release that has more than 25 labels, we don't need to browse for labels.

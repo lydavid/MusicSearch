@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.event
 
 import kotlinx.datetime.Instant
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
@@ -12,6 +13,7 @@ import ly.david.musicsearch.shared.domain.relation.RelationRepository
 class EventRepositoryImpl(
     private val eventDao: EventDao,
     private val relationRepository: RelationRepository,
+    private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
 ) : EventRepository {
 
@@ -61,6 +63,8 @@ class EventRepositoryImpl(
     ) {
         eventDao.withTransaction {
             eventDao.insert(event)
+
+            aliasDao.insertReplaceAll(listOf(event))
 
             val relationWithOrderList = event.relations.toRelationWithOrderList(event.id)
             relationRepository.insertAllUrlRelations(

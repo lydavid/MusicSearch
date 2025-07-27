@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.helpers
 
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
@@ -15,6 +16,7 @@ interface TestEventRepository {
     val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val eventDao: EventDao
+    val aliasDao: AliasDao
 
     fun createEventRepository(
         musicBrainzModel: EventMusicBrainzNetworkModel,
@@ -35,6 +37,7 @@ interface TestEventRepository {
         return EventRepositoryImpl(
             eventDao = eventDao,
             relationRepository = relationRepository,
+            aliasDao = aliasDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupEvent(
                     eventId: String,

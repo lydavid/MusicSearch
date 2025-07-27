@@ -22,6 +22,7 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndEntity
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import org.junit.Assert.assertEquals
@@ -48,6 +49,7 @@ class ArtistCollaborationRepositoryImplTest :
     override val collectionEntityDao: CollectionEntityDao by inject()
     override val recordingDao: RecordingDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     @Test
     fun `lookup artist, then recordings, releases, release groups, and collaborations`() = runTest {

@@ -53,10 +53,10 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
     override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
-    private val collectionDao: CollectionDao by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     override val collectionEntityDao: CollectionEntityDao by inject()
-    private val aliasDao: AliasDao by inject()
+    override val aliasDao: AliasDao by inject()
+    private val collectionDao: CollectionDao by inject()
 
     private fun createPlacesListRepository(
         places: List<PlaceMusicBrainzNetworkModel>,

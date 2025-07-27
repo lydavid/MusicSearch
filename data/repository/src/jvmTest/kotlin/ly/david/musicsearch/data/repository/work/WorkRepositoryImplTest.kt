@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.repository.work
 
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
@@ -35,6 +36,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository {
     override val relationDao: RelationDao by inject()
     override val workDao: WorkDao by inject()
     override val workAttributeDao: WorkAttributeDao by inject()
+    override val aliasDao: AliasDao by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {

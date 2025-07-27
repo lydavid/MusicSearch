@@ -8,9 +8,9 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import ly.david.data.test.KoinTestRule
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.coverart.api.CoverArtUrls
 import ly.david.musicsearch.data.coverart.api.ThumbnailsUrls
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.EventDao
@@ -27,11 +27,12 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetwor
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
-import ly.david.musicsearch.data.repository.he.TestMusicBrainzImageMetadataRepository
 import ly.david.musicsearch.data.repository.helpers.TestEventRepository
+import ly.david.musicsearch.data.repository.helpers.TestMusicBrainzImageMetadataRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
@@ -74,6 +75,7 @@ class ImageMetadataRepositoryImplTest :
     override val labelDao: LabelDao by inject()
     override val mediumDao: MediumDao by inject()
     override val trackDao: TrackDao by inject()
+    override val aliasDao: AliasDao by inject()
 
     @Test
     fun empty() = runTest {

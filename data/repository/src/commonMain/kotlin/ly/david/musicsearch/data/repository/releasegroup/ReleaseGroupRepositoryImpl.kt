@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
 import kotlinx.datetime.Instant
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -14,6 +15,7 @@ class ReleaseGroupRepositoryImpl(
     private val releaseGroupDao: ReleaseGroupDao,
     private val artistCreditDao: ArtistCreditDao,
     private val relationRepository: RelationRepository,
+    private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
 ) : ReleaseGroupRepository {
 
@@ -69,6 +71,8 @@ class ReleaseGroupRepositoryImpl(
     ) {
         releaseGroupDao.withTransaction {
             releaseGroupDao.insertReleaseGroup(releaseGroup)
+
+            aliasDao.insertReplaceAll(listOf(releaseGroup))
 
             val relationWithOrderList = releaseGroup.relations.toRelationWithOrderList(releaseGroup.id)
             relationRepository.insertAllUrlRelations(

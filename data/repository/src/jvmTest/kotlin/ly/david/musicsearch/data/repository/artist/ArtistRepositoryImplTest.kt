@@ -23,6 +23,7 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
@@ -46,8 +47,9 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
     override val relationDao: RelationDao by inject()
     override val areaDao: AreaDao by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
+    override val aliasDao: AliasDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
-    private val aliasDao: AliasDao by inject()
 
     @Test
     fun `lookup artist`() = runTest {

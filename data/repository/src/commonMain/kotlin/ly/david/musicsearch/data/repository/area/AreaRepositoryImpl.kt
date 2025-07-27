@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.area
 
 import kotlinx.datetime.Instant
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
@@ -12,6 +13,7 @@ import ly.david.musicsearch.shared.domain.relation.RelationRepository
 class AreaRepositoryImpl(
     private val areaDao: AreaDao,
     private val relationRepository: RelationRepository,
+    private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
 ) : AreaRepository {
 
@@ -65,6 +67,8 @@ class AreaRepositoryImpl(
                     type = area.type ?: "",
                 ),
             )
+
+            aliasDao.insertReplaceAll(listOf(area))
 
             val relationWithOrderList = area.relations.toRelationWithOrderList(area.id)
             relationRepository.insertAllUrlRelations(

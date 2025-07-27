@@ -29,6 +29,7 @@ import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetwo
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.TestSearchResultsRepository
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
@@ -73,6 +74,7 @@ class LookupHistoryRepositoryImplTest :
     override val seriesDao: SeriesDao by inject()
     override val workDao: WorkDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
     private val lookupHistoryDao: LookupHistoryDao by inject()
 
     @Test
@@ -133,6 +135,32 @@ class LookupHistoryRepositoryImplTest :
 
     @Test
     fun `aliases are inserted after searching and are used in history`() = runTest {
+        val aliases = listOf(
+            AliasMusicBrainzNetworkModel(
+                name = "ZUTOMAYO",
+                isPrimary = true,
+                locale = "en",
+                typeId = "894afba6-2816-3c24-8072-eadb66bd04bc",
+            ),
+            AliasMusicBrainzNetworkModel(
+                name = "ZTMY",
+                isPrimary = null,
+                locale = "en",
+                typeId = "894afba6-2816-3c24-8072-eadb66bd04bc",
+            ),
+            AliasMusicBrainzNetworkModel(
+                name = "계속 한밤중이면 좋을 텐데.",
+                isPrimary = true,
+                locale = "ko",
+                typeId = "894afba6-2816-3c24-8072-eadb66bd04bc",
+            ),
+            AliasMusicBrainzNetworkModel(
+                name = "ずとまよ",
+                isPrimary = false,
+                locale = "ja",
+                typeId = "894afba6-2816-3c24-8072-eadb66bd04bc",
+            ),
+        )
         val searchResultsRepository = createSearchResultsRepository(
             searchApi = object : FakeSearchApi() {
                 override suspend fun queryArtists(
@@ -144,32 +172,7 @@ class LookupHistoryRepositoryImplTest :
                         count = 1,
                         artists = listOf(
                             zutomayoArtistMusicBrainzNetworkModel.copy(
-                                aliases = listOf(
-                                    AliasMusicBrainzNetworkModel(
-                                        name = "ZUTOMAYO",
-                                        isPrimary = true,
-                                        locale = "en",
-                                        typeId = "894afba6-2816-3c24-8072-eadb66bd04bc",
-                                    ),
-                                    AliasMusicBrainzNetworkModel(
-                                        name = "ZTMY",
-                                        isPrimary = null,
-                                        locale = "en",
-                                        typeId = "894afba6-2816-3c24-8072-eadb66bd04bc",
-                                    ),
-                                    AliasMusicBrainzNetworkModel(
-                                        name = "계속 한밤중이면 좋을 텐데.",
-                                        isPrimary = true,
-                                        locale = "ko",
-                                        typeId = "894afba6-2816-3c24-8072-eadb66bd04bc",
-                                    ),
-                                    AliasMusicBrainzNetworkModel(
-                                        name = "ずとまよ",
-                                        isPrimary = false,
-                                        locale = "ja",
-                                        typeId = "894afba6-2816-3c24-8072-eadb66bd04bc",
-                                    ),
-                                ),
+                                aliases = aliases,
                             ),
                         ),
                     )
@@ -199,7 +202,9 @@ class LookupHistoryRepositoryImplTest :
 
         val currentTime = Instant.parse("2024-06-05T19:42:20Z")
         createArtistRepository(
-            artistMusicBrainzModel = zutomayoArtistMusicBrainzNetworkModel,
+            artistMusicBrainzModel = zutomayoArtistMusicBrainzNetworkModel.copy(
+                aliases = aliases,
+            ),
         ).lookupArtist(
             artistId = zutomayoArtistMusicBrainzNetworkModel.id,
             forceRefresh = false,

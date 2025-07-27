@@ -1,5 +1,65 @@
 import kotlin.Boolean;
 
+-- Migration script to add CASCADE DELETE to alias tables
+-- This script recreates all alias tables with CASCADE DELETE foreign key constraints
+
+-- Drop existing indices and view
+DROP INDEX IF EXISTS idx_work_alias_work_id;
+DROP INDEX IF EXISTS idx_work_alias_name;
+DROP INDEX IF EXISTS idx_series_alias_series_id;
+DROP INDEX IF EXISTS idx_series_alias_name;
+DROP INDEX IF EXISTS idx_release_group_alias_release_group_id;
+DROP INDEX IF EXISTS idx_release_group_alias_name;
+DROP INDEX IF EXISTS idx_release_alias_release_id;
+DROP INDEX IF EXISTS idx_release_alias_name;
+DROP INDEX IF EXISTS idx_recording_alias_recording_id;
+DROP INDEX IF EXISTS idx_recording_alias_name;
+DROP INDEX IF EXISTS idx_place_alias_place_id;
+DROP INDEX IF EXISTS idx_place_alias_name;
+DROP INDEX IF EXISTS idx_label_alias_label_id;
+DROP INDEX IF EXISTS idx_label_alias_name;
+DROP INDEX IF EXISTS idx_instrument_alias_instrument_id;
+DROP INDEX IF EXISTS idx_instrument_alias_name;
+DROP INDEX IF EXISTS idx_genre_alias_genre_id;
+DROP INDEX IF EXISTS idx_genre_alias_name;
+DROP INDEX IF EXISTS idx_event_alias_event_id;
+DROP INDEX IF EXISTS idx_event_alias_name;
+DROP INDEX IF EXISTS idx_artist_alias_artist_id;
+DROP INDEX IF EXISTS idx_artist_alias_name;
+DROP INDEX IF EXISTS idx_area_alias_area_id;
+DROP INDEX IF EXISTS idx_area_alias_name;
+
+DROP VIEW IF EXISTS all_alias_names;
+
+-- Backup tables
+CREATE TABLE area_alias_backup AS SELECT * FROM area_alias;
+CREATE TABLE artist_alias_backup AS SELECT * FROM artist_alias;
+CREATE TABLE event_alias_backup AS SELECT * FROM event_alias;
+CREATE TABLE genre_alias_backup AS SELECT * FROM genre_alias;
+CREATE TABLE instrument_alias_backup AS SELECT * FROM instrument_alias;
+CREATE TABLE label_alias_backup AS SELECT * FROM label_alias;
+CREATE TABLE place_alias_backup AS SELECT * FROM place_alias;
+CREATE TABLE recording_alias_backup AS SELECT * FROM recording_alias;
+CREATE TABLE release_alias_backup AS SELECT * FROM release_alias;
+CREATE TABLE release_group_alias_backup AS SELECT * FROM release_group_alias;
+CREATE TABLE series_alias_backup AS SELECT * FROM series_alias;
+CREATE TABLE work_alias_backup AS SELECT * FROM work_alias;
+
+-- Drop tables
+DROP TABLE IF EXISTS work_alias;
+DROP TABLE IF EXISTS series_alias;
+DROP TABLE IF EXISTS release_group_alias;
+DROP TABLE IF EXISTS release_alias;
+DROP TABLE IF EXISTS recording_alias;
+DROP TABLE IF EXISTS place_alias;
+DROP TABLE IF EXISTS label_alias;
+DROP TABLE IF EXISTS instrument_alias;
+DROP TABLE IF EXISTS genre_alias;
+DROP TABLE IF EXISTS event_alias;
+DROP TABLE IF EXISTS artist_alias;
+DROP TABLE IF EXISTS area_alias;
+
+-- Recreate tables with CASCADE DELETE foreign keys
 CREATE TABLE area_alias (
   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   area_id TEXT NOT NULL,
@@ -156,6 +216,7 @@ CREATE TABLE work_alias (
   FOREIGN KEY (work_id) REFERENCES work(id) ON DELETE CASCADE
 );
 
+-- Recreate indices
 CREATE INDEX idx_area_alias_area_id ON area_alias(area_id);
 CREATE INDEX idx_area_alias_name ON area_alias(name);
 
@@ -192,6 +253,7 @@ CREATE INDEX idx_series_alias_name ON series_alias(name);
 CREATE INDEX idx_work_alias_work_id ON work_alias(work_id);
 CREATE INDEX idx_work_alias_name ON work_alias(name);
 
+-- Recreate the view
 CREATE VIEW all_alias_names AS
 SELECT area_id AS mbid, name FROM area_alias
 UNION ALL
@@ -217,338 +279,30 @@ SELECT series_id AS mbid, name FROM series_alias
 UNION ALL
 SELECT work_id AS mbid, name FROM work_alias;
 
-insertAreaAlias:
-INSERT INTO area_alias (
-  id,
-  area_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
+-- Restore data from backups
+INSERT INTO area_alias SELECT * FROM area_alias_backup;
+INSERT INTO artist_alias SELECT * FROM artist_alias_backup;
+INSERT INTO event_alias SELECT * FROM event_alias_backup;
+INSERT INTO genre_alias SELECT * FROM genre_alias_backup;
+INSERT INTO instrument_alias SELECT * FROM instrument_alias_backup;
+INSERT INTO label_alias SELECT * FROM label_alias_backup;
+INSERT INTO place_alias SELECT * FROM place_alias_backup;
+INSERT INTO recording_alias SELECT * FROM recording_alias_backup;
+INSERT INTO release_alias SELECT * FROM release_alias_backup;
+INSERT INTO release_group_alias SELECT * FROM release_group_alias_backup;
+INSERT INTO series_alias SELECT * FROM series_alias_backup;
+INSERT INTO work_alias SELECT * FROM work_alias_backup;
 
-deleteAreaAlias:
-DELETE FROM area_alias
-WHERE area_id = :mbid;
-
-insertArtistAlias:
-INSERT INTO artist_alias (
-  id,
-  artist_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteArtistAlias:
-DELETE FROM artist_alias
-WHERE artist_id = :mbid;
-
-insertEventAlias:
-INSERT INTO event_alias (
-  id,
-  event_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteEventAlias:
-DELETE FROM event_alias
-WHERE event_id = :mbid;
-
-insertGenreAlias:
-INSERT INTO genre_alias (
-  id,
-  genre_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteGenreAlias:
-DELETE FROM genre_alias
-WHERE genre_id = :mbid;
-
-insertInstrumentAlias:
-INSERT INTO instrument_alias (
-  id,
-  instrument_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteInstrumentAlias:
-DELETE FROM instrument_alias
-WHERE instrument_id = :mbid;
-
-insertLabelAlias:
-INSERT INTO label_alias (
-  id,
-  label_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteLabelAlias:
-DELETE FROM label_alias
-WHERE label_id = :mbid;
-
-insertPlaceAlias:
-INSERT INTO place_alias (
-  id,
-  place_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deletePlaceAlias:
-DELETE FROM place_alias
-WHERE place_id = :mbid;
-
-insertRecordingAlias:
-INSERT INTO recording_alias (
-  id,
-  recording_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteRecordingAlias:
-DELETE FROM recording_alias
-WHERE recording_id = :mbid;
-
-insertReleaseAlias:
-INSERT INTO release_alias (
-  id,
-  release_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteReleaseAlias:
-DELETE FROM release_alias
-WHERE release_id = :mbid;
-
-insertReleaseGroupAlias:
-INSERT INTO release_group_alias (
-  id,
-  release_group_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteReleaseGroupAlias:
-DELETE FROM release_group_alias
-WHERE release_group_id = :mbid;
-
-insertSeriesAlias:
-INSERT INTO series_alias (
-  id,
-  series_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteSeriesAlias:
-DELETE FROM series_alias
-WHERE series_id = :mbid;
-
-insertWorkAlias:
-INSERT INTO work_alias (
-  id,
-  work_id,
-  name,
-  locale,
-  type_id,
-  is_primary,
-  begin_date,
-  end_date,
-  ended
-)
-VALUES (
-  nullif(:id, 0),
-  :mbid,
-  :name,
-  :locale,
-  :typeId,
-  :isPrimary,
-  :beginDate,
-  :endDate,
-  :ended
-);
-
-deleteWorkAlias:
-DELETE FROM work_alias
-WHERE work_id = :mbid;
+-- Drop backup tables
+DROP TABLE area_alias_backup;
+DROP TABLE artist_alias_backup;
+DROP TABLE event_alias_backup;
+DROP TABLE genre_alias_backup;
+DROP TABLE instrument_alias_backup;
+DROP TABLE label_alias_backup;
+DROP TABLE place_alias_backup;
+DROP TABLE recording_alias_backup;
+DROP TABLE release_alias_backup;
+DROP TABLE release_group_alias_backup;
+DROP TABLE series_alias_backup;
+DROP TABLE work_alias_backup;

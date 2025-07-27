@@ -54,10 +54,10 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
     override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
+    override val aliasDao: AliasDao by inject()
     private val collectionDao: CollectionDao by inject()
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
-    private val aliasDao: AliasDao by inject()
 
     private val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
 

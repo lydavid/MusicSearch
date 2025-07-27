@@ -56,7 +56,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
     override val areaDao: AreaDao by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     override val collectionEntityDao: CollectionEntityDao by inject()
-    private val aliasDao: AliasDao by inject()
+    override val aliasDao: AliasDao by inject()
 
     private fun createAreaRepositoryWithFakeNetworkData(
         musicBrainzModel: AreaMusicBrainzNetworkModel,
@@ -77,6 +77,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         return AreaRepositoryImpl(
             areaDao = areaDao,
             relationRepository = relationRepository,
+            aliasDao = aliasDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupArea(
                     areaId: String,

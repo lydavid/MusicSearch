@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.helpers
 
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
@@ -17,6 +18,8 @@ interface TestReleaseGroupRepository {
     val relationsMetadataDao: RelationsMetadataDao
     val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
+    val aliasDao: AliasDao
+
     fun createReleaseGroupRepository(
         musicBrainzModel: ReleaseGroupMusicBrainzNetworkModel,
     ): ReleaseGroupRepository {
@@ -37,6 +40,7 @@ interface TestReleaseGroupRepository {
             releaseGroupDao = releaseGroupDao,
             artistCreditDao = artistCreditDao,
             relationRepository = relationRepository,
+            aliasDao = aliasDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupReleaseGroup(
                     releaseGroupId: String,
