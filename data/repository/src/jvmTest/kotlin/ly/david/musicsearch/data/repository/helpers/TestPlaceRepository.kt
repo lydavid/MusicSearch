@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.helpers
 
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -21,6 +22,7 @@ interface TestPlaceRepository {
     val areaDao: AreaDao
     val browseRemoteMetadataDao: BrowseRemoteMetadataDao
     val collectionEntityDao: CollectionEntityDao
+    val aliasDao: AliasDao
 
     fun createPlaceRepository(
         musicBrainzModel: PlaceMusicBrainzNetworkModel,
@@ -42,6 +44,7 @@ interface TestPlaceRepository {
             placeDao = this.placeDao,
             areaDao = areaDao,
             relationRepository = relationRepository,
+            aliasDao = aliasDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupPlace(
                     placeId: String,

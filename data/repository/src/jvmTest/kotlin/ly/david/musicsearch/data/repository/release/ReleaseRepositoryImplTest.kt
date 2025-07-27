@@ -6,6 +6,7 @@ import ly.david.data.test.KoinTestRule
 import ly.david.data.test.releaseWith3CatalogNumbersWithSameLabel
 import ly.david.data.test.releaseWithSameCatalogNumberWithDifferentLabels
 import ly.david.data.test.utaNoUtaReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.LabelDao
@@ -71,6 +72,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
     override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
+    override val aliasDao: AliasDao by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {

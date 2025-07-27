@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.helpers
 
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
@@ -15,6 +16,7 @@ interface TestAreaRepository {
     val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val areaDao: AreaDao
+    val aliasDao: AliasDao
 
     /**
      * This builds [AreaRepositoryImpl] cast as [AreaRepository].
@@ -39,6 +41,7 @@ interface TestAreaRepository {
         return AreaRepositoryImpl(
             areaDao = areaDao,
             relationRepository = relationRepository,
+            aliasDao = aliasDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupArea(
                     areaId: String,

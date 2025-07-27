@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.repository.area
 
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
@@ -27,6 +28,7 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
     override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val areaDao: AreaDao by inject()
+    override val aliasDao: AliasDao by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {

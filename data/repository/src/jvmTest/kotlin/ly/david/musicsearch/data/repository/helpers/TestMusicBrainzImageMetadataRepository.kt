@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.repository.he
+package ly.david.musicsearch.data.repository.helpers
 
 import kotlinx.coroutines.test.TestScope
 import ly.david.data.test.api.NoOpCoverArtArchiveApi

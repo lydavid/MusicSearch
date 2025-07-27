@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.series
 
 import kotlinx.datetime.Instant
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
@@ -12,6 +13,7 @@ import ly.david.musicsearch.shared.domain.series.SeriesRepository
 class SeriesRepositoryImpl(
     private val seriesDao: SeriesDao,
     private val relationRepository: RelationRepository,
+    private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
 ) : SeriesRepository {
 
@@ -61,6 +63,8 @@ class SeriesRepositoryImpl(
     ) {
         seriesDao.withTransaction {
             seriesDao.insert(series)
+
+            aliasDao.insertReplaceAll(listOf(series))
 
             val relationWithOrderList = series.relations.toRelationWithOrderList(series.id)
             relationRepository.insertAllUrlRelations(

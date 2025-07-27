@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.place
 
 import kotlinx.datetime.Instant
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -14,6 +15,7 @@ class PlaceRepositoryImpl(
     private val placeDao: PlaceDao,
     private val areaDao: AreaDao,
     private val relationRepository: RelationRepository,
+    private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
 ) : PlaceRepository {
 
@@ -66,6 +68,9 @@ class PlaceRepositoryImpl(
     ) {
         placeDao.withTransaction {
             placeDao.insert(place)
+
+            aliasDao.insertReplaceAll(listOf(place))
+
             place.area?.let { areaMusicBrainzModel ->
                 areaDao.insert(areaMusicBrainzModel)
                 placeDao.insertPlaceByArea(

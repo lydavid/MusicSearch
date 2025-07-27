@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.helpers
 
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
@@ -17,6 +18,7 @@ interface TestWorkRepository {
     val relationDao: RelationDao
     val workDao: WorkDao
     val workAttributeDao: WorkAttributeDao
+    val aliasDao: AliasDao
 
     fun createWorkRepository(
         musicBrainzModel: WorkMusicBrainzNetworkModel,
@@ -38,6 +40,7 @@ interface TestWorkRepository {
             workDao = workDao,
             workAttributeDao = workAttributeDao,
             relationRepository = relationRepository,
+            aliasDao = aliasDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupWork(
                     workId: String,

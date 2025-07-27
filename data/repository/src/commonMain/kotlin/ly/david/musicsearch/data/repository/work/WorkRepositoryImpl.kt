@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.work
 
 import kotlinx.datetime.Instant
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -14,6 +15,7 @@ class WorkRepositoryImpl(
     private val workDao: WorkDao,
     private val workAttributeDao: WorkAttributeDao,
     private val relationRepository: RelationRepository,
+    private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
 ) : WorkRepository {
 
@@ -66,6 +68,8 @@ class WorkRepositoryImpl(
                 workId = work.id,
                 work.attributes,
             )
+
+            aliasDao.insertReplaceAll(listOf(work))
 
             val relationWithOrderList = work.relations.toRelationWithOrderList(work.id)
             relationRepository.insertAllUrlRelations(

@@ -58,6 +58,7 @@ import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageId
@@ -104,7 +105,8 @@ class ReleasesListRepositoryImplTest :
     override val relationDao: RelationDao by inject()
     override val recordingDao: RecordingDao by inject()
     override val areaDao: AreaDao by inject()
-    private val aliasDao: AliasDao by inject()
+    override val aliasDao: AliasDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     private fun createReleasesListRepository(
         releases: List<ReleaseMusicBrainzNetworkModel>,

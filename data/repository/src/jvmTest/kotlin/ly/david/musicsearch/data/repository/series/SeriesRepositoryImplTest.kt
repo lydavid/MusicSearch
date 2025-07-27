@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.series
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
@@ -34,6 +35,7 @@ class SeriesRepositoryImplTest : KoinTest {
     private val detailsMetadataDao: DetailsMetadataDao by inject()
     private val relationDao: RelationDao by inject()
     private val seriesDao: SeriesDao by inject()
+    private val aliasDao: AliasDao by inject()
 
     private fun createRelationRepository(
         musicBrainzModel: SeriesMusicBrainzNetworkModel,
@@ -61,6 +63,7 @@ class SeriesRepositoryImplTest : KoinTest {
         return SeriesRepositoryImpl(
             seriesDao = seriesDao,
             relationRepository = relationRepository,
+            aliasDao = aliasDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupSeries(
                     seriesId: String,

@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.recording
 
 import kotlinx.datetime.Instant
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -14,6 +15,7 @@ class RecordingRepositoryImpl(
     private val recordingDao: RecordingDao,
     private val artistCreditDao: ArtistCreditDao,
     private val relationRepository: RelationRepository,
+    private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
 ) : RecordingRepository {
 
@@ -71,6 +73,8 @@ class RecordingRepositoryImpl(
     ) {
         recordingDao.withTransaction {
             recordingDao.insert(recording)
+
+            aliasDao.insertReplaceAll(listOf(recording))
 
             val relationWithOrderList = recording.relations.toRelationWithOrderList(recording.id)
             relationRepository.insertAllUrlRelations(

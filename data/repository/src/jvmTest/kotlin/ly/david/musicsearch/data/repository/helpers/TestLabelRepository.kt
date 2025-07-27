@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.helpers
 
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
@@ -16,6 +17,7 @@ interface TestLabelRepository {
     val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val labelDao: LabelDao
+    val aliasDao: AliasDao
 
     fun createLabelRepository(
         musicBrainzModel: LabelMusicBrainzNetworkModel,
@@ -36,6 +38,7 @@ interface TestLabelRepository {
         return LabelRepositoryImpl(
             labelDao = labelDao,
             relationRepository = relationRepository,
+            aliasDao = aliasDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupLabel(
                     labelId: String,

@@ -52,10 +52,10 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
     override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
+    override val aliasDao: AliasDao by inject()
     private val collectionDao: CollectionDao by inject()
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
-    private val aliasDao: AliasDao by inject()
 
     private fun createEventsListRepository(
         events: List<EventMusicBrainzNetworkModel>,

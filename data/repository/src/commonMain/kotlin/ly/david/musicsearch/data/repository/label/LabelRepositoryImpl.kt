@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.label
 
 import kotlinx.datetime.Instant
+import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
@@ -12,6 +13,7 @@ import ly.david.musicsearch.shared.domain.relation.RelationRepository
 class LabelRepositoryImpl(
     private val labelDao: LabelDao,
     private val relationRepository: RelationRepository,
+    private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
 ) : LabelRepository {
 
@@ -56,6 +58,8 @@ class LabelRepositoryImpl(
     ) {
         labelDao.withTransaction {
             labelDao.insert(label)
+
+            aliasDao.insertReplaceAll(listOf(label))
 
             val relationWithOrderList = label.relations.toRelationWithOrderList(label.id)
             relationRepository.insertAllUrlRelations(
