@@ -31,8 +31,7 @@ internal fun NameWithDisambiguationAndAliases.getAliasForLocale(
             val parts = it.locale.split("-")
             val systemParts = systemTag.split("-")
 
-            parts.size >= 2 && systemParts.size >= 2 &&
-                parts[0] == systemParts[0] && parts[1] == systemParts[1] &&
+            matches(parts, systemParts) &&
                 parts[1].length == SCRIPT_LENGTH && systemParts[1].length == SCRIPT_LENGTH
         }
         ?: // 3. Try to match: {language}-{region}
@@ -40,8 +39,7 @@ internal fun NameWithDisambiguationAndAliases.getAliasForLocale(
             val parts = it.locale.split("-")
             val systemParts = systemTag.split("-")
 
-            parts.size >= 2 && systemParts.size >= 2 &&
-                parts[0] == systemParts[0] && parts[1] == systemParts[1]
+            matches(parts, systemParts)
             // We don't need to check the second part's length because having failed step 2,
             //  we must have a length of 2 if it exists
         }
@@ -57,6 +55,12 @@ internal fun NameWithDisambiguationAndAliases.getAliasForLocale(
     return alias?.name?.takeIf { name?.contains(it) != true }
 }
 
+private fun matches(
+    parts: List<String>,
+    systemParts: List<String>,
+): Boolean = parts.size >= 2 && systemParts.size >= 2 &&
+    parts[0] == systemParts[0] && parts[1] == systemParts[1]
+
 @Composable
 fun NameWithDisambiguationAndAliases?.getAnnotatedName(): AnnotatedString {
     if (this == null) return AnnotatedString("")
@@ -66,6 +70,8 @@ fun NameWithDisambiguationAndAliases?.getAnnotatedName(): AnnotatedString {
         val alias: String? = withAliases(
             aliases = aliases.filter { alias -> alias.isPrimary },
         ).getAliasForLocale(
+            // Need to exclude locale from android:configChanges to force activity recreation for this to update
+            // https://issuetracker.google.com/issues/240191036
             systemLocale = Locale.current,
         )
         if (!alias.isNullOrEmpty() || !disambiguation.isNullOrEmpty()) {
