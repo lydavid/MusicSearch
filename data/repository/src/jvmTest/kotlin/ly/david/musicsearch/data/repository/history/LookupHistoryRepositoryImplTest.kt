@@ -29,6 +29,7 @@ import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetwo
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.TestSearchResultsRepository
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -218,6 +219,28 @@ class LookupHistoryRepositoryImplTest :
                     type = "Group",
                     sortName = "Zutto Mayonaka de Iinoni.",
                     lastUpdated = currentTime,
+                    aliases = listOf(
+                        BasicAlias(
+                            name = "ZUTOMAYO",
+                            locale = "en",
+                            isPrimary = true,
+                        ),
+                        BasicAlias(
+                            name = "ZTMY",
+                            locale = "en",
+                            isPrimary = false,
+                        ),
+                        BasicAlias(
+                            name = "계속 한밤중이면 좋을 텐데.",
+                            locale = "ko",
+                            isPrimary = true,
+                        ),
+                        BasicAlias(
+                            name = "ずとまよ",
+                            locale = "ja",
+                            isPrimary = false,
+                        ),
+                    ),
                 ),
                 this,
             )

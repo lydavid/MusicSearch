@@ -7,6 +7,7 @@ import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.series.SeriesRepository
 
@@ -29,12 +30,18 @@ class SeriesRepositoryImpl(
         val series = seriesDao.getSeriesForDetails(seriesId)
         val urlRelations = relationRepository.getRelationshipsByType(seriesId)
         val visited = relationRepository.visited(seriesId)
+        val aliases = aliasDao.getAliases(
+            entityType = MusicBrainzEntity.SERIES,
+            mbid = seriesId,
+        )
+
         if (series != null &&
             visited &&
             !forceRefresh
         ) {
             return series.copy(
                 urls = urlRelations,
+                aliases = aliases,
             )
         }
 

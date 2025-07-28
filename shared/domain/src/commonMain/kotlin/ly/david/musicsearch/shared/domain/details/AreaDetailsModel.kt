@@ -3,6 +3,8 @@ package ly.david.musicsearch.shared.domain.details
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.area.Area
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
@@ -22,6 +24,7 @@ data class AreaDetailsModel(
     override val imageMetadata: ImageMetadata = ImageMetadata(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val urls: List<RelationListItemModel> = listOf(),
+    override val aliases: List<BasicAlias> = listOf(),
 ) : Area, MusicBrainzDetailsModel {
     override fun withArtistCredits(artistCredits: List<ArtistCreditUiModel>): MusicBrainzDetailsModel {
         return copy(artistCredits = artistCredits)
@@ -37,5 +40,9 @@ data class AreaDetailsModel(
 
     override fun withUrls(urls: List<RelationListItemModel>): MusicBrainzDetailsModel {
         return copy(urls = urls)
+    }
+
+    override fun withAliases(aliases: List<BasicAlias>): NameWithDisambiguationAndAliases {
+        return copy(aliases = aliases)
     }
 }

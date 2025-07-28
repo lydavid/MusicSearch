@@ -8,6 +8,7 @@ import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 
@@ -46,11 +47,16 @@ class ReleaseGroupRepositoryImpl(
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseGroupId)
         val urlRelations = relationRepository.getRelationshipsByType(releaseGroupId)
         val visited = relationRepository.visited(releaseGroupId)
+        val aliases = aliasDao.getAliases(
+            entityType = MusicBrainzEntity.RELEASE_GROUP,
+            mbid = releaseGroupId,
+        )
 
         return if (releaseGroup != null && artistCredits.isNotEmpty() && visited) {
             releaseGroup.copy(
                 artistCredits = artistCredits,
                 urls = urlRelations,
+                aliases = aliases,
             )
         } else {
             null

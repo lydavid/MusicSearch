@@ -20,9 +20,9 @@ import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 fun <T : MusicBrainzDetailsModel> T.getCapitalizedName(strings: AppStrings): String {
     return when (this) {
@@ -97,6 +97,10 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 collapsed = detailsTabUiState.isExternalLinksCollapsed,
                 onCollapseExpand = onCollapseExpandExternalLinks,
             )
+
+            // TODO: display all aliases? default expanded or no?
+            //  show the primary one for user locale but toggle to show rest?
+            //  primary is already shown in title, but we should repeat here for completeness
 
             item {
                 LastUpdatedFooterItem(

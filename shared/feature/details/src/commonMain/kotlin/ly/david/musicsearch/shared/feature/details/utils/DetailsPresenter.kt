@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.intl.Locale
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
 import com.slack.circuit.retained.collectAsRetainedState
@@ -35,6 +36,7 @@ import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
 import ly.david.musicsearch.ui.common.list.getTotalLocalCount
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
@@ -97,6 +99,15 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             entityId = screen.id,
         ).collectAsRetainedState(false)
 
+        // Need to exclude locale from android:configChanges to force activity recreation for this to update
+        // https://issuetracker.google.com/issues/240191036
+        val locale = Locale.current
+
+        val a by remember(locale) { mutableStateOf("languageTag=${locale.toLanguageTag()}") }
+        LaunchedEffect(a) {
+            println(a)
+        }
+
         val entitiesListUiState = allEntitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
 
@@ -126,9 +137,13 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             forceRefreshDetails = false
         }
 
+        // TODO: although it could be nice to format the name, alias, disambiguation differently,
+        //  I think it's more important to be able to record it in history
+        //  I think we can do both though
+        //  pass split model to view, but combine them here
         RecordVisit(
             mbid = screen.id,
-            title = title,
+            title = detailsModel.getAnnotatedName().text,
             entity = screen.entity,
             searchHint = getSearchHint(detailsModel),
         )
@@ -262,7 +277,6 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         }
 
         return DetailsUiState(
-            title = title,
             subtitle = subtitle,
             tabs = getTabs(),
             selectedTab = selectedTab,
@@ -290,7 +304,6 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
 }
 
 internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
-    val title: String,
     val subtitle: String = "",
     val tabs: ImmutableList<Tab>,
     val selectedTab: Tab,

@@ -9,8 +9,12 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
+import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
 
 /**
@@ -19,19 +23,19 @@ import ly.david.musicsearch.ui.common.preview.PreviewTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 actual fun TopAppBarWithFilter(
+    annotatedString: AnnotatedString,
     modifier: Modifier,
     onBack: () -> Unit,
     showBackButton: Boolean,
     entity: MusicBrainzEntity?,
-    title: String,
     subtitle: String,
     scrollBehavior: TopAppBarScrollBehavior?,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
     topAppBarFilterState: TopAppBarFilterState,
     selectionState: SelectionState,
-    additionalActions: @Composable () -> Unit,
-    additionalBar: @Composable () -> Unit,
+    additionalActions: @Composable (() -> Unit),
+    additionalBar: @Composable (() -> Unit),
     onSelectAllToggle: () -> Unit,
 ) {
     if (topAppBarFilterState.isFilterMode || selectionState.isEditMode) {
@@ -49,7 +53,7 @@ actual fun TopAppBarWithFilter(
         onBack = onBack,
         showBackButton = showBackButton,
         entity = entity,
-        title = title,
+        annotatedString = annotatedString,
         subtitle = subtitle,
         scrollBehavior = scrollBehavior,
         overflowDropdownMenuItems = overflowDropdownMenuItems,
@@ -68,7 +72,20 @@ actual fun TopAppBarWithFilter(
 @Composable
 internal fun PreviewTopAppBarWithFilter() {
     PreviewTheme {
-        TopAppBarWithFilterInternal(title = "Title")
+        TopAppBarWithFilterInternal(
+            annotatedString = ArtistDetailsModel(
+                id = "8b089567-8879-4d0e-bf24-6f8352b63a16",
+                name = "ナノ",
+                disambiguation = "Japanese-American pop/rock singer",
+                aliases = listOf(
+                    BasicAlias(
+                        name = "NANO",
+                        locale = "en",
+                        isPrimary = true,
+                    )
+                )
+            ).getAnnotatedName(),
+        )
     }
 }
 
@@ -78,7 +95,7 @@ internal fun PreviewTopAppBarWithFilter() {
 internal fun PreviewTopAppBarWithFilterFilterMode() {
     PreviewTheme {
         TopAppBarWithFilterInternal(
-            title = "Title",
+            annotatedString = AnnotatedString(text = "Title"),
             topAppBarFilterState = TopAppBarFilterState(initialIsFilterMode = true),
         )
     }
@@ -90,7 +107,7 @@ internal fun PreviewTopAppBarWithFilterFilterMode() {
 internal fun PreviewTopAppBarWithFilterFilterModeWithText() {
     PreviewTheme {
         TopAppBarWithFilterInternal(
-            title = "Title",
+            annotatedString = AnnotatedString(text = "Title"),
             topAppBarFilterState = TopAppBarFilterState(
                 initialFilterText = "Initial text",
                 initialIsFilterMode = true
@@ -105,7 +122,7 @@ internal fun PreviewTopAppBarWithFilterFilterModeWithText() {
 internal fun PreviewTopAppBarWithFilterNoFilter() {
     PreviewTheme {
         TopAppBarWithFilterInternal(
-            title = "Title",
+            annotatedString = AnnotatedString(text = "Title"),
             topAppBarFilterState = TopAppBarFilterState(
                 initialShow = false,
             )
@@ -121,7 +138,7 @@ internal fun PreviewTopAppBarWithFilterWithTabs() {
         var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
         TopAppBarWithFilterInternal(
-            title = "A title that is very long so that it will go off the screen and allow us to scroll.",
+            annotatedString = AnnotatedString(text = "Title"),
             additionalBar = {
                 TabsBar(
                     tabsTitle = listOf(
@@ -145,7 +162,7 @@ internal fun PreviewTopAppBarWithFilterWithTabsFilterMode() {
         var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
         TopAppBarWithFilterInternal(
-            title = "A title that is very long so that it will go off the screen and allow us to scroll.",
+            annotatedString = AnnotatedString(text = "Title"),
             topAppBarFilterState = TopAppBarFilterState(initialIsFilterMode = true),
             additionalBar = {
                 TabsBar(
@@ -173,7 +190,7 @@ internal fun PreviewTopAppBarWithFilterWithSelectedOne() {
             totalLoadedCount = 200,
         )
         TopAppBarWithFilterInternal(
-            title = "Title",
+            annotatedString = AnnotatedString(text = "Title"),
             selectionState = selectionState,
         )
     }
@@ -189,7 +206,7 @@ internal fun PreviewTopAppBarWithFilterWithSelectedAll() {
             ids = (1..200).map { it.toString() },
         )
         TopAppBarWithFilterInternal(
-            title = "Title",
+            annotatedString = AnnotatedString(text = "Title"),
             selectionState = selectionState,
         )
     }
@@ -205,7 +222,7 @@ internal fun PreviewTopAppBarWithFilterWithSelectedAllExceptOne() {
             ids = (1..199).map { it.toString() },
         )
         TopAppBarWithFilterInternal(
-            title = "Title",
+            annotatedString = AnnotatedString(text = "Title"),
             selectionState = selectionState,
         )
     }

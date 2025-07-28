@@ -47,9 +47,6 @@ internal class ArtistPresenter(
         return artistTabs
     }
 
-    // TODO: consider using getFirstTabListItems, getSecondTabListItems, ..., getSixthTabListItems
-    //  to store all the possible list items
-
     override fun getSearchHint(detailsModel: ArtistDetailsModel?): String? {
         return detailsModel?.sortName
     }

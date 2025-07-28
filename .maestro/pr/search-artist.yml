@@ -9,7 +9,7 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "zutomayo"
 - tapOn: "ずっと真夜中でいいのに。"
 
-- assertVisible: "ずっと真夜中でいいのに。 (Japanese pop band)"
+- assertVisible: "ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
 - assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
 - assertVisible: "Type: Group"
 - assertVisible: "Founded: 2018"
@@ -31,7 +31,7 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "japan"
 - assertVisible: "Japan"
 - tapOn: Cancel
-- tapOn: "Add ずっと真夜中でいいのに。 (Japanese pop band) to collection"
+- tapOn: "Add ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band) to collection"
 - tapOn: "Create a collection"
 - inputText: "Artists"
 - tapOn: "OK"
@@ -57,14 +57,14 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "History"
 - tapOn: "Filter"
 - inputText: "zutomayo"
-- assertVisible: "ずっと真夜中でいいのに。 (Japanese pop band)"
+- assertVisible: "ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
 - tapOn: Clear filter text
 - inputText: "zutto mayo"
-- tapOn: "ずっと真夜中でいいのに。 (Japanese pop band)"
+- tapOn: "ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
 
 
 # Repeat tests with cached data
-- assertVisible: "ずっと真夜中でいいのに。 (Japanese pop band)"
+- assertVisible: "ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
 - assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
 - assertVisible: "Type: Group"
 - assertVisible: "Founded: 2018"
@@ -86,7 +86,7 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "japan"
 - assertVisible: "Japan"
 - tapOn: Cancel
-- tapOn: "Add ずっと真夜中でいいのに。 (Japanese pop band) to another collection"
+- tapOn: "Add ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band) to another collection"
 - tapOn: "Artists"
 - assertVisible: "Already in Artists."
 

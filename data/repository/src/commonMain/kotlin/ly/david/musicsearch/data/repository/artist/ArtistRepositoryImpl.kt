@@ -35,6 +35,10 @@ class ArtistRepositoryImpl(
         val artistDetailsModel = artistDao.getArtistForDetails(artistId)
         val urlRelations = relationRepository.getRelationshipsByType(artistId)
         val visited = relationRepository.visited(artistId)
+        val aliases = aliasDao.getAliases(
+            entityType = MusicBrainzEntity.ARTIST,
+            mbid = artistId,
+        )
 
         if (
             artistDetailsModel != null &&
@@ -43,6 +47,7 @@ class ArtistRepositoryImpl(
         ) {
             val artistWithUrls = artistDetailsModel.copy(
                 urls = urlRelations,
+                aliases = aliases,
             )
             return@withContext artistWithUrls
         }
