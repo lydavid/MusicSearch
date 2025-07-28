@@ -8,6 +8,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkM
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class AreaRepositoryImpl(
@@ -29,12 +30,18 @@ class AreaRepositoryImpl(
         val area = areaDao.getAreaForDetails(areaId)
         val urlRelations = relationRepository.getRelationshipsByType(areaId)
         val visited = relationRepository.visited(areaId)
+        val aliases = aliasDao.getAliases(
+            entityType = MusicBrainzEntity.AREA,
+            mbid = areaId,
+        )
+
         if (area?.type != null &&
             visited &&
             !forceRefresh
         ) {
             return area.copy(
                 urls = urlRelations,
+                aliases = aliases,
             )
         }
 

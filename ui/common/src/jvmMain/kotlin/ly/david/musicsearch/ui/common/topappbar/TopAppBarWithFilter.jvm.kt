@@ -3,6 +3,8 @@ package ly.david.musicsearch.ui.common.topappbar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 
 /**
@@ -11,19 +13,19 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 actual fun TopAppBarWithFilter(
-    modifier: androidx.compose.ui.Modifier,
+    annotatedString: AnnotatedString,
+    modifier: Modifier,
     onBack: () -> Unit,
     showBackButton: Boolean,
     entity: MusicBrainzEntity?,
-    title: String,
     subtitle: String,
     scrollBehavior: TopAppBarScrollBehavior?,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
     topAppBarFilterState: TopAppBarFilterState,
     selectionState: SelectionState,
-    additionalActions: @Composable () -> Unit,
-    additionalBar: @Composable () -> Unit,
+    additionalActions: @Composable (() -> Unit),
+    additionalBar: @Composable (() -> Unit),
     onSelectAllToggle: () -> Unit,
 ) {
     TopAppBarWithFilterInternal(
@@ -31,7 +33,7 @@ actual fun TopAppBarWithFilter(
         onBack = onBack,
         showBackButton = showBackButton,
         entity = entity,
-        title = title,
+        annotatedString = annotatedString,
         subtitle = subtitle,
         scrollBehavior = scrollBehavior,
         overflowDropdownMenuItems = overflowDropdownMenuItems,

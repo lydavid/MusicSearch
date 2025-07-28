@@ -35,6 +35,7 @@ import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
 import ly.david.musicsearch.ui.common.list.getTotalLocalCount
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
@@ -128,7 +129,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
 
         RecordVisit(
             mbid = screen.id,
-            title = title,
+            title = detailsModel.getAnnotatedName().text,
             entity = screen.entity,
             searchHint = getSearchHint(detailsModel),
         )
@@ -262,7 +263,6 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         }
 
         return DetailsUiState(
-            title = title,
             subtitle = subtitle,
             tabs = getTabs(),
             selectedTab = selectedTab,
@@ -290,7 +290,6 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
 }
 
 internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
-    val title: String,
     val subtitle: String = "",
     val tabs: ImmutableList<Tab>,
     val selectedTab: Tab,

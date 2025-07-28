@@ -46,6 +46,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.state.ToggleableState
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -58,12 +59,9 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.FindInPage
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 
-/**
- * [ScrollableTopAppBar] with filtering.
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-expect fun TopAppBarWithFilter(
+fun TopAppBarWithFilter(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
@@ -78,24 +76,63 @@ expect fun TopAppBarWithFilter(
     additionalActions: @Composable () -> Unit = {},
     additionalBar: @Composable () -> Unit = {},
     onSelectAllToggle: () -> Unit = {},
-)
+) {
+    TopAppBarWithFilter(
+        modifier = modifier,
+        onBack = onBack,
+        showBackButton = showBackButton,
+        entity = entity,
+        annotatedString = AnnotatedString(title),
+        subtitle = subtitle,
+        scrollBehavior = scrollBehavior,
+        overflowDropdownMenuItems = overflowDropdownMenuItems,
+        subtitleDropdownMenuItems = subtitleDropdownMenuItems,
+        topAppBarFilterState = topAppBarFilterState,
+        selectionState = selectionState,
+        additionalActions = additionalActions,
+        additionalBar = additionalBar,
+        onSelectAllToggle = onSelectAllToggle,
+    )
+}
 
+/**
+ * [ScrollableTopAppBar] with filtering.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun TopAppBarWithFilterInternal(
+expect fun TopAppBarWithFilter(
+    annotatedString: AnnotatedString,
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
     entity: MusicBrainzEntity? = null,
-    title: String = "",
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     selectionState: SelectionState = SelectionState(),
-    additionalActions: @Composable () -> Unit = {},
-    additionalBar: @Composable () -> Unit = {},
+    additionalActions: @Composable (() -> Unit) = {},
+    additionalBar: @Composable (() -> Unit) = {},
+    onSelectAllToggle: () -> Unit = {},
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun TopAppBarWithFilterInternal(
+    annotatedString: AnnotatedString,
+    modifier: Modifier = Modifier,
+    onBack: () -> Unit = {},
+    showBackButton: Boolean = true,
+    entity: MusicBrainzEntity? = null,
+    subtitle: String = "",
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+    overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
+    subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
+    topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
+    selectionState: SelectionState = SelectionState(),
+    additionalActions: @Composable (() -> Unit) = {},
+    additionalBar: @Composable (() -> Unit) = {},
     onSelectAllToggle: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
@@ -195,10 +232,10 @@ internal fun TopAppBarWithFilterInternal(
             },
             showBackButton = showBackButton,
             entity = entity,
-            title = if (isEditMode) {
-                selectionState.title.ifEmpty { "Editing..." }
+            annotatedString = if (isEditMode) {
+                AnnotatedString(selectionState.title.ifEmpty { "Editing..." })
             } else {
-                title
+                annotatedString
             },
             subtitle = subtitle,
             scrollBehavior = scrollBehavior.takeIf { !isEditMode },

@@ -9,8 +9,8 @@ data class AliasMusicBrainzNetworkModel(
     @SerialName("name") override val name: String,
     @SerialName("primary") override val isPrimary: Boolean? = null,
     @SerialName("locale") override val locale: String? = null,
-    @SerialName("type-id") override val typeId: String? = null,
-    @SerialName("begin-date") override val beginDate: String? = null,
-    @SerialName("end-date") override val endDate: String? = null,
-    @SerialName("ended") override val ended: Boolean? = null,
+    @SerialName("type-id") val typeId: String? = null,
+    @SerialName("begin-date") val beginDate: String? = null,
+    @SerialName("end-date") val endDate: String? = null,
+    @SerialName("ended") val ended: Boolean? = null,
 ) : Alias

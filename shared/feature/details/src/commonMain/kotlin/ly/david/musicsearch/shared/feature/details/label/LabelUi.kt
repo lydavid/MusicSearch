@@ -26,6 +26,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
@@ -131,12 +132,13 @@ internal fun LabelUi(
             }
         },
         topBar = {
+            val annotatedName = state.detailsModel.getAnnotatedName()
             TopAppBarWithFilter(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
                 entity = entity,
-                title = state.title,
+                annotatedString = annotatedName,
                 scrollBehavior = scrollBehavior,
                 additionalActions = {
                     AddToCollectionActionToggle(
@@ -149,7 +151,7 @@ internal fun LabelUi(
                         onLoginClick = {
                             loginEventSink(LoginUiEvent.StartLogin)
                         },
-                        nameWithDisambiguation = state.title,
+                        nameWithDisambiguation = annotatedName.text,
                     )
                 },
                 overflowDropdownMenuItems = {

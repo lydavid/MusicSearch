@@ -552,3 +552,99 @@ VALUES (
 deleteWorkAlias:
 DELETE FROM work_alias
 WHERE work_id = :mbid;
+
+getAreaAliases:
+SELECT
+  name,
+  locale,
+  is_primary
+FROM area_alias
+WHERE area_alias.area_id = :mbid;
+
+getArtistAliases:
+SELECT
+  name,
+  locale,
+  is_primary
+FROM artist_alias
+WHERE artist_alias.artist_id = :mbid;
+
+getEventAliases:
+SELECT
+  name,
+  locale,
+  is_primary
+FROM event_alias
+WHERE event_alias.event_id = :mbid;
+
+getGenreAliases:
+SELECT
+  name,
+  locale,
+  is_primary
+FROM genre_alias
+WHERE genre_alias.genre_id = :mbid;
+
+getInstrumentAliases:
+SELECT
+  name,
+  locale,
+  is_primary
+FROM instrument_alias
+WHERE instrument_alias.instrument_id = :mbid;
+
+getLabelAliases:
+SELECT
+  name,
+  locale,
+  is_primary
+FROM label_alias
+WHERE label_alias.label_id = :mbid;
+
+getPlaceAliases:
+SELECT
+  name,
+  locale,
+  is_primary
+FROM place_alias
+WHERE place_alias.place_id = :mbid;
+
+getRecordingAliases:
+SELECT
+  name,
+  locale,
+  is_primary
+FROM recording_alias
+WHERE recording_alias.recording_id = :mbid;
+
+getReleaseAliases:
+SELECT
+  name,
+  locale,
+  is_primary
+FROM release_alias
+WHERE release_alias.release_id = :mbid;
+
+getReleaseGroupAliases:
+SELECT
+  name,
+  locale,
+  is_primary
+FROM release_group_alias
+WHERE release_group_alias.release_group_id = :mbid;
+
+getSeriesAliases:
+SELECT
+  name,
+  locale,
+  is_primary
+FROM series_alias
+WHERE series_alias.series_id = :mbid;
+
+getWorkAliases:
+SELECT
+  name,
+  locale,
+  is_primary
+FROM work_alias
+WHERE work_alias.work_id = :mbid;

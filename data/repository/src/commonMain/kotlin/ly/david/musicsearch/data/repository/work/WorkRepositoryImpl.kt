@@ -8,6 +8,7 @@ import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.work.WorkRepository
 
@@ -32,10 +33,16 @@ class WorkRepositoryImpl(
         val workAttributes = workAttributeDao.getWorkAttributesForWork(workId)
         val urlRelations = relationRepository.getRelationshipsByType(workId)
         val visited = relationRepository.visited(workId)
+        val aliases = aliasDao.getAliases(
+            entityType = MusicBrainzEntity.WORK,
+            mbid = workId,
+        )
+
         if (work != null && visited) {
             return work.copy(
                 attributes = workAttributes,
                 urls = urlRelations,
+                aliases = aliases,
             )
         }
 

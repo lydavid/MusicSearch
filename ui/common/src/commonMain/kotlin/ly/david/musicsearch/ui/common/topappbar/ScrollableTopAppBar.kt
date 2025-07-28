@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -46,6 +47,38 @@ import ly.david.musicsearch.ui.common.theme.LocalStrings
  * exceed this time.
  */
 private const val DELAY_LOADING_MS = 300L
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ScrollableTopAppBar(
+    modifier: Modifier = Modifier,
+    onBack: () -> Unit = {},
+    showBackButton: Boolean = true,
+    entity: MusicBrainzEntity? = null,
+    title: String = "",
+    subtitle: String = "",
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+    containerColor: Color = Color.Unspecified,
+    actions: @Composable () -> Unit = {},
+    overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
+    subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
+    additionalBar: @Composable ColumnScope.() -> Unit = {},
+) {
+    ScrollableTopAppBar(
+        modifier = modifier,
+        onBack = onBack,
+        showBackButton = showBackButton,
+        entity = entity,
+        annotatedString = AnnotatedString(title),
+        subtitle = subtitle,
+        scrollBehavior = scrollBehavior,
+        containerColor = containerColor,
+        actions = actions,
+        overflowDropdownMenuItems = overflowDropdownMenuItems,
+        subtitleDropdownMenuItems = subtitleDropdownMenuItems,
+        additionalBar = additionalBar,
+    )
+}
 
 /**
  * [TopAppBar] with icon for [entity], scrollable [title]/[subtitle];
@@ -65,14 +98,14 @@ fun ScrollableTopAppBar(
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
     entity: MusicBrainzEntity? = null,
-    title: String = "",
+    annotatedString: AnnotatedString = AnnotatedString(""),
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
     containerColor: Color = Color.Unspecified,
-    actions: @Composable () -> Unit = {},
+    actions: @Composable (() -> Unit) = {},
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
-    additionalBar: @Composable ColumnScope.() -> Unit = {},
+    additionalBar: @Composable (ColumnScope.() -> Unit) = {},
 ) {
     val strings = LocalStrings.current
 
@@ -80,7 +113,7 @@ fun ScrollableTopAppBar(
         TopAppBar(
             title = {
                 TitleAndSubtitle(
-                    title = title,
+                    annotatedString = annotatedString,
                     entity = entity,
                     subtitle = subtitle,
                     subtitleDropdownMenuItems = subtitleDropdownMenuItems,
@@ -112,15 +145,15 @@ fun ScrollableTopAppBar(
 
 @Composable
 private fun TitleAndSubtitle(
-    title: String,
+    annotatedString: AnnotatedString,
     entity: MusicBrainzEntity? = null,
     subtitle: String = "",
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 ) {
     var showLoading by rememberSaveable { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = title) {
-        showLoading = if (title.isEmpty()) {
+    LaunchedEffect(key1 = annotatedString) {
+        showLoading = if (annotatedString.text.isEmpty()) {
             delay(DELAY_LOADING_MS)
             true
         } else {
@@ -146,7 +179,7 @@ private fun TitleAndSubtitle(
             Column {
                 SelectionContainer {
                     Text(
-                        text = title,
+                        text = annotatedString,
                         modifier = Modifier.horizontalScroll(rememberScrollState()),
                     )
                 }

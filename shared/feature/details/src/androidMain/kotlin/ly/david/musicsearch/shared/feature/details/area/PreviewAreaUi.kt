@@ -505,7 +505,6 @@ private val country = AreaDetailsModel(
 )
 
 private val detailsUiState = DetailsUiState(
-    title = "Canada",
     tabs = areaTabs,
     selectedTab = Tab.DETAILS,
     detailsModel = country,
@@ -589,7 +588,6 @@ internal fun PreviewAreaRelationships() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
             state = DetailsUiState(
-                title = "Canada",
                 tabs = areaTabs,
                 selectedTab = Tab.RELATIONSHIPS,
                 detailsModel = country,
@@ -626,7 +624,6 @@ internal fun PreviewAreaArtists() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
             state = DetailsUiState(
-                title = "Canada",
                 tabs = areaTabs,
                 selectedTab = Tab.ARTISTS,
                 detailsModel = country,
@@ -663,7 +660,6 @@ internal fun PreviewAreaEvents() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
             state = DetailsUiState(
-                title = "Canada",
                 tabs = areaTabs,
                 selectedTab = Tab.EVENTS,
                 detailsModel = country,
@@ -700,7 +696,6 @@ internal fun PreviewAreaLabels() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
             state = DetailsUiState(
-                title = "Canada",
                 tabs = areaTabs,
                 selectedTab = Tab.LABELS,
                 detailsModel = country,
@@ -737,7 +732,6 @@ internal fun PreviewAreaReleases() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
             state = DetailsUiState(
-                title = "Canada",
                 tabs = areaTabs,
                 selectedTab = Tab.RELEASES,
                 detailsModel = country,
@@ -774,7 +768,6 @@ internal fun PreviewAreaPlaces() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
             state = DetailsUiState(
-                title = "Canada",
                 tabs = areaTabs,
                 selectedTab = Tab.PLACES,
                 detailsModel = country,
@@ -812,7 +805,6 @@ internal fun PreviewAreaStats() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
             state = DetailsUiState(
-                title = "Canada",
                 tabs = areaTabs,
                 selectedTab = Tab.STATS,
                 detailsModel = country,

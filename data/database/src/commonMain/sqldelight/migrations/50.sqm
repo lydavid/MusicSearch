@@ -1,0 +1,35 @@
+UPDATE area_alias
+SET locale = replace(locale, '_', '-');
+
+UPDATE artist_alias
+SET locale = replace(locale, '_', '-');
+
+UPDATE event_alias
+SET locale = replace(locale, '_', '-');
+
+UPDATE genre_alias
+SET locale = replace(locale, '_', '-');
+
+UPDATE instrument_alias
+SET locale = replace(locale, '_', '-');
+
+UPDATE label_alias
+SET locale = replace(locale, '_', '-');
+
+UPDATE place_alias
+SET locale = replace(locale, '_', '-');
+
+UPDATE recording_alias
+SET locale = replace(locale, '_', '-');
+
+UPDATE release_alias
+SET locale = replace(locale, '_', '-');
+
+UPDATE release_group_alias
+SET locale = replace(locale, '_', '-');
+
+UPDATE series_alias
+SET locale = replace(locale, '_', '-');
+
+UPDATE work_alias
+SET locale = replace(locale, '_', '-');

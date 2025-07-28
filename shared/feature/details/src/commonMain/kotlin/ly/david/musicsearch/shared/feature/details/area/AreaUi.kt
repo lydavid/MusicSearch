@@ -30,6 +30,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
@@ -84,7 +85,7 @@ internal fun AreaUi(
                 onLoginClick = {
                     loginEventSink(LoginUiEvent.StartLogin)
                 },
-                nameWithDisambiguation = state.title,
+                nameWithDisambiguation = state.detailsModel.getAnnotatedName().text,
             )
         },
         additionalOverflowDropdownMenuItems = {
@@ -210,7 +211,7 @@ internal fun AreaUiInternal(
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
                 entity = entity,
-                title = state.title,
+                annotatedString = state.detailsModel.getAnnotatedName(),
                 scrollBehavior = scrollBehavior,
                 additionalActions = additionalActions,
                 overflowDropdownMenuItems = {

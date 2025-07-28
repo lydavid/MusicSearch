@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
+import app.cash.sqldelight.Query
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
@@ -15,6 +16,8 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.AliasQueries
 
 class AliasDao(
@@ -63,7 +66,9 @@ class AliasDao(
         networkModel: MusicBrainzNetworkModel,
         alias: AliasMusicBrainzNetworkModel?,
     ) {
-        alias?.run {
+        alias?.copy(
+            locale = alias.locale?.replace("_", "-"),
+        )?.run {
             when (networkModel) {
                 is AreaMusicBrainzNetworkModel -> {
                     transacter.insertAreaAlias(
@@ -237,4 +242,37 @@ class AliasDao(
             }
         }
     }
+
+    fun getAliases(
+        entityType: MusicBrainzEntity,
+        mbid: String,
+    ): List<BasicAlias> {
+        val aliasQueries: Map<MusicBrainzEntity, AliasQuery<BasicAlias>> = mapOf(
+            MusicBrainzEntity.AREA to transacter::getAreaAliases,
+            MusicBrainzEntity.ARTIST to transacter::getArtistAliases,
+            MusicBrainzEntity.EVENT to transacter::getEventAliases,
+            MusicBrainzEntity.GENRE to transacter::getGenreAliases,
+            MusicBrainzEntity.INSTRUMENT to transacter::getInstrumentAliases,
+            MusicBrainzEntity.LABEL to transacter::getLabelAliases,
+            MusicBrainzEntity.PLACE to transacter::getPlaceAliases,
+            MusicBrainzEntity.RECORDING to transacter::getRecordingAliases,
+            MusicBrainzEntity.RELEASE to transacter::getReleaseAliases,
+            MusicBrainzEntity.RELEASE_GROUP to transacter::getReleaseGroupAliases,
+            MusicBrainzEntity.SERIES to transacter::getSeriesAliases,
+            MusicBrainzEntity.WORK to transacter::getWorkAliases,
+        )
+
+        return aliasQueries[entityType]?.invoke(mbid, mapToBasicAlias())?.executeAsList()
+            ?: emptyList()
+    }
+}
+
+private typealias AliasQuery<T> = (String, (String, String?, Boolean) -> T) -> Query<T>
+
+private fun mapToBasicAlias(): (String, String?, Boolean) -> BasicAlias = { name, locale, isPrimary ->
+    BasicAlias(
+        name = name,
+        locale = locale.orEmpty(),
+        isPrimary = isPrimary,
+    )
 }
