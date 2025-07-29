@@ -110,7 +110,7 @@ class LookupHistoryRepositoryImplTest :
         Assert.assertEquals(
             listOf(
                 ListSeparator(
-                    id = "Sunday, February 9",
+                    id = "1739108222",
                     text = "Sunday, February 9",
                 ),
                 LookupHistoryListItemModel(
@@ -265,9 +265,8 @@ class LookupHistoryRepositoryImplTest :
         ).asSnapshot().run {
             Assert.assertEquals(
                 listOf(
-                    // TODO: use a more unique id for lookup history list separators
                     ListSeparator(
-                        id = "Wednesday, June 5",
+                        id = "1717616540",
                         text = "Wednesday, June 5",
                     ),
                     LookupHistoryListItemModel(
