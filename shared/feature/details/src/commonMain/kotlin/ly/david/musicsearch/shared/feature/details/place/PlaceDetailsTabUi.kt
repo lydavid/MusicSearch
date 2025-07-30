@@ -22,7 +22,7 @@ internal fun PlaceDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
+    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     onCollapseExpandExternalLinks: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
@@ -76,7 +76,6 @@ internal fun PlaceDetailsTabUi(
                             onItemClick(
                                 MusicBrainzEntity.AREA,
                                 id,
-                                areaName,
                             )
                         },
                         showIcon = false,

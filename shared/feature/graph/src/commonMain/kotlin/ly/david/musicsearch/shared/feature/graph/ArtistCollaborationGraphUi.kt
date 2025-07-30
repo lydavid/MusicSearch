@@ -132,7 +132,6 @@ internal fun ArtistCollaborationGraphUi(
                             ArtistCollaborationGraphUiEvent.ClickItem(
                                 entity = node.entity,
                                 id = node.id,
-                                title = node.name,
                             ),
                         )
 

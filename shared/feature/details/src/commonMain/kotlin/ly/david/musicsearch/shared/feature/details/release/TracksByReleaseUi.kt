@@ -19,7 +19,7 @@ import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
 internal fun TracksByReleaseUi(
     uiState: TracksByReleaseUiState,
     modifier: Modifier = Modifier,
-    onRecordingClick: (id: String, title: String) -> Unit = { _, _ -> },
+    onRecordingClick: (id: String) -> Unit = {},
 ) {
     val eventSink = uiState.eventSink
 
@@ -47,7 +47,7 @@ internal fun TracksByReleaseUi(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     collapsedMediumIds: Set<Long> = setOf(),
-    onRecordingClick: (id: String, title: String) -> Unit = { _, _ -> },
+    onRecordingClick: (id: String) -> Unit = {},
     onToggleMedium: (id: String) -> Unit = {},
 ) {
     ScreenWithPagingLoadingAndError(

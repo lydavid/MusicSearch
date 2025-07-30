@@ -224,12 +224,11 @@ internal fun PlaceUi(
                     place = detailsModel,
                     filterText = state.topAppBarFilterState.filterText,
                     detailsTabUiState = state.detailsTabUiState,
-                    onItemClick = { entity, id, title ->
+                    onItemClick = { entity, id ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
                                 entity = entity,
                                 id = id,
-                                title = title,
                             ),
                         )
                     },

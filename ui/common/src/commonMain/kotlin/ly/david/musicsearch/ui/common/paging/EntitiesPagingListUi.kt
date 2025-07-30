@@ -6,7 +6,6 @@ import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
@@ -48,7 +47,7 @@ fun EntitiesPagingListUi(
     modifier: Modifier = Modifier,
     selectedIds: ImmutableSet<String> = persistentSetOf(),
     now: Instant = Clock.System.now(),
-    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
+    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     onSelect: (String) -> Unit = {},
     onEditCollectionClick: (String) -> Unit = {},
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = { _ -> },
@@ -66,7 +65,6 @@ fun EntitiesPagingListUi(
                         onItemClick(
                             MusicBrainzEntity.AREA,
                             id,
-                            getNameWithDisambiguation(),
                         )
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
@@ -82,7 +80,6 @@ fun EntitiesPagingListUi(
                         onItemClick(
                             MusicBrainzEntity.ARTIST,
                             id,
-                            getNameWithDisambiguation(),
                         )
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
@@ -98,7 +95,6 @@ fun EntitiesPagingListUi(
                         onItemClick(
                             MusicBrainzEntity.EVENT,
                             id,
-                            getNameWithDisambiguation(),
                         )
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
@@ -114,7 +110,6 @@ fun EntitiesPagingListUi(
                         onItemClick(
                             MusicBrainzEntity.GENRE,
                             id,
-                            getNameWithDisambiguation(),
                         )
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
@@ -130,7 +125,6 @@ fun EntitiesPagingListUi(
                         onItemClick(
                             MusicBrainzEntity.INSTRUMENT,
                             id,
-                            getNameWithDisambiguation(),
                         )
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
@@ -146,7 +140,6 @@ fun EntitiesPagingListUi(
                         onItemClick(
                             MusicBrainzEntity.LABEL,
                             id,
-                            getNameWithDisambiguation(),
                         )
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
@@ -162,7 +155,6 @@ fun EntitiesPagingListUi(
                         onItemClick(
                             MusicBrainzEntity.PLACE,
                             id,
-                            getNameWithDisambiguation(),
                         )
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
@@ -178,7 +170,6 @@ fun EntitiesPagingListUi(
                         onItemClick(
                             MusicBrainzEntity.RECORDING,
                             id,
-                            getNameWithDisambiguation(),
                         )
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
@@ -198,7 +189,6 @@ fun EntitiesPagingListUi(
                         onItemClick(
                             MusicBrainzEntity.RELEASE,
                             id,
-                            getNameWithDisambiguation(),
                         )
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
@@ -218,7 +208,6 @@ fun EntitiesPagingListUi(
                         onItemClick(
                             MusicBrainzEntity.RELEASE_GROUP,
                             id,
-                            getNameWithDisambiguation(),
                         )
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
@@ -234,7 +223,6 @@ fun EntitiesPagingListUi(
                         onItemClick(
                             MusicBrainzEntity.SERIES,
                             id,
-                            getNameWithDisambiguation(),
                         )
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
@@ -250,7 +238,6 @@ fun EntitiesPagingListUi(
                         onItemClick(
                             MusicBrainzEntity.WORK,
                             id,
-                            getNameWithDisambiguation(),
                         )
                     },
                     isSelected = selectedIds.contains(listItemModel.id),
@@ -262,12 +249,11 @@ fun EntitiesPagingListUi(
             is RelationListItemModel -> {
                 RelationListItem(
                     relation = listItemModel,
-                    onItemClick = { entity, id, title ->
+                    onItemClick = { entity, id ->
                         require(entity != MusicBrainzEntity.URL)
                         onItemClick(
                             entity,
                             id,
-                            title,
                         )
                     },
                 )

@@ -138,14 +138,13 @@ internal fun SearchUiContent(
             SearchResultsUi(
                 lazyPagingItems = state.searchResults,
                 lazyListState = state.searchResultsListState,
-                onItemClick = { entity, id, title ->
+                onItemClick = { entity, id ->
                     focusManager.clearFocus()
                     eventSink(SearchUiEvent.RecordSearch)
                     eventSink(
                         SearchUiEvent.ClickItem(
                             entity = entity,
                             id = id,
-                            title = title,
                         ),
                     )
                 },

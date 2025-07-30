@@ -101,7 +101,6 @@ internal class SearchPresenter(
                             DetailsScreen(
                                 entity = event.entity,
                                 id = event.id,
-                                title = event.title,
                             ),
                         ),
                     )
@@ -141,6 +140,5 @@ internal sealed interface SearchUiEvent : CircuitUiEvent {
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,
-        val title: String?,
     ) : SearchUiEvent
 }

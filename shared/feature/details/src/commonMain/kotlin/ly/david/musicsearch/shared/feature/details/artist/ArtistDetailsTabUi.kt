@@ -21,7 +21,7 @@ internal fun ArtistDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
+    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     onCollapseExpandExternalLinks: () -> Unit = {},
 ) {
     DetailsTabUi(
@@ -115,7 +115,7 @@ private fun ArtistDetailsModel.ArtistInformationSection(
 private fun AreaSection(
     areaListItemModel: AreaListItemModel?,
     filterText: String = "",
-    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
+    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
 ) {
     val strings = LocalStrings.current
 
@@ -132,7 +132,6 @@ private fun AreaSection(
                     onItemClick(
                         MusicBrainzEntity.AREA,
                         id,
-                        name,
                     )
                 },
             )

@@ -20,8 +20,8 @@ import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
-import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.RecordVisit
 
 internal class GenrePresenter(
     private val screen: DetailsScreen,
@@ -34,7 +34,7 @@ internal class GenrePresenter(
 
     @Composable
     override fun present(): GenreUiState {
-        var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
+        var title by rememberSaveable { mutableStateOf("") }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var genre: GenreListItemModel? by rememberRetained { mutableStateOf(null) }
         var forceRefreshDetails by remember { mutableStateOf(false) }

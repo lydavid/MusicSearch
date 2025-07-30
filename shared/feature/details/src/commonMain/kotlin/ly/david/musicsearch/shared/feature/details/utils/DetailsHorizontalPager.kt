@@ -79,12 +79,11 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
             Tab.TRACKS -> {
                 TracksByReleaseUi(
                     uiState = state.allEntitiesListUiState.tracksByReleaseUiState,
-                    onRecordingClick = { id, title ->
+                    onRecordingClick = { id ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
                                 entity = MusicBrainzEntity.RECORDING,
                                 id = id,
-                                title = title,
                             ),
                         )
                     },
@@ -147,12 +146,11 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                 EntitiesPagingListUi(
                     uiState = uiState,
                     now = now,
-                    onItemClick = { entity, id, title ->
+                    onItemClick = { entity, id ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
                                 entity = entity,
                                 id = id,
-                                title = title,
                             ),
                         )
                     },

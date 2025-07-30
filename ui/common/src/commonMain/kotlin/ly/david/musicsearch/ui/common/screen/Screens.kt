@@ -58,7 +58,6 @@ data class SnackbarPopResult(
 data class DetailsScreen(
     val entity: MusicBrainzEntity,
     val id: String,
-    val title: String? = null,
 ) : Screen
 
 @Parcelize

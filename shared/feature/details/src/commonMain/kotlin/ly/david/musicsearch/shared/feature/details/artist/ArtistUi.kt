@@ -293,12 +293,11 @@ internal fun ArtistUi(
                     artist = detailsModel,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
-                    onItemClick = { entity, id, title ->
+                    onItemClick = { entity, id ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
                                 entity = entity,
                                 id = id,
-                                title = title,
                             ),
                         )
                     },

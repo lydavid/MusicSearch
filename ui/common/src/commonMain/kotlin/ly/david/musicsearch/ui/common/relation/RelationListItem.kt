@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
-import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
@@ -30,7 +29,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 fun RelationListItem(
     relation: RelationListItemModel,
     modifier: Modifier = Modifier,
-    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
+    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
 ) {
     val clipboard = LocalClipboard.current
     val coroutineScope = rememberCoroutineScope()
@@ -93,7 +92,6 @@ fun RelationListItem(
                     onItemClick(
                         entity,
                         relation.linkedEntityId,
-                        relation.getNameWithDisambiguation(),
                     )
                 },
                 onLongClick = {

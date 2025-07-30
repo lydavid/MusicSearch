@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.cash.paging.compose.LazyPagingItems
-import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
@@ -46,7 +45,7 @@ import ly.david.musicsearch.ui.common.work.WorkListItem
 internal fun SearchResultsUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     lazyListState: LazyListState = rememberLazyListState(),
-    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
+    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
 ) {
     val strings = LocalStrings.current
 
@@ -88,7 +87,6 @@ private fun ListItemUi(
                     onItemClick(
                         MusicBrainzEntity.AREA,
                         id,
-                        getNameWithDisambiguation(),
                     )
                 },
             )
@@ -101,7 +99,6 @@ private fun ListItemUi(
                     onItemClick(
                         MusicBrainzEntity.ARTIST,
                         id,
-                        null,
                     )
                 },
             )
@@ -114,7 +111,6 @@ private fun ListItemUi(
                     onItemClick(
                         MusicBrainzEntity.EVENT,
                         id,
-                        getNameWithDisambiguation(),
                     )
                 },
             )
@@ -127,7 +123,6 @@ private fun ListItemUi(
                     onItemClick(
                         MusicBrainzEntity.INSTRUMENT,
                         id,
-                        getNameWithDisambiguation(),
                     )
                 },
             )
@@ -140,7 +135,6 @@ private fun ListItemUi(
                     onItemClick(
                         MusicBrainzEntity.LABEL,
                         id,
-                        getNameWithDisambiguation(),
                     )
                 },
             )
@@ -153,7 +147,6 @@ private fun ListItemUi(
                     onItemClick(
                         MusicBrainzEntity.PLACE,
                         id,
-                        getNameWithDisambiguation(),
                     )
                 },
             )
@@ -166,7 +159,6 @@ private fun ListItemUi(
                     onItemClick(
                         MusicBrainzEntity.RECORDING,
                         id,
-                        getNameWithDisambiguation(),
                     )
                 },
             )
@@ -179,7 +171,6 @@ private fun ListItemUi(
                     onItemClick(
                         MusicBrainzEntity.RELEASE,
                         id,
-                        getNameWithDisambiguation(),
                     )
                 },
             )
@@ -193,7 +184,6 @@ private fun ListItemUi(
                     onItemClick(
                         MusicBrainzEntity.RELEASE_GROUP,
                         id,
-                        getNameWithDisambiguation(),
                     )
                 },
             )
@@ -206,7 +196,6 @@ private fun ListItemUi(
                     onItemClick(
                         MusicBrainzEntity.SERIES,
                         id,
-                        getNameWithDisambiguation(),
                     )
                 },
             )
@@ -219,7 +208,6 @@ private fun ListItemUi(
                     onItemClick(
                         MusicBrainzEntity.WORK,
                         id,
-                        getNameWithDisambiguation(),
                     )
                 },
             )

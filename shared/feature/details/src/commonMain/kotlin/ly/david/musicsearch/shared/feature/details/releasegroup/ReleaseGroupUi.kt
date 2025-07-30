@@ -214,7 +214,6 @@ internal fun ReleaseGroupUi(
                                     DetailsUiEvent.ClickItem(
                                         entity = MusicBrainzEntity.ARTIST,
                                         id = artistCredit.artistId,
-                                        title = null,
                                     ),
                                 )
                             },

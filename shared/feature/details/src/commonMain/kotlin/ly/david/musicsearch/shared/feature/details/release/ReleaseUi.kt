@@ -204,7 +204,6 @@ internal fun ReleaseUi(
                                     DetailsUiEvent.ClickItem(
                                         entity = MusicBrainzEntity.ARTIST,
                                         id = artistCredit.artistId,
-                                        title = null,
                                     ),
                                 )
                             },
@@ -220,7 +219,6 @@ internal fun ReleaseUi(
                                     DetailsUiEvent.ClickItem(
                                         entity = MusicBrainzEntity.RELEASE_GROUP,
                                         id = releaseGroup.id,
-                                        title = null,
                                     ),
                                 )
                             },
@@ -265,12 +263,11 @@ internal fun ReleaseUi(
                     onImageClick = {
                         eventSink(DetailsUiEvent.ClickImage)
                     },
-                    onItemClick = { entity, id, title ->
+                    onItemClick = { entity, id ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
                                 entity = entity,
                                 id = id,
-                                title = title,
                             ),
                         )
                     },

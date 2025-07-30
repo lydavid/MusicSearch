@@ -207,7 +207,6 @@ internal fun RecordingUi(
                                     DetailsUiEvent.ClickItem(
                                         entity = MusicBrainzEntity.ARTIST,
                                         id = artistCredit.artistId,
-                                        title = null,
                                     ),
                                 )
                             },

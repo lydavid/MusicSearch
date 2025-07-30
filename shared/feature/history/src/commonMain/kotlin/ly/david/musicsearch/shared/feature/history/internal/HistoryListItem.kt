@@ -22,7 +22,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 internal fun HistoryListItem(
     lookupHistory: LookupHistoryListItemModel,
     modifier: Modifier = Modifier,
-    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
+    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     onDeleteItem: (LookupHistoryListItemModel) -> Unit = {},
 ) {
     val strings = LocalStrings.current
@@ -40,7 +40,6 @@ internal fun HistoryListItem(
                     onItemClick(
                         lookupHistory.entity,
                         lookupHistory.id,
-                        lookupHistory.title,
                     )
                 },
                 supportingContent = {

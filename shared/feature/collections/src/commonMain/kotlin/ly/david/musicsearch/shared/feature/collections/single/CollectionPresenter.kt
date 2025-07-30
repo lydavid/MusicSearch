@@ -129,7 +129,6 @@ internal class CollectionPresenter(
                             DetailsScreen(
                                 entity = event.entity,
                                 id = event.id,
-                                title = event.title,
                             ),
                         ),
                     )
@@ -198,7 +197,6 @@ internal sealed interface CollectionUiEvent : CircuitUiEvent {
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,
-        val title: String?,
     ) : CollectionUiEvent
 
     data object DeleteItemsMarkedAsDeleted : CollectionUiEvent

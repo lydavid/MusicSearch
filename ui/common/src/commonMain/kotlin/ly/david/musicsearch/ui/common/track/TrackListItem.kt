@@ -22,7 +22,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 fun TrackListItem(
     track: TrackListItemModel,
     modifier: Modifier = Modifier,
-    onRecordingClick: (id: String, title: String) -> Unit = { _, _ -> },
+    onRecordingClick: (id: String) -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -35,7 +35,6 @@ fun TrackListItem(
         modifier = modifier.clickable {
             onRecordingClick(
                 track.recordingId,
-                track.title,
             )
         },
         leadingContent = {

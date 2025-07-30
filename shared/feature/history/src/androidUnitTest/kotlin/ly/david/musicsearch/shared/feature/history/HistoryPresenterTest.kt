@@ -112,7 +112,6 @@ class HistoryPresenterTest {
                 HistoryUiEvent.ClickItem(
                     entity = MusicBrainzEntity.RELEASE_GROUP,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
-                    title = "欠けた心象、世のよすが",
                 ),
             )
             assertEquals(
@@ -120,7 +119,6 @@ class HistoryPresenterTest {
                 DetailsScreen(
                     entity = MusicBrainzEntity.RELEASE_GROUP,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
-                    title = "欠けた心象、世のよすが",
                 ),
             )
         }
@@ -157,7 +155,6 @@ class HistoryPresenterTest {
                 HistoryUiEvent.ClickItem(
                     entity = MusicBrainzEntity.COLLECTION,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3757",
-                    title = "My collection",
                 ),
             )
             assertEquals(

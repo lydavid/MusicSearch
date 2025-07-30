@@ -155,7 +155,6 @@ private fun getInitialScreens(
                     DetailsScreen(
                         entity = entity,
                         id = id,
-                        title = null,
                     ),
                 )
             }

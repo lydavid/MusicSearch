@@ -77,7 +77,6 @@ internal class AllLocalEntitiesPresenter(
                             DetailsScreen(
                                 entity = event.entity,
                                 id = event.id,
-                                title = event.title,
                             ),
                         ),
                     )
@@ -114,6 +113,5 @@ internal sealed interface AllLocalEntitiesUiEvent : CircuitUiEvent {
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,
-        val title: String?,
     ) : AllLocalEntitiesUiEvent
 }

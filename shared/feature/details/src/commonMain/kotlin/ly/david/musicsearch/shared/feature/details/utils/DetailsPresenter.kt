@@ -80,7 +80,6 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
     @Suppress("CyclomaticComplexMethod")
     @Composable
     final override fun present(): DetailsUiState<DetailsModel> {
-        var title by rememberSaveable { mutableStateOf(screen.title.orEmpty()) }
         var subtitle by rememberSaveable { mutableStateOf("") }
         var isLoading by rememberSaveable { mutableStateOf(true) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
@@ -114,7 +113,6 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     screen.id,
                     forceRefreshDetails,
                 )
-                title = newDetailsModel.getNameWithDisambiguation()
                 subtitle = getSubtitle(newDetailsModel)
                 detailsModel = newDetailsModel
 
@@ -224,7 +222,6 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                             DetailsScreen(
                                 entity = event.entity,
                                 id = event.id,
-                                title = event.title,
                             ),
                         ),
                     )
@@ -246,7 +243,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                         NavEvent.GoTo(
                             ArtistCollaborationScreen(
                                 id = screen.id,
-                                name = title,
+                                name = detailsModel?.getNameWithDisambiguation().orEmpty(),
                             ),
                         ),
                     )
@@ -334,7 +331,6 @@ internal sealed interface DetailsUiEvent : CircuitUiEvent {
     data class ClickItem(
         val entity: MusicBrainzEntity,
         val id: String,
-        val title: String?,
     ) : DetailsUiEvent
 
     data object ClickImage : DetailsUiEvent

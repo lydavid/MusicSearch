@@ -152,12 +152,11 @@ internal fun HistoryUi(
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             lazyListState = state.lazyListState,
-            onItemClick = { entity, id, title ->
+            onItemClick = { entity, id ->
                 eventSink(
                     HistoryUiEvent.ClickItem(
                         entity = entity,
                         id = id,
-                        title = title,
                     ),
                 )
             },
@@ -196,7 +195,7 @@ internal fun HistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = LazyListState(),
-    onItemClick: MusicBrainzItemClickHandler = { _, _, _ -> },
+    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     onDeleteItem: (LookupHistoryListItemModel) -> Unit = {},
 ) {
     ScreenWithPagingLoadingAndError(
