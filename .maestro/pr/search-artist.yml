@@ -7,7 +7,7 @@ appId: io.github.lydavid.musicsearch.debug
     text: "Search"
     index: 0
 - inputText: "zutomayo"
-- tapOn: "ずっと真夜中でいいのに。"
+- tapOn: "ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
 
 - assertVisible: "ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
 - assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
