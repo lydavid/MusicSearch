@@ -194,6 +194,18 @@ class LookupHistoryRepositoryImplTest :
                         disambiguation = "Japanese pop band",
                         sortName = "Zutto Mayonaka de Iinoni.",
                         type = "Group",
+                        aliases = listOf(
+                            BasicAlias(
+                                name = "ZUTOMAYO",
+                                locale = "en",
+                                isPrimary = true,
+                            ),
+                            BasicAlias(
+                                name = "계속 한밤중이면 좋을 텐데.",
+                                locale = "ko",
+                                isPrimary = true,
+                            ),
+                        ),
                     ),
                     Footer(),
                 ),

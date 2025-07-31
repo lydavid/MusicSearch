@@ -76,7 +76,7 @@ class WorkRepositoryImpl(
                 work.attributes,
             )
 
-            aliasDao.insertReplaceAll(listOf(work))
+            aliasDao.insertAll(listOf(work))
 
             val relationWithOrderList = work.relations.toRelationWithOrderList(work.id)
             relationRepository.insertAllUrlRelations(

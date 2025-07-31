@@ -78,7 +78,7 @@ class ReleaseGroupRepositoryImpl(
         releaseGroupDao.withTransaction {
             releaseGroupDao.insertReleaseGroup(releaseGroup)
 
-            aliasDao.insertReplaceAll(listOf(releaseGroup))
+            aliasDao.insertAll(listOf(releaseGroup))
 
             val relationWithOrderList = releaseGroup.relations.toRelationWithOrderList(releaseGroup.id)
             relationRepository.insertAllUrlRelations(

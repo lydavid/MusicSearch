@@ -11,6 +11,8 @@ fun mapToWorkListItemModel(
     iswcs: List<String>?,
     visited: Boolean?,
     collected: Boolean?,
+    aliasNames: String?,
+    aliasLocales: String?,
 ) = WorkListItemModel(
     id = id,
     name = name,
@@ -20,4 +22,5 @@ fun mapToWorkListItemModel(
     iswcs = iswcs.orEmpty(),
     visited = visited == true,
     collected = collected == true,
+    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
 )

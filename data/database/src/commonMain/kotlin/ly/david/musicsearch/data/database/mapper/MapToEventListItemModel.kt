@@ -18,6 +18,8 @@ fun mapToEventListItemModel(
     imageId: Long?,
     visited: Boolean?,
     collected: Boolean?,
+    aliasNames: String?,
+    aliasLocales: String?,
 ) = EventListItemModel(
     id = id,
     name = name,
@@ -34,4 +36,5 @@ fun mapToEventListItemModel(
     imageId = imageId?.let { ImageId(it) },
     visited = visited == true,
     collected = collected == true,
+    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
 )

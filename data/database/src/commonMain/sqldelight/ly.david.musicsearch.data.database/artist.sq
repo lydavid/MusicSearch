@@ -80,7 +80,7 @@ SELECT IFNULL(
     SELECT COUNT(DISTINCT artist.id)
     FROM artists_by_entity ae
     INNER JOIN artist ON artist.id = ae.artist_id
-    LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id
+    LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id AND artist_alias.is_primary
     WHERE ae.entity_id = :entityId
     AND (
       artist.name LIKE :query OR
@@ -109,15 +109,18 @@ SELECT
   artist.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
-  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = artist.id
+  ) AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = artist.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(artist_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(artist_alias.locale, CHAR(9)) AS alias_locales
 FROM artists_by_entity ae
 INNER JOIN artist ON artist.id = ae.artist_id
-LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id
+LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id AND artist_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = artist.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = artist.id
 WHERE ae.entity_id = :entityId
 AND (
   artist.name LIKE :query OR
@@ -140,7 +143,7 @@ SELECT IFNULL(
     FROM artist
     INNER JOIN collection_entity ce ON artist.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id
+    LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id AND artist_alias.is_primary
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
@@ -170,11 +173,13 @@ SELECT
   mi.thumbnail_url,
   mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited,
-  ce.id IS NOT NULL AS collected
+  ce.id IS NOT NULL AS collected,
+  GROUP_CONCAT(artist_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(artist_alias.locale, CHAR(9)) AS alias_locales
 FROM artist
 INNER JOIN collection_entity ce ON artist.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id
+LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id AND artist_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = artist.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = artist.id
 WHERE c.id = :collectionId
@@ -199,7 +204,7 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT artist.id)
     FROM artist
-    LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id
+    LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id AND artist_alias.is_primary
     WHERE (
       artist.name LIKE :query OR
       artist.disambiguation LIKE :query OR
@@ -230,9 +235,11 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = artist.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(artist_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(artist_alias.locale, CHAR(9)) AS alias_locales
 FROM artist
-LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id
+LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id AND artist_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = artist.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = artist.id
 WHERE (

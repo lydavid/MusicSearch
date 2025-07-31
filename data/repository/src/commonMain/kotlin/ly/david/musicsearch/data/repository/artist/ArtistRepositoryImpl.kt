@@ -81,7 +81,7 @@ class ArtistRepositoryImpl(
         artistDao.withTransaction {
             artistDao.insertReplace(artist)
 
-            aliasDao.insertReplaceAll(listOf(artist))
+            aliasDao.insertAll(listOf(artist))
 
             artist.area?.let { area ->
                 areaDao.insert(area)

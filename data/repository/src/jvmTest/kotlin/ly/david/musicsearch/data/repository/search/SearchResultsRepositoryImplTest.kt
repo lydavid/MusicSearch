@@ -37,6 +37,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetwo
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.data.repository.helpers.TestSearchResultsRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
@@ -76,6 +77,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestSearchResultsRepository, T
     override val seriesDao: SeriesDao by inject()
     override val workDao: WorkDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     @Test
     fun `empty network, no list items`() = runTest {

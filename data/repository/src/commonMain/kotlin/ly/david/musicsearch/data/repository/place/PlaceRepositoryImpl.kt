@@ -76,7 +76,7 @@ class PlaceRepositoryImpl(
         placeDao.withTransaction {
             placeDao.insert(place)
 
-            aliasDao.insertReplaceAll(listOf(place))
+            aliasDao.insertAll(listOf(place))
 
             place.area?.let { areaMusicBrainzModel ->
                 areaDao.insert(areaMusicBrainzModel)

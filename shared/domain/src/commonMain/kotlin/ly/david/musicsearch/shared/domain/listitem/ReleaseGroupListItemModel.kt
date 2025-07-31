@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.listitem
 
+import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroup
 
@@ -15,4 +17,9 @@ data class ReleaseGroupListItemModel(
     val imageId: ImageId? = null,
     override val visited: Boolean = false,
     override val collected: Boolean = false,
-) : EntityListItemModel, ReleaseGroup
+    override val aliases: List<BasicAlias> = listOf(),
+) : EntityListItemModel, ReleaseGroup, NameWithDisambiguationAndAliases {
+    override fun withAliases(aliases: List<BasicAlias>): ReleaseGroupListItemModel {
+        return copy(aliases = aliases)
+    }
+}

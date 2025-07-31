@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common.release
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
@@ -165,6 +166,15 @@ internal fun PreviewReleaseListItemCatalog() {
                 date = "2022-08-10",
                 countryCode = "JP",
                 catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
+                formattedFormats = "2×CD + Blu-ray",
+                formattedTracks = "15 + 8 + 24",
+                aliases = listOf(
+                    BasicAlias(
+                        name = "Uta no Uta ONE PIECE FILM RED",
+                        locale = "en",
+                        isPrimary = true,
+                    )
+                ),
             ),
             showMoreInfo = true,
         )
@@ -186,6 +196,13 @@ internal fun PreviewReleaseListItemVisited() {
                 formattedFormats = "2×CD + Blu-ray",
                 formattedTracks = "15 + 8 + 24",
                 visited = true,
+                aliases = listOf(
+                    BasicAlias(
+                        name = "Uta no Uta ONE PIECE FILM RED",
+                        locale = "en",
+                        isPrimary = true,
+                    )
+                ),
             ),
             showMoreInfo = true,
         )

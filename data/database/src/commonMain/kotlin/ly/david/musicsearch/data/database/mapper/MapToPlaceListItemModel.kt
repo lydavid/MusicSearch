@@ -17,6 +17,8 @@ fun mapToPlaceListItemModel(
     ended: Boolean?,
     visited: Boolean?,
     collected: Boolean?,
+    aliasNames: String?,
+    aliasLocales: String?,
 ) = PlaceListItemModel(
     id = id,
     name = name,
@@ -34,4 +36,5 @@ fun mapToPlaceListItemModel(
     ),
     visited = visited == true,
     collected = collected == true,
+    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
 )

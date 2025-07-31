@@ -61,7 +61,7 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT area.id)
     FROM area
-    LEFT JOIN area_alias ON area.id = area_alias.area_id
+    LEFT JOIN area_alias ON area.id = area_alias.area_id AND area_alias.is_primary
     WHERE (
       area.name LIKE :query OR
       area.disambiguation LIKE :query OR
@@ -87,9 +87,11 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = area.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(area_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(area_alias.locale, CHAR(9)) AS alias_locales
 FROM area
-LEFT JOIN area_alias ON area.id = area_alias.area_id
+LEFT JOIN area_alias ON area.id = area_alias.area_id AND area_alias.is_primary
 LEFT JOIN country_code cc ON area.id = cc.area_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = area.id
 WHERE (
@@ -112,7 +114,7 @@ SELECT IFNULL(
     FROM area
     INNER JOIN collection_entity ce ON area.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN area_alias ON area.id = area_alias.area_id
+    LEFT JOIN area_alias ON area.id = area_alias.area_id AND area_alias.is_primary
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
@@ -138,11 +140,13 @@ SELECT
   area.ended,
   cc.code,
   details_metadata.entity_id IS NOT NULL AS visited,
-  ce.id IS NOT NULL AS collected
+  ce.id IS NOT NULL AS collected,
+  GROUP_CONCAT(area_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(area_alias.locale, CHAR(9)) AS alias_locales
 FROM area
 INNER JOIN collection_entity ce ON area.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN area_alias ON area.id = area_alias.area_id
+LEFT JOIN area_alias ON area.id = area_alias.area_id AND area_alias.is_primary
 LEFT JOIN country_code cc ON area.id = cc.area_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = area.id
 WHERE c.id = :collectionId
@@ -171,11 +175,16 @@ SELECT
   area.end,
   area.ended,
   '' AS countryCode,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  area.id IS NULL AS collected, -- don't care about whether it's collected
+  GROUP_CONCAT(area_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(area_alias.locale, CHAR(9)) AS alias_locales
 FROM area
 INNER JOIN area_place ap ON area.id = ap.area_id
+LEFT JOIN area_alias ON area.id = area_alias.area_id AND area_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = area.id
-WHERE ap.place_id = :placeId;
+WHERE ap.place_id = :placeId
+GROUP BY area.id;
 
 -- An area that does not have a type is the area for a place that has never been visited.
 -- We only delete this one so that we don't delete the rest of its containment.

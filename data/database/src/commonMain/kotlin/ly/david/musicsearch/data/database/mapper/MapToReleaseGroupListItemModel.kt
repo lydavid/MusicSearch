@@ -15,6 +15,8 @@ internal fun mapToReleaseGroupListItemModel(
     imageId: Long?,
     visited: Boolean?,
     collected: Boolean?,
+    aliasNames: String?,
+    aliasLocales: String?,
 ) = ReleaseGroupListItemModel(
     id = id,
     name = name,
@@ -27,4 +29,5 @@ internal fun mapToReleaseGroupListItemModel(
     imageId = imageId?.let { ImageId(it) },
     visited = visited == true,
     collected = collected == true,
+    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
 )

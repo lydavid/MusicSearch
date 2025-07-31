@@ -25,13 +25,14 @@ class AliasDao(
 ) : EntityDao {
     override val transacter: AliasQueries = database.aliasQueries
 
-    fun insertReplaceAll(
+    fun insertAll(
         musicBrainzNetworkModels: List<MusicBrainzNetworkModel>,
+        deleteExisting: Boolean = true,
     ) {
         musicBrainzNetworkModels.forEach { musicBrainzNetworkModel ->
-            delete(
-                networkModel = musicBrainzNetworkModel,
-            )
+            if (deleteExisting) {
+                delete(networkModel = musicBrainzNetworkModel)
+            }
             musicBrainzNetworkModel.aliases?.forEach { alias ->
                 insert(
                     networkModel = musicBrainzNetworkModel,

@@ -81,7 +81,7 @@ class RecordingRepositoryImpl(
         recordingDao.withTransaction {
             recordingDao.insert(recording)
 
-            aliasDao.insertReplaceAll(listOf(recording))
+            aliasDao.insertAll(listOf(recording))
 
             val relationWithOrderList = recording.relations.toRelationWithOrderList(recording.id)
             relationRepository.insertAllUrlRelations(

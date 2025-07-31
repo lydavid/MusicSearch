@@ -9,19 +9,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
-import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
-import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
@@ -61,13 +61,12 @@ fun AreaListItem(
     ListItem(
         headlineContent = {
             val flags = area.countryCodes.joinToString { it.toFlagEmoji() }
-            val areaName = if (flags.isEmpty()) {
-                area.name
-            } else {
-                flags.transformThisIfNotNullOrEmpty { "$it " } + area.name
+            val fullName = buildAnnotatedString {
+                flags.ifNotNullOrEmpty { append("$it ") }
+                append(area.getAnnotatedName())
             }
             Text(
-                text = areaName,
+                text = fullName,
                 style = TextStyles.getCardBodyTextStyle(),
                 fontWeight = area.fontWeight,
             )
@@ -83,11 +82,6 @@ fun AreaListItem(
         ),
         supportingContent = {
             Column {
-                DisambiguationText(
-                    disambiguation = area.disambiguation,
-                    fontWeight = area.fontWeight,
-                )
-
                 val type = area.type
                 if (showType && !type.isNullOrEmpty()) {
                     Text(

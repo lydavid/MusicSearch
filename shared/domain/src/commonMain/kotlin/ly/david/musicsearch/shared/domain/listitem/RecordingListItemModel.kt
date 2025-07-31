@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.listitem
 
+import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.recording.Recording
 
 data class RecordingListItemModel(
@@ -12,4 +14,9 @@ data class RecordingListItemModel(
     val formattedArtistCredits: String? = null,
     override val visited: Boolean = false,
     override val collected: Boolean = false,
-) : EntityListItemModel, Recording
+    override val aliases: List<BasicAlias> = listOf(),
+) : EntityListItemModel, Recording, NameWithDisambiguationAndAliases {
+    override fun withAliases(aliases: List<BasicAlias>): NameWithDisambiguationAndAliases {
+        return copy(aliases = aliases)
+    }
+}

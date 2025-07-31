@@ -20,8 +20,8 @@ import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
-import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
@@ -46,7 +46,7 @@ fun ReleaseGroupListItem(
     ListItem(
         headlineContent = {
             Text(
-                text = releaseGroup.name,
+                text = releaseGroup.getAnnotatedName(),
                 style = TextStyles.getCardBodyTextStyle(),
                 fontWeight = releaseGroup.fontWeight,
             )
@@ -58,11 +58,6 @@ fun ReleaseGroupListItem(
         colors = listItemColors(isSelected = isSelected),
         supportingContent = {
             Column {
-                DisambiguationText(
-                    disambiguation = releaseGroup.disambiguation,
-                    fontWeight = releaseGroup.fontWeight,
-                )
-
                 if (showType) {
                     releaseGroup.getDisplayTypes().ifNotNullOrEmpty {
                         Text(

@@ -28,6 +28,8 @@ internal fun mapToReleaseListItemModel(
     releaseCountryCount: Long,
     visited: Boolean?,
     collected: Boolean?,
+    aliasNames: String?,
+    aliasLocales: String?,
 ) = ReleaseListItemModel(
     id = id,
     name = name,
@@ -54,6 +56,7 @@ internal fun mapToReleaseListItemModel(
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited == true,
     collected = collected == true,
+    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
 )
 
 /**
@@ -82,6 +85,8 @@ internal fun mapToReleaseListItemModel(
     releaseCountryCount: Long,
     visited: Boolean?,
     collected: Boolean?,
+    aliasNames: String?,
+    aliasLocales: String?,
 ) = ReleaseListItemModel(
     id = id,
     name = name,
@@ -109,4 +114,5 @@ internal fun mapToReleaseListItemModel(
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited == true,
     collected = collected == true,
+    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
 )

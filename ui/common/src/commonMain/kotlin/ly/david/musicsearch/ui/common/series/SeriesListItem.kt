@@ -15,8 +15,8 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
-import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
@@ -34,13 +34,8 @@ fun SeriesListItem(
             Column {
                 series.run {
                     Text(
-                        text = name,
+                        text = getAnnotatedName(),
                         style = TextStyles.getCardBodyTextStyle(),
-                        fontWeight = series.fontWeight,
-                    )
-
-                    DisambiguationText(
-                        disambiguation = disambiguation,
                         fontWeight = series.fontWeight,
                     )
 

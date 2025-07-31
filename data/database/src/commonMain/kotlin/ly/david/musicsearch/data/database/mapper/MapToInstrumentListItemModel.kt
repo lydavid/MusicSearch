@@ -10,6 +10,8 @@ fun mapToInstrumentListItemModel(
     type: String?,
     visited: Boolean?,
     collected: Boolean?,
+    aliasNames: String?,
+    aliasLocales: String?,
 ) = InstrumentListItemModel(
     id = id,
     name = name,
@@ -18,4 +20,5 @@ fun mapToInstrumentListItemModel(
     type = type,
     visited = visited == true,
     collected = collected == true,
+    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
 )

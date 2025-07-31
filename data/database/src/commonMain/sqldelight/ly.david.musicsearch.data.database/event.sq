@@ -61,7 +61,7 @@ SELECT IFNULL(
     SELECT COUNT(DISTINCT event.id)
     FROM events_by_entity ee
     INNER JOIN event ON event.id = ee.event_id
-    LEFT JOIN event_alias ON event.id = event_alias.event_id
+    LEFT JOIN event_alias ON event.id = event_alias.event_id AND event_alias.is_primary
     WHERE ee.entity_id = :entityId
     AND (
       event.name LIKE :query OR
@@ -92,10 +92,12 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = event.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(event_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(event_alias.locale, CHAR(9)) AS alias_locales
 FROM events_by_entity ee
 INNER JOIN event ON event.id = ee.event_id
-LEFT JOIN event_alias ON event.id = event_alias.event_id
+LEFT JOIN event_alias ON event.id = event_alias.event_id AND event_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = event.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = event.id
 WHERE ee.entity_id = :entityId
@@ -121,7 +123,7 @@ SELECT IFNULL(
     FROM event
     INNER JOIN collection_entity ce ON event.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN event_alias ON event.id = event_alias.event_id
+    LEFT JOIN event_alias ON event.id = event_alias.event_id AND event_alias.is_primary
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
@@ -148,11 +150,13 @@ SELECT
   mi.thumbnail_url,
   mi.id AS imageId,
   details_metadata.entity_id IS NOT NULL AS visited,
-  ce.id IS NOT NULL AS collected
+  ce.id IS NOT NULL AS collected,
+  GROUP_CONCAT(event_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(event_alias.locale, CHAR(9)) AS alias_locales
 FROM event
 INNER JOIN collection_entity ce ON event.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN event_alias ON event.id = event_alias.event_id
+LEFT JOIN event_alias ON event.id = event_alias.event_id AND event_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = event.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = event.id
 WHERE c.id = :collectionId
@@ -177,7 +181,7 @@ SELECT IFNULL(
   (
     SELECT COUNT(e.id)
     FROM event e
-    LEFT JOIN event_alias ON e.id = event_alias.event_id
+    LEFT JOIN event_alias ON e.id = event_alias.event_id AND event_alias.is_primary
     WHERE (
       e.name LIKE :query OR
       e.disambiguation LIKE :query OR
@@ -204,9 +208,11 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = event.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(event_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(event_alias.locale, CHAR(9)) AS alias_locales
 FROM event
-LEFT JOIN event_alias ON event.id = event_alias.event_id
+LEFT JOIN event_alias ON event.id = event_alias.event_id AND event_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = event.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = event.id
 WHERE (

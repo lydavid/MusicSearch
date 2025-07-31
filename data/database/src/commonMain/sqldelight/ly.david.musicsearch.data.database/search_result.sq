@@ -40,7 +40,7 @@ VALUES (
 
 insert:
 INSERT OR IGNORE INTO search_result (
-  `entity_id`
+  entity_id
 )
 VALUES (
   :entity_id
@@ -52,7 +52,7 @@ DELETE FROM search_result;
 getNumberOfSearchResults:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(id)
     FROM search_result
   ),
   0
@@ -74,11 +74,15 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = area.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(area_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(area_alias.locale, CHAR(9)) AS alias_locales
 FROM area
 INNER JOIN search_result sr ON area.id = sr.entity_id
+LEFT JOIN area_alias ON area.id = area_alias.area_id AND area_alias.is_primary
 LEFT JOIN country_code cc ON area.id = cc.area_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = area.id
+GROUP BY sr.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -102,11 +106,15 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = artist.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(artist_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(artist_alias.locale, CHAR(9)) AS alias_locales
 FROM search_result sr
 INNER JOIN artist ON sr.entity_id = artist.id
+LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id AND artist_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = artist.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = artist.id
+GROUP BY sr.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -129,12 +137,15 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = event.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(event_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(event_alias.locale, CHAR(9)) AS alias_locales
 FROM search_result sr
 INNER JOIN event ON sr.entity_id = event.id
+LEFT JOIN event_alias ON event.id = event_alias.event_id AND event_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = event.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = event.id
-GROUP BY event.id
+GROUP BY sr.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -151,10 +162,14 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = instrument.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(instrument_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(instrument_alias.locale, CHAR(9)) AS alias_locales
 FROM search_result sr
 INNER JOIN instrument ON sr.entity_id = instrument.id
+LEFT JOIN instrument_alias ON instrument.id = instrument_alias.instrument_id AND instrument_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = instrument.id
+GROUP BY sr.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -171,10 +186,14 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = label.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(label_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(label_alias.locale, CHAR(9)) AS alias_locales
 FROM search_result sr
 INNER JOIN label ON sr.entity_id = label.id
+LEFT JOIN label_alias ON label.id = label_alias.label_id AND label_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
+GROUP BY sr.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -196,10 +215,14 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = place.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(place_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(place_alias.locale, CHAR(9)) AS alias_locales
 FROM search_result sr
 INNER JOIN place ON sr.entity_id = place.id
+LEFT JOIN place_alias ON place.id = place_alias.place_id AND place_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = place.id
+GROUP BY sr.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -218,13 +241,16 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = recording.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
 FROM search_result sr
 INNER JOIN recording ON sr.entity_id = recording.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id AND recording_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
-GROUP BY recording.id
+GROUP BY sr.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -250,14 +276,17 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = `release`.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
 FROM search_result sr
 INNER JOIN `release` ON sr.entity_id = `release`.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN release_alias ON `release`.id = release_alias.release_id AND release_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = `release`.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = `release`.id
-GROUP BY `release`.id
+GROUP BY sr.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -278,14 +307,17 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(release_group_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(release_group_alias.locale, CHAR(9)) AS alias_locales
 FROM search_result sr
 INNER JOIN release_group ON sr.entity_id = release_group.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN release_group_alias ON release_group.id = release_group_alias.release_group_id AND release_group_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = release_group.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = release_group.id
-GROUP BY release_group.id
+GROUP BY sr.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -301,10 +333,14 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = series.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(series_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(series_alias.locale, CHAR(9)) AS alias_locales
 FROM search_result sr
 INNER JOIN series ON sr.entity_id = series.id
+LEFT JOIN series_alias ON series.id = series_alias.series_id AND series_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = series.id
+GROUP BY sr.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
@@ -322,9 +358,13 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = work.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(work_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(work_alias.locale, CHAR(9)) AS alias_locales
 FROM search_result sr
 INNER JOIN work ON sr.entity_id = work.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = work.id
+LEFT JOIN work_alias ON work.id = work_alias.work_id AND work_alias.is_primary
+GROUP BY sr.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;

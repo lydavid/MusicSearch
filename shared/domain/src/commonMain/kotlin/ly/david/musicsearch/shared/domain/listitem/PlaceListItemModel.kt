@@ -1,6 +1,8 @@
 package ly.david.musicsearch.shared.domain.listitem
 
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.place.Coordinates
 import ly.david.musicsearch.shared.domain.place.Place
 
@@ -15,4 +17,9 @@ data class PlaceListItemModel(
     override val lifeSpan: LifeSpanUiModel? = null,
     override val visited: Boolean = false,
     override val collected: Boolean = false,
-) : EntityListItemModel, Place
+    override val aliases: List<BasicAlias> = listOf(),
+) : EntityListItemModel, Place, NameWithDisambiguationAndAliases {
+    override fun withAliases(aliases: List<BasicAlias>): NameWithDisambiguationAndAliases {
+        return copy(aliases = aliases)
+    }
+}

@@ -9,6 +9,8 @@ fun mapToSeriesListItemModel(
     type: String?,
     visited: Boolean?,
     collected: Boolean?,
+    aliasNames: String?,
+    aliasLocales: String?,
 ) = SeriesListItemModel(
     id = id,
     name = name,
@@ -16,4 +18,5 @@ fun mapToSeriesListItemModel(
     type = type,
     visited = visited == true,
     collected = collected == true,
+    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
 )

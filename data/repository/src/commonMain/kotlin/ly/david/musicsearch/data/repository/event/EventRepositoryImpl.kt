@@ -71,7 +71,7 @@ class EventRepositoryImpl(
         eventDao.withTransaction {
             eventDao.insert(event)
 
-            aliasDao.insertReplaceAll(listOf(event))
+            aliasDao.insertAll(listOf(event))
 
             val relationWithOrderList = event.relations.toRelationWithOrderList(event.id)
             relationRepository.insertAllUrlRelations(

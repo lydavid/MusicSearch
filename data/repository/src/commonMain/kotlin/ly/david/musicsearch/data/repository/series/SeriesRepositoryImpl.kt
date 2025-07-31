@@ -71,7 +71,7 @@ class SeriesRepositoryImpl(
         seriesDao.withTransaction {
             seriesDao.insert(series)
 
-            aliasDao.insertReplaceAll(listOf(series))
+            aliasDao.insertAll(listOf(series))
 
             val relationWithOrderList = series.relations.toRelationWithOrderList(series.id)
             relationRepository.insertAllUrlRelations(

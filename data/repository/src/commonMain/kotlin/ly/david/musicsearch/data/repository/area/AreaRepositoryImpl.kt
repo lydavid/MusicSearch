@@ -75,7 +75,7 @@ class AreaRepositoryImpl(
                 ),
             )
 
-            aliasDao.insertReplaceAll(listOf(area))
+            aliasDao.insertAll(listOf(area))
 
             val relationWithOrderList = area.relations.toRelationWithOrderList(area.id)
             relationRepository.insertAllUrlRelations(

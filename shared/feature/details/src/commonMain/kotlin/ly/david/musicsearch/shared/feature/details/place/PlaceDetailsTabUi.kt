@@ -72,13 +72,14 @@ internal fun PlaceDetailsTabUi(
                     AreaListItem(
                         area = it,
                         showType = false,
+                        showIcon = false,
+                        showEditCollection = false,
                         onAreaClick = {
                             onItemClick(
                                 MusicBrainzEntity.AREA,
                                 id,
                             )
                         },
-                        showIcon = false,
                     )
                 }
             }

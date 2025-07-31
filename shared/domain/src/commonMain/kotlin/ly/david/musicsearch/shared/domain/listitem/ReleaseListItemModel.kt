@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.listitem
 
+import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.Release
@@ -33,4 +35,9 @@ data class ReleaseListItemModel(
     val releaseCountryCount: Int = 0,
     override val visited: Boolean = false,
     override val collected: Boolean = false,
-) : EntityListItemModel, Release
+    override val aliases: List<BasicAlias> = listOf(),
+) : EntityListItemModel, Release, NameWithDisambiguationAndAliases {
+    override fun withAliases(aliases: List<BasicAlias>): NameWithDisambiguationAndAliases {
+        return copy(aliases = aliases)
+    }
+}

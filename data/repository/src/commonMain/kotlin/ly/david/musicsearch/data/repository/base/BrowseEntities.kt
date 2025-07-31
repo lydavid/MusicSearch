@@ -127,7 +127,7 @@ abstract class BrowseEntities<
                 musicBrainzModels = musicBrainzModels,
             )
 
-            aliasDao.insertReplaceAll(
+            aliasDao.insertAll(
                 musicBrainzNetworkModels = musicBrainzModels,
             )
         }

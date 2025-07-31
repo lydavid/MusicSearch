@@ -16,6 +16,7 @@ import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.SearchApi
 import ly.david.musicsearch.data.repository.search.SearchResultsRepositoryImpl
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.search.results.SearchResultsRepository
 
 interface TestSearchResultsRepository {
@@ -34,6 +35,7 @@ interface TestSearchResultsRepository {
     val seriesDao: SeriesDao
     val workDao: WorkDao
     val aliasDao: AliasDao
+    val coroutineDispatchers: CoroutineDispatchers
 
     fun createSearchResultsRepository(
         searchApi: SearchApi,
@@ -53,6 +55,7 @@ interface TestSearchResultsRepository {
             seriesDao = seriesDao,
             workDao = workDao,
             aliasDao = aliasDao,
+            coroutineDispatchers = coroutineDispatchers,
         )
     }
 }

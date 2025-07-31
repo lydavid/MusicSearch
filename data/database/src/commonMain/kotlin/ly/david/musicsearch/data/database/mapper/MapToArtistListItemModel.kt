@@ -19,6 +19,8 @@ fun mapToArtistListItemModel(
     imageId: Long?,
     visited: Boolean?,
     collected: Boolean?,
+    aliasNames: String?,
+    aliasLocales: String?,
 ) = ArtistListItemModel(
     id = id,
     name = name,
@@ -36,4 +38,5 @@ fun mapToArtistListItemModel(
     imageId = imageId?.let { ImageId(it) },
     visited = visited == true,
     collected = collected == true,
+    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
 )

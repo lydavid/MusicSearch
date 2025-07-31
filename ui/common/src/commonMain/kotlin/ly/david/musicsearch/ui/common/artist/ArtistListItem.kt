@@ -17,8 +17,8 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
-import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.release.ReleaseListItem
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -40,7 +40,7 @@ fun ArtistListItem(
     ListItem(
         headlineContent = {
             Text(
-                text = artist.name,
+                text = artist.getAnnotatedName(),
                 style = TextStyles.getCardBodyTextStyle(),
                 fontWeight = artist.fontWeight,
             )
@@ -57,11 +57,6 @@ fun ArtistListItem(
         colors = listItemColors(isSelected = isSelected),
         supportingContent = {
             Column {
-                DisambiguationText(
-                    disambiguation = artist.disambiguation,
-                    fontWeight = artist.fontWeight,
-                )
-
                 artist.type.ifNotNullOrEmpty {
                     Text(
                         text = it,

@@ -65,7 +65,7 @@ SELECT IFNULL(
     SELECT COUNT(DISTINCT label.id)
     FROM labels_by_entity le
     INNER JOIN label ON label.id = le.label_id
-    LEFT JOIN label_alias ON label.id = label_alias.label_id
+    LEFT JOIN label_alias ON label.id = label_alias.label_id AND label_alias.is_primary
     WHERE le.entity_id = :entityId
     AND (
       label.name LIKE :query OR
@@ -88,10 +88,12 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = label.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(label_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(label_alias.locale, CHAR(9)) AS alias_locales
 FROM labels_by_entity le
 INNER JOIN label ON label.id = le.label_id
-LEFT JOIN label_alias ON label.id = label_alias.label_id
+LEFT JOIN label_alias ON label.id = label_alias.label_id AND label_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
 WHERE le.entity_id = :entityId
 AND (
@@ -113,7 +115,7 @@ SELECT IFNULL(
     FROM label
     INNER JOIN collection_entity ce ON label.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN label_alias ON label.id = label_alias.label_id
+    LEFT JOIN label_alias ON label.id = label_alias.label_id AND label_alias.is_primary
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
@@ -135,11 +137,13 @@ SELECT
   label.type,
   label.label_code,
   details_metadata.entity_id IS NOT NULL AS visited,
-  ce.id IS NOT NULL AS collected
+  ce.id IS NOT NULL AS collected,
+  GROUP_CONCAT(label_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(label_alias.locale, CHAR(9)) AS alias_locales
 FROM label label
 INNER JOIN collection_entity ce ON label.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN label_alias ON label.id = label_alias.label_id
+LEFT JOIN label_alias ON label.id = label_alias.label_id AND label_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
@@ -172,9 +176,12 @@ SELECT
     ),
     ''
   ) AS catalogNumbers,
-  details_metadata.entity_id IS NOT NULL AS visited
+  details_metadata.entity_id IS NOT NULL AS visited,
+  GROUP_CONCAT(label_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(label_alias.locale, CHAR(9)) AS alias_locales
 FROM label
 INNER JOIN labels_by_entity le ON label.id = le.label_id
+LEFT JOIN label_alias ON label.id = label_alias.label_id AND label_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
 WHERE le.entity_id = :releaseId
 GROUP BY label.id, label.name, label.disambiguation, label.type, label.label_code
@@ -187,7 +194,7 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT label.id)
     FROM label
-    LEFT JOIN label_alias ON label.id = label_alias.label_id
+    LEFT JOIN label_alias ON label.id = label_alias.label_id AND label_alias.is_primary
     WHERE (
       label.name LIKE :query OR
       label.disambiguation LIKE :query OR
@@ -209,9 +216,11 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = label.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(label_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(label_alias.locale, CHAR(9)) AS alias_locales
 FROM label
-LEFT JOIN label_alias ON label.id = label_alias.label_id
+LEFT JOIN label_alias ON label.id = label_alias.label_id AND label_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
 WHERE (
   label.name LIKE :query OR

@@ -35,6 +35,7 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
@@ -597,7 +598,15 @@ class ReleaseGroupsListRepositoryImplTest :
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        utaNoUtaReleaseGroupListItemModel,
+                        utaNoUtaReleaseGroupListItemModel.copy(
+                            aliases = listOf(
+                                BasicAlias(
+                                    name = "UTA'S SONGS ONE PIECE FILM RED",
+                                    locale = "en",
+                                    isPrimary = true,
+                                ),
+                            ),
+                        ),
                     ),
                 ),
                 FilterTestCase(
@@ -609,14 +618,30 @@ class ReleaseGroupsListRepositoryImplTest :
                     description = "filter by alias",
                     query = "uta",
                     expectedResult = listOf(
-                        utaNoUtaReleaseGroupListItemModel,
+                        utaNoUtaReleaseGroupListItemModel.copy(
+                            aliases = listOf(
+                                BasicAlias(
+                                    name = "UTA'S SONGS ONE PIECE FILM RED",
+                                    locale = "en",
+                                    isPrimary = true,
+                                ),
+                            ),
+                        ),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "歌",
                     expectedResult = listOf(
-                        utaNoUtaReleaseGroupListItemModel,
+                        utaNoUtaReleaseGroupListItemModel.copy(
+                            aliases = listOf(
+                                BasicAlias(
+                                    name = "UTA'S SONGS ONE PIECE FILM RED",
+                                    locale = "en",
+                                    isPrimary = true,
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),

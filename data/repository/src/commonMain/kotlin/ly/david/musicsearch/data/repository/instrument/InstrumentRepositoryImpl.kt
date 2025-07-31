@@ -68,7 +68,7 @@ class InstrumentRepositoryImpl(
         instrumentDao.withTransaction {
             instrumentDao.insert(instrument)
 
-            aliasDao.insertReplaceAll(listOf(instrument))
+            aliasDao.insertAll(listOf(instrument))
 
             val relationWithOrderList = instrument.relations.toRelationWithOrderList(instrument.id)
             relationRepository.insertAllUrlRelations(

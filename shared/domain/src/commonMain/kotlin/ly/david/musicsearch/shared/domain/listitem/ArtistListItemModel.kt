@@ -1,6 +1,8 @@
 package ly.david.musicsearch.shared.domain.listitem
 
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.Artist
 import ly.david.musicsearch.shared.domain.image.ImageId
 
@@ -17,4 +19,9 @@ data class ArtistListItemModel(
     val imageId: ImageId? = null,
     override val visited: Boolean = false,
     override val collected: Boolean = false,
-) : EntityListItemModel, Artist
+    override val aliases: List<BasicAlias> = listOf(),
+) : EntityListItemModel, Artist, NameWithDisambiguationAndAliases {
+    override fun withAliases(aliases: List<BasicAlias>): ArtistListItemModel {
+        return copy(aliases = aliases)
+    }
+}

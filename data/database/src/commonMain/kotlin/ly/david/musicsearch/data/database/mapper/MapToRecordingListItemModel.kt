@@ -12,6 +12,8 @@ internal fun mapToRecordingListItemModel(
     formattedArtistCreditNames: String,
     visited: Boolean?,
     collected: Boolean?,
+    aliasNames: String?,
+    aliasLocales: String?,
 ) = RecordingListItemModel(
     id = id,
     name = name,
@@ -22,4 +24,5 @@ internal fun mapToRecordingListItemModel(
     formattedArtistCredits = formattedArtistCreditNames,
     visited = visited == true,
     collected = collected == true,
+    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
 )

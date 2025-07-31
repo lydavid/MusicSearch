@@ -64,8 +64,15 @@ SELECT IFNULL(
     SELECT COUNT(DISTINCT place.id)
     FROM place
     INNER JOIN area_place ap ON place.id = ap.place_id
+    LEFT JOIN place_alias ON place.id = place_alias.place_id AND place_alias.is_primary
     WHERE ap.area_id = :areaId
-    AND (place.name LIKE :query OR place.disambiguation LIKE :query OR place.type LIKE :query)
+    AND (
+      place.name LIKE :query OR
+      place.disambiguation LIKE :query OR
+      place.address LIKE :query OR
+      place.type LIKE :query OR
+      place_alias.name LIKE :query
+    )
   ),
   0
 ) AS count;
@@ -85,15 +92,18 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = place.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(place_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(place_alias.locale, CHAR(9)) AS alias_locales
 FROM place
 INNER JOIN area_place ap ON place.id = ap.place_id
-LEFT JOIN place_alias ON place.id = place_alias.place_id
+LEFT JOIN place_alias ON place.id = place_alias.place_id AND place_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = place.id
 WHERE ap.area_id = :areaId
 AND (
   place.name LIKE :query OR
   place.disambiguation LIKE :query OR
+  place.address LIKE :query OR
   place.type LIKE :query OR
   place_alias.name LIKE :query
 )
@@ -110,7 +120,7 @@ SELECT IFNULL(
     FROM place
     INNER JOIN collection_entity ce ON place.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN place_alias ON place.id = place_alias.place_id
+    LEFT JOIN place_alias ON place.id = place_alias.place_id AND place_alias.is_primary
     WHERE c.id = :collectionId
     AND ce.deleted = 0
     AND (
@@ -137,11 +147,13 @@ SELECT
   place.`end`,
   place.`ended`,
   details_metadata.entity_id IS NOT NULL AS visited,
-  ce.id IS NOT NULL AS collected
+  ce.id IS NOT NULL AS collected,
+  GROUP_CONCAT(place_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(place_alias.locale, CHAR(9)) AS alias_locales
 FROM place
 INNER JOIN collection_entity ce ON place.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN place_alias ON place.id = place_alias.place_id
+LEFT JOIN place_alias ON place.id = place_alias.place_id AND place_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = place.id
 WHERE c.id = :collectionId
 AND ce.deleted = 0
@@ -190,9 +202,11 @@ SELECT
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = place.id
-  ) AS collected
+  ) AS collected,
+  GROUP_CONCAT(place_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(place_alias.locale, CHAR(9)) AS alias_locales
 FROM place
-LEFT JOIN place_alias ON place.id = place_alias.place_id
+LEFT JOIN place_alias ON place.id = place_alias.place_id AND place_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = place.id
 WHERE (
   place.name LIKE :query OR

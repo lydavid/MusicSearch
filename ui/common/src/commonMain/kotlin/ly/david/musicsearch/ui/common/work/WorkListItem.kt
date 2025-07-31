@@ -13,8 +13,8 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
-import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -33,7 +33,7 @@ fun WorkListItem(
     ListItem(
         headlineContent = {
             Text(
-                text = work.name,
+                text = work.getAnnotatedName(),
                 style = TextStyles.getCardBodyTextStyle(),
                 fontWeight = work.fontWeight,
             )
@@ -41,10 +41,6 @@ fun WorkListItem(
         supportingContent = {
             Column {
                 work.run {
-                    DisambiguationText(
-                        disambiguation = disambiguation,
-                        fontWeight = work.fontWeight,
-                    )
                     iswcs.ifNotNullOrEmpty {
                         Text(
                             text = it.joinToString(", "),

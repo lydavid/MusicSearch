@@ -16,8 +16,8 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
-import ly.david.musicsearch.ui.common.listitem.DisambiguationText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.track.TrackListItem
@@ -37,7 +37,7 @@ fun RecordingListItem(
     ListItem(
         headlineContent = {
             Text(
-                text = recording.name,
+                text = recording.getAnnotatedName(),
                 style = TextStyles.getCardBodyTextStyle(),
                 fontWeight = recording.fontWeight,
             )
@@ -49,11 +49,6 @@ fun RecordingListItem(
         colors = listItemColors(isSelected = isSelected),
         supportingContent = {
             Column {
-                DisambiguationText(
-                    disambiguation = recording.disambiguation,
-                    fontWeight = recording.fontWeight,
-                )
-
                 val dateAndLength = listOfNotNull(
                     recording.firstReleaseDate?.takeIf { it.isNotEmpty() },
                     recording.length.toDisplayTime(),
