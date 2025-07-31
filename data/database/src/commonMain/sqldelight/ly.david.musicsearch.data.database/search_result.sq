@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS search_result (
   `entity_id` TEXT NOT NULL
 );
 
+CREATE INDEX idx_search_result_entity_id ON search_result(entity_id);
+
 CREATE TABLE IF NOT EXISTS search_result_metadata (
   `entity` TEXT AS MusicBrainzEntity NOT NULL,
   `query` TEXT NOT NULL,
