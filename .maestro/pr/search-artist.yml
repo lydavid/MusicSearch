@@ -38,12 +38,12 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "Artists"
 
 - tapOn: "Release Groups"
-- assertVisible: "ぐされ"
-- assertVisible: "潜潜話"
+- assertVisible: "ぐされ (Gusare)"
+- assertVisible: "潜潜話 (Hisohiso Banashi)"
 - tapOn: "More actions"
 - tapOn: "Un-sort"
-- assertVisible: "ぐされ"
-- assertNotVisible: "潜潜話"
+- assertVisible: "ぐされ (Gusare)"
+- assertNotVisible: "潜潜話 (Hisohiso Banashi)"
 
 - tapOn: "Releases"
 
@@ -51,7 +51,7 @@ appId: io.github.lydavid.musicsearch.debug
     text: "Back"
     index: 0
 - assertVisible: "Search MusicBrainz"
-- assertVisible: "ずっと真夜中でいいのに。"
+- assertVisible: "ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
 
 - tapOn: "Database"
 - tapOn: "History"
@@ -91,8 +91,8 @@ appId: io.github.lydavid.musicsearch.debug
 - assertVisible: "Already in Artists."
 
 - tapOn: "Release Groups"
-- assertVisible: "ぐされ"
-- assertNotVisible: "潜潜話"
+- assertVisible: "ぐされ (Gusare)"
+- assertNotVisible: "潜潜話 (Hisohiso Banashi)"
 - tapOn: "More actions"
 - tapOn: "Sort"
 
@@ -107,11 +107,11 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "Stats"
 - assertVisible: "Cached 1 / 1"
 - back
-- longPressOn: "ずっと真夜中でいいのに。"
+- longPressOn: "ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
 - assertVisible: "Selected 1 / 1"
 - back
 - assertVisible: "Artists"
-- longPressOn: "ずっと真夜中でいいのに。"
+- longPressOn: "ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
 - assertVisible: "Selected 1 / 1"
 - tapOn: "Filter"
 - inputText: "zutto"
@@ -120,7 +120,7 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "Delete 1"
 - assertVisible: "Deleting 1 from Artists."
 - tapOn: "Undo"
-- longPressOn: "ずっと真夜中でいいのに。"
+- longPressOn: "ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
 - tapOn: "More actions"
 - tapOn: "Delete 1"
 - assertVisible: "Deleting 1 from Artists."
