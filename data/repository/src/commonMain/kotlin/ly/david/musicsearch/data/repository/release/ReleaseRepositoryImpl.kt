@@ -239,7 +239,7 @@ private fun TrackAndMedium.toTrackListItemModel() =
         id = id,
         position = position,
         number = number,
-        title = title,
+        name = title,
         length = length,
         mediumId = mediumId,
         recordingId = recordingId,
@@ -249,4 +249,5 @@ private fun TrackAndMedium.toTrackListItemModel() =
         mediumName = mediumName,
         trackCount = trackCount,
         format = format,
+        aliases = aliases,
     )

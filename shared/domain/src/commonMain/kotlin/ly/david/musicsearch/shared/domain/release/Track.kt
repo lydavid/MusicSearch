@@ -7,6 +7,6 @@ interface Track {
     val id: String
     val position: Int
     val number: String
-    val title: String
+    val name: String
     val length: Int?
 }

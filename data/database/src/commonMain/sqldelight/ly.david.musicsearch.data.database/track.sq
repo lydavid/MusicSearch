@@ -21,41 +21,56 @@ VALUES ?;
 getNumberOfTracksByRelease:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
-    FROM track t
-    INNER JOIN medium m ON t.medium_id = m.id
-    INNER JOIN `release` r ON m.release_id = r.id
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = t.id
+    SELECT COUNT(track.id)
+    FROM track
+    INNER JOIN medium ON track.medium_id = medium.id
+    INNER JOIN `release` r ON medium.release_id = r.id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = track.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN recording_alias ON track.recording_id = recording_alias.recording_id
     WHERE r.id = :releaseId
     AND (
-      t.title LIKE :query
-      OR t.number LIKE :query
-      OR ac.name LIKE :query
+      track.title LIKE :query OR
+      track.number LIKE :query OR
+      ac.name LIKE :query OR
+      recording_alias.name LIKE :query
     )
+    GROUP BY track.id
   ),
   0
 ) AS count;
 
 getTracksByRelease:
 SELECT
-  t.*,
+  track.id,
+  track.medium_id,
+  track.recording_id,
+  track.position,
+  track.number,
+  track.title,
+  track.length,
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited,
-  m.position,
-  m.name,
-  m.track_count,
-  m.format
-FROM track t
-INNER JOIN medium m ON t.medium_id = m.id
-INNER JOIN `release` r ON m.release_id = r.id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = t.id
+  medium.position,
+  medium.name,
+  medium.track_count,
+  medium.format,
+  GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
+FROM track
+INNER JOIN medium ON track.medium_id = medium.id
+INNER JOIN `release` r ON medium.release_id = r.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = track.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = t.recording_id
+LEFT JOIN details_metadata ON details_metadata.entity_id = track.recording_id
+LEFT JOIN recording_alias ON track.recording_id = recording_alias.recording_id
 WHERE r.id = :releaseId
 AND (
-  t.title LIKE :query
-  OR t.number LIKE :query
-  OR ac.name LIKE :query
+  track.title LIKE :query OR
+  track.number LIKE :query OR
+  ac.name LIKE :query OR
+  recording_alias.name LIKE :query
 )
+GROUP BY track.id
+ORDER BY medium.position, track.position
 LIMIT :limit OFFSET :offset;

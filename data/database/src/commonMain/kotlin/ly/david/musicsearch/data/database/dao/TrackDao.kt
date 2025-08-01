@@ -2,9 +2,11 @@ package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.mapper.combineToPrimaryAliases
 import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import lydavidmusicsearchdatadatabase.Track
 
 class TrackDao(
@@ -39,7 +41,7 @@ class TrackDao(
                     medium_id = mediumId,
                     position = position,
                     number = number,
-                    title = title,
+                    title = name,
                     length = length,
                     recording_id = recording.id,
                 ),
@@ -93,6 +95,8 @@ private fun mapToTrackAndMedium(
     mediumName: String?,
     trackCount: Int,
     format: String?,
+    aliasNames: String?,
+    aliasLocales: String?,
 ) = TrackAndMedium(
     id = id,
     position = position,
@@ -107,6 +111,7 @@ private fun mapToTrackAndMedium(
     mediumName = mediumName,
     trackCount = trackCount,
     format = format,
+    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
 )
 
 data class TrackAndMedium(
@@ -124,4 +129,5 @@ data class TrackAndMedium(
     val mediumName: String?,
     val trackCount: Int,
     val format: String?,
+    val aliases: List<BasicAlias>,
 )

@@ -4,8 +4,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
-import ly.david.musicsearch.ui.common.track.TrackListItem
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
+import ly.david.musicsearch.ui.common.track.TrackListItem
 
 @PreviewLightDark
 @Composable
@@ -15,7 +15,7 @@ internal fun PreviewTrackListItem() {
             TrackListItem(
                 track = TrackListItemModel(
                     id = "1",
-                    title = "Track title",
+                    name = "Track title",
                     position = 1,
                     number = "A",
                     mediumId = 1L,
@@ -34,7 +34,7 @@ internal fun PreviewTrackListItemAllInfo() {
             TrackListItem(
                 track = TrackListItemModel(
                     id = "2",
-                    title = "Track title that is long and wraps around",
+                    name = "Track title that is long and wraps around",
                     position = 1,
                     number = "123",
                     length = 25300000,
@@ -55,7 +55,7 @@ internal fun PreviewTrackListItemVisited() {
             TrackListItem(
                 track = TrackListItemModel(
                     id = "2",
-                    title = "Track title that is long and wraps",
+                    name = "Track title that is long and wraps",
                     position = 1,
                     number = "123",
                     length = 25300000,

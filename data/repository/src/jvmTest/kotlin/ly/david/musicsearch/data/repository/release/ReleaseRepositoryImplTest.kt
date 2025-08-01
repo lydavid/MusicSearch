@@ -172,7 +172,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "c9700f84-638f-3dec-9170-a15eb4f0cc96",
                                 position = 1,
                                 number = "1",
-                                title = "終わりへ向かう始まりの歌",
+                                name = "終わりへ向かう始まりの歌",
                                 length = 130000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -199,7 +199,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "7f1cb4f5-5936-3a51-a08d-6bf715a237d0",
                                 position = 2,
                                 number = "2",
-                                title = "君の知らない物語",
+                                name = "君の知らない物語",
                                 length = 339000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -226,7 +226,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "a941e1a2-79de-33c9-a02b-a7f067e13aef",
                                 position = 3,
                                 number = "3",
-                                title = "ヒーロー",
+                                name = "ヒーロー",
                                 length = 311000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -248,7 +248,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "bf7143f7-f93a-3731-bc7d-c0ff84728ca6",
                                 position = 4,
                                 number = "4",
-                                title = "Perfect Day",
+                                name = "Perfect Day",
                                 length = 286000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -270,7 +270,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "066266e5-b58b-3e71-91db-5ad2a8ed2532",
                                 position = 5,
                                 number = "5",
-                                title = "復讐",
+                                name = "復讐",
                                 length = 203000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -292,7 +292,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "79a09526-fb42-3bf8-a85b-e788fcbfabf6",
                                 position = 6,
                                 number = "6",
-                                title = "ロックンロールなんですの",
+                                name = "ロックンロールなんですの",
                                 length = 216000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -314,7 +314,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "441bf9d5-b91a-36ea-9f15-56317ab22676",
                                 position = 7,
                                 number = "7",
-                                title = "LOVE & ROLL",
+                                name = "LOVE & ROLL",
                                 length = 295000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -336,7 +336,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "b38da0ab-d752-39b4-9517-d17a33aa4cc5",
                                 position = 8,
                                 number = "8",
-                                title = "Feel so good",
+                                name = "Feel so good",
                                 length = 301000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -358,7 +358,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "a58a39b1-93ba-3137-906d-4210255f19a1",
                                 position = 9,
                                 number = "9",
-                                title = "星が瞬くこんな夜に",
+                                name = "星が瞬くこんな夜に",
                                 length = 269000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -380,7 +380,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "961ef5f0-197f-3a5c-9c81-198264a59cf6",
                                 position = 10,
                                 number = "10",
-                                title = "うたかた花火",
+                                name = "うたかた花火",
                                 length = 360000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -402,7 +402,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "44adf604-f8e7-38ad-ad8b-fb58d50fac0a",
                                 position = 11,
                                 number = "11",
-                                title = "夜が明けるよ",
+                                name = "夜が明けるよ",
                                 length = 290000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -424,7 +424,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "2622e69b-d15a-3acd-a2ad-417bc3238f40",
                                 position = 12,
                                 number = "12",
-                                title = "さよならメモリーズ",
+                                name = "さよならメモリーズ",
                                 length = 368000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -446,7 +446,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "1cd30e11-c4d6-3281-81cd-623043ea936e",
                                 position = 13,
                                 number = "13",
-                                title = "私へ",
+                                name = "私へ",
                                 length = 126000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -476,7 +476,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "1af38b9b-5d34-3350-98ba-33276886b3be",
                                 position = 1,
                                 number = "1",
-                                title = "「君の知らない物語」 ×「君化物語」 コラボCM",
+                                name = "「君の知らない物語」 ×「君化物語」 コラボCM",
                                 length = 16000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -500,7 +500,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "04f225b8-a641-3adf-b41f-8f50db310759",
                                 position = 2,
                                 number = "2",
-                                title = "「センコロールトレーラー映像",
+                                name = "「センコロールトレーラー映像",
                                 length = 85000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -524,7 +524,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "40cfb01b-1f7a-332c-b9d6-a9a89bb059f8",
                                 position = 3,
                                 number = "3",
-                                title = "「魔法使いの夜」トレーラー映像",
+                                name = "「魔法使いの夜」トレーラー映像",
                                 length = 217000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -548,7 +548,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "b0f703bf-2aa5-30aa-a4d7-c3827366e580",
                                 position = 4,
                                 number = "4",
-                                title = "「アオハル」トレーラー映像",
+                                name = "「アオハル」トレーラー映像",
                                 length = 47000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -572,7 +572,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 id = "b91bf6db-7368-395e-8b26-5a2c77802228",
                                 position = 5,
                                 number = "5",
-                                title = "「Perfect Day」Music Clip",
+                                name = "「Perfect Day」Music Clip",
                                 length = 297000,
                                 artistCredits = listOf(
                                     ArtistCreditMusicBrainzModel(
@@ -887,7 +887,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                             id = "c9700f84-638f-3dec-9170-a15eb4f0cc96",
                             position = 1,
                             number = "1",
-                            title = "Demo",
+                            name = "Demo",
                             length = 18733,
                             artistCredits = listOf(
                                 ArtistCreditMusicBrainzModel(
@@ -994,7 +994,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     id = "c9700f84-638f-3dec-9170-a15eb4f0cc96",
                     position = 1,
                     number = "1",
-                    title = "Demo",
+                    name = "Demo",
                     length = 18733,
                     mediumId = 1,
                     recordingId = "994b2961-3527-43f7-830d-7c817d286577",
@@ -1022,7 +1022,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                             id = "c9700f84-638f-3dec-9170-a15eb4f0cc96",
                             position = 1,
                             number = "1",
-                            title = "Demo",
+                            name = "Demo",
                             length = 18733,
                             artistCredits = listOf(
                                 ArtistCreditMusicBrainzModel(
@@ -1067,7 +1067,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     id = "c9700f84-638f-3dec-9170-a15eb4f0cc96",
                     position = 1,
                     number = "1",
-                    title = "Demo",
+                    name = "Demo",
                     length = 18733,
                     mediumId = 2,
                     recordingId = "994b2961-3527-43f7-830d-7c817d286577",

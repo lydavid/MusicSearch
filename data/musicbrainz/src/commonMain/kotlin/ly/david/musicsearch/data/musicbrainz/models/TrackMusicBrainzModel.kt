@@ -2,9 +2,9 @@ package ly.david.musicsearch.data.musicbrainz.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.shared.domain.release.Track
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
+import ly.david.musicsearch.shared.domain.release.Track
 
 /**
  * A [Track] in [MediumMusicBrainzModel].
@@ -14,7 +14,7 @@ data class TrackMusicBrainzModel(
     @SerialName("id") override val id: String,
     @SerialName("position") override val position: Int,
     @SerialName("number") override val number: String, // Usually a string of `position`, but could be things like `A1`
-    @SerialName("title") override val title: String,
+    @SerialName("title") override val name: String,
     @SerialName("length") override val length: Int? = null,
 
     @SerialName("artist-credit") val artistCredits: List<ArtistCreditMusicBrainzModel>? = null,
