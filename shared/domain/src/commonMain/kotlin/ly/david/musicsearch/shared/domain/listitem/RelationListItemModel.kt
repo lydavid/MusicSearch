@@ -2,6 +2,8 @@ package ly.david.musicsearch.shared.domain.listitem
 
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.Relation
@@ -23,8 +25,14 @@ data class RelationListItemModel(
     override val linkedEntity: MusicBrainzEntity,
     override val visited: Boolean = true,
     override val isForwardDirection: Boolean? = null,
+    // TODO: immutable
+    override val aliases: List<BasicAlias> = listOf(),
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val imageUrl: String? = null,
     val imageId: ImageId? = null,
     val lastUpdated: Instant? = null,
-) : ListItemModel, Relation, Visitable
+) : ListItemModel, Relation, Visitable, NameWithDisambiguationAndAliases {
+    override fun withAliases(aliases: List<BasicAlias>): NameWithDisambiguationAndAliases {
+        return copy(aliases = aliases)
+    }
+}

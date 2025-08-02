@@ -1,0 +1,86 @@
+DROP VIEW all_alias_names;
+
+CREATE VIEW all_primary_alias AS
+SELECT
+  area_id AS mbid,
+  name,
+  locale
+FROM area_alias
+WHERE is_primary
+UNION ALL
+SELECT
+  artist_id AS mbid,
+  name,
+  locale
+FROM artist_alias
+WHERE is_primary
+UNION ALL
+SELECT
+  event_id AS mbid,
+  name,
+  locale
+FROM event_alias
+WHERE is_primary
+UNION ALL
+SELECT
+  genre_id AS mbid,
+  name,
+  locale
+FROM genre_alias
+WHERE is_primary
+UNION ALL
+SELECT
+  instrument_id AS mbid,
+  name,
+  locale
+FROM instrument_alias
+WHERE is_primary
+UNION ALL
+SELECT
+  label_id AS mbid,
+  name,
+  locale
+FROM label_alias
+WHERE is_primary
+UNION ALL
+SELECT
+  place_id AS mbid,
+  name,
+  locale
+FROM place_alias
+WHERE is_primary
+UNION ALL
+SELECT
+  recording_id AS mbid,
+  name,
+  locale
+FROM recording_alias
+WHERE is_primary
+UNION ALL
+SELECT
+  release_id AS mbid,
+  name,
+  locale
+FROM release_alias
+WHERE is_primary
+UNION ALL
+SELECT
+  release_group_id AS mbid,
+  name,
+  locale
+FROM release_group_alias
+WHERE is_primary
+UNION ALL
+SELECT
+  series_id AS mbid,
+  name,
+  locale
+FROM series_alias
+WHERE is_primary
+UNION ALL
+SELECT
+  work_id AS mbid,
+  name,
+  locale
+FROM work_alias
+WHERE is_primary;

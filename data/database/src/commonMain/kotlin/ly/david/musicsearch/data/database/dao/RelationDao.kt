@@ -7,6 +7,7 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.mapper.combineToPrimaryAliases
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.image.ImageId
@@ -120,6 +121,8 @@ class RelationDao(
         ended: Boolean?,
         thumbnailUrl: String?,
         imageId: Long?,
+        aliasNames: String? = null,
+        aliasLocales: String? = null,
         lastUpdated: Instant? = null,
     ) = RelationListItemModel(
         id = "${linkedEntityId}_$order",
@@ -138,6 +141,10 @@ class RelationDao(
         ),
         imageUrl = thumbnailUrl,
         imageId = imageId?.let { ImageId(it) },
+        aliases = combineToPrimaryAliases(
+            aliasNames = aliasNames,
+            aliasLocales = aliasLocales,
+        ),
         lastUpdated = lastUpdated,
     )
 
