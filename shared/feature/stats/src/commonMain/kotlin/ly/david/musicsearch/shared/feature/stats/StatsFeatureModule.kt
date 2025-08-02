@@ -14,7 +14,7 @@ val statsFeatureModule = module {
                 is StatsScreen -> {
                     StatsPresenter(
                         screen = screen,
-                        getCountOfEachRelationshipTypeUseCase = get(),
+                        observeRelationStatsUseCase = get(),
                         browseRemoteMetadataRepository = get(),
                         observeLocalCount = get(),
                         observeVisitedCount = get(),

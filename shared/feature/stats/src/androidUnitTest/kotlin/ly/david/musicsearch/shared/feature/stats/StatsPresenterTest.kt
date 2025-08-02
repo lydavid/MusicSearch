@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.list.ObserveVisitedCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
-import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
+import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCase
 import ly.david.musicsearch.shared.domain.releasegroup.ObserveCountOfEachAlbumType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.ui.common.artist.artistTabs
@@ -39,7 +39,7 @@ class StatsPresenterTest {
                 byEntity = MusicBrainzEntity.ARTIST,
                 tabs = artistTabs,
             ),
-            getCountOfEachRelationshipTypeUseCase = object : GetCountOfEachRelationshipTypeUseCase {
+            observeRelationStatsUseCase = object : ObserveRelationStatsUseCase {
                 override fun invoke(browseMethod: BrowseMethod): Flow<List<RelationTypeCount>> {
                     return flowOf(
                         listOf(

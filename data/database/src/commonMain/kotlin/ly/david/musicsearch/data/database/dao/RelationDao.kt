@@ -6,14 +6,14 @@ import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
-import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 
 class RelationDao(
     database: Database,
@@ -141,8 +141,16 @@ class RelationDao(
         lastUpdated = lastUpdated,
     )
 
-    fun getCountOfEachRelationshipType(entityId: String): Flow<List<CountOfEachRelationshipType>> =
-        transacter.countOfEachRelationshipType(entityId)
+    fun observeCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>> =
+        transacter.countOfEachRelationshipType(
+            entityId = entityId,
+            mapper = { musicBrainzEntity, count ->
+                RelationTypeCount(
+                    linkedEntity = musicBrainzEntity,
+                    count = count.toInt(),
+                )
+            },
+        )
             .asFlow()
             .mapToList(coroutineDispatchers.io)
 }

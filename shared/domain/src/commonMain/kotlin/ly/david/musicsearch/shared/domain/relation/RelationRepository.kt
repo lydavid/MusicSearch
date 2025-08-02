@@ -43,5 +43,7 @@ interface RelationRepository {
         lastUpdated: Instant,
     ): Flow<PagingData<ListItemModel>>
 
-    fun getCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>>
+    fun observeCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>>
+
+    fun observeLastUpdated(entityId: String): Flow<Instant?>
 }

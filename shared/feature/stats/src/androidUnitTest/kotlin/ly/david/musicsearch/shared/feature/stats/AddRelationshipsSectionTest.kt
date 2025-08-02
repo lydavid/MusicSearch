@@ -20,9 +20,9 @@ class AddRelationshipsSectionTest : ScreenshotTest() {
     }
 
     @Test
-    fun nullRelationships() {
+    fun nullLastUpdated() {
         snapshot {
-            PreviewAddRelationshipsSectionNullRelationships()
+            PreviewAddRelationshipsSectionNullLastUpdated()
         }
     }
 }

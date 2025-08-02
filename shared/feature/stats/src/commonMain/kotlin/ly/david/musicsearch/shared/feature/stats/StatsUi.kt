@@ -39,8 +39,8 @@ internal fun StatsUi(
             when (tab) {
                 Tab.RELATIONSHIPS -> {
                     addRelationshipsSection(
-                        totalRelations = stats.totalRelations,
-                        relationTypeCounts = stats.relationTypeCounts,
+                        relationStats = stats.relationStats,
+                        now = now,
                     )
                 }
 

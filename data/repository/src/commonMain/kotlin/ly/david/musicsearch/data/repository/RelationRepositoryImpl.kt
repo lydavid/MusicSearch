@@ -25,7 +25,6 @@ import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
-import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 
 class RelationRepositoryImpl(
     private val lookupApi: LookupApi,
@@ -287,13 +286,11 @@ class RelationRepositoryImpl(
         )
     }
 
-    override fun getCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>> =
-        relationDao.getCountOfEachRelationshipType(entityId).map {
-            it.map { countOfEachRelationshipType: CountOfEachRelationshipType ->
-                RelationTypeCount(
-                    linkedEntity = countOfEachRelationshipType.linked_entity,
-                    count = countOfEachRelationshipType.entity_count.toInt(),
-                )
-            }
-        }
+    override fun observeCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>> {
+        return relationDao.observeCountOfEachRelationshipType(entityId = entityId)
+    }
+
+    override fun observeLastUpdated(entityId: String): Flow<Instant?> {
+        return relationsMetadataDao.observeLastUpdated(entityId = entityId)
+    }
 }

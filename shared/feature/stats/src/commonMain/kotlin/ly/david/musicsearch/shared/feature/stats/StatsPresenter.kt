@@ -16,7 +16,8 @@ import ly.david.musicsearch.shared.domain.list.ObserveCollectedCount
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.list.ObserveVisitedCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
+import ly.david.musicsearch.shared.domain.relation.RelationStats
+import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCase
 import ly.david.musicsearch.shared.domain.releasegroup.ObserveCountOfEachAlbumType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.ui.common.screen.StatsScreen
@@ -25,7 +26,7 @@ import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
 
 internal class StatsPresenter(
     private val screen: StatsScreen,
-    private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
+    private val observeRelationStatsUseCase: ObserveRelationStatsUseCase,
     private val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
     private val observeLocalCount: ObserveLocalCount,
     private val observeVisitedCount: ObserveVisitedCount,
@@ -45,8 +46,7 @@ internal class StatsPresenter(
                 entity = byEntity,
             )
         }
-        val relationTypeCounts
-            by getCountOfEachRelationshipTypeUseCase(browseMethod).collectAsState(listOf())
+        val relationStats by observeRelationStatsUseCase(browseMethod).collectAsState(RelationStats())
 
         val tabToStats = screen.tabs
             .filterNot { setOf(Tab.DETAILS, Tab.TRACKS, Tab.STATS).contains(it) }
@@ -68,8 +68,7 @@ internal class StatsPresenter(
             }.toPersistentHashMap()
 
         val stats = Stats(
-            totalRelations = relationTypeCounts.sumOf { it.count },
-            relationTypeCounts = relationTypeCounts.toImmutableList(),
+            relationStats = relationStats,
             tabToStats = tabToStats,
         )
 

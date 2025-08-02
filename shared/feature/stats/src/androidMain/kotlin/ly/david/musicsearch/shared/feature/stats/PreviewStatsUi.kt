@@ -7,6 +7,7 @@ import kotlinx.collections.immutable.persistentHashMapOf
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.relation.RelationStats
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
@@ -25,16 +26,18 @@ internal fun PreviewStatsUi() {
                     Tab.PLACES,
                 ),
                 stats = Stats(
-                    totalRelations = 696,
-                    relationTypeCounts = persistentListOf(
-                        RelationTypeCount(
-                            linkedEntity = MusicBrainzEntity.ARTIST,
-                            count = 17,
+                    relationStats = RelationStats(
+                        relationTypeCounts = persistentListOf(
+                            RelationTypeCount(
+                                linkedEntity = MusicBrainzEntity.ARTIST,
+                                count = 17,
+                            ),
+                            RelationTypeCount(
+                                linkedEntity = MusicBrainzEntity.RECORDING,
+                                count = 397,
+                            ),
                         ),
-                        RelationTypeCount(
-                            linkedEntity = MusicBrainzEntity.RECORDING,
-                            count = 397,
-                        ),
+                        lastUpdated = Instant.parse("2025-02-26T07:42:20Z"),
                     ),
                     persistentHashMapOf(
                         Tab.RELEASE_GROUPS to EntityStats(

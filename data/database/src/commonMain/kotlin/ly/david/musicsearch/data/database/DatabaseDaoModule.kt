@@ -56,7 +56,7 @@ val databaseDaoModule = module {
     single { CollectionDao(get(), get()) }
     singleOf(::CollectionEntityDao)
     single { CountryCodeDao(get()) }
-    single { RelationsMetadataDao(get()) }
+    singleOf(::RelationsMetadataDao)
     singleOf(::DetailsMetadataDaoImpl) bind DetailsMetadataDao::class
     singleOf(::EventDao)
     singleOf(::InstrumentDao)

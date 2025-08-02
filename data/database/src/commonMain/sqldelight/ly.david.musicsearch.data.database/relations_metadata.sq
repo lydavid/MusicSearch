@@ -21,3 +21,8 @@ upsert {
 contains:
 SELECT entity_id FROM relations_metadata
 WHERE entity_id = :entityId;
+
+getLastUpdated:
+SELECT last_updated
+FROM relations_metadata
+WHERE entity_id = :entityId;

@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.domain
 
-import ly.david.musicsearch.shared.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
@@ -23,8 +22,8 @@ import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrlImpl
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.DeleteNowPlayingHistory
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.GetNowPlayingHistory
-import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
-import ly.david.musicsearch.shared.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCaseImpl
+import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCase
+import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCaseImpl
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationshipsImpl
 import ly.david.musicsearch.shared.domain.release.usecase.GetTracksByRelease
@@ -44,7 +43,6 @@ val domainModule = module {
     )
 
     singleOf(::GetEntitiesImpl) bind GetEntities::class
-    singleOf(::ObserveBrowseEntityCount)
     singleOf(::CreateCollection)
     singleOf(::GetAllCollections)
     singleOf(::GetCollection)
@@ -56,7 +54,7 @@ val domainModule = module {
     singleOf(::UnMarkLookupHistoryForDeletionImpl) bind UnMarkLookupHistoryForDeletion::class
     singleOf(::DeleteNowPlayingHistory)
     singleOf(::GetNowPlayingHistory)
-    singleOf(::GetCountOfEachRelationshipTypeUseCaseImpl) bind GetCountOfEachRelationshipTypeUseCase::class
+    singleOf(::ObserveRelationStatsUseCaseImpl) bind ObserveRelationStatsUseCase::class
     singleOf(::GetEntityRelationshipsImpl) bind GetEntityRelationships::class
     singleOf(::GetTracksByReleaseImpl) bind GetTracksByRelease::class
     singleOf(::DeleteSearchHistory)
