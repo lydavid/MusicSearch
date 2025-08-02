@@ -21,7 +21,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
-import ly.david.musicsearch.ui.common.listitem.DisambiguationText
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
@@ -53,7 +53,7 @@ fun RelationListItem(
                 )
 
                 Text(
-                    text = relation.name,
+                    text = relation.getAnnotatedName(),
                     style = TextStyles.getCardBodyTextStyle(),
                     fontWeight = relation.fontWeight,
                 )
@@ -61,11 +61,6 @@ fun RelationListItem(
         },
         supportingContent = {
             Column {
-                DisambiguationText(
-                    disambiguation = relation.disambiguation,
-                    fontWeight = relation.fontWeight,
-                )
-
                 relation.attributes.ifNotNullOrEmpty {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
