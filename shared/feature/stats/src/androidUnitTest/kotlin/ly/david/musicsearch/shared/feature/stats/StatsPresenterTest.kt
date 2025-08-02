@@ -14,6 +14,7 @@ import ly.david.musicsearch.shared.domain.list.ObserveCollectedCount
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.list.ObserveVisitedCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.relation.RelationStats
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCase
 import ly.david.musicsearch.shared.domain.releasegroup.ObserveCountOfEachAlbumType
@@ -40,22 +41,25 @@ class StatsPresenterTest {
                 tabs = artistTabs,
             ),
             observeRelationStatsUseCase = object : ObserveRelationStatsUseCase {
-                override fun invoke(browseMethod: BrowseMethod): Flow<List<RelationTypeCount>> {
+                override fun invoke(browseMethod: BrowseMethod): Flow<RelationStats> {
                     return flowOf(
-                        listOf(
-                            RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.AREA,
-                                count = 1,
+                        RelationStats(
+                            relationTypeCounts = persistentListOf(
+                                RelationTypeCount(
+                                    linkedEntity = MusicBrainzEntity.AREA,
+                                    count = 1,
+                                ),
+                                RelationTypeCount(
+                                    linkedEntity = MusicBrainzEntity.ARTIST,
+                                    count = 2,
+                                ),
+                                RelationTypeCount(
+                                    linkedEntity = MusicBrainzEntity.EVENT,
+                                    count = 3,
+                                ),
                             ),
-                            RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.ARTIST,
-                                count = 2,
-                            ),
-                            RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.EVENT,
-                                count = 3,
-                            ),
-                        ),
+                            lastUpdated = lastUpdated,
+                        )
                     )
                 }
             },
@@ -117,8 +121,6 @@ class StatsPresenterTest {
                 assertEquals(
                     StatsUiState(
                         stats = Stats(
-                            totalRelations = 0,
-                            relationTypeCounts = persistentListOf(),
                             tabToStats = persistentHashMapOf(
                                 Tab.RELATIONSHIPS to EntityStats(),
                                 Tab.RECORDINGS to EntityStats(),
@@ -137,20 +139,22 @@ class StatsPresenterTest {
                 assertEquals(
                     StatsUiState(
                         stats = Stats(
-                            totalRelations = 6,
-                            relationTypeCounts = persistentListOf(
-                                RelationTypeCount(
-                                    linkedEntity = MusicBrainzEntity.AREA,
-                                    count = 1,
+                            relationStats = RelationStats(
+                                relationTypeCounts = persistentListOf(
+                                    RelationTypeCount(
+                                        linkedEntity = MusicBrainzEntity.AREA,
+                                        count = 1,
+                                    ),
+                                    RelationTypeCount(
+                                        linkedEntity = MusicBrainzEntity.ARTIST,
+                                        count = 2,
+                                    ),
+                                    RelationTypeCount(
+                                        linkedEntity = MusicBrainzEntity.EVENT,
+                                        count = 3,
+                                    ),
                                 ),
-                                RelationTypeCount(
-                                    linkedEntity = MusicBrainzEntity.ARTIST,
-                                    count = 2,
-                                ),
-                                RelationTypeCount(
-                                    linkedEntity = MusicBrainzEntity.EVENT,
-                                    count = 3,
-                                ),
+                                lastUpdated = lastUpdated,
                             ),
                             tabToStats = persistentHashMapOf(
                                 Tab.RELATIONSHIPS to EntityStats(),
