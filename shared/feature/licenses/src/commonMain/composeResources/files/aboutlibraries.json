@@ -1240,7 +1240,7 @@
                     "name": "Slack Technologies, Inc."
                 }
             ],
-            "artifactVersion": "0.29.1",
+            "artifactVersion": "0.30.0",
             "description": "Circuit UI",
             "scm": {
                 "connection": "scm:git:git://github.com/slackhq/circuit.git",
