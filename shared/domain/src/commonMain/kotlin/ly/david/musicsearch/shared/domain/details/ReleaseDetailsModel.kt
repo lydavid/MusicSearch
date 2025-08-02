@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.details
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
@@ -34,7 +36,7 @@ data class ReleaseDetailsModel(
     override val artistCredits: List<ArtistCreditUiModel> = listOf(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val urls: List<RelationListItemModel> = listOf(),
-    override val aliases: List<BasicAlias> = listOf(),
+    override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 
     // TODO: unused
     val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
@@ -67,7 +69,7 @@ data class ReleaseDetailsModel(
         return copy(urls = urls)
     }
 
-    override fun withAliases(aliases: List<BasicAlias>): NameWithDisambiguationAndAliases {
+    override fun withAliases(aliases: ImmutableList<BasicAlias>): NameWithDisambiguationAndAliases {
         return copy(aliases = aliases)
     }
 }

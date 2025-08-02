@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.collections.immutable.ImmutableList
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.combineToPrimaryAliases
 import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
@@ -129,5 +130,5 @@ data class TrackAndMedium(
     val mediumName: String?,
     val trackCount: Int,
     val format: String?,
-    val aliases: List<BasicAlias>,
+    val aliases: ImmutableList<BasicAlias>,
 )

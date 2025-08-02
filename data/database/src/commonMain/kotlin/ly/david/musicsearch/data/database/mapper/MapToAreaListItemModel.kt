@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
+import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 
@@ -28,7 +29,7 @@ internal fun mapToAreaListItemModel(
         end = end,
         ended = ended,
     ),
-    countryCodes = listOfNotNull(countryCode.takeIf { !it.isNullOrEmpty() }),
+    countryCodes = listOfNotNull(countryCode.takeIf { !it.isNullOrEmpty() }).toPersistentList(),
     visited = visited,
     collected = collected,
     aliases = combineToPrimaryAliases(aliasNames, aliasLocales),

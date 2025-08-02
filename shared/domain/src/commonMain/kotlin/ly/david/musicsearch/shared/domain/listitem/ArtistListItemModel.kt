@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.listitem
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
@@ -19,9 +21,9 @@ data class ArtistListItemModel(
     val imageId: ImageId? = null,
     override val visited: Boolean = false,
     override val collected: Boolean = false,
-    override val aliases: List<BasicAlias> = listOf(),
+    override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 ) : EntityListItemModel, Artist, NameWithDisambiguationAndAliases {
-    override fun withAliases(aliases: List<BasicAlias>): ArtistListItemModel {
+    override fun withAliases(aliases: ImmutableList<BasicAlias>): ArtistListItemModel {
         return copy(aliases = aliases)
     }
 }

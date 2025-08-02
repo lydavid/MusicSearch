@@ -1,6 +1,8 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.sqldelight.Query
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
@@ -247,7 +249,7 @@ class AliasDao(
     fun getAliases(
         entityType: MusicBrainzEntity,
         mbid: String,
-    ): List<BasicAlias> {
+    ): ImmutableList<BasicAlias> {
         val aliasQueries: Map<MusicBrainzEntity, AliasQuery<BasicAlias>> = mapOf(
             MusicBrainzEntity.AREA to transacter::getAreaAliases,
             MusicBrainzEntity.ARTIST to transacter::getArtistAliases,
@@ -263,8 +265,11 @@ class AliasDao(
             MusicBrainzEntity.WORK to transacter::getWorkAliases,
         )
 
-        return aliasQueries[entityType]?.invoke(mbid, mapToBasicAlias())?.executeAsList()
-            ?: emptyList()
+        return aliasQueries[entityType]
+            ?.invoke(mbid, mapToBasicAlias())
+            ?.executeAsList()
+            .orEmpty()
+            .toPersistentList()
     }
 }
 

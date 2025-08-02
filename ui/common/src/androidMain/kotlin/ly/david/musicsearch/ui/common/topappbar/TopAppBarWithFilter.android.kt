@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
@@ -77,7 +78,7 @@ internal fun PreviewTopAppBarWithFilter() {
                 id = "8b089567-8879-4d0e-bf24-6f8352b63a16",
                 name = "ナノ",
                 disambiguation = "Japanese-American pop/rock singer",
-                aliases = listOf(
+                aliases = persistentListOf(
                     BasicAlias(
                         name = "NANO",
                         locale = "en",

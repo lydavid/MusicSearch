@@ -7,6 +7,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.withStyle
+import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.ui.common.theme.getSubTextColor
@@ -68,7 +69,7 @@ fun NameWithDisambiguationAndAliases?.getAnnotatedName(): AnnotatedString {
         append(name)
 
         val alias: String? = withAliases(
-            aliases = aliases.filter { alias -> alias.isPrimary },
+            aliases = aliases.filter { alias -> alias.isPrimary }.toPersistentList(),
         ).getAliasForLocale(
             // Need to exclude locale from android:configChanges to force activity recreation for this to update
             // https://issuetracker.google.com/issues/240191036
