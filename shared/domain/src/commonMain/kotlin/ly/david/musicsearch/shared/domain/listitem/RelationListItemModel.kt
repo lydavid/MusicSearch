@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.listitem
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
@@ -25,14 +27,13 @@ data class RelationListItemModel(
     override val linkedEntity: MusicBrainzEntity,
     override val visited: Boolean = true,
     override val isForwardDirection: Boolean? = null,
-    // TODO: immutable
-    override val aliases: List<BasicAlias> = listOf(),
+    override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val imageUrl: String? = null,
     val imageId: ImageId? = null,
     val lastUpdated: Instant? = null,
 ) : ListItemModel, Relation, Visitable, NameWithDisambiguationAndAliases {
-    override fun withAliases(aliases: List<BasicAlias>): NameWithDisambiguationAndAliases {
+    override fun withAliases(aliases: ImmutableList<BasicAlias>): NameWithDisambiguationAndAliases {
         return copy(aliases = aliases)
     }
 }

@@ -26,6 +26,7 @@ stable class CollectionListPresenter {
   runtime val getAllCollections: GetAllCollections
   runtime val createCollection: CreateCollection
   unstable val collectionRepository: CollectionRepository
+  unstable val externalScope: CoroutineScope
   <runtime stability> = Stable
 }
 stable class CollectionsListUiState {
@@ -39,7 +40,6 @@ stable class CollectionsListUiState {
   runtime val firstActionableResult: ActionableResult?
   runtime val secondActionableResult: ActionableResult?
   stable val eventSink: Function1<CollectionsListUiEvent, Unit>
-  unstable val suspendEventSink: SuspendFunction1<SuspendCollectionsListUiEvent, Unit>
 }
 stable class UpdateShowLocal {
   stable val show: Boolean
@@ -79,6 +79,7 @@ stable class CollectionPresenter {
   stable val allEntitiesListPresenter: AllEntitiesListPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
   unstable val collectionRepository: CollectionRepository
+  unstable val externalScope: CoroutineScope
   <runtime stability> = Stable
 }
 stable class CollectionUiState {
@@ -92,7 +93,6 @@ stable class CollectionUiState {
   stable val loginUiState: LoginUiState
   stable val allEntitiesListUiState: AllEntitiesListUiState
   stable val eventSink: Function1<CollectionUiEvent, Unit>
-  unstable val suspendEventSink: SuspendFunction1<SuspendCollectionUiEvent, Unit>
 }
 stable class NavigateUp {
   <runtime stability> = Stable
@@ -106,7 +106,6 @@ stable class UnMarkItemsAsDeleted {
 stable class ClickItem {
   stable val entity: MusicBrainzEntity
   stable val id: String
-  stable val title: String?
   <runtime stability> = Stable
 }
 stable class DeleteItemsMarkedAsDeleted {

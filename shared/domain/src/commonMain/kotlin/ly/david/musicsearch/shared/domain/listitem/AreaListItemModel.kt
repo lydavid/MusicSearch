@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.listitem
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
@@ -13,13 +15,13 @@ data class AreaListItemModel(
     override val disambiguation: String? = null,
     override val type: String? = null,
     override val lifeSpan: LifeSpanUiModel? = LifeSpanUiModel(),
-    val countryCodes: List<String> = listOf(),
+    val countryCodes: ImmutableList<String> = persistentListOf(),
     val date: String? = "",
     override val visited: Boolean = false,
     override val collected: Boolean = false,
-    override val aliases: List<BasicAlias> = listOf(),
+    override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 ) : EntityListItemModel, Area, NameWithDisambiguationAndAliases {
-    override fun withAliases(aliases: List<BasicAlias>): NameWithDisambiguationAndAliases {
+    override fun withAliases(aliases: ImmutableList<BasicAlias>): NameWithDisambiguationAndAliases {
         return copy(aliases = aliases)
     }
 }
@@ -28,6 +30,6 @@ fun ReleaseEvent.toAreaListItemModel() = AreaListItemModel(
     id = id,
     name = name,
     date = date,
-    countryCodes = listOfNotNull(countryCode),
+    countryCodes = countryCode?.let { persistentListOf(it) } ?: persistentListOf(),
     visited = visited,
 )

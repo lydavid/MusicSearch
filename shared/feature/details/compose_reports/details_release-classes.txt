@@ -84,7 +84,6 @@ stable class DetailsPresenter {
   <runtime stability> = Stable
 }
 stable class DetailsUiState {
-  stable val title: String
   stable val subtitle: String
   stable val tabs: ImmutableList<Tab>
   stable val selectedTab: Tab
@@ -132,7 +131,6 @@ stable class ToggleSelectAllItems {
 stable class ClickItem {
   stable val entity: MusicBrainzEntity
   stable val id: String
-  stable val title: String?
   <runtime stability> = Stable
 }
 stable class ClickImage {

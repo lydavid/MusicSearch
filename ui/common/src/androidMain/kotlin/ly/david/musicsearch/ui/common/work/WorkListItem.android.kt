@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common.work
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 
@@ -14,8 +15,8 @@ internal fun PreviewWorkListItemModel() {
                 id = "4202da8f-2f57-4186-a5c8-80ed64988a16",
                 name = "aLIEz",
                 // previews doesn't render "German" but app does
-                languages = listOf("jpn", "eng", "deu"),
-                iswcs = listOf("T-915.750.016-8"),
+                languages = persistentListOf("jpn", "eng", "deu"),
+                iswcs = persistentListOf("T-915.750.016-8"),
             ),
         )
     }
@@ -31,8 +32,8 @@ internal fun PreviewWorkListItemModelAllInfo() {
                 name = "残酷な天使のテーゼ",
                 disambiguation = "Neon Genesis Evangelion",
                 type = "Song",
-                iswcs = listOf("T-101.261.638-3"),
-                languages = listOf("jpn"),
+                iswcs = persistentListOf("T-101.261.638-3"),
+                languages = persistentListOf("jpn"),
             ),
         )
     }
@@ -48,7 +49,7 @@ internal fun PreviewWorkListItemModelVisited() {
                 name = "イニシエノウタ",
                 disambiguation = "NieR",
                 type = "Song",
-                languages = listOf("qaa"),
+                languages = persistentListOf("qaa"),
                 visited = true,
             ),
         )

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.domain.details
 
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.MusicBrainzModel
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
@@ -15,7 +16,7 @@ sealed interface MusicBrainzDetailsModel : MusicBrainzModel, NameWithDisambiguat
     val imageMetadata: ImageMetadata
     val wikipediaExtract: WikipediaExtract
     val urls: List<RelationListItemModel>
-    override val aliases: List<BasicAlias>
+    override val aliases: ImmutableList<BasicAlias>
 
     fun withArtistCredits(artistCredits: List<ArtistCreditUiModel>): MusicBrainzDetailsModel
     fun withImageMetadata(imageMetadata: ImageMetadata): MusicBrainzDetailsModel

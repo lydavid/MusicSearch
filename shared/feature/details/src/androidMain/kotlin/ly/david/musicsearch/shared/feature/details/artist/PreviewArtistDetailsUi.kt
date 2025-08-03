@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.details.artist
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
@@ -25,7 +26,7 @@ private val artist = ArtistDetailsModel(
     areaListItemModel = AreaListItemModel(
         id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
         name = "United Kingdom",
-        countryCodes = listOf("GB"),
+        countryCodes = persistentListOf("GB"),
     ),
     lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
     wikipediaExtract = WikipediaExtract(

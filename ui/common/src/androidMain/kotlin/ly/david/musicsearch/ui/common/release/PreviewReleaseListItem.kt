@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common.release
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
@@ -168,7 +169,7 @@ internal fun PreviewReleaseListItemCatalog() {
                 catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
                 formattedFormats = "2×CD + Blu-ray",
                 formattedTracks = "15 + 8 + 24",
-                aliases = listOf(
+                aliases = persistentListOf(
                     BasicAlias(
                         name = "Uta no Uta ONE PIECE FILM RED",
                         locale = "en",
@@ -196,7 +197,7 @@ internal fun PreviewReleaseListItemVisited() {
                 formattedFormats = "2×CD + Blu-ray",
                 formattedTracks = "15 + 8 + 24",
                 visited = true,
-                aliases = listOf(
+                aliases = persistentListOf(
                     BasicAlias(
                         name = "Uta no Uta ONE PIECE FILM RED",
                         locale = "en",

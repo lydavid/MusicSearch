@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.details.release
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
@@ -43,7 +44,7 @@ private val release = ReleaseDetailsModel(
             id = "2db42837-c832-3c27-b4a3-08198f75693c",
             name = "Japan",
             type = COUNTRY,
-            countryCodes = listOf("JP"),
+            countryCodes = persistentListOf("JP"),
             date = "2022-08-10",
         ),
     ),

@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain.listitem
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.release.Track
@@ -18,14 +20,14 @@ data class TrackListItemModel(
     val mediumName: String? = null,
     val trackCount: Int = 0,
     val format: String? = null,
-    override val aliases: List<BasicAlias> = listOf(),
+    override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 ) : ListItemModel, Track, Visitable, NameWithDisambiguationAndAliases {
     /**
      * Unused. The actual disambiguation is part of [name].
      */
     override val disambiguation: String? = null
 
-    override fun withAliases(aliases: List<BasicAlias>): NameWithDisambiguationAndAliases {
+    override fun withAliases(aliases: ImmutableList<BasicAlias>): NameWithDisambiguationAndAliases {
         return copy(aliases = aliases)
     }
 }

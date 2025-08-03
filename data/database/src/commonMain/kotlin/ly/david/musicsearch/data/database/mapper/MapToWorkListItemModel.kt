@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
+import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 
 fun mapToWorkListItemModel(
@@ -18,8 +19,8 @@ fun mapToWorkListItemModel(
     name = name,
     disambiguation = disambiguation,
     type = type,
-    languages = languages.orEmpty(),
-    iswcs = iswcs.orEmpty(),
+    languages = languages.orEmpty().toPersistentList(),
+    iswcs = iswcs.orEmpty().toPersistentList(),
     visited = visited == true,
     collected = collected == true,
     aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
