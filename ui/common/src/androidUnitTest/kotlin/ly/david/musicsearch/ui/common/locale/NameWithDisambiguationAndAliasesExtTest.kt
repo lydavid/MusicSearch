@@ -1,6 +1,7 @@
 package ly.david.musicsearch.ui.common.locale
 
 import androidx.compose.ui.text.intl.Locale
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import org.junit.Assert
@@ -13,7 +14,7 @@ class NameWithDisambiguationAndAliasesExtTest {
             id = "89ad4ac3-39f7-470e-963a-56509c546377",
             name = "Various Artists",
             disambiguation = "add compilations to this artist",
-            aliases = listOf(
+            aliases = persistentListOf(
                 BasicAlias(
                     name = "Various Artists",
                     locale = "en",

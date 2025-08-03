@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common.area
 
 import androidx.paging.testing.asSnapshot
 import com.slack.circuit.test.presenterTestOf
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
@@ -33,7 +34,7 @@ class AreasListPresenterTest {
                 AreaListItemModel(
                     id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
                     name = "United Kingdom",
-                    countryCodes = listOf("GB"),
+                    countryCodes = persistentListOf("GB"),
                 ),
             ),
         )
@@ -45,7 +46,7 @@ class AreasListPresenterTest {
                         AreaListItemModel(
                             id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
                             name = "United Kingdom",
-                            countryCodes = listOf("GB"),
+                            countryCodes = persistentListOf("GB"),
                         ),
                     ),
                     pagingDataFlow.asSnapshot(),
@@ -61,7 +62,7 @@ class AreasListPresenterTest {
                         AreaListItemModel(
                             id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
                             name = "United Kingdom",
-                            countryCodes = listOf("GB"),
+                            countryCodes = persistentListOf("GB"),
                         ),
                     ),
                     pagingDataFlow.asSnapshot(),

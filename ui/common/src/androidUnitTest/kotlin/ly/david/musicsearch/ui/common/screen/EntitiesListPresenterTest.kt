@@ -3,6 +3,7 @@ package ly.david.musicsearch.ui.common.screen
 import androidx.paging.testing.asSnapshot
 import app.cash.paging.PagingData
 import com.slack.circuit.test.presenterTestOf
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -149,7 +150,7 @@ class EntitiesListPresenterTest {
                 AreaListItemModel(
                     id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
                     name = "United Kingdom",
-                    countryCodes = listOf("GB"),
+                    countryCodes = persistentListOf("GB"),
                 ),
             ),
             artistsListItems = listOf(
@@ -165,7 +166,7 @@ class EntitiesListPresenterTest {
                         AreaListItemModel(
                             id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
                             name = "United Kingdom",
-                            countryCodes = listOf("GB"),
+                            countryCodes = persistentListOf("GB"),
                         ),
                     ),
                     areasListUiState.pagingDataFlow.asSnapshot(),
@@ -181,7 +182,7 @@ class EntitiesListPresenterTest {
                         AreaListItemModel(
                             id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
                             name = "United Kingdom",
-                            countryCodes = listOf("GB"),
+                            countryCodes = persistentListOf("GB"),
                         ),
                     ),
                     areasListUiState.pagingDataFlow.asSnapshot(),
