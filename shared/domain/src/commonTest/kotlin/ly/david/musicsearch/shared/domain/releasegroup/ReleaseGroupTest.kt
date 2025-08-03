@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.domain.releasegroup
 
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -12,7 +13,7 @@ internal class ReleaseGroupTest {
             id = "",
             name = "",
             primaryType = "",
-            secondaryTypes = listOf(),
+            secondaryTypes = persistentListOf(),
         )
         assertEquals(
             NO_TYPE,
@@ -26,7 +27,7 @@ internal class ReleaseGroupTest {
             id = "",
             name = "",
             primaryType = "Album",
-            secondaryTypes = listOf(),
+            secondaryTypes = persistentListOf(),
         )
         assertEquals(
             "Album",
@@ -40,7 +41,7 @@ internal class ReleaseGroupTest {
             id = "",
             name = "",
             primaryType = "Album",
-            secondaryTypes = listOf(
+            secondaryTypes = persistentListOf(
                 "Compilation",
             ),
         )
@@ -56,7 +57,7 @@ internal class ReleaseGroupTest {
             id = "",
             name = "",
             primaryType = "Album",
-            secondaryTypes = listOf(
+            secondaryTypes = persistentListOf(
                 "Compilation",
                 "Live",
                 "Remix",
