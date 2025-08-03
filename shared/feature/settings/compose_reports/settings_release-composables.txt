@@ -34,8 +34,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingsU
   stable showAndroidSettings: Boolean
   stable modifier: Modifier? = @static Companion
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable versionName: String? = @static "1.49.1"
-  stable versionCode: Int = @dynamic val <elvis> = "675".toIntOrNull()
+  stable versionName: String? = @static "1.52.0"
+  stable versionCode: Int = @dynamic val <elvis> = "688".toIntOrNull()
 when {
   <elvis>  @  ly.david.musicsearch.shared.feature.settings.internal.SettingsUi   ==   null   ->   {
     0
@@ -62,8 +62,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingsU
   stable showAndroidSettings: Boolean
   stable modifier: Modifier? = @static Companion
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable versionName: String? = @static "1.49.1"
-  stable versionCode: Int = @dynamic val <elvis> = "675".toIntOrNull()
+  stable versionName: String? = @static "1.52.0"
+  stable versionCode: Int = @dynamic val <elvis> = "688".toIntOrNull()
 when {
   <elvis>  @  ly.david.musicsearch.shared.feature.settings.internal.SettingsUi   ==   null   ->   {
     0

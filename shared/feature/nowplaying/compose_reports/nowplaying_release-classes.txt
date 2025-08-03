@@ -1,5 +1,6 @@
 unstable class NowPlayingNotificationListener {
-  unstable val coroutineScope$delegate: Lazy<CoroutineScope>
+  unstable val coroutineDispatchers$delegate: Lazy<CoroutineDispatchers>
+  unstable val coroutineScope: CoroutineScope
   unstable val nowPlayingHistoryRepository$delegate: Lazy<NowPlayingHistoryRepository>
   <runtime stability> = Unstable
 }

@@ -17,11 +17,11 @@
   "inferredUncertainClasses": 0,
   "effectivelyStableClasses": 21,
   "totalClasses": 21,
-  "memoizedLambdas": 135,
+  "memoizedLambdas": 133,
   "singletonLambdas": 0,
   "singletonComposableLambdas": 18,
   "composableLambdas": 50,
-  "totalLambdas": 135,
+  "totalLambdas": 133,
   "featureFlags": {
     "StrongSkipping": true,
     "IntrinsicRemember": true,

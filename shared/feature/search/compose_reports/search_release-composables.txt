@@ -78,9 +78,9 @@ fun present(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchResultsUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static sourceInformationMarkerStart($composer, 1113423011, "CC(remember):SearchResultsUi.kt#9igjgp")
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 993303135, "CC(remember):SearchResultsUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
+  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
 
   }
 
@@ -91,7 +91,7 @@ tmp0_group@ly.david.musicsearch.shared.feature.search.SearchResultsUi
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ListItemUi(
   unstable listItemModel: ListItemModel?
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchUi(
   stable state: SearchUiState

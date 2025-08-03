@@ -1,6 +1,5 @@
 stable class Stats {
-  stable val totalRelations: Int?
-  runtime val relationTypeCounts: ImmutableList<RelationTypeCount>
+  runtime val relationStats: RelationStats
   runtime val tabToStats: ImmutableMap<Tab, EntityStats>
 }
 runtime class EntityStats {
@@ -14,7 +13,7 @@ runtime class EntityStats {
 }
 stable class StatsPresenter {
   stable val screen: StatsScreen
-  unstable val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  unstable val observeRelationStatsUseCase: ObserveRelationStatsUseCase
   unstable val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository
   unstable val observeLocalCount: ObserveLocalCount
   unstable val observeVisitedCount: ObserveVisitedCount

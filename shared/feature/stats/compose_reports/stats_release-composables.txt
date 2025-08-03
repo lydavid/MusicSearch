@@ -2,7 +2,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAd
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddEntityStatsSectionReleaseGroup()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionAll()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionNoRelationships()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionNullRelationships()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionNullLastUpdated()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarNoRemote()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarEmpty()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarHalf()
@@ -10,6 +10,10 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLo
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarOverflow()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarUnknown()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewStatsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RelationTypeCountBar(
+  relationTypeCount: RelationTypeCount
+  stable totalRelations: Int
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CompletionProgressBar(
   stable totalCount: Int?
   stable currentCount: Int

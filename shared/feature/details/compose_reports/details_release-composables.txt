@@ -77,9 +77,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistDet
   stable modifier: Modifier? = @static Companion
   detailsTabUiState: DetailsTabUiState? = @dynamic DetailsTabUiState()
   stable filterText: String? = @static ""
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static sourceInformationMarkerStart($composer, -182691959, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 1016043303, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
+  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
 
   }
 
@@ -87,7 +87,7 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.details.artist.ArtistDetailsTabUi
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -182689923, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1016045246, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -105,9 +105,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistInf
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaSection(
   areaListItemModel: AreaListItemModel?
   stable filterText: String? = @static ""
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static sourceInformationMarkerStart($composer, -267040773, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, -1205572391, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
+  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
 
   }
 
@@ -206,9 +206,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceDeta
   stable modifier: Modifier? = @static Companion
   detailsTabUiState: DetailsTabUiState? = @dynamic DetailsTabUiState()
   stable filterText: String? = @static ""
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static sourceInformationMarkerStart($composer, -201860465, "CC(remember):PlaceDetailsTabUi.kt#9igjgp")
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 751341165, "CC(remember):PlaceDetailsTabUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
+  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
 
   }
 
@@ -216,7 +216,7 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.details.place.PlaceDetailsTabUi
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -201858429, "CC(remember):PlaceDetailsTabUi.kt#9igjgp")
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 751343108, "CC(remember):PlaceDetailsTabUi.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -258,7 +258,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseDe
   detailsTabUiState: DetailsTabUiState
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
-  stable onImageClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1817245871, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
+  stable onImageClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1831496016, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -268,7 +268,7 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.details.release.ReleaseDetailsTabUi
-  stable onCollapseExpandReleaseEvents: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1817247535, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
+  stable onCollapseExpandReleaseEvents: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1831497680, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -278,7 +278,7 @@ val tmp1_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.shared.feature.details.release.ReleaseDetailsTabUi
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1817249199, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1831499344, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
 val tmp2_group = $composer.cache(false) {
   {
 
@@ -288,9 +288,9 @@ val tmp2_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp2_group@ly.david.musicsearch.shared.feature.details.release.ReleaseDetailsTabUi
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static sourceInformationMarkerStart($composer, 1817250843, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 1831500985, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
 val tmp3_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
+  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
 
   }
 
@@ -307,9 +307,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseUi
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TracksByReleaseUi(
   stable uiState: TracksByReleaseUiState
   stable modifier: Modifier? = @static Companion
-  stable onRecordingClick: Function2<@[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String, Unit>? = @static sourceInformationMarkerStart($composer, -1943574567, "CC(remember):TracksByReleaseUi.kt#9igjgp")
+  stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 1412860625, "CC(remember):TracksByReleaseUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   String  ,   <unused var>  :   String   ->
+  {     it  :   String   ->
 
   }
 
@@ -323,9 +323,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TracksByR
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   unstable collapsedMediumIds: Set<Long>? = @static setOf()
-  stable onRecordingClick: Function2<@[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String, Unit>? = @static sourceInformationMarkerStart($composer, 179839098, "CC(remember):TracksByReleaseUi.kt#9igjgp")
+  stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 1378573874, "CC(remember):TracksByReleaseUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   String  ,   <unused var>  :   String   ->
+  {     it  :   String   ->
 
   }
 
@@ -333,7 +333,7 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi
-  stable onToggleMedium: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 179840881, "CC(remember):TracksByReleaseUi.kt#9igjgp")
+  stable onToggleMedium: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 1378575378, "CC(remember):TracksByReleaseUi.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 

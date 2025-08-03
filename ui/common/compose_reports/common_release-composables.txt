@@ -38,7 +38,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewIn
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLabelListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLabelListItemAllInfo()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLabelListItemVisited()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewDisambiguationText()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollapsibleListSeparatorHeaderCollapsed()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollapsibleListSeparatorHeaderExpanded()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLastUpdatedFooterItem()
@@ -101,8 +100,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSc
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewScrollableTopAppBarWithTabs()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewScrollableTopAppBarLoading()
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun TopAppBarWithFilter(
+  stable annotatedString: AnnotatedString
   stable modifier: Modifier? = @static Companion
-  stable onBack: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1633378079, "CC(remember):TopAppBarWithFilter.android.kt#9igjgp")
+  stable onBack: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1445848485, "CC(remember):TopAppBarWithFilter.android.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -114,16 +114,15 @@ sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
   stable showBackButton: Boolean = @static true
   stable entity: MusicBrainzEntity? = @static null
-  stable title: String? = @static ""
   stable subtitle: String? = @static ""
   stable scrollBehavior: TopAppBarScrollBehavior? = @static null
   stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
   stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
   stable topAppBarFilterState: TopAppBarFilterState? = @dynamic TopAppBarFilterState()
   stable selectionState: SelectionState? = @dynamic SelectionState()
-  stable additionalActions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilter_androidKt.lambda$-221104971
-  stable additionalBar: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilter_androidKt.lambda$329255135
-  stable onSelectAllToggle: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1633358463, "CC(remember):TopAppBarWithFilter.android.kt#9igjgp")
+  stable additionalActions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilter_androidKt.lambda$-1137415005
+  stable additionalBar: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilter_androidKt.lambda$398567353
+  stable onSelectAllToggle: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1445829509, "CC(remember):TopAppBarWithFilter.android.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -588,11 +587,6 @@ val tmp0_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DisambiguationText(
-  stable disambiguation: String?
-  stable modifier: Modifier? = @static Companion
-  stable fontWeight: FontWeight? = @static null
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LastUpdatedFooterItem(
   stable lastUpdated: Instant
   stable modifier: Modifier? = @static Companion
@@ -654,14 +648,17 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SwipeToDeleteBackground(
   stable alignment: Alignment
 )
+fun getAnnotatedName(
+  unstable <this>: NameWithDisambiguationAndAliases?
+): AnnotatedString
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EntitiesPagingListUi(
   uiState: EntitiesPagingListUiState
   stable modifier: Modifier? = @static Companion
   stable selectedIds: ImmutableSet<String>? = @static persistentSetOf()
   stable now: Instant? = @dynamic System.now()
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static sourceInformationMarkerStart($composer, -1488413183, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 825392031, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
+  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
 
   }
 
@@ -669,7 +666,7 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -1488411627, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 825393494, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -679,7 +676,7 @@ val tmp1_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
-  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -1488410027, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
+  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 825395094, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
 val tmp2_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -689,7 +686,7 @@ val tmp2_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp2_group@ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
-  unstable requestForMissingCoverArtUrl: SuspendFunction1<@[ParameterName(name = 'id')] String, Unit>? = @dynamic sourceInformationMarkerStart($composer, -1488407813, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
+  unstable requestForMissingCoverArtUrl: SuspendFunction1<@[ParameterName(name = 'id')] String, Unit>? = @dynamic sourceInformationMarkerStart($composer, 825397308, "CC(remember):EntitiesPagingListUi.kt#9igjgp")
 val tmp3_group = $composer.cache(false) {
   {     <unused var>  :   String   ->
 
@@ -794,9 +791,9 @@ tmp2_group@ly.david.musicsearch.ui.common.recording.RecordingListItem
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RelationListItem(
   relation: RelationListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static sourceInformationMarkerStart($composer, 946460155, "CC(remember):RelationListItem.kt#9igjgp")
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 932927351, "CC(remember):RelationListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
+  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
 
   }
 
@@ -804,21 +801,6 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.relation.RelationListItem
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RelationsListScreen(
-  lazyPagingItems: LazyPagingItems<RelationListItemModel>
-  stable modifier: Modifier? = @static Companion
-  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static sourceInformationMarkerStart($composer, 1163268874, "CC(remember):RelationsListScreen.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String  ,   <unused var>  :   String?   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.ui.common.relation.RelationsListScreen
 )
 fun present(
   stable <this>: RelationsPresenterImpl
@@ -1070,8 +1052,33 @@ tmp0_group@ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
   stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
   stable additionalBar: @[ExtensionFunctionType] Function3<ColumnScope, Composer, Int, Unit>? = @static ComposableSingletons$ScrollableTopAppBarKt.lambda$1740123635
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ScrollableTopAppBar(
+  stable modifier: Modifier? = @static Companion
+  stable onBack: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -649244901, "CC(remember):ScrollableTopAppBar.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
+  stable showBackButton: Boolean = @static true
+  stable entity: MusicBrainzEntity? = @static null
+  stable annotatedString: AnnotatedString? = @static AnnotatedString(
+  text   =   ""
+)
+  stable subtitle: String? = @static ""
+  stable scrollBehavior: TopAppBarScrollBehavior? = @static null
+  stable containerColor: Color = @static Companion.Unspecified
+  stable actions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$ScrollableTopAppBarKt.lambda$-333516502
+  stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable additionalBar: @[ExtensionFunctionType] Function3<ColumnScope, Composer, Int, Unit>? = @static ComposableSingletons$ScrollableTopAppBarKt.lambda$1653331689
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun TitleAndSubtitle(
-  stable title: String
+  stable annotatedString: AnnotatedString
   stable entity: MusicBrainzEntity? = @static null
   stable subtitle: String? = @static ""
   stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
@@ -1127,9 +1134,44 @@ fun rememberTopAppBarFilterState(
   stable initialFilterText: String? = @static ""
   stable initialIsFilterMode: Boolean = @static false
 ): TopAppBarFilterState
-restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun TopAppBarWithFilterInternal(
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun TopAppBarWithFilter(
   stable modifier: Modifier? = @static Companion
-  stable onBack: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -690120155, "CC(remember):TopAppBarWithFilter.kt#9igjgp")
+  stable onBack: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1756613698, "CC(remember):TopAppBarWithFilter.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+  stable showBackButton: Boolean = @static true
+  stable entity: MusicBrainzEntity? = @static null
+  stable title: String? = @static ""
+  stable subtitle: String? = @static ""
+  stable scrollBehavior: TopAppBarScrollBehavior? = @static null
+  stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable topAppBarFilterState: TopAppBarFilterState? = @dynamic TopAppBarFilterState()
+  stable selectionState: SelectionState? = @dynamic SelectionState()
+  stable additionalActions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda$-1244674602
+  stable additionalBar: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda$-404659200
+  stable onSelectAllToggle: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1756633314, "CC(remember):TopAppBarWithFilter.kt#9igjgp")
+val tmp1_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp1_group@ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun TopAppBarWithFilterInternal(
+  stable annotatedString: AnnotatedString
+  stable modifier: Modifier? = @static Companion
+  stable onBack: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1227436761, "CC(remember):TopAppBarWithFilter.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -1141,16 +1183,15 @@ sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilterInternal
   stable showBackButton: Boolean = @static true
   stable entity: MusicBrainzEntity? = @static null
-  stable title: String? = @static ""
   stable subtitle: String? = @static ""
   stable scrollBehavior: TopAppBarScrollBehavior? = @static null
   stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
   stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
   stable topAppBarFilterState: TopAppBarFilterState? = @dynamic TopAppBarFilterState()
   stable selectionState: SelectionState? = @dynamic SelectionState()
-  stable additionalActions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda$2050265177
-  stable additionalBar: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda$-1694342013
-  stable onSelectAllToggle: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -690100539, "CC(remember):TopAppBarWithFilter.kt#9igjgp")
+  stable additionalActions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda$1247487137
+  stable additionalBar: Function2<Composer, Int, Unit>? = @static ComposableSingletons$TopAppBarWithFilterKt.lambda$-1511497801
+  stable onSelectAllToggle: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1227455737, "CC(remember):TopAppBarWithFilter.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -1164,9 +1205,9 @@ tmp1_group@ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilterInternal
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TrackListItem(
   track: TrackListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onRecordingClick: Function2<@[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String, Unit>? = @static sourceInformationMarkerStart($composer, 1656119259, "CC(remember):TrackListItem.kt#9igjgp")
+  stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 2139794097, "CC(remember):TrackListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   String  ,   <unused var>  :   String   ->
+  {     it  :   String   ->
 
   }
 

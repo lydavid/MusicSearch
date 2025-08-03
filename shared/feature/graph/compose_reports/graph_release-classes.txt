@@ -25,7 +25,6 @@ stable class SelectEntity {
 stable class ClickItem {
   stable val entity: MusicBrainzEntity
   stable val id: String
-  stable val title: String?
   <runtime stability> = Stable
 }
 stable class GraphNode {

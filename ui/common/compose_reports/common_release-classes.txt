@@ -229,7 +229,6 @@ stable class SnackbarPopResult {
 stable class DetailsScreen {
   stable val entity: MusicBrainzEntity
   stable val id: String
-  stable val title: String?
   <runtime stability> = Stable
 }
 stable class CoverArtsScreen {
