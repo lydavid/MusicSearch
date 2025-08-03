@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.area
 
 import androidx.paging.testing.asSnapshot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
@@ -156,7 +157,7 @@ class AreasListRepositoryImplTest : KoinTest {
                     AreaListItemModel(
                         id = "390b05d4-11ec-3bce-a343-703a366b34a5",
                         name = "Ireland",
-                        countryCodes = listOf("IE"),
+                        countryCodes = persistentListOf("IE"),
                         type = "Country",
                         collected = true,
                     ),

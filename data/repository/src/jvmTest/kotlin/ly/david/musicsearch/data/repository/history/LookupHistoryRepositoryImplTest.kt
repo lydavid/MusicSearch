@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.history
 
 import androidx.paging.testing.asSnapshot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import ly.david.data.test.KoinTestRule
@@ -194,7 +195,7 @@ class LookupHistoryRepositoryImplTest :
                         disambiguation = "Japanese pop band",
                         sortName = "Zutto Mayonaka de Iinoni.",
                         type = "Group",
-                        aliases = listOf(
+                        aliases = persistentListOf(
                             BasicAlias(
                                 name = "ZUTOMAYO",
                                 locale = "en",
@@ -231,7 +232,7 @@ class LookupHistoryRepositoryImplTest :
                     type = "Group",
                     sortName = "Zutto Mayonaka de Iinoni.",
                     lastUpdated = currentTime,
-                    aliases = listOf(
+                    aliases = persistentListOf(
                         BasicAlias(
                             name = "ZUTOMAYO",
                             locale = "en",

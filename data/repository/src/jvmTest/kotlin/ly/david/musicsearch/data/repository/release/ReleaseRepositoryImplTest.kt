@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.release
 
 import androidx.paging.testing.asSnapshot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.releaseWith3CatalogNumbersWithSameLabel
@@ -740,7 +741,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     AreaListItemModel(
                         id = "2db42837-c832-3c27-b4a3-08198f75693c",
                         name = "Japan",
-                        countryCodes = listOf("JP"),
+                        countryCodes = persistentListOf("JP"),
                         date = "2011-03-16",
                     ),
                 ),
@@ -965,7 +966,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         sortName = "",
                         disambiguation = null,
                         type = null,
-                        countryCodes = listOf("JP"),
+                        countryCodes = persistentListOf("JP"),
                         date = "2023-07-26",
                         visited = false,
                     ),
@@ -1124,7 +1125,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 AreaListItemModel(
                     id = "2db42837-c832-3c27-b4a3-08198f75693c",
                     name = "Japan",
-                    countryCodes = listOf("JP"),
+                    countryCodes = persistentListOf("JP"),
                     date = "2022-08-10",
                     visited = false,
                 ),
@@ -1210,35 +1211,35 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 AreaListItemModel(
                     id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
                     name = "United Kingdom",
-                    countryCodes = listOf("GB"),
+                    countryCodes = persistentListOf("GB"),
                     date = "2012-10-22",
                     visited = false,
                 ),
                 AreaListItemModel(
                     id = "c6500277-9a3d-349b-bf30-41afdbf42add",
                     name = "Italy",
-                    countryCodes = listOf("IT"),
+                    countryCodes = persistentListOf("IT"),
                     date = "2012-10-23",
                     visited = false,
                 ),
                 AreaListItemModel(
                     id = "471c46a7-afc5-31c4-923c-d0444f5053a4",
                     name = "Spain",
-                    countryCodes = listOf("ES"),
+                    countryCodes = persistentListOf("ES"),
                     date = "2012-10-23",
                     visited = false,
                 ),
                 AreaListItemModel(
                     id = "ef1b7cc0-cd26-36f4-8ea0-04d9623786c7",
                     name = "Netherlands",
-                    countryCodes = listOf("NL"),
+                    countryCodes = persistentListOf("NL"),
                     date = "2012-10-26",
                     visited = false,
                 ),
                 AreaListItemModel(
                     id = "08310658-51eb-3801-80de-5a0739207115",
                     name = "France",
-                    countryCodes = listOf("FR"),
+                    countryCodes = persistentListOf("FR"),
                     date = "2012-11-05",
                     visited = false,
                 ),

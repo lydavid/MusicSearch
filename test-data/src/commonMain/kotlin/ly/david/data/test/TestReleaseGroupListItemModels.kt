@@ -1,5 +1,6 @@
 package ly.david.data.test
 
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 
 val underPressureReleaseGroupListItemModel = ReleaseGroupListItemModel(
@@ -14,7 +15,7 @@ val utaNoUtaReleaseGroupListItemModel = ReleaseGroupListItemModel(
     id = "22760f81-37ce-47ce-98b6-65f8a285f083",
     name = "ウタの歌 ONE PIECE FILM RED",
     primaryType = "Album",
-    secondaryTypes = listOf(),
+    secondaryTypes = persistentListOf(),
     disambiguation = "",
     formattedArtistCredits = "Ado",
     firstReleaseDate = "2022-08-10",

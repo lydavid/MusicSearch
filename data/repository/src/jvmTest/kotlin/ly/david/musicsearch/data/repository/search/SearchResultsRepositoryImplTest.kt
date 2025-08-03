@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.repository.search
 
 import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
@@ -337,7 +338,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestSearchResultsRepository, T
                         id = "c6500277-9a3d-349b-bf30-41afdbf42add",
                         name = "Italy",
                         sortName = "Italy",
-                        countryCodes = listOf("IT"),
+                        countryCodes = persistentListOf("IT"),
                         type = "Country",
                         visited = false,
                     ),

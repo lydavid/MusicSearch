@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
 import androidx.paging.testing.asSnapshot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.adoArtistMusicBrainzModel
@@ -599,7 +600,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     query = "",
                     expectedResult = listOf(
                         utaNoUtaReleaseGroupListItemModel.copy(
-                            aliases = listOf(
+                            aliases = persistentListOf(
                                 BasicAlias(
                                     name = "UTA'S SONGS ONE PIECE FILM RED",
                                     locale = "en",
@@ -619,7 +620,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     query = "uta",
                     expectedResult = listOf(
                         utaNoUtaReleaseGroupListItemModel.copy(
-                            aliases = listOf(
+                            aliases = persistentListOf(
                                 BasicAlias(
                                     name = "UTA'S SONGS ONE PIECE FILM RED",
                                     locale = "en",
@@ -634,7 +635,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     query = "歌",
                     expectedResult = listOf(
                         utaNoUtaReleaseGroupListItemModel.copy(
-                            aliases = listOf(
+                            aliases = persistentListOf(
                                 BasicAlias(
                                     name = "UTA'S SONGS ONE PIECE FILM RED",
                                     locale = "en",

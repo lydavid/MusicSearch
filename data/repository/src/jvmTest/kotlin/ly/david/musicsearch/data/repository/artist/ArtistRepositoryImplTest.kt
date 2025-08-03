@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.repository.artist
 
 import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
@@ -88,7 +89,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 areaListItemModel = AreaListItemModel(
                     id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
                     name = "United Kingdom",
-                    countryCodes = listOf("GB"),
+                    countryCodes = persistentListOf("GB"),
                 ),
                 isnis = listOf("0000000121707484"),
                 lastUpdated = testDateTimeInThePast,
@@ -141,7 +142,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 areaListItemModel = AreaListItemModel(
                     id = "9d5dd675-3cf4-4296-9e39-67865ebee758",
                     name = "England",
-                    countryCodes = listOf(),
+                    countryCodes = persistentListOf(),
                 ),
                 ipis = listOf("00003960406", "00015471209"),
                 isnis = listOf("0000000114448576", "0000000458257298"),
@@ -252,7 +253,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 areaListItemModel = AreaListItemModel(
                     id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
                     name = "United Kingdom",
-                    countryCodes = listOf("GB"),
+                    countryCodes = persistentListOf("GB"),
                 ),
                 isnis = listOf("0000000121707484"),
                 lastUpdated = testDateTimeInThePast,
@@ -330,7 +331,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 areaListItemModel = AreaListItemModel(
                     id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
                     name = "United Kingdom",
-                    countryCodes = listOf("GB"),
+                    countryCodes = persistentListOf("GB"),
                 ),
                 isnis = listOf("0000000121707484"),
                 lastUpdated = testDateTimeInThePast.plus(2.hours),
