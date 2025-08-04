@@ -16,20 +16,20 @@ appId: io.github.lydavid.musicsearch.debug
 
 # After clicking on a track then coming back, collapsed state persists
 - assertVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
-- tapOn: "CD 1"
+- tapOn: "1・CD"
 - assertNotVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
-- tapOn: "CD 2"
+- tapOn: "2・CD"
 - tapOn: "Symphony No. 14 in A Major, K. 114: I. Allegro moderato"
 - tapOn: "Back"
 - assertNotVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
 
 # When filtering, collapsed medium with a matching track will remain displayed
-- tapOn: "CD 1"
+- tapOn: "1・CD"
 - assertVisible: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
-- tapOn: "CD 1"
+- tapOn: "1・CD"
 - tapOn: "Filter"
 - inputText: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
-- tapOn: "CD 1"
+- tapOn: "1・CD"
 - assertVisible:
       text: "Symphony No. 1 in E-Flat Major, K. 16: I. Molto allegro"
       index: 1
