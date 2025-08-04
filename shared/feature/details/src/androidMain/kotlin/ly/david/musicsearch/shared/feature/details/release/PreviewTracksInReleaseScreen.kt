@@ -29,6 +29,7 @@ internal fun PreviewTracksInReleaseScreen() {
                             name = "Track name",
                             length = 295000,
                             mediumId = 1,
+                            mediumPosition = 1,
                         ),
                         ListSeparator(
                             id = "2",
@@ -41,6 +42,7 @@ internal fun PreviewTracksInReleaseScreen() {
                             name = "Should not be shown",
                             length = 199000,
                             mediumId = 2,
+                            mediumPosition = 2,
                         ),
                         ListSeparator(
                             id = "3",
@@ -53,6 +55,7 @@ internal fun PreviewTracksInReleaseScreen() {
                             name = "Another track name",
                             length = 199000,
                             mediumId = 3,
+                            mediumPosition = 3,
                         ),
                     ),
                 ),

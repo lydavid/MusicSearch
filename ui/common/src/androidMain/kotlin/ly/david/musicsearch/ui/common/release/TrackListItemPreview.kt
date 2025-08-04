@@ -20,6 +20,7 @@ internal fun PreviewTrackListItem() {
                     number = "A",
                     mediumId = 1L,
                     recordingId = "r1",
+                    mediumPosition = 1,
                 ),
             )
         }
@@ -41,6 +42,7 @@ internal fun PreviewTrackListItemAllInfo() {
                     mediumId = 2L,
                     recordingId = "r2",
                     formattedArtistCredits = "Some artist feat. Other artist",
+                    mediumPosition = 1,
                 ),
             )
         }
@@ -63,6 +65,7 @@ internal fun PreviewTrackListItemVisited() {
                     recordingId = "r2",
                     formattedArtistCredits = "Some artist feat. Other artist",
                     visited = true,
+                    mediumPosition = 1,
                 ),
             )
         }

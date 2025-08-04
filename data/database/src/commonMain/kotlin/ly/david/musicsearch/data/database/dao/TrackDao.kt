@@ -108,7 +108,7 @@ private fun mapToTrackAndMedium(
     recordingId = recordingId,
     formattedArtistCredits = formattedArtistCreditNames,
     visited = visited == true,
-    mediumPosition = mediumPosition,
+    mediumPosition = mediumPosition ?: 0,
     mediumName = mediumName,
     trackCount = trackCount,
     format = format,
@@ -126,7 +126,7 @@ data class TrackAndMedium(
     val formattedArtistCredits: String? = null,
     val visited: Boolean = false,
 
-    val mediumPosition: Int?,
+    val mediumPosition: Int,
     val mediumName: String?,
     val trackCount: Int,
     val format: String?,

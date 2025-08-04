@@ -209,8 +209,8 @@ class ReleaseRepositoryImpl(
                         if (before?.mediumId != after?.mediumId && after != null) {
                             ListSeparator(
                                 id = "${after.mediumId}",
-                                text = after.format.orEmpty() +
-                                    (after.mediumPosition?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
+                                text = "${after.mediumPosition}・" +
+                                    after.format.orEmpty() +
                                     after.mediumName.transformThisIfNotNullOrEmpty { " ($it)" },
                             )
                         } else {

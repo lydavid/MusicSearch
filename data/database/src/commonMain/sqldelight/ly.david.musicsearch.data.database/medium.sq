@@ -3,7 +3,7 @@ import kotlin.Int;
 CREATE TABLE IF NOT EXISTS medium (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   `release_id` TEXT NOT NULL,
-  `position` INTEGER AS Int,
+  `position` INTEGER AS Int, -- TODO: NOT NULL
   `name` TEXT,
   `track_count` INTEGER AS Int NOT NULL,
   `format` TEXT,
